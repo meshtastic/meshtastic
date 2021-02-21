@@ -28,6 +28,7 @@
   <br />
 
 
+
   <hr />
 
 </div>
@@ -46,6 +47,7 @@ The radios automatically create a mesh to forward packets as needed, so everyone
 </td>
 </tr>
 </table>
+
 ## Getting started
 
 ###### Description, should mention:
@@ -83,6 +85,7 @@ The official Meshtastic Android app, It provides messaging, channel configuratio
 
 
 
+
 #### Meshtastic Device
 
 <table>
@@ -94,6 +97,7 @@ The paramount Meshtastic project, the device firmware itself. Runs on supported 
 </td>
 </tr>
 </table>
+
 
 
 #### Meshtastic.js
@@ -108,6 +112,7 @@ TypeScript library for interfacting with Meshtastic
 </tr>
 </table>
 
+
 #### Meshtastic-python
 
 <table>
@@ -119,3 +124,4 @@ Description about product
 </td>
 </tr>
 </table>
+
