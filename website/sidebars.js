@@ -30,6 +30,11 @@ module.exports = {
       "js/connecting",
       "js/events",
       "js/http-api",
+      {
+        type: "link",
+        label: "API Docs",
+        href: "https://js.meshtastic.org",
+      },
     ],
     Protobufs: ["protobufs/api"],
   },
