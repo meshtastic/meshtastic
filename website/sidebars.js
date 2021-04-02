@@ -1,0 +1,36 @@
+module.exports = {
+  Sidebar: {
+    "Getting Started": ["overview"],
+    Device: [
+      "device/radio-settings",
+      "device/supported-hardware",
+      "device/faq",
+      "device/http-api",
+      "device/documents",
+    ],
+    Software: [
+      "software/sw-design",
+      "software/remote-hardware-service",
+      "software/rak815",
+      "software/power",
+      "software/plugin-api",
+      "software/pinetab",
+      "software/nrf52-TODO",
+      "software/mqtt",
+      "software/mesh-alg",
+      "software/install-OSX",
+      "software/esp32-arduino-build-notes",
+      "software/device-api",
+      "software/crypto",
+      "software/build-instructions",
+      "software/ant",
+    ],
+    "Meshtastic.js": [
+      "js/getting-started",
+      "js/connecting",
+      "js/events",
+      "js/http-api",
+    ],
+    Protobufs: ["protobufs/api"],
+  },
+};

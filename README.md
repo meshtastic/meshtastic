@@ -27,8 +27,6 @@
   </span>
   <br />
 
-
-
   <hr />
 
 </div>
@@ -47,25 +45,24 @@ The radios automatically create a mesh to forward packets as needed, so everyone
 </td>
 </tr>
 </table>
-
 ## Getting started
 
 ###### Description, should mention:
 
 You will require atleast one of [these](https://github.com/meshtastic/meshtastic-device#supported-hardware) devices
 
-* Link to device compatability table on `meshtastic/meshtastic-device`
-* Link to flashing instructions
+- Link to device compatability table on `meshtastic/meshtastic-device`
+- Link to flashing instructions
 
 ## Community
 
 ###### Description, should mention:
 
-* Discussions tab: https://github.com/meshtastic/Meshtastic/discussions
-* Forum
-* Slack
-* unofficial/international communities
-* Maybe have an `awesome-meshtastic` page, have all of the apps and extensions ppl have made
+- Discussions tab: https://github.com/meshtastic/Meshtastic/discussions
+- Forum
+- Slack
+- unofficial/international communities
+- Maybe have an `awesome-meshtastic` page, have all of the apps and extensions ppl have made
 
 ## Software
 
@@ -74,57 +71,47 @@ You will require atleast one of [these](https://github.com/meshtastic/meshtastic
 #### Meshtastic App
 
 <table>
-  <tr>
-    <td>
-      <p>
-        The official Meshtastic Android app, It provides messaging, channel configuration and a real time map. It also has inbuilt functionality for updating device firmware over Bluetooth
-      </p>
-    </td>
-  </tr>
+<tr>
+<td>
+<p>
+The official Meshtastic Android app, It provides messaging, channel configuration and a real time map. It also has inbuilt functionality for updating device firmware over Bluetooth
+</p>
+</td>
+</tr>
 </table>
-
-
-
 
 #### Meshtastic Device
 
 <table>
-  <tr>
-    <td>
-      <p>
-        The paramount Meshtastic project, the device firmware itself. Runs on supported hardware that allows the creation of mesh networks at any scale
-      </p>
-    </td>
-  </tr>
+<tr>
+<td>
+<p>
+The paramount Meshtastic project, the device firmware itself. Runs on supported hardware that allows the creation of mesh networks at any scale
+</p>
+</td>
+</tr>
 </table>
-
-
 
 #### Meshtastic.js
 
 <table>
-  <tr>
-    <td>
-      <p>
-        TypeScript library for interfacting with Meshtastic, built with RxJs and ProtoBuf.js
-      </p>
-    </td>
-  </tr>
+<tr>
+<td>
+<p>
+TypeScript library for interfacting with Meshtastic 
+</p>
+</td>
+</tr>
 </table>
-
 
 #### Meshtastic-python
 
 <table>
-  <tr>
-    <td>
-      <p>
-        A Python client for using Meshtastic devices. This small library (and example application) provides an easy API for sending and receiving messages over mesh radios.
-      </p>
-      <p>
-        It also provides access to any of the operations/data available in the device user interface or the Android application. Events are delivered using a publish-subscribe model, and you can subscribe to only the message types you are interested in.
-      </p>
-    </td>
-  </tr>
+<tr>
+<td>
+<p>
+Description about product
+</p>
+</td>
+</tr>
 </table>
-
