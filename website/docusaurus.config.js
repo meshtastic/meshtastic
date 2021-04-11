@@ -21,9 +21,27 @@ module.exports = {
       },
       items: [
         {
-          to: "docs/",
-          activeBasePath: "docs",
-          label: "Docs",
+          to: "docs/getting_started",
+          activeBasePath: "docs/getting_started",
+          label: "Getting Started",
+          position: "left",
+        },
+        {
+          to: "docs/software/overview-software",
+          activeBasePath: "docs/software",
+          label: "Software",
+          position: "left",
+        },
+        {
+          to: "docs/hardware/supported_hardware",
+          activeBasePath: "docs/hardware",
+          label: "Hardware",
+          position: "left",
+        },
+        {
+          to: "docs/developers/api_developers",
+          activeBasePath: "docs/developers",
+          label: "Developers",
           position: "left",
         },
         {
@@ -46,20 +64,20 @@ module.exports = {
           title: "Docs",
           items: [
             {
-              label: "Device",
-              to: "docs/device/radio-settings/",
+              label: "Getting Started",
+              to: "docs/getting_started",
             },
             {
               label: "Software",
-              to: "docs/software/sw-design/",
+              to: "docs/software/overview-software",
             },
             {
-              label: "meshtastic.js",
-              to: "docs/js/getting-started/",
+              label: "Hardware",
+              to: "docs/hardware/supported_hardware",
             },
             {
-              label: "Protobufs",
-              to: "docs/protobufs/api",
+              label: "Developers",
+              to: "docs/developers/api_developers",
             },
           ],
         },
@@ -67,16 +85,12 @@ module.exports = {
           title: "Community",
           items: [
             {
-              label: "Stack Overflow",
-              href: "https://stackoverflow.com/questions/tagged/docusaurus",
+              label: "Forum",
+              href: "https://meshtastic.discourse.group",
             },
             {
-              label: "Discord",
-              href: "https://discordapp.com/invite/docusaurus",
-            },
-            {
-              label: "Twitter",
-              href: "https://twitter.com/docusaurus",
+              label: "Slack",
+              href: "#",
             },
           ],
         },

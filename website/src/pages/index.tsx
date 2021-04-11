@@ -10,32 +10,37 @@ import styles from './styles.module.css';
 
 const features = [
   {
-    title: "Easy to Use",
-    imageUrl: "img/undraw_docusaurus_mountain.svg",
+    title: "Diverse Software Ecosystem",
+    imageUrl: "img/software.svg",
     description: (
       <>
-        Docusaurus was designed from the ground up to be easily installed and
-        used to get your website up and running quickly.
+        Having an ever-growing, vibrant software ecosystem, there's almost
+        certainly, a capable solution ready to go for your project. With
+        libraries for Typescript and Python, apps for all major platforms and a
+        whole suite of native integrations, there's something for everyone.
       </>
     ),
   },
   {
-    title: "Focus on What Matters",
-    imageUrl: "img/undraw_docusaurus_tree.svg",
+    title: "Extremely Versatile",
+    imageUrl: "img/versatility.svg",
     description: (
       <>
-        Docusaurus lets you focus on your docs, and we&apos;ll do the chores. Go
-        ahead and move your docs into the <code>docs</code> directory.
+        Create a highly scalable mesh with hardware on a multitude of platforms
+        to fit your unique requirements: Create an environment monitoring mesh
+        and produce real-time heatmaps, or maybe decentralised, encrypted
+        messaging network, your imagination is the limit.
       </>
     ),
   },
   {
-    title: "Powered by React",
-    imageUrl: "img/undraw_docusaurus_react.svg",
+    title: "Peak Efficiency",
+    imageUrl: "img/efficiency.svg",
     description: (
       <>
-        Extend or customize your website layout by reusing React. Docusaurus can
-        be extended while reusing the same header and footer.
+        Go for days on end and on a single battery, or extend it infinitely with
+        a solar cell, communicate with tens kilometres between nodes on
+        inexpensive beginner friendly hardware.
       </>
     ),
   },

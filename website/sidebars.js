@@ -8,19 +8,6 @@ module.exports = {
         "Howto's": [],
       },
     ],
-    Hardware: [
-      "hardware/supported_hardware_hardware",
-      "hardware/behaviour_hardware",
-      "hardware/antenna_hardware",
-    ],
-
-    Device: [
-      "device/radio-settings",
-      "device/supported-hardware",
-      "device/faq",
-      "device/http-api",
-      "device/documents",
-    ],
     Software: [
       "software/overview-software",
       {
@@ -68,10 +55,24 @@ module.exports = {
         ],
       },
     ],
+    Hardware: [
+      "hardware/supported_hardware_hardware",
+      "hardware/behaviour_hardware",
+      "hardware/antenna_hardware",
+    ],
     Developers: [
       {
         Protobufs: ["protobufs/api"],
       },
+      "developers/api_developers",
+    ],
+
+    Device: [
+      "device/radio-settings",
+      "device/supported-hardware",
+      "device/faq",
+      "device/http-api",
+      "device/documents",
     ],
   },
 };

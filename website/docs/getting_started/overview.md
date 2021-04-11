@@ -1,8 +1,8 @@
 ---
-id: overview
+id: overview_getting_started
 title: What is Meshtastic?
 sidebar_label: Overview
-slug: /
+slug: /getting_started
 ---
 
 Meshtastic® is a project that lets you use
