@@ -8,6 +8,7 @@ module.exports = {
       {
         "Howto's": [],
       },
+      "getting_started/concepts",
     ],
     Software: [
       "software/overview",
