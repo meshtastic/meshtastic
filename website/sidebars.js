@@ -84,9 +84,4 @@ module.exports = {
       },
     ],
   },
-  Showcase: {
-    "Jungle Project": [
-      "software/other/mesh-alg",
-    ]
-  },
 };
