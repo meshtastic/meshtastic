@@ -27,6 +27,16 @@ module.exports = {
         ],
       },
       {
+        "Plugins": [
+          "software/plugins/plugins",
+          "software/plugins/store-foreward-plugin",
+          "software/plugins/range-test-plugin",
+          "software/plugins/environment-plugin",
+          "software/plugins/ext-notif-plugin",
+          "software/plugins/serial-plugin",
+        ],
+      },
+      {
         "Meshtastic-python": [
           {
             type: "link",
