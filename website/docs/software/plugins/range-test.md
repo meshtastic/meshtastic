@@ -77,16 +77,17 @@ Also be mindful of your space usage on the file system. It has protections from 
 
 Steps:
 
-[Download](https://www.google.com/earth/versions/#download-pro 1 and open Google Earth
-Select File > Import
-Select CSV
-Select Delimited, Comma
-Make sure the button that states “This dataset does not contain latitude/longitude information, but street addresses” is unchecked
-Select “rx lat” & “rx long” for the appropriate lat/lng fields
-Click finish
-When it prompts you to create a style template, click yes.
-Set the name field to whichever column you want to be displayed on the map (don’t worry about this too much, when you click on an icon, all the relavant data appears)
-select a color, icon, etc. and hit ok.
+1. [Download](https://www.google.com/earth/versions/#download-pro) and open Google Earth
+    1. Select File > Import
+    2. Select CSV
+    3. Select Delimited, Comma
+    4. Make sure the button that states “This dataset does not contain latitude/longitude information, but street addresses” is unchecked
+    5. Select “rx lat” & “rx long” for the appropriate lat/lng fields
+    6. Click finish
+2. When it prompts you to create a style template, click yes.
+    1. Set the name field to whichever column you want to be displayed on the map (don’t worry about this too much, when you click on an icon, all the relavant data appears)
+    2. select a color, icon, etc. and hit ok.
+
 Your data will load onto the map, make sure to click the checkbox next to your dataset in the sidebar to view it.
 
 #### My Maps
