@@ -3,9 +3,13 @@ module.exports = {
     "Getting Started": [
       "getting_started/about",
       "getting_started/overview",
-      "getting_started/flashing_firmware",
-      "getting_started/concepts",
       {
+        "Flashing Firmware": [
+          "getting_started/flashing_firmware/flashing_firmware_overview",
+          "getting_started/flashing_firmware/flashing_firmware_cli",
+          "getting_started/flashing_firmware/flashing_firmware_gui",
+          "getting_started/flashing_firmware/flashing_firmware_ota",
+        ],
         "Howto's": [],
       },
       "getting_started/concepts",
@@ -79,5 +83,10 @@ module.exports = {
         ],
       },
     ],
+  },
+  Showcase: {
+    "Jungle Project": [
+      "software/other/mesh-alg",
+    ]
   },
 };
