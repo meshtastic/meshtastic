@@ -1,5 +1,5 @@
 ---
-id: overview_getting_started
+id: overview
 title: What is Meshtastic?
 sidebar_label: Overview
 slug: /getting_started
@@ -97,4 +97,4 @@ For a nice looking cases:
 
 ## IMPORTANT DISCLAIMERS AND FAQ
 
-For a listing of currently missing features and a FAQ click [here](device/faq).
+For a listing of currently missing features and a FAQ click [here](developers/device/faq).
