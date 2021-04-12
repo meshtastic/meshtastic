@@ -1,5 +1,5 @@
 ---
-id: api_developers
+id: api
 title: APIs
 sidebar_label: APIs
 ---

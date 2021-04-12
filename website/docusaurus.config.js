@@ -27,19 +27,19 @@ module.exports = {
           position: "left",
         },
         {
-          to: "docs/software/overview-software",
+          to: "docs/software",
           activeBasePath: "docs/software",
           label: "Software",
           position: "left",
         },
         {
-          to: "docs/hardware/supported_hardware",
+          to: "docs/hardware",
           activeBasePath: "docs/hardware",
           label: "Hardware",
           position: "left",
         },
         {
-          to: "docs/developers/api_developers",
+          to: "docs/developers",
           activeBasePath: "docs/developers",
           label: "Developers",
           position: "left",
@@ -69,15 +69,15 @@ module.exports = {
             },
             {
               label: "Software",
-              to: "docs/software/overview-software",
+              to: "docs/software",
             },
             {
               label: "Hardware",
-              to: "docs/hardware/supported_hardware",
+              to: "docs/hardware",
             },
             {
               label: "Developers",
-              to: "docs/developers/api_developers",
+              to: "docs/developers",
             },
           ],
         },
@@ -90,7 +90,7 @@ module.exports = {
             },
             {
               label: "Slack",
-              href: "#",
+              href: "https://meshtasticdev.slack.com",
             },
           ],
         },

@@ -1,24 +1,24 @@
 module.exports = {
   Sidebar: {
     "Getting Started": [
-      "getting_started/overview_getting_started",
-      "getting_started/flashing_firmware_getting_started",
-      "getting_started/concepts_getting_started",
+      "getting_started/overview",
+      "getting_started/flashing_firmware",
+      "getting_started/concepts",
       {
         "Howto's": [],
       },
     ],
     Software: [
-      "software/overview-software",
+      "software/overview",
       {
         "Meshtastic Android": [],
       },
       {
         "Meshtastic.js": [
-          "js/getting-started",
-          "js/connecting",
-          "js/events",
-          "js/http-api",
+          "software/js/getting-started",
+          "software/js/connecting",
+          "software/js/events",
+          "software/js/http-api",
           {
             type: "link",
             label: "API Docs",
@@ -56,23 +56,26 @@ module.exports = {
       },
     ],
     Hardware: [
-      "hardware/supported_hardware_hardware",
-      "hardware/behaviour_hardware",
-      "hardware/antenna_hardware",
+      "hardware/overview",
+      "hardware/supported_hardware",
+      "hardware/behaviour",
+      "hardware/antenna",
     ],
     Developers: [
+      "developers/overview",
       {
-        Protobufs: ["protobufs/api"],
+        Protobufs: ["developers/protobufs/api"],
       },
-      "developers/api_developers",
-    ],
-
-    Device: [
-      "device/radio-settings",
-      "device/supported-hardware",
-      "device/faq",
-      "device/http-api",
-      "device/documents",
+      "developers/api",
+      {
+        Device: [
+          "developers/device/radio-settings",
+          "developers/device/supported-hardware",
+          "developers/device/faq",
+          "developers/device/http-api",
+          "developers/device/documents",
+        ],
+      },
     ],
   },
 };
