@@ -2,7 +2,7 @@
 id: flashing_firmware_cli
 title: Flashing Firmware – CLI
 sidebar_label: Command Line Interface
-slug: /flashing_firmware_cli
+slug: /getting_started/flashing_firmware/cli
 ---
 ## Linux
 

@@ -2,7 +2,7 @@
 id: flashing_firmware_gui
 title: Flashing Firmware – GUI
 sidebar_label: Graphic User Interface
-slug: /flashing_firmware_gui
+slug: /getting_started/flashing_firmware/gui
 ---
 ### Windows & MacOS
 

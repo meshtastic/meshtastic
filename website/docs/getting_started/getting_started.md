@@ -33,9 +33,9 @@ Be very careful to install the correct load for your board. In particular the po
 
 If your device already has Meshtastic flashed to it, You can update over the air (OTA). Otherwise you'll need a computer and a **data** USB cable.
 
-- [Install using over-the-air (OTA)](/flashing-firmware-ota)
-- [Install using a graphical user interface (GUI)](/flashing-firmware-gui)
-- [Install using the command line interface (CLI)](/flashing-firmware-cli)
+- [Install using over-the-air (OTA)](getting_started/flashing_firmware/ota)
+- [Install using a graphical user interface (GUI)](getting_started/flashing_firmware/gui)
+- [Install using the command line interface (CLI)](getting_started/flashing_firmware/cli)
 
 ## Connect to your Device
 

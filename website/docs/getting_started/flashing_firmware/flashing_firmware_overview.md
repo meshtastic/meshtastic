@@ -2,7 +2,7 @@
 id: flashing_firmware_overview
 title: Overview
 sidebar_label: Overview
-slug: /flashing_firmware_overview
+slug: /getting_started/flashing_firmware/overview
 ---
 ## Download Firmware
 
