@@ -18,9 +18,9 @@ Be very careful to install the correct load for your board. In particular the po
 | :--------------: | :-----------------------: |
 
 Firmware Flashing Methods
-- [Command line interface](/getting_started/flashing_firmware/cli)
-- [Graphic user interface](/getting_started/flashing_firmware/gui)
-- [Over the air](/getting_started/flashing_firmware/ota)
+- [Command line interface](cli)
+- [Graphic user interface](gui)
+- [Over the air](ota)
 
 ## Troubleshooting
 
