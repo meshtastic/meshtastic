@@ -58,13 +58,11 @@ Recommended settings for a sender at different radio settings:
 Sender
 
 `meshtastic --set range_test_plugin_enabled 1`
-
 `meshtastic --set range_test_plugin_sender 60`
 
 Receiver
 
 `meshtastic --set range_test_plugin_enabled 1`
-
 `meshtastic --set range_test_plugin_save 1`
 
 ### Other things to keep in mind
@@ -108,7 +106,7 @@ If turned on, using mesh network will become unwieldly because messages are sent
 
 ## TODO
 
-Right now range test messages go over the TEXT_MESSAGE_APP port. We need a toggle to switch to optionally send over RANGE_TEST_APP.
+Right now range test messages go over the `TEXT_MESSAGE_APP` port. We need a toggle to switch to optionally send over `RANGE_TEST_APP`.
 
 ## FAQ
 
