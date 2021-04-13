@@ -75,9 +75,7 @@ Also be mindful of your space usage on the file system. It has protections from 
 
 ## Application Examples
 
-### Google Integration
-
-#### Earth
+### Google Earth Integration
 
 Steps:
 
@@ -94,7 +92,7 @@ Steps:
 
 Your data will load onto the map, make sure to click the checkbox next to your dataset in the sidebar to view it.
 
-#### My Maps
+### My Maps
 
 You can use [My Maps](http://mymaps.google.com/). It takes CSVs and the whole interface is much easier to work with.
 
