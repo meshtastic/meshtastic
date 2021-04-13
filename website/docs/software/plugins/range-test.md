@@ -58,11 +58,13 @@ Recommended settings for a sender at different radio settings:
 Sender
 
 `meshtastic --set range_test_plugin_enabled 1`
+
 `meshtastic --set range_test_plugin_sender 60`
 
 Receiver
 
 `meshtastic --set range_test_plugin_enabled 1`
+
 `meshtastic --set range_test_plugin_save 1`
 
 ### Other things to keep in mind
@@ -111,28 +113,28 @@ Right now range test messages go over the `TEXT_MESSAGE_APP` port. We need a tog
 ## FAQ
 
 Q: Where is rangetest.csv saved? 
-    A: Turn on the WiFi on your device as either a WiFi client or a WiFi AP. Once you can connect to your device, go to /static and you will see rangetest.csv.
+    * Turn on the WiFi on your device as either a WiFi client or a WiFi AP. Once you can connect to your device, go to /static and you will see rangetest.csv.
 
 Q: Do I need to have WiFi turned on for the file to be saved? 
-    A: Nope, it'll just work.
+    * Nope, it'll just work.
 
 Q: Do I need a phone for this plugin? 
-    A: There's no need for a phone.
+    * There's no need for a phone.
 
 Q: Can I use this as a message logger? 
-    A: While it's not the intended purpose, sure, why not. Do it!
+    * While it's not the intended purpose, sure, why not. Do it!
 
 Q: What will happen if I run out of space on my device? 
-    A: We have a protection in place to keep you from completly filling up your device. This will make sure that other device critical functions will continue to work. We will reserve at least 50k of free space.
+    * We have a protection in place to keep you from completly filling up your device. This will make sure that other device critical functions will continue to work. We will reserve at least 50k of free space.
 
 Q: What do I do with the rangetest.csv file when I'm done? 
-    A: Go to /static and delete the file.
+    * Go to /static and delete the file.
 
 Q: Can I use this as a sender while on battery power? 
-    A: Yes, but your battery will run down quicker than normal. While sending, we tell the device not to go into low-power mode since it needs to keep to a fairly strict timer.
+    * Yes, but your battery will run down quicker than normal. While sending, we tell the device not to go into low-power mode since it needs to keep to a fairly strict timer.
 
 Q: Why is this operating on incoming messages instead of the existing location discovery protocol? 
-    A: This plugin is still young and currently supports monitoring just one port at a time. I decided to use the existing message port because that is easy to test with. A future version will listen to multiple ports to be more promiscuous.
+    * This plugin is still young and currently supports monitoring just one port at a time. I decided to use the existing message port because that is easy to test with. A future version will listen to multiple ports to be more promiscuous.
 
 ## Need more help?
 
