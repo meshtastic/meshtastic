@@ -27,22 +27,22 @@ module.exports = {
         ],
       },
       {
-        "Plugins": [
-          "software/plugins/plugins",
-          "software/plugins/store-forward-plugin",
-          "software/plugins/range-test-plugin",
-          "software/plugins/environment-plugin",
-          "software/plugins/ext-notif-plugin",
-          "software/plugins/serial-plugin",
-        ],
-      },
-      {
         "Meshtastic-python": [
           {
             type: "link",
             label: "API Docs",
             href: "https://meshtastic.github.io/Meshtastic-python",
           },
+        ],
+      },
+      {
+        "Plugins": [
+          "software/plugins/plugins",
+          "software/plugins/range-test-plugin",
+          "software/plugins/ext-notif-plugin",
+          "software/plugins/serial-plugin",
+          "software/plugins/store-forward-plugin",
+          "software/plugins/environment-plugin",
         ],
       },
       {

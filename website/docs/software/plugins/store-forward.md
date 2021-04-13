@@ -5,7 +5,7 @@ sidebar_label: Store and forward
 ---
 
 ## About
-:::warning
+:::caution
 This is a work in progress and is not yet available.
 :::
 

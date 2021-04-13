@@ -26,6 +26,10 @@ These are the settings that can be configured.
     range_test_plugin_sender
         Number of seconds to wait between sending packets. Using the long_slow channel configuration, it's best not to go more frequent than once every 60 seconds. You can be more agressive with faster settings. 0 is default which disables sending messages.
 
+:::note
+The device must be restarted after the settings have been changed for the plugin to take effect.
+:::
+
 ### Usage Notes
 
 For basic usage, you will need two devices both with a GPS. A device with a paired phone with GPS may work, I have not tried it.
@@ -54,11 +58,13 @@ Recommended settings for a sender at different radio settings:
 Sender
 
     meshtastic --set range_test_plugin_enabled 1
+
     meshtastic --set range_test_plugin_sender 60
 
 Receiver
 
     meshtastic --set range_test_plugin_enabled 1
+
     meshtastic --set range_test_plugin_save 1
 
 ### Other things to keep in mind
@@ -70,8 +76,6 @@ Also be mindful of your space usage on the file system. It has protections from 
 ## Application Examples
 
 ### Google Integration
-
-@jfirwin on our forum [meshtastic.discourse.org](https://meshtastic.discourse.group/t/new-plugin-rangetestplugin/2591/49?u=mc-hamster) shared how to integrate the resulting csv file with Google Products.
 
 #### Earth
 
@@ -126,6 +130,4 @@ Q: Why is this operating on incoming messages instead of the existing location d
 
 ## Need more help?
 
-Go to the Meshtastic Discourse Group if you have any questions or to share how you have used this.
-
-https://meshtastic.discourse.group
+Go to the [Meshtastic Forum](https://meshtastic.discourse.group) if you have any questions or to share how you have used this.

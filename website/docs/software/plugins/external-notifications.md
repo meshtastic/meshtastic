@@ -51,6 +51,7 @@ These are the settings that can be configured.
 For basic usage, start with:
 
 	ext_notification_plugin_enabled = 1
+    
 	ext_notification_plugin_alert_message = 1
     
 Depending on how your external cirtcuit configured is configured, you may need to set the active state to true.
