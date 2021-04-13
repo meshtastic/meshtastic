@@ -36,6 +36,4 @@ This won't happen any time soon.
     
 ## Need help?
 
-Need help with this plugin? Post your question on the Meshtastic Discourse:
-
-https://meshtastic.discourse.group
+Go to the [Meshtastic Forum](https://meshtastic.discourse.group) if you have any questions or to share how you have used this.

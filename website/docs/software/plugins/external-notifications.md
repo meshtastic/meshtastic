@@ -51,7 +51,7 @@ These are the settings that can be configured.
 For basic usage, start with:
 
 	ext_notification_plugin_enabled = 1
-    
+
 	ext_notification_plugin_alert_message = 1
     
 Depending on how your external cirtcuit configured is configured, you may need to set the active state to true.
@@ -90,6 +90,4 @@ Ideas for external hardware:
 
 ## Need more help?
 
-Go to the Meshtastic Discourse Group if you have any questions or to share how you have used this.
-
-https://meshtastic.discourse.group
+Go to the [Meshtastic Forum](https://meshtastic.discourse.group) if you have any questions or to share how you have used this.
