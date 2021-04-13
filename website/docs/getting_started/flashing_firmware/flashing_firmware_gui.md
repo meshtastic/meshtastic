@@ -4,7 +4,12 @@ title: Flashing Firmware – GUI
 sidebar_label: Graphic User Interface
 slug: /getting_started/flashing_firmware/gui
 ---
-### Windows & MacOS
+
+:::caution
+Be very careful to install the correct load for your board. In particular the popular 'T-BEAM' radio from TTGO is not called 'TTGO-Lora' (that is a different board). So don't install the 'TTGO-Lora' build on a TBEAM, it won't work correctly.
+:::
+
+## Windows & MacOS
 
 1. Download and unzip the latest Meshtastic firmware [release](https://github.com/meshtastic/meshtastic-device/releases/latest).
 2. Download [ESPHome Flasher](https://github.com/esphome/esphome-flasher) following their installation instructions.

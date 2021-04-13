@@ -4,6 +4,11 @@ title: Flashing Firmware – CLI
 sidebar_label: Command Line Interface
 slug: /getting_started/flashing_firmware/cli
 ---
+
+:::caution
+Be very careful to install the correct load for your board. In particular the popular 'T-BEAM' radio from TTGO is not called 'TTGO-Lora' (that is a different board). So don't install the 'TTGO-Lora' build on a TBEAM, it won't work correctly.
+:::
+
 ## Linux
 
 Requires `Python` and `pip`

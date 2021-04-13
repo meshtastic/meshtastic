@@ -12,7 +12,6 @@ Prebuilt binaries for the supported radios are available in our releases. Your i
 Be very careful to install the correct load for your board. In particular the popular 'T-BEAM' radio from TTGO is not called 'TTGO-Lora' (that is a different board). So don't install the 'TTGO-Lora' build on a TBEAM, it won't work correctly.
 :::
 
-
 <!--- TODO I'd like to create prettier buttons for this than just a table --->
 | [Current Firmware](https://github.com/meshtastic/meshtastic-device/releases/latest) | [List of Firmware Versions](https://github.com/meshtastic/meshtastic-device/releases/) |
 | :--------------: | :-----------------------: |
