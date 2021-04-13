@@ -22,6 +22,10 @@ Default is to use RX GPIO 16 and TX GPIO 17.
 6. Send a packet up to 240 bytes in length. This will get relayed over the mesh network.
 7. (Optional) Set serialplugin_echo to 1 and any message you send out will be echoed back to your device.
 
+:::note
+The device must be restarted after the settings have been changed for the plugin to take effect.
+:::
+
 ## TODO (in this order):
 
 * Define a verbose RX mode to report on mesh and packet infomration.

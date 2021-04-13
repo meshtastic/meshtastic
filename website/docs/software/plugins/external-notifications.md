@@ -57,6 +57,10 @@ For basic usage, start with:
 Depending on how your external cirtcuit configured is configured, you may need to set the active state to true.
 
 	ext_notification_plugin_active = 1
+
+:::note
+The device must be restarted after the settings have been changed for the plugin to take effect.
+:::
 	
 ### Alert Types
 
