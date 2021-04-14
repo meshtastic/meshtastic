@@ -133,7 +133,3 @@ Q: Can I use this as a sender while on battery power?
 
 Q: Why is this operating on incoming messages instead of the existing location discovery protocol? 
 * This plugin is still young and currently supports monitoring just one port at a time. I decided to use the existing message port because that is easy to test with. A future version will listen to multiple ports to be more promiscuous.
-
-## Need more help?
-
-Go to the [Meshtastic Forum](https://meshtastic.discourse.group) if you have any questions or to share how you have used this.

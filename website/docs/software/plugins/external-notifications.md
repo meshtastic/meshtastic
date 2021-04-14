@@ -91,7 +91,3 @@ Ideas for external hardware:
 * This won't directly support an passive (normal) speaker as it does not generate any audio wave forms.
 * This currently only supports the esp32. Other targets may be possible, I just don't have to test with.
 * This plugin only monitors text messages. We won't trigger on any other packet types.
-
-## Need more help?
-
-Go to the [Meshtastic Forum](https://meshtastic.discourse.group) if you have any questions or to share how you have used this.

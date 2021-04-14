@@ -36,9 +36,5 @@ This won't happen any time soon.
 
 ## Known Problems
 
-    * Until the plugin is initilized by the startup sequence, the TX pin is in a floating state. Device connected to that pin may see this as "noise".
-    * Will not work on NRF and the Linux device targets.
-    
-## Need help?
-
-Go to the [Meshtastic Forum](https://meshtastic.discourse.group) if you have any questions or to share how you have used this.
+* Until the plugin is initilized by the startup sequence, the TX pin is in a floating state. Device connected to that pin may see this as "noise".
+* Will not work on NRF and the Linux device targets.
