@@ -36,6 +36,16 @@ module.exports = {
         ],
       },
       {
+        "Plugins": [
+          "software/plugins/plugins",
+          "software/plugins/range-test-plugin",
+          "software/plugins/ext-notif-plugin",
+          "software/plugins/serial-plugin",
+          "software/plugins/store-forward-plugin",
+          "software/plugins/environment-plugin",
+        ],
+      },
+      {
         Other: [
           "software/other/sw-design",
           "software/other/remote-hardware-service",
