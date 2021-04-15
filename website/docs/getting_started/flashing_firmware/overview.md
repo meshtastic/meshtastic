@@ -1,8 +1,7 @@
 ---
-id: flashing_firmware_overview
+id: overview
 title: Overview
 sidebar_label: Overview
-slug: /getting_started/flashing_firmware/overview
 ---
 ## Download Firmware
 
@@ -16,11 +15,16 @@ Be very careful to install the correct load for your board. In particular the po
 | [Current Firmware](https://github.com/meshtastic/meshtastic-device/releases/latest) | [List of Firmware Versions](https://github.com/meshtastic/meshtastic-device/releases/) |
 | :--------------: | :-----------------------: |
 
-Firmware Flashing Methods
-- [Command line interface](cli)
-- [Graphic user interface](gui)
+Firmware flashing methods
+- Command line interface
+  - [Linux](linux#command-line-instructions)
+  - [MacOS](macos#command-line-instructions)
+  - [Windows](windows#command-line-instructions)
+- Graphical user interface
+  - [Linux](linux#graphical-user-interface-instructions)
+  - [MacOS](macos#graphical-user-interface-instructions)
+  - [Windows](windows#graphical-user-interface-instructions)
 - [Over the air](ota)
-
-## Troubleshooting
-
-For any issues during setup, search [our forum](https://meshtastic.discourse.group) to find a solution. If you can't find one, please post your problem, providing as much detail as possible.
+:::note
+Over the air (OTA) firmware installation is currently only available on the Android App.
+:::
