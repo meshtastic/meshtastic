@@ -24,11 +24,11 @@ Cause: This most likely means that the file system for the web server has not be
 
 Solutions:
 
-Option 1) Flash the device with the `device-install.sh` script that comes packaged with the firmware zip file (you'll lose previous settings).
+Option 1) Flash the device with the `device-install.sh` script that comes packaged with the firmware zip file (you'll lose previous settings). Then follow the instructions under configuration to upload the web interface
 
 Option 2) Flash the device with the OTA update from within the Android application.
 
-Option 3) Flash the device with the SPIFFS instructions in platform.io below.
+Option 3) Flash the device with the SPIFFS instructions in platform.io.
 
 ### Insufficient space to upload new files
 

@@ -6,11 +6,11 @@ sidebar_label: Configuration
 
 ## Manual Installation
 
-Pre-requisite: You have Meshtastic Device firmware between version 1.0.32 - 1.1.50. A client for version 1.2.x will be released shortly and the documentation update accordingly.
+Pre-requisite: You have Meshtastic Device firmware between version 1.0.32 - 1.1.50. A client for version 1.2.x will be released shortly and the documentation will be updated accordingly.
 
 We do realize this installation method is not "easy" and are exploring ways to simplify this in the future, ideally rolling it out as part of the device firmware.
 
-Once you have your device loaded with the Meshtastic Device firmware you need to connect to it's wifi and then manually upload the Meshtastic Web files. 
+Once you have your device loaded with the Meshtastic Device firmware you need to connect to it's wifi and then manually upload the web interface files. 
 
 ### Connect to device wifi
 
@@ -54,7 +54,7 @@ We do realize this is not "easy" and are exploring ways to simplify this in the 
 
 ### Wifi configuration
 
-To enable the WiFi to access the Meshtastic Web Interface, you must at minimum set two preferences:
+To enable the WiFi to access the web interface, you must at minimum set two preferences:
 
 `wifi_ssid`
 `wifi_password`
@@ -70,7 +70,7 @@ Alternatively, you can enable the internal Soft Access Point:
 
 `wifi_ap_mode true`
 
-With that enabled, we will broadcast a new wifi network with the SSID and password you set. In AP mode, your device will act as a Captive Portal with a built in DNS server that resolves all name requests back to the device. Additionally, Apple Captive Portal Assistant is implemented -- if you're on an Apple device, the Meshtastic Web Interface will pop up automagically.
+With that enabled, we will broadcast a new wifi network with the SSID and password you set. In AP mode, your device will act as a Captive Portal with a built in DNS server that resolves all name requests back to the device. Additionally, Apple Captive Portal Assistant is implemented -- if you're on an Apple device, the web interface will pop up automagically.
 
 To turn it off, simply reboot the device.
 
