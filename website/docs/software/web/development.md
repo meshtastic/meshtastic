@@ -1,6 +1,6 @@
 ---
 id: web-development-software
-title: Information for developers of Meshtastic-web
+title: Information for developers of the web interface
 sidebar_label: Development
 ---
 

@@ -4,7 +4,7 @@ title: Managing ESP32 partitions
 sidebar_label: ESP32 partitions
 ---
 
-## Insufficient space to upload Meshtastic web files
+## Insufficient space to upload web interface files
 
 This problem seems to occur when your board has the partitioning structure set incorrectly. This typically occurs when the board has had a firmware other than Meshtastic on it previously. In this situation, the file upload page on the device typically shows a free space of around 48,000 bytes, rather than the ~300,000 bytes that it should have free.
 

@@ -1,6 +1,6 @@
 ---
 id: web-usage-software
-title: Using Meshtastic-web
+title: Using the web interface
 sidebar_label: Usage
 ---
 

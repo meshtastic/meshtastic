@@ -6,7 +6,7 @@ sidebar_label: Configuration
 
 ## Manual Installation
 
-Pre-requisite: You have Meshtastic Device firmware between 1.0.32 - 1.1.50
+Pre-requisite: You have Meshtastic Device firmware between version 1.0.32 - 1.1.50. A client for version 1.2.x will be released shortly and the documentation update accordingly.
 
 We do realize this installation method is not "easy" and are exploring ways to simplify this in the future, ideally rolling it out as part of the device firmware.
 
@@ -34,7 +34,7 @@ The device will now go into WiFi SoftAP Admin Mode. In this mode, your device wi
 The first time your device restarts after enabling WiFi, it will take an additional 20-30 seconds to boot. This is to generate self-signed SSL keys. The keys will be saved for future reuse.
 :::
 
-### Upload Meshtastic-web files
+### Upload web interface files
 
 Next download the three files (app.css.gz, app.js.gz and index.html.gz) from:
 
@@ -48,7 +48,7 @@ Then manually upload them to your device by going to:
 * * http://{your device IP address here}/static
 * * Device IP address typically defaults to 192.168.42.1
 
-The Meshtastic-web application can then be accessed by visiting [http://meshtastic.local/](http://meshtastic.local/) or [http://192.168.42.1/](http://192.168.42.1/)
+The web interface application can then be accessed by visiting [http://meshtastic.local/](http://meshtastic.local/) or [http://192.168.42.1/](http://192.168.42.1/)
 
 We do realize this is not "easy" and are exploring ways to simplify this in the future, ideally rolling it out as part of the device firmware.
 
