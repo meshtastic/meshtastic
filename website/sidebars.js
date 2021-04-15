@@ -9,6 +9,7 @@ module.exports = {
           "getting_started/flashing_firmware/flashing_firmware_cli",
           "getting_started/flashing_firmware/flashing_firmware_gui",
           "getting_started/flashing_firmware/flashing_firmware_ota",
+          "getting_started/flashing_firmware/windows",
         ],
         "Howto's": [],
       },
