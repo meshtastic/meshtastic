@@ -61,14 +61,14 @@ cd /Downloads/firmware/
 Be very careful to install the correct load for your board. In particular the popular 'T-BEAM' radio from TTGO is not called 'TTGO-Lora' (that is a different board). So don't install the 'TTGO-Lora' build on a TBEAM, it won't work correctly.
 :::
 ```bash title="Command"
-device-install.sh -f firmware-BOARD-VERSION.bin
+./device-install.sh -f firmware-BOARD-VERSION.bin
 ```
 ```bash title="Example"
 ./device-install.sh -f firmware-heltec-EU865-1.2.0.bin
 ```
 9. To update a the firmware on an existing Meshtastic device, run
 ```bash title="Command"
-device-update.sh -f firmware-BOARD-VERSION.bin
+./device-update.sh -f firmware-BOARD-VERSION.bin
 ```
 ```bash title="Example"
 ./device-update.sh -f firmware-heltec-EU865-1.2.0.bin
