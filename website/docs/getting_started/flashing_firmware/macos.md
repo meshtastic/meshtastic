@@ -4,8 +4,7 @@ title: Flashing Firmware – MacOS
 sidebar_label: MacOS
 ---
 :::note
-To check if you have a data cable that will work, plug in your device and **then** navigate to `Apple Menu  > About This Mac > System Report... > Hardware > USB`
-you should see something like `CP210X USB to UART Bridge Controller`.
+To check if you have a data cable that will work, plug in your device and **then** navigate to `Apple Menu  > About This Mac > System Report... > Hardware > USB` you should see something like `CP210X USB to UART Bridge Controller`.
 :::
 
 ## Download Firmware
