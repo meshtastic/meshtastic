@@ -4,7 +4,10 @@ title: Flashing Firmware – Linux
 sidebar_label: Linux
 ---
 :::note
-To check if you have a data cable that will work, plug in your device and **then** navigate to `Apple Menu  > About This Mac > System Report... > Hardware > USB`
+To check if you have a data cable that will work, plug in your device and **then** navigate to `Terminal` and enter the following command:
+```bash
+lsusb
+```
 you should see something like `CP210X USB to UART Bridge Controller`.
 :::
 
