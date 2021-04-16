@@ -72,3 +72,11 @@ Be very careful to install the correct load for your board. In particular the po
 ESPHome Flasher for linux is a prebuilt binary for Ubuntu. These instructions were only testing on Ubuntu. Mileage may very on other distros. ESPHome Flasher also provides instructions to build from source or install via `pip` on their README.
 :::
 
+1. Download [ESPHome Flasher](https://github.com/esphome/esphome-flasher)
+2. Connect your radio to your USB port.
+3. Open ESPHome Flasher. There should be no installation required.
+4. If your board is not showing under `Serial Port` then you may need to install the drivers for the [CP210X USB to UART bridge](https://www.silabs.com/products/development-tools/software/usb-to-uart-bridge-vcp-drivers).
+5. In ESPHome Flasher, refresh the serial ports and select the port to which your board is connected.
+6. Browse to the previously downloaded firmware and select the correct firmware based on the board type.
+7. Select Flash ESP.
+8. Once complete, “Done! Flashing is complete!” will be shown.
