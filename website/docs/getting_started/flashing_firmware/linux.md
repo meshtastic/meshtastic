@@ -67,3 +67,8 @@ Be very careful to install the correct load for your board. In particular the po
 ```
 
 ## Graphical User Interface Instructions
+
+:::note
+ESPHome Flasher for linux is a prebuilt binary for Ubuntu. These instructions were only testing on Ubuntu. Mileage may very on other distros. ESPHome Flasher also provides instructions to build from source or install via `pip` on their README.
+:::
+

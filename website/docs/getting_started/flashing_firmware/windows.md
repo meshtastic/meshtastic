@@ -76,6 +76,10 @@ Be very careful to install the correct load for your board. In particular the po
 
 ## Graphical User Interface Instructions
 
+:::note
+ESPHome Flasher also provides instructions to build from source or install via `pip` on their README.
+:::
+
 1. Download [ESPHome Flasher](https://github.com/esphome/esphome-flasher)
 2. Connect your radio to your USB port.
 3. Open ESPHome Flasher. There should be no installation required.
