@@ -85,6 +85,7 @@ module.exports = {
       },
     ],
     Legal: [
+      "legal/overview",
       "legal/licensing",
       "legal/trademark",
     ],
