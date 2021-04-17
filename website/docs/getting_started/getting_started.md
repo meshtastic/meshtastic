@@ -29,9 +29,9 @@ Prebuilt binaries for the supported radios are available in our releases. Your i
 
 If your device already has Meshtastic flashed to it, You can update over the air (OTA). Otherwise you'll need a computer and a **data** USB cable.
 
-- [Install using the command line interface (CLI)](getting_started/flashing_firmware/cli)
-- [Install using a graphical user interface (GUI)](getting_started/flashing_firmware/gui)
-- [Install using over-the-air (OTA)](getting_started/flashing_firmware/ota)
+- Install using the command line interface (CLI)
+- Install using a graphical user interface (GUI)
+- Install using over-the-air (OTA)
 
 ## Connect to your Device
 
