@@ -1,19 +1,19 @@
 module.exports = {
   Sidebar: {
     "Getting Started": [
-      "getting_started/about",
-      "getting_started/overview",
+      "getting-started/about",
+      "getting-started/overview",
       {
         "Flashing Firmware": [
-          "getting_started/flashing_firmware/overview",
-          "getting_started/flashing_firmware/linux",
-          "getting_started/flashing_firmware/macos",
-          "getting_started/flashing_firmware/ota",
-          "getting_started/flashing_firmware/windows",
+          "getting-started/flashing-firmware/overview",
+          "getting-started/flashing-firmware/linux",
+          "getting-started/flashing-firmware/macos",
+          "getting-started/flashing-firmware/ota",
+          "getting-started/flashing-firmware/windows",
         ],
         "Howto's": [],
       },
-      "getting_started/concepts",
+      "getting-started/concepts",
     ],
     Software: [
       "software/overview",
@@ -64,7 +64,7 @@ module.exports = {
     ],
     Hardware: [
       "hardware/overview",
-      "hardware/supported_hardware",
+      "hardware/supported-hardware",
       "hardware/behaviour",
       "hardware/antenna",
     ],
