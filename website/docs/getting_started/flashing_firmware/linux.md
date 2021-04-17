@@ -18,7 +18,22 @@ Download the [latest](https://github.com/meshtastic/meshtastic-device/releases/l
 
 ## Command Line Instructions
 
-Requires `Python` and `pip`
+:::note
+Check if you have `python3` and `pip` installed with the following command
+```bash
+python3 --version
+pip3 --version
+```
+If `python3` is not installed, install with
+```bash
+sudo apt-get update
+sudo apt-get install python3.6
+```
+If `pip` is not installed, install with
+```bash
+sudo apt-get install python3-pip
+```
+:::
 
 1. Install `esptool`
 ```bash
