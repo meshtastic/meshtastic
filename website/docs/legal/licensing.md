@@ -7,4 +7,4 @@ You are hereby granted a two year non-exclusive license to use the Meshtastic® 
 
 We only ask that you include a line in your support text that states:
 
-> "Meshtastic® is a registered trademark of Geeksville Industries LLC. Meshtastic software components are released under various licenses, see github for details. No warranty is provided - use at your own risk."
+> Meshtastic® is a registered trademark of Geeksville Industries LLC. Meshtastic software components are released under various licenses, see github for details. No warranty is provided - use at your own risk.
