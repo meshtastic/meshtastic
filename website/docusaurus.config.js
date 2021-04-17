@@ -101,6 +101,10 @@ module.exports = {
               label: "GitHub",
               href: "https://github.com/meshtastic/meshtastic",
             },
+            {
+              label: "Legal",
+              to: "docs/legal",
+            },
           ],
         },
       ],
