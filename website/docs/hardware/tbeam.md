@@ -33,7 +33,7 @@ sidebar_label: LILYGO® T-Beam
 
 ## T-Beam - M8N & SX1262
 
-* Comes with Semtech SX1262 transceiver for better received sensitivity
+* Comes with Semtech SX1262 transceiver for better receiver sensitivity
 * Upgraded Neo-M8N GPS for better GPS sensitivity
 * Screen sold separately
 
