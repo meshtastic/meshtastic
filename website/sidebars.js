@@ -104,11 +104,15 @@ module.exports = {
         Device: [
           "developers/device/radio-settings",
           "developers/device/supported-hardware",
-          "developers/device/faq",
           "developers/device/http-api",
           "developers/device/documents",
         ],
       },
+    ],
+    Legal: [
+      "legal/overview",
+      "legal/licensing",
+      "legal/trademark",
     ],
   },
 };
