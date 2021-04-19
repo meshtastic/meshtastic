@@ -17,6 +17,7 @@ sidebar_label: LILYGO® Lora
 * Reset and Program switches
 * No GPS
 
+
 * Firmware file: `firmware-tlora-v1-1.x.x.bin`
 * [Purchase link](https://www.aliexpress.com/item/32840238513.html)
 
@@ -33,6 +34,7 @@ sidebar_label: LILYGO® Lora
 * U.FL antenna connector
 * Reset and Program switches
 * No GPS
+
 
 * Firmware file: `firmware-tlora_v1_3-1.x.x.bin`
 * [Purchase link](https://www.aliexpress.com/item/4000628100802.html)
@@ -53,6 +55,7 @@ sidebar_label: LILYGO® Lora
 * microSD connector
 * No GPS
 
+
 * Firmware file: `firmware-tlora-v2-1.x.x.bin`
 * [Purchase link](https://www.aliexpress.com/item/32846302183.html)
 
@@ -71,6 +74,7 @@ sidebar_label: LILYGO® Lora
 * Power and Reset switches
 * microSD connector
 * No GPS
+
 
 * Firmware file: `firmware-tlora-v2-1-1.6-1.x.x.bin`
 * [Purchase link](https://www.aliexpress.com/item/32915894264.html)

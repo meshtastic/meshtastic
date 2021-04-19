@@ -19,6 +19,7 @@ sidebar_label: LILYGO® T-Beam
 * Power, Program and Reset switches
 * Comes with 0.96 inch OLED display (some soldering required to assemble)
 
+
 * Firmware file: `firmware-tbeam-1.x.x.bin`
 * [Purchase link](https://www.aliexpress.com/item/4001178678568.html)
 
@@ -37,6 +38,7 @@ sidebar_label: LILYGO® T-Beam
 * Power, Program and Reset switches
 * No GPS
 * Screen sold separately
+
 
 * Firmware file: `firmware-tbeam0.7-1.x.x.bin`
 * [Purchase link](https://www.aliexpress.com/item/4000469332610.html)
@@ -57,6 +59,7 @@ sidebar_label: LILYGO® T-Beam
 * Power, Program and Reset switches
 * Comes with 0.96 inch OLED display (some soldering required to assemble)
 
+
 * Firmware file: `firmware-tbeam-1.x.x.bin`
 * [Purchase link](https://www.aliexpress.com/item/4001178678568.html)
 
@@ -75,6 +78,7 @@ sidebar_label: LILYGO® T-Beam
 * U.FL antenna connector
 * Power, Program and Reset switches
 * Screen sold separately
+
 
 * Firmware file: `firmware-tbeam-1.x.x.bin`
 * [Purchase link](https://www.aliexpress.com/item/33047631119.html)
@@ -95,6 +99,7 @@ sidebar_label: LILYGO® T-Beam
 * Power, Program and Reset switches
 * Screen sold separately
 
+
 * Firmware file: `firmware-tbeam-1.x.x.bin`
 * [Purchase link](https://www.aliexpress.com/item/4001287221970.html)
 
@@ -103,7 +108,6 @@ sidebar_label: LILYGO® T-Beam
 ## Screen
 
 * 0.96 inch OLED i<sup>2</sup>c display
-
 * [Purchase link](https://www.aliexpress.com/item/32922106384.html)
 
 [<img alt="0.96 inch OLED display" src="/img/hardware/screen.png" style={{zoom:'25%'}} />](/img/hardware/screen.png)

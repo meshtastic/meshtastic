@@ -18,6 +18,7 @@ sidebar_label: Heltec
 * Reset and Program switches
 * No GPS
 
+
 * Firmware file: `firmware-heltec-1.x.x.bin`
 * [Purchase link](https://heltec.org/project/wifi-lora-32/)
 
