@@ -10,7 +10,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
         with:
-          token: ${{ secrets.ACCESS_TOKEN }}  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
           submodules: true
 
       - name: Update Submodule
@@ -22,4 +21,5 @@ jobs:
         run: |
           git config --global user.name 'github-actions'
           git config --global user.email 'bot@noreply.github.com'
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
           git commit -m "Update protobuf submodule" && git push || echo "No changes to commit"
