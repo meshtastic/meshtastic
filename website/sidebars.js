@@ -17,6 +17,7 @@ module.exports = {
     ],
     Settings: [
       "settings/overview",
+      "settings/wifi",
     ],
     Software: [
       "software/overview",
