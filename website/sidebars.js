@@ -15,6 +15,9 @@ module.exports = {
       },
       "getting-started/concepts",
     ],
+    Settings: [
+      "settings/overview",
+    ],
     Software: [
       "software/overview",
       {
