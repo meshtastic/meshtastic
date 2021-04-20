@@ -21,8 +21,8 @@ module.exports = {
       },
       items: [
         {
-          to: "docs/getting_started",
-          activeBasePath: "docs/getting_started",
+          to: "docs/getting-started",
+          activeBasePath: "docs/getting-started",
           label: "Getting Started",
           position: "left",
         },
@@ -65,7 +65,7 @@ module.exports = {
           items: [
             {
               label: "Getting Started",
-              to: "docs/getting_started",
+              to: "docs/getting-started",
             },
             {
               label: "Software",
@@ -100,6 +100,10 @@ module.exports = {
             {
               label: "GitHub",
               href: "https://github.com/meshtastic/meshtastic",
+            },
+            {
+              label: "Legal",
+              to: "docs/legal",
             },
           ],
         },

@@ -1,18 +1,19 @@
 module.exports = {
   Sidebar: {
     "Getting Started": [
-      "getting_started/about",
-      "getting_started/overview",
+      "getting-started/about",
+      "getting-started/overview",
       {
         "Flashing Firmware": [
-          "getting_started/flashing_firmware/flashing_firmware_overview",
-          "getting_started/flashing_firmware/flashing_firmware_cli",
-          "getting_started/flashing_firmware/flashing_firmware_gui",
-          "getting_started/flashing_firmware/flashing_firmware_ota",
+          "getting-started/flashing-firmware/overview",
+          "getting-started/flashing-firmware/linux",
+          "getting-started/flashing-firmware/macos",
+          "getting-started/flashing-firmware/ota",
+          "getting-started/flashing-firmware/windows",
         ],
         "Howto's": [],
       },
-      "getting_started/concepts",
+      "getting-started/concepts",
     ],
     Software: [
       "software/overview",
@@ -52,6 +53,15 @@ module.exports = {
         ],
       },
       {
+        "Web interface": [
+          "software/web/web-app-software",
+          "software/web/web-config-software",
+          "software/web/web-usage-software",
+          "software/web/web-partitions-software",
+          "software/web/web-development-software",
+        ],
+      },
+      {
         Other: [
           "software/other/sw-design",
           "software/other/remote-hardware-service",
@@ -73,7 +83,14 @@ module.exports = {
     ],
     Hardware: [
       "hardware/overview",
-      "hardware/supported_hardware",
+      {
+        "Supported Hardware": [
+          "hardware/tbeam-hardware",
+          "hardware/lora-hardware",
+          "hardware/heltec-hardware",
+          "hardware/techo-hardware",
+        ],
+      },
       "hardware/behaviour",
       "hardware/antenna",
     ],
@@ -87,11 +104,15 @@ module.exports = {
         Device: [
           "developers/device/radio-settings",
           "developers/device/supported-hardware",
-          "developers/device/faq",
           "developers/device/http-api",
           "developers/device/documents",
         ],
       },
+    ],
+    Legal: [
+      "legal/overview",
+      "legal/licensing",
+      "legal/trademark",
     ],
   },
 };
