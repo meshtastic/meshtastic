@@ -27,6 +27,12 @@ module.exports = {
           position: "left",
         },
         {
+          to: "docs/settings",
+          activeBasePath: "docs/settings",
+          label: "Settings",
+          position: "left",
+        },
+        {
           to: "docs/software",
           activeBasePath: "docs/software",
           label: "Software",
@@ -66,6 +72,10 @@ module.exports = {
             {
               label: "Getting Started",
               to: "docs/getting-started",
+            },
+            {
+              label: "Settings",
+              to: "docs/settings",
             },
             {
               label: "Software",
