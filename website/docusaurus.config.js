@@ -110,6 +110,12 @@ module.exports = {
       ],
       copyright: `Meshtastic® trademark is a registered trademark belonging to Geeksville Industries LLC`,
     },
+    algolia: {
+      apiKey: '01ad7e13d3fe392d2ad26da3c69dbc21',
+      indexName: 'meshtastic',
+      contextualSearch: false,
+      searchParameters: {},
+    },
   },
   presets: [
     [
