@@ -18,6 +18,7 @@ module.exports = {
     Settings: [
       "settings/overview",
       "settings/gps",
+      "settings/range-test-plugin",
       "settings/wifi",
     ],
     Software: [
