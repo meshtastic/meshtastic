@@ -8,7 +8,7 @@ sidebar_label: ESP32 partitions
 
 This problem seems to occur when your board has the partitioning structure set incorrectly. This typically occurs when the board has had a firmware other than Meshtastic on it previously. In this situation, the file upload page on the device typically shows a free space of around 48,000 bytes, rather than the ~300,000 bytes that it should have free.
 
-![Meshtastic.local's upload page showing insufficient storage space](/imgs/insufficient-space.png)
+![Meshtastic.local's upload page showing insufficient storage space](/img/insufficient-space.png)
 
 There are a number of methods that essentially involve erasing the flash and then re-uploading the Meshtastic firmware.
 
