@@ -1,7 +1,7 @@
 ---
 id: android-installation
 title: Android application installation
-sidebar_label: Android installation
+sidebar_label: Installation
 ---
 Our Android application is available to download on Google Play.
 
