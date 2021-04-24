@@ -20,6 +20,7 @@ module.exports = {
       {
         "Meshtastic Android": [],
       },
+      "software/ios-software",
       {
         "Meshtastic.js": [
           "software/js/getting-started",
