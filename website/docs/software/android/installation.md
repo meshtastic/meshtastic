@@ -1,7 +1,7 @@
 ---
-id: android-software
-title: Android App
-sidebar_label: Android App
+id: android-installation
+title: Android application installation
+sidebar_label: Android installation
 ---
 Our Android application is available to download on Google Play.
 
