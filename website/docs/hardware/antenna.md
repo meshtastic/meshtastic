@@ -101,6 +101,7 @@ Stating the obvious:
 - For each message, note location and whether 'ack' ticks are received,
 - Also note reported signal strengths,
 - Change aerials, repeat & contrast.
+
 This can be done by utilising the [range test plugin](/docs/software/plugins/range-test-plugin)
 
 ## Discussion
