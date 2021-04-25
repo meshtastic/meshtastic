@@ -18,7 +18,7 @@ You will need a device with Meshtastic installed to go any further. See the [fla
 
 Open the Settings tab (last tab), and it should look similar to the screen below. It shows any Meshtastic devices that are found over Bluetooth.
 
-[![Device available to select](/img/android/android_settings_deselected_c.png)](/img/android/android_settings_deselected_sm.png)
+[![Device available to select](/img/android/android_settings_deselected_c.png)](/img/android/android_settings_deselected.png)
 
 1. Select the Device by name, "Meshtastic_b615" in the example below. (You will see any active devices within range, so make sure to get the right one.)
 2. You will need to "pair" the device by entering a PIN shown on the device screen. This can alternatively be done in the phone Bluetooth settings. If the Device has no screen, but it's connected via USB, it may be displayed on a serial terminal (921600 Baud). For a development device, the PlatformIO terminal would come in handy. Some nodes have buttons allowing you to change the page displayed on the nodes screen. If you double click this button, it will set the pairing code to `123456`.
@@ -133,7 +133,7 @@ The map is not developed by the Meshtastic project, and the source of the maps i
 
 ## Configuration options
 
-[![Meshtastic configuration options](/img/android/android_settings_options_c.png)](/img/android_settings_options.png)
+[![Meshtastic configuration options](/img/android/android_settings_options_c.png)](/img/android/android_settings_options.png)
 
 ### Advanced settings
 
