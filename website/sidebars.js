@@ -80,7 +80,6 @@ module.exports = {
           "software/other/install-OSX",
           "software/other/esp32-arduino-build-notes",
           "software/other/device-api",
-          "software/other/crypto",
           "software/other/build-instructions",
           "software/other/ant",
         ],
