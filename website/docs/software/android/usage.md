@@ -6,7 +6,7 @@ sidebar_label: Usage
 
 ## Introduction
 
-Meshtastic is a project that lets you pair your mobile phone with an inexpensive (~$30) GPS LoRa radio. This allows you to communicate over a mesh network where you don’t have reliable cell/mobile reception or wifi access. The Meshtastic Android app handles the communication and shows the location of everyone in your private group. Each member of your private mesh can always see the location and distance of all other members and any text messages sent to your group chat.
+The Meshtastic Android app handles the communication and shows the location of everyone in your private group. Each member of your private mesh can always see the location and distance of all other members and any text messages sent to your group chat.
 
 Open the App and you should see a screen like this. You can move through the tabs but nothing much will be visible until you connect to a radio device.
 
@@ -140,7 +140,7 @@ The map is not developed by the Meshtastic project, and the source of the maps i
 
 #### Broadcast position period
 
-This allows you to change the frequency with which your location is broadcast across the mesh. By default this is set to 900 seconds (15 minutes). The minimum time this can be set to is 375 seconds, the reasons for which have been [discussed on the forum](https://meshtastic.discourse.group/t/lost-messages-while-testing/2455/19)
+This allows you to change the frequency with which your location is broadcast across the mesh. By default this is set to 900 seconds (15 minutes). The minimum time this can be set to is 375 seconds, the reasons for which have been [discussed on the forum](https://meshtastic.discourse.group/t/lost-messages-while-testing/2455/19).
 
 #### Device sleep period
 
@@ -148,7 +148,7 @@ To use as little power as possible while running on battery, ESP32 based devices
 
 ### Debug page
 
-The debug page allows you to see all packets sent between the application and the device. This can then be used for debugging purposes
+The debug page allows you to see all packets sent between the application and the device. This can then be used for debugging purposes.
 
 ### Save messages as csv
 
@@ -156,7 +156,7 @@ This allows you to save your messages to a .csv (comma sparated value) file on y
 
 ### Theme
 
-This allows you to change between light and dark themes, or to select the system default
+This allows you to change between light and dark themes, or to select the system default.
 
 <!--image-->
 
