@@ -36,9 +36,11 @@ If there is no Device shown, just the `None (disable)` as below, then the device
 [![No devices available](/img/android/android_settings_none_c.png)](/img/android/android_settings_none_c.png)
 
 The cloud icon at the top right corner indicates if you are connected to a device. This currently has three states:
-![Not connected](/img/android/android_cloud_cross.png) Cloud with a slash through it: No device connected to the application
-![Connected](/img/android/android_cloud_tick.png) Cloud with a tick in it: Device connected to the application
-![Sleeping](/img/android/android_cloud_up.png) Cloud with an up arrow in it: Device is connected, but currently sleeping or out of range
+![Not connected](/img/android/android_cloud_cross.png) Cloud with a slash through it: No device connected to the application.
+
+![Connected](/img/android/android_cloud_tick.png) Cloud with a tick in it: Device connected to the application.
+
+![Sleeping](/img/android/android_cloud_up.png) Cloud with an up arrow in it: Device is connected, but currently sleeping or out of range.
 
 
 ## Common tasks
@@ -68,7 +70,7 @@ The app will generate a new QR code on the screen, and this encodes the channel 
 If another user shares a QR code, you should be able to scan it with your camera (phones with Android 9 or later will recognise QR codes).
 
 1. You will see a message like Tap here to go to "www.meshtastic.org" in your browser.
-2. Proceed and it will launch the Meshtastic app, and you should see a message like Do you want to switch to the 'Owl Team' channel?.
+2. Proceed and it will launch the Meshtastic app, and you should see a message like "Do you want to switch to the 'Owl Team' channel?".
 3. Accept this, and the app will change to this new channel. You will lose any current channel setting!
 
 If the channel is shared as a link via a message, or email, you can click on the link and follow similar steps.
