@@ -64,7 +64,7 @@ You will see a warning because changing the Channel will break communications wi
 
 [![Do you want to change the channel?](/img/android/android-new-channel-sm.png)](/img/android/android-new-channel.png)
 
-The app will generate a new QR code on the screen, and this encodes the channel details and a random 256-bit key for sharing with the new group. You can share the QR code with other Meshtastic users, or use the Share button and share the link via chat message, SMS, email (the link is a very long code, for example: https://www.meshtastic.org/c/#GAEiIPBUiiLq74okyCaw3rq5vs4cTE3awoMUJ3P2ALrh-nhLKghPd2wgVGVhbQ== 
+The app will generate a new QR code on the screen, and this encodes the channel details and a random 256-bit key for sharing with the new group. You can share the QR code with other Meshtastic users, or use the Share button and share the link via chat message, SMS, email (the link is a very long code, for example: https://www.meshtastic.org/d/#CgUYAyIBAQ
 
 ### Join a channel
 
