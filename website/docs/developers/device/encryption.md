@@ -9,6 +9,8 @@ Cryptography is tricky, so we've tried to 'simply' apply standard crypto solutio
 - If you are a cryptography expert, please review these notes and our questions below. Can you help us by reviewing our notes below and offering advice? We will happily give as much or as little credit as you wish ;-).
 - Consider our existing solution 'alpha' and probably fairly secure against a not particularly aggressive adversary (but we can't yet make a more confident statement).
 
+Always keep in mind [xkcd's note on encryption](https://xkcd.com/538/).
+
 ## Summary of strengths/weaknesses of our current implementation
 
 Based on comments from reviewers (see below), here's some tips for usage of these radios. So you can know the level of protection offered:

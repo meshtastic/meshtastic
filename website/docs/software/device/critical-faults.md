@@ -4,10 +4,7 @@ title: Critical error codes
 sidebar_label: Critical error codes
 ---
 
-## CriticalErrorCode
-Error codes for critical errors
-
-The device might report these fault codes on the screen. If you encounter a fault code, please post on the forum and we'll try to help.
+The device might report these fault codes on the screen, but it will also be outputted on the device serial output. If you encounter a fault code, please post on the forum and we'll try to help.
 
 | Name | Number | Description |
 | ---- | ------ | ----------- |

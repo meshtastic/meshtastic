@@ -4,7 +4,6 @@ title: Meshtastic port numbers
 sidebar_label: Port numbers
 ---
 
-## Port numbers
 For any new apps that run on the device or via sister apps on phones/PCs they should pick and use a unique 'portnum' for their application.
 
 If you are making a new app using meshtastic, please send in a pull request to add your 'portnum' to this master table.  PortNums should be assigned in the following range:
