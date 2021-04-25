@@ -8,7 +8,7 @@ sidebar_label: ESP32 partitions
 
 This problem seems to occur when your board has the partitioning structure set incorrectly. This typically occurs when the board has had a firmware other than Meshtastic on it previously. In this situation, the file upload page on the device typically shows a free space of around 48,000 bytes, rather than the ~300,000 bytes that it should have free.
 
-![Meshtastic.local's upload page showing insufficient storage space](https://raw.githubusercontent.com/meshtastic/Meshtastic-device/master/images/Insufficient%20space.png)
+![Meshtastic.local's upload page showing insufficient storage space](/img/insufficient-space.png)
 
 There are a number of methods that essentially involve erasing the flash and then re-uploading the Meshtastic firmware.
 
@@ -44,7 +44,7 @@ Requires: [Python](https://www.python.org/) and [esptool.py](https://github.com/
 #### Visual Studio & PlatformIO
 There is also the method of using the Visual Studio IDE. This requires having Visual Studio and PlatformIO installed, along with having cloned the meshtastic-device code as per the [build instructions](https://github.com/meshtastic/Meshtastic-device/blob/master/docs/software/build-instructions.md)<!-- link to be changed once build page is completed -->. After loading the project in Visual Studio, select the PlatformIO alien icon, then find the appropriate device, and then click the Erase Flash command.
 
-![Erasing the flash using PlatformIO in Visual Studio Code](https://raw.githubusercontent.com/meshtastic/Meshtastic-device/master/images/platformio-erase.png)
+![Erasing the flash using PlatformIO in Visual Studio Code](/img/platformio-erase.png)
 
 https://meshtastic.discourse.group/t/configuring-channel-via-python-api/1948/17
 
