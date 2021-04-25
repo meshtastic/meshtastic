@@ -25,7 +25,9 @@ Some understanding of the factors affecting radio communications will help achie
 
 The Meshtastic devices (of various flavours) lend themselves to experimentation, not only because you can replace their aerials, but also because of their mesh operation.  All nodes will, without alteration, relay communications from any other members of the mesh around obstacles and over greater distances.  The cost of aerial investment should be weighed against investment in additional low-cost nodes.
 
-Caution: do not switch on your Meshtastic device (or any other transmitter) without an aerial attached - see below.
+:::caution
+Do not switch on your Meshtastic device (or any other transmitter) without an aerial attached - see below.
+:::
 
 The information collected here is by no means definitive, and necessarily abbreviated (it's a huge topic).
 
@@ -50,7 +52,9 @@ The aerial's design will affect:
 - directions in which it's transmitted, and whether it will be affected by horizontal / vertical polarisation,
 - proportion of signal which is reflected back within the device itself.
 
+:::caution
 While the LoRa devices we are using for Meshtastic are relatively low power radios, care should be taken _not_ to operate any radio transmission device without an aerial or with a poorly matched aerial.  Un-transmitted radio signal reflected back to the transmitter can damage the device.
+:::
 
 ### Important considerations:
 
@@ -73,7 +77,7 @@ While the LoRa devices we are using for Meshtastic are relatively low power radi
 
 You could also do worse than reading the [wikipedia entry for Antenna](https://en.wikipedia.org/wiki/Antenna_(radio)).
 
-Instead of repeat listing the terms, let me recommend this superb [tutorial](https://www.youtube.com/watch?v=J3PBL9oLPX8) by Andreas Speiss (the 'guy with the Swiss accent').
+Instead of repeat listing the terms, let us recommend this superb [tutorial](https://www.youtube.com/watch?v=J3PBL9oLPX8) by Andreas Speiss (the 'guy with the Swiss accent').
 
 See in the references of the above LoRa world record transmission distance details & instructions on self-build Moxon antennae.
 
@@ -102,7 +106,9 @@ Stating the obvious:
 - Also note reported signal strengths,
 - Change aerials, repeat & contrast.
 
+:::note
 This can be done by utilising the [range test plugin](/docs/software/plugins/range-test-plugin)
+:::
 
 ## Discussion
 
