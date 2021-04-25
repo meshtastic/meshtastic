@@ -21,6 +21,11 @@ module.exports = {
         "Meshtastic Android": [],
       },
       {
+        "Meshtastic iOS": [
+          "software/ios/ios-development",
+        ],
+      },
+      {
         "Meshtastic.js": [
           "software/js/getting-started",
           "software/js/connecting",
