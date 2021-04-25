@@ -1,5 +1,5 @@
 ---
-id: security-device-developer
+id: encryption
 title: Meshtastic encryption
 sidebar_label: Encryption
 ---

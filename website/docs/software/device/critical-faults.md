@@ -1,5 +1,5 @@
 ---
-id: critical-error-device
+id: critical-error-codes
 title: Critical error codes
 sidebar_label: Critical error codes
 ---

@@ -19,7 +19,7 @@ module.exports = {
       "software/overview",
       {
         "Meshtastic device": [
-          "software/device/critical-error-device",
+          "software/device/critical-error-codes",
         ],
       },
       {
@@ -107,8 +107,8 @@ module.exports = {
       {
         Device: [
           "developers/device/radio-settings",
-          "developers/device/security-device-developer",
-          "developers/device/portnum-device-developer",
+          "developers/device/encryption",
+          "developers/device/portnum",
           "developers/device/supported-hardware",
           "developers/device/http-api",
           "developers/device/documents",

@@ -1,5 +1,5 @@
 ---
-id: portnum-device-developer
+id: portnum
 title: Meshtastic port numbers
 sidebar_label: Port numbers
 ---

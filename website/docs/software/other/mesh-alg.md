@@ -26,7 +26,7 @@ After the preamble the 16 byte packet header is transmitted. This header is desc
 - id (4 bytes): the unique (wrt the sending node only) packet ID number for this packet. We use a large (32 bit) packet ID to ensure there is enough unique state to protect any encrypted payload from attack.
 - flags (4 bytes): Only a few bits are are currently used - 3 bits for for the "HopLimit" (see below) and 1 bit for "WantAck"
 
-After the packet header the actual packet is placed onto the the wire. These bytes are merely the encrypted packed protobuf encoding of the SubPacket protobuf. A full description of our encryption is available in [crypto](/docs/developers/device/security-device-developer). It is worth noting that only this SubPacket is encrypted, headers are not. Which leaves open the option of eventually allowing nodes to route packets without knowing the keys used to encrypt.
+After the packet header the actual packet is placed onto the the wire. These bytes are merely the encrypted packed protobuf encoding of the SubPacket protobuf. A full description of our encryption is available in [crypto](/docs/developers/device/encryption). It is worth noting that only this SubPacket is encrypted, headers are not. Which leaves open the option of eventually allowing nodes to route packets without knowing the keys used to encrypt.
 
 NodeIds are constructed from the bottom four bytes of the macaddr of the bluetooth address. Because the OUI is assigned by the IEEE and we currently only support a few CPU manufacturers, the upper byte is defacto guaranteed unique for each vendor. The bottom 3 bytes are guaranteed unique by that vendor.
 
