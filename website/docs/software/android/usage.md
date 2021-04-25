@@ -10,7 +10,7 @@ The Meshtastic Android app handles the communication and shows the location of e
 
 Open the App and you should see a screen like this. You can move through the tabs but nothing much will be visible until you connect to a radio device.
 
-[![No device connected](/img/android/android_settings_none_sm.png)](/img/android/android_settings_none.png)
+[![No device connected](/img/android/android-settings-none-sm.png)](/img/android/android-settings-none.png)
 
 ## Connecting
 
@@ -18,29 +18,30 @@ You will need a device with Meshtastic installed to go any further. See the [fla
 
 Open the Settings tab (last tab), and it should look similar to the screen below. It shows any Meshtastic devices that are found over Bluetooth.
 
-[![Device available to select](/img/android/android_settings_deselected_c.png)](/img/android/android_settings_deselected.png)
+[![Device available to select](/img/android/android-settings-deselected-c.png)](/img/android/android-settings-deselected.png)
 
-1. Select the Device by name, "Meshtastic_b615" in the example below. (You will see any active devices within range, so make sure to get the right one.)
+1. Select the Device by name, "Meshtastic_c830" in the example below. (You will see any active devices within range, so make sure to get the right one.)
 2. You will need to "pair" the device by entering a PIN shown on the device screen. This can alternatively be done in the phone Bluetooth settings. If the Device has no screen, but it's connected via USB, it may be displayed on a serial terminal (921600 Baud). For a development device, the PlatformIO terminal would come in handy. Some nodes have buttons allowing you to change the page displayed on the nodes screen. If you double click this button, it will set the pairing code to `123456`.
 3. Edit the "Your name", e.g. to be "Mike Bird". This is the name that other people will see, so make it unique within your group.
 4. The initials e.g. "MB" should also be unique and will be used to identify you in the message history and on the device screens.
 
-[![Changing device name](/img/android/android_settings_mike_sm.png)](/img/android/android_settings_mike.png)
+[![Changing device name](/img/android/android-settings-mike-sm.png)](/img/android/android-settings-mike.png)
 
 5. This should start the communication with the Device. The cloud icon, on the status bar, will have a tick.
 
-![Connected](/img/android/android_cloud_tick.png)
+![Connected](/img/android/android-cloud-tick.png)
 
 If there is no Device shown, just the `None (disable)` as below, then the device may be off, or in a sleep mode. Try to reset, or press a button to wake it.
 
-[![No devices available](/img/android/android_settings_none_c.png)](/img/android/android_settings_none_c.png)
+[![No devices available](/img/android/android-settings-none-c.png)](/img/android/android-settings-none-c.png)
 
 The cloud icon at the top right corner indicates if you are connected to a device. This currently has three states:
-![Not connected](/img/android/android_cloud_cross.png) Cloud with a slash through it: No device connected to the application.
 
-![Connected](/img/android/android_cloud_tick.png) Cloud with a tick in it: Device connected to the application.
+![Not connected](/img/android/android-cloud-cross.png) Cloud with a slash through it: No device connected to the application.
 
-![Sleeping](/img/android/android_cloud_up.png) Cloud with an up arrow in it: Device is connected, but currently sleeping or out of range.
+![Connected](/img/android/android-cloud-tick.png) Cloud with a tick in it: Device connected to the application.
+
+![Sleeping](/img/android/android-cloud-up.png) Cloud with an up arrow in it: Device is connected, but currently sleeping or out of range.
 
 
 ## Common tasks
@@ -51,17 +52,17 @@ Once you are connected to a Device the App will work, and you can test it by "se
 
 To use Meshtastic you need to setup a Channel, and share the details with your group. The group is private and only those who have the details can join the group and see the messages. You will need to do this once initially, and then only when you want to change or make a new mesh network group. For a new device you will see there is a default setting, shown as `#LongSlow-1, Very long range (but slow)`. It is OK to use this initially.
 
-The Channel tab allow you to do this. This screen is initially locked, so that you don't change it accidentally. Press the lock symbol, and you will be able to edit. First, select the Channel options, as shown here, and chose the most appropriate option:
+The Channel tab allows you to do this. This screen is initially locked, so that you don't change it accidentally. Press the lock symbol, and you will be able to edit. First, select the Channel options, as shown here, and chose the most appropriate option:
 
-[![Changing channel settings](/img/android/android_change_channel_sm.png)](/img/android/android_change_channel.png)
+[![Changing channel settings](/img/android/android-change-channel-sm.png)](/img/android/android-change-channel.png)
 
-Here we selected Medium Range (but fast), and then made a Channel Name using the keyboard. This identifies your group, here "Owl Team".
+Here we selected `Very long range (but slow)`, and then made a Channel Name using the keyboard. This identifies your group, here "Owl Team".
 
-[![Changing channel name](/img/android/android_channel_owl_sm.png)](/img/android/android_channel_owl.png)
+[![Changing channel name](/img/android/android-channel-owl-sm.png)](/img/android/android-channel-owl.png)
 
 You will see a warning because changing the Channel will break communications with your group, i.e. if you change your settings without sharing the new details with the group.
 
-[![Accept new channel](/img/android/android_accept_channel_c.png)](/img/android/android_accept_channel.png)
+[![Do you want to change the channel?](/img/android/android-new-channel-sm.png)](/img/android/android-new-channel.png)
 
 The app will generate a new QR code on the screen, and this encodes the channel details and a random 256-bit key for sharing with the new group. You can share the QR code with other Meshtastic users, or use the Share button and share the link via chat message, SMS, email (the link is a very long code, for example: https://www.meshtastic.org/c/#GAEiIPBUiiLq74okyCaw3rq5vs4cTE3awoMUJ3P2ALrh-nhLKghPd2wgVGVhbQ== 
 
@@ -72,6 +73,8 @@ If another user shares a QR code, you should be able to scan it with your camera
 1. You will see a message like Tap here to go to "www.meshtastic.org" in your browser.
 2. Proceed and it will launch the Meshtastic app, and you should see a message like "Do you want to switch to the 'Owl Team' channel?".
 3. Accept this, and the app will change to this new channel. You will lose any current channel setting!
+
+[![Accept new channel](/img/android/android-accept-channel-c.png)](/img/android/android-accept-channel.png)
 
 If the channel is shared as a link via a message, or email, you can click on the link and follow similar steps.
 
@@ -86,7 +89,7 @@ Your app must be connected to an active Meshtastic device for the link or QR Cod
 
 You can test changing channels with the QR code shown below.
 
-![Meshtastic Default Channel](/img/android/default_channel.png)
+![Meshtastic Default Channel](/img/android/default-channel.png)
 
 ### Configure a channel
 
@@ -114,7 +117,7 @@ Thus, in a group size of 3 and up, confirmations could be from any one device (n
 
 There is no long-term store-and-forward of messages, so messages not received within a time-out (duration?) are lost.
 
-[![Messages](/img/android/android_messages_sm.png)](/img/android/android_messages.png)
+[![Messages](/img/android/android-messages-sm.png)](/img/android/android-messages.png)
 
 ### View your network
 
@@ -122,24 +125,24 @@ The network list shows all the users (devices) that have connected to the same C
 
 This is a list of network nodes, rather than users, so where there is a named user connected to the device, you will see the user name, otherwise the node is shown as `Unknown a3c9` (where `a3c9` is the last 4 hex digits from the MAC address.)
 
-[![Local Meshtastic network](/img/android/android_nodes_sm.png)](/img/android/android_nodes.png)
+[![Local Meshtastic network](/img/android/android-nodes-sm.png)](/img/android/android-nodes.png)
 
 ### View the map
 
 The Map tab will show a local map with an icon for each active mesh node that has a known position. The users names are shown against the icon.
 
-[![Mapping provided by Mapbox](/img/android/android_map_sm.png)](/img/android/android_map.png)
+[![Mapping provided by Mapbox](/img/android/android-map-sm.png)](/img/android/android-map.png)
 
 The map is not developed by the Meshtastic project, and the source of the maps is [Mapbox](https://docs.mapbox.com/help/how-mapbox-works/) (free-tier), and the map data is sourced from [OpenStreetMap OSM](https://www.openstreetmap.org/). Mapbox currently requires analytics to be enabled for you to use their mapping system. There is currently no off-line maps (phone needs mobile data), although this will be improved in the future. If you don't see the features that you'd expect on the map then head over to [OpenStreetMap OSM](https://www.openstreetmap.org/) where you can contribute new data to the map.
 
 
 ## Configuration options
 
-[![Meshtastic configuration options](/img/android/android_settings_options_c.png)](/img/android/android_settings_options.png)
+[![Meshtastic configuration options](/img/android/android-settings-options-c.png)](/img/android/android-settings-options.png)
 
 ### Advanced settings
 
-[![Advanced settings](/img/android/android_advanced_settings_c.png)](/img/android/android_advanced_settings.png)
+[![Advanced settings](/img/android/android-advanced-settings-c.png)](/img/android/android-advanced-settings.png)
 
 #### Broadcast position period
 
@@ -151,7 +154,7 @@ To use as little power as possible while running on battery, ESP32 based devices
 
 ### Debug page
 
-[![Debug page](/img/android/android_debug_sm.png)](/img/android/android_debug.png)
+[![Debug page](/img/android/android-debug-sm.png)](/img/android/android-debug.png)
 
 The debug page allows you to see all packets sent between the application and the device. This can then be used for debugging purposes.
 
@@ -163,7 +166,7 @@ This allows you to save your messages to a .csv (comma sparated value) file on y
 
 This allows you to change between light and dark themes, or to select the system default.
 
-[![Meshtastic theme](/img/android/android_settings_theme_c.png)](/img/android/android_settings_theme.png)
+[![Meshtastic theme](/img/android/android-settings-theme-c.png)](/img/android/android-settings-theme.png)
 
 
 
