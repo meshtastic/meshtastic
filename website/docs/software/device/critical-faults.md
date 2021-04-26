@@ -8,7 +8,6 @@ The device might report these fault codes on the screen, but it will also be out
 
 | Name | Number | Description |
 | ---- | ------ | ----------- |
-| None | 0 |  |
 | TxWatchdog | 1 | A software bug was detected while trying to send lora |
 | SleepEnterWait | 2 | A software bug was detected on entry to sleep |
 | NoRadio | 3 | No Lora radio hardware could be found |

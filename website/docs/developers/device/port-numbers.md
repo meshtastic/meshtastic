@@ -29,10 +29,10 @@ We have change to this 'portnum' based scheme for specifying app handlers for pa
 | ADMIN_APP | 6 | Admin control packets, payload is a AdminMessage protobuf |
 | REPLY_APP | 32 | Provides a 'ping' service that replies to any packet it receives. Also this serves as a small example plugin. |
 | IP_TUNNEL_APP | 33 | Used for the python IP tunnel feature |
-| SERIAL_APP | 64 | Provides a hardware serial interface to send and receive from the Meshtastic network. Connect to the RX/TX pins of a device with 38400 8N1. Packets received from the Meshtastic network is forwarded to the RX pin while sending a packet to TX will go out to the Mesh network. Maximum packet size of 240 bytes. Plugin is disabled by default can be turned on by setting SERIALPLUGIN_ENABLED = 1 in SerialPlugh.cpp. Maintained by Jm Casler (MC Hamster) : jm@casler.org |
-| STORE_FORWARD_APP | 65 | STORE_FORWARD_APP (Work in Progress) Maintained by Jm Casler (MC Hamster) : jm@casler.org |
-| RANGE_TEST_APP | 66 | STORE_FORWARD_APP (Work in Progress) Maintained by Jm Casler (MC Hamster) : jm@casler.org |
-| ENVIRONMENTAL_MEASUREMENT_APP | 67 | Provides a format to send and receive environmental data from the Meshtastic network. Maintained by Charles Crossan (crossan007) : crossan007@gmail.com |
+| SERIAL_APP | 64 | Provides a hardware serial interface to send and receive from the Meshtastic network. Connect to the RX/TX pins of a device with 38400 8N1. Packets received from the Meshtastic network is forwarded to the RX pin while sending a packet to TX will go out to the Mesh network. Maximum packet size of 240 bytes. Plugin is disabled by default can be turned on by setting SERIALPLUGIN_ENABLED = 1 in SerialPlugh.cpp. Maintained by [Jm Casler (MC Hamster)](https://github.com/mc-hamster/Meshtastic-device) |
+| STORE_FORWARD_APP | 65 | STORE_FORWARD_APP (Work in Progress) Maintained by [Jm Casler (MC Hamster)](https://github.com/mc-hamster/Meshtastic-device)|
+| RANGE_TEST_APP | 66 | STORE_FORWARD_APP (Work in Progress) Maintained by [Jm Casler (MC Hamster)](https://github.com/mc-hamster/Meshtastic-device) |
+| ENVIRONMENTAL_MEASUREMENT_APP | 67 | Provides a format to send and receive environmental data from the Meshtastic network. Maintained by [Charles Crossan (crossan007)](https://github.com/crossan007/Meshtastic-device)|
 | PRIVATE_APP | 256 | Private applications should use portnums >= 256. To simplify initial development and testing you can use PRIVATE_APP in your code without needing to rebuild protobuf files (via bin/regin_protos.sh) |
 | ATAK_FORWARDER | 257 | ATAK Forwarder Plugin https://github.com/paulmandal/atak-forwarder |
 | MAX | 511 | Currently we limit port nums to no higher than this value |
