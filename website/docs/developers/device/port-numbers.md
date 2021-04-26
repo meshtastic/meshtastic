@@ -34,5 +34,5 @@ We have change to this 'portnum' based scheme for specifying app handlers for pa
 | RANGE_TEST_APP | 66 | STORE_FORWARD_APP (Work in Progress) Maintained by [Jm Casler (MC Hamster)](https://github.com/mc-hamster/Meshtastic-device) |
 | ENVIRONMENTAL_MEASUREMENT_APP | 67 | Provides a format to send and receive environmental data from the Meshtastic network. Maintained by [Charles Crossan (crossan007)](https://github.com/crossan007/Meshtastic-device)|
 | PRIVATE_APP | 256 | Private applications should use portnums >= 256. To simplify initial development and testing you can use PRIVATE_APP in your code without needing to rebuild protobuf files (via bin/regin_protos.sh) |
-| ATAK_FORWARDER | 257 | ATAK Forwarder Plugin https://github.com/paulmandal/atak-forwarder |
+| ATAK_FORWARDER | 257 | ATAK Forwarder Plugin. Maintained by [Paul Mandal](https://github.com/paulmandal/atak-forwarder) |
 | MAX | 511 | Currently we limit port nums to no higher than this value |
