@@ -1,5 +1,5 @@
 ---
-id: store-and-forward
+id: store-and-forward-plugin
 title: Store and Forward Settings
 sidebar_label: Store and Forward
 ---
