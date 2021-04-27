@@ -8,9 +8,11 @@ For any new apps that run on the device or via sister apps on phones/PCs they sh
 
 If you are making a new app using meshtastic, please send in a pull request to add your 'portnum' to this master table.  PortNums should be assigned in the following range:
 
-* 0-63 - Core Meshtastic use, do not use for third party apps
-* 64-127 - Registered 3rd party apps, send in a pull request that adds a new entry to portnums.proto to  register your application
-* 256-511 - Use one of these portnums for your private applications that you do not want to register publically
+| Portnum | Usage |
+| --- | --- |
+| 0-63 | Core Meshtastic use, do not use for third party apps |
+| 64-127 | Registered 3rd party apps, send in a pull request that adds a new entry to portnums.proto to  register your application |
+| 256-511 | Use one of these portnums for your private applications that you do not want to register publically |
 
 All other values are reserved.
 
