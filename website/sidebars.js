@@ -17,9 +17,21 @@ module.exports = {
     ],
     Settings: [
       "settings/overview",
+      "settings/channel",
       "settings/gps",
-      "settings/range-test-plugin",
+      "settings/mqtt",
+      "settings/power",
       "settings/wifi",
+      {
+        "Plugins": [
+          "settings/environmental-measurement-plugin",
+          "settings/external-notification-plugin",
+          "settings/range-test-plugin",
+          "settings/serial-plugin",
+          "settings/store-and-forward-plugin",
+        ],
+      },
+      "settings/misc",
     ],
     Software: [
       "software/overview",
