@@ -1,9 +1,8 @@
 ---
 id: python-usage
 title: Meshtastic-python usage
-sidebar_label: Usage
+sidebar_label: Python usage
 ---
-
 
 An example using Python 3 code to send a message to the mesh:
 ```python
@@ -13,8 +12,7 @@ interface.sendText("hello mesh") # or sendData to send binary data, see document
 interface.close()
 ```
 
-For the rough notes/implementation plan see [TODO](https://github.com/meshtastic/Meshtastic-python/blob/master/TODO.md).
-
+For the rough notes/implementation plan see [TODO](https://github.com/meshtastic/Meshtastic-python/blob/master/TODO.md). See the API for full details of how to use the library.
 
 ## A note to developers of this lib
 

@@ -68,11 +68,11 @@ You can even set the channel preshared key to a particular AES128 or AES256 sequ
 meshtastic --setchan psk 0x1a1a1a1a2b2b2b2b1a1a1a1a2b2b2b2b1a1a1a1a2b2b2b2b1a1a1a1a2b2b2b2b --info
 ```
 
-Use "--setchan psk none" to turn off encryption.  
+Use `--setchan psk none` to turn off encryption.  
 
-Use "--setchan psk random" will assign a new (high quality) random AES256 key to the primary channel (similar to what the Android app does when making new channels).
+Use `--setchan psk random` will assign a new (high quality) random AES256 key to the primary channel (similar to what the Android app does when making new channels).
 
-Use "--setchan psk default" to restore the standard 'default' (minimally secure, because it is in the source code for anyone to read) AES128 key.
+Use `--setchan psk default` to restore the standard 'default' (minimally secure, because it is in the source code for anyone to read) AES128 key.
 
 ### Ham radio support
 
@@ -90,14 +90,17 @@ Writing modified channels to device
 
 This is a collection of common questions and answers from our friendly forum.
 
-### [Permission denied: ‘/dev/ttyUSB0’](https://meshtastic.discourse.group/t/question-on-permission-denied-dev-ttyusb0/590/3?u=geeksville)
+### Permission denied: ‘/dev/ttyUSB0’
+
+As previously discussed on the [forum](https://meshtastic.discourse.group/t/question-on-permission-denied-dev-ttyusb0/590/3?u=geeksville)
 
 This indicates an OS permission problem for access by your user to the USB serial port.  Typically this is fixed by the following.
+
 ```bash
 sudo usermod -a -G dialout <username>
 ```
 
-## Mac OS Big Sur
+### Mac OS Big Sur
 
 There is a problem with Big Sur and pyserial. The workaround is to install a newer version of pyserial:
 
