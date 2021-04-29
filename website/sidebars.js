@@ -23,7 +23,15 @@ module.exports = {
         ],
       },
       {
-        "Meshtastic Android": [],
+        "Meshtastic Android": [
+          "software/android/android-installation",
+          "software/android/android-usage",
+        ],
+      },
+      {
+        "Meshtastic iOS": [
+          "software/ios/ios-development",
+        ],
       },
       {
         "Meshtastic.js": [
