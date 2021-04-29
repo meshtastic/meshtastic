@@ -29,7 +29,7 @@ Installation is easily done through the Python package installer pip (note, you 
 - Pip is typically installed if you are using python 3 version >= 3.4
     * Check that pip is installed using this command
         ```bash
-        pip3 --version
+        pip3 -V
         ```
     * If this does not return a version, install [pip](https://pip.pypa.io/en/stable/installing/)
 - Install pytap2
