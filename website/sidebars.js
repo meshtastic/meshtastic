@@ -18,6 +18,11 @@ module.exports = {
     Software: [
       "software/overview",
       {
+        "Meshtastic Device": [
+          "software/device/critical-error-codes",
+        ],
+      },
+      {
         "Meshtastic Android": [
           "software/android/android-installation",
           "software/android/android-usage",
@@ -86,7 +91,6 @@ module.exports = {
           "software/other/install-OSX",
           "software/other/esp32-arduino-build-notes",
           "software/other/device-api",
-          "software/other/crypto",
           "software/other/build-instructions",
           "software/other/ant",
         ],
@@ -114,6 +118,8 @@ module.exports = {
       {
         Device: [
           "developers/device/radio-settings",
+          "developers/device/encryption",
+          "developers/device/portnum",
           "developers/device/supported-hardware",
           "developers/device/http-api",
           "developers/device/documents",
