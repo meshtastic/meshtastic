@@ -18,7 +18,15 @@ module.exports = {
     Software: [
       "software/overview",
       {
-        "Meshtastic Android": [],
+        "Meshtastic Android": [
+          "software/android/android-installation",
+          "software/android/android-usage",
+        ],
+      },
+      {
+        "Meshtastic iOS": [
+          "software/ios/ios-development",
+        ],
       },
       {
         "Meshtastic.js": [
@@ -35,6 +43,9 @@ module.exports = {
       },
       {
         "Meshtastic-python": [
+          "software/python/python-installation",
+          "software/python/python-cli",
+          "software/python/python-usage",
           {
             type: "link",
             label: "API Docs",
