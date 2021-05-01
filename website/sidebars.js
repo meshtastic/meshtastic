@@ -78,6 +78,13 @@ module.exports = {
         ],
       },
       {
+        "Community projects": [
+          "software/community/community-overview",
+          "software/community/community-atak",
+          "software/community/community-pygui",
+        ],
+      },
+      {
         Other: [
           "software/other/sw-design",
           "software/other/remote-hardware-service",
