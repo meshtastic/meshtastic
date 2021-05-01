@@ -9,3 +9,5 @@ The Meshtastic ecosystem is highly extensible, and a number of community project
 Current community projects:
  * Meshtastic plugin for ATAK (Android Team Awareness Kit)
  * PyGUI - Platform independant graphical user interface for Meshtastic devices
+
+Support for these projects should be sought from their respective authors.
