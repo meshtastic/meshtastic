@@ -80,7 +80,6 @@ module.exports = {
       {
         Other: [
           "software/other/sw-design",
-          "software/other/remote-hardware-service",
           "software/other/rak815",
           "software/other/power",
           "software/other/plugin-api",
@@ -120,7 +119,6 @@ module.exports = {
           "developers/device/radio-settings",
           "developers/device/encryption",
           "developers/device/portnum",
-          "developers/device/supported-hardware",
           "developers/device/http-api",
           "developers/device/documents",
         ],
@@ -130,6 +128,7 @@ module.exports = {
       "legal/overview",
       "legal/licensing",
       "legal/trademark",
+      "legal/privacy",
     ],
   },
 };

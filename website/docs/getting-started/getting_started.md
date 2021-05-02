@@ -7,7 +7,7 @@ slug: /getting-started
 
 ## Purchase a Radio
 
-The easiest way is to [buy a device with the software already installed](https://www.aliexpress.com/item/4001178678568.html) In the Americas get the 915mhz version, In Europe the 868Mhz or Asia 923Mhz see [here](https://www.thethingsnetwork.org/docs/lorawan/frequencies-by-country.html).
+The easiest way is to [buy a device with the software already installed](https://www.aliexpress.com/item/4001178678568.html). Other devices are [available](/docs/hardware/tbeam-hardware). In the Americas get the 915mhz version, in Europe the 868Mhz, or Asia 923Mhz. See this listing by [The Things Network](https://www.thethingsnetwork.org/docs/lorawan/frequencies-by-country.html) for frequencies by specific countries.
 
 ## Setup the Radio
 
@@ -19,7 +19,7 @@ Make sure not to power the radio on without first attaching the antenna! You cou
 
 ## Download Firmware
 
-Prebuilt binaries for the supported radios are available in our releases. Your initial installation has to happen over USB from your Mac, Windows or Linux PC. Once our software is installed, all future software updates happen over bluetooth from your phone.
+Prebuilt binaries for the supported radios are available in our releases. Your initial installation has to happen over USB from your Mac, Windows or Linux PC. Once our software is installed, all future software updates can happen over bluetooth from your phone.
 
 <!--- TODO I'd like to create prettier buttons for this than just a table --->
 | [Current Firmware](https://github.com/meshtastic/meshtastic-device/releases/latest) | [List of Firmware Versions](https://github.com/meshtastic/meshtastic-device/releases/) |
@@ -27,7 +27,7 @@ Prebuilt binaries for the supported radios are available in our releases. Your i
 
 ## Flashing Firmware
 
-If your device already has Meshtastic flashed to it, You can update over the air (OTA). Otherwise you'll need a computer and a **data** USB cable.
+If your device already has Meshtastic flashed to it, You can update it over the air (OTA). Otherwise you'll need a computer and a **data** USB cable. This can be done in the following ways:
 
 - Install using the command line interface (CLI)
 - Install using a graphical user interface (GUI)
@@ -35,13 +35,13 @@ If your device already has Meshtastic flashed to it, You can update over the air
 
 ## Connect to your Device
 
-There are many ways to connect to your new radio! Using the command line interface
+There are many ways to connect to your new radio!
 
 - Command line interface (CLI)
 - Graphic user interface (GUI)
 - Serial connection
 - Bluetooth
-- Web (in development)
+- Web app over wifi (in development)
 
 ## Troubleshooting
 
