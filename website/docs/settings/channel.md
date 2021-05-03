@@ -38,8 +38,6 @@ For more details about `region` settings, you can see the source code [here](htt
 ## Details
 
 ### CLI Examples
-
-#### Set Region
-```bash
+```bash title="Set Region"
 meshtastic --set region Unset
 ```
