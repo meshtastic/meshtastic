@@ -103,6 +103,7 @@ module.exports = {
           "hardware/lora-hardware",
           "hardware/heltec-hardware",
           "hardware/techo-hardware",
+          "hardware/wisBlock-hardware",
         ],
       },
       "hardware/behaviour",
