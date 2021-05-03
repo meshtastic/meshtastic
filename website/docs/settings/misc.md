@@ -10,8 +10,8 @@ sidebar_label: Miscellaneous
 
 ## Settings
 
-| Setting | Acceptable Values | Default | Description |
-| :-----: | :---------------: | :-----: | :---------: |
+| Setting | Acceptable Values | Default |
+| :-----: | :---------------: | :-----: |
 | debug_log_enabled | `true`, `false` | `false` |
 | factory_reset | `true`, `false` | `false` |
 | frequency_offset | real numbers | `0` |
