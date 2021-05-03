@@ -21,6 +21,7 @@ module.exports = {
       "settings/gps",
       "settings/mqtt",
       "settings/power",
+      "settings/router",
       "settings/wifi",
       {
         "Plugins": [
