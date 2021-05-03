@@ -34,3 +34,5 @@ Toggling `is_router` changes your device settings in the following ways.
 ### Altered Behaviors
 #### Screen Wake
 #### Bluetooth
+
+### CLI Examples

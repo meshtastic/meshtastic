@@ -86,3 +86,5 @@ Send our owner info at least this often (also we always send once at boot - to r
 Power management state machine option. See the [power page](../software/other/power) for details. 0 for default of 1 minute
 
 ## Details
+
+### CLI Examples

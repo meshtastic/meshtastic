@@ -25,3 +25,5 @@ The server to use for our MQTT global message gateway feature. If not set, the d
 The server to use for our MQTT global message gateway feature. If not set, the default server will be used
 
 ## Details
+
+### CLI Examples

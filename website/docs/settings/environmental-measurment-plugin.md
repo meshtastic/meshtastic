@@ -58,3 +58,5 @@ Specify the sensor type
 Interval in seconds of how often we should try to send our measurements to the mesh.
 
 ## Details
+
+### CLI Examples

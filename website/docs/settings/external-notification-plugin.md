@@ -44,3 +44,5 @@ Enables the plugin
 <!--- TODO --->
 
 ## Details
+
+### CLI Examples
