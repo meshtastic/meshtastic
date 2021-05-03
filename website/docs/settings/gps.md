@@ -61,6 +61,7 @@ Determines how often should the device should attempt to aquire a GPS position (
 ### location_share
 
 Determines whether location is shared with other nodes. See more details.
+
 | Value | Description |
 | :---: | :---------: |
 | LocUnset | **Default**: operates the same as `LocEnabled`|
