@@ -88,7 +88,7 @@ sidebar_label: LILYGO® T-Beam
 ## T-Beam - M8N & SX1262
 
 * ESP32 - Wifi & Bluetooth
-* SX1272 - LoRa Transceiver - improved performance
+* SX1262 - LoRa Transceiver - improved performance
 * Frequency options:
     * 433 MHz
     * 868 MHz 
