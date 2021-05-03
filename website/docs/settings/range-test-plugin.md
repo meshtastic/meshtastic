@@ -14,11 +14,23 @@ Once settings are changed, a **reset** is required for them to take effect.
 
 ## Settings
 
-| Setting | Acceptable Values | Default | Description |
-| :-----: | :---------------: | :-----: | :---------: |
-| range_test_plugin_enabled | `true`, `false` | `false` | Enables the plugin. |
-| range_test_plugin_save | `true`, `false` | `false` | If enabled, we will save a log of all received messages to `/static/rangetest.csv` which you can access from the webserver. We will abort writing if there is less than 50k of space on the filesystem to prevent filling up the storage. |
-| range_test_plugin_sender | `integer` (Seconds) | `0` | Number of seconds to wait between sending packets. Using the long_slow channel configuration, it's best not to go more frequent than once every 60 seconds. You can be more agressive with faster settings. `0` is default which disables sending messages. |
+| Setting | Acceptable Values | Default |
+| :-----: | :---------------: | :-----: |
+| range_test_plugin_enabled | `true`, `false` | `false` |
+| range_test_plugin_save | `true`, `false` | `false` |
+| range_test_plugin_sender | `integer` (Seconds) | `0` |
+
+### range_test_plugin_enabled
+
+Enables the plugin.
+
+### range_test_plugin_save
+
+If enabled, we will save a log of all received messages to `/static/rangetest.csv` which you can access from the webserver. We will abort writing if there is less than 50k of space on the filesystem to prevent filling up the storage.
+
+### range_test_plugin_sender
+
+Number of seconds to wait between sending packets. Using the long_slow channel configuration, it's best not to go more frequent than once every 60 seconds. You can be more agressive with faster settings. `0` is default which disables sending messages.
 
 ## Details
 
