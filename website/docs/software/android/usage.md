@@ -121,7 +121,7 @@ There is no long-term store-and-forward of messages, so messages not received wi
 
 ### View your network
 
-The network list shows all the users (devices) that have connected to the same Channel. For each entry, it shows the last time they were active, their distance, and their last known power status (battery & percentage, or external power). In the example below, Eddie is the local user, Mike is active and 29m away, and a third node has been inactive since 9:02pm.
+The network list shows all the users (devices) that have connected to the same Channel. For each entry, it shows the last time they were active, their distance, and their last known power status (battery & percentage, or external power). In the example below, Lora V2 is the local user, m8n was last heard from 3 minutes ago and is 29m away, and 25C is active and 498m away.
 
 This is a list of network nodes, rather than users, so where there is a named user connected to the device, you will see the user name, otherwise the node is shown as `Unknown a3c9` (where `a3c9` is the last 4 hex digits from the MAC address.)
 
@@ -133,10 +133,12 @@ The Map tab will show a local map with an icon for each active mesh node that ha
 
 [![Mapping provided by Mapbox](/img/android/android-map-sm.png)](/img/android/android-map.png)
 
-The map is not developed by the Meshtastic project, and the source of the maps is [Mapbox](https://docs.mapbox.com/help/how-mapbox-works/) (free-tier), and the map data is sourced from [OpenStreetMap OSM](https://www.openstreetmap.org/). Mapbox currently requires analytics to be enabled for you to use their mapping system. There is currently no off-line maps (phone needs mobile data), although this will be improved in the future. If you don't see the features that you'd expect on the map then head over to [OpenStreetMap OSM](https://www.openstreetmap.org/) where you can contribute new data to the map.
+The map is not developed by the Meshtastic project, and the source of the mapping system is [Mapbox](https://docs.mapbox.com/help/how-mapbox-works/) (free-tier), and the map data is sourced from [OpenStreetMap OSM](https://www.openstreetmap.org/). Mapbox currently requires analytics to be enabled for you to use their mapping system. There is currently no off-line maps (phone needs mobile data or wifi), although this will be improved in the future. If you don't see the features that you'd expect on the map then head over to [OpenStreetMap OSM](https://www.openstreetmap.org/) where you can contribute new data to the map.
 
 
 ## Configuration options
+
+Pressing the three verticle dots in the top right corner shows the configuration menu.
 
 [![Meshtastic configuration options](/img/android/android-settings-options-c.png)](/img/android/android-settings-options.png)
 
