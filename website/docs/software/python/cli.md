@@ -74,6 +74,12 @@ Use `--ch-set psk random` will assign a new (high quality) random AES256 key to 
 
 Use `--ch-set psk default` to restore the standard 'default' (minimally secure, because it is in the source code for anyone to read) AES128 key.
 
+All `ch-set` commands will default to the primary channel at index 0, but can be applied to other channels with the `ch-index` parameter:
+
+```bash
+meshtastic --ch-index 1 --ch-set name mychan --ch-set channel_num 4 --info
+```
+
 ### Ham radio support
 
 Meshtastic is designed to be used without a radio operator license.  If you do have a license you can set your operator ID and turn off encryption with:
