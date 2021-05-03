@@ -6,17 +6,41 @@ sidebar_label: Serial Plugin
 
 ## Overview
 
-
+This is a simple interface to send messages over the mesh network by sending strings over a serial port.
 
 ## Settings
 
-| Setting | Acceptable Values | Default | Description |
-| :-----: | :---------------: | :-----: | :---------: |
-| serialplugin_enabled | `true`, `false` | `false` | Enables the plugin. |
-| serialplugin_echo | `true`, `false` | `false` | TODO |
-| serialplugin_mode | `integer` | `0` | TODO |
-| serialplugin_rxd | `integer` | `0` | TODO |
-| serialplugin_timeout | `integer` (seconds) | `0` | TODO |
-| serialplugin_txd | `integer` | `0` | TODO |
+| Setting | Acceptable Values | Default |
+| :-----: | :---------------: | :-----: |
+| serialplugin_enabled | `true`, `false` | `false` |
+| serialplugin_echo | `true`, `false` | `false` |
+| serialplugin_mode | `integer` | `0` |
+| serialplugin_rxd | `integer` | `0` |
+| serialplugin_timeout | `integer` (seconds) | `0` |
+| serialplugin_txd | `integer` | `0` |
+
+### serialplugin_enabled
+
+Enables the plugin.
+
+### serialplugin_echo
+
+<!--- TODO --->
+
+### serialplugin_mode
+
+<!--- TODO --->
+
+### serialplugin_rxd
+
+<!--- TODO --->
+
+### serialplugin_timeout
+
+<!--- TODO --->
+
+### serialplugin_txd
+
+<!--- TODO --->
 
 ## Details
