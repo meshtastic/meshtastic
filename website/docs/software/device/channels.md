@@ -56,3 +56,11 @@ Channels:
 Primary channel URL: https://www.meshtastic.org/d/#CgUYAyIBAQ
 Complete URL (includes all channels): https://www.meshtastic.org/d/#CgUYAyIBAQopIiAdbsTecxuI1u-voyGwOicsKaPt5ICG23ONsjH-vk5CaCoFYWRtaW4
 ```
+
+Secondary channels can be deleted by specifying their index, otherwise ch-del will attempt to delete channel index 0
+
+```bash title="Deleting a secondary channel"
+$ meshtastic --ch-index 1 --ch-del
+Connected to radio
+Deleting channel 1
+```
