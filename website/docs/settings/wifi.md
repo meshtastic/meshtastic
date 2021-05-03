@@ -14,11 +14,11 @@ The device can be either a WiFi client or a software access point. It **cannot**
 
 ## Settings
 
-| Setting | Acceptable Values | Default | Description |
-| :-----: | :---------------: | :-----: | :--------- |
-| wifi_ap_mode | `true`, `false` | `false` | Toggles the [Software Access Point](#software-access-point) |
-| wifi_password | string | `""` | Your WiFi password |
-| wifi_ssid | string | `""` | Your WiFi SSID (aka network name) |
+| Setting | Acceptable Values | Default |
+| :-----: | :---------------: | :-----: |
+| wifi_ap_mode | `true`, `false` | `false` |
+| wifi_password | string | `""` |
+| wifi_ssid | string | `""` |
 
 :::note
 If your `wifi_ssid` or `wifi_password` contain spaces, be sure to put quotation marks around the whole thing:
@@ -26,6 +26,18 @@ If your `wifi_ssid` or `wifi_password` contain spaces, be sure to put quotation 
 meshtastic --set wifi_ssid "my wifi ssid" --set wifi_password "my wifi password"
 ```
 :::
+
+### wifi_ap_mode
+
+A boolean value that toggles the [Software Access Point](#software-access-point)
+
+### wifi_password
+
+In [SoftAP](#software-access-point) mode, this is the password to access your device's WiFi. In [Client](#wifi-client) mode, this is your WiFi Networks password.
+
+### wifi_ssid
+
+In [SoftAP](#software-access-point) mode, this is the SSID broadcast to access your device's WiFi. In [Client](#wifi-client) mode, this is your WiFi Networks SSID.
 
 ## Details
 
