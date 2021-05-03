@@ -80,6 +80,7 @@ module.exports = {
       {
         Other: [
           "software/other/sw-design",
+          "software/other/remote-hardware-service",
           "software/other/rak815",
           "software/other/power",
           "software/other/plugin-api",
