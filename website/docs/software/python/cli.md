@@ -57,7 +57,7 @@ The channel settings can be changed similiarly.  Either by using a standard (sha
 The URL is constructed automatically based off of the current channel settings. So if you want to customize a channel you could do something like:
 
 ```bash
-meshtastic --setchan name mychan --setchan channel_num 4 --info
+meshtastic --ch-set name mychan --ch-set channel_num 4 --info
 ```
 
 This will change some channel params and then show device info (which will include the current channel URL)
@@ -65,14 +65,14 @@ This will change some channel params and then show device info (which will inclu
 You can even set the channel preshared key to a particular AES128 or AES256 sequence.
 
 ```bash
-meshtastic --setchan psk 0x1a1a1a1a2b2b2b2b1a1a1a1a2b2b2b2b1a1a1a1a2b2b2b2b1a1a1a1a2b2b2b2b --info
+meshtastic --ch-set psk 0x1a1a1a1a2b2b2b2b1a1a1a1a2b2b2b2b1a1a1a1a2b2b2b2b1a1a1a1a2b2b2b2b --info
 ```
 
-Use `--setchan psk none` to turn off encryption.  
+Use `--ch-set psk none` to turn off encryption.  
 
-Use `--setchan psk random` will assign a new (high quality) random AES256 key to the primary channel (similar to what the Android app does when making new channels).
+Use `--ch-set psk random` will assign a new (high quality) random AES256 key to the primary channel (similar to what the Android app does when making new channels).
 
-Use `--setchan psk default` to restore the standard 'default' (minimally secure, because it is in the source code for anyone to read) AES128 key.
+Use `--ch-set psk default` to restore the standard 'default' (minimally secure, because it is in the source code for anyone to read) AES128 key.
 
 ### Ham radio support
 

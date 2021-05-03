@@ -117,6 +117,7 @@ module.exports = {
           "hardware/lora-hardware",
           "hardware/heltec-hardware",
           "hardware/techo-hardware",
+          "hardware/wisBlock-hardware",
         ],
       },
       "hardware/behaviour",
@@ -133,7 +134,6 @@ module.exports = {
           "developers/device/radio-settings",
           "developers/device/encryption",
           "developers/device/portnum",
-          "developers/device/supported-hardware",
           "developers/device/http-api",
           "developers/device/documents",
         ],
@@ -143,6 +143,7 @@ module.exports = {
       "legal/overview",
       "legal/licensing",
       "legal/trademark",
+      "legal/privacy",
     ],
   },
 };
