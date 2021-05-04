@@ -26,6 +26,9 @@ If your `wifi_ssid` or `wifi_password` contain spaces, be sure to put quotation 
 meshtastic --set wifi_ssid "my wifi ssid" --set wifi_password "my wifi password"
 ```
 :::
+:::note
+`wifi_ssid` & `wifi_password` are both **case sensitive** values.
+:::
 
 ### wifi_ap_mode
 
@@ -33,11 +36,11 @@ A boolean value that toggles the [Software Access Point](#software-access-point)
 
 ### wifi_password
 
-In [SoftAP](#software-access-point) mode, this is the password to access your device's WiFi. In [Client](#wifi-client) mode, this is your WiFi Networks password.
+In [SoftAP](#software-access-point) mode, this is the password to access your device's WiFi. In [Client](#wifi-client) mode, this is your WiFi Networks password. This string is case sensitive.
 
 ### wifi_ssid
 
-In [SoftAP](#software-access-point) mode, this is the SSID broadcast to access your device's WiFi. In [Client](#wifi-client) mode, this is your WiFi Networks SSID.
+In [SoftAP](#software-access-point) mode, this is the SSID broadcast to access your device's WiFi. In [Client](#wifi-client) mode, this is your WiFi Networks SSID. This string is case sensitive.
 
 ## Details
 
