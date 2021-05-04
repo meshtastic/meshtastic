@@ -40,4 +40,8 @@ If set, this will disable the SerialConsole by not initilizing the StreamAPI.
 
 ## Details
 
+<!--- TODO --->
+
 ### CLI Examples
+
+<!--- TODO --->
