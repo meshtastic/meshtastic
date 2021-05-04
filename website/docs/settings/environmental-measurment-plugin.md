@@ -59,4 +59,8 @@ Interval in seconds of how often we should try to send our measurements to the m
 
 ## Details
 
+<!--- TODO --->
+
 ### CLI Examples
+
+<!--- TODO --->
