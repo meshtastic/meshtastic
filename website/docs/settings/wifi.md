@@ -45,14 +45,6 @@ In [SoftAP](#software-access-point) mode, this is the SSID broadcast to access y
 
 With the SoftAP enabled, a DNS server will run on the device. The DNS server will respond to all DNS requests with the IP address of your device. This will simplify device discovery because you will not have to remember the device's IP – any unencrypted HTTP request will direct you to the right location.
 
-#### CLI Example
-
-```bash title="Example"
-meshtastic --set wifi_ap_mode true --set wifi_ssid mywifissid --set wifi_password mywifipassword
-```
-
-In the above example, the device will broadcast a network with the SSID `mywifissid` and the password `mywifipassword`.
-
 #### Force SoftAP
 
 You can also enable the SoftAP by following these directions:
@@ -70,7 +62,7 @@ With `wifi_ssid` & `wifi_password` populated, the device will now to connect to 
 
 To disable WiFi completely, set `wifi_ap_mode` to `false`, and both `wifi_ssid` & `wifi_password` to an empty string `""`.
 
-#### CLI Examples
+### CLI Examples
 ```bash title="Example - Enabling WiFi"
 meshtastic --set wifi_ap_mode false --set wifi_ssid mywifissid --set wifi_password mywifipassword
 ```
@@ -81,3 +73,9 @@ In the above example, the device will join a network with the SSID `mywifissid` 
 meshtastic --set wifi_ap_mode false --set wifi_ssid "" --set wifi_password ""
 ```
 In the above example, the device will disable WiFi.
+
+```bash title="Software Access Point Example"
+meshtastic --set wifi_ap_mode true --set wifi_ssid mywifissid --set wifi_password mywifipassword
+```
+
+In the above example, the device will broadcast a network with the SSID `mywifissid` and the password `mywifipassword`.
