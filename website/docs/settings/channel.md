@@ -10,6 +10,7 @@ Channel settings are an integral part of the way your devices communicate across
 
 ## Settings
 
+<!--- TODO add other channel settings --->
 
 | Setting | Acceptable Values | Default |
 | :-----: | :---------------: | :-----: |
