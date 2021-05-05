@@ -68,10 +68,6 @@ module.exports = {
               to: "docs/getting-started",
             },
             {
-              label: "Settings",
-              to: "docs/settings",
-            },
-            {
               label: "Software",
               to: "docs/software",
             },
