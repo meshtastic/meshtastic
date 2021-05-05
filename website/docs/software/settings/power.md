@@ -21,7 +21,7 @@ import TabItem from '@theme/TabItem';
 | ls_secs | `integer` (seconds) | `0` (see note) |
 | mesh_sds_timeout_secs | `integer` (seconds) | `0` |
 | min_wake_secs | `integer` (seconds) | `0` |
-| phone_sds_timeout_sec | `integer` (seconds) | `0` | Power management state machine option. See the [power page](../software/other/power) for details. 0 for default of two hours, MAXUINT for disabled |
+| phone_sds_timeout_sec | `integer` (seconds) | `0` | Power management state machine option. See the [power page](other/power) for details. 0 for default of two hours, MAXUINT for disabled |
 | phone_timeout_secs | `integer` (seconds) | `0` |
 | screen_on_secs | `integer` (seconds) | `0` |
 | sds_secs | `integer` (seconds) | `0` |
@@ -54,31 +54,31 @@ Are we operating as a router. Changes behavior in the following ways: The device
 
 ### ls_secs
 
-Power management state machine option. See the [power page](../software/other/power) for details. 0 for default of 3600
+Power management state machine option. See the [power page](../other/power) for details. 0 for default of 3600
 
 ### mesh_sds_timeout_secs
 
-Power management state machine option. See the [power page](../software/other/power) for details. 0 for default of two hours, MAXUINT for disabled
+Power management state machine option. See the [power page](../other/power) for details. 0 for default of two hours, MAXUINT for disabled
 
 ### min_wake_secs
 
-Power management state machine option. See the [power page](../software/other/power)for details. 0 for default of 10 seconds
+Power management state machine option. See the [power page](../other/power)for details. 0 for default of 10 seconds
 
 ### phone_sds_timeout_sec
 
-Power management state machine option. See the [power page](../software/other/power) for details. 0 for default of two hours, MAXUINT for disabled
+Power management state machine option. See the [power page](../other/power) for details. 0 for default of two hours, MAXUINT for disabled
 
 ### phone_timeout_secs
 
-Power management state machine option. See the [power page](../software/other/power) for details. 0 for default of 15 minutes
+Power management state machine option. See the [power page](../other/power) for details. 0 for default of 15 minutes
 
 ### screen_on_secs
 
-Power management state machine option. See the [power page](../software/other/power) for details. 0 for default of one minute.
+Power management state machine option. See the [power page](../other/power) for details. 0 for default of one minute.
 
 ### sds_secs
 
-Power management state machine option. See the [power page](../software/other/power) for details. 0 for default of one year
+Power management state machine option. See the [power page](../other/power) for details. 0 for default of one year
 
 ### send_owner_interval
 
@@ -86,7 +86,7 @@ Send our owner info at least this often (also we always send once at boot - to r
 
 ### wait_bluetooth_secs
 
-Power management state machine option. See the [power page](../software/other/power) for details. 0 for default of 1 minute
+Power management state machine option. See the [power page](../other/power) for details. 0 for default of 1 minute
 
 ## Details
 
