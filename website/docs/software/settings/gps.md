@@ -3,6 +3,9 @@ id: gps
 title: GPS Settings
 sidebar_label: GPS
 ---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 :::caution
 Altering/disabling the GPS functionality does not mean that you will be unable to be found. Via triangulation of your radio, location may be given up to someone if they are determined enough.
 :::
@@ -76,18 +79,57 @@ The gps updates will be sent out every `position_broadcast_secs`, with either th
 
 ## Details
 
-### CLI Examples
+## Examples
 
-```bash title="Disable Location Sharing"
-meshtastic --set location_share LocDisabled
-```
+### Disable Location Sharing
+<Tabs
+  groupId="settings"
+  defaultValue="cli"
+  values={[
+    {label: 'CLI', value: 'cli'},
+    {label: 'Android', value: 'android'},
+  ]}>
+  <TabItem value="cli">
+
+  ```bash title="Disable Location Sharing"
+  meshtastic --set location_share LocDisabled
+  ```
+
+  </TabItem>
+  <TabItem value="android">
+
+  TODO
+
+  </TabItem>
+</Tabs>
+
 :::note
 Disabling location sharing does not disable the GPS functionality, only the location sharing via the mesh.
 :::
 
-```bash title="Disable GPS Completely"
-meshtastic --set gps_operation GpsOpDisabled
-```
+
+### Disable GPS Completely
+<Tabs
+  groupId="settings"
+  defaultValue="cli"
+  values={[
+    {label: 'CLI', value: 'cli'},
+    {label: 'Android', value: 'android'},
+  ]}>
+  <TabItem value="cli">
+
+  ```bash title="Disable GPS Completely"
+  meshtastic --set gps_operation GpsOpDisabled
+  ```
+
+  </TabItem>
+  <TabItem value="android">
+
+  TODO
+
+  </TabItem>
+</Tabs>
+
 :::note
 `gps_operation GpsOpTimeOnly` is prefered to `gps_operation GpsOPDisabled` because it allows the device to get a highres time.
 :::

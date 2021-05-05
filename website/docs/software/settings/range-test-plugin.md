@@ -3,6 +3,9 @@ id: range-test-plugin
 title: Range Test Plugin Settings
 sidebar_label: Range Test Plugin
 ---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 
 ## Overview
 
@@ -62,14 +65,51 @@ http://198.168.0.X/static/rangetest.csv
 | Medium | 15 |
 | Short Fast | 15 |
 
-### CLI Examples
+## Examples
 
-```bash title="Example - Sender Node"
-meshtastic --set range_test_plugin_enabled true
-meshtastic --set range_test_plugin_sender 60
-```
+### Sender Node
+<Tabs
+  groupId="settings"
+  defaultValue="cli"
+  values={[
+    {label: 'CLI', value: 'cli'},
+    {label: 'Android', value: 'android'},
+  ]}>
+  <TabItem value="cli">
 
-```bash title="Example - Receiver Node"
-meshtastic --set range_test_plugin_enabled true
-meshtastic --set range_test_plugin_save true
-```
+  ```bash title="Example - Sender Node"
+  meshtastic --set range_test_plugin_enabled true
+  meshtastic --set range_test_plugin_sender 60
+  ```
+
+
+  </TabItem>
+  <TabItem value="android">
+
+  TODO
+
+  </TabItem>
+</Tabs>
+
+### Receiver Node
+<Tabs
+  groupId="settings"
+  defaultValue="cli"
+  values={[
+    {label: 'CLI', value: 'cli'},
+    {label: 'Android', value: 'android'},
+  ]}>
+  <TabItem value="cli">
+
+  ```bash title="Example - Receiver Node"
+  meshtastic --set range_test_plugin_enabled true
+  meshtastic --set range_test_plugin_save true
+  ```
+
+  </TabItem>
+  <TabItem value="android">
+
+  TODO
+
+  </TabItem>
+</Tabs>

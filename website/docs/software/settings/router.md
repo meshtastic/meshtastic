@@ -3,6 +3,9 @@ id: router
 title: Router Settings
 sidebar_label: Router
 ---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 
 ## Overview
 
@@ -35,4 +38,23 @@ Toggling `is_router` changes your device settings in the following ways.
 #### Screen Wake
 #### Bluetooth
 
-### CLI Examples
+## Examples
+
+<Tabs
+  groupId="settings"
+  defaultValue="cli"
+  values={[
+    {label: 'CLI', value: 'cli'},
+    {label: 'Android', value: 'android'},
+  ]}>
+  <TabItem value="cli">
+
+  TODO
+
+  </TabItem>
+  <TabItem value="android">
+
+  TODO
+
+  </TabItem>
+</Tabs>

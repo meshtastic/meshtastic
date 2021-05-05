@@ -3,6 +3,9 @@ id: mqtt
 title: MQTT Settings
 sidebar_label: MQTT
 ---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 :::note
 This is still under development, use at your own risk. Report any bugs you see by creating an issue on the [meshtastic/Meshtastic-device](https://github.com/meshtastic/Meshtastic-device) repository or comment on our forum.
 :::
@@ -44,6 +47,23 @@ This is a channel specific setting. If your channel has this set to `true` and y
 
 <!--- TODO --->
 
-### CLI Examples
+## Examples
 
-<!--- TODO --->
+<Tabs
+  groupId="settings"
+  defaultValue="cli"
+  values={[
+    {label: 'CLI', value: 'cli'},
+    {label: 'Android', value: 'android'},
+  ]}>
+  <TabItem value="cli">
+
+  TODO
+
+  </TabItem>
+  <TabItem value="android">
+
+  TODO
+
+  </TabItem>
+</Tabs>

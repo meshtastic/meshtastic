@@ -3,6 +3,9 @@ id: environmental-measurement-plugin
 title: Environmental Measurement Plugin Settings
 sidebar_label: Environmental Measurement Plugin
 ---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 
 ## Overview
 
@@ -61,6 +64,23 @@ Interval in seconds of how often we should try to send our measurements to the m
 
 <!--- TODO --->
 
-### CLI Examples
+## Examples
 
-<!--- TODO --->
+<Tabs
+  groupId="settings"
+  defaultValue="cli"
+  values={[
+    {label: 'CLI', value: 'cli'},
+    {label: 'Android', value: 'android'},
+  ]}>
+  <TabItem value="cli">
+
+  TODO
+
+  </TabItem>
+  <TabItem value="android">
+
+  TODO
+
+  </TabItem>
+</Tabs>

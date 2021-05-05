@@ -3,6 +3,9 @@ id: store-and-forward-plugin
 title: Store and Forward Settings
 sidebar_label: Store and Forward
 ---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 
 ## Overview
 
@@ -31,4 +34,23 @@ Enables the plugin.
 
 ## Details
 
-### CLI Examples
+## Examples
+
+<Tabs
+  groupId="settings"
+  defaultValue="cli"
+  values={[
+    {label: 'CLI', value: 'cli'},
+    {label: 'Android', value: 'android'},
+  ]}>
+  <TabItem value="cli">
+
+  TODO
+
+  </TabItem>
+  <TabItem value="android">
+
+  TODO
+
+  </TabItem>
+</Tabs>

@@ -3,6 +3,8 @@ id: channel
 title: Channel Settings
 sidebar_label: Channel
 ---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 
 ## Overview
 
@@ -38,7 +40,26 @@ For more details about `region` settings, you can see the source code [here](htt
 
 ## Details
 
-### CLI Examples
-```bash title="Set Region"
-meshtastic --set region Unset
-```
+## Examples
+
+### Set Region
+<Tabs
+  groupId="settings"
+  defaultValue="cli"
+  values={[
+    {label: 'CLI', value: 'cli'},
+    {label: 'Android', value: 'android'},
+  ]}>
+  <TabItem value="cli">
+
+  ```bash title="Set Region"
+  meshtastic --set region Unset
+  ```
+
+  </TabItem>
+  <TabItem value="android">
+
+  TODO
+
+  </TabItem>
+</Tabs>

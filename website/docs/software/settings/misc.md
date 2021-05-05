@@ -3,6 +3,9 @@ id: misc
 title: Miscellaneous Settings
 sidebar_label: Miscellaneous
 ---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 
 ## Overview
 
@@ -42,6 +45,23 @@ If set, this will disable the SerialConsole by not initilizing the StreamAPI.
 
 <!--- TODO --->
 
-### CLI Examples
+## Examples
 
-<!--- TODO --->
+<Tabs
+  groupId="settings"
+  defaultValue="cli"
+  values={[
+    {label: 'CLI', value: 'cli'},
+    {label: 'Android', value: 'android'},
+  ]}>
+  <TabItem value="cli">
+
+  TODO
+
+  </TabItem>
+  <TabItem value="android">
+
+  TODO
+
+  </TabItem>
+</Tabs>

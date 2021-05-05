@@ -3,6 +3,9 @@ id: power
 title: Power Settings
 sidebar_label: Power
 ---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 
 ## Overview
 
@@ -87,4 +90,23 @@ Power management state machine option. See the [power page](../software/other/po
 
 ## Details
 
-### CLI Examples
+## Examples
+
+<Tabs
+  groupId="settings"
+  defaultValue="cli"
+  values={[
+    {label: 'CLI', value: 'cli'},
+    {label: 'Android', value: 'android'},
+  ]}>
+  <TabItem value="cli">
+
+  TODO
+
+  </TabItem>
+  <TabItem value="android">
+
+  TODO
+
+  </TabItem>
+</Tabs>

@@ -3,6 +3,8 @@ id: wifi
 title: WiFi Settings
 sidebar_label: WiFi
 ---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 
 ## Overview
 
@@ -20,12 +22,6 @@ The device can be either a WiFi client or a software access point. It **cannot**
 | wifi_password | string | `""` |
 | wifi_ssid | string | `""` |
 
-:::note
-If your `wifi_ssid` or `wifi_password` contain spaces, be sure to put quotation marks around the whole thing:
-```bash title="Example with spaces"
-meshtastic --set wifi_ssid "my wifi ssid" --set wifi_password "my wifi password"
-```
-:::
 :::note
 `wifi_ssid` & `wifi_password` are both **case sensitive** values.
 :::
@@ -65,20 +61,90 @@ With `wifi_ssid` & `wifi_password` populated, the device will now to connect to 
 
 To disable WiFi completely, set `wifi_ap_mode` to `false`, and both `wifi_ssid` & `wifi_password` to an empty string `""`.
 
-### CLI Examples
-```bash title="Example - Enabling WiFi"
-meshtastic --set wifi_ap_mode false --set wifi_ssid mywifissid --set wifi_password mywifipassword
+## Examples
+
+### Enable WiFi (as client)
+<Tabs
+  groupId="settings"
+  defaultValue="cli"
+  values={[
+    {label: 'CLI', value: 'cli'},
+    {label: 'Android', value: 'android'},
+  ]}>
+  <TabItem value="cli">
+
+  ```bash title="Enabling WiFi Client"
+  meshtastic --set wifi_ap_mode false --set wifi_ssid mywifissid --set wifi_password mywifipassword
+  ```
+
+:::note
+If your `wifi_ssid` or `wifi_password` contain spaces, be sure to put quotation marks around the whole thing:
+```bash title="Example with spaces"
+meshtastic --set wifi_ssid "my wifi ssid" --set wifi_password "my wifi password"
 ```
+:::
+  </TabItem>
+  <TabItem value="android">
+
+  TODO
+
+  </TabItem>
+</Tabs>
 
 In the above example, the device will join a network with the SSID `mywifissid` and the password `mywifipassword`.
 
-```bash title="Example - Disabling WiFi"
-meshtastic --set wifi_ap_mode false --set wifi_ssid "" --set wifi_password ""
-```
-In the above example, the device will disable WiFi.
+### Enable WiFi (as SoftAP)
+<Tabs
+  groupId="settings"
+  defaultValue="cli"
+  values={[
+    {label: 'CLI', value: 'cli'},
+    {label: 'Android', value: 'android'},
+  ]}>
+  <TabItem value="cli">
 
-```bash title="Software Access Point Example"
-meshtastic --set wifi_ap_mode true --set wifi_ssid mywifissid --set wifi_password mywifipassword
+  ```bash title="Software Access Point Example"
+  meshtastic --set wifi_ap_mode true --set wifi_ssid mywifissid --set wifi_password mywifipassword
+  ```
+
+:::note
+If your `wifi_ssid` or `wifi_password` contain spaces, be sure to put quotation marks around the whole thing:
+```bash title="Example with spaces"
+meshtastic --set wifi_ssid "my wifi ssid" --set wifi_password "my wifi password"
 ```
+:::
+
+
+
+  </TabItem>
+  <TabItem value="android">
+
+  TODO
+
+  </TabItem>
+</Tabs>
 
 In the above example, the device will broadcast a network with the SSID `mywifissid` and the password `mywifipassword`.
+
+### Disable WiFi Completely
+<Tabs
+  groupId="settings"
+  defaultValue="cli"
+  values={[
+    {label: 'CLI', value: 'cli'},
+    {label: 'Android', value: 'android'},
+  ]}>
+  <TabItem value="cli">
+
+  ```bash title="Example - Disabling WiFi"
+  meshtastic --set wifi_ap_mode false --set wifi_ssid "" --set wifi_password ""
+  ```
+
+
+  </TabItem>
+  <TabItem value="android">
+
+  TODO
+
+  </TabItem>
+</Tabs>

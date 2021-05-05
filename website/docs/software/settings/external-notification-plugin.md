@@ -3,6 +3,9 @@ id: external-notification-plugin
 title: External Notification Plugin Settings
 sidebar_label: External Notification Plugin
 ---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 
 ## Overview
 
@@ -47,6 +50,23 @@ Enables the plugin
 
 <!--- TODO --->
 
-### CLI Examples
+## Examples
 
-<!--- TODO --->
+<Tabs
+  groupId="settings"
+  defaultValue="cli"
+  values={[
+    {label: 'CLI', value: 'cli'},
+    {label: 'Android', value: 'android'},
+  ]}>
+  <TabItem value="cli">
+
+  TODO
+
+  </TabItem>
+  <TabItem value="android">
+
+  TODO
+
+  </TabItem>
+</Tabs>
