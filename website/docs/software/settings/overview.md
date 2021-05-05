@@ -31,7 +31,6 @@ At the bottom of each setting page, examples will be available displaying how to
 The CLI examples will require you to utilize the Commandline Interface that is available through Meshtastic-python. Installation instructions can be found here.
 :::
 
-  Examples will look like this:
   ```bash title="Example"
   meshtastic --set region Unset
   ```
