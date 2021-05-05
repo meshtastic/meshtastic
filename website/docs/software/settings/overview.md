@@ -15,7 +15,7 @@ If you've just flashed your device, you'll want to make sure to set your region 
 
 ## Examples
 
-At the bottom of each setting page, various examples will be available displaying how to adjust settings using the various platforms available to interface with your device. The examples will look like this:
+At the bottom of each setting page, examples will be available displaying how to adjust settings using the various platforms available to interface with your device. The examples will look like this:
 ### Introducing Examples
 <Tabs
   groupId="settings"
