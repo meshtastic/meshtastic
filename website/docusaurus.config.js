@@ -27,12 +27,6 @@ module.exports = {
           position: "left",
         },
         {
-          to: "docs/settings",
-          activeBasePath: "docs/settings",
-          label: "Settings",
-          position: "left",
-        },
-        {
           to: "docs/software",
           activeBasePath: "docs/software",
           label: "Software",
