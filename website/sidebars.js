@@ -3,14 +3,8 @@ module.exports = {
     "Getting Started": [
       "getting-started/about",
       "getting-started/overview",
+      "getting-started/flashing-firmware",
       {
-        "Flashing Firmware": [
-          "getting-started/flashing-firmware/overview",
-          "getting-started/flashing-firmware/linux",
-          "getting-started/flashing-firmware/macos",
-          "getting-started/flashing-firmware/ota",
-          "getting-started/flashing-firmware/windows",
-        ],
         "Howto's": [],
       },
       "getting-started/concepts",
