@@ -108,6 +108,27 @@ module.exports = {
           "software/other/ant",
         ],
       },
+      {
+        Settings: [
+          "software/settings/overview",
+          "software/settings/channel",
+          "software/settings/gps",
+          "software/settings/mqtt",
+          "software/settings/power",
+          "software/settings/router",
+          "software/settings/wifi",
+          {
+            "Plugins": [
+              "software/settings/environmental-measurement-plugin",
+              "software/settings/external-notification-plugin",
+              "software/settings/range-test-plugin",
+              "software/settings/serial-plugin",
+              "software/settings/store-and-forward-plugin",
+            ],
+          },
+          "software/settings/misc",
+        ]
+      },
     ],
     Hardware: [
       "hardware/overview",
