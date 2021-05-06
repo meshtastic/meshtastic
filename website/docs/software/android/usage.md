@@ -14,7 +14,7 @@ Open the App and you should see a screen like this. You can move through the tab
 
 ## Connecting
 
-You will need a device with Meshtastic installed to go any further. See the [flashing firmware](/docs/getting-started/flashing-firmware/overview) section for information on how to do this.
+You will need a device with Meshtastic installed to go any further. See the [flashing firmware](/docs/getting-started/flashing-firmware) section for information on how to do this.
 
 Open the Settings tab (last tab), and it should look similar to the screen below. It shows any Meshtastic devices that are found over Bluetooth.
 
@@ -169,6 +169,3 @@ This allows you to save your messages to a .csv (comma sparated value) file on y
 This allows you to change between light and dark themes, or to select the system default.
 
 [![Meshtastic theme](/img/android/android-settings-theme-c.png)](/img/android/android-settings-theme.png)
-
-
-
