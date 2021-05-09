@@ -5,7 +5,7 @@ sidebar_label: Non-aerial factors
 slug: /hardware/non-aerial
 ---
 
-Unless you're using your devices in a vacuum with clear line of sight between aerials:
+Unless you're using your devices in a vacuum with clear line of sight between aerials the following will have an affect:
 - Weather (temperature, humidity & air pressure),
 - Transmission power, spreading and other associated channel factors,
 - Number of nodes within reach in the mesh (affects retries consequent duty cycle hit),
@@ -13,7 +13,7 @@ Unless you're using your devices in a vacuum with clear line of sight between ae
 - Reflection off surfaces (and channeled through material tunnels, including warm / cold air tunnels commonly present in the atmosphere),
 - Diffraction around obstacles (over forests and around corners).
 
-### Environmental
+### Environmental factors
 
 For a bit of light reading on environmental research:
 - [RF attentuation in vegetation](https://www.itu.int/dms_pubrec/itu-r/rec/p/R-REC-P.833-9-201609-I!!PDF-E.pdf) (yes really); if you wander through the woods wondering how your RF is bouncing off leaves dependent on their variety, and wind speed … well you do, now.

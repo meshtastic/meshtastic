@@ -1,7 +1,7 @@
 ---
 id: antenna
 title: Antennas
-sidebar_label: Antennas
+sidebar_label: Overview
 slug: /hardware/antenna
 ---
 
