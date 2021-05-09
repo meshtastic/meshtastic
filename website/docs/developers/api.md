@@ -8,7 +8,7 @@ sidebar_label: APIs
 
 :::note
 
-Currently there are three methods of interfacing wiht devices: `HTTP`, `BLE`, and `Serial`.
+Currently there are three methods of interfacing with devices: `HTTP`, `BLE`, and `Serial`.
 
 Whilst each method has it's own ways sending and receiving data, the underlying protobuf transport medium remains the same.
 :::
