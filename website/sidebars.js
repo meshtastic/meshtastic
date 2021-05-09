@@ -141,7 +141,7 @@ module.exports = {
           "hardware/antenna/antenna",
           "hardware/antenna/aerials",
           "hardware/antenna/non-aerial",
-          "hardware/antenna/antenna-testing"
+          "hardware/antenna/antenna-testing",
           "hardware/antenna/resources",
         ],
       },
