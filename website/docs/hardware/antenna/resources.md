@@ -1,0 +1,46 @@
+---
+id: resources
+title: Antenna resources
+sidebar_label: Resources
+slug: /hardware/resources
+---
+
+
+### Coverage prediction
+
+* [Tower Coverage.com](https://www.towercoverage.com/)
+    * Commercial but has free options
+
+
+* [HeyWhat'sThat](http://www.heywhatsthat.com/)
+    * Free with path profiling options
+
+
+* [Radio Mobile Online](https://www.ve2dbe.com/rmonline_s.asp)
+    * Radio Mobile Online is a radio wave propagation prediction tool dedicated to amateur radio
+
+
+### RF Tools
+
+* [Times Microwave Systems](https://www.timesmicrowave.com/calculator/?Product=RG-6&RunLength=10&Frequency=868)
+    * Coaxial Cable Attenuation & Power Handling Calculator
+
+
+* [Solwise Link Budget Calculator](https://www.solwise.co.uk/link-budget.htm)
+    * Predict the received signal strength
+
+
+### Antenna designs
+
+* [1/4 Wave Ground Plane Antenna Calculator](https://m0ukd.com/calculators/quarter-wave-ground-plane-antenna-calculator/)
+
+
+* [Quadrifilar helicoidal antenna calculator](https://jcoppens.com/ant/qfh/calc.en.php)
+
+
+* [Building an 868/915 MHz co-linear antenna tutorial](https://www.youtube.com/watch?v=1_1LxuOngHs)
+    * [868 Mhz antenna schematic PDF](https://github.com/IRNAS/ttn-irnas-gw/blob/master/Collinear868MHzLoRaantenna.PDF)
+    * [915 Mhz antenna schematic PDF](https://github.com/IRNAS/ttn-irnas-gw/blob/master/CollinearLoRaantenna915MHzIRNAS.PDF)
+
+
+* [NEC based antenna modeler and optimizer](https://www.qsl.net/4nec2/)

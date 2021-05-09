@@ -136,7 +136,15 @@ module.exports = {
         ],
       },
       "hardware/behaviour",
-      "hardware/antenna",
+      {
+        "Antennas": [
+          "hardware/antenna/antenna",
+          "hardware/antenna/aerials",
+          "hardware/antenna/non-aerial",
+          "hardware/antenna/antenna-testing"
+          "hardware/antenna/resources",
+        ],
+      },
     ],
     Developers: [
       "developers/overview",
