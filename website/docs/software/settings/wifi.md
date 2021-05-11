@@ -8,7 +8,7 @@ import TabItem from '@theme/TabItem';
 
 ## Overview
 
-WiFi support can be configured as either a WiFi Client or a Software Access Point (SoftAP). The WiFi client will connect to your existing WiFi network, as opposed to the SoftAP which will broadcast a new SSID and Password. See below for more details.
+The ESP32 based devices have the ability to connect to WiFi as a client and also are able to create a software based access point (SoftAP). See below for more details.
 
 :::note
 The device can be either a WiFi client or a software access point. It **cannot** operate as both at the same time.
