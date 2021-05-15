@@ -21,6 +21,7 @@ Installation is easily done through the [Python package installer pip](https://p
     {label: 'Windows', value: 'windows'},
   ]}>
 <TabItem value="linux">
+
 * Check that your computer has the required serial drivers installed
     * Connect your Meshtastic device to your USB port
     * Use the command
@@ -49,8 +50,10 @@ Installation is easily done through the [Python package installer pip](https://p
     ```bash
     sudo pip3 install --upgrade meshtastic
     ```
+
 </TabItem>
 <TabItem value="macos">
+
 * Check that your computer has the required serial drivers installed
     * Connect your Meshtastic device to your USB port
     * Navigate to `Apple Menu  > About This Mac > System Report... > Hardware > USB`
@@ -86,8 +89,10 @@ Installation is easily done through the [Python package installer pip](https://p
     ```bash
     sudo pip3 install --upgrade meshtastic
     ```
+
 </TabItem>
 <TabItem value="windows">
+
 * Check that your computer has the required serial drivers installed
     * Connect your Meshtastic device to your USB port
     * Open Device Manager
@@ -113,5 +118,6 @@ Installation is easily done through the [Python package installer pip](https://p
     ```powershell
     pip3 install --upgrade meshtastic
     ```
+    
 </TabItem>
 </Tabs>
