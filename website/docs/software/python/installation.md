@@ -21,7 +21,7 @@ Installation is easily done through the [Python package installer pip](https://p
     {label: 'Windows', value: 'windows'},
   ]}>
 <TabItem value="linux">
-- Check that your computer has the required serial drivers installed
+* Check that your computer has the required serial drivers installed
     * Connect your Meshtastic device to your USB port
     * Use the command
         ```bash
@@ -29,34 +29,34 @@ Installation is easily done through the [Python package installer pip](https://p
         ```
     * You should see something like `CP210X USB to UART Bridge Controller`
     * If not download the drivers from [Silicon Labs](https://www.silabs.com/developers/usb-to-uart-bridge-vcp-drivers).
-- Check that your computer has Python 3 installed.
+* Check that your computer has Python 3 installed.
     * Use the command
         ```bash
         python3 -V
         ```
     * If this does not return a version, install [python](https://www.python.org)
-- Pip is typically installed if you are using python 3 version >= 3.4
+* Pip is typically installed if you are using python 3 version >= 3.4
     * Check that pip is installed using this command
         ```bash
         pip3 -V
         ```
     * If this does not return a version, install [pip](https://pip.pypa.io/en/stable/installing/)
-- Install pytap2
+* Install pytap2
     ```bash
     sudo pip3 install --upgrade pytap2
     ```
-- Install meshtastic:
+* Install meshtastic:
     ```bash
     sudo pip3 install --upgrade meshtastic
     ```
 </TabItem>
 <TabItem value="macos">
-- Check that your computer has the required serial drivers installed
+* Check that your computer has the required serial drivers installed
     * Connect your Meshtastic device to your USB port
     * Navigate to `Apple Menu  > About This Mac > System Report... > Hardware > USB`
     * You should see something like `CP210X USB to UART Bridge Controller`
     * If not download the drivers from [Silicon Labs](https://www.silabs.com/developers/usb-to-uart-bridge-vcp-drivers).
-- Check that your computer has Python 3 installed.
+* Check that your computer has Python 3 installed.
     * Use the command
         ```bash
         python3 -V
@@ -72,44 +72,44 @@ Installation is easily done through the [Python package installer pip](https://p
             ```bash
             brew install python3
             ```
-- Pip is typically installed if you are using python 3 version >= 3.4
+* Pip is typically installed if you are using python 3 version >= 3.4
     * Check that pip is installed using this command
         ```bash
         pip3 -V
         ```
     * If this does not return a version, install [pip](https://pip.pypa.io/en/stable/installing/)
-- Install pytap2
+* Install pytap2
     ```bash
     sudo pip3 install --upgrade pytap2
     ```
-- Install meshtastic:
+* Install meshtastic:
     ```bash
     sudo pip3 install --upgrade meshtastic
     ```
 </TabItem>
 <TabItem value="windows">
-- Check that your computer has the required serial drivers installed
+* Check that your computer has the required serial drivers installed
     * Connect your Meshtastic device to your USB port
     * Open Device Manager
     * Under `Ports (COM & LPT)` you should see something like `Silicon Labs CP210X USB to UART Bridge (COM5)`
     * If not download the drivers from [Silicon Labs](https://www.silabs.com/developers/usb-to-uart-bridge-vcp-drivers).
-- Check that your computer has Python 3 installed.
+* Check that your computer has Python 3 installed.
     * Use the command
         ```powershell
         py -V
         ```
     * If this does not return a version, install [python](https://www.python.org)
-- Pip is typically installed if you are using python 3 version >= 3.4
+* Pip is typically installed if you are using python 3 version >= 3.4
     * Check that pip is installed using this command
         ```powershell
         pip3 -V
         ```
     * If this does not return a version, install [pip](https://pip.pypa.io/en/stable/installing/)
-- Install pytap2
+* Install pytap2
     ```powershell
     pip3 install --upgrade pytap2
     ```
-- Install meshtastic:
+* Install meshtastic:
     ```powershell
     pip3 install --upgrade meshtastic
     ```
