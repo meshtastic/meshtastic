@@ -10,7 +10,7 @@ slug: /hardware/antenna
 If you have sufficient range with your existing aerial, skip this section.  If you don't, consider either getting more nodes and / or replace the stock aerial with one tuned (to your region transmitter's frequency): 
 
 - A quarter quarter wave _tuned_ stubby aerial (<10cm for fit-in-pocket) should have a real-world range of a couple of km without significant obstacles (buildings / hills). 
-- Aerial criteria: 50 Ohm, appropriate connector (usually SMA male of U.FL), low VSWR (<2) (at tuning frequency - see its datasheet), gain > 0 dbi .
+- Aerial criteria: 50 Ohm, appropriate connector (usually SMA male or U.FL), low VSWR (<2) (at tuning frequency - see its datasheet), gain > 0 dbi .
 - Caution, avoid suppliers who:
   - don't state the aerial's tuned frequency and its specific purpose (LoRa network)
   - claim huge gain figures on omni-directional aerials
