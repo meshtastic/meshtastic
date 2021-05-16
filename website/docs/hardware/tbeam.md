@@ -11,8 +11,8 @@ sidebar_label: LILYGO® T-Beam
 * SX1276 - LoRa Transceiver
 * Frequency options:
     * 433 MHz
-    * 868 MHz 
-    * 915 MHz 
+    * 868 MHz
+    * 915 MHz
     * 923 MHz
 * NEO-6M - GPS receiver
 * SMA antenna connector
@@ -27,12 +27,17 @@ sidebar_label: LILYGO® T-Beam
 
 ## T-Beam - v0.7
 
+:::note
+This is an earlier version of the T-Beam board, and due to changes in the design in subsequent iterations this board uses a specific firmware file different from the other T-Beam boards.
+
+`firmware-tbeam0.7-1.x.x.bin` is the correct firmware. `firmware-tbeam-1.x.x.bin` is incompatible. For all other T-Beam boards `firmware-tbeam-1.x.x.bin` is the correct selection.
+:::
 
 * ESP32 - Wifi & Bluetooth
 * SX1276 - LoRa Tranceiver
 * Frequency options:
-    * 868 MHz 
-    * 915 MHz 
+    * 868 MHz
+    * 915 MHz
 * NEO-6M - GPS receiver
 * SMA antenna connector
 * Power, Program and Reset switches
@@ -51,8 +56,8 @@ sidebar_label: LILYGO® T-Beam
 * SX1276 - LoRa Transceiver
 * Frequency options:
     * 433 MHz
-    * 868 MHz 
-    * 915 MHz 
+    * 868 MHz
+    * 915 MHz
     * 923 MHz
 * NEO-6M - GPS receiver
 * SMA antenna connector
@@ -71,8 +76,8 @@ sidebar_label: LILYGO® T-Beam
 * SX1276 - LoRa Transceiver
 * Frequency options:
     * 433 MHz
-    * 868 MHz 
-    * 915 MHz 
+    * 868 MHz
+    * 915 MHz
     * 923 MHz
 * NEO-M8N - GPS receiver - better GPS sensitivity
 * U.FL antenna connector
@@ -91,8 +96,8 @@ sidebar_label: LILYGO® T-Beam
 * SX1262 - LoRa Transceiver - improved performance
 * Frequency options:
     * 433 MHz
-    * 868 MHz 
-    * 915 MHz 
+    * 868 MHz
+    * 915 MHz
     * 923 MHz
 * NEO-M8N - GPS receiver - better GPS sensitivity
 * U.FL antenna connector
