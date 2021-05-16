@@ -55,7 +55,7 @@ The following applications are available to support your Meshtastic network:
 
 ## Supported hardware
 
-We currently support a number of different devices based on the ESP32 and nRF52 microcontrollers. The way it is designed allows it to ported to new boards relatively easily. See our [hardware](/docs/hardware) section for a complete listing of supported hardware.
+We currently support a number of different devices based on the ESP32 and nRF52 microcontrollers. The way Meshtastic is designed allows it to ported to new boards relatively easily. See our [hardware](/docs/hardware) section for a complete listing of supported hardware.
 
 Make sure to buy the frequency range which is legal for your country. In the Americas get the 915mhz version, in Europe the 868Mhz, or Asia 923Mhz. See this listing by [The Things Network](https://www.thethingsnetwork.org/docs/lorawan/frequencies-by-country.html) for frequencies by specific countries. Getting a version that include a screen is optional, but highly recommended.
 

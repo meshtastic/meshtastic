@@ -31,7 +31,6 @@ If your device already has Meshtastic flashed to it, You can update it over the 
 
 - Install using the command line interface (CLI)
 - Install using a graphical user interface (GUI)
-- Install using over-the-air (OTA)
 
 ## Connect to your Device
 
