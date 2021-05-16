@@ -68,7 +68,6 @@ The [T-Beam 0.7](../hardware/tbeam-hardware#t-beam---v07) board is an earlier ve
 `firmware-tbeam0.7-1.x.x.bin` is the correct firmware. `firmware-tbeam-1.x.x.bin` is incompatible. For all other [T-Beam](../hardware/tbeam-hardware) boards `firmware-tbeam-1.x.x.bin` is the correct selection.
 :::
 
-
 ## Command Line Interface Instructions
 
 ### Install Prerequisite Software
