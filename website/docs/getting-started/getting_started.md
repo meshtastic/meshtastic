@@ -25,6 +25,12 @@ Prebuilt binaries for the supported radios are available in our releases. Your i
 | [Current Firmware](https://github.com/meshtastic/meshtastic-device/releases/latest) | [List of Firmware Versions](https://github.com/meshtastic/meshtastic-device/releases/) |
 | :--------------: | :-----------------------: |
 
+:::note
+The [T-Beam 0.7](../hardware/tbeam-hardware#t-beam---v07) board is an earlier version of the T-Beam board, and due to changes in the design in subsequent iterations this board uses a specific firmware file different from the other T-Beam boards.
+
+`firmware-tbeam0.7-1.x.x.bin` is the correct firmware. `firmware-tbeam-1.x.x.bin` is incompatible. For all other [T-Beam](../hardware/tbeam-hardware) boards `firmware-tbeam-1.x.x.bin` is the correct selection.
+:::
+
 ## Flashing Firmware
 
 If your device already has Meshtastic flashed to it, You can update it over the air (OTA). Otherwise you'll need a computer and a **data** USB cable. This can be done in the following ways:
