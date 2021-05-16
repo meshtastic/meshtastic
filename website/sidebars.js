@@ -1,7 +1,6 @@
 module.exports = {
   Sidebar: {
     "Getting Started": [
-      "getting-started/about",
       "getting-started/overview",
       "getting-started/flashing-firmware",
       {
