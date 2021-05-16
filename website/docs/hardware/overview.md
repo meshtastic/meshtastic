@@ -9,7 +9,7 @@ We currently support devices that use the ESP32 and the nRF52 microcontrollers. 
 
 ## ESP32
 
-The ESP32 devices have the advantage of having a wifi interface. This allows you to connect to an access point, or run the device as an access point, and host the [web interface]. Unfortunately the ESP32 does not support Bluetooth 5.0, and so has to wake up from sleep mode every now and then to connect to bluetooth devices to receive messages. This can result in delays sending a message from phone.
+The ESP32 devices have the advantage of having a wifi interface. This allows you to connect to an access point, or run the device as an access point, and host the [web interface](/docs/software/web/web-app-software). Unfortunately the ESP32 does not support Bluetooth 5.0, and so has to wake up from sleep mode every now and then to connect to bluetooth devices to receive messages. This can result in delays sending a message from phone.
 
 The following ESP32 devices are supported:
 * [Lilygo TTGO T-Beam](/docs/hardware/tbeam-hardware) - versions 0.7, 1.1 (including M8N gps and SX1262 LoRa varients)
