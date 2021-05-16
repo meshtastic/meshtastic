@@ -10,7 +10,7 @@ The following applications are available to support your Meshtastic network:
   * Connect to the devices with our [Android app](/docs/software/android/android-installation)
   * An [iOS application](/docs/software/ios/ios-development) is in the works
   * [Meshtastic.js](/docs/software/js/getting-started) provides a javascript library to interface with devices
-  * [Meshtastic-python](/docs/software/python/python-installation) provides access from desktop computers
+  * [Meshtastic-python](/docs/software/python/python-installation) provides access from desktop computers including a command line interface
   * A [web interface](/docs/software/web/web-app-software) can be accessed over wifi on ESP32 devices
   * Pre-installed device plugins for:
     * [Range testing](/docs/software/plugins/range-test-plugin)
