@@ -135,7 +135,6 @@ module.exports = {
           "hardware/wisBlock-hardware",
         ],
       },
-      "hardware/behaviour",
       {
         "Antennas": [
           "hardware/antenna/antenna",
