@@ -110,6 +110,21 @@ brew -v
 If it's not installed, follow the instructions on the [Homebrew website](https://brew.sh) before continuing.
 :::
 
+  Check if you have `python3` and `pip` installed with the following command
+  ```bash
+  python3 --version
+  pip3 --version
+  ```
+  If `python3` is not installed, install with
+  Install Python3
+  ```bash
+  brew install python3
+  ```
+  Confirm `pip3` was installed alongside `python3`
+  ```bash
+  pip3 -v
+  ```
+
   </TabItem>
   <TabItem value="windows">
 

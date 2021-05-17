@@ -1,7 +1,6 @@
 module.exports = {
   Sidebar: {
     "Getting Started": [
-      "getting-started/about",
       "getting-started/overview",
       "getting-started/flashing-firmware",
       {
@@ -135,7 +134,6 @@ module.exports = {
           "hardware/wisBlock-hardware",
         ],
       },
-      "hardware/behaviour",
       {
         "Antennas": [
           "hardware/antenna/antenna",

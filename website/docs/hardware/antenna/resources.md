@@ -29,8 +29,10 @@ slug: /hardware/resources
 * [Solwise Link Budget Calculator](https://www.solwise.co.uk/link-budget.htm)
     * Predict the received signal strength
 
+
 * [Amateur Radio Toolkit](https://play.google.com/store/apps/details?id=com.daveyhollenberg.amateurradiotoolkit)
     * Android app with lots of antenna information
+
 
 ### Antenna designs
 
