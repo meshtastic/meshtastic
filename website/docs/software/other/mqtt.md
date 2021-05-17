@@ -44,7 +44,7 @@ FIXME - explain this more, talk about how useful for users and security domains.
 
 ## On device API
 
-For information on the related on-device API see [here](device-api.md).
+For information on the related on-device API see [here](/doc/developers/device/device-api.md).
 
 ## MQTT transport
 
