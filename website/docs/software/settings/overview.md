@@ -17,7 +17,7 @@ Below are some of the most common settings that a new user will want to become a
 
 ### Channel Settings
 
-Channel settings are very important, if channels are misconfigured between devices they won't be able to communicate! A freshly flashed device will use the default channel settings. Depending on your use case you may want to change your encryption using `psk`, your range of communication by setting one of the four pre-set bands using `modem_config`, or even just the name of your channel! Before you begin, don't forget to set your `region` correctly! Take a look at the [basic channel configuration](software/settings/channels) and if you're tech savvy or a radio head check out the [advanced channel settings](software/settings/channels-advanced).
+Channel settings are very important, if channels are misconfigured between devices they won't be able to communicate! A freshly flashed device will use the default channel settings. Depending on your use case you may want to change your encryption using `psk`, your range of communication by setting one of the four pre-set bands using `modem_config`, or even just the name of your channel! Before you begin, don't forget to set your `region` correctly! Take a look at the [basic channel configuration](software/settings/channel) and if you're tech savvy or a radio head check out the [advanced channel settings](software/settings/channel-advanced).
 
 :::note
 It is very important that you set your device's `region` setting. This will ensure that you are operating within the legal limits for your area.
