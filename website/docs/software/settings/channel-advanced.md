@@ -11,7 +11,39 @@ These settings are for advanced users only. If you don't know what you are doing
 :::
 
 ## Overview
+
+Most
+
 ## Settings
+
+| Setting | Acceptable Values | Default |
+| :-----: | :---------------: | :-----: |
+| bandwidth |  |  |
+| channel_num |  |  |
+| coding_rate |  |  |
+| spread_factor | `7`, `8`, `9`, `10`, `11`, `12` | TODO |
+| tx_power | `integer` (in dBm) | `0` |
+
+### bandwidth
+
+TODO
+
+### channel_num
+
+TODO
+
+### coding_rate
+
+TODO
+
+### spread_factor
+
+TODO
+
+### tx_power
+
+TODO
+
 ## Examples
 
 ### Example TODO
