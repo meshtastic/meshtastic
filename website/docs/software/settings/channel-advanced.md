@@ -1,7 +1,7 @@
 ---
 id: channel-advanced
 title: Channel Settings - Advanced
-sidebar_label: Channel - Advanced
+sidebar_label: Channel
 ---
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
