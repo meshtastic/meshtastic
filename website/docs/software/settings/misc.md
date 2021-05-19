@@ -41,10 +41,6 @@ If true, radio should not try to be smart about what packets to queue to the pho
 
 If set, this will disable the SerialConsole by not initilizing the StreamAPI.
 
-## Details
-
-<!--- TODO --->
-
 ## Examples
 
 <Tabs

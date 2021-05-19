@@ -38,7 +38,6 @@ The `region` variable sets which region your radio is configured to work in. It 
 For more details about `region` settings, you can see the source code [here](https://github.com/meshtastic/Meshtastic-device/blob/master/src/mesh/RadioInterface.cpp)
 :::
 
-## Details
 
 ## Examples
 

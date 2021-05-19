@@ -77,8 +77,6 @@ How often our position is sent to the mesh (but only if it has changed significa
 
 The gps updates will be sent out every `position_broadcast_secs`, with either the actual gps location, or an empty location if no gps fix was achieved. This defaults to broadcast every 15 minutes.
 
-## Details
-
 ## Examples
 
 ### Disable Location Sharing
