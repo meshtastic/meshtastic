@@ -7,8 +7,6 @@ slug: /settings
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-## Overview
-
 Cusomization of your settings is vital to configuring your own mesh. Changing settings is currently most reliably done using the commandline interface available within `Meshtastic-python`. Setting support is being added to all other methods of interfacing with your device.
 
 ## Settings
