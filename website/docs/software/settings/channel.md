@@ -199,7 +199,7 @@ A channel `id` must be set in order to name a channel.
 </Tabs>
 
 :::note
-See [`modem_config`](#modem_config) for details. For advanced modem configuration, see [Channel Settings - Advanced](software/settings/channel-advanced).
+See [`modem_config`](#modem_config) for details. For advanced modem configuration, see [Channel Settings - Advanced](channel-advanced).
 :::
 
 ### Set Region
