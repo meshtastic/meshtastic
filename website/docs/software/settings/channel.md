@@ -177,6 +177,10 @@ A channel `id` must be set in order to name a channel.
   </TabItem>
 </Tabs>
 
+:::note
+See [`psk`](#psk) for details.
+:::
+
 ### Set Modem
 <Tabs
   groupId="settings"
