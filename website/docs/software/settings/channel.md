@@ -93,11 +93,114 @@ The `region` variable sets which region your radio is configured to work in. It 
 For more details about `region` settings, you can see the source code [here](https://github.com/meshtastic/Meshtastic-device/blob/master/src/mesh/RadioInterface.cpp)
 :::
 
-### Uplink Enabled
+### uplink_enabled
 
 If `true`, messages on the mesh will be sent to the public internet by any gateway node. See [MQTT settings](mqtt) for more details.
 
 ## Examples
+
+### Set Channel ID
+<Tabs
+  groupId="settings"
+  defaultValue="cli"
+  values={[
+    {label: 'CLI', value: 'cli'},
+    {label: 'Android', value: 'android'},
+  ]}>
+  <TabItem value="cli">
+
+  ```bash title="Set channel ID"
+  meshtastic --ch-set id 1234
+  ```
+
+  </TabItem>
+  <TabItem value="android">
+
+  TODO
+
+  </TabItem>
+</Tabs>
+
+:::note
+The channel `id` must be an integer.
+:::
+
+### Set Channel Name
+<Tabs
+  groupId="settings"
+  defaultValue="cli"
+  values={[
+    {label: 'CLI', value: 'cli'},
+    {label: 'Android', value: 'android'},
+  ]}>
+  <TabItem value="cli">
+
+  ```bash title="Set channel name"
+  meshtastic --ch-set name MyChannel
+  ```
+
+  ```bash title="Set channel name with spaces"
+  meshtastic --ch-set name "My Channel"
+  ```
+  </TabItem>
+  <TabItem value="android">
+
+  TODO
+
+  </TabItem>
+</Tabs>
+
+:::note
+A channel `id` must be set in order to name a channel.
+:::
+
+### Set Encryption
+<Tabs
+  groupId="settings"
+  defaultValue="cli"
+  values={[
+    {label: 'CLI', value: 'cli'},
+    {label: 'Android', value: 'android'},
+  ]}>
+  <TabItem value="cli">
+
+  ```bash title="Set psk"
+  meshtastic --ch-set psk default
+  ```
+<!--- TODO random and none --->
+
+  </TabItem>
+  <TabItem value="android">
+
+  TODO
+
+  </TabItem>
+</Tabs>
+
+### Set Modem
+<Tabs
+  groupId="settings"
+  defaultValue="cli"
+  values={[
+    {label: 'CLI', value: 'cli'},
+    {label: 'Android', value: 'android'},
+  ]}>
+  <TabItem value="cli">
+
+  ```bash title="Set Modem - LongSlow"
+  meshtastic --ch-set modem_config Bw125Cr48Sf4096
+  ```
+  </TabItem>
+  <TabItem value="android">
+
+  TODO
+
+  </TabItem>
+</Tabs>
+
+:::note
+See [`modem_config`](#modem_config) for details. For advanced modem configuration, see [Channel Settings - Advanced](software/settings/channel-advanced).
+:::
 
 ### Set Region
 <Tabs
@@ -120,3 +223,5 @@ If `true`, messages on the mesh will be sent to the public internet by any gatew
 
   </TabItem>
 </Tabs>
+
+<!--- TODO add downlink_enabled & uplink_enabled examples --->
