@@ -25,7 +25,7 @@ import TabItem from '@theme/TabItem';
 | phone_timeout_secs | `integer` (seconds) | `0` |
 | screen_on_secs | `integer` (seconds) | `0` |
 | sds_secs | `integer` (seconds) | `0` |
-| send_owner_interval | `integer` (seconds) | `4` |
+| send_owner_interval | `integer` | `4` |
 | wait_bluetooth_secs | `integer` (seconds) | `0` |
 
 :::note
@@ -82,7 +82,9 @@ Power management state machine option. See the [power page](../other/power) for 
 
 ### send_owner_interval
 
-Send our owner info at least this often (also we always send once at boot - to rejoin the mesh)
+This sets how often to send the database of node owner information with other nodes in the mesh (per mesh network ping). 
+
+For instance the default interval of 4 will send the node owner information for every 4 mesh network pings. This information is also transmitted after the node first boots up.
 
 ### wait_bluetooth_secs
 
