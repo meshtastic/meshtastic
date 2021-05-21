@@ -35,7 +35,7 @@ If you wish to disable any GPS features, see below for more information.
 
 ### fixed_position
 
-If set, this node is at a fixed position. The device will generate GPS position updates at the regular `gps_update_interval`, but use whatever the last lat/lon/alt it saved for the node. The lat/lon/alt can be set by an internal GPS or with the help of the mobile device's GPS.
+If set, this node is at a fixed position. The device will generate GPS updates at the regular `gps_update_interval`, but use whatever the last lat/lon/alt it saved for the node. The lat/lon/alt can be set by an internal GPS or with the help of the mobile device's GPS.
 
 ### gps_attempt_time
 
@@ -79,6 +79,32 @@ The gps updates will be sent out every `position_broadcast_secs`, with either th
 
 ## Examples
 
+### Disable GPS Completely
+<Tabs
+  groupId="settings"
+  defaultValue="cli"
+  values={[
+    {label: 'CLI', value: 'cli'},
+    {label: 'Android', value: 'android'},
+  ]}>
+  <TabItem value="cli">
+
+  ```bash title="Disable GPS Completely"
+  meshtastic --set gps_operation GpsOpDisabled
+  ```
+
+  </TabItem>
+  <TabItem value="android">
+
+  TODO
+
+  </TabItem>
+</Tabs>
+
+:::note
+`gps_operation GpsOpTimeOnly` is prefered to `gps_operation GpsOPDisabled` because it allows the device to get a highres time.
+:::
+
 ### Disable Location Sharing
 <Tabs
   groupId="settings"
@@ -105,8 +131,7 @@ The gps updates will be sent out every `position_broadcast_secs`, with either th
 Disabling location sharing does not disable the GPS functionality, only the location sharing via the mesh.
 :::
 
-
-### Disable GPS Completely
+### Set Fixed Position – Current Lat/Lon
 <Tabs
   groupId="settings"
   defaultValue="cli"
@@ -116,8 +141,8 @@ Disabling location sharing does not disable the GPS functionality, only the loca
   ]}>
   <TabItem value="cli">
 
-  ```bash title="Disable GPS Completely"
-  meshtastic --set gps_operation GpsOpDisabled
+  ```bash title="Set Fixed Position"
+  meshtastic --set fixed_position true
   ```
 
   </TabItem>
@@ -129,5 +154,53 @@ Disabling location sharing does not disable the GPS functionality, only the loca
 </Tabs>
 
 :::note
-`gps_operation GpsOpTimeOnly` is prefered to `gps_operation GpsOPDisabled` because it allows the device to get a highres time.
+The device will continue to aquire GPS coordinates according to the `gps_update_interval`, but will use the last saved coordinates as its fixed point.
+:::
+
+### Set Fixed Position – Specify Lat/Lon
+<Tabs
+  groupId="settings"
+  defaultValue="cli"
+  values={[
+    {label: 'CLI', value: 'cli'},
+    {label: 'Android', value: 'android'},
+  ]}>
+  <TabItem value="cli">
+
+  ```bash title="Set Fixed Position"
+  meshtastic --setlat 37.8651 --setlon -119.5383
+  ```
+
+  </TabItem>
+  <TabItem value="android">
+
+  TODO
+
+  </TabItem>
+</Tabs>
+
+### Unset Fixed Position
+<Tabs
+  groupId="settings"
+  defaultValue="cli"
+  values={[
+    {label: 'CLI', value: 'cli'},
+    {label: 'Android', value: 'android'},
+  ]}>
+  <TabItem value="cli">
+
+  ```bash title="Unset Fixed Position"
+  meshtastic --set fixed_position false
+  ```
+
+  </TabItem>
+  <TabItem value="android">
+
+  TODO
+
+  </TabItem>
+</Tabs>
+
+:::note
+It may take some time to see that the change has taken effect. The GPS location is updated according to the value specified on `gps_update_interval` and the mesh will be notified of the new position in relation to the `position_broadcast_secs` value.
 :::
