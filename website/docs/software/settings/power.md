@@ -25,7 +25,7 @@ import TabItem from '@theme/TabItem';
 | phone_timeout_secs | `integer` (seconds) | `0` |
 | screen_on_secs | `integer` (seconds) | `0` |
 | sds_secs | `integer` (seconds) | `0` |
-| send_owner_interval | `integer` | `4` |
+| send_owner_interval | `integer` (sent every x network pings) | `4` |
 | wait_bluetooth_secs | `integer` (seconds) | `0` |
 
 :::note
