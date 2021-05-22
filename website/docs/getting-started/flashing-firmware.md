@@ -185,11 +185,11 @@ pip --version
 Connect the radio to your computer using a data USB cable. Confirm your device is talking to your computer using the following command:
 
   ```bash title="Command"
-  esptool.py chip_id
+  esptool chip_id
   ```
   ```bash title="Expected Output"
   # You should see a result similar to this:
-  mydir$ esptool.py chip_id
+  mydir$ esptool chip_id
   esptool.py v2.6
   Found 2 serial ports
   Serial port /dev/ttyUSB0
