@@ -147,6 +147,8 @@ module.exports = {
         Protobufs: ["developers/protobufs/api"],
       },
       "developers/api",
+      "developers/build-env",
+      "developers/codespaces",
       {
         Device: [
           "developers/device/device-api",
@@ -157,6 +159,12 @@ module.exports = {
           "developers/device/plugin-api",
           "developers/device/http-api",
           "developers/device/documents",
+        ],
+      },
+      {
+        "Android App": [
+          "developers/android/build-app",
+          "developers/android/mapbox",
         ],
       },
     ],
