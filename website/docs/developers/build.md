@@ -4,9 +4,9 @@ title: Creating a build/development environment
 sidebar_label: Building Meshtastic
 ---
 
-This project uses the simple PlatformIO build system. PlatformIO is an extension to Microsoft VSCode. Workflows from building from the GUI or from the commandline are listed below.
+This project uses the simple PlatformIO build system. PlatformIO is an extension to Microsoft VSCode.
 
-## GUI
+## GUI Installation
 
 1. Install [Python](https://www.python.org/downloads/).
 2. Install [Git](https://git-scm.com/downloads) or [GitHub Desktop](https://desktop.github.com/)
