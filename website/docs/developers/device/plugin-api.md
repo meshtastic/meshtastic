@@ -41,14 +41,14 @@ A number of [key services](http://github.com/meshtastic/meshtastic-device/tree/m
 
 - [TextMessagePlugin](http://github.com/meshtastic/meshtastic-device/tree/master/src/plugins/TextMessagePlugin.h) - receives text messages and displays them on the LCD screen/stores them in the local DB
 - [NodeInfoPlugin](http://github.com/meshtastic/meshtastic-device/tree/master/src/plugins/NodeInfoPlugin.h) - receives/sends User information to other nodes so that usernames are available in the databases
-- [RemoteHardwarePlugin](http://github.com/meshtastic/meshtastic-device/tree/master/src/plugins/RemoteHardwarePlugin.h) - a plugin that provides easy remote access to device hardware (for things like turning GPIOs on or off). Intended to be a more extensive example and provide a useful feature of its own. See [remote-hardware](remote-hardware-service.md) for details.
+- [RemoteHardwarePlugin](http://github.com/meshtastic/meshtastic-device/tree/master/src/plugins/RemoteHardwarePlugin.h) - a plugin that provides easy remote access to device hardware (for things like turning GPIOs on or off). Intended to be a more extensive example and provide a useful feature of its own. See [remote-hardware](/docs/software/other/remote-hardware-service) for details.
 - [ReplyPlugin](http://github.com/meshtastic/meshtastic-device/tree/master/src/plugins/ReplyPlugin.h) - a simple plugin that just replies to any packet it receives (provides a 'ping' service).
 
 ## Getting started
 
 The easiest way to get started is:
 
-- [Build and install](build-instructions.md) the standard codebase from github.
+- [Build and install](/docs/software/other/build-instructions) the standard codebase from github.
 - Copy [src/plugins/ReplyPlugin.\*](http://github.com/meshtastic/meshtastic-device/tree/master/src/plugins/ReplyPlugin.cpp) into src/plugins/YourPlugin.*. Then change the port number from *PortNum_REPLY_APP* to *PortNum_PRIVATE_APP\*.
 - Edit plugins/Plugins.cpp:setupPlugins() to add a call to create an instance of your plugin (see comment at head of that function)
 - Rebuild with your new messaging goodness and install on the device

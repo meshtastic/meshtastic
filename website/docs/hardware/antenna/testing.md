@@ -22,7 +22,7 @@ On the topic of testing - performing your own testing and providing feedback is 
 
 ## Signal strength testing
 
-Real world testing is also discussed by Andreas Speiss (the 'guy with the Swiss accent') in his [tutorial](https://www.youtube.com/watch?v=J3PBL9oLPX8). He has written [code](https://github.com/SensorsIot/Antenna-Tester) for testing antennas using two Lora32 V1 boards to compare how different antennas behave.
+Real world testing is also discussed by Andreas Speiss (the 'guy with the Swiss accent') in his [tutorial](https://www.youtube.com/watch?v=J3PBL9oLPX8). He has written [code](https://github.com/SensorsIot/Antenna-Tester) for testing antennas using two Lora32 V1 boards to compare how different antennas behave. Lilygo have also made code available for testing the rssi on the [LORA32](https://github.com/LilyGO/TTGO-LORA32) [boards](https://github.com/Xinyuan-LilyGO/TTGO-LoRa-Series) and the [T-Beam](https://github.com/LilyGO/TTGO-T-Beam).
 
 Here are a [couple](https://medium.com/home-wireless/testing-lora-antennas-at-915mhz-6d6b41ac8f1d) of [excellent](https://medium.com/home-wireless/testing-and-reviewing-lora-antennas-5b37dfa594a3) aerial comparisons.  Their utility goes beyond the specific aerials tested, giving insight into:
 - Aerial types & their characteristics,
