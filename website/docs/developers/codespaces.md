@@ -19,10 +19,10 @@ After that you will be added to the waiting list and will be contacted when you 
 ![On the Codespaces waiting list](/img/codespaces/codespaces-waitinglist-sm.png)
 
 Once you have been granted access, go to the project you wish to develop (for example the [Meshtastic device code](https://github.com/meshtastic/Meshtastic-device) or the [backend server code](https://github.com/meshtastic/meshtastic-backend)) and click the button in the upper right that says "Fork". It will ask you to confirm, then GitHub will generate your "fork" of the master code.
-    <!--add images for this section once I have access to Codespaces-->
-Browse to your fork of the code and in the upper right of the window click on the "Code" dropdown button, then click "Open with Codespaces"
+<!--add images for this section once I have access to Codespaces-->
+Browse to your fork of the code and in the upper right of the window click on the "Code" dropdown button, then click "Open with Codespaces".
 
 Github will then create a new virtual machine for you. This will take a few minutes the first time it is created as it installs Platformio and other dependancies.
 
 You can now edit code and click to build and run just like you are on your own machine.
-    <!--add examples of usage-->
+<!--add examples of usage-->

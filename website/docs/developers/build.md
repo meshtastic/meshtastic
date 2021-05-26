@@ -22,4 +22,6 @@ This project uses the simple PlatformIO build system. PlatformIO is an extension
 10. The hardware can be configured for different countries by adding a definition to the `configuration.h` file. `#define HW_VERSION_US` or `HW_VERSION_EU433, HW_VERSION_EU865, HW_VERSION_CN, HW_VERSION_JP`. Other country settings can be found in `MeshRadio.h`. The default is `HW_VERSION_US`.
 11. Click the PlatformIO icon on the side bar. Under `Project Tasks` you can now build or upload.
 
-Note - To get a clean build you may have to delete the auto-generated file `./.vscode/c_cpp_properties.json`, close and re-open Visual Studio and WAIT until the file is auto-generated before compiling again.
+:::note
+To get a clean build you may have to delete the auto-generated file `./.vscode/c_cpp_properties.json`, close and re-open Visual Studio and WAIT until the file is auto-generated before compiling again.
+:::
