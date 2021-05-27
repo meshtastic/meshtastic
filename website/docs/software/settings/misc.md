@@ -43,7 +43,7 @@ If set, this will disable the SerialConsole by not initilizing the StreamAPI.
 
 ## Examples
 
-### Enable debug log
+### debug_log_enabled
 
 <Tabs
   groupId="settings"
@@ -54,9 +54,111 @@ If set, this will disable the SerialConsole by not initilizing the StreamAPI.
   ]}>
   <TabItem value="cli">
 
+  ```bash title="Example - Disable debug log"
+  meshtastic --set debug_log_enabled false
   ```
+:::note
+`debug_log_enabled` set to `false` is the default behavior.
+:::
+  ```bash title="Example - Enable debug log"
   meshtastic --set debug_log_enabled true
   ```
+
+  </TabItem>
+  <TabItem value="android">
+
+  TODO
+
+  </TabItem>
+</Tabs>
+
+### factory_reset
+
+<Tabs
+  groupId="settings"
+  defaultValue="cli"
+  values={[
+    {label: 'CLI', value: 'cli'},
+    {label: 'Android', value: 'android'},
+  ]}>
+  <TabItem value="cli">
+
+  ```bash title="Example - Factory reset"
+  meshtastic --set factory_reset true
+  ```
+
+  </TabItem>
+  <TabItem value="android">
+
+  TODO
+
+  </TabItem>
+</Tabs>
+
+### frequency_offset
+
+<Tabs
+  groupId="settings"
+  defaultValue="cli"
+  values={[
+    {label: 'CLI', value: 'cli'},
+    {label: 'Android', value: 'android'},
+  ]}>
+  <TabItem value="cli">
+
+  TODO
+
+  </TabItem>
+  <TabItem value="android">
+
+  TODO
+
+  </TabItem>
+</Tabs>
+
+
+### ignore_incoming
+
+<Tabs
+  groupId="settings"
+  defaultValue="cli"
+  values={[
+    {label: 'CLI', value: 'cli'},
+    {label: 'Android', value: 'android'},
+  ]}>
+  <TabItem value="cli">
+
+  TODO
+
+  </TabItem>
+  <TabItem value="android">
+
+  TODO
+
+  </TabItem>
+</Tabs>
+
+
+### serial_disabled
+
+<Tabs
+  groupId="settings"
+  defaultValue="cli"
+  values={[
+    {label: 'CLI', value: 'cli'},
+    {label: 'Android', value: 'android'},
+  ]}>
+  <TabItem value="cli">
+
+  ```bash title="Example - Disable serial"
+  meshtastic --set disable_serial true
+  ```
+  ```bash title="Example - Enable serial"
+  meshtastic --set disable_serial false
+  ```
+:::note
+`disable_serial` set to `false` is the default behavior.
+:::
 
   </TabItem>
   <TabItem value="android">
