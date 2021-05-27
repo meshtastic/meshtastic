@@ -23,7 +23,7 @@ import TabItem from '@theme/TabItem';
 
 ### debug_log_enabled
 
-By default we turn off logging as soon as an API client connects (to keep shared serial link quiet). Set this to true to leave the debug log outputting even when API is active.
+By default we turn off logging as soon as an API client connects (to keep shared serial link quiet and save bandwidth). Set this to true to leave the debug log outputting even when API is active.
 
 ### factory_reset
 
@@ -43,6 +43,8 @@ If set, this will disable the SerialConsole by not initilizing the StreamAPI.
 
 ## Examples
 
+### Enable debug log
+
 <Tabs
   groupId="settings"
   defaultValue="cli"
@@ -52,7 +54,9 @@ If set, this will disable the SerialConsole by not initilizing the StreamAPI.
   ]}>
   <TabItem value="cli">
 
-  TODO
+  ```
+  meshtastic --set debug_log_enabled true
+  ```
 
   </TabItem>
   <TabItem value="android">
