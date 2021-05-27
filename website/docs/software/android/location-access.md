@@ -13,10 +13,12 @@ Sorry ya'll.
 
 ## Why this app needs "foreground location acccess"
 
-We need foregraound location access for two reaons:
+We need foreground location access for two reaons:
 
 * (Primarily) [This app](https://github.com/meshtastic/Meshtastic-Android) is a navigation app that uses long range LoRa mesh radios for communication in the back country.  These radios can run for weeks on a charge and talk to the user's phone over USB or bluetooth to provide the UX.  We need foreground location so we can show the user's current position on the same map that is showing positions of the other users.
 * (Secondarily) Using the old bluetooth BLE API (which we need to use to support older devices), scanning for bluetooth low energy devices requires this permission (because 'beacons' etc... could leak location info to the app).  Without this permission (on older phones) the BLE discovery results are always empty.
+
+If it is helpful, [here](https://meshtastic.org/docs/software/android/android-usage) is a slightly stale set of screenshots/instructions showing how the user uses our application.
 
 ## Why this app needs "background location access"
 

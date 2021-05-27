@@ -25,6 +25,7 @@ module.exports = {
         "Meshtastic Android": [
           "software/android/android-installation",
           "software/android/android-usage",
+          "software/android/location-access"
         ],
       },
       {
