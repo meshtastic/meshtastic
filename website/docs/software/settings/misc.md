@@ -43,7 +43,11 @@ If set, this will disable the SerialConsole by not initilizing the StreamAPI.
 
 ## Examples
 
-### debug_log_enabled
+### Debug Log - Disable
+
+:::note
+`debug_log_enabled` set to `false` is the default behavior.
+:::
 
 <Tabs
   groupId="settings"
@@ -57,9 +61,25 @@ If set, this will disable the SerialConsole by not initilizing the StreamAPI.
   ```bash title="Example - Disable debug log"
   meshtastic --set debug_log_enabled false
   ```
-:::note
-`debug_log_enabled` set to `false` is the default behavior.
-:::
+  </TabItem>
+  <TabItem value="android">
+
+  TODO
+
+  </TabItem>
+</Tabs>
+
+### Debug Log - Enable
+
+<Tabs
+  groupId="settings"
+  defaultValue="cli"
+  values={[
+    {label: 'CLI', value: 'cli'},
+    {label: 'Android', value: 'android'},
+  ]}>
+  <TabItem value="cli">
+
   ```bash title="Example - Enable debug log"
   meshtastic --set debug_log_enabled true
   ```
@@ -72,7 +92,7 @@ If set, this will disable the SerialConsole by not initilizing the StreamAPI.
   </TabItem>
 </Tabs>
 
-### factory_reset
+### Factory reset
 
 <Tabs
   groupId="settings"
@@ -95,7 +115,7 @@ If set, this will disable the SerialConsole by not initilizing the StreamAPI.
   </TabItem>
 </Tabs>
 
-### frequency_offset
+### Frequency Offset
 
 <Tabs
   groupId="settings"
@@ -117,7 +137,7 @@ If set, this will disable the SerialConsole by not initilizing the StreamAPI.
 </Tabs>
 
 
-### ignore_incoming
+### Ignore Incoming
 
 <Tabs
   groupId="settings"
@@ -139,7 +159,7 @@ If set, this will disable the SerialConsole by not initilizing the StreamAPI.
 </Tabs>
 
 
-### serial_disabled
+### Serial - Disable
 
 <Tabs
   groupId="settings"
@@ -153,12 +173,33 @@ If set, this will disable the SerialConsole by not initilizing the StreamAPI.
   ```bash title="Example - Disable serial"
   meshtastic --set disable_serial true
   ```
-  ```bash title="Example - Enable serial"
-  meshtastic --set disable_serial false
-  ```
+
+  </TabItem>
+  <TabItem value="android">
+
+  TODO
+
+  </TabItem>
+</Tabs>
+
+### Serial - Enable
+
 :::note
 `disable_serial` set to `false` is the default behavior.
 :::
+
+<Tabs
+  groupId="settings"
+  defaultValue="cli"
+  values={[
+    {label: 'CLI', value: 'cli'},
+    {label: 'Android', value: 'android'},
+  ]}>
+  <TabItem value="cli">
+
+  ```bash title="Example - Enable serial"
+  meshtastic --set disable_serial false
+  ```
 
   </TabItem>
   <TabItem value="android">
