@@ -1,9 +1,9 @@
 # Location access and meshtastic
 
-Google Play has some new requirements for access to background location.  This doc is a collection of work items needed to meet those requirements.
+Google Play has some newish requirements for access to background location.  This doc is a collection of work items needed to meet those requirements.
 
 The app is currently removed from the play store ([broken store link](https://play.google.com/store/apps/details?id=com.geeksville.mesh)), and some kind googlers inside of google are helping with this problem.  **Hopefully** it will be
-relisted soon (while we address threse three new requirements), but we've got to do a bit of code to add a new dialog (and make a video for google).  It will take about a week to make these changes (including testing time with the [alpha-tester group](https://meshtastic.discourse.group/c/development/alpha-testers/) on the forum).
+relisted soon (while we address these newish requirements), but we've got to do a bit of code to add a new dialog (and make a video for google).  It will take about a week to make these changes (including testing time with the [alpha-tester group](https://meshtastic.discourse.group/c/development/alpha-testers/) on the forum).
 
 Until relisted in the play store (hopefully they can relist while we make these fixes), you'll need to install [raw APKs from github](https://github.com/meshtastic/Meshtastic-Android/releases).  Which is not ideal, but works.
 
