@@ -3,7 +3,7 @@ id: android-installation
 title: Android application installation
 sidebar_label: Installation
 ---
-~Our Android application is available to download on Google Play.~ Our Google Play listing has been removed by google due to a recent policy change by them with respect to the background location accesss (which our app needs). We've started the 'appeal' process, but for now you'll need to get the app from other places.
+~~Our Android application is available to download on Google Play.~~ Our Google Play listing has been removed by google due to a recent policy change by them with respect to the background location accesss (which our app needs). We've started the '[appeal](/docs/software/android/location-access)' process, but for now you'll need to get the app from other places.
 
 The app is also available on the Amazon [Appstore](https://www.amazon.com/Geeksville-Industries-Meshtastic/dp/B08CY9394Q). You will need to install the Amazon Appstore onto your phone in order to install the Meshtastic application.
 
