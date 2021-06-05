@@ -124,6 +124,7 @@ Installation is easily done through the [Python package installer pip](https://p
     
 </TabItem>
 <TabItem value="termux">
+
 * Install [Termux](https://f-droid.org/en/packages/com.termux/) from the F-Droid app store (Google play does not currently support the latest builds)
 * Load Termux and update the package list
     ```
