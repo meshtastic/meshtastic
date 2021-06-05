@@ -7,7 +7,7 @@ sidebar_label: Installation
 
 The app is also available on the Amazon [Appstore](https://www.amazon.com/Geeksville-Industries-Meshtastic/dp/B08CY9394Q). You will need to install the Amazon Appstore onto your phone in order to install the Meshtastic application.
 
-<p align="center"><a href="https://play.google.com/store/apps/details?id=com.geeksville.mesh&referrer=utm_source%3Dgithub-homepage"><img alt="Download at https://play.google.com/store/apps/details?id=com.geeksville.mesh" src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" style={{zoom:'35%'}} /></a>      <a href="https://www.amazon.com/Geeksville-Industries-Meshtastic/dp/B08CY9394Q" style={{padding-bottom:'3.5em'}}><img alt="Download at https://www.amazon.com/Geeksville-Industries-Meshtastic/dp/B08CY9394Q" src="/img/amazon-fire-button.png" style={{zoom:'20%'}} /></a></p>
+<p align="center"><a href="https://play.google.com/store/apps/details?id=com.geeksville.mesh&referrer=utm_source%3Dgithub-homepage"><img alt="Download at https://play.google.com/store/apps/details?id=com.geeksville.mesh" src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" style={{zoom:'35%'}} /></a>      <a href="https://www.amazon.com/Geeksville-Industries-Meshtastic/dp/B08CY9394Q" style={{padding:'3.5em'}}><img alt="Download at https://www.amazon.com/Geeksville-Industries-Meshtastic/dp/B08CY9394Q" src="/img/amazon-fire-button.png" style={{zoom:'20%'}} /></a></p>
 
 The application may not be found if your phone/Android version are too old. The minimum Android version is 5.0 (Lollipop 2014, first BLE support). However Android 6, Marshmallow 2015, is recommended as the Bluetooth is more stable.
 
