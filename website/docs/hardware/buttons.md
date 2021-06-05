@@ -10,5 +10,5 @@ Many of the TTGO Lora32 devices do not have a progam button to navigate the disp
 
 Shorting IO12 to ground will progress the screen pages, wake up the device, etc. A simple push switch can be added for this purpose.
 
-<a href="/img/hardware/lora32-v2-1.6-button.jpg"><img src="/img/hardware/lora32-v2-1.6-button.jpg" style={{zoom:'30%'}} /></a>
+[<img src="/img/hardware/lora32-v2-1.6-button.jpg" style={{zoom:'30%'}} />](/img/hardware/lora32-v2-1.6-button.jpg)
 
