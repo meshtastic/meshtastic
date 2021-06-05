@@ -33,85 +33,11 @@
 
 ## What is Meshtastic?
 
-<table>
-<tr>
-<td>
 <p>
 Meshtastic® is a project that lets you use inexpensive GPS mesh radios as an extensible, super long battery life mesh GPS communicator. These radios are great for hiking, skiing, paragliding - essentially any hobby where you don't have reliable internet access. Each member of your private mesh can always see the location and distance of all other members and any text messages sent to your group chat.
 </p>
 <p>
 The radios automatically create a mesh to forward packets as needed, so everyone in the group can receive messages from even the furthest member. The radios will optionally work with your phone, but no phone is required.
 </p>
-</td>
-</tr>
-</table>
-## Getting started
 
-###### Description, should mention:
-
-You will require atleast one of [these](https://github.com/meshtastic/meshtastic-device#supported-hardware) devices
-
-- Link to device compatability table on `meshtastic/meshtastic-device`
-- Link to flashing instructions
-
-## Community
-
-###### Description, should mention:
-
-- Discussions tab: https://github.com/meshtastic/Meshtastic/discussions
-- Forum
-- Slack
-- unofficial/international communities
-- Maybe have an `awesome-meshtastic` page, have all of the apps and extensions ppl have made
-
-## Software
-
-###### Description
-
-#### Meshtastic App
-
-<table>
-<tr>
-<td>
-<p>
-The official Meshtastic Android app, It provides messaging, channel configuration and a real time map. It also has inbuilt functionality for updating device firmware over Bluetooth
-</p>
-</td>
-</tr>
-</table>
-
-#### Meshtastic Device
-
-<table>
-<tr>
-<td>
-<p>
-The paramount Meshtastic project, the device firmware itself. Runs on supported hardware that allows the creation of mesh networks at any scale
-</p>
-</td>
-</tr>
-</table>
-
-#### Meshtastic.js
-
-<table>
-<tr>
-<td>
-<p>
-TypeScript library for interfacting with Meshtastic 
-</p>
-</td>
-</tr>
-</table>
-
-#### Meshtastic-python
-
-<table>
-<tr>
-<td>
-<p>
-Description about product
-</p>
-</td>
-</tr>
-</table>
+<p>Please see our <a href="https://meshtastic.org">website for more information about Meshtastic</p>

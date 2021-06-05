@@ -10,6 +10,8 @@ This is a python library for using Meshtastic devices. This small library (and e
 
 [Full documentation](https://meshtastic.github.io/Meshtastic-python) for the library, including examples, is available.
 
+If you wish to view the code or contribute to development of the python library or the command line interface, please visit the Meshtastic python <a href="https://github.com/meshtastic/Meshtastic-python">GitHub page</a>.
+
 Installation is easily done through the [Python package installer pip](https://pypi.org/project/meshtastic/) (note, you must use pip version 20 or later):
 
 <Tabs
@@ -19,6 +21,7 @@ Installation is easily done through the [Python package installer pip](https://p
     {label: 'Linux', value: 'linux'},
     {label: 'macOS', value: 'macos'},
     {label: 'Windows', value: 'windows'},
+    {label: 'Termux for Android', value: 'termux'},
   ]}>
 <TabItem value="linux">
 
@@ -119,5 +122,28 @@ Installation is easily done through the [Python package installer pip](https://p
     pip3 install --upgrade meshtastic
     ```
     
+</TabItem>
+<TabItem value="termux">
+* Install [Termux](https://f-droid.org/en/packages/com.termux/) from the F-Droid app store (Google play does not currently support the latest builds)
+* Load Termux and update the package list
+    ```
+    pkg update
+    ```
+* Upgrade the installed packages
+    ```
+    pkg upgrade
+    ```
+* Install python
+    ```
+    pkg install python
+    ```
+* Upgrade pip and installed meshtastic and its dependancies
+    ```
+    pip install --upgrade pip pytap2 wheel mesthtastic
+    ```
+
+:::note 
+Be aware that currently the Meshtastic CLI is not able to control the nodes over USB through termux, but you can control devices over wifi using the `--host x.x.x.x` option with the device IP address. However, only ESP32 devices can use wifi currently.
+:::
 </TabItem>
 </Tabs>
