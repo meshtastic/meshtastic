@@ -23,7 +23,7 @@ import TabItem from '@theme/TabItem';
 
 ### debug_log_enabled
 
-By default we turn off logging as soon as an API client connects (to keep shared serial link quiet). Set this to true to leave the debug log outputting even when API is active.
+By default we turn off logging as soon as an API client connects (to keep shared serial link quiet and save bandwidth). Set this to true to leave the debug log outputting even when API is active.
 
 ### factory_reset
 
@@ -41,11 +41,81 @@ If true, radio should not try to be smart about what packets to queue to the pho
 
 If set, this will disable the SerialConsole by not initilizing the StreamAPI.
 
-## Details
-
-<!--- TODO --->
-
 ## Examples
+
+### Debug Log - Disable
+
+:::note
+`debug_log_enabled` set to `false` is the default behavior.
+:::
+
+<Tabs
+  groupId="settings"
+  defaultValue="cli"
+  values={[
+    {label: 'CLI', value: 'cli'},
+    {label: 'Android', value: 'android'},
+  ]}>
+  <TabItem value="cli">
+
+  ```bash title="Example - Disable debug log"
+  meshtastic --set debug_log_enabled false
+  ```
+  </TabItem>
+  <TabItem value="android">
+
+  TODO
+
+  </TabItem>
+</Tabs>
+
+### Debug Log - Enable
+
+<Tabs
+  groupId="settings"
+  defaultValue="cli"
+  values={[
+    {label: 'CLI', value: 'cli'},
+    {label: 'Android', value: 'android'},
+  ]}>
+  <TabItem value="cli">
+
+  ```bash title="Example - Enable debug log"
+  meshtastic --set debug_log_enabled true
+  ```
+
+  </TabItem>
+  <TabItem value="android">
+
+  TODO
+
+  </TabItem>
+</Tabs>
+
+### Factory reset
+
+<Tabs
+  groupId="settings"
+  defaultValue="cli"
+  values={[
+    {label: 'CLI', value: 'cli'},
+    {label: 'Android', value: 'android'},
+  ]}>
+  <TabItem value="cli">
+
+  ```bash title="Example - Factory reset"
+  meshtastic --set factory_reset true
+  ```
+
+  </TabItem>
+  <TabItem value="android">
+
+  TODO
+
+  </TabItem>
+</Tabs>
+
+### Frequency Offset
 
 <Tabs
   groupId="settings"
@@ -57,6 +127,79 @@ If set, this will disable the SerialConsole by not initilizing the StreamAPI.
   <TabItem value="cli">
 
   TODO
+
+  </TabItem>
+  <TabItem value="android">
+
+  TODO
+
+  </TabItem>
+</Tabs>
+
+
+### Ignore Incoming
+
+<Tabs
+  groupId="settings"
+  defaultValue="cli"
+  values={[
+    {label: 'CLI', value: 'cli'},
+    {label: 'Android', value: 'android'},
+  ]}>
+  <TabItem value="cli">
+
+  TODO
+
+  </TabItem>
+  <TabItem value="android">
+
+  TODO
+
+  </TabItem>
+</Tabs>
+
+
+### Serial - Disable
+
+<Tabs
+  groupId="settings"
+  defaultValue="cli"
+  values={[
+    {label: 'CLI', value: 'cli'},
+    {label: 'Android', value: 'android'},
+  ]}>
+  <TabItem value="cli">
+
+  ```bash title="Example - Disable serial"
+  meshtastic --set disable_serial true
+  ```
+
+  </TabItem>
+  <TabItem value="android">
+
+  TODO
+
+  </TabItem>
+</Tabs>
+
+### Serial - Enable
+
+:::note
+`disable_serial` set to `false` is the default behavior.
+:::
+
+<Tabs
+  groupId="settings"
+  defaultValue="cli"
+  values={[
+    {label: 'CLI', value: 'cli'},
+    {label: 'Android', value: 'android'},
+  ]}>
+  <TabItem value="cli">
+
+  ```bash title="Example - Enable serial"
+  meshtastic --set disable_serial false
+  ```
 
   </TabItem>
   <TabItem value="android">

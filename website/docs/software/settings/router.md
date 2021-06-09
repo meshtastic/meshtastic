@@ -40,6 +40,7 @@ Toggling `is_router` changes your device settings in the following ways.
 
 ## Examples
 
+### Set Router
 <Tabs
   groupId="settings"
   defaultValue="cli"
@@ -49,7 +50,9 @@ Toggling `is_router` changes your device settings in the following ways.
   ]}>
   <TabItem value="cli">
 
-  TODO
+  ```bash title="Set Router"
+  meshtastic --set is_router true
+  ```
 
   </TabItem>
   <TabItem value="android">

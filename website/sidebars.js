@@ -116,8 +116,11 @@ module.exports = {
               "software/settings/serial-plugin",
               "software/settings/store-and-forward-plugin",
             ],
+            "Advanced": [
+              "software/settings/channel-advanced",
+              "software/settings/misc",
+            ],
           },
-          "software/settings/misc",
         ]
       },
     ],

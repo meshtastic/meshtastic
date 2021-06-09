@@ -90,8 +90,6 @@ For instance the default interval of 4 will send the node owner information for 
 
 Power management state machine option. See the [power page](../other/power) for details. 0 for default of 1 minute
 
-## Details
-
 ## Examples
 
 <Tabs
