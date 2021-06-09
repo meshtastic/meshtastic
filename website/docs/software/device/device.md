@@ -8,6 +8,7 @@ The device firmware runs on the nodes to build the mesh for communication. Each 
 
 The current firmware has support for a screen to display received messages, along with information about nodes on the mesh, and more detailed information about the device on which it is running.
 
+The latest firmware can be downloaded from the <a href="https://github.com/meshtastic/Meshtastic-device/releases/latest">GibHut releases</a> page, which also contains the release notes for each version. If you wish to view the code or contribute to development of the firmware, please visit the device code <a href="https://github.com/meshtastic/Meshtastic-device">GitHub page</a>.
 ### Buttons
 
 A number of devices support buttons that can be used to interact with the firmware. These buttons have a number of different functions:
