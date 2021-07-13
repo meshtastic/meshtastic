@@ -14,7 +14,7 @@ This is a plugin for ATAK (Android Team Awareness Kit) that uses Meshtastic to p
 
 ![ATAK Plugin](/img/atak-animation.gif)
 
-The builds of the plugin on the Google Drive currently are now signed for the Play Store version of ATAK, as of 6/3/2021.
+The builds of the plugin on the Google Drive are now signed for the Play Store version of ATAK, as of 6/3/2021.
 
 The ATAK plugin requires the Meshtastic Android app to be installed.
 
