@@ -30,37 +30,9 @@ Prebuilt binaries for the supported radios are available in our releases. Your i
 Be careful to install the correct load for your board. While it is unlikely that you will cause damage to your device, the wrong firmware will cause it to not work.
 :::
 
-<Tabs
-  groupId="operating-system"
-  defaultValue="linux"
-  values={[
-    {label: 'Linux', value: 'linux'},
-    {label: 'macOS', value: 'macos'},
-    {label: 'Windows', value: 'windows'},
-  ]}>
-  <TabItem value="linux">
 
-
-  </TabItem>
-  <TabItem value="macos">
-
-* Connect your device to your computer with a USB cable. If you computer complains about needing to format the new drive, cancel the format command.
+* Connect your device to your computer with a USB cable. If you computer complains about needing to format a new drive, cancel the format command.
 * Double click the reset button on your device, this will put it into boot loader mode.
-* A new drive will then appear on your computer. Open this drive and you should see three files: `CURRENT.UF2`, `INDEX.HTM`, and `INFO_UF2.TXT`
+* A new drive will then be mounted on your computer. Open this drive and you should see three files: `CURRENT.UF2`, `INDEX.HTM`, and `INFO_UF2.TXT`
 * Copy the appropriate `firmware-xxxxx-1.2.x.uf2` file from the firmware zip file onto the new drive.
 * Once the file has finished copying over, the device will reboot, loading the new firmware as it does.
-
-
-  </TabItem>
-  <TabItem value="windows">
-
-* Connect your device to your computer with a USB cable. If you computer complains about needing to format the new drive, cancel the format command.
-* Double click the reset button on your device, this will put it into boot loader mode.
-* A new drive will then appear on your computer. Open this drive and you should see three files: `CURRENT.UF2`, `INDEX.HTM`, and `INFO_UF2.TXT`
-* Copy the appropriate `firmware-xxxxx-1.2.x.uf2` file from the firmware zip file onto the new drive.
-* Once the file has finished copying over, the device will reboot, loading the new firmware as it does.
-
-
-  </TabItem>
-</Tabs>
-
