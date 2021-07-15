@@ -1,7 +1,7 @@
 ---
-id: flashing-firmware
-title: Flashing Firmware
-sidebar_label: Flashing Firmware
+id: flashing-esp32
+title: Flashing ESP32 devices firmware
+sidebar_label: ESP32 devices
 ---
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
