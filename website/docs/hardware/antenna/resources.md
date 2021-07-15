@@ -5,7 +5,10 @@ sidebar_label: Resources
 slug: /hardware/resources
 ---
 
+### More antenna information
 
+* [Hackaday's Introduction to Antenna Basics](https://www.youtube.com/playlist?list=PL_tws4AXg7authztKFg5ZN5qWGtq3N_nI)
+    * An excellent series of presentations on the basics of antenna design and function, presented by spacecraft radio engineer Karen Rucker.
 ### Coverage prediction
 
 * [Tower Coverage.com](https://www.towercoverage.com/)
