@@ -32,6 +32,8 @@ If your device already has Meshtastic flashed to it, You can update it over the 
 - Install using the command line interface (CLI)
 - Install using a graphical user interface (GUI)
 
+The firmware installation method will also depend on whether you have an ESP32 based device or a nRF52 based device. See our [hardware section](/docs/hardware) to determine which microcontroller your device is based on.
+
 ## Connect to your Device
 
 There are many ways to connect to your new radio!
