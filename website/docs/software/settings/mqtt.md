@@ -44,7 +44,6 @@ This is a channel specific setting. If your channel has this set to `true` and y
 This is a channel specific setting. If your channel has this set to `true` and you are connected to WiFi, the device will forward along messages from the MQTT server to the mesh from this device.
 
 ## Details
-
 <!--- TODO --->
 
 ## Examples
@@ -57,9 +56,19 @@ This is a channel specific setting. If your channel has this set to `true` and y
     {label: 'Android', value: 'android'},
   ]}>
   <TabItem value="cli">
+  ```bash title="Set server"
+  meshtastic --set mqtt_server 192.168.123.234
+  ```
 
-  TODO
+  ```bash title="Enable MQTT server to mesh"
+  meshtastic --set is_downlink_enabled True
+  ```
 
+  ```bash title="View raw encoded messages using mosquitto"
+  mosquitto_sub -h 192.168.123.234 -v -t msh/#
+  ```
+    
+  :::note FIXME some documentation says msh/# , some says mesh/# . As of 1.2.39 the messages are on msh/#
   </TabItem>
   <TabItem value="android">
 
