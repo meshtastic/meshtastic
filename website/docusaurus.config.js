@@ -89,8 +89,8 @@ module.exports = {
               href: "https://meshtastic.discourse.group",
             },
             {
-              label: "Slack",
-              href: "https://meshtasticdev.slack.com",
+              label: "Discord",
+              href: "https://discord.gg/UQJ5QuM7vq",
             },
           ],
         },
@@ -111,8 +111,8 @@ module.exports = {
       copyright: `Meshtastic® trademark is a registered trademark belonging to Geeksville Industries LLC`,
     },
     algolia: {
-      apiKey: '01ad7e13d3fe392d2ad26da3c69dbc21',
-      indexName: 'meshtastic',
+      apiKey: "01ad7e13d3fe392d2ad26da3c69dbc21",
+      indexName: "meshtastic",
       contextualSearch: false,
       searchParameters: {},
     },
