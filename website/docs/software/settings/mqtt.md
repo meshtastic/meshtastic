@@ -3,6 +3,7 @@ id: mqtt
 title: MQTT Settings
 sidebar_label: MQTT
 ---
+
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -20,12 +21,12 @@ If your device is connected to WiFi you can enable it to forward messages along 
 
 ## Settings
 
-| Setting | Acceptable Values | Default |
-| :-----: | :---------------: | :-----: |
-| mqtt_disabled | `true`, `false` | `false` |
-| mqtt_server | `string` | `""` |
-| is_uplink_enabled | `true`, `false` | `false` |
-| is_downlink_enabled | `true`, `false` | `false` |
+|       Setting       | Acceptable Values | Default |
+| :-----------------: | :---------------: | :-----: |
+|    mqtt_disabled    |  `true`, `false`  | `false` |
+|     mqtt_server     |     `string`      |  `""`   |
+|  is_uplink_enabled  |  `true`, `false`  | `false` |
+| is_downlink_enabled |  `true`, `false`  | `false` |
 
 ### mqtt_disabled
 
@@ -50,20 +51,33 @@ This is a channel specific setting. If your channel has this set to `true` and y
 ## Examples
 
 <Tabs
-  groupId="settings"
-  defaultValue="cli"
-  values={[
-    {label: 'CLI', value: 'cli'},
-    {label: 'Android', value: 'android'},
-  ]}>
-  <TabItem value="cli">
+groupId="settings"
+defaultValue="cli"
+values={[
+{label: 'CLI', value: 'cli'},
+{label: 'Android', value: 'android'},
+]}>
+<TabItem value="cli">
 
-  TODO
+```bash title="Set server"
+meshtastic --set mqtt_server 192.168.123.234
+```
 
-  </TabItem>
-  <TabItem value="android">
+```bash title="Enable MQTT server to mesh"
+meshtastic --set is_downlink_enabled True
+```
 
-  TODO
+```bash title="View raw encoded messages using mosquitto"
+mosquitto_sub -h 192.168.123.234 -v -t msh/#
+```
+
+:::note
+FIXME some documentation says msh/# , some says mesh/# . As of 1.2.39 the messages are on msh/#
+:::
+</TabItem>
+<TabItem value="android">
+
+TODO
 
   </TabItem>
 </Tabs>
