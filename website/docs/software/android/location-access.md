@@ -11,7 +11,7 @@ Sorry ya'll.
 
 (The remainder of this public document is mostly for googlers)
 
-## Why this app needs "foreground location acccess"
+## Why this app needs "foreground location access"
 
 We need foreground location access for two reaons:
 
