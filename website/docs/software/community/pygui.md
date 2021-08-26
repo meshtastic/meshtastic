@@ -17,7 +17,7 @@ PyGUI is a platform independant graphical user interface for meshtastic devices.
 This can be installed using pip.
 
 ```powershell title="Windows"
-python -m pip install --upgraade meshtastic-pygui
+python -m pip install --upgrade meshtastic-pygui
 ```
 
 ```bash title="MacOS/Linux"
