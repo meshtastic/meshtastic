@@ -158,7 +158,7 @@ pip --version
   <TabItem value="linux">
 
   ```bash
-  pip install --upgrade esptool
+  pip3 install --upgrade esptool
   ```
 
   </TabItem>
