@@ -140,7 +140,7 @@ Installation is easily done through the [Python package installer pip](https://p
     ```
 * Upgrade pip and installed meshtastic and its dependancies
     ```
-    pip install --upgrade pip pytap2 wheel mesthtastic
+    pip install --upgrade pip pygatt pytap2 wheel mesthtastic
     ```
 
 :::note 
