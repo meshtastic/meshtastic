@@ -3,42 +3,42 @@ id: power
 title: Power Settings
 sidebar_label: Power
 ---
+
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-
 ## Overview
 
-Power settings on a Meshtastic device can be set like other user-define settings with the `--set` command ([see Meshtastic-python](../python/usage)). Some of these options are implicit in other commands. For example, when you set the device to router mode using `is_router true`, it is implied that deep sleep is disabled and we want to constantly listen for messages. Below is a list of all user-definable settings and the acceptable values that these settings can use.
+Power settings on a Meshtastic device can be set like other user-define settings with the `--set` command see ([see Meshtastic-python](../python/python-usage)). Some of these options are implicit in other commands. For example, when you set the device to router mode using `is_router true`, it is implied that deep sleep is disabled and we want to constantly listen for messages. Bellow is a list of all user-definable settings and the acceptable values that these settings can use.
 
 For example, if we wanted to disable sleep mode, like when we put the device into router mode, we could use the command:
 
-  ```bash
-  meshtastic --set mesh_sds_timeout_secs MAXUNIT
-  ```
-  (see `MAXUNIT` under `mesh_sds_timeout_secs` below...)
-  
+```bash
+meshtastic --set mesh_sds_timeout_secs MAXUNIT
+```
+
 For a description and more information on what exactly all of these mean, please refer to [Power Management State Machine](../other/power)
 
 ## Settings
 
-| Setting | Acceptable Values | Default |
-| :-----: | :---------------: | :-----: |
-| charge_current | `MAUnset`, `MA100`, `MA190`, `MA280`, `MA360`, `MA450`, `MA550`, `MA630`, `MA700`, `MA780`, `MA880`, `MA960`, `MA1000`, `MA1080`, `MA1160`, `MA1240`, `MA1320`: | `MAUnset` |
-| is_low_power | `true`, `false` | `false` | If set, we are powered from a low-current source (i.e. solar), so even if it looks like we have power flowing in we should try to minimize power consumption as much as possible. YOU DO NOT NEED TO SET THIS IF YOU'VE set is_router (it is implied in that case). |
-| is_router | `true`, `false` | `false` |
-| ls_secs | `integer` (seconds) | `0` (see note) |
-| mesh_sds_timeout_secs | `integer` (seconds) | `0` |
-| min_wake_secs | `integer` (seconds) | `0` |
-| phone_sds_timeout_sec | `integer` (seconds) | `0` | Power management state machine option. See the [power page](other/power) for details. 0 for default of two hours, MAXUINT for disabled |
-| phone_timeout_secs | `integer` (seconds) | `0` |
-| screen_on_secs | `integer` (seconds) | `0` |
-| sds_secs | `integer` (seconds) | `0` |
-| send_owner_interval | `integer` (sent every x network pings) | `4` |
-| wait_bluetooth_secs | `integer` (seconds) | `0` |
+|        Setting        |                                                                        Acceptable Values                                                                        |    Default     |
+| :-------------------: | :-------------------------------------------------------------------------------------------------------------------------------------------------------------: | :------------: | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+|    charge_current     | `MAUnset`, `MA100`, `MA190`, `MA280`, `MA360`, `MA450`, `MA550`, `MA630`, `MA700`, `MA780`, `MA880`, `MA960`, `MA1000`, `MA1080`, `MA1160`, `MA1240`, `MA1320`: |   `MAUnset`    |
+|     is_low_power      |                                                                         `true`, `false`                                                                         |    `false`     | If set, we are powered from a low-current source (i.e. solar), so even if it looks like we have power flowing in we should try to minimize power consumption as much as possible. YOU DO NOT NEED TO SET THIS IF YOU'VE set is_router (it is implied in that case). |
+|       is_router       |                                                                         `true`, `false`                                                                         |    `false`     |
+|        ls_secs        |                                                                       `integer` (seconds)                                                                       | `0` (see note) |
+| mesh_sds_timeout_secs |                                                                       `integer` (seconds)                                                                       |      `0`       |
+|     min_wake_secs     |                                                                       `integer` (seconds)                                                                       |      `0`       |
+| phone_sds_timeout_sec |                                                                       `integer` (seconds)                                                                       |      `0`       | Power management state machine option. See the [power page](../other/power) for details. 0 for default of two hours, MAXUINT for disabled                                                                                                                           |
+|  phone_timeout_secs   |                                                                       `integer` (seconds)                                                                       |      `0`       |
+|    screen_on_secs     |                                                                       `integer` (seconds)                                                                       |      `0`       |
+|       sds_secs        |                                                                       `integer` (seconds)                                                                       |      `0`       |
+|  send_owner_interval  |                                                             `integer` (sent every x network pings)                                                              |      `4`       |
+|  wait_bluetooth_secs  |                                                                       `integer` (seconds)                                                                       |      `0`       |
 
 :::note
 When you the following settings to `0` they assume the following defaults:
+
 - `ls_secs`: 1 hour
 - `mesh_sds_timeout_secs`: 2 hours
 - `min_wake_secs`: 10 seconds
@@ -47,7 +47,7 @@ When you the following settings to `0` they assume the following defaults:
 - `screen_on_secs`: 1 minute
 - `sds_secs`: 1 year
 - `wait_bluetooth_secs`: 1 minute
-:::
+  :::
 
 ### charge_current
 
@@ -91,7 +91,7 @@ Power management state machine option. See the [power page](../other/power) for 
 
 ### send_owner_interval
 
-This sets how often to send the database of node owner information with other nodes in the mesh (per mesh network ping). 
+This sets how often to send the database of node owner information with other nodes in the mesh (per mesh network ping).
 
 For instance the default interval of 4 will send the node owner information for every 4 mesh network pings. This information is also transmitted after the node first boots up.
 
@@ -102,20 +102,20 @@ Power management state machine option. See the [power page](../other/power) for 
 ## Examples
 
 <Tabs
-  groupId="settings"
-  defaultValue="cli"
-  values={[
-    {label: 'CLI', value: 'cli'},
-    {label: 'Android', value: 'android'},
-  ]}>
-  <TabItem value="cli">
+groupId="settings"
+defaultValue="cli"
+values={[
+{label: 'CLI', value: 'cli'},
+{label: 'Android', value: 'android'},
+]}>
+<TabItem value="cli">
 
-  TODO
+TODO
 
   </TabItem>
   <TabItem value="android">
 
-  TODO
+TODO
 
   </TabItem>
 </Tabs>

@@ -17,6 +17,8 @@ jobs:
         uses: arduino/setup-protoc@v1
       - name: Install Go
         uses: actions/setup-go@v2
+        with:
+          go-version: 1.17.2
       - name: Install protoc-gen-doc
         run: go get -u github.com/pseudomuto/protoc-gen-doc/cmd/protoc-gen-doc
       - name: Checkout code
