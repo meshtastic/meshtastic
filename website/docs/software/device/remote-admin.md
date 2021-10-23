@@ -4,11 +4,11 @@ title: Remote node administration
 sidebar_label: Remote node admininstration
 ---
 
-This feature will allow you to use the multiple channels feature to enable remote adminstration of meshtastic nodes.  This will let you talk through the mesh to some far away node and change that node's settings.  This is an advanced feature that (currently) few users would need.  Also, keep in mind it is possible (if you are not careful) to assign settings to that remote node that cause it to completely drop off of your mesh.
+This feature will allow you to use the multiple channels feature to enable remote adminstration of meshtastic nodes.  This will let you talk through the mesh to some far away node and change that node's settings.  This is an advanced feature that (currently) few users would need.  Also, keep in mind it is possible (if you are not careful) to assign settings to that remote node that cause it to completely drop off of your mesh. We advise network admins have a test node to test settings with before applying changes to a remote node to prevent this.
 
 ## Creating the admin channel
 
-By default, nodes will **only** respond to adminstrative commands via the local USB/bluetooth/TCP interface.  This provides basic security to prevent unauthorized access.  This is how normal administration and settings changes work.  The only difference for the remote case is that we are sending those commands over the mesh.
+By default, nodes will **only** respond to adminstrative commands via the local USB/bluetooth/TCP interface.  This provides basic security to prevent unauthorized access and is how normal administration and settings changes work.  The only difference for the remote case is that we are sending those commands over the mesh.
 
 Before a node will allow remote admin access, it must have a primary channel:
 ```bash title="Expected output"
@@ -20,16 +20,16 @@ Channels:
 Primary channel URL: https://www.meshtastic.org/d/#CgUYAyIBAQ
 ```
 
-So from this output you see that this node knows about only one channel and that its PSK is set to the default value.
+So from this output you see can that this node knows about only one channel and that its PSK is set to the default value.
 
-Now add an admin channel: 
+Now we add an admin channel: 
 
 ```bash title="Command"
 meshtastic --ch-add admin
 ```
 
 :::note
-The name of the channel is important, it must be `admin`.
+The name of the channel is important and must be `admin`.
 :::
 
 Your channels will now look like this:
@@ -47,11 +47,11 @@ Primary channel URL: https://www.meshtastic.org/d/#CgUYAyIBAQ
 Complete URL (includes all channels): https://www.meshtastic.org/d/#CgUYAyIBAQopIiAdbsTecxuI1u-voyGwOicsKaPt5ICG23ONsjH-vk5CaCoFYWRtaW4
 ```
 
-Notice that now we have a new secondary channel.  Also, the `--info` option prints out TWO URLs.  The `Complete URL` includes all of the channels this node understands.  You should consider this URL something you should be very cautious about sharing.  In the case of remote adminstration, you only need the node you want to adminster and the node you are locally connected to know this new "admin" channel.
+Notice that now we have a new secondary channel and the `--info` option prints out TWO URLs.  The `Complete URL` includes all of the channels this node understands.  The URL contains the preshared keys and should be treated with caution and kept a secret.  In the case of remote adminstration, you only need the node you want to adminster and the node you are locally connected to know this new "admin" channel.
 
 ## Sharing the admin channel with other nodes
 
-I'm going to assume you've already created the admin channel on your "local node" i.e. the meshtastic node sitting on your desk at your home.  But now you want to enable access on the "remote node" you want to eventually have far away from you.
+Creating an "admin" channel automatically generates a preshared key, just like with [Multiple Channels](./channels). In order to administer to other nodes remotely, we need to copy the preshared key to the new nodes.
 
 For this step you need physical access to both the nodes.
 
@@ -68,7 +68,7 @@ At this point you can take your remote node and install it far away and still be
 
 ## Remotely administering your node
 
-Now that both your local node and the remote node contain your secret admin channel key, you can do things like this:
+Now that both your local node and the remote node contain your secret admin channel key, you can do things like:
 
 Get the node list from the local node:
 
@@ -93,6 +93,9 @@ INFO:root:Requesting configuration from remote node (this could take a while)
 
 :::note
 You will need to escape the `!` using `\!` otherwise the command will fail.
+:::
+:::note
+The above note needs clarificaiton. Currently, you refer to other nodes with `!########`. No backslashes are used.
 :::
 
 And you can now confirm via the local node that the remote node has changed:
