@@ -1,4 +1,7 @@
-module.exports = {
+// @ts-check
+
+/** @type {import('@docusaurus/types').Config} */
+const config = {
   title: "Meshtastic",
   tagline: "Open Source hiking, pilot, skiing and secure GPS mesh communicator",
   url: "https://meshtastic.org",
@@ -8,7 +11,7 @@ module.exports = {
   favicon: "img/meshtastic-design/web/favicon.ico",
   organizationName: "meshtastic",
   projectName: "meshtastic",
-  themeConfig: {
+  themeConfig: /** @type {import('@docusaurus/preset-classic').ThemeConfig} */ {
     colorMode: {
       respectPrefersColorScheme: true,
     },
@@ -120,6 +123,7 @@ module.exports = {
   presets: [
     [
       "@docusaurus/preset-classic",
+      /** @type {import('@docusaurus/preset-classic').Options} */
       {
         docs: {
           sidebarPath: require.resolve("./sidebars.js"),
@@ -134,3 +138,5 @@ module.exports = {
     ],
   ],
 };
+
+module.exports = config;
