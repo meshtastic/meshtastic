@@ -4,7 +4,7 @@ title: Power Management State Machine
 sidebar_label: Power Management
 ---
 
-Long battery life is one of the main goals of this project. Based on intial measurements, the current code should run for about three days between charging (assuming using a t-beam with a 3500mAh 18650 battery). This will hopefully be increased to around eight days in the future.
+Long battery life is one of the main goals of this project. Based on initial measurements, the current code should run for about three days between charging (assuming using a t-beam with a 3500mAh 18650 battery). This will hopefully be increased to around eight days in the future.
 
 ## States
 
