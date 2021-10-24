@@ -47,7 +47,7 @@ Primary channel URL: https://www.meshtastic.org/d/#CgUYAyIBAQ
 Complete URL (includes all channels): https://www.meshtastic.org/d/#CgUYAyIBAQopIiAdbsTecxuI1u-voyGwOicsKaPt5ICG23ONsjH-vk5CaCoFYWRtaW4
 ```
 
-Notice that now we have a new secondary channel and the `--info` option prints out TWO URLs.  The `Complete URL` includes all of the channels this node understands.  The URL contains the preshared keys and should be treated with caution and kept a secret.  Wehn deploying remote adminstration, you only need the node you want to adminster and the node you are locally connected to know this new "admin" channel. All of the other nodes will forward the packets as long as they are a member of the primary channel.
+Notice that now we have a new secondary channel and the `--info` option prints out TWO URLs.  The `Complete URL` includes all of the channels this node understands.  The URL contains the preshared keys and should be treated with caution and kept a secret.  When deploying remote adminstration, you only need the node you want to administer and the node you are locally connected to know this new "admin" channel. All of the other nodes will forward the packets as long as they are a member of the primary channel.
 
 ## Sharing the admin channel with other nodes
 
@@ -95,7 +95,7 @@ INFO:root:Requesting configuration from remote node (this could take a while)
 You will need to escape the `!` using `\!` otherwise the command will fail.
 :::
 :::note
-The above note needs clarificaiton. Currently, you refer to other nodes with `!########`. No backslashes are used.
+The above note needs clarification. Currently, you refer to other nodes with `!########`. No backslashes are used.
 :::
 
 And you can now confirm via the local node that the remote node has changed:
@@ -128,7 +128,7 @@ Complete URL (includes all channels): https://www.meshtastic.org/d/#CgUYAyIBAQop
 
 ## Admin Channel Setup is Complete
 
-You've finished setting up and adding 2 devices to the admin channel. Remember, because this is a mesh network, it doesn't matter which node you are at; you could adminster your first device we set up from the second one we added to the channel. And the settings and examples on this page are just a tast of the other settings you can set. Also, if you ever want to view a setting without having to read through the `--info`, you can always do the following:
+You've finished setting up and adding 2 devices to the admin channel. Remember, because this is a mesh network, it doesn't matter which node you are at; you could administer your first device we set up from the second one we added to the channel. And the settings and examples on this page are just a taste of the other settings you can set. Also, if you ever want to view a setting without having to read through the `--info`, you can always do the following:
 
 ```bash title="--get vs. --info"
 $ meshtastic --dest \!28979058 --get ls_secs
@@ -138,9 +138,10 @@ ls_secs: 301
 Completed getting preferences
 ```
 
-For further reading, I recommend starting out with [Meshtastic-python](../python/python-cli) if you haven't already gone throught this (hopefully you have since you are reading this). But for a full reference to the settings you can change, please see:
+For further reading, I recommend starting out with [Meshtastic-python](../python/python-cli) if you haven't already gone through this (hopefully you have since you are reading this). But for a full reference to the settings you can change, please see:
 
 [Settings Overview](/docs/settings)
+[Complete list of user settings in Protobufs](https://meshtastic.org/docs/developers/protobufs/api#radioconfiguserpreferences)
 
 ## Areas for future development
 

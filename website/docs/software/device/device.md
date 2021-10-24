@@ -30,11 +30,11 @@ The screen is split up into pages, through which you can navigate using the prog
 
 ![Message page](/img/screen/mesh-message.jpg)
 
-The next pages display information about the nodes that are currently on the mesh. This includes the distance and direction to that node, along with signal strenth and time last seen.
+The next pages display information about the nodes that are currently on the mesh. This includes the distance and direction to that node, along with signal strength and time last seen.
 
 ![Node page](/img/screen/mesh-node1.jpg) ![Node page](/img/screen/mesh-node2.jpg)
 
-The next page shows information about the device, battery power, number of nodes and how many are connected current, number of GPS satalites being received, channel name, last digits of the MAC address, and names of the last nodes to join the mesh.
+The next page shows information about the device, battery power, number of nodes and how many are connected current, number of GPS satellites being received, channel name, last digits of the MAC address, and names of the last nodes to join the mesh.
 
 ![Channel page](/img/screen/mesh-channel.jpg)
 

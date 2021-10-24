@@ -6,13 +6,16 @@ sidebar_label: Installation
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-This is a python library for using Meshtastic devices. This small library (and example application) provides an easy API for sending and receiving messages over mesh radios. It also provides access to any of the operations/data available in the device user interface or the Android application. Events are delivered using a publish-subscribe model, and you can subscribe to only the message types you are interested in.
+This small library provides a command line interface for Meshtastic nodes and provides an easy API for sending and receiving messages over mesh radios, in addition to changing user settings. Using the command line is currently the most powerful w. Events are delivered using a publish-subscribe model, and you can subscribe to only the message types you are interested in.
 
 [Full documentation](https://meshtastic.github.io/Meshtastic-python) for the library, including examples, is available.
 
 If you wish to view the code or contribute to development of the python library or the command line interface, please visit the Meshtastic python <a href="https://github.com/meshtastic/Meshtastic-python">GitHub page</a>.
 
-Installation is easily done through the [Python package installer pip](https://pypi.org/project/meshtastic/) (note, you must use pip version 20 or later):
+Installation is easily done through the [Python package installer pip](https://pypi.org/project/meshtastic/):
+:::note
+You must use pip version 20 or later. To upgrade to the latest pip, do: `pip install --upgrade pip`
+:::
 
 <Tabs
   groupId="operating-system"
@@ -100,7 +103,10 @@ Installation is easily done through the [Python package installer pip](https://p
     * Connect your Meshtastic device to your USB port
     * Open Device Manager
     * Under `Ports (COM & LPT)` you should see something like `Silicon Labs CP210X USB to UART Bridge (COM5)`
-    * If not download the drivers from [Silicon Labs](https://www.silabs.com/developers/usb-to-uart-bridge-vcp-drivers).
+    * If not download the drivers from [Silicon Labs](https://www.silabs.com/developers/usb-to-uart-bridge-vcp-drivers) or use the direct link below.
+    :::warning
+    You must install the [CP210x Universal Windows Driver](https://www.silabs.com/documents/public/software/CP210x_Universal_Windows_Driver.zip). If you do not install this driver, your device may not work and the driver may need to be uninstalled from device manager before installing the correct driver.
+    :::
 * Check that your computer has Python 3 installed.
     * Use the command
         ```powershell
@@ -125,6 +131,10 @@ Installation is easily done through the [Python package installer pip](https://p
 </TabItem>
 <TabItem value="termux">
 
+:::note
+Wifi connection is currently under development and may not be working properly just yet. If you would like to provide feedback or test this feature, please visit our [forum](https://meshtastic.discourse.group/) or join our [Discord server](https://discord.gg/RjQKWHmzPZ) for more information.
+:::
+
 * Install [Termux](https://f-droid.org/en/packages/com.termux/) from the F-Droid app store (Google play does not currently support the latest builds)
 * Load Termux and update the package list
     ```
@@ -144,7 +154,7 @@ Installation is easily done through the [Python package installer pip](https://p
     ```
 
 :::note 
-Be aware that currently the Meshtastic CLI is not able to control the nodes over USB through termux, but you can control devices over wifi using the `--host x.x.x.x` option with the device IP address. However, only ESP32 devices can use wifi currently.
+Be aware that the Meshtastic CLI is not able to control the nodes over USB through termux, but you can control devices over wifi using the `--host x.x.x.x` option with the device IP address. However, only ESP32 devices can use wifi currently.
 :::
 </TabItem>
 </Tabs>
