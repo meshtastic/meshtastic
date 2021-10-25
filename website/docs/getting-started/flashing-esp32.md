@@ -10,6 +10,11 @@ import TabItem from '@theme/TabItem';
 
 ### Check Data Cable
 
+Plug your device into your computer using a USB cable and then do the following:
+:::important
+You may need to install a driver from Silicon Labs for the [CP210X USB to UART bridge](https://www.silabs.com/products/development-tools/software/usb-to-uart-bridge-vcp-drivers)
+:::
+
 <Tabs
   groupId="operating-system"
   defaultValue="linux"
@@ -20,39 +25,25 @@ import TabItem from '@theme/TabItem';
   ]}>
   <TabItem value="linux">
 
-  To check if you have a data cable that will work, plug your device into the computer and **then** navigate to `Terminal` and enter the following command:
-  ```bash
-  lsusb
-  ```
-  you should see something like `CP210X USB to UART Bridge Controller`.
-
-:::note
-You may need to install a driver from Silicon Labs for the [CP210X USB to UART bridge](https://www.silabs.com/products/development-tools/software/usb-to-uart-bridge-vcp-drivers)
-:::
+  > Open a `Terminal` and enter the following command:
+  > ```bash
+  > lsusb
+  > ```
 
   </TabItem>
   <TabItem value="macos">
 
-  To check if you have a data cable that will work, plug your device into the computer and **then** navigate to `Apple Menu  > About This Mac > System Report... > Hardware > USB` you should see something like `CP210X USB to UART Bridge Controller`.
-
-:::note
-You may need to install a driver from Silicon Labs for the [CP210X USB to UART bridge](https://www.silabs.com/products/development-tools/software/usb-to-uart-bridge-vcp-drivers)
-:::
-
+  > Navigate to `Apple Menu  > About This Mac > System Report... > Hardware > USB`.
 
   </TabItem>
   <TabItem value="windows">
 
-  To check if you have a data cable that will work, plug your device into the computer and navigate to `Device Manager > Ports` and ensure the device is shown. You should see something like `CP210X USB to UART Bridge Controller`.
-
-  If your device is showing up under `Device Manager > Ports > Other Devices` you need to install the driver from Silicon Labs for the CP210X USB to UART bridge
-
-:::note
-You may need to install a driver from Silicon Labs for the [CP210X USB to UART bridge](https://www.silabs.com/products/development-tools/software/usb-to-uart-bridge-vcp-drivers)
-:::
+  > Navigate to `Device Manager > Ports (COM & LPT)`.
 
   </TabItem>
 </Tabs>
+
+You should see something like `CP210X USB to UART Bridge Controller`. If you don't, you will need to install the appropriate driver from [Silicon Labs](https://sliabs.com/developers/usb-to-uart-bridge-vcp-drivers).
 
 ### Download Latest Firmware
 
@@ -70,8 +61,6 @@ The [T-Beam 0.7](../hardware/tbeam-hardware#t-beam---v07) board is an earlier ve
 
 ## Command Line Interface Instructions
 
-### Install Prerequisite Software
-
 <Tabs
   groupId="operating-system"
   defaultValue="linux"
@@ -82,25 +71,35 @@ The [T-Beam 0.7](../hardware/tbeam-hardware#t-beam---v07) board is an earlier ve
   ]}>
   <TabItem value="linux">
 
-  Check if you have `python3` and `pip` installed with the following command
-  ```bash
-  python3 --version
-  pip3 --version
-  ```
-  If `python3` is not installed, install with
-  ```bash
-  sudo apt-get update
-  sudo apt-get install python3.6
-  ```
-  If `pip` is not installed, install with
-  ```bash
-  sudo apt-get install python3-pip
-  ```
+  ### Install Prerequisite Software
+
+  > Check if you have `python3` and `pip` installed with the following command
+  > ```bash
+  > python3 --version
+  >  pip3 --version
+  > ```
+  > If `python3` is not installed, install with
+  > ```bash
+  > sudo apt-get update
+  > sudo apt-get install python3.6
+  > ```
+  > If `pip` is not installed, install with
+  > ```bash
+  > sudo apt-get install python3-pip
+  > ```
+
+  ### Install `esptool`
+
+  > ```bash
+  > pip3 install --upgrade esptool
+  > ```
 
   </TabItem>
   <TabItem value="macos">
 
-  OS X comes with `Python 2.7` installed, but not `pip`. The following uses Homebrew to install `python3` which includes `pip3`. On MacOS you will use `pip3` instead of `pip`.
+  ### Install Prerequisite Software
+
+  > OS X comes with `Python 2.7` installed, but not `pip`. The following uses Homebrew to install `python3` which includes `pip3`. On MacOS you will use `pip3` instead > of `pip`.
 
 :::note
 Check if you have Homebrew installed with the following command
@@ -110,26 +109,33 @@ brew -v
 If it's not installed, follow the instructions on the [Homebrew website](https://brew.sh) before continuing.
 :::
 
-  Check if you have `python3` and `pip` installed with the following command
-  ```bash
-  python3 --version
-  pip3 --version
-  ```
-  If `python3` is not installed, install with
-  Install Python3
-  ```bash
-  brew install python3
-  ```
-  Confirm `pip3` was installed alongside `python3`
-  ```bash
-  pip3 -v
-  ```
+  > Check if you have `python3` and `pip` installed with the following command
+  > ```bash
+  > python3 --version
+  > pip3 --version
+  > ```
+  > If `python3` is not installed, install with
+  > Install Python3
+  > ```bash
+  > brew install python3
+  > ```
+  > Confirm `pip3` was installed alongside `python3`
+  > ```bash
+  > pip3 -v
+  > ```
+
+  ### Install `esptool`
+
+  > ```bash
+  > pip3 install --upgrade esptool
+  > ```
+
 
   </TabItem>
   <TabItem value="windows">
 
-  - Download and install [Python](https://www.python.org/). When installing, make sure to click `Add Python X.Y to PATH`.
-  - Download and install [Gitbash](https://gitforwindows.org/) (or other appropriate shell) and run all subsequent commands from that shell.
+  > - Download and install [Python](https://www.python.org/). When installing, make sure to click `Add Python X.Y to PATH`.
+  > - Download and install [Gitbash](https://gitforwindows.org/) (or other appropriate shell) and run all subsequent commands from that shell.
 
 :::note
 Confirm installation of `python` & `pip` with the following commands.
@@ -141,48 +147,22 @@ pip --version
 ```
 :::
 
-  </TabItem>
-</Tabs>
+  ### Install `esptool`
 
-
-### Install `esptool`
-
-<Tabs
-  groupId="operating-system"
-  defaultValue="linux"
-  values={[
-    {label: 'Linux', value: 'linux'},
-    {label: 'macOS', value: 'macos'},
-    {label: 'Windows', value: 'windows'},
-  ]}>
-  <TabItem value="linux">
-
-  ```bash
-  pip3 install --upgrade esptool
-  ```
-
-  </TabItem>
-  <TabItem value="macos">
-
-  ```bash
-  pip3 install --upgrade esptool
-  ```
-
-  </TabItem>
-  <TabItem value="windows">
-
-  ```bash
-  pip install --upgrade esptool
-  ```
+  > ```bash
+  > pip install --upgrade esptool
+  > ```
 
   </TabItem>
 </Tabs>
-
-
 
 ### Confirm Communication With Chip
 
 Connect the radio to your computer using a data USB cable. Confirm your device is talking to your computer using the following command:
+
+:::important
+On windows, you must explicitly declare esptools as a .py script. Use `esptools.py chip_id`.
+:::
 
   ```bash title="Command"
   esptool chip_id
@@ -214,30 +194,67 @@ cd /Downloads/firmware/
 ```
 
 ### Install/Update Firmware
+Install or Update the device that you have by using the following commands according to your operating system:
+
 :::caution
 Be very careful to install the correct load for your board. In particular the popular 'T-BEAM' radio from TTGO is not called 'TTGO-Lora' (that is a different board). So don't install the 'TTGO-Lora' build on a TBEAM, it won't work correctly.
 :::
 
-#### Install Firmware
+<Tabs
+  groupId="operating-system"
+  defaultValue="linux"
+  values={[
+    {label: 'Linux', value: 'linux'},
+    {label: 'macOS', value: 'macos'},
+    {label: 'Windows', value: 'windows'},
+  ]}>
+  <TabItem value="linux">
 
-Install the correct firmware for your board using the following command. Be sure to select the correct board and frequency.
-```bash title="Command"
-./device-install.sh -f firmware-BOARD-VERSION.bin
-```
-```bash title="Example"
-./device-install.sh -f firmware-heltec-EU865-1.2.0.bin
-```
+  #### Install
 
+  > ```bash title="Command"
+  > ./device-install.sh -f firmware-BOARD-VERSION.bin
+  > ```
 
-#### Update Firmware
+  #### Update
 
-To update a the firmware on an existing Meshtastic device use the following command. Be sure to select the correct board and frequency.
-```bash title="Command"
-./device-update.sh -f firmware-BOARD-VERSION.bin
-```
-```bash title="Example"
-./device-update.sh -f firmware-heltec-EU865-1.2.0.bin
-```
+  > ```bash title="Command"
+  > ./device-update.sh -f firmware-BOARD-VERSION.bin
+  > ```
+
+  </TabItem>
+  <TabItem value="macos">
+
+  #### Install
+
+  > ```bash title="Command"
+  > ./device-install.sh -f firmware-BOARD-VERSION.bin
+  > ```
+
+  #### Update
+
+  > ```bash title="Command"
+  > ./device-update.sh -f firmware-BOARD-VERSION.bin
+  > ```
+
+  </TabItem>
+  <TabItem value="windows">
+
+  #### Install
+
+  > ```bash title="Command"
+  > ./device-install.bat -f firmware-BOARD-VERSION.bin
+  > ```
+
+  #### Update
+
+  > ```bash title="Command"
+  > ./device-update.bat -f firmware-BOARD-VERSION.bin
+  > ```
+
+  </TabItem>
+</Tabs>
+
 
 ## Graphical User Interface Instructions
 
@@ -261,65 +278,42 @@ ESPHome Flasher also provides instructions to build from source or install via `
   | [ESPHome Flasher](https://github.com/esphome/esphome-flasher/releases/latest) |
   | :-----------------------------------------------------------: |
 
+  ### Open ESPHome Flasher
+
+  > There should be no installation required. Connect your device using a data USB cable and refresh the `Serial Port`. Select the port that your device is connected to.
+
 :::note
 ESPHome Flasher for linux is a prebuilt binary for Ubuntu. These instructions were only tested on Ubuntu. Mileage may very on other distros.
 :::
 
-  </TabItem>
-  <TabItem value="macos">
-
-  | [ESPHome Flasher](https://github.com/esphome/esphome-flasher/releases/latest) |
-  | :-----------------------------------------------------------: |
-
-
-  </TabItem>
-  <TabItem value="windows">
-
-  | [ESPHome Flasher](https://github.com/esphome/esphome-flasher/releases/latest) |
-  | :-----------------------------------------------------------: |
-
-
-  </TabItem>
-</Tabs>
-
-### Open ESPHome Flasher
-
-
-<Tabs
-  groupId="operating-system"
-  defaultValue="linux"
-  values={[
-    {label: 'Linux', value: 'linux'},
-    {label: 'macOS', value: 'macos'},
-    {label: 'Windows', value: 'windows'},
-  ]}>
-  <TabItem value="linux">
-
-  There should be no installation required. Connect your device using a data USB cable and refresh the `Serial Port`. Select the port that your device is connected to.
 
   </TabItem>
   <TabItem value="macos">
 
-  There should be no installation required. Connect your device using a data USB cable and refresh the `Serial Port`. Select the port that your device is connected to.
+  ### Open ESPHome Flasher
+
+  > There should be no installation required. Connect your device using a data USB cable and refresh the `Serial Port`. Select the port that your device is connected to.
 
 :::note
 If you get an error saying `The application "ESPHome-Flasher.app" can't be opened` it is likely a permissions issue. See [here](https://github.com/esphome/esphome-flasher/issues/26#issuecomment-671061140) for instructions.
 :::
 :::note
-If you get an error saying `"ESPHome-Flasher.app" cannot be opened because the developer cannot be verified`, click `cancel`. Right click on the application and select `Open`. Select `Open` on the confirmation alert.
+>If you get an error saying `"ESPHome-Flasher.app" cannot be opened because the developer cannot be verified`, click `cancel`. Right click on the application and select `Open`. Select `Open` on the confirmation alert.
 :::
 
   </TabItem>
   <TabItem value="windows">
 
-  There should be no installation required. Connect your device using a data USB cable and refresh the `Serial Port`. Select the port that your device is connected to.
+  | [ESPHome Flasher](https://github.com/esphome/esphome-flasher/releases/latest) |
+  | :-----------------------------------------------------------: |
+
+  ### Open ESPHome Flasher
+
+  > There should be no installation required. Connect your device using a data USB cable and refresh the `Serial Port`. Select the port that your device is connected to.
+
 
   </TabItem>
 </Tabs>
-
-:::note
-If your device is not showing under `Serial Port` you may need to install the drivers for the [CP210X USB to UART bridge](https://www.silabes.com/products/development-tools/sofware/usb-to-uart-bridge-vcp-drivers).
-:::
 
 ### Select Firmware
 

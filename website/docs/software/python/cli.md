@@ -4,21 +4,24 @@ title: Command line interface
 sidebar_label: CLI usage
 ---
 
-This pip package will also install a "meshtastic" command line executable, which displays packets sent over the network as JSON and lets you see serial debugging information from the meshtastic devices. The source code for this tool is also a good [example](https://github.com/meshtastic/Meshtastic-python/blob/master/meshtastic/__main__.py) of a 'complete' application that uses the meshtastic python API.
+This section covers installing a "meshtastic" command line executable, which displays packets sent over the network as JSON and lets you see serial debugging information from the Meshtastic devices. The source code for this tool is also a good [example](https://github.com/meshtastic/Meshtastic-python/blob/master/meshtastic/__main__.py) of a 'complete' application that uses the Meshtastic python API.
 
 :::note
-This command is not run inside of python, you run it from your operating system shell prompt directly.  If when you type "meshtastic" it doesn't find the command and you are using Windows: Check that the python "scripts" directory [is in your path](https://datatofish.com/add-python-to-windows-path/).
+The `meshtastic` command is not run within python but is a script  run from your operating system shell prompt.  When you type "meshtastic" and the prompt is unable to find the command in Windows, check that the python "scripts" directory [is in your path](https://datatofish.com/add-python-to-windows-path/).
 :::
 
-To display a (partial) list of the available commands:
+To display a list of the available commands:
 ```bash
 meshtastic -h
 ```
+:::note
+Because of the growing nature of this project, not all commands may appear when using the help command with `meshtastic -h`.
+:::
 
 ## Changing device settings
 
 You can also use this tool to set any of the device parameters which are stored in persistent storage. For instance, here's how to set the device
-to keep the bluetooth link alive for eight hours (any usage of the bluetooth protcol from your phone will reset this timer)
+to keep the bluetooth link alive for eight hours (any usage of the bluetooth protocol from your phone will reset this timer)
 
 ```bash title="Expected Output"
 # You should see a result similar to this:
@@ -47,20 +50,19 @@ meshtastic --set wifi_ap_mode true --set wifi_ssid mywifissid --set wifi_passwor
 ```
 
 :::note
-For a full list of preferences which can be set (and their documentation) can be found in the [protobufs](/docs/developers/protobufs/api#radioconfiguserpreferences)
+For a full list of preferences which can be set (and their documentation) can be found in the [protobufs](/docs/developers/protobufs/api#radioconfiguserpreferences).
 :::
 
 ### Changing channel settings
 
-The channel settings can be changed similiarly.  Either by using a standard (sharable) meshtastic URL or you can set partiular channel parameters (for advanced users).
+The channel settings can also be changed, either by using a standard (sharable) meshtastic URL or you can set particular channel parameter (for advanced users).
 
-The URL is constructed automatically based off of the current channel settings. So if you want to customize a channel you could do something like:
+:::warning
+Meshtastic encodes the radio channel and PSK in the channel's URL. All nodes must connect to the channel again by using the URL provided after a change in this section by performing the `--info` switch. Please refer to [Multiple Channel Support](../device/device-channels).
 
 ```bash
 meshtastic --ch-set name mychan --ch-set channel_num 4 --info
 ```
-
-This will change some channel params and then show device info (which will include the current channel URL)
 
 You can even set the channel preshared key to a particular AES128 or AES256 sequence.
 
