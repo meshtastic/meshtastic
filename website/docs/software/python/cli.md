@@ -59,6 +59,7 @@ The channel settings can also be changed, either by using a standard (sharable) 
 
 :::warning
 Meshtastic encodes the radio channel and PSK in the channel's URL. All nodes must connect to the channel again by using the URL provided after a change in this section by performing the `--info` switch. Please refer to [Multiple Channel Support](../device/device-channels).
+:::
 
 ```bash
 meshtastic --ch-set name mychan --ch-set channel_num 4 --info
