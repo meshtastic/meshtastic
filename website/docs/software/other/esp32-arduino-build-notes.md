@@ -1,33 +1,56 @@
 ---
-id: esp32-arduino-build-notes
-title: esp32-arduino build instructions
+id: esp32-arduino-build
+title: esp32-arduino Build Instructions
 sidebar_label: Building esp32-arduino
 ---
 
-We build our own custom version of esp32-arduino, in order to get some fixes we've made but haven't yet been merged in master.
+For ESP32 boards, we use our own [custom version of arduino-esp32 core](https://github.com/meshtastic/arduino-esp32). You can find the version used in the [`platform_packages argument` in `platformio.ini`](https://github.com/meshtastic/Meshtastic-device/blob/51646f28eccf0de461ecac7d771e1a39ef33ff43/platformio.ini#L119-L120) in the [Meshtastic-device repo](https://github.com/meshtastic/Meshtastic-device). It is built using a [modified `esp32-arduino-lib-builder`](https://github.com/meshtastic/esp32-arduino-lib-builder) which pulls the correct repos for some modified libraries. This allows for some fixes we've made that haven't yet been merged in master.
 
-These are a set of currently unformatted notes on how to build and install them. Most developers should not care about this, because
-you'll automatically get our fixed libraries.
+Most developers should not care about this, because you'll automatically get our fixed libraries. However, if you would like to tweak the core options this documentation describes how to do it in Linux:
+
+1. [Install ESP32 Arduino Lib Builder](https://github.com/meshtastic/esp32-arduino-lib-builder/blob/master/README.md):
+
+```console
+sudo apt-get install git wget curl libssl-dev libncurses-dev flex bison gperf python python-pip python-setuptools python-serial python-click python-cryptography python-future python-pyparsing python-pyelftools cmake ninja-build ccache
+sudo pip install --upgrade pip
+git clone https://github.com/meshtastic/esp32-arduino-lib-builder
+cd esp32-arduino-lib-builder
+```
+2. Install esp-idf (needed if you want to `make menuconfig`, `build.sh` will install it automatically if needed):
 
 ```bash
-  //last EDF release in arduino is: https://github.com/espressif/arduino-esp32/commit/1977370e6fc069e93ffd8818798fbfda27ae7d99<br/>
-  //IDF release/v3.3 46b12a560
-  //IDF release/v3.3 367c3c09c
-  //https://docs.espressif.com/projects/esp-idf/en/release-v3.3/get-started/linux-setup.html
-  python /home/kevinh/development/meshtastic/
-  cp -a out/tools/sdk/* components/arduino/tools/sdk
-  cp -ar components/arduino/* ~/.platformio/packages/framework-arduinoespressif32
+./tools/install-esp-idf.sh
+``` 
 
-  /// @src-fba9d33740f719f712e9f8b07da6ea13/
+3. Run menuconfig and change options as needed:
 
-  or
-
-  cp -ar out/tools/sdk/* ~/.platformio/packages/framework-arduinoespressif32/tools/sdk
-
+```bash
+make IDF_PATH=$(pwd)/esp-idf menuconfig
 ```
 
-How to flash new bootloader
+4. [Patch the Azure_IoT library](https://github.com/VSChina/ESP32_AzureIoT_Arduino/pull/15):
 
 ```bash
-esptool.py --chip esp32 --port /dev/ttyUSB0 --baud 921600 --before default_reset --after hard_reset write_flash -z --flash_mode dout --flash_freq 40m --flash_size detect 0x1000 /home/kevinh/development/meshtastic/esp32-arduino-lib-builder/build/bootloader/bootloader.bin
+cd components/arduino/libraries/AzureIoT
+wget https://patch-diff.githubusercontent.com/raw/VSChina/ESP32_AzureIoT_Arduino/pull/15.patch 
+patch -p1 < 15.patch
+cd ../../../../
+```
+
+5. Build esp32-arduino:
+
+```bash
+./build.sh
+```
+
+6. Copy files into the platformio framework:
+
+```bash
+  cp -ar out/tools/sdk/* ~/.platformio/packages/framework-arduinoespressif32/tools/sdk
+```
+
+7. Flash a new bootloader if needed:
+ 
+```bash
+esp-idf/components/esptool_py/esptool/esptool.py --chip esp32 --port your_port --baud 921600 --before default_reset --after hard_reset write_flash -z --flash_mode dout --flash_freq 40m --flash_size detect 0x1000 build/bootloader/bootloader.bin
 ```
