@@ -97,7 +97,7 @@ module.exports = {
           "software/other/nrf52-TODO",
           "software/other/mqtt",
           "software/other/install-OSX",
-          "software/other/esp32-arduino-build-notes",
+          "software/other/esp32-arduino-build",
           "software/other/build-instructions",
           "software/other/ant",
         ],
