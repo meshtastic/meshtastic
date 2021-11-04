@@ -17,7 +17,7 @@ The T-Echo has been in development by LILYGO® over the past few months and has 
 
 
 * firmware file: `firmware-t-echo-1.x.x.uf2`
-* [Purchase link](https://www.aliexpress.com/item/1005002842456390.html)
+* [Purchase link](https://www.aliexpress.com/item/1005003026107533.html)
 * TTGO's [GitHub page](https://github.com/Xinyuan-LilyGO/LilyGO-T-Echo) for the T-Echo
 
 <img alt="LILYGO T-Echo" src="/img/hardware/t-echo.png" style={{zoom: '15%'}} />
