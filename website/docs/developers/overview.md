@@ -18,6 +18,13 @@ Here are some ways to help and people to connect with if you have an interest in
 
 ## Web Application
 
+@sachaw has been making tons of progress on the web app and would love help with 
+
+    * Saving of preferences
+    * Better loading state indicators
+    * Chat scroll lock
+    * Various plugin support
+
 ## Phone Apps
 
 ## Documentation
