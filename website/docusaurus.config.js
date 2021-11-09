@@ -13,7 +13,15 @@ const config = {
   projectName: "meshtastic",
   themeConfig: /** @type {import('@docusaurus/preset-classic').ThemeConfig} */ {
     colorMode: {
-      respectPrefersColorScheme: true,
+      respectPrefersColorScheme: false,
+    },
+    announcementBar: {
+      id: 'support_us',
+      content:
+        'Android app unavailable in the Google Play Store store. Please check out installing manually by side-loading or using the Amazon Apps method  <a href="/docs/software/android/android-installation" href="#">here</a>',
+      backgroundColor: '#ff9999',
+      textColor: '#091E42',
+      isCloseable: false,
     },
     navbar: {
       title: "Meshtastic",
