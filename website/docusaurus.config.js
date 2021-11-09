@@ -16,9 +16,9 @@ const config = {
       respectPrefersColorScheme: true,
     },
     announcementBar: {
-      id: 'support_us',
+      id: 'play_store_workaround',
       content:
-        'Android app unavailable in the Google Play Store store. Please check out installing manually by side-loading or using the Amazon Apps method  <a href="/docs/software/android/android-installation" href="#">here</a>',
+        '<a href="/docs/software/android/android-installation" href="#">Android app unavailable in the Google Play Store store. Install by side-loading from git-hub or from Amazon Apps.</a>',
       backgroundColor: '#ff9999',
       textColor: '#091E42',
       isCloseable: false,
