@@ -18,10 +18,10 @@ const config = {
     announcementBar: {
       id: 'play_store_workaround',
       content:
-        'Android app unavailable in the Google Play Store store. Install by side-loading from <a href="https://github.com/meshtastic/Meshtastic-Android/releases">GitHub</a> or from <a href="https://www.amazon.com/Geeksville-Industries-Meshtastic/dp/B08CY9394Q">Amazon</a>.',
+        'Android app unavailable in the Google Play Store store. Install by <a href="/docs/software/android/android-installation">side-loading</a> from <a href="https://github.com/meshtastic/Meshtastic-Android/releases">GitHub</a> or from <a href="https://www.amazon.com/Geeksville-Industries-Meshtastic/dp/B08CY9394Q">Amazon</a>.',
       backgroundColor: '#ff9999',
       textColor: '#091E42',
-      isCloseable: false,
+      isCloseable: true,
     },
     navbar: {
       title: "Meshtastic",
