@@ -13,7 +13,7 @@ const config = {
   projectName: "meshtastic",
   themeConfig: /** @type {import('@docusaurus/preset-classic').ThemeConfig} */ {
     colorMode: {
-      respectPrefersColorScheme: false,
+      respectPrefersColorScheme: true,
     },
     announcementBar: {
       id: 'support_us',
