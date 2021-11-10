@@ -16,6 +16,9 @@ Installation is easily done through the [Python package installer pip](https://p
 :::note
 You must use pip version 20 or later. To upgrade to the latest pip, do: `pip install --upgrade pip`
 :::
+:::info
+Make sure that the `PATH variable` also gets installed by checking the box while installing python. If you don't, python may not be available and you may not be able to call `meshtastic` from your CLI. If you do forget to check that box, you will need to install the path environment variable for python on your operating system.
+:::
 
 <Tabs
   groupId="operating-system"
@@ -158,3 +161,7 @@ Be aware that the Meshtastic CLI is not able to control the nodes over USB throu
 :::
 </TabItem>
 </Tabs>
+
+:::info
+You may need to close and re-open the CLI. The path variables may or may not update for the current session when installing.
+:::
