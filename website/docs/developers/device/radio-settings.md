@@ -60,8 +60,8 @@ We have four predefined channels. These are the most common settings and have be
 
 | Channel setting            | Alt Channel Name | Data-rate            | SF / Symbols | Coding Rate | Bandwidth | Link Budget |
 | :------------------------- | :--------------- | :------------------- | :----------- | :---------- | :-------- | :---------- |
-| Short range (but fast)     | Short Fast       | 21.875 kbps          | 7 / 128      | 4/5         | 125       | 134dB       |
-| Medium range (but fast)    | Medium           | 5.469 kbps           | 7 / 128      | 4/5         | 500       | 140dB       |
+| Short range (but fast)     | Short Fast       | 21.875 kbps          | 7 / 128      | 4/5         | 500       | 134dB       |
+| Medium range (but fast)    | Medium           | 5.469 kbps           | 7 / 128      | 4/5         | 125       | 140dB       |
 | Long range (but slower)    | Long Alt         | 0.275 kbps           | 9 / 512      | 4/8         | 31        | 153dB       |
 | Very long range (but slow) | Long Slow        | 0.183 kbps (default) | 12 / 4096    | 4/8         | 125       | 154dB       |
 
