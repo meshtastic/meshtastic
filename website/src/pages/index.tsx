@@ -5,6 +5,7 @@ import clsx from 'clsx';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
+import Head from '@docusaurus/Head';
 
 import styles from './styles.module.css';
 
@@ -65,10 +66,20 @@ function Home() {
   const context = useDocusaurusContext();
   const { siteConfig } = context;
   return (
-    <Layout
-      title=""
-      description="Description will go into a meta tag in <head />"
-    >
+    <Layout>
+      <Head>
+        <meta property="og:title" content="Meshtastic" />
+        <meta
+          property="og:image"
+          content={useBaseUrl("img/meshtastic-design/web/social-preview-1200x630.png")}
+        />
+        <meta
+          property="og:description"
+          content="Open Source hiking, pilot, skiing and secure GPS mesh communicator"
+        />
+        <meta property="og:url" content="https://meshtastic.org/" />
+        <meta name="twitter:card" content="summary_large_image" />
+      </Head>
       <header className={clsx("hero hero--primary", styles.heroBanner)}>
         <div className="container">
           <h1 className="hero__title">
