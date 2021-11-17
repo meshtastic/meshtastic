@@ -1,5 +1,5 @@
 ---
-id: publishing-prod
+id: publish
 title: Publishing Meshtastic
 sidebar_label: Publishing Meshtastic
 ---
