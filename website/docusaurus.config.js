@@ -119,7 +119,7 @@ const config = {
           ],
         },
       ],
-      copyright: `Powered by ▲ Vercel | Meshtastic® trademark is a registered trademark belonging to Geeksville Industries LLC`,
+      copyright: `<a href="https://vercel.com/?utm_source=meshtastic&utm_campaign=oss" style="color: white">Powered by ▲ Vercel</a> | Meshtastic® trademark is a registered trademark belonging to Geeksville Industries LLC`,
     },
     algolia: {
       apiKey: "01ad7e13d3fe392d2ad26da3c69dbc21",
