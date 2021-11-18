@@ -9,30 +9,47 @@ import TabItem from '@theme/TabItem';
 
 ## General
 
-Q: Question
-* Answer
+Q: What is Meshtastic?
+* Answer TBD
+
+Q: How can I contrinute to Meshtastic?
+* Answer TBD
 
 ## Device
 
 Q: Question
-* Answer
+* Answer TBD
+
+### Plugins
+
+Q: What are Plugins?
+* Answer TBD
+
+Q: What plugins do we have?
+* To see the list of available plugins, please go to: https://meshtastic.org/docs/software/plugins/plugins
 
 ## Android
 
-Q: Question
-* Answer
+Q: What versions of Android does the Meshtastic Android App require?
+* Answer TBD
 
 ## iOS
 
-Q: Question
-* Answer
+Q: What version of iOS does the Meshtastic iOS App Require?
+* Answer TBD
+
+Q: How do I get the Meshtastic iOS App?
+* Answer TBD
 
 ## Web Browser
 
-Q: Question
-* Answer
+Q: How can I access Meshtastic from my web browser?
+* Answer TBD
+
+Q: Why would I want to access Meshtastic from a web browser?
+* Answer TBD
 
 ## Commmand Line / Python
 
 Q: Question
-* Answer
+* Answer TBD
