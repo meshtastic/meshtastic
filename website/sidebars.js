@@ -2,6 +2,7 @@ module.exports = {
   Sidebar: {
     "Getting Started": [
       "getting-started/overview",
+      "getting-started/FAQ",
       {
         "Flashing firmware": [
           "getting-started/flashing-esp32",
