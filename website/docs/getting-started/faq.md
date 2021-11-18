@@ -7,12 +7,28 @@ slug: /getting-started/faq
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
+<!-- 
+
+**** FAQ Contributors, README ***
+*
+*   Best Practices for the FAQ:
+*
+*   - Keep the answers Non-Technical. The FAQ should be targeted to non-geeks.
+*   - This FAQ is not the authoritative document. Provide a short answer and a link to learn more.
+*
+****
+
+-->
+
 ## General
 
 Q: What is Meshtastic?
 * Answer TBD
 
 Q: How can I contrinute to Meshtastic?
+* Answer TBD
+
+Q: What is a Channel?
 * Answer TBD
 
 ## Device
