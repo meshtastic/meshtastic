@@ -1,6 +1,6 @@
 ---
 id: faq
-title: Frequenty Asked Questions
+title: Frequenty Asked Questions (FAQ)
 sidebar_label: Frequenty Asked Questions
 slug: /getting-started/faq
 ---
@@ -23,12 +23,12 @@ import TabItem from '@theme/TabItem';
 ## General
 
 Q: What is Meshtastic?
-* Answer TBD
+* The most awesome long range, low power communications service on the planet earth! That's not even an exageration!
+
+Q: Where can I get additional help, ask questions or bond with the Meshtastic community?
+* After reading this FAQ, there are two places ... The preferred place is to check out the [Fourm](https://meshtastic.discourse.group). There you can be part of our growing community and search for previosly posts that may be similar to what you're looking for. We also have the [Meshtastic Discord](https://discord.com/invite/UQJ5QuM7vq) server where you may connect with like minded people.
 
 Q: How can I contribute to Meshtastic?
-* Answer TBD
-
-Q: What is a Channel?
 * Answer TBD
 
 ## Device (aka Node)
@@ -42,8 +42,8 @@ Q: I have my hardware. How do I install the firmware?
 Q: How do I update the firmware to the latest version?
 * Answer TBD
 
-Q: My device has gone to sleep. Are my messages lost?
-* The LORA radio on the node is still active and will wake up the CPU when the device is sleeping. If your phone is in range, the node will relay any messages your phone may have missed.
+Q: My device has gone to sleep. Are received messages lost?
+* The LORA radio on the node is still active and will wake up the CPU when the device is sleeping. If your phone is in range, the node will relay any messages your phone may have missed. If you're in range and your device is active, messages have not been lost.
 
 Q: My device has gone to sleep and I can't send any messages.
 * Once the node wakes up from sleep, your phone will relay any delayed messages through your node and to the mesh network. Give it a few minutes and it'll do the right thing.
@@ -56,13 +56,13 @@ Q: How can I tell the device not to sleep?
 ### Plugins
 
 Q: What are Plugins?
-* Answer TBD
+* Plugins are features that expand the basic device functionalty and/or integrations with other services.
 
 Q: What plugins do we have available?
 * To see the list of available plugins, please go to: https://meshtastic.org/docs/software/plugins/plugins
 
-Q: I have an idea for a plugin. Who can help me with this?
-* Answer TBD
+Q: I'd like to write a plugin. How do I get started?
+* See: https://meshtastic.org/docs/developers/device/plugin-api
 
 ## Android
 
