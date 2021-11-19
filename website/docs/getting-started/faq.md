@@ -25,7 +25,7 @@ import TabItem from '@theme/TabItem';
 Q: What is Meshtastic?
 * Answer TBD
 
-Q: How can I contrinute to Meshtastic?
+Q: How can I contribute to Meshtastic?
 * Answer TBD
 
 Q: What is a Channel?
@@ -69,6 +69,15 @@ Q: I have an idea for a plugin. Who can help me with this?
 Q: What versions of Android does the Meshtastic Android App require?
 * Answer TBD
 
+Q: What's the cloud icon next to the message?
+* Empty Cloud - In route to your device.
+* Up Arrow - Queued to be sent over the mesh.
+* Check Mark - Delivered over the mesh.
+* Cross Mark - Error
+
+Q: How can I clear the message history?
+* Clear the storage from Android Settings > App
+
 ## iOS
 
 Q: What version of iOS does the Meshtastic iOS App Require?
@@ -80,7 +89,10 @@ Q: How do I get the Meshtastic iOS App?
 ## Web Browser
 
 Q: How can I access Meshtastic from my web browser?
-* Answer TBD
+* See: https://meshtastic.org/docs/software/device/device-wifi
+
+Q: When I turn on WiFi, bluetooth turns off. Why is this?
+* Currently WiFi and Bluetooth can be turned on at the same time.
 
 Q: Why would I want to access Meshtastic from a web browser?
 * Answer TBD
