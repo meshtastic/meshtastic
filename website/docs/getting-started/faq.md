@@ -33,16 +33,36 @@ Q: What is a Channel?
 
 ## Device
 
-Q: Question
+Q: Where do I purchase the device hardware?
 * Answer TBD
+
+Q: I have my hardware. How do I install the firmware?
+* Answer TBD
+
+Q: How do I update the firmware to the latest version?
+* Answer TBD
+
+Q: My node (device) has gone to sleep. Are my messages lost?
+* The LORA radio on the node is still active and will wake up the CPU when the device is sleeping. If your phone is in range, the node will relay any messages your phone may have missed.
+
+Q: My node (device) has gone to sleep and I can't send any messages.
+* Once the node wakes up from sleep, your phone will relay any delayed messages through your node and to the mesh network. Give it a few minutes and it'll do the right thing.
+
+Q: How can I tell the node (device) not to sleep?
+* Answer TBD
+
+
 
 ### Plugins
 
 Q: What are Plugins?
 * Answer TBD
 
-Q: What plugins do we have?
+Q: What plugins do we have available?
 * To see the list of available plugins, please go to: https://meshtastic.org/docs/software/plugins/plugins
+
+Q: I have an idea for a plugin. Who can help me with this?
+* Answer TBD
 
 ## Android
 
