@@ -86,15 +86,15 @@ Q: What version of iOS does the Meshtastic iOS App Require?
 Q: How do I get the Meshtastic iOS App?
 * Answer TBD
 
-## Web Browser
+## WiFi / Web Browser
 
-Q: How can I access Meshtastic from my web browser?
+Q: How do I turn on the WiFI radio?
 * See: https://meshtastic.org/docs/software/device/device-wifi
 
-Q: When I turn on WiFi, bluetooth turns off. Why is this?
+Q: When I turn on WiFi, Bluetooth turns off. Why is this?
 * Currently WiFi and Bluetooth can be turned on at the same time.
 
-Q: Why would I want to access Meshtastic from a web browser?
+Q: How do I access the network from my web browser?
 * Answer TBD
 
 ## Commmand Line / Python
