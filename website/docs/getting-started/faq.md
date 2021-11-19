@@ -31,7 +31,7 @@ Q: How can I contribute to Meshtastic?
 Q: What is a Channel?
 * Answer TBD
 
-## Node (aka Device)
+## Device (aka Node)
 
 Q: Where do I purchase the device hardware?
 * Answer TBD
@@ -42,13 +42,13 @@ Q: I have my hardware. How do I install the firmware?
 Q: How do I update the firmware to the latest version?
 * Answer TBD
 
-Q: My node (device) has gone to sleep. Are my messages lost?
+Q: My device has gone to sleep. Are my messages lost?
 * The LORA radio on the node is still active and will wake up the CPU when the device is sleeping. If your phone is in range, the node will relay any messages your phone may have missed.
 
-Q: My node (device) has gone to sleep and I can't send any messages.
+Q: My device has gone to sleep and I can't send any messages.
 * Once the node wakes up from sleep, your phone will relay any delayed messages through your node and to the mesh network. Give it a few minutes and it'll do the right thing.
 
-Q: How can I tell the node (device) not to sleep?
+Q: How can I tell the device not to sleep?
 * Answer TBD
 
 
@@ -96,6 +96,23 @@ Q: When I turn on WiFi, Bluetooth turns off. Why is this?
 
 Q: How do I access the network from my web browser?
 * Answer TBD
+
+## Channels
+
+Q: What is a Meshtastic Channel?
+* This is the LoRa channel you're broadcasting on, the modem configuration (spreading factor, bandwidth and error correction), along with a special identifier for your group and optional encryption.
+
+Q: What is a LoRa channel?
+* This is the LoRa frequency within the Frequency band your device is configured to use.
+
+Q: How do I share my Meshtastic Channel with other people?
+* Your Meshtastic client (Android, iOS, Web or Python) will provide you a URL or QR code. You can email, text or print this URL or QR code and share it with people you want to join your Meshtastic Channel.
+
+Q: What is a Primary Channel?
+* This is the first channel that's created for you when you initially setup your Meshtastic Channel.
+
+Q: What is a Secondary Channel?
+* As this is a new feature, secondary Channels work on the device and the Python Script. Support for secondary channels by other clients are pending. For more information: https://meshtastic.org/docs/software/device/device-channels#how-to-use-secondary-channels
 
 ## Commmand Line / Python
 
