@@ -31,7 +31,7 @@ Q: How can I contrinute to Meshtastic?
 Q: What is a Channel?
 * Answer TBD
 
-## Device
+## Node (aka Device)
 
 Q: Where do I purchase the device hardware?
 * Answer TBD
