@@ -52,7 +52,8 @@ Q: How do I turn on / off an esp32 tbeam based device?
 * Answer TBD
 
 Q: How can I tell the device not to sleep?
-* Answer TBD
+* Android instructions see: [Android Usage](https://meshtastic.org/docs/software/android/android-usage#configuration-options)
+* Python CLI instructions see: [Python Usage](https://meshtastic.org/docs/software/python/python-cli#changing-device-settings)
 
 
 
