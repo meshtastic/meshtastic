@@ -48,6 +48,9 @@ Q: My device has gone to sleep. Are received messages lost?
 Q: My device has gone to sleep and I can't send any messages.
 * Once the node wakes up from sleep, your phone will relay any delayed messages through your node and to the mesh network. Give it a few minutes and it'll do the right thing.
 
+Q: How do I turn on / off an esp32 tbeam based device?
+* Answer TBD
+
 Q: How can I tell the device not to sleep?
 * Answer TBD
 
@@ -84,6 +87,11 @@ Q: What version of iOS does the Meshtastic iOS App Require?
 * Answer TBD
 
 Q: How do I get the Meshtastic iOS App?
+* Answer TBD
+
+## Bluetooth
+
+Q: How do I pair my phone to the device if my device doesn't have a screen?
 * Answer TBD
 
 ## WiFi / Web Browser
