@@ -152,7 +152,7 @@ This allows you to change the frequency with which your location is broadcast ac
 
 #### Device sleep period
 
-To use as little power as possible while running on battery, ESP32 based devices go into a sleep mode. Unfortunately, during this sleep mode they turn off their Bluetooth radio. They can be woken early from this sleep by either receiving a message over LoRa (the LoRa receiver never switches off), of by pressing a program button where there is one on the device. This setting allows the length of the sleep mode to be changed from the default of 300 seconds (5 minutes). Setting the period to 0 seconds disables the sleep function on the device.
+To use as little power as possible while running on battery, ESP32 based devices go into a sleep mode. Unfortunately, during this sleep mode they turn off their Bluetooth radio. They can be woken early from this sleep by either receiving a message over LoRa (the LoRa receiver never switches off), of by pressing a program button where there is one on the device. This setting allows the length of the sleep mode to be changed from the default of 300 seconds (5 minutes). To keep the bluetooth link alive for eight hours (any usage of the bluetooth protcol from your phone will reset this timer), set this to 28800 seconds.
 
 ### Debug page
 

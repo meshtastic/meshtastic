@@ -23,13 +23,13 @@ import TabItem from '@theme/TabItem';
 ## General
 
 Q: What is Meshtastic?
-* The most awesome long range, low power communications service on the planet earth! That's not even an exageration!
+* Meshtastic is most awesome long range, low power communications service on the planet earth! That's not even an exageration!
 
 Q: Where can I get additional help, ask questions or bond with the Meshtastic community?
 * After reading this FAQ, there are two places ... The preferred place is to check out the [Fourm](https://meshtastic.discourse.group). There you can be part of our growing community and search for previosly posts that may be similar to what you're looking for. We also have the [Meshtastic Discord](https://discord.com/invite/UQJ5QuM7vq) server where you may connect with like minded people.
 
 Q: How can I contribute to Meshtastic?
-* Answer TBD
+* Everyone contributes in a different way. Join the [Fourm](https://meshtastic.discourse.group) and/or the [Meshtastic Discord](https://discord.com/invite/UQJ5QuM7vq) and introduce yourself. We're all very friendly. If you'd like to pitch in some code, check out the [Developers](https://meshtastic.org/docs/developers) menu on the left.
 
 ## Device (aka Node)
 
