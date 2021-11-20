@@ -135,6 +135,7 @@ module.exports = {
           "hardware/heltec-hardware",
           "hardware/techo-hardware",
           "hardware/wisBlock-hardware",
+          "hardware/linux-hardware",
         ],
       },
       "hardware/buttons",
