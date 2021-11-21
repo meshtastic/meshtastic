@@ -79,14 +79,25 @@ Not necessarily in this order:
 
 * Be able to identify if you're within range of a router.
 
-* Be able to specify the HOP MAX to reduce airtime.
+* Be able to specify the HOP MAX to reduce airtime. Is this necessary?
 
-* Restrict operation of S&F on the slow channel configurations.     
+* Restrict operation of S&F on the slow channel configurations.
 
-*/
+* Create a tx queue to prevent the history from being modified in flight.
+
+* Only allow n-number of requests to the router at any one time.
+
+* Set number of max messages from the history.
+
+* Calculate a new channel with 250mhz bandwidth and ~1.5kbit.
 
 *** Done
+
+* Disable ACK. If the router is within range, so is the requester.
 
 * Currently the way we allocate messages in the device code is super inefficient. It always allocates the worst case message size. Really we should dynamically allocate just the # of bytes we need. This would allow many more MeshPackets to be kept in RAM.
 
 * Allow max history to be defined by radioConfig.preferences.store_forward_plugin_records
+
+* Add a starting to send / finished sending message
+

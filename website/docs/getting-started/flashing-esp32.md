@@ -13,6 +13,8 @@ import TabItem from '@theme/TabItem';
 Plug your device into your computer using a USB cable and then do the following:
 :::important
 You may need to install a driver from Silicon Labs for the [CP210X USB to UART bridge](https://www.silabs.com/products/development-tools/software/usb-to-uart-bridge-vcp-drivers)
+
+Some newer boards may require the drivers for the [CH9102 USB to UART bridge](https://m5stack.oss-cn-shenzhen.aliyuncs.com/resource/drivers/CH9102_VCP_SER_Windows.exe) on Windows 7.
 :::
 
 <Tabs

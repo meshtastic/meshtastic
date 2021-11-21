@@ -36,8 +36,8 @@ Q: How can I contribute to Meshtastic?
 Q: Where do I purchase the device hardware?
 * Answer TBD
 
-Q: I have my hardware. How do I install the firmware?
-* Answer TBD
+Q: I have my hardware. How do I install the firmware and any required drivers?
+* See: https://meshtastic.org/docs/getting-started/flashing-esp32
 
 Q: How do I update the firmware to the latest version?
 * Answer TBD
@@ -48,8 +48,11 @@ Q: My device has gone to sleep. Are received messages lost?
 Q: My device has gone to sleep and I can't send any messages.
 * Once the node wakes up from sleep, your phone will relay any delayed messages through your node and to the mesh network. Give it a few minutes and it'll do the right thing.
 
-Q: How do I turn on / off an esp32 tbeam based device?
-* Answer TBD
+Q: How do I turn off an esp32 tbeam based device?
+* Hold down the middle button for about 10 seconds.
+
+Q: How do I turn on an esp32 tbeam based device?
+* Push the power button for about 1 second.
 
 Q: How can I tell the device not to sleep?
 * Android instructions see: [Android Usage](https://meshtastic.org/docs/software/android/android-usage#configuration-options)
