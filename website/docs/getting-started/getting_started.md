@@ -5,6 +5,13 @@ sidebar_label: Overview
 slug: /getting-started
 ---
 
+## What is Meshtastic?
+
+Meshtastic® is a project that lets you use inexpensive GPS mesh radios as an extensible, super long battery life mesh GPS communicator. These radios are great for hiking, skiing, paragliding - essentially any hobby where you don't have reliable internet access. Each member of your private mesh can always see the location and distance of all other members and any text messages sent to your group chat.
+
+The radios automatically create a mesh to forward packets as needed, so everyone in the group can receive messages from even the furthest member. The radios will optionally work with your phone, but no phone is required.
+
+
 ## Purchase a Radio
 
 The easiest way is to [buy a device with the software already installed](https://www.aliexpress.com/item/4001178678568.html). Other devices are [available](/docs/hardware/tbeam-hardware). In the Americas get the 915mhz version, in Europe the 868Mhz, or Asia 923Mhz. See this listing by [The Things Network](https://www.thethingsnetwork.org/docs/lorawan/frequencies-by-country.html) for frequencies by specific countries.
@@ -155,6 +162,8 @@ Requires Python, pip, Gitbash
 ## Troubleshooting
 
 For any issues during setup, search [our forum](https://meshtastic.discourse.group) to find a solution. If you can't find one, please post your problem, providing as much detail as possible.
+
+We are also on [Discord](https://discord.gg/UQJ5QuM7vq).
 
 
 --->
