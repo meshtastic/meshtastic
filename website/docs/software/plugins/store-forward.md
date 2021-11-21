@@ -1,7 +1,7 @@
 ---
 id: store-forward-plugin
-title: Store and forward plugin
-sidebar_label: Store and forward
+title: Store and Forward plugin
+sidebar_label: Store and Forward
 ---
 
 ## About
@@ -22,7 +22,36 @@ Initial Requirements:
 * * Router nodes are intended to be always online. If this plugin misses any messages, the reliability of the stored messages will be reduced
 * Esp32 Processor based device with external PSRAM. (tbeam v1.0 and tbeamv1.1, maybe others)
 
-## Implementation timeline
+## Usage Overview
+
+* To use / test this you will want at least 3 devices
+* * One device will (currently) need be a tbeam v1.0 and tbeamv1.1 configured as a meshtastic router. Other devices with built in PSRAM will be supported at some point.
+* * Two others will be regular clients. Nothing special required.
+
+### Meshtastic channel configuration
+
+Don't use this on the "Very long range (but slow)" or "Long range (but slower)" channel settings. You're welcome to try and report back, but those channels have a very low bitrate.
+
+Either use a customer channel configuration with at an at least 1kbit data rate or use "Medium range (but fast)".
+
+### Router setup
+
+* Configure your device as a meshtastic router.
+* * https://meshtastic.org/docs/software/settings/router
+* Configure the Store and Forward plugin
+* * Required configuration
+* * * store_forward_plugin_enabled - Set this to true to enable the plugin. False to disable the plugin.
+* * Optional configuration
+* * * store_forward_plugin_records - Set this to the maximum number of records to save. Best to leave this at the default (0) where the plugin will use 2/3 of your device's available PSRAM. This is about 11,000 records.
+* Name your router node something that makes it easily identifable, aka "Router".
+
+Don't enable the Store and Forward plugin on multile routers!
+
+### Client Usage
+ 
+Currently, no sepcial configuration is required. To request your history sent to you, send the message "SF". That's it. This will eventually change to make it easier.
+
+## Developer Notes:
 
 Not necessarily in this order:
 
@@ -41,72 +70,3 @@ UC 6) Eventually we could add a "want_store_and_forward" bit to MeshPacket and t
 UC 7) Currently the way we allocate messages in the device code is super inefficient. It always allocates the worst case message size. Really we should dynamically allocate just the # of bytes we need. This would allow many more MeshPackets to be kept in RAM.
 
 UC 8) We'll want a "delayed" bit in MeshPacket. This will indicate that the message was not received in real time.
-
-## Things to consider
-
-Not all these cases will be initially implemented. It's just a running stream of thoughts to be considered.
-
-### Main Mesh Network with Router
-
-The store and forward plugin is intended to be enabled on a router that designates your "main" mesh network.
-
-### Store and Forward on Multiple Routers
-
-If multiple routers with the plugin are enabled, they should be able to share their stored database amongst each other. This enable resilliancy from one router going offline.
-
-### Fragmented networks - No router
-
-In this case, the mesh network has been fragmented by two client devices leaving the main network.
-
-If two Meshtastic devices walk away from the main mesh, they will be able to message each other but not message the main network. When they return to the main network, they will receive the messages they have missed from the main mesh network.
-
-### Fragmented network - With routers
-
-In this case, we have two routers separate by a great distance, each serving multiple devices. One of the routers have gone offline. This has now created two physically seaprated mesh networks using the same channel configuration.
-
-Q: How do we rejoin both fragmented networks? Do we care about messages that were unrouted between fagments?
-
-### Identifing Delayed Messages
-
-When a message is replayed for a node, identify the packet as "Delayed". This will indicate that the message was not received in real time.
-
-## Router Data Structures
-
-Structure of received messages:
-
-    receivedMessages
-      Port_No
-      packetID
-      to
-      from
-      rxTimeMsec
-      data
-
-Structure of nodes and last time we heard from them. This is a record of any packet type.
-
-    receivedRecord
-      From
-      rxTimeMillis
-
-## General Operation for UC1 - automagically forward packets to a client that may have missed packets
-
-On every handled packet
-* Record the sender from and the time we heard from that sender into senderRecord.
-
-On every handled packet
-
-* If the packet is a message, save the messsage into receivedMessages
-
-On every handled packet, if we have not heard from that sender in a period of time greater than timeAway, let's assume that they have been away from the network.
-
-* In this case, we will resend them all the messages they have missed since they were gone
-
-### Expected problems this implementation
-
-* If the client has been away for less than 5 minutes and has received the previously sent message, the client will gracefully ignore it. This is thanks to PacketHistory::wasSeenRecently in PacketHistory.cpp.
-* * If the client has been away for more than 5 minutes and we resend packets that they have already received, it's possible they will see duplicate messages. This should be unlikely but is still possible. 
-
-
-## Designed limitations
-
-The Store and Forward plugin will subscribe to specific packet types and channels and only save those. This will both reduce the amount of data we will need to store and reduce the overhead on the network. Eg: There's no need to replay ACK packets nor is there's no need to replay old location packets.
