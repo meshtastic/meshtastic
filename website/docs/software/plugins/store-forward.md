@@ -34,6 +34,14 @@ Don't use this on the "Very long range (but slow)" or "Long range (but slower)" 
 
 Either use a customer channel configuration with at an at least 1kbit data rate or use "Medium range (but fast)".
 
+Recommended channel setting is for 1.343kbps:
+
+```bash
+meshtastic --setchan spread_factor 11 --setchan coding_rate 4 --setchan bandwidth 500
+```
+
+With an aftermarket coaxial antenna or moxon antenna, that will give you roughly the same range as "Long range (but slow)" and 5x the bitrate.
+
 ### Router setup
 
 * Configure your device as a meshtastic router.
@@ -51,22 +59,34 @@ Don't enable the Store and Forward plugin on multile routers!
  
 Currently, no sepcial configuration is required. To request your history sent to you, send the message "SF". That's it. This will eventually change to make it easier.
 
-## Developer Notes:
+## Developer TODO
 
 Not necessarily in this order:
 
-UC 1) MVP - automagically forward packets to a client that may have missed packets.
+* Client Interface (Web, Android, Python or iOS when that happens) to request packets be resent.
 
-UC 2) Client Interface (Web, Android, Python or iOS when that happens) to optionally request packets be resent. This is to support the case where Router has not detected that the client was away. This is because the router will only know you're away if you've been gone for a period of time but will have no way of knowing if you were offline for a short number of minutes. This will cover the case where you have ducked into a cave or you're swapping out your battery.
+* Router sends a heartbeat so the client knows there is a router in range.
 
-UC 3) router sends a periodic “heartbeat” to let the clients know they’re part of the main mesh
+* support for a mesh to have multiple routers that have the store & forward functionality (for redundancy)
 
-UC 4) support for a mesh to have multiple routers that have the store & forward functionality (for redundancy)
+* Add a default channel at about 1.5kbit / sec
 
-UC 5) Support for "long term" delayed messages and "short term" delayed messages. Handle the cases slightly different to improve user expierence. A short term delayed message would be a message that was resent becaue a node was not heard from for <5 minutes. A long term delayed message is a message that has not been delivered in >5 minutes.
+* Eventually we could add a "want_store_and_forward" bit to MeshPacket and that could be nicer than whitelists in this plugin. Initially we'd only set that bit in text messages (and any other plugin messages that can cope with this). This change would be backward wire compatible so can add easily later.
 
-UC 6) Eventually we could add a "want_store_and_forward" bit to MeshPacket and that could be nicer than whitelists in this plugin. Initially we'd only set that bit in text messages (and any other plugin messages that can cope with this). This change would be backward wire compatible so can add easily later.
+* Have a "cool down" period to disallow a client to request the history too often.
 
-UC 7) Currently the way we allocate messages in the device code is super inefficient. It always allocates the worst case message size. Really we should dynamically allocate just the # of bytes we need. This would allow many more MeshPackets to be kept in RAM.
+* Message with SF status on requests.
 
-UC 8) We'll want a "delayed" bit in MeshPacket. This will indicate that the message was not received in real time.
+* Be able to identify if you're within range of a router.
+
+* Be able to specify the HOP MAX to reduce airtime.
+
+* Restrict operation of S&F on the slow channel configurations.     
+
+*/
+
+*** Done
+
+* Currently the way we allocate messages in the device code is super inefficient. It always allocates the worst case message size. Really we should dynamically allocate just the # of bytes we need. This would allow many more MeshPackets to be kept in RAM.
+
+* Allow max history to be defined by radioConfig.preferences.store_forward_plugin_records
