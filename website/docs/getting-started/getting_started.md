@@ -55,6 +55,8 @@ There are many ways to connect to your new radio!
 
 For any issues during setup, search [our forum](https://meshtastic.discourse.group) to find a solution. If you can't find one, please post your problem, providing as much detail as possible.
 
+We are also on [Discord](https://discord.gg/UQJ5QuM7vq).
+
 <!--- A guide to setting up your Meshtastic device.
 
 The easiest way is to [buy a device with the software already installed](https://www.aliexpress.com/item/4001178678568.html) In the Americas get the 915mhz version, In Europe the 868Mhz or Asia 923Mhz [Frequency details](https://www.thethingsnetwork.org/docs/lorawan/frequencies-by-country.html).
@@ -162,8 +164,5 @@ Requires Python, pip, Gitbash
 ## Troubleshooting
 
 For any issues during setup, search [our forum](https://meshtastic.discourse.group) to find a solution. If you can't find one, please post your problem, providing as much detail as possible.
-
-We are also on [Discord](https://discord.gg/UQJ5QuM7vq).
-
 
 --->
