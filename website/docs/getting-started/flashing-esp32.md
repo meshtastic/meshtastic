@@ -43,7 +43,7 @@ You may need to install a driver from Silicon Labs for the [CP210X USB to UART b
   </TabItem>
 </Tabs>
 
-You should see something like `CP210X USB to UART Bridge Controller`. If you don't, you will need to install the appropriate driver from [Silicon Labs](https://sliabs.com/developers/usb-to-uart-bridge-vcp-drivers).
+You should see something like `CP210X USB to UART Bridge Controller`. If you don't, you will need to install the appropriate driver from [Silicon Labs](https://silabs.com/developers/usb-to-uart-bridge-vcp-drivers).
 
 ### Download Latest Firmware
 
