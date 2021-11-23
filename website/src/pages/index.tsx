@@ -12,7 +12,7 @@ import styles from './styles.module.css';
 const features = [
   {
     title: "Radio Mesh Text Messaging",
-    imageUrl: "img/software.svg",
+    imageUrl: "img/homepage/messages.svg",
     description: (
       <>
         Off-grid messaging using inexpensive hardware to create your personal mesh. Radios forward messages to the next to flood the network. Communicate kilometers/miles between nodes. Internet-connected relay nodes enable the conversation to move online too.
@@ -21,7 +21,7 @@ const features = [
   },
   {
     title: "Encryption",
-    imageUrl: "img/versatility.svg",
+    imageUrl: "img/homepage/encryption.svg",
     description: (
       <>
         Messages are AES256 encrypted. Only radios supplied with your channel settings (which includes the key) should be able to read your messages. Using multichannel settings you can send encrypted messages on one channel and still participate in a default Meshtastic mesh.
@@ -30,7 +30,7 @@ const features = [
   },
   {
     title: "Conserve Battery",
-    imageUrl: "img/efficiency.svg",
+    imageUrl: "img/homepage/battery.svg",
     description: (
       <>
         Go for days on end and on a single battery or extend it infinitely with a solar cell. Power management ensures the device will last the duration of your use.
@@ -39,7 +39,7 @@ const features = [
   },
   {
     title: "Extendable",
-    imageUrl: "img/efficiency.svg",
+    imageUrl: "img/homepage/extendable.svg",
     description: (
       <>
         Create a highly scalable mesh with hardware on a multitude of platforms to fit your unique requirements: Create an environment monitoring mesh and produce real-time heatmaps, or maybe decentralised, encrypted messaging network, your imagination is the limit.
@@ -48,7 +48,7 @@ const features = [
   },
   {
     title: "Platform Agnostic",
-    imageUrl: "img/efficiency.svg",
+    imageUrl: "img/homepage/platforms.svg",
     description: (
       <>
         Meshtastic clients are built or being built for all major desktop and mobile platforms. Linux, Windows, Mac, Android, and iOS are all supported or well on their way to being supported.
@@ -57,7 +57,7 @@ const features = [
   },
   {
     title: "Open Source",
-    imageUrl: "img/efficiency.svg",
+    imageUrl: "img/homepage/opensource.svg",
     description: (
       <>
         All Meshtastic software is open source. If you want an improvement, submit a pull request or file an issue on Github. Happy coding!
