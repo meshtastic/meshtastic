@@ -57,7 +57,26 @@ Don't enable the Store and Forward plugin on multile routers!
 
 ### Client Usage
  
-Currently, no sepcial configuration is required. To request your history sent to you, send the message "SF". That's it. This will eventually change to make it easier.
+Currently, no sepcial configuration is required. To request your history sent to you, send the command into the message field "SF". That's it. This will eventually change to make it easier. At the moment, that message will be sent to everyone on the mesh but we'll (eventually) make it easier to use where there'll be a button (or maybe it'll be transparent) and the command isn't sent as a text message to the mesh.
+
+Available Commands:
+
+| Command | Definition |
+| :-----: | :---------------: |
+| SF | Send the last few messages I may have missed |
+| SFm | Send a 240 byte payload (Used for testing) |
+
+The Store and Forward plugin will only service one client at a time. If a second client requests messages while the S&F is busy, the S&F will send a private message to the second client that they will need to wait.
+
+## Settings
+
+| Setting | Acceptable Values | Default |
+| :-----: | :---------------: | :-----: |
+| store_forward_plugin_enabled | `true`, `false` | `false` |
+| store_forward_plugin_records | integer | `0` |
+| store_forward_plugin_replay_max_records (reserved) | integer | `0` |
+| store_forward_plugin_replay_max_time  (reserved)  | integer | `0` |
+
 
 ## Developer TODO
 
