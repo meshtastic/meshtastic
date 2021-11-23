@@ -19,6 +19,11 @@ You must use pip version 20 or later. To upgrade to the latest pip, do: `pip ins
 :::info
 Make sure that the `PATH variable` also gets installed by checking the box while installing python. If you don't, python may not be available and you may not be able to call `meshtastic` from your CLI. If you do forget to check that box, you will need to install the path environment variable for python on your operating system.
 :::
+:::important
+You may need to install a driver from Silicon Labs for the [CP210X USB to UART bridge](https://www.silabs.com/products/development-tools/software/usb-to-uart-bridge-vcp-drivers)
+
+Some newer boards may require the drivers for the [CH9102](http://www.wch.cn/downloads/CH343SER_ZIP.html) or [Direct Download](https://github.com/Xinyuan-LilyGO/CH9102_Driver) for Windows 7.
+:::
 
 <Tabs
   groupId="operating-system"
@@ -37,27 +42,49 @@ Make sure that the `PATH variable` also gets installed by checking the box while
         ```bash
         lsusb
         ```
-    * You should see something like `CP210X USB to UART Bridge Controller`
-    * If not download the drivers from [Silicon Labs](https://www.silabs.com/developers/usb-to-uart-bridge-vcp-drivers).
+    * You should see something like:
+        * `ID 10c4:ea60 Silicon Labs CP210x UART Bridge` for CP210X
+        * `ID 1a86:55d4 QinHeng Electronics USB Single Serial` for CH9102
+
 * Check that your computer has Python 3 installed.
     * Use the command
         ```bash
         python3 -V
         ```
-    * If this does not return a version, install [python](https://www.python.org)
+    * If this does not return a version, install python
+        ```bash
+        sudo apt-get update
+        sudo apt-get install python3
+        ```
+
 * Pip is typically installed if you are using python 3 version >= 3.4
     * Check that pip is installed using this command
         ```bash
         pip3 -V
         ```
-    * If this does not return a version, install [pip](https://pip.pypa.io/en/stable/installing/)
+    * If this does not return a version, install pip
+        ```bash
+        sudo apt-get install python3-pip
+        ```
+
+* Optional: use a python virtual environment (otherwise jump to step "Install pytap2")
+    * Install python-virtualenvwrapper (arch based distros as an example)
+        ```bash
+        sudo pacman -Syu python-virtualenvwrapper
+        ```
+    * Create a virtual environment
+        ```bash
+        source /usr/bin/virtualenvwrapper.sh
+        mkvirtualenv meshtastic
+        workon meshtastic
+        ```
 * Install pytap2
     ```bash
-    sudo pip3 install --upgrade pytap2
+    pip3 install --upgrade pytap2
     ```
 * Install meshtastic:
     ```bash
-    sudo pip3 install --upgrade meshtastic
+    pip3 install --upgrade meshtastic
     ```
 
 </TabItem>
@@ -90,6 +117,7 @@ Make sure that the `PATH variable` also gets installed by checking the box while
         pip3 -V
         ```
     * If this does not return a version, install [pip](https://pip.pypa.io/en/stable/installing/)
+    
 * Install pytap2
     ```bash
     sudo pip3 install --upgrade pytap2
@@ -130,7 +158,7 @@ Make sure that the `PATH variable` also gets installed by checking the box while
     ```powershell
     pip3 install --upgrade meshtastic
     ```
-    
+
 </TabItem>
 <TabItem value="termux">
 
