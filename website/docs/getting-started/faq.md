@@ -34,24 +34,24 @@ Q: How can I contribute to Meshtastic?
 ## Device (aka Node)
 
 Q: Where do I purchase the device hardware?
-* Answer TBD
+* Each [supported device](https://meshtastic.org/docs/hardware/tbeam-hardware) has a "Purchase Link".
 
 Q: I have my hardware. How do I install the firmware and any required drivers?
 * See: https://meshtastic.org/docs/getting-started/flashing-esp32
 
 Q: How do I update the firmware to the latest version?
-* Answer TBD
+* If the device is running Meshtastic firmware, you might be able to update over-the-air like via the Android app.
 
 Q: My device has gone to sleep. Are received messages lost?
-* The LORA radio on the node is still active and will wake up the CPU when the device is sleeping. If your phone is in range, the node will relay any messages your phone may have missed. If you're in range and your device is active, messages have not been lost.
+* The LoRa radio on the node is still active and will wake up the CPU when the device is sleeping. If your phone is in range, the node will relay any messages your phone may have missed. If you're in range and your device is active, messages have not been lost.
 
 Q: My device has gone to sleep and I can't send any messages.
 * Once the node wakes up from sleep, your phone will relay any delayed messages through your node and to the mesh network. Give it a few minutes and it'll do the right thing.
 
-Q: How do I turn off an esp32 tbeam based device?
+Q: How do I turn off an esp32 t-beam based device?
 * Hold down the middle button for about 10 seconds.
 
-Q: How do I turn on an esp32 tbeam based device?
+Q: How do I turn on an esp32 t-beam based device?
 * Push the power button for about 1 second.
 
 Q: How can I tell the device not to sleep?
@@ -88,15 +88,21 @@ Q: How can I clear the message history?
 ## iOS
 
 Q: What version of iOS does the Meshtastic iOS App Require?
-* Answer TBD
+* The now-in-beta iOS app requires iOS v15.
 
 Q: How do I get the Meshtastic iOS App?
-* Answer TBD
+* See [iOS App](https://meshtastic.org/docs/software/ios/ios-development)
 
 ## Bluetooth
 
 Q: How do I pair my phone to the device if my device doesn't have a screen?
-* Answer TBD
+* Answer TBD (perhaps consider using web if esp32)
+
+Q: Can I have Bluetooth enabled and use WiFi radio?
+* No. Only one method will work at a time.
+
+Q: How do I disable WiFi so Bluetooth will work?
+* Ensure the wifi_ssid and wifi_password values are blank.
 
 ## WiFi / Web Browser
 
@@ -107,7 +113,7 @@ Q: When I turn on WiFi, Bluetooth turns off. Why is this?
 * Currently WiFi and Bluetooth can be turned on at the same time.
 
 Q: How do I access the network from my web browser?
-* Answer TBD
+* Visit http://meshtastic.local (Note: This is a work in progress.)
 
 ## Channels
 
@@ -128,5 +134,9 @@ Q: What is a Secondary Channel?
 
 ## Commmand Line / Python
 
-Q: Question
-* Answer TBD
+Q: How do I find out more about installing (and using) Meshtastic via command line?
+* See https://meshtastic.org/docs/software/python/python-installation
+
+Q: How do I find out more about using python to interact?
+* See https://meshtastic.org/docs/software/python/python-usage
+
