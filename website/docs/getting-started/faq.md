@@ -110,7 +110,7 @@ Q: How do I turn on the WiFI radio?
 * See: https://meshtastic.org/docs/software/device/device-wifi
 
 Q: When I turn on WiFi, Bluetooth turns off. Why is this?
-* Currently WiFi and Bluetooth can be turned on at the same time.
+* Currently WiFi and Bluetooth can not be enabled at the same time.
 
 Q: How do I access the network from my web browser?
 * Visit http://meshtastic.local (Note: This is a work in progress.)
