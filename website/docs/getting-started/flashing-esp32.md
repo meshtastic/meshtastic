@@ -13,6 +13,8 @@ import TabItem from '@theme/TabItem';
 Plug your device into your computer using a USB cable and then do the following:
 :::important
 You may need to install a driver from Silicon Labs for the [CP210X USB to UART bridge](https://www.silabs.com/products/development-tools/software/usb-to-uart-bridge-vcp-drivers)
+
+Some newer boards may require the drivers for the [CH9102](http://www.wch.cn/downloads/CH343SER_ZIP.html) or [Direct Download](https://github.com/Xinyuan-LilyGO/CH9102_Driver) for Windows 7.
 :::
 
 <Tabs
@@ -25,25 +27,26 @@ You may need to install a driver from Silicon Labs for the [CP210X USB to UART b
   ]}>
   <TabItem value="linux">
 
-  > Open a `Terminal` and enter the following command:
+  > Connect your Meshtastic device to your USB port, open a `Terminal` and enter the following command:
   > ```bash
   > lsusb
   > ```
-
+  > You should see something like: `ID 10c4:ea60 Silicon Labs CP210x UART Bridge` for CP210X or `ID 1a86:55d4 QinHeng Electronics USB Single Serial` for CH9102
+ 
   </TabItem>
   <TabItem value="macos">
 
   > Navigate to `Apple Menu  > About This Mac > System Report... > Hardware > USB`.
+  > You should see something like `CP210X USB to UART Bridge Controller`. If not download the appropriate drivers
 
   </TabItem>
   <TabItem value="windows">
 
-  > Navigate to `Device Manager > Ports (COM & LPT)`.
+  > Navigate to `Device Manager > Ports (COM & LPT)`. You should see something like `Silicon Labs CP210X USB to UART Bridge (COM5)`. If not download the appropriate drivers
 
   </TabItem>
 </Tabs>
 
-You should see something like `CP210X USB to UART Bridge Controller`. If you don't, you will need to install the appropriate driver from [Silicon Labs](https://sliabs.com/developers/usb-to-uart-bridge-vcp-drivers).
 
 ### Download Latest Firmware
 
@@ -81,7 +84,7 @@ The [T-Beam 0.7](../hardware/tbeam-hardware#t-beam---v07) board is an earlier ve
   > If `python3` is not installed, install with
   > ```bash
   > sudo apt-get update
-  > sudo apt-get install python3.6
+  > sudo apt-get install python3
   > ```
   > If `pip` is not installed, install with
   > ```bash

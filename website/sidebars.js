@@ -2,6 +2,7 @@ module.exports = {
   Sidebar: {
     "Getting Started": [
       "getting-started/overview",
+      "getting-started/faq",
       {
         "Flashing firmware": [
           "getting-started/flashing-esp32",
@@ -27,13 +28,11 @@ module.exports = {
         "Meshtastic Android": [
           "software/android/android-installation",
           "software/android/android-usage",
-          "software/android/location-access"
+          "software/android/location-access",
         ],
       },
       {
-        "Meshtastic iOS": [
-          "software/ios/ios-development",
-        ],
+        "Meshtastic iOS": ["software/ios/ios-development"],
       },
       {
         "Meshtastic.js": [
@@ -61,7 +60,7 @@ module.exports = {
         ],
       },
       {
-        "Plugins": [
+        Plugins: [
           "software/plugins/plugins",
           "software/plugins/range-test-plugin",
           "software/plugins/ext-notif-plugin",
@@ -112,19 +111,19 @@ module.exports = {
           "software/settings/router",
           "software/settings/wifi",
           {
-            "Plugins": [
+            Plugins: [
               "software/settings/environmental-measurement-plugin",
               "software/settings/external-notification-plugin",
               "software/settings/range-test-plugin",
               "software/settings/serial-plugin",
               "software/settings/store-and-forward-plugin",
             ],
-            "Advanced": [
+            Advanced: [
               "software/settings/channel-advanced",
               "software/settings/misc",
             ],
           },
-        ]
+        ],
       },
     ],
     Hardware: [
@@ -136,11 +135,12 @@ module.exports = {
           "hardware/heltec-hardware",
           "hardware/techo-hardware",
           "hardware/wisBlock-hardware",
+          "hardware/linux-hardware",
         ],
       },
       "hardware/buttons",
       {
-        "Antennas": [
+        Antennas: [
           "hardware/antenna/antenna",
           "hardware/antenna/aerials",
           "hardware/antenna/non-aerial",
@@ -156,6 +156,7 @@ module.exports = {
       },
       "developers/api",
       "developers/build-env",
+      "developers/publish",
       "developers/codespaces",
       {
         Device: [

@@ -36,21 +36,7 @@ The first time your device restarts after enabling WiFi, it will take an additio
 
 ### Upload web interface files
 
-Next download the three files (app.css.gz, app.js.gz and index.html.gz) from:
-
-[https://github.com/meshtastic/meshtastic-web/releases](https://github.com/meshtastic/meshtastic-web/releases)
-
-Then manually upload them to your device by going to:
-
-* Hostname over mDNS
-* * [http://meshtastic.local/static](http://meshtastic.local/static)
-* If mDNS doesn't work for you
-* * http://{your device IP address here}/static
-* * Device IP address typically defaults to 192.168.42.1
-
-The web interface application can then be accessed by visiting [http://meshtastic.local/](http://meshtastic.local/) or [http://192.168.42.1/](http://192.168.42.1/)
-
-We do realize this is not "easy" and are exploring ways to simplify this in the future, ideally rolling it out as part of the device firmware.
+* Updated (Nov 20, 2021) - The process to use the web interface will soon be included in the default builds downloaded from the usual places. This document will be updated soon. Hang tight :)
 
 ### Wifi configuration
 

@@ -12,6 +12,30 @@ interface.sendText("hello mesh") # or sendData to send binary data, see document
 interface.close()
 ```
 
+Another example using Python 3 code to send a message to the mesh when WiFi is enabled:
+```python
+import time
+import meshtastic
+from pubsub import pub
+
+def onReceive(packet, interface): # called when a packet arrives
+    print(f"Received: {packet}")
+
+def onConnection(interface, topic=pub.AUTO_TOPIC): # called when we (re)connect to the radio
+    # defaults to broadcast, specify a destination ID if you wish
+    interface.sendText("hello mesh")
+
+pub.subscribe(onReceive, "meshtastic.receive")
+pub.subscribe(onConnection, "meshtastic.connection.established")
+interface = meshtastic.TCPInterface(hostname='192.168.68.74')
+while True:
+    time.sleep(1000)
+interface.close()
+```
+
+Note: Be sure to change the ip address in the code above to a valid ip address for your setup.
+
+
 For the rough notes/implementation plan see [TODO](https://github.com/meshtastic/Meshtastic-python/blob/master/TODO.md). See the API for full details of how to use the library.
 
 ## A note to developers of this lib

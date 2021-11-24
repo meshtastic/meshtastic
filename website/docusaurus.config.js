@@ -15,6 +15,14 @@ const config = {
     colorMode: {
       respectPrefersColorScheme: true,
     },
+    announcementBar: {
+      id: "play_store_workaround",
+      content:
+        'Android app unavailable in the Google Play Store store. Install by <a href="/docs/software/android/android-installation">side-loading</a> from <a href="https://github.com/meshtastic/Meshtastic-Android/releases">GitHub</a> or <a href="https://www.amazon.com/Geeksville-Industries-Meshtastic/dp/B08CY9394Q">Amazon</a>.',
+      backgroundColor: "#ff9999",
+      textColor: "#091E42",
+      isCloseable: true,
+    },
     navbar: {
       title: "Meshtastic",
       logo: {
@@ -111,7 +119,7 @@ const config = {
           ],
         },
       ],
-      copyright: `Meshtastic® trademark is a registered trademark belonging to Geeksville Industries LLC`,
+      copyright: `<a href="https://vercel.com/?utm_source=meshtastic&utm_campaign=oss" style="color: white">Powered by ▲ Vercel</a> | Meshtastic® trademark is a registered trademark belonging to Geeksville Industries LLC`,
     },
     algolia: {
       apiKey: "01ad7e13d3fe392d2ad26da3c69dbc21",
@@ -127,7 +135,6 @@ const config = {
       {
         docs: {
           sidebarPath: require.resolve("./sidebars.js"),
-          // Please change this to your repo.
           editUrl:
             "https://github.com/meshtastic/meshtastic/edit/master/website/",
         },
