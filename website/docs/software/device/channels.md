@@ -38,13 +38,13 @@ Any channel you add after that Primary channel is Secondary.  Secondary channels
 
 Secondary channels **must** have a PSK (encryption).
 
-```bash title="Adding a channel called testing-channel"
-$ meshtastic --ch-add testing-channel
+```bash title="Adding a channel called testing"
+$ meshtastic --ch-add testing
 Connected to radio
 Writing modified channels to device
 ```
 
-The device will now have a Secondary channel called "testing-channel"
+The device will now have a Secondary channel called "testing"
 
 ```bash title="Expected output"
 $ meshtastic --info
@@ -52,7 +52,7 @@ Connected to radio
 ...
 Channels:
   PRIMARY psk=default { "modemConfig": "Bw125Cr48Sf4096", "psk": "AQ==" }
-  SECONDARY psk=secret { "psk": "HW7E3nMbiNbvr6MhsDonLCmj7eSAhttzjbIx/r5OQmg=", "name": "testing-channel" }
+  SECONDARY psk=secret { "psk": "HW7E3nMbiNbvr6MhsDonLCmj7eSAhttzjbIx/r5OQmg=", "name": "testing" }
 Primary channel URL: https://www.meshtastic.org/d/#CgUYAyIBAQ
 Complete URL (includes all channels): https://www.meshtastic.org/d/#CgUYAyIBAQopIiAdbsTecxuI1u-voyGwOicsKaPt5ICG23ONsjH-vk5CaCoFYWRtaW4
 ```

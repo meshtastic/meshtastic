@@ -24,3 +24,8 @@ sidebar_label: Heltec
 
 [<img src="Heltec WiFi LoRa 32 (V2)" src="/img/hardware/heltec-v2.png" style={{zoom:'25%'}} />](/img/hardware/heltec-v2.png)
 
+* There are two versions of the Heltec (V2). Below is a picture highlighting the visual differences:
+
+[<img src="Heltec WiFi LoRa 32 (V2)" src="/img/hardware/heltec_v2_vs_v21.png" style={{zoom:'25%'}} />](/img/hardware/heltec_v2_vs_v21.png)
+
+* See [hardware update log](https://heltec-automation-docs.readthedocs.io/en/latest/esp32/wifi_lora_32/hardware_update_log.html) for more details
