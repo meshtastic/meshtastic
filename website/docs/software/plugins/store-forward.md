@@ -32,7 +32,7 @@ Initial Requirements:
 
 Don't use this on the "Very long range (but slow)" or "Long range (but slower)" channel settings. You're welcome to try and report back, but those channels have a very low bitrate.
 
-Either use a customer channel configuration with at an at least 1kbit data rate or use "Medium range (but fast)".
+Either use a custom channel configuration with at an at least 1kbit data rate or use "Medium range (but fast)".
 
 Recommended channel setting is for 1.343kbps:
 
@@ -74,8 +74,8 @@ The Store and Forward plugin will only service one client at a time. If a second
 | :-----: | :---------------: | :-----: |
 | store_forward_plugin_enabled | `true`, `false` | `false` |
 | store_forward_plugin_records | integer | `0` |
-| store_forward_plugin_replay_max_records (reserved) | integer | `0` |
-| store_forward_plugin_replay_max_time  (reserved)  | integer | `0` |
+| store_forward_plugin_replay_max_records (tbd) | integer | `0` |
+| store_forward_plugin_replay_max_time  (tbd)  | integer | `0` |
 
 
 ## Developer TODO
