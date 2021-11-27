@@ -14,6 +14,14 @@ If you’d like to do ‘real’ releases with your changes, the procedure is:
 * run bin/promote-release.sh - this should cause github to start a release build (see the CI actions)
 * edit the draft release text and click publish
 
+### Update Protobufs
+
+* cd proto
+* git checkout master && git pull
+* cd ..
+* git add proto
+* git commit -m "updating proto submodule to latest"
+
 ## Android
 
 TBD
