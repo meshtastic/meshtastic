@@ -14,10 +14,10 @@ Power settings on a Meshtastic device can be set like other user-define settings
 For example, if we wanted to disable sleep mode, like when we put the device into router mode, we could use the command:
 
 ```bash
-meshtastic --set mesh_sds_timeout_secs MAXUNIT
+meshtastic --set mesh_sds_timeout_secs 4294967295
 ```
 :::note
-See MAXUNIT from `mesh_sds_timeout_secs` below:
+See MAXUINT from `mesh_sds_timeout_secs` below:
 
 For a description and more information on what exactly all of these mean, please refer to [Power Management State Machine](../other/power)
 
@@ -31,7 +31,7 @@ For a description and more information on what exactly all of these mean, please
 |        ls_secs        |                                                                       `integer` (seconds)                                                                       | `0` (see note) |
 | mesh_sds_timeout_secs |                                                                       `integer` (seconds)                                                                       |      `0`       |
 |     min_wake_secs     |                                                                       `integer` (seconds)                                                                       |      `0`       |
-| phone_sds_timeout_sec |                                                                       `integer` (seconds)                                                                       |      `0`       | Power management state machine option. See the [power page](../other/power) for details. 0 for default of two hours, MAXUINT for disabled                                                                                                                           |
+| phone_sds_timeout_sec |                                                                       `integer` (seconds)                                                                       |      `0`       | Power management state machine option. See the [power page](../other/power) for details. 0 for default of two hours, use the value of MAXUINT or 4294967295 to disable                                                                                                                           |
 |  phone_timeout_secs   |                                                                       `integer` (seconds)                                                                       |      `0`       |
 |    screen_on_secs     |                                                                       `integer` (seconds)                                                                       |      `0`       |
 |       sds_secs        |                                                                       `integer` (seconds)                                                                       |      `0`       |
@@ -69,7 +69,7 @@ Power management state machine option. See the [power page](../other/power) for 
 
 ### mesh_sds_timeout_secs
 
-Power management state machine option. See the [power page](../other/power) for details. 0 for default of two hours, MAXUINT for disabled
+Power management state machine option. See the [power page](../other/power) for details. 0 for default of two hours, use the MAXUINT or 4294967295 to disable
 
 ### min_wake_secs
 
@@ -77,7 +77,7 @@ Power management state machine option. See the [power page](../other/power)for d
 
 ### phone_sds_timeout_sec
 
-Power management state machine option. See the [power page](../other/power) for details. 0 for default of two hours, MAXUINT for disabled
+Power management state machine option. See the [power page](../other/power) for details. 0 for default of two hours, use the MAXUINT or 4294967295 to disable
 
 ### phone_timeout_secs
 
@@ -112,7 +112,9 @@ Power management state machine option. See the [power page](../other/power) for 
   ]}>
   <TabItem value="cli">
 
-    TODO
+```bash
+meshtastic --set mesh_sds_timeout_secs 0
+```
 
   </TabItem>
   <TabItem value="android">
