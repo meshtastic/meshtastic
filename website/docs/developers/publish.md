@@ -32,10 +32,24 @@ TBD
 
 ## Python
 
-if any dev wants to take this on, send me a note and I’ll bless you with pypi
+### Pre-requistes
 
+* Python Packages
+* * pip3 install pdoc3
+* * pip3 install pygatt
+* * pip3 install pandoc
+* * pip install twine
+* https://pandoc.org/installing.html
+* nanopb 0.4.4 installed
+
+### Instructions
+
+* update the proto submodule
 * bump the version in setup.py
 * run bin/upload-release.sh
 
+ I usually just edit setup.py to bump the version number, then run "bin/upload-release.sh" (though you should use bin/test-release.sh for the first time - which is just a dry deploy to the pypi test server).  This script does the build (including new docs - which will end up in the git checkin) and upload to pypi.  Then I do a git commit/push and tag wit the version number.
+
 :::note
-You need permissions in the github project to make a build:::
+You need permissions in the github project to make a build
+:::
