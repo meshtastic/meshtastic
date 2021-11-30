@@ -25,6 +25,7 @@ const config = {
     },
     navbar: {
       title: "Meshtastic",
+      hideOnScroll: true,
       logo: {
         alt: "Meshtastic Logo",
         src: "img/meshtastic-design/logo/svg/Mesh_Logo_Black.svg",
@@ -32,28 +33,14 @@ const config = {
       },
       items: [
         {
+          label: "Showcase",
+          to: "showcase",
+          activeBasePath: "showcase",
+        },
+        {
+          label: "Docs",
           to: "docs/getting-started",
           activeBasePath: "docs/getting-started",
-          label: "Getting Started",
-          position: "left",
-        },
-        {
-          to: "docs/software",
-          activeBasePath: "docs/software",
-          label: "Software",
-          position: "left",
-        },
-        {
-          to: "docs/hardware",
-          activeBasePath: "docs/hardware",
-          label: "Hardware",
-          position: "left",
-        },
-        {
-          to: "docs/developers",
-          activeBasePath: "docs/developers",
-          label: "Developers",
-          position: "left",
         },
         {
           href: "https://meshtastic.discourse.group",
@@ -75,20 +62,12 @@ const config = {
           title: "Docs",
           items: [
             {
-              label: "Getting Started",
+              label: "Get Started",
               to: "docs/getting-started",
             },
             {
-              label: "Software",
-              to: "docs/software",
-            },
-            {
-              label: "Hardware",
-              to: "docs/hardware",
-            },
-            {
-              label: "Developers",
-              to: "docs/developers",
+              label: "Showcase",
+              to: "showcase",
             },
           ],
         },
@@ -128,6 +107,7 @@ const config = {
       searchParameters: {},
     },
   },
+
   presets: [
     [
       "@docusaurus/preset-classic",
@@ -144,6 +124,7 @@ const config = {
       },
     ],
   ],
+  plugins: ["@docusaurus/plugin-ideal-image"],
 };
 
 module.exports = config;

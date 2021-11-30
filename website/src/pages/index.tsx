@@ -1,13 +1,9 @@
 import React from 'react';
 
-import clsx from 'clsx';
-
+import Head from '@docusaurus/Head';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
-import Head from '@docusaurus/Head';
-
-import styles from './styles.module.css';
 
 const features = [
   {
@@ -15,7 +11,10 @@ const features = [
     imageUrl: "img/homepage/messages.svg",
     description: (
       <>
-        Off-grid messaging using inexpensive hardware to create your personal mesh. Radios forward messages to the next to flood the network. Communicate kilometers/miles between nodes. Internet-connected relay nodes enable the conversation to move online too.
+        Off-grid messaging using inexpensive hardware to create your personal
+        mesh. Radios forward messages to the next to flood the network.
+        Communicate kilometers/miles between nodes. Internet-connected relay
+        nodes enable the conversation to move online too.
       </>
     ),
   },
@@ -24,7 +23,10 @@ const features = [
     imageUrl: "img/homepage/encryption.svg",
     description: (
       <>
-        Messages are AES256 encrypted. Only radios supplied with your channel settings (which includes the key) should be able to read your messages. Using multichannel settings you can send encrypted messages on one channel and still participate in a default Meshtastic mesh.
+        Messages are AES256 encrypted. Only radios supplied with your channel
+        settings (which includes the key) should be able to read your messages.
+        Using multichannel settings you can send encrypted messages on one
+        channel and still participate in a default Meshtastic mesh.
       </>
     ),
   },
@@ -33,7 +35,9 @@ const features = [
     imageUrl: "img/homepage/battery.svg",
     description: (
       <>
-        Go for days on end and on a single battery or extend it infinitely with a solar cell. Power management ensures the device will last the duration of your use.
+        Go for days on end and on a single battery or extend it infinitely with
+        a solar cell. Power management ensures the device will last the duration
+        of your use.
       </>
     ),
   },
@@ -42,7 +46,10 @@ const features = [
     imageUrl: "img/homepage/extendable.svg",
     description: (
       <>
-        Create a highly scalable mesh with hardware on a multitude of platforms to fit your unique requirements: Create an environment monitoring mesh and produce real-time heatmaps, or maybe decentralised, encrypted messaging network, your imagination is the limit.
+        Create a highly scalable mesh with hardware on a multitude of platforms
+        to fit your unique requirements: Create an environment monitoring mesh
+        and produce real-time heatmaps, or maybe decentralised, encrypted
+        messaging network, your imagination is the limit.
       </>
     ),
   },
@@ -51,7 +58,9 @@ const features = [
     imageUrl: "img/homepage/platforms.svg",
     description: (
       <>
-        Meshtastic clients are built or being built for all major desktop and mobile platforms. Linux, Windows, Mac, Android, and iOS are all supported or well on their way to being supported.
+        Meshtastic clients are built or being built for all major desktop and
+        mobile platforms. Linux, Windows, Mac, Android, and iOS are all
+        supported or well on their way to being supported.
       </>
     ),
   },
@@ -60,7 +69,8 @@ const features = [
     imageUrl: "img/homepage/opensource.svg",
     description: (
       <>
-        All Meshtastic software is open source. If you want an improvement, submit a pull request or file an issue on Github. Happy coding!
+        All Meshtastic software is open source. If you want an improvement,
+        submit a pull request or file an issue on Github. Happy coding!
       </>
     ),
   },
@@ -69,10 +79,10 @@ const features = [
 function Feature({ imageUrl, title, description }) {
   const imgUrl = useBaseUrl(imageUrl);
   return (
-    <div className={clsx("col col--4", styles.feature)}>
+    <div className="col col--4">
       {imgUrl && (
         <div className="text--center">
-          <img className={styles.featureImage} src={imgUrl} alt={title} />
+          <img width={200} height={200} src={imgUrl} alt={title} />
         </div>
       )}
       <h3>{title}</h3>
@@ -90,7 +100,9 @@ function Home() {
         <meta property="og:title" content="Meshtastic" />
         <meta
           property="og:image"
-          content={useBaseUrl("img/meshtastic-design/web/social-preview-1200x630.png")}
+          content={useBaseUrl(
+            "img/meshtastic-design/web/social-preview-1200x630.png"
+          )}
         />
         <meta
           property="og:description"
@@ -99,7 +111,7 @@ function Home() {
         <meta property="og:url" content="https://meshtastic.org/" />
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
-      <header className={clsx("hero hero--primary", styles.heroBanner)}>
+      <header style={{ textAlign: "center" }} className="hero hero--primary">
         <div className="container">
           <h1 className="hero__title">
             <img
@@ -114,7 +126,9 @@ function Home() {
       </header>
       <main>
         {features && features.length > 0 && (
-          <section className={styles.features}>
+          <section
+            style={{ display: "flex", alignItems: "center", padding: "2rem" }}
+          >
             <div className="container">
               <div className="row">
                 {features.map((props, idx) => (
