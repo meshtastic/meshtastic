@@ -1,7 +1,7 @@
 ---
 id: faq
-title: Frequenty Asked Questions (FAQ)
-sidebar_label: Frequenty Asked Questions
+title: Frequently Asked Questions (FAQ)
+sidebar_label: Frequently Asked Questions
 slug: /getting-started/faq
 ---
 import Tabs from '@theme/Tabs';
@@ -23,13 +23,13 @@ import TabItem from '@theme/TabItem';
 ## General
 
 Q: What is Meshtastic?
-* Meshtastic is most awesome long range, low power communications service on the planet earth! That's not even an exageration!
+* Meshtastic is most awesome long range, low power communications service on the planet earth! That's not even an exaggeration!
 
 Q: Where can I get additional help, ask questions or bond with the Meshtastic community?
-* After reading this FAQ and checking out the links on the left, there are two places ... The preferred place is to check out the [Fourm](https://meshtastic.discourse.group). There you can be part of our growing community and search for previosly posts that may be similar to what you're looking for. We also have the [Meshtastic Discord](https://discord.com/invite/UQJ5QuM7vq) server where you may connect with like minded people.
+* After reading this FAQ and checking out the links on the left, there are two places... The preferred place is to check out the [Forum](https://meshtastic.discourse.group). There you can be part of our growing community and search for previous posts that may be similar to what you're looking for. We also have the [Meshtastic Discord](https://discord.com/invite/UQJ5QuM7vq) server where you may connect with like-minded people.
 
 Q: How can I contribute to Meshtastic?
-* Everyone contributes in a different way. Join the [Fourm](https://meshtastic.discourse.group) and/or the [Meshtastic Discord](https://discord.com/invite/UQJ5QuM7vq) and introduce yourself. We're all very friendly. If you'd like to pitch in some code, check out the [Developers](https://meshtastic.org/docs/developers) menu on the left.
+* Everyone contributes in a different way. Join the [Forum](https://meshtastic.discourse.group) and/or the [Meshtastic Discord](https://discord.com/invite/UQJ5QuM7vq) and introduce yourself. We're all very friendly. If you'd like to pitch in some code, check out the [Developers](https://meshtastic.org/docs/developers) menu on the left.
 
 ## Device (aka Node)
 
@@ -63,7 +63,7 @@ Q: How can I tell the device not to sleep?
 ### Plugins
 
 Q: What are Plugins?
-* Plugins are features that expand the basic device functionalty and/or integrations with other services.
+* Plugins are features that expand the basic device functionality and/or integrate with other services.
 
 Q: What plugins do we have available?
 * To see the list of available plugins, please go to: https://meshtastic.org/docs/software/plugins/plugins
@@ -132,11 +132,10 @@ Q: What is a Primary Channel?
 Q: What is a Secondary Channel?
 * As this is a new feature, secondary Channels work on the device and the Python Script. Support for secondary channels by other clients are pending. For more information: https://meshtastic.org/docs/software/device/device-channels#how-to-use-secondary-channels
 
-## Commmand Line / Python
+## Command Line / Python
 
 Q: How do I find out more about installing (and using) Meshtastic via command line?
 * See https://meshtastic.org/docs/software/python/python-installation
 
 Q: How do I find out more about using python to interact?
 * See https://meshtastic.org/docs/software/python/python-usage
-
