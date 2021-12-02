@@ -18,7 +18,14 @@ meshtastic -h
 Because of the growing nature of this project, not all commands may appear when using the help command with `meshtastic -h`.
 :::
 
-## Changing device settings
+## Getting a list of User Preferences
+
+You can get a list of user preferences by running '--get' with an invalid atrribute such as 'all'.
+```bash
+meshtastic --get all
+```
+
+## Changing settings
 
 You can also use this tool to set any of the device parameters which are stored in persistent storage. For instance, here's how to set the device
 to keep the bluetooth link alive for eight hours (any usage of the bluetooth protocol from your phone will reset this timer)

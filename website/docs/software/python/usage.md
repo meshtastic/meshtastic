@@ -36,6 +36,21 @@ interface.close()
 Note: Be sure to change the ip address in the code above to a valid ip address for your setup.
 
 
+You can get and update settings like this:
+```python
+import meshtastic
+interface = meshtastic.SerialInterface()
+
+ourNode = interface.getNode('^local')
+print(ourNode.radioConfig.preferences)
+ourNode.radioConfig.preferences.gps_update_interval = 60
+print(ourNode.radioConfig.preferences)
+ourNode.writeConfig()
+
+interface.close()
+```
+
+
 For the rough notes/implementation plan see [TODO](https://github.com/meshtastic/Meshtastic-python/blob/master/TODO.md). See the API for full details of how to use the library.
 
 ## A note to developers of this lib
