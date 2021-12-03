@@ -1,29 +1,31 @@
 import React from 'react';
 
-import { networks } from '../../../data/networks/_overview';
-import { NetworkWriteup } from '../../../utils/showcase';
+// import { networks } from '../../../data/networks/_overview';
+import { NetworkWriteup, ShowcaseNetwork } from '../../../utils/showcase';
 
 interface NetworkProps {
   id: string;
 }
 
 export const Network = ({ id }: NetworkProps): JSX.Element => {
-  import(`../../../data/networks/${id}/writeup.ts`).then((data) => {
+  import(`../../../data/networks/${id}`).then((data) => {
     setNetworkWriteup(data.writeup as NetworkWriteup);
+    setMetadata(data.metadata as ShowcaseNetwork);
   });
 
   //   console.log(data);
   const [networkWriteup, setNetworkWriteup] = React.useState<NetworkWriteup>();
+  const [metadata, setMetadata] = React.useState<ShowcaseNetwork>();
   React.useEffect(() => {
     // data.then((data) => setNetworkWriteup(data));
   }, []);
 
-  const network = networks.find((network) => network.id === id);
+  // const network = networks.find((network) => network.id === id);
 
-  return network && networkWriteup ? (
+  return metadata && networkWriteup ? (
     <div className="container">
-      <h1>{network.title}</h1>
-      <p>{network.description}</p>
+      <h1>{metadata.title}</h1>
+      <p>{metadata.description}</p>
       <div className="avatar">
         <img
           src={networkWriteup.author.avatarUrl}

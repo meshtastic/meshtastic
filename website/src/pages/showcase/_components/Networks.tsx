@@ -7,13 +7,6 @@ import { useSelectedTags } from '../../../hooks/useSelectedTags';
 import { ShowcaseNetwork, sortedNetworks } from '../../../utils/showcase';
 import { Card } from './Card';
 
-const favoriteNetworks = sortedNetworks.filter((network) =>
-  network.tags.includes("favorite")
-);
-const otherNetworks = sortedNetworks.filter(
-  (network) => !network.tags.includes("favorite")
-);
-
 interface NetworkSectionProps {
   title: string;
   icon?: JSX.Element;
@@ -70,6 +63,16 @@ const NetworkSection = ({
 };
 
 export const Networks = (): JSX.Element => {
+  const [sorted, setSorted] = React.useState<ShowcaseNetwork[]>([]);
+  const [other, setOther] = React.useState<ShowcaseNetwork[]>([]);
+
+  sortedNetworks.then((networks) => {
+    setSorted(networks.filter((network) => network.tags.includes("favorite")));
+  });
+  sortedNetworks.then((networks) => {
+    setOther(networks.filter((network) => !network.tags.includes("favorite")));
+  });
+
   const selectedTags = useSelectedTags();
   const filteredNetworks = useFilteredNetworks();
 
@@ -81,9 +84,9 @@ export const Networks = (): JSX.Element => {
             title="Our favorites"
             icon={<FiHeart />}
             iconColor="rgb(190 24 93)"
-            networks={favoriteNetworks}
+            networks={sorted}
           />
-          <NetworkSection title="All networks" networks={otherNetworks} />
+          <NetworkSection title="All networks" networks={other} />
         </>
       ) : (
         <NetworkSection
