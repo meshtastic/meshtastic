@@ -1,8 +1,33 @@
 import React from 'react';
 
+import { Octokit } from '@octokit/rest';
+import { Endpoints } from '@octokit/types';
 import Layout from '@theme/Layout';
 
+import { FirmwareCard } from './_components/FirmwareCard';
+
 const Firmware = (): JSX.Element => {
+  const gh = new Octokit();
+
+  const [releases, setReleases] =
+    React.useState<
+      Endpoints["GET /repos/{owner}/{repo}/releases"]["response"]
+    >();
+
+  gh.repos
+    .listReleases({
+      owner: "meshtastic",
+      repo: "meshtastic-device",
+    })
+    .then((response) => {
+      if (response.data) {
+        setReleases(response);
+      }
+    });
+
+  const beta = releases?.data.filter((release) => release.prerelease === false);
+
+  const alpha = releases?.data.filter((release) => release.prerelease === true);
   return (
     <Layout
       title="Firmware"
@@ -10,16 +35,6 @@ const Firmware = (): JSX.Element => {
     >
       <main className="margin-vert--xl">
         <div className="container">
-          {/*  */}
-          <div
-            className="margin-bottom--sm"
-            style={{
-              display: "flex",
-              alignItems: "center",
-            }}
-          >
-            <h2>Stable</h2>
-          </div>
           <ul
             style={{
               position: "relative",
@@ -30,38 +45,16 @@ const Firmware = (): JSX.Element => {
             }}
           >
             {/*  */}
-            <div className="card">
-              <div className="card__header">
-                <h3>Beta</h3>
-              </div>
-              <div className="card__body">
-                <p>Tested feature set. For those who want stability.</p>
-              </div>
-              <div className="card__footer">
-                <button className="button button--secondary button--block">
-                  See All
-                </button>
-              </div>
-            </div>
-
-            {/*  */}
-            {/*  */}
-            <div className="card">
-              <div className="card__header">
-                <h3>Alpha</h3>
-              </div>
-              <div className="card__body">
-                <p>
-                  Upcomming changes for testing. For those who want new
-                  features.
-                </p>
-              </div>
-              <div className="card__footer">
-                <button className="button button--secondary button--block">
-                  See All
-                </button>
-              </div>
-            </div>
+            <FirmwareCard
+              variant="Beta"
+              description="Tested feature set. For those who want stability."
+              firmware={beta}
+            />
+            <FirmwareCard
+              variant="Alpha"
+              description="Upcomming changes for testing. For those who want new features."
+              firmware={alpha}
+            />
 
             {/*  */}
             {/*  */}
@@ -75,10 +68,13 @@ const Firmware = (): JSX.Element => {
                   things.
                 </p>
               </div>
-              <div className="card__footer">
-                <button className="button button--secondary button--block">
-                  See All
-                </button>
+              <div className="card__footer" style={{ marginTop: "1rem" }}>
+                <a
+                  href="https://nightly.link/meshtastic/meshtastic-device/workflows/main/master/built.zip"
+                  className="button button--secondary button--block"
+                >
+                  Download
+                </a>
               </div>
             </div>
 
