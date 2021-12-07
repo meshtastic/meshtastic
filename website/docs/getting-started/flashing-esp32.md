@@ -258,66 +258,6 @@ Be very careful to install the correct load for your board. In particular the po
   </TabItem>
 </Tabs>
 
-
-## Graphical User Interface Instructions
-
-
-### Download `ESPHome Flasher`
-
-:::note
-ESPHome Flasher also provides instructions to build from source or install via `pip` on their [README](https://github.com/esphome/esphome-flasher/).
-:::
-
-<Tabs
-  groupId="operating-system"
-  defaultValue="linux"
-  values={[
-    {label: 'Linux', value: 'linux'},
-    {label: 'macOS', value: 'macos'},
-    {label: 'Windows', value: 'windows'},
-  ]}>
-  <TabItem value="linux">
-
-  | [ESPHome Flasher](https://github.com/esphome/esphome-flasher/releases/latest) |
-  | :-----------------------------------------------------------: |
-
-  ### Open ESPHome Flasher
-
-  > There should be no installation required. Connect your device using a data USB cable and refresh the `Serial Port`. Select the port that your device is connected to.
-
-:::note
-ESPHome Flasher for linux is a prebuilt binary for Ubuntu. These instructions were only tested on Ubuntu. Mileage may very on other distros.
-:::
-
-
-  </TabItem>
-  <TabItem value="macos">
-
-  ### Open ESPHome Flasher
-
-  > There should be no installation required. Connect your device using a data USB cable and refresh the `Serial Port`. Select the port that your device is connected to.
-
-:::note
-If you get an error saying `The application "ESPHome-Flasher.app" can't be opened` it is likely a permissions issue. See [here](https://github.com/esphome/esphome-flasher/issues/26#issuecomment-671061140) for instructions.
-:::
-:::note
->If you get an error saying `"ESPHome-Flasher.app" cannot be opened because the developer cannot be verified`, click `cancel`. Right click on the application and select `Open`. Select `Open` on the confirmation alert.
-:::
-
-  </TabItem>
-  <TabItem value="windows">
-
-  | [ESPHome Flasher](https://github.com/esphome/esphome-flasher/releases/latest) |
-  | :-----------------------------------------------------------: |
-
-  ### Open ESPHome Flasher
-
-  > There should be no installation required. Connect your device using a data USB cable and refresh the `Serial Port`. Select the port that your device is connected to.
-
-
-  </TabItem>
-</Tabs>
-
 ### Select Firmware
 
 Browse to the previously downloaded firmware and select the correct firmware based on the board type and frequency.

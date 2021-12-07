@@ -42,10 +42,10 @@ With the latest versions of MacOS, the USB Serial driver is built-in. Do *NOT* d
         If you have already downloaded/installed the MacOS WCH-IC CH340 ("CH341SER_MAC") drivers via the `CH34x_Install_V1.5.pkg`, you will have to Uninstall the kernel extension:
         <br />
         <br />
-        1.) Unplug your T-Echo<br />
-        2.) Open the Terminal and run:<br />
-        3.) sudo -rf /Library/Extensions/usbserial.kext`<br />
-        4.) Reboot
+        1. Unplug your T-Echo<br />
+        2. Open the Terminal and run:<br />
+        3. sudo -rf /Library/Extensions/usbserial.kext`<br />
+        4. Reboot
     </div>
   </div>
 </details>
