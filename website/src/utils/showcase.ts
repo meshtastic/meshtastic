@@ -94,33 +94,27 @@ export const Tags: Record<TagType, Tag> = {
 export const sortBy = <T>(array: T[], getter: (item: T) => unknown): T[] => {
   const sortedArray = [...array];
   sortedArray.sort((a, b) =>
+    // @ts-ignore
     getter(a) > getter(b) ? 1 : getter(b) > getter(a) ? -1 : 0
   );
   return sortedArray;
 };
 
 export const TagList = Object.keys(Tags) as TagType[];
-const sortNetworks = async (): Promise<ShowcaseNetwork[]> => {
-  const metadata = await Promise.all(
-    writeups.map(async (id) => {
-      const data = (await import(`../data/networks/${id}`)) as {
-        metadata: ShowcaseNetwork;
-        writeup: NetworkWriteup;
-      };
-      return data.metadata;
-    })
-  );
 
-  let sorted = sortBy(metadata, (network) => network.title.toLowerCase());
-  return (sorted = sortBy(
-    sorted,
-    (network) => !network.tags.includes("favorite")
-  ));
-  // let result = networks;
+const sortNetworks = async () => {
+  const metadataArr: ShowcaseNetwork[] = [];
+  const writeupsArr: NetworkWriteup[] = [];
+  writeups.map(async (id) => {
+    await import(`../data/networks/${id}`).then(
+      (network: { metadata: ShowcaseNetwork; writeup: NetworkWriteup }) => {
+        metadataArr.push(network.metadata);
+        writeupsArr.push(network.writeup);
+      }
+    );
+  });
 
-  // result = sortBy(result, (user) => user.title.toLowerCase());
-  // result = sortBy(result, (user) => !user.tags.includes("favorite"));
-  // return result;
+  return metadataArr;
 };
 
 export const sortedNetworks = sortNetworks();
