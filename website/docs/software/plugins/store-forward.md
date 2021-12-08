@@ -13,6 +13,10 @@ The Store Forward Plugin is an implementation of a Store and Forward system to e
 
 Because of the increased network traffic for this overhead, it's not adviced to use this if you are duty cycle limited for your airtime usage nor is it adviced to use this for SF12 (Long range but Slow).
 
+### About - How it works
+
+![Store & Forward - Overview](/img/plugins/store_and_forward/store_and_forward-overview.png)
+
 ## Requirements
 
 Initial Requirements:
