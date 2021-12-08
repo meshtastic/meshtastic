@@ -1,3 +1,5 @@
+import 'url-search-params-polyfill';
+
 import React from 'react';
 
 import { useHistory, useLocation } from '@docusaurus/router';

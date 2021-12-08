@@ -1,5 +1,27 @@
-import { NetworkWriteup } from '../../../utils/showcase';
-import { rakWireless } from '../../hardware/rakWireless';
+import { NetworkWriteup, ShowcaseNetwork } from '../../utils/showcase';
+import { rakWireless } from '../hardware/rakWireless';
+
+export const metadata: ShowcaseNetwork = {
+  id: "ckwhq3l5a000008kufkw8f3dg",
+  title: "Network 1",
+  description:
+    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget dui mollis.",
+  nodes: [
+    {
+      latitude: -37.656719,
+      longitude: 145.632219,
+    },
+    {
+      latitude: -37.633466,
+      longitude: 145.692371,
+    },
+    {
+      latitude: -37.559148,
+      longitude: 145.735771,
+    },
+  ],
+  tags: ["community", "largeNetwork"],
+};
 
 export const writeup: NetworkWriteup = {
   summary: "This is the article summary.",

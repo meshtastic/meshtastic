@@ -1,4 +1,4 @@
-import { networks } from '../data/networks/_overview';
+import { writeups } from '../data/networks/_overview';
 
 export interface Material {
   name: string;
@@ -94,18 +94,28 @@ export const Tags: Record<TagType, Tag> = {
 export const sortBy = <T>(array: T[], getter: (item: T) => unknown): T[] => {
   const sortedArray = [...array];
   sortedArray.sort((a, b) =>
+    // @ts-ignore
     getter(a) > getter(b) ? 1 : getter(b) > getter(a) ? -1 : 0
   );
   return sortedArray;
 };
 
 export const TagList = Object.keys(Tags) as TagType[];
-function sortNetworks() {
-  let result = networks;
-  result = sortBy(result, (user) => user.title.toLowerCase());
-  result = sortBy(result, (user) => !user.tags.includes("favorite"));
-  return result;
-}
+
+const sortNetworks = async () => {
+  const metadataArr: ShowcaseNetwork[] = [];
+  const writeupsArr: NetworkWriteup[] = [];
+  writeups.map(async (id) => {
+    await import(`../data/networks/${id}`).then(
+      (network: { metadata: ShowcaseNetwork; writeup: NetworkWriteup }) => {
+        metadataArr.push(network.metadata);
+        writeupsArr.push(network.writeup);
+      }
+    );
+  });
+
+  return metadataArr;
+};
 
 export const sortedNetworks = sortNetworks();
 

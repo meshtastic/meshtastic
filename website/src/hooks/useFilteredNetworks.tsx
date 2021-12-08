@@ -3,14 +3,14 @@ import React from 'react';
 import { ShowcaseNetwork, sortedNetworks, TagType } from '../utils/showcase';
 import { useSelectedTags } from './useSelectedTags';
 
-const filterNetworks = (
-  showcaseNetworks: ShowcaseNetwork[],
+const filterNetworks = async (
+  showcaseNetworks: Promise<ShowcaseNetwork[]>,
   selectedTags: TagType[]
 ) => {
   if (selectedTags.length === 0) {
     return showcaseNetworks;
   }
-  return showcaseNetworks.filter((showcaseNetwork) => {
+  return (await showcaseNetworks).filter((showcaseNetwork) => {
     if (showcaseNetwork.tags.length === 0) {
       return false;
     }

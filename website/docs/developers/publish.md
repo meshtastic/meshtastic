@@ -41,6 +41,7 @@ TBD
 * * pip3 install pygatt
 * * pip3 install pandoc
 * * pip install twine
+* * pip3 install -r requirements.txt
 * https://pandoc.org/installing.html
 * nanopb 0.4.4 installed
 
