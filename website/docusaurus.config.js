@@ -33,6 +33,11 @@ const config = {
       },
       items: [
         {
+          label: "Firmware",
+          to: "firmware",
+          activeBasePath: "firmware",
+        },
+        {
           label: "Showcase",
           to: "showcase",
           activeBasePath: "showcase",
