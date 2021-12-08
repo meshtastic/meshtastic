@@ -17,8 +17,8 @@ If you’d like to do ‘real’ releases with your changes, the procedure is:
 * * git add proto
 * * git commit -m "updating proto submodule to latest"
 * run bin/regen-protos.sh
-* edit version.properties and check it into the root project
-* run bin/promote-release.sh - this should cause github to start a release build (see the CI actions)
+* edit version.properties to set release version
+* commit and push (or merge) to root of repo - this should cause github to start a release build (see the CI actions)
 * edit the draft release text and click publish
 
 ### Update Protobufs
