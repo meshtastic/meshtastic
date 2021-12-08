@@ -1,33 +1,23 @@
 import React from 'react';
 
-import { Octokit } from '@octokit/rest';
-import { Endpoints } from '@octokit/types';
+import useSWR from 'swr';
+
+// import { Endpoints } from '@octokit/types';
 import Layout from '@theme/Layout';
 
+import { Release } from '../../utils/github';
 import { FirmwareCard } from './_components/FirmwareCard';
 
 const Firmware = (): JSX.Element => {
-  const gh = new Octokit();
+  const fetcher = (url: string) => fetch(url).then((res) => res.json());
+  const { data, error } = useSWR<Release[]>(
+    "https://api.github.com/repos/meshtastic/meshtastic-device/releases",
+    fetcher
+  );
 
-  const [releases, setReleases] =
-    React.useState<
-      Endpoints["GET /repos/{owner}/{repo}/releases"]["response"]
-    >();
+  const beta = data?.filter((release) => release.prerelease === false);
 
-  gh.repos
-    .listReleases({
-      owner: "meshtastic",
-      repo: "meshtastic-device",
-    })
-    .then((response) => {
-      if (response.data) {
-        setReleases(response);
-      }
-    });
-
-  const beta = releases?.data.filter((release) => release.prerelease === false);
-
-  const alpha = releases?.data.filter((release) => release.prerelease === true);
+  const alpha = data?.filter((release) => release.prerelease === true);
   return (
     <Layout
       title="Firmware"
@@ -48,12 +38,12 @@ const Firmware = (): JSX.Element => {
             <FirmwareCard
               variant="Beta"
               description="Tested feature set. For those who want stability."
-              firmware={beta}
+              release={beta}
             />
             <FirmwareCard
               variant="Alpha"
               description="Upcomming changes for testing. For those who want new features."
-              firmware={alpha}
+              release={alpha}
             />
 
             {/*  */}

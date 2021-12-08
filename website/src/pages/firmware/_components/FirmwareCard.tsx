@@ -1,18 +1,18 @@
 import React from 'react';
 
-import { Endpoints } from '@octokit/types';
+import { Release } from '@site/src/utils/github';
 
-export interface FirmwareCardProps {
+export interface releaseCardProps {
   variant: string;
   description: string;
-  firmware: Endpoints["GET /repos/{owner}/{repo}/releases"]["response"]["data"];
+  release?: Release[];
 }
 
 export const FirmwareCard = ({
   variant,
   description,
-  firmware,
-}: FirmwareCardProps): JSX.Element => {
+  release,
+}: releaseCardProps): JSX.Element => {
   return (
     <div className="card">
       <div
@@ -20,25 +20,23 @@ export const FirmwareCard = ({
         style={{ display: "flex", justifyContent: "space-between" }}
       >
         <h3>{variant}</h3>
-        {firmware?.length && (
-          <a href={firmware[0].html_url}>{firmware[0].name}</a>
-        )}
+        {release?.length && <a href={release[0].html_url}>{release[0].name}</a>}
       </div>
       <div className="card__body">
         <p>{description}</p>
       </div>
       <div className="card__footer">
-        {firmware?.length ? (
+        {release?.length ? (
           <>
             <a
-              href={firmware[0].assets[1]?.browser_download_url}
+              href={release[0].assets[1]?.browser_download_url}
               className="button button--secondary button--block"
             >
               Download
             </a>
             <div className="margin-top--sm">
               <h3>Older versions</h3>
-              {firmware.slice(1, 6).map((release) => {
+              {release.slice(1, 6).map((release) => {
                 return (
                   <div key={release.id}>
                     <a href={release.assets[1]?.browser_download_url}>
