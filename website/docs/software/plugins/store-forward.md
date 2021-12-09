@@ -82,6 +82,52 @@ The Store and Forward plugin will only service one client at a time. If a second
 | store_forward_plugin_replay_max_time  (tbd)  | integer | `0` |
 
 
+## Example Request/Response
+
+### Request History (Use Router Defaults)
+
+Story: Carol has been away from the mesh with device turned off. She would like to get a replay of what she has missed. The router will return the messages.
+
+* Carol
+* * Packet (Port: STORE_FORWARD_APP)
+* * * To: Broadcast (Optionally, direct to router)
+* * * StoreAndForward.rr.CLIENT_HISTORY
+* Router
+* * Packet (Port: STORE_FORWARD_APP)
+* * * To: Carol
+* * * StoreAndForward.rr.ROUTER_HISTORY
+* * * StoreAndForward.history.HistoryMessages = 42 // Router has 42 messages that will be sent to Carol
+* * * StoreAndForward.history.Window = 120 // Router searched for messages over the last two hours.
+* * * StoreAndForward.history.LastRequest = 0 // Carol has never asked for the history.
+* * Packet (Port: TEXT_MESSAGE_APP)
+* * * ... a series of 42 text messages
+
+### Request History (No history available)
+
+Story: Carol has been away from the mesh with device turned off. She would like to get a replay of what she has missed but the router indicates there are no messages available.
+
+* Carol
+* * Packet (Port: STORE_FORWARD_APP)
+* * * To: Broadcast (Optionally, direct to router)
+* * * StoreAndForward.rr.CLIENT_HISTORY
+* Router
+* * Packet (Port: STORE_FORWARD_APP)
+* * * To: Carol
+* * * StoreAndForward.rr.ROUTER_HISTORY
+* * * StoreAndForward.history.HistoryMessages = 0 // Router has no messages to be sent to carol
+* * * StoreAndForward.history.Window = 120 // Router searched for messages over the last two hours.
+* * * StoreAndForward.history.LastRequest = (timestamp) // Last time carol requested the history
+
+### Store & Forward Router Heartbeat
+
+Story: The Store & Forward Router sends a periodic message onto the network. This allows connected devices to know that a router is in range and listening to received messages. Client will not respond to network but (optionally) indicate to the user that a S&F router is available or not available.
+
+* Router
+* * Packet (Port: STORE_FORWARD_APP)
+* * * To: Broadcast
+* * * StoreAndForward.rr.ROUTER_HEARTBEAT
+* * * StoreAndForward.heartbeat.heartbeatPeriod = 120 // Expect a heartbeat every 2 minutes
+
 ## Developer TODO
 
 Not necessarily in this order:
