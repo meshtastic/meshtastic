@@ -126,7 +126,8 @@ Story: The Store & Forward Router sends a periodic message onto the network. Thi
 * * Packet (Port: STORE_FORWARD_APP)
 * * * To: Broadcast
 * * * StoreAndForward.rr.ROUTER_HEARTBEAT
-* * * StoreAndForward.heartbeat.heartbeatPeriod = 120 // Expect a heartbeat every 2 minutes
+* * * StoreAndForward.heartbeat.Period = 120 // Expect a heartbeat every 2 minutes
+* * * StoreAndForward.heartbeat.Secondary = false // If true, this is a secondary "backup" S&F node. Will be (eventually) used for router election in the event there are multiple S&F Routers.
 
 ## Developer TODO
 
