@@ -26,8 +26,28 @@ If you’d like to do ‘real’ releases with your changes, the procedure is:
 
 ## Android
 
-TBD
+### Pre-requisites
 
+* Add repository secrets
+* * KEYSTORE_FILENAME
+* * * name of the .jks
+* * KEYSTORE
+* * * we will convert the .jks to base64
+* * * openssl base64 < filename.jks | tr -d '\n' | tee filename.txt
+* * KEYSTORE_PROPERTIES
+* * * storePassword=nononononono
+keyPassword=nononononono
+keyAlias=upload
+storeFile=nononononono.jks
+
+
+### Instructions - Automated
+
+* Update protobufs
+* Go to Actions / Make Release / Run Workflow
+* Pick the Releases branch
+* Enter the version found in app/gradle.build
+* 
 ## iOS
 
 TBD
