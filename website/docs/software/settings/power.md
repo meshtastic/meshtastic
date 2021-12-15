@@ -18,6 +18,7 @@ meshtastic --set mesh_sds_timeout_secs 4294967295
 ```
 :::note
 See MAXUINT from `mesh_sds_timeout_secs` below:
+:::
 
 For a description and more information on what exactly all of these mean, please refer to [Power Management State Machine](../other/power)
 

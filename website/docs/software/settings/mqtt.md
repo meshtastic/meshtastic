@@ -64,7 +64,7 @@ meshtastic --set mqtt_server 192.168.123.234
 ```
 
 ```bash title="Enable MQTT server to mesh"
-meshtastic --set is_downlink_enabled True
+meshtastic --ch-set uplink_enabled true --ch-set downlink_enabled true
 ```
 
 ```bash title="View raw encoded messages using mosquitto"
