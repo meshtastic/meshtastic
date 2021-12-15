@@ -109,8 +109,8 @@ If `true`, messages on the mesh will be sent to the public internet by any gatew
   ]}>
   <TabItem value="cli">
 
-  ```bash title="Set channel ID"
-  meshtastic --ch-set id 1234
+  ```bash title="Set the PRIMARY channel ID"
+  meshtastic --ch-set id 1234 --ch-index 0
   ```
 
   </TabItem>
@@ -135,12 +135,12 @@ The channel `id` must be an integer.
   ]}>
   <TabItem value="cli">
 
-  ```bash title="Set channel name"
-  meshtastic --ch-set name MyChannel
+  ```bash title="Set channel name for the PRIMARY channel"
+  meshtastic --ch-set name MyChannel --ch-index 0
   ```
 
-  ```bash title="Set channel name with spaces"
-  meshtastic --ch-set name "My Channel"
+  ```bash title="Set channel name for the PRIMARY channel with spaces"
+  meshtastic --ch-set name "My Channel" --ch-index 0
   ```
   </TabItem>
   <TabItem value="android">
@@ -165,7 +165,7 @@ A channel `id` must be set in order to name a channel.
   <TabItem value="cli">
 
   ```bash title="Set psk"
-  meshtastic --ch-set psk default
+  meshtastic --ch-set psk default --ch-index 0
   ```
 <!--- TODO random and none --->
 
@@ -192,7 +192,7 @@ See [`psk`](#psk) for details.
   <TabItem value="cli">
 
   ```bash title="Set Modem - LongSlow"
-  meshtastic --ch-set modem_config Bw125Cr48Sf4096
+  meshtastic --ch-set modem_config Bw125Cr48Sf4096 --ch-index 0
   ```
   </TabItem>
   <TabItem value="android">

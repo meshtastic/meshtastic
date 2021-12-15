@@ -18,6 +18,7 @@ meshtastic --set mesh_sds_timeout_secs 4294967295
 ```
 :::note
 See MAXUINT from `mesh_sds_timeout_secs` below:
+:::
 
 For a description and more information on what exactly all of these mean, please refer to [Power Management State Machine](../other/power)
 
@@ -99,7 +100,11 @@ For instance the default interval of 4 will send the node owner information for 
 
 ### wait_bluetooth_secs
 
-Power management state machine option. See the [power page](../other/power) for details. 0 for default of 1 minute
+Wait number of seconds for Bluetooth - Power management state machine option. See the [power page](../other/power) for details. 0 for default of 1 minute
+
+### is_always_powered
+
+If the device is plugged into the wall (not from battery), you may consider using this setting to always keep the device from sleeping. This is a useful setting if you are on esp32 and using the wifi options.
 
 ## Examples
 
@@ -114,6 +119,15 @@ Power management state machine option. See the [power page](../other/power) for 
 
 ```bash
 meshtastic --set mesh_sds_timeout_secs 0
+```
+
+Note: Probably only want to set the wait_bluetooth_secs this high during testing:
+```bash
+meshtastic --set wait_bluetooth_secs 28800
+```
+
+```bash
+meshtastic --set is_always_powered true
 ```
 
   </TabItem>

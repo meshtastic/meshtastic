@@ -69,22 +69,22 @@ Meshtastic encodes the radio channel and PSK in the channel's URL. All nodes mus
 :::
 
 ```bash
-meshtastic --ch-set name mychan --ch-set channel_num 4 --info
+meshtastic --ch-set name mychan --ch-index 1 --ch-set channel_num 4 --info
 ```
 
 You can even set the channel preshared key to a particular AES128 or AES256 sequence.
 
 ```bash
-meshtastic --ch-set psk 0x1a1a1a1a2b2b2b2b1a1a1a1a2b2b2b2b1a1a1a1a2b2b2b2b1a1a1a1a2b2b2b2b --info
+meshtastic --ch-index 1 --ch-set psk 0x1a1a1a1a2b2b2b2b1a1a1a1a2b2b2b2b1a1a1a1a2b2b2b2b1a1a1a1a2b2b2b2b --info
 ```
 
-Use `--ch-set psk none` to turn off encryption.  
+Use `--ch-set psk none --ch-index 0` to turn off encryption.
 
-Use `--ch-set psk random` will assign a new (high quality) random AES256 key to the primary channel (similar to what the Android app does when making new channels).
+Use `--ch-set psk random --ch-index 0` will assign a new (high quality) random AES256 key to the primary channel (similar to what the Android app does when making new channels).
 
-Use `--ch-set psk default` to restore the standard 'default' (minimally secure, because it is in the source code for anyone to read) AES128 key.
+Use `--ch-set psk default --ch-index 0` to restore the standard 'default' (minimally secure, because it is in the source code for anyone to read) AES128 key.
 
-All `ch-set` commands will default to the primary channel at index 0, but can be applied to other channels with the `ch-index` parameter:
+All `ch-set` commands need to have the `ch-index` parameter specified:
 
 ```bash
 meshtastic --ch-index 1 --ch-set name mychan --ch-set channel_num 4 --info
