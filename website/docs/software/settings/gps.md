@@ -80,13 +80,15 @@ The gps updates will be sent out every `position_broadcast_secs`, with either th
 
 ### position_broadcast_smart
 
-Complements `position_broadcast_secs` (doesn't override that setting) but will apply an algorithem to more frequently update your mesh network if you are in motion and then throttle it down when you are standing still. If you use this feature, it's best to leave `position_broadcast_secs` at the default.
+`position_broadcast_smart` will send out your position at an increased frequency only if your location has changed enough for a position update to be useful.
 
-`position_broadcast_smart` will algorithemicly calculate an ideal position update interval based on the data rate of your selected channel configuration. 
+Complements `position_broadcast_secs` (doesn't override that setting) but will apply an algorithm to more frequently update your mesh network if you are in motion and then throttle it down when you are standing still. If you use this feature, it's best to leave `position_broadcast_secs` at the default.
+
+`position_broadcast_smart` will calculate an ideal position update interval based on the data rate of your selected channel configuration. 
 
 As an example, if you configure your radio to use **Long Range / Fast**, if you have traveled at least 144 meters and it's been at least 61 seconds since the last position update, a new position broadcast will be sent out. If you've moved less than 144 meters, we will broadcast the position based on the value of `position_broadcast_secs`.
 
-The table below is a summary computed values from the algorithem.
+The table below is a summary computed values from the algorithm.
 
 | Long Name | Update every x-seconds | Update distance traveled (meters) |
 | :---: | :---------: | :---------: |
