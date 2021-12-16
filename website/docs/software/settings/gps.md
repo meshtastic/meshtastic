@@ -24,6 +24,7 @@ GPS is provided by either the device or your paired phone. More than likely, you
 | gps_update_interval | `integer` (seconds) | `0` (see note) |
 | location_share | `LocUnset`, `LocEnabled`, `LocDisabled` | `LocUnset` |
 | position_broadcast_secs | `integer` (seconds) | `0` (see note) |
+| position_broadcast_smart | `true`, `false` | `false` |
 
 :::note
 On `gps_attempt_time`, `gps_update_interval`, & `position_broadcast_secs` when you set these to `0` you are not disabling these features.
@@ -76,6 +77,29 @@ Determines whether location is shared with other nodes. See more details.
 How often our position is sent to the mesh (but only if it has changed significantly).
 
 The gps updates will be sent out every `position_broadcast_secs`, with either the actual gps location, or an empty location if no gps fix was achieved. This defaults to broadcast every 15 minutes.
+
+### position_broadcast_smart
+
+`position_broadcast_smart` will send out your position at an increased frequency only if your location has changed enough for a position update to be useful.
+
+Complements `position_broadcast_secs` (doesn't override that setting) but will apply an algorithm to more frequently update your mesh network if you are in motion and then throttle it down when you are standing still. If you use this feature, it's best to leave `position_broadcast_secs` at the default.
+
+`position_broadcast_smart` will calculate an ideal position update interval based on the data rate of your selected channel configuration. 
+
+As an example, if you configure your radio to use **Long Range / Fast**, if you have traveled at least 144 meters and it's been at least 61 seconds since the last position update, a new position broadcast will be sent out. If you've moved less than 144 meters, we will broadcast the position based on the value of `position_broadcast_secs`.
+
+The table below is a summary computed values from the algorithm.
+
+| Long Name | Update every x-seconds | Update distance traveled (meters) |
+| :---: | :---------: | :---------: |
+| Long Range / Slow | 88 | 150 |
+| Long Range / Fast | 61 | 144 |
+| Medium Range / Slow | 30 | 41 |
+| Medium Range / Fast | 30 | 30 |
+| Short Range / Slow | 30 | 30 |
+| Short Range / Fast | 30 | 30 |
+
+Note: A person walking in a straight line will take about 90 seconds to travel 150 meters. That walking speed estimate was used as the baseline for the formula used.
 
 ## Examples
 
