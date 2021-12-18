@@ -18,6 +18,10 @@ You will need a device with Meshtastic installed to go any further. See the [get
 
 Open the Settings tab (last tab), and it should look similar to the screen below. It shows any Meshtastic devices that are found over Bluetooth.
 
+:::note
+Android requires location permission granted and location must be turned on to find new devices via bluetooth. You can turn it off again afterwards.
+:::
+
 [![Device available to select](/img/android/android-settings-deselected-c.png)](/img/android/android-settings-deselected.png)
 
 1. Select the Device by name, "Meshtastic_c830" in the example below. (You will see any active devices within range, so make sure to get the right one.)
@@ -68,24 +72,38 @@ The app will generate a new QR code on the screen, and this encodes the channel 
 
 ### Join a channel
 
-If another user shares a QR code, you should be able to scan it with your camera (phones with Android 9 or later will recognise QR codes).
+If another user shares a QR code, you will be able to scan it with your camera. If the channel is shared as a file or link via the Share button, you can click on the file or link and follow similar steps. 
 
-1. You will see a message like Tap here to go to "www.meshtastic.org" in your browser.
-2. Proceed and it will launch the Meshtastic app, and you should see a message like "Do you want to switch to the 'Owl Team' channel?".
-3. Accept this, and the app will change to this new channel. You will lose any current channel setting!
+You should see a message with the option "open with Meshtastic".
+
+[![Open with Meshtastic](/img/android/android-open-with-c.png)](/img/android/android-open-with.png)
+
+<details>
+  <summary>Troubleshooting: Can't "open with Meshtastic".</summary>
+  <div>
+    <div>
+        If you don't see "Meshtastic" as an option to open the file or link with:
+        <br />
+        <br />
+        1. Go to Android Settings > Apps > Default apps > Meshtastic > Opening links<br />
+        <br />
+        [![Links1](/img/android/android-open-links-sm1.png)](/img/android/android-open-links-sm1.png) [![Links2](/img/android/android-open-links-sm2.png)](/img/android/android-open-links-sm1.png)
+        <br />
+        2. Make sure you have in "links/web address": www.meshtastic.org/>
+        3. If you see the option "Open the supported links" make sure it is enabled.<br />
+        4. Try again!
+    </div>
+  </div>
+</details>
+
+Proceed and you should see a message like "Do you want to switch to the 'Owl Team' channel?".
+Accept this, and the app will change to this new channel. You will lose any current channel setting!
 
 [![Accept new channel](/img/android/android-accept-channel-c.png)](/img/android/android-accept-channel.png)
 
-If the channel is shared as a link via a message, or email, you can click on the link and follow similar steps.
-
 :::note
-You must use a link or a QR Code to Join a Channel. Setting the Channel Settings to the same Name and Options will not work as there is also a shared key encoded in the link.
+Setting the same Name and Options will not work as there is also a unique pre-shared key encoded in the channel.
 :::
-
-:::note
-Your app must be connected to an active Meshtastic device for the link or QR Code to work.
-:::
-
 
 You can test changing channels with the QR code shown below.
 
@@ -95,12 +113,14 @@ You can test changing channels with the QR code shown below.
 
 Various data-rates are selectable when configuring a channel and are inversely proportional to the theoretical range of the devices:
 
-| Channel setting	         | Data-rate            |
-|----------------------------|----------------------|
-| Short range (but fast)	 | 21.875 kbps          |
-| Medium range (but fast)	 | 5.469 kbps           |
-| Long range (but slower)	 | 0.275 kbps           |
-| Very long range (but slow) | 0.183 kbps (default) |
+| Channel setting        | Data-rate            |
+|------------------------|----------------------|
+| Short Range / Fast)	 | 19346.94 bps         |
+| Short Range / Slow)	 | 4800.00 bps          |
+| Medium Range / Fast)	 | 1227.18 bps          |
+| Medium Range / Slow)	 | 763.29 bps           |
+| Long Range / Fast)	 | 196.74 bps           |
+| long Range / Slow)     | 136.71 bps (default) |
 
 ### Send a message
 
