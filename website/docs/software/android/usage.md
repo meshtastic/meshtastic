@@ -72,7 +72,7 @@ The app will generate a new QR code on the screen, and this encodes the channel 
 
 ### Join a channel
 
-If another user shares a QR code, you will be able to scan it with your camera. If the channel is shared as a file or link via the Share button, you can click on the file or link and follow similar steps. 
+If another user shares a QR code, you will be able to scan it with your camera. If the channel is shared as a file or link via the Share button, you can click on the file or link and follow similar steps.
 
 You should see a message with the option "open with Meshtastic".
 
@@ -82,16 +82,10 @@ You should see a message with the option "open with Meshtastic".
   <summary>Troubleshooting: Can't "open with Meshtastic".</summary>
   <div>
     <div>
-        If you don't see "Meshtastic" as an option to open the file or link with:
-        <br />
-        <br />
+        If you don't see "Meshtastic" as an option to open the file or link with:<br />
         1. Go to Android Settings > Apps > Default apps > Meshtastic > Opening links<br />
-        <br />
-        [![Links1](/img/android/android-open-links-sm1.png)](/img/android/android-open-links-sm1.png) [![Links2](/img/android/android-open-links-sm2.png)](/img/android/android-open-links-sm1.png)
-        <br />
-        2. Make sure you have in "links/web address": www.meshtastic.org/>
+        2. Make sure you have in "links/web address": www.meshtastic.org<br />
         3. If you see the option "Open the supported links" make sure it is enabled.<br />
-        4. Try again!
     </div>
   </div>
 </details>
