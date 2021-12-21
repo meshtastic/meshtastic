@@ -1,0 +1,61 @@
+datasource db {
+  url      = env("DATABASE_URL")
+  provider = "postgresql"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Author {
+  id             String @id @default(cuid())
+  githubUsername String
+  bio            String
+
+  showcase Showcase[]
+}
+
+model Showcase {
+  id        String   @id @default(cuid())
+  title     String
+  body      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  tags      ShowcaseTag[]
+  nodes     Node[]
+  materials Material[]
+  author    Author        @relation(fields: [authorId], references: [id])
+  authorId  String
+}
+
+model Material {
+  id      String @id @default(cuid())
+  name    String
+  details String
+  image   String
+  url     String
+
+  showcases Showcase[]
+}
+
+model Node {
+  id        String @id @default(cuid())
+  latitude  String
+  longitude String
+
+  showcase   Showcase @relation(fields: [showcaseId], references: [id])
+  showcaseId String
+
+}
+
+model ShowcaseTag {
+  id          String @id @default(cuid())
+  label       String
+  description String
+  color       String
+
+  showcase   Showcase @relation(fields: [showcaseId], references: [id])
+  showcaseId String
+
+}
