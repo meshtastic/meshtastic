@@ -16,6 +16,7 @@ Another example using Python 3 code to send a message to the mesh when WiFi is e
 ```python
 import time
 import meshtastic
+import meshtastic.tcp_interface
 from pubsub import pub
 
 def onReceive(packet, interface): # called when a packet arrives
@@ -27,7 +28,7 @@ def onConnection(interface, topic=pub.AUTO_TOPIC): # called when we (re)connect 
 
 pub.subscribe(onReceive, "meshtastic.receive")
 pub.subscribe(onConnection, "meshtastic.connection.established")
-interface = meshtastic.TCPInterface(hostname='192.168.68.74')
+interface = meshtastic.tcp_interface.TCPInterface(hostname='192.168.68.74')
 while True:
     time.sleep(1000)
 interface.close()
@@ -39,7 +40,8 @@ Note: Be sure to change the ip address in the code above to a valid ip address f
 You can get and update settings like this:
 ```python
 import meshtastic
-interface = meshtastic.SerialInterface()
+import meshtastic.serial_interface
+interface = meshtastic.serial_interface.SerialInterface()
 
 ourNode = interface.getNode('^local')
 print(ourNode.radioConfig.preferences)
