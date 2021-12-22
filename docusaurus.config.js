@@ -128,7 +128,7 @@ const config = {
       },
     ],
   ],
-  plugins: ["@docusaurus/plugin-ideal-image", "docusaurus2-dotenv"],
+  plugins: ["@docusaurus/plugin-ideal-image", "docusaurus-plugin-dotenv"],
 };
 
 module.exports = config;
