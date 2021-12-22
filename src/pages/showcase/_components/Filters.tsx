@@ -11,7 +11,7 @@ import { TagSelect } from './TagSelect';
 
 export const Filters = (): JSX.Element => {
   const { data, error } = useSWR<ShowcaseTag[]>(
-    "http://localhost:4000/showcase/tags",
+    `${process.env.API_URL}/showcase/tags`,
     fetcher
   );
   return (

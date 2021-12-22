@@ -8,7 +8,7 @@ const config = {
   baseUrl: "/",
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "warn",
-  favicon: "img/meshtastic-design/web/favicon.ico",
+  favicon: "design/web/favicon.ico",
   organizationName: "meshtastic",
   projectName: "meshtastic",
   themeConfig: /** @type {import('@docusaurus/preset-classic').ThemeConfig} */ {
@@ -28,8 +28,8 @@ const config = {
       hideOnScroll: true,
       logo: {
         alt: "Meshtastic Logo",
-        src: "img/meshtastic-design/logo/svg/Mesh_Logo_Black.svg",
-        srcDark: "img/meshtastic-design/logo/svg/Mesh_Logo_White.svg",
+        src: "design/logo/svg/Mesh_Logo_Black.svg",
+        srcDark: "design/logo/svg/Mesh_Logo_White.svg",
       },
       items: [
         {

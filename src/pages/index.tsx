@@ -100,9 +100,7 @@ function Home() {
         <meta property="og:title" content="Meshtastic" />
         <meta
           property="og:image"
-          content={useBaseUrl(
-            "img/meshtastic-design/web/social-preview-1200x630.png"
-          )}
+          content={useBaseUrl("design/web/social-preview-1200x630.png")}
         />
         <meta
           property="og:description"
@@ -118,7 +116,7 @@ function Home() {
               style={{ paddingTop: "2rem", paddingBottom: "2rem" }}
               alt="Meshtastic Logo"
               className="header__logo"
-              src={useBaseUrl("img/meshtastic-design/typelogo/typelogo.svg")}
+              src={useBaseUrl("design/typelogo/typelogo.svg")}
             />
           </h1>
           <p className="hero__subtitle">{siteConfig.tagline}</p>
