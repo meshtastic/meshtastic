@@ -6,10 +6,10 @@ import useSWR from 'swr';
 import Layout from '@theme/Layout';
 
 import { Release } from '../../utils/github';
+import { fetcher } from '../../utils/swr';
 import { FirmwareCard } from './_components/FirmwareCard';
 
 const Firmware = (): JSX.Element => {
-  const fetcher = (url: string) => fetch(url).then((res) => res.json());
   const { data, error } = useSWR<Release[]>(
     "https://api.github.com/repos/meshtastic/meshtastic-device/releases",
     fetcher

@@ -1,49 +1,44 @@
 import React from 'react';
 
-// import { networks } from '../../../data/networks/_overview';
-import { NetworkWriteup, ShowcaseNetwork } from '../../../utils/showcase';
+import useSWR from 'swr';
+
+import { Showcase } from '@site/src/utils/apiTypes';
+import { User } from '@site/src/utils/github';
+import { fetcher } from '@site/src/utils/swr';
 
 interface NetworkProps {
   id: string;
 }
 
 export const Network = ({ id }: NetworkProps): JSX.Element => {
-  import(`../../../data/networks/${id}`).then((data) => {
-    setNetworkWriteup(data.writeup as NetworkWriteup);
-    setMetadata(data.metadata as ShowcaseNetwork);
-  });
+  const { data, error } = useSWR<Showcase>(
+    `http://localhost:4000/showcase/${id}`,
+    fetcher
+  );
 
-  //   console.log(data);
-  const [networkWriteup, setNetworkWriteup] = React.useState<NetworkWriteup>();
-  const [metadata, setMetadata] = React.useState<ShowcaseNetwork>();
-  React.useEffect(() => {
-    // data.then((data) => setNetworkWriteup(data));
-  }, []);
+  const githubData = useSWR<User>(
+    `https://api.github.com/users/${data?.author?.githubUsername}`,
+    fetcher
+  ).data;
 
-  // const network = networks.find((network) => network.id === id);
-
-  return metadata && networkWriteup ? (
+  return data && !error ? (
     <div className="container">
-      <h1>{metadata.title}</h1>
-      <p>{metadata.description}</p>
-      <div className="avatar">
-        <img
-          src={networkWriteup.author.avatarUrl}
-          alt={networkWriteup.author.name}
-          className="avatar__photo"
-        />
-        <div className="avatar__intro">
-          <div className="avatar__name">{networkWriteup.author.name}</div>
-          <div className="avatar__subtitle">{networkWriteup.author.about}</div>
+      <h1>{data.title}</h1>
+      <p>{data.summary}</p>
+      {githubData && (
+        <div className="avatar">
+          <img
+            src={githubData.avatar_url}
+            alt={githubData.name}
+            className="avatar__photo"
+          />
+          <div className="avatar__intro">
+            <div className="avatar__name">{githubData.name}</div>
+            <div className="avatar__subtitle">{githubData.bio}</div>
+          </div>
         </div>
-      </div>
-
-      {networkWriteup.body.map((segment, index) => (
-        <div key={index}>
-          <h2>{segment.heading}</h2>
-          <p>{segment.body}</p>
-        </div>
-      ))}
+      )}
+      <div className="markdown">{data.body}</div>
 
       <div
         className="card"
@@ -62,7 +57,7 @@ export const Network = ({ id }: NetworkProps): JSX.Element => {
           <h2>Bill of Materials</h2>
         </div>
         <div className="card__body">
-          {networkWriteup.bom.map((material, index) => (
+          {data.materials?.map((material, index) => (
             <div
               key={index}
               style={{

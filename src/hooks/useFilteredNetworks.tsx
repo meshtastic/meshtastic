@@ -1,27 +1,29 @@
 import React from 'react';
 
-import { ShowcaseNetwork, sortedNetworks, TagType } from '../utils/showcase';
+import { Showcase } from '../utils/apiTypes.js';
 import { useSelectedTags } from './useSelectedTags';
 
-const filterNetworks = async (
-  showcaseNetworks: Promise<ShowcaseNetwork[]>,
-  selectedTags: TagType[]
+const filterNetworks = (
+  showcaseNetworks: Showcase[],
+  selectedTags: string[]
 ) => {
   if (selectedTags.length === 0) {
     return showcaseNetworks;
   }
-  return (await showcaseNetworks).filter((showcaseNetwork) => {
+  return showcaseNetworks.filter((showcaseNetwork) => {
     if (showcaseNetwork.tags.length === 0) {
       return false;
     }
-    return selectedTags.every((tag) => showcaseNetwork.tags.includes(tag));
+    return selectedTags.every((queryTag) =>
+      showcaseNetwork.tags.find((searchTag) => searchTag.label === queryTag)
+    );
   });
 };
 
-export const useFilteredNetworks = () => {
+export const useFilteredNetworks = (networks: Showcase[]) => {
   const selectedTags = useSelectedTags();
   return React.useMemo(
-    () => filterNetworks(sortedNetworks, selectedTags),
+    () => filterNetworks(networks, selectedTags),
     [selectedTags]
   );
 };

@@ -1,5 +1,5 @@
 ---
-id: device-software
+id: device-firmware
 title: Device firmware
 sidebar_label: Device firmware
 ---
