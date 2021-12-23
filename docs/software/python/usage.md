@@ -4,11 +4,30 @@ title: Meshtastic-python usage
 sidebar_label: Python usage
 ---
 
-An example using Python 3 code to send a message to the mesh:
+An example using Python 3 code to send a message to the mesh, get and set a radio configuration preference:
 ```python
 import meshtastic
-interface = meshtastic.SerialInterface() # By default will try to find a meshtastic device, otherwise provide a device path like /dev/ttyUSB0
-interface.sendText("hello mesh") # or sendData to send binary data, see documentations for other options.
+import meshtastic.serial_interface
+
+# By default will try to find a meshtastic device,
+# otherwise provide a device path like /dev/ttyUSB0
+interface = meshtastic.serial_interface.SerialInterface()
+# or something like this
+# interface = meshtastic.serial_interface.SerialInterface(devPath='/dev/cu.usbmodem53230050571')
+
+# or sendData to send binary data, see documentations for other options.
+interface.sendText("hello mesh")
+
+ourNode = interface.getNode('^local')
+print(f'Our node preferences:{ourNode.radioConfig.preferences}')
+
+# update a value
+print('Changing a preference...')
+ourNode.radioConfig.preferences.gps_update_interval = 60
+
+print(f'Our node preferences now:{ourNode.radioConfig.preferences}')
+ourNode.writeConfig()
+
 interface.close()
 ```
 
