@@ -8,38 +8,22 @@ export interface CardTagsProps {
 
 export const CardTags = ({ tags }: CardTagsProps) => {
   return (
-    <ul className="pills">
-      {tags.map(({ color, description, label }, index) => {
+    <div>
+      {tags.map(({ color, label }, index) => {
         return (
-          <li
+          <span
+            className="badge"
             key={index}
             style={{
-              display: "inline-flex",
-              alignItems: "center",
-              alignContent: "center",
-              gap: "0.3rem",
-              fontSize: "0.6rem",
-              lineHeight: "1rem",
-              cursor: "default",
+              backgroundColor: color,
+              marginRight: "0.3rem",
               userSelect: "none",
-              padding: "0.2rem",
-              border: "2px solid gray",
             }}
-            className="pills__item"
-            title={description}
           >
-            <span>{label.toLowerCase()}</span>
-            <span
-              style={{
-                backgroundColor: color,
-                width: "0.5rem",
-                height: "0.5rem",
-                borderRadius: "50%",
-              }}
-            />
-          </li>
+            {label}
+          </span>
         );
       })}
-    </ul>
+    </div>
   );
 };
