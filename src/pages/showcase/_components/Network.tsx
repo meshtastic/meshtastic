@@ -2,6 +2,7 @@ import React from 'react';
 
 import useSWR from 'swr';
 
+import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import { Showcase } from '@site/src/utils/apiTypes';
 import { User } from '@site/src/utils/github';
 import { fetcher } from '@site/src/utils/swr';
@@ -11,8 +12,10 @@ interface NetworkProps {
 }
 
 export const Network = ({ id }: NetworkProps): JSX.Element => {
+  const { siteConfig } = useDocusaurusContext();
+
   const { data, error } = useSWR<Showcase>(
-    `http://localhost:4000/showcase/${id}`,
+    `${siteConfig.customFields.API_URL}/showcase/${id}`,
     fetcher
   );
 

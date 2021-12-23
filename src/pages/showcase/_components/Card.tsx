@@ -25,7 +25,7 @@ export const Card = React.memo(({ network }: CardProps) => (
         className="button button--primary button--block"
         style={{ marginBottom: "0.5rem" }}
       >
-        Get Started
+        Read more
       </a>
       <CardTags tags={network.tags} />
     </div>

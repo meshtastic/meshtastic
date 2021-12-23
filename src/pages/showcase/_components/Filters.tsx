@@ -3,6 +3,7 @@ import React from 'react';
 import { FiHeart } from 'react-icons/fi';
 import useSWR from 'swr';
 
+import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import { fetcher } from '@site/src/utils/swr';
 
 import { ShowcaseTag } from '../../../utils/apiTypes';
@@ -10,10 +11,13 @@ import { ShowcaseTag } from '../../../utils/apiTypes';
 import { TagSelect } from './TagSelect';
 
 export const Filters = (): JSX.Element => {
+  const { siteConfig } = useDocusaurusContext();
+
   const { data, error } = useSWR<ShowcaseTag[]>(
-    `${process.env.API_URL}/showcase/tags`,
+    `${siteConfig.customFields.API_URL}/showcase/tags`,
     fetcher
   );
+
   return (
     <section className="container margin-top--l margin-bottom--lg">
       {data && !error ? (

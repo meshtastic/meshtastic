@@ -1,5 +1,7 @@
 // @ts-check
 
+require("dotenv").config();
+
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: "Meshtastic",
@@ -128,7 +130,10 @@ const config = {
       },
     ],
   ],
-  plugins: ["@docusaurus/plugin-ideal-image", "docusaurus-plugin-dotenv"],
+  plugins: ["@docusaurus/plugin-ideal-image"],
+  customFields: {
+    API_URL: process.env.API_URL,
+  },
 };
 
 module.exports = config;

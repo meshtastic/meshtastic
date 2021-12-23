@@ -1,8 +1,10 @@
 import React from 'react';
 
 import { FiHeart, FiSearch } from 'react-icons/fi';
+import JSONPretty from 'react-json-pretty';
 import useSWR from 'swr';
 
+import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import { useSelectedTags } from '@site/src/hooks/useSelectedTags';
 
 import { useFilteredNetworks } from '../../../hooks/useFilteredNetworks';
@@ -11,10 +13,13 @@ import { fetcher } from '../../../utils/swr';
 import { NetworkSection } from './NetworkSection';
 
 export const Networks = (): JSX.Element => {
+  const { siteConfig } = useDocusaurusContext();
+
   const { data, error } = useSWR<Showcase[]>(
-    "http://localhost:4000/showcase",
+    `${siteConfig.customFields.API_URL}/showcase`,
     fetcher
   );
+
   const selectedTags = useSelectedTags();
   const filteredNetworks = useFilteredNetworks(data ?? []);
 
@@ -41,7 +46,9 @@ export const Networks = (): JSX.Element => {
           />
         )
       ) : error ? (
-        <div>{error}</div>
+        <div>
+          <JSONPretty data={error} />
+        </div>
       ) : (
         <div>Loading...</div>
       )}
