@@ -1,5 +1,6 @@
 import React from 'react';
 
+import JSONPretty from 'react-json-pretty';
 import useSWR from 'swr';
 
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
@@ -111,7 +112,12 @@ export const Network = ({ id }: NetworkProps): JSX.Element => {
     </div>
   ) : (
     <div>
-      <h1>Network not found</h1>
+      {error && (
+        <div>
+          <JSONPretty data={error} />
+        </div>
+      )}
+      {!data && <div>Loading...</div>}
     </div>
   );
 };

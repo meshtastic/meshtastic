@@ -25,14 +25,14 @@ export const Networks = (): JSX.Element => {
 
   return (
     <section className="margin-top--lg margin-bottom--xl">
-      {data && !error ? (
+      {!error ? (
         selectedTags.length === 0 ? (
           <>
             <NetworkSection
               title="Our favorites"
               icon={<FiHeart />}
               iconColor="rgb(190 24 93)"
-              networks={data.filter((network) =>
+              networks={data?.filter((network) =>
                 network.tags.find((tag) => tag.label === "Favourite")
               )}
             />
@@ -45,12 +45,10 @@ export const Networks = (): JSX.Element => {
             networks={filteredNetworks}
           />
         )
-      ) : error ? (
+      ) : (
         <div>
           <JSONPretty data={error} />
         </div>
-      ) : (
-        <div>Loading...</div>
       )}
     </section>
   );

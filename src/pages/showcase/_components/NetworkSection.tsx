@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Showcase } from '../../../utils/apiTypes';
-import { Card } from './Card';
+import { Card, PlaceholderCard } from './Card';
 
 interface NetworkSectionProps {
   title: string;
@@ -57,7 +57,9 @@ export const NetworkSection = ({
             {networks.length === 0 && <h2>No result</h2>}
           </>
         ) : (
-          <div>Loading...</div>
+          <div>
+            <PlaceholderCard />
+          </div>
         )}
       </ul>
     </div>

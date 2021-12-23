@@ -31,3 +31,67 @@ export const Card = React.memo(({ network }: CardProps) => (
     </div>
   </div>
 ));
+
+export const PlaceholderCard = (): JSX.Element => (
+  <div
+    className="card"
+    style={{
+      animation: "pulse 2s infinite",
+      transform: "scale(1)",
+    }}
+  >
+    <div className="card__image">
+      <div
+        style={{
+          height: "150px",
+        }}
+      />
+    </div>
+    <div className="card__body">
+      <div
+        style={{
+          width: "30%",
+          height: "2rem",
+          borderRadius: "0.4rem",
+          backgroundColor: "gray",
+          marginBottom: "1rem",
+        }}
+      />
+      <div
+        style={{
+          width: "100%",
+          height: "1rem",
+          borderRadius: "0.4rem",
+          backgroundColor: "gray",
+          marginBottom: "0.5rem",
+        }}
+      />
+      <div
+        style={{
+          width: "100%",
+          height: "1rem",
+          borderRadius: "0.4rem",
+          backgroundColor: "gray",
+        }}
+      />
+    </div>
+    <div className="card__footer">
+      <a
+        className="button disabled button--primary button--block"
+        style={{ marginBottom: "0.5rem" }}
+      >
+        &nbsp;
+      </a>
+      <div>
+        <div
+          style={{
+            width: "4rem",
+            height: "1.5rem",
+            borderRadius: "0.4rem",
+            backgroundColor: "gray",
+          }}
+        />
+      </div>
+    </div>
+  </div>
+);

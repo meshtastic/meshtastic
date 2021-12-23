@@ -8,7 +8,7 @@ import { fetcher } from '@site/src/utils/swr';
 
 import { ShowcaseTag } from '../../../utils/apiTypes';
 // import { TagList, Tags } from '../../../utils/showcase';
-import { TagSelect } from './TagSelect';
+import { PlaceholderTagSelect, TagSelect } from './TagSelect';
 
 export const Filters = (): JSX.Element => {
   const { siteConfig } = useDocusaurusContext();
@@ -83,7 +83,7 @@ export const Filters = (): JSX.Element => {
           })}
         </ul>
       ) : (
-        <p>Loading...</p>
+        <PlaceholderTagSelect />
       )}
     </section>
   );

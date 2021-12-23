@@ -58,3 +58,54 @@ export const TagSelect = React.forwardRef<HTMLLabelElement, Props>(
     );
   }
 );
+
+export const PlaceholderTagSelect = (): JSX.Element => (
+  <div
+    style={{
+      boxSizing: "border-box",
+      position: "relative",
+      display: "inline-flex",
+      alignItems: "center",
+      height: "2rem",
+      marginTop: "0.5rem",
+      marginRight: "0.5rem",
+      fontSize: "0.875rem",
+      lineHeight: "1.25rem",
+      verticalAlign: "middle",
+      userSelect: "none",
+    }}
+  >
+    <div
+      style={{
+        width: "7rem",
+        height: "1.8rem",
+        borderRadius: "0.4rem",
+        backgroundColor: "gray",
+        animation: "pulse 2s infinite",
+        transform: "scale(1)",
+      }}
+    />
+    <div
+      style={{
+        width: "7rem",
+        height: "1.8rem",
+        borderRadius: "0.4rem",
+        backgroundColor: "gray",
+        animation: "pulse 2s infinite",
+        transform: "scale(1)",
+        marginLeft: 8,
+      }}
+    />
+    <div
+      style={{
+        width: "7rem",
+        height: "1.8rem",
+        borderRadius: "0.4rem",
+        backgroundColor: "gray",
+        animation: "pulse 2s infinite",
+        transform: "scale(1)",
+        marginLeft: 8,
+      }}
+    />
+  </div>
+);
