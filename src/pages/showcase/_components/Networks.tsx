@@ -33,7 +33,7 @@ export const Networks = (): JSX.Element => {
               icon={<FiHeart />}
               iconColor="rgb(190 24 93)"
               networks={data?.filter((network) =>
-                network.tags.find((tag) => tag.label === "Favourite")
+                network.tags.find((tag) => tag.label === "Favorite")
               )}
             />
             <NetworkSection title="All networks" networks={data} />
