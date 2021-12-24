@@ -1,5 +1,7 @@
 // @ts-check
 
+require("dotenv").config();
+
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: "Meshtastic",
@@ -61,49 +63,7 @@ const config = {
       ],
     },
     footer: {
-      style: "dark",
-      links: [
-        {
-          title: "Docs",
-          items: [
-            {
-              label: "Get Started",
-              to: "docs/getting-started",
-            },
-            {
-              label: "Showcase",
-              to: "showcase",
-            },
-          ],
-        },
-        {
-          title: "Community",
-          items: [
-            {
-              label: "Forum",
-              href: "https://meshtastic.discourse.group",
-            },
-            {
-              label: "Discord",
-              href: "https://discord.gg/UQJ5QuM7vq",
-            },
-          ],
-        },
-        {
-          title: "More",
-          items: [
-            {
-              label: "GitHub",
-              href: "https://github.com/meshtastic/meshtastic",
-            },
-            {
-              label: "Legal",
-              to: "docs/legal",
-            },
-          ],
-        },
-      ],
-      copyright: `<a href="https://vercel.com/?utm_source=meshtastic&utm_campaign=oss" style="color: white">Powered by ▲ Vercel</a> | Meshtastic® trademark is a registered trademark belonging to Geeksville Industries LLC`,
+      copyright: `<a href="https://vercel.com/?utm_source=meshtastic&utm_campaign=oss" style="color: white">Powered by ▲ Vercel</a> | Meshtastic® is a registered trademark of Geeksville Industries LLC`,
     },
     algolia: {
       apiKey: "01ad7e13d3fe392d2ad26da3c69dbc21",
@@ -129,6 +89,9 @@ const config = {
     ],
   ],
   plugins: ["@docusaurus/plugin-ideal-image"],
+  customFields: {
+    API_URL: process.env.API_URL,
+  },
 };
 
 module.exports = config;
