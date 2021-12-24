@@ -4,11 +4,11 @@ title: Multiple channel support
 sidebar_label: Multiple channels
 ---
 
-Version 1.2 of the software adds support for multiple (simultaneous) channels.  The idea behind this feature is that a mesh can allow multiple users/groups to be share common mesh infrastructure.  Even including routing messages for others when no one except that subgroup of users has the encryption keys for their private channel.
-
-:::note
-Older Meshtastic applications that don't yet understand multi-channel support will only show the user the primary channel.
+:::warning
+Multiple channel support is currently an experimental feature that is ONLY supported by the Python CLI. 
 :::
+
+Version 1.2 of the software adds support for multiple (simultaneous) channels.  The idea behind this feature is that a mesh can allow multiple users/groups to be share common mesh infrastructure.  Even including routing messages for others when no one except that subgroup of users has the encryption keys for their private channel.
 
 ### What is the Primary channel
 
