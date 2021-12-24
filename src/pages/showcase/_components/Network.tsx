@@ -25,14 +25,8 @@ export const Network = ({ id }: NetworkProps): JSX.Element => {
     fetcher
   ).data;
 
-  return true ? (
-    <PlaceholderNetwork />
-  ) : (
+  return (
     <div>
-      <a className="button button--outline button--secondary" href="/showcase">
-        Back
-      </a>
-
       {data && !error ? (
         <div className="container">
           <h1>{data.title}</h1>
@@ -127,7 +121,7 @@ export const Network = ({ id }: NetworkProps): JSX.Element => {
               <JSONPretty data={error} />
             </div>
           )}
-          {!data && <div>Loading...</div>}
+          {!data && <PlaceholderNetwork />}
         </div>
       )}
     </div>
@@ -136,10 +130,17 @@ export const Network = ({ id }: NetworkProps): JSX.Element => {
 
 export const PlaceholderNetwork = (): JSX.Element => {
   return (
-    <div className="container" style={{ display: "flex", gap: "2rem" }}>
+    <div
+      className="container"
+      style={{
+        display: "flex",
+        flexDirection: window.innerWidth > 768 ? "row" : "column",
+        gap: "2rem",
+      }}
+    >
       <div
         style={{
-          width: "60%",
+          width: window.innerWidth > 768 ? "60%" : "100%",
         }}
       >
         <div
@@ -208,7 +209,7 @@ export const PlaceholderNetwork = (): JSX.Element => {
       </div>
       <div
         style={{
-          width: "40%",
+          width: window.innerWidth > 768 ? "40%" : "100%",
         }}
       >
         <div
