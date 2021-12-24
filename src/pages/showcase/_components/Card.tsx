@@ -13,7 +13,9 @@ export interface CardProps {
 export const Card = React.memo(({ network }: CardProps) => (
   <div className="card">
     <div className="card__image">
-      <Image img={mapUrl(network.nodes ?? [])} alt={network.title} />
+      <div style={{ height: "140px" }}>
+        <Image img={mapUrl(network.nodes ?? [])} alt={network.title} />
+      </div>
     </div>
     <div className="card__body">
       <h4>{network.title}</h4>
@@ -43,7 +45,7 @@ export const PlaceholderCard = (): JSX.Element => (
     <div className="card__image">
       <div
         style={{
-          height: "150px",
+          height: "140px",
         }}
       />
     </div>
@@ -82,7 +84,20 @@ export const PlaceholderCard = (): JSX.Element => (
       >
         &nbsp;
       </a>
-      <div>
+      <div
+        style={{
+          display: "flex",
+          gap: "0.5rem",
+        }}
+      >
+        <div
+          style={{
+            width: "4rem",
+            height: "1.5rem",
+            borderRadius: "0.4rem",
+            backgroundColor: "gray",
+          }}
+        />
         <div
           style={{
             width: "4rem",

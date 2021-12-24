@@ -63,48 +63,6 @@ const config = {
       ],
     },
     footer: {
-      style: "dark",
-      links: [
-        {
-          title: "Docs",
-          items: [
-            {
-              label: "Get Started",
-              to: "docs/getting-started",
-            },
-            {
-              label: "Showcase",
-              to: "showcase",
-            },
-          ],
-        },
-        {
-          title: "Community",
-          items: [
-            {
-              label: "Forum",
-              href: "https://meshtastic.discourse.group",
-            },
-            {
-              label: "Discord",
-              href: "https://discord.gg/UQJ5QuM7vq",
-            },
-          ],
-        },
-        {
-          title: "More",
-          items: [
-            {
-              label: "GitHub",
-              href: "https://github.com/meshtastic/meshtastic",
-            },
-            {
-              label: "Legal",
-              to: "docs/legal",
-            },
-          ],
-        },
-      ],
       copyright: `<a href="https://vercel.com/?utm_source=meshtastic&utm_campaign=oss" style="color: white">Powered by ▲ Vercel</a> | Meshtastic® trademark is a registered trademark belonging to Geeksville Industries LLC`,
     },
     algolia: {
