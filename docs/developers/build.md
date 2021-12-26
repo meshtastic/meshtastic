@@ -25,3 +25,42 @@ This project uses the simple PlatformIO build system. PlatformIO is an extension
 :::note
 To get a clean build you may have to delete the auto-generated file `./.vscode/c_cpp_properties.json`, close and re-open Visual Studio and WAIT until the file is auto-generated before compiling again.
 :::
+
+## Manual Installation on Linux
+1. On a linux distro (like Ubuntu), ensure you have pre-requisites installed:
+
+```
+sudo apt-get update
+sudo apt-get install python3 g++ zip
+```
+
+2. Install platformio (which is usually via wget/curl command).
+
+```
+wget https://raw.githubusercontent.com/platformio/platformio-core-installer/master/get-platformio.py -O get-platformio.py
+chmod +x get-platformio.py
+python3 get-platformio.py
+```
+
+3. Clone the repo https://github.com/meshtastic/Meshtastic-device
+
+4. Change into the Meshtastic-device and then download submodules
+
+```
+cd Meshtastic-device
+git submodule update --init --recursive
+```
+
+5. Activate the Platformio python virtual environment
+
+```
+source ~/.platformio/penv/bin/activate
+```
+
+6. Build everything (optionally just build what you really need by editing platformio.ini)
+
+```
+./bin/build-all.sh
+```
+
+7. See the newly built bits in release/archive/firmware-1.2.49.XXX.zip (where XXX is the git commit)
