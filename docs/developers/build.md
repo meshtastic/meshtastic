@@ -51,6 +51,16 @@ cd Meshtastic-device
 git submodule update --init --recursive
 ```
 
+Note: If you get an error like this:
+
+```
+Compiling .pio/build/rak4631_5005/src/plugins/PositionPlugin.cpp.o
+src/nrf52/NRF52CryptoEngine.cpp:3:10: fatal error: ocrypto_aes_ctr.h: No such file or directory
+```
+
+then you need to run that submodule command from the main Meshtastic-device directory.
+
+
 5. Activate the Platformio python virtual environment
 
 ```
