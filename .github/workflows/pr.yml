@@ -11,11 +11,11 @@ jobs:
           submodules: true
       - uses: reviewdog/action-languagetool@v1
         with:
-          github_token: ${{ secrets.github_token }}
+          # github_token: ${{ secrets.github_token }}
           # Change reviewdog reporter if you need [github-pr-check,github-check,github-pr-review].
           reporter: github-pr-review
           # Change reporter level if you need.
-          level: info
+          level: error
       - uses: actions/setup-node@v2-beta
         with:
           node-version: 16
