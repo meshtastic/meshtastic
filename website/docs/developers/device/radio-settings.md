@@ -56,16 +56,18 @@ Considerations:
 
 ### Pre-Defined
 
-We have four predefined channels. These are the most common settings and have been proven to work well:
+We have six predefined channels. These are the most common settings and have been proven to work well:
 
 | Channel setting            | Alt Channel Name | Data-rate            | SF / Symbols | Coding Rate | Bandwidth | Link Budget |
 | :------------------------- | :--------------- | :------------------- | :----------- | :---------- | :-------- | :---------- |
-| Short range (but fast)     | Short Fast       | 21.875 kbps          | 7 / 128      | 4/5         | 500       | 134dB       |
-| Medium range (but fast)    | Medium           | 5.469 kbps           | 7 / 128      | 4/5         | 125       | 140dB       |
-| Long range (but slower)    | Long Alt         | 0.275 kbps           | 9 / 512      | 4/8         | 31        | 153dB       |
-| Very long range (but slow) | Long Slow        | 0.183 kbps (default) | 12 / 4096    | 4/8         | 125       | 154dB       |
+| Long Range / Slow          | Short Fast       | 18.89 kbps          | 7 / 128      | 4/5         | 500       | 134dB       |
+| Long Range / Fast          | Short Slow       | 4.69 kbps           | 7 / 128      | 4/5         | 125       | 140dB       |
+| Medium Range / Slow        | Medium Fast      | 1.2 kbps            | 10 / 1024    | 4/6         | 250       | 146dB       |
+| Medium Range / Fast        | Medium Slow      | 0.75 kbps           | 11 / 2048    | 4/7         | 250       | 148dB       |
+| Short Range / Slow         | Long Fast        | 0.19 kbps           | 9 / 512      | 4/8         | 31        | 153dB       |
+| Short Range / Fast         | Long Slow        | 0.13 kbps (default) | 12 / 4096    | 4/8         | 125       | 154dB       |
 
-The link budget used by these calculations assumes a transmit power of 17dBm and an antenna with 0dB gain. Adjust your link budget assumptions based on your actual devices.
+Note: The link budget used by these calculations assumes a transmit power of 17dBm and an antenna with 0dB gain. Adjust your link budget assumptions based on your actual devices. Data-rate in this table is actual measured but doesn't count mesh overhead, hops and retransmissions.
 
 ### Custom Settings
 
