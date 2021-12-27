@@ -17,7 +17,7 @@ need to consider the MeshPacket and Subpacket message types.
 
 This layer is conventional non-reliable LoRa packet transmission. The transmitted packet has the following representation on the ether:
 
-- A 32 bit LORA preamble (to allow receiving radios to synchronize clocks and start framing). We use a longer than minimum (8 bit) preamble to maximize the amount of time the LORA receivers can stay asleep, which dramatically lowers power consumption.
+- A 32 bit LoRa preamble (to allow receiving radios to synchronize clocks and start framing). We use a longer than minimum (8 bit) preamble to maximize the amount of time the LoRa receivers can stay asleep, which dramatically lowers power consumption.
 
 After the preamble the 16 byte packet header is transmitted. This header is described directly by the PacketHeader class in the C++ source code. But indirectly it matches the first portion of the "MeshPacket" protobuf definition. But notably: this portion of the packet is sent directly as the following 16 bytes (rather than using the protobuf encoding). We do this to both save airtime and to allow receiving radio hardware the option of filtering packets before even waking the main CPU.
 
