@@ -41,7 +41,7 @@ The default messaging provided by layer-1 is extended by setting the "want-ack" 
 """This packet is being sent as a reliable message, we would prefer it to arrive
 at the destination. We would like to receive an ACK packet in response.
 
-Broadcast messages treat this flag specially: Since acks for broadcasts would
+Broadcast messages treat this flag specially: Since ACKs for broadcasts would
 rapidly flood the channel, the normal ACK behavior is suppressed. Instead,
 the original sender listens to see if at least one node is rebroadcasting this
 packet (because naive flooding algorithm). If it hears that, the odds (given
@@ -55,7 +55,7 @@ If a transmitting node does not receive an ACK (or a NAK) packet within FIXME mi
 
 ### Layer 3: (Naive) flooding for multi-hop messaging
 
-Given our use-case for the initial release, most of our protocol is built around [flooding](<https://en.wikipedia.org/wiki/Flooding_(computer_networking)>). The implementation is currently 'naive' - i.e. it doesn't try to optimize flooding other than abandoning retransmission once we've seen a nearby receiver has acked the packet. Therefore, for each source packet up to N retransmissions might occur (if there are N nodes in the mesh).
+Given our use-case for the initial release, most of our protocol is built around [flooding](<https://en.wikipedia.org/wiki/Flooding_(computer_networking)>). The implementation is currently 'naive' - i.e. it doesn't try to optimize flooding other than abandoning retransmission once we've seen a nearby receiver has ACKed the packet. Therefore, for each source packet up to N retransmissions might occur (if there are N nodes in the mesh).
 
 Each node in the mesh, if it sees a packet on the ether with HopLimit set to a value other than zero, it will decrement that HopLimit and attempt retransmission on behalf of the original sending node.
 
@@ -86,14 +86,14 @@ reliable messaging tasks (stage one for DSR):
 - DONE add a max hops parameter, use it for broadcast as well (0 means adjacent only, 1 is one forward etc...). Store as three bits in the header.
 - DONE add a 'snoopReceived' hook for all messages that pass through our node.
 - DONE use the same 'recentmessages' array used for broadcast msgs to detect duplicate retransmitted messages.
-- DONE in the router receive path?, send an ACK packet if want_ack was set and we are the final destination. FIXME, for now don't handle multi-hop or merging of data replies with these acks.
-- DONE keep a list of packets waiting for acks
+- DONE in the router receive path?, send an ACK packet if want_ack was set and we are the final destination. FIXME, for now don't handle multi-hop or merging of data replies with these ACKs.
+- DONE keep a list of packets waiting for ACKs
 - DONE for each message keep a count of # retries (max of three). Local to the node, only for the most immediate hop, ignorant of multi-hop routing.
-- DONE delay some random time for each retry (large enough to allow for acks to come in)
-- DONE once an ack comes in, remove the packet from the retry list and deliver the ack to the original sender
-- DONE after three retries, deliver a no-ACK packet to the original sender (i.e. the phone app or mesh router service)
+- DONE delay some random time for each retry (large enough to allow for ACKs to come in)
+- DONE once an ACK comes in, remove the packet from the retry list and deliver the ACK to the original sender
+- DONE after three retries, deliver a NAK packet to the original sender (i.e. the phone app or mesh router service)
 - DONE test one hop ACK/NAK with the python framework
-- DONE Do stress test with acks
+- DONE Do stress test with ACKs
 
 DSR tasks
 
@@ -113,7 +113,7 @@ optimizations / low priority:
 - make ReliableRouter.pending threadsafe
 - bump up PacketPool size for all the new ACK/NAK/routing packets
 - handle 51 day rollover in doRetransmissions
-- use a priority queue for the messages waiting to send. Send acks first, then routing messages, then data messages, then broadcasts?
+- use a priority queue for the messages waiting to send. Send ACKs first, then routing messages, then data messages, then broadcasts?
 
 when we send a packet
 
