@@ -4,7 +4,7 @@ title: Build Instructions
 sidebar_label: Building
 ---
 
-This project uses the simple PlatformIO build system. PlatformIO is an extension to Microsoft VSCode. Workflows from building from the GUI or from the commandline are listed below.
+This project uses the simple PlatformIO build system. PlatformIO is an extension to Microsoft VSCode. Workflows from building from the GUI or from the command line are listed below.
 
 If you encounter any problems, please post a question in [our forum](https://meshtastic.discourse.group). And when you learn a fix, update these instructions for the next person (i.e. edit this file and send in a [pull-request](https://opensource.com/article/19/7/create-pull-request-github) which we will eagerly merge).
 
@@ -40,7 +40,7 @@ Note - To get a clean build you may have to delete the auto-generated file `./.v
 5. If you are outside the USA, run "export COUNTRY=EU865" (or whatever) to set the correct frequency range for your country. Options are provided for `EU433`, `EU865`, `CN`, `JP` and `US` (default). Pull-requests eagerly accepted for other countries.
 6. Plug the radio into your USB port
 7. Type `pio run --environment XXX -t upload` (This command will fetch dependencies, build the project and install it on the board via USB). For XXX, use the board type you have (either `tlora-v2, tlora-v1, tlora-v2-1-1.6, tbeam, heltec, tbeam0.7`).
-8. Platform IO also installs a very nice VisualStudio Code based IDE, see their [tutorial](https://docs.platformio.org/en/latest/tutorials/espressif32/arduino_debugging_unit_testing.html) if you'd like to use it.
+8. PlatformIO also installs a very nice VisualStudio Code based IDE, see their [tutorial](https://docs.platformio.org/en/latest/tutorials/espressif32/arduino_debugging_unit_testing.html) if you'd like to use it.
 
 ## Decoding stack traces
 
@@ -58,6 +58,6 @@ If you get a crash, you can decode the addresses from the `Backtrace:` line:
 You can run the exception decoder to monitor the serial output and decode backtraces in real time.
 
 1. From within PlatformIO, open a new terminal.
-2. At the the terminal, enter:
+2. At the terminal, enter:
    `pio device monitor --port /dev/cu.SLAB_USBtoUART -f esp32_exception_decoder`
    Replace the value of port with the location of your serial port.

@@ -42,13 +42,13 @@ Various data-rates are selectable when configuring a channel and are inversely p
 Considerations:
 
 - Spreading Factor - How much we "spread" our data over time.
-  - Each step up in Spreading Factor dobules the airtime to transmit.
+  - Each step up in Spreading Factor doubles the airtime to transmit.
   - Each step up in Spreading Factor adds about 2.5db extra link budget.
 - Bandwidth - How big of a slice of the spectrum we use.
   - Each doubling of the bandwidth is almost 3db less link budget.
-  - Bandwidths less than 31 may be unstable unless you have a high quality Crystal Ossilator.
-- Coding Rate - How much redundency we encode to resist noise.
-  - Increasing coding rate increases reliability while decrasing data-rate.
+  - Bandwidths less than 31 may be unstable unless you have a high quality Crystal Oscillator.
+- Coding Rate - How much redundancy we encode to resist noise.
+  - Increasing coding rate increases reliability while decreasing data-rate.
   - 4/5 - 1.25x overhead
   - 4/6 - 1.5x overhead
   - 4/7 - 1.75x overhead
@@ -92,12 +92,12 @@ Some example settings:
 | 0.610 kbps | 10 / 1024    | 4/8         | 125       | 149dB       |                                                                         |
 | 0.488 kbps | 11 / 2048    | 4/6         | 125       | 152dB       |                                                                         |
 | 0.336 kbps | 11 / 2048    | 4/8         | 125       | 152dB       |                                                                         |
-| 0.073 kbps | 12 / 4096    | 4/5         | 31        | 160dB       | Twice the range and/or coverage of "Long Slow", low resliance to noise  |
-| 0.046 kbps | 12 / 4096    | 4/8         | 31        | 160dB       | Twice the range and/or coverage of "Long Slow", high resliance to noise |
+| 0.073 kbps | 12 / 4096    | 4/5         | 31        | 160dB       | Twice the range and/or coverage of "Long Slow", low resilience to noise  |
+| 0.046 kbps | 12 / 4096    | 4/8         | 31        | 160dB       | Twice the range and/or coverage of "Long Slow", high resilience to noise |
 
 The link budget used by these calculations assumes a transmit power of 17dBm and an antenna with 0dB gain. Adjust your link budget assumptions based on your actual devices.
 
-These channel settings may have not been tested. Use at your own discression. Share on <https://meshtastic.discourse.group> with your successes or failure.
+These channel settings may have not been tested. Use at your own discretion. Share on <https://meshtastic.discourse.group> with your successes or failure.
 
 ## Cryptography
 

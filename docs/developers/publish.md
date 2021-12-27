@@ -18,7 +18,7 @@ If you’d like to do ‘real’ releases with your changes, the procedure is:
 * * git commit -m "updating proto submodule to latest"
 * run bin/regen-protos.sh
 * edit version.properties to set release version
-* commit and push (or merge) to root of repo - this should cause github to start a release build (see the CI actions)
+* commit and push (or merge) to root of repo - this should cause GitHub to start a release build (see the CI actions)
 * edit the draft release text and click publish
 
 ### Update Protobufs
@@ -54,7 +54,7 @@ TBD
 
 ## Python
 
-### Pre-requistes
+### Pre-requisites
 
 * Python Packages
 * * pip3 install pdoc3
@@ -82,5 +82,5 @@ TBD
  I usually just edit setup.py to bump the version number, then run "bin/upload-release.sh" (though you should use bin/test-release.sh for the first time - which is just a dry deploy to the pypi test server).  This script does the build (including new docs - which will end up in the git checkin) and upload to pypi.  Then I do a git commit/push and tag wit the version number.
 
 :::note
-You need permissions in the github project to make a build
+You need permissions in the GitHub project to make a build
 :::

@@ -36,7 +36,7 @@ Meshtastic® is a project that lets you use inexpensive LoRa radios as a long ra
 
 The radios automatically create a mesh to forward packets as needed, so everyone in the group can receive messages from even the furthest member. The radios will optionally work with your phone, but no phone is required.
 
-Meshtastic uses LoRa for the long range communcations and depending on settings used the maximum theoritical group size ranges from 30-200 device nodes. Currently each device can only support a connection from a single user at a time.
+Meshtastic uses LoRa for the long range communications and depending on settings used the maximum theoretical group size ranges from 30-200 device nodes. Currently each device can only support a connection from a single user at a time.
 
 Please see our [website](https://meshtastic.org) for more information about Meshtastic.
 

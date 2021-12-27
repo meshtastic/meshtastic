@@ -27,14 +27,14 @@ To get a clean build you may have to delete the auto-generated file `./.vscode/c
 :::
 
 ## Manual Installation on Linux
-1. On a linux distro (like Ubuntu), ensure you have pre-requisites installed:
+1. On a Linux distro (like Ubuntu), ensure you have pre-requisites installed:
 
 ```
 sudo apt-get update
 sudo apt-get install python3 g++ zip
 ```
 
-2. Install platformio (which is usually via wget/curl command).
+2. Install PlatformIO (which is usually via wget/curl command).
 
 ```
 wget https://raw.githubusercontent.com/platformio/platformio-core-installer/master/get-platformio.py -O get-platformio.py

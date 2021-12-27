@@ -43,7 +43,7 @@ Build esp32-arduino:
 ./build.sh
 ```
 
-Copy sdk files into the platformio framework:
+Copy SDK files into the PlatformIO framework:
 
 ```bash
   cp -ar out/tools/sdk/* ~/.platformio/packages/framework-arduinoespressif32/tools/sdk

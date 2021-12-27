@@ -29,15 +29,15 @@ Enables the plugin.
 
 ### range_test_plugin_save
 
-If enabled, we will save a log of all received messages to `/static/rangetest.csv` which you can access from the webserver. We will abort writing if there is less than 50k of space on the filesystem to prevent filling up the storage.
+If enabled, we will save a log of all received messages to `/static/rangetest.csv` which you can access from the web server. We will abort writing if there is less than 50k of space on the filesystem to prevent filling up the storage.
 
 ### range_test_plugin_sender
 
-Number of seconds to wait between sending packets. Using the long_slow channel configuration, it's best not to go more frequent than once every 60 seconds. You can be more agressive with faster settings. `0` is default which disables sending messages.
+Number of seconds to wait between sending packets. Using the long_slow channel configuration, it's best not to go more frequent than once every 60 seconds. You can be more aggressive with faster settings. `0` is default which disables sending messages.
 
 ## Details
 
-While a minumum of two radios is required, more can be used. You can have any number of receivers and senders that your mesh is able to handle. You can test having a single sender with multiple receivers or a single reciever with multiple senders. Let us know on the [forum thread](https://meshtastic.discourse.group/t/new-plugin-rangetestplugin/2591/) the results of your configuration.
+While a minimum of two radios is required, more can be used. You can have any number of receivers and senders that your mesh is able to handle. You can test having a single sender with multiple receivers or a single receiver with multiple senders. Let us know on the [forum thread](https://meshtastic.discourse.group/t/new-plugin-rangetestplugin/2591/) the results of your configuration.
 
 Be sure to turn off either the plugin configured as a sender or the device where the plugin setup as sender when not in use. This will use a lot of time on air and will spam your channel.
 

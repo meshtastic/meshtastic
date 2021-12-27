@@ -12,5 +12,5 @@ These plugins are currently integrated into the firmware:
 * Serial - Allows messages to be sent across the mesh by sending strings across a serial port
 
 These plugins are currently in development:
-* Store and forward - Allows a node to store messages and resend them to nodes that have intermittant connection to the mesh
+* Store and forward - Allows a node to store messages and resend them to nodes that have intermittent connection to the mesh
 * Environment measurement - Allows a node to measure it's local environment and report across the mesh

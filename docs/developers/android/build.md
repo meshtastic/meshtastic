@@ -27,10 +27,10 @@ If you would like to develop this application we'd love your help!  These build 
 MAPBOX_DOWNLOADS_TOKEN=sk.yourtokenherexxx
 ```
 
-* Now you should be able to select "Run / Run" in the IDE and it will happily start running on your phoneor the emulator.
+* Now you should be able to select "Run / Run" in the IDE and it will happily start running on your phone or the emulator.
 
 :::note
-The emulators don't support bluetooth, so some features can not be used in that environment.
+The emulators don't support Bluetooth, so some features can not be used in that environment.
 :::
 
 ## Analytics setup

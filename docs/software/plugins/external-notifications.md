@@ -54,7 +54,7 @@ For basic usage, start with:
 
 	ext_notification_plugin_alert_message = 1
     
-Depending on how your external cirtcuit configured is configured, you may need to set the active state to true.
+Depending on how your external circuit configured is configured, you may need to set the active state to true.
 
 	ext_notification_plugin_active = 1
 
@@ -68,7 +68,7 @@ We support being alerted on two events:
 
 1) Incoming Text Message
 
-2) Incoming Text Message that contains the ascii bell character. At present, only the Python API can send an ascii bell character, but more support may be added in the future.
+2) Incoming Text Message that contains the ASCII bell character. At present, only the Python API can send an ASCII bell character, but more support may be added in the future.
 
 #### Bell Character
 
@@ -76,7 +76,7 @@ The bell character is ASCII 0x07. Include 0x07 anywhere in the text message and 
     
 ## External Hardware
 
-Be mindful of the max current sink and source of the esp32 GPIO. The easiest devices to interface with would be either an LED or Active Buzzer.
+Be mindful of the max current sink and source of the ESP32 GPIO. The easiest devices to interface with would be either an LED or Active Buzzer.
 
 Ideas for external hardware:
 
@@ -88,6 +88,6 @@ Ideas for external hardware:
     
 ## Known Problems
 
-* This won't directly support an passive (normal) speaker as it does not generate any audio wave forms.
-* This currently only supports the esp32. Other targets may be possible, I just don't have to test with.
+* This won't directly support a passive (normal) speaker as it does not generate any audio wave forms.
+* This currently only supports the ESP32. Other targets may be possible, I just don't have to test with.
 * This plugin only monitors text messages. We won't trigger on any other packet types.

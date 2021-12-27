@@ -179,13 +179,13 @@ Wifi connection is currently under development and may not be working properly j
     ```
     pkg install python
     ```
-* Upgrade pip and installed meshtastic and its dependancies
+* Upgrade pip and installed meshtastic and its dependencies
     ```
     pip install --upgrade pip pygatt pytap2 wheel mesthtastic
     ```
 
 :::note 
-Be aware that the Meshtastic CLI is not able to control the nodes over USB through termux, but you can control devices over wifi using the `--host x.x.x.x` option with the device IP address. However, only ESP32 devices can use wifi currently.
+Be aware that the Meshtastic CLI is not able to control the nodes over USB through termux, but you can control devices over Wifi using the `--host x.x.x.x` option with the device IP address. However, only ESP32 devices can use Wifi currently.
 :::
 </TabItem>
 </Tabs>

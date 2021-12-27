@@ -4,7 +4,7 @@ title: Modifying devices to add buttons
 sidebar_label: Adding buttons
 ---
 
-Many of the TTGO Lora32 devices do not have a progam button to navigate the displayed pages. It is possible to add a button to the following device:
+Many of the TTGO Lora32 devices do not have a program button to navigate the displayed pages. It is possible to add a button to the following device:
 
 ## TTGO Lora32 V2.1-1.6
 

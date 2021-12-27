@@ -2,21 +2,21 @@
 
 Google Play has some newish requirements for access to background location.  This doc is a collection of work items needed to meet those requirements.
 
-The app is currently removed from the play store ([broken store link](https://play.google.com/store/apps/details?id=com.geeksville.mesh)), and some kind googlers inside of google are helping with this problem.  **Hopefully** it will be
-relisted soon (while we address these newish requirements), but we've got to do a bit of code to add a new dialog (and make a video for google).  It will take about a week to make these changes (including testing time with the [alpha-tester group](https://meshtastic.discourse.group/c/development/alpha-testers/) on the forum).
+The app is currently removed from the Play Store ([broken store link](https://play.google.com/store/apps/details?id=com.geeksville.mesh)), and some kind Googlers inside of Google are helping with this problem.  **Hopefully** it will be
+relisted soon (while we address these newish requirements), but we've got to do a bit of code to add a new dialog (and make a video for Google).  It will take about a week to make these changes (including testing time with the [alpha-tester group](https://meshtastic.discourse.group/c/development/alpha-testers/) on the forum).
 
-Until relisted in the play store (hopefully they can relist while we make these fixes), you'll need to install [raw APKs from github](https://github.com/meshtastic/Meshtastic-Android/releases).  Which is not ideal, but works.
+Until relisted in the Play Store (hopefully they can relist while we make these fixes), you'll need to install [raw APKs from GitHub](https://github.com/meshtastic/Meshtastic-Android/releases).  Which is not ideal, but works.
 
 Sorry ya'll.  
 
-(The remainder of this public document is mostly for googlers)
+(The remainder of this public document is mostly for Googlers)
 
 ## Why this app needs "foreground location access"
 
-We need foreground location access for two reaons:
+We need foreground location access for two reasons:
 
-* (Primarily) [This app](https://github.com/meshtastic/Meshtastic-Android) is a navigation app that uses long range LoRa mesh radios for communication in the back country.  These radios can run for weeks on a charge and talk to the user's phone over USB or bluetooth to provide the UX.  We need foreground location so we can show the user's current position on the same map that is showing positions of the other users.
-* (Secondarily) Using the old bluetooth BLE API (which we need to use to support older devices), scanning for bluetooth low energy devices requires this permission (because 'beacons' etc... could leak location info to the app).  Without this permission (on older phones) the BLE discovery results are always empty.
+* (Primarily) [This app](https://github.com/meshtastic/Meshtastic-Android) is a navigation app that uses long range LoRa mesh radios for communication in the back country.  These radios can run for weeks on a charge and talk to the user's phone over USB or Bluetooth to provide the UX.  We need foreground location so we can show the user's current position on the same map that is showing positions of the other users.
+* (Secondarily) Using the old Bluetooth BLE API (which we need to use to support older devices), scanning for Bluetooth low energy devices requires this permission (because 'beacons' etc... could leak location info to the app).  Without this permission (on older phones) the BLE discovery results are always empty.
 
 If it is helpful, [here](https://meshtastic.org/docs/software/android/android-usage) is a slightly stale set of screenshots/instructions showing how the user uses our application.
 
@@ -34,11 +34,11 @@ Since we need background location access for the app to work, we need to do thre
 
 per https://support.google.com/googleplay/android-developer/answer/9799150
 
-### TODO: Update play store listing
+### TODO: Update Play Store listing
 
 The existing text explains what the app does, but it needs to be even more explicit:
 
-Requirements from google site:
+Requirements from Google site:
 If you plan to use location in the background in your app, you should communicate this to users in the Google Play Store Listing via your app description, screenshots and (if applicable) title or icon. 
 
 Here are some suggestions on how to highlight use of location in the background to users:
@@ -51,7 +51,7 @@ If applicable, your app title or icon may also signal the location feature of yo
 
 We currently explain why we need location access on the settings page and in the help.  But we need a new dialog at launch, which needs to be **super** explicit:
 
-Requirements from google site:
+Requirements from Google site:
 Must be within the app itself, not only in the app description or on a website;
 Must be displayed in the normal usage of the app and not require the user to navigate into a menu or settings;
 Must describe the data being accessed or collected;
@@ -78,7 +78,7 @@ Note: If the feature does not have a user-facing interface when location in the 
 
 I'm awful at making videos, so I'll ask someone from the [forum](https://meshtastic.discourse.group/) to help with this!
 
-Requirements from google site:
+Requirements from Google site:
 As part of the permissions declaration, you must provide a link to a short video that demonstrates the location-based feature in your app that requires access to location in the background (while the app is not in use). 
 
 You can see an example of what this video demonstration should look like below.

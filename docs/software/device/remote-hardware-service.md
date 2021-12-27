@@ -9,7 +9,7 @@ GPIO access is fundamentally dangerous because invalid options can physically da
 :::
 
 :::note
-This feature uses a preinstalled plugin in the device code and associated commandline flags/classes in the python code.  You'll need to be running at least version 1.2.23 (or later) of the python and device code to use this feature.
+This feature uses a preinstalled plugin in the device code and associated command line flags/classes in the python code.  You'll need to be running at least version 1.2.23 (or later) of the python and device code to use this feature.
 :::
 
 You can get the latest python tool/library with `pip3 install --upgrade meshtastic` on Windows/Linux/OS-X. See the [python section](/docs/software/python/python-installation) for more details.
@@ -29,7 +29,7 @@ To prevent access from untrusted users you must first make a `gpio` channel that
 The procedure using the python command line tool is:
 
 1. Connect local device via USB
-2. Create a GPIO channel
+2. Create a gpio channel
     ```bash
     meshtastic --ch-add gpio
     ```
@@ -38,7 +38,7 @@ The procedure using the python command line tool is:
     meshtastic --info
     ```
 4. Connect the remote device via USB (or use the [remote admin](device-remote-admin) feature to reach it through the mesh)
-5. Set it to join the GPIO channel you created
+5. Set it to join the gpio channel you created
     ```bash
     meshtastic --seturl theurlyoucopiedinstep3
     ```

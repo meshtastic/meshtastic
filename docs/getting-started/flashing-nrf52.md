@@ -7,7 +7,7 @@ sidebar_label: nRF52 devices
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-## Pre-requisits
+## Pre-requisites
 
 :::tip
 Please ensure that you use a data USB-C cable, as many USB-C cables provide power only and not the data lines.
@@ -16,7 +16,7 @@ Please ensure that you use a data USB-C cable, as many USB-C cables provide powe
 ### T-Echo
 
 :::tip
-The usb-C to usb-A cable from LILYGO is _NOT_ a "data cable", and can only be used for charging.
+The USB-C to USB-A cable from LILYGO is _NOT_ a "data cable", and can only be used for charging.
 :::
 
 #### Windows:
@@ -28,7 +28,7 @@ You may need to install the [USB device drivers](http://www.wch-ic.com/search?q=
 Last Verified T-Echo nRF52840 on: Mac OS Monterey v12.0.1 (Intel chipset)
 
 :::tip
-You can use the latest [Apple USB-C Charge cables](https://www.apple.com/shop/product/MLL82AM/A/usb-c-charge-cable-2-m). The cable that is provided with the iPad Pro works. Older Laptop usb-C Power cables will _NOT_ work, as they are missing the data lines.
+You can use the latest [Apple USB-C Charge cables](https://www.apple.com/shop/product/MLL82AM/A/usb-c-charge-cable-2-m). The cable that is provided with the iPad Pro works. Older Laptop USB-C Power cables will _NOT_ work, as they are missing the data lines.
 :::
 
 :::caution
@@ -66,7 +66,7 @@ Please ensure that you have updated the bootloader to the latest version using t
 
 ## Download Latest Firmware
 
-Firmware can be downloaded from the [Firmware](/firmware) page. Your initial installation has to happen over USB from your Mac, Windows or Linux PC. Once our software is installed, all future software updates happen over bluetooth from your phone.
+Firmware can be downloaded from the [Firmware](/firmware) page. Your initial installation has to happen over USB from your Mac, Windows or Linux PC. Once our software is installed, all future software updates happen over Bluetooth from your phone.
 
 ## Install/Update Firmware
 
@@ -74,7 +74,7 @@ Firmware can be downloaded from the [Firmware](/firmware) page. Your initial ins
 Be careful to install the correct load for your board. While it is unlikely that you will cause damage to your device, the wrong firmware will cause it to not work.
 :::
 
-- Connect your device to your computer with a USB cable. If you computer complains about needing to format a new drive, cancel the format command.
+- Connect your device to your computer with a USB cable. If your computer complains about needing to format a new drive, cancel the format command.
 - Double click the `Reset` button on your device, this will put it into boot loader mode.
 
 [<img alt="LILYGO T-Echo" src="/img/hardware/t-echo-lilygo.jpg" style={{zoom:'25%'}} />](/img/hardware/t-echo-lilygo.jpg)

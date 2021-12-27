@@ -4,7 +4,7 @@ title: NRF52 TODO
 sidebar_label: NRF52
 ---
 
-- Possibly switch from softdevice to Apachy Newt: <https://github.com/espressif/esp-nimble>
+- Possibly switch from softdevice to Apache Newt: <https://github.com/espressif/esp-nimble>
   <https://github.com/apache/mynewt-core> - use nimble BLE on both ESP32 and NRF52
 
 ## RAK815
@@ -15,15 +15,15 @@ sidebar_label: NRF52
 
 - use S113 soft device 7.2.0
 - properly test charge controller config and read battery/charge status
-- fix bluetooth
+- fix Bluetooth
 - fix LCD max contrast (currently too high, needs to be about 40?)
 - save brightness settings in flash
-- make ST7567Wire driver less ugly, move OLED stuff into a common class treee
-- add LCD power save mode for lcd per page 31 of datasheet
-- add LCD power off sequence per datasheet to lcd driver
+- make ST7567Wire driver less ugly, move OLED stuff into a common class tree
+- add LCD power save mode for LCD per page 31 of datasheet
+- add LCD power off sequence per datasheet to LCD driver
 - leave LCD screen on most of the time (because it needs little power)
 
-### general nrf52 TODO
+### general nRF52 TODO
 
 - turn off transitions on eink screens
 - change update interval on eink from 1/sec frames to one frame every 5 mins
@@ -32,9 +32,9 @@ sidebar_label: NRF52
 - require button press to pair
 
 - shrink soft device RAM usage
-- get nrf52832 working again (currently OOM)
-- i2c gps comms not quite right
-- ble: AdafruitBluefruit::begin - adafruit_ble_task was assigned an invalid stack pointer. out of memory?
+- get nRF52832 working again (currently OOM)
+- i2c GPS comms not quite right
+- BLE: AdafruitBluefruit::begin - adafruit_ble_task was assigned an invalid stack pointer. out of memory?
 - measure power draw
 
 ### Bootloader
@@ -67,15 +67,15 @@ In another, run:
 bin/nrf52-console.sh
 ```
 
-On NRF52 I've been using the jlink fake serial console. But since the rak815 has the serial port hooked up we can switch back to that once the basics are working.
+On NRF52 I've been using the jlink fake serial console. But since the RAK815 has the serial port hooked up we can switch back to that once the basics are working.
 
 ## Misc work items
 
 RAM investigation.
 nRF52832-QFAA 64KB ram, 512KB flash vs
-nrf52832-QFAB 32KB ram, 512kb flash
-nrf52833 128KB RAM
-nrf52840 256KB RAM, 1MB flash
+nRF52832-QFAB 32KB ram, 512kb flash
+nRF52833 128KB RAM
+nRF52840 256KB RAM, 1MB flash
 
 Manual hacks needed to build (for now):
 
@@ -102,7 +102,7 @@ Minimum items needed to make sure hardware is good.
 Needed to be fully functional at least at the same level of the ESP32 boards. At this point users would probably want them.
 
 - DONE get serial API working
-- get full BLE api working
+- get full BLE API working
 - make power management/sleep work properly
 - make a settimeofday implementation
 - DONE increase preamble length? - will break other clients? so all devices must update
@@ -112,8 +112,8 @@ Needed to be fully functional at least at the same level of the ESP32 boards. At
 - we need to enable the external tcxo for the sx1262 (on dio3)?
 - figure out which regulator mode the sx1262 is operating in
 - turn on security for BLE, make pairing work
-- make ble endpoints not require "start config", just have them start in config mode
-- use new PMU to provide battery voltage/% full to app (both bluetooth and screen)
+- make BLE endpoints not require "start config", just have them start in config mode
+- use new PMU to provide battery voltage/% full to app (both Bluetooth and screen)
 - do initial power measurements, measure effects of more preamble bits, measure power management and confirm battery life
 - set UICR.CUSTOMER to indicate board model & version
 
@@ -141,10 +141,10 @@ Nice ideas worth considering someday...
 - enable monitor mode debugging (need to use real jlink): <https://devzone.nordicsemi.com/nordic/nordic-blog/b/blog/posts/monitor-mode-debugging-with-j-link-and-gdbeclipse>
 - Improve efficiency of PeriodicTimer by only checking the next queued timer event, and carefully sorting based on schedule
 - make a Mfg Controller and device under test classes as examples of custom app code for third party devs. Make a post about this. Use a custom payload type code. Have device under test send a broadcast with max hopcount of 0 for the 'mfgcontroller' payload type. mfg controller will read SNR and reply. DOT will declare failure/success and switch to the regular app screen.
-- Hook Segger RTT to the nordic logging framework. <https://devzone.nordicsemi.com/nordic/nordic-blog/b/blog/posts/debugging-with-real-time-terminal>
-- Use nordic logging for DEBUG_MSG
+- Hook Segger RTT to the Nordic logging framework. <https://devzone.nordicsemi.com/nordic/nordic-blog/b/blog/posts/debugging-with-real-time-terminal>
+- Use Nordic logging for DEBUG_MSG
 - use the Jumper simulator to run meshes of simulated hardware: <https://docs.jumper.io/docs/install.html>
-- make/find a multithread safe debug logging class (include remote logging and timestamps and levels). make each log event atomic.
+- make/find a multi-thread safe debug logging class (include remote logging and timestamps and levels). make each log event atomic.
 - turn on freertos stack size checking
 - Currently we use Nordic's vendor ID, which is apparently okay: <https://devzone.nordicsemi.com/f/nordic-q-a/44014/using-nordic-vid-and-pid-for-nrf52840> and I just picked a PID of 0x4403
 - Use NRF logger module (includes flash logging etc...) instead of DEBUG_MSG
@@ -153,15 +153,15 @@ Nice ideas worth considering someday...
 - in addition to the main CPU watchdog, use the PMU watchdog as a really big emergency hammer
 - turn on 'shipping mode' in the PMU when device is 'off' - to cut battery draw to essentially zero
 - make Lorro_BQ25703A read/write operations atomic, current version could let other threads sneak in (once we start using threads)
-- make the segger logbuffer larger, move it to RAM that is preserved across reboots and support reading it out at runtime (to allow full log messages to be included in crash reports). Share this code with ESP32 (use gcc noinit attribute)
+- make the segger logbuffer larger, move it to RAM that is preserved across reboots and support reading it out at runtime (to allow full log messages to be included in crash reports). Share this code with ESP32 (use GCC noinit attribute)
 - convert hardfaults/panics/asserts/wd exceptions into fault codes sent to phone
 - stop enumerating all i2c devices at boot, it wastes power & time
-- consider using "SYSTEMOFF" deep sleep mode, without RAM retension. Only useful for 'truly off - wake only by button press' only saves 1.5uA vs SYSTEMON. (SYSTEMON only costs 1.5uA). Possibly put PMU into shipping mode?
+- consider using "SYSTEMOFF" deep sleep mode, without RAM retention. Only useful for 'truly off - wake only by button press' only saves 1.5uA vs SYSTEMON. (SYSTEMON only costs 1.5uA). Possibly put PMU into shipping mode?
 - change the BLE protocol to be more symmetric. Have the phone _also_ host a GATT service which receives writes to
   'fromradio'. This would allow removing the 'fromnum' mailbox/notify scheme of the current approach and decrease the number of packet handoffs when a packet is received.
-- Using the preceeding, make a generalized 'nrf52/esp32 ble to internet' bridge service. To let nrf52 apps do MQTT/UDP/HTTP POST/HTTP GET operations to web services.
-- lower advertise interval to save power, lower ble transmit power to save power
-- the SX126x class does SPI transfers on a byte by byte basis, which is very ineffecient. Much better to do block writes/reads.
+- Using the preceding, make a generalized 'nRF52/ESP32 BLE to internet' bridge service. To let nRF52 apps do MQTT/UDP/HTTP POST/HTTP GET operations to web services.
+- lower advertise interval to save power, lower BLE transmit power to save power
+- the SX126x class does SPI transfers on a byte by byte basis, which is very inefficient. Much better to do block writes/reads.
 
 ## Old unorganized notes
 
@@ -186,12 +186,12 @@ Nice ideas worth considering someday...
 - DONE change rx95 to radiolib
 - DONE track rxbad, rxgood, txgood
 - DONE neg 7 error code from receive
-- DONE remove unused sx1262 lib from github
+- DONE remove unused SX1262 lib from GitHub
 - at boot we are starting our message IDs at 1, rather we should start them at a random number. also, seed random based on timer. this could be the cause of our first message not seen bug.
 - add a NMEA based GPS driver to test GPS
-- DONE use "variants" to get all gpio bindings
+- DONE use "variants" to get all GPIO bindings
 - DONE plug in correct variants for the real board
-- turn on DFU assistance in the appload using the nordic DFU helper lib call
+- turn on DFU assistance in the appload using the Nordic DFU helper lib call
 - make a new boarddef with a variant.h file. Fix pins in that file. In particular (at least):
   #define PIN_SPI_MISO (46)
   #define PIN_SPI_MOSI (45)
@@ -202,14 +202,14 @@ Nice ideas worth considering someday...
 - remove the MeshRadio wrapper - we don't need it anymore, just do everything in RadioInterface subclasses.
 - DONE use SX126x::startReceiveDutyCycleAuto to save power by sleeping and briefly waking to check for preamble bits. Change xmit rules to have more preamble bits.
 - scheduleOSCallback doesn't work yet - it is way too fast (causes rapid polling of busyTx, high power draw etc...)
-- find out why we reboot while debugging - it was bluetooth/softdevice
+- find out why we reboot while debugging - it was Bluetooth/softdevice
 - make a file system implementation (preferably one that can see the files the bootloader also sees) - preferably <https://github.com/adafruit/Adafruit_nRF52_Arduino/blob/master/libraries/InternalFileSytem/examples/Internal_ReadWrite/Internal_ReadWrite.ino> else use <https://infocenter.nordicsemi.com/topic/com.nordic.infocenter.sdk5.v15.3.0/lib_fds_usage.html?cp=7_5_0_3_55_3>
 - change packet numbers to be 32 bits
 
 per
 <https://docs.platformio.org/en/latest/tutorials/nordicnrf52/arduino_debugging_unit_testing.html>
 
-ardunino github is here <https://github.com/sandeepmistry/arduino-nRF5>
+Arduino GitHub is here <https://github.com/sandeepmistry/arduino-nRF5>
 devboard hw docs here:
 <https://infocenter.nordicsemi.com/topic/ug_nrf52840_dk/UG/nrf52840_DK/hw_buttons_leds.html?cp=4_0_4_7_6>
 
@@ -245,7 +245,7 @@ examples of turning off the loop call to save power:
 example of a more complex BLE service:
 <https://learn.adafruit.com/bluefruit-nrf52-feather-learning-guide/custom-hrm>
 
-See g_ADigitalPinMap to see how arduino maps to the real gpio#s - and all in P0
+See g_ADigitalPinMap to see how Arduino maps to the real GPIO#s - and all in P0
 
 ```cpp
 #define LED1 14

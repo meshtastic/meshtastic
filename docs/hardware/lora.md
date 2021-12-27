@@ -8,7 +8,7 @@ sidebar_label: LILYGO® Lora
 ## Lora V1
 
 * ESP32 - Wifi & Bluetooth
-* SX1276 - LoRa Tranceiver
+* SX1276 - LoRa Transceiver
 * Frequency options:
     * 868 MHz
     * 915 MHz
@@ -80,7 +80,7 @@ sidebar_label: LILYGO® Lora
 * [Purchase link](https://www.aliexpress.com/item/32915894264.html)
 
 :::warning
-Some of these boards contained the wrong component in the lipo battery charging circuit allowing the battery to be overcharged. While this does appear to have been fixed recently, please see the [warning](https://www.thethingsnetwork.org/community/berlin/post/warning-attention-users-of-ttgo21-v16-boards-labeled-t3_v16-on-pcb-battery-exploded-and-got-on-fire) on The Things Network for more information.
+Some of these boards contained the wrong component in the LiPo battery charging circuit allowing the battery to be overcharged. While this does appear to have been fixed recently, please see the [warning](https://www.thethingsnetwork.org/community/berlin/post/warning-attention-users-of-ttgo21-v16-boards-labeled-t3_v16-on-pcb-battery-exploded-and-got-on-fire) on The Things Network for more information.
 :::
 
 [<img src="/img/hardware/lora-v2.1-1.6.png" alt="LILYGO® TTGO Lora V2.1-1.6" style={{zoom:'25%'}} />](/img/hardware/lora-v2.1-1.6.png)

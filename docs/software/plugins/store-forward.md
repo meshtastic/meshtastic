@@ -11,7 +11,7 @@ This is a work in progress and is not yet available.
 
 The Store Forward Plugin is an implementation of a Store and Forward system to enable resilient messaging in the event that a client device is disconnected from the main network.
 
-Because of the increased network traffic for this overhead, it's not adviced to use this if you are duty cycle limited for your airtime usage nor is it adviced to use this for SF12 (Long range but Slow).
+Because of the increased network traffic for this overhead, it's not advised to use this if you are duty cycle limited for your airtime usage nor is it advised to use this for SF12 (Long range but Slow).
 
 ### About - How it works
 
@@ -55,13 +55,13 @@ With an aftermarket coaxial antenna or moxon antenna, that will give you roughly
 * * * store_forward_plugin_enabled - Set this to true to enable the plugin. False to disable the plugin.
 * * Optional configuration
 * * * store_forward_plugin_records - Set this to the maximum number of records to save. Best to leave this at the default (0) where the plugin will use 2/3 of your device's available PSRAM. This is about 11,000 records.
-* Name your router node something that makes it easily identifable, aka "Router".
+* Name your router node something that makes it easily identifiable, aka "Router".
 
-Don't enable the Store and Forward plugin on multile routers!
+Don't enable the Store and Forward plugin on multiple routers!
 
 ### Client Usage
  
-Currently, no sepcial configuration is required. To request your history sent to you, send the command into the message field "SF". That's it. This will eventually change to make it easier. At the moment, that message will be sent to everyone on the mesh but we'll (eventually) make it easier to use where there'll be a button (or maybe it'll be transparent) and the command isn't sent as a text message to the mesh.
+Currently, no special configuration is required. To request your history sent to you, send the command into the message field "SF". That's it. This will eventually change to make it easier. At the moment, that message will be sent to everyone on the mesh but we'll (eventually) make it easier to use where there'll be a button (or maybe it'll be transparent) and the command isn't sent as a text message to the mesh.
 
 Available Commands:
 
@@ -153,13 +153,13 @@ Not necessarily in this order:
 
 * Restrict operation of S&F on the slow channel configurations.
 
-* Create a tx queue to prevent the history from being modified in flight.
+* Create a TX queue to prevent the history from being modified in flight.
 
 * Only allow n-number of requests to the router at any one time.
 
 * Set number of max messages from the history.
 
-* Calculate a new channel with 250mhz bandwidth and ~1.5kbit.
+* Calculate a new channel with 250MHz bandwidth and ~1.5kbit.
 
 *** Done
 

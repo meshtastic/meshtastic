@@ -53,7 +53,7 @@ while True:
 interface.close()
 ```
 
-Note: Be sure to change the ip address in the code above to a valid ip address for your setup.
+Note: Be sure to change the IP address in the code above to a valid IP address for your setup.
 
 
 You can get and update settings like this:

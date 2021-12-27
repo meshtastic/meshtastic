@@ -104,7 +104,7 @@ Wait number of seconds for Bluetooth - Power management state machine option. Se
 
 ### is_always_powered
 
-If the device is plugged into the wall (not from battery), you may consider using this setting to always keep the device from sleeping. This is a useful setting if you are on esp32 and using the wifi options.
+If the device is plugged into the wall (not from battery), you may consider using this setting to always keep the device from sleeping. This is a useful setting if you are on ESP32 and using the Wifi options.
 
 ## Examples
 

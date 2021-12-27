@@ -34,7 +34,7 @@ This is an earlier version of the T-Beam board, and due to changes in the design
 :::
 
 * ESP32 - Wifi & Bluetooth
-* SX1276 - LoRa Tranceiver
+* SX1276 - LoRa Transceiver
 * Frequency options:
     * 868 MHz
     * 915 MHz

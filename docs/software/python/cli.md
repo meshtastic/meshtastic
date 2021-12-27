@@ -20,7 +20,7 @@ Because of the growing nature of this project, not all commands may appear when 
 
 ## Getting a list of User Preferences
 
-You can get a list of user preferences by running '--get' with an invalid atrribute such as 'all'.
+You can get a list of user preferences by running '--get' with an invalid attribute such as 'all'.
 ```bash
 meshtastic --get all
 ```
@@ -28,7 +28,7 @@ meshtastic --get all
 ## Changing settings
 
 You can also use this tool to set any of the device parameters which are stored in persistent storage. For instance, here's how to set the device
-to keep the bluetooth link alive for eight hours (any usage of the bluetooth protocol from your phone will reset this timer)
+to keep the Bluetooth link alive for eight hours (any usage of the Bluetooth protocol from your phone will reset this timer)
 
 ```bash title="Expected Output"
 # You should see a result similar to this:
@@ -44,7 +44,7 @@ Or to set a node at a fixed position and never power up the GPS.
 meshtastic --setlat 25.2 --setlon -16.8 --setalt 120
 ```
 
-Or to configure an ESP32 based board to join a wifi network as a station:
+Or to configure an ESP32 based board to join a Wifi network as a station:
 
 ```bash
 meshtastic --set wifi_ap_mode false --set wifi_ssid mywifissid --set wifi_password mywifipsw
@@ -62,7 +62,7 @@ For a full list of preferences which can be set (and their documentation) can be
 
 ### Changing channel settings
 
-The channel settings can also be changed, either by using a standard (sharable) meshtastic URL or you can set particular channel parameter (for advanced users).
+The channel settings can also be changed, either by using a standard (shareable) meshtastic URL or you can set particular channel parameter (for advanced users).
 
 :::warning
 Meshtastic encodes the radio channel and PSK in the channel's URL. All nodes must connect to the channel again by using the URL provided after a change in this section by performing the `--info` switch. Please refer to [Multiple Channel Support](../device/device-channels).
@@ -124,4 +124,4 @@ There is a problem with Big Sur and pyserial. The workaround is to install a new
 pip3 install -U --pre pyserial
 ```
 
-Afterwards you can use the meshatstic python client again on MacOS.
+Afterwards you can use the meshtastic python client again on MacOS.
