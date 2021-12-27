@@ -166,6 +166,10 @@ Example Cases:
 * * From: Ann
 * * To: Bob
 
+When a message is 'real time', time a message is sent is the same as the time the message was received. In the case the message is delayed, there is no timestamp available for the message.
+
+Where the message is a delayed broadcast, the "To" is *not* a broadcast address but rather the address of the device that requested the messages to be replayed. This is to allow the message to be routed over the mesh network and not displayed in the message screen of other devices.
+
 ## Developer TODO
 
 Not necessarily in this order:
