@@ -6,7 +6,7 @@ sidebar_label: Store and Forward
 
 ## About
 :::caution
-This is a work in progress and is not yet available.
+This is a work in progress and is partially available. Stability is not gaurenteed.
 :::
 
 The Store Forward Plugin is an implementation of a Store and Forward system to enable resilient messaging in the event that a client device is disconnected from the main network.
