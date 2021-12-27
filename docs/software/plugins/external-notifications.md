@@ -54,7 +54,7 @@ For basic usage, start with:
 
 	ext_notification_plugin_alert_message = 1
     
-Depending on how your external circuit configured is configured, you may need to set the active state to true.
+Depending on how your external circuit is configured, you may need to set the active state to true.
 
 	ext_notification_plugin_active = 1
 
