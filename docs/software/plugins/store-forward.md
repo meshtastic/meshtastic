@@ -141,7 +141,7 @@ typedef enum _MeshPacket_Delayed {
 } MeshPacket_Delayed;
 ```
 
-* NO_DELAY - The packet was set in real time. Store and Forward had no hand in this message. This is the default case.
+* NO_DELAY - The packet was sent in real time. Store and Forward had no hand in this message. This is the default case.
 * DELAYED_BROADCAST - This is a delayed message. The 'to' of the packet has been directed at a named user but was previously a broadcast packet.
 * DELAYED_DIRECT - This is a delayed message. The 'to' of the packet has been directed at a named user but was previously a direct packet.
 
