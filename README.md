@@ -39,3 +39,5 @@ The radios automatically create a mesh to forward packets as needed, so everyone
 Meshtastic uses LoRa for the long range communcations and depending on settings used the maximum theoritical group size ranges from 30-200 device nodes. Currently each device can only support a connection from a single user at a time.
 
 Please see our [website](https://meshtastic.org) for more information about Meshtastic.
+
+[![Powered by Vercel](https://raw.githubusercontent.com/abumalick/powered-by-vercel/master/powered-by-vercel.svg)](https://vercel.com?utm_source=meshtastic&utm_campaign=oss)

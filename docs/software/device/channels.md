@@ -5,7 +5,7 @@ sidebar_label: Multiple channels
 ---
 
 :::warning
-Multiple channel support is currently an experimental feature that is ONLY supported by the Python CLI and WebUI right now. 
+Multiple channel support is currently an experimental feature that is ONLY supported by the Python CLI. 
 :::
 
 Version 1.2 of the software adds support for multiple (simultaneous) channels.  The idea behind this feature is that a mesh can allow multiple users/groups to be share common mesh infrastructure.  Even including routing messages for others when no one except that subgroup of users has the encryption keys for their private channel.
