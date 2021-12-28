@@ -17,6 +17,7 @@ This is a mini-doc/RFC sketching out a development plan to satisfy a number of 1
 - A text messaging bridge when a node in the mesh can gateway to the internet. Issue #[353](https://github.com/meshtastic/Meshtastic-device/issues/353) and this nicely documented [android issue](https://github.com/meshtastic/Meshtastic-Android/issues/2).
 - An easy way to let desktop app developers remotely control GPIOs. Issue #[182](https://github.com/meshtastic/Meshtastic-device/issues/182)
 - Remote attribute access (to change settings of distant nodes). Issue #182
+- Be sure to checkout [MQTT Settings](https://meshtastic.org/docs/software/settings/mqtt)
 
 ## Short term goals
 
@@ -186,3 +187,92 @@ on how this will be implemented and guesses at approximate work items.
 The initial gateway will be added to the python tool. But the gateway implementation is designed to be fairly trivial/dumb. After the initial release, the actual gateway code can be ported to also run inside the android app. In fact, we could have ESP32 based nodes include a built-in "gateway node" implementation.
 
 Store and forward could be added so that nodes on the mesh could deliver messages (i.e. text messages) on an "as possible" basis. This would allow things like "hiker sends a message to friend - mesh can not currently reach friend - eventually (days later) mesh can somehow reach friend, message gets delivered"
+
+### Mini tutorial on how to get up and running with mosquitto on a mac
+
+1. install mqtt server
+
+```
+brew install mosquitto
+```
+
+2. start the mqtt server
+
+```
+brew services restart mosquitto
+```
+
+3. Do a quick test of server, start a subscriber on a topic:
+# Note: this will wait until you press control-c (publish a message, see below)
+
+```
+mosquitto_sub -t test/hello
+```
+
+4. In another window, publish a message to that topic:
+
+```
+mosquitto_pub -h localhost -q 0 -t test/hello -m 'yo!'
+```
+
+5. For Meshtastic to be able to access that server, two settings need to be changed in the
+`/usr/local/etc/mosquitto/mosquitto.conf` file:
+
+```
+listener 1883 0.0.0.0
+allow_anonymous true
+```
+6. Restart the service:
+
+```
+brew services restart mosquitto
+```
+
+7. If you are using the mac firewall, you will need to go into: System Preferences > Security & Privacy > Firewall > Firewall Options and add it.
+
+### Sending/receiving messages on mosquitto server using python
+
+Here is an example publish message in python:
+
+```
+#!/usr/bin/env python3
+import paho.mqtt.client as mqtt
+from random import randrange, uniform
+import time
+
+client = mqtt.Client("some_client_id")
+client.connect('localhost')
+
+while True:
+    randNumber = uniform(20.0, 21.0)
+    client.publish("env/test/TEMPERATURE", randNumber)
+    print("Just published " + str(randNumber) + " to topic TEMPERATURE")
+    time.sleep(1)
+```
+
+Here is example subscribe in python:
+
+```
+#!/usr/bin/env python3
+
+import paho.mqtt.client as paho
+
+def on_message(mosq, obj, msg):
+    print("%-20s %d %s" % (msg.topic, msg.qos, msg.payload))
+    mosq.publish('pong', 'ack', 0)
+
+def on_publish(mosq, obj, mid):
+    pass
+
+if __name__ == '__main__':
+    client = paho.Client()
+    client.on_message = on_message
+    client.on_publish = on_publish
+
+    client.connect("localhost", 1883, 60)
+
+    client.subscribe("env/test/TEMPERATURE", 0)
+
+    while client.loop() == 0:
+        pass
+```
