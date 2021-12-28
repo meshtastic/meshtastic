@@ -48,10 +48,10 @@ Q: My device has gone to sleep. Are received messages lost?
 Q: My device has gone to sleep and I can't send any messages.
 * Once the node wakes up from sleep, your phone will relay any delayed messages through your node and to the mesh network. Give it a few minutes and it'll do the right thing.
 
-Q: How do I turn off an esp32 t-beam based device?
+Q: How do I turn off an ESP32 t-beam based device?
 * Hold down the middle button for about 10 seconds.
 
-Q: How do I turn on an esp32 t-beam based device?
+Q: How do I turn on an ESP32 t-beam based device?
 * Push the power button for about 1 second.
 
 Q: How can I tell the device not to sleep?
@@ -96,7 +96,7 @@ Q: How do I get the Meshtastic iOS App?
 ## Bluetooth
 
 Q: How do I pair my phone to the device if my device doesn't have a screen?
-* Answer TBD (perhaps consider using web if esp32)
+* Answer TBD (perhaps consider using web if ESP32)
 
 Q: Can I have Bluetooth enabled and use WiFi radio?
 * No. Only one method will work at a time.

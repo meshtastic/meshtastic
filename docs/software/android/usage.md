@@ -19,7 +19,7 @@ You will need a device with Meshtastic installed to go any further. See the [get
 Open the Settings tab (last tab), and it should look similar to the screen below. It shows any Meshtastic devices that are found over Bluetooth.
 
 :::note
-Android requires location permission granted and location must be turned on to find new devices via bluetooth. You can turn it off again afterwards.
+Android requires location permission granted and location must be turned on to find new devices via Bluetooth. You can turn it off again afterwards.
 :::
 
 [![Device available to select](/img/android/android-settings-deselected-c.png)](/img/android/android-settings-deselected.png)
@@ -50,7 +50,7 @@ The cloud icon at the top right corner indicates if you are connected to a devic
 
 ## Common tasks
 
-Once you are connected to a Device the App will work, and you can test it by "sending" a message. However you will need to join or create a new mesh network so you have someone to communicate with. If you have been sent a QR code or link for Meshtastic, then skip ahead to Join a Channel, otherwise you will need to Setup a Channel.
+Once you are connected to a Device the App will work, and you can test it by "sending" a message. However, you will need to join or create a new mesh network so you have someone to communicate with. If you have been sent a QR code or link for Meshtastic, then skip ahead to Join a Channel, otherwise you will need to Setup a Channel.
 
 ### Setup a channel
 
@@ -85,7 +85,7 @@ You should see a message with the option "open with Meshtastic".
         If you don't see "Meshtastic" as an option to open the file or link with:<br />
         1. Go to Android Settings > Apps > Default apps > Meshtastic > Opening links<br />
         2. Make sure you have in "links/web address": www.meshtastic.org<br />
-        3. If you see the option "Open the supported links" make sure it is enabled.<br />
+        3. If you see the option "Open the supported links", make sure it is enabled.<br />
     </div>
   </div>
 </details>
@@ -122,10 +122,10 @@ The message window operates like any chat applications. Note that any messages s
 
 With LoRa (or any radio) there is some uncertainty that the messages has been received, so there is a confirmation built-in to the protocol. There are small cloud icons shown to the right of the messages you send:
 
-* Cloud with an up arrow: the application is waiting for the device to some out of sleep mode (or come back into bluetooth range), to upload the message to the device.
+* Cloud with an up arrow: the application is waiting for the device to some out of sleep mode (or come back into Bluetooth range), to upload the message to the device.
 * Cloud only: message has been sent via Bluetooth and transmitted via LoRa.
 * Cloud with a check mark: message has been delivered to at least one node in the mesh and at least one node sent back a confirmation (successfully received by the initial sender).
-* Cloud crossed out: message may have been delivered to at least one node in the mesh. If at least one node sent a confirmation back the initial sender did not receive the confirmation within a certain timeout.
+* Cloud crossed out: message may have been delivered to at least one node in the mesh. The initial sender did not receive at least one node's confirmation within a certain timeout.
 
 Thus, in a group size of 3 and up, confirmations could be from any one device (not person), so it is good practice to respond, so the initial sender knows you have read their message.
 
@@ -147,12 +147,12 @@ The Map tab will show a local map with an icon for each active mesh node that ha
 
 [![Mapping provided by Mapbox](/img/android/android-map-sm.png)](/img/android/android-map.png)
 
-The map is not developed by the Meshtastic project, and the source of the mapping system is [Mapbox](https://docs.mapbox.com/help/how-mapbox-works/) (free-tier), and the map data is sourced from [OpenStreetMap OSM](https://www.openstreetmap.org/). Mapbox currently requires analytics to be enabled for you to use their mapping system. There is currently no off-line maps (phone needs mobile data or wifi), although this will be improved in the future. If you don't see the features that you'd expect on the map then head over to [OpenStreetMap OSM](https://www.openstreetmap.org/) where you can contribute new data to the map.
+The map is not developed by the Meshtastic project, and the source of the mapping system is [Mapbox](https://docs.mapbox.com/help/how-mapbox-works/) (free-tier), and the map data is sourced from [OpenStreetMap OSM](https://www.openstreetmap.org/). Mapbox currently requires analytics to be enabled for you to use their mapping system. There is currently no off-line maps (phone needs mobile data or Wifi), although this will be improved in the future. If you don't see the features that you'd expect on the map then head over to [OpenStreetMap OSM](https://www.openstreetmap.org/) where you can contribute new data to the map.
 
 
 ## Configuration options
 
-Pressing the three verticle dots in the top right corner shows the configuration menu.
+Pressing the three vertical dots in the top right corner shows the configuration menu.
 
 [![Meshtastic configuration options](/img/android/android-settings-options-c.png)](/img/android/android-settings-options.png)
 
@@ -162,7 +162,7 @@ Pressing the three verticle dots in the top right corner shows the configuration
 
 #### Broadcast position period
 
-This allows you to change the frequency with which your location is broadcast across the mesh. By default this is set to 900 seconds (15 minutes). The minimum time this can be set to is 375 seconds, the reasons for which have been [discussed on the forum](https://meshtastic.discourse.group/t/lost-messages-while-testing/2455/19).
+This allows you to change the frequency with which your location is broadcast across the mesh. By default, this is set to 900 seconds (15 minutes). The minimum time this can be set to is 375 seconds, the reasons for which have been [discussed on the forum](https://meshtastic.discourse.group/t/lost-messages-while-testing/2455/19).
 
 #### Device sleep period
 
@@ -174,9 +174,9 @@ By default, ESP32 devices will enter sleep mode after 300 seconds of inactivity 
 
 The debug page allows you to see all packets sent between the application and the device. This can then be used for debugging purposes.
 
-### Save messages as csv
+### Save messages as CSV
 
-This allows you to save your messages to a .csv (comma sparated value) file on your phone.
+This allows you to save your messages to a .csv (comma separated value) file on your phone.
 
 ### Theme
 

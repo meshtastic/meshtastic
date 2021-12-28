@@ -18,13 +18,13 @@ A number of devices support buttons that can be used to interact with the firmwa
 - Power button - This is present on some devices. A long press powers the device off or turns it back on again.
 - Program button - This is present of some devices and has a number of functions:
   - Single press - This changes the page of information displayed on the screen.
-  - Double press - This sets the bluetooth pairing code to `123456` (useful if you do not have a screen on the device).
+  - Double press - This sets the Bluetooth pairing code to `123456` (useful if you do not have a screen on the device).
   - Long press - This adjusts the contrast of the screen.
-  - Long press during reboot - This turns on the software wifi access point on devices that support wifi.
+  - Long press during reboot - This turns on the software Wifi access point on devices that support Wifi.
 
 ### Screens
 
-A number of devices have screens capable of displaying the messages received and information about the mesh and other details. On powering the device it will display the Meshtastic splashscreen for a couple of seconds:
+A number of devices have screens capable of displaying the messages received and information about the mesh and other details. On powering the device it will display the Meshtastic splash screen for a couple of seconds:
 
 ![Splash screen](/img/screen/mesh-splash.jpg)
 
@@ -44,7 +44,7 @@ The final page shows current battery voltage and capacity, as well as noting how
 
 ![GPS page](/img/screen/mesh-gps.jpg)
 
-If the device wifi has been enabled (only possible on ESP32 devices), another page appears displaying information about the WiFi settings, IP address and number of devices connected to the WiFi.
+If the device Wifi has been enabled (only possible on ESP32 devices), another page appears displaying information about the WiFi settings, IP address and number of devices connected to the WiFi.
 
 ![Wifi page](/img/screen/mesh-wifi.jpg)
 

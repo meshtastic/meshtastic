@@ -41,7 +41,7 @@ Using this site, find the location of where you plan to place your relay.
 
 Move the place marker over the spot where your relay is to placed, and it will give you the latitude, longitude and altitude.
 
-Enter the latitude and longitude to one decimal place and altitude is recorded in metres in the configuration file.
+Enter the latitude and longitude to one decimal place and altitude is recorded in meters in the configuration file.
 
 As a suggestion, save the configuration file into the same folder, where you have downloaded the latest device firmware.
 Save the file as `relay.sh`

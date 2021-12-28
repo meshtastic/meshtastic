@@ -11,11 +11,11 @@ Meshtastic® is a project that lets you use inexpensive LoRa radios as a long ra
 
 The radios automatically create a mesh to forward packets as needed, so everyone in the group can receive messages from even the furthest member. The radios will optionally work with your phone, but no phone is required.
 
-Meshtastic uses LoRa for the long range communcations and depending on settings used the maximum theoritical group size ranges from 30-200 device nodes. Currently each device can only support a connection from a single user at a time.
+Meshtastic uses LoRa for the long range communications and depending on settings used the maximum theoretical group size ranges from 30-200 device nodes. Currently, each device can only support a connection from a single user at a time.
 
 ## Purchase a Radio
 
-The easiest way is to [buy a device with the software already installed](https://www.aliexpress.com/item/4001178678568.html). Other devices are [available](/docs/hardware/tbeam-hardware). In the Americas get the 915mhz version, in Europe the 868Mhz, or Asia 923Mhz. See this listing by [The Things Network](https://www.thethingsnetwork.org/docs/lorawan/frequencies-by-country.html) for frequencies by specific countries.
+The easiest way is to [buy a device with the software already installed](https://www.aliexpress.com/item/4001178678568.html). Other devices are [available](/docs/hardware/tbeam-hardware). In the Americas get the 915MHz version, in Europe the 868MHz, or Asia 923MHz. See this listing by [The Things Network](https://www.thethingsnetwork.org/docs/lorawan/frequencies-by-country.html) for frequencies by specific countries.
 
 ## Setup the Radio
 
@@ -27,11 +27,11 @@ Make sure not to power the radio on without first attaching the antenna! You cou
 
 ## Download Firmware
 
-Firmware can be downloaded from the [Firmware](/firmware) page. Your initial installation has to happen over USB from your Mac, Windows or Linux PC. Once our software is installed, all future software updates happen over bluetooth from your phone.
+Firmware can be downloaded from the [Firmware](/firmware) page. Your initial installation has to happen over USB from your Mac, Windows or Linux PC. Once our software is installed, all future software updates happen over Bluetooth from your phone.
 
 ## Flashing Firmware
 
-If your device already has Meshtastic flashed to it, You can update it over the air (OTA). Otherwise you'll need a computer and a **data** USB cable. This can be done in the following ways:
+If your device already has Meshtastic flashed to it, You can update it over the air (OTA). Otherwise, you'll need a computer and a **data** USB cable. This can be done in the following ways:
 
 - Install using the command line interface (CLI)
 - Install using a graphical user interface (GUI)
@@ -46,7 +46,7 @@ There are many ways to connect to your new radio!
 - Graphic user interface (GUI)
 - Serial connection
 - Bluetooth
-- Web app over wifi (in development)
+- Web app over Wifi (in development)
 
 ## A good first test (connect via USB and CLI)
 
@@ -67,20 +67,20 @@ The Android app is currently more robust than the iOS app. But, they both should
 - Install Android or iOS Meshtastic app
 - Start Meshtastic app
 - Connect to radio(s) from inside the app
-- Pair with radio(s). A paring code should show on the radio. Enter that value when prompted to pair a bluetooth device.
-- Note: May want to set the bluetooth timeout (ex: "meshtastic --set wait_bluetooth_secs 28800")
+- Pair with radio(s). A paring code should show on the radio. Enter that value when prompted to pair a Bluetooth device.
+- Note: May want to set the Bluetooth timeout (ex: "meshtastic --set wait_bluetooth_secs 28800")
 - Send message(s) from inside the app.
 - Verify that all radios are receiving the messages. Might have to click on the button on the radio to see most recent message.
 
-## A good third test (connect via Wifi/http)
+## A good third test (connect via Wifi/HTTP)
 
-- Configure the _wifi_ssid_ and _wifi_password_. "meshtastic --set wifi_ssid 'xxx' --set wifi_password 'yyy'" (where xxx and yyy are the appropriate values for your neetwork)
+- Configure the _wifi_ssid_ and _wifi_password_. "meshtastic --set wifi_ssid 'xxx' --set wifi_password 'yyy'" (where xxx and yyy are the appropriate values for your network)
 - Reboot radio by either removing power or pressing the power button.
-- Click on the button to cycle thru to the screen with ip address and verify that there was a connection to the wifi access point.
+- Click on the button to cycle through to the screen with IP address and verify that there was a connection to the Wifi access point.
 - Send message(s). "meshtastic --host 192.168.1.200 --sendtext hello"
 - Verify that all radios are receiving the messages. Might have to click on the button on the radio(s) to see most recent message.
-- Open up a brower to http://meshtastic.local to view the web UI (currently under development). You may need to open http://meshtastic.local/static )
-- If you want to switch back to bluetooth, you will need to set the _wifi_ssid_ and _wifi_password_ values to blank values (ex: '').
+- Open up a browser to http://meshtastic.local to view the web UI (currently under development). You may need to open http://meshtastic.local/static )
+- If you want to switch back to Bluetooth, you will need to set the _wifi_ssid_ and _wifi_password_ values to blank values (ex: '').
 
 ## Troubleshooting
 

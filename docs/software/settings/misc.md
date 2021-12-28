@@ -40,11 +40,11 @@ If true, radio should not try to be smart about what packets to queue to the pho
 
 ### serial_disabled
 
-If set, this will disable the SerialConsole by not initilizing the StreamAPI.
+If set, this will disable the SerialConsole by not initializing the StreamAPI.
 
 ### hop_limit
 
-Overides the deault number of hops a message will be passed. If not set, will default to 3 hops.
+Overrides the default number of hops a message will be passed. If not set, will default to 3 hops.
 
 Meshtastic allows a maximum of 7 hops (this is a limit of the protocol). Setting a hop_limit of greater than 7 will be replaced with 7 on the device.
 

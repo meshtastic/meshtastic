@@ -10,7 +10,7 @@ Development can be followed on [GitHub](https://github.com/lmatte7/meshtastic-go
 Support should be sought from the respective authors.
 :::
 
-This is a command line interface for Meshtastic devices that has been built using the Go programming language developed by Google. This allows for an executable file to be downloaded for your operating system and run without installing other pre-requisits. The only requirement is for the [CP210x USB to UART bridge drivers](https://www.silabs.com/developers/usb-to-uart-bridge-vcp-drivers) to be installed. A selection of executables for different operating systems are available, and further operating systems can be supported as required.
+This is a command line interface for Meshtastic devices that has been built using the Go programming language developed by Google. This allows for an executable file to be downloaded for your operating system and run without installing other pre-requisites. The only requirement is for the [CP210x USB to UART bridge drivers](https://www.silabs.com/developers/usb-to-uart-bridge-vcp-drivers) to be installed. A selection of executables for different operating systems are available, and further operating systems can be supported as required.
 
 ### Command syntax
 

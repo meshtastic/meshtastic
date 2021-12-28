@@ -52,7 +52,7 @@ values={[
 
 ### Download Latest Firmware
 
-Firmware can be downloaded from the [Firmware](/firmware) page. Your initial installation has to happen over USB from your Mac, Windows or Linux PC. Once our software is installed, all future software updates happen over bluetooth from your phone.
+Firmware can be downloaded from the [Firmware](/firmware) page. Your initial installation has to happen over USB from your Mac, Windows or Linux PC. Once our software is installed, all future software updates happen over Bluetooth from your phone.
 
 :::note
 The [T-Beam 0.7](../hardware/tbeam-hardware#t-beam---v07) board is an earlier version of the T-Beam board, and due to changes in the design in subsequent iterations this board uses a specific firmware file different from the other T-Beam boards.

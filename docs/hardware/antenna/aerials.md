@@ -11,7 +11,7 @@ Matching an aerial to the frequency of transmission is important, as is choosing
 
 The aerial's design will affect:
 - proportion of the signal which leaves the aerial (efficiency), 
-- directions in which it's transmitted, and whether it will be affected by horizontal / vertical polarisation,
+- directions in which it's transmitted, and whether it will be affected by horizontal / vertical polarization,
 - proportion of signal which is reflected back within the device itself.
 
 :::caution
@@ -25,8 +25,8 @@ While the LoRa devices we are using for Meshtastic are relatively low power radi
   - See this listing by [The Things Network](https://www.thethingsnetwork.org/docs/lorawan/frequencies-by-country.html) for frequencies licensed for specific countries.
 - How will you be carrying / transporting the radio?
   - A large directional aerial will transmit over significantly greater distance than an omni-directional aerial.  However, it must be pointed at its target so isn't optimal for mobile use.
-  - A tuned half wave whip aerial may have more omni-directional range than the quarter wave stubby; but it will be conspicuous in your pocket.
-  - Many antennas, especially quater wave stubby antennas, require the use of ground planes to transmit at peak performance.
+  - A tuned half-wave whip aerial may have more omni-directional range than the quarter wave stubby; but it will be conspicuous in your pocket.
+  - Many antennas, especially quarter wave stubby antennas, require the use of ground planes to transmit at peak performance.
 - Do you want transmission in all directions?
   - While humans (mostly water) don't attenuate signal greatly (at LoRa frequencies), buildings & walls do.  
   - If your aerial is permanently positioned against a building, signal transmitted towards the wall will be largely lost.
@@ -42,4 +42,4 @@ While the LoRa devices we are using for Meshtastic are relatively low power radi
 
 You could do a lot worse than reading the [Wikipedia entry for Antenna](https://en.wikipedia.org/wiki/Antenna_(radio)), along with the [Wikipedia entry for LoRa](https://en.wikipedia.org/wiki/LoRa).
 
-Instead of listing the terms, let us recommend this superb [tutorial](https://www.youtube.com/watch?v=J3PBL9oLPX8) by Andreas Speiss (the 'guy with the Swiss accent').
+Instead of listing the terms, let us recommend this superb [tutorial](https://www.youtube.com/watch?v=J3PBL9oLPX8) by Andreas Spiess (the 'guy with the Swiss accent').

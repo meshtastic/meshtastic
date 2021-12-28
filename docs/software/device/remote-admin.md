@@ -1,14 +1,14 @@
 ---
 id: device-remote-admin
 title: Remote node administration
-sidebar_label: Remote node admininstration
+sidebar_label: Remote node administration
 ---
 
-This feature will allow you to use the multiple channels feature to enable remote adminstration of meshtastic nodes.  This will let you talk through the mesh to some far away node and change that node's settings.  This is an advanced feature that (currently) few users would need.  Also, keep in mind it is possible (if you are not careful) to assign settings to that remote node that cause it to completely drop off of your mesh. We advise network admins have a test node to test settings with before applying changes to a remote node to prevent this.
+This feature will allow you to use the multiple channels feature to enable remote administration of meshtastic nodes.  This will let you talk through the mesh to some far away node and change that node's settings.  This is an advanced feature that (currently) few users would need.  Also, keep in mind it is possible (if you are not careful) to assign settings to that remote node that cause it to completely drop off of your mesh. We advise network admins have a test node to test settings with before applying changes to a remote node to prevent this.
 
 ## Creating the admin channel
 
-By default, nodes will **only** respond to adminstrative commands via the local USB/bluetooth/TCP interface.  This provides basic security to prevent unauthorized access and is how normal administration and settings changes work.  The only difference for the remote case is that we are sending those commands over the mesh.
+By default, nodes will **only** respond to administrative commands via the local USB/Bluetooth/TCP interface.  This provides basic security to prevent unauthorized access and is how normal administration and settings changes work.  The only difference for the remote case is that we are sending those commands over the mesh.
 
 Before a node will allow remote admin access, it must have a primary channel:
 ```bash title="Expected output"
@@ -47,7 +47,7 @@ Primary channel URL: https://www.meshtastic.org/d/#CgUYAyIBAQ
 Complete URL (includes all channels): https://www.meshtastic.org/d/#CgUYAyIBAQopIiAdbsTecxuI1u-voyGwOicsKaPt5ICG23ONsjH-vk5CaCoFYWRtaW4
 ```
 
-Notice that now we have a new secondary channel and the `--info` option prints out TWO URLs.  The `Complete URL` includes all of the channels this node understands.  The URL contains the preshared keys and should be treated with caution and kept a secret.  When deploying remote adminstration, you only need the node you want to administer and the node you are locally connected to know this new "admin" channel. All of the other nodes will forward the packets as long as they are a member of the primary channel.
+Notice that now we have a new secondary channel and the `--info` option prints out TWO URLs.  The `Complete URL` includes all of the channels this node understands.  The URL contains the preshared keys and should be treated with caution and kept a secret.  When deploying remote administration, you only need the node you want to administer and the node you are locally connected to know this new "admin" channel. All of the other nodes will forward the packets as long as they are a member of the primary channel.
 
 ## Sharing the admin channel with other nodes
 
@@ -145,4 +145,4 @@ For further reading, I recommend starting out with [Meshtastic-python](../python
 
 ## Areas for future development
 
-In the future we will add a "deadman timer" to this feature so that the remote node will revert any changes if you fail to send a special "commit changes" command.  This will protect against sending bad settings to nodes that you can't physically access.  Instead if the node does not receive a commit message within 10 minutes it will revert all changes and (hopefully) rejoin the mesh.
+In the future we will add a "deadman timer" to this feature so that the remote node will revert any changes if you fail to send a special "commit changes" command.  This will protect against sending bad settings to nodes that you can't physically access.  Instead, if the node does not receive a commit message within 10 minutes it will revert all changes and (hopefully) rejoin the mesh.

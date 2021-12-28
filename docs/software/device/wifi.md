@@ -33,7 +33,7 @@ http://meshtastic.local
       * * * * *
 ```
 
-You should then be able to connect to the node using either the displayed IP address or the http link.
+You should then be able to connect to the node using either the displayed IP address or the HTTP link.
 
 To disable the WiFi, set the preferences to empty strings.
 
@@ -47,7 +47,7 @@ Writing modified preferences to device
 
 ## Setting up WiFi in AP mode
 
-The device can also be set up in access point mode and is capable of hosting upto four connected devices. The access point is enalbed by setting the following preferences:
+The device can also be set up in access point mode and is capable of hosting up to four connected devices. The access point is enabled by setting the following preferences:
 
 * `wifi_ap_mode`
 * `wifi_ssid`

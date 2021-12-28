@@ -4,7 +4,7 @@ title: Range test plugin
 sidebar_label: Range test
 ---
 
-This plugin allows you to test he range of your Meshtastic nodes. It uses two nodes, one to send a message every minute, and another to receive the messages. The receiving node then saves the messages along with the GPS coordinates at which they were received into a .csv file. This .csv file can then be integrated into, for example, Google Earth, allowing you to see where you have coverage.
+This plugin allows you to test the range of your Meshtastic nodes. It uses two nodes, one to send a message every minute, and another to receive the messages. The receiving node then saves the messages along with the GPS coordinates at which they were received into a .csv file. This .csv file can then be integrated into, for example, Google Earth, allowing you to see where you have coverage.
 
 ## Configuration
 
@@ -34,7 +34,7 @@ The device must be restarted after the settings have been changed for the plugin
 
 For basic usage, you will need two devices both with a GPS. A device with a paired phone with GPS may work, I have not tried it.
 
-The first thing to do is to turn on the plugin. The device will need to be restarted after appling the settings. With the plugin turned on, the other settings will be available:
+The first thing to do is to turn on the plugin. The device will need to be restarted after applying the settings. With the plugin turned on, the other settings will be available:
 
     range_test_plugin_enabled = 1
 
@@ -71,7 +71,7 @@ Receiver
 
 Be sure to turn off either the plugin configured as a sender or the device where the plugin setup as sender when not in use. This will use a lot of time on air and will spam your channel.
 
-Also be mindful of your space usage on the file system. It has protections from filling up the space but it's best to delete old range test results.
+Also, be mindful of your space usage on the file system. It has protections from filling up the space but it's best to delete old range test results.
 
 ## Application Examples
 
@@ -87,8 +87,8 @@ Steps:
     5. Select “rx lat” & “rx long” for the appropriate lat/lng fields
     6. Click finish
 2. When it prompts you to create a style template, click yes.
-    1. Set the name field to whichever column you want to be displayed on the map (don’t worry about this too much, when you click on an icon, all the relavant data appears)
-    2. select a color, icon, etc. and hit ok.
+    1. Set the name field to whichever column you want to be displayed on the map (don’t worry about this too much, when you click on an icon, all the relevant data appears)
+    2. select a color, icon, etc. and hit OK.
 
 Your data will load onto the map, make sure to click the checkbox next to your dataset in the sidebar to view it.
 
@@ -102,7 +102,7 @@ You can style the ranges differently based on the values, so you can have the pi
 
 ## Known Problems
 
-If turned on, using mesh network will become unwieldly because messages are sent over the same channel as the other messages. See TODO below.
+If turned on, using mesh network will become unwieldy because messages are sent over the same channel as the other messages. See TODO below.
 
 ## TODO
 
@@ -123,7 +123,7 @@ Q: Can I use this as a message logger?
 * While it's not the intended purpose, sure, why not. Do it!
 
 Q: What will happen if I run out of space on my device? 
-* We have a protection in place to keep you from completly filling up your device. This will make sure that other device critical functions will continue to work. We will reserve at least 50k of free space.
+* We have a protection in place to keep you from completely filling up your device. This will make sure that other device critical functions will continue to work. We will reserve at least 50k of free space.
 
 Q: What do I do with the rangetest.csv file when I'm done? 
 * Go to /static and delete the file.

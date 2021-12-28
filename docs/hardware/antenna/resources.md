@@ -46,8 +46,8 @@ slug: /hardware/resources
 
 
 * [Building an 868/915 MHz co-linear antenna tutorial](https://www.youtube.com/watch?v=1_1LxuOngHs)
-    * [868 Mhz antenna schematic PDF](https://github.com/IRNAS/ttn-irnas-gw/blob/master/Collinear868MHzLoRaantenna.PDF)
-    * [915 Mhz antenna schematic PDF](https://github.com/IRNAS/ttn-irnas-gw/blob/master/CollinearLoRaantenna915MHzIRNAS.PDF)
+    * [868 MHz antenna schematic PDF](https://github.com/IRNAS/ttn-irnas-gw/blob/master/Collinear868MHzLoRaantenna.PDF)
+    * [915 MHz antenna schematic PDF](https://github.com/IRNAS/ttn-irnas-gw/blob/master/CollinearLoRaantenna915MHzIRNAS.PDF)
 
 
 * [NEC based antenna modeler and optimizer](https://www.qsl.net/4nec2/)

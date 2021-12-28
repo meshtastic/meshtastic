@@ -34,7 +34,7 @@ Enables the plugin.
 
 ### environmental_measurement_plugin_display_farenheit
 
-The sensor is always read in Celsius, but the user can opt to view the temperature display in Farenheit using this setting.
+The sensor is always read in Celsius, but the user can opt to view the temperature display in Fahrenheit using this setting.
 
 ### environmental_measurement_plugin_read_error_count_threshold
 

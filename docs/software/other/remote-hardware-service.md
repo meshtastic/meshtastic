@@ -4,7 +4,7 @@ title: Remote Hardware Service
 sidebar_label: Remote Hardware
 ---
 
-FIXME - the following are a collection of notes moved from elsewhere. We need to refactor these notes into actual documentation on the remote-hardware/gpio service.
+FIXME - the following are a collection of notes moved from elsewhere. We need to refactor these notes into actual documentation on the remote-hardware/GPIO service.
 
 ### 1.7.2. New 'no-code-IOT' mini-app
 

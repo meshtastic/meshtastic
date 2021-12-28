@@ -10,7 +10,7 @@ Development can be followed on [GitHub](https://github.com/ZebusJesus/Meshtastic
 Support should be sought from the respective authors.
 :::
 
-PyGUI is a platform independant graphical user interface for meshtastic devices. It allows the sending of messages, changing of a lot of settings, monitoring of packets, and uploading firmware.
+PyGUI is a platform independent graphical user interface for meshtastic devices. It allows the sending of messages, changing of a lot of settings, monitoring of packets, and uploading firmware.
 
 ![Python GUI](/img/pygui.jpg)
 
