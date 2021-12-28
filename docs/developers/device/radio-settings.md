@@ -107,7 +107,7 @@ The preshared key used by the devices can be modified.
 - 1 = Default channel key
 - 2 - 10 = The default channel key, except with 1 through 9 added to the last byte
 
-Use of cryptography can also be modified. To disable cryptography (maybe useful if you have HAM radio license):
+Use of cryptography can also be modified. To disable cryptography (maybe useful if you have Ham radio license):
 
 ```bash
 meshtastic --setchan psk 0
