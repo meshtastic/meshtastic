@@ -51,7 +51,9 @@ module.exports = {
         "Meshtastic-python": [
           "software/python/python-installation",
           "software/python/python-cli",
-          "software/python/python-usage",
+          "software/python/python-uses",
+          "software/python/python-using-library",
+          "software/python/python-development",
           {
             type: "link",
             label: "API Docs",

@@ -1,127 +1,425 @@
 ---
 id: python-cli
-title: Command line interface
-sidebar_label: CLI usage
+title: meshtastic command line interface guide
+sidebar_label: meshtastic cli
 ---
 
-This section covers installing a "meshtastic" command line executable, which displays packets sent over the network as JSON and lets you see serial debugging information from the Meshtastic devices. The source code for this tool is also a good [example](https://github.com/meshtastic/Meshtastic-python/blob/master/meshtastic/__main__.py) of a 'complete' application that uses the Meshtastic python API.
+# Meshtastic CLI Guide
 
-:::note
-The `meshtastic` command is not run within python but is a script  run from your operating system shell prompt.  When you type "meshtastic" and the prompt is unable to find the command in Windows, check that the python "scripts" directory [is in your path](https://datatofish.com/add-python-to-windows-path/).
-:::
+The python pip package installs a "meshtastic" command line executable, which displays packets sent over the network as JSON and lets you see serial debugging information from the meshtastic devices. This command is not run inside of python, you run it from your operating system shell prompt directly. If when you type "meshtastic" it doesn't find the command and you are using Windows: Check that the python "scripts" directory is in your path.
 
-To display a list of the available commands:
-```bash
+## Optional Arguments
+
+### -h or --help
+
+Shows a help message that describes the arguments.
+
+**Usage**
+
+``` shell
 meshtastic -h
 ```
-:::note
-Because of the growing nature of this project, not all commands may appear when using the help command with `meshtastic -h`.
-:::
 
-## Getting a list of User Preferences
+### --port PORT
 
-You can get a list of user preferences by running '--get' with an invalid attribute such as 'all'.
-```bash
-meshtastic --get all
+The port the Meshtastic device is connected to, i.e. /dev/ttyUSB0 or COM4. if unspecified, meshtastic will try to find it. Important to use when multiple devices are connected to ensure you call the command for the correct device.
+
+**Usage**
+
+``` shell
+meshtastic --port /dev/ttyUSB0 --info
+meshtastic --port COM4 --info
 ```
 
-## Changing settings
+### --host HOST
 
-You can also use this tool to set any of the device parameters which are stored in persistent storage. For instance, here's how to set the device
-to keep the Bluetooth link alive for eight hours (any usage of the Bluetooth protocol from your phone will reset this timer)
+The hostname/ipaddr of the device to connect to (over TCP).
 
-```bash title="Expected Output"
-# You should see a result similar to this:
-mydir$ meshtastic --set wait_bluetooth_secs 28800
-Connected to radio...
-Setting preference wait_bluetooth_secs to 28800
-Writing modified preferences to device...
+**Usage**
+
+``` shell
+meshtastic --host HOST
 ```
 
-Or to set a node at a fixed position and never power up the GPS.
+### --seriallog SERIALLOG
 
-```bash
-meshtastic --setlat 25.2 --setlon -16.8 --setalt 120
+Logs device serial output to either 'stdout', 'none' or a filename to append to.
+
+**Usage**
+
+``` shell
+meshtastic --port /dev/ttyUSB0 --seriallog
 ```
 
-Or to configure an ESP32 based board to join a Wifi network as a station:
+### --info
 
-```bash
-meshtastic --set wifi_ap_mode false --set wifi_ssid mywifissid --set wifi_password mywifipsw
+Read and display the radio config information.
+
+**Usage**
+
+``` shell
+meshtastic --port /dev/ttyUSB0 --info
 ```
 
-Or to configure an ESP32 to run as a Wifi access point:
+### --nodes
 
-```bash
-meshtastic --set wifi_ap_mode true --set wifi_ssid mywifissid --set wifi_password mywifipsw
+Prints a node list in a pretty, formatted table.
+
+**Usage**
+
+``` shell
+meshtastic --nodes
 ```
 
-:::note
-For a full list of preferences which can be set (and their documentation) can be found in the [protobufs](/docs/developers/protobufs/api#radioconfiguserpreferences).
-:::
+### --qr
 
-### Changing channel settings
+Displays the QR code that corresponds to the current channel.
 
-The channel settings can also be changed, either by using a standard (shareable) meshtastic URL or you can set particular channel parameter (for advanced users).
+**Usage**
 
-:::warning
-Meshtastic encodes the radio channel and PSK in the channel's URL. All nodes must connect to the channel again by using the URL provided after a change in this section by performing the `--info` switch. Please refer to [Multiple Channel Support](../device/device-channels).
-:::
-
-```bash
-meshtastic --ch-set name mychan --ch-index 1 --ch-set channel_num 4 --info
+``` shell
+meshtastic --qr
 ```
 
-You can even set the channel preshared key to a particular AES128 or AES256 sequence.
+### --get GET
 
-```bash
-meshtastic --ch-index 1 --ch-set psk 0x1a1a1a1a2b2b2b2b1a1a1a1a2b2b2b2b1a1a1a1a2b2b2b2b1a1a1a1a2b2b2b2b --info
+Gets a preferences field.
+
+**Usage**
+
+``` shell
+meshtastic --get modem_config
 ```
 
-Use `--ch-set psk none --ch-index 0` to turn off encryption.
+### --set SET SET
 
-Use `--ch-set psk random --ch-index 0` will assign a new (high quality) random AES256 key to the primary channel (similar to what the Android app does when making new channels).
+Sets a preferences field.
 
-Use `--ch-set psk default --ch-index 0` to restore the standard 'default' (minimally secure, because it is in the source code for anyone to read) AES128 key.
+**Usage**
 
-All `ch-set` commands need to have the `ch-index` parameter specified:
-
-```bash
-meshtastic --ch-index 1 --ch-set name mychan --ch-set channel_num 4 --info
+``` shell
+meshtastic --set region Unset
 ```
 
-### Ham radio support
+### --seturl SETURL
 
-Meshtastic is designed to be used without a radio operator license.  If you do have a license you can set your operator ID and turn off encryption with:
+Set a channel URL.
 
-```bash title="Expected Output"
-# You should see a result similar to this:
-mydir$ meshtastic --port /dev/ttyUSB1 --set-ham KI1345
-Connected to radio
-Setting Ham ID to KI1345 and turning off encryption
-Writing modified channels to device
+**Usage**
+
+``` shell
+meshtastic --seturl https://www.meshtastic.org/c/GAMiIE67C6zsNmlWQ-KE1tKt0fRKFciHka-DShI6G7ElvGOiKgZzaGFyZWQ=
 ```
 
-## FAQ/common problems
+### --ch-index CH_INDEX
 
-This is a collection of common questions and answers from our friendly forum.
+Set the specified channel index
 
-### Permission denied: ‘/dev/ttyUSB0’
+**Usage**
 
-As previously discussed on the [forum](https://meshtastic.discourse.group/t/question-on-permission-denied-dev-ttyusb0/590/3?u=geeksville)
-
-This indicates an OS permission problem for access by your user to the USB serial port.  Typically this is fixed by the following.
-
-```bash
-sudo usermod -a -G dialout <username>
+``` shell
+meshtastic --ch-index 1 --ch-disable
 ```
 
-### Mac OS Big Sur
+### --ch-add CH_ADD
 
-There is a problem with Big Sur and pyserial. The workaround is to install a newer version of pyserial:
+Add a secondary channel, you must specify a channel name.
 
-```bash
-pip3 install -U --pre pyserial
+**Usage**
+
+``` shell
+meshtastic --ch-add testing-channel
+```
+### --ch-del
+
+Delete the ch-index channel.
+
+**Usage**
+
+``` shell
+meshtastic --ch-index 1 --ch-del
 ```
 
-Afterwards you can use the meshtastic python client again on MacOS.
+### --ch-enable
+
+Enable the specified channel.
+
+**Usage**
+
+``` shell
+meshtastic --ch-index 1 --ch-enable
+```
+
+### --ch-disable
+
+Disable the specified channel.
+
+**Usage**
+
+``` shell
+meshtastic --ch-index 1 --ch-disable
+```
+
+### --ch-set CH_SET CH_SET
+
+Set a channel parameter.
+
+**Usage**
+
+``` shell
+meshtastic --ch-set id 1234 --ch-index 0
+```
+
+### --ch-longslow
+
+Change to the standard long-range (but slow) channel.
+
+**Usage**
+
+``` shell
+meshtastic --ch-longslow
+```
+
+### --ch-shortfast
+
+Change to the standard fast (but short range) channel.
+
+**Usage**
+
+``` shell
+meshtastic --ch-shortfast
+```
+
+### --set-owner SET_OWNER
+
+Set device owner name.
+
+**Usage**
+
+``` shell
+meshtastic --dest \!28979058 --set-owner "MeshyJohn"
+```
+
+### --set-ham SET_HAM
+
+Set licensed Ham ID and turn off encryption.
+
+**Usage**
+
+``` shell
+meshtastic --set-ham KI1345
+```
+
+### --dest DEST
+
+The destination node id for any sent commands
+
+**Usage**
+
+``` shell
+meshtastic --dest \!28979058 --set-owner "MeshyJohn"
+```
+
+### --sendtext SENDTEXT
+
+Send a text message. Can specify a channel index ('--ch-index') or a destination ('--dest')
+
+**Usage**
+
+``` shell
+meshtastic --sendtext "Hello Mesh!"
+```
+
+### --sendping
+
+Send a ping message (which requests a reply).
+
+**Usage**
+
+``` shell
+meshtastic --sendping
+```
+
+### --reboot
+
+Tell the destination node to reboot.
+
+**Usage**
+
+``` shell
+meshtastic --dest \!28979058 --reboot
+```
+
+### --reply
+
+Reply to received messages.
+
+**Usage**
+
+``` shell
+meshtastic --reply
+```
+
+### --gpio-wrb GPIO_WRB GPIO_WRB
+
+Set a particular GPIO # to 1 or 0.
+
+**Usage**
+
+``` shell
+meshtastic --port /dev/ttyUSB0 --gpio-wrb 4 1 --dest \!28979058
+```
+
+### --gpio-rd GPIO_RD
+
+Read from a GPIO mask.
+
+**Usage**
+
+``` shell
+meshtastic --port /dev/ttyUSB0 --gpio-rd 0x10 --dest \!28979058
+```
+
+### --gpio-watch GPIO_WATCH
+
+Start watching a GPIO mask for changes.
+
+**Usage**
+
+``` shell
+meshtastic --port /dev/ttyUSB0 --gpio-watch 0x10 --dest \!28979058
+```
+
+### --no-time
+
+Suppress sending the current time to the mesh.
+
+**Usage**
+
+``` shell
+meshtastic --port /dev/ttyUSB0 --no-time
+```
+
+### --setalt SETALT
+
+Set device altitude (allows use without GPS).
+
+**Usage**
+
+``` shell
+meshtastic --setalt 120
+```
+
+### --setlat SETLAT
+
+Set device latitude (allows use without GPS).
+
+**Usage**
+
+``` shell
+meshtastic --setlat 25.2
+```
+
+### --setlon SETLON
+
+Set device longitude (allows use without GPS).
+
+**Usage**
+
+``` shell
+meshtastic --setlon -16.8
+```
+
+### --debug
+
+Show API library debug log messages.
+
+**Usage**
+
+``` shell
+meshtastic --debug --info
+```
+
+### --test
+
+Run stress test against all connected Meshtastic devices.
+
+**Usage**
+
+``` shell
+meshtastic --test
+```
+
+### --ble BLE
+
+BLE mac address to connect to (BLE is not yet supported for this tool).
+
+**Usage**
+
+``` shell
+meshtastic --ble "83:38:92:32:37:48"
+```
+
+### --noproto
+
+Don't start the API, just function as a dumb serial terminal. Probably not very helpful from the command line. Used more for testing/internal needs.
+
+**Usage**
+
+``` shell
+meshtastic --noproto
+```
+
+### --version
+
+Show program's version number and exit.
+
+**Usage**
+
+``` shell
+meshtastic --version
+```
+
+### --configure
+
+Configure all of the radio configuration from a yaml file.
+
+**Usage**
+
+``` shell
+meshtastic --configure example_config.yaml
+```
+
+### --export-config
+
+Export the configuration of the device. (to be consumed by the '--configure' command)
+
+**Usage**
+
+``` shell
+meshtastic --export-config
+```
+
+### --support
+
+Print out info that would be helpful supporting any issues.
+
+**Usage**
+
+``` shell
+meshtastic --support
+```
+
+## Deprecated Arguments
+
+### --setchan
+
+Deprecated - use "--ch-set param value" instead.
+
+### --set-router
+
+Deprecated - use "--set is_router true" instead.
+
+### --unset-router
+
+Deprecated - use "--set is_router false" instead.
