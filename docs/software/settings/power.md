@@ -9,7 +9,7 @@ import TabItem from '@theme/TabItem';
 
 ## Overview
 
-Power settings on a Meshtastic device can be set like other user-define settings with the `--set` command see ([see Meshtastic-python](../python/python-usage)). Some of these options are implicit in other commands. For example, when you set the device to router mode using `is_router true`, it is implied that deep sleep is disabled and we want to constantly listen for messages. Below is a list of all user-definable settings and the acceptable values that these settings can use.
+Power settings on a Meshtastic device can be set like other user-define settings with the `--set` command see ([see Meshtastic-python](../python/python-cli)). Some of these options are implicit in other commands. For example, when you set the device to router mode using `is_router true`, it is implied that deep sleep is disabled and we want to constantly listen for messages. Below is a list of all user-definable settings and the acceptable values that these settings can use.
 
 For example, if we wanted to disable sleep mode, like when we put the device into router mode, we could use the command:
 
