@@ -1,0 +1,116 @@
+---
+id: python-development
+title: Meshtastic-python Development
+sidebar_label: Meshtastic-python development
+---
+
+## A note to developers of this lib
+
+We use the visual-studio-code default python formatting conventions (autopep8). So if you use that IDE you should be able to use "Format Document" and not generate unrelated diffs. If you use some other editor, please do not change formatting on lines you have not changed yourself.
+
+If you need to build a new release you will need:
+
+```
+apt install pandoc
+sudo pip3 install markdown pdoc3 webencodings pyparsing twine autopep8 pylint pytest pytest-cov
+```
+
+For development, you will probably want to run:
+
+```
+pip3 install -r requirements.txt
+```
+
+To lint, run:
+
+```
+pylint meshtastic
+```
+
+To test, first install this code locally, then run pytest:
+
+```
+pip3 install .
+pytest
+```
+
+Possible options for testing:
+
+- For more verbosity, add "-v" or even "-vv" like this:
+
+```
+pytest -vv
+```
+
+- To run just unit tests:
+
+```
+pytest
+# or (more verbosely)
+pytest -m unit
+# or
+make
+```
+
+- To run just integration tests:
+
+```
+pytest -m int
+```
+
+- To run the smoke test with only one device connected serially (aka smoke1):
+
+```
+pytest -m smoke1
+```
+
+CAUTION: Running smoke1 will reset values on the device, including the region to 1 (US).
+Be sure to hit the reset button on the device after the test is completed.
+
+- To run the smoke test with only two device connected serially (aka smoke2):
+
+```
+pytest -m smoke2
+```
+
+- To run the wifi smoke test:
+
+```
+pytest -m smokewifi
+```
+
+- To run a specific test:
+
+```
+pytest -msmoke1 meshtastic/tests/test_smoke1.py::test_smoke1_info
+# or to run a specific smoke2 test
+pytest -m smoke2 meshtastic/tests/test_smoke2.py::test_smoke2_info
+# or to run a specific smoke_wifi test
+pytest -m smokewifi meshtastic/tests/test_smoke_wifi.py::test_smokewifi_info
+```
+
+- To add another classification of tests such as "unit" or "smoke1", see [pytest.ini](pytest.ini).
+
+- To see the unit test code coverage:
+
+```
+pytest --cov=meshtastic
+# or if want html coverage report
+pytest --cov-report html --cov=meshtastic
+# or
+make cov
+```
+
+- To see slowest unit tests, you can run:
+
+```
+pytest --durations=0
+# or
+make slow
+```
+
+See the [docs](https://meshtastic-python.vercel.app/meshtastic/index.html) or you can generate them locally by running:
+
+```
+bin/regen-docs.sh
+```
