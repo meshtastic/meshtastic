@@ -89,7 +89,7 @@ pytest -m smoke2 meshtastic/tests/test_smoke2.py::test_smoke2_info
 pytest -m smokewifi meshtastic/tests/test_smoke_wifi.py::test_smokewifi_info
 ```
 
-- To add another classification of tests such as "unit" or "smoke1", see [pytest.ini](pytest.ini).
+- To add another classification of tests such as "unit" or "smoke1", see [pytest.ini](https://github.com/meshtastic/Meshtastic-python/blob/master/pytest.ini).
 
 - To see the unit test code coverage:
 
