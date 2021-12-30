@@ -46,7 +46,7 @@ const Firmware = (): JSX.Element => {
                 />
                 <FirmwareCard
                   variant="Alpha"
-                  description="Upcomming changes for testing. For those who want new features."
+                  description="Upcoming changes for testing. For those who want new features."
                   release={alpha}
                 />
                 <div className="card">
