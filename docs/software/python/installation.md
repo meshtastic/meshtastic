@@ -6,7 +6,7 @@ sidebar_label: Installation
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-This small library provides a command line interface for Meshtastic nodes and provides an easy API for sending and receiving messages over mesh radios, in addition to changing user settings. Using the command line is currently the most powerful w. Events are delivered using a publish-subscribe model, and you can subscribe to only the message types you are interested in.
+This library provides a command line interface for Meshtastic nodes and provides an easy API for sending and receiving messages over mesh radios, in addition to changing user settings. Using the command line is currently the most powerful. Events are delivered using a publish-subscribe model, and you can subscribe to only the message types you are interested in.
 
 [Full documentation](https://meshtastic.github.io/Meshtastic-python) for the library, including examples, is available.
 
@@ -117,7 +117,7 @@ Some newer boards may require the drivers for the [CH9102](http://www.wch.cn/dow
         pip3 -V
         ```
     * If this does not return a version, install [pip](https://pip.pypa.io/en/stable/installing/)
-    
+
 * Install pytap2
     ```bash
     sudo pip3 install --upgrade pytap2
@@ -179,13 +179,13 @@ Wifi connection is currently under development and may not be working properly j
     ```
     pkg install python
     ```
-* Upgrade pip and installed meshtastic and its dependancies
+* Upgrade pip and installed meshtastic and some of its dependencies
     ```
     pip install --upgrade pip pygatt pytap2 wheel mesthtastic
     ```
 
-:::note 
-Be aware that the Meshtastic CLI is not able to control the nodes over USB through termux, but you can control devices over wifi using the `--host x.x.x.x` option with the device IP address. However, only ESP32 devices can use wifi currently.
+:::note
+Be aware that the Meshtastic CLI is not able to control the nodes over USB through termux, but you can control devices over Wifi using the `--host x.x.x.x` option with the device IP address. However, only ESP32 devices can use Wifi currently.
 :::
 </TabItem>
 </Tabs>

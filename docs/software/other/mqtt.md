@@ -17,6 +17,7 @@ This is a mini-doc/RFC sketching out a development plan to satisfy a number of 1
 - A text messaging bridge when a node in the mesh can gateway to the internet. Issue #[353](https://github.com/meshtastic/Meshtastic-device/issues/353) and this nicely documented [android issue](https://github.com/meshtastic/Meshtastic-Android/issues/2).
 - An easy way to let desktop app developers remotely control GPIOs. Issue #[182](https://github.com/meshtastic/Meshtastic-device/issues/182)
 - Remote attribute access (to change settings of distant nodes). Issue #182
+- Be sure to checkout [MQTT Settings](https://meshtastic.org/docs/software/settings/mqtt)
 
 ## Short term goals
 
@@ -54,7 +55,7 @@ Any gateway-device will contact the MQTT broker.
 
 The "mesh/crypt/CHANNELID/NODEID/PORTID" [topic](https://www.hivemq.com/blog/mqtt-essentials-part-5-mqtt-topics-best-practices/) will be used for messages sent from/to a mesh.
 
-Gateway nodes will foward any MeshPacket from a local mesh channel with uplink_enabled. The packet (encapsulated in a ServiceEnvelope) will remain encrypted with the key for the specified channel.
+Gateway nodes will forward any MeshPacket from a local mesh channel with uplink_enabled. The packet (encapsulated in a ServiceEnvelope) will remain encrypted with the key for the specified channel.
 
 For any channels in the local node with downlink_enabled, the gateway node will forward packets from MQTT to the local mesh. It will do this by subscribing to mesh/crypt/CHANNELID/# and forwarding relevant packets.
 
@@ -62,7 +63,7 @@ If the channelid 'well known'/public it could be decrypted by a web service (if 
 
 FIXME, discuss how text message global mirroring could scale (or not)
 FIXME, possibly don't global mirror text messages - instead rely on matrix/riot?
-FIXME, discuss possible attacks by griefers and how they can be prvented
+FIXME, discuss possible attacks by griefers and how they can be prevented
 
 #### Service Envelope
 
@@ -72,7 +73,7 @@ ServiceEnvelope will include the message, and full information about arrival tim
 
 #### NODEID
 
-The unique ID for a node. A hex string that starts with a ! symbol.
+The unique ID for a node. A hex string that starts with an ! symbol.
 
 #### USERID
 
@@ -84,11 +85,11 @@ FIXME, figure out how channelids work
 
 ### Gateway nodes
 
-Any meshtastic node that has a direct connection to the internet (either via a helper app or installed wifi/4G/satellite hardware) can function as a "Gateway node".
+Any meshtastic node that has a direct connection to the internet (either via a helper app or installed Wifi/4G/satellite hardware) can function as a "Gateway node".
 
 Gateway nodes (via code running in the phone) will contain two tables to whitelist particular traffic to either be delivered toward the internet, or down toward the mesh. Users that are developing custom apps will be able to customize these filters/subscriptions.
 
-Since multiple gateway nodes might be connected to a single mesh, it is possible that duplicate messages will be published on any particular topic. Therefore subscribers to these topics should
+Since multiple gateway nodes might be connected to a single mesh, it is possible that duplicate messages will be published on any particular topic. Therefore, subscribers to these topics should
 deduplicate if needed by using the packet ID of each message.
 
 ### Optional web services
@@ -97,7 +98,7 @@ deduplicate if needed by using the packet ID of each message.
 
 An existing public [MQTT broker](https://mosquitto.org/) will be the default for this service, but clients can use any MQTT broker they choose.
 
-FIXME - figure out how to avoid impersonation (because we are initially using a public mqtt server with no special security options). FIXME, include some ideas on this in the ServiceEnvelope documentation.
+FIXME - figure out how to avoid impersonation (because we are initially using a public MQTT server with no special security options). FIXME, include some ideas on this in the ServiceEnvelope documentation.
 
 #### Riot.im messaging bridge
 
@@ -109,7 +110,7 @@ There is apparently [already](https://github.com/derEisele/tuple) a riot.im [bri
 
 :::caution
 
-All of the folowing concepts have been deprecated
+All of the following concepts have been deprecated
 
 :::
 
@@ -133,7 +134,7 @@ The type of DESTID this message should be delivered to. A short one letter seque
 | L      | local mesh node ID or ^all                                    |
 | A      | an application specific message, ID will be an APP ID         |
 | S      | SMS gateway, DESTID is a phone number to reach via Twilio.com |
-| E      | Emergency message, see bug #fixme for more context            |
+| E      | Emergency message, see bug #FIXME for more context            |
 
 #### DESTID (deprecated)
 
@@ -143,7 +144,7 @@ Can be...
 
 - an internet username: kevinh@geeksville.com
 - ^ALL for anyone
-- An app ID (to allow apps out in the web to receive arbitrary binary data from nodes or simply other apps using meshtastic as a transport). They would connect to the MQTT broker and subscribe to their topic
+- An app ID (to allow apps out on the web to receive arbitrary binary data from nodes or simply other apps using meshtastic as a transport). They would connect to the MQTT broker and subscribe to their topic
 
 ## Rejected idea: RAW UDP
 
@@ -155,8 +156,8 @@ This idea has been rejected
 
 A number of commenters have requested/proposed using UDP for the transport. We've considered this option and decided to use MQTT instead for the following reasons:
 
-- Most UDP uses cases would need to have a server anyways so that nodes can reach each other from anywhere (i.e. if most gateways will be behind some form of NAT which would need to be tunnelled)
-- Raw UDP is dropped **very** agressively by many cellular providers. MQTT from the gateway to a broker can be done over a TCP connection for this reason.
+- Most UDP uses cases would need to have a server anyways so that nodes can reach each other from anywhere (i.e. if most gateways will be behind some form of NAT which would need to be tunneled)
+- Raw UDP is dropped **very** aggressively by many cellular providers. MQTT from the gateway to a broker can be done over a TCP connection for this reason.
 - MQTT provides a nice/documented/standard security model to build upon
 - MQTT is fairly wire efficient with multiple broker implementations/providers and numerous client libraries for any language. The actual implementation of MQTT is quite simple.
 
@@ -173,7 +174,7 @@ on how this will be implemented and guesses at approximate work items.
 - Add new multi channel concept
 - Send new channels to python client
 - Let python client add channels
-- Add portion of channelid to the raw lora packet header
+- Add portion of channelid to the raw LoRa packet header
 - Confirm that we can now forward encrypted packets without decrypting at each node
 - Use a channel named "remotehw" to secure the GPIO service. If that channel is not found, don't even start the service. Document this as the standard method for securing services.
 - Add first cut of the "gateway node" code (i.e. MQTT broker client) to the python API (very little code needed for this component)
@@ -183,6 +184,96 @@ on how this will be implemented and guesses at approximate work items.
 
 ### Enhancements in following releases
 
-The initial gateway will be added to the python tool. But the gateway implementation is designed to be fairly trivial/dumb. After the initial release the actual gateway code can be ported to also run inside of the android app. In fact, we could have ESP32 based nodes include a built-in "gateway node" implementation.
+The initial gateway will be added to the python tool. But the gateway implementation is designed to be fairly trivial/dumb. After the initial release, the actual gateway code can be ported to also run inside the android app. In fact, we could have ESP32 based nodes include a built-in "gateway node" implementation.
 
 Store and forward could be added so that nodes on the mesh could deliver messages (i.e. text messages) on an "as possible" basis. This would allow things like "hiker sends a message to friend - mesh can not currently reach friend - eventually (days later) mesh can somehow reach friend, message gets delivered"
+
+### Mini tutorial on how to get up and running with mosquitto on a mac
+
+1. install mqtt server
+
+```
+brew install mosquitto
+```
+
+2. start the mqtt server
+
+```
+brew services restart mosquitto
+```
+
+3. Do a quick test of server, start a subscriber on a topic:
+
+Note: this will wait until you press control-c (publish a message, see below)
+
+```
+mosquitto_sub -t test/hello
+```
+
+4. In another window, publish a message to that topic:
+
+```
+mosquitto_pub -h localhost -q 0 -t test/hello -m 'yo!'
+```
+
+5. For Meshtastic to be able to access that server, two settings need to be changed in the
+`/usr/local/etc/mosquitto/mosquitto.conf` file:
+
+```
+listener 1883 0.0.0.0
+allow_anonymous true
+```
+6. Restart the service:
+
+```
+brew services restart mosquitto
+```
+
+7. If you are using the mac firewall, you will need to go into: System Preferences > Security & Privacy > Firewall > Firewall Options and add it.
+
+### Sending/receiving messages on mosquitto server using python
+
+Here is an example publish message in python:
+
+```
+#!/usr/bin/env python3
+import paho.mqtt.client as mqtt
+from random import randrange, uniform
+import time
+
+client = mqtt.Client("some_client_id")
+client.connect('localhost')
+
+while True:
+    randNumber = uniform(20.0, 21.0)
+    client.publish("env/test/TEMPERATURE", randNumber)
+    print("Just published " + str(randNumber) + " to topic TEMPERATURE")
+    time.sleep(1)
+```
+
+Here is example subscribe in python:
+
+```
+#!/usr/bin/env python3
+
+import paho.mqtt.client as paho
+
+def on_message(mosq, obj, msg):
+    print("%-20s %d %s" % (msg.topic, msg.qos, msg.payload))
+    mosq.publish('pong', 'ack', 0)
+
+def on_publish(mosq, obj, mid):
+    pass
+
+if __name__ == '__main__':
+    client = paho.Client()
+    client.on_message = on_message
+    client.on_publish = on_publish
+
+    client.connect("localhost", 1883, 60)
+
+    client.subscribe("env/test/TEMPERATURE", 0)
+
+    while client.loop() == 0:
+        pass
+```

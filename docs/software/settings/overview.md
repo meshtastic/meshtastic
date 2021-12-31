@@ -7,11 +7,11 @@ slug: /settings
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-Customization of your settings is vital to configuring your own mesh. Changing settings is currently most reliably done using the commandline interface available within `Meshtastic-python`. Setting support is being added to all other methods of interfacing with your device.
+Customization of your settings is vital to configuring your own mesh. Changing settings is currently most reliably done using the command line interface available within `Meshtastic-python`. Setting support is being added to all other methods of interfacing with your device.
 
 ## Settings
 
-Below are some of the most common settings that a new user will want to become aquainted with, but it isn't an exhaustive list. Make sure to take a look at the sidebar for additional settings. If you find something missing or incorrect, please help us improve our docs by filing an issue, creating a pull request, or mentioning it in our forum.
+Below are some of the most common settings that a new user will want to become acquainted with, but it isn't an exhaustive list. Make sure to take a look at the sidebar for additional settings. If you find something missing or incorrect, please help us improve our docs by filing an issue, creating a pull request, or mentioning it in our forum.
 
 ### Channel Settings
 
@@ -43,7 +43,7 @@ At the bottom of each setting page, examples will be available displaying how to
   <TabItem value="cli">
 
 :::note
-The CLI examples will require you to utilize the Commandline Interface that is available through Meshtastic-python. Installation instructions can be found [here](software/python/python-installation).
+The CLI examples will require you to utilize the Command line Interface that is available through Meshtastic-python. Installation instructions can be found [here](software/python/python-installation).
 :::
 
   ```bash title="Example - Set Region (an important first step!)"

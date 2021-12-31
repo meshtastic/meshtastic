@@ -12,12 +12,12 @@ This table is derived from the [protobufs](/docs/developers/protobufs/api#critic
 
 | Name | Number | Description |
 | ---- | ------ | ----------- |
-| TxWatchdog | 1 | A software bug was detected while trying to send lora |
+| TxWatchdog | 1 | A software bug was detected while trying to send LoRa |
 | SleepEnterWait | 2 | A software bug was detected on entry to sleep |
-| NoRadio | 3 | No Lora radio hardware could be found |
+| NoRadio | 3 | No LoRa radio hardware could be found |
 | Unspecified | 4 | Not normally used |
 | UBloxInitFailed | 5 | We failed while configuring a UBlox GPS |
 | NoAXP192 | 6 | This board was expected to have a power management chip and it is missing or broken |
 | InvalidRadioSetting | 7 | The channel tried to set a radio setting which is not supported by this chipset, radio comms settings are now undefined. |
 | TransmitFailed | 8 | Radio transmit hardware failure. We sent data to the radio chip, but it did not reply with an interrupt. |
-| Brownout | 9 | We detected that the main CPU voltage dropped below the minumum acceptable value |
+| Brownout | 9 | We detected that the main CPU voltage dropped below the minimum acceptable value |

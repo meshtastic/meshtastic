@@ -4,7 +4,7 @@ title: Connecting to a device
 sidebar_label: Connecting
 ---
 
-Currently Two connection methods are supported, HTTP and BLE.
+Currently, two connection methods are supported, HTTP and BLE.
 
 ## HTTP
 

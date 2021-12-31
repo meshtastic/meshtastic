@@ -8,7 +8,7 @@ This page is a place holder.
 
 The device software can run on Hardware that runs Linux to execute unit tests.
 
-Fledgling support for a Lora USB dongle has been in the works.
+Fledgling support for a LoRa USB dongle has been in the works.
 
 This page will be updated with more information as information is made available.
 

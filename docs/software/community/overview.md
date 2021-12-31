@@ -8,7 +8,7 @@ The Meshtastic ecosystem is highly extensible, and a number of community project
 
 Current community projects:
  * Meshtastic plugin for ATAK (Android Team Awareness Kit)
- * PyGUI - Platform independant graphical user interface for Meshtastic devices
- * Go CLI - A command line interface using Go that requires no pre-requisits to be installed
+ * PyGUI - Platform independent graphical user interface for Meshtastic devices
+ * Go CLI - A command line interface using Go that requires no pre-requisites to be installed
 
 Support for these projects should be sought from their respective authors.

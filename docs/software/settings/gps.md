@@ -40,7 +40,7 @@ If set, this node is at a fixed position. The device will generate GPS updates a
 
 ### gps_attempt_time
 
-Determines the amount of time that a GPS fix should be allowed to take. The default is every 30 seconds. If you increase this value, it will allow the device that amount of time in seconds to aquire coordinates. If the device is unable to get a fix, it will turn off until the next interval. GPS coordinates are updated every [`gps_update_interval`](#gps_update_interval) seconds.
+Determines the amount of time that a GPS fix should be allowed to take. The default is every 30 seconds. If you increase this value, it will allow the device that amount of time in seconds to acquire coordinates. If the device is unable to get a fix, it will turn off until the next interval. GPS coordinates are updated every [`gps_update_interval`](#gps_update_interval) seconds.
 
 ### gps_operation
 
@@ -60,7 +60,7 @@ This is independent of how our location is shared with other devices. For that s
 
 ### gps_update_interval
 
-Determines how often should the device should attempt to aquire a GPS position (in seconds). The length of time the device is allowed to attempt to aquire GPS coordinates each interval is set using [`gps_attempt_time`](#gps_attempt_time). The default is every 30 seconds.
+Determines how often should the device should attempt to acquire a GPS position (in seconds). The length of time the device is allowed to attempt to acquire GPS coordinates each interval is set using [`gps_attempt_time`](#gps_attempt_time). The default is every 30 seconds.
 
 ### location_share
 
@@ -76,7 +76,7 @@ Determines whether location is shared with other nodes. See more details.
 
 How often our position is sent to the mesh (but only if it has changed significantly).
 
-The gps updates will be sent out every `position_broadcast_secs`, with either the actual gps location, or an empty location if no gps fix was achieved. This defaults to broadcast every 15 minutes.
+The GPS updates will be sent out every `position_broadcast_secs`, with either the actual GPS location, or an empty location if no GPS fix was achieved. This defaults to broadcast every 15 minutes.
 
 ### position_broadcast_smart
 
@@ -126,7 +126,7 @@ Note: A person walking in a straight line will take about 90 seconds to travel 1
 </Tabs>
 
 :::note
-`gps_operation GpsOpTimeOnly` is prefered to `gps_operation GpsOPDisabled` because it allows the device to get a highres time.
+`gps_operation GpsOpTimeOnly` is preferred to `gps_operation GpsOPDisabled` because it allows the device to get a hi-res time.
 :::
 
 ### Disable Location Sharing
@@ -178,7 +178,7 @@ Disabling location sharing does not disable the GPS functionality, only the loca
 </Tabs>
 
 :::note
-The device will continue to aquire GPS coordinates according to the `gps_update_interval`, but will use the last saved coordinates as its fixed point.
+The device will continue to acquire GPS coordinates according to the `gps_update_interval`, but will use the last saved coordinates as its fixed point.
 :::
 
 ### Set Fixed Position – Specify Lat/Lon

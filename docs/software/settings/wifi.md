@@ -61,7 +61,7 @@ This will reboot the device with the SSID set to `meshtasticAdmin` and the passw
 
 ### WiFi Client
 
-With `wifi_ssid` & `wifi_password` populated, the device will now to connect to your network. Make sure you are in range of your WiFi. If you have a single device on your local network it's easy to connect to your device `http://meshtastic.local`. If you have multiple devices you will need to connect using thier respective IP addresses.
+With `wifi_ssid` & `wifi_password` populated, the device will now to connect to your network. Make sure you are in range of your WiFi. If you have a single device on your local network it's easy to connect to your device `http://meshtastic.local`. If you have multiple devices you will need to connect using their respective IP addresses.
 
 To disable WiFi completely, set `wifi_ap_mode` to `false`, and both `wifi_ssid` & `wifi_password` to an empty string `""`.
 

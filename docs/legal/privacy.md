@@ -14,6 +14,6 @@ Maps provided by Mapbox require analytics to work. For more information about wh
 
 The search engine for this website is provided by Algolia, please see their [privacy policy](https://www.algolia.com/policies/privacy/) for details of what information they collect.
 
-This is an open-source project run by hobbyists and we try to be completely transparent.  If you have questions on this policy, please post on the forum and we'll reply/clarify/correct.
+This is an open-source project run by hobbyists, and we try to be completely transparent.  If you have questions on this policy, please post on the forum, and we'll reply/clarify/correct.
 
 Keep being awesome!

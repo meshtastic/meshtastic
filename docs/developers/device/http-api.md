@@ -63,11 +63,11 @@ Since authentication is also eventually needed for our other transports (TCP and
 
 ## Client
 
-### Javascript
+### JavaScript
 
 See: <https://github.com/meshtastic/meshtastic.js>
 
-A reference client written in Javascript will provide a Javascript API for using this transport. That client will do HTTP connections, use the generated protobuf javascript code and provide an API that hides all of this REST plumbing. The two key methods will be "sendToRadio(packet) and onFromRadio(callback)".
+A reference client written in JavaScript will provide a JavaScript API for using this transport. That client will do HTTP connections, use the generated protobuf JavaScript code and provide an API that hides all of this REST plumbing. The two key methods will be "sendToRadio(packet) and onFromRadio(callback)".
 
 ### Protoman
 
@@ -77,7 +77,7 @@ Protoman is able to interface with the Meshtastic REST API out of the box. This 
 
 ## Security
 
-HTTP and HTTPS are both supported on the esp32 using self signed certificates on HTTPS.
+HTTP and HTTPS are both supported on the ESP32 using self signed certificates on HTTPS.
 
 ## Related documents
 

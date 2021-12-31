@@ -10,11 +10,11 @@ Pre-requisite: You have Meshtastic Device firmware between version 1.0.32 - 1.1.
 
 We do realize this installation method is not "easy" and are exploring ways to simplify this in the future, ideally rolling it out as part of the device firmware.
 
-Once you have your device loaded with the Meshtastic Device firmware you need to connect to it's wifi and then manually upload the web interface files. 
+Once you have your device loaded with the Meshtastic Device firmware you need to connect to it's Wifi and then manually upload the web interface files. 
 
-### Connect to device wifi
+### Connect to device Wifi
 
-The easiest way to turn on the device wifi is to do the following after the device has been powered on:
+The easiest way to turn on the device Wifi is to do the following after the device has been powered on:
 
 * Hold down the user button
 * Press and release the reset button
@@ -45,7 +45,7 @@ To enable the WiFi to access the web interface, you must at minimum set two pref
 `wifi_ssid`
 `wifi_password`
 
-For the wifi features to be enabled, those two properties must be set. 
+For the Wifi features to be enabled, those two properties must be set. 
 
 To turn it off, either of preference must be set as an empty string, that is a pair of double quotes each:
 
@@ -56,7 +56,7 @@ Alternatively, you can enable the internal Soft Access Point:
 
 `wifi_ap_mode true`
 
-With that enabled, we will broadcast a new wifi network with the SSID and password you set. In AP mode, your device will act as a Captive Portal with a built in DNS server that resolves all name requests back to the device. Additionally, Apple Captive Portal Assistant is implemented -- if you're on an Apple device, the web interface will pop up automagically.
+With that enabled, we will broadcast a new Wifi network with the SSID and password you set. In AP mode, your device will act as a Captive Portal with a built in DNS server that resolves all name requests back to the device. Additionally, Apple Captive Portal Assistant is implemented -- if you're on an Apple device, the web interface will pop up automagically.
 
 To turn it off, simply reboot the device.
 
