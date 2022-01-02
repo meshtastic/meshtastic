@@ -9,7 +9,7 @@ import TabItem from '@theme/TabItem';
 
 ## Overview
 
-Power settings on a Meshtastic device can be set like other user-define settings with the `--set` command see ([see Meshtastic-python](/software/python/python-cli)). Some of these options are implicit in other commands. For example, when you set the device to router mode using `is_router true`, it is implied that deep sleep is disabled and we want to constantly listen for messages. Below is a list of all user-definable settings and the acceptable values that these settings can use.
+Power settings on a Meshtastic device can be set like other user-define settings with the `--set` command see ([see Meshtastic-python](/docs/software/python/python-cli)). Some of these options are implicit in other commands. For example, when you set the device to router mode using `is_router true`, it is implied that deep sleep is disabled and we want to constantly listen for messages. Below is a list of all user-definable settings and the acceptable values that these settings can use.
 
 For example, if we wanted to disable sleep mode, like when we put the device into router mode, we could use the command:
 
@@ -21,7 +21,7 @@ meshtastic --set mesh_sds_timeout_secs 4294967295
 See MAXUINT from `mesh_sds_timeout_secs` below:
 :::
 
-For a description and more information on what exactly all of these mean, please refer to [Power Management State Machine](/software/other/power)
+For a description and more information on what exactly all of these mean, please refer to [Power Management State Machine](/docs/software/other/power)
 
 ## Settings
 
@@ -33,7 +33,7 @@ For a description and more information on what exactly all of these mean, please
 |        ls_secs        |                                                                       `integer` (seconds)                                                                       | `0` (see note) |
 | mesh_sds_timeout_secs |                                                                       `integer` (seconds)                                                                       |      `0`       |
 |     min_wake_secs     |                                                                       `integer` (seconds)                                                                       |      `0`       |
-| phone_sds_timeout_sec |                                                                       `integer` (seconds)                                                                       |      `0`       | Power management state machine option. See the [power page](/software/other/power) for details. 0 for default of two hours, use the value of MAXUINT or 4294967295 to disable                                                                                       |
+| phone_sds_timeout_sec |                                                                       `integer` (seconds)                                                                       |      `0`       | Power management state machine option. See the [power page](/docs/software/other/power) for details. 0 for default of two hours, use the value of MAXUINT or 4294967295 to disable                                                                                  |
 |  phone_timeout_secs   |                                                                       `integer` (seconds)                                                                       |      `0`       |
 |    screen_on_secs     |                                                                       `integer` (seconds)                                                                       |      `0`       |
 |       sds_secs        |                                                                       `integer` (seconds)                                                                       |      `0`       |
@@ -67,31 +67,31 @@ Are we operating as a router. Changes behavior in the following ways: The device
 
 ### ls_secs
 
-Power management state machine option. See the [power page](/software/other/power) for details. 0 for default of 3600
+Power management state machine option. See the [power page](/docs/software/other/power) for details. 0 for default of 3600
 
 ### mesh_sds_timeout_secs
 
-Power management state machine option. See the [power page](/software/other/power) for details. 0 for default of two hours, use the MAXUINT or 4294967295 to disable
+Power management state machine option. See the [power page](/docs/software/other/power) for details. 0 for default of two hours, use the MAXUINT or 4294967295 to disable
 
 ### min_wake_secs
 
-Power management state machine option. See the [power page](/software/other/power)for details. 0 for default of 10 seconds
+Power management state machine option. See the [power page](/docs/software/other/power)for details. 0 for default of 10 seconds
 
 ### phone_sds_timeout_sec
 
-Power management state machine option. See the [power page](/software/other/power) for details. 0 for default of two hours, use the MAXUINT or 4294967295 to disable
+Power management state machine option. See the [power page](/docs/software/other/power) for details. 0 for default of two hours, use the MAXUINT or 4294967295 to disable
 
 ### phone_timeout_secs
 
-Power management state machine option. See the [power page](/software/other/power) for details. 0 for default of 15 minutes
+Power management state machine option. See the [power page](/docs/software/other/power) for details. 0 for default of 15 minutes
 
 ### screen_on_secs
 
-Power management state machine option. See the [power page](/software/other/power) for details. 0 for default of one minute.
+Power management state machine option. See the [power page](/docs/software/other/power) for details. 0 for default of one minute.
 
 ### sds_secs
 
-Power management state machine option. See the [power page](/software/other/power) for details. 0 for default of one year
+Power management state machine option. See the [power page](/docs/software/other/power) for details. 0 for default of one year
 
 ### send_owner_interval
 
@@ -101,7 +101,7 @@ For instance the default interval of 4 will send the node owner information for 
 
 ### wait_bluetooth_secs
 
-Wait number of seconds for Bluetooth - Power management state machine option. See the [power page](/software/other/power) for details. 0 for default of 1 minute
+Wait number of seconds for Bluetooth - Power management state machine option. See the [power page](/docs/software/other/power) for details. 0 for default of 1 minute
 
 ### is_always_powered
 

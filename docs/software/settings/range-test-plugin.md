@@ -44,7 +44,7 @@ Be sure to turn off either the plugin configured as a sender or the device where
 Also be mindful of your space usage on the file system. It has protections from filling up the space but it's best to delete old range test results.
 
 :::note
-Leaving this plugin on can slow down your mesh. Currently, the messages are sent using the same `TEXT_MESSAGE_APP` [port that all other messages](/developers/protobufs/api#portnumsproto) are sent on.
+Leaving this plugin on can slow down your mesh. Currently, the messages are sent using the same `TEXT_MESSAGE_APP` [port that all other messages](/docs/developers/protobufs/api#portnumsproto) are sent on.
 :::
 
 ### Accessing your CSV

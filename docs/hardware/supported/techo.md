@@ -6,7 +6,7 @@ sidebar_label: LILYGO® T-Echo
 
 The T-Echo has been in development by LILYGO® over the past few months and has now been released.
 
-### See [Getting Started](/getting-started/flashing-nrf52)
+### See [Getting Started](/docs/getting-started/flashing-nrf52)
 
 - firmware file: `firmware-t-echo-1.x.x.uf2`
 - [Purchase link](https://www.aliexpress.com/item/1005002842456390.html)

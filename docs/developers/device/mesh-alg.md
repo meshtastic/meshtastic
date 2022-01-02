@@ -10,7 +10,7 @@ The routing protocol for Meshtastic is really quite simple (and suboptimal). It 
 
 ### A note about protocol buffers
 
-Because we want our devices to work across various vendors and implementations, we use [Protocol Buffers](https://github.com/meshtastic/Meshtastic-protobufs) pervasively. For information on how the protocol buffers are used with respect to API clients see [sw-design](/software/other/sw-design.md), for purposes of this document you mostly only
+Because we want our devices to work across various vendors and implementations, we use [Protocol Buffers](https://github.com/meshtastic/Meshtastic-protobufs) pervasively. For information on how the protocol buffers are used with respect to API clients see [sw-design](/docs/software/other/sw-design), for purposes of this document you mostly only
 need to consider the MeshPacket and Subpacket message types.
 
 ### Layer 1: Non reliable zero hop messaging
