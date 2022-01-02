@@ -6,7 +6,7 @@ sidebar_label: Store and Forward
 
 ## About
 :::caution
-This is a work in progress and is not yet available.
+This is a work in progress and is partially available. Stability is not gaurenteed.
 :::
 
 The Store Forward Plugin is an implementation of a Store and Forward system to enable resilient messaging in the event that a client device is disconnected from the main network.
@@ -128,6 +128,47 @@ Story: The Store & Forward Router sends a periodic message onto the network. Thi
 * * * StoreAndForward.rr.ROUTER_HEARTBEAT
 * * * StoreAndForward.heartbeat.Period = 120 // Expect a heartbeat every 2 minutes
 * * * StoreAndForward.heartbeat.Secondary = false // If true, this is a secondary "backup" S&F node. Will be (eventually) used for router election in the event there are multiple S&F Routers.
+
+## Meshpacket
+
+To support functionality of Store and Forward, a new enum has been added to the MeshPacket.
+
+```
+typedef enum _MeshPacket_Delayed {
+    MeshPacket_Delayed_NO_DELAY = 0,
+    MeshPacket_Delayed_DELAYED_BROADCAST = 1,
+    MeshPacket_Delayed_DELAYED_DIRECT = 2
+} MeshPacket_Delayed;
+```
+
+* NO_DELAY - The packet was sent in real time. Store and Forward had no hand in this message. This is the default case.
+* DELAYED_BROADCAST - This is a delayed message. The 'to' of the packet has been directed at a named user but was previously a broadcast packet.
+* DELAYED_DIRECT - This is a delayed message. The 'to' of the packet has been directed at a named user but was previously a direct packet.
+
+As a reminder, broadcast messages are messages where the "to" of a payload is directed at NODENUM_BROADCAST or (0xFFFFFFFF).
+
+Example Cases:
+
+* Real time :: BROADCAST
+* * Delayed = MeshPacket_Delayed_NO_DELAY
+* * From: Ann
+* * To: BROADCAST
+* Real time :: Direct
+* * Delayed = MeshPacket_Delayed_NO_DELAY
+* * From: Ann
+* * To: Bob
+* Delayed :: BROADCAST
+* * Delayed = MeshPacket_Delayed_DELAYED_BROADCAST
+* * From: Ann
+* * To: Bob
+* Delayed :: Direct
+* * Delayed = MeshPacket_Delayed_DELAYED_DIRECT
+* * From: Ann
+* * To: Bob
+
+When a message is 'real time', time a message is sent is the same as the time the message was received. In the case the message is delayed, there is no timestamp available for the message.
+
+Where the message is a delayed broadcast, the "To" is *not* a broadcast address but rather the address of the device that requested the messages to be replayed. This is to allow the message to be routed over the mesh network and not displayed in the message screen of other devices.
 
 ## Developer TODO
 

@@ -19,6 +19,8 @@ You may want to change your [GPS location sharing settings](gps#location_share) 
 
 If your device is connected to WiFi you can enable it to forward messages along to an MQTT server. This allows users on the local mesh to communicate with users on the internet.
 
+Be sure to checkout this [MQTT](https://meshtastic.org/docs/software/other/mqtt) too.
+
 ## Settings
 
 |       Setting       | Acceptable Values | Default |
@@ -64,7 +66,7 @@ meshtastic --set mqtt_server 192.168.123.234
 ```
 
 ```bash title="Enable MQTT server to mesh"
-meshtastic --ch-set uplink_enabled true --ch-set downlink_enabled true
+meshtastic --ch-set uplink_enabled true --ch-set downlink_enabled true --ch-index 0
 ```
 
 ```bash title="View raw encoded messages using mosquitto"

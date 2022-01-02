@@ -1,7 +1,7 @@
 ---
-id: python-usage
-title: Meshtastic-python usage
-sidebar_label: Python usage
+id: python-using-library
+title: using the Meshtastic-python library
+sidebar_label: Using the meshtastic Python library
 ---
 
 An example using Python 3 code to send a message to the mesh, get and set a radio configuration preference:
