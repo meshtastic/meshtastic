@@ -52,8 +52,8 @@ module.exports = {
           "software/python/python-installation",
           "software/python/python-cli",
           "software/python/python-uses",
-          "software/python/python-using-library",
-          "software/python/python-development",
+          "software/python/python-commands",
+          "software/python/python-stream",
           {
             type: "link",
             label: "API Docs",
@@ -132,15 +132,16 @@ module.exports = {
       "hardware/overview",
       {
         "Supported Hardware": [
-          "hardware/tbeam-hardware",
-          "hardware/lora-hardware",
-          "hardware/heltec-hardware",
-          "hardware/techo-hardware",
-          "hardware/wisBlock-hardware",
-          "hardware/linux-hardware",
+          "hardware/supported/tbeam",
+          "hardware/supported/lora",
+          "hardware/supported/heltec",
+          "hardware/supported/techo",
+          "hardware/supported/wisBlock",
+          "hardware/supported/linux",
         ],
       },
       "hardware/buttons",
+      "hardware/battery",
       {
         Antennas: [
           "hardware/antenna/antenna",
