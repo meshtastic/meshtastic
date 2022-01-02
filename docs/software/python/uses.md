@@ -7,12 +7,13 @@ sidebar_label: Uses
 This section covers using the "meshtastic" command line executable, which displays packets sent over the network as JSON and lets you see serial debugging information from the Meshtastic devices.
 
 :::note
-The `meshtastic` command is not run within python but is a script  run from your operating system shell prompt.  When you type "meshtastic" and the prompt is unable to find the command in Windows, check that the python "scripts" directory [is in your path](https://datatofish.com/add-python-to-windows-path/).
+The `meshtastic` command is not run within python but is a script run from your operating system shell prompt. When you type "meshtastic" and the prompt is unable to find the command in Windows, check that the python "scripts" directory [is in your path](https://datatofish.com/add-python-to-windows-path/).
 :::
 
 ## Getting a list of User Preferences
 
 You can get a list of user preferences by running '--get' with an invalid attribute such as 'all'.
+
 ```bash
 meshtastic --get all
 ```
@@ -57,7 +58,7 @@ For a full list of preferences which can be set (and their documentation) can be
 The channel settings can also be changed, either by using a standard (shareable) meshtastic URL or you can set particular channel parameter (for advanced users).
 
 :::warning
-Meshtastic encodes the radio channel and PSK in the channel's URL. All nodes must connect to the channel again by using the URL provided after a change in this section by performing the `--info` switch. Please refer to [Multiple Channel Support](../device/device-channels).
+Meshtastic encodes the radio channel and PSK in the channel's URL. All nodes must connect to the channel again by using the URL provided after a change in this section by performing the `--info` switch. Please refer to [Multiple Channel Support](/software/device/device-channels).
 :::
 
 ```bash
@@ -84,7 +85,7 @@ meshtastic --ch-index 1 --ch-set name mychan --ch-set channel_num 4 --info
 
 ### Ham radio support
 
-Meshtastic is designed to be used without a radio operator license.  If you do have a license you can set your operator ID and turn off encryption with:
+Meshtastic is designed to be used without a radio operator license. If you do have a license you can set your operator ID and turn off encryption with:
 
 ```bash title="Expected Output"
 # You should see a result similar to this:
@@ -110,7 +111,6 @@ Use "--ch-set psk default" to restore the standard 'default' (minimally secure, 
 
 All "ch-set" commands will default to the primary channel at index 0, but can be applied to other channels with the "ch-index" parameter.
 
-
 ## FAQ/common problems
 
 This is a collection of common questions and answers from our friendly forum.
@@ -119,7 +119,7 @@ This is a collection of common questions and answers from our friendly forum.
 
 As previously discussed on the [forum](https://meshtastic.discourse.group/t/question-on-permission-denied-dev-ttyusb0/590/3?u=geeksville)
 
-This indicates an OS permission problem for access by your user to the USB serial port.  Typically this is fixed by the following.
+This indicates an OS permission problem for access by your user to the USB serial port. Typically this is fixed by the following.
 
 ```bash
 sudo usermod -a -G dialout <username>
