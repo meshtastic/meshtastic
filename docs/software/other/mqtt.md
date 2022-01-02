@@ -203,7 +203,8 @@ brew services restart mosquitto
 ```
 
 3. Do a quick test of server, start a subscriber on a topic:
-# Note: this will wait until you press control-c (publish a message, see below)
+
+Note: this will wait until you press control-c (publish a message, see below)
 
 ```
 mosquitto_sub -t test/hello
