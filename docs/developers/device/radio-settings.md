@@ -5,6 +5,7 @@ sidebar_label: Radio Settings
 ---
 
 We use the same channel maps as LoRaWAN (though this is not LoRaWAN).
+(Note, not the same channel map as TTN for US frequences.)
 
 ![freq table](/img/LoRa-Frequency-Bands.jpg)
 

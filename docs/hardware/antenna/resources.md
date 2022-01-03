@@ -12,7 +12,7 @@ slug: /hardware/resources
 ### Coverage prediction
 
 * [Tower Coverage.com](https://www.towercoverage.com/)
-    * Commercial but has free options
+    * Commercial, but has free options
 
 
 * [HeyWhat'sThat](http://www.heywhatsthat.com/)

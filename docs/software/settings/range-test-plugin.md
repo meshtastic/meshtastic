@@ -61,7 +61,7 @@ http://198.168.0.X/static/rangetest.csv
 | Radio Setting | `range_test_plugin_sender` |
 | :-----------: | :------------------------: |
 | Long Slow | 60 |
-| Long Alt | 30 |
+| Long Fast | 30 |
 | Medium | 15 |
 | Short Fast | 15 |
 

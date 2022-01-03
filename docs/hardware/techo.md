@@ -14,10 +14,10 @@ The T-Echo has been in development by LILYGO® over the past few months and has 
 
 ### Features
 
-* nRF52840 - Bluetooth BLE 5.0, NFC and very low power consumption
+* nRF52840 - Bluetooth BLE 5.0, NFC, and very low power consumption
 * SX1262 - LoRa transceiver
 * 1.54" eInk display
-* L76K - GNSS receiver - Supporting GPS, BeiDou, GLONASS & QZSS
+* L76K - GNSS receiver - Supporting GPS, BeiDou, GLONASS, and QZSS
 * Reset, Program and capacitive touch buttons
 * U.FL antenna connector
 <!-- * BME280 - Humidity and Pressure Sensor -->

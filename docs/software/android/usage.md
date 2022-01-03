@@ -8,7 +8,7 @@ sidebar_label: Usage
 
 The Meshtastic Android app handles the communication and shows the location of everyone in your private group. Each member of your private mesh can always see the location and distance of all other members and any text messages sent to your group chat.
 
-Open the App and you should see a screen like this. You can move through the tabs but nothing much will be visible until you connect to a radio device.
+Open the App and you should see a screen like this. Notice the cloud with a slash through it in the upper right, showing no device connection. You can move through the tabs but nothing much will be visible until you connect to a radio device.
 
 [![No device connected](/img/android/android-settings-none-sm.png)](/img/android/android-settings-none.png)
 
@@ -50,13 +50,13 @@ The cloud icon at the top right corner indicates if you are connected to a devic
 
 ## Common tasks
 
-Once you are connected to a Device the App will work, and you can test it by "sending" a message. However, you will need to join or create a new mesh network so you have someone to communicate with. If you have been sent a QR code or link for Meshtastic, then skip ahead to Join a Channel, otherwise you will need to Setup a Channel.
+Once you are connected to a device, the App will work, and you can test it by "sending" a message. However, you will need to join or create a new mesh network so you have someone to communicate with. If you have been sent a QR code or link for Meshtastic, then skip ahead to [Join a Channel](#join-a-channel), otherwise you will need to Setup a Channel.
 
 ### Setup a channel
 
-To use Meshtastic you need to setup a Channel, and share the details with your group. The group is private and only those who have the details can join the group and see the messages. You will need to do this once initially, and then only when you want to change or make a new mesh network group. For a new device you will see there is a default setting, shown as `#LongSlow-1, Very long range (but slow)`. It is OK to use this initially.
+To use Meshtastic, you need to setup a Channel and share the details with your group. The group is private and only those who have the details can join the group and see the messages. You will need to do this once initially, and then only when you want to change or make a new mesh network group. For a new device you will see there is a default setting, shown as `#LongSlow-1, Very long range (but slow)`. It is OK to use this initially.
 
-The Channel tab allows you to do this. This screen is initially locked, so that you don't change it accidentally. Press the lock symbol, and you will be able to edit. First, select the Channel options, as shown here, and chose the most appropriate option:
+The Channel tab allows you to do this. This screen is initially locked so that you don't change it accidentally. Press the lock symbol, and you will be able to edit. First, select the Channel options, as shown here, and chose the most appropriate option:
 
 [![Changing channel settings](/img/android/android-change-channel-sm.png)](/img/android/android-change-channel.png)
 
@@ -68,7 +68,7 @@ You will see a warning because changing the Channel will break communications wi
 
 [![Do you want to change the channel?](/img/android/android-new-channel-sm.png)](/img/android/android-new-channel.png)
 
-The app will generate a new QR code on the screen, and this encodes the channel details and a random 256-bit key for sharing with the new group. You can share the QR code with other Meshtastic users, or use the Share button and share the link via chat message, SMS, email (the link is a very long code, for example: https://www.meshtastic.org/d/#CgUYAyIBAQ
+The app will generate a new QR code on the screen, and this encodes the channel details and a random 256-bit key for sharing with the new group. You can share the QR code with other Meshtastic users, or use the Share button and share the link via chat message, SMS, or email. The link is a very long code, for example: https://www.meshtastic.org/d/#CgUYAyIBAQ
 
 ### Join a channel
 
@@ -96,7 +96,7 @@ Accept this, and the app will change to this new channel. You will lose any curr
 [![Accept new channel](/img/android/android-accept-channel-c.png)](/img/android/android-accept-channel.png)
 
 :::note
-Setting the same Name and Options will not work as there is also a unique pre-shared key encoded in the channel.
+Setting the same Name and Options directly will not work as there is also a unique pre-shared key encoded in the QR code or link.
 :::
 
 You can test changing channels with the QR code shown below.
@@ -109,12 +109,12 @@ Various data-rates are selectable when configuring a channel and are inversely p
 
 | Channel setting        | Data-rate            |
 |------------------------|----------------------|
-| Short Range / Fast)	 | 19346.94 bps         |
-| Short Range / Slow)	 | 4800.00 bps          |
-| Medium Range / Fast)	 | 1227.18 bps          |
-| Medium Range / Slow)	 | 763.29 bps           |
-| Long Range / Fast)	 | 196.74 bps           |
-| long Range / Slow)     | 136.71 bps (default) |
+| Short Range / Fast	 | 19346.94 bps         |
+| Short Range / Slow	 | 4800.00 bps          |
+| Medium Range / Fast	 | 1227.18 bps          |
+| Medium Range / Slow	 | 763.29 bps           |
+| Long Range / Fast	 | 196.74 bps           |
+| long Range / Slow      | 136.71 bps (default) |
 
 ### Send a message
 
@@ -135,9 +135,9 @@ There is no long-term store-and-forward of messages, so messages not received wi
 
 ### View your network
 
-The network list shows all the users (devices) that have connected to the same Channel. For each entry, it shows the last time they were active, their distance, and their last known power status (battery & percentage, or external power). In the example below, Lora V2 is the local user, m8n was last heard from 3 minutes ago and is 29m away, and 25C is active and 498m away.
+The network list shows all the users (devices) that have connected to the same Channel. For each entry, it shows the last time they were active, their distance, and their last known power status (battery and percentage, or external power). In the example below, Lora V2 is the local user, m8n was last heard from 3 minutes ago and is 29m away, and 25C is active and 498m away.
 
-This is a list of network nodes, rather than users, so where there is a named user connected to the device, you will see the user name, otherwise the node is shown as `Unknown a3c9` (where `a3c9` is the last 4 hex digits from the MAC address.)
+This is a list of network nodes, rather than users, so where there is a named user connected to the device, you will see the user name. Otherwise the node is shown as `Unknown a3c9` (where `a3c9` is the last 4 hex digits from the MAC address.)
 
 [![Local Meshtastic network](/img/android/android-nodes-sm.png)](/img/android/android-nodes.png)
 
@@ -166,13 +166,13 @@ This allows you to change the frequency with which your location is broadcast ac
 
 #### Device sleep period
 
-By default, ESP32 devices will enter sleep mode after 300 seconds of inactivity to save battery power. Unfortunately, this will also turn off the Bluetooth radio. They can be woken by either receiving a message over LoRa (the LoRa receiver never switches off), or by pressing a program button when there is one on the device. For example, to keep the Bluetooth link awake for eight hours (any usage of the Bluetooth protocol from your phone will reset this timer), set this to 28800 seconds.
+By default, ESP32 devices will enter sleep mode after 300 seconds of inactivity to save battery power. Unfortunately, this will also turn off the Bluetooth radio. They can be woken by either receiving a message over LoRa (the LoRa receiver never switches off), or by pressing a program button if there is one on the device. For example, to keep the Bluetooth link awake for eight hours (any usage of the Bluetooth protocol from your phone will reset this timer), set this to 28800 seconds.
 
 ### Debug page
 
 [![Debug page](/img/android/android-debug-sm.png)](/img/android/android-debug.png)
 
-The debug page allows you to see all packets sent between the application and the device. This can then be used for debugging purposes.
+The debug page allows you to see all packets sent between the application and the device. This can be useful for debugging purposes.
 
 ### Save messages as CSV
 

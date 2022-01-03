@@ -47,7 +47,7 @@ storeFile=nononononono.jks
 * Go to Actions / Make Release / Run Workflow
 * Pick the Releases branch
 * Enter the version found in app/gradle.build
-* 
+ 
 ## iOS
 
 TBD

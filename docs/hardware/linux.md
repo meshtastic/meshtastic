@@ -6,7 +6,7 @@ sidebar_label: Linux
 
 This page is a place holder.
 
-The device software can run on Hardware that runs Linux to execute unit tests.
+The device software can run on hardware that runs Linux to execute unit tests.
 
 Fledgling support for a LoRa USB dongle has been in the works.
 

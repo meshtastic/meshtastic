@@ -40,9 +40,9 @@ This is in active development and not ready for casual users. Testing only.
 
 | Setting | Name | Bandwidth | Coding Rate | Spread Factor | Speed |
 | :-----: | :--: | :-------: | :---------: | :-----------: | :-----: |
-| `Bw125Cr45Sf128` | Medium | 125 kHz | 4/5 | 7 = 128chips/symbol | 5.469 kbps |
+| `Bw125Cr45Sf128` | ShortSlow | 125 kHz | 4/5 | 7 = 128chips/symbol | 5.469 kbps |
 | `Bw500Cr45Sf128` | ShortFast | 500 kHz | 4/5 | 7 = 128chips/symbol | 21.875 kbps |
-| `Bw31_25Cr48Sf512` | LongAlt | 31.25 kHz | 4/8 | 9 = 512chips/symbol | 275 bps |
+| `Bw31_25Cr48Sf512` | LongFast | 31.25 kHz | 4/8 | 9 = 512chips/symbol | 275 bps |
 | `Bw125Cr48Sf4096` | LongSlow | 125 kHz | 4/8 | 12 = 4096chips/symbol | 183 bps |
 
 ### name

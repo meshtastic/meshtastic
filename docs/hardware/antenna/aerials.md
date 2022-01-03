@@ -5,14 +5,15 @@ sidebar_label: Aerial selection
 slug: /hardware/aerials
 ---
 
-The stock aerials provided bundled with the t-Beam and other boards are, in general a 'mixed bag'.  They may not have been selected for your given frequency range, tuned or of a quality design.
+The stock aerials provided bundled with the t-Beam and other boards are a 'mixed bag'. They may not have been designed or tuned for your given frequency range, and they may not be of a quality design.
 
-Matching an aerial to the frequency of transmission is important, as is choosing an appropriate design.
+Matching an aerial to the transceiver frequency is important, as is choosing an appropriate design.
 
 The aerial's design will affect:
 - proportion of the signal which leaves the aerial (efficiency), 
-- directions in which it's transmitted, and whether it will be affected by horizontal / vertical polarization,
-- proportion of signal which is reflected back within the device itself.
+- directions in which it's transmitted,
+- whether it will be affected by horizontal or vertical polarization,
+- and proportion of signal which is reflected back within the device itself.
 
 :::caution
 While the LoRa devices we are using for Meshtastic are relatively low power radios, care should be taken _not_ to operate any radio transmission device without an aerial or with a poorly matched aerial.  Un-transmitted radio signal reflected back to the transmitter can damage the device.
@@ -29,14 +30,14 @@ While the LoRa devices we are using for Meshtastic are relatively low power radi
   - Many antennas, especially quarter wave stubby antennas, require the use of ground planes to transmit at peak performance.
 - Do you want transmission in all directions?
   - While humans (mostly water) don't attenuate signal greatly (at LoRa frequencies), buildings & walls do.  
-  - If your aerial is permanently positioned against a building, signal transmitted towards the wall will be largely lost.
-- Does my Meshtastic device have the right power range, impedance & connector for the aerial?
-  - For the LoRa devices it should be 50 Ohm impedance, with SMA connector. Many antennas will be recommended for LoRa use in their technical details.
-  - By contrast, a close range, contact-less Personal Area Network antenna, or a huge aerial at the end of length of coax designed for a 100W transmitter are not going to be operable.
-- Cost, quality and supply service?
-  - The perfect aerial on paper, sourced from the other side of the world with mixed reviews doesn't compare to a local supplier who has spent time carefully collating all of the aerial data-sheets for comparison _and_ holds stock immediately available - personally I prefer to pay significantly more for a time saving, quality service.
+  - If your aerial is permanently positioned against a building, signal transmitted towards the wall will be largely lost or attenuated.
+- Does my Meshtastic device have the right power range, impedance, and connector for the aerial?
+  - For the LoRa devices, it should be 50 Ohm impedance with SMA connector. Many antennas will be recommended for LoRa use in their technical details.
+  - By contrast, a close range, contactless Personal Area Network antenna, or a huge aerial at the end of length of coax designed for a 100W transmitter, are not going to be operable.
+- Cost, quality, and supply service?
+  - The perfect aerial on paper, sourced from the other side of the world with mixed reviews, doesn't compare to a local supplier who has spent time carefully collating all of the aerial data-sheets for comparison _and_ holds stock immediately available. Personally, I prefer to pay significantly more for a time saving, quality service.
 - How close will the antenna be to my Meshtastic device?
-  - Most cables will significantly degrade the signal strength over any significant distance. It is often more effective to place a node outside, than to have it indoors with the antenna outside.
+  - Most cables will significantly degrade the signal strength over any significant distance. It is often more effective to place a node outside, than to have it indoors with the antenna outside. (The exception might be if there is extreme heat, cold, or humidity, and if the shortest possible low loss cable is used. Still, a proper enclosure should mitigate bad weather.)
 
 ## Terminology / references
 

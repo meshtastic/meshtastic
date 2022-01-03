@@ -6,12 +6,12 @@ sidebar_label: Store and Forward
 
 ## About
 :::caution
-This is a work in progress and is partially available. Stability is not gaurenteed.
+This is a work in progress and is partially available. Stability is not guaranteed.
 :::
 
 The Store Forward Plugin is an implementation of a Store and Forward system to enable resilient messaging in the event that a client device is disconnected from the main network.
 
-Because of the increased network traffic for this overhead, it's not advised to use this if you are duty cycle limited for your airtime usage nor is it advised to use this for SF12 (Long range but Slow).
+Because of the increased network traffic for this overhead, it's not advised to use this if you are duty cycle limited for your airtime usage nor is it advised to use this for SF12 (Long Range / Slow).
 
 ### About - How it works
 
@@ -23,20 +23,20 @@ Initial Requirements:
 
 * Must be installed on a router node.
 * * This is an artificial limitation, but is in place to enforce best practices.
-* * Router nodes are intended to be always online. If this plugin misses any messages, the reliability of the stored messages will be reduced
-* Esp32 Processor based device with external PSRAM. (tbeam v1.0 and tbeamv1.1, maybe others)
+* * Router nodes are intended to be always online. If this plugin misses any messages, the reliability of the stored messages will be reduced.
+* Esp32 Processor based device with external PSRAM. (tbeam v1.0 and tbeamv1.1, and maybe others)
 
 ## Usage Overview
 
 * To use / test this you will want at least 3 devices
-* * One device will (currently) need be a tbeam v1.0 and tbeamv1.1 configured as a meshtastic router. Other devices with built in PSRAM will be supported at some point.
+* * One device will (currently) need be a tbeam v1.0 and tbeamv1.1 configured as a Meshtastic router. Other devices with built in PSRAM will be supported at some point.
 * * Two others will be regular clients. Nothing special required.
 
 ### Meshtastic channel configuration
 
-Don't use this on the "Very long range (but slow)" or "Long range (but slower)" channel settings. You're welcome to try and report back, but those channels have a very low bitrate.
+Don't use this on the "Long Range / Slow" or "Long Range / Fast" channel settings. You're welcome to try and report back, but those channels have a [very low bitrate](/docs/developers/device/radio-settings#pre-defined).
 
-Either use a custom channel configuration with at an at least 1kbit data rate or use "Medium range (but fast)".
+Either use a custom channel configuration with at an at least 1kbit data rate or use "Medium Range / Fast".
 
 Recommended channel setting is for 1.343kbps:
 
@@ -44,7 +44,7 @@ Recommended channel setting is for 1.343kbps:
 meshtastic --setchan spread_factor 11 --setchan coding_rate 4 --setchan bandwidth 500
 ```
 
-With an aftermarket coaxial antenna or moxon antenna, that will give you roughly the same range as "Long range (but slow)" and 5x the bitrate.
+With an aftermarket coaxial antenna or moxon antenna, that will give you roughly the same range as "Long Range / Slow" and 5x the bitrate.
 
 ### Router setup
 
@@ -96,7 +96,7 @@ Story: Carol has been away from the mesh with device turned off. She would like 
 * * Packet (Port: STORE_FORWARD_APP)
 * * * To: Carol
 * * * StoreAndForward.rr.ROUTER_HISTORY
-* * * StoreAndForward.history.HistoryMessages = 42 // Router has 42 messages that will be sent to Carol
+* * * StoreAndForward.history.HistoryMessages = 42 // Router has 42 messages that will be sent to Carol.
 * * * StoreAndForward.history.Window = 120 // Router searched for messages over the last two hours.
 * * * StoreAndForward.history.LastRequest = 0 // Carol has never asked for the history.
 * * Packet (Port: TEXT_MESSAGE_APP)
@@ -114,9 +114,9 @@ Story: Carol has been away from the mesh with device turned off. She would like 
 * * Packet (Port: STORE_FORWARD_APP)
 * * * To: Carol
 * * * StoreAndForward.rr.ROUTER_HISTORY
-* * * StoreAndForward.history.HistoryMessages = 0 // Router has no messages to be sent to carol
+* * * StoreAndForward.history.HistoryMessages = 0 // Router has no messages to be sent to Carol.
 * * * StoreAndForward.history.Window = 120 // Router searched for messages over the last two hours.
-* * * StoreAndForward.history.LastRequest = (timestamp) // Last time carol requested the history
+* * * StoreAndForward.history.LastRequest = (timestamp) // Last time carol requested the history.
 
 ### Store & Forward Router Heartbeat
 
@@ -126,7 +126,7 @@ Story: The Store & Forward Router sends a periodic message onto the network. Thi
 * * Packet (Port: STORE_FORWARD_APP)
 * * * To: Broadcast
 * * * StoreAndForward.rr.ROUTER_HEARTBEAT
-* * * StoreAndForward.heartbeat.Period = 120 // Expect a heartbeat every 2 minutes
+* * * StoreAndForward.heartbeat.Period = 120 // Expect a heartbeat every 2 minutes.
 * * * StoreAndForward.heartbeat.Secondary = false // If true, this is a secondary "backup" S&F node. Will be (eventually) used for router election in the event there are multiple S&F Routers.
 
 ## Meshpacket
@@ -178,9 +178,9 @@ Not necessarily in this order:
 
 * Router sends a heartbeat so the client knows there is a router in range.
 
-* support for a mesh to have multiple routers that have the store & forward functionality (for redundancy)
+* Support for a mesh to have multiple routers that have the store & forward functionality (for redundancy).
 
-* Add a default channel at about 1.5kbit / sec
+* Add a default channel at about 1.5kbit / sec.
 
 * Eventually we could add a "want_store_and_forward" bit to MeshPacket and that could be nicer than whitelists in this plugin. Initially we'd only set that bit in text messages (and any other plugin messages that can cope with this). This change would be backward wire compatible so can add easily later.
 
@@ -200,7 +200,7 @@ Not necessarily in this order:
 
 * Set number of max messages from the history.
 
-* Calculate a new channel with 250MHz bandwidth and ~1.5kbit.
+* Calculate a new channel with 250kHz bandwidth and ~1.5kbit.
 
 *** Done
 
@@ -208,7 +208,7 @@ Not necessarily in this order:
 
 * Currently the way we allocate messages in the device code is super inefficient. It always allocates the worst case message size. Really we should dynamically allocate just the # of bytes we need. This would allow many more MeshPackets to be kept in RAM.
 
-* Allow max history to be defined by radioConfig.preferences.store_forward_plugin_records
+* Allow max history to be defined by radioConfig.preferences.store_forward_plugin_records.
 
-* Add a starting to send / finished sending message
+* Add a starting to send / finished sending message.
 

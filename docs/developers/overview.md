@@ -6,10 +6,10 @@ slug: /developers
 ---
 # How to Help
 
-Meshtastic is a team of volunteers and as such there is always plenty of ways to help. This project gets great contributions from people in their off hours. Those contributors work on the features they are interested in. It is a very open and welcoming developer community, and we are always looking for help to improve Meshtastic.
+Meshtastic is a team of volunteers, and as such there is always plenty of ways to help. This project gets great contributions from people in their off hours. Those contributors work on the features they are interested in. It is a very open and welcoming developer community, and we are always looking for help to improve Meshtastic.
 
 * If you're a developer, there's plenty stuff to do. Dig in!
-* If you're interacting with Meshtastic radios, we could use help with testing, documenting and providing feedback.
+* If you're interacting with Meshtastic radios, we could use help with testing, documenting, and providing feedback.
 * If you're into Web Development, check out the different web repos.
 * If you're into Kotlin and Android, check out the link to the repo below.
 * If you're into Python, check out the link to the repo below
@@ -24,7 +24,7 @@ There are many technologies (and repositories) used in creating the Meshtastic e
 Most communication and interactions happen with protocol buffers. The [Meshtastic-protobufs](https://github.com/meshtastic/Meshtastic-protobufs) repo is where all of the protocol buffer changes happen. See the [Protobuf API Reference](https://meshtastic.org/docs/developers/protobufs/api) for more details.
 
 ## Firmware
-The [Meshtastic-device](https://github.com/meshtastic/Meshtastic-device) is where all of the firmware development happens. This is where the code for the ESP32 and nRF52 based devices to interact is developed. It is mainly C and C++ code.Think Arduino. It is where the first level of hardware interaction begins and ends.
+The [Meshtastic-device](https://github.com/meshtastic/Meshtastic-device) is where all of the firmware development happens. This is where the code for the ESP32 and nRF52 based devices is developed. It is mainly C and C++ code.Think Arduino. It is where the first level of hardware interaction begins and ends.
 
 ## Plugins
 [Plugins](https://meshtastic.org/docs/software/plugins/) are also implemented mainly in the Meshtastic-device repo above. Typically, you would add functionality in the protobufs repo and the device repo to implement plugin functionality. You probably also want to have some client/device use/interact with the plugin and that is where the Device support comes into play.

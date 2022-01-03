@@ -10,7 +10,7 @@ The Device API is design to have only a simple stream of ToRadio and FromRadio p
 
 ## Streaming version
 
-This protocol is **almost** identical when it is deployed over BLE, Serial/USB or TCP (our three currently supported transports for connecting to phone/PC). Most of this document is in terms of the original BLE version, but this section describes the small changes when this API is exposed over a Streaming (non datagram) transport. The streaming version has the following changes:
+This protocol is **almost** identical when it is deployed over BLE, Serial/USB, or TCP (our three currently supported transports for connecting to phone/PC). Most of this document is in terms of the original BLE version, but this section describes the small changes when this API is exposed over a Streaming (non datagram) transport. The streaming version has the following changes:
 
 - We assume the stream is reliable (though the protocol will resynchronize if bytes are lost or corrupted). i.e. we do not include CRCs or error correction codes.
 - Packets always have a four byte header (described below) prefixed before each packet. This header provides framing characters and length.
@@ -28,15 +28,15 @@ The receiver will validate length and if >512 it will assume the packet is corru
 
 ## MeshBluetoothService (the BLE API)
 
-This is the main Bluetooth service for the device and provides the API your app should use to get information about the mesh, send packets or provision the radio.
+This is the main Bluetooth service for the device and provides the API your app should use to get information about the mesh, send packets, or provision the radio.
 
 For a reference implementation of a client that uses this service see [RadioInterfaceService](https://github.com/meshtastic/Meshtastic-Android/blob/master/app/src/main/java/com/geeksville/mesh/service/RadioInterfaceService.kt).
 
-Typical flow when a phone connects to the device should be the following (if you want to watch this flow from the python app just run "meshtastic --debug --info" - the flow over BLE is identical):
+Typical flow when a phone connects to the device should be the following (if you want to watch this flow from the python app just run `meshtastic --debug --info` - the flow over BLE is identical):
 
 - There are only three relevant endpoints (and they have built in BLE documentation - so use a BLE tool of your choice to watch them): FromRadio, FromNum (sends notifies when new data is available in FromRadio) and ToRadio
 - SetMTU size to 512
-- Write a ToRadio.startConfig protobuf to the "ToRadio" endpoint" - this tells the radio you are a new connection and you need the entire NodeDB sent down.
+- Write a ToRadio.startConfig protobuf to the "ToRadio" endpoint - this tells the radio you are a new connection and you need the entire NodeDB sent down.
 - Read repeatedly from the "FromRadio" endpoint. Each time you read you will get back a FromRadio protobuf (see Meshtatastic-protobuf). Keep reading from this endpoint until you get back and empty buffer.
 - See below for the expected sequence for your initial download.
 - After the initial download, you should subscribe for BLE "notify" on the "FromNum" endpoint. If a notification arrives, that means there are now one or more FromRadio packets waiting inside FromRadio. Read from FromRadio until you get back an empty packet.
@@ -49,7 +49,7 @@ Expected sequence for initial download:
 - Read a User from "user" - to get the username for this node
 - Read a MyNodeInfo from "mynode" to get information about this local device
 - Read a series of NodeInfo packets to build the phone's copy of the current NodeDB for the mesh
-- Read a endConfig packet that indicates that the entire state you need has been sent.
+- Read a endConfig packet that indicates that the entire state you need has been sent
 - Read a series of MeshPackets until it returns empty to get any messages that arrived for this node while the phone was away
 
 For definitions (and documentation) on FromRadio, ToRadio, MyNodeInfo, NodeInfo and User protocol buffers see [mesh.proto](https://github.com/meshtastic/Meshtastic-protobufs/blob/master/mesh.proto)
@@ -82,13 +82,13 @@ When the ESP32 advances fromnum, it will delay doing the notify by 100ms, in the
 
 Note: that if the phone ever sees this number decrease, it means the ESP32 has rebooted.
 
-Re: queue management
-Not all messages are kept in the fromradio queue (filtered based on SubPacket):
+Re: Queue management, 
+not all messages are kept in the fromradio queue (filtered based on SubPacket):
 
 - only the most recent Position and User messages for a particular node are kept
 - all Data SubPackets are kept
 - No WantNodeNum / DenyNodeNum messages are kept
-  A variable keepAllPackets, if set to true will suppress this behavior and instead keep everything for forwarding to the phone (for debugging)
+- A variable keepAllPackets, if set to true will suppress this behavior and instead keep everything for forwarding to the phone (for debugging)
 
 ### A note on MTU sizes
 

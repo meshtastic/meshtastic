@@ -18,13 +18,13 @@ You can get the latest python tool/library with `pip3 install --upgrade meshtast
 
 - Set any GPIO
 - Read any GPIO
-- Receive notification of changes in any GPIO.
+- Receive notification of changes in any GPIO
 
 ## Setup
 
 
 
-To prevent access from untrusted users you must first make a `gpio` channel that is used for authenticated access to this feature.  You'll need to install this channel on both the local and remote node.
+To prevent access from untrusted users, you must first make a `gpio` channel that is used for authenticated access to this feature.  You'll need to install this channel on both the local and remote node.
 
 The procedure using the python command line tool is:
 
@@ -33,7 +33,7 @@ The procedure using the python command line tool is:
     ```bash
     meshtastic --ch-add gpio
     ```
-3. Check the channel has been created and copy the long "Complete URL" that contains all the channels on that device.
+3. Check the channel has been created and copy the long "Complete URL" that contains all the channels on that device
     ```bash
     meshtastic --info
     ```
@@ -47,18 +47,18 @@ Now both devices can talk over the `gpio` channel.
 
 ## Doing GPIO operations
 
-You can programmatically do operations from your own python code by using the meshtastic `RemoteHardwareClient` class. See the [python API](https://meshtastic.github.io/Meshtastic-python) documentation for more details.
+You can programmatically do operations from your own python code by using the Meshtastic `RemoteHardwareClient` class. See the [python API](https://meshtastic.github.io/Meshtastic-python) documentation for more details.
 
 ## Using GPIOs from the python CLI
 
-Writing a GPIO
+Writing a GPIO:
 ```bash title="Expected output"
 $ meshtastic  --port /dev/ttyUSB0 --gpio-wrb 4 1 --dest \!28979058 
 Connected to radio
 Writing GPIO mask 0x10 with value 0x10 to !28979058
 ```
 
-Reading a GPIO
+Reading a GPIO:
 ```bash title="Expected output"
 $ meshtastic --port /dev/ttyUSB0 --gpio-rd 0x10 --dest \!28979058 
 Connected to radio

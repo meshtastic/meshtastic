@@ -88,7 +88,7 @@ Steps:
     6. Click finish
 2. When it prompts you to create a style template, click yes.
     1. Set the name field to whichever column you want to be displayed on the map (don’t worry about this too much, when you click on an icon, all the relevant data appears)
-    2. select a color, icon, etc. and hit OK.
+    2. Select a color, icon, etc. and hit OK.
 
 Your data will load onto the map, make sure to click the checkbox next to your dataset in the sidebar to view it.
 

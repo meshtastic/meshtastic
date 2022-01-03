@@ -39,12 +39,12 @@ With the latest versions of MacOS, the USB Serial driver is built-in. Do _NOT_ d
   <summary>Removing the CH34x (CH340/CH341) USB Drivers</summary>
   <div>
     <div>
-        If you have already downloaded/installed the MacOS WCH-IC CH340 ("CH341SER_MAC") drivers via the `CH34x_Install_V1.5.pkg`, you will have to Uninstall the kernel extension:
+        If you have already downloaded/installed the MacOS WCH-IC CH340 ("CH341SER_MAC") drivers via the CH34x_Install_V1.5.pkg, you will have to Uninstall the kernel extension:
         <br />
         <br />
         1. Unplug your T-Echo<br />
         2. Open the Terminal and run:<br />
-        3. sudo -rf /Library/Extensions/usbserial.kext`<br />
+        3. sudo -rf /Library/Extensions/usbserial.kext<br />
         4. Reboot
     </div>
   </div>
@@ -75,7 +75,7 @@ Be careful to install the correct load for your board. While it is unlikely that
 :::
 
 - Connect your device to your computer with a USB cable. If your computer complains about needing to format a new drive, cancel the format command.
-- Double click the `Reset` button on your device, this will put it into boot loader mode.
+- Double click the `Reset` button on your device, this will put it into bootloader mode.
 
 [<img alt="LILYGO T-Echo" src="/img/hardware/t-echo-lilygo.jpg" style={{zoom:'25%'}} />](/img/hardware/t-echo-lilygo.jpg)
 

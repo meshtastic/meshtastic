@@ -26,7 +26,7 @@ https://meshtastic.discourse.group/t/solved-help-installing-with-other-than-esph
 ```powershell
 pio run --target erase --environment tbeam
 ```
-Then re-install the firmware ie using ESPHome Flasher
+Then re-install the firmware ie using ESPHome Flasher.
 
 Requires: [Python](https://www.python.org/), [Pio](https://pypi.org/project/pio/), command to be run in the root directory of the meshtastic-device project once you’ve cloned it (this last requirement is an assumption based on pio not knowing what a tbeam is, may also require Visual Studio Code and PlatformIO as these were installed during use).
 
@@ -42,7 +42,7 @@ esptool.py --baud 921600 write_flash 0x10000 firmware-tbeam-EU865-1.1.42.bin
 Requires: [Python](https://www.python.org/) and [esptool.py](https://github.com/espressif/esptool)
 
 ### Visual Studio & PlatformIO
-There is also the method of using the Visual Studio IDE. This requires having Visual Studio and PlatformIO installed, along with having cloned the meshtastic-device code as per the [build instructions](https://github.com/meshtastic/Meshtastic-device/blob/master/docs/software/build-instructions.md)<!-- link to be changed once build page is completed -->. After loading the project in Visual Studio, select the PlatformIO alien icon, then find the appropriate device, and then click the Erase Flash command.
+There is also the method of using the Visual Studio IDE. This requires having Visual Studio and PlatformIO installed, along with having cloned the meshtastic-device code as per the [build instructions](/docs/software/other/build-instructions). After loading the project in Visual Studio, select the PlatformIO alien icon, then find the appropriate device, and then click the Erase Flash command.
 
 ![Erasing the flash using PlatformIO in Visual Studio Code](/img/platformio-erase.png)
 
@@ -54,4 +54,4 @@ Requires: [Visual Studio Code](https://code.visualstudio.com/), [PlatformIO](htt
 
 Once it has been successfully erased and re-flashed, visiting https://192.168.42.1/static should leave you with free space on the order of 300,000 bytes, rather than the ~48,000 bytes you currently have. You can then upload the files from the meshtastic-web release.
 
-Occasionally this may glitch when uploading the larger app.js.gz file, but a further erase and flash typically solves this.
+Occasionally, this may glitch may appear when uploading the larger app.js.gz file, but a further erase and flash typically solves this.

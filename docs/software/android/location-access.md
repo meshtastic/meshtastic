@@ -22,11 +22,11 @@ If it is helpful, [here](https://meshtastic.org/docs/software/android/android-us
 
 ## Why this app needs "background location access"
 
-When the user has the LoRa device in their pocket occasionally (every 15 minutes ish), the android sister app background service will acquire the GPS position and provide it to the LoRa [firmware](https://github.com/meshtastic/Meshtastic-device).  Without background location access this core (the primary feature) of our app would not work (because you wouldn't be able to see the last known position of the hikers/skiers/users in your group).
+When the user has the LoRa device in their pocket occasionally (every 15 minutes ish), the Android sister app background service will acquire the GPS position and provide it to the LoRa [firmware](https://github.com/meshtastic/Meshtastic-device).  Without background location access, this core (the primary feature) of our app would not work (because you wouldn't be able to see the last known position of the hikers/skiers/users in your group).
 
 This location is shared only over an [encrypted](https://meshtastic.org/docs/developers/device/encryption) link and each group of users has their own AES256 key for their 'channel'.  Our privacy policy is [here](https://meshtastic.org/docs/legal/privacy).
 
-(This description has been simplified a bit: This project works with a [variety](https://meshtastic.org/docs/hardware) of LoRa devices, some of which have their own built-in GPS. For the devices that have a GPS built-in, we do not use android to get the user's location)
+(This description has been simplified a bit: This project works with a [variety](https://meshtastic.org/docs/hardware) of LoRa devices, some of which have their own built-in GPS. For the devices that have a GPS built-in, we do not use Android to get the user's location)
 
 ## Fixes needed for these new Play Store background position requirements
 

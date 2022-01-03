@@ -23,9 +23,9 @@ import TabItem from '@theme/TabItem';
 ## General
 
 Q: What is Meshtastic?
-* Meshtastic is most awesome long range, low power communications service on the planet earth! That's not even an exaggeration!
+* Meshtastic is the most awesome long range, low power communications service on the planet earth! That's not even an exaggeration!
 
-Q: Where can I get additional help, ask questions or bond with the Meshtastic community?
+Q: Where can I get additional help, ask questions, or bond with the Meshtastic community?
 * After reading this FAQ and checking out the links on the left, there are two places... The preferred place is to check out the [Forum](https://meshtastic.discourse.group). There you can be part of our growing community and search for previous posts that may be similar to what you're looking for. We also have the [Meshtastic Discord](https://discord.com/invite/UQJ5QuM7vq) server where you may connect with like-minded people.
 
 Q: How can I contribute to Meshtastic?
@@ -49,10 +49,10 @@ Q: My device has gone to sleep and I can't send any messages.
 * Once the node wakes up from sleep, your phone will relay any delayed messages through your node and to the mesh network. Give it a few minutes and it'll do the right thing.
 
 Q: How do I turn off an ESP32 t-beam based device?
-* Hold down the middle button for about 10 seconds.
+* Hold down the left PWR button for about 10 seconds and the display should turn off.
 
 Q: How do I turn on an ESP32 t-beam based device?
-* Push the power button for about 1 second.
+* Push the left PWR button for about 1 second.
 
 Q: How can I tell the device not to sleep?
 * Android instructions see: [Android Usage](https://meshtastic.org/docs/software/android/android-usage#configuration-options)
@@ -66,7 +66,7 @@ Q: What are Plugins?
 * Plugins are features that expand the basic device functionality and/or integrate with other services.
 
 Q: What plugins do we have available?
-* To see the list of available plugins, please go to: https://meshtastic.org/docs/software/plugins/plugins
+* To see the list of available plugins, please go to: https://meshtastic.org/docs/software/plugins/
 
 Q: I'd like to write a plugin. How do I get started?
 * See: https://meshtastic.org/docs/developers/device/plugin-api
@@ -74,13 +74,13 @@ Q: I'd like to write a plugin. How do I get started?
 ## Android
 
 Q: What versions of Android does the Meshtastic Android App require?
-* Answer TBD
+* Android 5.0 is the current minSdkVersion (21).
 
 Q: What's the cloud icon next to the message?
-* Empty Cloud - In route to your device.
-* Up Arrow - Queued to be sent over the mesh.
+* Empty Cloud - Queued on the app to be sent to your device.
+* Up Arrow - Queued on the device to be sent over the mesh.
 * Check Mark - Delivered over the mesh.
-* Cross Mark - Error
+* Cross Mark - Error.
 
 Q: How can I clear the message history?
 * Clear the storage from Android Settings > App
@@ -96,7 +96,7 @@ Q: How do I get the Meshtastic iOS App?
 ## Bluetooth
 
 Q: How do I pair my phone to the device if my device doesn't have a screen?
-* Answer TBD (perhaps consider using web if ESP32)
+* Use [Wifi](https://meshtastic.org/docs/software/device/device-wifi) or use Bluetooth with [screenless pairing](https://github.com/meshtastic/Meshtastic-device/issues/26). When prompted to pair, double click on the device button and the password will be set to `123456`.
 
 Q: Can I have Bluetooth enabled and use WiFi radio?
 * No. Only one method will work at a time.
@@ -118,10 +118,10 @@ Q: How do I access the network from my web browser?
 ## Channels
 
 Q: What is a Meshtastic Channel?
-* This is the LoRa channel you're broadcasting on, the modem configuration (spreading factor, bandwidth and error correction), along with a special identifier for your group and optional encryption.
+* This is the LoRa channel you're broadcasting on, the modem configuration (spreading factor, bandwidth and error correction), along with a special identifier for your group, and optional encryption.
 
 Q: What is a LoRa channel?
-* This is the LoRa frequency within the Frequency band your device is configured to use.
+* This is the LoRa frequency within the frequency band your device is configured to use.
 
 Q: How do I share my Meshtastic Channel with other people?
 * Your Meshtastic client (Android, iOS, Web or Python) will provide you a URL or QR code. You can email, text or print this URL or QR code and share it with people you want to join your Meshtastic Channel.
@@ -130,7 +130,7 @@ Q: What is a Primary Channel?
 * This is the first channel that's created for you when you initially setup your Meshtastic Channel.
 
 Q: What is a Secondary Channel?
-* As this is a new feature, secondary Channels work on the device and the Python Script. Support for secondary channels by other clients are pending. For more information: https://meshtastic.org/docs/software/device/device-channels#how-to-use-secondary-channels
+* As this is a new feature, secondary channels work on the device and the Python Script. Support for secondary channels by other clients is pending. For more information: https://meshtastic.org/docs/software/device/device-channels#how-to-use-secondary-channels
 
 ## Command Line / Python
 

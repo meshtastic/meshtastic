@@ -38,11 +38,11 @@ The sensor is always read in Celsius, but the user can opt to view the temperatu
 
 ### environmental_measurement_plugin_read_error_count_threshold
 
-Sometimes sensor reads can fail. If this happens, we will retry a configurable number of attempts Each attempt will be delayed by the minimum required refresh rate for that sensor
+Sometimes sensor reads can fail. If this happens, we will retry a configurable number of attempts. Each attempt will be delayed by the minimum required refresh rate for that sensor
 
 ### environmental_measurement_plugin_recovery_interval
 
-Sometimes we can end up with more than read_error_count_threshold failures. In this case, we will stop trying to read from the sensor for a while. Wait this long until trying to read from the sensor again
+Sometimes we can end up with more than read_error_count_threshold failures. In this case, we will stop trying to read from the sensor for a while. Wait this long until trying to read from the sensor again.
 
 ### environmental_measurement_plugin_screen_enabled
 
@@ -54,7 +54,7 @@ Specify the preferred GPIO Pin for sensor readings.
 
 ### environmental_measurement_plugin_sensor_type
 
-Specify the sensor type
+Specify the sensor type.
 
 ### environmental_measurement_plugin_update_interval
 

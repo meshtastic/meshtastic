@@ -14,15 +14,15 @@ If you have sufficient range with your existing aerial, skip this section.  If y
 - Caution, avoid suppliers who:
   - don't state the aerial's tuned frequency and its specific purpose (LoRa network)
   - claim huge gain figures on omni-directional aerials
-  - don't provide boringly professional data-sheets. 
+  - don't provide boringly professional datasheets 
 
 If you want more range, directionality, or specificity read on.
 
 ## General guidance
 
-The Meshtastic system is designed to be simple and intuitive to use.  However, its LoRa radios rely on point-to-point communications, unit to unit, aerial to aerial; quite different to the near ubiquitous radio coverage of today's cellphone & Wifi connections.
+The Meshtastic system is designed to be simple and intuitive to use.  However, its LoRa radios rely on point-to-point communications, unit-to-unit, aerial-to-aerial; quite different to the near ubiquitous radio coverage of today's cellphone & Wifi connections.
 
-Some understanding of the factors affecting radio communications will help achieve substantially better service, faster transmission, over a greater range with your devices.  Here, we'll attempt to provide a top-level set of guidance for use and aerial selection, how to test the aerials, and a set of resources for further research and plenty of opportunity for going deeper.
+Some understanding of the factors affecting radio communications will help achieve substantially better service and faster transmission over a greater range with your devices.  Here, we'll attempt to provide a top-level set of guidance for use and aerial selection, how to test the aerials, a set of resources for further research, and plenty of opportunity for going deeper.
 
 The Meshtastic devices (of various flavors) lend themselves to experimentation, not only because you can replace their aerials, but also because of their mesh operation.  All nodes will, without alteration, relay communications from any other members of the mesh around obstacles and over greater distances.  The cost of aerial investment should be weighed against investment in additional low-cost nodes.
 
@@ -36,4 +36,4 @@ The information collected here is by no means definitive, and necessarily abbrev
 
 To comment on / join in antenna range [Meshtastic discourse](https://meshtastic.discourse.group/t/antenna-improved-range/227/35?u=sens8tion)
 
-There, you will also find reference to Meshtastic range achievements, aerial recommendations (note we've stopped short of making specific supplier aerial recommendations in this wiki).
+There, you will also find reference to Meshtastic range achievements and aerial recommendations. (Note we've stopped short of making specific supplier aerial recommendations in this wiki.)
