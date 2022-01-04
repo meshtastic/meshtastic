@@ -104,7 +104,7 @@ function Home() {
         />
         <meta
           property="og:description"
-          content="Open Source hiking, pilot, skiing and secure GPS mesh communicator"
+          content="Open Source hiking, pilot, skiing and secure LoRa mesh communicator"
         />
         <meta property="og:url" content="https://meshtastic.org/" />
         <meta name="twitter:card" content="summary_large_image" />
