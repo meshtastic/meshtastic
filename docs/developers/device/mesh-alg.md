@@ -163,7 +163,7 @@ TODO:
 - REJECTED - seems dying - possibly dash7? <https://www.slideshare.net/MaartenWeyn1/dash7-alliance-protocol-technical-presentation> <https://github.com/MOSAIC-LoPoW/dash7-ap-open-source-stack> - does the open source stack implement multi-hop routing? flooding? their discussion mailing list looks dead-dead
 - update duty cycle spreadsheet for our typical use case
 
-a description of DSR: <https://t>ools.ietf.org/html/rfc4728 good slides here: <https://www.slideshare.net/ashrafmath/dynamic-source-routing>
+a description of DSR: <https://tools.ietf.org/html/rfc4728> good slides here: <https://www.slideshare.net/ashrafmath/dynamic-source-routing>
 good description of batman protocol: <https://www.open-mesh.org/projects/open-mesh/wiki/BATMANConcept>
 
 interesting paper on LoRa mesh: <https://portal.research.lu.se/portal/files/45735775/paper.pdf>

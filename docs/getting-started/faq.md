@@ -78,7 +78,7 @@ Q: What are Plugins?
 
 Q: What plugins do we have available?
 
-- To see the list of available plugins, please go to: https://meshtastic.org/docs/software/plugins/plugins
+- To see the list of available plugins, please go to: https://meshtastic.org/docs/software/plugins/
 
 Q: I'd like to write a plugin. How do I get started?
 
@@ -173,4 +173,4 @@ Q: How do I find out more about installing (and using) Meshtastic via command li
 
 Q: How do I find out more about using python to interact?
 
-- See https://meshtastic.org/docs/software/python/python-usage
+- See https://meshtastic.org/docs/software/python/python-uses
