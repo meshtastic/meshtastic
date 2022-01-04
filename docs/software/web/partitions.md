@@ -42,7 +42,7 @@ esptool.py --baud 921600 write_flash 0x10000 firmware-tbeam-EU865-1.1.42.bin
 Requires: [Python](https://www.python.org/) and [esptool.py](https://github.com/espressif/esptool)
 
 ### Visual Studio & PlatformIO
-There is also the method of using the Visual Studio IDE. This requires having Visual Studio and PlatformIO installed, along with having cloned the meshtastic-device code as per the [build instructions](https://github.com/meshtastic/Meshtastic-device/blob/master/docs/software/build-instructions.md)<!-- link to be changed once build page is completed -->. After loading the project in Visual Studio, select the PlatformIO alien icon, then find the appropriate device, and then click the Erase Flash command.
+There is also the method of using the Visual Studio IDE. This requires having Visual Studio and PlatformIO installed, along with having cloned the meshtastic-device code as per the [build instructions](https://meshtastic.org/docs/software/other/build-instructions). After loading the project in Visual Studio, select the PlatformIO alien icon, then find the appropriate device, and then click the Erase Flash command.
 
 ![Erasing the flash using PlatformIO in Visual Studio Code](/img/platformio-erase.png)
 
