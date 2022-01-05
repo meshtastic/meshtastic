@@ -55,9 +55,9 @@ values={[
 Firmware can be downloaded from the [Firmware](/firmware) page. Your initial installation has to happen over USB from your Mac, Windows, or Linux PC. Once our software is installed, all future software updates happen over Bluetooth from your phone.
 
 :::note
-The [T-Beam 0.7](../hardware/tbeam-hardware#t-beam---v07) board is an earlier version of the T-Beam board, and due to changes in the design in subsequent iterations, this board uses a specific firmware file different from the other T-Beam boards.
+The [T-Beam 0.7](/docs/hardware/supported/tbeam#t-beam---v07) board is an earlier version of the T-Beam board, and due to changes in the design in subsequent iterations this board uses a specific firmware file different from the other T-Beam boards.
 
-`firmware-tbeam0.7-1.x.x.bin` is the correct firmware. `firmware-tbeam-1.x.x.bin` is incompatible. For all other [T-Beam](../hardware/tbeam-hardware) boards `firmware-tbeam-1.x.x.bin` is the correct selection.
+`firmware-tbeam0.7-1.x.x.bin` is the correct firmware. `firmware-tbeam-1.x.x.bin` is incompatible. For all other [T-Beam](/docs/hardware/supported/tbeam) boards `firmware-tbeam-1.x.x.bin` is the correct selection.
 :::
 
 ## Command Line Interface Instructions

@@ -1,5 +1,5 @@
 ---
-id: linux-hardware
+id: linux
 title: Linux Compatible Hardware
 sidebar_label: Linux
 ---

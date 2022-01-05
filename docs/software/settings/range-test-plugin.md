@@ -3,9 +3,9 @@ id: range-test-plugin
 title: Range Test Plugin Settings
 sidebar_label: Range Test Plugin
 ---
+
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
-
 
 ## Overview
 
@@ -17,11 +17,11 @@ Once settings are changed, a **reset** is required for them to take effect.
 
 ## Settings
 
-| Setting | Acceptable Values | Default |
-| :-----: | :---------------: | :-----: |
-| range_test_plugin_enabled | `true`, `false` | `false` |
-| range_test_plugin_save | `true`, `false` | `false` |
-| range_test_plugin_sender | `integer` (Seconds) | `0` |
+|          Setting          |  Acceptable Values  | Default |
+| :-----------------------: | :-----------------: | :-----: |
+| range_test_plugin_enabled |   `true`, `false`   | `false` |
+|  range_test_plugin_save   |   `true`, `false`   | `false` |
+| range_test_plugin_sender  | `integer` (Seconds) |   `0`   |
 
 ### range_test_plugin_enabled
 
@@ -44,7 +44,7 @@ Be sure to turn off either the plugin configured as a sender or the device where
 Also be mindful of your space usage on the file system. It has protections from filling up the space but it's best to delete old range test results.
 
 :::note
-Leaving this plugin on can slow down your mesh. Currently, the messages are sent using the same `TEXT_MESSAGE_APP` [port that all other messages](../../developers/protobufs/api#portnumsproto) are sent on.
+Leaving this plugin on can slow down your mesh. Currently, the messages are sent using the same `TEXT_MESSAGE_APP` [port that all other messages](/docs/developers/protobufs/api#portnumsproto) are sent on.
 :::
 
 ### Accessing your CSV
@@ -60,56 +60,57 @@ http://198.168.0.X/static/rangetest.csv
 
 | Radio Setting | `range_test_plugin_sender` |
 | :-----------: | :------------------------: |
-| Long Slow | 60 |
-| Long Fast | 30 |
-| Medium | 15 |
-| Short Fast | 15 |
+|   Long Slow   |             60             |
+|   Long Alt    |             30             |
+|    Medium     |             15             |
+|  Short Fast   |             15             |
 
 ## Examples
 
 ### Sender Node
+
 <Tabs
-  groupId="settings"
-  defaultValue="cli"
-  values={[
-    {label: 'CLI', value: 'cli'},
-    {label: 'Android', value: 'android'},
-  ]}>
-  <TabItem value="cli">
+groupId="settings"
+defaultValue="cli"
+values={[
+{label: 'CLI', value: 'cli'},
+{label: 'Android', value: 'android'},
+]}>
+<TabItem value="cli">
 
-  ```bash title="Example - Sender Node"
-  meshtastic --set range_test_plugin_enabled true
-  meshtastic --set range_test_plugin_sender 60
-  ```
-
+```bash title="Example - Sender Node"
+meshtastic --set range_test_plugin_enabled true
+meshtastic --set range_test_plugin_sender 60
+```
 
   </TabItem>
   <TabItem value="android">
 
-  TODO
+TODO
 
   </TabItem>
 </Tabs>
 
 ### Receiver Node
-<Tabs
-  groupId="settings"
-  defaultValue="cli"
-  values={[
-    {label: 'CLI', value: 'cli'},
-    {label: 'Android', value: 'android'},
-  ]}>
-  <TabItem value="cli">
 
-  ```bash title="Example - Receiver Node"
-  meshtastic --set range_test_plugin_enabled true
-  meshtastic --set range_test_plugin_save true
-  ```
+<Tabs
+groupId="settings"
+defaultValue="cli"
+values={[
+{label: 'CLI', value: 'cli'},
+{label: 'Android', value: 'android'},
+]}>
+<TabItem value="cli">
+
+```bash title="Example - Receiver Node"
+meshtastic --set range_test_plugin_enabled true
+meshtastic --set range_test_plugin_save true
+```
 
   </TabItem>
   <TabItem value="android">
 
-  TODO
+TODO
 
   </TabItem>
 </Tabs>

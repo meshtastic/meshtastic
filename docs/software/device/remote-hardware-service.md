@@ -47,20 +47,20 @@ Now both devices can talk over the `gpio` channel.
 
 ## Doing GPIO operations
 
-You can programmatically do operations from your own python code by using the Meshtastic `RemoteHardwareClient` class. See the [python API](https://meshtastic.github.io/Meshtastic-python) documentation for more details.
+You can programmatically do operations from your own python code by using the Meshtastic `RemoteHardwareClient` class. See the [python API](https://meshtastic.org/docs/software/python/python-installation) documentation for more details.
 
 ## Using GPIOs from the python CLI
 
 Writing a GPIO:
 ```bash title="Expected output"
-$ meshtastic  --port /dev/ttyUSB0 --gpio-wrb 4 1 --dest \!28979058 
+$ meshtastic  --port /dev/ttyUSB0 --gpio-wrb 4 1 --dest \!28979058
 Connected to radio
 Writing GPIO mask 0x10 with value 0x10 to !28979058
 ```
 
 Reading a GPIO:
 ```bash title="Expected output"
-$ meshtastic --port /dev/ttyUSB0 --gpio-rd 0x10 --dest \!28979058 
+$ meshtastic --port /dev/ttyUSB0 --gpio-rd 0x10 --dest \!28979058
 Connected to radio
 Reading GPIO mask 0x10 from !28979058
 GPIO read response gpio_value=16
@@ -68,7 +68,7 @@ GPIO read response gpio_value=16
 
 Watching for GPIO changes:
 ```bash title="Expected output"
-$ meshtastic --port /dev/ttyUSB0 --gpio-watch 0x10 --dest \!28979058 
+$ meshtastic --port /dev/ttyUSB0 --gpio-watch 0x10 --dest \!28979058
 Connected to radio
 Watching GPIO mask 0x10 from !28979058
 Received RemoteHardware typ=GPIOS_CHANGED, gpio_value=16

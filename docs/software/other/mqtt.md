@@ -67,7 +67,7 @@ FIXME, discuss possible attacks by griefers and how they can be prevented
 
 #### Service Envelope
 
-The payload published on mesh/... will always be wrapped in a [ServiceEnvelope protobuf](https://github.com/meshtastic/Meshtastic-protobufs/blob/master/docs/docs.md#.ServiceEnvelope).
+The payload published on mesh/... will always be wrapped in a [ServiceEnvelope protobuf](https://meshtastic.org/docs/developers/protobufs/api#serviceenvelope).
 
 ServiceEnvelope will include the message, and full information about arrival time, who forwarded it, source channel, source mesh id, etc...
 

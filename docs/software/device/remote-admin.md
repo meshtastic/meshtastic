@@ -4,13 +4,14 @@ title: Remote node administration
 sidebar_label: Remote node administration
 ---
 
-This feature will allow you to use the multiple channels feature to enable remote administration of Meshtastic nodes.  This will let you talk through the mesh to some far away node and change that node's settings.  This is an advanced feature that (currently) few users would need.  Also, keep in mind it is possible (if you are not careful) to assign settings to that remote node that cause it to completely drop off of your mesh. We advise network admins have a test node to test settings with before applying changes to a remote node to prevent this.
+This feature will allow you to use the multiple channels feature to enable remote administration of Meshtastic nodes. This will let you talk through the mesh to some far away node and change that node's settings. This is an advanced feature that (currently) few users would need. Also, keep in mind it is possible (if you are not careful) to assign settings to that remote node that cause it to completely drop off of your mesh. We advise network admins have a test node to test settings with before applying changes to a remote node to prevent this.
 
 ## Creating the admin channel
 
-By default, nodes will **only** respond to administrative commands via the local USB/Bluetooth/TCP interface.  This provides basic security to prevent unauthorized access and is how normal administration and settings changes work.  The only difference for the remote case is that we are sending those commands over the mesh.
+By default, nodes will **only** respond to administrative commands via the local USB/Bluetooth/TCP interface. This provides basic security to prevent unauthorized access and is how normal administration and settings changes work. The only difference for the remote case is that we are sending those commands over the mesh.
 
 Before a node will allow remote admin access, it must have a primary channel:
+
 ```bash title="Expected output"
 $ meshtastic --info
 Connected to radio
@@ -22,7 +23,7 @@ Primary channel URL: https://www.meshtastic.org/d/#CgUYAyIBAQ
 
 So from this output you see can that this node knows about only one channel and that its PSK is set to the default value.
 
-Now we add an admin channel: 
+Now we add an admin channel:
 
 ```bash title="Command"
 meshtastic --ch-add admin
@@ -33,6 +34,7 @@ The name of the channel is important and must be `admin`.
 :::
 
 Your channels will now look like this:
+
 ```bash title="Expected output"
 $ meshtastic --ch-add admin
 Connected to radio
@@ -47,7 +49,7 @@ Primary channel URL: https://www.meshtastic.org/d/#CgUYAyIBAQ
 Complete URL (includes all channels): https://www.meshtastic.org/d/#CgUYAyIBAQopIiAdbsTecxuI1u-voyGwOicsKaPt5ICG23ONsjH-vk5CaCoFYWRtaW4
 ```
 
-Notice that now we have a new secondary channel and the `--info` option prints out TWO URLs.  The `Complete URL` includes all of the channels this node understands.  The URL contains the preshared keys and should be treated with caution and kept a secret.  When deploying remote administration, you only need the node you want to administer and the node you are locally connected to know this new "admin" channel. All of the other nodes will forward the packets as long as they are a member of the primary channel.
+Notice that now we have a new secondary channel and the `--info` option prints out TWO URLs. The `Complete URL` includes all of the channels this node understands. The URL contains the preshared keys and should be treated with caution and kept a secret. When deploying remote administration, you only need the node you want to administer and the node you are locally connected to know this new "admin" channel. All of the other nodes will forward the packets as long as they are a member of the primary channel.
 
 ## Sharing the admin channel with other nodes
 
@@ -59,9 +61,11 @@ For this step you need physical access to both the nodes.
 2. Copy the "Complete URL" someplace for permanent reference/access.
 3. Connect to the "remote node" over the USB port.
 4. For the "remote node" type
-  ```bash
-  meshtastic --seturl the-url-from-step-2
-  ```
+
+```bash
+meshtastic --seturl the-url-from-step-2
+```
+
 5. Run `meshtastic --info` and confirm that the "Complete URL" is the same for both of the nodes.
 
 At this point you can take your remote node and install it far away and still be able to change any of its settings.
@@ -101,7 +105,7 @@ The above note needs clarification. Currently, you refer to other nodes with `!#
 And you can now confirm via the local node that the remote node has changed:
 
 ```bash title="Expected output"
-$ meshtastic --nodes 
+$ meshtastic --nodes
 Connected to radio
 /----------------------------------------------------------------------------------------------------\
 |N|  User   |AKA|   ID    |        Position        |Battery|  SNR  |     LastHeard     |    Since    |
@@ -110,7 +114,7 @@ Connected to radio
 \----------------------------------------------------------------------------------------------------/
 ```
 
-Note: you can change **any** parameter, add channels or get info from the remote node.  Here's an example of setting ls_secs and printing the complete device info from the remote node:
+Note: you can change **any** parameter, add channels or get info from the remote node. Here's an example of setting ls_secs and printing the complete device info from the remote node:
 
 ```bash title="Expected output"
 $ meshtastic --dest \!28979058 --set ls_secs 301 --info
@@ -138,11 +142,11 @@ ls_secs: 301
 Completed getting preferences
 ```
 
-For further reading, I recommend starting out with [Meshtastic-python](../python/python-cli) if you haven't already gone through this (hopefully you have since you are reading this). But for a full reference to the settings you can change, please see:
+For further reading, I recommend starting out with [Meshtastic-python](/docs/software/python/python-cli) if you haven't already gone through this (hopefully you have since you are reading this). But for a full reference to the settings you can change, please see:
 
 [Settings Overview](/docs/settings) and 
 [Complete list of user settings in Protobufs](https://meshtastic.org/docs/developers/protobufs/api#radioconfiguserpreferences)
 
 ## Areas for future development
 
-In the future we will add a "dead man's timer" to this feature so that the remote node will revert any changes if you fail to send a special "commit changes" command.  This will protect against sending bad settings to nodes that you can't physically access.  Instead, if the node does not receive a commit message within 10 minutes, it will revert all changes and (hopefully) rejoin the mesh.
+In the future we will add a "dead man's timer" to this feature so that the remote node will revert any changes if you fail to send a special "commit changes" command. This will protect against sending bad settings to nodes that you can't physically access. Instead, if the node does not receive a commit message within 10 minutes it will revert all changes and (hopefully) rejoin the mesh.
