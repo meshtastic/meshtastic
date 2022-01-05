@@ -6,23 +6,23 @@ sidebar_label: Mesh algorithm
 
 ## Current algorithm
 
-The routing protocol for Meshtastic is really quite simple (and suboptimal). It is heavily influenced by the mesh routing algorithm used in [Radiohead](https://www.airspayce.com/mikem/arduino/RadioHead/) (which was used in very early versions of this project). It has four conceptual layers.
+The routing protocol for Meshtastic is really quite simple (and suboptimal). It is heavily influenced by the mesh routing algorithm used in [RadioHead](https://www.airspayce.com/mikem/arduino/RadioHead/) (which was used in very early versions of this project). It has four conceptual layers.
 
 ### A note about protocol buffers
 
-Because we want our devices to work across various vendors and implementations, we use [Protocol Buffers](https://github.com/meshtastic/Meshtastic-protobufs) pervasively. For information on how the protocol buffers are used with respect to API clients see [sw-design](/docs/software/other/sw-design), for purposes of this document you mostly only
+Because we want our devices to work across various vendors and implementations, we use [Protocol Buffers](https://github.com/meshtastic/Meshtastic-protobufs) pervasively. For information on how the protocol buffers are used with respect to API clients see [sw-design](/software/other/sw-design.md), for purposes of this document you mostly only
 need to consider the MeshPacket and Subpacket message types.
 
-### Layer 1: Non reliable zero hop messaging
+### Layer 1: Non-reliable zero hop messaging
 
 This layer is conventional non-reliable LoRa packet transmission. The transmitted packet has the following representation on the ether:
 
-- A 32 bit LoRa preamble (to allow receiving radios to synchronize clocks and start framing). We use a longer than minimum (8 bit) preamble to maximize the amount of time the LoRa receivers can stay asleep, which dramatically lowers power consumption.
+- A 256-bit LoRa preamble (to allow receiving radios to synchronize clocks and start framing). We use a longer than minimum (8 bit) preamble to maximize the amount of time the LoRa receivers can stay asleep, which dramatically lowers power consumption.
 
-After the preamble the 16 byte packet header is transmitted. This header is described directly by the PacketHeader class in the C++ source code. But indirectly it matches the first portion of the "MeshPacket" protobuf definition. But notably: this portion of the packet is sent directly as the following 16 bytes (rather than using the protobuf encoding). We do this to both save airtime and to allow receiving radio hardware the option of filtering packets before even waking the main CPU.
+After the preamble and the syncWord of 0x2b, the 16 byte packet header is transmitted. This header is described directly by the PacketHeader class in the C++ source code. But indirectly it matches the first portion of the "MeshPacket" protobuf definition. But notably: this portion of the packet is sent directly as the following 16 bytes (rather than using the protobuf encoding). We do this to both save airtime and to allow receiving radio hardware the option of filtering packets before even waking the main CPU.
 
 - to (4 bytes): the unique NodeId of the destination (or 0xffffffff for NodeNum_BROADCAST)
-- from (4 bytes): the unique NodeId of the sender)
+- from (4 bytes): the unique NodeId of the sender
 - id (4 bytes): the unique (with respect to the sending node only) packet ID number for this packet. We use a large (32 bit) packet ID to ensure there is enough unique state to protect any encrypted payload from attack.
 - flags (4 bytes): Only a few bits are currently used - 3 bits for the "HopLimit" (see below) and 1 bit for "WantAck"
 
@@ -30,7 +30,7 @@ After the packet header, the actual packet is placed onto the the wire. These by
 
 NodeIds are constructed from the bottom four bytes of the macaddr of the Bluetooth address. Because the OUI is assigned by the IEEE, and we currently only support a few CPU manufacturers, the upper byte is defacto guaranteed unique for each vendor. The bottom 3 bytes are guaranteed unique by that vendor.
 
-To prevent collisions all transmitters will listen before attempting to send. If they hear some other node transmitting, they will reattempt transmission in x milliseconds. This retransmission delay is random between FIXME and FIXME (these two numbers are currently hardwired, but really should be scaled based on expected packet transmission time at current channel settings).
+To prevent collisions all transmitters will listen before attempting to send. If they hear some other node transmitting, they will reattempt transmission in x milliseconds. This retransmission delay is random between 20 and 22 seconds. (these two numbers are currently hardwired, but really should be scaled based on expected packet transmission time at current channel settings).
 
 ### Layer 2: Reliable zero hop messaging
 
@@ -163,7 +163,7 @@ TODO:
 - REJECTED - seems dying - possibly dash7? <https://www.slideshare.net/MaartenWeyn1/dash7-alliance-protocol-technical-presentation> <https://github.com/MOSAIC-LoPoW/dash7-ap-open-source-stack> - does the open source stack implement multi-hop routing? flooding? their discussion mailing list looks dead-dead
 - update duty cycle spreadsheet for our typical use case
 
-a description of DSR: <https://tools.ietf.org/html/rfc4728> good slides here: <https://www.slideshare.net/ashrafmath/dynamic-source-routing>
+a description of DSR: <https://tools.ietf.org/html/rfc4728>, good slides here: <https://www.slideshare.net/ashrafmath/dynamic-source-routing>, 
 good description of batman protocol: <https://www.open-mesh.org/projects/open-mesh/wiki/BATMANConcept>
 
 interesting paper on LoRa mesh: <https://portal.research.lu.se/portal/files/45735775/paper.pdf>
@@ -203,7 +203,7 @@ If Y were to die, at least the neighbor nodes of Y would have their last known p
 
 - when a node X wants to know other nodes positions, it broadcasts its position with want_replies=true. Then each of the nodes that received that request broadcast their replies (possibly by using special timeslots?)
 - all nodes constantly update their local db based on replies they witnessed.
-- after 10s (or whatever) if node Y notices that it didn't hear a reply from node Z (that Y has heard from recently ) to that initial request, that means Z never heard the request from X. Node Y will reply to X on Z's behalf.
+- after 10s (or whatever) if node Y notices that it didn't hear a reply from node Z (that Y has heard from recently) to that initial request, that means Z never heard the request from X. Node Y will reply to X on Z's behalf.
 - could this work for more than one hop? Is more than one hop needed? Could it work for sending messages (i.e. for a message sent to Z with want-reply set).
 
 ## approach 4
@@ -218,5 +218,5 @@ look into the literature for this idea specifically.
 - Occasionally, a node might broadcast saying "anyone have anything newer than time X?" If someone does, they send the diffs since that date.
 - essentially everything in this variant becomes broadcasts of "request db updates for >time X - for _all_ or for a particular nodenum" and nodes sending (either due to request or because they changed state) "here's a set of db updates". Every node is constantly trying to
   build the most recent version of reality, and if some nodes are too far, then nodes closer in will eventually forward their changes to the distributed db.
-- construct non ambiguous rules for who broadcasts to request db updates. ideally the algorithm should nicely realize node X can see most other nodes, so they should just listen to all those nodes and minimize the # of broadcasts. the distributed picture of nodes RSSI could be useful here?
+- construct non-ambiguous rules for who broadcasts to request db updates. Ideally the algorithm should nicely realize node X can see most other nodes, so they should just listen to all those nodes and minimize the # of broadcasts. The distributed picture of nodes RSSI could be useful here?
 - possibly view the BLE protocol to the radio the same way - just a process of reconverging the node/msgdb database.

@@ -9,7 +9,7 @@ import TabItem from '@theme/TabItem';
 
 ## Overview
 
-The External Notification Plugin will allow you to connect a speaker, LED or other device to notify you when a message has been received from the mesh network.
+The External Notification Plugin will allow you to connect a speaker, LED, or other device to notify you when a message has been received from the mesh network.
 
 ## Settings
 
@@ -24,7 +24,7 @@ The External Notification Plugin will allow you to connect a speaker, LED or oth
 
 ### ext_notification_plugin_enabled
 
-Enables the plugin
+Enables the plugin.
 
 ### ext_notification_plugin_active
 

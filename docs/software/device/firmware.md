@@ -12,9 +12,9 @@ The latest firmware can be downloaded from the [Firmware](/firmware) page. If yo
 
 ### Buttons
 
-A number of devices support buttons that can be used to interact with the firmware. These buttons have a number of different functions:
+A number of devices have buttons that can be used to interact with the firmware. These buttons have a number of different functions:
 
-- Reset button - This is present on most devices
+- Reset button - This is present on most devices.
 - Power button - This is present on some devices. A long press powers the device off or turns it back on again.
 - Program button - This is present of some devices and has a number of functions:
   - Single press - This changes the page of information displayed on the screen.
@@ -24,7 +24,7 @@ A number of devices support buttons that can be used to interact with the firmwa
 
 ### Screens
 
-A number of devices have screens capable of displaying the messages received and information about the mesh and other details. On powering the device it will display the Meshtastic splash screen for a couple of seconds:
+A number of devices have screens capable of displaying the messages received, information about the mesh, and other details. On powering the device it will display the Meshtastic splash screen with the version number for a couple of seconds:
 
 ![Splash screen](/img/screen/mesh-splash.jpg)
 
@@ -32,19 +32,19 @@ The screen is split up into pages, through which you can navigate using the prog
 
 ![Message page](/img/screen/mesh-message.jpg)
 
-The next pages display information about the nodes that are currently on the mesh. This includes the distance and direction to that node, along with signal strength and time last seen.
+The next pages display information about the nodes that are currently on the mesh. This includes the distance and direction to that node, the signal strength, and the time last seen.
 
 ![Node page](/img/screen/mesh-node1.jpg) ![Node page](/img/screen/mesh-node2.jpg)
 
-The next page shows information about the device, battery power, number of nodes and how many are connected current, number of GPS satellites being received, channel name, last digits of the MAC address, and names of the last nodes to join the mesh.
+The next page shows information about the device, battery power, current / total nodes, number of GPS satellites seen, channel name, last digits of the MAC address, and a brief log including the names of the last nodes to join the mesh.
 
 ![Channel page](/img/screen/mesh-channel.jpg)
 
-The final page shows current battery voltage and capacity, as well as noting how long the device has been online and the current GPS time and GPS location.
+The final page shows current battery voltage and percent charge, as well as noting how long the device has been online and the current GPS time, and GPS location.
 
 ![GPS page](/img/screen/mesh-gps.jpg)
 
-If the device Wifi has been enabled (only possible on ESP32 devices), another page appears displaying information about the WiFi settings, IP address and number of devices connected to the WiFi.
+If the device Wifi has been enabled (only possible on ESP32 devices), another page appears displaying information about the WiFi settings, IP address, and number of devices connected to the WiFi.
 
 ![Wifi page](/img/screen/mesh-wifi.jpg)
 

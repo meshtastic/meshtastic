@@ -40,14 +40,14 @@ The first time your device restarts after enabling WiFi, it will take an additio
 
 ### Wifi configuration
 
-To enable the WiFi to access the web interface, you must at minimum set two preferences:
+To enable WiFi to access the web interface, you must at minimum set two preferences:
 
 `wifi_ssid`
 `wifi_password`
 
 For the Wifi features to be enabled, those two properties must be set. 
 
-To turn it off, either of preference must be set as an empty string, that is a pair of double quotes each:
+To turn it off, either preference must be set as an empty string, that is a pair of double quotes each:
 
 `wifi_ssid ""`  
 `wifi_password ""`

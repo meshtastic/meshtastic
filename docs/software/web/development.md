@@ -7,9 +7,9 @@ sidebar_label: Development
 
 ## Considerations
 
-We have a total of 458752 bytes (448KB) available on the SPIFFS (Serial Peripheral Interface Flash File System) -- the on board storage of the ESP32. Of that space, let's not use more than half of that (224KB) in order to leave space for other uses.
+We have a total of 458,752 bytes (448KB) available on the SPIFFS (Serial Peripheral Interface Flash File System) -- the on-board storage of the ESP32. Of that space, let's not use more than half of that (224KB) in order to leave space for other uses.
 
-Right now, the Meshtastic Device Preferences as well as SSL keys use that space. We can imagine other future uses as well such as logging chat messages and possibly saving received signal strength with GPS coordinates to create coverage heat maps.
+Right now, the Meshtastic Device Preferences as well as SSL keys use that space. We can imagine other future uses as well, such as logging chat messages and possibly saving received signal strength with GPS coordinates to create coverage heat maps.
 
 ## Static Files
 
@@ -62,7 +62,7 @@ Used by the Apple Captive Portal Assistant.
 
 ### /upload
 
-End point to upload files. Used by the file manager.
+Endpoint to upload files. Used by the file manager.
 
 ### /json/report
 

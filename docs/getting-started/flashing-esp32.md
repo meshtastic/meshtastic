@@ -52,7 +52,7 @@ values={[
 
 ### Download Latest Firmware
 
-Firmware can be downloaded from the [Firmware](/firmware) page. Your initial installation has to happen over USB from your Mac, Windows or Linux PC. Once our software is installed, all future software updates happen over Bluetooth from your phone.
+Firmware can be downloaded from the [Firmware](/firmware) page. Your initial installation has to happen over USB from your Mac, Windows, or Linux PC. Once our software is installed, all future software updates happen over Bluetooth from your phone.
 
 :::note
 The [T-Beam 0.7](/docs/hardware/supported/tbeam#t-beam---v07) board is an earlier version of the T-Beam board, and due to changes in the design in subsequent iterations this board uses a specific firmware file different from the other T-Beam boards.
@@ -78,7 +78,7 @@ values={[
 >
 > ```bash
 > python3 --version
->  pip3 --version
+> pip3 --version
 > ```
 >
 > If `python3` is not installed, install with
@@ -207,7 +207,7 @@ Hard resetting via RTS pin...
 `cd` into the directory where you unzipped the latest release. For example:
 
 ```bash title="Example"
-cd /Downloads/firmware/
+cd ~/Downloads/firmware/
 ```
 
 ### Install/Update Firmware
@@ -278,7 +278,7 @@ values={[
 Browse to the previously downloaded firmware and select the correct firmware based on the board type and frequency.
 
 :::caution
-Be very careful to install the correct load for your board. In particular the popular 'T-BEAM' radio from TTGO is not called 'TTGO-Lora' (that is a different board). So don't install the 'TTGO-Lora' build on a TBEAM, it won't work correctly.
+Be very careful to install the correct load for your board. In particular the popular 'T-BEAM' radio from TTGO is not called 'TTGO-Lora' (that is a different board). So don't install the 'TTGO-Lora' build on a TBEAM, it won't work correctly. If you flash the incorrect firmware: It may appear to flash correctly, but if your device has a screen it might stay blank. On-board radio peripherals might be damaged because of GPIO pin direction, but you should just try to flash with the correct version. 
 :::
 
 ### Flash Firmware

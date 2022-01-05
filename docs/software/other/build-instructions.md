@@ -10,7 +10,7 @@ If you encounter any problems, please post a question in [our forum](https://mes
 
 ## GUI
 
-1. Purchase a suitable [radio](https://github.com/meshtastic/Meshtastic-device/wiki/Hardware-Information).
+1. Purchase a suitable [radio](/docs/hardware).
 2. Install [Python](https://www.python.org/downloads/).
 3. Install [Git](https://git-scm.com/downloads).
 4. Reboot your computer.
@@ -27,7 +27,7 @@ Note - To get a clean build you may have to delete the auto-generated file `./.v
 
 ## Command Line
 
-1. Purchase a suitable [radio](https://github.com/meshtastic/Meshtastic-device/wiki/Hardware-Information).
+1. Purchase a suitable [radio](/docs/hardware).
 2. Install [PlatformIO](https://platformio.org/platformio-ide)
 3. Download this git repo and cd into it:
 
@@ -37,8 +37,8 @@ Note - To get a clean build you may have to delete the auto-generated file `./.v
    ```
 
 4. Run `git submodule update --init --recursive` to pull in dependencies this project needs.
-5. If you are outside the USA, run "export COUNTRY=EU865" (or whatever) to set the correct frequency range for your country. Options are provided for `EU433`, `EU865`, `CN`, `JP` and `US` (default). Pull-requests eagerly accepted for other countries.
-6. Plug the radio into your USB port
+5. If you are outside the USA, run `export COUNTRY=EU865` (or whatever) to set the correct frequency range for your country. Options are provided for `EU433`, `EU865`, `CN`, `JP` and `US` (default). Pull-requests eagerly accepted for other countries.
+6. Plug the radio into your USB port.
 7. Type `pio run --environment XXX -t upload` (This command will fetch dependencies, build the project and install it on the board via USB). For XXX, use the board type you have (either `tlora-v2, tlora-v1, tlora-v2-1-1.6, tbeam, heltec, tbeam0.7`).
 8. PlatformIO also installs a very nice VisualStudio Code based IDE, see their [tutorial](https://docs.platformio.org/en/latest/tutorials/espressif32/arduino_debugging_unit_testing.html) if you'd like to use it.
 

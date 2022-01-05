@@ -7,7 +7,7 @@ sidebar_label: Uses
 This section covers using the "meshtastic" command line executable, which displays packets sent over the network as JSON and lets you see serial debugging information from the Meshtastic devices.
 
 :::note
-The `meshtastic` command is not run within python but is a script run from your operating system shell prompt. When you type "meshtastic" and the prompt is unable to find the command in Windows, check that the python "scripts" directory [is in your path](https://datatofish.com/add-python-to-windows-path/).
+The `meshtastic` command is not run within python but is a script  run from your operating system shell prompt. When you type "meshtastic" and the prompt is unable to find the command in Windows, check that the python "scripts" directory [is in your path](https://datatofish.com/add-python-to-windows-path/).
 :::
 
 ## Getting a list of User Preferences

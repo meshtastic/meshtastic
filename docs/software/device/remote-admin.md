@@ -4,7 +4,7 @@ title: Remote node administration
 sidebar_label: Remote node administration
 ---
 
-This feature will allow you to use the multiple channels feature to enable remote administration of meshtastic nodes. This will let you talk through the mesh to some far away node and change that node's settings. This is an advanced feature that (currently) few users would need. Also, keep in mind it is possible (if you are not careful) to assign settings to that remote node that cause it to completely drop off of your mesh. We advise network admins have a test node to test settings with before applying changes to a remote node to prevent this.
+This feature will allow you to use the multiple channels feature to enable remote administration of Meshtastic nodes. This will let you talk through the mesh to some far away node and change that node's settings. This is an advanced feature that (currently) few users would need. Also, keep in mind it is possible (if you are not careful) to assign settings to that remote node that cause it to completely drop off of your mesh. We advise network admins have a test node to test settings with before applying changes to a remote node to prevent this.
 
 ## Creating the admin channel
 
@@ -132,7 +132,7 @@ Complete URL (includes all channels): https://www.meshtastic.org/d/#CgUYAyIBAQop
 
 ## Admin Channel Setup is Complete
 
-You've finished setting up and adding 2 devices to the admin channel. Remember, because this is a mesh network, it doesn't matter which node you are at; you could administer your first device we set up from the second one we added to the channel. And the settings and examples on this page are just a taste of the other settings you can set. Also, if you ever want to view a setting without having to read through the `--info`, you can always do the following:
+You've finished setting up and adding two devices to the admin channel. Remember, because this is a mesh network, it doesn't matter which node you are at; you could administer your first device we set up from the second one we added to the channel. And the settings and examples on this page are just a taste of the other settings you can set. Also, if you ever want to view a setting without having to read through the `--info`, you can always do the following:
 
 ```bash title="--get vs. --info"
 $ meshtastic --dest \!28979058 --get ls_secs
@@ -144,9 +144,9 @@ Completed getting preferences
 
 For further reading, I recommend starting out with [Meshtastic-python](/docs/software/python/python-cli) if you haven't already gone through this (hopefully you have since you are reading this). But for a full reference to the settings you can change, please see:
 
-[Settings Overview](/docs/settings)
+[Settings Overview](/docs/settings) and 
 [Complete list of user settings in Protobufs](https://meshtastic.org/docs/developers/protobufs/api#radioconfiguserpreferences)
 
 ## Areas for future development
 
-In the future we will add a "deadman timer" to this feature so that the remote node will revert any changes if you fail to send a special "commit changes" command. This will protect against sending bad settings to nodes that you can't physically access. Instead, if the node does not receive a commit message within 10 minutes it will revert all changes and (hopefully) rejoin the mesh.
+In the future we will add a "dead man's timer" to this feature so that the remote node will revert any changes if you fail to send a special "commit changes" command. This will protect against sending bad settings to nodes that you can't physically access. Instead, if the node does not receive a commit message within 10 minutes it will revert all changes and (hopefully) rejoin the mesh.

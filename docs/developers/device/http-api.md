@@ -12,8 +12,8 @@ This is a mini-spec on a HTTP API which can be used by browser based clients to 
 
 - No need for JSON parsing on the resource constrained embedded server.
 - Small.
-- Already in use for all other transports (so shared testing/tooling coverage)
-- Backwards and forward compatible
+- Already in use for all other transports (so shared testing/tooling coverage).
+- Backwards and forward compatible.
 
 ## Request headers
 

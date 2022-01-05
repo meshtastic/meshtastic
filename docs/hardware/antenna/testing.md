@@ -4,15 +4,15 @@ title: Antenna testing
 sidebar_label: Testing
 ---
 
-Testing of antennas can be both simple and complex. At its simplest, testing involves sending messages from different locations and seeing which ones are received and then comparing the results against other antennas. This ranges up to using expensive test chambers and equipment to measure the signal strength, gain and radiation patterns. However, it seems that a reasonable job can be done with cheaper methods.
+Testing of antennas can be both simple and complex. At its simplest, testing involves sending messages from different locations and seeing which ones are received, and then comparing the results against other antennas. At the complex end, this can be using expensive test chambers and equipment to measure the signal strength, gain, and radiation patterns. However, it seems that a reasonable job can be done with cheaper methods.
 
 ## Range testing
 
-As mentioned, while stating the obvious, the simplest way of performing test is:
+As mentioned, while stating the obvious, the simplest way of performing a test is:
 - Walk around with a radio sending messages,
 - For each message, note location and whether 'ACK' ticks are received,
-- Also note reported signal strengths,
-- Change aerials, repeat & contrast.
+- Also, note reported signal strengths,
+- Change aerials, repeat, and evaluate results.
 
 :::note
 The [range test plugin](/docs/software/plugins/range-test-plugin) has been designed for exactly this purpose. It allows one node to transmit a frequent message, and another node to record which messages were received. This data is saved and can be imported to applications such as Google Earth.
@@ -30,6 +30,6 @@ Here are a [couple](https://medium.com/home-wireless/testing-lora-antennas-at-91
 
 ## Antenna matching & vector network analyzers
 
-One of the first things to ensure is that the antenna you have is tuned to the frequency that you are using. A lot of cheap antennas come labeled with an incorrect working frequency, and this will immediately reduce the emitted signal strength. A Vector Network Analyzer (VNA) can be used to ensure that the antenna is appropriately matched to the transmission circuit, ensuring that it is operating at the correct impedance and has a low level of power reflected back from the antenna to the transmitter at the desired transmission frequency. 
+One of the first things to ensure, is that the antenna you have is tuned to the frequency that you are using. A lot of cheap antennas come labeled with an incorrect working frequency, and this will immediately reduce the emitted signal strength. A Vector Network Analyzer (VNA) can be used to ensure that the antenna is appropriately matched to the transmission circuit, ensuring that it is operating at the correct impedance, and has a low level of power reflected back from the antenna to the transmitter at the desired transmission frequency. 
 
-Andreas Spiess also gives a great explanation of [how to use Vector Network Analyzers](https://www.youtube.com/watch?v=ZpKoLvqOWyc) to correctly tune your antennas, as well as a more [in depth tutorial of how to use VNAs](https://www.youtube.com/watch?v=_pjcEKQY_Tk). It is important to remember however, that VNAs can only tell you if the antenna is well-matched, not how well it is transmitting. A 50 ohm resistor across the transmitter output would show as ideally matched, but it would be useless at transmitting a signal. There are a number of VNAs now available for less than $100, making this no longer out of reach for most hobbyists unlike expensive spectrum analyzers.
+Andreas Spiess also gives a great explanation of [how to use Vector Network Analyzers](https://www.youtube.com/watch?v=ZpKoLvqOWyc) to correctly tune your antennas, as well as a more [in depth tutorial of how to use VNAs](https://www.youtube.com/watch?v=_pjcEKQY_Tk). It is important to remember however, that VNAs can only tell you if the antenna is well-matched, not how well it is transmitting. A 50 ohm resistor across the transmitter output would show as ideally matched, but it would be useless at transmitting a signal. There are a number of VNAs now available for less than $100, making this no longer out of reach for most hobbyists, unlike expensive spectrum analyzers.

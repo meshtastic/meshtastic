@@ -27,7 +27,7 @@ For most, GPS is a really cool, desirable feature. Knowing where everyone on you
 
 ### WiFi Settings
 
-Whether you're using the upcoming [web interface](software/web/web-app-software) or you're interested in broadcasting messages to/from the internet using [MQTT](software/settings/mqtt), the [WiFi settings](software/settings/wifi) are your first stop towards an IOT radio.
+Whether you're using the upcoming [web interface](software/web/web-app-software) or you're interested in broadcasting messages to/from the internet using [MQTT](software/settings/mqtt), the [WiFi settings](software/settings/wifi) are your first stop towards an IoT radio.
 
 ## Examples
 

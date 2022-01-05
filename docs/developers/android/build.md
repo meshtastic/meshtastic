@@ -9,7 +9,7 @@ sidebar_label: Building Android App
 If you would like to develop this application we'd love your help!  These build instructions are brief and should be improved, please send a PR if you can.
 
 * Use Android Studio 4.1.2 to build/debug (other versions might work but no promises)
-* Use "git submodule update --init --recursive" to pull in the various submodules we depend on
+* Use `git submodule update --init --recursive` to pull in the various submodules we depend on
 * There are a few config files which you'll need to copy from templates included in the project. Run the following commands to do so:
 
 ```
