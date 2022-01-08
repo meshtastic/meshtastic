@@ -394,6 +394,13 @@ meshtastic --configure example_config.yaml
 
 Export the configuration of the device. (to be consumed by the '--configure' command)
 
+To create to a file with the connected device's configuration, this command's output must be piped to a yaml file
+
+**Usage**
+
+``` shell
+meshtastic --export-config > example_config.yaml
+```
 **Usage**
 
 ``` shell
