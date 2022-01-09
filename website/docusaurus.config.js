@@ -33,9 +33,9 @@ const config = {
       },
       items: [
         {
-          label: "Firmware",
-          to: "firmware",
-          activeBasePath: "firmware",
+          label: "Start Here",
+          to: "docs/academy",
+          activeBasePath: "docs/academy",
         },
         {
           label: "Showcase",
@@ -46,6 +46,11 @@ const config = {
           label: "Docs",
           to: "docs/getting-started",
           activeBasePath: "docs/getting-started",
+        },
+        {
+          label: "Firmware",
+          to: "firmware",
+          activeBasePath: "firmware",
         },
         {
           href: "https://meshtastic.discourse.group",
