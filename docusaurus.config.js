@@ -35,6 +35,11 @@ const config = {
       },
       items: [
         {
+          label: "Start Here",
+          to: "docs/academy",
+          activeBasePath: "docs/academy",
+        },
+        {
           label: "Firmware",
           to: "firmware",
           activeBasePath: "firmware",
