@@ -8,4 +8,8 @@ slug: /academy
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-Work in progress
+I want something that just works.
+
+Tinkerer
+
+Maker
