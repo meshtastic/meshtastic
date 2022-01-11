@@ -75,7 +75,9 @@ Selecting a number from the following table will use publicly known encryption k
 | `default` | Default Encryption (use the weak encryption key) |
 | `random` | Generate a secure 256-bit encryption key. Use this setting for private communication. |
 
+:::note
 If you use Meshtastic for exchanging messages you don't want other people to see, `random` is the setting you should use.
+:::
 
 ### region
 
