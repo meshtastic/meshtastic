@@ -57,7 +57,7 @@ This is in active development and not ready for casual users. Testing only.
 
 <!--- A simple pre-shared key for now for crypto. Must be either 0 bytes (no crypto), 16 bytes (AES128), or 32 bytes (AES256). A special shorthand is used for 1 byte long psks. These psks should be treated as only minimally secure, because they are listed in this source code. Those bytes are mapped using the following scheme: 0 = No crypto 1 = The special "default" channel key: {0xd4, 0xf1, 0xbb, 0x3a, 0x20, 0x29, 0x07, 0x59, 0xf0, 0xbc, 0xff, 0xab, 0xcf, 0x4e, 0x69, 0xbf} 2 through 10 = The default channel key, except with 1 through 9 added to the last byte. Shown to user as simple1 through 10 --->
 
-The following table uses publicly known encryption keys. They're shipped with Meshtastic source code and thus, anyone can listen to messages encrypted by them.
+Selecting a number from the following table will use publicly known encryption keys. They're shipped with Meshtastic source code and thus, anyone can listen to messages encrypted by them. They're great for testing and public channels.
 
 | Setting | Behavior |
 | :-----: | :------: |
