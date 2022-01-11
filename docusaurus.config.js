@@ -33,12 +33,15 @@ const config = {
         src: "design/logo/svg/Mesh_Logo_Black.svg",
         srcDark: "design/logo/svg/Mesh_Logo_White.svg",
       },
+
       items: [
+/*
         {
           label: "Start Here",
           to: "docs/academy",
           activeBasePath: "docs/academy",
         },
+*/
         {
           label: "Firmware",
           to: "firmware",
