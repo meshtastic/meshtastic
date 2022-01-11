@@ -50,6 +50,7 @@ module.exports = {
       {
         "Meshtastic-python": [
           "software/python/python-installation",
+          "software/python/python-standalone",
           "software/python/python-cli",
           "software/python/python-uses",
           "software/python/python-commands",
