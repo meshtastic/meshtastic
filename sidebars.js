@@ -53,7 +53,6 @@ module.exports = {
           "software/python/python-standalone",
           "software/python/python-cli",
           "software/python/python-uses",
-          "software/python/python-commands",
           "software/python/python-stream",
           {
             type: "link",
