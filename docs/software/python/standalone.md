@@ -8,6 +8,8 @@ import TabItem from '@theme/TabItem';
 
 There are standalone executable files for Mac, Windows and Ubuntu. A single file is all you need to run the command line interface (CLI) Meshtastic tool. There is a zip file per operating system. To use, see the operating system specific notes below:
 
+They can be found on the [Releases](https://github.com/meshtastic/Meshtastic-python/releases) page.
+
 
 <Tabs
   groupId="operating-system"
@@ -23,11 +25,25 @@ There are standalone executable files for Mac, Windows and Ubuntu. A single file
 
 * Unzip.
 
-* Run: "chmod +x meshtastic"
+:::note
+You may need to run `sudo apt-get install zip`
+:::
 
-* To run: "./meshtastic"
+* Run the following command to make the file executable:
 
-* Tip: Copy (or move) this binary somewhere in your path.
+```
+chmod +x meshtastic
+```
+
+* To run the cli:
+
+```
+./meshtastic
+```
+
+:::tip
+Copy (or move) this binary somewhere in your path.
+:::
 
 </TabItem>
 <TabItem value="macos">
@@ -36,20 +52,46 @@ There are standalone executable files for Mac, Windows and Ubuntu. A single file
 
 * Unzip.
 
-* Run: "chmod +x meshtastic"
+* Run the following command to make the file executable:
 
-* Try to run it: "./meshtastic". You may get a dialog that says:
-	"meshtastic" can't be opened because Apple cannot check it for malicious software.
+```
+chmod +x meshtastic
+```
+
+* Try to run it:
+
+```
+./meshtastic
+```
+
+:::note
+ You may get a dialog that says:
+     "meshtastic" can't be opened because Apple cannot check it for malicious software.
+:::
 
 * To fix, go into "System Preferences", "Security & Privacy", "General" tab, and click on the "Allow Anyway" button.
 
-* Try to run it again: "./meshtastic". You may get a dialog that says:
+* Try to run it again:
+
+```
+./meshtastic
+```
+
+:::note
+You may get a dialog that says:
 	"meshtastic" can't be opened because Apple cannot check it for malicious software.
   Click "Open".
+:::
 
-* Now when you want to run it, you can simply run "./meshtastic".
+* Now when you want to run it, you can simply run:
 
-* Tip: Copy (or move) this binary somewhere in your path.
+```
+./meshtastic
+```
+
+:::tip
+Copy (or move) this binary somewhere in your path.
+:::
 
 </TabItem>
 <TabItem value="windows">
@@ -58,7 +100,11 @@ There are standalone executable files for Mac, Windows and Ubuntu. A single file
 
 * Unzip.
 
-* To run, double click on "meshtastic.exe" or from a command prompt run "./meshtastic.exe"
+* To run, double click on "meshtastic.exe" or from a command prompt run:
+
+```
+.\meshtastic.exe
+```
 
 </TabItem>
 </Tabs>
