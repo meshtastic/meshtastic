@@ -57,7 +57,7 @@ module.exports = {
           {
             type: "link",
             label: "API Docs",
-            href: "https://meshtastic-python.vercel.app/meshtastic/index.html",
+            href: "https://python.meshtastic.org/",
           },
         ],
       },
