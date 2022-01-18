@@ -16,6 +16,7 @@ The following applications are available to support your Meshtastic network:
 - Pre-installed device plugins for:
   - [Range testing](/docs/software/plugins/range-test-plugin)
   - [External notifications](/docs/software/plugins/ext-notif-plugin)
+  - [Canned messages](/docs/software/plugins/canned-message-plugin)
   - [Serial communication](/docs/software/plugins/serial-plugin)
   - [Store and forwarding messages](/docs/software/plugins/store-forward-plugin) (in development)
   - [Environment measurement](/docs/software/plugins/environment-plugin) (in development)
