@@ -66,6 +66,7 @@ module.exports = {
           "software/plugins/plugins",
           "software/plugins/range-test-plugin",
           "software/plugins/ext-notif-plugin",
+          "software/plugins/canned-message-plugin",
           "software/plugins/serial-plugin",
           "software/plugins/store-forward-plugin",
           "software/plugins/environment-plugin",
@@ -116,9 +117,11 @@ module.exports = {
             Plugins: [
               "software/settings/environmental-measurement-plugin",
               "software/settings/external-notification-plugin",
+              "software/settings/canned-message-plugin-settings",
               "software/settings/range-test-plugin",
               "software/settings/serial-plugin",
               "software/settings/store-and-forward-plugin",
+              "software/settings/rotary-encoder-settings",
             ],
             Advanced: [
               "software/settings/channel-advanced",
