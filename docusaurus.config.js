@@ -43,9 +43,9 @@ const config = {
         },
 */
         {
-          label: "Firmware",
-          to: "firmware",
-          activeBasePath: "firmware",
+          label: "Downloads",
+          to: "downloads",
+          activeBasePath: "downloads",
         },
         {
           label: "Showcase",

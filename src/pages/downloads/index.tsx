@@ -13,6 +13,7 @@ import {
 } from './_components/FirmwareCard';
 
 const Firmware = (): JSX.Element => {
+
   const { data, error } = useSWR<Release[]>(
     "https://api.github.com/repos/meshtastic/meshtastic-device/releases",
     fetcher
@@ -24,7 +25,7 @@ const Firmware = (): JSX.Element => {
   return (
     <Layout
       title="Firmware"
-      description="Firmware download for the Meshtastic project"
+      description="Firmware downloads for the Meshtastic project"
     >
       <main className="margin-vert--xl">
         <div className="container">

@@ -66,7 +66,7 @@ Please ensure that you have updated the bootloader to the latest version using t
 
 ## Download Latest Firmware
 
-Firmware can be downloaded from the [Firmware](/firmware) page. Your initial installation has to happen over USB from your Mac, Windows or Linux PC. Once our software is installed, all future software updates happen over Bluetooth from your phone.
+Firmware can be downloaded from the [Firmware](/downloads) page. Your initial installation has to happen over USB from your Mac, Windows or Linux PC. Once our software is installed, all future software updates happen over Bluetooth from your phone.
 
 ## Install/Update Firmware
 

@@ -27,7 +27,7 @@ Make sure not to power the radio on without first attaching the antenna! You cou
 
 ## Download Firmware
 
-Firmware can be downloaded from the [Firmware](/firmware) page. Your initial installation has to happen over USB from your Mac, Windows, or Linux PC. Once our software is installed, all future software updates happen over Bluetooth from your phone.
+Firmware can be downloaded from the [Firmware](/downloads) page. Your initial installation has to happen over USB from your Mac, Windows, or Linux PC. Once our software is installed, all future software updates happen over Bluetooth from your phone.
 
 ## Flashing Firmware
 
