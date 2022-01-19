@@ -43,6 +43,43 @@ const config = {
         },
 */
         {
+          label: "Documentation",
+          items: [
+            {
+              label: "About Meshtastic",
+              to: "docs/software",
+            },
+            {
+              label: "Getting Started",
+              to: "docs/getting-started",
+            },
+            {
+              label: "Device Settings",
+              to: "docs/settings",
+            },
+            {
+              label: "Hardware Details",
+              to: "docs/hardware",
+            },
+            {
+              label: "Contribute to Meshtastic",
+              to: "docs/developers",
+            },
+            /*
+              TODO add Docusaurus and Vercel instructions for how to manage the docs
+            {
+              label: "About this Documentation",
+              to: "docs/about-documentation",
+            },
+            */
+            {
+              label: "Legal",
+              to: "docs/legal",
+            },
+
+          ],
+        },
+        {
           label: "Firmware",
           to: "firmware",
           activeBasePath: "firmware",
@@ -51,11 +88,6 @@ const config = {
           label: "Showcase",
           to: "showcase",
           activeBasePath: "showcase",
-        },
-        {
-          label: "Docs",
-          to: "docs/getting-started",
-          activeBasePath: "docs/getting-started",
         },
         {
           href: "https://meshtastic.discourse.group",
