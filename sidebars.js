@@ -1,16 +1,5 @@
 module.exports = {
-  Sidebar: {
-    "Getting Started": [
-      "getting-started/overview",
-      "getting-started/faq",
-      {
-        "Flashing firmware": [
-          "getting-started/flashing-esp32",
-          "getting-started/flashing-nrf52",
-        ],
-      },
-      "getting-started/concepts",
-    ],
+  About: {
     Software: [
       "software/overview",
       {
@@ -104,33 +93,48 @@ module.exports = {
           "software/other/ant",
         ],
       },
+    ],
+  },
+  GettingStarted: {
+    "Getting Started": [
+      "getting-started/overview",
+      "getting-started/faq",
       {
-        Settings: [
-          "software/settings/overview",
-          "software/settings/channel",
-          "software/settings/gps",
-          "software/settings/mqtt",
-          "software/settings/power",
-          "software/settings/router",
-          "software/settings/wifi",
-          {
-            Plugins: [
-              "software/settings/environmental-measurement-plugin",
-              "software/settings/external-notification-plugin",
-              "software/settings/canned-message-plugin-settings",
-              "software/settings/range-test-plugin",
-              "software/settings/serial-plugin",
-              "software/settings/store-and-forward-plugin",
-              "software/settings/rotary-encoder-settings",
-            ],
-            Advanced: [
-              "software/settings/channel-advanced",
-              "software/settings/misc",
-            ],
-          },
+        "Flashing firmware": [
+          "getting-started/flashing-esp32",
+          "getting-started/flashing-nrf52",
+        ],
+      },
+      "getting-started/concepts",
+    ],
+  },
+  Settings: {
+    Settings: [
+      "software/settings/overview",
+      "software/settings/channel",
+      "software/settings/gps",
+      "software/settings/mqtt",
+      "software/settings/power",
+      "software/settings/router",
+      "software/settings/wifi",
+      {
+        Plugins: [
+          "software/settings/environmental-measurement-plugin",
+          "software/settings/external-notification-plugin",
+          "software/settings/canned-message-plugin-settings",
+          "software/settings/range-test-plugin",
+          "software/settings/serial-plugin",
+          "software/settings/store-and-forward-plugin",
+          "software/settings/rotary-encoder-settings",
+        ],
+        Advanced: [
+          "software/settings/channel-advanced",
+          "software/settings/misc",
         ],
       },
     ],
+  },
+  Hardware: {
     Hardware: [
       "hardware/overview",
       {
@@ -155,6 +159,8 @@ module.exports = {
         ],
       },
     ],
+  },
+  Contribute: {
     Developers: [
       "developers/overview",
       {
@@ -183,6 +189,8 @@ module.exports = {
         ],
       },
     ],
+  },
+  Legal: {
     Legal: [
       "legal/overview",
       "legal/licensing",
