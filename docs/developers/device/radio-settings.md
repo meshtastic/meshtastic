@@ -75,7 +75,7 @@ Note: The link budget used by these calculations assumes a transmit power of 17d
 You may want to select other channels for your usage. The other settings can be set by using the Python API.
 
 ```bash
-meshtastic --setchan spread_factor 10 --setchan coding_rate 4 --setchan bandwidth 125
+meshtastic --setchan spread_factor 10 --setchan coding_rate 4 --setchan bandwidth 125 --ch-index 0
 ```
 
 After applying the settings, you will need to restart the device. After your device is restarted, it will generate a new crypto key and you will need to share the newly generated QR Code or URL to all your other devices.
