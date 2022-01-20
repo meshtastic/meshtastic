@@ -57,7 +57,9 @@ TODO
   ]}>
   <TabItem value="cli">
 
-  TODO
+```bash
+meshtastic --ch-set bandwidth 125 --ch-index 0
+```
 
   </TabItem>
   <TabItem value="android">
@@ -99,7 +101,9 @@ TODO
   ]}>
   <TabItem value="cli">
 
-  TODO
+```bash
+meshtastic --ch-set coding_rate 8 --ch-index 0
+```
 
   </TabItem>
   <TabItem value="android">
@@ -120,7 +124,9 @@ TODO
   ]}>
   <TabItem value="cli">
 
-  TODO
+```bash
+meshtastic --ch-set spread_factor 12 --ch-index 0
+```
 
   </TabItem>
   <TabItem value="android">
