@@ -73,12 +73,14 @@ Interval in seconds of how often we should try to send our measurements to the m
   ]}>
   <TabItem value="cli">
 
+```
 meshtastic --set environmental_measurement_plugin_measurement_enabled true
 meshtastic --set environmental_measurement_plugin_screen_enabled true
 meshtastic --set environmental_measurement_plugin_update_interval 15
 meshtastic --set environmental_measurement_plugin_display_farenheit true
 meshtastic --set environmental_measurement_plugin_sensor_type 5
 meshtastic --set environmental_measurement_plugin_sensor_type BME280
+```
 
   </TabItem>
   <TabItem value="android">
