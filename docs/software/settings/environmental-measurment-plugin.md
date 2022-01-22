@@ -9,11 +9,7 @@ import TabItem from '@theme/TabItem';
 
 ## Overview
 
-:::caution
-This is a work in progress and is not yet available.
-:::
-
-The Environmental Measurement Plugin will allow you to connect climate sensors to report local conditions to your mesh.
+The Environmental Measurement Plugin will allow you to connect environment sensors to report conditions to your mesh. Examples are temperature, humidity and gas pressure.
 
 ## Settings
 
@@ -50,7 +46,7 @@ Enable/Disable the environmental measurement plugin on-device display.
 
 ### environmental_measurement_plugin_sensor_pin
 
-Specify the preferred GPIO Pin for sensor readings.
+Specify the preferred GPIO Pin for sensor readings. May not be needed if using I2C.
 
 ### environmental_measurement_plugin_sensor_type
 
@@ -72,13 +68,30 @@ Interval in seconds of how often we should try to send our measurements to the m
   values={[
     {label: 'CLI', value: 'cli'},
     {label: 'Android', value: 'android'},
+    {label: 'iOS', value: 'iOS'},
+    {label: 'web', value: 'web'},
   ]}>
   <TabItem value="cli">
+
+meshtastic --set environmental_measurement_plugin_measurement_enabled true
+meshtastic --set environmental_measurement_plugin_screen_enabled true
+meshtastic --set environmental_measurement_plugin_update_interval 15
+meshtastic --set environmental_measurement_plugin_display_farenheit true
+meshtastic --set environmental_measurement_plugin_sensor_type 5
+meshtastic --set environmental_measurement_plugin_sensor_type BME280
+
+  </TabItem>
+  <TabItem value="android">
 
   TODO
 
   </TabItem>
-  <TabItem value="android">
+  <TabItem value="iOS">
+
+  TODO
+
+  </TabItem>
+  <TabItem value="web">
 
   TODO
 
