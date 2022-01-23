@@ -173,11 +173,26 @@ pip --version
 
 ### Confirm Communication With Chip
 
-Connect the radio to your computer using a data USB cable. Confirm your device is talking to your computer using the following command:
+<Tabs
+groupId="operating-system"
+defaultValue="linux"
+values={[
+{label: 'Linux', value: 'linux'},
+{label: 'macOS', value: 'macos'},
+{label: 'Windows', value: 'windows'},
+]}>
+  <TabItem value="linux"></TabItem>
+  <TabItem value="macos"></TabItem>
+  <TabItem value="windows">
 
 :::important
-On windows, you must explicitly declare esptools as a .py script. Use `esptools.py chip_id`.
+On Windows, you must explicitly declare esptools as a .py script. Use `esptools.py chip_id`.
 :::
+
+  </TabItem>
+</Tabs>
+
+Connect the radio to your computer using a data USB cable. Confirm your device is talking to your computer using the following command:
 
 ```bash title="Command"
 esptool chip_id
@@ -278,7 +293,7 @@ values={[
 Browse to the previously downloaded firmware and select the correct firmware based on the board type and frequency.
 
 :::caution
-Be very careful to install the correct load for your board. In particular the popular 'T-BEAM' radio from TTGO is not called 'TTGO-Lora' (that is a different board). So don't install the 'TTGO-Lora' build on a TBEAM, it won't work correctly. If you flash the incorrect firmware: It may appear to flash correctly, but if your device has a screen it might stay blank. On-board radio peripherals might be damaged because of GPIO pin direction, but you should just try to flash with the correct version. 
+Be very careful to install the correct load for your board. In particular the popular 'T-BEAM' radio from TTGO is not called 'TTGO-Lora' (that is a different board). So don't install the 'TTGO-Lora' build on a TBEAM, it won't work correctly. If you flash the incorrect firmware: It may appear to flash correctly, but if your device has a screen it might stay blank. On-board radio peripherals might be damaged because of GPIO pin direction, but you should just try to flash with the correct version.
 :::
 
 ### Flash Firmware
