@@ -11,6 +11,7 @@ module.exports = {
           "software/device/device-wifi",
           "software/device/device-power",
           "software/device/critical-error-codes",
+          "software/device/ham",
         ],
       },
       {
@@ -99,7 +100,6 @@ module.exports = {
     "Getting Started": [
       "getting-started/overview",
       "getting-started/faq",
-      "getting-started/ham",
       {
         "Flashing firmware": [
           "getting-started/flashing-esp32",
