@@ -99,6 +99,7 @@ module.exports = {
     "Getting Started": [
       "getting-started/overview",
       "getting-started/faq",
+      "getting-started/ham",
       {
         "Flashing firmware": [
           "getting-started/flashing-esp32",
