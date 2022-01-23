@@ -162,11 +162,11 @@ Pressing the three vertical dots in the top right corner shows the configuration
 
 #### Broadcast position period
 
-This allows you to change the frequency with which your location is broadcast across the mesh. By default, this is set to 900 seconds (15 minutes). The minimum time this can be set to is 375 seconds, the reasons for which have been [discussed on the forum](https://meshtastic.discourse.group/t/lost-messages-while-testing/2455/19).
+This allows you to change the frequency with which your location is broadcast across the mesh. By default, this is set to 900 seconds (15 minutes). The minimum time this can be set for the default channel is 375 seconds, the reasons for which have been [discussed on the forum](https://meshtastic.discourse.group/t/lost-messages-while-testing/2455/19).
 
 #### Device sleep period
 
-By default, ESP32 devices will enter sleep mode after 300 seconds of inactivity to save battery power. Unfortunately, this will also turn off the Bluetooth radio. They can be woken by either receiving a message over LoRa (the LoRa receiver never switches off), or by pressing a program button if there is one on the device. For example, to keep the Bluetooth link awake for eight hours (any usage of the Bluetooth protocol from your phone will reset this timer), set this to 28800 seconds.
+ESP32 devices can enter sleep mode to save battery life. During sleep Bluetooth is turned off. This setting allows the length of the sleep mode to be changed from the default 300 seconds (5 minutes). After this time period, they awake to check the phone for any queued messages and then go back to sleep, alternating between sleep and awake states. Receiving a message over LoRa (the LoRa receiver never switches off) or pressing a program button (if there is one on the device) also awakes the device.
 
 ### Debug page
 

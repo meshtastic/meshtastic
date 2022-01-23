@@ -6,13 +6,15 @@ sidebar_label: Installation
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-This library provides a command line interface for Meshtastic nodes and provides an easy API for sending and receiving messages over mesh radios, in addition to changing user settings. Using the command line is currently the most powerful. Events are delivered using a publish-subscribe model, and you can subscribe to only the message types you are interested in.
+This library provides a command line interface (CLI) for Meshtastic nodes and provides an easy API for sending and receiving messages over mesh radios, in addition to changing user settings. Using the command line is currently the most powerful. Events are delivered using a publish-subscribe model, and you can subscribe to only the message types you are interested in.
 
-[Full documentation](https://meshtastic.org/docs/software/python/python-installation) for the library, including examples, is available.
+The [Meshtastic-python repo](https://github.com/meshtastic/Meshtastic-python) and [API documentation](https://meshtastic-python.vercel.app/meshtastic/index.html) are excellent sources of information.
 
-If you wish to view the code or contribute to development of the python library or the command line interface, please visit the Meshtastic python <a href="https://meshtastic.org/docs/software/python/python-installation">GitHub page</a>.
+If you wish to view the code or contribute to development of the python library or the command line interface, please visit the Meshtastic python <a href="https://github.com/meshtastic/Meshtastic-python">GitHub page</a>.
 
-Installation is easily done through the [Python package installer pip](https://pypi.org/project/meshtastic/):
+There are standalone executables for Mac, Windows and Ubuntu if you do not want to install python and/or the python libraries required to run the mestastic CLI tool. See [Standalone](https://meshtastic.org/docs/software/python/python-standalone) for more information.
+
+Installation can also be easily done through the [Python package installer pip](https://pypi.org/project/meshtastic/):
 :::note
 You must use pip version 20 or later. To upgrade to the latest pip, do: `pip install --upgrade pip`
 :::
