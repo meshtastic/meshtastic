@@ -1,8 +1,8 @@
 ---
 id: ham
-title: Ham Operators
-sidebar_label: Ham Operators
-slug: /getting-started/ham
+title: Licensed (HAM) Operation
+sidebar_label: Licensed (HAM) Operation
+slug: /software/device/ham
 ---
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
