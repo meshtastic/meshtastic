@@ -4,4 +4,6 @@ title: Meshtastic URL
 sidebar_label: d
 ---
 
-You are here because reasons.
+# Error : Something happened
+
+Please go to [Android Usage](/docs/software/android/android-usage#join-a-channel) for more information.
