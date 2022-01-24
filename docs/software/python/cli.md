@@ -16,17 +16,17 @@ Shows a help message that describes the arguments.
 
 **Usage**
 
-``` shell
+```shell
 meshtastic -h
 ```
 
 ### --port PORT
 
-The port the Meshtastic device is connected to, i.e. /dev/ttyUSB0 or COM4. if unspecified, meshtastic will try to find it. Important to use when multiple devices are connected to ensure you call the command for the correct device.
+The port the Meshtastic device is connected to, i.e. `/dev/ttyUSB0`, `/dev/cu.wchusbserial`, `COM4` etc. if unspecified, meshtastic will try to find it. Important to use when multiple devices are connected to ensure you call the command for the correct device.
 
 **Usage**
 
-``` shell
+```shell
 meshtastic --port /dev/ttyUSB0 --info
 meshtastic --port COM4 --info
 ```
@@ -37,7 +37,7 @@ The hostname/ipaddr of the device to connect to (over TCP).
 
 **Usage**
 
-``` shell
+```shell
 meshtastic --host HOST
 ```
 
@@ -47,7 +47,7 @@ Logs device serial output to either 'stdout', 'none' or a filename to append to.
 
 **Usage**
 
-``` shell
+```shell
 meshtastic --port /dev/ttyUSB0 --seriallog
 ```
 
@@ -57,7 +57,7 @@ Read and display the radio config information.
 
 **Usage**
 
-``` shell
+```shell
 meshtastic --port /dev/ttyUSB0 --info
 ```
 
@@ -67,7 +67,7 @@ Prints a node list in a pretty, formatted table.
 
 **Usage**
 
-``` shell
+```shell
 meshtastic --nodes
 ```
 
@@ -77,7 +77,7 @@ Displays the QR code that corresponds to the current channel.
 
 **Usage**
 
-``` shell
+```shell
 meshtastic --qr
 ```
 
@@ -87,7 +87,7 @@ Gets a preferences field.
 
 **Usage**
 
-``` shell
+```shell
 meshtastic --get modem_config
 ```
 
@@ -97,7 +97,7 @@ Sets a preferences field.
 
 **Usage**
 
-``` shell
+```shell
 meshtastic --set region Unset
 ```
 
@@ -107,7 +107,7 @@ Set a channel URL.
 
 **Usage**
 
-``` shell
+```shell
 meshtastic --seturl https://www.meshtastic.org/c/GAMiIE67C6zsNmlWQ-KE1tKt0fRKFciHka-DShI6G7ElvGOiKgZzaGFyZWQ=
 ```
 
@@ -117,7 +117,7 @@ Set the specified channel index
 
 **Usage**
 
-``` shell
+```shell
 meshtastic --ch-index 1 --ch-disable
 ```
 
@@ -127,16 +127,17 @@ Add a secondary channel, you must specify a channel name.
 
 **Usage**
 
-``` shell
+```shell
 meshtastic --ch-add testing-channel
 ```
+
 ### --ch-del
 
 Delete the ch-index channel.
 
 **Usage**
 
-``` shell
+```shell
 meshtastic --ch-index 1 --ch-del
 ```
 
@@ -146,7 +147,7 @@ Enable the specified channel.
 
 **Usage**
 
-``` shell
+```shell
 meshtastic --ch-index 1 --ch-enable
 ```
 
@@ -156,7 +157,7 @@ Disable the specified channel.
 
 **Usage**
 
-``` shell
+```shell
 meshtastic --ch-index 1 --ch-disable
 ```
 
@@ -166,7 +167,7 @@ Set a channel parameter.
 
 **Usage**
 
-``` shell
+```shell
 meshtastic --ch-set id 1234 --ch-index 0
 ```
 
@@ -176,7 +177,7 @@ Change to the standard long-range (but slow) channel.
 
 **Usage**
 
-``` shell
+```shell
 meshtastic --ch-longslow
 ```
 
@@ -186,7 +187,7 @@ Change to the standard fast (but short range) channel.
 
 **Usage**
 
-``` shell
+```shell
 meshtastic --ch-shortfast
 ```
 
@@ -196,8 +197,8 @@ Set device owner name.
 
 **Usage**
 
-``` shell
-meshtastic --dest \!28979058 --set-owner "MeshyJohn"
+```shell
+meshtastic --dest '!28979058' --set-owner "MeshyJohn"
 ```
 
 ### --set-ham SET_HAM
@@ -206,7 +207,7 @@ Set licensed Ham ID and turn off encryption.
 
 **Usage**
 
-``` shell
+```shell
 meshtastic --set-ham KI1345
 ```
 
@@ -216,8 +217,8 @@ The destination node id for any sent commands
 
 **Usage**
 
-``` shell
-meshtastic --dest \!28979058 --set-owner "MeshyJohn"
+```shell
+meshtastic --dest '!28979058' --set-owner "MeshyJohn"
 ```
 
 ### --sendtext SENDTEXT
@@ -226,7 +227,7 @@ Send a text message. Can specify a channel index ('--ch-index') or a destination
 
 **Usage**
 
-``` shell
+```shell
 meshtastic --sendtext "Hello Mesh!"
 ```
 
@@ -236,7 +237,7 @@ Send a ping message (which requests a reply).
 
 **Usage**
 
-``` shell
+```shell
 meshtastic --sendping
 ```
 
@@ -246,8 +247,8 @@ Tell the destination node to reboot.
 
 **Usage**
 
-``` shell
-meshtastic --dest \!28979058 --reboot
+```shell
+meshtastic --dest '!28979058' --reboot
 ```
 
 ### --reply
@@ -256,7 +257,7 @@ Reply to received messages.
 
 **Usage**
 
-``` shell
+```shell
 meshtastic --reply
 ```
 
@@ -266,8 +267,8 @@ Set a particular GPIO # to 1 or 0.
 
 **Usage**
 
-``` shell
-meshtastic --port /dev/ttyUSB0 --gpio-wrb 4 1 --dest \!28979058
+```shell
+meshtastic --port /dev/ttyUSB0 --gpio-wrb 4 1 --dest '!28979058'
 ```
 
 ### --gpio-rd GPIO_RD
@@ -276,8 +277,8 @@ Read from a GPIO mask.
 
 **Usage**
 
-``` shell
-meshtastic --port /dev/ttyUSB0 --gpio-rd 0x10 --dest \!28979058
+```shell
+meshtastic --port /dev/ttyUSB0 --gpio-rd 0x10 --dest '!28979058'
 ```
 
 ### --gpio-watch GPIO_WATCH
@@ -286,8 +287,8 @@ Start watching a GPIO mask for changes.
 
 **Usage**
 
-``` shell
-meshtastic --port /dev/ttyUSB0 --gpio-watch 0x10 --dest \!28979058
+```shell
+meshtastic --port /dev/ttyUSB0 --gpio-watch 0x10 --dest '!28979058'
 ```
 
 ### --no-time
@@ -296,7 +297,7 @@ Suppress sending the current time to the mesh.
 
 **Usage**
 
-``` shell
+```shell
 meshtastic --port /dev/ttyUSB0 --no-time
 ```
 
@@ -306,7 +307,7 @@ Set device altitude (allows use without GPS).
 
 **Usage**
 
-``` shell
+```shell
 meshtastic --setalt 120
 ```
 
@@ -316,7 +317,7 @@ Set device latitude (allows use without GPS).
 
 **Usage**
 
-``` shell
+```shell
 meshtastic --setlat 25.2
 ```
 
@@ -326,7 +327,7 @@ Set device longitude (allows use without GPS).
 
 **Usage**
 
-``` shell
+```shell
 meshtastic --setlon -16.8
 ```
 
@@ -336,7 +337,7 @@ Show API library debug log messages.
 
 **Usage**
 
-``` shell
+```shell
 meshtastic --debug --info
 ```
 
@@ -346,7 +347,7 @@ Run stress test against all connected Meshtastic devices.
 
 **Usage**
 
-``` shell
+```shell
 meshtastic --test
 ```
 
@@ -356,7 +357,7 @@ BLE mac address to connect to (BLE is not yet supported for this tool).
 
 **Usage**
 
-``` shell
+```shell
 meshtastic --ble "83:38:92:32:37:48"
 ```
 
@@ -366,7 +367,7 @@ Don't start the API, just function as a dumb serial terminal. Probably not very 
 
 **Usage**
 
-``` shell
+```shell
 meshtastic --noproto
 ```
 
@@ -376,7 +377,7 @@ Show program's version number and exit.
 
 **Usage**
 
-``` shell
+```shell
 meshtastic --version
 ```
 
@@ -386,7 +387,7 @@ Configure all of the radio configuration from a yaml file.
 
 **Usage**
 
-``` shell
+```shell
 meshtastic --configure example_config.yaml
 ```
 
@@ -398,12 +399,13 @@ To create to a file with the connected device's configuration, this command's ou
 
 **Usage**
 
-``` shell
+```shell
 meshtastic --export-config > example_config.yaml
 ```
+
 **Usage**
 
-``` shell
+```shell
 meshtastic --export-config
 ```
 
@@ -413,7 +415,7 @@ Print out info that would be helpful supporting any issues.
 
 **Usage**
 
-``` shell
+```shell
 meshtastic --support
 ```
 
