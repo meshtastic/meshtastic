@@ -16,8 +16,6 @@ By changing these settings, you are self certifying that you are licensed to ope
 This written US only, may or may not be applicable elsewhere.
 :::
 
-<!--- Potential TODO Add tabs for other countries/regions --->
-
 Meshtastic can be used by both unlicensed people and licensed operators. If you use Meshtastic with your ham radio license, there are additional privileges and restrictions to consider.
 
 | Privileges | Restrictions |
