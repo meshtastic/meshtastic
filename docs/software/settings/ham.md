@@ -24,8 +24,6 @@ Meshtastic can be used by both unlicensed people and licensed operators. If you 
 |:----------:|:------------:|
 | <ul><li>Additional Power</li><li>Higher gain antennas</li></ul> | <ul><li>Unencrypted</li><li>Identified with your ID</li></ul> |
 
-
-
 ## Settings
 
 | Setting | Acceptable Values | Default |
@@ -35,6 +33,14 @@ Meshtastic can be used by both unlicensed people and licensed operators. If you 
 ### set-ham
 
 If you are a licensed HAM operator, you can set this variable to be your ID.
+
+## Details
+
+Toggling `set-ham` changes your device settings in the following ways.
+
+| Setting | `set-ham` Default | Normal Default |
+| :-----: | :-----------------: | :------------: |
+
 
 ## Examples
 
