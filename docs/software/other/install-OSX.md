@@ -4,7 +4,7 @@ title: OSX Install
 sidebar_label: OSX
 ---
 
-(Here's some quick tips on installing the device code from OS-X, thanks to @android606)
+(Here's some quick tips and [troubleshooting](#troubleshooting) on installing the device code from OS-X, thanks to @android606)
 
 First time using LoRa for anything, just checking it out.
 
@@ -31,3 +31,31 @@ I got it working fairly smoothly, but there were two hang-ups I thought I'd ment
    [driver for the CP210X USB to UART bridge from Silicon Labs](https://www.silabs.com/products/development-tools/software/usb-to-uart-bridge-vcp-drivers)
 
 After I installed that, esptool.py was completely happy and the firmware loaded right up.
+
+### Troubleshooting
+
+**1. Running into trouble when installing `esptool` via brew**
+
+- Make sure that `openssl` is installed first:
+
+```
+brew install openssl
+```
+
+- Set some flags in your bash/zsh/whichever profile for `esptool` to install [cryptography](https://cryptography.io/en/latest/installation/) as a dependency correctly:
+
+```
+export LDFLAGS="-L/usr/local/opt/openssl/lib"
+export CPPFLAGS="-I/usr/local/opt/openssl/include"
+export PKG_CONFIG_PATH="/usr/local/opt/openssl/lib/pkgconfig"
+```
+
+- attempt a reinstall of esptool
+
+```
+pip3 install --upgrade esptool
+```
+
+**2. I can't see the usb device as `/dev/tty[something]`:**
+
+- Driver config successfully tested on Big Sur v11.6.2: https://github.com/WCHSoftGroup/ch34xser_macos
