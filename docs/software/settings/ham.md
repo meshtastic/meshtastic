@@ -38,7 +38,10 @@ Toggling `set-ham` changes your device settings in the following ways.
 
 | Setting | `set-ham` Default | Normal Default |
 | :-----: | :-----------------: | :------------: |
-
+| `is_licensed` (Protobuf) | `true` | `false` |
+| `long_name` (Protobuf) | `id` | User Defined |
+| `psk` (Protobuf) | `""` | See [Channel Settings - psk](channel#psk) |
+| `short_name` (Protobuf) | TODO | User Defined |
 
 ## Examples
 
