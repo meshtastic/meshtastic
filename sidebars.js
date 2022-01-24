@@ -114,6 +114,7 @@ module.exports = {
       "software/settings/overview",
       "software/settings/channel",
       "software/settings/gps",
+      "software/settings/ham",
       "software/settings/mqtt",
       "software/settings/power",
       "software/settings/router",
