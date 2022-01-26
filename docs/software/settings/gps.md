@@ -28,6 +28,7 @@ GPS is provided by either the device or your paired phone. More than likely, you
 | location_share | `LocUnset`, `LocEnabled`, `LocDisabled` | `LocUnset` |
 | position_broadcast_secs | `integer` (seconds) | `0` (see note) |
 | position_broadcast_smart | `true`, `false` | `false` |
+| position_flags | `POS_UNDEFINED`, `POS_ALTITUDE`, `POS_ALT_MSL`, `POS_GEO_SEP`, `POS_DOP`, `POS_HVDOP`, `PDOP`, `POS_BATTERY`, `POS_SATINVIEW`, `POS_SEQ_NOS`, `POS_TIMESTAMP` | `POS_UNDEFINED` |
 
 :::note
 On `gps_attempt_time`, `gps_update_interval`, & `position_broadcast_secs` when you set these to `0` you are not disabling these features.
@@ -124,6 +125,23 @@ The table below is a summary computed values from the algorithm.
 | Short Range / Fast | 30 | 30 |
 
 Note: A person walking in a straight line will take about 90 seconds to travel 150 meters. That walking speed estimate was used as the baseline for the formula used.
+
+### position_flags
+
+Bit field of boolean configuration options for POSITION messages (bitwise OR of PositionFlags)
+
+| Value | Description |
+| :---: | :---------: |
+| POS_UNDEFINED | Required for compilation |
+| POS_ALTITUDE | Include an altitude value (if available) |
+| POS_ALT_MSL | Altitude value is MSL |
+| POS_GEO_SEP | Include geoidal separation |
+| POS_DOP | Include the DOP value ; PDOP used by default, see below |
+| POS_HVDOP | If POS_DOP set, send separate HDOP / VDOP values instead of | PDOP
+| POS_BATTERY | Include battery level |
+| POS_SATINVIEW | Include number of "satellites in view" |
+| POS_SEQ_NOS | Include a sequence number incremented per packet |
+| POS_TIMESTAMP | Include positional timestamp (from GPS solution) |
 
 ## Examples
 
