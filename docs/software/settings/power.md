@@ -51,7 +51,7 @@ When you the following settings to `0` they assume the following defaults:
 - `screen_on_secs`: 1 minute
 - `sds_secs`: 1 year
 - `wait_bluetooth_secs`: 1 minute
-  :::
+:::
 
 ### charge_current
 
