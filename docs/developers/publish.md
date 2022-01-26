@@ -54,32 +54,41 @@ TBD
 
 ## Python
 
+A python release consists of publishing the release to PyPi https://pypi.org/project/meshtastic/ as well as producing single-executable files that are downloadable from Github https://github.com/meshtastic/Meshtastic-python/releases.
+
 ### Pre-requisites
 
-* Python Packages
-* * pip3 install pdoc3
-* * pip3 install pygatt
-* * pip3 install pandoc
-* * pip install twine
-* * pip3 install -r requirements.txt
-* https://pandoc.org/installing.html
-* nanopb 0.4.4 installed
+No pre-requisites are needed locally to make a release. All builds are done via Github Actions currently.
+
+To test/validate, you will need to run:
+
+```
+pip3 install -r requirements.txt
+pip install .
+```
+
 
 ### Instructions
 
-* Update protobufs
-* * cd proto
-* * git checkout master && git pull
-* * cd ..
-* * git add proto
-* * git commit -m "updating proto submodule to latest"
-* run bin/regen-protos.sh
-* bump the version in setup.py
-* run bin/test-release.sh
-* * Ensure no errors.
-* run bin/upload-release.sh
+* Update protobufs by running the "Update protobufs" workflow in Actions: https://github.com/meshtastic/Meshtastic-python/actions/workflows/update_protobufs.yml
 
- I usually just edit setup.py to bump the version number, then run "bin/upload-release.sh" (though you should use bin/test-release.sh for the first time - which is just a dry deploy to the pypi test server).  This script does the build (including new docs - which will end up in the git checkin) and upload to pypi.  Then I do a git commit/push and tag wit the version number.
+* run the "smoke1" test (optional):
+
+connect one device to the serial port and run:
+
+```
+pytest -m smoke1
+```
+
+* run unit tests: `pytest` (optional)
+
+* run bin/test-release.sh (optional)
+
+* bump the version in setup.py
+
+* Run the "Make Release" workflow in Actions: https://github.com/meshtastic/Meshtastic-python/actions/workflows/release.yml
+
+* After the "Make Release" is done, go into Releases: https://github.com/meshtastic/Meshtastic-python/releases There should be a draft. Add the title, update the "What's Changed" (Tip: Click on the "Auto-generate release notes" button.). Uncheck the "This is a pre-release" (if applicable).
 
 :::note
 You need permissions in the GitHub project to make a build
