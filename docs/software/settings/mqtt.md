@@ -28,6 +28,7 @@ Be sure to checkout this [MQTT](https://meshtastic.org/docs/software/other/mqtt)
 |    mqtt_disabled    |  `true`, `false`  | `false` |
 |     mqtt_server     |     `string`      |  `""`   |
 |    mqtt_password    |     `string`      |  `""`   |
+|    mqtt_username    |     `string`      |  `""`   |
 |  is_uplink_enabled  |  `true`, `false`  | `false` |
 | is_downlink_enabled |  `true`, `false`  | `false` |
 
@@ -42,6 +43,10 @@ The server to use for our MQTT global message gateway feature. If not set, the d
 ### mqtt_password
 
 MQTT password to use (most useful for a custom MQTT server). If using a custom server, this will be honoured even if empty. If using the default server, this will only be honoured if set, otherwise the device will use the default password (TODO - find default password).
+
+### mqtt_username
+
+MQTT username to use (most useful for a custom MQTT server). If using a custom server, this will be honoured even if empty. If using the default server, this will only be honoured if set, otherwise the device will use the default username (TODO - find default username).
 
 ### is_uplink_enabled
 
