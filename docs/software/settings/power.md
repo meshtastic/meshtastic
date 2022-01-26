@@ -25,20 +25,20 @@ For a description and more information on what exactly all of these mean, please
 
 ## Settings
 
-|        Setting        |                                                                        Acceptable Values                                                                        |    Default     |
-| :-------------------: | :-------------------------------------------------------------------------------------------------------------------------------------------------------------: | :------------: | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-|    charge_current     | `MAUnset`, `MA100`, `MA190`, `MA280`, `MA360`, `MA450`, `MA550`, `MA630`, `MA700`, `MA780`, `MA880`, `MA960`, `MA1000`, `MA1080`, `MA1160`, `MA1240`, `MA1320`: |   `MAUnset`    |
-|     is_low_power      |                                                                         `true`, `false`                                                                         |    `false`     | If set, we are powered from a low-current source (i.e. solar), so even if it looks like we have power flowing in we should try to minimize power consumption as much as possible. YOU DO NOT NEED TO SET THIS IF YOU'VE set is_router (it is implied in that case). |
-|       is_router       |                                                                         `true`, `false`                                                                         |    `false`     |
-|        ls_secs        |                                                                       `integer` (seconds)                                                                       | `0` (see note) |
-| mesh_sds_timeout_secs |                                                                       `integer` (seconds)                                                                       |      `0`       |
-|     min_wake_secs     |                                                                       `integer` (seconds)                                                                       |      `0`       |
-| phone_sds_timeout_sec |                                                                       `integer` (seconds)                                                                       |      `0`       | Power management state machine option. See the [power page](/docs/software/other/power) for details. 0 for default of two hours, use the value of MAXUINT or 4294967295 to disable                                                                                  |
-|  phone_timeout_secs   |                                                                       `integer` (seconds)                                                                       |      `0`       |
-|    screen_on_secs     |                                                                       `integer` (seconds)                                                                       |      `0`       |
-|       sds_secs        |                                                                       `integer` (seconds)                                                                       |      `0`       |
-|  send_owner_interval  |                                                             `integer` (sent every x network pings)                                                              |      `4`       |
-|  wait_bluetooth_secs  |                                                                       `integer` (seconds)                                                                       |      `0`       |
+| Setting | Acceptable Values | Default |
+| :-----: | :---------------: | :-----: |
+| charge_current | `MAUnset`, `MA100`, `MA190`, `MA280`, `MA360`, `MA450`, `MA550`, `MA630`, `MA700`, `MA780`, `MA880`, `MA960`, `MA1000`, `MA1080`, `MA1160`, `MA1240`, `MA1320`: | `MAUnset` |
+| is_low_power | `true`, `false` | `false` |
+| is_router | `true`, `false` | `false` |
+| ls_secs | `integer` (seconds) | `0` |
+| mesh_sds_timeout_secs | `integer` (seconds) | `0` |
+| min_wake_secs | `integer` (seconds) | `0` |
+| phone_sds_timeout_sec | `integer` (seconds) | `0` |
+| phone_timeout_secs | `integer` (seconds) | `0` |
+| screen_on_secs | `integer` (seconds) | `0` |
+| sds_secs | `integer` (seconds) | `0` |
+| send_owner_interval | `integer` (sent every x network pings) | `4` |
+| wait_bluetooth_secs | `integer` (seconds) | `0` |
 
 :::note
 When you the following settings to `0` they assume the following defaults:
