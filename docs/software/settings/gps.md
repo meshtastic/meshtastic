@@ -19,6 +19,7 @@ GPS is provided by either the device or your paired phone. More than likely, you
 | Setting | Acceptable Values | Default |
 | :-----: | :---------------: | :-----: |
 | fixed_position | `true`, `false` | `false` |
+| gps_accept_2d | `true`, `false` | `false` |
 | gps_attempt_time | `integer` (seconds) | `0` (see note) |
 | gps_operation | `GpsOpUnset`, ~~`GpsOpStationary`~~, `GpsOpMobile`, `GpsOpTimeOnly`, `GpsOpDisabled` | `GpsOpUnset` |
 | gps_update_interval | `integer` (seconds) | `0` (see note) |
@@ -37,6 +38,10 @@ If you wish to disable any GPS features, see below for more information.
 ### fixed_position
 
 If set, this node is at a fixed position. The device will generate GPS updates at the regular `gps_update_interval`, but use whatever the last lat/lon/alt it saved for the node. The lat/lon/alt can be set by an internal GPS or with the help of the mobile device's GPS.
+
+### gps_accept_2d
+
+Determines whether the device should accept 2D GPS fixes. By default, only 3D fixes are accepted (during a 2D fix, altitude values are unreliable and will be excluded).
 
 ### gps_attempt_time
 
@@ -84,7 +89,7 @@ The GPS updates will be sent out every `position_broadcast_secs`, with either th
 
 Complements `position_broadcast_secs` (doesn't override that setting) but will apply an algorithm to more frequently update your mesh network if you are in motion and then throttle it down when you are standing still. If you use this feature, it's best to leave `position_broadcast_secs` at the default.
 
-`position_broadcast_smart` will calculate an ideal position update interval based on the data rate of your selected channel configuration. 
+`position_broadcast_smart` will calculate an ideal position update interval based on the data rate of your selected channel configuration.
 
 As an example, if you configure your radio to use **Long Range / Fast**, if you have traveled at least 144 meters and it's been at least 61 seconds since the last position update, a new position broadcast will be sent out. If you've moved less than 144 meters, we will broadcast the position based on the value of `position_broadcast_secs`.
 
