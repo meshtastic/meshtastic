@@ -28,6 +28,7 @@ For a description and more information on what exactly all of these mean, please
 | Setting | Acceptable Values | Default |
 | :-----: | :---------------: | :-----: |
 | charge_current | `MAUnset`, `MA100`, `MA190`, `MA280`, `MA360`, `MA450`, `MA550`, `MA630`, `MA700`, `MA780`, `MA880`, `MA960`, `MA1000`, `MA1080`, `MA1160`, `MA1240`, `MA1320`: | `MAUnset` |
+| is_always_powered | `true`, `false` | `false` |
 | is_low_power | `true`, `false` | `false` |
 | is_router | `true`, `false` | `false` |
 | ls_secs | `integer` (seconds) | `0` |
@@ -56,6 +57,10 @@ When you the following settings to `0` they assume the following defaults:
 ### charge_current
 
 Sets the current of the battery charger
+
+### is_always_powered
+
+Circumvents the logic block for determining whether the device is powered or not. Useful for devices with finicky ADC issues on the battery sense pins.
 
 ### is_low_power
 
