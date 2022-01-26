@@ -15,12 +15,18 @@ import TabItem from '@theme/TabItem';
 
 | Setting | Acceptable Values | Default |
 | :-----: | :---------------: | :-----: |
+| auto_screen_carousel_secs | `integer` (seconds) | `0` |
 | debug_log_enabled | `true`, `false` | `false` |
 | factory_reset | `true`, `false` | `false` |
 | frequency_offset | real numbers | `0` |
 | ignore_incoming | `string` – list of node nums to ignore | `0` |
 | serial_disabled | `true`, `false` | `false` |
 | hop_limit | real numbers | 0|
+
+
+### auto_screen_carousel_secs
+
+Automatically toggles to the next page on the screen like a carousel, based the specified interval in seconds. Potentially useful for devices without user buttons.
 
 ### debug_log_enabled
 
