@@ -23,6 +23,7 @@ Because of the increased network traffic for this overhead, it's not advised to 
 | :-----: | :---------------: | :-----: |
 | store_forward_plugin_enabled | `true`, `false` | `false` |
 | store_forward_plugin_heartbeat | | |
+| store_forward_plugin_history_return_max | | |
 | store_forward_plugin_records | integer | `0` |
 
 ### store_forward_plugin_enabled
@@ -30,6 +31,10 @@ Because of the increased network traffic for this overhead, it's not advised to 
 Enables the plugin.
 
 ### store_forward_plugin_heartbeat
+
+<!--- TODO --->
+
+### store_forward_plugin_history_return_max
 
 <!--- TODO --->
 
