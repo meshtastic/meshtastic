@@ -27,6 +27,7 @@ Be sure to checkout this [MQTT](https://meshtastic.org/docs/software/other/mqtt)
 | :-----------------: | :---------------: | :-----: |
 |    mqtt_disabled    |  `true`, `false`  | `false` |
 |     mqtt_server     |     `string`      |  `""`   |
+|    mqtt_password    |     `string`      |  `""`   |
 |  is_uplink_enabled  |  `true`, `false`  | `false` |
 | is_downlink_enabled |  `true`, `false`  | `false` |
 
@@ -37,6 +38,10 @@ If a meshtastic node is able to reach the internet it will normally attempt to g
 ### mqtt_server
 
 The server to use for our MQTT global message gateway feature. If not set, the default server will be used
+
+### mqtt_password
+
+MQTT password to use (most useful for a custom MQTT server). If using a custom server, this will be honoured even if empty. If using the default server, this will only be honoured if set, otherwise the device will use the default password (TODO - find default password).
 
 ### is_uplink_enabled
 
