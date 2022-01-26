@@ -23,6 +23,7 @@ GPS is provided by either the device or your paired phone. More than likely, you
 | gps_attempt_time | `integer` (seconds) | `0` (see note) |
 | gps_format | `GpsFormatDec`, `GpsFormatDMS`, `GpsFormatUTM`, `GpsFormatMGRS`, `GpsFormatOLC`, `GpsFormatOSGR` | `GpsFormatDec` |
 | gps_operation | `GpsOpUnset`, ~~`GpsOpStationary`~~, `GpsOpMobile`, `GpsOpTimeOnly`, `GpsOpDisabled` | `GpsOpUnset` |
+| gps_max_dop | `integer` | `0` |
 | gps_update_interval | `integer` (seconds) | `0` (see note) |
 | location_share | `LocUnset`, `LocEnabled`, `LocDisabled` | `LocUnset` |
 | position_broadcast_secs | `integer` (seconds) | `0` (see note) |
@@ -60,6 +61,10 @@ Determines how the GPS coordinates are displayed on the OLED screen.
 ### gps_attempt_time
 
 Determines the amount of time that a GPS fix should be allowed to take. The default is every 30 seconds. If you increase this value, it will allow the device that amount of time in seconds to acquire coordinates. If the device is unable to get a fix, it will turn off until the next interval. GPS coordinates are updated every [`gps_update_interval`](#gps_update_interval) seconds.
+
+### gps_max_dop
+
+Determines GPS maximum DOP accepted (dilution of precision) Set a rejection threshold for GPS readings based on their precision, relative to the GPS rated accuracy (which is typically ~3m) Solutions above this value will be treated as retryable errors! Useful range is between 1 - 64 (3m - <~200m) By default (if zero), accept all GPS readings
 
 ### gps_operation
 
