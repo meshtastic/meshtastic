@@ -21,6 +21,7 @@ GPS is provided by either the device or your paired phone. More than likely, you
 | fixed_position | `true`, `false` | `false` |
 | gps_accept_2d | `true`, `false` | `false` |
 | gps_attempt_time | `integer` (seconds) | `0` (see note) |
+| gps_format | `GpsFormatDec`, `GpsFormatDMS`, `GpsFormatUTM`, `GpsFormatMGRS`, `GpsFormatOLC`, `GpsFormatOSGR` | `GpsFormatDec` |
 | gps_operation | `GpsOpUnset`, ~~`GpsOpStationary`~~, `GpsOpMobile`, `GpsOpTimeOnly`, `GpsOpDisabled` | `GpsOpUnset` |
 | gps_update_interval | `integer` (seconds) | `0` (see note) |
 | location_share | `LocUnset`, `LocEnabled`, `LocDisabled` | `LocUnset` |
@@ -42,6 +43,19 @@ If set, this node is at a fixed position. The device will generate GPS updates a
 ### gps_accept_2d
 
 Determines whether the device should accept 2D GPS fixes. By default, only 3D fixes are accepted (during a 2D fix, altitude values are unreliable and will be excluded).
+
+### gps_format
+
+Determines how the GPS coordinates are displayed on the OLED screen.
+
+| Value | Description |
+| :---: | :---------: |
+| GpsFormatDec | GPS coordinates are displayed in the normal decimal degrees format: DD.DDDDDD DDD.DDDDDD |
+| GpsFormatDMS | GPS coordinates are displayed in the degrees minutes seconds format: DD°MM'SS"C DDD°MM'SS"C, where C is the compass point representing the locations quadrant |
+| GpsFormatUTM | GPS coordinates are displayed in Universal Transverse Mercator format: ZZB EEEEEE NNNNNNN, where Z is zone, B is band, E is easting, N is northing |
+| GpsFormatMGRS | GPS coordinates are displayed in Military Grid Reference System format: ZZB CD EEEEE NNNNN, where Z is zone, B is band, C is the east 100k square, D is the north 100k square, E is easting, N is northing |
+| GpsFormatOLC | GPS coordinates are displayed in Open Location Code (aka Plus Codes) |
+| GpsFormatOSGR | GPS coordinates are displayed in Ordnance Survey Grid Reference (the National Grid System of the UK). Format: AB EEEEE NNNNN, where A is the east 100k square, B is the north 100k square, E is the easting, N is the northing |
 
 ### gps_attempt_time
 
