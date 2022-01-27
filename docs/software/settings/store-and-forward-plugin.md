@@ -22,11 +22,26 @@ Because of the increased network traffic for this overhead, it's not advised to 
 | Setting | Acceptable Values | Default |
 | :-----: | :---------------: | :-----: |
 | store_forward_plugin_enabled | `true`, `false` | `false` |
+| store_forward_plugin_heartbeat | `true`, `false` | TODO - look up default setting |
+| store_forward_plugin_history_return_max | `integer` | `0` |
+| store_forward_plugin_history_return_window | `integer` | `0` |
 | store_forward_plugin_records | integer | `0` |
 
 ### store_forward_plugin_enabled
 
 Enables the plugin.
+
+### store_forward_plugin_heartbeat
+
+<!--- TODO --->
+
+### store_forward_plugin_history_return_max
+
+<!--- TODO --->
+
+### store_forward_plugin_history_return_window
+
+<!--- TODO --->
 
 ### store_forward_plugin_records
 

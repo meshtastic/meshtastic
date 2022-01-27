@@ -19,12 +19,16 @@ GPS is provided by either the device or your paired phone. More than likely, you
 | Setting | Acceptable Values | Default |
 | :-----: | :---------------: | :-----: |
 | fixed_position | `true`, `false` | `false` |
+| gps_accept_2d | `true`, `false` | `false` |
 | gps_attempt_time | `integer` (seconds) | `0` (see note) |
+| gps_format | `GpsFormatDec`, `GpsFormatDMS`, `GpsFormatUTM`, `GpsFormatMGRS`, `GpsFormatOLC`, `GpsFormatOSGR` | `GpsFormatDec` |
 | gps_operation | `GpsOpUnset`, ~~`GpsOpStationary`~~, `GpsOpMobile`, `GpsOpTimeOnly`, `GpsOpDisabled` | `GpsOpUnset` |
+| gps_max_dop | `integer` | `0` |
 | gps_update_interval | `integer` (seconds) | `0` (see note) |
 | location_share | `LocUnset`, `LocEnabled`, `LocDisabled` | `LocUnset` |
 | position_broadcast_secs | `integer` (seconds) | `0` (see note) |
 | position_broadcast_smart | `true`, `false` | `false` |
+| position_flags | `POS_UNDEFINED`, `POS_ALTITUDE`, `POS_ALT_MSL`, `POS_GEO_SEP`, `POS_DOP`, `POS_HVDOP`, `PDOP`, `POS_BATTERY`, `POS_SATINVIEW`, `POS_SEQ_NOS`, `POS_TIMESTAMP` | `POS_UNDEFINED` |
 
 :::note
 On `gps_attempt_time`, `gps_update_interval`, & `position_broadcast_secs` when you set these to `0` you are not disabling these features.
@@ -38,9 +42,30 @@ If you wish to disable any GPS features, see below for more information.
 
 If set, this node is at a fixed position. The device will generate GPS updates at the regular `gps_update_interval`, but use whatever the last lat/lon/alt it saved for the node. The lat/lon/alt can be set by an internal GPS or with the help of the mobile device's GPS.
 
+### gps_accept_2d
+
+Determines whether the device should accept 2D GPS fixes. By default, only 3D fixes are accepted (during a 2D fix, altitude values are unreliable and will be excluded).
+
+### gps_format
+
+Determines how the GPS coordinates are displayed on the OLED screen.
+
+| Value | Description |
+| :---: | :---------: |
+| GpsFormatDec | GPS coordinates are displayed in the normal decimal degrees format: DD.DDDDDD DDD.DDDDDD |
+| GpsFormatDMS | GPS coordinates are displayed in the degrees minutes seconds format: DD°MM'SS"C DDD°MM'SS"C, where C is the compass point representing the locations quadrant |
+| GpsFormatUTM | GPS coordinates are displayed in Universal Transverse Mercator format: ZZB EEEEEE NNNNNNN, where Z is zone, B is band, E is easting, N is northing |
+| GpsFormatMGRS | GPS coordinates are displayed in Military Grid Reference System format: ZZB CD EEEEE NNNNN, where Z is zone, B is band, C is the east 100k square, D is the north 100k square, E is easting, N is northing |
+| GpsFormatOLC | GPS coordinates are displayed in Open Location Code (aka Plus Codes) |
+| GpsFormatOSGR | GPS coordinates are displayed in Ordnance Survey Grid Reference (the National Grid System of the UK). Format: AB EEEEE NNNNN, where A is the east 100k square, B is the north 100k square, E is the easting, N is the northing |
+
 ### gps_attempt_time
 
 Determines the amount of time that a GPS fix should be allowed to take. The default is every 30 seconds. If you increase this value, it will allow the device that amount of time in seconds to acquire coordinates. If the device is unable to get a fix, it will turn off until the next interval. GPS coordinates are updated every [`gps_update_interval`](#gps_update_interval) seconds.
+
+### gps_max_dop
+
+Determines GPS maximum DOP accepted (dilution of precision) Set a rejection threshold for GPS readings based on their precision, relative to the GPS rated accuracy (which is typically ~3m) Solutions above this value will be treated as retryable errors! Useful range is between 1 - 64 (3m - <~200m) By default (if zero), accept all GPS readings
 
 ### gps_operation
 
@@ -84,7 +109,7 @@ The GPS updates will be sent out every `position_broadcast_secs`, with either th
 
 Complements `position_broadcast_secs` (doesn't override that setting) but will apply an algorithm to more frequently update your mesh network if you are in motion and then throttle it down when you are standing still. If you use this feature, it's best to leave `position_broadcast_secs` at the default.
 
-`position_broadcast_smart` will calculate an ideal position update interval based on the data rate of your selected channel configuration. 
+`position_broadcast_smart` will calculate an ideal position update interval based on the data rate of your selected channel configuration.
 
 As an example, if you configure your radio to use **Long Range / Fast**, if you have traveled at least 144 meters and it's been at least 61 seconds since the last position update, a new position broadcast will be sent out. If you've moved less than 144 meters, we will broadcast the position based on the value of `position_broadcast_secs`.
 
@@ -100,6 +125,23 @@ The table below is a summary computed values from the algorithm.
 | Short Range / Fast | 30 | 30 |
 
 Note: A person walking in a straight line will take about 90 seconds to travel 150 meters. That walking speed estimate was used as the baseline for the formula used.
+
+### position_flags
+
+Bit field of boolean configuration options for POSITION messages (bitwise OR of PositionFlags)
+
+| Value | Description |
+| :---: | :---------: |
+| POS_UNDEFINED | Required for compilation |
+| POS_ALTITUDE | Include an altitude value (if available) |
+| POS_ALT_MSL | Altitude value is MSL |
+| POS_GEO_SEP | Include geoidal separation |
+| POS_DOP | Include the DOP value ; PDOP used by default, see below |
+| POS_HVDOP | If POS_DOP set, send separate HDOP / VDOP values instead of | PDOP
+| POS_BATTERY | Include battery level |
+| POS_SATINVIEW | Include number of "satellites in view" |
+| POS_SEQ_NOS | Include a sequence number incremented per packet |
+| POS_TIMESTAMP | Include positional timestamp (from GPS solution) |
 
 ## Examples
 
