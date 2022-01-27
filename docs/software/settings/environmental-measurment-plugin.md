@@ -59,15 +59,15 @@ Specify the preferred GPIO Pin for sensor readings. May not be needed if using I
 
 Specify the sensor type.
 
-| Value | Description |
-| :---: | :---------: |
-| `0` | DHT11 |
-| `1` | DS18B20 (Dallas 1-wire) |
-| `2` | DHT12 |
-| `3` | DHT21 |
-| `4` | DHT22 |
-| `5` | BME280 |
-| `6` | BME680 |
+| Value | Description | Sensor Features |
+| :---: | :---------: | :-------------: |
+| `0` | DHT11 | TODO |
+| `1` | DS18B20 (Dallas 1-wire) | TODO |
+| `2` | DHT12 | TODO |
+| `3` | DHT21 | TODO |
+| `4` | DHT22 | TODO |
+| `5` | BME280 | TODO |
+| `6` | BME680 | TODO |
 
 ### environmental_measurement_plugin_update_interval
 
