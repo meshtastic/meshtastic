@@ -29,12 +29,12 @@ Be sure to checkout this [MQTT](https://meshtastic.org/docs/software/other/mqtt)
 | mqtt_server | `string` | `""` |
 | mqtt_password | `string` | `""` |
 | mqtt_username | `string` | `""` |
-| is_uplink_enabled | `true`, `false` | `false` |
-| is_downlink_enabled | `true`, `false` | `false` |
+| uplink_enabled | `true`, `false` | `false` |
+| downlink_enabled | `true`, `false` | `false` |
 
 ### mqtt_disabled
 
-If a meshtastic node is able to reach the internet it will normally attempt to gateway any channels that are marked as `is_uplink_enabled` or `is_downlink_enabled`. But if this flag is set, all MQTT features will be disabled and no servers will be contacted.
+If a meshtastic node is able to reach the internet it will normally attempt to gateway any channels that are marked as `uplink_enabled` or `downlink_enabled`. But if this flag is set, all MQTT features will be disabled and no servers will be contacted.
 
 ### mqtt_server
 
@@ -48,11 +48,11 @@ MQTT password to use (most useful for a custom MQTT server). If using a custom s
 
 MQTT username to use (most useful for a custom MQTT server). If using a custom server, this will be honoured even if empty. If using the default server, this will only be honoured if set, otherwise the device will use the default username (TODO - find default username).
 
-### is_uplink_enabled
+### uplink_enabled
 
 This is a channel specific setting. If your channel has this set to `true` and you are connected to WiFi, the device will forward along messages to whatever MQTT server is specified in `mqtt_server`.
 
-### is_downlink_enabled
+### downlink_enabled
 
 This is a channel specific setting. If your channel has this set to `true` and you are connected to WiFi, the device will forward along messages from the MQTT server to the mesh from this device.
 
