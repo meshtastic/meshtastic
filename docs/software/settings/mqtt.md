@@ -50,11 +50,11 @@ MQTT username to use (most useful for a custom MQTT server). If using a custom s
 
 ### uplink_enabled
 
-This is a channel specific setting. If your channel has this set to `true` and you are connected to WiFi, the device will forward along messages to whatever MQTT server is specified in `mqtt_server`.
+This is a channel specific setting. If your channel has this set to `true` and you are connected to WiFi, the device will forward along messages to whatever MQTT server is specified in `mqtt_server`. See [Channel Settings](channel).
 
 ### downlink_enabled
 
-This is a channel specific setting. If your channel has this set to `true` and you are connected to WiFi, the device will forward along messages from the MQTT server to the mesh from this device.
+This is a channel specific setting. If your channel has this set to `true` and you are connected to WiFi, the device will forward along messages from the MQTT server to the mesh from this device. See [Channel Settings](channel).
 
 ## Details
 
