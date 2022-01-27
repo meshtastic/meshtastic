@@ -55,8 +55,8 @@ If you have at least two radios with the Meshtastic firmware, you may consider c
 - Ensure you can run `meshtastic --info`.
 - Ensure the region is set appropriately. If the radios are 915 MHz and you are in the US, then no region changes/settings are necessary. If you are in another region, you may need to run something like: `meshtastic --set region EU865`.
 - Send a message `meshtastic --sendtext hello1`
-- The radio connected via USB should show the message almost instantly.
-- Other radios may take a few seconds before they show the message. You may need to press one of the buttons on the other radio to see if the message arrived.
+- Note: The radio connected via USB will not show messages sent.
+- After a few seconds the other radios will show the message. You may need to press one of the buttons on the other radio to see if the message arrived.
 - Run `meshtastic --nodes` to see if other nodes show in the display.
 - Messages sent from the USB radio should be sent to the other radio(s) via LoRa. The default settings should allow this to work.
 
@@ -68,9 +68,9 @@ The Android app is currently more robust than the iOS app. But, they both should
 - Start Meshtastic app
 - Connect to radio(s) from inside the app
 - Pair with radio(s). A paring code should show on the radio. Enter that value when prompted to pair a Bluetooth device.
-- Note: May want to set the Bluetooth timeout (ex: `meshtastic --set wait_bluetooth_secs 28800`)
 - Send message(s) from inside the app.
-- Verify that all radios are receiving the messages. Might have to click on the button on the radio to see most recent message.
+- Note: The radio connected via Bluetooth will not show messages sent.
+- Verify that all other radios are receiving the message(s). Might have to click on the button on the radio to see most recent message.
 
 ## A good third test (connect via Wifi/HTTP)
 
@@ -78,7 +78,8 @@ The Android app is currently more robust than the iOS app. But, they both should
 - Reboot radio by either removing power or pressing the power button.
 - Click on the button to cycle through to the screen with IP address and verify that there was a connection to the Wifi access point.
 - Send message(s). `meshtastic --host 192.168.1.200 --sendtext hello`
-- Verify that all radios are receiving the messages. Might have to click on the button on the radio(s) to see most recent message.
+- Note: The radio connected via Wifi will not show messages sent.
+- Verify that all radios are receiving the message(s). Might have to click on the button on the radio(s) to see most recent message.
 - Open up a browser to http://meshtastic.local to view the web UI (currently under development). You may need to open http://meshtastic.local/static )
 - If you want to switch back to Bluetooth, you will need to set the _wifi_ssid_ and _wifi_password_ values to blank values (ex: `meshtastic --set wifi_ssid '' --set wifi_password ''`).
 
