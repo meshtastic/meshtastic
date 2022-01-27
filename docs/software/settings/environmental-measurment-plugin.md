@@ -11,6 +11,10 @@ import TabItem from '@theme/TabItem';
 
 The Environmental Measurement Plugin will allow you to connect environment sensors to report conditions to your mesh. Examples are temperature, humidity and gas pressure.
 
+:::note
+Once settings are changed, a **reset** is required for them to take effect.
+:::
+
 ## Settings
 
 | Setting | Acceptable Values | Default |
@@ -45,6 +49,10 @@ Sometimes we can end up with more than read_error_count_threshold failures. In t
 Enable/Disable the environmental measurement plugin on-device display.
 
 ### environmental_measurement_plugin_sensor_pin
+
+:::note
+The preferred setup is using I2C, so the `environmental_measurement_plugin_sensor_pin` may not be needed.
+:::
 
 Specify the preferred GPIO Pin for sensor readings. May not be needed if using I2C.
 
