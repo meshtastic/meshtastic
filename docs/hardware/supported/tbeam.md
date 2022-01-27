@@ -24,6 +24,7 @@ sidebar_label: LILYGO® T-Beam
 
 [<img alt="LILYGO® TTGO T-Beam Meshtastic" src="/img/hardware/t-beam-meshtastic.png" style={{zoom:'25%'}} />](/img/hardware/t-beam-meshtastic.png)
 
+
 ## T-Beam - v0.7
 
 :::note
@@ -47,6 +48,8 @@ This is an earlier version of the T-Beam board, and due to changes in the design
 - [Purchase link](https://www.aliexpress.com/item/4000469332610.html)
 
 [<img alt="LILYGO TTGO T-Beam v0.7" src="/img/hardware/t-beam-v0.7.png" style={{zoom:'25%'}} />](/img/hardware/t-beam-v0.7.png)
+[<img alt="LILYGO TTGO T-Beam v0.7 pinmap" src="/img/hardware/t-beam_v0.7_pinmap.jpeg" style={{zoom:'25%'}} />](/img/hardware/t-beam_v0.7_pinmap.jpeg)
+
 
 ## T-Beam - V1.1
 
@@ -66,6 +69,8 @@ This is an earlier version of the T-Beam board, and due to changes in the design
 - [Purchase link](https://www.aliexpress.com/item/4001178678568.html)
 
 [<img alt="LILYGO® TTGO T-Beam v1.1" src="/img/hardware/t-beam-v1.1.png" style={{zoom:'35%'}} />](/img/hardware/t-beam-v1.1.png)
+[<img alt="LILYGO® TTGO T-Beam v1.1 pinmap" src="/img/hardware/t-beam_v1.1_pinmap.webp" style={{zoom:'35%'}} />](/img/hardware/t-beam_v1.1_pinmap.webp)
+
 
 ## T-Beam - M8N
 
