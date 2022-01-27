@@ -89,7 +89,7 @@ The sensors can be wired differently, here's one example for sensor DS18B20 http
 
 Setup of a T-LoraV1 with DHT22 temperature sensor.
 
-[<img src="T-LoraV1 with DHT22" src="/img/hardware/lora_v1_with_DHT22.jpg" style={{zoom:'25%'}} />](/img/hardware/lora_v1_with_DHT22)
+[<img src="T-LoraV1 with DHT22" src="/img/hardware/lora_v1_with_DHT22.jpg" style={{zoom:'25%'}} />](/img/hardware/lora_v1_with_DHT22.jpg)
 
 Requirements:
 * T-LoraV1 (but any esp32 should work, just be sure to double check which GPIO to use)
@@ -136,7 +136,7 @@ and verify the the environmental_measurement_plugin_sensor_type and environmenta
 
 Setup of a T-LoraV1 with DS18B20 temperature sensor.
 
-[<img src="T-LoraV1 with DS18B20" src="/img/hardware/lora_v1_with_DS18B20.jpg" style={{zoom:'25%'}} />](/img/hardware/lora_v1_with_DS18B20)
+[<img src="T-LoraV1 with DS18B20" src="/img/hardware/lora_v1_with_DS18B20.jpg" style={{zoom:'25%'}} />](/img/hardware/lora_v1_with_DS18B20.jpg)
 
 Requirements:
 * T-LoraV1 (but any esp32 should work, just be sure to double check which GPIO to use)
