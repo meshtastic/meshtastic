@@ -75,7 +75,13 @@ Interval in seconds of how often we should try to send our measurements to the m
 
 ## Details
 
-<!--- TODO --->
+### Hardware
+
+The sensors can be wired differently, here's [one example](https://randomnerdtutorials.com/esp32-ds18b20-temperature-arduino-ide) for sensor DS18B20.
+
+### Known Problems
+
+* No default configuration values are currently set, so this must be done when enabling the plugin.
 
 ## Examples
 
