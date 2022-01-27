@@ -6,10 +6,9 @@ sidebar_label: Environmental Measurement Plugin
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-
 ## Overview
 
-The Environmental Measurement Plugin will allow you to connect environment sensors to report conditions to your mesh. Examples are temperature, humidity and gas pressure.
+The Environment Measurement Plugin will allow nodes to send a specific message with information from connected environmental sensors. Currently supported sensors are BME280, BME680, DHT11, DHT12, DHT21, DHT22 and Dallas 1-wire DS18B20.
 
 :::note
 Once settings are changed, a **reset** is required for them to take effect.
