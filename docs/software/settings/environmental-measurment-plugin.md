@@ -62,6 +62,7 @@ Interval in seconds of how often we should try to send our measurements to the m
 
 ## Examples
 
+### Enable/Disable the plugin
 <Tabs
   groupId="settings"
   defaultValue="cli"
@@ -69,17 +70,163 @@ Interval in seconds of how often we should try to send our measurements to the m
     {label: 'CLI', value: 'cli'},
     {label: 'Android', value: 'android'},
     {label: 'iOS', value: 'iOS'},
-    {label: 'web', value: 'web'},
+    {label: 'Web', value: 'web'},
   ]}>
   <TabItem value="cli">
 
-```
+```bash title="Enable Plugin"
 meshtastic --set environmental_measurement_plugin_measurement_enabled true
+```
+```bash title="Disable Plugin"
+meshtastic --set environmental_measurement_plugin_measurement_enabled false
+```
+  </TabItem>
+  <TabItem value="android">
+
+  TODO
+
+  </TabItem>
+  <TabItem value="iOS">
+
+  TODO
+
+  </TabItem>
+  <TabItem value="web">
+
+  TODO
+
+  </TabItem>
+</Tabs>
+
+### Enable/Disable the plugin on device screen
+<Tabs
+  groupId="settings"
+  defaultValue="cli"
+  values={[
+    {label: 'CLI', value: 'cli'},
+    {label: 'Android', value: 'android'},
+    {label: 'iOS', value: 'iOS'},
+    {label: 'Web', value: 'web'},
+  ]}>
+  <TabItem value="cli">
+
+```bash title="Enable on device screen"
 meshtastic --set environmental_measurement_plugin_screen_enabled true
-meshtastic --set environmental_measurement_plugin_update_interval 15
+```
+```bash title="Disable on device screen"
+meshtastic --set environmental_measurement_plugin_screen_enabled false
+```
+  </TabItem>
+  <TabItem value="android">
+
+  TODO
+
+  </TabItem>
+  <TabItem value="iOS">
+
+  TODO
+
+  </TabItem>
+  <TabItem value="web">
+
+  TODO
+
+  </TabItem>
+</Tabs>
+
+### Display Farenheit/Celsius
+<Tabs
+  groupId="settings"
+  defaultValue="cli"
+  values={[
+    {label: 'CLI', value: 'cli'},
+    {label: 'Android', value: 'android'},
+    {label: 'iOS', value: 'iOS'},
+    {label: 'Web', value: 'web'},
+  ]}>
+  <TabItem value="cli">
+
+```bash title="Display Farenheit"
 meshtastic --set environmental_measurement_plugin_display_farenheit true
-meshtastic --set environmental_measurement_plugin_sensor_type 5
-meshtastic --set environmental_measurement_plugin_sensor_type BME280
+```
+```bash title="Display Celsius"
+meshtastic --set environmental_measurement_plugin_display_farenheit false
+```
+
+  </TabItem>
+  <TabItem value="android">
+
+  TODO
+
+  </TabItem>
+  <TabItem value="iOS">
+
+  TODO
+
+  </TabItem>
+  <TabItem value="web">
+
+  TODO
+
+  </TabItem>
+</Tabs>
+
+### Set plugin update interval
+<Tabs
+  groupId="settings"
+  defaultValue="cli"
+  values={[
+    {label: 'CLI', value: 'cli'},
+    {label: 'Android', value: 'android'},
+    {label: 'iOS', value: 'iOS'},
+    {label: 'Web', value: 'web'},
+  ]}>
+  <TabItem value="cli">
+
+```bash title="Set plugin update interval to 15 seconds"
+meshtastic --set environmental_measurement_plugin_update_interval 15
+```
+
+  </TabItem>
+  <TabItem value="android">
+
+  TODO
+
+  </TabItem>
+  <TabItem value="iOS">
+
+  TODO
+
+  </TabItem>
+  <TabItem value="web">
+
+  TODO
+
+  </TabItem>
+</Tabs>
+
+### Set Sensor type
+
+<Tabs
+  groupId="settings"
+  defaultValue="cli"
+  values={[
+    {label: 'CLI', value: 'cli'},
+    {label: 'Android', value: 'android'},
+    {label: 'iOS', value: 'iOS'},
+    {label: 'Web', value: 'web'},
+  ]}>
+  <TabItem value="cli">
+
+:::note
+The CLI is able to take the [value or the name](#environmental_measurement_plugin_sensor_type) of the sensor.
+:::
+
+```bash title="Set sensor type to DS18B20"
+meshtastic --set environmental_measurement_plugin_sensor_type 1
+```
+```bash title="Set sensor type to DS18B20"
+meshtastic --set environmental_measurement_plugin_sensor_type DS18B20
 ```
 
   </TabItem>
