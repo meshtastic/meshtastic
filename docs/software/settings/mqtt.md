@@ -23,14 +23,14 @@ Be sure to checkout this [MQTT](https://meshtastic.org/docs/software/other/mqtt)
 
 ## Settings
 
-|       Setting       | Acceptable Values | Default |
-| :-----------------: | :---------------: | :-----: |
-|    mqtt_disabled    |  `true`, `false`  | `false` |
-|     mqtt_server     |     `string`      |  `""`   |
-|    mqtt_password    |     `string`      |  `""`   |
-|    mqtt_username    |     `string`      |  `""`   |
-|  is_uplink_enabled  |  `true`, `false`  | `false` |
-| is_downlink_enabled |  `true`, `false`  | `false` |
+| Setting | Acceptable Values | Default |
+| :-----: | :---------------: | :-----: |
+| mqtt_disabled | `true`, `false` | `false` |
+| mqtt_server | `string` | `""` |
+| mqtt_password | `string` | `""` |
+| mqtt_username | `string` | `""` |
+| is_uplink_enabled | `true`, `false` | `false` |
+| is_downlink_enabled | `true`, `false` | `false` |
 
 ### mqtt_disabled
 
