@@ -21,7 +21,7 @@ The Environmental Measurement Plugin will allow you to connect environment senso
 | environmental_measurement_plugin_recovery_interval | `integer` (seconds) | `0` |
 | environmental_measurement_plugin_screen_enabled | `true`, `false` | `0` |
 | environmental_measurement_plugin_sensor_pin | `integer` | `0` |
-| environmental_measurement_plugin_sensor_type | `DHT11` | `0` |
+| environmental_measurement_plugin_sensor_type | `0-6` | `0` |
 | environmental_measurement_plugin_update_interval | `integer` (seconds) | `0` |
 
 ### environmental_measurement_plugin_measurement_enabled
@@ -51,6 +51,16 @@ Specify the preferred GPIO Pin for sensor readings. May not be needed if using I
 ### environmental_measurement_plugin_sensor_type
 
 Specify the sensor type.
+
+| Value | Description |
+| :---: | :---------: |
+| `0` | DHT11 |
+| `1` | DS18B20 (Dallas 1-wire) |
+| `2` | DHT12 |
+| `3` | DHT21 |
+| `4` | DHT22 |
+| `5` | BME280 |
+| `6` | BME680 |
 
 ### environmental_measurement_plugin_update_interval
 
