@@ -142,6 +142,8 @@ Visit http://meshtastic.local (Note: This is a work in progress.)
 
 Ensure you have used the included `device-install` script to flash your device, and that the file `spiffs-*.bin` is present in the same folder as your firmware at the time of flashing.
 
+Note: Currently only Chrome and Chromium based browsers offer reliable support for the Web UI. 
+
 ## Channels
 
 ### What is a Meshtastic Channel?
