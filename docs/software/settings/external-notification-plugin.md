@@ -44,7 +44,7 @@ Specifies if an alert should be sent when receiving an incoming message.
 
 ### ext_notification_plugin_output
 
-Specifies the GPIO that your external circui is attached to on the device.
+Specifies the GPIO that your external circuit is attached to on the device.
 
 ### ext_notification_plugin_output_ms
 
