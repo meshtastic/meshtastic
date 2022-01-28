@@ -252,7 +252,7 @@ Configuring this setting is not yet available for the selected platform. If this
   </TabItem>
 </Tabs>
 
-### Set Sensor type
+### Set sensor type
 
 <Tabs
   groupId="settings"
