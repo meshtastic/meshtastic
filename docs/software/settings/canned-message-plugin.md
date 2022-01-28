@@ -77,4 +77,143 @@ That's it! With a functioning and enabled rotary encoder, you're ready to begin 
 
 ## Examples
 
-See "Software / Plugins / Canned messages" for examples!
+### Enable/Disable the Plugin
+<Tabs
+  groupId="settings"
+  defaultValue="cli"
+  values={[
+    {label: 'CLI', value: 'cli'},
+    {label: 'Android', value: 'android'},
+    {label: 'iOS', value: 'iOS'},
+    {label: 'Web', value: 'web'},
+  ]}>
+  <TabItem value="cli">
+
+```bash title="Enable Canned Message Plugin"
+meshtastic --set canned_message_plugin_enabled true
+```
+```bash title="Disable Canned Message Plugin"
+meshtastic --set canned_message_plugin_enabled false
+```
+  </TabItem>
+  <TabItem value="android">
+
+  TODO
+
+  </TabItem>
+  <TabItem value="iOS">
+
+  TODO
+
+  </TabItem>
+  <TabItem value="web">
+
+  TODO
+
+  </TabItem>
+</Tabs>
+
+### Set Canned Messages
+<Tabs
+  groupId="settings"
+  defaultValue="cli"
+  values={[
+    {label: 'CLI', value: 'cli'},
+    {label: 'Android', value: 'android'},
+    {label: 'iOS', value: 'iOS'},
+    {label: 'Web', value: 'web'},
+  ]}>
+  <TabItem value="cli">
+
+```bash title="Set Canned Messages"
+meshtastic --set canned_message_plugin_messages "I'm fine|I'm out|I'm back|Need helping hand|Help me with saw|I need an alpinist|I need ambulance|Keep Calm|On my way|I will be late|I'm already waiting|We have company|Beer is cold|Roger"
+```
+  </TabItem>
+  <TabItem value="android">
+
+  TODO
+
+  </TabItem>
+  <TabItem value="iOS">
+
+  TODO
+
+  </TabItem>
+  <TabItem value="web">
+
+  TODO
+
+  </TabItem>
+</Tabs>
+
+### Enable/Disable Bell Character
+<Tabs
+  groupId="settings"
+  defaultValue="cli"
+  values={[
+    {label: 'CLI', value: 'cli'},
+    {label: 'Android', value: 'android'},
+    {label: 'iOS', value: 'iOS'},
+    {label: 'Web', value: 'web'},
+  ]}>
+  <TabItem value="cli">
+
+```bash title="Enable Bell Character"
+meshtastic --set canned_message_plugin_send_bell true
+```
+```bash title="Disable Bell Character"
+meshtastic --set canned_message_plugin_send_bell false
+```
+  </TabItem>
+  <TabItem value="android">
+
+  TODO
+
+  </TabItem>
+  <TabItem value="iOS">
+
+  TODO
+
+  </TabItem>
+  <TabItem value="web">
+
+  TODO
+
+  </TabItem>
+</Tabs>
+
+### Set Input Source
+<Tabs
+  groupId="settings"
+  defaultValue="cli"
+  values={[
+    {label: 'CLI', value: 'cli'},
+    {label: 'Android', value: 'android'},
+    {label: 'iOS', value: 'iOS'},
+    {label: 'Web', value: 'web'},
+  ]}>
+  <TabItem value="cli">
+
+```bash title="Set Allowed Input Source"
+meshtastic --set canned_message_plugin_allow_input_source "_any"
+```
+```bash title="Specify Allowed Input Source"
+meshtastic --set canned_message_plugin_allow_input_source "rotEnc1"
+```
+  </TabItem>
+  <TabItem value="android">
+
+  TODO
+
+  </TabItem>
+  <TabItem value="iOS">
+
+  TODO
+
+  </TabItem>
+  <TabItem value="web">
+
+  TODO
+
+  </TabItem>
+</Tabs>
