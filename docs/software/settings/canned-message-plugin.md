@@ -33,11 +33,11 @@ Enables the plugin.
 ### canned_message_plugin_allow_input_source
 
 Input event origin accepted by the canned message plugin.
-Can be e.g. "rotEnc1" or keyword "_any"
+Can be e.g. `rotEnc1` or keyword `_any`
 
 ### canned_message_plugin_messages
 
-Predefined messages for CannedMessagePlugin separated by '|' characters.
+Predefined messages for CannedMessagePlugin separated by `|` characters.
 
 You can define up to 50 messages with a total length 1024 bytes.
 
