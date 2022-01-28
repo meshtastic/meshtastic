@@ -61,7 +61,7 @@ The [External Notification Plugin](external-notification-plugin) can benefit fro
 - Once attached, configure peripheral device with [Rotary Encoder Plugin Settings](rotary-encoder-plugin).
 
 :::note
-Replace `GPIO` below with the GPIO numbers from hardware setup.
+Replace each `GPIO` (x3) below with the GPIO numbers from hardware setup.
 
   ```bash title="Canned Message Plugin - Required Rotary Encoder Plugin Settings"
   meshtastic --set rotary1_pin_a GPIO
