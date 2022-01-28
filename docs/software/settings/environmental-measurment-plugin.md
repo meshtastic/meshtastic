@@ -106,17 +106,23 @@ meshtastic --set environmental_measurement_plugin_measurement_enabled false
   </TabItem>
   <TabItem value="android">
 
-  TODO
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
 
   </TabItem>
   <TabItem value="iOS">
 
-  TODO
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
 
   </TabItem>
   <TabItem value="web">
 
-  TODO
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
 
   </TabItem>
 </Tabs>
@@ -142,17 +148,23 @@ meshtastic --set environmental_measurement_plugin_screen_enabled false
   </TabItem>
   <TabItem value="android">
 
-  TODO
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
 
   </TabItem>
   <TabItem value="iOS">
 
-  TODO
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
 
   </TabItem>
   <TabItem value="web">
 
-  TODO
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
 
   </TabItem>
 </Tabs>
@@ -179,17 +191,23 @@ meshtastic --set environmental_measurement_plugin_display_farenheit false
   </TabItem>
   <TabItem value="android">
 
-  TODO
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
 
   </TabItem>
   <TabItem value="iOS">
 
-  TODO
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
 
   </TabItem>
   <TabItem value="web">
 
-  TODO
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
 
   </TabItem>
 </Tabs>
@@ -213,17 +231,23 @@ meshtastic --set environmental_measurement_plugin_update_interval 15
   </TabItem>
   <TabItem value="android">
 
-  TODO
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
 
   </TabItem>
   <TabItem value="iOS">
 
-  TODO
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
 
   </TabItem>
   <TabItem value="web">
 
-  TODO
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
 
   </TabItem>
 </Tabs>
@@ -255,17 +279,23 @@ meshtastic --set environmental_measurement_plugin_sensor_type DS18B20
   </TabItem>
   <TabItem value="android">
 
-  TODO
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
 
   </TabItem>
   <TabItem value="iOS">
 
-  TODO
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
 
   </TabItem>
   <TabItem value="web">
 
-  TODO
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
 
   </TabItem>
 </Tabs>
