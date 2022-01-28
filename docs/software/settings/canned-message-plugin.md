@@ -23,7 +23,7 @@ Once plugin settings are changed, a **reset** is required for them to take effec
 | :-----: | :---------------: | :-----: |
 | canned_message_plugin_enabled | `true`, `false` | `false` |
 | canned_message_plugin_allow_input_source | `rotEnc1`, `_any` | `_any` |
-| canned_message_plugin_messages | `string` | (not defined) |
+| canned_message_plugin_messages | `string` | `""` |
 | canned_message_plugin_send_bell | `true`, `false` | `false` |
 
 ### canned_message_plugin_enabled
