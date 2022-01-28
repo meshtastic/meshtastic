@@ -13,6 +13,10 @@ Meshtastic supports hardwired rotary encoders as input devices.
 Currently, one rotary encoder (`rotary1`) is defined, but later more rotary encoders
 can be added (if needed) the same way.
 
+:::tip
+Once plugin settings are changed, a **reset** is required for them to take effect.
+:::
+
 ## Settings
 
 | Setting | Acceptable Values | Default |

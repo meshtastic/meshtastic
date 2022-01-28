@@ -11,6 +11,10 @@ import TabItem from '@theme/TabItem';
 
 This is a simple interface to send messages over the mesh network by sending strings over a serial port.
 
+:::tip
+Once plugin settings are changed, a **reset** is required for them to take effect.
+:::
+
 ## Settings
 
 | Setting | Acceptable Values | Default |
