@@ -77,7 +77,7 @@ That's it! With a functioning and enabled rotary encoder, you're ready to begin 
 
 ## Examples
 
-### Enable/Disable the Plugin
+### Enable/Disable the plugin
 <Tabs
   groupId="settings"
   defaultValue="cli"
@@ -119,7 +119,7 @@ Configuring this setting is not yet available for the selected platform. If this
   </TabItem>
 </Tabs>
 
-### Set Canned Messages
+### Set canned messages
 <Tabs
   groupId="settings"
   defaultValue="cli"
@@ -158,7 +158,7 @@ Configuring this setting is not yet available for the selected platform. If this
   </TabItem>
 </Tabs>
 
-### Enable/Disable Bell Character
+### Enable/Disable bell character
 <Tabs
   groupId="settings"
   defaultValue="cli"
@@ -200,7 +200,7 @@ Configuring this setting is not yet available for the selected platform. If this
   </TabItem>
 </Tabs>
 
-### Set Input Source
+### Set input source
 <Tabs
   groupId="settings"
   defaultValue="cli"
