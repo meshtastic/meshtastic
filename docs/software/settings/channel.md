@@ -47,7 +47,7 @@ This is in active development and not ready for casual users. Testing only.
 
 ### name
 
-<!--- A SHORT name that will be packed into the URL. Less than 12 bytes. Something for end users to call the channel If this is the empty string it is assumed that this channel is the special (minimally secure) "Default"channel. In user interfaces it should be rendered as a local language translation of "X". For channel_num hashing empty string will be treated as "X". Where "X" is selected based on the English words listed above for ModemConfig --->
+The name of the channel. If this is left an empty string it is assumed that this channel is the special (minimally secure) "Default" channel. Channel Names should be short (less than 12 bytes).
 
 ### psk
 
