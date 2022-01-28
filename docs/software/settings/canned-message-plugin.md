@@ -11,7 +11,7 @@ import TabItem from '@theme/TabItem';
 
 The CannedMessage Plugin will allow you to send messages to the mesh network from the device without using the phone app. You can predefine text messages to choose from.
 
-Please also follow settings of Rotary Encoder to configure input source!
+Please also follow settings of the [Rotary Encoder Plugin](rotary-encoder-plugin) to configure input source!
 
 :::note
 Once plugin settings are changed, a **reset** is required for them to take effect.
