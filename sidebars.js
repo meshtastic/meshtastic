@@ -123,11 +123,11 @@ module.exports = {
         Plugins: [
           "software/settings/environmental-measurement-plugin",
           "software/settings/external-notification-plugin",
-          "software/settings/canned-message-plugin-settings",
+          "software/settings/canned-message-plugin",
           "software/settings/range-test-plugin",
           "software/settings/serial-plugin",
           "software/settings/store-and-forward-plugin",
-          "software/settings/rotary-encoder-settings",
+          "software/settings/rotary-encoder-plugin",
         ],
         Advanced: [
           "software/settings/channel-advanced",

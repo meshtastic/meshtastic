@@ -1,5 +1,5 @@
 ---
-id: rotary-encoder-settings
+id: rotary-encoder-plugin
 title: Rotary Encoder
 sidebar_label: Rotary Encoder
 ---

@@ -1,5 +1,5 @@
 ---
-id: canned-message-plugin-settings
+id: canned-message-plugin
 title: Canned Message Plugin Settings
 sidebar_label: Canned Message Plugin Settings
 ---
