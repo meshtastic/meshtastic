@@ -98,17 +98,23 @@ meshtastic --set canned_message_plugin_enabled false
   </TabItem>
   <TabItem value="android">
 
-  TODO
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
 
   </TabItem>
   <TabItem value="iOS">
 
-  TODO
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
 
   </TabItem>
   <TabItem value="web">
 
-  TODO
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
 
   </TabItem>
 </Tabs>
@@ -131,17 +137,23 @@ meshtastic --set canned_message_plugin_messages "I'm fine|I'm out|I'm back|Need 
   </TabItem>
   <TabItem value="android">
 
-  TODO
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
 
   </TabItem>
   <TabItem value="iOS">
 
-  TODO
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
 
   </TabItem>
   <TabItem value="web">
 
-  TODO
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
 
   </TabItem>
 </Tabs>
@@ -167,17 +179,23 @@ meshtastic --set canned_message_plugin_send_bell false
   </TabItem>
   <TabItem value="android">
 
-  TODO
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
 
   </TabItem>
   <TabItem value="iOS">
 
-  TODO
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
 
   </TabItem>
   <TabItem value="web">
 
-  TODO
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
 
   </TabItem>
 </Tabs>
@@ -203,17 +221,23 @@ meshtastic --set canned_message_plugin_allow_input_source "rotEnc1"
   </TabItem>
   <TabItem value="android">
 
-  TODO
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
 
   </TabItem>
   <TabItem value="iOS">
 
-  TODO
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
 
   </TabItem>
   <TabItem value="web">
 
-  TODO
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
 
   </TabItem>
 </Tabs>
