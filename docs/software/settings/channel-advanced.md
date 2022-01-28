@@ -12,7 +12,7 @@ These settings are for advanced users only. If you don't know what you are doing
 
 ## Overview
 
-Most
+Most users should not need to change these settings. The default [modem_config](channel#modem_config) settings should work just fine.
 
 ## Settings
 
