@@ -1,7 +1,7 @@
 ---
 id: canned-message-plugin
-title: Canned Message Plugin Settings
-sidebar_label: Canned Message Plugin Settings
+title: Canned Message Plugin
+sidebar_label: Canned Message Plugin
 ---
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
