@@ -35,6 +35,8 @@ Enables the plugin.
 Input event origin accepted by the canned message plugin.
 Can be e.g. `rotEnc1` or keyword `_any`
 
+<!--- TODO - add table of possible input sources --->
+
 ### canned_message_plugin_messages
 
 Predefined messages for CannedMessagePlugin separated by `|` characters.
