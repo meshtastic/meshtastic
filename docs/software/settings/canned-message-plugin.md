@@ -48,7 +48,7 @@ You can define up to 50 messages with a total length 1024 bytes.
 ### canned_message_plugin_send_bell
 
 CannedMessagePlugin also sends a bell character with the messages.
-ExternalNotificationPlugin can benefit from this feature.
+The [External Notification Plugin](external-notification-plugin) can benefit from this feature as it utilizes the bell character.
 
 ## Details
 
