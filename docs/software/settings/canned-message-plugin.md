@@ -56,7 +56,26 @@ The [External Notification Plugin](external-notification-plugin) can benefit fro
 
 ## Details
 
-See "Software / Plugins / Canned messages" for details!
+### Prerequisites
+
+<!--- TODO add link to hardware pages to first bullet point --->
+- Attach a compatible peripheral device. Take note of the GPIO numbers you use, as they will be used in the following step.
+- Once attached, configure peripheral device with [Rotary Encoder Plugin Settings](rotary-encoder-plugin).
+
+:::note
+Replace `GPIO` below with the GPIO numbers from hardware setup.
+
+  ```bash title="Canned Message Plugin - Required Rotary Encoder Plugin Settings"
+  meshtastic --set rotary1_pin_a GPIO
+  meshtastic --set rotary1_pin_b GPIO
+  meshtastic --set rotary1_pin_press GPIO
+  meshtastic --set rotary1_event_cw KEY_UP
+  meshtastic --set rotary1_event_ccw KEY_DOWN
+  meshtastic --set rotary1_event_press KEY_SELECT
+  meshtastic --set rotary1_enabled True
+  ```
+:::
+That's it! With a functioning and enabled rotary encoder, you're ready to begin configuring the Canned Message Plugin.
 
 ## Examples
 
