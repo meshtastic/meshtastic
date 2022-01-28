@@ -178,6 +178,36 @@ meshtastic --info
 
 and verify the the environmental_measurement_plugin_sensor_type and environmental_measurement_plugin_sensor_pin
 
+## Example of RAK 4631 with Environment Sensor
+
+Setup of a RAK 4631 with Environment Sensor
+
+[<img src="RAK4631_with_EnvSensor" src="/img/hardware/rak/RAK4631_with_EnvSensor.jpg" style={{zoom:'25%'}} />](/img/hardware/rak/RAK4631_with_EnvSensor.jpg)
+
+Requirements:
+* RAK4631
+* Environment Sensor
+
+Steps:
+* configure the device:
+
+```
+meshtastic --set environmental_measurement_plugin_measurement_enabled true --set environmental_measurement_plugin_screen_enabled true --set environmental_measurement_plugin_update_interval 15 --set environmental_measurement_plugin_display_farenheit true --set environmental_measurement_plugin_sensor_type 6
+```
+
+:::tip
+You can change the values above to suit your needs. The commands can be run one at a time or in a group as show above.
+:::
+
+* reboot/reset the device (press the button or unplug/plug in the device)
+* when the device boots it should say "Environment" and it may show the sensor data
+* if still "no data", run:
+
+```
+meshtastic --info
+```
+
+and verify the the environmental_measurement_plugin_sensor_type
 
 ## Known Problems
 
