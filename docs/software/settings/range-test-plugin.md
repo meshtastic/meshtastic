@@ -12,7 +12,7 @@ import TabItem from '@theme/TabItem';
 This plugin allows you to test the range of your Meshtastic nodes. It requires at least two nodes, a sender and a receiver. The receiving node then saves the messages along with the GPS coordinates at which they were received into a .csv file. This .csv file can then be integrated into [Google Earth](https://earth.google.com), [Google Maps - My Maps](https://mymaps.google.com), or any other program capable of processing .csv files. This can enable you to visualize your mesh.
 
 :::note
-Once settings are changed, a **reset** is required for them to take effect.
+Once plugin settings are changed, a **reset** is required for them to take effect.
 :::
 
 ## Settings

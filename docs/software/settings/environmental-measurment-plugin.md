@@ -11,7 +11,7 @@ import TabItem from '@theme/TabItem';
 The Environment Measurement Plugin will allow nodes to send a specific message with information from connected environmental sensors. Currently supported sensors are BME280, BME680, DHT11, DHT12, DHT21, DHT22 and Dallas 1-wire DS18B20.
 
 :::note
-Once settings are changed, a **reset** is required for them to take effect.
+Once plugin settings are changed, a **reset** is required for them to take effect.
 :::
 
 ## Settings

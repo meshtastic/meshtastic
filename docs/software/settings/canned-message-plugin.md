@@ -13,6 +13,10 @@ The CannedMessage Plugin will allow you to send messages to the mesh network fro
 
 Please also follow settings of Rotary Encoder to configure input source!
 
+:::note
+Once plugin settings are changed, a **reset** is required for them to take effect.
+:::
+
 ## Settings
 
 | Setting | Acceptable Values | Default |

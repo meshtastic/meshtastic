@@ -11,6 +11,10 @@ import TabItem from '@theme/TabItem';
 
 The External Notification Plugin will allow you to connect a speaker, LED, or other device to notify you when a message has been received from the mesh network.
 
+:::note
+Once plugin settings are changed, a **reset** is required for them to take effect.
+:::
+
 ## Settings
 
 | Setting | Acceptable Values | Default |
@@ -20,7 +24,7 @@ The External Notification Plugin will allow you to connect a speaker, LED, or ot
 | ext_notification_plugin_alert_bell | `true`, `false` | `false` |
 | ext_notification_plugin_alert_message | `true`, `false` | `false` |
 | ext_notification_plugin_output | `integer` | `0` |
-| ext_notification_plugin_output_ms | `integer` | `0` |
+| ext_notification_plugin_output_ms | `integer` (milliseconds) | `0` |
 
 ### ext_notification_plugin_enabled
 
@@ -28,23 +32,23 @@ Enables the plugin.
 
 ### ext_notification_plugin_active
 
-<!--- TODO --->
+Specifies whether the external circuit is triggered when the device's GPIO is low or high.
 
 ### ext_notification_plugin_alert_bell
 
-<!--- TODO --->
+Specifies if an alert should be sent when receiving an incoming bell.
 
 ### ext_notification_plugin_alert_message
 
-<!--- TODO --->
+Specifies if an alert should be sent when receiving an incoming message.
 
 ### ext_notification_plugin_output
 
-<!--- TODO --->
+Specifies the GPIO that your external circui is attached to on the device.
 
 ### ext_notification_plugin_output_ms
 
-<!--- TODO --->
+Specifies how long in milliseconds you would like your external circuit triggered. Default is `1000`. (Because of the way that defaults are handled in the protobufs `0` is interpreted as `1000`)
 
 ## Details
 
