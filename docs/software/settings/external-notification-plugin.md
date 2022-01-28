@@ -6,6 +6,10 @@ sidebar_label: External Notification Plugin
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
+<!--- TODO add link to hardware setup to admonition--->
+:::note
+This plugin requires attaching a peripheral accessory to your device. It will not work without one.
+:::
 
 ## Overview
 
