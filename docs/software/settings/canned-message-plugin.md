@@ -32,12 +32,12 @@ Enables the plugin.
 
 ### canned_message_plugin_allow_input_source
 
-Input event origin accepted by the canned message plugin.
+Input event source accepted by the canned message plugin.
 
 | Value | Description |
 | :---: | :---------: |
-| `_any` | Default. Allows any input device connected to the device. |
-| `rotEnc1` | Hardcoded value naming the input device that this plugin listens to. This could allow multiple input devices to be named, but pull requests would need to be made to the device repo, so at the moment this doesn't do anything differently than the default setting. |
+| `_any` | Default. Allows any peripheral input device connected to the device. |
+| `rotEnc1` | Hardcoded value naming the input device that this plugin listens to. This could allow multiple input devices to be named with future software development. At present, this doesn't do anything differently than the default setting. |
 
 ### canned_message_plugin_messages
 
