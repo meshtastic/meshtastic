@@ -8,14 +8,12 @@ import TabItem from '@theme/TabItem';
 
 <!--- TODO add link to hardware setup to admonition--->
 :::note
-This plugin requires attaching a peripheral accessory to your device. It will not work without one.
+This plugin requires attaching a peripheral accessory to your device. It will not work without one. It also requires use of the [Rotary Encoder Plugin](rotary-encoder-plugin) to configure the input source.
 :::
 
 ## Overview
 
 The CannedMessage Plugin will allow you to send messages to the mesh network from the device without using the phone app. You can predefine text messages to choose from.
-
-Please also follow settings of the [Rotary Encoder Plugin](rotary-encoder-plugin) to configure input source!
 
 :::tip
 Once plugin settings are changed, a **reset** is required for them to take effect.
