@@ -114,6 +114,8 @@ If `true`, messages on the mesh will be sent to the public internet by any gatew
   values={[
     {label: 'CLI', value: 'cli'},
     {label: 'Android', value: 'android'},
+    {label: 'iOS', value: 'iOS'},
+    {label: 'Web', value: 'web'},
   ]}>
   <TabItem value="cli">
 
@@ -124,7 +126,23 @@ If `true`, messages on the mesh will be sent to the public internet by any gatew
   </TabItem>
   <TabItem value="android">
 
-  TODO
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+  <TabItem value="iOS">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+  <TabItem value="web">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
 
   </TabItem>
 </Tabs>
@@ -140,6 +158,8 @@ The channel `id` must be an integer.
   values={[
     {label: 'CLI', value: 'cli'},
     {label: 'Android', value: 'android'},
+    {label: 'iOS', value: 'iOS'},
+    {label: 'Web', value: 'web'},
   ]}>
   <TabItem value="cli">
 
@@ -153,7 +173,23 @@ The channel `id` must be an integer.
   </TabItem>
   <TabItem value="android">
 
-  TODO
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+  <TabItem value="iOS">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+  <TabItem value="web">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
 
   </TabItem>
 </Tabs>
@@ -162,28 +198,51 @@ The channel `id` must be an integer.
 A channel `id` must be set in order to name a channel.
 :::
 
-### Set Encryption
+### Set/Disable Encryption
 <Tabs
   groupId="settings"
   defaultValue="cli"
   values={[
     {label: 'CLI', value: 'cli'},
     {label: 'Android', value: 'android'},
+    {label: 'iOS', value: 'iOS'},
+    {label: 'Web', value: 'web'},
   ]}>
   <TabItem value="cli">
 
-  ```bash title="Set psk"
+  ```bash title="Set encryptions to default on PRIMARY channel"
   meshtastic --ch-set psk default --ch-index 0
+  ```
+  ```bash title="Set encryptions to random on PRIMARY channel"
+  meshtastic --ch-set psk random --ch-index 0
+  ```
+  ```bash title="Set encryptions to default on PRIMARY channel"
+  meshtastic --ch-set psk none --ch-index 0
   ```
 <!--- TODO random and none --->
 
   </TabItem>
   <TabItem value="android">
 
-  TODO
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
 
   </TabItem>
-</Tabs>
+  <TabItem value="iOS">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+  <TabItem value="web">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem></Tabs>
 
 :::note
 See [`psk`](#psk) for details.
@@ -196,6 +255,8 @@ See [`psk`](#psk) for details.
   values={[
     {label: 'CLI', value: 'cli'},
     {label: 'Android', value: 'android'},
+    {label: 'iOS', value: 'iOS'},
+    {label: 'Web', value: 'web'},
   ]}>
   <TabItem value="cli">
 
@@ -205,7 +266,23 @@ See [`psk`](#psk) for details.
   </TabItem>
   <TabItem value="android">
 
-  TODO
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+  <TabItem value="iOS">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+  <TabItem value="web">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
 
   </TabItem>
 </Tabs>
@@ -221,17 +298,38 @@ See [`modem_config`](#modem_config) for details. For advanced modem configuratio
   values={[
     {label: 'CLI', value: 'cli'},
     {label: 'Android', value: 'android'},
+    {label: 'iOS', value: 'iOS'},
+    {label: 'Web', value: 'web'},
   ]}>
   <TabItem value="cli">
 
-  ```bash title="Set Region"
+  ```bash title="Unset Region"
   meshtastic --set region Unset
+  ```
+  ```bash title="Set Region"
+  meshtastic --set region US
   ```
 
   </TabItem>
   <TabItem value="android">
 
-  TODO
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+  <TabItem value="iOS">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+  <TabItem value="web">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
 
   </TabItem>
 </Tabs>
