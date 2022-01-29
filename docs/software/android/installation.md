@@ -5,7 +5,7 @@ sidebar_label: Installation
 ---
 Our Android application is available to download on Google Play Store.
 
-<p align="center"><a href="https://play.google.com/store/apps/details?id=com.geeksville.mesh&referrer=utm_source%3Dgithub-homepage"><img alt="Download at https://play.google.com/store/apps/details?id=com.geeksville.mesh" src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" style={{zoom:'35%'}} /></a>
+<p align="center"><a href="https://play.google.com/store/apps/details?id=com.geeksville.mesh&referrer=utm_source%3Dgithub-homepage"><img alt="Download at https://play.google.com/store/apps/details?id=com.geeksville.mesh" src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" style={{zoom:'35%'}} /></a></p>
 
 The app is also available on the Amazon [Appstore](https://www.amazon.com/Geeksville-Industries-Meshtastic/dp/B08CY9394Q). You will need to install the Amazon Appstore onto your phone in order to install the Meshtastic application.
 
