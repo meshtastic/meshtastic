@@ -4,6 +4,52 @@ title: MQTT
 sidebar_label: MQTT
 ---
 
+## MQTT
+ 
+Meshtastic devices with wifi hardware (ESP32) are able to connect to an MQTT broker to uplink and downlink mesh packets.  This is useful for a number of purposes:
+
+- Connecting your mesh to the official Meshtastic MQTT broker.  This makes your devices appear on the world map, and provides a limited copy of your mesh traffic, translated into JSON.
+- Using a custom MQTT broker to bridge several mesh networks together, via the internet (or just a local IP network)
+- Using a custom MQTT broker and a translator program to decode the raw protobuf packets and translate them into a plain text form for use in other systems.  eg plotting temperature readings in Grafana, or device positions in Traccar.
+
+When MQTT enabled, the Meshtastic device simply uplinks and/or downlinks every raw protobuf packet that it sees to the MQTT broker.  These are encrypted, just like they are sent out via the Lora radio.  All packets are sent to the broker, whether they originate from another device on the mesh, or the gateway node itself.
+
+IMPORTANT: When MQTT is turned on, you are potentially broadcasting your mesh traffic onto the public internet.  This includes messages and position information.
+
+### MQTT Topic
+
+The device will uplink and downlink packets to the `msh/` prefix:
+
+`msh/1/c/ShortFast/!12345678` where 
+
+- `!12345678` is the address of the gateway device.
+- `ShortFast` is the channel name.
+
+The payload is a raw protobuf.  Looking at the MQTT traffic with a program like `mosquitto_sub` will tell you it's working, but you won't get much useful information out of it. For example:
+```
+苓????"!
+	!937bed1cTanksTnk"D???05??=???aP`
+	ShortFast	!937bed1c
+```
+
+### Configuration
+
+Check out [MQTT Settings](https://meshtastic.org/docs/software/settings/mqtt) for full information.  For quick start instructions, read on.
+
+- Connect your gateway node to wifi, by setting the `wifi_ssid` and `wifi_password` preferences.
+- Configure your broker settings: `mqtt_server`, `mqtt_username`, and `mqtt_password`.  If all are left blank, the device will connect to the Meshtastic broker.
+- Set `uplink_enabled` and `downlink_enabled` as appropriate for each channel.  Most users will just have a single channel (at channel index 0). `meshtastic --ch-index 0 --ch-set uplink_enabled true`
+
+`uplink_enabled` will tell the device to publish mesh packets to MQTT.
+`downlink_enabled` will tell the device to subscribe to MQTT, and forward any packets from there onto the mesh.
+
+### Future Developments
+
+There is work in progress to enable decrypted packets to be sent to MQTT.  When combined with a script that can translate the protobuf packets into plain form (such as [this one](https://github.com/joshpirihi/meshtastic-mqtt)), this will make it much easier for external systems to ingest meshtastic traffic.
+
+
+#Original brainstorming for MQTT:
+
 ## Abstract
 
 :::note
