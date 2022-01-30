@@ -12,9 +12,11 @@ Meshtastic devices with wifi hardware (ESP32) are able to connect to an MQTT bro
 - Using a custom MQTT broker to bridge several mesh networks together, via the internet (or just a local IP network)
 - Using a custom MQTT broker and a translator program to decode the raw protobuf packets and translate them into a plain text form for use in other systems.  eg plotting temperature readings in Grafana, or device positions in Traccar.
 
-When MQTT enabled, the Meshtastic device simply uplinks and/or downlinks every raw protobuf packet that it sees to the MQTT broker.  These are encrypted, just like they are sent out via the Lora radio.  All packets are sent to the broker, whether they originate from another device on the mesh, or the gateway node itself.
+When MQTT enabled, the Meshtastic device simply uplinks and/or downlinks every raw protobuf packet that it sees to the MQTT broker.  All packets are sent to the broker, whether they originate from another device on the mesh, or the gateway node itself.
 
-IMPORTANT: When MQTT is turned on, you are potentially broadcasting your mesh traffic onto the public internet.  This includes messages and position information.
+Packets may be encrypted.  If you use the default meshtastic MQTT server, packets are always encrypted.  If you use a custom MQTT broker (ie set `mqtt_server`), the `mqtt_encryption_enabled` setting applies, which by default is false.
+
+IMPORTANT: When MQTT is turned on, you are potentially broadcasting your entire mesh traffic onto the public internet.  This includes messages and position information.
 
 ### MQTT Topic
 
@@ -32,7 +34,7 @@ The payload is a raw protobuf.  Looking at the MQTT traffic with a program like 
 	ShortFast	!937bed1c
 ```
 
-### Configuration
+### Basic Configuration
 
 Check out [MQTT Settings](https://meshtastic.org/docs/software/settings/mqtt) for full information.  For quick start instructions, read on.
 
@@ -43,9 +45,26 @@ Check out [MQTT Settings](https://meshtastic.org/docs/software/settings/mqtt) fo
 `uplink_enabled` will tell the device to publish mesh packets to MQTT.
 `downlink_enabled` will tell the device to subscribe to MQTT, and forward any packets from there onto the mesh.
 
-### Future Developments
+### Getting plain data out of the mesh
 
-There is work in progress to enable decrypted packets to be sent to MQTT.  When combined with a script that can translate the protobuf packets into plain form (such as [this one](https://github.com/joshpirihi/meshtastic-mqtt)), this will make it much easier for external systems to ingest meshtastic traffic.
+As of firmware 1.2.53, it is possible for the device to decrypt the protobufs before publishing to MQTT.  To translate this into a plain format:
+
+- Set up a gateway node to uplink packets to your MQTT broker:
+    - `meshtastic --set wifi_ssid XXXX`
+    - `meshtastic --set wifi_password XXXX`
+    - `meshtastic --set mqtt_server 192.168.1.1`
+    - `meshtastic --set mqtt_username XXXX`
+    - `meshtastic --set mqtt_password XXXX`
+    - `meshtastic --set mqtt_encryption_enabled false`
+    - `meshtastic --ch-index 0 --ch-set uplink_enabled true`
+- Grab the meshtastic-mqtt script from [here](https://github.com/joshpirihi/meshtastic-mqtt)
+    - `git clone https://github.com/joshpirihi/meshtastic-mqtt && cd meshtastic-mqtt`
+    - Edit `meshtastic_mqtt/meshtastic_mqtt.py` and enter your mqtt broker details
+    - Install the script with `pip install .`
+    - Run `meshtastic-mqtt`.  It will print some debug output by default, and publish the plain values to the `meshtastic/` prefix.
+    - View the plain data with `mosquitto_sub -h YOUR_MQTT_SERVER -t meshtastic/# -v`
+    - You can then consume the data easily in other systems.  For example, nodered->influx db->grafana.
+
 
 
 #Original brainstorming for MQTT:
