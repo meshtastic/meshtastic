@@ -63,4 +63,51 @@ See "Software / Plugins / Canned messages" for details!
 
 ## Examples
 
-See "Software / Plugins / Canned messages" for examples! 
+### Configure rotary encoder for Canned Message Plugin
+<Tabs
+  groupId="settings"
+  defaultValue="cli"
+  values={[
+    {label: 'CLI', value: 'cli'},
+    {label: 'Android', value: 'android'},
+    {label: 'iOS', value: 'iOS'},
+    {label: 'Web', value: 'web'},
+  ]}>
+  <TabItem value="cli">
+
+:::note
+Replace each `GPIO` (x3) below with the GPIO numbers from hardware setup.
+:::
+
+  ```bash title="Canned Message Plugin - Required Rotary Encoder Plugin Settings"
+  meshtastic --set rotary1_pin_a GPIO
+  meshtastic --set rotary1_pin_b GPIO
+  meshtastic --set rotary1_pin_press GPIO
+  meshtastic --set rotary1_event_cw KEY_UP
+  meshtastic --set rotary1_event_ccw KEY_DOWN
+  meshtastic --set rotary1_event_press KEY_SELECT
+  meshtastic --set rotary1_enabled True
+  ```
+  </TabItem>
+  <TabItem value="android">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+  <TabItem value="iOS">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+  <TabItem value="web">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+</Tabs>
