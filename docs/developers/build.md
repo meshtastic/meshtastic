@@ -31,7 +31,7 @@ To get a clean build you may have to delete the auto-generated file `./.vscode/c
 
 ```
 sudo apt-get update
-sudo apt-get install python3 python3 g++ zip
+sudo apt-get install python3 python3-dev g++ zip
 ```
 
 2. Install PlatformIO (which is usually via wget/curl command).
