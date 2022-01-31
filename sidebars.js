@@ -102,6 +102,7 @@ module.exports = {
       "getting-started/faq",
       {
         "Flashing firmware": [
+          "getting-started/meshtastic-flasher",
           "getting-started/flashing-esp32",
           "getting-started/flashing-nrf52",
         ],
