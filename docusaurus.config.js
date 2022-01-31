@@ -57,13 +57,10 @@ const config = {
               label: "Contribute to Meshtastic",
               to: "docs/developers",
             },
-            /*
-              TODO add Docusaurus and Vercel instructions for how to manage the docs
             {
               label: "About this Documentation",
               to: "docs/about-documentation",
             },
-            */
             {
               label: "Legal",
               to: "docs/legal",

@@ -192,6 +192,11 @@ module.exports = {
       },
     ],
   },
+  Documentation: {
+    "About Documentation": [
+      "about-documentation/overview",
+    ]
+  },
   Legal: {
     Legal: [
       "legal/overview",
