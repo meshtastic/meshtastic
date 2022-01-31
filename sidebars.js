@@ -121,13 +121,13 @@ module.exports = {
       "software/settings/wifi",
       {
         Plugins: [
+          "software/settings/canned-message-plugin",
           "software/settings/environmental-measurement-plugin",
           "software/settings/external-notification-plugin",
-          "software/settings/canned-message-plugin-settings",
           "software/settings/range-test-plugin",
+          "software/settings/rotary-encoder-plugin",
           "software/settings/serial-plugin",
           "software/settings/store-and-forward-plugin",
-          "software/settings/rotary-encoder-settings",
         ],
         Advanced: [
           "software/settings/channel-advanced",

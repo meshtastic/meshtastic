@@ -47,7 +47,7 @@ This is in active development and not ready for casual users. Testing only.
 
 ### name
 
-<!--- A SHORT name that will be packed into the URL. Less than 12 bytes. Something for end users to call the channel If this is the empty string it is assumed that this channel is the special (minimally secure) "Default"channel. In user interfaces it should be rendered as a local language translation of "X". For channel_num hashing empty string will be treated as "X". Where "X" is selected based on the English words listed above for ModemConfig --->
+The name of the channel. If this is left an empty string it is assumed that this channel is the special (minimally secure) "Default" channel. Channel Names should be short (less than 12 bytes).
 
 ### psk
 
@@ -57,7 +57,9 @@ This is in active development and not ready for casual users. Testing only.
 
 <!--- A simple pre-shared key for now for crypto. Must be either 0 bytes (no crypto), 16 bytes (AES128), or 32 bytes (AES256). A special shorthand is used for 1 byte long psks. These psks should be treated as only minimally secure, because they are listed in this source code. Those bytes are mapped using the following scheme: 0 = No crypto 1 = The special "default" channel key: {0xd4, 0xf1, 0xbb, 0x3a, 0x20, 0x29, 0x07, 0x59, 0xf0, 0xbc, 0xff, 0xab, 0xcf, 0x4e, 0x69, 0xbf} 2 through 10 = The default channel key, except with 1 through 9 added to the last byte. Shown to user as simple1 through 10 --->
 
+:::note
 Selecting a number from the following table will use publicly known encryption keys. They're shipped with Meshtastic source code and thus, anyone can listen to messages encrypted by them. They're great for testing and public channels.
+:::
 
 | Setting | Behavior |
 | :-----: | :------: |
@@ -75,7 +77,7 @@ Selecting a number from the following table will use publicly known encryption k
 | `default` | Default Encryption (use the weak encryption key) |
 | `random` | Generate a secure 256-bit encryption key. Use this setting for private communication. |
 
-:::note
+:::tip
 If you use Meshtastic for exchanging messages you don't want other people to see, `random` is the setting you should use.
 :::
 
@@ -112,6 +114,8 @@ If `true`, messages on the mesh will be sent to the public internet by any gatew
   values={[
     {label: 'CLI', value: 'cli'},
     {label: 'Android', value: 'android'},
+    {label: 'iOS', value: 'iOS'},
+    {label: 'Web', value: 'web'},
   ]}>
   <TabItem value="cli">
 
@@ -122,7 +126,23 @@ If `true`, messages on the mesh will be sent to the public internet by any gatew
   </TabItem>
   <TabItem value="android">
 
-  TODO
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+  <TabItem value="iOS">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+  <TabItem value="web">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
 
   </TabItem>
 </Tabs>
@@ -138,6 +158,8 @@ The channel `id` must be an integer.
   values={[
     {label: 'CLI', value: 'cli'},
     {label: 'Android', value: 'android'},
+    {label: 'iOS', value: 'iOS'},
+    {label: 'Web', value: 'web'},
   ]}>
   <TabItem value="cli">
 
@@ -151,7 +173,23 @@ The channel `id` must be an integer.
   </TabItem>
   <TabItem value="android">
 
-  TODO
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+  <TabItem value="iOS">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+  <TabItem value="web">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
 
   </TabItem>
 </Tabs>
@@ -160,28 +198,51 @@ The channel `id` must be an integer.
 A channel `id` must be set in order to name a channel.
 :::
 
-### Set Encryption
+### Set/Disable Encryption
 <Tabs
   groupId="settings"
   defaultValue="cli"
   values={[
     {label: 'CLI', value: 'cli'},
     {label: 'Android', value: 'android'},
+    {label: 'iOS', value: 'iOS'},
+    {label: 'Web', value: 'web'},
   ]}>
   <TabItem value="cli">
 
-  ```bash title="Set psk"
+  ```bash title="Set encryptions to default on PRIMARY channel"
   meshtastic --ch-set psk default --ch-index 0
+  ```
+  ```bash title="Set encryptions to random on PRIMARY channel"
+  meshtastic --ch-set psk random --ch-index 0
+  ```
+  ```bash title="Set encryptions to default on PRIMARY channel"
+  meshtastic --ch-set psk none --ch-index 0
   ```
 <!--- TODO random and none --->
 
   </TabItem>
   <TabItem value="android">
 
-  TODO
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
 
   </TabItem>
-</Tabs>
+  <TabItem value="iOS">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+  <TabItem value="web">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem></Tabs>
 
 :::note
 See [`psk`](#psk) for details.
@@ -194,6 +255,8 @@ See [`psk`](#psk) for details.
   values={[
     {label: 'CLI', value: 'cli'},
     {label: 'Android', value: 'android'},
+    {label: 'iOS', value: 'iOS'},
+    {label: 'Web', value: 'web'},
   ]}>
   <TabItem value="cli">
 
@@ -203,7 +266,23 @@ See [`psk`](#psk) for details.
   </TabItem>
   <TabItem value="android">
 
-  TODO
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+  <TabItem value="iOS">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+  <TabItem value="web">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
 
   </TabItem>
 </Tabs>
@@ -219,17 +298,38 @@ See [`modem_config`](#modem_config) for details. For advanced modem configuratio
   values={[
     {label: 'CLI', value: 'cli'},
     {label: 'Android', value: 'android'},
+    {label: 'iOS', value: 'iOS'},
+    {label: 'Web', value: 'web'},
   ]}>
   <TabItem value="cli">
 
-  ```bash title="Set Region"
+  ```bash title="Unset Region"
   meshtastic --set region Unset
+  ```
+  ```bash title="Set Region"
+  meshtastic --set region US
   ```
 
   </TabItem>
   <TabItem value="android">
 
-  TODO
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+  <TabItem value="iOS">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+  <TabItem value="web">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
 
   </TabItem>
 </Tabs>

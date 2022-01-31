@@ -68,8 +68,10 @@ defaultValue="cli"
 values={[
 {label: 'CLI', value: 'cli'},
 {label: 'Android', value: 'android'},
+{label: 'iOS', value: 'iOS'},
+{label: 'Web', value: 'web'},
 ]}>
-<TabItem value="cli">
+  <TabItem value="cli">
 
 ```bash title="Set server"
 meshtastic --set mqtt_server 192.168.123.234
@@ -86,10 +88,26 @@ mosquitto_sub -h 192.168.123.234 -v -t msh/#
 :::note
 FIXME some documentation says msh/# , some says mesh/# . As of 1.2.39 the messages are on msh/#
 :::
-</TabItem>
-<TabItem value="android">
+  </TabItem>
+  <TabItem value="android">
 
-TODO
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+  <TabItem value="iOS">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+  <TabItem value="web">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
 
   </TabItem>
 </Tabs>

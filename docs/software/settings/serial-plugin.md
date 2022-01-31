@@ -11,6 +11,10 @@ import TabItem from '@theme/TabItem';
 
 This is a simple interface to send messages over the mesh network by sending strings over a serial port.
 
+:::tip
+Once plugin settings are changed, a **reset** is required for them to take effect.
+:::
+
 ## Settings
 
 | Setting | Acceptable Values | Default |
@@ -56,6 +60,8 @@ Enables the plugin.
   values={[
     {label: 'CLI', value: 'cli'},
     {label: 'Android', value: 'android'},
+    {label: 'iOS', value: 'iOS'},
+    {label: 'Web', value: 'web'},
   ]}>
   <TabItem value="cli">
 
@@ -64,7 +70,23 @@ Enables the plugin.
   </TabItem>
   <TabItem value="android">
 
-  TODO
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+  <TabItem value="iOS">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+  <TabItem value="web">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
 
   </TabItem>
 </Tabs>

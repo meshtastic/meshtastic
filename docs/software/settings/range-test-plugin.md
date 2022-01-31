@@ -11,8 +11,8 @@ import TabItem from '@theme/TabItem';
 
 This plugin allows you to test the range of your Meshtastic nodes. It requires at least two nodes, a sender and a receiver. The receiving node then saves the messages along with the GPS coordinates at which they were received into a .csv file. This .csv file can then be integrated into [Google Earth](https://earth.google.com), [Google Maps - My Maps](https://mymaps.google.com), or any other program capable of processing .csv files. This can enable you to visualize your mesh.
 
-:::note
-Once settings are changed, a **reset** is required for them to take effect.
+:::tip
+Once plugin settings are changed, a **reset** is required for them to take effect.
 :::
 
 ## Settings
@@ -75,6 +75,8 @@ defaultValue="cli"
 values={[
 {label: 'CLI', value: 'cli'},
 {label: 'Android', value: 'android'},
+{label: 'iOS', value: 'iOS'},
+{label: 'Web', value: 'web'},
 ]}>
 <TabItem value="cli">
 
@@ -86,7 +88,23 @@ meshtastic --set range_test_plugin_sender 60
   </TabItem>
   <TabItem value="android">
 
-TODO
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+  <TabItem value="iOS">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+  <TabItem value="web">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
 
   </TabItem>
 </Tabs>
@@ -99,6 +117,8 @@ defaultValue="cli"
 values={[
 {label: 'CLI', value: 'cli'},
 {label: 'Android', value: 'android'},
+{label: 'iOS', value: 'iOS'},
+{label: 'Web', value: 'web'},
 ]}>
 <TabItem value="cli">
 
@@ -110,7 +130,23 @@ meshtastic --set range_test_plugin_save true
   </TabItem>
   <TabItem value="android">
 
-TODO
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+  <TabItem value="iOS">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+  <TabItem value="web">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
 
   </TabItem>
 </Tabs>

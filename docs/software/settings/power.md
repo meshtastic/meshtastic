@@ -125,6 +125,8 @@ defaultValue="cli"
 values={[
 {label: 'CLI', value: 'cli'},
 {label: 'Android', value: 'android'},
+{label: 'iOS', value: 'iOS'},
+{label: 'Web', value: 'web'},
 ]}>
 <TabItem value="cli">
 
@@ -145,7 +147,23 @@ meshtastic --set is_always_powered true
   </TabItem>
   <TabItem value="android">
 
-    TODO
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+  <TabItem value="iOS">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+  <TabItem value="web">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
 
   </TabItem>
 </Tabs>
