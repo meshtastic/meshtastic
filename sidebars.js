@@ -193,6 +193,12 @@ module.exports = {
       },
     ],
   },
+  Documentation: {
+    "About Documentation": [
+      "about-documentation/overview",
+      "about-documentation/serve-docs-locally",
+    ]
+  },
   Legal: {
     Legal: [
       "legal/overview",
