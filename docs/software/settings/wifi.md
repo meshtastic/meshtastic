@@ -218,7 +218,23 @@ meshtastic --set wifi_ssid "my wifi ssid" --set wifi_password "my wifi password"
   </TabItem>
   <TabItem value="android">
 
-  TODO
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+  <TabItem value="iOS">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+  <TabItem value="web">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
 
   </TabItem>
 </Tabs>
