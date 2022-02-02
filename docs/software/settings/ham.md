@@ -32,24 +32,11 @@ Meshtastic can be used by both unlicensed people and licensed operators. If you 
 
 If you are a licensed HAM operator, you can set this variable to be your ID.
 
-## Details
-
-Toggling `set-ham` changes your device settings in the following ways.
-
-| Setting | `set-ham` Default | Normal Default |
-| :-----: | :-----------------: | :------------: |
-| `is_licensed` (Protobuf) | `true` | `false` |
-| `long_name` (Protobuf) | `id` | User Defined |
-| `psk` (Protobuf) | `""` | See [Channel Settings - psk](channel#psk) |
-| `short_name` (Protobuf) | TODO | User Defined |
-
-## Examples
-
 :::warning
 By changing these settings, you are self certifying that you are licensed to operate in the mode you have chosen. Failure to comply with your local regulations may result in fines.
 :::
 
-### Set HAM ID
+#### Set HAM ID
 <Tabs
   groupId="settings"
   defaultValue="cli"
@@ -88,3 +75,14 @@ Configuring this setting is not yet available for the selected platform. If this
 
   </TabItem>
 </Tabs>
+
+## Details
+
+Toggling `set-ham` changes your device settings in the following ways.
+
+| Setting | `set-ham` Default | Normal Default |
+| :-----: | :-----------------: | :------------: |
+| `is_licensed` (Protobuf) | `true` | `false` |
+| `long_name` (Protobuf) | `id` | User Defined |
+| `psk` (Protobuf) | `""` | See [Channel Settings - psk](channel#psk) |
+| `short_name` (Protobuf) | TODO | User Defined |

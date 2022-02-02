@@ -36,9 +36,102 @@ Be sure to checkout this [MQTT](https://meshtastic.org/docs/software/other/mqtt)
 
 If a meshtastic node is able to reach the internet it will normally attempt to gateway any channels that are marked as `uplink_enabled` or `downlink_enabled`. But if this flag is set, all MQTT features will be disabled and no servers will be contacted.
 
+#### Enable/Disable MQTT
+<Tabs
+  groupId="settings"
+  defaultValue="cli"
+  values={[
+    {label: 'CLI', value: 'cli'},
+    {label: 'Android', value: 'android'},
+    {label: 'iOS', value: 'iOS'},
+    {label: 'Web', value: 'web'},
+  ]}>
+  <TabItem value="cli">
+
+  ```bash title="Enable MQTT (Default)"
+  meshtastic --set mqtt_disabled false
+  ```
+  ```bash title="Disable MQTT"
+  meshtastic --set mqtt_disabled true
+  ```
+
+  </TabItem>
+  <TabItem value="android">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+  <TabItem value="iOS">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+  <TabItem value="web">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+</Tabs>
+
 ### mqtt_server
 
 The server to use for our MQTT global message gateway feature. If not set, the default server will be used
+
+#### Enable/Disable MQTT Server
+<Tabs
+  groupId="settings"
+  defaultValue="cli"
+  values={[
+    {label: 'CLI', value: 'cli'},
+    {label: 'Android', value: 'android'},
+    {label: 'iOS', value: 'iOS'},
+    {label: 'Web', value: 'web'},
+  ]}>
+  <TabItem value="cli">
+
+:::tip
+When the mqtt_server is set to `""`, it will default to `mqtt.meshtastic.org`
+:::
+
+  ```bash title="Enable MQTT Server - Public Meshtastic MQTT Server (Default)"
+  meshtastic --set mqtt_server ""
+  ```
+  ```bash title="Enable MQTT Server - Personal MQTT Server (by IP)"
+  meshtastic --set mqtt_server 198.168.0.2
+  ```
+  ```bash title="Enable MQTT Server - Personal MQTT Server (by URL)"
+  meshtastic --set mqtt_server mqtt.mydomain.com
+  ```
+
+  </TabItem>
+  <TabItem value="android">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+  <TabItem value="iOS">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+  <TabItem value="web">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+</Tabs>
 
 ### mqtt_password
 
@@ -50,11 +143,11 @@ MQTT username to use (most useful for a custom MQTT server). If using a custom s
 
 ### uplink_enabled
 
-This is a channel specific setting. If your channel has this set to `true` and you are connected to WiFi, the device will forward along messages to whatever MQTT server is specified in `mqtt_server`. See [Channel Settings](channel).
+This is a channel specific setting. If your channel has this set to `true` and you are connected to WiFi, the device will forward along messages to whatever MQTT server is specified in [mqtt_server](#mqtt_server).
 
 ### downlink_enabled
 
-This is a channel specific setting. If your channel has this set to `true` and you are connected to WiFi, the device will forward along messages from the MQTT server to the mesh from this device. See [Channel Settings](channel).
+This is a channel specific setting. If your channel has this set to `true` and you are connected to WiFi, the device will forward along messages from the MQTT server specified [here](#mqtt_server) to the mesh from this device.
 
 ## Details
 

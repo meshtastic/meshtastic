@@ -34,33 +34,7 @@ Once plugin settings are changed, a **reset** is required for them to take effec
 
 Enables the plugin.
 
-### ext_notification_plugin_active
-
-Specifies whether the external circuit is triggered when the device's GPIO is low or high.
-
-### ext_notification_plugin_alert_bell
-
-Specifies if an alert should be sent when receiving an incoming bell.
-
-### ext_notification_plugin_alert_message
-
-Specifies if an alert should be sent when receiving an incoming message.
-
-### ext_notification_plugin_output
-
-Specifies the GPIO that your external circuit is attached to on the device.
-
-### ext_notification_plugin_output_ms
-
-Specifies how long in milliseconds you would like your external circuit triggered. Default is `1000`. (Because of the way that defaults are handled in the protobufs `0` is interpreted as `1000`)
-
-## Details
-
-<!--- TODO --->
-
-## Examples
-
-### Enable/Disable the plugin
+#### Enable/Disable the plugin
 <Tabs
   groupId="settings"
   defaultValue="cli"
@@ -102,7 +76,151 @@ Configuring this setting is not yet available for the selected platform. If this
   </TabItem>
 </Tabs>
 
-### Specify GPIO for circuit to monitor
+### ext_notification_plugin_active
+
+Specifies whether the external circuit is triggered when the device's GPIO is low or high.
+
+#### Specify High/Low GPIO triggers circuit
+<Tabs
+  groupId="settings"
+  defaultValue="cli"
+  values={[
+    {label: 'CLI', value: 'cli'},
+    {label: 'Android', value: 'android'},
+    {label: 'iOS', value: 'iOS'},
+    {label: 'Web', value: 'web'},
+  ]}>
+  <TabItem value="cli">
+
+```bash title="GPIO active high"
+meshtastic --set ext_notification_plugin_active true
+```
+```bash title="GPIO active low (default)"
+meshtastic --set ext_notification_plugin_active false
+```
+  </TabItem>
+  <TabItem value="android">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+  <TabItem value="iOS">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+  <TabItem value="web">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+</Tabs>
+
+### ext_notification_plugin_alert_bell
+
+Specifies if an alert should be sent when receiving an incoming bell.
+
+#### Enable/Disable alert on incoming bell
+<Tabs
+  groupId="settings"
+  defaultValue="cli"
+  values={[
+    {label: 'CLI', value: 'cli'},
+    {label: 'Android', value: 'android'},
+    {label: 'iOS', value: 'iOS'},
+    {label: 'Web', value: 'web'},
+  ]}>
+  <TabItem value="cli">
+
+```bash title="Enable alert on incoming bell"
+meshtastic --set ext_notification_plugin_alert_bell true
+```
+```bash title="Disable alert on incoming bell"
+meshtastic --set ext_notification_plugin_alert_bell false
+```
+  </TabItem>
+  <TabItem value="android">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+  <TabItem value="iOS">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+  <TabItem value="web">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+</Tabs>
+
+### ext_notification_plugin_alert_message
+
+Specifies if an alert should be sent when receiving an incoming message.
+
+#### Enable/Disable Alert on incoming message
+<Tabs
+  groupId="settings"
+  defaultValue="cli"
+  values={[
+    {label: 'CLI', value: 'cli'},
+    {label: 'Android', value: 'android'},
+    {label: 'iOS', value: 'iOS'},
+    {label: 'Web', value: 'web'},
+  ]}>
+  <TabItem value="cli">
+
+```bash title="Enable alert on incoming message"
+meshtastic --set ext_notification_plugin_alert_message true
+```
+```bash title="Disable alert on incoming message"
+meshtastic --set ext_notification_plugin_alert_message false
+```
+  </TabItem>
+  <TabItem value="android">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+  <TabItem value="iOS">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+  <TabItem value="web">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+</Tabs>
+
+
+
+### ext_notification_plugin_output
+
+Specifies the GPIO that your external circuit is attached to on the device.
+
+#### Specify GPIO for circuit to monitor
 <Tabs
   groupId="settings"
   defaultValue="cli"
@@ -145,51 +263,11 @@ Configuring this setting is not yet available for the selected platform. If this
   </TabItem>
 </Tabs>
 
+### ext_notification_plugin_output_ms
 
-### Specify High/Low GPIO triggers circuit
-<Tabs
-  groupId="settings"
-  defaultValue="cli"
-  values={[
-    {label: 'CLI', value: 'cli'},
-    {label: 'Android', value: 'android'},
-    {label: 'iOS', value: 'iOS'},
-    {label: 'Web', value: 'web'},
-  ]}>
-  <TabItem value="cli">
+Specifies how long in milliseconds you would like your external circuit triggered. Default is `1000`. (Because of the way that defaults are handled in the protobufs `0` is interpreted as `1000`)
 
-```bash title="GPIO active high"
-meshtastic --set ext_notification_plugin_active true
-```
-```bash title="GPIO active low (default)"
-meshtastic --set ext_notification_plugin_active false
-```
-  </TabItem>
-  <TabItem value="android">
-
-:::info
-Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
-  </TabItem>
-  <TabItem value="iOS">
-
-:::info
-Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
-  </TabItem>
-  <TabItem value="web">
-
-:::info
-Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
-  </TabItem>
-</Tabs>
-
-
-### Specify how many milliseconds to trigger circuit
+#### Specify how many milliseconds to trigger circuit
 <Tabs
   groupId="settings"
   defaultValue="cli"
@@ -232,87 +310,6 @@ Configuring this setting is not yet available for the selected platform. If this
 </Tabs>
 
 
-### Enable/Disable alert on incoming bell
-<Tabs
-  groupId="settings"
-  defaultValue="cli"
-  values={[
-    {label: 'CLI', value: 'cli'},
-    {label: 'Android', value: 'android'},
-    {label: 'iOS', value: 'iOS'},
-    {label: 'Web', value: 'web'},
-  ]}>
-  <TabItem value="cli">
+## Details
 
-```bash title="Enable alert on incoming bell"
-meshtastic --set ext_notification_plugin_alert_bell true
-```
-```bash title="Disable alert on incoming bell"
-meshtastic --set ext_notification_plugin_alert_bell false
-```
-  </TabItem>
-  <TabItem value="android">
-
-:::info
-Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
-  </TabItem>
-  <TabItem value="iOS">
-
-:::info
-Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
-  </TabItem>
-  <TabItem value="web">
-
-:::info
-Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
-  </TabItem>
-</Tabs>
-
-
-### Enable/Disable Alert on incoming message
-<Tabs
-  groupId="settings"
-  defaultValue="cli"
-  values={[
-    {label: 'CLI', value: 'cli'},
-    {label: 'Android', value: 'android'},
-    {label: 'iOS', value: 'iOS'},
-    {label: 'Web', value: 'web'},
-  ]}>
-  <TabItem value="cli">
-
-```bash title="Enable alert on incoming message"
-meshtastic --set ext_notification_plugin_alert_message true
-```
-```bash title="Disable alert on incoming message"
-meshtastic --set ext_notification_plugin_alert_message false
-```
-  </TabItem>
-  <TabItem value="android">
-
-:::info
-Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
-  </TabItem>
-  <TabItem value="iOS">
-
-:::info
-Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
-  </TabItem>
-  <TabItem value="web">
-
-:::info
-Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
-  </TabItem>
-</Tabs>
+<!--- TODO --->

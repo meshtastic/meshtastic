@@ -32,52 +32,10 @@ Once plugin settings are changed, a **reset** is required for them to take effec
 
 Enables the plugin.
 
-### canned_message_plugin_allow_input_source
-
-Input event source accepted by the canned message plugin.
-
-| Value | Description |
-| :---: | :---------: |
-| `_any` | Default. Allows any peripheral input device connected to the device. |
-| `rotEnc1` | Hardcoded value naming the input device that this plugin listens to. This could allow multiple input devices to be named with future software development. At present, this doesn't do anything differently than the default setting. |
-
-### canned_message_plugin_messages
-
-Predefined messages for CannedMessagePlugin separated by `|` characters.
-
-You can define up to 50 messages with a total length 1024 bytes.
-
-### canned_message_plugin_send_bell
-
-CannedMessagePlugin also sends a bell character with the messages.
-The [External Notification Plugin](external-notification-plugin) can benefit from this feature as it utilizes the bell character.
-
-## Details
-
-### Prerequisites
-
-<!--- TODO add link to hardware pages to first bullet point --->
-- Attach a compatible peripheral device. Take note of the GPIO numbers you use, as they will be used in the following step.
-- Once attached, configure peripheral device with [Rotary Encoder Plugin Settings](rotary-encoder-plugin).
-
-:::note
-Replace each `GPIO` (x3) below with the GPIO numbers from hardware setup.
-
-  ```bash title="Canned Message Plugin - Required Rotary Encoder Plugin Settings"
-  meshtastic --set rotary1_pin_a GPIO
-  meshtastic --set rotary1_pin_b GPIO
-  meshtastic --set rotary1_pin_press GPIO
-  meshtastic --set rotary1_event_cw KEY_UP
-  meshtastic --set rotary1_event_ccw KEY_DOWN
-  meshtastic --set rotary1_event_press KEY_SELECT
-  meshtastic --set rotary1_enabled True
-  ```
+:::tip
+Using the canned message plugin requires you set up the [rotary encoder plugin](rotary-encoder-plugin). See [prerequisites](#prerequisites) below.
 :::
-That's it! With a functioning and enabled rotary encoder, you're ready to begin configuring the Canned Message Plugin.
-
-## Examples
-
-### Enable/Disable the plugin
+#### Enable/Disable the plugin
 <Tabs
   groupId="settings"
   defaultValue="cli"
@@ -119,7 +77,65 @@ Configuring this setting is not yet available for the selected platform. If this
   </TabItem>
 </Tabs>
 
-### Set canned messages
+### canned_message_plugin_allow_input_source
+
+Input event source accepted by the canned message plugin.
+
+| Value | Description |
+| :---: | :---------: |
+| `_any` | Default. Allows any peripheral input device connected to the device. |
+| `rotEnc1` | Hardcoded value naming the input device that this plugin listens to. This could allow multiple input devices to be named with future software development. At present, this doesn't do anything differently than the default setting. |
+
+#### Set input source
+<Tabs
+  groupId="settings"
+  defaultValue="cli"
+  values={[
+    {label: 'CLI', value: 'cli'},
+    {label: 'Android', value: 'android'},
+    {label: 'iOS', value: 'iOS'},
+    {label: 'Web', value: 'web'},
+  ]}>
+  <TabItem value="cli">
+
+```bash title="Set Allowed Input Source"
+meshtastic --set canned_message_plugin_allow_input_source "_any"
+```
+```bash title="Specify Allowed Input Source"
+meshtastic --set canned_message_plugin_allow_input_source "rotEnc1"
+```
+  </TabItem>
+  <TabItem value="android">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+  <TabItem value="iOS">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+  <TabItem value="web">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+</Tabs>
+
+
+### canned_message_plugin_messages
+
+Predefined messages for CannedMessagePlugin separated by `|` characters.
+
+You can define up to 50 messages with a total length 1024 bytes.
+
+#### Set canned messages
 <Tabs
   groupId="settings"
   defaultValue="cli"
@@ -158,7 +174,12 @@ Configuring this setting is not yet available for the selected platform. If this
   </TabItem>
 </Tabs>
 
-### Enable/Disable bell character
+### canned_message_plugin_send_bell
+
+CannedMessagePlugin also sends a bell character with the messages.
+The [External Notification Plugin](external-notification-plugin) can benefit from this feature as it utilizes the bell character.
+
+#### Enable/Disable bell character
 <Tabs
   groupId="settings"
   defaultValue="cli"
@@ -200,44 +221,25 @@ Configuring this setting is not yet available for the selected platform. If this
   </TabItem>
 </Tabs>
 
-### Set input source
-<Tabs
-  groupId="settings"
-  defaultValue="cli"
-  values={[
-    {label: 'CLI', value: 'cli'},
-    {label: 'Android', value: 'android'},
-    {label: 'iOS', value: 'iOS'},
-    {label: 'Web', value: 'web'},
-  ]}>
-  <TabItem value="cli">
+## Details
 
-```bash title="Set Allowed Input Source"
-meshtastic --set canned_message_plugin_allow_input_source "_any"
-```
-```bash title="Specify Allowed Input Source"
-meshtastic --set canned_message_plugin_allow_input_source "rotEnc1"
-```
-  </TabItem>
-  <TabItem value="android">
+### Prerequisites
 
-:::info
-Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+<!--- TODO add link to hardware pages to first bullet point --->
+- Attach a compatible peripheral device. Take note of the GPIO numbers you use, as they will be used in the following step.
+- Once attached, configure peripheral device with [Rotary Encoder Plugin Settings](rotary-encoder-plugin).
+
+:::note
+Replace each `GPIO` (x3) below with the GPIO numbers from hardware setup.
+
+  ```bash title="Canned Message Plugin - Required Rotary Encoder Plugin Settings"
+  meshtastic --set rotary1_pin_a GPIO
+  meshtastic --set rotary1_pin_b GPIO
+  meshtastic --set rotary1_pin_press GPIO
+  meshtastic --set rotary1_event_cw KEY_UP
+  meshtastic --set rotary1_event_ccw KEY_DOWN
+  meshtastic --set rotary1_event_press KEY_SELECT
+  meshtastic --set rotary1_enabled True
+  ```
 :::
-
-  </TabItem>
-  <TabItem value="iOS">
-
-:::info
-Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
-  </TabItem>
-  <TabItem value="web">
-
-:::info
-Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
-  </TabItem>
-</Tabs>
+That's it! With a functioning and enabled rotary encoder, you're ready to begin configuring the Canned Message Plugin.
