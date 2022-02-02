@@ -143,7 +143,11 @@ Configuring this setting is not yet available for the selected platform. If this
 
 ### is_low_power
 
-If set, we are powered from a low-current source (i.e. solar), so even if it looks like we have power flowing in we should try to minimize power consumption as much as possible. YOU DO NOT NEED TO SET THIS IF YOU'VE set is_router (it is implied in that case).
+If set, we are powered from a low-current source (i.e. solar), so even if it looks like we have power flowing in we should try to minimize power consumption as much as possible.
+
+:::note
+You do **not** need to set this if you've set `is_router` (it is implied in that case).
+:::
 
 <Tabs
   groupId="settings"
