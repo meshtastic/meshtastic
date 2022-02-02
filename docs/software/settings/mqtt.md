@@ -27,6 +27,7 @@ Be sure to checkout this [MQTT](https://meshtastic.org/docs/software/other/mqtt)
 | :-----: | :---------------: | :-----: |
 | downlink_enabled | `true`, `false` | `false` |
 | mqtt_disabled | `true`, `false` | `false` |
+| mqtt_encryption_enabled | `true`, `false` | `false` |
 | mqtt_password | `string` | `""` |
 | mqtt_server | `string` | `""` |
 | mqtt_username | `string` | `""` |
@@ -53,6 +54,57 @@ If a meshtastic node is able to reach the internet it will normally attempt to g
   ```
   ```bash title="Disable MQTT"
   meshtastic --set mqtt_disabled true
+  ```
+
+  </TabItem>
+  <TabItem value="android">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+  <TabItem value="iOS">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+  <TabItem value="web">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+</Tabs>
+
+### mqtt_encryption_enabled
+
+Determines whether or not the device sends the packets encrypted to/from your MQTT server.
+
+:::tip
+If you are using the default Meshtastic MQTT server, this setting will take no effect. All packets will continue to be encrypted regardless of this setting. Only custom servers will honor this setting.
+:::
+
+#### Enable/Disable MQTT Encryption
+<Tabs
+  groupId="settings"
+  defaultValue="cli"
+  values={[
+    {label: 'CLI', value: 'cli'},
+    {label: 'Android', value: 'android'},
+    {label: 'iOS', value: 'iOS'},
+    {label: 'Web', value: 'web'},
+  ]}>
+  <TabItem value="cli">
+
+  ```bash title="Enable MQTT Encryption (Default)"
+  meshtastic --set mqtt_encryption_enabled false
+  ```
+  ```bash title="Disable MQTT Encryption"
+  meshtastic --set mqtt_encryption_enabled true
   ```
 
   </TabItem>
