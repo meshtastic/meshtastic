@@ -30,52 +30,6 @@ Once plugin settings are changed, a **reset** is required for them to take effec
 | ext_notification_plugin_output | `integer` | `0` |
 | ext_notification_plugin_output_ms | `integer` (milliseconds) | `0` |
 
-### ext_notification_plugin_enabled
-
-Enables the plugin.
-
-#### Enable/Disable the plugin
-<Tabs
-  groupId="settings"
-  defaultValue="cli"
-  values={[
-    {label: 'CLI', value: 'cli'},
-    {label: 'Android', value: 'android'},
-    {label: 'iOS', value: 'iOS'},
-    {label: 'Web', value: 'web'},
-  ]}>
-  <TabItem value="cli">
-
-```bash title="Enable Plugin"
-meshtastic --set ext_notification_plugin_enabled true
-```
-```bash title="Disable Plugin"
-meshtastic --set ext_notification_plugin_enabled false
-```
-  </TabItem>
-  <TabItem value="android">
-
-:::info
-Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
-  </TabItem>
-  <TabItem value="iOS">
-
-:::info
-Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
-  </TabItem>
-  <TabItem value="web">
-
-:::info
-Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
-  </TabItem>
-</Tabs>
-
 ### ext_notification_plugin_active
 
 Specifies whether the external circuit is triggered when the device's GPIO is low or high.
@@ -214,7 +168,51 @@ Configuring this setting is not yet available for the selected platform. If this
   </TabItem>
 </Tabs>
 
+### ext_notification_plugin_enabled
 
+Enables the plugin.
+
+#### Enable/Disable the plugin
+<Tabs
+  groupId="settings"
+  defaultValue="cli"
+  values={[
+    {label: 'CLI', value: 'cli'},
+    {label: 'Android', value: 'android'},
+    {label: 'iOS', value: 'iOS'},
+    {label: 'Web', value: 'web'},
+  ]}>
+  <TabItem value="cli">
+
+```bash title="Enable Plugin"
+meshtastic --set ext_notification_plugin_enabled true
+```
+```bash title="Disable Plugin"
+meshtastic --set ext_notification_plugin_enabled false
+```
+  </TabItem>
+  <TabItem value="android">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+  <TabItem value="iOS">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+  <TabItem value="web">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+</Tabs>
 
 ### ext_notification_plugin_output
 

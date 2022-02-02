@@ -140,6 +140,53 @@ Configuring this setting is not yet available for the selected platform. If this
   </TabItem>
 </Tabs>
 
+### gps_attempt_time
+
+Determines the amount of time that a GPS fix should be allowed to take. The default is every 30 seconds. If you increase this value, it will allow the device that amount of time in seconds to acquire coordinates. If the device is unable to get a fix, it will turn off until the next interval. GPS coordinates are updated every [`gps_update_interval`](#gps_update_interval) seconds.
+
+#### Change GPS attempt time frequency
+<Tabs
+  groupId="settings"
+  defaultValue="cli"
+  values={[
+    {label: 'CLI', value: 'cli'},
+    {label: 'Android', value: 'android'},
+    {label: 'iOS', value: 'iOS'},
+    {label: 'Web', value: 'web'},
+  ]}>
+  <TabItem value="cli">
+
+  ```bash title="Set GPS attempt time to default (30 seconds)"
+  meshtastic --set gps_attempt_time 0
+  ```
+  ```bash title="Set GPS attempt time to 45 seconds"
+  meshtastic --set gps_attempt_time 45
+  ```
+
+  </TabItem>
+  <TabItem value="android">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+  <TabItem value="iOS">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+  <TabItem value="web">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+</Tabs>
+
 ### gps_format
 
 Determines how the GPS coordinates are displayed on the OLED screen.
@@ -167,53 +214,6 @@ Determines how the GPS coordinates are displayed on the OLED screen.
 
   ```bash title="Specify GPS format on device screen"
   meshtastic --set gps_format GpsFormatUTM
-  ```
-
-  </TabItem>
-  <TabItem value="android">
-
-:::info
-Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
-  </TabItem>
-  <TabItem value="iOS">
-
-:::info
-Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
-  </TabItem>
-  <TabItem value="web">
-
-:::info
-Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
-  </TabItem>
-</Tabs>
-
-### gps_attempt_time
-
-Determines the amount of time that a GPS fix should be allowed to take. The default is every 30 seconds. If you increase this value, it will allow the device that amount of time in seconds to acquire coordinates. If the device is unable to get a fix, it will turn off until the next interval. GPS coordinates are updated every [`gps_update_interval`](#gps_update_interval) seconds.
-
-#### Change GPS attempt time frequency
-<Tabs
-  groupId="settings"
-  defaultValue="cli"
-  values={[
-    {label: 'CLI', value: 'cli'},
-    {label: 'Android', value: 'android'},
-    {label: 'iOS', value: 'iOS'},
-    {label: 'Web', value: 'web'},
-  ]}>
-  <TabItem value="cli">
-
-  ```bash title="Set GPS attempt time to default (30 seconds)"
-  meshtastic --set gps_attempt_time 0
-  ```
-  ```bash title="Set GPS attempt time to 45 seconds"
-  meshtastic --set gps_attempt_time 45
   ```
 
   </TabItem>

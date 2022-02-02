@@ -76,138 +76,6 @@ Configuring this setting is not yet available for the selected platform. If this
   </TabItem>
 </Tabs>
 
-### rotary1_pin_a
-GPIO pin for rotary encoder A port.
-
-#### Specify rotary1 pin a
-<Tabs
-  groupId="settings"
-  defaultValue="cli"
-  values={[
-    {label: 'CLI', value: 'cli'},
-    {label: 'Android', value: 'android'},
-    {label: 'iOS', value: 'iOS'},
-    {label: 'Web', value: 'web'},
-  ]}>
-  <TabItem value="cli">
-
-:::note
-Replace `GPIO` below with the GPIO number from hardware setup.
-:::
-
-  ```bash title="Specify rotary1 pin a"
-  meshtastic --set rotary1_pin_a GPIO
-  ```
-
-  </TabItem>
-  <TabItem value="android">
-:::info
-Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
-  </TabItem>
-  <TabItem value="iOS">
-:::info
-Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
-  </TabItem>
-  <TabItem value="web">
-:::info
-Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
-  </TabItem>
-</Tabs>
-
-### rotary1_pin_b
-GPIO pin for rotary encoder B port.
-
-#### Specify rotary1 pin b
-<Tabs
-  groupId="settings"
-  defaultValue="cli"
-  values={[
-    {label: 'CLI', value: 'cli'},
-    {label: 'Android', value: 'android'},
-    {label: 'iOS', value: 'iOS'},
-    {label: 'Web', value: 'web'},
-  ]}>
-  <TabItem value="cli">
-
-:::note
-Replace `GPIO` below with the GPIO number from hardware setup.
-:::
-
-  ```bash title="Specify rotary1 pin b"
-  meshtastic --set rotary1_pin_b GPIO
-  ```
-
-  </TabItem>
-  <TabItem value="android">
-:::info
-Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
-  </TabItem>
-  <TabItem value="iOS">
-:::info
-Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
-  </TabItem>
-  <TabItem value="web">
-:::info
-Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
-  </TabItem>
-</Tabs>
-
-### rotary1_pin_press
-GPIO pin for rotary encoder Press port.
-
-#### Specify rotary1 pin press
-<Tabs
-  groupId="settings"
-  defaultValue="cli"
-  values={[
-    {label: 'CLI', value: 'cli'},
-    {label: 'Android', value: 'android'},
-    {label: 'iOS', value: 'iOS'},
-    {label: 'Web', value: 'web'},
-  ]}>
-  <TabItem value="cli">
-
-:::note
-Replace `GPIO` below with the GPIO number from hardware setup.
-:::
-
-  ```bash title="Specify rotary1 pin press"
-  meshtastic --set rotary1_pin_press GPIO
-  ```
-
-  </TabItem>
-  <TabItem value="android">
-:::info
-Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
-  </TabItem>
-  <TabItem value="iOS">
-:::info
-Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
-  </TabItem>
-  <TabItem value="web">
-:::info
-Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
-  </TabItem>
-</Tabs>
-
 ### rotary1_event_cw
 Generate input event on CW of this kind.
 
@@ -326,6 +194,138 @@ For using with CannedMessagePlugin you must choose value `KEY_SELECT` here.
   ```
   ```bash title="Unset rotary1 event press"
   meshtastic --set rotary1_event_press ""
+  ```
+
+  </TabItem>
+  <TabItem value="android">
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+  <TabItem value="iOS">
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+  <TabItem value="web">
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+</Tabs>
+
+### rotary1_pin_a
+GPIO pin for rotary encoder A port.
+
+#### Specify rotary1 pin a
+<Tabs
+  groupId="settings"
+  defaultValue="cli"
+  values={[
+    {label: 'CLI', value: 'cli'},
+    {label: 'Android', value: 'android'},
+    {label: 'iOS', value: 'iOS'},
+    {label: 'Web', value: 'web'},
+  ]}>
+  <TabItem value="cli">
+
+:::note
+Replace `GPIO` below with the GPIO number from hardware setup.
+:::
+
+  ```bash title="Specify rotary1 pin a"
+  meshtastic --set rotary1_pin_a GPIO
+  ```
+
+  </TabItem>
+  <TabItem value="android">
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+  <TabItem value="iOS">
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+  <TabItem value="web">
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+</Tabs>
+
+### rotary1_pin_b
+GPIO pin for rotary encoder B port.
+
+#### Specify rotary1 pin b
+<Tabs
+  groupId="settings"
+  defaultValue="cli"
+  values={[
+    {label: 'CLI', value: 'cli'},
+    {label: 'Android', value: 'android'},
+    {label: 'iOS', value: 'iOS'},
+    {label: 'Web', value: 'web'},
+  ]}>
+  <TabItem value="cli">
+
+:::note
+Replace `GPIO` below with the GPIO number from hardware setup.
+:::
+
+  ```bash title="Specify rotary1 pin b"
+  meshtastic --set rotary1_pin_b GPIO
+  ```
+
+  </TabItem>
+  <TabItem value="android">
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+  <TabItem value="iOS">
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+  <TabItem value="web">
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+</Tabs>
+
+### rotary1_pin_press
+GPIO pin for rotary encoder Press port.
+
+#### Specify rotary1 pin press
+<Tabs
+  groupId="settings"
+  defaultValue="cli"
+  values={[
+    {label: 'CLI', value: 'cli'},
+    {label: 'Android', value: 'android'},
+    {label: 'iOS', value: 'iOS'},
+    {label: 'Web', value: 'web'},
+  ]}>
+  <TabItem value="cli">
+
+:::note
+Replace `GPIO` below with the GPIO number from hardware setup.
+:::
+
+  ```bash title="Specify rotary1 pin press"
+  meshtastic --set rotary1_pin_press GPIO
   ```
 
   </TabItem>

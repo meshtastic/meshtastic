@@ -28,55 +28,6 @@ Once plugin settings are changed, a **reset** is required for them to take effec
 | canned_message_plugin_messages | `string` | `""` |
 | canned_message_plugin_send_bell | `true`, `false` | `false` |
 
-### canned_message_plugin_enabled
-
-Enables the plugin.
-
-:::tip
-Using the canned message plugin requires you set up the [rotary encoder plugin](rotary-encoder-plugin). See [prerequisites](#prerequisites) below.
-:::
-#### Enable/Disable the plugin
-<Tabs
-  groupId="settings"
-  defaultValue="cli"
-  values={[
-    {label: 'CLI', value: 'cli'},
-    {label: 'Android', value: 'android'},
-    {label: 'iOS', value: 'iOS'},
-    {label: 'Web', value: 'web'},
-  ]}>
-  <TabItem value="cli">
-
-```bash title="Enable Canned Message Plugin"
-meshtastic --set canned_message_plugin_enabled true
-```
-```bash title="Disable Canned Message Plugin"
-meshtastic --set canned_message_plugin_enabled false
-```
-  </TabItem>
-  <TabItem value="android">
-
-:::info
-Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
-  </TabItem>
-  <TabItem value="iOS">
-
-:::info
-Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
-  </TabItem>
-  <TabItem value="web">
-
-:::info
-Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
-  </TabItem>
-</Tabs>
-
 ### canned_message_plugin_allow_input_source
 
 Input event source accepted by the canned message plugin.
@@ -128,6 +79,54 @@ Configuring this setting is not yet available for the selected platform. If this
   </TabItem>
 </Tabs>
 
+### canned_message_plugin_enabled
+
+Enables the plugin.
+
+:::tip
+Using the canned message plugin requires you set up the [rotary encoder plugin](rotary-encoder-plugin). See [prerequisites](#prerequisites) below.
+:::
+#### Enable/Disable the plugin
+<Tabs
+  groupId="settings"
+  defaultValue="cli"
+  values={[
+    {label: 'CLI', value: 'cli'},
+    {label: 'Android', value: 'android'},
+    {label: 'iOS', value: 'iOS'},
+    {label: 'Web', value: 'web'},
+  ]}>
+  <TabItem value="cli">
+
+```bash title="Enable Canned Message Plugin"
+meshtastic --set canned_message_plugin_enabled true
+```
+```bash title="Disable Canned Message Plugin"
+meshtastic --set canned_message_plugin_enabled false
+```
+  </TabItem>
+  <TabItem value="android">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+  <TabItem value="iOS">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+  <TabItem value="web">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+</Tabs>
 
 ### canned_message_plugin_messages
 

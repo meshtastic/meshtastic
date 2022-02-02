@@ -113,10 +113,6 @@ For instance the default interval of 4 will send the node owner information for 
 
 Wait number of seconds for Bluetooth - Power management state machine option. See the [power page](/docs/software/other/power) for details. 0 for default of 1 minute
 
-### is_always_powered
-
-If the device is plugged into the wall (not from battery), you may consider using this setting to always keep the device from sleeping. This is a useful setting if you are on ESP32 and using the Wifi options.
-
 ## Examples
 
 <Tabs
