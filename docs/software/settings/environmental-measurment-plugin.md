@@ -23,8 +23,8 @@ Once plugin settings are changed, a **reset** is required for them to take effec
 
 | Setting | Acceptable Values | Default |
 | :-----: | :---------------: | :-----: |
-| environmental_measurement_plugin_measurement_enabled | `true`, `false` | `false` |
 | environmental_measurement_plugin_display_farenheit | `true`, `false` | `false` |
+| environmental_measurement_plugin_measurement_enabled | `true`, `false` | `false` |
 | environmental_measurement_plugin_read_error_count_threshold | `integer` | `0` |
 | environmental_measurement_plugin_recovery_interval | `integer` (seconds) | `0` |
 | environmental_measurement_plugin_screen_enabled | `true`, `false` | `0` |

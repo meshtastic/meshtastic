@@ -26,12 +26,12 @@ Once plugin settings are changed, a **reset** is required for them to take effec
 | Setting | Acceptable Values | Default |
 | :-----: | :---------------: | :-----: |
 | rotary1_enabled | `true`, `false` | `false` |
-| rotary1_pin_a | `integer` | (not defined) |
-| rotary1_pin_b | `integer` | (not defined) |
-| rotary1_pin_press | `integer` | (not defined) |
 | rotary1_event_cw | `InputEventChar` | (not defined) |
 | rotary1_event_ccw | `InputEventChar` | (not defined) |
 | rotary1_event_press | `InputEventChar` | (not defined) |
+| rotary1_pin_a | `integer` | (not defined) |
+| rotary1_pin_b | `integer` | (not defined) |
+| rotary1_pin_press | `integer` | (not defined) |
 
 ### rotary1_enabled
 Enable the rotary encoder #1

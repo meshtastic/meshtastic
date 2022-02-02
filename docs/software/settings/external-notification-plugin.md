@@ -23,10 +23,10 @@ Once plugin settings are changed, a **reset** is required for them to take effec
 
 | Setting | Acceptable Values | Default |
 | :-----: | :---------------: | :-----: |
-| ext_notification_plugin_enabled | `true`, `false` | `false` |
 | ext_notification_plugin_active | `true`, `false` | `false` |
 | ext_notification_plugin_alert_bell | `true`, `false` | `false` |
 | ext_notification_plugin_alert_message | `true`, `false` | `false` |
+| ext_notification_plugin_enabled | `true`, `false` | `false` |
 | ext_notification_plugin_output | `integer` | `0` |
 | ext_notification_plugin_output_ms | `integer` (milliseconds) | `0` |
 

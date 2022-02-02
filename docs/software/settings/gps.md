@@ -22,8 +22,8 @@ GPS is provided by either the device or your paired phone. More than likely, you
 | gps_accept_2d | `true`, `false` | `false` |
 | gps_attempt_time | `integer` (seconds) | `0` (see note) |
 | gps_format | `GpsFormatDec`, `GpsFormatDMS`, `GpsFormatUTM`, `GpsFormatMGRS`, `GpsFormatOLC`, `GpsFormatOSGR` | `GpsFormatDec` |
-| gps_operation | `GpsOpUnset`, ~~`GpsOpStationary`~~, `GpsOpMobile`, `GpsOpTimeOnly`, `GpsOpDisabled` | `GpsOpUnset` |
 | gps_max_dop | `integer` | `0` |
+| gps_operation | `GpsOpUnset`, ~~`GpsOpStationary`~~, `GpsOpMobile`, `GpsOpTimeOnly`, `GpsOpDisabled` | `GpsOpUnset` |
 | gps_update_interval | `integer` (seconds) | `0` (see note) |
 | location_share | `LocUnset`, `LocEnabled`, `LocDisabled` | `LocUnset` |
 | position_broadcast_secs | `integer` (seconds) | `0` (see note) |

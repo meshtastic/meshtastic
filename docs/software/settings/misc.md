@@ -20,8 +20,8 @@ import TabItem from '@theme/TabItem';
 | factory_reset | `true`, `false` | `false` |
 | frequency_offset | real numbers | `0` |
 | ignore_incoming | `string` – list of node nums to ignore | `0` |
-| serial_disabled | `true`, `false` | `false` |
 | hop_limit | real numbers | 0|
+| serial_disabled | `true`, `false` | `false` |
 
 
 ### auto_screen_carousel_secs
