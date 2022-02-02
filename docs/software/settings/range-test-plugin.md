@@ -17,11 +17,11 @@ Once plugin settings are changed, a **reset** is required for them to take effec
 
 ## Settings
 
-|          Setting          |  Acceptable Values  | Default |
-| :-----------------------: | :-----------------: | :-----: |
-| range_test_plugin_enabled |   `true`, `false`   | `false` |
-|  range_test_plugin_save   |   `true`, `false`   | `false` |
-| range_test_plugin_sender  | `integer` (Seconds) |   `0`   |
+| Setting | Acceptable Values | Default |
+| :-----: | :---------------: | :-----: |
+| range_test_plugin_enabled | `true`, `false` | `false` |
+| range_test_plugin_save | `true`, `false` | `false` |
+| range_test_plugin_sender | `integer` (Seconds) | `0` |
 
 ### range_test_plugin_enabled
 
