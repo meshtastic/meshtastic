@@ -16,21 +16,11 @@ Channel settings are an integral part of the way your devices communicate across
 
 | Setting | Acceptable Values | Default |
 | :-----: | :---------------: | :-----: |
-| downlink_enabled | `true`, `false` | `false` |
 | id | `integer` | `0` |
 | modem_config | `Bw125Cr45Sf128`, `Bw500Cr45Sf128`, `Bw31_25Cr48Sf512`, `Bw125Cr48Sf4096` | TODO |
 | name | `string` | `""` |
 | psk | `0`, `1`, `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9`, `none`, `default`, `random` | `1` |
 | region | `Unset`, `US`, `EU433`, `EU865`, `CN`, `JP`, `ANZ`, `KR`, `TW`, `RU` | `Unset` |
-| uplink_enabled | `true`, `false` | `false` |
-
-### downlink_enabled
-
-If `true`, messages seen on the internet will be forwarded to the local mesh through a gateway node. See [MQTT settings](mqtt) for more details.
-
-:::caution
-This is in active development and not ready for casual users. Testing only.
-:::
 
 ### id
 
@@ -324,7 +314,3 @@ Configuring this setting is not yet available for the selected platform. If this
 
   </TabItem>
 </Tabs>
-
-### uplink_enabled
-
-If `true`, messages on the mesh will be sent to the public internet by any gateway node. See [MQTT settings](mqtt) for more details.
