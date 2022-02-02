@@ -17,7 +17,7 @@ Channel settings are an integral part of the way your devices communicate across
 | Setting | Acceptable Values | Default |
 | :-----: | :---------------: | :-----: |
 | id | `integer` | `0` |
-| modem_config | `Bw125Cr45Sf128`, `Bw500Cr45Sf128`, `Bw31_25Cr48Sf512`, `Bw125Cr48Sf4096` | TODO |
+| modem_config | `Bw125Cr45Sf128`, `Bw500Cr45Sf128`, `Bw31_25Cr48Sf512`, `Bw125Cr48Sf4096` | `Bw125Cr45Sf128` |
 | name | `string` | `""` |
 | psk | `0`, `1`, `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9`, `none`, `default`, `random` | `1` |
 | region | `Unset`, `US`, `EU433`, `EU865`, `CN`, `JP`, `ANZ`, `KR`, `TW`, `RU` | `Unset` |
@@ -73,12 +73,14 @@ The channel `id` must be an integer.
 
 ### modem_config
 
-| Setting | Name | Bandwidth | Coding Rate | Spread Factor | Speed |
+| Setting | Name (Range/Speed) | Bandwidth | Coding Rate | Spread Factor | Speed |
 | :-----: | :--: | :-------: | :---------: | :-----------: | :-----: |
-| `Bw125Cr45Sf128` | ShortSlow | 125 kHz | 4/5 | 7 = 128chips/symbol | 5.469 kbps |
-| `Bw500Cr45Sf128` | ShortFast | 500 kHz | 4/5 | 7 = 128chips/symbol | 21.875 kbps |
-| `Bw31_25Cr48Sf512` | LongFast | 31.25 kHz | 4/8 | 9 = 512chips/symbol | 275 bps |
-| `Bw125Cr48Sf4096` | LongSlow | 125 kHz | 4/8 | 12 = 4096chips/symbol | 183 bps |
+| `Bw500Cr45Sf128` | Short/Fast | 500 kHz | 4/5 | 7 = 128chips/symbol | 18.89 kbps |
+| `Bw125Cr45Sf128` | Short/Slow | 125 kHz | 4/5 | 7 = 128chips/symbol | 4.69 kbps |
+| `Bw250Cr47Sf1024` | Medium/Fast | 250 kHz | 4/7 | 10 = 1024chips/symbol | 1.2 kbps |
+| `Bw250Cr46Sf2048` | Medium/Slow | 250 kHz | 4/6 | 11 = 2048chips/symbol | 0.75 kbps |
+| `Bw31_25Cr48Sf512` | Long/Fast | 31.25 kHz | 4/8 | 9 = 512chips/symbol | 0.19 kbps |
+| `Bw125Cr48Sf4096` | Long/Slow | 125 kHz | 4/8 | 12 = 4096chips/symbol | 0.13 kbps |
 
 #### Set Modem
 <Tabs
