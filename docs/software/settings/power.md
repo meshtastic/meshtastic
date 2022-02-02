@@ -43,7 +43,7 @@ For a description and more information on what exactly all of these mean, please
 | wait_bluetooth_secs | `integer` (seconds) | `0` |
 
 :::note
-When you the following settings to `0` they assume the following defaults:
+When you change the following settings to `0` they assume the following defaults:
 
 - `ls_secs`: 1 hour
 - `mesh_sds_timeout_secs`: 2 hours
