@@ -4,7 +4,6 @@ import useSWR from 'swr';
 
 // import { Endpoints } from '@octokit/types';
 import Layout from '@theme/Layout';
-import CodeBlock from '@theme/CodeBlock';
 
 import { Release } from '../../utils/github';
 import { fetcher } from '../../utils/swr';
@@ -47,13 +46,7 @@ const Firmware = (): JSX.Element => {
             buttonText="Download Meshtastic Flasher"
             url="https://github.com/meshtastic/Meshtastic-gui-installer/releases/latest"
             notes={[
-              "To download using ", <code>pip</code>, " use the following:",
-              <CodeBlock className="language-bash" title="Install meshtastic-flasher">
-                {"pip install meshtastic-flasher"}
-              </CodeBlock>,
-              <CodeBlock className="language-bash" title="Running meshtastic-flasher">
-                {"meshtastic-flasher"}
-              </CodeBlock>,
+              "To download using ", <code>pip</code>, " follow ",<a href="https://meshtastic.org/docs/getting-started/meshtastic-flasher#install-using-pip">these instructions</a>,"."
             ]}
           />
         </div>

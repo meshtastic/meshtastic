@@ -10,6 +10,7 @@ import TabItem from '@theme/TabItem';
 
 Install Meshtastic Flasher by either [downloading the executable file](https://github.com/meshtastic/Meshtastic-gui-installer/releases) or installing using `pip`. The following operating systems are: Windows, Mac, and Ubuntu.
 
+### Install using `pip`
 <Tabs
 groupId="operating-system"
 defaultValue="linux"
