@@ -179,15 +179,15 @@ A channel `id` must be set in order to name a channel.
 ### psk
 
 :::note
-Selecting `1`-`10` from the following table will use publicly known encryption keys. They're shipped with Meshtastic source code and thus, anyone can listen to messages encrypted by them. They're great for testing and public channels.
+Selecting a `default` or any of the `simple` values from the following table will use publicly known encryption keys. They're shipped with Meshtastic source code and thus, anyone can listen to messages encrypted by them. They're great for testing and public channels.
 :::
 
 | Setting | Behavior |
 | :-----: | :------: |
-| `none`/`0` | Disable Encryption |
-| `default`/`1` | Default Encryption (use the weak encryption key) |
-| `2`-`10` | Default Encryption, except with 1-9 added to the last byte |
+| `none` | Disable Encryption |
+| `default` | Default Encryption (use the weak encryption key) |
 | `random` | Generate a secure 256-bit encryption key. Use this setting for private communication. |
+| `simple0`- `simple254` | Uses a single byte encoding for encryption |
 
 :::tip
 If you use Meshtastic for exchanging messages you don't want other people to see, `random` is the setting you should use.
@@ -211,10 +211,15 @@ If you use Meshtastic for exchanging messages you don't want other people to see
   ```bash title="Set encryption to random on PRIMARY channel"
   meshtastic --ch-set psk random --ch-index 0
   ```
+  ```bash title="Set encryption to single byte  on PRIMARY channel"
+  meshtastic --ch-set psk simple15 --ch-index 0
+  ```
+  ```bash title="Set encryption to your own key on PRIMARY channel"
+  meshtastic --ch-set psk 0x1a1a1a1a2b2b2b2b1a1a1a1a2b2b2b2b1a1a1a1a2b2b2b2b1a1a1a1a2b2b2b2b --ch-index 0
+  ```
   ```bash title="Disable encryption on PRIMARY channel"
   meshtastic --ch-set psk none --ch-index 0
   ```
-
   </TabItem>
   <TabItem value="android">
 
