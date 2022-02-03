@@ -11,6 +11,7 @@ import {
   FirmwareCard,
   PlaceholderFirmwareCard,
 } from './_components/FirmwareCard';
+import { HeaderText } from './_components/HeaderText'
 
 const Firmware = (): JSX.Element => {
   const { data, error } = useSWR<Release[]>(
@@ -23,11 +24,41 @@ const Firmware = (): JSX.Element => {
   const alpha = data?.filter((release) => release.prerelease === true);
   return (
     <Layout
-      title="Firmware"
-      description="Firmware download for the Meshtastic project"
+      title="Downloads"
+      description="Downloads for the Meshtastic project"
     >
       <main className="margin-vert--xl">
         <div className="container">
+        <HeaderText
+          type="h1"
+          text="Downloads"
+        />
+        </div>
+        <div className="container">
+        <HeaderText
+          type="h2"
+          text="Install Meshtastic"
+          link=""
+        />
+        </div>
+        <div className="container">
+        <HeaderText
+          type="h2"
+          text="Mobile Downloads"
+          link="mobile-downloads"
+        />
+        </div>
+        <div className="container">
+        <HeaderText
+          type="h2"
+          text="Advanced"
+          link="advanced"
+        />
+        <HeaderText
+          type="h3"
+          text="Firmware Downloads"
+          link="firmware-downloads"
+        />
           <ul
             style={{
               position: "relative",
@@ -77,6 +108,11 @@ const Firmware = (): JSX.Element => {
               </>
             )}
           </ul>
+          <HeaderText
+            type="h3"
+            text="Sideload Android"
+            link="sideload-android"
+          />
         </div>
       </main>
     </Layout>
