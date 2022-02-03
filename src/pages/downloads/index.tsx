@@ -4,6 +4,7 @@ import useSWR from 'swr';
 
 // import { Endpoints } from '@octokit/types';
 import Layout from '@theme/Layout';
+import CodeBlock from '@theme/CodeBlock';
 
 import { Release } from '../../utils/github';
 import { fetcher } from '../../utils/swr';
@@ -12,6 +13,7 @@ import {
   PlaceholderFirmwareCard,
 } from './_components/FirmwareCard';
 import { HeaderText } from './_components/HeaderText'
+import { DownloadCard } from './_components/DownloadCard'
 
 const Firmware = (): JSX.Element => {
   const { data, error } = useSWR<Release[]>(
@@ -38,7 +40,21 @@ const Firmware = (): JSX.Element => {
           <HeaderText
             type="h2"
             text="Install Meshtastic"
-            link=""
+            link="install-meshtastic"
+          />
+          <DownloadCard
+            client="Meshtastic Flasher"
+            buttonText="Download Meshtastic Flasher"
+            url="https://github.com/meshtastic/Meshtastic-gui-installer/releases/latest"
+            notes={[
+              "To download using ", <code>pip</code>, " use the following:",
+              <CodeBlock className="language-bash" title="Install meshtastic-flasher">
+                {"pip install meshtastic-flasher"}
+              </CodeBlock>,
+              <CodeBlock className="language-bash" title="Running meshtastic-flasher">
+                {"meshtastic-flasher"}
+              </CodeBlock>,
+            ]}
           />
         </div>
         <div className="container">
@@ -47,6 +63,28 @@ const Firmware = (): JSX.Element => {
             text="Mobile Downloads"
             link="mobile-downloads"
           />
+          <ul
+            style={{
+              position: "relative",
+              display: "grid",
+              gap: "1.5rem",
+              gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
+              paddingLeft: "0",
+            }}
+          >
+            <DownloadCard
+              client="Android"
+              imgUrl="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png"
+              url="https://play.google.com/store/apps/details?id=com.geeksville.mesh&referrer=utm_source=downloads-page"
+              notes={["To sideload, ",<a href="https://github.com/meshtastic/Meshtastic-Android/releases/latest" rel="noreferrer" target="_blank">download the latest .apk</a>," from Github", ]}
+            />
+            <DownloadCard
+              client="iOS"
+              url="https://testflight.apple.com/join/c8nNl8q1"
+              buttonText="Download on TestFlight"
+              notes="Currently only available in TestFlight"
+            />
+          </ul>
         </div>
         <div className="container">
           <HeaderText
