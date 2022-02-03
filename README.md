@@ -27,7 +27,6 @@
   </span>
   <br />
   <hr />
-
 </div>
 
 ## What is Meshtastic?
