@@ -29,36 +29,36 @@ const Firmware = (): JSX.Element => {
     >
       <main className="margin-vert--xl">
         <div className="container">
-        <HeaderText
-          type="h1"
-          text="Downloads"
-        />
+          <HeaderText
+            type="h1"
+            text="Downloads"
+          />
         </div>
         <div className="container">
-        <HeaderText
-          type="h2"
-          text="Install Meshtastic"
-          link=""
-        />
+          <HeaderText
+            type="h2"
+            text="Install Meshtastic"
+            link=""
+          />
         </div>
         <div className="container">
-        <HeaderText
-          type="h2"
-          text="Mobile Downloads"
-          link="mobile-downloads"
-        />
+          <HeaderText
+            type="h2"
+            text="Mobile Downloads"
+            link="mobile-downloads"
+          />
         </div>
         <div className="container">
-        <HeaderText
-          type="h2"
-          text="Advanced"
-          link="advanced"
-        />
-        <HeaderText
-          type="h3"
-          text="Firmware Downloads"
-          link="firmware-downloads"
-        />
+          <HeaderText
+            type="h2"
+            text="Advanced"
+            link="advanced"
+          />
+          <HeaderText
+            type="h3"
+            text="Firmware Downloads"
+            link="firmware-downloads"
+          />
           <ul
             style={{
               position: "relative",
