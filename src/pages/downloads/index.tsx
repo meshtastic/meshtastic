@@ -51,11 +51,6 @@ const Firmware = (): JSX.Element => {
         <div className="container">
           <HeaderText
             type="h2"
-            text="Advanced"
-            link="advanced"
-          />
-          <HeaderText
-            type="h3"
             text="Firmware Downloads"
             link="firmware-downloads"
           />
@@ -108,11 +103,6 @@ const Firmware = (): JSX.Element => {
               </>
             )}
           </ul>
-          <HeaderText
-            type="h3"
-            text="Sideload Android"
-            link="sideload-android"
-          />
         </div>
       </main>
     </Layout>
