@@ -134,6 +134,7 @@ const Firmware = (): JSX.Element => {
               </>
             )}
           </ul>
+          Once downloaded, follow the flashing instructions for <a href="https://meshtastic.org/docs/getting-started/flashing-esp32" rel="noreferrer" target="_blank">ESP32 chipsets</a>, <a href="https://meshtastic.org/docs/getting-started/flashing-nrf52" rel="noreferrer" target="_blank">NRF52 chipsets</a>, or the <a href="https://meshtastic.org/docs/getting-started/meshtastic-flasher" rel="noreferrer" target="_blank">GUI instructions for Meshtastic Flasher</a>.
         </div>
       </main>
     </Layout>
