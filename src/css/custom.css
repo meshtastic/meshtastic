@@ -50,3 +50,21 @@ html[data-theme="dark"] .header-github-link:before {
     box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
   }
 }
+
+.footer__items {
+  width: 1000px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.footer__item {
+  display: inline;
+  list-style-type: none;
+  line-height: 44px;
+}
+
+.footer__item ~ .footer__item::before {
+  content: ' | '; 
+  padding: 0 15px;
+}
+
