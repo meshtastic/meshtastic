@@ -34,7 +34,7 @@ export const DownloadCard = ({
             {buttonText}
           </a>
           :
-          <a href={url} className="button button--secondary button--block">
+          <a href={url}>
             <img style={{height: '4rem'}} src={imgUrl}></img>
           </a>
         }
