@@ -15,20 +15,6 @@ export const DownloadCard = ({
   notes,
   buttonText,
 }: downloadCardProps): JSX.Element => {
-
-  const button = React.createElement(
-    'a',
-    {href: url, className: "button button--secondary button--block"},
-    buttonText
-  )
-  const img = React.createElement(
-    'img',
-    {style: {height: '4rem'}, src: imgUrl, href: url},
-    null
-  )
-
-  const anchorImg = <a href={url}>{buttonText ? null : img}</a>
-
   return (
     <div className="card">
       <div
@@ -41,7 +27,17 @@ export const DownloadCard = ({
         className="card__body"
         style={{ display: "flex", justifyContent: "center"}}
       >
-        {buttonText ? button : anchorImg}
+        {
+          buttonText
+          ?
+          <a href={url} className="button button--secondary button--block">
+            {buttonText}
+          </a>
+          :
+          <a href={url} className="button button--secondary button--block">
+            <img style={{height: '4rem'}} src={imgUrl}></img>
+          </a>
+        }
       </div>
       <div className="card__footer">
         {notes ? notes : null}
