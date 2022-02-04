@@ -1,6 +1,6 @@
 import type React from 'react';
 
-export interface releaseCardProps {
+export interface downloadCardProps {
   client: string;
   imgUrl: string;
   url: string;
@@ -14,7 +14,7 @@ export const DownloadCard = ({
   url,
   notes,
   buttonText,
-}: releaseCardProps): JSX.Element => {
+}: downloadCardProps): JSX.Element => {
 
   const button = React.createElement(
     'a',
