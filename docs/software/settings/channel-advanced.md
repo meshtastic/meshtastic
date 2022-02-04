@@ -6,7 +6,7 @@ sidebar_label: Channel
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-:::caution
+:::warning
 These settings are for advanced users only. If you don't know what you are doing you could damage your radio or break local radio laws. Proceed with caution.
 :::
 
@@ -28,25 +28,7 @@ Most users should not need to change these settings. The default [modem_config](
 
 TODO
 
-### channel_num
-
-TODO
-
-### coding_rate
-
-TODO
-
-### spread_factor
-
-TODO
-
-### tx_power
-
-TODO
-
-## Examples
-
-### Set Bandwidth
+#### Set Bandwidth
 
 <Tabs
   groupId="settings"
@@ -87,7 +69,11 @@ Configuring this setting is not yet available for the selected platform. If this
   </TabItem>
 </Tabs>
 
-### Set Channel Number
+### channel_num
+
+TODO
+
+#### Set Channel Number
 
 <Tabs
   groupId="settings"
@@ -100,7 +86,9 @@ Configuring this setting is not yet available for the selected platform. If this
   ]}>
   <TabItem value="cli">
 
-  TODO
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
 
   </TabItem>
   <TabItem value="android">
@@ -126,7 +114,11 @@ Configuring this setting is not yet available for the selected platform. If this
   </TabItem>
 </Tabs>
 
-### Set Coding Rate
+### coding_rate
+
+TODO
+
+#### Set Coding Rate
 
 <Tabs
   groupId="settings"
@@ -167,7 +159,11 @@ Configuring this setting is not yet available for the selected platform. If this
   </TabItem>
 </Tabs>
 
-### Set Spread Factor
+### spread_factor
+
+TODO
+
+#### Set Spread Factor
 
 <Tabs
   groupId="settings"
@@ -208,7 +204,11 @@ Configuring this setting is not yet available for the selected platform. If this
   </TabItem>
 </Tabs>
 
-### Set TX Power
+### tx_power
+
+TODO
+
+#### Set TX Power
 
 <Tabs
   groupId="settings"
