@@ -250,6 +250,55 @@ MQTT username to use (most useful for a custom MQTT server). If using a custom s
 
 This is a channel specific setting. If your channel has this set to `true` and you are connected to WiFi, the device will forward along messages to whatever MQTT server is specified in [mqtt_server](#mqtt_server).
 
+#### Enable/Disable uplink_enabled
+<Tabs
+  groupId="settings"
+  defaultValue="cli"
+  values={[
+    {label: 'CLI', value: 'cli'},
+    {label: 'Android', value: 'android'},
+    {label: 'iOS', value: 'iOS'},
+    {label: 'Web', value: 'web'},
+  ]}>
+  <TabItem value="cli">
+
+  ```bash title="Enable uplink_enabled on PRIMARY channel"
+  meshtastic --ch-set uplink_enabled true --ch-index 0
+  ```
+  ```bash title="Disable uplink_enabled on PRIMARY channel"
+  meshtastic --ch-set uplink_enabled false --ch-index 0
+  ```
+  ```bash title="Enable uplink_enabled on OTHER channel"
+  meshtastic --ch-set uplink_enabled true --ch-index 1
+  ```
+  ```bash title="Disable uplink_enabled on OTHER channel"
+  meshtastic --ch-set uplink_enabled false --ch-index 1
+  ```
+
+  </TabItem>
+  <TabItem value="android">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+  <TabItem value="iOS">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+  <TabItem value="web">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+</Tabs>
+
 ## Details
 
 <!--- TODO --->
