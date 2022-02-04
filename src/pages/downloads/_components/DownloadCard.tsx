@@ -50,7 +50,7 @@ export const DownloadCard = ({
   );
 };
 
-export const PlaceholderFirmwareCard = (): JSX.Element => {
+export const PlaceholderCard = (): JSX.Element => {
   return (
     <div
       className="card"
