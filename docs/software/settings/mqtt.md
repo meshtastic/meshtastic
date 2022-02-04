@@ -292,6 +292,52 @@ Configuring this setting is not yet available for the selected platform. If this
 
 MQTT username to use (most useful for a custom MQTT server). If using a custom server, this will be honoured even if empty. If using the default server, this will only be honoured if set, otherwise the device will use the default username (TODO - find default username).
 
+#### Configure mqtt_username
+<Tabs
+  groupId="settings"
+  defaultValue="cli"
+  values={[
+    {label: 'CLI', value: 'cli'},
+    {label: 'Android', value: 'android'},
+    {label: 'iOS', value: 'iOS'},
+    {label: 'Web', value: 'web'},
+  ]}>
+  <TabItem value="cli">
+
+  ```bash title="Set mqtt_username"
+  meshtastic --set mqtt_username myusername
+  ```
+  ```bash title="Set mqtt_username (with spaces)"
+  meshtastic --set mqtt_username "my username"
+  ```
+  ```bash title="Unset mqtt_username (Default)"
+  meshtastic --set mqtt_username ""
+  ```
+
+  </TabItem>
+  <TabItem value="android">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+  <TabItem value="iOS">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+  <TabItem value="web">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+</Tabs>
+
 ### uplink_enabled
 
 This is a channel specific setting. If your channel has this set to `true` and you are connected to WiFi, the device will forward along messages to whatever MQTT server is specified in [mqtt_server](#mqtt_server).
