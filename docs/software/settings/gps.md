@@ -22,8 +22,8 @@ GPS is provided by either the device or your paired phone. More than likely, you
 | gps_accept_2d | `true`, `false` | `false` |
 | gps_attempt_time | `integer` (seconds) | `0` (see note) |
 | gps_format | `GpsFormatDec`, `GpsFormatDMS`, `GpsFormatUTM`, `GpsFormatMGRS`, `GpsFormatOLC`, `GpsFormatOSGR` | `GpsFormatDec` |
-| gps_operation | `GpsOpUnset`, ~~`GpsOpStationary`~~, `GpsOpMobile`, `GpsOpTimeOnly`, `GpsOpDisabled` | `GpsOpUnset` |
 | gps_max_dop | `integer` | `0` |
+| gps_operation | `GpsOpUnset`, ~~`GpsOpStationary`~~, `GpsOpMobile`, `GpsOpTimeOnly`, `GpsOpDisabled` | `GpsOpUnset` |
 | gps_update_interval | `integer` (seconds) | `0` (see note) |
 | location_share | `LocUnset`, `LocEnabled`, `LocDisabled` | `LocUnset` |
 | position_broadcast_secs | `integer` (seconds) | `0` (see note) |
@@ -42,9 +42,150 @@ If you wish to disable any GPS features, see below for more information.
 
 If set, this node is at a fixed position. The device will generate GPS updates at the regular `gps_update_interval`, but use whatever the last lat/lon/alt it saved for the node. The lat/lon/alt can be set by an internal GPS or with the help of the mobile device's GPS.
 
+#### Set/Unset Fixed Position
+<Tabs
+  groupId="settings"
+  defaultValue="cli"
+  values={[
+    {label: 'CLI', value: 'cli'},
+    {label: 'Android', value: 'android'},
+    {label: 'iOS', value: 'iOS'},
+    {label: 'Web', value: 'web'},
+  ]}>
+  <TabItem value="cli">
+
+  ```bash title="Set Fixed Position - Current Location"
+  meshtastic --set fixed_position true
+  ```
+:::note
+The device will continue to acquire GPS coordinates according to the `gps_update_interval`, but will use the last saved coordinates as its fixed point.
+:::
+  ```bash title="Set Fixed Position - User Defined"
+  meshtastic --setlat 37.8651 --setlon -119.5383
+  ```
+  ```bash title="Unset Fixed Position"
+  meshtastic --set fixed_position false
+  ```
+:::note
+It may take some time to see that the change has taken effect. The GPS location is updated according to the value specified on `gps_update_interval` and the mesh will be notified of the new position in relation to the `position_broadcast_secs` value.
+:::
+  </TabItem>
+  <TabItem value="android">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+  <TabItem value="iOS">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+  <TabItem value="web">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+</Tabs>
+
 ### gps_accept_2d
 
 Determines whether the device should accept 2D GPS fixes. By default, only 3D fixes are accepted (during a 2D fix, altitude values are unreliable and will be excluded).
+
+#### Enable/Disable 2D GPS Fixes
+<Tabs
+  groupId="settings"
+  defaultValue="cli"
+  values={[
+    {label: 'CLI', value: 'cli'},
+    {label: 'Android', value: 'android'},
+    {label: 'iOS', value: 'iOS'},
+    {label: 'Web', value: 'web'},
+  ]}>
+  <TabItem value="cli">
+
+  ```bash title="Enable 2D GPS Fixes"
+  meshtastic --set gps_accept_2d true
+  ```
+  ```bash title="Disable 2D GPS Fixes"
+  meshtastic --set gps_accept_2d false
+  ```
+
+  </TabItem>
+  <TabItem value="android">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+  <TabItem value="iOS">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+  <TabItem value="web">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+</Tabs>
+
+### gps_attempt_time
+
+Determines the amount of time that a GPS fix should be allowed to take. The default is every 30 seconds. If you increase this value, it will allow the device that amount of time in seconds to acquire coordinates. If the device is unable to get a fix, it will turn off until the next interval. GPS coordinates are updated every [`gps_update_interval`](#gps_update_interval) seconds.
+
+#### Change GPS attempt time frequency
+<Tabs
+  groupId="settings"
+  defaultValue="cli"
+  values={[
+    {label: 'CLI', value: 'cli'},
+    {label: 'Android', value: 'android'},
+    {label: 'iOS', value: 'iOS'},
+    {label: 'Web', value: 'web'},
+  ]}>
+  <TabItem value="cli">
+
+  ```bash title="Set GPS attempt time to default (30 seconds)"
+  meshtastic --set gps_attempt_time 0
+  ```
+  ```bash title="Set GPS attempt time to 45 seconds"
+  meshtastic --set gps_attempt_time 45
+  ```
+
+  </TabItem>
+  <TabItem value="android">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+  <TabItem value="iOS">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+  <TabItem value="web">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+</Tabs>
 
 ### gps_format
 
@@ -59,13 +200,135 @@ Determines how the GPS coordinates are displayed on the OLED screen.
 | GpsFormatOLC | GPS coordinates are displayed in Open Location Code (aka Plus Codes) |
 | GpsFormatOSGR | GPS coordinates are displayed in Ordnance Survey Grid Reference (the National Grid System of the UK). Format: AB EEEEE NNNNN, where A is the east 100k square, B is the north 100k square, E is the easting, N is the northing |
 
-### gps_attempt_time
+#### Specify GPS Screen Display
+<Tabs
+  groupId="settings"
+  defaultValue="cli"
+  values={[
+    {label: 'CLI', value: 'cli'},
+    {label: 'Android', value: 'android'},
+    {label: 'iOS', value: 'iOS'},
+    {label: 'Web', value: 'web'},
+  ]}>
+  <TabItem value="cli">
 
-Determines the amount of time that a GPS fix should be allowed to take. The default is every 30 seconds. If you increase this value, it will allow the device that amount of time in seconds to acquire coordinates. If the device is unable to get a fix, it will turn off until the next interval. GPS coordinates are updated every [`gps_update_interval`](#gps_update_interval) seconds.
+  ```bash title="Specify GPS format on device screen"
+  meshtastic --set gps_format GpsFormatUTM
+  ```
+
+  </TabItem>
+  <TabItem value="android">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+  <TabItem value="iOS">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+  <TabItem value="web">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+</Tabs>
 
 ### gps_max_dop
 
 Determines GPS maximum DOP accepted (dilution of precision) Set a rejection threshold for GPS readings based on their precision, relative to the GPS rated accuracy (which is typically ~3m) Solutions above this value will be treated as retryable errors! Useful range is between 1 - 64 (3m - <~200m) By default (if zero), accept all GPS readings
+
+#### Change maximum GPS dilution of precision
+<Tabs
+  groupId="settings"
+  defaultValue="cli"
+  values={[
+    {label: 'CLI', value: 'cli'},
+    {label: 'Android', value: 'android'},
+    {label: 'iOS', value: 'iOS'},
+    {label: 'Web', value: 'web'},
+  ]}>
+  <TabItem value="cli">
+
+  ```bash title="Set GPS max DOP to default (accept all GPS readings)"
+  meshtastic --set gps_max_dop 0
+  ```
+  ```bash title="Set GPS max DOP to 3m"
+  meshtastic --set gps_max_dop 1
+  ```
+  ```bash title="Set GPS max DOP to < ~200m"
+  meshtastic --set gps_max_dop 64
+  ```
+
+  </TabItem>
+  <TabItem value="android">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+  <TabItem value="iOS">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+  <TabItem value="web">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+</Tabs>
+
+#### Specify GPS Screen Display
+<Tabs
+  groupId="settings"
+  defaultValue="cli"
+  values={[
+    {label: 'CLI', value: 'cli'},
+    {label: 'Android', value: 'android'},
+    {label: 'iOS', value: 'iOS'},
+    {label: 'Web', value: 'web'},
+  ]}>
+  <TabItem value="cli">
+
+  ```bash title="Specify GPS format on device screen"
+  meshtastic --set gps_format GpsFormatUTM
+  ```
+
+  </TabItem>
+  <TabItem value="android">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+  <TabItem value="iOS">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+  <TabItem value="web">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+</Tabs>
 
 ### gps_operation
 
@@ -83,69 +346,7 @@ This is independent of how our location is shared with other devices. For that s
 | GpsOpTimeOnly | We should only use the GPS to get time (no location data should be acquired/stored) Once we have the time we treat `gps_update_interval` as MAXINT (i.e. sleep forever) |
 | GpsOpDisabled | GPS is always turned off - this mode is not recommended - use `GpsOpTimeOnly` instead. |
 
-### gps_update_interval
-
-Determines how often should the device should attempt to acquire a GPS position (in seconds). The length of time the device is allowed to attempt to acquire GPS coordinates each interval is set using [`gps_attempt_time`](#gps_attempt_time). The default is every 30 seconds.
-
-### location_share
-
-Determines whether location is shared with other nodes. See more details.
-
-| Value | Description |
-| :---: | :---------: |
-| LocUnset | **Default**: operates the same as `LocEnabled`|
-| LocEnabled | The device is sharing its location (or the paired phone's location) |
-| LocDisabled | The device is not sharing its location (if the unit has a GPS it will default to only get time - i.e. [`GpsOpTimeOnly`](#gps_operation)) |
-
-### position_broadcast_secs
-
-How often our position is sent to the mesh (but only if it has changed significantly).
-
-The GPS updates will be sent out every `position_broadcast_secs`, with either the actual GPS location, or an empty location if no GPS fix was achieved. This defaults to broadcast every 15 minutes.
-
-### position_broadcast_smart
-
-`position_broadcast_smart` will send out your position at an increased frequency only if your location has changed enough for a position update to be useful.
-
-Complements `position_broadcast_secs` (doesn't override that setting) but will apply an algorithm to more frequently update your mesh network if you are in motion and then throttle it down when you are standing still. If you use this feature, it's best to leave `position_broadcast_secs` at the default.
-
-`position_broadcast_smart` will calculate an ideal position update interval based on the data rate of your selected channel configuration.
-
-As an example, if you configure your radio to use **Long Range / Fast**, if you have traveled at least 144 meters and it's been at least 61 seconds since the last position update, a new position broadcast will be sent out. If you've moved less than 144 meters, we will broadcast the position based on the value of `position_broadcast_secs`.
-
-The table below is a summary computed values from the algorithm.
-
-| Long Name | Update every x-seconds | Update distance traveled (meters) |
-| :---: | :---------: | :---------: |
-| Long Range / Slow | 88 | 150 |
-| Long Range / Fast | 61 | 144 |
-| Medium Range / Slow | 30 | 41 |
-| Medium Range / Fast | 30 | 30 |
-| Short Range / Slow | 30 | 30 |
-| Short Range / Fast | 30 | 30 |
-
-Note: A person walking in a straight line will take about 90 seconds to travel 150 meters. That walking speed estimate was used as the baseline for the formula used.
-
-### position_flags
-
-Bit field of boolean configuration options for POSITION messages (bitwise OR of PositionFlags)
-
-| Value | Description |
-| :---: | :---------: |
-| POS_UNDEFINED | Required for compilation |
-| POS_ALTITUDE | Include an altitude value (if available) |
-| POS_ALT_MSL | Altitude value is MSL |
-| POS_GEO_SEP | Include geoidal separation |
-| POS_DOP | Include the DOP value ; PDOP used by default, see below |
-| POS_HVDOP | If POS_DOP set, send separate HDOP / VDOP values instead of | PDOP
-| POS_BATTERY | Include battery level |
-| POS_SATINVIEW | Include number of "satellites in view" |
-| POS_SEQ_NOS | Include a sequence number incremented per packet |
-| POS_TIMESTAMP | Include positional timestamp (from GPS solution) |
-
-## Examples
-
-### Disable GPS Completely
+#### Enable/Disable GPS
 <Tabs
   groupId="settings"
   defaultValue="cli"
@@ -157,6 +358,12 @@ Bit field of boolean configuration options for POSITION messages (bitwise OR of 
   ]}>
   <TabItem value="cli">
 
+  ```bash title="Set GPS to default settings"
+  meshtastic --set gps_operation GpsOpUnset
+  ```
+  ```bash title="Set GPS to only be used for time"
+  meshtastic --set gps_operation GpsOpTimeOnly
+  ```
   ```bash title="Disable GPS Completely"
   meshtastic --set gps_operation GpsOpDisabled
   ```
@@ -189,7 +396,64 @@ Configuring this setting is not yet available for the selected platform. If this
 `gps_operation GpsOpTimeOnly` is preferred to `gps_operation GpsOPDisabled` because it allows the device to get a hi-res time.
 :::
 
-### Disable Location Sharing
+### gps_update_interval
+
+Determines how often should the device should attempt to acquire a GPS position (in seconds). The length of time the device is allowed to attempt to acquire GPS coordinates each interval is set using [`gps_attempt_time`](#gps_attempt_time). The default is every 30 seconds.
+
+#### Specify GPS update interval
+<Tabs
+  groupId="settings"
+  defaultValue="cli"
+  values={[
+    {label: 'CLI', value: 'cli'},
+    {label: 'Android', value: 'android'},
+    {label: 'iOS', value: 'iOS'},
+    {label: 'Web', value: 'web'},
+  ]}>
+  <TabItem value="cli">
+
+  ```bash title="Set GPS update interval to default settings (every 30 seconds)"
+  meshtastic --set gps_update_interval 0
+  ```
+  ```bash title="Set GPS update interval to every 45 seconds"
+  meshtastic --set gps_update_interval 45
+  ```
+
+  </TabItem>
+  <TabItem value="android">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+  <TabItem value="iOS">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+  <TabItem value="web">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+</Tabs>
+
+### location_share
+
+Determines whether location is shared with other nodes. See more details.
+
+| Value | Description |
+| :---: | :---------: |
+| LocUnset | **Default**: operates the same as `LocEnabled`|
+| LocEnabled | The device is sharing its location (or the paired phone's location) |
+| LocDisabled | The device is not sharing its location (if the unit has a GPS it will default to only get time - i.e. [`GpsOpTimeOnly`](#gps_operation)) |
+
+#### Disable Location Sharing
 <Tabs
   groupId="settings"
   defaultValue="cli"
@@ -233,7 +497,13 @@ Configuring this setting is not yet available for the selected platform. If this
 Disabling location sharing does not disable the GPS functionality, only the location sharing via the mesh.
 :::
 
-### Set Fixed Position – Current Lat/Lon
+### position_broadcast_secs
+
+How often our position is sent to the mesh (but only if it has changed significantly).
+
+The GPS updates will be sent out every `position_broadcast_secs`, with either the actual GPS location, or an empty location if no GPS fix was achieved. This defaults to broadcast every 15 minutes.
+
+#### Specify GPS position broadcast frequency
 <Tabs
   groupId="settings"
   defaultValue="cli"
@@ -245,8 +515,11 @@ Disabling location sharing does not disable the GPS functionality, only the loca
   ]}>
   <TabItem value="cli">
 
-  ```bash title="Set Fixed Position"
-  meshtastic --set fixed_position true
+  ```bash title="Set GPS update interval to default settings (every 15 minutes)"
+  meshtastic --set position_broadcast_secs 0
+  ```
+  ```bash title="Set GPS update interval to every 60 seconds"
+  meshtastic --set position_broadcast_secs 60
   ```
 
   </TabItem>
@@ -273,11 +546,32 @@ Configuring this setting is not yet available for the selected platform. If this
   </TabItem>
 </Tabs>
 
-:::note
-The device will continue to acquire GPS coordinates according to the `gps_update_interval`, but will use the last saved coordinates as its fixed point.
+### position_broadcast_smart
+
+`position_broadcast_smart` will send out your position at an increased frequency only if your location has changed enough for a position update to be useful.
+
+Complements `position_broadcast_secs` (doesn't override that setting) but will apply an algorithm to more frequently update your mesh network if you are in motion and then throttle it down when you are standing still. If you use this feature, it's best to leave `position_broadcast_secs` at the default.
+
+`position_broadcast_smart` will calculate an ideal position update interval based on the data rate of your selected channel configuration.
+
+As an example, if you configure your radio to use **Long Range / Fast**, if you have traveled at least 144 meters and it's been at least 61 seconds since the last position update, a new position broadcast will be sent out. If you've moved less than 144 meters, we will broadcast the position based on the value of `position_broadcast_secs`.
+
+The table below is a summary computed values from the algorithm.
+
+| Long Name | Update every x-seconds | Update distance traveled (meters) |
+| :---: | :---------: | :---------: |
+| Long Range / Slow | 88 | 150 |
+| Long Range / Fast | 61 | 144 |
+| Medium Range / Slow | 30 | 41 |
+| Medium Range / Fast | 30 | 30 |
+| Short Range / Slow | 30 | 30 |
+| Short Range / Fast | 30 | 30 |
+
+:::tip
+A person walking in a straight line will take about 90 seconds to travel 150 meters. That walking speed estimate was used as the baseline for the formula used.
 :::
 
-### Set Fixed Position – Specify Lat/Lon
+#### Enable/Disable Smart Position Broadcast
 <Tabs
   groupId="settings"
   defaultValue="cli"
@@ -289,8 +583,11 @@ The device will continue to acquire GPS coordinates according to the `gps_update
   ]}>
   <TabItem value="cli">
 
-  ```bash title="Set Fixed Position"
-  meshtastic --setlat 37.8651 --setlon -119.5383
+  ```bash title="Enable smart position broadcast"
+  meshtastic --set position_broadcast_smart true
+  ```
+  ```bash title="Disable smart position broadcast"
+  meshtastic --set position_broadcast_smart false
   ```
 
   </TabItem>
@@ -317,7 +614,24 @@ Configuring this setting is not yet available for the selected platform. If this
   </TabItem>
 </Tabs>
 
-### Unset Fixed Position
+### position_flags
+
+Bit field of boolean configuration options for POSITION messages (bitwise OR of PositionFlags)
+
+| Value | Description |
+| :---: | :---------: |
+| POS_UNDEFINED | Required for compilation |
+| POS_ALTITUDE | Include an altitude value (if available) |
+| POS_ALT_MSL | Altitude value is MSL |
+| POS_GEO_SEP | Include geoidal separation |
+| POS_DOP | Include the DOP value ; PDOP used by default, see below |
+| POS_HVDOP | If POS_DOP set, send separate HDOP / VDOP values instead of | PDOP
+| POS_BATTERY | Include battery level |
+| POS_SATINVIEW | Include number of "satellites in view" |
+| POS_SEQ_NOS | Include a sequence number incremented per packet |
+| POS_TIMESTAMP | Include positional timestamp (from GPS solution) |
+
+#### Set/Unset Position Flags
 <Tabs
   groupId="settings"
   defaultValue="cli"
@@ -329,8 +643,15 @@ Configuring this setting is not yet available for the selected platform. If this
   ]}>
   <TabItem value="cli">
 
-  ```bash title="Unset Fixed Position"
-  meshtastic --set fixed_position false
+:::tip
+Include each flag desired from the table above separated by a single space.
+:::
+
+  ```bash title="Set Position Flags"
+  meshtastic --pos-fields POS_ALTITUDE POS_ALT_MSL
+  ```
+  ```bash title="Unset Position Flags"
+  meshtastic --pos-fields POS_UNDEFINED
   ```
 
   </TabItem>
@@ -356,7 +677,3 @@ Configuring this setting is not yet available for the selected platform. If this
 
   </TabItem>
 </Tabs>
-
-:::note
-It may take some time to see that the change has taken effect. The GPS location is updated according to the value specified on `gps_update_interval` and the mesh will be notified of the new position in relation to the `position_broadcast_secs` value.
-:::
