@@ -93,6 +93,72 @@ const config = {
     },
     footer: {
       copyright: `<a href="https://vercel.com/?utm_source=meshtastic&utm_campaign=oss" style="color: var(--ifm-footer-color)">Powered by ▲ Vercel</a> | Meshtastic® is a registered trademark of Geeksville Industries LLC`,
+      links: [
+        {
+          title: 'Learn',
+          items: [
+            {
+              label: 'Getting Started',
+              to: 'docs/getting-started',
+            },
+            {
+              label: 'About',
+              to: 'docs/about-documentation',
+            },
+            {
+              label: 'Hardware',
+              to: 'docs/hardware',
+            },
+            {
+              label: 'Settings',
+              to: 'docs/settings',
+            },
+          ],
+        },
+        {
+          title: 'Community',
+          items: [
+            {
+              label: 'YouTube',
+              to: 'https://www.youtube.com/meshtastic',
+            },
+            {
+              label: 'Discord',
+              to: 'https://discord.com/invite/UQJ5QuM7vq',
+            },
+            {
+              label: 'Forum',
+              to: 'https://meshtastic.discourse.group',
+            },
+          ],
+        },
+        {
+          title: 'Legal',
+          items: [
+            {
+              label: 'Privacy',
+              to: 'docs/legal/privacy',
+            },
+            {
+              label: 'Licensing',
+              to: 'docs/legal/licensing',
+            },
+            {
+              label: 'Trademark',
+              to: 'docs/legal/trademark',
+            },
+          ],
+        },
+        {
+          title: 'Resources',
+          items: [
+            {
+              label: 'GitHub',
+              to: 'https://github.com/meshtastic',
+            },
+          ],
+        },
+      ],
     },
     algolia: {
       apiKey: "01ad7e13d3fe392d2ad26da3c69dbc21",
