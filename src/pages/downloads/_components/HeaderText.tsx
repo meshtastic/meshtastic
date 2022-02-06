@@ -7,7 +7,7 @@ export const HeaderText = ({type, text, link}): JSX.Element => {
   return (
     <Header className="anchor anchorWithHideOnScrollNavbar_node_modules-@docusaurus-theme-classic-lib-next-theme-Heading-styles-module">
       {text}
-      {link ? <a className="hash-link" href={`#${link}`} title="Direct link to heading"/> : null}
+      {link && <a className="hash-link" href={`#${link}`} title="Direct link to heading"/>}
     </Header>
   );
 
