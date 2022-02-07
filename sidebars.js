@@ -196,7 +196,14 @@ module.exports = {
     "About Documentation": [
       "about-documentation/overview",
       "about-documentation/serve-docs-locally",
-    ]
+      {
+        Dependencies: [
+          "about-documentation/docusaurus",
+          "about-documentation/github",
+          "about-documentation/vercel",
+        ],
+      }
+    ],
   },
   Legal: {
     Legal: [
