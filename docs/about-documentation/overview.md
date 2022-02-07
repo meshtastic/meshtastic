@@ -14,7 +14,8 @@ Another component that we use is [Vercel](https://vercel.com) — a platform for
 ## Documentation Organization
 | Section | File Path | Description |
 | :-----: | :-------: | :---------: |
-| About Meshtastic | `docs/software` | High level explanation of each part of Meshtastic. |
+| About Meshtastic | `docs/about` | High level explanation of of Meshtastic. |
+| Meshtastic Software | `docs/software` | Current bulk of documentation running through each Meshtastic project. |
 | Getting Started | `docs/getting-started` | Instructions on how to get the Meshtastic firmware onto a users device. |
 | Device Settings | `docs/software/settings` | Details each user setting and provides explanations for what the setting does and how to configure the device using the various clients available (Android, CLI, iOS, Web) |
 | Hardware Details | `docs/hardware` | Any hardware related content. Any time a user is attaching a peripheral accessory to their device. That includes 3d printed cases, antennas, buttons, chimes, rotary encoders, and screens. |
