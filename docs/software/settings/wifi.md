@@ -14,7 +14,7 @@ The ESP32 based devices have the ability to connect to WiFi as a client and also
 The device can be either a WiFi client or a software access point. It **cannot** operate as both at the same time.
 :::
 
-:::note
+:::info
 The first time your device restarts after enabling the WiFi access point, it will take an additional 20-30 seconds to boot. This is to generate self-signed SSL keys. The keys will be saved for future reuse.
 :::
 
