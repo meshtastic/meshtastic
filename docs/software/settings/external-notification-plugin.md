@@ -306,8 +306,3 @@ Configuring this setting is not yet available for the selected platform. If this
 
   </TabItem>
 </Tabs>
-
-
-## Details
-
-<!--- TODO --->
