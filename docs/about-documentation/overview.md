@@ -25,7 +25,7 @@ Another component that we use is [Vercel](https://vercel.com) — a platform for
 
 ## Quick Start
 
-Assuming you have the prerequisites installed, running a local instance of Docusaurus takes three steps:
+Assuming you have the [prerequisites installed](serve-docs-locally#prerequisites), running a local instance of Docusaurus takes three steps:
 
 1. Fork/Clone the [meshtastic/Meshtastic](https://github.com/meshtastic/Meshtastic) repository and navigate to the root directory of the project.
 ```bash title="Clone the project"
