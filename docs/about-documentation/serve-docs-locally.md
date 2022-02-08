@@ -12,6 +12,7 @@ In order to set up your local environment, you will need to install:
 - [Node & Node package manager (NPM)](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
 - [Yarn package manager](https://yarnpkg.com/getting-started/install)
 
+## Getting Started
 ### Fork the Meshtastic Repository
 
 Log into Github and create a fork of the [meshtastic/Meshtastic](https://github.com/meshtastic/Meshtastic) repository.
@@ -40,3 +41,11 @@ yarn install
 ```bash title="Run node.js server"
 yarn start
 ```
+
+:::tip
+Before submitting a pull request, it's helpful to run the following command to ensure there are no broken links or errors:
+
+```bash title="Build Project"
+yarn build
+```
+:::
