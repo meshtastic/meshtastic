@@ -48,7 +48,7 @@ nodejs is required in your dev. environment. The method for installing nodejs de
 Fork then clone the repository:
 
 ```bash
-git clone https://github.co/meshtastic/meshtastic
+git clone https://github.com/meshtastic/meshtastic
 ```
 
 
