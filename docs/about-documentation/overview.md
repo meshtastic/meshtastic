@@ -7,11 +7,11 @@ slug: /about-documentation
 Meshtastic documentation is an important ingredient to the overall project. We want users to hit the ground running with the information they need right at their finger tips. This section will discuss the documentation software stack, file organization, and style guides.
 
 ## Software Stack
-All of our documentation resides on GitHub. Instructions for setting up your GitHub account are located [here](github).
+All of our documentation resides on GitHub. Instructions for setting up your GitHub account are located [here](about-documentation/github).
 
-Our documentation is powered by [Docusaurus](https://docusaurus.io) — a documentation platform built on React that utilizes markdown files. Because markdown files are easy to edit, most content changes should be fairly simple. Instructions for setting up your instance of Docusaurus are located [here](docusaurus).
+Our documentation is powered by [Docusaurus](https://docusaurus.io) — a documentation platform built on React that utilizes markdown files. Because markdown files are easy to edit, most content changes should be fairly simple. Instructions for setting up your instance of Docusaurus are located [here](about-documentation/docusaurus).
 
-Another component that we use is [Vercel](https://vercel.com) — a platform for frontend frameworks and static sites. Instructions for setting up your instance of Vercel are located [here](vercel).
+Another component that we use is [Vercel](https://vercel.com) — a platform for frontend frameworks and static sites. Instructions for setting up your instance of Vercel are located [here](about-documentation/vercel).
 
 ## Documentation Organization
 | Section | File Path | Description |
@@ -27,7 +27,7 @@ Another component that we use is [Vercel](https://vercel.com) — a platform for
 
 ## Quick Start
 
-Assuming you have the [prerequisites installed](serve-docs-locally#prerequisites), running a local instance of Docusaurus takes three steps:
+Assuming you have the [prerequisites installed](about-documentation/serve-docs-locally#prerequisites), running a local instance of Docusaurus takes three steps:
 
 1. Fork/Clone the [meshtastic/Meshtastic](https://github.com/meshtastic/Meshtastic) repository and navigate to the root directory of the project.
 ```bash title="Clone the project"
