@@ -7,9 +7,11 @@ slug: /about-documentation
 Meshtastic documentation is an important ingredient to the overall project. We want users to hit the ground running with the information they need right at their finger tips. This section will discuss the documentation software stack, file organization, and style guides.
 
 ## Software Stack
-Our documentation is powered by [Docusaurus](https://docusaurus.io) — a documentation platform built on React that utilizes markdown files. Because markdown files are easy to edit, most content changes should be fairly simple.
+All of our documentation resides on GitHub. Instructions for setting up your GitHub account are located [here](github).
 
-Another component that we use is [Vercel](https://vercel.com) — a platform for frontend frameworks and static sites.
+Our documentation is powered by [Docusaurus](https://docusaurus.io) — a documentation platform built on React that utilizes markdown files. Because markdown files are easy to edit, most content changes should be fairly simple. Instructions for setting up your instance of Docusaurus are located [here](docusaurus).
+
+Another component that we use is [Vercel](https://vercel.com) — a platform for frontend frameworks and static sites. Instructions for setting up your instance of Vercel are located [here](vercel).
 
 ## Documentation Organization
 | Section | File Path | Description |
