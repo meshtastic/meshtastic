@@ -41,9 +41,12 @@ Automatically toggles to the next page on the screen like a carousel, based the 
   ]}>
   <TabItem value="cli">
 
-:::info
-Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
+  ```bash title="Set auto_screen_carousel_secs to default"
+  meshtastic --set auto_screen_carousel_secs 0
+  ```
+  ```bash title="Set auto_screen_carousel_secs to 120 seconds"
+  meshtastic --set auto_screen_carousel_secs 120
+  ```
 
   </TabItem>
   <TabItem value="android">
