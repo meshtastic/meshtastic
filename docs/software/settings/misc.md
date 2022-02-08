@@ -224,9 +224,12 @@ If true, radio should not try to be smart about what packets to queue to the pho
   ]}>
   <TabItem value="cli">
 
-:::info
-Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
+  ```bash title="Enable ignore_incoming"
+  meshtastic --set ignore_incoming true
+  ```
+  ```bash title="Disable ignore_incoming"
+  meshtastic --set ignore_incoming false
+  ```
 
   </TabItem>
   <TabItem value="android">
