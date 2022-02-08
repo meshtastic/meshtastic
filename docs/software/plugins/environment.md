@@ -5,7 +5,7 @@ sidebar_label: Environment measurement
 ---
 ## About
 
-The Environment Measurement Plugin will allow nodes to send a specific message with information from connected environmental sensors. Currently supported sensors are BME280, BME680, DHT11, DHT12, DHT21, DHT22 and Dallas 1-wire DS18B20.
+The Environment Measurement Plugin will allow nodes to send a specific message with information from connected environmental sensors. Currently supported sensors are BME280, BME680, MCP9808, DHT11, DHT12, DHT21, DHT22 and Dallas 1-wire DS18B20.
 
 The preferred setup is using I2C, so the `environmental_measurement_plugin_sensor_pin` may not be needed.
 
@@ -56,6 +56,7 @@ These are the settings that can be configured.
         4 = DHT22
         5 = BME280
         6 = BME680
+        7 = MCP9808
 
     environmental_measurement_plugin_sensor_pin
         Which pin is the sensor connected to?

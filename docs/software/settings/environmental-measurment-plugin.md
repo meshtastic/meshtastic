@@ -240,6 +240,7 @@ Specify the sensor type.
 | `4` | DHT22 | Temperature, Humidity |
 | `5` | BME280 | Temperature, Humidity, Pressure |
 | `6` | BME680 | Temperature, Humidity, Pressure, VOC Gas |
+| `7` | MCP9808 | Precision Temperature |
 
 #### Set sensor type
 
