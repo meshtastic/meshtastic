@@ -20,7 +20,7 @@ import TabItem from '@theme/TabItem';
 | factory_reset | `true`, `false` | `false` |
 | frequency_offset | real numbers | `0` |
 | ignore_incoming | `string` – list of node nums to ignore | `0` |
-| hop_limit | real numbers | 0|
+| hop_limit | `0`-`7` | `0` |
 | serial_disabled | `true`, `false` | `false` |
 
 
@@ -304,7 +304,53 @@ Configuring this setting is not yet available for the selected platform. If this
 
 Overrides the default number of hops a message will be passed. If not set, will default to 3 hops.
 
+:::note
 Meshtastic allows a maximum of 7 hops (this is a limit of the protocol). Setting a hop_limit of greater than 7 will be replaced with 7 on the device.
+:::
+
+#### Configure hop_limit
+
+<Tabs
+  groupId="settings"
+  defaultValue="cli"
+  values={[
+    {label: 'CLI', value: 'cli'},
+    {label: 'Android', value: 'android'},
+    {label: 'iOS', value: 'iOS'},
+    {label: 'Web', value: 'web'},
+  ]}>
+  <TabItem value="cli">
+
+  ```bash title="Set hop_limit to default (3 hops)"
+  meshtastic --set hop_limit 0
+  ```
+  ```bash title="Set hop_limit to max (7 hops)"
+  meshtastic --set hop_limit 7
+  ```
+
+  </TabItem>
+  <TabItem value="android">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+  <TabItem value="iOS">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+  <TabItem value="web">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+</Tabs>
 
 #### Ignore Incoming
 
