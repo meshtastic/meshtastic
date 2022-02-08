@@ -28,7 +28,7 @@ import TabItem from '@theme/TabItem';
 
 Automatically toggles to the next page on the screen like a carousel, based the specified interval in seconds. Potentially useful for devices without user buttons.
 
-#### Ignore Incoming
+#### Configure auto_screen_carousel_secs
 
 <Tabs
   groupId="settings"
@@ -166,7 +166,7 @@ Configuring this setting is not yet available for the selected platform. If this
 
 This parameter is for advanced users with advanced test equipment, we do not recommend most users use it. A frequency offset that is added to to the calculated band center frequency. Used to correct for crystal calibration errors.
 
-#### Frequency Offset
+#### Configure frequency_offset
 
 <Tabs
   groupId="settings"
@@ -211,7 +211,7 @@ Configuring this setting is not yet available for the selected platform. If this
 
 If true, radio should not try to be smart about what packets to queue to the phone bool keep_all_packets = 101; If true, we will try to capture all the packets sent on the mesh, not just the ones destined to our node. bool promiscuous_mode = 102; For testing it is useful sometimes to force a node to never listen to particular other nodes (simulating radio out of range). All nodenums listed in ignore_incoming will have packets they send dropped on receive (by router.cpp)
 
-#### Ignore Incoming
+#### Enable/Disable ignore_incoming
 
 <Tabs
   groupId="settings"
