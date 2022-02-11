@@ -21,7 +21,7 @@ Most users should not need to change these settings. The default [modem_config](
 | bandwidth |  |  |
 | channel_num |  |  |
 | coding_rate |  |  |
-| spread_factor | `7`, `8`, `9`, `10`, `11`, `12` | TODO |
+| spread_factor | `7`, `8`, `9`, `10`, `11`, `12` | `7` |
 | tx_power | `integer` (in dBm) | `0` |
 
 ### bandwidth
@@ -161,7 +161,7 @@ Configuring this setting is not yet available for the selected platform. If this
 
 ### spread_factor
 
-TODO
+LoRa is a spread spectrum technology. spread_factor is how much the signal is spread over the spectrum. SF8 = 2^8 or spread 256 times. SF12 = 2^12 or spread 4096 times.
 
 #### Set Spread Factor
 
