@@ -19,7 +19,7 @@ Most users should not need to change these settings. The default [modem_config](
 | Setting | Acceptable Values | Default |
 | :-----: | :---------------: | :-----: |
 | bandwidth | `10.4`, `15.6`, `20.8`, `31.25`, `41.7`, `62.5`, `125`, `250`, `500` | `125` |
-| channel_num | FIXME | FIXME |
+| channel_num | Depends on Region | Region Channel Number Default |
 | coding_rate | `5`, `6`, `7`, `8` | `5` |
 | spread_factor | `7`, `8`, `9`, `10`, `11`, `12` | `7` |
 | tx_power | `0`, `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9`, `10`, `11`, `12`, `13`, `14`, `15`, `16`, `17`, (dBm) | `0` |
