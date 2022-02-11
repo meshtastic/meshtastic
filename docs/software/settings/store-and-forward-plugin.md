@@ -6,6 +6,11 @@ sidebar_label: Store and Forward
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
+:::info
+Currently only available for ESP32 based devices with external PSRAM. Requires the device to be set as a router.
+
+**Don't enable Store and Forward Plugin on multiple [routers](router).**
+:::
 
 ## Overview
 
@@ -26,10 +31,10 @@ Once plugin settings are changed, a **reset** is required for them to take effec
 | Setting | Acceptable Values | Default |
 | :-----: | :---------------: | :-----: |
 | store_forward_plugin_enabled | `true`, `false` | `false` |
-| store_forward_plugin_heartbeat | `true`, `false` | TODO - look up default setting |
+| store_forward_plugin_heartbeat | `true`, `false` | `false` |
 | store_forward_plugin_history_return_max | `integer` | `0` |
 | store_forward_plugin_history_return_window | `integer` | `0` |
-| store_forward_plugin_records | integer | `0` |
+| store_forward_plugin_records | `integer` | `0` |
 
 ### store_forward_plugin_enabled
 
@@ -46,9 +51,12 @@ Enables the plugin.
   ]}>
   <TabItem value="cli">
 
-:::info
-Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
+  ```bash title="Enable the plugin"
+  meshtastic --set store_forward_plugin_enabled true
+  ```
+  ```bash title="Disable the plugin"
+  meshtastic --set store_forward_plugin_enabled false
+  ```
 
   </TabItem>
   <TabItem value="android">
@@ -76,7 +84,7 @@ Configuring this setting is not yet available for the selected platform. If this
 
 ### store_forward_plugin_heartbeat
 
-<!--- TODO --->
+The Store & Forward Router sends a periodic message onto the network. This allows connected devices to know that a router is in range and listening to received messages. A client like Android, iOS, or Web can (if supported) indicate to the user whether a store and forward router is available.
 
 <Tabs
   groupId="settings"
@@ -89,9 +97,9 @@ Configuring this setting is not yet available for the selected platform. If this
   ]}>
   <TabItem value="cli">
 
-:::info
-Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
+  ```bash title="Set store_forward_plugin_heartbeat to default"
+  meshtastic --set store_forward_plugin_heartbeat 0
+  ```
 
   </TabItem>
   <TabItem value="android">
@@ -120,7 +128,7 @@ Configuring this setting is not yet available for the selected platform. If this
 
 ### store_forward_plugin_history_return_max
 
-<!--- TODO --->
+Sets the maximum number of messages to return to a client device.
 
 <Tabs
   groupId="settings"
@@ -133,9 +141,12 @@ Configuring this setting is not yet available for the selected platform. If this
   ]}>
   <TabItem value="cli">
 
-:::info
-Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
+  ```bash title="Set store_forward_plugin_history_return_max to default"
+  meshtastic --set store_forward_plugin_history_return_max 0
+  ```
+  ```bash title="Set store_forward_plugin_history_return_max to 100 messages"
+  meshtastic --set store_forward_plugin_history_return_max 100
+  ```
 
   </TabItem>
   <TabItem value="android">
@@ -164,7 +175,7 @@ Configuring this setting is not yet available for the selected platform. If this
 
 ### store_forward_plugin_history_return_window
 
-<!--- TODO --->
+Limits the time period (in minutes) a client device can request.
 
 <Tabs
   groupId="settings"
@@ -177,9 +188,12 @@ Configuring this setting is not yet available for the selected platform. If this
   ]}>
   <TabItem value="cli">
 
-:::info
-Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
+  ```bash title="Set store_forward_plugin_history_return_window to default"
+  meshtastic --set store_forward_plugin_history_return_window 0
+  ```
+  ```bash title="Set store_forward_plugin_history_return_window to 1 day (1440 minutes)"
+  meshtastic --set store_forward_plugin_history_return_window 1440
+  ```
 
   </TabItem>
   <TabItem value="android">
@@ -208,7 +222,7 @@ Configuring this setting is not yet available for the selected platform. If this
 
 ### store_forward_plugin_records
 
-<!--- TODO --->
+Set this to the maximum number of records to save. Best to leave this at the default (`0`) where the plugin will use 2/3 of your device's available PSRAM. This is about 11,000 records.
 
 <Tabs
   groupId="settings"
@@ -221,9 +235,12 @@ Configuring this setting is not yet available for the selected platform. If this
   ]}>
   <TabItem value="cli">
 
-:::info
-Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
+  ```bash title="Set store_forward_plugin_records to default (≈11,000 records)"
+  meshtastic --set store_forward_plugin_records 0
+  ```
+  ```bash title="Set store_forward_plugin_records to 100 records"
+  meshtastic --set store_forward_plugin_records 100
+  ```
 
   </TabItem>
   <TabItem value="android">
@@ -261,15 +278,15 @@ Configuring this setting is not yet available for the selected platform. If this
 Initial Requirements:
 
 * Must be installed on a router node.
-* * This is an artificial limitation, but is in place to enforce best practices.
-* * Router nodes are intended to be always online. If this plugin misses any messages, the reliability of the stored messages will be reduced.
+  * This is an artificial limitation, but is in place to enforce best practices.
+  * Router nodes are intended to be always online. If this plugin misses any messages, the reliability of the stored messages will be reduced.
 * Esp32 Processor based device with external PSRAM. (tbeam v1.0 and tbeamv1.1, and maybe others)
 
 ### Usage Overview
 
 * To use / test this you will want at least 3 devices
-* * One device will (currently) need be a tbeam v1.0 and tbeamv1.1 configured as a Meshtastic router. Other devices with built in PSRAM will be supported at some point.
-* * Two others will be regular clients. Nothing special required.
+  * One device will (currently) need be a tbeam v1.0 and tbeamv1.1 configured as a Meshtastic router. Other devices with built in PSRAM will be supported at some point.
+  * Two others will be regular clients. Nothing special required.
 
 ### Meshtastic channel configuration
 
@@ -279,7 +296,7 @@ Either use a custom channel configuration with at an at least 1kbit data rate or
 
 Recommended channel setting is for 1.343kbps:
 
-```bash
+```bash title="Recommended channel setting for S&F plugin"
 meshtastic --setchan spread_factor 11 --setchan coding_rate 4 --setchan bandwidth 500
 ```
 
@@ -287,16 +304,22 @@ With an aftermarket coaxial antenna or moxon antenna, that will give you roughly
 
 ### Router setup
 
-* Configure your device as a meshtastic router.
-* * https://meshtastic.org/docs/software/settings/router
-* Configure the Store and Forward plugin
-* * Required configuration
-* * * store_forward_plugin_enabled - Set this to true to enable the plugin. False to disable the plugin.
-* * Optional configuration
-* * * store_forward_plugin_records - Set this to the maximum number of records to save. Best to leave this at the default (0) where the plugin will use 2/3 of your device's available PSRAM. This is about 11,000 records.
+* Configure your device as a [meshtastic router](router).
 * Name your router node something that makes it easily identifiable, aka "Router".
+* Configure the Store and Forward plugin
+  ```bash title="Required - Enable the plugin"
+  meshtastic --set store_forward_plugin_enabled true
+  ```
+  ```bash title="Optional - Set maximum number of records to save to device"
+  meshtastic --set store_forward_plugin_records 100
+  ```
+:::tip
+Best to leave `store_forward_plugin_records` at the default (`0`) where the plugin will use 2/3 of your device's available PSRAM. This is about 11,000 records.
+:::
 
+:::warning
 Don't enable the Store and Forward plugin on multiple routers!
+:::
 
 ### Client Usage
 
