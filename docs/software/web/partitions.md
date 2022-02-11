@@ -3,6 +3,11 @@ id: web-partitions-software
 title: Managing ESP32 partitions
 sidebar_label: ESP32 partitions
 ---
+:::caution
+It has been reported that some of this information is out of date.
+
+FIXME - Investigate and rewrite document to reflect the current ESP32 Partition mitigation.
+:::
 
 ## Insufficient space to upload web interface files
 
