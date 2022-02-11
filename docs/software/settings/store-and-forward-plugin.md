@@ -304,6 +304,10 @@ With an aftermarket coaxial antenna or moxon antenna, that will give you roughly
 
 ### Router setup
 
+:::warning
+Don't enable the Store and Forward plugin on multiple routers!
+:::
+
 * Configure your device as a [meshtastic router](router).
 * Name your router node something that makes it easily identifiable, aka "Router".
 * Configure the Store and Forward plugin
@@ -315,10 +319,6 @@ With an aftermarket coaxial antenna or moxon antenna, that will give you roughly
   ```
 :::tip
 Best to leave `store_forward_plugin_records` at the default (`0`) where the plugin will use 2/3 of your device's available PSRAM. This is about 11,000 records.
-:::
-
-:::warning
-Don't enable the Store and Forward plugin on multiple routers!
 :::
 
 ### Client Usage
