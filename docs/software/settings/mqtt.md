@@ -186,7 +186,7 @@ Configuring this setting is not yet available for the selected platform. If this
 
 ### mqtt_password
 
-MQTT password to use (most useful for a custom MQTT server). If using a custom server, this will be honoured even if empty. If using the default server, this will only be honoured if set, otherwise the device will use the default password (TODO - find default password).
+MQTT password to use (most useful for a custom MQTT server). If using a custom server, this will be honoured even if empty. If using the default server, this will only be honoured if set, otherwise the device will use the default password `large4cats`.
 
 #### Configure mqtt_password
 <Tabs
@@ -290,7 +290,7 @@ Configuring this setting is not yet available for the selected platform. If this
 
 ### mqtt_username
 
-MQTT username to use (most useful for a custom MQTT server). If using a custom server, this will be honoured even if empty. If using the default server, this will only be honoured if set, otherwise the device will use the default username (TODO - find default username).
+MQTT username to use (most useful for a custom MQTT server). If using a custom server, this will be honoured even if empty. If using the default server, this will only be honoured if set, otherwise the device will use the default username `meshdev`.
 
 #### Configure mqtt_username
 <Tabs
