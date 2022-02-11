@@ -26,7 +26,7 @@ Most users should not need to change these settings. The default [modem_config](
 
 ### bandwidth
 
-TODO
+Total amount of spectrum used for the transmission.
 
 #### Set Bandwidth
 
@@ -71,7 +71,7 @@ Configuring this setting is not yet available for the selected platform. If this
 
 ### channel_num
 
-TODO
+An abstraction that maps to a specific center frequency used for transmission.
 
 #### Set Channel Number
 
@@ -116,7 +116,7 @@ Configuring this setting is not yet available for the selected platform. If this
 
 ### coding_rate
 
-TODO
+The amount of forward error correction applied to allow for us to automatically repair errors in the data transmission.
 
 #### Set Coding Rate
 
@@ -206,7 +206,13 @@ Configuring this setting is not yet available for the selected platform. If this
 
 ### tx_power
 
-TODO
+Configured transmit power out of the LoRa radio, measured in dBM.
+
+:::caution
+Ensure that you are not exceeding your country's regulations.
+
+`Country regulation - antenna gain = tx_power max setting`
+:::
 
 #### Set TX Power
 
