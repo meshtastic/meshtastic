@@ -22,7 +22,7 @@ Most users should not need to change these settings. The default [modem_config](
 | channel_num | FIXME | FIXME |
 | coding_rate | `5`, `6`, `7`, `8` | `5` |
 | spread_factor | `7`, `8`, `9`, `10`, `11`, `12` | `7` |
-| tx_power | `integer` (in dBm) | `0` |
+| tx_power | `0`, `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9`, `10`, `11`, `12`, `13`, `14`, `15`, `16`, `17`, (dBm) | `0` |
 
 ### bandwidth
 
@@ -206,7 +206,7 @@ Configuring this setting is not yet available for the selected platform. If this
 
 ### tx_power
 
-Configured transmit power out of the LoRa radio, measured in dBM.
+Configured transmit power out of the LoRa radio, measured in dBM. Setting this to `0` will use the device default which is the max legal continuous power for your region.
 
 :::caution
 Ensure that you are not exceeding your country's regulations.
@@ -227,7 +227,12 @@ Ensure that you are not exceeding your country's regulations.
   ]}>
   <TabItem value="cli">
 
-  TODO
+  ```bash title="Set Default"
+  meshtastic --ch-set tx_power 0 --ch-index 0
+  ```
+  ```bash title="Set to 2dBM"
+  meshtastic --ch-set tx_power 2 --ch-index 0
+  ```
 
   </TabItem>
   <TabItem value="android">
