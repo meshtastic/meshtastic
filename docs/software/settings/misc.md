@@ -18,9 +18,8 @@ import TabItem from '@theme/TabItem';
 | auto_screen_carousel_secs | `integer` (seconds) | `0` |
 | debug_log_enabled | `true`, `false` | `false` |
 | factory_reset | `true`, `false` | `false` |
-| frequency_offset | real numbers | `0` |
 | ignore_incoming | `string` – list of node nums to ignore | `0` |
-| hop_limit | real numbers | 0|
+| hop_limit | `0`-`7` | `0` |
 | serial_disabled | `true`, `false` | `false` |
 
 
@@ -28,7 +27,7 @@ import TabItem from '@theme/TabItem';
 
 Automatically toggles to the next page on the screen like a carousel, based the specified interval in seconds. Potentially useful for devices without user buttons.
 
-#### Ignore Incoming
+#### Configure auto_screen_carousel_secs
 
 <Tabs
   groupId="settings"
@@ -41,9 +40,12 @@ Automatically toggles to the next page on the screen like a carousel, based the 
   ]}>
   <TabItem value="cli">
 
-:::info
-Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
+  ```bash title="Set auto_screen_carousel_secs to default"
+  meshtastic --set auto_screen_carousel_secs 0
+  ```
+  ```bash title="Set auto_screen_carousel_secs to 120 seconds"
+  meshtastic --set auto_screen_carousel_secs 120
+  ```
 
   </TabItem>
   <TabItem value="android">
@@ -162,56 +164,11 @@ Configuring this setting is not yet available for the selected platform. If this
   </TabItem>
 </Tabs>
 
-### frequency_offset
-
-This parameter is for advanced users with advanced test equipment, we do not recommend most users use it. A frequency offset that is added to to the calculated band center frequency. Used to correct for crystal calibration errors.
-
-#### Frequency Offset
-
-<Tabs
-  groupId="settings"
-  defaultValue="cli"
-  values={[
-    {label: 'CLI', value: 'cli'},
-    {label: 'Android', value: 'android'},
-    {label: 'iOS', value: 'iOS'},
-    {label: 'Web', value: 'web'},
-  ]}>
-  <TabItem value="cli">
-
-:::info
-Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
-  </TabItem>
-  <TabItem value="android">
-
-:::info
-Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
-  </TabItem>
-  <TabItem value="iOS">
-
-:::info
-Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
-  </TabItem>
-  <TabItem value="web">
-
-:::info
-Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
-  </TabItem>
-</Tabs>
-
 ### ignore_incoming
 
 If true, radio should not try to be smart about what packets to queue to the phone bool keep_all_packets = 101; If true, we will try to capture all the packets sent on the mesh, not just the ones destined to our node. bool promiscuous_mode = 102; For testing it is useful sometimes to force a node to never listen to particular other nodes (simulating radio out of range). All nodenums listed in ignore_incoming will have packets they send dropped on receive (by router.cpp)
 
-#### Ignore Incoming
+#### Enable/Disable ignore_incoming
 
 <Tabs
   groupId="settings"
@@ -224,9 +181,12 @@ If true, radio should not try to be smart about what packets to queue to the pho
   ]}>
   <TabItem value="cli">
 
-:::info
-Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
+  ```bash title="Enable ignore_incoming"
+  meshtastic --set ignore_incoming true
+  ```
+  ```bash title="Disable ignore_incoming"
+  meshtastic --set ignore_incoming false
+  ```
 
   </TabItem>
   <TabItem value="android">
@@ -304,9 +264,11 @@ Configuring this setting is not yet available for the selected platform. If this
 
 Overrides the default number of hops a message will be passed. If not set, will default to 3 hops.
 
+:::note
 Meshtastic allows a maximum of 7 hops (this is a limit of the protocol). Setting a hop_limit of greater than 7 will be replaced with 7 on the device.
+:::
 
-#### Ignore Incoming
+#### Configure hop_limit
 
 <Tabs
   groupId="settings"
@@ -319,9 +281,12 @@ Meshtastic allows a maximum of 7 hops (this is a limit of the protocol). Setting
   ]}>
   <TabItem value="cli">
 
-:::info
-Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
+  ```bash title="Set hop_limit to default (3 hops)"
+  meshtastic --set hop_limit 0
+  ```
+  ```bash title="Set hop_limit to max (7 hops)"
+  meshtastic --set hop_limit 7
+  ```
 
   </TabItem>
   <TabItem value="android">

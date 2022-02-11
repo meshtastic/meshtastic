@@ -38,7 +38,7 @@ const config = {
           label: "Documentation",
           items: [
             {
-              label: "About Meshtastic",
+              label: "Meshtastic Software",
               to: "docs/software",
             },
             {

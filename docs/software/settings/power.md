@@ -11,16 +11,6 @@ import TabItem from '@theme/TabItem';
 
 Power settings on a Meshtastic device can be set like other user-define settings with the `--set` command see ([see Meshtastic-python](/docs/software/python/python-cli)). Some of these options are implicit in other commands. For example, when you set the device to router mode using `is_router true`, it is implied that deep sleep is disabled and we want to constantly listen for messages. Below is a list of all user-definable settings and the acceptable values that these settings can use.
 
-For example, if we wanted to disable sleep mode, like when we put the device into router mode, we could use the command:
-
-```bash
-meshtastic --set mesh_sds_timeout_secs 4294967295
-```
-
-:::note
-See MAXUINT from `mesh_sds_timeout_secs` below:
-:::
-
 For a description and more information on what exactly all of these mean, please refer to [Power Management State Machine](/docs/software/other/power)
 
 ## Settings
