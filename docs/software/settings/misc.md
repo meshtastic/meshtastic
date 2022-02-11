@@ -18,7 +18,6 @@ import TabItem from '@theme/TabItem';
 | auto_screen_carousel_secs | `integer` (seconds) | `0` |
 | debug_log_enabled | `true`, `false` | `false` |
 | factory_reset | `true`, `false` | `false` |
-| frequency_offset | real numbers | `0` |
 | ignore_incoming | `string` – list of node nums to ignore | `0` |
 | hop_limit | `0`-`7` | `0` |
 | serial_disabled | `true`, `false` | `false` |
@@ -140,51 +139,6 @@ This setting is never saved to disk, but if set, all device settings will be ret
   ```bash title="Example - Factory reset"
   meshtastic --set factory_reset true
   ```
-
-  </TabItem>
-  <TabItem value="android">
-
-:::info
-Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
-  </TabItem>
-  <TabItem value="iOS">
-
-:::info
-Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
-  </TabItem>
-  <TabItem value="web">
-
-:::info
-Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
-  </TabItem>
-</Tabs>
-
-### frequency_offset
-
-This parameter is for advanced users with advanced test equipment, we do not recommend most users use it. A frequency offset that is added to to the calculated band center frequency. Used to correct for crystal calibration errors.
-
-#### Configure frequency_offset
-
-<Tabs
-  groupId="settings"
-  defaultValue="cli"
-  values={[
-    {label: 'CLI', value: 'cli'},
-    {label: 'Android', value: 'android'},
-    {label: 'iOS', value: 'iOS'},
-    {label: 'Web', value: 'web'},
-  ]}>
-  <TabItem value="cli">
-
-:::info
-Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
 
   </TabItem>
   <TabItem value="android">
