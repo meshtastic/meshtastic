@@ -3,6 +3,11 @@ id: web-usage-software
 title: Using the web interface
 sidebar_label: Usage
 ---
+:::caution
+It has been reported that some of this information is out of date.
+
+FIXME - Investigate and rewrite document to reflect the current web usage solution.
+:::
 
 Assuming your device is connected to a wireless network, push the User Button (that's the middle button on the T-Beam) until you get to the Network settings screen.
 
@@ -20,7 +25,7 @@ If you have just one Meshtastic device on your network, the easiest thing to do 
 
 ### Problem: File not found: /static/index.html
 
-Cause: This most likely means that the file system for the web server has not been loaded. You probably used esphome-flasher or some other GUI tool to flash the firmware. 
+Cause: This most likely means that the file system for the web server has not been loaded. You probably used esphome-flasher or some other GUI tool to flash the firmware.
 
 Solutions:
 
