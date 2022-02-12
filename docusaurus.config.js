@@ -126,16 +126,20 @@ const config = {
           title: 'Community',
           items: [
             {
-              label: 'YouTube',
-              to: 'https://www.youtube.com/meshtastic',
-            },
-            {
               label: 'Discord',
               to: 'https://discord.com/invite/UQJ5QuM7vq',
             },
             {
               label: 'Forum',
               to: 'https://meshtastic.discourse.group',
+            },
+            {
+              label: 'Reddit',
+              to: 'https://reddit.com/r/meshtastic',
+            },
+            {
+              label: 'YouTube',
+              to: 'https://www.youtube.com/meshtastic',
             },
           ],
         },
