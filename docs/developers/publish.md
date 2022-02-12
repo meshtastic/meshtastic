@@ -47,10 +47,20 @@ storeFile=nononononono.jks
 * Go to Actions / Make Release / Run Workflow
 * Pick the Releases branch
 * Enter the version found in app/gradle.build
- 
+
 ## iOS
 
 TBD
+
+## Meshtastic-flasher
+
+A `meshtastic-flasher` release consists of publishing the release to PyPi https://pypi.org/project/meshtastic-flasher/ as well as producing single-executable files that are downloadable from Github https://github.com/meshtastic/Meshtastic-gui-installer/releases.
+
+### Instructions - mostly automated
+
+* Update https://github.com/meshtastic/Meshtastic-gui-installer/blob/master/meshtastic_flasher/version.py
+* Go to Actions / Make Release / Run Workflow https://github.com/meshtastic/Meshtastic-gui-installer/actions/workflows/release.yml
+* Draft & Publish release https://github.com/meshtastic/Meshtastic-gui-installer/releases
 
 ## Python
 
