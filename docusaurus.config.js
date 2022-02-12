@@ -34,6 +34,13 @@ const config = {
           activeBasePath: "docs/academy",
         },
 */
+/*
+        {
+          label: "About Meshtastic",
+          to: "docs/about",
+          activeBasePath: "docs/about",
+        },
+*/
         {
           label: "Documentation",
           items: [
