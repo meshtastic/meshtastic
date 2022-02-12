@@ -42,6 +42,11 @@ const config = {
         },
 */
         {
+          label: "Showcase",
+          to: "showcase",
+          activeBasePath: "showcase",
+        },
+        {
           label: "Documentation",
           items: [
             {
@@ -79,11 +84,6 @@ const config = {
           label: "Downloads",
           to: "downloads",
           activeBasePath: "downloads",
-        },
-        {
-          label: "Showcase",
-          to: "showcase",
-          activeBasePath: "showcase",
         },
         {
           href: "https://meshtastic.discourse.group",
