@@ -96,22 +96,30 @@ module.exports = {
       },
     ],
   },
-  GettingStarted: {
+  Configuration: {
     "Getting Started": [
       "getting-started/overview",
       "getting-started/faq",
       {
         "Flashing firmware": [
           "getting-started/meshtastic-flasher",
-          "getting-started/flashing-esp32",
-          "getting-started/flashing-nrf52",
+          {
+            "Manual Method": [
+              "getting-started/flashing-esp32",
+              "getting-started/flashing-nrf52",
+            ],
+          },
+        ],
+      },
+      {
+        "Connect to Device": [
+          "getting-started/clients",
         ],
       },
       "getting-started/concepts",
     ],
-  },
-  Settings: {
-    Settings: [
+
+    "Device Settings": [
       "software/settings/overview",
       "software/settings/channel",
       "software/settings/gps",
