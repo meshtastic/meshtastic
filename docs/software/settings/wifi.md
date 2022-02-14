@@ -14,7 +14,7 @@ The ESP32 based devices have the ability to connect to WiFi as a client and also
 The device can be either a WiFi client or a software access point. It **cannot** operate as both at the same time.
 :::
 
-:::note
+:::info
 The first time your device restarts after enabling the WiFi access point, it will take an additional 20-30 seconds to boot. This is to generate self-signed SSL keys. The keys will be saved for future reuse.
 :::
 
@@ -34,13 +34,139 @@ The first time your device restarts after enabling the WiFi access point, it wil
 
 A boolean value that toggles the [Software Access Point](#software-access-point)
 
+#### Enable/Disable Software Access Point
+<Tabs
+  groupId="settings"
+  defaultValue="cli"
+  values={[
+    {label: 'CLI', value: 'cli'},
+    {label: 'Android', value: 'android'},
+    {label: 'iOS', value: 'iOS'},
+    {label: 'Web', value: 'web'},
+  ]}>
+  <TabItem value="cli">
+
+  ```bash title="Enable SoftAP"
+  meshtastic --set wifi_ap_mode true
+  ```
+  ```bash title="Disable SoftAP"
+  meshtastic --set wifi_ap_mode false
+  ```
+
+  </TabItem>
+  <TabItem value="android">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+  <TabItem value="iOS">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+  <TabItem value="web">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+</Tabs>
+
 ### wifi_password
 
 In [SoftAP](#software-access-point) mode, this is the password to access your device's WiFi. In [Client](#wifi-client) mode, this is your WiFi Networks password. This string is case sensitive.
 
+<Tabs
+  groupId="settings"
+  defaultValue="cli"
+  values={[
+    {label: 'CLI', value: 'cli'},
+    {label: 'Android', value: 'android'},
+    {label: 'iOS', value: 'iOS'},
+    {label: 'Web', value: 'web'},
+  ]}>
+  <TabItem value="cli">
+
+  ```bash title="Set WiFi password"
+  meshtastic --set wifi_password mypassword
+  ```
+  ```bash title="Set WiFi password (with spaces)"
+  meshtastic --set wifi_password "my password"
+  ```
+
+  </TabItem>
+  <TabItem value="android">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+  <TabItem value="iOS">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+  <TabItem value="web">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+</Tabs>
+
 ### wifi_ssid
 
 In [SoftAP](#software-access-point) mode, this is the SSID broadcast to access your device's WiFi. In [Client](#wifi-client) mode, this is your WiFi Networks SSID. This string is case sensitive.
+
+<Tabs
+  groupId="settings"
+  defaultValue="cli"
+  values={[
+    {label: 'CLI', value: 'cli'},
+    {label: 'Android', value: 'android'},
+    {label: 'iOS', value: 'iOS'},
+    {label: 'Web', value: 'web'},
+  ]}>
+  <TabItem value="cli">
+
+  ```bash title="Set WiFi network"
+  meshtastic --set wifi_ssid mynetwork
+  ```
+  ```bash title="Set WiFi network (with spaces)"
+  meshtastic --set wifi_ssid "my network"
+  ```
+  </TabItem>
+  <TabItem value="android">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+  <TabItem value="iOS">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+  <TabItem value="web">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+</Tabs>
 
 ## Details
 
@@ -74,6 +200,8 @@ To disable WiFi completely, set `wifi_ap_mode` to `false`, and both `wifi_ssid` 
   values={[
     {label: 'CLI', value: 'cli'},
     {label: 'Android', value: 'android'},
+    {label: 'iOS', value: 'iOS'},
+    {label: 'Web', value: 'web'},
   ]}>
   <TabItem value="cli">
 
@@ -90,7 +218,23 @@ meshtastic --set wifi_ssid "my wifi ssid" --set wifi_password "my wifi password"
   </TabItem>
   <TabItem value="android">
 
-  TODO
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+  <TabItem value="iOS">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+  <TabItem value="web">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
 
   </TabItem>
 </Tabs>
@@ -104,6 +248,8 @@ In the above example, the device will join a network with the SSID `mywifissid` 
   values={[
     {label: 'CLI', value: 'cli'},
     {label: 'Android', value: 'android'},
+    {label: 'iOS', value: 'iOS'},
+    {label: 'Web', value: 'web'},
   ]}>
   <TabItem value="cli">
 
@@ -123,7 +269,23 @@ meshtastic --set wifi_ssid "my wifi ssid" --set wifi_password "my wifi password"
   </TabItem>
   <TabItem value="android">
 
-  TODO
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+  <TabItem value="iOS">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+  <TabItem value="web">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
 
   </TabItem>
 </Tabs>
@@ -137,6 +299,8 @@ In the above example, the device will broadcast a network with the SSID `mywifis
   values={[
     {label: 'CLI', value: 'cli'},
     {label: 'Android', value: 'android'},
+    {label: 'iOS', value: 'iOS'},
+    {label: 'Web', value: 'web'},
   ]}>
   <TabItem value="cli">
 
@@ -148,7 +312,23 @@ In the above example, the device will broadcast a network with the SSID `mywifis
   </TabItem>
   <TabItem value="android">
 
-  TODO
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+  <TabItem value="iOS">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+  <TabItem value="web">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
 
   </TabItem>
 </Tabs>

@@ -21,6 +21,50 @@ import TabItem from '@theme/TabItem';
 
 Are we operating as a router. Changes behavior in the following ways: The device will only sleep for critically low battery level (i.e. always tries to stay alive for the mesh) In the future routing decisions will preferentially route packets through nodes with this attribute (because assumed good line of sight)
 
+#### Enable/Disable router mode
+<Tabs
+  groupId="settings"
+  defaultValue="cli"
+  values={[
+    {label: 'CLI', value: 'cli'},
+    {label: 'Android', value: 'android'},
+    {label: 'iOS', value: 'iOS'},
+    {label: 'Web', value: 'web'},
+  ]}>
+  <TabItem value="cli">
+
+  ```bash title="Enable router mode"
+  meshtastic --set is_router true
+  ```
+  ```bash title="Disable router mode"
+  meshtastic --set is_router false
+  ```
+
+  </TabItem>
+  <TabItem value="android">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+  <TabItem value="iOS">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+  <TabItem value="web">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+</Tabs>
+
+
 ## Details
 
 Toggling `is_router` changes your device settings in the following ways.
@@ -37,27 +81,3 @@ Toggling `is_router` changes your device settings in the following ways.
 ### Altered Behaviors
 #### Screen Wake
 #### Bluetooth
-
-## Examples
-
-### Set Router
-<Tabs
-  groupId="settings"
-  defaultValue="cli"
-  values={[
-    {label: 'CLI', value: 'cli'},
-    {label: 'Android', value: 'android'},
-  ]}>
-  <TabItem value="cli">
-
-  ```bash title="Set Router"
-  meshtastic --set is_router true
-  ```
-
-  </TabItem>
-  <TabItem value="android">
-
-  TODO
-
-  </TabItem>
-</Tabs>

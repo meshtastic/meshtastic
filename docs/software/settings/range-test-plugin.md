@@ -11,29 +11,158 @@ import TabItem from '@theme/TabItem';
 
 This plugin allows you to test the range of your Meshtastic nodes. It requires at least two nodes, a sender and a receiver. The receiving node then saves the messages along with the GPS coordinates at which they were received into a .csv file. This .csv file can then be integrated into [Google Earth](https://earth.google.com), [Google Maps - My Maps](https://mymaps.google.com), or any other program capable of processing .csv files. This can enable you to visualize your mesh.
 
-:::note
-Once settings are changed, a **reset** is required for them to take effect.
+:::tip
+Once plugin settings are changed, a **reset** is required for them to take effect.
 :::
 
 ## Settings
 
-|          Setting          |  Acceptable Values  | Default |
-| :-----------------------: | :-----------------: | :-----: |
-| range_test_plugin_enabled |   `true`, `false`   | `false` |
-|  range_test_plugin_save   |   `true`, `false`   | `false` |
-| range_test_plugin_sender  | `integer` (Seconds) |   `0`   |
+| Setting | Acceptable Values | Default |
+| :-----: | :---------------: | :-----: |
+| range_test_plugin_enabled | `true`, `false` | `false` |
+| range_test_plugin_save | `true`, `false` | `false` |
+| range_test_plugin_sender | `integer` (Seconds) | `0` |
 
 ### range_test_plugin_enabled
 
 Enables the plugin.
 
+#### Enable/Disable the plugin
+<Tabs
+  groupId="settings"
+  defaultValue="cli"
+  values={[
+    {label: 'CLI', value: 'cli'},
+    {label: 'Android', value: 'android'},
+    {label: 'iOS', value: 'iOS'},
+    {label: 'Web', value: 'web'},
+  ]}>
+  <TabItem value="cli">
+
+  ```bash title="Enable the plugin"
+  meshtastic --set range_test_plugin_enabled true
+  ```
+  ```bash title="Disable the plugin"
+  meshtastic --set range_test_plugin_enabled true
+  ```
+
+  </TabItem>
+  <TabItem value="android">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+  <TabItem value="iOS">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+  <TabItem value="web">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+</Tabs>
+
 ### range_test_plugin_save
 
 If enabled, we will save a log of all received messages to `/static/rangetest.csv` which you can access from the web server. We will abort writing if there is less than 50k of space on the filesystem to prevent filling up the storage.
 
+#### Enable/Disable range test save `csv`
+<Tabs
+  groupId="settings"
+  defaultValue="cli"
+  values={[
+    {label: 'CLI', value: 'cli'},
+    {label: 'Android', value: 'android'},
+    {label: 'iOS', value: 'iOS'},
+    {label: 'Web', value: 'web'},
+  ]}>
+  <TabItem value="cli">
+
+  ```bash title="Enable range test save"
+  meshtastic --set range_test_plugin_save true
+  ```
+  ```bash title="Disable range test save"
+  meshtastic --set range_test_plugin_save false
+  ```
+
+  </TabItem>
+  <TabItem value="android">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+  <TabItem value="iOS">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+  <TabItem value="web">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+</Tabs>
+
 ### range_test_plugin_sender
 
 Number of seconds to wait between sending packets. Using the long_slow channel configuration, it's best not to go more frequent than once every 60 seconds. You can be more aggressive with faster settings. `0` is default which disables sending messages.
+
+#### Enable/Disable range test sender
+<Tabs
+  groupId="settings"
+  defaultValue="cli"
+  values={[
+    {label: 'CLI', value: 'cli'},
+    {label: 'Android', value: 'android'},
+    {label: 'iOS', value: 'iOS'},
+    {label: 'Web', value: 'web'},
+  ]}>
+  <TabItem value="cli">
+
+  ```bash title="Enable range test sender (send every 60 seconds)"
+  meshtastic --set range_test_plugin_sender 60
+  ```
+  ```bash title="Disable range test sender"
+  meshtastic --set range_test_plugin_sender 0
+  ```
+
+  </TabItem>
+  <TabItem value="android">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+  <TabItem value="iOS">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+  <TabItem value="web">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+</Tabs>
 
 ## Details
 
@@ -75,6 +204,8 @@ defaultValue="cli"
 values={[
 {label: 'CLI', value: 'cli'},
 {label: 'Android', value: 'android'},
+{label: 'iOS', value: 'iOS'},
+{label: 'Web', value: 'web'},
 ]}>
 <TabItem value="cli">
 
@@ -86,7 +217,23 @@ meshtastic --set range_test_plugin_sender 60
   </TabItem>
   <TabItem value="android">
 
-TODO
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+  <TabItem value="iOS">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+  <TabItem value="web">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
 
   </TabItem>
 </Tabs>
@@ -99,6 +246,8 @@ defaultValue="cli"
 values={[
 {label: 'CLI', value: 'cli'},
 {label: 'Android', value: 'android'},
+{label: 'iOS', value: 'iOS'},
+{label: 'Web', value: 'web'},
 ]}>
 <TabItem value="cli">
 
@@ -110,7 +259,23 @@ meshtastic --set range_test_plugin_save true
   </TabItem>
   <TabItem value="android">
 
-TODO
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+  <TabItem value="iOS">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+  <TabItem value="web">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
 
   </TabItem>
 </Tabs>

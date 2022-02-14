@@ -20,7 +20,7 @@ export const FirmwareCard = ({
         style={{ display: "flex", justifyContent: "space-between" }}
       >
         <h3>{variant}</h3>
-        {release?.length && <a href={release[0].html_url}>{release[0].name}</a>}
+        {release?.length && <a href={release[0].html_url}>{release[0].tag_name}</a>}
       </div>
       <div className="card__body">
         <p>{description}</p>
@@ -40,7 +40,7 @@ export const FirmwareCard = ({
                 return (
                   <div key={release.id}>
                     <a href={release.assets[1]?.browser_download_url}>
-                      {release.name}
+                      {release.tag_name}
                     </a>
                   </div>
                 );

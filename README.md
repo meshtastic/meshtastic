@@ -27,7 +27,6 @@
   </span>
   <br />
   <hr />
-
 </div>
 
 ## What is Meshtastic?
@@ -41,3 +40,32 @@ Meshtastic uses LoRa for the long range communications and depending on settings
 Please see our [website](https://meshtastic.org) for more information about Meshtastic.
 
 [![Powered by Vercel](https://raw.githubusercontent.com/abumalick/powered-by-vercel/master/powered-by-vercel.svg)](https://vercel.com?utm_source=meshtastic&utm_campaign=oss)
+
+## Installation
+
+nodejs is required in your dev. environment. The method for installing nodejs depends on your operating system.  This software is built using [Docusaurus](https://docusaurus.io).
+
+Fork then clone the repository:
+
+```bash
+git clone https://github.com/meshtastic/meshtastic
+```
+
+
+Go to the root directory of your repository and install dependencies:
+
+```bash
+yarn install
+```
+
+Build the project with the following command
+
+```bash
+yarn build
+```
+
+Start a local dev. instance with the following command
+
+```bash
+yarn start
+```

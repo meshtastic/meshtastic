@@ -17,14 +17,6 @@ const config = {
     colorMode: {
       respectPrefersColorScheme: true,
     },
-    announcementBar: {
-      id: "play_store_workaround",
-      content:
-        'Android app unavailable in the Google Play Store store. Install by <a href="/docs/software/android/android-installation">side-loading</a> from <a href="https://github.com/meshtastic/Meshtastic-Android/releases">GitHub</a> or <a href="https://www.amazon.com/Geeksville-Industries-Meshtastic/dp/B08CY9394Q">Amazon</a>.',
-      backgroundColor: "#ff9999",
-      textColor: "#091E42",
-      isCloseable: true,
-    },
     navbar: {
       title: "Meshtastic",
       hideOnScroll: true,
@@ -46,7 +38,7 @@ const config = {
           label: "Documentation",
           items: [
             {
-              label: "About Meshtastic",
+              label: "Meshtastic Software",
               to: "docs/software",
             },
             {
@@ -65,13 +57,10 @@ const config = {
               label: "Contribute to Meshtastic",
               to: "docs/developers",
             },
-            /*
-              TODO add Docusaurus and Vercel instructions for how to manage the docs
             {
               label: "About this Documentation",
               to: "docs/about-documentation",
             },
-            */
             {
               label: "Legal",
               to: "docs/legal",
@@ -80,9 +69,9 @@ const config = {
           ],
         },
         {
-          label: "Firmware",
-          to: "firmware",
-          activeBasePath: "firmware",
+          label: "Downloads",
+          to: "downloads",
+          activeBasePath: "downloads",
         },
         {
           label: "Showcase",
@@ -103,7 +92,73 @@ const config = {
       ],
     },
     footer: {
-      copyright: `<a href="https://vercel.com/?utm_source=meshtastic&utm_campaign=oss" style="color: white">Powered by ▲ Vercel</a> | Meshtastic® is a registered trademark of Geeksville Industries LLC`,
+      copyright: `<a href="https://vercel.com/?utm_source=meshtastic&utm_campaign=oss" style="color: var(--ifm-footer-color)">Powered by ▲ Vercel</a> | Meshtastic® is a registered trademark of Geeksville Industries LLC`,
+      links: [
+        {
+          title: 'Learn',
+          items: [
+            {
+              label: 'Getting Started',
+              to: 'docs/getting-started',
+            },
+            {
+              label: 'About',
+              to: 'docs/about-documentation',
+            },
+            {
+              label: 'Hardware',
+              to: 'docs/hardware',
+            },
+            {
+              label: 'Settings',
+              to: 'docs/settings',
+            },
+          ],
+        },
+        {
+          title: 'Community',
+          items: [
+            {
+              label: 'YouTube',
+              to: 'https://www.youtube.com/meshtastic',
+            },
+            {
+              label: 'Discord',
+              to: 'https://discord.com/invite/UQJ5QuM7vq',
+            },
+            {
+              label: 'Forum',
+              to: 'https://meshtastic.discourse.group',
+            },
+          ],
+        },
+        {
+          title: 'Legal',
+          items: [
+            {
+              label: 'Privacy',
+              to: 'docs/legal/privacy',
+            },
+            {
+              label: 'Licensing',
+              to: 'docs/legal/licensing',
+            },
+            {
+              label: 'Trademark',
+              to: 'docs/legal/trademark',
+            },
+          ],
+        },
+        {
+          title: 'Resources',
+          items: [
+            {
+              label: 'GitHub',
+              to: 'https://github.com/meshtastic',
+            },
+          ],
+        },
+      ],
     },
     algolia: {
       apiKey: "01ad7e13d3fe392d2ad26da3c69dbc21",

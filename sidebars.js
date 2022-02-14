@@ -102,6 +102,7 @@ module.exports = {
       "getting-started/faq",
       {
         "Flashing firmware": [
+          "getting-started/meshtastic-flasher",
           "getting-started/flashing-esp32",
           "getting-started/flashing-nrf52",
         ],
@@ -114,19 +115,20 @@ module.exports = {
       "software/settings/overview",
       "software/settings/channel",
       "software/settings/gps",
+      "software/settings/ham",
       "software/settings/mqtt",
       "software/settings/power",
       "software/settings/router",
       "software/settings/wifi",
       {
         Plugins: [
+          "software/settings/canned-message-plugin",
           "software/settings/environmental-measurement-plugin",
           "software/settings/external-notification-plugin",
-          "software/settings/canned-message-plugin-settings",
           "software/settings/range-test-plugin",
+          "software/settings/rotary-encoder-plugin",
           "software/settings/serial-plugin",
           "software/settings/store-and-forward-plugin",
-          "software/settings/rotary-encoder-settings",
         ],
         Advanced: [
           "software/settings/channel-advanced",
@@ -187,6 +189,28 @@ module.exports = {
         "Android App": [
           "developers/android/build-app",
           "developers/android/mapbox",
+        ],
+      },
+    ],
+  },
+  Documentation: {
+    "About Documentation": [
+      "about-documentation/overview",
+      {
+        Dependencies: [
+          "about-documentation/docusaurus",
+          "about-documentation/github",
+          "about-documentation/vercel",
+        ],
+      },
+      {
+        Examples: [
+          "about-documentation/serve-docs-locally",
+        ],
+      },
+      {
+        "Style Guides": [
+          "about-documentation/style-guides/style-guide-settings",
         ],
       },
     ],

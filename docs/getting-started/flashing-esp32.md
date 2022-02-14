@@ -15,7 +15,7 @@ Plug your device into your computer using a USB cable and then do the following:
 :::important
 You may need to install a driver from Silicon Labs for the [CP210X USB to UART bridge](https://www.silabs.com/products/development-tools/software/usb-to-uart-bridge-vcp-drivers)
 
-Some newer boards may require the drivers for the [CH9102](http://www.wch.cn/downloads/CH343SER_ZIP.html) or [Direct Download](https://github.com/Xinyuan-LilyGO/CH9102_Driver) for Windows 7.
+Some newer boards may require the drivers for the [CH9102 Windows](http://www.wch.cn/downloads/CH343SER_ZIP.html) or [Direct Download](https://github.com/Xinyuan-LilyGO/CH9102_Driver) for Windows 7. For [CH9102 Mac](http://www.wch.cn/downloads/CH34XSER_MAC_ZIP.html). Click the big blue button with the down arrow. Be sure to open up the application and click "Install" after the package is installed. Also, reboot.
 :::
 
 <Tabs
@@ -52,7 +52,7 @@ values={[
 
 ### Download Latest Firmware
 
-Firmware can be downloaded from the [Firmware](/firmware) page. Your initial installation has to happen over USB from your Mac, Windows, or Linux PC. Once our software is installed, all future software updates happen over Bluetooth from your phone.
+Firmware can be downloaded from the [Downloads](/downloads) page. Your initial installation has to happen over USB from your Mac, Windows, or Linux PC. Once our software is installed, all future software updates happen over Bluetooth from your phone.
 
 :::note
 The [T-Beam 0.7](/docs/hardware/supported/tbeam#t-beam---v07) board is an earlier version of the T-Beam board, and due to changes in the design in subsequent iterations this board uses a specific firmware file different from the other T-Beam boards.
