@@ -17,9 +17,10 @@ The following ESP32 devices are supported:
 - [Lilygo TTGO Lora](/docs/hardware/supported/lora) - versions 1, 1.3, 2.0, 2.1-1.6
 - [Heltec LoRa 32 (V2)](/docs/hardware/supported/heltec)
 
+:::caution
 Supported but not encouraged:
-
 - Lilygo TTGO T-Beam - version 0.7 -- Very old, no power management chip, difficulty with GPS module and is freqeuntly confused with other devices.
+:::
 
 ## nRF52
 
