@@ -1,7 +1,7 @@
 ---
 id: overview
-title: Overview
-sidebar_label: Overview
+title: Legal
+sidebar_label: Legal
 slug: /legal
 ---
 ## Disclaimers

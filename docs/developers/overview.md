@@ -1,7 +1,7 @@
 ---
 id: overview
-title: Overview
-sidebar_label: Overview
+title: Contribute to Meshtastic
+sidebar_label: Contribute to Meshtastic
 slug: /developers
 ---
 # How to Help

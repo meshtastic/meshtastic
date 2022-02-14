@@ -1,7 +1,7 @@
 ---
 id: overview
-title: Overview
-sidebar_label: Overview
+title: Hardware
+sidebar_label: Hardware
 slug: /hardware
 ---
 

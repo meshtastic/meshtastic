@@ -1,7 +1,7 @@
 ---
 id: overview
-title: Overview
-sidebar_label: Overview
+title: Device Settings
+sidebar_label: Device Settings
 slug: /settings
 ---
 import Tabs from '@theme/Tabs';
