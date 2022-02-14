@@ -144,6 +144,13 @@ module.exports = {
         ],
       },
     ],
+    "Additional Documentation": [
+      {type: "ref", id: "hardware/overview"},
+      {type: "ref", id: "software/overview"},
+      {type: "ref", id: "developers/overview"},
+      {type: "ref", id: "about-documentation/overview"},
+      {type: "ref", id: "legal/overview"},
+    ],
   },
   Hardware: {
     Hardware: [
