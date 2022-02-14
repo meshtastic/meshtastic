@@ -13,9 +13,13 @@ The ESP32 devices have the advantage of having a Wifi interface. This allows you
 
 The following ESP32 devices are supported:
 
-- [Lilygo TTGO T-Beam](/docs/hardware/supported/tbeam) - versions 0.7, 1.1 (including M8N GPS and SX1262 LoRa variants)
+- [Lilygo TTGO T-Beam](/docs/hardware/supported/tbeam) - 1.1 (including M8N GPS and SX1262 LoRa variants)
 - [Lilygo TTGO Lora](/docs/hardware/supported/lora) - versions 1, 1.3, 2.0, 2.1-1.6
 - [Heltec LoRa 32 (V2)](/docs/hardware/supported/heltec)
+
+Supported but not encouraged:
+
+- Lilygo TTGO T-Beam - version 0.7
 
 ## nRF52
 
