@@ -19,7 +19,7 @@ The following ESP32 devices are supported:
 
 Supported but not encouraged:
 
-- Lilygo TTGO T-Beam - version 0.7
+- Lilygo TTGO T-Beam - version 0.7 -- Very old, no power management chip and is freqeuntly confused with other devices.
 
 ## nRF52
 
