@@ -1,5 +1,5 @@
 module.exports = {
-  About: {
+  Software: {
     Software: [
       "software/overview",
       {
