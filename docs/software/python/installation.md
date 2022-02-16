@@ -8,7 +8,7 @@ import TabItem from '@theme/TabItem';
 
 This library provides a command line interface (CLI) for Meshtastic nodes and provides an easy API for sending and receiving messages over mesh radios, in addition to changing user settings. Using the command line is currently the most powerful. Events are delivered using a publish-subscribe model, and you can subscribe to only the message types you are interested in.
 
-The [Meshtastic-python repo](https://github.com/meshtastic/Meshtastic-python) and [API documentation](https://meshtastic-python.vercel.app/meshtastic/index.html) are excellent sources of information.
+The [Meshtastic-python repo](https://github.com/meshtastic/Meshtastic-python) and [API documentation](https://python.meshtastic.org) are excellent sources of information.
 
 If you wish to view the code or contribute to development of the python library or the command line interface, please visit the Meshtastic python <a href="https://github.com/meshtastic/Meshtastic-python">GitHub page</a>.
 

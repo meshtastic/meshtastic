@@ -109,7 +109,7 @@ pytest --durations=0
 make slow
 ```
 
-See the [docs](https://meshtastic-python.vercel.app/meshtastic/index.html) or you can generate them locally by running:
+See the [API documentation](https://python.meshtastic.org) or you can generate them locally by running:
 
 ```
 bin/regen-docs.sh
