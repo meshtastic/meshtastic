@@ -74,3 +74,15 @@ source ~/.platformio/penv/bin/activate
 ```
 
 7. See the newly built bits in release/archive/firmware-1.2.49.XXX.zip (where XXX is the git commit)
+
+## Running the Native environment on Linux
+
+(From @caveman99 )
+
+- linux. flavour doesn't matter. in my case it Centos stream.
+- pio run -e native
+- then cd .pio/build/native
+- gdb program
+- on the gdb prompt, execute "run"
+- if it eventually coredumps it returns to the gdb prompt, then run bt for a backtrace.
+- the actual name of the binary is 'program'
