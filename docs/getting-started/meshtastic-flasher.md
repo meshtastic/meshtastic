@@ -8,7 +8,7 @@ import TabItem from '@theme/TabItem';
 
 ## Overview
 
-Meshtastic Flasher is a graphical user interface for flashing [supported devices](hardware/supported-devices) with Meshtastic.
+Meshtastic Flasher is a graphical user interface for flashing [supported devices](/docs/hardware) with Meshtastic.
 
 ## Prerequisites
 

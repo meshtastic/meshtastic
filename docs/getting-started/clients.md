@@ -11,7 +11,7 @@ There are many ways to connect to your newly flashed device. Below is a quicksta
 
 ### Commandline Interface (CLI)
 
-The CLI is currently the best way to manage your settings. It is feature rich and well documented. The [settings pages](docs/software/settings/overview) have examples for each user preference for the device. The CLI is included in the [Meshtastic-python](https://github.com/meshtastic/Meshtastic-python) project. If you'd like to use python to interface with a device, see the [API documentation](https://python.meshtastic.org).
+The CLI is currently the best way to manage your settings. It is feature rich and well documented. The [settings pages](/docs/settings) have examples for each user preference for the device. The CLI is included in the [Meshtastic-python](https://github.com/meshtastic/Meshtastic-python) project. If you'd like to use python to interface with a device, see the [API documentation](https://python.meshtastic.org).
 
 To install/upgrade Meshtastic-python, see below:
 
