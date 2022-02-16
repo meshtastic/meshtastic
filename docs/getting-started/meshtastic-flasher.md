@@ -1,10 +1,14 @@
 ---
 id: meshtastic-flasher
-title: Using Meshtastic Flasher GUI
-sidebar_label: Meshtastic Flasher GUI
+title: Using Meshtastic Flasher
+sidebar_label: Using Meshtastic Flasher
 ---
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
+
+## Overview
+
+Meshtastic Flasher is a graphical user interface for flashing [supported devices](/docs/hardware) with Meshtastic.
 
 ## Prerequisites
 

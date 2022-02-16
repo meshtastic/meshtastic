@@ -1,7 +1,7 @@
 ---
 id: overview
-title: Overview
-sidebar_label: Overview
+title: Software
+sidebar_label: Software
 slug: /software
 ---
 

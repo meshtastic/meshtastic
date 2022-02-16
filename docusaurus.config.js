@@ -34,6 +34,18 @@ const config = {
           activeBasePath: "docs/academy",
         },
 */
+/*
+        {
+          label: "About Meshtastic",
+          to: "docs/about",
+          activeBasePath: "docs/about",
+        },
+*/
+        {
+          label: "Showcase",
+          to: "showcase",
+          activeBasePath: "showcase",
+        },
         {
           label: "Documentation",
           items: [
@@ -72,11 +84,6 @@ const config = {
           label: "Downloads",
           to: "downloads",
           activeBasePath: "downloads",
-        },
-        {
-          label: "Showcase",
-          to: "showcase",
-          activeBasePath: "showcase",
         },
         {
           href: "https://meshtastic.discourse.group",
@@ -119,16 +126,20 @@ const config = {
           title: 'Community',
           items: [
             {
-              label: 'YouTube',
-              to: 'https://www.youtube.com/meshtastic',
-            },
-            {
               label: 'Discord',
               to: 'https://discord.com/invite/UQJ5QuM7vq',
             },
             {
               label: 'Forum',
               to: 'https://meshtastic.discourse.group',
+            },
+            {
+              label: 'Reddit',
+              to: 'https://reddit.com/r/meshtastic',
+            },
+            {
+              label: 'YouTube',
+              to: 'https://www.youtube.com/meshtastic',
             },
           ],
         },

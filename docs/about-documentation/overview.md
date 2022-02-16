@@ -1,7 +1,7 @@
 ---
 id: overview
-title: Overview
-sidebar_label: Overview
+title: Maintaining Documentation
+sidebar_label: Maintaining Documentation
 slug: /about-documentation
 ---
 Meshtastic documentation is an important ingredient to the overall project. We want users to hit the ground running with the information they need right at their finger tips. This section will discuss the documentation software stack, file organization, and style guides.

@@ -1,5 +1,5 @@
 module.exports = {
-  About: {
+  Software: {
     Software: [
       "software/overview",
       {
@@ -95,23 +95,39 @@ module.exports = {
         ],
       },
     ],
+    "Additional Documentation": [
+      {type: "ref", id: "getting-started/overview"},
+      {type: "ref", id: "software/settings/overview"},
+      {type: "ref", id: "hardware/overview"},
+      {type: "ref", id: "developers/overview"},
+      {type: "ref", id: "about-documentation/overview"},
+      {type: "ref", id: "legal/overview"},
+    ],
   },
-  GettingStarted: {
+  Configuration: {
     "Getting Started": [
       "getting-started/overview",
       "getting-started/faq",
       {
         "Flashing firmware": [
           "getting-started/meshtastic-flasher",
-          "getting-started/flashing-esp32",
-          "getting-started/flashing-nrf52",
+          {
+            "Manual Method": [
+              "getting-started/flashing-esp32",
+              "getting-started/flashing-nrf52",
+            ],
+          },
+        ],
+      },
+      {
+        "Connect to Device": [
+          "getting-started/clients",
         ],
       },
       "getting-started/concepts",
     ],
-  },
-  Settings: {
-    Settings: [
+
+    "Device Settings": [
       "software/settings/overview",
       "software/settings/channel",
       "software/settings/gps",
@@ -135,6 +151,13 @@ module.exports = {
           "software/settings/misc",
         ],
       },
+    ],
+    "Additional Documentation": [
+      {type: "ref", id: "hardware/overview"},
+      {type: "ref", id: "software/overview"},
+      {type: "ref", id: "developers/overview"},
+      {type: "ref", id: "about-documentation/overview"},
+      {type: "ref", id: "legal/overview"},
     ],
   },
   Hardware: {
@@ -161,6 +184,14 @@ module.exports = {
           "hardware/antenna/resources",
         ],
       },
+    ],
+    "Additional Documentation": [
+      {type: "ref", id: "getting-started/overview"},
+      {type: "ref", id: "software/settings/overview"},
+      {type: "ref", id: "software/overview"},
+      {type: "ref", id: "developers/overview"},
+      {type: "ref", id: "about-documentation/overview"},
+      {type: "ref", id: "legal/overview"},
     ],
   },
   Contribute: {
@@ -192,9 +223,7 @@ module.exports = {
         ],
       },
     ],
-  },
-  Documentation: {
-    "About Documentation": [
+    "Maintaining Documentation": [
       "about-documentation/overview",
       {
         Dependencies: [
@@ -214,6 +243,13 @@ module.exports = {
         ],
       },
     ],
+    "Additional Documentation": [
+      {type: "ref", id: "getting-started/overview"},
+      {type: "ref", id: "software/settings/overview"},
+      {type: "ref", id: "hardware/overview"},
+      {type: "ref", id: "software/overview"},
+      {type: "ref", id: "legal/overview"},
+    ],
   },
   Legal: {
     Legal: [
@@ -221,6 +257,13 @@ module.exports = {
       "legal/licensing",
       "legal/trademark",
       "legal/privacy",
+    ],
+    "Additional Documentation": [
+      {type: "ref", id: "getting-started/overview"},
+      {type: "ref", id: "software/settings/overview"},
+      {type: "ref", id: "hardware/overview"},
+      {type: "ref", id: "software/overview"},
+      {type: "ref", id: "developers/overview"},
     ],
   },
 };
