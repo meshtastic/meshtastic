@@ -95,6 +95,14 @@ module.exports = {
         ],
       },
     ],
+    "Additional Documentation": [
+      {type: "ref", id: "getting-started/overview"},
+      {type: "ref", id: "software/settings/overview"},
+      {type: "ref", id: "hardware/overview"},
+      {type: "ref", id: "developers/overview"},
+      {type: "ref", id: "about-documentation/overview"},
+      {type: "ref", id: "legal/overview"},
+    ],
   },
   Configuration: {
     "Getting Started": [
@@ -177,6 +185,14 @@ module.exports = {
         ],
       },
     ],
+    "Additional Documentation": [
+      {type: "ref", id: "getting-started/overview"},
+      {type: "ref", id: "software/settings/overview"},
+      {type: "ref", id: "software/overview"},
+      {type: "ref", id: "developers/overview"},
+      {type: "ref", id: "about-documentation/overview"},
+      {type: "ref", id: "legal/overview"},
+    ],
   },
   Contribute: {
     Developers: [
@@ -207,9 +223,7 @@ module.exports = {
         ],
       },
     ],
-  },
-  Documentation: {
-    "About Documentation": [
+    "Maintaining Documentation": [
       "about-documentation/overview",
       {
         Dependencies: [
@@ -229,6 +243,13 @@ module.exports = {
         ],
       },
     ],
+    "Additional Documentation": [
+      {type: "ref", id: "getting-started/overview"},
+      {type: "ref", id: "software/settings/overview"},
+      {type: "ref", id: "hardware/overview"},
+      {type: "ref", id: "software/overview"},
+      {type: "ref", id: "legal/overview"},
+    ],
   },
   Legal: {
     Legal: [
@@ -236,6 +257,13 @@ module.exports = {
       "legal/licensing",
       "legal/trademark",
       "legal/privacy",
+    ],
+    "Additional Documentation": [
+      {type: "ref", id: "getting-started/overview"},
+      {type: "ref", id: "software/settings/overview"},
+      {type: "ref", id: "hardware/overview"},
+      {type: "ref", id: "software/overview"},
+      {type: "ref", id: "developers/overview"},
     ],
   },
 };
