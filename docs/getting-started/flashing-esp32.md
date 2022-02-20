@@ -186,7 +186,7 @@ values={[
   <TabItem value="windows">
 
 :::important
-On Windows, you must explicitly declare esptools as a .py script. Use `esptools.py chip_id`.
+On Windows, you must explicitly declare esptool as a .py script. Use `esptool.py chip_id`.
 :::
 
   </TabItem>
