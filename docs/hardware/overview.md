@@ -9,7 +9,7 @@ We currently support devices that use the ESP32 and the nRF52 microcontrollers. 
 
 ## ESP32
 
-The ESP32 devices have the advantage of having a Wifi interface. This allows you to connect to an access point, or run the device as an access point, and host the [web interface](/docs/software/web/web-app-software). Unfortunately the ESP32 does not support Bluetooth 5.0, and so has to wake up from sleep mode now and then to connect to Bluetooth devices to receive messages. This can result in delays sending a message from your phone.
+The ESP32 devices have the advantage of having a Wifi interface. This allows you to connect to an access point, or run the device as an access point, and host the [web interface](/docs/software/web/web-app-software).
 
 The following ESP32 devices are supported:
 
