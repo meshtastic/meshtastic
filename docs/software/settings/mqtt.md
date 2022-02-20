@@ -153,10 +153,10 @@ If you are using the default Meshtastic MQTT server, this setting will take no e
   ]}>
   <TabItem value="cli">
 
-  ```bash title="Enable MQTT Encryption (Default)"
+  ```bash title="Enable MQTT Decryption (Default)"
   meshtastic --set mqtt_encryption_enabled false
   ```
-  ```bash title="Disable MQTT Encryption"
+  ```bash title="Disable MQTT Decryption"
   meshtastic --set mqtt_encryption_enabled true
   ```
 
