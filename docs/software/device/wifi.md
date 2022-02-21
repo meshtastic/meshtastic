@@ -4,6 +4,10 @@ title: WiFi on ESP32 devices
 sidebar_label: WiFi
 ---
 
+:::note
+Enabling WiFi will disable Bluetooth. Only one method will work at a time.
+:::
+
 The ESP32 based devices have the ability to connect to WiFi and also are able to create a software based access point. The WiFi can be set up through the python API. The WiFi can also be set to AP mode by rebooting the device with the program switch depressed.
 
 ## Setting up WiFi in host mode
@@ -110,4 +114,4 @@ http://meshtastic.local
       * * * * *
 ```
 
-To disable to WiFi access point, simply reboot your device.
+To disable the WiFi access point, simply reboot your device.
