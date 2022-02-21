@@ -114,4 +114,4 @@ http://meshtastic.local
       * * * * *
 ```
 
-To disable to WiFi access point, simply reboot your device.
+To disable the WiFi access point, simply reboot your device.
