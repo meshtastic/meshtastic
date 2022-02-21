@@ -15,7 +15,7 @@ Below are some of the most common settings that a new user will want to become a
 
 ### Channel Settings
 
-Channel settings are very important, if channels are misconfigured between devices they won't be able to communicate! A freshly flashed device will use the default channel settings. Depending on your use case you may want to change your encryption using `psk`, your range of communication by setting one of the four pre-set bands using `modem_config`, or even just the name of your channel! Before you begin, don't forget to set your `region` correctly! Take a look at the [basic channel configuration](software/settings/channel) and if you're tech savvy or a radio head check out the [advanced channel settings](software/settings/channel-advanced).
+Channel settings are very important, if channels are misconfigured between devices they won't be able to communicate! A freshly flashed device will use the default channel settings. Depending on your use case you may want to change your encryption using `psk`, your range of communication by setting one of the four pre-set bands using `modem_config`, or even just the name of your channel! Before you begin, don't forget to set your `region` correctly! Take a look at the [basic channel configuration](settings/channel) and if you're tech savvy or a radio head check out the [advanced channel settings](settings/channel-advanced).
 
 :::note
 It is very important that you set your device's `region` setting. This will ensure that you are operating within the legal limits for your area.
@@ -23,11 +23,11 @@ It is very important that you set your device's `region` setting. This will ensu
 
 ### GPS Settings
 
-For most, GPS is a really cool, desirable feature. Knowing where everyone on your local mesh is has some major advantages. However, it's possible you want to hide the location of a particular device (like a router mounted on your home). All of the settings related to GPS are located [here](software/settings/gps).
+For most, GPS is a really cool, desirable feature. Knowing where everyone on your local mesh is has some major advantages. However, it's possible you want to hide the location of a particular device (like a router mounted on your home). All of the settings related to GPS are located [here](settings/gps).
 
 ### WiFi Settings
 
-Whether you're using the upcoming [web interface](software/web/web-app-software) or you're interested in broadcasting messages to/from the internet using [MQTT](software/settings/mqtt), the [WiFi settings](software/settings/wifi) are your first stop towards an IoT radio.
+Whether you're using the upcoming [web interface](software/web/web-app-software) or you're interested in broadcasting messages to/from the internet using [MQTT](settings/mqtt), the [WiFi settings](settings/wifi) are your first stop towards an IoT radio.
 
 ## Examples
 
