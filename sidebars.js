@@ -203,7 +203,6 @@ module.exports = {
       "developers/api",
       "developers/build-env",
       "developers/publish",
-      "developers/codespaces",
       {
         Device: [
           "developers/device/device-api",
