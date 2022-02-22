@@ -195,7 +195,7 @@ module.exports = {
     ],
   },
   Contribute: {
-    Developers: [
+    "Contribute to Meshtastic": [
       "developers/overview",
       {
         Protobufs: ["developers/protobufs/api"],
