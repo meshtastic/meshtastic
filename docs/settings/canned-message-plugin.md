@@ -25,8 +25,11 @@ Once plugin settings are changed, a **reset** is required for them to take effec
 | :-----: | :---------------: | :-----: |
 | canned_message_plugin_allow_input_source | `rotEnc1`, `_any` | `_any` |
 | canned_message_plugin_enabled | `true`, `false` | `false` |
-| canned_message_plugin_messages | `string` | `""` |
 | canned_message_plugin_send_bell | `true`, `false` | `false` |
+
+Messages can be set with a dedicated option:
+
+`--set-canned-message "<messages>"`
 
 ### canned_message_plugin_allow_input_source
 
@@ -128,13 +131,12 @@ Configuring this setting is not yet available for the selected platform. If this
   </TabItem>
 </Tabs>
 
-### canned_message_plugin_messages
+### canned_message_plugin_send_bell
 
-Predefined messages for CannedMessagePlugin separated by `|` characters.
+CannedMessagePlugin also sends a bell character with the messages.
+The [External Notification Plugin](external-notification-plugin) can benefit from this feature as it utilizes the bell character.
 
-You can define up to 50 messages with a total length 1024 bytes.
-
-#### Set canned messages
+#### Enable/Disable bell character
 <Tabs
   groupId="settings"
   defaultValue="cli"
@@ -146,8 +148,11 @@ You can define up to 50 messages with a total length 1024 bytes.
   ]}>
   <TabItem value="cli">
 
-```bash title="Set Canned Messages"
-meshtastic --set canned_message_plugin_messages "I'm fine|I'm out|I'm back|Need helping hand|Help me with saw|I need an alpinist|I need ambulance|Keep Calm|On my way|I will be late|I'm already waiting|We have company|Beer is cold|Roger"
+```bash title="Enable Bell Character"
+meshtastic --set canned_message_plugin_send_bell true
+```
+```bash title="Disable Bell Character"
+meshtastic --set canned_message_plugin_send_bell false
 ```
   </TabItem>
   <TabItem value="android">
@@ -173,28 +178,26 @@ Configuring this setting is not yet available for the selected platform. If this
   </TabItem>
 </Tabs>
 
-### canned_message_plugin_send_bell
+### --set-canned-message
 
-CannedMessagePlugin also sends a bell character with the messages.
-The [External Notification Plugin](external-notification-plugin) can benefit from this feature as it utilizes the bell character.
+Predefined messages for CannedMessagePlugin separated by `|` characters.
 
-#### Enable/Disable bell character
+You can define up to 50 messages with a total length 800 bytes.
+
+#### Set canned messages
 <Tabs
-  groupId="settings"
-  defaultValue="cli"
-  values={[
-    {label: 'CLI', value: 'cli'},
-    {label: 'Android', value: 'android'},
-    {label: 'iOS', value: 'iOS'},
-    {label: 'Web', value: 'web'},
-  ]}>
-  <TabItem value="cli">
+groupId="settings"
+defaultValue="cli"
+values={[
+{label: 'CLI', value: 'cli'},
+{label: 'Android', value: 'android'},
+{label: 'iOS', value: 'iOS'},
+{label: 'Web', value: 'web'},
+]}>
+<TabItem value="cli">
 
-```bash title="Enable Bell Character"
-meshtastic --set canned_message_plugin_send_bell true
-```
-```bash title="Disable Bell Character"
-meshtastic --set canned_message_plugin_send_bell false
+```bash title="Set Canned Messages"
+meshtastic --set-canned-message "What am I doing?|I'm fine|Don't follow me|I'm out|I'm back|Need helping hand|Help me with saw|I need an alpinist|I need ambulance|Keep Calm|On my way|Need 5 mins|I will be late|I'm already waiting|I couldn't join|We have company|Beer is cold|Roger"
 ```
   </TabItem>
   <TabItem value="android">
