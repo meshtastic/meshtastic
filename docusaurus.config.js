@@ -70,8 +70,8 @@ const config = {
               to: "docs/developers",
             },
             {
-              label: "About this Documentation",
-              to: "docs/about-documentation",
+              label: "Maintaining Documentation",
+              to: "docs/developers/maintaining-documentation/overview",
             },
             {
               label: "Legal",
@@ -166,6 +166,10 @@ const config = {
             {
               label: 'GitHub',
               to: 'https://github.com/meshtastic',
+            },
+            {
+              label: 'Contribute',
+              to: 'docs/developers',
             },
           ],
         },
