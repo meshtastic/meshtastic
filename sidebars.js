@@ -100,7 +100,7 @@ module.exports = {
       {type: "ref", id: "settings/overview"},
       {type: "ref", id: "hardware/overview"},
       {type: "ref", id: "developers/overview"},
-      {type: "ref", id: "about-documentation/overview"},
+      {type: "ref", id: "developers/maintaining-documentation/overview"},
       {type: "ref", id: "legal/overview"},
     ],
   },
@@ -156,7 +156,7 @@ module.exports = {
       {type: "ref", id: "hardware/overview"},
       {type: "ref", id: "software/overview"},
       {type: "ref", id: "developers/overview"},
-      {type: "ref", id: "about-documentation/overview"},
+      {type: "ref", id: "developers/maintaining-documentation/overview"},
       {type: "ref", id: "legal/overview"},
     ],
   },
@@ -190,12 +190,12 @@ module.exports = {
       {type: "ref", id: "settings/overview"},
       {type: "ref", id: "software/overview"},
       {type: "ref", id: "developers/overview"},
-      {type: "ref", id: "about-documentation/overview"},
+      {type: "ref", id: "developers/maintaining-documentation/overview"},
       {type: "ref", id: "legal/overview"},
     ],
   },
   Contribute: {
-    Developers: [
+    "Contribute to Meshtastic": [
       "developers/overview",
       {
         Protobufs: ["developers/protobufs/api"],
@@ -220,25 +220,25 @@ module.exports = {
           "developers/android/build-app",
           "developers/android/mapbox",
         ],
-      },
-    ],
-    "Maintaining Documentation": [
-      "about-documentation/overview",
-      {
-        Dependencies: [
-          "about-documentation/docusaurus",
-          "about-documentation/github",
-          "about-documentation/vercel",
-        ],
-      },
-      {
-        Examples: [
-          "about-documentation/serve-docs-locally",
-        ],
-      },
-      {
-        "Style Guides": [
-          "about-documentation/style-guides/style-guide-settings",
+        "Maintaining Documentation": [
+          "developers/maintaining-documentation/overview",
+          {
+            Dependencies: [
+              "developers/maintaining-documentation/docusaurus",
+              "developers/maintaining-documentation/github",
+              "developers/maintaining-documentation/vercel",
+            ],
+          },
+          {
+            Examples: [
+              "developers/maintaining-documentation/serve-docs-locally",
+            ],
+          },
+          {
+            "Style Guides": [
+              "developers/maintaining-documentation/style-guides/style-guide-settings",
+            ],
+          },
         ],
       },
     ],
