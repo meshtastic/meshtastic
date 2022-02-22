@@ -94,7 +94,7 @@ Given our use-case for the initial release, most of our protocol is built around
 If any mesh nodes see a packet with a HopLimit other than zero, it will decrement that HopLimit and attempt retransmission on behalf of the original sending node.
 
 :::note
-A node being in router mode does **not** currently change this behavior, but is intended to be used for future versions of the meshing algorithm. For an explanation of what router mode currently does, see [settings](/docs/software/settings/router#enabledisable-router-mode).
+A node being in router mode does **not** currently change this behavior, but is intended to be used for future versions of the meshing algorithm. For an explanation of what router mode currently does, see [settings](/docs/settings/router#enabledisable-router-mode).
 :::
 
 ### Layer 4: DSR for Multi-Hop Unicast Messaging
