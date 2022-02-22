@@ -35,6 +35,11 @@ Once module settings are changed, a **reset** is required for them to take effec
 |      canned_message_module_enabled       |  `true`, `false`  | `false` |
 |      canned_message_module_messages      |     `string`      |  `""`   |
 |     canned_message_module_send_bell      |  `true`, `false`  | `false` |
+| (Messages)* | `string` | `""` |
+
+- Messages can be set with a dedicated option:
+
+`--set-canned-message "<messages>"`
 
 ### canned_message_module_allow_input_source
 
@@ -143,13 +148,16 @@ Configuring this setting is not yet available for the selected platform. If this
   </TabItem>
 </Tabs>
 
-### canned_message_module_messages
+### canned_message_module_send_bell
 
-Predefined messages for CannedMessageModule separated by `|` characters.
+CannedMessageModule also sends a "bell character" with the messages.
+The [External Notification Module](external-notification-module) can benefit from this feature as it utilizes the bell character.
 
-You can define up to 50 messages with a total length 1024 bytes.
+_We have an "External Notification Module", that can be set up to beep, when new message arrives.
+This module can also be configured to beep only when message contains the "bell character".
+See module documentation (link above) for details._
 
-#### Set canned messages
+#### Enable/Disable bell character
 
 <Tabs
 groupId="settings"
@@ -162,8 +170,12 @@ values={[
 ]}>
 <TabItem value="cli">
 
-```bash title="Set Canned Messages"
-meshtastic --set canned_message_module_messages "I'm fine|I'm out|I'm back|Need helping hand|Help me with saw|I need an alpinist|I need ambulance|Keep Calm|On my way|I will be late|I'm already waiting|We have company|Beer is cold|Roger"
+```bash title="Enable Bell Character"
+meshtastic --set canned_message_module_send_bell true
+```
+
+```bash title="Disable Bell Character"
+meshtastic --set canned_message_module_send_bell false
 ```
 
   </TabItem>
@@ -190,12 +202,16 @@ Configuring this setting is not yet available for the selected platform. If this
   </TabItem>
 </Tabs>
 
-### canned_message_module_send_bell
+### Messages
 
-CannedMessageModule also sends a bell character with the messages.
-The [External Notification Module](external-notification-module) can benefit from this feature as it utilizes the bell character.
+CLI has a dedicated option for canned message module to set predefines messages: `--set-canned-message <message>`
+Predefined messages separated by `|` characters.
 
-#### Enable/Disable bell character
+You can define up to 50 messages with a total length 800 bytes.
+
+Existing configuration can be queried with CLI option: `--get-canned-message`
+
+#### Set canned messages
 
 <Tabs
 groupId="settings"
@@ -208,12 +224,8 @@ values={[
 ]}>
 <TabItem value="cli">
 
-```bash title="Enable Bell Character"
-meshtastic --set canned_message_module_send_bell true
-```
-
-```bash title="Disable Bell Character"
-meshtastic --set canned_message_module_send_bell false
+```bash title="Set Canned Messages"
+meshtastic --set canned_message_module_messages "I'm fine|I'm out|I'm back|Need helping hand|Help me with saw|I need an alpinist|I need ambulance|Keep Calm|On my way|I will be late|I'm already waiting|We have company|Beer is cold|Roger"
 ```
 
   </TabItem>
