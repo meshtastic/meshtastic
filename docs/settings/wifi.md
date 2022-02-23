@@ -6,6 +6,10 @@ sidebar_label: WiFi
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
+:::info
+Enabling WiFi will disable bluetooth. Only one method will work at a time.
+:::
+
 ## Overview
 
 The ESP32 based devices have the ability to connect to WiFi as a client and also are able to create a software based access point (SoftAP). See below for more details.
