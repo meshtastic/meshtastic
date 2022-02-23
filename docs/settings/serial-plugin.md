@@ -172,6 +172,10 @@ Configuring this setting is not yet available for the selected platform. If this
 
 Set the GPIO pin to the RXD pin you have set up.
 
+:::caution
+To prevent damaging your device, double check your device's schematics before attaching to the GPIO pins and setting this value.
+:::
+
 <Tabs
   groupId="settings"
   defaultValue="cli"
@@ -261,6 +265,10 @@ Configuring this setting is not yet available for the selected platform. If this
 ### serialplugin_txd
 
 Set the GPIO pin to the TXD pin you have set up.
+
+:::caution
+To prevent damaging your device, double check your device's schematics before attaching to the GPIO pins and setting this value.
+:::
 
 <Tabs
   groupId="settings"

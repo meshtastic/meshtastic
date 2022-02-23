@@ -38,6 +38,10 @@ Once plugin settings are changed, a **reset** is required for them to take effec
 
 Specifies whether the external circuit is triggered when the device's GPIO is low or high.
 
+:::caution
+To prevent damaging your device, double check your device's schematics before attaching to the GPIO pins and setting this value.
+:::
+
 #### Specify High/Low GPIO triggers circuit
 <Tabs
   groupId="settings"
@@ -221,6 +225,10 @@ Configuring this setting is not yet available for the selected platform. If this
 ### ext_notification_plugin_output
 
 Specifies the GPIO that your external circuit is attached to on the device.
+
+:::caution
+To prevent damaging your device, double check your device's schematics before attaching to the GPIO pins and setting this value.
+:::
 
 #### Specify GPIO for circuit to monitor
 <Tabs

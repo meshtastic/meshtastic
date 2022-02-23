@@ -269,6 +269,10 @@ The preferred setup is using I2C, so the `environmental_measurement_plugin_senso
 
 Specify the preferred GPIO Pin for sensor readings. May not be needed if using I2C.
 
+:::caution
+To prevent damaging your device, double check your device's schematics before attaching to the GPIO pins and setting this value.
+:::
+
 #### Set plugin sensor pin
 <Tabs
   groupId="settings"

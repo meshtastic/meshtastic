@@ -224,6 +224,10 @@ Configuring this setting is not yet available for the selected platform. If this
 ### rotary1_pin_a
 GPIO pin for rotary encoder A port.
 
+:::caution
+To prevent damaging your device, double check your device's schematics before attaching to the GPIO pins and setting this value.
+:::
+
 #### Specify rotary1 pin a
 <Tabs
   groupId="settings"
@@ -268,6 +272,10 @@ Configuring this setting is not yet available for the selected platform. If this
 ### rotary1_pin_b
 GPIO pin for rotary encoder B port.
 
+:::caution
+To prevent damaging your device, double check your device's schematics before attaching to the GPIO pins and setting this value.
+:::
+
 #### Specify rotary1 pin b
 <Tabs
   groupId="settings"
@@ -311,6 +319,10 @@ Configuring this setting is not yet available for the selected platform. If this
 
 ### rotary1_pin_press
 GPIO pin for rotary encoder Press port.
+
+:::caution
+To prevent damaging your device, double check your device's schematics before attaching to the GPIO pins and setting this value.
+:::
 
 #### Specify rotary1 pin press
 <Tabs
