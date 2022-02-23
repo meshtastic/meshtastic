@@ -6,6 +6,10 @@ sidebar_label: Environmental Measurement Plugin
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
+:::warning
+GPIO access is fundamentally dangerous because invalid options can physically damage or destroy your hardware. Ensure that you fully understand the schematic for your particular device before trying this as we do not offer a warranty. Use at your own risk.
+:::
+
 <!--- TODO add link to hardware setup to admonition--->
 :::note
 This plugin requires attaching a peripheral accessory to your device. It will not work without one.
@@ -264,6 +268,10 @@ The preferred setup is using I2C, so the `environmental_measurement_plugin_senso
 :::
 
 Specify the preferred GPIO Pin for sensor readings. May not be needed if using I2C.
+
+:::caution
+To prevent damaging your device, double check your device's schematics before attaching to the GPIO pins and setting this value.
+:::
 
 #### Set plugin sensor pin
 <Tabs

@@ -6,6 +6,13 @@ sidebar_label: Serial Plugin
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
+:::warning
+GPIO access is fundamentally dangerous because invalid options can physically damage or destroy your hardware. Ensure that you fully understand the schematic for your particular device before trying this as we do not offer a warranty. Use at your own risk.
+:::
+
+:::note
+This plugin requires attaching a peripheral accessory to your device. It will not work without one.
+:::
 
 ## Overview
 
@@ -165,6 +172,10 @@ Configuring this setting is not yet available for the selected platform. If this
 
 Set the GPIO pin to the RXD pin you have set up.
 
+:::caution
+To prevent damaging your device, double check your device's schematics before attaching to the GPIO pins and setting this value.
+:::
+
 <Tabs
   groupId="settings"
   defaultValue="cli"
@@ -254,6 +265,10 @@ Configuring this setting is not yet available for the selected platform. If this
 ### serialplugin_txd
 
 Set the GPIO pin to the TXD pin you have set up.
+
+:::caution
+To prevent damaging your device, double check your device's schematics before attaching to the GPIO pins and setting this value.
+:::
 
 <Tabs
   groupId="settings"

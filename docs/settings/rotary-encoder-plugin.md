@@ -6,6 +6,10 @@ sidebar_label: Rotary Encoder
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
+:::warning
+GPIO access is fundamentally dangerous because invalid options can physically damage or destroy your hardware. Ensure that you fully understand the schematic for your particular device before trying this as we do not offer a warranty. Use at your own risk.
+:::
+
 <!--- TODO add link to hardware setup to admonition--->
 :::note
 This plugin requires attaching a peripheral accessory to your device. It will not work without one.
@@ -220,6 +224,10 @@ Configuring this setting is not yet available for the selected platform. If this
 ### rotary1_pin_a
 GPIO pin for rotary encoder A port.
 
+:::caution
+To prevent damaging your device, double check your device's schematics before attaching to the GPIO pins and setting this value.
+:::
+
 #### Specify rotary1 pin a
 <Tabs
   groupId="settings"
@@ -264,6 +272,10 @@ Configuring this setting is not yet available for the selected platform. If this
 ### rotary1_pin_b
 GPIO pin for rotary encoder B port.
 
+:::caution
+To prevent damaging your device, double check your device's schematics before attaching to the GPIO pins and setting this value.
+:::
+
 #### Specify rotary1 pin b
 <Tabs
   groupId="settings"
@@ -307,6 +319,10 @@ Configuring this setting is not yet available for the selected platform. If this
 
 ### rotary1_pin_press
 GPIO pin for rotary encoder Press port.
+
+:::caution
+To prevent damaging your device, double check your device's schematics before attaching to the GPIO pins and setting this value.
+:::
 
 #### Specify rotary1 pin press
 <Tabs

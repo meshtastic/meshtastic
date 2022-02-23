@@ -6,6 +6,10 @@ sidebar_label: External Notification Plugin
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
+:::warning
+GPIO access is fundamentally dangerous because invalid options can physically damage or destroy your hardware. Ensure that you fully understand the schematic for your particular device before trying this as we do not offer a warranty. Use at your own risk.
+:::
+
 <!--- TODO add link to hardware setup to admonition--->
 :::note
 This plugin requires attaching a peripheral accessory to your device. It will not work without one.
@@ -33,6 +37,10 @@ Once plugin settings are changed, a **reset** is required for them to take effec
 ### ext_notification_plugin_active
 
 Specifies whether the external circuit is triggered when the device's GPIO is low or high.
+
+:::caution
+To prevent damaging your device, double check your device's schematics before attaching to the GPIO pins and setting this value.
+:::
 
 #### Specify High/Low GPIO triggers circuit
 <Tabs
@@ -217,6 +225,10 @@ Configuring this setting is not yet available for the selected platform. If this
 ### ext_notification_plugin_output
 
 Specifies the GPIO that your external circuit is attached to on the device.
+
+:::caution
+To prevent damaging your device, double check your device's schematics before attaching to the GPIO pins and setting this value.
+:::
 
 #### Specify GPIO for circuit to monitor
 <Tabs
