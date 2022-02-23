@@ -50,10 +50,6 @@ const config = {
           label: "Documentation",
           items: [
             {
-              label: "Meshtastic Software",
-              to: "docs/software",
-            },
-            {
               label: "Getting Started",
               to: "docs/getting-started",
             },
@@ -66,6 +62,15 @@ const config = {
               to: "docs/hardware",
             },
             {
+              label: "Meshtastic Software",
+              to: "docs/software",
+            },
+          ],
+        },
+        {
+          label: "Contribute",
+          items: [
+            {
               label: "Contribute to Meshtastic",
               to: "docs/developers",
             },
@@ -77,7 +82,6 @@ const config = {
               label: "Legal",
               to: "docs/legal",
             },
-
           ],
         },
         {
