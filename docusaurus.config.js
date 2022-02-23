@@ -41,11 +41,13 @@ const config = {
           activeBasePath: "docs/about",
         },
 */
+/*
         {
           label: "Showcase",
           to: "showcase",
           activeBasePath: "showcase",
         },
+*/
         {
           label: "Documentation",
           items: [
