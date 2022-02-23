@@ -64,6 +64,12 @@ const config = {
               label: "Hardware Details",
               to: "docs/hardware",
             },
+/*
+            {
+              label: "Mesh Radio Details",
+              to: "docs/mesh"
+            },
+*/
             {
               label: "Meshtastic Software",
               to: "docs/software",
