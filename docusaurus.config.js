@@ -41,32 +41,46 @@ const config = {
           activeBasePath: "docs/about",
         },
 */
+/*
         {
           label: "Showcase",
           to: "showcase",
           activeBasePath: "showcase",
         },
+*/
         {
           label: "Documentation",
           items: [
             {
-              label: "Meshtastic Software",
-              to: "docs/software",
-            },
-            {
               label: "Getting Started",
               to: "docs/getting-started",
             },
+            // FIXME create configuration & settings landing page and adjust path below
             {
-              label: "Device Settings",
+              label: "Configuration & Settings",
               to: "docs/settings",
             },
             {
               label: "Hardware Details",
               to: "docs/hardware",
             },
+/*
             {
-              label: "Contribute to Meshtastic",
+              label: "Mesh Radio Details",
+              to: "docs/mesh"
+            },
+*/
+            {
+              label: "Meshtastic Software",
+              to: "docs/software",
+            },
+          ],
+        },
+        {
+          label: "Contribute",
+          items: [
+            {
+              label: "Developers",
               to: "docs/developers",
             },
             {
@@ -77,7 +91,6 @@ const config = {
               label: "Legal",
               to: "docs/legal",
             },
-
           ],
         },
         {
