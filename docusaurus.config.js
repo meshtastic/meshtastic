@@ -55,8 +55,9 @@ const config = {
               label: "Getting Started",
               to: "docs/getting-started",
             },
+            // FIXME create configuration & settings landing page and adjust path below
             {
-              label: "Device Settings",
+              label: "Configuration & Settings",
               to: "docs/settings",
             },
             {
@@ -73,7 +74,7 @@ const config = {
           label: "Contribute",
           items: [
             {
-              label: "Contribute to Meshtastic",
+              label: "Developers",
               to: "docs/developers",
             },
             {
