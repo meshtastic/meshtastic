@@ -26,6 +26,18 @@ values={[
   <TabItem value="linux">
 
   ```bash title="Install Meshtastic Flasher"
+  python3 --version
+  # ensure you are using at least python v3.6
+  # change to a directory where you want to create a python virtual environment
+  mkdir some_dir
+  cd some_dir
+  # if the following command fails, it might tell you what package to install
+  python3 -m venv venv
+  # activate the python virtual environment
+  source venv/bin/activate
+  # your prompt should change - it should include "(venv) in the front
+  # upgrade pip
+  pip install --upgrade pip
   pip install meshtastic-flasher
   ```
 
@@ -37,6 +49,17 @@ values={[
   <TabItem value="macos">
 
   ```bash title="Install Meshtastic Flasher"
+  python3 --version
+  # ensure you are using at least python v3.6
+  # change to a directory where you want to create a python virtual environment
+  mkdir some_dir
+  cd some_dir
+  python3 -m venv venv
+  # activate the python virtual environment
+  source venv/bin/activate
+  # your prompt should change - it should include "(venv) in the front
+  # upgrade pip
+  pip install --upgrade pip
   pip install meshtastic-flasher
   ```
 
@@ -48,6 +71,16 @@ values={[
   <TabItem value="windows">
 
   ```bash title="Install Meshtastic Flasher"
+  # open a command prompt
+  # create a new directory for the python virtual environment
+  cd c:\
+  mkdir some_dir
+  cd some_dir
+  # check that python version is sufficient, must be at least v3.9+
+  python -m venv venv
+  # activate the python virtual environment
+  venv\Scripts\activate
+  # your prompt should change - it should have (venv) at the beginning
   pip install meshtastic-flasher
   ```
 
@@ -80,3 +113,4 @@ The following are known limitations:
 
 * Raspberry Pi is not available, since it is arm-based and there are no pre-built libraries for [PySide](https://wiki.qt.io/Qt_for_Python)
 * Ubuntu 20.04 is the version used for testing, it may work with other versions
+* see [README](https://github.com/meshtastic/Meshtastic-gui-installer/blob/master/README.md) for more details
