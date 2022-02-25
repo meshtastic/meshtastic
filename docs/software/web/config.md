@@ -18,6 +18,10 @@ Once you have your device loaded with the Meshtastic Device firmware you need to
 
 ### Wifi configuration
 
+:::info
+Enabling WiFi will disable bluetooth. Only one method will work at a time.
+:::
+
 WiFi configuration is required to use the web interface. Any method of set up will work:
 - [Device as a client](/docs/settings/wifi#enable-wifi-as-client)
 - [Device as an access point](/docs/settings/wifi#enable-wifi-as-softap)
