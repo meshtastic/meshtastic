@@ -4,7 +4,7 @@ title: Managing ESP32 partitions
 sidebar_label: ESP32 partitions
 ---
 :::caution
-It has been reported that some of this information is out of date.
+It has been reported that some of this information is out of date. Flashing the device with [Meshtastic-flasher](/docs/getting-started/meshtastic-flasher) should fix these partition issues and update you to the current web interface.
 
 FIXME - Investigate and rewrite document to reflect the current ESP32 Partition mitigation.
 :::

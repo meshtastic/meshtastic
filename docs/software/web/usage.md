@@ -4,7 +4,7 @@ title: Using the web interface
 sidebar_label: Usage
 ---
 :::caution
-It has been reported that some of this information is out of date.
+It has been reported that some of this information is out of date. Flashing the device with [Meshtastic-flasher](/docs/getting-started/meshtastic-flasher) should fix these partition issues and update you to the current web interface.
 
 FIXME - Investigate and rewrite document to reflect the current web usage solution.
 :::
