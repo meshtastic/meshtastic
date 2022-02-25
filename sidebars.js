@@ -1,4 +1,28 @@
 module.exports = {
+  About: {
+    "About Meshtastic": [
+      "about/overview",
+      {
+        "Concepts": [
+          "about/concepts/overview",
+          "about/concepts/channels",
+          "about/concepts/clients",
+          "about/concepts/external-devices",
+          "about/concepts/internet",
+          "about/concepts/mesh",
+        ],
+      },
+      "about/expectations",
+      {
+        "FAQs": [
+          "faq/faq",
+          "faq/antenna",
+          "faq/mesh",
+          "faq/wifi",
+        ],
+      }
+    ],
+  },
   Software: {
     Software: [
       "software/overview",
