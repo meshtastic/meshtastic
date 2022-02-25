@@ -8,7 +8,6 @@ module.exports = {
           "software/device/device-channels",
           "software/device/device-remote-admin",
           "software/device/remote-hardware-service",
-          "software/device/device-wifi",
           "software/device/device-power",
           "software/device/critical-error-codes",
           "software/device/ham",
