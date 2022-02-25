@@ -34,13 +34,11 @@ const config = {
           activeBasePath: "docs/academy",
         },
 */
-/*
         {
           label: "About Meshtastic",
           to: "docs/about",
           activeBasePath: "docs/about",
         },
-*/
 /*
         {
           label: "Showcase",
@@ -51,6 +49,10 @@ const config = {
         {
           label: "Documentation",
           items: [
+            {
+              label: "About",
+              to: "docs/about",
+            },
             {
               label: "Getting Started",
               to: "docs/getting-started",
@@ -118,13 +120,13 @@ const config = {
           title: 'Learn',
           items: [
             {
+              label: 'About',
+              to: 'docs/about',
+            },
+            {
               label: 'Getting Started',
               to: 'docs/getting-started',
             },
-            // {
-            //   label: 'About',
-            //   to: 'docs/about',
-            // },
             {
               label: 'Hardware',
               to: 'docs/hardware',
