@@ -12,7 +12,7 @@ This project uses the simple PlatformIO build system. PlatformIO is an extension
 2. Install [Git](https://git-scm.com/downloads) or [GitHub Desktop](https://desktop.github.com/)
 3. Install [Microsoft Visual Studio Code](https://code.visualstudio.com/)
 4. Install [PlatformIO](https://platformio.org/platformio-ide).
-5. Click the PlatformIO icon on the side bar. 
+5. Click the PlatformIO icon on the side bar.
         ![platformio icon](https://user-images.githubusercontent.com/47490997/89482668-77c7ea00-d7ee-11ea-8785-5faf8ff99800.png)
 6. Under `Quick Access, Miscellaneous, Clone Git Project` enter the URL of the Meshtastic repo found [here](https://github.com/meshtastic/Meshtastic-device).
         ![image](https://user-images.githubusercontent.com/47490997/89483047-4c91ca80-d7ef-11ea-91f4-1d53d4e8acd9.png)
