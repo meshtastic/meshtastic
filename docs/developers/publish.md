@@ -11,12 +11,16 @@ If you’d like to do ‘real’ releases with your changes, the procedure is:
 ## Device
 
 * Update protobufs
-* * cd proto
-* * git checkout master && git pull
-* * cd ..
-* * git add proto
-* * git commit -m "updating proto submodule to latest"
-* run bin/regen-protos.sh
+
+```
+cd proto
+git checkout master && git pull
+cd ..
+git add proto
+git commit -m "updating proto submodule to latest"
+run bin/regen-protos.sh
+```
+
 * edit version.properties to set release version
 * commit and push (or merge) to root of repo - this should cause GitHub to start a release build (see the CI actions)
 * edit the draft release text and click publish
@@ -76,7 +80,6 @@ pip3 install -r requirements.txt
 pip install .
 ```
 
-
 ### Instructions
 
 * Update protobufs by running the "Update protobufs" workflow in Actions: https://github.com/meshtastic/Meshtastic-python/actions/workflows/update_protobufs.yml
@@ -92,8 +95,6 @@ pytest -m smoke1
 * run unit tests: `pytest` (optional)
 
 * run bin/test-release.sh (optional)
-
-* bump the version in setup.py
 
 * Run the "Make Release" workflow in Actions: https://github.com/meshtastic/Meshtastic-python/actions/workflows/release.yml
 
