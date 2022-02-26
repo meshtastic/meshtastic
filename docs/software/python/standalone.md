@@ -15,7 +15,7 @@ They can be found on the [Releases](https://github.com/meshtastic/Meshtastic-pyt
   groupId="operating-system"
   defaultValue="windows"
   values={[
-    {label: 'Ubutnu', value: 'ubuntu'},
+    {label: 'Ubuntu', value: 'ubuntu'},
     {label: 'macOS', value: 'macos'},
     {label: 'Windows', value: 'windows'},
   ]}>
