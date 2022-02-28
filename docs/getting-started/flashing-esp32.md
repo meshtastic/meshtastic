@@ -28,24 +28,23 @@ values={[
 ]}>
 <TabItem value="linux">
 
-> Connect your Meshtastic device to your USB port, open a `Terminal` and enter the following command:
->
-> ```bash
-> lsusb
-> ```
->
-> You should see something like: `ID 10c4:ea60 Silicon Labs CP210x UART Bridge` for CP210X or `ID 1a86:55d4 QinHeng Electronics USB Single Serial` for CH9102
+Connect your Meshtastic device to your USB port, open a `Terminal` and enter the following command:
+
+```bash
+lsusb
+```
+
+You should see something like: `ID 10c4:ea60 Silicon Labs CP210x UART Bridge` for CP210X or `ID 1a86:55d4 QinHeng Electronics USB Single Serial` for CH9102
 
   </TabItem>
   <TabItem value="macos">
 
-> Navigate to `Apple Menu  > About This Mac > System Report... > Hardware > USB`.
-> You should see something like `CP210X USB to UART Bridge Controller`. If not download the appropriate drivers
+Navigate to `Apple Menu  > About This Mac > System Report... > Hardware > USB`. You should see something like `CP210X USB to UART Bridge Controller`. If not download the appropriate drivers
 
   </TabItem>
   <TabItem value="windows">
 
-> Navigate to `Device Manager > Ports (COM & LPT)`. You should see something like `Silicon Labs CP210X USB to UART Bridge (COM5)`. If not download the appropriate drivers
+Navigate to `Device Manager > Ports (COM & LPT)`. You should see something like `Silicon Labs CP210X USB to UART Bridge (COM5)`. If not download the appropriate drivers
 
   </TabItem>
 </Tabs>
@@ -74,38 +73,38 @@ values={[
 
 ### Install Prerequisite Software
 
-> Check if you have `python3` and `pip` installed with the following command
->
-> ```bash
-> python3 --version
-> pip3 --version
-> ```
->
-> If `python3` is not installed, install with
->
-> ```bash
-> sudo apt-get update
-> sudo apt-get install python3
-> ```
->
-> If `pip` is not installed, install with
->
-> ```bash
-> sudo apt-get install python3-pip
-> ```
+Check if you have `python3` and `pip` installed with the following command
+
+```bash
+python3 --version
+pip3 --version
+```
+
+If `python3` is not installed, install with
+
+```bash
+sudo apt-get update
+sudo apt-get install python3
+```
+
+If `pip` is not installed, install with
+
+```bash
+sudo apt-get install python3-pip
+```
 
 ### Install `esptool`
 
-> ```bash
-> pip3 install --upgrade esptool
-> ```
+```bash
+pip3 install --upgrade esptool
+```
 
   </TabItem>
   <TabItem value="macos">
 
 ### Install Prerequisite Software
 
-> OS X comes with `Python 2.7` installed, but not `pip`. The following uses Homebrew to install `python3` which includes `pip3`. On MacOS you will use `pip3` instead > of `pip`.
+OS X comes with `Python 2.7` installed, but not `pip`. The following uses Homebrew to install `python3` which includes `pip3`. On MacOS you will use `pip3` instead > of `pip`.
 
 :::note
 Check if you have Homebrew installed with the following command
@@ -117,37 +116,37 @@ brew -v
 If it's not installed, follow the instructions on the [Homebrew website](https://brew.sh) before continuing.
 :::
 
-> Check if you have `python3` and `pip` installed with the following command
->
-> ```bash
-> python3 --version
-> pip3 --version
-> ```
->
-> If `python3` is not installed, install with
-> Install Python3
->
-> ```bash
-> brew install python3
-> ```
->
-> Confirm `pip3` was installed alongside `python3`
->
-> ```bash
-> pip3 -v
-> ```
+Check if you have `python3` and `pip` installed with the following command
+
+```bash
+python3 --version
+pip3 --version
+```
+
+If `python3` is not installed, install with
+Install Python3
+
+```bash
+brew install python3
+```
+
+Confirm `pip3` was installed alongside `python3`
+
+```bash
+pip3 -v
+```
 
 ### Install `esptool`
 
-> ```bash
-> pip3 install --upgrade esptool
-> ```
+```bash
+pip3 install --upgrade esptool
+```
 
   </TabItem>
   <TabItem value="windows">
 
-> - Download and install [Python](https://www.python.org/). When installing, make sure to click `Add Python X.Y to PATH`.
-> - Download and install [Gitbash](https://gitforwindows.org/) (or other appropriate shell) and run all subsequent commands from that shell.
+- Download and install [Python](https://www.python.org/). When installing, make sure to click `Add Python X.Y to PATH`.
+- Download and install [Gitbash](https://gitforwindows.org/) (or other appropriate shell) and run all subsequent commands from that shell.
 
 :::note
 Confirm installation of `python` & `pip` with the following commands.
@@ -164,9 +163,9 @@ pip --version
 
 ### Install `esptool`
 
-> ```bash
-> pip install --upgrade esptool
-> ```
+```bash
+pip install --upgrade esptool
+```
 
   </TabItem>
 </Tabs>
@@ -245,45 +244,45 @@ values={[
 
 #### Install
 
-> ```bash title="Command"
-> ./device-install.sh -f firmware-BOARD-VERSION.bin
-> ```
+```bash title="Command"
+./device-install.sh -f firmware-BOARD-VERSION.bin
+```
 
 #### Update
 
-> ```bash title="Command"
-> ./device-update.sh -f firmware-BOARD-VERSION.bin
-> ```
+```bash title="Command"
+./device-update.sh -f firmware-BOARD-VERSION.bin
+```
 
   </TabItem>
   <TabItem value="macos">
 
 #### Install
 
-> ```bash title="Command"
-> ./device-install.sh -f firmware-BOARD-VERSION.bin
-> ```
+```bash title="Command"
+./device-install.sh -f firmware-BOARD-VERSION.bin
+```
 
 #### Update
 
-> ```bash title="Command"
-> ./device-update.sh -f firmware-BOARD-VERSION.bin
-> ```
+```bash title="Command"
+./device-update.sh -f firmware-BOARD-VERSION.bin
+```
 
   </TabItem>
   <TabItem value="windows">
 
 #### Install
 
-> ```bash title="Command"
-> ./device-install.bat -f firmware-BOARD-VERSION.bin
-> ```
+```bash title="Command"
+./device-install.bat -f firmware-BOARD-VERSION.bin
+```
 
 #### Update
 
-> ```bash title="Command"
-> ./device-update.bat -f firmware-BOARD-VERSION.bin
-> ```
+```bash title="Command"
+./device-update.bat -f firmware-BOARD-VERSION.bin
+```
 
   </TabItem>
 </Tabs>
