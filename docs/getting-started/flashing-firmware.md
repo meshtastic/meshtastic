@@ -1,5 +1,5 @@
 ---
-id: flashing-prerequisites
+id: flashing-firmware
 title: Firmware Flashing Prerequisites
 sidebar_label: Prerequisites
 ---
