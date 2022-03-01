@@ -28,7 +28,7 @@ Check to see if your computer is communicating with the device with the followin
 
 If you don't see your device in the following test, you either:
 
-1. Need to install a driver.
+1. Need to [install a driver](#install-appropriate-drivers).
 2. Are currently using a charging only cable.
 
 <Tabs
