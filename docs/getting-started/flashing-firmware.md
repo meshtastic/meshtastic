@@ -25,6 +25,8 @@ Once you've located a data cable, check the following to see if you need to inst
 If you know you have installed the correct driver, the following step can be used to check if your cable is a data cable.
 :::
 
+### Test for driver installation
+
 <Tabs
   groupId="operating-system"
   defaultValue="linux"
