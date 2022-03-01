@@ -8,7 +8,7 @@ import TabItem from '@theme/TabItem';
 
 ## Overview
 
-Before you flash your device, you may need to install drivers on your computer in order to communicate with it. Once installed, be sure to reboot your computer to verify the installation is complete.
+Before you flash your device it is prudent to verify that we have proper connectivity with the device being flashed. Outlined below are steps that can be taken to verify connectivity and, if necessary, to install the appropriate drivers. If you end up needing to install drivers be sure to reboot your computer afterwards to verify the installation is complete.
 
 ## Prerequisites
 
@@ -24,7 +24,9 @@ If you know you have installed the correct driver, the following step can be use
 
 ### Test for driver installation
 
-Check to see if your computer is communicating with the device with the following test. If you can see your device, you are ready to flash the firmware. Skip to the[Choose Firmware Flashing Method section](#choose-firmware-flashing-method).
+You can verify that you have a proper data cable (rather than a charge-only type cable) and that the appropriate drivers for your system are installed by performing the following test. Select your operating system below.
+
+If you can see your device, you are ready to flash the firmware. Skip to the[Choose Firmware Flashing Method section](#choose-firmware-flashing-method).
 
 If you don't see your device in the following test, you either:
 
