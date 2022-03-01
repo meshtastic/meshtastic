@@ -23,16 +23,16 @@ They can be found on the [Releases](https://github.com/meshtastic/Meshtastic-pyt
 
 * Download meshtastic_ubuntu
 
-* Run the following command to make the file executable:
+* Run the following command to make the file executable and rename it 'meshtastic':
 
 ```
-chmod +x meshtastic_ubuntu
+chmod +x meshtastic_ubuntu && mv meshtastic_ubuntu meshtastic
 ```
 
 * To run the cli:
 
 ```
-./meshtastic_ubuntu
+./meshtastic
 ```
 
 :::tip
@@ -44,16 +44,16 @@ Copy (or move) this binary somewhere in your path.
 
 * Download meshtastic_mac
 
-* Run the following command to make the file executable:
+* Run the following command to make the file executable and to rename it 'meshtastic':
 
 ```
-chmod +x meshtastic_mac
+chmod +x meshtastic_mac && mv meshtastic_mac meshtastic
 ```
 
 * Try to run it:
 
 ```
-./meshtastic_mac
+./meshtastic
 ```
 
 :::note
@@ -66,7 +66,7 @@ chmod +x meshtastic_mac
 * Try to run it again:
 
 ```
-./meshtastic_mac
+./meshtastic
 ```
 
 :::note
@@ -78,7 +78,7 @@ You may get a dialog that says:
 * Now when you want to run it, you can simply run:
 
 ```
-./meshtastic_mac
+./meshtastic
 ```
 
 :::tip
@@ -90,12 +90,12 @@ Copy (or move) this binary somewhere in your path.
 
 * Download meshtastic_windows
 
-* Rename to meshtastic_windows.exe
+* Rename to meshtastic.exe
 
 * To run, open a windows command prompt, navigate to the location of the executable and run:
 
 ```
-meshtastic_windows.exe
+meshtastic.exe
 ```
 
 </TabItem>
