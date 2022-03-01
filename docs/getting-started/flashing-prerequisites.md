@@ -139,3 +139,9 @@ With the latest versions of MacOS, the USB Serial driver is built-in. Do _NOT_ d
 
   </TabItem>
 </Tabs>
+
+## Choose Firmware Flashing Method
+
+For most users we recommend using the [Meshtastic Flasher application](meshtastic-flasher). It does a lot under the hood to prevent you from needing to use the terminal. It also allows you to set device settings and configure your device.
+
+If you choose to flash the firmware using the manual method, [ESP32 based devices](flashing-esp32) and [NRF52 based devices](flashing-nrf52) have different methods. Select the appropriate one. If you don't know what chipset your device is, take a look at our supported hardware section.
