@@ -1,7 +1,7 @@
 ---
 id: drivers
-title: Driver & Data Cord Verification
-sidebar_label: Verify Drivers & Data Cord
+title: Firmware Flashing Prerequisites
+sidebar_label: Prerequisites
 ---
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
@@ -14,7 +14,9 @@ Before you flash your device, you may need to install drivers on your computer i
 
 ### Verify data cord
 
-A data cable will charge your device, but a charging cable will not be able to flash the device or communicate with it. Verify you have a data cable before proceeding. There's no official way to determine the difference in cables, trying out a few cables will be the best way to verify. If you've installed the appropriate drivers, you should see the results below.
+A data cable will charge your device, but a charging cable will not be able to flash the device or communicate with it. Verify you have a data cable before proceeding. There's no official way to determine the difference in cables, trying out a few cables will be the best way to verify.
+
+If you have a data cable, you may find that you don't need to install a driver by checking the instructions below.
 
 <Tabs
   groupId="operating-system"
@@ -47,7 +49,15 @@ Navigate to `Device Manager > Ports (COM & LPT)`. You should see something like 
 
 ## Install Appropriate Drivers
 
+:::important
+Reboot your computer after you have installed the driver to complete the installation.
+:::
+
 ### ESP32 Drivers
+
+You may need to install a driver from Silicon Labs for the [CP210X USB to UART bridge](https://www.silabs.com/products/development-tools/software/usb-to-uart-bridge-vcp-drivers)
+
+Some newer boards may require the CH9102 Driver.
 
 <Tabs
   groupId="operating-system"
@@ -59,11 +69,25 @@ Navigate to `Device Manager > Ports (COM & LPT)`. You should see something like 
   ]}>
   <TabItem value="linux">
 
+[CP210X USB to UART bridge - Download](https://www.silabs.com/products/development-tools/software/usb-to-uart-bridge-vcp-drivers)
+
+[CH9102 Driver - Linux Download](http://www.wch-ic.com/downloads/CH341SER_LINUX_ZIP.html)
+
   </TabItem>
   <TabItem value="macos">
 
+[CP210X USB to UART bridge - Download](https://www.silabs.com/products/development-tools/software/usb-to-uart-bridge-vcp-drivers)
+
+[CH9102 Driver - MacOS Download](http://www.wch.cn/downloads/CH34XSER_MAC_ZIP.html)
+
   </TabItem>
   <TabItem value="windows">
+
+[CP210X USB to UART bridge - Download](https://www.silabs.com/products/development-tools/software/usb-to-uart-bridge-vcp-drivers)
+
+[CH9102 Driver - Windows Download](http://www.wch.cn/downloads/CH343SER_ZIP.html)
+
+[CH9102 Driver - Windows Download (Direct Download for Windows 7)](https://github.com/Xinyuan-LilyGO/CH9102_Driver)
 
   </TabItem>
 </Tabs>
@@ -80,11 +104,38 @@ Navigate to `Device Manager > Ports (COM & LPT)`. You should see something like 
   ]}>
   <TabItem value="linux">
 
+[CH9102 Driver - Linux Download](http://www.wch-ic.com/downloads/CH341SER_LINUX_ZIP.html)
+
   </TabItem>
   <TabItem value="macos">
 
+[CH9102 Driver - MacOS Download](http://www.wch-ic.com/downloads/CH341SER_MAC_ZIP.html)
+
+:::caution
+With the latest versions of MacOS, the USB Serial driver is built-in. Do _NOT_ download the USB device drivers unless required. If you downloaded/installed any already, please remove them:
+
+<details>
+  <summary>Removing the CH34x (CH340/CH341) USB Drivers</summary>
+  <div>
+    <div>
+        If you have already downloaded/installed the MacOS WCH-IC CH340 ("CH341SER_MAC") drivers via the CH34x_Install_V1.5.pkg, you will have to Uninstall the kernel extension:
+        <br />
+        <br />
+        1. Unplug your T-Echo<br />
+        2. Open the Terminal and run:<br />
+        3. sudo -rf /Library/Extensions/usbserial.kext<br />
+        4. Reboot
+    </div>
+  </div>
+</details>
+
+:::
+
+
   </TabItem>
   <TabItem value="windows">
+
+[CH9102 Driver - Windows Download](http://www.wch-ic.com/downloads/CH341SER_EXE.html)
 
   </TabItem>
 </Tabs>
