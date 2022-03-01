@@ -57,7 +57,7 @@ Reboot your computer after you have installed the driver to complete the install
 
 You may need to install a driver from Silicon Labs for the [CP210X USB to UART bridge](https://www.silabs.com/products/development-tools/software/usb-to-uart-bridge-vcp-drivers)
 
-Some newer boards may require the CH9102 Driver.
+Some newer boards may require the CH9102 (CH340/CH341) Driver.
 
 <Tabs
   groupId="operating-system"
