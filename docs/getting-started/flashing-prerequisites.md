@@ -14,9 +14,16 @@ Before you flash your device, you may need to install drivers on your computer i
 
 ### Verify data cord
 
-A data cable will charge your device, but a charging cable will not be able to flash the device or communicate with it. Verify you have a data cable before proceeding. There's no official way to determine the difference in cables, trying out a few cables will be the best way to verify.
+Verify you have a data cable (not a charging only cable) before proceeding. There's no definitive way to determine the difference in cables if you aren't willing to pull it apart. Trying out a few cables will be the best way to verify.
 
-If you have a data cable, you may find that you don't need to install a driver by checking the instructions below.
+Once you've located a data cable, check the following to see if you need to install a driver to communicate with your device. If you don't see your device in the following, you either:
+
+1. Need to install a driver.
+2. Are currently using a charging only cable.
+
+:::tip
+If you know you have installed the driver, the following step can be used to check if your cable is a data cable.
+:::
 
 <Tabs
   groupId="operating-system"
