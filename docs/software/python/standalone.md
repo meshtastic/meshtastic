@@ -92,10 +92,10 @@ Copy (or move) this binary somewhere in your path.
 
 * Rename to meshtastic_windows.exe
 
-* To run, double click on "meshtastic.exe" or from a command prompt run:
+* To run, open a windows command prompt, navigate to the location of the executable and run:
 
 ```
-.\meshtastic_windows.exe
+meshtastic_windows.exe
 ```
 
 </TabItem>
