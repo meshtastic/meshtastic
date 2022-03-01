@@ -12,7 +12,7 @@ Before you flash your device, you may need to install drivers on your computer i
 
 ## Prerequisites
 
-### Verify data cord
+### Verify data cable
 
 Verify you have a data cable (not a charging only cable) before proceeding. There's no definitive way to determine the difference in cables if you aren't willing to pull it apart. Trying out a few cables will be the best way to verify.
 
