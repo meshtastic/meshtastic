@@ -12,7 +12,7 @@ Meshtastic Flasher is a graphical user interface for flashing [supported devices
 
 ## Prerequisites
 
-Install Meshtastic Flasher by either [downloading the executable file](https://github.com/meshtastic/Meshtastic-gui-installer/releases) or installing using `pip`. The following operating systems are: Windows, Mac, and Ubuntu.
+Install Meshtastic Flasher by either [downloading the executable file](https://github.com/meshtastic/Meshtastic-gui-installer/releases) or installing using `pip`. The following operating systems are currently supported: Windows, Mac, and Ubuntu.
 
 ### Install using `pip`
 <Tabs
