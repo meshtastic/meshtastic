@@ -22,7 +22,7 @@ Once you've located a data cable, check the following to see if you need to inst
 2. Are currently using a charging only cable.
 
 :::tip
-If you know you have installed the driver, the following step can be used to check if your cable is a data cable.
+If you know you have installed the correct driver, the following step can be used to check if your cable is a data cable.
 :::
 
 <Tabs
