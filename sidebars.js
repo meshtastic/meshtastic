@@ -133,7 +133,7 @@ module.exports = {
       "getting-started/faq",
       {
         "Flashing firmware": [
-          "getting-started/drivers",
+          "getting-started/flashing-prerequisites",
           "getting-started/meshtastic-flasher",
           {
             "Manual Method": [

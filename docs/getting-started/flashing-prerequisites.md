@@ -1,5 +1,5 @@
 ---
-id: drivers
+id: flashing-prerequisites
 title: Firmware Flashing Prerequisites
 sidebar_label: Prerequisites
 ---
