@@ -16,16 +16,20 @@ Before you flash your device, you may need to install drivers on your computer i
 
 Verify you have a data cable (not a charging only cable) before proceeding. There's no definitive way to determine the difference in cables if you aren't willing to pull it apart. Trying out a few cables will be the best way to verify.
 
-Once you've located a data cable, check the following to see if you need to install a driver to communicate with your device. If you don't see your device in the following, you either:
-
-1. Need to install a driver.
-2. Are currently using a charging only cable.
+Once you've located a data cable, check the following to see if you need to install a driver to communicate with your device.
 
 :::tip
 If you know you have installed the correct driver, the following step can be used to check if your cable is a data cable.
 :::
 
 ### Test for driver installation
+
+Check to see if your computer is communicating with the device with the following test. If you can see your device, you are ready to flash the firmware. Skip to the[Choose Firmware Flashing Method section](#choose-firmware-flashing-method).
+
+If you don't see your device in the following test, you either:
+
+1. Need to install a driver.
+2. Are currently using a charging only cable.
 
 <Tabs
   groupId="operating-system"
