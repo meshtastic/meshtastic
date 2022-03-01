@@ -64,10 +64,6 @@ Navigate to `Device Manager > Ports (COM & LPT)`. You should see something like 
 
 ## Install Appropriate Drivers
 
-:::important
-Reboot your computer after you have installed the driver to complete the installation.
-:::
-
 ### ESP32 Drivers
 
 You may need to install a driver from Silicon Labs for the [CP210X USB to UART bridge](https://www.silabs.com/products/development-tools/software/usb-to-uart-bridge-vcp-drivers)
@@ -154,6 +150,10 @@ With the latest versions of MacOS, the USB Serial driver is built-in. Do _NOT_ d
 
   </TabItem>
 </Tabs>
+
+:::important
+Reboot your computer after you have installed the driver to complete the installation.
+:::
 
 ## Choose Firmware Flashing Method
 
