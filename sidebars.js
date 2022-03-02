@@ -17,7 +17,18 @@ module.exports = {
         "FAQs": [
           "faq/faq",
           "faq/antenna",
+          "faq/bluetooth",
+          "faq/channel",
+          "Clients": [
+            "faq/client-android",
+            "faq/client-python-cli",
+            "faq/client-ios",
+            "faq/client-web",
+          ],
+          "faq/device",
           "faq/mesh",
+          "faq/mqtt",
+          "faq/plugins",
           "faq/wifi",
         ],
       }
