@@ -20,7 +20,11 @@ Meshtastic uses LoRa for the long range communications and depending on settings
   Learn More
 </Link>
 
-## Purchase a Radio
+## Hardware
+
+### Purchasing
+
+#### Purchase radio
 
 The easiest way is to [buy a device with the software already installed](https://www.aliexpress.com/item/4001178678568.html). Other devices are [available](/docs/hardware/supported/tbeam). In the Americas get the 915MHz version, in Europe the 868MHz, or Asia 923MHz. See this listing by [The Things Network](https://www.thethingsnetwork.org/docs/lorawan/frequencies-by-country.html) for frequencies by specific countries.
 
@@ -30,8 +34,13 @@ The easiest way is to [buy a device with the software already installed](https:/
   Purchase Hardware
 </Link>
 
+#### Purchase battery
 
-## Setup the Radio
+#### Purchase other accessories
+
+### Initial Setup
+
+#### Setup the Radio
 
 When it arrives, install your antenna and make sure you install the battery correctly. Reversing the battery can damage your device. Make sure the antenna is on when you power up the board.
 
