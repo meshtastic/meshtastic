@@ -4,6 +4,7 @@ title: Getting Started
 sidebar_label: Getting Started
 slug: /getting-started
 ---
+import Link from '@docusaurus/Link';
 
 ## What is Meshtastic?
 
@@ -13,9 +14,22 @@ The radios automatically create a mesh to forward packets as needed, so everyone
 
 Meshtastic uses LoRa for the long range communications and depending on settings used, the maximum theoretical group size ranges from 30-200 device nodes. Currently, each device can only support a connection from a single user at a time.
 
+<Link
+  className={'button button--outline  button--lg cta--button'}
+  to={'/docs/about'}>
+  Learn More
+</Link>
+
 ## Purchase a Radio
 
 The easiest way is to [buy a device with the software already installed](https://www.aliexpress.com/item/4001178678568.html). Other devices are [available](/docs/hardware/supported/tbeam). In the Americas get the 915MHz version, in Europe the 868MHz, or Asia 923MHz. See this listing by [The Things Network](https://www.thethingsnetwork.org/docs/lorawan/frequencies-by-country.html) for frequencies by specific countries.
+
+<Link
+  className={'button button--outline  button--lg cta--button'}
+  to={'/docs/hardware'}>
+  Purchase Hardware
+</Link>
+
 
 ## Setup the Radio
 
@@ -37,6 +51,11 @@ If your device already has Meshtastic flashed to it, you can update it over the 
 
 The manual firmware installation method will also depend on whether you have an ESP32 based device or a nRF52 based device. See our [hardware section](/docs/hardware) to determine which microcontroller your device is based on.
 
+<Link
+  className={'button button--outline  button--lg cta--button'}
+  to={'/docs/getting-started/flashing-firmware'}>
+  Flash Firmware
+</Link>
 
 ## Connect to your Device
 
