@@ -43,10 +43,12 @@ Make sure not to power the radio on without first attaching the antenna! You cou
 
 If your device already has Meshtastic flashed to it, you can update it over the air (OTA). Otherwise, you'll need a computer and a **data** USB cable. Flashing firmware can be done in the following ways:
 
-- Install using Meshtastic Flasher
+- Install using Meshtastic Flasher:
+
   This all in one application will download the appropriate firmware, detect your device, flash the device, and allow you to configure your settings.
 
-- Install using manual method
+- Install using manual method:
+
   Manual firmware files can be downloaded from the [Downloads](/downloads) page.
 
 The manual firmware installation method will also depend on whether you have an ESP32 based device or a nRF52 based device. See our [hardware section](/docs/hardware) to determine which microcontroller your device is based on.
