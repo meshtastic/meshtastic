@@ -2,7 +2,6 @@
 id: concepts
 title: Concepts
 sidebar_label: Concepts
-slug: /getting-started/concepts
 ---
 
 Various high level concepts used in the Meshtastic meta verse:

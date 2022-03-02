@@ -14,6 +14,46 @@ Meshtastic Flasher is a graphical user interface for flashing [supported devices
 
 Install Meshtastic Flasher by either [downloading the executable file](https://github.com/meshtastic/Meshtastic-gui-installer/releases) or installing using `pip`. The following operating systems are currently supported: Windows, Mac, and Ubuntu.
 
+### Check Data Cable
+
+Plug your device into your computer using a USB cable and then do the following:
+:::important
+You may need to install a driver from Silicon Labs for the [CP210X USB to UART bridge](https://www.silabs.com/products/development-tools/software/usb-to-uart-bridge-vcp-drivers)
+
+Some newer boards may require the drivers for the [CH9102 Windows](http://www.wch.cn/downloads/CH343SER_ZIP.html) or [Direct Download](https://github.com/Xinyuan-LilyGO/CH9102_Driver) for Windows 7. For [CH9102 Mac](http://www.wch.cn/downloads/CH34XSER_MAC_ZIP.html). Click the big blue button with the down arrow. Be sure to open up the application and click "Install" after the package is installed. Also, reboot.
+:::
+
+<Tabs
+groupId="operating-system"
+defaultValue="linux"
+values={[
+{label: 'Linux', value: 'linux'},
+{label: 'macOS', value: 'macos'},
+{label: 'Windows', value: 'windows'},
+]}>
+<TabItem value="linux">
+
+Connect your Meshtastic device to your USB port, open a `Terminal` and enter the following command:
+
+```bash
+lsusb
+```
+
+You should see something like: `ID 10c4:ea60 Silicon Labs CP210x UART Bridge` for CP210X or `ID 1a86:55d4 QinHeng Electronics USB Single Serial` for CH9102
+
+  </TabItem>
+  <TabItem value="macos">
+
+Navigate to `Apple Menu  > About This Mac > System Report... > Hardware > USB`. You should see something like `CP210X USB to UART Bridge Controller`. If not download the appropriate drivers
+
+  </TabItem>
+  <TabItem value="windows">
+
+Navigate to `Device Manager > Ports (COM & LPT)`. You should see something like `Silicon Labs CP210X USB to UART Bridge (COM5)`. If not download the appropriate drivers
+
+  </TabItem>
+</Tabs>
+
 ### Install using `pip`
 <Tabs
 groupId="operating-system"
