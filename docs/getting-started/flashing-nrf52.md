@@ -7,66 +7,23 @@ sidebar_label: nRF52 devices
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-## Pre-requisites
+## Prerequisites
 
-:::tip
-Please ensure that you use a data USB-C cable, as many USB-C cables provide power only and not the data lines.
-:::
+### Device connectivity
 
-### T-Echo
+Ensure your computer is communicating with the device correctly by following [these instructions](flashing-firmware).
 
-:::tip
-The USB-C to USB-A cable from LILYGO is _NOT_ a "data cable", and can only be used for charging.
-:::
+### Download Latest Firmware
 
-#### Windows:
+Firmware can be downloaded from the [Downloads](/downloads) page. Your initial installation has to happen over USB from your Mac, Windows, or Linux computer. Over the air updates are currently only available using the Android application after this initial installation.
 
-You may need to install the [USB device drivers](http://www.wch-ic.com/search?q=ch340&t=downloads) if your device does not show up when connected.
-
-#### Mac OS
-
-Last Verified T-Echo nRF52840 on: Mac OS Monterey v12.0.1 (Intel chipset)
-
-:::tip
-You can use the latest [Apple USB-C Charge cables](https://www.apple.com/shop/product/MLL82AM/A/usb-c-charge-cable-2-m). The cable that is provided with the iPad Pro works. Older Laptop USB-C Power cables will _NOT_ work, as they are missing the data lines.
-:::
-
-:::caution
-With the latest versions of MacOS, the USB Serial driver is built-in. Do _NOT_ download any USB device drivers - this will actually prevent you from connecting to your T-Echo from your Mac. If you downloaded/installed any already, please Remove them.
-:::
-
-<details>
-  <summary>Removing the CH34x (CH340/CH341) USB Drivers</summary>
-  <div>
-    <div>
-        If you have already downloaded/installed the MacOS WCH-IC CH340 ("CH341SER_MAC") drivers via the CH34x_Install_V1.5.pkg, you will have to Uninstall the kernel extension:
-        <br />
-        <br />
-        1. Unplug your T-Echo<br />
-        2. Open the Terminal and run:<br />
-        3. sudo -rf /Library/Extensions/usbserial.kext<br />
-        4. Reboot
-    </div>
-  </div>
-</details>
-
-Verify successful connections with:
-
-- Plug in your T-Echo
-- Open the Terminal
-- `ls -l /dev/tty.usbmodem*`
-
-If the device file exists, you will also notice a "TECHOBOOT" volume in the Finder, or in the Terminal after double-clicking the Reset Button (see below)
-
-- `ls /Volumes/TECHOBOOT`
-
-### WisBlock RAK4631
+### WisBlock RAK4631 Bootloader
 
 Please ensure that you have updated the bootloader to the latest version using the information on the [RAK Documentation Center](https://docs.rakwireless.com/Product-Categories/WisBlock/RAK4631/Quickstart/#how-to-check-if-you-have-the-updated-rak4631-bootloader) website.
 
-## Download Latest Firmware
-
-Firmware can be downloaded from the [Downloads](/downloads) page. Your initial installation has to happen over USB from your Mac, Windows or Linux PC. Once our software is installed, all future software updates happen over Bluetooth from your phone.
+:::tip
+[Meshtastic Flasher](meshtastic-flasher) can assist you in updating the bootloader to the latest version.
+:::
 
 ## Install/Update Firmware
 
