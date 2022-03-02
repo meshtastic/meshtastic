@@ -17,7 +17,7 @@ Channel settings are an integral part of the way your devices communicate across
 | Setting | Acceptable Values | Default |
 | :-----: | :---------------: | :-----: |
 | id | `integer` | `0` |
-| modem_config | `Bw125Cr45Sf128`, `Bw500Cr45Sf128`, `Bw31_25Cr48Sf512`, `Bw125Cr48Sf4096` | `Bw125Cr45Sf128` |
+| modem_config | `Bw125Cr45Sf128`, `Bw500Cr45Sf128`, `Bw31_25Cr48Sf512`, `Bw125Cr48Sf4096` | `Bw125Cr48Sf4096` |
 | name | `string` | `""` |
 | psk | `0`, `1`, `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9`, `none`, `default`, `random` | `1` |
 | region | `Unset`, `US`, `EU433`, `EU865`, `CN`, `JP`, `ANZ`, `KR`, `TW`, `RU` | `Unset` |
@@ -252,7 +252,7 @@ The `region` variable sets which region your radio is configured to work in. It 
 | :--: | :-------: | :-----: | :----------------: | :---------: |
 | US | 903.08 | 2.16 | 13 | 0 |
 | EU433 | 433.175 | 0.2 | 8 | 0 |
-| EU865 | 865.2 | 0.3 | 10 | 0 |
+| EU868 | 865.2 | 0.3 | 10 | 0 |
 | CN | 470.0 | 2.0 | 20 | 0 |
 | JP | 920.0 | 0.5 | 10 | 13 |
 | ANZ | 916.0 | 0.5 | 20 | 0 |
