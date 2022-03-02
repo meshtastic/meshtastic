@@ -19,12 +19,14 @@ module.exports = {
           "faq/antenna",
           "faq/bluetooth",
           "faq/channel",
-          "Clients": [
-            "faq/client-android",
-            "faq/client-python-cli",
-            "faq/client-ios",
-            "faq/client-web",
-          ],
+          {
+            "Clients": [
+              "faq/client-android",
+              "faq/client-python-cli",
+              "faq/client-ios",
+              "faq/client-web",
+            ],
+          },
           "faq/device",
           "faq/mesh",
           "faq/mqtt",
