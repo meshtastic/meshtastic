@@ -67,7 +67,7 @@ There are many ways to connect to your new radio!
 - Bluetooth
 - Web app over Wifi (in development)
 
-## A good first test (connect via USB and CLI)
+### A good first test (connect via USB and CLI)
 
 If you have at least two radios with the Meshtastic firmware, you may consider connecting one via USB and the other battery powered. Communicate with the USB radio using a CLI like [Meshtastic-python](https://meshtastic.org/docs/software/python/python-installation).
 
@@ -79,7 +79,7 @@ If you have at least two radios with the Meshtastic firmware, you may consider c
 - Run `meshtastic --nodes` to see if other nodes show in the display.
 - Messages sent from the USB radio should be sent to the other radio(s) via LoRa. The default settings should allow this to work.
 
-## A good second test (connect via Bluetooth)
+### A good second test (connect via Bluetooth)
 
 The Android app is currently more robust than the iOS app. But, they both should be able to interact with the radios.
 
@@ -91,7 +91,7 @@ The Android app is currently more robust than the iOS app. But, they both should
 - Note: The radio connected via Bluetooth will not show messages sent.
 - Verify that all other radios are receiving the message(s). Might have to click on the button on the radio to see most recent message.
 
-## A good third test (connect via Wifi/HTTP)
+### A good third test (connect via Wifi/HTTP)
 
 - Configure the _wifi_ssid_ and _wifi_password_. `meshtastic --set wifi_ssid 'xxx' --set wifi_password 'yyy'` (where xxx and yyy are the appropriate values for your network)
 - Reboot radio by either removing power or pressing the power button.
