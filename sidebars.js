@@ -141,7 +141,6 @@ module.exports = {
   Configuration: {
     "Getting Started": [
       "getting-started/overview",
-      "getting-started/faq",
       {
         "Flashing firmware": [
           "getting-started/flashing-firmware",
