@@ -4,6 +4,7 @@ import Head from '@docusaurus/Head';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
+import Link from '@docusaurus/Link';
 
 const features = [
   {
@@ -120,6 +121,14 @@ function Home() {
             />
           </h1>
           <p className="hero__subtitle">{siteConfig.tagline}</p>
+          <div className="indexCtas">
+            <Link className="button button--lg" to="/docs/about">
+            Learn More
+            </Link>
+            <Link className="button button--lg" to="/docs/getting-started">
+            Get Started
+            </Link>
+          </div>
         </div>
       </header>
       <main>
