@@ -178,7 +178,7 @@ function Home() {
                 style={{ display: "flex", justifyContent: "center"}}
               >
                 <p>
-                  Hardware you will want will consider:
+                  Hardware you will want to consider:
                   <ul>
                     <li>
                       Radio
