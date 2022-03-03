@@ -30,6 +30,10 @@ Meshtastic uses LoRa for the long range communications and depending on settings
 
 The easiest way is to [buy a device with the software already installed](https://www.aliexpress.com/item/4001178678568.html). Other devices are [available](/docs/hardware/supported/tbeam). In the Americas get the 915MHz version, in Europe the 868MHz, or Asia 923MHz. See this listing by [The Things Network](https://www.thethingsnetwork.org/docs/lorawan/frequencies-by-country.html) for frequencies by specific countries.
 
+#### Purchase battery
+
+#### Purchase other accessories
+
 <div className="indexCtasBody">
   <Link
    className={'button button--outline  button--lg cta--button'}
@@ -37,10 +41,6 @@ The easiest way is to [buy a device with the software already installed](https:/
     Purchase Hardware
   </Link>
 </div>
-
-#### Purchase battery
-
-#### Purchase other accessories
 
 ### Initial Setup
 
