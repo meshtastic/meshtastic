@@ -5,7 +5,7 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
 import Link from '@docusaurus/Link';
-import { HeaderText } from './Downloads/_components/HeaderText';
+import { HeaderText } from './downloads/_components/HeaderText';
 
 const features = [
   {
