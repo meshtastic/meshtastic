@@ -4,6 +4,8 @@ import Head from '@docusaurus/Head';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
+import Link from '@docusaurus/Link';
+import { HeaderText } from './downloads/_components/HeaderText';
 
 const features = [
   {
@@ -120,6 +122,14 @@ function Home() {
             />
           </h1>
           <p className="hero__subtitle">{siteConfig.tagline}</p>
+          <div className="indexCtas">
+            <Link className="button button--lg" to="/docs/about">
+            Learn More
+            </Link>
+            <Link className="button button--lg" to="/docs/getting-started">
+            Get Started
+            </Link>
+          </div>
         </div>
       </header>
       <main>
@@ -136,6 +146,115 @@ function Home() {
             </div>
           </section>
         )}
+        <div className="container">
+          <HeaderText
+            type="h1"
+            text="Getting Started"
+            link="getting-started"
+          />
+          <p>
+            Getting started with Meshtastic is as easy as 1, 2, 3!
+          </p>
+          <ul
+            style={{
+              position: "relative",
+              display: "grid",
+              gap: "1.5rem",
+              gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
+              paddingLeft: "0",
+            }}
+          >
+            <div className="card">
+              <div
+                className="card__header"
+                style={{ display: "flex", justifyContent: "space-between" }}
+              >
+                <h3>
+                  1. Purchase Supported Hardware
+                </h3>
+              </div>
+              <div
+                className="card__body"
+                style={{ display: "flex", justifyContent: "center"}}
+              >
+                <p>
+                  Hardware you will want to consider:
+                  <ul>
+                    <li>
+                      Radio
+                    </li>
+                    <li>
+                      Battery
+                    </li>
+                    <li>
+                      Case
+                    </li>
+                    <li>
+                      Antenna (most devices include an antenna, but the quality can be a bit of a mixed bag from some suppliers on stock antennas)
+                    </li>
+                  </ul>
+                </p>
+              </div>
+            </div>
+            <div className="card">
+              <div
+                className="card__header"
+                style={{ display: "flex", justifyContent: "space-between" }}
+              >
+                <h3>
+                  2. Flash & Configure Node
+                </h3>
+              </div>
+              <div
+                className="card__body"
+                style={{ display: "flex", justifyContent: "center"}}
+              >
+                <p>
+                  The Meshtastic Flasher application can assist you in flashing the firmware and configuring settings.
+                </p>
+              </div>
+            </div>
+            <div className="card">
+              <div
+                className="card__header"
+                style={{ display: "flex", justifyContent: "space-between" }}
+              >
+                <h3>
+                  3. Connect to Node
+                </h3>
+              </div>
+              <div
+                className="card__body"
+                style={{ display: "flex", justifyContent: "center"}}
+              >
+              <p>
+                Applications are available for the following systems:
+                <ul>
+                  <li>
+                    Android
+                  </li>
+                  <li>
+                    iOS
+                  </li>
+                  <li>
+                    Mac
+                  </li>
+                  <li>
+                    Web Browser
+                  </li>
+                </ul>
+              </p>
+              </div>
+            </div>
+          </ul>
+          <div className="indexCtasBody">
+            <Link
+            className="button button--outline button--lg cta--button" to="/docs/getting-started"
+            >
+            Getting Started
+            </Link>
+          </div>
+        </div>
       </main>
     </Layout>
   );
