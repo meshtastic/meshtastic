@@ -190,7 +190,7 @@ function Home() {
                       Case
                     </li>
                     <li>
-                      Antenna (most devices include an antenna, but it is a bit of a mixed bag from some suppliers)
+                      Antenna (most devices include an antenna, but the quality can be a bit of a mixed bag from some suppliers on stock antennas)
                     </li>
                   </ul>
                 </p>
