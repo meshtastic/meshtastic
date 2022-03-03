@@ -5,6 +5,7 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
 import Link from '@docusaurus/Link';
+import { HeaderText } from './Downloads/_components/HeaderText';
 
 const features = [
   {
@@ -145,6 +146,115 @@ function Home() {
             </div>
           </section>
         )}
+        <div className="container">
+          <HeaderText
+            type="h1"
+            text="Getting Started"
+            link="getting-started"
+          />
+          <p>
+            Getting started with Meshtastic is as easy as 1, 2, 3!
+          </p>
+          <ul
+            style={{
+              position: "relative",
+              display: "grid",
+              gap: "1.5rem",
+              gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
+              paddingLeft: "0",
+            }}
+          >
+            <div className="card">
+              <div
+                className="card__header"
+                style={{ display: "flex", justifyContent: "space-between" }}
+              >
+                <h3>
+                  1. Purchase Supported Hardware
+                </h3>
+              </div>
+              <div
+                className="card__body"
+                style={{ display: "flex", justifyContent: "center"}}
+              >
+                <p>
+                  Hardware you will want will consider:
+                  <ul>
+                    <li>
+                      Radio
+                    </li>
+                    <li>
+                      Battery
+                    </li>
+                    <li>
+                      Case
+                    </li>
+                    <li>
+                      Antenna (most devices include an antenna, but it is a bit of a mixed bag from some suppliers)
+                    </li>
+                  </ul>
+                </p>
+              </div>
+            </div>
+            <div className="card">
+              <div
+                className="card__header"
+                style={{ display: "flex", justifyContent: "space-between" }}
+              >
+                <h3>
+                  2. Flash & Configure Node
+                </h3>
+              </div>
+              <div
+                className="card__body"
+                style={{ display: "flex", justifyContent: "center"}}
+              >
+                <p>
+                  The Meshtastic Flasher application can assist you in flashing the firmware and configuring settings.
+                </p>
+              </div>
+            </div>
+            <div className="card">
+              <div
+                className="card__header"
+                style={{ display: "flex", justifyContent: "space-between" }}
+              >
+                <h3>
+                  3. Connect to Node
+                </h3>
+              </div>
+              <div
+                className="card__body"
+                style={{ display: "flex", justifyContent: "center"}}
+              >
+              <p>
+                Applications are available for the following systems:
+                <ul>
+                  <li>
+                    Android
+                  </li>
+                  <li>
+                    iOS
+                  </li>
+                  <li>
+                    Mac
+                  </li>
+                  <li>
+                    Web Browser
+                  </li>
+                </ul>
+              </p>
+              </div>
+            </div>
+          </ul>
+          <div className="indexCtasBody">
+            <Link
+            className="button button--outline button--lg cta--button" to="/docs/getting-started"
+            >
+            Getting Started
+            </Link>
+          </div>
+        </div>
       </main>
     </Layout>
   );
