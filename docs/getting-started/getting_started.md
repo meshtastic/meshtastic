@@ -106,6 +106,4 @@ This is the best part of Meshtastic. Deploying, testing, and optimizing your per
 
 ## Troubleshooting
 
-For any issues during setup, search [our forum](https://meshtastic.discourse.group) to find a solution. If you can't find one, please post your problem and provide as much detail as possible.
-
-We are also on [Discord](https://discord.gg/UQJ5QuM7vq).
+Hopefully your "getting started" experience has been straight forward and headache free. If you've had issues, please consider updating our documentation to improve future user experiences. If you're still having issues. Reach out on the [forum](https://meshtastic.discourse.group) or [Discord](https://discord.com/invite/UQJ5QuM7vq). Our support is 100% volunteer based. We are passionate about the project hope to help newcomers become Meshtastic experts.
