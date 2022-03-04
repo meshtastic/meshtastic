@@ -1,7 +1,7 @@
 ---
 id: clients
-title: Clients Overview
-sidebar_label: Clients Overview
+title: Meshtastic Clients
+sidebar_label: Meshtastic Clients
 ---
 import { DownloadCard } from '/src/pages/downloads/_components/DownloadCard.tsx'
 
