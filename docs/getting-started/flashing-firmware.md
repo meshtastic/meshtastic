@@ -103,6 +103,10 @@ Some newer boards may require the CH9102 (CH340/CH341) Driver.
   </TabItem>
 </Tabs>
 
+:::important
+Reboot your computer after you have installed the driver to complete the installation.
+:::
+
 ### NRF52 Drivers
 
 <Tabs
