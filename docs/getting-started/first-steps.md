@@ -50,6 +50,6 @@ The Android app is currently more robust than the iOS app. But, they both should
 - Open up a browser to http://meshtastic.local to view the web UI (currently under development). You may need to open http://meshtastic.local/static )
 - If you want to switch back to Bluetooth, you will need to set the _wifi_ssid_ and _wifi_password_ values to blank values (ex: `meshtastic --set wifi_ssid '' --set wifi_password ''`).
 
-## Issues?
+## Troubleshooting
 
-Hopefully your "getting started" experience has been straight forward and headache free. If you've had issues, please consider updating our documentation to improve future user's experience. If you're still having issues. Reach out on the [forum](https://meshtastic.discourse.group) or [Discord](https://discord.com/invite/UQJ5QuM7vq). Our support is 100% volunteer based. We are passionate about the project hope to help newcomers become Meshtastic experts.
+Hopefully your "getting started" experience has been straight forward and headache free. If you've had issues, please consider updating our documentation to improve future user experiences. If you're still having issues. Reach out on the [forum](https://meshtastic.discourse.group) or [Discord](https://discord.com/invite/UQJ5QuM7vq). Our support is 100% volunteer based. We are passionate about the project hope to help newcomers become Meshtastic experts.
