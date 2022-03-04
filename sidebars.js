@@ -158,6 +158,7 @@ module.exports = {
           "getting-started/clients",
         ],
       },
+      "getting-started/first-steps",
     ],
 
     "Device Settings": [
