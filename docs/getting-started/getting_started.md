@@ -99,8 +99,8 @@ This is the best part of Meshtastic. Deploying, testing, and optimizing your per
 <div className="indexCtasBody">
   <Link
     className={'button button--outline  button--lg cta--button'}
-    to={'/docs/getting-started/testing-meshtastic'}>
-    Test Meshtastic
+    to={'/docs/getting-started/first-steps'}>
+    First Steps
   </Link>
 </div>
 

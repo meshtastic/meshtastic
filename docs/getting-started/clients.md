@@ -11,7 +11,7 @@ There are many ways to connect to your newly flashed device. Below is a quicksta
 
 ### Commandline Interface (CLI)
 
-The CLI is currently the best way to manage your settings. It is feature rich and well documented. The [settings pages](/docs/settings) have examples for each user preference for the device. The CLI is available as a standalone executable for Windows, Mac OS or linux or as part of the [Meshtastic-python](https://github.com/meshtastic/Meshtastic-python) project. If you'd like to use python to interface with a device, see the [API documentation](https://python.meshtastic.org). 
+The CLI is currently the best way to manage your settings. It is feature rich and well documented. The [settings pages](/docs/settings) have examples for each user preference for the device. The CLI is available as a standalone executable for Windows, Mac OS or linux or as part of the [Meshtastic-python](https://github.com/meshtastic/Meshtastic-python) project. If you'd like to use python to interface with a device, see the [API documentation](https://python.meshtastic.org).
 
 To install the prebuilt binary refer to: [Meshtastic-python standalone executable](/docs/software/python/python-standalone).
 
@@ -24,7 +24,7 @@ pip install meshtastic
 pip install --upgrade meshtastic
 ```
 :::note
-Some installations of python may require you to substitute 'pip3' for the 'pip' command. 
+Some installations of python may require you to substitute 'pip3' for the 'pip' command.
 :::
 
 ### Mobile Client Downloads
@@ -65,7 +65,7 @@ Using your preferred program (PuTTy, Serial, etc) connect to your device with th
 
 The web interface is available for all browsers, but [bluetooth and serial capabilities are limited](https://github.com/meshtastic/meshtastic.js#compatibility). You can connect to your node using:
 
-- [client.meshtastic.org](client.meshtastic.org)
+- [client.meshtastic.org](https://client.meshtastic.org)
   - BLE
   - HTTP
   - Serial

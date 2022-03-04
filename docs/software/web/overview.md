@@ -8,7 +8,7 @@ sidebar_label: Overview
 
 The web interface is available for all browsers, but [bluetooth and serial capabilities are limited](https://github.com/meshtastic/meshtastic.js#compatibility). You can connect to your node using:
 
-- [client.meshtastic.org](client.meshtastic.org)
+- [client.meshtastic.org](https://client.meshtastic.org)
   - BLE
   - HTTP
   - Serial
