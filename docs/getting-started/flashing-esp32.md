@@ -2,6 +2,8 @@
 id: flashing-esp32
 title: Flashing ESP32 devices firmware
 sidebar_label: ESP32 devices
+pagination_prev: flashing-firmware
+pagination_next: first-steps
 ---
 
 import Tabs from '@theme/Tabs';

@@ -2,6 +2,8 @@
 id: flashing-nrf52
 title: Flashing nRF52 devices firmware
 sidebar_label: nRF52 devices
+pagination_prev: flashing-firmware
+pagination_next: first-steps
 ---
 
 import Tabs from '@theme/Tabs';
