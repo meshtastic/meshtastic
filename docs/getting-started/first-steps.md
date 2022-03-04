@@ -7,6 +7,12 @@ sidebar_label: First Steps
 
 Congratulations! Your node should now be running Meshtastic and hopefully you've paired to a client on your mobile device, desktop, or browser.
 
+## Configuration
+
+:::important
+Make sure to set your `region` to the correct region so you don't transmit on an incorrect frequency.
+:::
+
 ## Connection Tests
 
 ### Connect via USB and CLI
