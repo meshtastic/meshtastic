@@ -2,7 +2,7 @@
 id: meshtastic-flasher
 title: Using Meshtastic Flasher
 sidebar_label: Using Meshtastic Flasher
-pagination_next: first-steps
+pagination_next: getting-started/first-steps
 ---
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
