@@ -3,7 +3,7 @@ id: flashing-esp32
 title: Flashing ESP32 devices firmware
 sidebar_label: ESP32 devices
 pagination_prev: getting-started/flashing-firmware
-pagination_next: getting-started/first-steps
+pagination_next: getting-started/clients
 ---
 
 import Tabs from '@theme/Tabs';
