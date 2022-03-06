@@ -98,7 +98,7 @@ Minimum requirement is Android 5 (Lollipop 2014, first BLE support), however And
 
 ### How can I clear the message history?
 
-Clear the storage from Android Settings > App
+Long press any message to select and show the menu with "delete" and "select all" buttons.
 
 ## iOS
 
