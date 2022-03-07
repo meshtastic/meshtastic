@@ -7,7 +7,7 @@ sidebar_label: Android
 
 ### What versions of Android does the Meshtastic Android App require?
 
-Android 5.0 is the current minSdkVersion (21).
+Minimum requirement is Android 5 (Lollipop 2014, first BLE support), however Android 6 (Marshmallow 2015) is recommended as Bluetooth is more stable.
 
 ### What's the cloud icon next to the message?
 
@@ -18,4 +18,4 @@ Android 5.0 is the current minSdkVersion (21).
 
 ### How can I clear the message history?
 
-Clear the storage from Android Settings > App
+Long press any message to select and show the menu with "delete" and "select all" buttons.
