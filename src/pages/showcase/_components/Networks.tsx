@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { FiHeart, FiSearch } from 'react-icons/fi';
-import JSONPretty from 'react-json-pretty';
 import useSWR from 'swr';
 
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
@@ -46,9 +45,7 @@ export const Networks = (): JSX.Element => {
           />
         )
       ) : (
-        <div>
-          <JSONPretty data={error} />
-        </div>
+        <div>{JSON.stringify(error)}</div>
       )}
     </section>
   );

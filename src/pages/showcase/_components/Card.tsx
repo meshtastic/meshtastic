@@ -1,7 +1,5 @@
 import React from 'react';
 
-import Image from '@theme/IdealImage';
-
 import { Showcase } from '../../../utils/apiTypes';
 import { mapUrl } from '../../../utils/map';
 import { CardTags } from './CardTags';
@@ -14,7 +12,7 @@ export const Card = React.memo(({ network }: CardProps) => (
   <div className="card">
     <div className="card__image">
       <div style={{ height: "140px" }}>
-        <Image img={mapUrl(network.nodes ?? [])} alt={network.title} />
+        <img img={mapUrl(network.nodes ?? [])} alt={network.title} />
       </div>
     </div>
     <div className="card__body">

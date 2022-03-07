@@ -1,6 +1,5 @@
 import React from 'react';
 
-import JSONPretty from 'react-json-pretty';
 import useSWR from 'swr';
 
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
@@ -116,11 +115,7 @@ export const Network = ({ id }: NetworkProps): JSX.Element => {
         </div>
       ) : (
         <div>
-          {error && (
-            <div>
-              <JSONPretty data={error} />
-            </div>
-          )}
+          {error && <div>{JSON.stringify(error)}</div>}
           {!data && <PlaceholderNetwork />}
         </div>
       )}

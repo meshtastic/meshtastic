@@ -27,7 +27,7 @@ const config = {
       },
 
       items: [
-/*
+        /*
         {
           label: "Start Here",
           to: "docs/academy",
@@ -39,7 +39,7 @@ const config = {
           to: "docs/about",
           activeBasePath: "docs/about",
         },
-/*
+        /*
         {
           label: "Showcase",
           to: "showcase",
@@ -66,7 +66,7 @@ const config = {
               label: "Hardware Details",
               to: "docs/hardware",
             },
-/*
+            /*
             {
               label: "Mesh Radio Details",
               to: "docs/mesh"
@@ -117,84 +117,85 @@ const config = {
       copyright: `<a href="https://vercel.com/?utm_source=meshtastic&utm_campaign=oss" style="color: var(--ifm-footer-color)">Powered by ▲ Vercel</a> | Meshtastic® is a registered trademark of Geeksville Industries LLC`,
       links: [
         {
-          title: 'Learn',
+          title: "Learn",
           items: [
             {
-              label: 'About',
-              to: 'docs/about',
+              label: "About",
+              to: "docs/about",
             },
             {
-              label: 'Getting Started',
-              to: 'docs/getting-started',
+              label: "Getting Started",
+              to: "docs/getting-started",
             },
             {
-              label: 'Hardware',
-              to: 'docs/hardware',
+              label: "Hardware",
+              to: "docs/hardware",
             },
             {
-              label: 'Settings',
-              to: 'docs/settings',
+              label: "Settings",
+              to: "docs/settings",
             },
           ],
         },
         {
-          title: 'Community',
+          title: "Community",
           items: [
             {
-              label: 'Discord',
-              to: 'https://discord.com/invite/UQJ5QuM7vq',
+              label: "Discord",
+              to: "https://discord.com/invite/UQJ5QuM7vq",
             },
             {
-              label: 'Forum',
-              to: 'https://meshtastic.discourse.group',
+              label: "Forum",
+              to: "https://meshtastic.discourse.group",
             },
             {
-              label: 'Reddit',
-              to: 'https://reddit.com/r/meshtastic',
+              label: "Reddit",
+              to: "https://reddit.com/r/meshtastic",
             },
             {
-              label: 'YouTube',
-              to: 'https://www.youtube.com/meshtastic',
+              label: "YouTube",
+              to: "https://www.youtube.com/meshtastic",
             },
           ],
         },
         {
-          title: 'Legal',
+          title: "Legal",
           items: [
             {
-              label: 'Privacy',
-              to: 'docs/legal/privacy',
+              label: "Privacy",
+              to: "docs/legal/privacy",
             },
             {
-              label: 'Licensing',
-              to: 'docs/legal/licensing',
+              label: "Licensing",
+              to: "docs/legal/licensing",
             },
             {
-              label: 'Trademark',
-              to: 'docs/legal/trademark',
+              label: "Trademark",
+              to: "docs/legal/trademark",
             },
           ],
         },
         {
-          title: 'Resources',
+          title: "Resources",
           items: [
             {
-              label: 'GitHub',
-              to: 'https://github.com/meshtastic',
+              label: "GitHub",
+              to: "https://github.com/meshtastic",
             },
             {
-              label: 'Contribute',
-              to: 'docs/developers',
+              label: "Contribute",
+              to: "docs/developers",
             },
           ],
         },
       ],
     },
     algolia: {
-      apiKey: "01ad7e13d3fe392d2ad26da3c69dbc21",
+      appId: "IG2GQB8L3V",
+      apiKey: "2e4348812173ec7ea6f7879c7032bb21",
       indexName: "meshtastic",
       contextualSearch: false,
-      searchParameters: {},
+      searchPagePath: "search",
     },
   },
 
@@ -213,7 +214,6 @@ const config = {
       },
     ],
   ],
-  plugins: ["@docusaurus/plugin-ideal-image"],
   customFields: {
     API_URL: process.env.API_URL,
   },
