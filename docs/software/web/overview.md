@@ -6,37 +6,57 @@ sidebar_label: Overview
 
 <!--- FIXME add self hosting details link --->
 
-The web interface is available for all browsers, but [bluetooth and serial capabilities are limited](https://github.com/meshtastic/meshtastic.js#compatibility). You can connect to your node using:
+Meshtastic Web is a [Progressive Web App](https://web.dev/progressive-web-apps/) that runs directly in your browser.
+There are three ways of accessing the app:
 
-- [client.meshtastic.org](https://client.meshtastic.org)
-  - BLE
-  - HTTP
-  - Serial
-- [ESP32 WiFi SoftAP](/docs/settings/wifi#software-access-point)
-- [ESP32 as Client](/docs/settings/wifi#wifi-client)
+1. Served directly from an ESP32 based node via [meshtastic.local](http://meshtastic.local) or the device's IP Address.
+2. A hosted version located at [client.meshtastic.org](https://client.meshtastic.org).
+3. Running it yourself.
 
-The Meshtastic firmware incorporates an embedded web server using the [ESP32 HTTPS Server](https://github.com/fhessel/esp32_https_server) project. This allows the WiFi supporting ESP32 devices to run our web interface to access Meshtastic directly from your browser. This imports the [Meshtastic.js library](/docs/software/js/getting-started) to provide a web page capable of interacting with the device.
+## Compatibility
+
+The application will work in all major browsers, but specific functionality is limited in some cases, for the best experience we reccomend using [Google Chrome](https://www.google.com/chrome/)
+
+### HTTP
+
+This method of connecting has the best support, and has no incompatibilities.
 
 :::caution
-Please note that this is under active development and liable to change.
+
+When using the [hosted](https://client.meshtastic.org) version of the application, all traffic must be served over HTTPS,
+as Meshtastic nodes generate self-signed certificates, you must inform your browser that you wish to trust the aforementioned certificate.
+This can be done by first accessing your node directly via your browser: `https://NODE_IP_ADDRESS/` replacing `NODE_IP_ADDRESS` with the IP address of your node.
+This can be found on the screen of the device, via your router's DHCP lease page or serial console.
+
 :::
 
-:::caution
-It has been reported that some of this information is out of date.
+You have two primary options for accessing your device over HTTP, those being [Client](/docs/settings/wifi#wifi-client) and [SoftAP](/docs/settings/wifi#software-access-point)
 
-FIXME - Investigate and rewrite document to reflect the current web usage solution.
-:::
+### Bluetooth
 
-## Configuration
+Bluetooth support is governed by the availability of the [Web Bluetooth API](https://web.dev/bluetooth/) as illustrated blow, support is primarily available in Chromium browsers
+
+![Web Bluetooth compatability matrix](https://caniuse.bitsofco.de/image/web-bluetooth.png)
+
+
+
+### Serial (USB)
+
+The method with the least platform support, uses the [Web Serial API](https://web.dev/serial/) allows us to connect directly to a Meshtastic node over USB, accessing it directly within your browser.
+
+![Web Serial compatability matrix](https://caniuse.bitsofco.de/image/web-serial.png)
+
+## Updating
 
 The web interface is now included in firmware releases. There is active development ongoing to fix some issues with updating the web interface from the web interface directly. Please be patient with us as we work on this. Use [Meshtastic-flasher](/docs/getting-started/meshtastic-flasher) to update your device to the current stable build which includes the web interface.
 
-### Wifi configuration
 
-WiFi configuration is required to use the web interface. Any method of set up will work:
-- [Device as a client](/docs/settings/wifi#enable-wifi-as-client)
-- [Device as an access point](/docs/settings/wifi#enable-wifi-as-softap)
-- [Force SoftAP (admin)](/docs/settings/wifi#force-softap)
+
+:::warning
+
+Old documentation below.
+
+:::
 
 If you have just one Meshtastic device on your network, the easiest thing to do is to go to http://meshtastic.local printed on your device screen. That URL should work provided that mDNS (aka ZeroConf) is not blocked on your local network. If you have more than one device or there's a problem with mDNS name resolution, you will have to refer to the device's IP address. The IP address will also be available on the screen. It can also be found by reading the serial logs when the device boots up.
 
