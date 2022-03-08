@@ -50,10 +50,6 @@ const config = {
           label: "Documentation",
           items: [
             {
-              label: "About",
-              to: "docs/about",
-            },
-            {
               label: "Getting Started",
               to: "docs/getting-started",
             },

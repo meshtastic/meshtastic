@@ -1,7 +1,7 @@
 ---
 id: clients
-title: Clients Overview
-sidebar_label: Clients Overview
+title: Meshtastic Clients
+sidebar_label: Meshtastic Clients
 ---
 import { DownloadCard } from '/src/pages/downloads/_components/DownloadCard.tsx'
 
@@ -11,7 +11,7 @@ There are many ways to connect to your newly flashed device. Below is a quicksta
 
 ### Commandline Interface (CLI)
 
-The CLI is currently the best way to manage your settings. It is feature rich and well documented. The [settings pages](/docs/settings) have examples for each user preference for the device. The CLI is available as a standalone executable for Windows, Mac OS or linux or as part of the [Meshtastic-python](https://github.com/meshtastic/Meshtastic-python) project. If you'd like to use python to interface with a device, see the [API documentation](https://python.meshtastic.org). 
+The CLI is currently the best way to manage your settings. It is feature rich and well documented. The [settings pages](/docs/settings) have examples for each user preference for the device. The CLI is available as a standalone executable for Windows, Mac OS or linux or as part of the [Meshtastic-python](https://github.com/meshtastic/Meshtastic-python) project. If you'd like to use python to interface with a device, see the [API documentation](https://python.meshtastic.org).
 
 To install the prebuilt binary refer to: [Meshtastic-python standalone executable](/docs/software/python/python-standalone).
 
@@ -24,7 +24,7 @@ pip install meshtastic
 pip install --upgrade meshtastic
 ```
 :::note
-Some installations of python may require you to substitute 'pip3' for the 'pip' command. 
+Some installations of python may require you to substitute 'pip3' for the 'pip' command.
 :::
 
 ### Mobile Client Downloads
@@ -60,3 +60,18 @@ Using your preferred program (PuTTy, Serial, etc) connect to your device with th
 | `921600` | `8` | `None` | `1` |
 
 ### Web
+
+<!--- FIXME add self hosting details link --->
+
+The web interface is available for all browsers, but [bluetooth and serial capabilities are limited](https://github.com/meshtastic/meshtastic.js#compatibility). You can connect to your node using:
+
+- [client.meshtastic.org](https://client.meshtastic.org)
+  - BLE
+  - HTTP
+  - Serial
+- [ESP32 WiFi SoftAP](/docs/settings/wifi#software-access-point)
+- [ESP32 as Client](/docs/settings/wifi#wifi-client)
+
+The Meshtastic firmware incorporates an embedded web server using the [ESP32 HTTPS Server](https://github.com/fhessel/esp32_https_server) project. This allows the WiFi supporting ESP32 devices to run our web interface to access Meshtastic directly from your browser. This imports the [Meshtastic.js library](/docs/software/js/getting-started) to provide a web page capable of interacting with the device.
+
+There is active development ongoing to fix some issues with updating the web interface from the web interface directly. Please be patient with us as we work on this. Use [Meshtastic-flasher](/docs/getting-started/meshtastic-flasher) to update your device to the current stable build which includes the web interface.
