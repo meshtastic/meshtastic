@@ -17,7 +17,20 @@ module.exports = {
         "FAQs": [
           "faq/faq",
           "faq/antenna",
+          "faq/bluetooth",
+          "faq/channel",
+          {
+            "Clients": [
+              "faq/client-android",
+              "faq/client-python-cli",
+              "faq/client-ios",
+              "faq/client-web",
+            ],
+          },
+          "faq/device",
           "faq/mesh",
+          "faq/mqtt",
+          "faq/plugins",
           "faq/wifi",
         ],
       }
@@ -128,7 +141,6 @@ module.exports = {
   Configuration: {
     "Getting Started": [
       "getting-started/overview",
-      "getting-started/faq",
       {
         "Flashing firmware": [
           "getting-started/flashing-firmware",
@@ -146,7 +158,7 @@ module.exports = {
           "getting-started/clients",
         ],
       },
-      "getting-started/concepts",
+      "getting-started/first-steps",
     ],
 
     "Device Settings": [
