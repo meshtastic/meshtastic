@@ -6,22 +6,22 @@
   <h1>Meshtastic</h1>
 <span>
   <a href="https://www.meshtastic.org" target="_blank">
-    <img src="assets/globe.svg" width="16" />
+    <img src="static/img/readme/globe.svg" width="16" />
     Website
   </a>
   <span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
   <a href="https://meshtastic.discourse.group" target="_blank">
-    <img src="assets/comment-alt.svg" width="16" />
+    <img src="static/img/readme/comment-alt.svg" width="16" />
     Forum
   </a>
   <span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
   <a href="https://discord.gg/UQJ5QuM7vq" target="_blank">
-    <img src="assets/discord.svg" width="16" />
+    <img src="static/img/readme/discord.svg" width="16" />
     Discord
   </a>
   <span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
   <a href="https://play.google.com/store/apps/details?id=com.geeksville.mesh" target="_blank">
-    <img src="assets/google-play.svg" width="16" />
+    <img src="static/img/readme/google-play.svg" width="16" />
     App
   </a>
   </span>
@@ -43,14 +43,13 @@ Please see our [website](https://meshtastic.org) for more information about Mesh
 
 ## Installation
 
-nodejs is required in your dev. environment. The method for installing nodejs depends on your operating system.  This software is built using [Docusaurus](https://docusaurus.io).
+nodejs is required in your dev. environment. The method for installing nodejs depends on your operating system. This software is built using [Docusaurus](https://docusaurus.io).
 
 Fork then clone the repository:
 
 ```bash
 git clone https://github.com/meshtastic/meshtastic
 ```
-
 
 Go to the root directory of your repository and install dependencies:
 
