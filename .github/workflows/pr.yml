@@ -6,20 +6,26 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout code & submodules
+        uses: actions/checkout@v3
         with:
           submodules: true
-      - uses: pnpm/action-setup@v2.2.1
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2.2.1
         with:
           version: latest
-      - uses: actions/setup-node@v3
+
+      - name: Setup NodeJS
+        uses: actions/setup-node@v3
         with:
           node-version: 17
-          cache: 'pnpm'
-      - uses: actions/setup-node@v2
-        with:
-          node-version: '16'
-          cache: 'pnpm'
-      - run: pnpm install
-      - run: pnpm format
-      - run: pnpm build
+
+      - name: Install Dependencies
+        run: pnpm install
+
+      - name: Lint & Format
+        run: pnpm format
+
+      - name: Build Site
+        run: pnpm build
