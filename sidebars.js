@@ -209,6 +209,7 @@ module.exports = {
       },
       "hardware/buttons",
       "hardware/battery",
+      "hardware/gpsmodule",
       {
         Antennas: [
           "hardware/antenna/antenna",
