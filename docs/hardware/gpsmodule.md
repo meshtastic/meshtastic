@@ -1,0 +1,33 @@
+---
+id: gpsmodule
+title: External GPS Module
+sidebar_label: GPS Module
+---
+
+External GPS modules can be installed to extend the capabilities of simple boards.
+
+## GY-GPS6MV2 GPS module
+- Based on the ublox/u-blox NEO-6M module
+- Input 3 to 5V
+- Interface: RS232 TTL
+- Default baud rate: 9600 bps
+- Outputs NMEA sentences
+
+[<img src="/img/hardware/gy-gps6mv2.jpg" alt="GY-GPS6MV2" style={{zoom:'50%'}} />](/img/hardware/gy-gps6mv2.jpg)
+
+
+### TTGO Lora32 V2.1-1.6
+
+- Wiring instructions:
+
+| GPS Module Pin | TTGO Lora32 Pin |
+| :-----: | :---------------: |
+| VCC | 3.3V |
+| RX | IO13 |
+| TX | IO15  |
+| GND | GND |
+
+- Once the module is connected, it should be detected automatically by the firmware.
+
+
+
