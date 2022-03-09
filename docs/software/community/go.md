@@ -44,5 +44,6 @@ GLOBAL OPTIONS:
    --help, -h              show help (default: false)
    --version, -v           print the version (default: false)
 ```
+
 Further information is available on the project's GitHub [Readme.md](https://github.com/lmatte7/meshtastic-go/blob/main/README.md).
 The latest executables can be downloaded from [GitHub](https://github.com/lmatte7/meshtastic-go/releases/latest).

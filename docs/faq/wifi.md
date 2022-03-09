@@ -3,6 +3,7 @@ id: wifi
 title: FAQs - WiFi
 sidebar_label: WiFi
 ---
+
 ## Overview
 
 ### How do I turn on the WiFI radio?

@@ -3,25 +3,22 @@ id: misc
 title: Miscellaneous Settings
 sidebar_label: Miscellaneous
 ---
+
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-
 ## Overview
-
-
 
 ## Settings
 
-| Setting | Acceptable Values | Default |
-| :-----: | :---------------: | :-----: |
-| auto_screen_carousel_secs | `integer` (seconds) | `0` |
-| debug_log_enabled | `true`, `false` | `false` |
-| factory_reset | `true`, `false` | `false` |
-| ignore_incoming | `string` – list of node nums to ignore | `0` |
-| hop_limit | `0`-`7` | `0` |
-| serial_disabled | `true`, `false` | `false` |
-
+|          Setting          |           Acceptable Values            | Default |
+| :-----------------------: | :------------------------------------: | :-----: |
+| auto_screen_carousel_secs |          `integer` (seconds)           |   `0`   |
+|     debug_log_enabled     |            `true`, `false`             | `false` |
+|       factory_reset       |            `true`, `false`             | `false` |
+|      ignore_incoming      | `string` – list of node nums to ignore |   `0`   |
+|         hop_limit         |                `0`-`7`                 |   `0`   |
+|      serial_disabled      |            `true`, `false`             | `false` |
 
 ### auto_screen_carousel_secs
 
@@ -30,22 +27,23 @@ Automatically toggles to the next page on the screen like a carousel, based the 
 #### Configure auto_screen_carousel_secs
 
 <Tabs
-  groupId="settings"
-  defaultValue="cli"
-  values={[
-    {label: 'CLI', value: 'cli'},
-    {label: 'Android', value: 'android'},
-    {label: 'iOS', value: 'iOS'},
-    {label: 'Web', value: 'web'},
-  ]}>
-  <TabItem value="cli">
+groupId="settings"
+defaultValue="cli"
+values={[
+{label: 'CLI', value: 'cli'},
+{label: 'Android', value: 'android'},
+{label: 'iOS', value: 'iOS'},
+{label: 'Web', value: 'web'},
+]}>
+<TabItem value="cli">
 
-  ```bash title="Set auto_screen_carousel_secs to default"
-  meshtastic --set auto_screen_carousel_secs 0
-  ```
-  ```bash title="Set auto_screen_carousel_secs to 120 seconds"
-  meshtastic --set auto_screen_carousel_secs 120
-  ```
+```bash title="Set auto_screen_carousel_secs to default"
+meshtastic --set auto_screen_carousel_secs 0
+```
+
+```bash title="Set auto_screen_carousel_secs to 120 seconds"
+meshtastic --set auto_screen_carousel_secs 120
+```
 
   </TabItem>
   <TabItem value="android">
@@ -78,22 +76,23 @@ By default we turn off logging as soon as an API client connects (to keep shared
 #### Enable/Disable Debug Log
 
 <Tabs
-  groupId="settings"
-  defaultValue="cli"
-  values={[
-    {label: 'CLI', value: 'cli'},
-    {label: 'Android', value: 'android'},
-    {label: 'iOS', value: 'iOS'},
-    {label: 'Web', value: 'web'},
-  ]}>
-  <TabItem value="cli">
+groupId="settings"
+defaultValue="cli"
+values={[
+{label: 'CLI', value: 'cli'},
+{label: 'Android', value: 'android'},
+{label: 'iOS', value: 'iOS'},
+{label: 'Web', value: 'web'},
+]}>
+<TabItem value="cli">
 
-  ```bash title="Enable debug log"
-  meshtastic --set debug_log_enabled true
-  ```
-  ```bash title="Disable debug log"
-  meshtastic --set debug_log_enabled false
-  ```
+```bash title="Enable debug log"
+meshtastic --set debug_log_enabled true
+```
+
+```bash title="Disable debug log"
+meshtastic --set debug_log_enabled false
+```
 
   </TabItem>
   <TabItem value="android">
@@ -126,19 +125,19 @@ This setting is never saved to disk, but if set, all device settings will be ret
 #### Factory reset
 
 <Tabs
-  groupId="settings"
-  defaultValue="cli"
-  values={[
-    {label: 'CLI', value: 'cli'},
-    {label: 'Android', value: 'android'},
-    {label: 'iOS', value: 'iOS'},
-    {label: 'Web', value: 'web'},
-  ]}>
-  <TabItem value="cli">
+groupId="settings"
+defaultValue="cli"
+values={[
+{label: 'CLI', value: 'cli'},
+{label: 'Android', value: 'android'},
+{label: 'iOS', value: 'iOS'},
+{label: 'Web', value: 'web'},
+]}>
+<TabItem value="cli">
 
-  ```bash title="Example - Factory reset"
-  meshtastic --set factory_reset true
-  ```
+```bash title="Example - Factory reset"
+meshtastic --set factory_reset true
+```
 
   </TabItem>
   <TabItem value="android">
@@ -171,22 +170,23 @@ If true, radio should not try to be smart about what packets to queue to the pho
 #### Enable/Disable ignore_incoming
 
 <Tabs
-  groupId="settings"
-  defaultValue="cli"
-  values={[
-    {label: 'CLI', value: 'cli'},
-    {label: 'Android', value: 'android'},
-    {label: 'iOS', value: 'iOS'},
-    {label: 'Web', value: 'web'},
-  ]}>
-  <TabItem value="cli">
+groupId="settings"
+defaultValue="cli"
+values={[
+{label: 'CLI', value: 'cli'},
+{label: 'Android', value: 'android'},
+{label: 'iOS', value: 'iOS'},
+{label: 'Web', value: 'web'},
+]}>
+<TabItem value="cli">
 
-  ```bash title="Enable ignore_incoming"
-  meshtastic --set ignore_incoming true
-  ```
-  ```bash title="Disable ignore_incoming"
-  meshtastic --set ignore_incoming false
-  ```
+```bash title="Enable ignore_incoming"
+meshtastic --set ignore_incoming true
+```
+
+```bash title="Disable ignore_incoming"
+meshtastic --set ignore_incoming false
+```
 
   </TabItem>
   <TabItem value="android">
@@ -219,22 +219,23 @@ If set, this will disable the SerialConsole by not initializing the StreamAPI.
 #### Enable/Disable Serial
 
 <Tabs
-  groupId="settings"
-  defaultValue="cli"
-  values={[
-    {label: 'CLI', value: 'cli'},
-    {label: 'Android', value: 'android'},
-    {label: 'iOS', value: 'iOS'},
-    {label: 'Web', value: 'web'},
-  ]}>
-  <TabItem value="cli">
+groupId="settings"
+defaultValue="cli"
+values={[
+{label: 'CLI', value: 'cli'},
+{label: 'Android', value: 'android'},
+{label: 'iOS', value: 'iOS'},
+{label: 'Web', value: 'web'},
+]}>
+<TabItem value="cli">
 
-  ```bash title="Enable serial"
-  meshtastic --set serial_disabled false
-  ```
-  ```bash title="Disable serial"
-  meshtastic --set serial_disabled true
-  ```
+```bash title="Enable serial"
+meshtastic --set serial_disabled false
+```
+
+```bash title="Disable serial"
+meshtastic --set serial_disabled true
+```
 
   </TabItem>
   <TabItem value="android">
@@ -271,22 +272,23 @@ Meshtastic allows a maximum of 7 hops (this is a limit of the protocol). Setting
 #### Configure hop_limit
 
 <Tabs
-  groupId="settings"
-  defaultValue="cli"
-  values={[
-    {label: 'CLI', value: 'cli'},
-    {label: 'Android', value: 'android'},
-    {label: 'iOS', value: 'iOS'},
-    {label: 'Web', value: 'web'},
-  ]}>
-  <TabItem value="cli">
+groupId="settings"
+defaultValue="cli"
+values={[
+{label: 'CLI', value: 'cli'},
+{label: 'Android', value: 'android'},
+{label: 'iOS', value: 'iOS'},
+{label: 'Web', value: 'web'},
+]}>
+<TabItem value="cli">
 
-  ```bash title="Set hop_limit to default (3 hops)"
-  meshtastic --set hop_limit 0
-  ```
-  ```bash title="Set hop_limit to max (7 hops)"
-  meshtastic --set hop_limit 7
-  ```
+```bash title="Set hop_limit to default (3 hops)"
+meshtastic --set hop_limit 0
+```
+
+```bash title="Set hop_limit to max (7 hops)"
+meshtastic --set hop_limit 7
+```
 
   </TabItem>
   <TabItem value="android">

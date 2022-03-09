@@ -82,7 +82,7 @@ When the ESP32 advances fromnum, it will delay doing the notify by 100ms, in the
 
 Note: that if the phone ever sees this number decrease, it means the ESP32 has rebooted.
 
-Re: Queue management, 
+Re: Queue management,
 not all messages are kept in the fromradio queue (filtered based on SubPacket):
 
 - only the most recent Position and User messages for a particular node are kept
@@ -111,16 +111,16 @@ SoftwareUpdateService UUID cb0b9a0b-a84c-4c0d-bdbb-442e3144ee30
 
 Characteristics
 
-| UUID                                 | properties  | description                                                                                                       |
-| ------------------------------------ | ----------- | ----------------------------------------------------------------------------------------------------------------- |
-| e74dd9c0-a301-4a6f-95a1-f0e1dbea8e1e | write,read  | total image size, 32 bit, write this first, then read back to see if it was acceptable (0 mean not accepted) |
-| e272ebac-d463-4b98-bc84-5cc1a39ee517 | write       | data, variable sized, recommended 512 bytes, write one for each block of file                                     |
-| 4826129c-c22a-43a3-b066-ce8f0d5bacc6 | write       | crc32, write last - writing this will complete the OTA operation, now you can read result                         |
-| 5e134862-7411-4424-ac4a-210937432c77 | read,notify | result code, readable but will notify when the OTA operation completes                                            |
-| 5e134862-7411-4424-ac4a-210937432c67 | write       | sets the region for programming, currently only 0 (app) or 100 (spiffs) are defined, if not set app is assumed    |
-| GATT_UUID_SW_VERSION_STR/0x2a28      | read        | We also implement these standard GATT entries because SW update probably needs them:                              |
-| GATT_UUID_MANU_NAME/0x2a29           | read        |                                                                                                                   |
-| GATT_UUID_HW_VERSION_STR/0x2a27      | read        |                                                                                                                   |
+| UUID                                 | properties  | description                                                                                                    |
+| ------------------------------------ | ----------- | -------------------------------------------------------------------------------------------------------------- |
+| e74dd9c0-a301-4a6f-95a1-f0e1dbea8e1e | write,read  | total image size, 32 bit, write this first, then read back to see if it was acceptable (0 mean not accepted)   |
+| e272ebac-d463-4b98-bc84-5cc1a39ee517 | write       | data, variable sized, recommended 512 bytes, write one for each block of file                                  |
+| 4826129c-c22a-43a3-b066-ce8f0d5bacc6 | write       | crc32, write last - writing this will complete the OTA operation, now you can read result                      |
+| 5e134862-7411-4424-ac4a-210937432c77 | read,notify | result code, readable but will notify when the OTA operation completes                                         |
+| 5e134862-7411-4424-ac4a-210937432c67 | write       | sets the region for programming, currently only 0 (app) or 100 (spiffs) are defined, if not set app is assumed |
+| GATT_UUID_SW_VERSION_STR/0x2a28      | read        | We also implement these standard GATT entries because SW update probably needs them:                           |
+| GATT_UUID_MANU_NAME/0x2a29           | read        |                                                                                                                |
+| GATT_UUID_HW_VERSION_STR/0x2a27      | read        |                                                                                                                |
 
 #### DeviceInformationService
 

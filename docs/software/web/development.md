@@ -4,7 +4,6 @@ title: Information for developers of the web interface
 sidebar_label: Development
 ---
 
-
 ## Considerations
 
 We have a total of 458,752 bytes (448KB) available on the SPIFFS (Serial Peripheral Interface Flash File System) -- the on-board storage of the ESP32. Of that space, let's not use more than half of that (224KB) in order to leave space for other uses.
@@ -17,15 +16,15 @@ Static files can be placed in the /data folder. All files should be compressed i
 
 As an example, this would mean we will have files such as:
 
-* style.css.gz
-* meshtastic.js.gz
-* meshtasticlogo.png.gz
+- style.css.gz
+- meshtastic.js.gz
+- meshtasticlogo.png.gz
 
 Unless otherwise stated, files in the `/data` folder of the source code will be stored in `/static` on the device.
 
 ## Application Interface
 
-We make extensive use of [Meshtastic.js](https://github.com/meshtastic/meshtastic.js). 
+We make extensive use of [Meshtastic.js](https://github.com/meshtastic/meshtastic.js).
 
 ## Embedded Server
 
@@ -41,8 +40,8 @@ If a file is uploaded in a .gz format, the .gz extension will be stripped prior 
 
 An experimental file system browser with upload and delete capability is available by going to either:
 
-* http://meshtastic.local/static
-* https://meshtastic.local/static
+- http://meshtastic.local/static
+- https://meshtastic.local/static
 
 There are known issues with uploading files with large file sizes.
 

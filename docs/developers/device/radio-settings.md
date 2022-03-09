@@ -59,14 +59,14 @@ Considerations:
 
 We have six predefined channels. These are the most common settings and have been proven to work well:
 
-| Channel setting            | Alt Channel Name | Data-rate            | SF / Symbols | Coding Rate | Bandwidth | Link Budget |
-| :------------------------- | :--------------- | :------------------- | :----------- | :---------- | :-------- | :---------- |
-| Short Range / Fast          | Short Fast       | 18.89 kbps          | 7 / 128      | 4/5         | 500       | 134dB       |
-| Short Range / Slow          | Short Slow       | 4.69 kbps           | 7 / 128      | 4/5         | 125       | 140dB       |
-| Medium Range / Fast        | Medium Fast      | 1.2 kbps            | 10 / 1024    | 4/6         | 250       | 146dB       |
-| Medium Range / Slow        | Medium Slow      | 0.75 kbps           | 11 / 2048    | 4/7         | 250       | 148dB       |
-| Long Range / Fast         | Long Fast        | 0.19 kbps           | 9 / 512      | 4/8         | 31        | 153dB       |
-| Long Range / Slow         | Long Slow        | 0.13 kbps (default) | 12 / 4096    | 4/8         | 125       | 154dB       |
+| Channel setting     | Alt Channel Name | Data-rate           | SF / Symbols | Coding Rate | Bandwidth | Link Budget |
+| :------------------ | :--------------- | :------------------ | :----------- | :---------- | :-------- | :---------- |
+| Short Range / Fast  | Short Fast       | 18.89 kbps          | 7 / 128      | 4/5         | 500       | 134dB       |
+| Short Range / Slow  | Short Slow       | 4.69 kbps           | 7 / 128      | 4/5         | 125       | 140dB       |
+| Medium Range / Fast | Medium Fast      | 1.2 kbps            | 10 / 1024    | 4/6         | 250       | 146dB       |
+| Medium Range / Slow | Medium Slow      | 0.75 kbps           | 11 / 2048    | 4/7         | 250       | 148dB       |
+| Long Range / Fast   | Long Fast        | 0.19 kbps           | 9 / 512      | 4/8         | 31        | 153dB       |
+| Long Range / Slow   | Long Slow        | 0.13 kbps (default) | 12 / 4096    | 4/8         | 125       | 154dB       |
 
 Note: The link budget used by these calculations assumes a transmit power of 17dBm and an antenna with 0dB gain. Adjust your link budget assumptions based on your actual devices. Data-rate in this table is actual measured but doesn't count mesh overhead, hops and retransmissions.
 
@@ -82,17 +82,17 @@ After applying the settings, you will need to restart the device. After your dev
 
 Some example settings:
 
-| Data-rate  | SF / Symbols | Coding Rate | Bandwidth | Link Budget | Note                                                                    |
-| :--------- | :----------- | :---------- | :-------- | :---------- | :---------------------------------------------------------------------- |
-| 37.50 kbps | 6 / 64       | 4/5         | 500       | 129dB       | Fastest possible speed                                                  |
-| 3.125 kbps | 8 / 256      | 4/5         | 125       | 143dB       |                                                                         |
-| 1.953 kbps | 8 / 256      | 4/8         | 125       | 143dB       |                                                                         |
-| 1.343 kbps | 11 / 2048    | 4/8         | 500       | 145dB       |                                                                         |
-| 1.099 kbps | 9 / 512      | 4/8         | 125       | 146dB       |                                                                         |
-| 0.814 kbps | 10 / 1024    | 4/6         | 125       | 149dB       |                                                                         |
-| 0.610 kbps | 10 / 1024    | 4/8         | 125       | 149dB       |                                                                         |
-| 0.488 kbps | 11 / 2048    | 4/6         | 125       | 152dB       |                                                                         |
-| 0.336 kbps | 11 / 2048    | 4/8         | 125       | 152dB       |                                                                         |
+| Data-rate  | SF / Symbols | Coding Rate | Bandwidth | Link Budget | Note                                                                     |
+| :--------- | :----------- | :---------- | :-------- | :---------- | :----------------------------------------------------------------------- |
+| 37.50 kbps | 6 / 64       | 4/5         | 500       | 129dB       | Fastest possible speed                                                   |
+| 3.125 kbps | 8 / 256      | 4/5         | 125       | 143dB       |                                                                          |
+| 1.953 kbps | 8 / 256      | 4/8         | 125       | 143dB       |                                                                          |
+| 1.343 kbps | 11 / 2048    | 4/8         | 500       | 145dB       |                                                                          |
+| 1.099 kbps | 9 / 512      | 4/8         | 125       | 146dB       |                                                                          |
+| 0.814 kbps | 10 / 1024    | 4/6         | 125       | 149dB       |                                                                          |
+| 0.610 kbps | 10 / 1024    | 4/8         | 125       | 149dB       |                                                                          |
+| 0.488 kbps | 11 / 2048    | 4/6         | 125       | 152dB       |                                                                          |
+| 0.336 kbps | 11 / 2048    | 4/8         | 125       | 152dB       |                                                                          |
 | 0.073 kbps | 12 / 4096    | 4/5         | 31        | 160dB       | Twice the range and/or coverage of "Long Slow", low resilience to noise  |
 | 0.046 kbps | 12 / 4096    | 4/8         | 31        | 160dB       | Twice the range and/or coverage of "Long Slow", high resilience to noise |
 

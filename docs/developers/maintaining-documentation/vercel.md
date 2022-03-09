@@ -3,7 +3,9 @@ id: vercel
 title: Vercel
 sidebar_label: Vercel
 ---
+
 ## Overview
+
 Setting up a Vercel account is an optional step that can help you view your changes to the documentation in a server environment just like the actual docs. This can be helpful to include when submitting a pull request so that developers can review your changes and visually check that things look correct.
 
 ## Set up Vercel account

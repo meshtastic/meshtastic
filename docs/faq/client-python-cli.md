@@ -3,6 +3,7 @@ id: client-python-cli
 title: FAQs - CLI
 sidebar_label: CLI
 ---
+
 ## Overview
 
 ### How do I find out more about installing (and using) Meshtastic via command line?

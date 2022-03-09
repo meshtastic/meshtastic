@@ -4,6 +4,7 @@ title: Device Settings
 sidebar_label: Device Settings
 slug: /settings
 ---
+
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -32,25 +33,27 @@ Whether you're using the upcoming [web interface](software/web/web-app-software)
 ## Examples
 
 At the bottom of each setting page, examples will be available displaying how to adjust settings using the various platforms available to interface with your device. The examples will look like this:
+
 ### Introducing Examples
+
 <Tabs
-  groupId="settings"
-  defaultValue="cli"
-  values={[
-    {label: 'CLI', value: 'cli'},
-    {label: 'Android', value: 'android'},
-    {label: 'iOS', value: 'iOS'},
-    {label: 'Web', value: 'web'},
-  ]}>
-  <TabItem value="cli">
+groupId="settings"
+defaultValue="cli"
+values={[
+{label: 'CLI', value: 'cli'},
+{label: 'Android', value: 'android'},
+{label: 'iOS', value: 'iOS'},
+{label: 'Web', value: 'web'},
+]}>
+<TabItem value="cli">
 
 :::note
 The CLI examples will require you to utilize the Command line Interface that is available through Meshtastic-python. Installation instructions can be found [here](software/python/python-installation).
 :::
 
-  ```bash title="Example - Set Region (an important first step!)"
-  meshtastic --set region Unset
-  ```
+```bash title="Example - Set Region (an important first step!)"
+meshtastic --set region Unset
+```
 
   </TabItem>
   <TabItem value="android">

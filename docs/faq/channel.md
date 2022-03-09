@@ -3,6 +3,7 @@ id: channel
 title: FAQs - Channel
 sidebar_label: Channel
 ---
+
 ## Overview
 
 ### What is a Meshtastic Channel?

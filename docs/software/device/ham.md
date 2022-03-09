@@ -4,6 +4,7 @@ title: Licensed (HAM) Operation
 sidebar_label: Licensed (HAM) Operation
 slug: /software/device/ham
 ---
+
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -17,13 +18,13 @@ Having a ham radio license grants you addition privilages and restrictions.
 
 # Additional privilages
 
-* Additional power
-* Higher gain antennas
+- Additional power
+- Higher gain antennas
 
 # Restrictions
 
-* Unencrypted
-* Identified with your ID
+- Unencrypted
+- Identified with your ID
 
 # Let's do it!
 

@@ -4,6 +4,7 @@ title: Getting Started
 sidebar_label: Getting Started
 slug: /getting-started
 ---
+
 import Link from '@docusaurus/Link';
 
 ## What is Meshtastic?

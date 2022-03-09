@@ -3,6 +3,7 @@ id: wifi
 title: WiFi Settings
 sidebar_label: WiFi
 ---
+
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -24,11 +25,11 @@ The first time your device restarts after enabling the WiFi access point, it wil
 
 ## Settings
 
-| Setting | Acceptable Values | Default |
-| :-----: | :---------------: | :-----: |
-| wifi_ap_mode | `true`, `false` | `false` |
-| wifi_password | string | `""` |
-| wifi_ssid | string | `""` |
+|    Setting    | Acceptable Values | Default |
+| :-----------: | :---------------: | :-----: |
+| wifi_ap_mode  |  `true`, `false`  | `false` |
+| wifi_password |      string       |  `""`   |
+|   wifi_ssid   |      string       |  `""`   |
 
 :::note
 `wifi_ssid` & `wifi_password` are both **case sensitive** values.
@@ -39,23 +40,25 @@ The first time your device restarts after enabling the WiFi access point, it wil
 A boolean value that toggles the [Software Access Point](#software-access-point)
 
 #### Enable/Disable Software Access Point
-<Tabs
-  groupId="settings"
-  defaultValue="cli"
-  values={[
-    {label: 'CLI', value: 'cli'},
-    {label: 'Android', value: 'android'},
-    {label: 'iOS', value: 'iOS'},
-    {label: 'Web', value: 'web'},
-  ]}>
-  <TabItem value="cli">
 
-  ```bash title="Enable SoftAP"
-  meshtastic --set wifi_ap_mode true
-  ```
-  ```bash title="Disable SoftAP"
-  meshtastic --set wifi_ap_mode false
-  ```
+<Tabs
+groupId="settings"
+defaultValue="cli"
+values={[
+{label: 'CLI', value: 'cli'},
+{label: 'Android', value: 'android'},
+{label: 'iOS', value: 'iOS'},
+{label: 'Web', value: 'web'},
+]}>
+<TabItem value="cli">
+
+```bash title="Enable SoftAP"
+meshtastic --set wifi_ap_mode true
+```
+
+```bash title="Disable SoftAP"
+meshtastic --set wifi_ap_mode false
+```
 
   </TabItem>
   <TabItem value="android">
@@ -86,22 +89,23 @@ Configuring this setting is not yet available for the selected platform. If this
 In [SoftAP](#software-access-point) mode, this is the password to access your device's WiFi. In [Client](#wifi-client) mode, this is your WiFi Networks password. This string is case sensitive.
 
 <Tabs
-  groupId="settings"
-  defaultValue="cli"
-  values={[
-    {label: 'CLI', value: 'cli'},
-    {label: 'Android', value: 'android'},
-    {label: 'iOS', value: 'iOS'},
-    {label: 'Web', value: 'web'},
-  ]}>
-  <TabItem value="cli">
+groupId="settings"
+defaultValue="cli"
+values={[
+{label: 'CLI', value: 'cli'},
+{label: 'Android', value: 'android'},
+{label: 'iOS', value: 'iOS'},
+{label: 'Web', value: 'web'},
+]}>
+<TabItem value="cli">
 
-  ```bash title="Set WiFi password"
-  meshtastic --set wifi_password mypassword
-  ```
-  ```bash title="Set WiFi password (with spaces)"
-  meshtastic --set wifi_password "my password"
-  ```
+```bash title="Set WiFi password"
+meshtastic --set wifi_password mypassword
+```
+
+```bash title="Set WiFi password (with spaces)"
+meshtastic --set wifi_password "my password"
+```
 
   </TabItem>
   <TabItem value="android">
@@ -132,22 +136,24 @@ Configuring this setting is not yet available for the selected platform. If this
 In [SoftAP](#software-access-point) mode, this is the SSID broadcast to access your device's WiFi. In [Client](#wifi-client) mode, this is your WiFi Networks SSID. This string is case sensitive.
 
 <Tabs
-  groupId="settings"
-  defaultValue="cli"
-  values={[
-    {label: 'CLI', value: 'cli'},
-    {label: 'Android', value: 'android'},
-    {label: 'iOS', value: 'iOS'},
-    {label: 'Web', value: 'web'},
-  ]}>
-  <TabItem value="cli">
+groupId="settings"
+defaultValue="cli"
+values={[
+{label: 'CLI', value: 'cli'},
+{label: 'Android', value: 'android'},
+{label: 'iOS', value: 'iOS'},
+{label: 'Web', value: 'web'},
+]}>
+<TabItem value="cli">
 
-  ```bash title="Set WiFi network"
-  meshtastic --set wifi_ssid mynetwork
-  ```
-  ```bash title="Set WiFi network (with spaces)"
-  meshtastic --set wifi_ssid "my network"
-  ```
+```bash title="Set WiFi network"
+meshtastic --set wifi_ssid mynetwork
+```
+
+```bash title="Set WiFi network (with spaces)"
+meshtastic --set wifi_ssid "my network"
+```
+
   </TabItem>
   <TabItem value="android">
 
@@ -194,10 +200,10 @@ You should then be able to connect to the node using either the displayed IP add
 
 You can also enable the SoftAP by following these directions:
 
-* Hold down the user button
-* Press and release the reset button
-* Count to two
-* Let go of the user button
+- Hold down the user button
+- Press and release the reset button
+- Count to two
+- Let go of the user button
 
 This will reboot the device with the SSID set to `meshtasticAdmin` and the password set to `12345678`. Using the Force SoftAP method, once you reboot, the SoftAP will be turned off.
 
@@ -236,29 +242,32 @@ To disable WiFi completely, set `wifi_ap_mode` to `false`, and both `wifi_ssid` 
 ## Examples
 
 ### Enable WiFi (as client)
-<Tabs
-  groupId="settings"
-  defaultValue="cli"
-  values={[
-    {label: 'CLI', value: 'cli'},
-    {label: 'Android', value: 'android'},
-    {label: 'iOS', value: 'iOS'},
-    {label: 'Web', value: 'web'},
-  ]}>
-  <TabItem value="cli">
 
-  ```bash title="Enabling WiFi Client"
-  meshtastic --set wifi_ap_mode false --set wifi_ssid mywifissid --set wifi_password mywifipassword
-  ```
+<Tabs
+groupId="settings"
+defaultValue="cli"
+values={[
+{label: 'CLI', value: 'cli'},
+{label: 'Android', value: 'android'},
+{label: 'iOS', value: 'iOS'},
+{label: 'Web', value: 'web'},
+]}>
+<TabItem value="cli">
+
+```bash title="Enabling WiFi Client"
+meshtastic --set wifi_ap_mode false --set wifi_ssid mywifissid --set wifi_password mywifipassword
+```
 
 :::note
 If your `wifi_ssid` or `wifi_password` contain spaces, be sure to put quotation marks around the whole thing:
+
 ```bash title="Example with spaces"
 meshtastic --set wifi_ssid "my wifi ssid" --set wifi_password "my wifi password"
 ```
+
 :::
-  </TabItem>
-  <TabItem value="android">
+</TabItem>
+<TabItem value="android">
 
 :::info
 Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
@@ -284,29 +293,30 @@ Configuring this setting is not yet available for the selected platform. If this
 In the above example, the device will join a network with the SSID `mywifissid` and the password `mywifipassword`.
 
 ### Enable WiFi (as SoftAP)
-<Tabs
-  groupId="settings"
-  defaultValue="cli"
-  values={[
-    {label: 'CLI', value: 'cli'},
-    {label: 'Android', value: 'android'},
-    {label: 'iOS', value: 'iOS'},
-    {label: 'Web', value: 'web'},
-  ]}>
-  <TabItem value="cli">
 
-  ```bash title="Software Access Point Example"
-  meshtastic --set wifi_ap_mode true --set wifi_ssid mywifissid --set wifi_password mywifipassword
-  ```
+<Tabs
+groupId="settings"
+defaultValue="cli"
+values={[
+{label: 'CLI', value: 'cli'},
+{label: 'Android', value: 'android'},
+{label: 'iOS', value: 'iOS'},
+{label: 'Web', value: 'web'},
+]}>
+<TabItem value="cli">
+
+```bash title="Software Access Point Example"
+meshtastic --set wifi_ap_mode true --set wifi_ssid mywifissid --set wifi_password mywifipassword
+```
 
 :::note
 If your `wifi_ssid` or `wifi_password` contain spaces, be sure to put quotation marks around the whole thing:
+
 ```bash title="Example with spaces"
 meshtastic --set wifi_ssid "my wifi ssid" --set wifi_password "my wifi password"
 ```
+
 :::
-
-
 
   </TabItem>
   <TabItem value="android">
@@ -335,21 +345,21 @@ Configuring this setting is not yet available for the selected platform. If this
 In the above example, the device will broadcast a network with the SSID `mywifissid` and the password `mywifipassword`.
 
 ### Disable WiFi Completely
+
 <Tabs
-  groupId="settings"
-  defaultValue="cli"
-  values={[
-    {label: 'CLI', value: 'cli'},
-    {label: 'Android', value: 'android'},
-    {label: 'iOS', value: 'iOS'},
-    {label: 'Web', value: 'web'},
-  ]}>
-  <TabItem value="cli">
+groupId="settings"
+defaultValue="cli"
+values={[
+{label: 'CLI', value: 'cli'},
+{label: 'Android', value: 'android'},
+{label: 'iOS', value: 'iOS'},
+{label: 'Web', value: 'web'},
+]}>
+<TabItem value="cli">
 
-  ```bash title="Example - Disabling WiFi"
-  meshtastic --set wifi_ap_mode false --set wifi_ssid "" --set wifi_password ""
-  ```
-
+```bash title="Example - Disabling WiFi"
+meshtastic --set wifi_ap_mode false --set wifi_ssid "" --set wifi_password ""
+```
 
   </TabItem>
   <TabItem value="android">
