@@ -19,7 +19,7 @@ The following applications are available to support your Meshtastic network:
   - [Canned messages](/docs/software/modules/canned-message-module)
   - [Serial communication](/docs/software/modules/serial-module)
   - [Store and forwarding messages](/docs/software/modules/store-forward-module) (in development)
-  - [Environment measurement](/docs/software/modules/environment-module) (in development)
+  - [Telemetry](/docs/software/modules/telemetry-module) (in development)
 - Community projects include:
   - A [module](/docs/software/community/community-atak) for the [Android Team Awareness Kit (ATAK)](https://play.google.com/store/apps/details?id=com.atakmap.app.civ)
   - [PyGUI](/docs/software/community/community-pygui), a platform agnostic graphical user interface for devices
