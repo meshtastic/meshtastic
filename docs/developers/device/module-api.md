@@ -8,7 +8,7 @@ This is a tutorial on how to write small modules which run on the device. Module
 
 ## Key concepts
 
-All modules should be subclasses of MeshPlugin. By inheriting from this class and creating an instance of your new module your module will be automatically registered to receive packets.
+All modules should be subclasses of MeshModule. By inheriting from this class and creating an instance of your new module your module will be automatically registered to receive packets.
 
 Messages are sent to particular port numbers (similar to UDP networking). Your new module should eventually pick its own port number (see below), but at first you can simply use PRIVATE_APP (which is the default).
 
@@ -18,11 +18,11 @@ Packets can be sent/received either as raw binary structures or as [Protobufs](h
 
 The relevant bits of the class hierarchy are as follows
 
-- [MeshPlugin](http://github.com/meshtastic/meshtastic-device/tree/master/src/mesh/MeshPlugin.h) (in src/mesh/MeshPlugin.h) - you probably don't want to use this baseclass directly
-  - [SinglePortPlugin](http://github.com/meshtastic/meshtastic-device/tree/master/src/mesh/SinglePortPlugin.h) (in src/mesh/SinglePortPlugin.h) - for modules that send/receive from a single port number (the normal case)
-    - [ProtobufPlugin](http://github.com/meshtastic/meshtastic-device/tree/master/src/mesh/ProtobufPlugin.h) (in src/mesh/ProtobufPlugin.h) - for modules that send/receive a single particular Protobuf type. Inherit from this if you are using protocol buffers in your module.
+- [MeshModule](http://github.com/meshtastic/meshtastic-device/tree/master/src/mesh/MeshModule.h) (in src/mesh/MeshModule.h) - you probably don't want to use this baseclass directly
+  - [SinglePortModule](http://github.com/meshtastic/meshtastic-device/tree/master/src/mesh/SinglePortModule.h) (in src/mesh/SinglePortModule.h) - for modules that send/receive from a single port number (the normal case)
+    - [ProtobufModule](http://github.com/meshtastic/meshtastic-device/tree/master/src/mesh/ProtobufModule.h) (in src/mesh/ProtobufModule.h) - for modules that send/receive a single particular Protobuf type. Inherit from this if you are using protocol buffers in your module.
 
-You will typically want to inherit from either SinglePortPlugin (if you are just sending/receiving raw bytes) or ProtobufPlugin (if you are sending/receiving protobufs). You'll implement your own handleReceived/handleReceivedProtobuf - probably based on the example code.
+You will typically want to inherit from either SinglePortModule (if you are just sending/receiving raw bytes) or ProtobufModule (if you are sending/receiving protobufs). You'll implement your own handleReceived/handleReceivedProtobuf - probably based on the example code.
 
 If your module needs to perform any operations at startup you can override and implement the setup() method to run your code.
 
