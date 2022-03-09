@@ -48,7 +48,7 @@ A number of [key services](http://github.com/meshtastic/meshtastic-device/tree/m
 
 The easiest way to get started is:
 
-- [Build and install](/docs/software/other/build-instructions) the standard codebase from GitHub.
+- [Build and install](/docs/developers/firmware/build-env) the standard codebase from GitHub.
 - Copy [src/modules/ReplyModule.\*](http://github.com/meshtastic/meshtastic-device/tree/master/src/modules/ReplyModule.cpp) into src/modules/YourModule.*. Then change the port number from *PortNum_REPLY_APP* to *PortNum_PRIVATE_APP\*.
 - Edit moduless/Moduless.cpp:setupModules() to add a call to create an instance of your module (see comment at head of that function)
 - Rebuild with your new messaging goodness and install on the device
@@ -72,7 +72,7 @@ If you are making a new app using meshtastic, please send in a pull request to a
 - **0-63** Core Meshtastic use; do not use for third party apps
 - **64-127** Registered 3rd party apps. Send in a pull request that adds a new entry to portnums.proto to register your application
 - **256-511** Use one of these portnums for your private applications that you don't want to register publicly
-- **1024-66559** Are reserved for use by IP tunneling (see [here](/docs/developers/device/portnum) for more information)
+- **1024-66559** Are reserved for use by IP tunneling (see [here](/docs/developers/firmware/portnum) for more information)
 
 All other values are reserved.
 

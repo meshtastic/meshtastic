@@ -109,7 +109,7 @@ FIXME - explain this more, talk about how useful for users and security domains.
 
 ## On device API
 
-For information on the related on-device API see [here](/docs/developers/device/device-api).
+For information on the related on-device API see [here](/docs/developers/firmware/device-api).
 
 ## MQTT transport
 

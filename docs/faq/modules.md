@@ -16,4 +16,4 @@ A list of available modules is available [here](/docs/software/modules).
 
 ### I'd like to write a module. How do I get started?
 
-API documentation for creating modules is available [here](/docs/developers/device/module-api).
+API documentation for creating modules is available [here](/docs/developers/firmware/module-api).

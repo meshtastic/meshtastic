@@ -53,7 +53,7 @@ Requires: [Python](https://www.python.org) and [esptool.py](https://github.com/e
 
 ### Visual Studio & PlatformIO
 
-There is also the method of using the Visual Studio IDE. This requires having Visual Studio and PlatformIO installed, along with having cloned the meshtastic-device code as per the [build instructions](/docs/software/other/build-instructions). After loading the project in Visual Studio, select the PlatformIO alien icon, then find the appropriate device, and then click the Erase Flash command.
+There is also the method of using the Visual Studio IDE. This requires having Visual Studio and PlatformIO installed, along with having cloned the meshtastic-device code as per the [build instructions](/docs/developers/firmware/build-env). After loading the project in Visual Studio, select the PlatformIO alien icon, then find the appropriate device, and then click the Erase Flash command.
 
 ![Erasing the flash using PlatformIO in Visual Studio Code](/img/platformio-erase.png)
 
