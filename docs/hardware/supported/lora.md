@@ -21,7 +21,6 @@ sidebar_label: LILYGO® Lora
 
 [<img alt="LILYGO® TTGO Lora V1" src="/img/hardware/lora-v1.png" style={{zoom:'25%'}} />](/img/hardware/lora-v1.png)
 
-
 ## Lora V1.3
 
 - ESP32 - Wifi & Bluetooth
@@ -58,7 +57,6 @@ sidebar_label: LILYGO® Lora
 - [Purchase link](https://www.aliexpress.com/item/32846302183.html)
 
 [<img alt="LILYGO® TTGO Lora V2" src="/img/hardware/lora-v2.0.png" style={{zoom:'25%'}} />](/img/hardware/lora-v2.0.png)
-
 
 ## Lora V2.1-1.6
 

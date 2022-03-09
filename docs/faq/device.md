@@ -3,11 +3,12 @@ id: device
 title: FAQs - Device
 sidebar_label: Device
 ---
+
 ## Overview
 
 ### Where do I purchase the device hardware?
 
-Each [supported device](https://meshtastic.org/docs/hardware/supported/tbeam) has a "Purchase Link".
+Each [supported device](/docs/hardware/supported/tbeam) has a "Purchase Link".
 
 ### I have my hardware. How do I install the firmware and any required drivers?
 
@@ -35,5 +36,5 @@ Push the left PWR button for about 1 second.
 
 ### How can I tell the device not to sleep?
 
-- Android instructions see: [Android Usage](https://meshtastic.org/docs/software/android/android-usage#configuration-options)
-- Python CLI instructions see: [Python Usage](https://meshtastic.org/docs/software/python/python-cli#changing-device-settings)
+- Android instructions see: [Android Usage](/docs/software/android/android-usage#configuration-options)
+- Python CLI instructions see: [Python Usage](/docs/software/python/python-cli#changing-device-settings)

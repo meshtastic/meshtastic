@@ -3,6 +3,7 @@ id: client-android
 title: FAQs - Android
 sidebar_label: Android
 ---
+
 ## Overview
 
 ### What versions of Android does the Meshtastic Android App require?

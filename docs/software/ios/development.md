@@ -4,11 +4,11 @@ title: iOS application development
 sidebar_label: App development
 ---
 
-The Meshtastic iOS app is currently available in TestFlight as a public beta with a projected App Store release in early 2022.  
+The Meshtastic iOS app is currently available in TestFlight as a public beta with a projected App Store release in early 2022.
 
 There are plenty of remaining beta spaces available and there are no codes.
 
- iOS 15 is required and you can sign up by opening the following link on any iOS device with TestFlight installed.
+iOS 15 is required and you can sign up by opening the following link on any iOS device with TestFlight installed.
 
 https://testflight.apple.com/join/c8nNl8q1
 
@@ -16,5 +16,5 @@ An alpha MacOS application is available in the beta TestFlight app for MacOS cur
 
 Code from two previous community projects is also available.
 
-* https://github.com/jeksys/Meshtastic-iOS
-* https://github.com/thepoweroftwo/meshtastic-ios
+- https://github.com/jeksys/Meshtastic-iOS
+- https://github.com/thepoweroftwo/meshtastic-ios

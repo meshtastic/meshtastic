@@ -16,11 +16,12 @@ sudo pip install --upgrade pip
 git clone https://github.com/meshtastic/esp32-arduino-lib-builder
 cd esp32-arduino-lib-builder
 ```
+
 Install esp-idf (needed if you want to `make menuconfig`, `build.sh` will install it automatically if needed):
 
 ```bash
 ./tools/install-esp-idf.sh
-``` 
+```
 
 Run menuconfig and change options as needed:
 
@@ -32,7 +33,7 @@ make IDF_PATH=$(pwd)/esp-idf menuconfig
 
 ```bash
 cd components/arduino/libraries/AzureIoT
-wget https://patch-diff.githubusercontent.com/raw/VSChina/ESP32_AzureIoT_Arduino/pull/15.patch 
+wget https://patch-diff.githubusercontent.com/raw/VSChina/ESP32_AzureIoT_Arduino/pull/15.patch
 patch -p1 < 15.patch
 cd ../../../../
 ```
@@ -50,7 +51,7 @@ Copy SDK files into the PlatformIO framework:
 ```
 
 Flash the new bootloader if needed:
- 
+
 ```bash
 esp-idf/components/esptool_py/esptool/esptool.py --chip esp32 --port your_port --baud 921600 --before default_reset --after hard_reset write_flash -z --flash_mode dout --flash_freq 40m --flash_size detect 0x1000 build/bootloader/bootloader.bin
 ```

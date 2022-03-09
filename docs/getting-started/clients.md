@@ -3,7 +3,8 @@ id: clients
 title: Meshtastic Clients
 sidebar_label: Meshtastic Clients
 ---
-import { DownloadCard } from '/src/pages/downloads/_components/DownloadCard.tsx'
+
+import { DownloadCard } from '/src/pages/downloads/\_components/DownloadCard.tsx'
 
 ## Overview
 
@@ -20,14 +21,17 @@ To install/upgrade Meshtastic-python manually, see below:
 ```bash title="Install Meshtastic-python (includes CLI)"
 pip install meshtastic
 ```
+
 ```bash title="Upgrade Meshtastic-python (includes CLI)"
 pip install --upgrade meshtastic
 ```
+
 :::note
 Some installations of python may require you to substitute 'pip3' for the 'pip' command.
 :::
 
 ### Mobile Client Downloads
+
 <ul
   style={{
     position: "relative",
@@ -57,7 +61,7 @@ Using your preferred program (PuTTy, Serial, etc) connect to your device with th
 
 | Baudrate | Data Bits | Parity | Stop Bits |
 | :------: | :-------: | :----: | :-------: |
-| `921600` | `8` | `None` | `1` |
+| `921600` |    `8`    | `None` |    `1`    |
 
 ### Web
 

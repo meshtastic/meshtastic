@@ -3,6 +3,7 @@ id: flashing-firmware
 title: Firmware Flashing Prerequisites
 sidebar_label: Prerequisites
 ---
+
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -34,14 +35,14 @@ If you don't see your device in the following test, you either:
 2. Are currently using a charging only cable.
 
 <Tabs
-  groupId="operating-system"
-  defaultValue="linux"
-  values={[
-  {label: 'Linux', value: 'linux'},
-  {label: 'macOS', value: 'macos'},
-  {label: 'Windows', value: 'windows'},
-  ]}>
-  <TabItem value="linux">
+groupId="operating-system"
+defaultValue="linux"
+values={[
+{label: 'Linux', value: 'linux'},
+{label: 'macOS', value: 'macos'},
+{label: 'Windows', value: 'windows'},
+]}>
+<TabItem value="linux">
 Connect your Meshtastic device to your USB port, open a `Terminal` and enter the following command:
 
 ```bash
@@ -49,8 +50,8 @@ lsusb
 ```
 
 You should see something like: `ID xxxx:xxxx Silicon Labs CP210x UART Bridge`, `ID xxxx:xxxx QinHeng Electronics USB Single Serial`, or `FIXME (WISBLOCK OUTPUT)`.
-  </TabItem>
-  <TabItem value="macos">
+</TabItem>
+<TabItem value="macos">
 
 Navigate to `Apple Menu  > About This Mac > System Report... > Hardware > USB`. You should see something like `CP210X USB to UART Bridge Controller`, `CH9102 USB to UART Bridge Controller`, or `WisCore RAK4631 Board`. If not download the appropriate drivers below.
 
@@ -71,14 +72,14 @@ You may need to install a driver from Silicon Labs for the [CP210X USB to UART b
 Some newer boards may require the CH9102 (CH340/CH341) Driver.
 
 <Tabs
-  groupId="operating-system"
-  defaultValue="linux"
-  values={[
-  {label: 'Linux', value: 'linux'},
-  {label: 'macOS', value: 'macos'},
-  {label: 'Windows', value: 'windows'},
-  ]}>
-  <TabItem value="linux">
+groupId="operating-system"
+defaultValue="linux"
+values={[
+{label: 'Linux', value: 'linux'},
+{label: 'macOS', value: 'macos'},
+{label: 'Windows', value: 'windows'},
+]}>
+<TabItem value="linux">
 
 [CP210X USB to UART bridge - Download](https://www.silabs.com/products/development-tools/software/usb-to-uart-bridge-vcp-drivers)
 
@@ -110,14 +111,14 @@ Reboot your computer after you have installed the driver to complete the install
 ### NRF52 Drivers
 
 <Tabs
-  groupId="operating-system"
-  defaultValue="linux"
-  values={[
-  {label: 'Linux', value: 'linux'},
-  {label: 'macOS', value: 'macos'},
-  {label: 'Windows', value: 'windows'},
-  ]}>
-  <TabItem value="linux">
+groupId="operating-system"
+defaultValue="linux"
+values={[
+{label: 'Linux', value: 'linux'},
+{label: 'macOS', value: 'macos'},
+{label: 'Windows', value: 'windows'},
+]}>
+<TabItem value="linux">
 
 [CH9102 Driver - Linux Download](http://www.wch-ic.com/downloads/CH341SER_LINUX_ZIP.html)
 
@@ -145,7 +146,6 @@ With the latest versions of MacOS, the USB Serial driver is built-in. Do _NOT_ d
 </details>
 
 :::
-
 
   </TabItem>
   <TabItem value="windows">

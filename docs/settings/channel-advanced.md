@@ -3,6 +3,7 @@ id: channel-advanced
 title: Channel Settings - Advanced
 sidebar_label: Channel
 ---
+
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -16,14 +17,14 @@ Most users should not need to change these settings. The default [modem_config](
 
 ## Settings
 
-| Setting | Acceptable Values | Default |
-| :-----: | :---------------: | :-----: |
-| bandwidth | `10.4`, `15.6`, `20.8`, `31.25`, `41.7`, `62.5`, `125`, `250`, `500` | `125` |
-| channel_num | Depends on Region | Region Channel Number Default |
-| coding_rate | `5`, `6`, `7`, `8` | `5` |
-| frequency_offset | real numbers | `0` |
-| spread_factor | `7`, `8`, `9`, `10`, `11`, `12` | `7` |
-| tx_power | `0`, `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9`, `10`, `11`, `12`, `13`, `14`, `15`, `16`, `17`, (dBm) | `0` |
+|     Setting      |                                         Acceptable Values                                          |            Default            |
+| :--------------: | :------------------------------------------------------------------------------------------------: | :---------------------------: |
+|    bandwidth     |                `10.4`, `15.6`, `20.8`, `31.25`, `41.7`, `62.5`, `125`, `250`, `500`                |             `125`             |
+|   channel_num    |                                         Depends on Region                                          | Region Channel Number Default |
+|   coding_rate    |                                         `5`, `6`, `7`, `8`                                         |              `5`              |
+| frequency_offset |                                            real numbers                                            |              `0`              |
+|  spread_factor   |                                  `7`, `8`, `9`, `10`, `11`, `12`                                   |              `7`              |
+|     tx_power     | `0`, `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9`, `10`, `11`, `12`, `13`, `14`, `15`, `16`, `17`, (dBm) |              `0`              |
 
 ### bandwidth
 
@@ -32,15 +33,15 @@ Total amount of spectrum used for the transmission.
 #### Set Bandwidth
 
 <Tabs
-  groupId="settings"
-  defaultValue="cli"
-  values={[
-    {label: 'CLI', value: 'cli'},
-    {label: 'Android', value: 'android'},
-    {label: 'iOS', value: 'iOS'},
-    {label: 'Web', value: 'web'},
-  ]}>
-  <TabItem value="cli">
+groupId="settings"
+defaultValue="cli"
+values={[
+{label: 'CLI', value: 'cli'},
+{label: 'Android', value: 'android'},
+{label: 'iOS', value: 'iOS'},
+{label: 'Web', value: 'web'},
+]}>
+<TabItem value="cli">
 
 ```bash
 meshtastic --ch-set bandwidth 125 --ch-index 0
@@ -77,15 +78,15 @@ An abstraction that maps to a specific center frequency used for transmission.
 #### Set Channel Number
 
 <Tabs
-  groupId="settings"
-  defaultValue="cli"
-  values={[
-    {label: 'CLI', value: 'cli'},
-    {label: 'Android', value: 'android'},
-    {label: 'iOS', value: 'iOS'},
-    {label: 'Web', value: 'web'},
-  ]}>
-  <TabItem value="cli">
+groupId="settings"
+defaultValue="cli"
+values={[
+{label: 'CLI', value: 'cli'},
+{label: 'Android', value: 'android'},
+{label: 'iOS', value: 'iOS'},
+{label: 'Web', value: 'web'},
+]}>
+<TabItem value="cli">
 
 :::info
 Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
@@ -122,15 +123,15 @@ The amount of forward error correction applied to allow for us to automatically 
 #### Set Coding Rate
 
 <Tabs
-  groupId="settings"
-  defaultValue="cli"
-  values={[
-    {label: 'CLI', value: 'cli'},
-    {label: 'Android', value: 'android'},
-    {label: 'iOS', value: 'iOS'},
-    {label: 'Web', value: 'web'},
-  ]}>
-  <TabItem value="cli">
+groupId="settings"
+defaultValue="cli"
+values={[
+{label: 'CLI', value: 'cli'},
+{label: 'Android', value: 'android'},
+{label: 'iOS', value: 'iOS'},
+{label: 'Web', value: 'web'},
+]}>
+<TabItem value="cli">
 
 ```bash
 meshtastic --ch-set coding_rate 8 --ch-index 0
@@ -167,15 +168,15 @@ This parameter is for advanced users with advanced test equipment, we do not rec
 #### Configure frequency_offset
 
 <Tabs
-  groupId="settings"
-  defaultValue="cli"
-  values={[
-    {label: 'CLI', value: 'cli'},
-    {label: 'Android', value: 'android'},
-    {label: 'iOS', value: 'iOS'},
-    {label: 'Web', value: 'web'},
-  ]}>
-  <TabItem value="cli">
+groupId="settings"
+defaultValue="cli"
+values={[
+{label: 'CLI', value: 'cli'},
+{label: 'Android', value: 'android'},
+{label: 'iOS', value: 'iOS'},
+{label: 'Web', value: 'web'},
+]}>
+<TabItem value="cli">
 
 :::info
 Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
@@ -212,15 +213,15 @@ LoRa is a spread spectrum technology. spread_factor is how much the signal is sp
 #### Set Spread Factor
 
 <Tabs
-  groupId="settings"
-  defaultValue="cli"
-  values={[
-    {label: 'CLI', value: 'cli'},
-    {label: 'Android', value: 'android'},
-    {label: 'iOS', value: 'iOS'},
-    {label: 'Web', value: 'web'},
-  ]}>
-  <TabItem value="cli">
+groupId="settings"
+defaultValue="cli"
+values={[
+{label: 'CLI', value: 'cli'},
+{label: 'Android', value: 'android'},
+{label: 'iOS', value: 'iOS'},
+{label: 'Web', value: 'web'},
+]}>
+<TabItem value="cli">
 
 ```bash
 meshtastic --ch-set spread_factor 12 --ch-index 0
@@ -263,22 +264,23 @@ Ensure that you are not exceeding your country's regulations.
 #### Set TX Power
 
 <Tabs
-  groupId="settings"
-  defaultValue="cli"
-  values={[
-    {label: 'CLI', value: 'cli'},
-    {label: 'Android', value: 'android'},
-    {label: 'iOS', value: 'iOS'},
-    {label: 'Web', value: 'web'},
-  ]}>
-  <TabItem value="cli">
+groupId="settings"
+defaultValue="cli"
+values={[
+{label: 'CLI', value: 'cli'},
+{label: 'Android', value: 'android'},
+{label: 'iOS', value: 'iOS'},
+{label: 'Web', value: 'web'},
+]}>
+<TabItem value="cli">
 
-  ```bash title="Set Default"
-  meshtastic --ch-set tx_power 0 --ch-index 0
-  ```
-  ```bash title="Set to 2dBM"
-  meshtastic --ch-set tx_power 2 --ch-index 0
-  ```
+```bash title="Set Default"
+meshtastic --ch-set tx_power 0 --ch-index 0
+```
+
+```bash title="Set to 2dBM"
+meshtastic --ch-set tx_power 2 --ch-index 0
+```
 
   </TabItem>
   <TabItem value="android">

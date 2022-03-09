@@ -47,7 +47,6 @@ The cloud icon at the top right corner indicates if you are connected to a devic
 
 ![Sleeping](/img/android/android-cloud-up.png) Cloud with an up arrow in it: Device is connected, but currently sleeping or out of range.
 
-
 ## Common tasks
 
 Once you are connected to a device, the App will work, and you can test it by "sending" a message. However, you will need to join or create a new mesh network so you have someone to communicate with. If you have been sent a QR code or link for Meshtastic, then skip ahead to [Join a Channel](#join-a-channel), otherwise you will need to Setup a Channel.
@@ -107,14 +106,14 @@ You can test changing channels with the QR code shown below.
 
 Various data-rates are selectable when configuring a channel and are inversely proportional to the theoretical range of the devices:
 
-| Channel setting        | Data-rate            |
-|------------------------|----------------------|
-| Short Range / Fast	 | 19346.94 bps         |
-| Short Range / Slow	 | 4800.00 bps          |
-| Medium Range / Fast	 | 1227.18 bps          |
-| Medium Range / Slow	 | 763.29 bps           |
-| Long Range / Fast	 | 196.74 bps           |
-| long Range / Slow      | 136.71 bps (default) |
+| Channel setting     | Data-rate            |
+| ------------------- | -------------------- |
+| Short Range / Fast  | 19346.94 bps         |
+| Short Range / Slow  | 4800.00 bps          |
+| Medium Range / Fast | 1227.18 bps          |
+| Medium Range / Slow | 763.29 bps           |
+| Long Range / Fast   | 196.74 bps           |
+| long Range / Slow   | 136.71 bps (default) |
 
 ### Send a message
 
@@ -122,10 +121,10 @@ The message window operates like any chat applications. Note that any messages s
 
 With LoRa (or any radio) there is some uncertainty that the messages has been received, so there is a confirmation built-in to the protocol. There are small cloud icons shown to the right of the messages you send:
 
-* Cloud with an up arrow: the application is waiting for the device to some out of sleep mode (or come back into Bluetooth range), to upload the message to the device.
-* Cloud only: message has been sent via Bluetooth and transmitted via LoRa.
-* Cloud with a check mark: message has been delivered to at least one node in the mesh and at least one node sent back a confirmation (successfully received by the initial sender).
-* Cloud crossed out: message may have been delivered to at least one node in the mesh. The initial sender did not receive at least one node's confirmation within a certain timeout.
+- Cloud with an up arrow: the application is waiting for the device to some out of sleep mode (or come back into Bluetooth range), to upload the message to the device.
+- Cloud only: message has been sent via Bluetooth and transmitted via LoRa.
+- Cloud with a check mark: message has been delivered to at least one node in the mesh and at least one node sent back a confirmation (successfully received by the initial sender).
+- Cloud crossed out: message may have been delivered to at least one node in the mesh. The initial sender did not receive at least one node's confirmation within a certain timeout.
 
 Thus, in a group size of 3 and up, confirmations could be from any one device (not person), so it is good practice to respond, so the initial sender knows you have read their message.
 
@@ -147,8 +146,7 @@ The Map tab will show a local map with an icon for each active mesh node that ha
 
 [![Mapping provided by Mapbox](/img/android/android-map-sm.png)](/img/android/android-map.png)
 
-The map is not developed by the Meshtastic project, and the source of the mapping system is [Mapbox](https://docs.mapbox.com/help/how-mapbox-works/) (free-tier), and the map data is sourced from [OpenStreetMap OSM](https://www.openstreetmap.org/). Mapbox currently requires analytics to be enabled for you to use their mapping system. There is currently no off-line maps (phone needs mobile data or Wifi), although this will be improved in the future. If you don't see the features that you'd expect on the map then head over to [OpenStreetMap OSM](https://www.openstreetmap.org/) where you can contribute new data to the map.
-
+The map is not developed by the Meshtastic project, and the source of the mapping system is [Mapbox](https://docs.mapbox.com/help/how-mapbox-works) (free-tier), and the map data is sourced from [OpenStreetMap OSM](https://www.openstreetmap.org). Mapbox currently requires analytics to be enabled for you to use their mapping system. There is currently no off-line maps (phone needs mobile data or Wifi), although this will be improved in the future. If you don't see the features that you'd expect on the map then head over to [OpenStreetMap OSM](https://www.openstreetmap.org) where you can contribute new data to the map.
 
 ## Configuration options
 

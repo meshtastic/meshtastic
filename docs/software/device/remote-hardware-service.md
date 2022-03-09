@@ -9,7 +9,7 @@ GPIO access is fundamentally dangerous because invalid options can physically da
 :::
 
 :::note
-This feature uses a preinstalled plugin in the device code and associated command line flags/classes in the python code.  You'll need to be running at least version 1.2.23 (or later) of the python and device code to use this feature.
+This feature uses a preinstalled module in the device code and associated command line flags/classes in the python code. You'll need to be running at least version 1.2.23 (or later) of the python and device code to use this feature.
 :::
 
 You can get the latest python tool/library with `pip3 install --upgrade meshtastic` on Windows/Linux/OS-X. See the [python section](/docs/software/python/python-installation) for more details.
@@ -22,34 +22,33 @@ You can get the latest python tool/library with `pip3 install --upgrade meshtast
 
 ## Setup
 
-
-To prevent access from untrusted users, you must first make a `gpio` channel that is used for authenticated access to this feature.  You'll need to install this channel on both the local and remote node.
+To prevent access from untrusted users, you must first make a `gpio` channel that is used for authenticated access to this feature. You'll need to install this channel on both the local and remote node.
 
 The procedure using the python command line tool is:
 
 1. Connect local device via USB
 
 2. Create a gpio channel
-    ```bash
-    meshtastic --ch-add gpio
-    ```
+   ```bash
+   meshtastic --ch-add gpio
+   ```
 
 :::tip
 If doing local testing, may want to change the speed of the channel at this time, too. (ex: "meshtastic --ch-mediumfast")
 :::
 
 3. Check the channel has been created and copy the long "Complete URL" that contains all the channels on that device
-    ```bash
-    meshtastic --info
-    ```
+
+   ```bash
+   meshtastic --info
+   ```
 
 4. Connect the remote device via USB (or use the [remote admin](device-remote-admin) feature to reach it through the mesh)
 
 5. Set it to join the gpio channel you created
-    ```bash
-    meshtastic --seturl theurlyoucopiedinstep3
-    ```
-
+   ```bash
+   meshtastic --seturl theurlyoucopiedinstep3
+   ```
 
 Now both devices should be able to talk over the `gpio` channel. Send a text message from one the other other verify. Also run "--nodes" to verify the second node shows up.
 
@@ -112,32 +111,34 @@ GPIO:44 mask:0x100000000000
 You can add a simple LED and resistor to validate that the GPIO operations work as expected. Used the tutorial at https://www.instructables.com/Slide-Switch-With-Arduino-Uno-R3/ as a guide.
 
 Need:
-* 2 Meshtastic devices (one device could be on a local computer, and the other one just has to be powered and is the one with the LED to be connected to it)
-* 2 wires (black and yellow; they can be any color but typically black is used for ground)
-* breadboard (optional)
-* 1 LED
-* 1 220Ω resistor (somewhat optional, but recommended)
+
+- 2 Meshtastic devices (one device could be on a local computer, and the other one just has to be powered and is the one with the LED to be connected to it)
+- 2 wires (black and yellow; they can be any color but typically black is used for ground)
+- breadboard (optional)
+- 1 LED
+- 1 220Ω resistor (somewhat optional, but recommended)
 
 Prep:
-* disconnect the remote device from power (battery/usb)
-* add a resistor from yellow wire to the one end of the LED (either end of the resistor is ok, either end of the LED is ok)
-* add the yellow wire from a GPIO pin that will not cause any issues (ex: for TLoraV1, we can use GPIO21)
-* add the black "ground" wire from the ground pin on the device (ex: for TLoraV1 it is the end pin next to the RST button) to the other end of the LED
-* power on the device
+
+- disconnect the remote device from power (battery/usb)
+- add a resistor from yellow wire to the one end of the LED (either end of the resistor is ok, either end of the LED is ok)
+- add the yellow wire from a GPIO pin that will not cause any issues (ex: for TLoraV1, we can use GPIO21)
+- add the black "ground" wire from the ground pin on the device (ex: for TLoraV1 it is the end pin next to the RST button) to the other end of the LED
+- power on the device
 
 Validation:
 By default, the pin may be "off" or "on". (It will most likely "off".) See the steps below for running commands. In the example of GPIO21, the mask would be 0x200000.
 
 [<img alt="T-Lora v1 with LED on GPIO 21" src="/img/LED_on_TLoraV1.jpg" style={{zoom:'25%'}} />](/img/LED_on_TLoraV1.jpg)
 
-
 ## Doing GPIO operations
 
-You can programmatically do operations from your own python code by using the Meshtastic `RemoteHardwareClient` class. See the [python API](https://meshtastic.org/docs/software/python/python-installation) documentation for more details.
+You can programmatically do operations from your own python code by using the Meshtastic `RemoteHardwareClient` class. See the [python API](/docs/software/python/python-installation) documentation for more details.
 
 ## Using GPIOs from the python CLI
 
 Writing a GPIO (ex: turn "on" GPIO4):
+
 ```bash title="Expected output"
 $ meshtastic  --port /dev/ttyUSB0 --gpio-wrb 4 1 --dest \!28979058
 Connected to radio
@@ -145,6 +146,7 @@ Writing GPIO mask 0x10 with value 0x10 to !28979058
 ```
 
 Reading a GPIO (ex: read GPIO4):
+
 ```bash title="Expected output"
 $ meshtastic --port /dev/ttyUSB0 --gpio-rd 0x10 --dest \!28979058
 Connected to radio
@@ -157,6 +159,7 @@ If the mask and the gpio_value match, then the value is "on". If the gpio_value 
 :::
 
 Watching for GPIO changes (ex: watching GPIO4 for changes):
+
 ```bash title="Expected output"
 $ meshtastic --port /dev/ttyUSB0 --gpio-watch 0x10 --dest \!28979058
 Connected to radio

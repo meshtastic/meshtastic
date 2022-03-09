@@ -1,8 +1,9 @@
 ---
-id: rotary-encoder-plugin
+id: rotary-encoder-module
 title: Rotary Encoder
 sidebar_label: Rotary Encoder
 ---
+
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -11,8 +12,9 @@ GPIO access is fundamentally dangerous because invalid options can physically da
 :::
 
 <!--- TODO add link to hardware setup to admonition--->
+
 :::note
-This plugin requires attaching a peripheral accessory to your device. It will not work without one.
+This module requires attaching a peripheral accessory to your device. It will not work without one.
 :::
 
 ## Overview
@@ -22,42 +24,45 @@ Currently, one rotary encoder (`rotary1`) is defined, but later more rotary enco
 can be added (if needed) the same way.
 
 :::tip
-Once plugin settings are changed, a **reset** is required for them to take effect.
+Once module settings are changed, a **reset** is required for them to take effect.
 :::
 
 ## Settings
 
-| Setting | Acceptable Values | Default |
-| :-----: | :---------------: | :-----: |
-| rotary1_enabled | `true`, `false` | `false` |
-| rotary1_event_cw | `InputEventChar` | (not defined) |
-| rotary1_event_ccw | `InputEventChar` | (not defined) |
-| rotary1_event_press | `InputEventChar` | (not defined) |
-| rotary1_pin_a | `integer` | (not defined) |
-| rotary1_pin_b | `integer` | (not defined) |
-| rotary1_pin_press | `integer` | (not defined) |
+|       Setting       | Acceptable Values |    Default    |
+| :-----------------: | :---------------: | :-----------: |
+|   rotary1_enabled   |  `true`, `false`  |    `false`    |
+|  rotary1_event_cw   | `InputEventChar`  | (not defined) |
+|  rotary1_event_ccw  | `InputEventChar`  | (not defined) |
+| rotary1_event_press | `InputEventChar`  | (not defined) |
+|    rotary1_pin_a    |     `integer`     | (not defined) |
+|    rotary1_pin_b    |     `integer`     | (not defined) |
+|  rotary1_pin_press  |     `integer`     | (not defined) |
 
 ### rotary1_enabled
+
 Enable the rotary encoder #1
 
 #### Enable/Disable rotary1
-<Tabs
-  groupId="settings"
-  defaultValue="cli"
-  values={[
-    {label: 'CLI', value: 'cli'},
-    {label: 'Android', value: 'android'},
-    {label: 'iOS', value: 'iOS'},
-    {label: 'Web', value: 'web'},
-  ]}>
-  <TabItem value="cli">
 
-  ```bash title="Enable rotary1"
-  meshtastic --set rotary1_enabled true
-  ```
-  ```bash title="Disable rotary1"
-  meshtastic --set rotary1_enabled true
-  ```
+<Tabs
+groupId="settings"
+defaultValue="cli"
+values={[
+{label: 'CLI', value: 'cli'},
+{label: 'Android', value: 'android'},
+{label: 'iOS', value: 'iOS'},
+{label: 'Web', value: 'web'},
+]}>
+<TabItem value="cli">
+
+```bash title="Enable rotary1"
+meshtastic --set rotary1_enabled true
+```
+
+```bash title="Disable rotary1"
+meshtastic --set rotary1_enabled true
+```
 
   </TabItem>
   <TabItem value="android">
@@ -81,30 +86,33 @@ Configuring this setting is not yet available for the selected platform. If this
 </Tabs>
 
 ### rotary1_event_cw
+
 Generate input event on CW of this kind.
 
 :::tip
-For using with CannedMessagePlugin you must choose value `KEY_UP` here.
+For using with CannedMessageModule you must choose value `KEY_UP` here.
 :::
 
 #### Specify rotary1 event cw
-<Tabs
-  groupId="settings"
-  defaultValue="cli"
-  values={[
-    {label: 'CLI', value: 'cli'},
-    {label: 'Android', value: 'android'},
-    {label: 'iOS', value: 'iOS'},
-    {label: 'Web', value: 'web'},
-  ]}>
-  <TabItem value="cli">
 
-  ```bash title="Set rotary1 event cw to 'KEY_UP'"
-  meshtastic --set rotary1_event_press KEY_UP
-  ```
-  ```bash title="Unset rotary1 event cw"
-  meshtastic --set rotary1_event_press ""
-  ```
+<Tabs
+groupId="settings"
+defaultValue="cli"
+values={[
+{label: 'CLI', value: 'cli'},
+{label: 'Android', value: 'android'},
+{label: 'iOS', value: 'iOS'},
+{label: 'Web', value: 'web'},
+]}>
+<TabItem value="cli">
+
+```bash title="Set rotary1 event cw to 'KEY_UP'"
+meshtastic --set rotary1_event_press KEY_UP
+```
+
+```bash title="Unset rotary1 event cw"
+meshtastic --set rotary1_event_press ""
+```
 
   </TabItem>
   <TabItem value="android">
@@ -128,30 +136,33 @@ Configuring this setting is not yet available for the selected platform. If this
 </Tabs>
 
 ### rotary1_event_ccw
+
 Generate input event on CCW of this kind.
 
 :::tip
-For using with CannedMessagePlugin you must choose value `KEY_DOWN` here.
+For using with CannedMessageModule you must choose value `KEY_DOWN` here.
 :::
 
 #### Specify rotary1 event ccw
-<Tabs
-  groupId="settings"
-  defaultValue="cli"
-  values={[
-    {label: 'CLI', value: 'cli'},
-    {label: 'Android', value: 'android'},
-    {label: 'iOS', value: 'iOS'},
-    {label: 'Web', value: 'web'},
-  ]}>
-  <TabItem value="cli">
 
-  ```bash title="Set rotary1 event ccw to 'KEY_DOWN'"
-  meshtastic --set rotary1_event_ccw KEY_DOWN
-  ```
-  ```bash title="Unset rotary1 event ccw"
-  meshtastic --set rotary1_event_ccw ""
-  ```
+<Tabs
+groupId="settings"
+defaultValue="cli"
+values={[
+{label: 'CLI', value: 'cli'},
+{label: 'Android', value: 'android'},
+{label: 'iOS', value: 'iOS'},
+{label: 'Web', value: 'web'},
+]}>
+<TabItem value="cli">
+
+```bash title="Set rotary1 event ccw to 'KEY_DOWN'"
+meshtastic --set rotary1_event_ccw KEY_DOWN
+```
+
+```bash title="Unset rotary1 event ccw"
+meshtastic --set rotary1_event_ccw ""
+```
 
   </TabItem>
   <TabItem value="android">
@@ -175,30 +186,33 @@ Configuring this setting is not yet available for the selected platform. If this
 </Tabs>
 
 ### rotary1_event_press
+
 Generate input event on Press of this kind.
 
 :::tip
-For using with CannedMessagePlugin you must choose value `KEY_SELECT` here.
+For using with CannedMessageModule you must choose value `KEY_SELECT` here.
 :::
 
 #### Specify rotary1 event press
-<Tabs
-  groupId="settings"
-  defaultValue="cli"
-  values={[
-    {label: 'CLI', value: 'cli'},
-    {label: 'Android', value: 'android'},
-    {label: 'iOS', value: 'iOS'},
-    {label: 'Web', value: 'web'},
-  ]}>
-  <TabItem value="cli">
 
-  ```bash title="Set rotary1 event press to 'KEY_SELECT'"
-  meshtastic --set rotary1_event_press KEY_SELECT
-  ```
-  ```bash title="Unset rotary1 event press"
-  meshtastic --set rotary1_event_press ""
-  ```
+<Tabs
+groupId="settings"
+defaultValue="cli"
+values={[
+{label: 'CLI', value: 'cli'},
+{label: 'Android', value: 'android'},
+{label: 'iOS', value: 'iOS'},
+{label: 'Web', value: 'web'},
+]}>
+<TabItem value="cli">
+
+```bash title="Set rotary1 event press to 'KEY_SELECT'"
+meshtastic --set rotary1_event_press KEY_SELECT
+```
+
+```bash title="Unset rotary1 event press"
+meshtastic --set rotary1_event_press ""
+```
 
   </TabItem>
   <TabItem value="android">
@@ -222,6 +236,7 @@ Configuring this setting is not yet available for the selected platform. If this
 </Tabs>
 
 ### rotary1_pin_a
+
 GPIO pin for rotary encoder A port.
 
 :::caution
@@ -229,24 +244,25 @@ To prevent damaging your device, double check your device's schematics before at
 :::
 
 #### Specify rotary1 pin a
+
 <Tabs
-  groupId="settings"
-  defaultValue="cli"
-  values={[
-    {label: 'CLI', value: 'cli'},
-    {label: 'Android', value: 'android'},
-    {label: 'iOS', value: 'iOS'},
-    {label: 'Web', value: 'web'},
-  ]}>
-  <TabItem value="cli">
+groupId="settings"
+defaultValue="cli"
+values={[
+{label: 'CLI', value: 'cli'},
+{label: 'Android', value: 'android'},
+{label: 'iOS', value: 'iOS'},
+{label: 'Web', value: 'web'},
+]}>
+<TabItem value="cli">
 
 :::note
 Replace `GPIO` below with the GPIO number from hardware setup.
 :::
 
-  ```bash title="Specify rotary1 pin a"
-  meshtastic --set rotary1_pin_a GPIO
-  ```
+```bash title="Specify rotary1 pin a"
+meshtastic --set rotary1_pin_a GPIO
+```
 
   </TabItem>
   <TabItem value="android">
@@ -270,6 +286,7 @@ Configuring this setting is not yet available for the selected platform. If this
 </Tabs>
 
 ### rotary1_pin_b
+
 GPIO pin for rotary encoder B port.
 
 :::caution
@@ -277,24 +294,25 @@ To prevent damaging your device, double check your device's schematics before at
 :::
 
 #### Specify rotary1 pin b
+
 <Tabs
-  groupId="settings"
-  defaultValue="cli"
-  values={[
-    {label: 'CLI', value: 'cli'},
-    {label: 'Android', value: 'android'},
-    {label: 'iOS', value: 'iOS'},
-    {label: 'Web', value: 'web'},
-  ]}>
-  <TabItem value="cli">
+groupId="settings"
+defaultValue="cli"
+values={[
+{label: 'CLI', value: 'cli'},
+{label: 'Android', value: 'android'},
+{label: 'iOS', value: 'iOS'},
+{label: 'Web', value: 'web'},
+]}>
+<TabItem value="cli">
 
 :::note
 Replace `GPIO` below with the GPIO number from hardware setup.
 :::
 
-  ```bash title="Specify rotary1 pin b"
-  meshtastic --set rotary1_pin_b GPIO
-  ```
+```bash title="Specify rotary1 pin b"
+meshtastic --set rotary1_pin_b GPIO
+```
 
   </TabItem>
   <TabItem value="android">
@@ -318,6 +336,7 @@ Configuring this setting is not yet available for the selected platform. If this
 </Tabs>
 
 ### rotary1_pin_press
+
 GPIO pin for rotary encoder Press port.
 
 :::caution
@@ -325,24 +344,25 @@ To prevent damaging your device, double check your device's schematics before at
 :::
 
 #### Specify rotary1 pin press
+
 <Tabs
-  groupId="settings"
-  defaultValue="cli"
-  values={[
-    {label: 'CLI', value: 'cli'},
-    {label: 'Android', value: 'android'},
-    {label: 'iOS', value: 'iOS'},
-    {label: 'Web', value: 'web'},
-  ]}>
-  <TabItem value="cli">
+groupId="settings"
+defaultValue="cli"
+values={[
+{label: 'CLI', value: 'cli'},
+{label: 'Android', value: 'android'},
+{label: 'iOS', value: 'iOS'},
+{label: 'Web', value: 'web'},
+]}>
+<TabItem value="cli">
 
 :::note
 Replace `GPIO` below with the GPIO number from hardware setup.
 :::
 
-  ```bash title="Specify rotary1 pin press"
-  meshtastic --set rotary1_pin_press GPIO
-  ```
+```bash title="Specify rotary1 pin press"
+meshtastic --set rotary1_pin_press GPIO
+```
 
   </TabItem>
   <TabItem value="android">
@@ -369,35 +389,37 @@ Configuring this setting is not yet available for the selected platform. If this
 
 <!--- TODO add link to hardware page --->
 
-Configuring the rotary encoder plugin require attaching the compatible hardware.
+Configuring the rotary encoder module require attaching the compatible hardware.
 
 ## Examples
 
-### Configure rotary encoder for Canned Message Plugin
+### Configure rotary encoder for Canned Message Module
+
 <Tabs
-  groupId="settings"
-  defaultValue="cli"
-  values={[
-    {label: 'CLI', value: 'cli'},
-    {label: 'Android', value: 'android'},
-    {label: 'iOS', value: 'iOS'},
-    {label: 'Web', value: 'web'},
-  ]}>
-  <TabItem value="cli">
+groupId="settings"
+defaultValue="cli"
+values={[
+{label: 'CLI', value: 'cli'},
+{label: 'Android', value: 'android'},
+{label: 'iOS', value: 'iOS'},
+{label: 'Web', value: 'web'},
+]}>
+<TabItem value="cli">
 
 :::note
 Replace each `GPIO` (x3) below with the GPIO numbers from hardware setup.
 :::
 
-  ```bash title="Canned Message Plugin - Required Rotary Encoder Plugin Settings"
-  meshtastic --set rotary1_pin_a GPIO
-  meshtastic --set rotary1_pin_b GPIO
-  meshtastic --set rotary1_pin_press GPIO
-  meshtastic --set rotary1_event_cw KEY_UP
-  meshtastic --set rotary1_event_ccw KEY_DOWN
-  meshtastic --set rotary1_event_press KEY_SELECT
-  meshtastic --set rotary1_enabled True
-  ```
+```bash title="Canned Message Module - Required Rotary Encoder Module Settings"
+meshtastic --set rotary1_pin_a GPIO
+meshtastic --set rotary1_pin_b GPIO
+meshtastic --set rotary1_pin_press GPIO
+meshtastic --set rotary1_event_cw KEY_UP
+meshtastic --set rotary1_event_ccw KEY_DOWN
+meshtastic --set rotary1_event_press KEY_SELECT
+meshtastic --set rotary1_enabled True
+```
+
   </TabItem>
   <TabItem value="android">
 :::info

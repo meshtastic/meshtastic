@@ -5,6 +5,7 @@ sidebar_label: Using the meshtastic Python library
 ---
 
 An example using Python 3 code to send a message to the mesh, get and set a radio configuration preference:
+
 ```python
 import meshtastic
 import meshtastic.serial_interface
@@ -32,6 +33,7 @@ interface.close()
 ```
 
 Another example using Python 3 code to send a message to the mesh when WiFi is enabled:
+
 ```python
 import time
 import meshtastic
@@ -55,8 +57,8 @@ interface.close()
 
 Note: Be sure to change the IP address in the code above to a valid IP address for your setup.
 
-
 You can get and update settings like this:
+
 ```python
 import meshtastic
 import meshtastic.serial_interface
@@ -71,14 +73,14 @@ ourNode.writeConfig()
 interface.close()
 ```
 
-
 For the rough notes/implementation plan see [TODO](https://github.com/meshtastic/Meshtastic-python/blob/master/TODO.md). See the API for full details of how to use the library.
 
 ## A note to developers of this lib
 
-We use the visual-studio-code default python formatting conventions (autopep8).  So if you use that IDE you should be able to use "Format Document" and not generate unrelated diffs.  If you use some other editor, please don't change formatting on lines you haven't changed.
+We use the visual-studio-code default python formatting conventions (autopep8). So if you use that IDE you should be able to use "Format Document" and not generate unrelated diffs. If you use some other editor, please don't change formatting on lines you haven't changed.
 
 If you need to build a new release you'll need:
+
 ```bash title="Command"
 apt install pandoc
 sudo pip3 install markdown pandoc webencodings pyparsing twine autopep8

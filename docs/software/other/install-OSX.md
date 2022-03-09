@@ -42,7 +42,7 @@ After I installed that, esptool.py was completely happy and the firmware loaded 
 brew install openssl
 ```
 
-- Set some flags in your bash/zsh/whichever profile for `esptool` to install [cryptography](https://cryptography.io/en/latest/installation/) as a dependency correctly:
+- Set some flags in your bash/zsh/whichever profile for `esptool` to install [cryptography](https://cryptography.io/en/latest/installation) as a dependency correctly:
 
 ```
 export LDFLAGS="-L/usr/local/opt/openssl/lib"

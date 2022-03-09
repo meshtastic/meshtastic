@@ -6,7 +6,7 @@ sidebar_label: Mesh algorithm
 
 ## Current Algorithm
 
-The routing protocol for Meshtastic is really quite simple (and suboptimal). It is heavily influenced by the mesh routing algorithm used in [RadioHead](https://www.airspayce.com/mikem/arduino/RadioHead/) (which was used in very early versions of this project). It has four conceptual layers.
+The routing protocol for Meshtastic is really quite simple (and suboptimal). It is heavily influenced by the mesh routing algorithm used in [RadioHead](https://www.airspayce.com/mikem/arduino/RadioHead) (which was used in very early versions of this project). It has four conceptual layers.
 
 ### A Note About Protocol Buffers
 
@@ -23,23 +23,23 @@ This preamble allows receiving radios to synchronize clocks and start framing. W
 
 This layer is conventional non-reliable LoRa packet transmission. The transmitted packet has the following representation before encoding for transmission:
 
-| Offset | Length | Type | Usage |
-|--------|--------|------|-------|
-| 0x00 | 1 byte | Integer | syncWord, always `0x2B`. |
-| 0x01 | 4 bytes | Integer | Packet header: Destination. The destination's unique NodeID. `0xFFFFFFFF` for broadcast. |
-| 0x05 | 4 bytes | Integer | Packet Header: Sender. The sender's unique NodeID. |
-| 0x09 | 4 bytes | Integer | Packet Header: The sending node's unique packet ID for this packet. |
-| 0x0D | 32 bits | Bits | Packet Header: Flags. See the [header flags](#packet-header-flags) for usage. |
-| 0x11 .. 0xFD | Varies, maximum of 237 bytes. | Bytes | Actual packet data. Unused bytes are not transmitted. |
-| 0xFE .. 0xFF | 2 Bytes | Bytes | Unused. |
+| Offset       | Length                        | Type    | Usage                                                                                    |
+| ------------ | ----------------------------- | ------- | ---------------------------------------------------------------------------------------- |
+| 0x00         | 1 byte                        | Integer | syncWord, always `0x2B`.                                                                 |
+| 0x01         | 4 bytes                       | Integer | Packet header: Destination. The destination's unique NodeID. `0xFFFFFFFF` for broadcast. |
+| 0x05         | 4 bytes                       | Integer | Packet Header: Sender. The sender's unique NodeID.                                       |
+| 0x09         | 4 bytes                       | Integer | Packet Header: The sending node's unique packet ID for this packet.                      |
+| 0x0D         | 32 bits                       | Bits    | Packet Header: Flags. See the [header flags](#packet-header-flags) for usage.            |
+| 0x11 .. 0xFD | Varies, maximum of 237 bytes. | Bytes   | Actual packet data. Unused bytes are not transmitted.                                    |
+| 0xFE .. 0xFF | 2 Bytes                       | Bytes   | Unused.                                                                                  |
 
 #### Packet Header Flags
 
-| Index | # of Bits | Usage |
-|-------|-----------|-------|
-| 0 | 3 | HopLimit (see note in Layer 3) |
-| 3 | 1 | WantAck |
-| 4 .. 32 | 28 | Currently unused |
+| Index   | # of Bits | Usage                          |
+| ------- | --------- | ------------------------------ |
+| 0       | 3         | HopLimit (see note in Layer 3) |
+| 3       | 1         | WantAck                        |
+| 4 .. 32 | 28        | Currently unused               |
 
 #### Usage Details
 
@@ -49,26 +49,26 @@ This layer is conventional non-reliable LoRa packet transmission. The transmitte
 
 - **Packet Header - Unique ID:** The ID is a large, 32 bit ID to ensure there is enough unique state to protect an encrypted payload from attack.
 
-- **Payload:** An encrypted and packed protobuf encoding of the SubPacket protobuf. Only the SubPacket is encrypted, while headers are not. This allows the option of eventually allowing nodes to route packets without knowing anything about the encrypted payload. For more information, see the [encryption](/docs/developers/device/encryption) and [protobufs](/docs/developers/protobufs/api) documentation. Any data past the maximum length is truncated.
+- **Payload:** An encrypted and packed protobuf encoding of the SubPacket protobuf. Only the SubPacket is encrypted, while headers are not. This allows the option of eventually allowing nodes to route packets without knowing anything about the encrypted payload. For more information, see the [encryption](/docs/developers/firmware/encryption) and [protobufs](/docs/developers/protobufs/api) documentation. Any data past the maximum length is truncated.
 
 #### Collision Avoidance
 
 All transmitters must listen before attempting to transmit. If another node is heard transmitting, the listening node will reattempt transmission after a calculated delay. The delay depends on various settings and is based on Semtech's [LoRa Modem Design Guide](/documents/LoRa_Design_Guide.pdf), section 4 and implemented in `RadioInterface::getPacketTime`. The following tables contains some calculated values for how long it takes to transmit a packet, which is used to calculate the delay.
 
-| Payload Bytes | Spreading Factor | Bandwidth | Coding Rate | Time |
-|---------------|------------------|-----------|-------------|------|
-| 0 | 7 | 125 kHz | 4/5 | 13 ms |
-| 237 | 7 | 125 kHz | 4/5 | 100 ms |
-| 0 | 7 | 500 kHz | 4/5 | 4 ms |
-| 237 | 7 | 500 kHz | 4/5 | 25 ms |
-| 0 | 10 | 250 kHz | 4/7 | 51 ms |
-| 237 | 10 | 250 kHz | 4/7 | 391 ms |
-| 0 | 11 | 250 kHz | 4/6 | 101 ms |
-| 237 | 11 | 250 kHz | 4/6 | 633 ms |
-| 0 | 9 | 31.25 kHz | 4/8 | 201 ms |
-| 237 | 9 | 31.25 kHz | 4/8 | 2.413 **seconds** |
-| 0 | 12 | 125 kHz | 4/8 | 402 ms |
-| 237 | 12 | 125 kHz | 4/8 | 3.482 **seconds** |
+| Payload Bytes | Spreading Factor | Bandwidth | Coding Rate | Time              |
+| ------------- | ---------------- | --------- | ----------- | ----------------- |
+| 0             | 7                | 125 kHz   | 4/5         | 13 ms             |
+| 237           | 7                | 125 kHz   | 4/5         | 100 ms            |
+| 0             | 7                | 500 kHz   | 4/5         | 4 ms              |
+| 237           | 7                | 500 kHz   | 4/5         | 25 ms             |
+| 0             | 10               | 250 kHz   | 4/7         | 51 ms             |
+| 237           | 10               | 250 kHz   | 4/7         | 391 ms            |
+| 0             | 11               | 250 kHz   | 4/6         | 101 ms            |
+| 237           | 11               | 250 kHz   | 4/6         | 633 ms            |
+| 0             | 9                | 31.25 kHz | 4/8         | 201 ms            |
+| 237           | 9                | 31.25 kHz | 4/8         | 2.413 **seconds** |
+| 0             | 12               | 125 kHz   | 4/8         | 402 ms            |
+| 237           | 12               | 125 kHz   | 4/8         | 3.482 **seconds** |
 
 The actual delay calculation is a random value between 100ms (a hardcoded minimum) and the time taken to transmit just the header, which is given in the table as a 0 Byte payload.
 
@@ -81,7 +81,7 @@ The default messaging provided by Layer 1 is extended by setting the `WantAck` f
 > This packet is being sent as a reliable message, we would prefer it to arrive at the destination. We would like to receive an ACK packet in response.
 >
 > Broadcast messages treat this flag specially: Since ACKs for broadcasts would rapidly flood the channel, the normal ACK behavior is suppressed. Instead, the original sender listens to see if at least one node is rebroadcasting this
-packet (because naive flooding algorithm). If it hears that, the odds (given typical LoRa topologies) are very high that every node should eventually receive the message. So FloodingRouter.cpp generates an implicit ACK which is delivered to the original sender. If after some time we don't hear anyone rebroadcast our packet, we will timeout and retransmit, using the regular resend logic.
+> packet (because naive flooding algorithm). If it hears that, the odds (given typical LoRa topologies) are very high that every node should eventually receive the message. So FloodingRouter.cpp generates an implicit ACK which is delivered to the original sender. If after some time we don't hear anyone rebroadcast our packet, we will timeout and retransmit, using the regular resend logic.
 
 If a transmitting node does not receive an ACK (or NAK) packet within FIXME milliseconds, it will use Layer 1 to attempt a retransmission of the sent packet. A reliable packet (at this 'zero hop' level) will be resent a maximum of three times. If no ACK or NAK has been received by then the local node will internally generate a NAK (either for local consumption or use by higher layers of the protocol).
 

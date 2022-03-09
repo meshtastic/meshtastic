@@ -1,0 +1,93 @@
+---
+id: ext-notif-module
+title: External notifications
+sidebar_label: External notifications
+---
+
+## About
+
+The ExternalNotification Module will allow you to connect a speaker, LED or other device to notify you when a message has been received from the mesh network.
+
+## Configuration
+
+These are the settings that can be configured.
+
+    ext_notification_module_enabled
+        Is the module enabled?
+
+        0 = Disabled (Default)
+        1 = Enabled
+
+    ext_notification_module_active
+        Is your external circuit triggered when our GPIO is low or high?
+
+        0 = Active Low (Default)
+        1 = Active High
+
+    ext_notification_module_alert_message
+        Do you want to be notified on an incoming message?
+
+        0 = Disabled (Default)
+        1 = Alert when a text message comes
+
+    ext_notification_module_alert_bell
+        Do you want to be notified on an incoming bell?
+
+        0 = Disabled (Default)
+        1 = Alert when the bell character is received
+
+    ext_notification_module_output
+        What GPIO is your external circuit attached?
+
+        GPIO of the output. (Default = 13)
+
+    ext_notification_module_output_ms
+        How long do you want us to trigger your external circuit?
+
+        Amount of time in ms for the alert. Default is 1000.
+
+## Usage Notes
+
+For basic usage, start with:
+
+    ext_notification_module_enabled = 1
+
+    ext_notification_module_alert_message = 1
+
+Depending on how your external circuit is configured, you may need to set the active state to true.
+
+    ext_notification_module_active = 1
+
+:::note
+The device must be restarted after the settings have been changed for the module to take effect.
+:::
+
+### Alert Types
+
+We support being alerted on two events:
+
+1. Incoming Text Message
+
+2. Incoming Text Message that contains the ASCII bell character. At present, only the Python API can send an ASCII bell character, but more support may be added in the future.
+
+#### Bell Character
+
+The bell character is ASCII 0x07. Include 0x07 anywhere in the text message and with ext_notification_module_alert_bell enabled, we will issue an external notification.
+
+## External Hardware
+
+Be mindful of the max current sink and source of the ESP32 GPIO. The easiest devices to interface with would be either an LED or Active Buzzer.
+
+Ideas for external hardware:
+
+- LED
+- Active Buzzer
+- Flame thrower
+- Strobe Light
+- Siren
+
+## Known Problems
+
+- This won't directly support a passive (normal) speaker as it does not generate any audio wave forms.
+- This currently only supports the ESP32. Other targets may be possible, I just don't have to test with.
+- This module only monitors text messages. We won't trigger on any other packet types.

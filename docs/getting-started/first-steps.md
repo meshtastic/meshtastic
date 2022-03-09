@@ -3,6 +3,7 @@ id: first-steps
 title: First Steps
 sidebar_label: First Steps
 ---
+
 ## Overview
 
 Congratulations! Your node should now be running Meshtastic and hopefully you've paired to a client on your mobile device, desktop, or browser.

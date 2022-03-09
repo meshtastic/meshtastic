@@ -111,8 +111,8 @@ pip3 install --upgrade esptool
   </TabItem>
   <TabItem value="windows">
 
-- Download and install [Python](https://www.python.org/). When installing, make sure to click `Add Python X.Y to PATH`.
-- Download and install [Gitbash](https://gitforwindows.org/) (or other appropriate shell) and run all subsequent commands from that shell.
+- Download and install [Python](https://www.python.or). When installing, make sure to click `Add Python X.Y to PATH`.
+- Download and install [Gitbash](https://gitforwindows.org) (or other appropriate shell) and run all subsequent commands from that shell.
 
 :::note
 Confirm installation of `python` & `pip` with the following commands.
@@ -146,9 +146,9 @@ values={[
 {label: 'macOS', value: 'macos'},
 {label: 'Windows', value: 'windows'},
 ]}>
-  <TabItem value="linux"></TabItem>
-  <TabItem value="macos"></TabItem>
-  <TabItem value="windows">
+<TabItem value="linux"></TabItem>
+<TabItem value="macos"></TabItem>
+<TabItem value="windows">
 
 :::important
 On Windows, you must explicitly declare esptool as a .py script. Use `esptool.py chip_id`.

@@ -19,48 +19,52 @@ You may want to change your [GPS location sharing settings](gps#location_share) 
 
 If your device is connected to WiFi you can enable it to forward messages along to an MQTT server. This allows users on the local mesh to communicate with users on the internet.
 
-Be sure to checkout this [MQTT](https://meshtastic.org/docs/software/other/mqtt) too.
+Be sure to checkout this [MQTT](/docs/software/other/mqtt) too.
 
 ## Settings
 
-| Setting | Acceptable Values | Default |
-| :-----: | :---------------: | :-----: |
-| downlink_enabled | `true`, `false` | `false` |
-| mqtt_disabled | `true`, `false` | `false` |
-| mqtt_encryption_enabled | `true`, `false` | `false` |
-| mqtt_password | `string` | `""` |
-| mqtt_server | `string` | `""` |
-| mqtt_username | `string` | `""` |
-| uplink_enabled | `true`, `false` | `false` |
+|         Setting         | Acceptable Values | Default |
+| :---------------------: | :---------------: | :-----: |
+|    downlink_enabled     |  `true`, `false`  | `false` |
+|      mqtt_disabled      |  `true`, `false`  | `false` |
+| mqtt_encryption_enabled |  `true`, `false`  | `false` |
+|      mqtt_password      |     `string`      |  `""`   |
+|       mqtt_server       |     `string`      |  `""`   |
+|      mqtt_username      |     `string`      |  `""`   |
+|     uplink_enabled      |  `true`, `false`  | `false` |
 
 ### downlink_enabled
 
 This is a channel specific setting. If your channel has this set to `true` and you are connected to WiFi, the device will forward along messages from the MQTT server specified [here](#mqtt_server) to the mesh from this device.
 
 #### Enable/Disable downlink_enabled
-<Tabs
-  groupId="settings"
-  defaultValue="cli"
-  values={[
-    {label: 'CLI', value: 'cli'},
-    {label: 'Android', value: 'android'},
-    {label: 'iOS', value: 'iOS'},
-    {label: 'Web', value: 'web'},
-  ]}>
-  <TabItem value="cli">
 
-  ```bash title="Enable downlink_enabled on PRIMARY channel"
-  meshtastic --ch-set downlink_enabled true --ch-index 0
-  ```
-  ```bash title="Disable downlink_enabled on PRIMARY channel"
-  meshtastic --ch-set downlink_enabled false --ch-index 0
-  ```
-  ```bash title="Enable downlink_enabled on OTHER channel"
-  meshtastic --ch-set downlink_enabled true --ch-index 1
-  ```
-  ```bash title="Disable downlink_enabled on OTHER channel"
-  meshtastic --ch-set downlink_enabled false --ch-index 1
-  ```
+<Tabs
+groupId="settings"
+defaultValue="cli"
+values={[
+{label: 'CLI', value: 'cli'},
+{label: 'Android', value: 'android'},
+{label: 'iOS', value: 'iOS'},
+{label: 'Web', value: 'web'},
+]}>
+<TabItem value="cli">
+
+```bash title="Enable downlink_enabled on PRIMARY channel"
+meshtastic --ch-set downlink_enabled true --ch-index 0
+```
+
+```bash title="Disable downlink_enabled on PRIMARY channel"
+meshtastic --ch-set downlink_enabled false --ch-index 0
+```
+
+```bash title="Enable downlink_enabled on OTHER channel"
+meshtastic --ch-set downlink_enabled true --ch-index 1
+```
+
+```bash title="Disable downlink_enabled on OTHER channel"
+meshtastic --ch-set downlink_enabled false --ch-index 1
+```
 
   </TabItem>
   <TabItem value="android">
@@ -91,23 +95,25 @@ Configuring this setting is not yet available for the selected platform. If this
 If a meshtastic node is able to reach the internet it will normally attempt to gateway any channels that are marked as `uplink_enabled` or `downlink_enabled`. But if this flag is set, all MQTT features will be disabled and no servers will be contacted.
 
 #### Enable/Disable MQTT
-<Tabs
-  groupId="settings"
-  defaultValue="cli"
-  values={[
-    {label: 'CLI', value: 'cli'},
-    {label: 'Android', value: 'android'},
-    {label: 'iOS', value: 'iOS'},
-    {label: 'Web', value: 'web'},
-  ]}>
-  <TabItem value="cli">
 
-  ```bash title="Enable MQTT (Default)"
-  meshtastic --set mqtt_disabled false
-  ```
-  ```bash title="Disable MQTT"
-  meshtastic --set mqtt_disabled true
-  ```
+<Tabs
+groupId="settings"
+defaultValue="cli"
+values={[
+{label: 'CLI', value: 'cli'},
+{label: 'Android', value: 'android'},
+{label: 'iOS', value: 'iOS'},
+{label: 'Web', value: 'web'},
+]}>
+<TabItem value="cli">
+
+```bash title="Enable MQTT (Default)"
+meshtastic --set mqtt_disabled false
+```
+
+```bash title="Disable MQTT"
+meshtastic --set mqtt_disabled true
+```
 
   </TabItem>
   <TabItem value="android">
@@ -142,23 +148,25 @@ If you are using the default Meshtastic MQTT server, this setting will take no e
 :::
 
 #### Enable/Disable MQTT Encryption
-<Tabs
-  groupId="settings"
-  defaultValue="cli"
-  values={[
-    {label: 'CLI', value: 'cli'},
-    {label: 'Android', value: 'android'},
-    {label: 'iOS', value: 'iOS'},
-    {label: 'Web', value: 'web'},
-  ]}>
-  <TabItem value="cli">
 
-  ```bash title="Publish decrypted packets to MQTT (Default)"
-  meshtastic --set mqtt_encryption_enabled false
-  ```
-  ```bash title="Publish encrypted packets to MQTT"
-  meshtastic --set mqtt_encryption_enabled true
-  ```
+<Tabs
+groupId="settings"
+defaultValue="cli"
+values={[
+{label: 'CLI', value: 'cli'},
+{label: 'Android', value: 'android'},
+{label: 'iOS', value: 'iOS'},
+{label: 'Web', value: 'web'},
+]}>
+<TabItem value="cli">
+
+```bash title="Publish decrypted packets to MQTT (Default)"
+meshtastic --set mqtt_encryption_enabled false
+```
+
+```bash title="Publish encrypted packets to MQTT"
+meshtastic --set mqtt_encryption_enabled true
+```
 
   </TabItem>
   <TabItem value="android">
@@ -189,26 +197,29 @@ Configuring this setting is not yet available for the selected platform. If this
 MQTT password to use (most useful for a custom MQTT server). If using a custom server, this will be honoured even if empty. If using the default server, this will only be honoured if set, otherwise the device will use the default password `large4cats`.
 
 #### Configure mqtt_password
-<Tabs
-  groupId="settings"
-  defaultValue="cli"
-  values={[
-    {label: 'CLI', value: 'cli'},
-    {label: 'Android', value: 'android'},
-    {label: 'iOS', value: 'iOS'},
-    {label: 'Web', value: 'web'},
-  ]}>
-  <TabItem value="cli">
 
-  ```bash title="Set mqtt_password"
-  meshtastic --set mqtt_password mypassword
-  ```
-  ```bash title="Set mqtt_password (with spaces)"
-  meshtastic --set mqtt_password "my password"
-  ```
-  ```bash title="Unset mqtt_password (Default)"
-  meshtastic --set mqtt_password ""
-  ```
+<Tabs
+groupId="settings"
+defaultValue="cli"
+values={[
+{label: 'CLI', value: 'cli'},
+{label: 'Android', value: 'android'},
+{label: 'iOS', value: 'iOS'},
+{label: 'Web', value: 'web'},
+]}>
+<TabItem value="cli">
+
+```bash title="Set mqtt_password"
+meshtastic --set mqtt_password mypassword
+```
+
+```bash title="Set mqtt_password (with spaces)"
+meshtastic --set mqtt_password "my password"
+```
+
+```bash title="Unset mqtt_password (Default)"
+meshtastic --set mqtt_password ""
+```
 
   </TabItem>
   <TabItem value="android">
@@ -239,30 +250,33 @@ Configuring this setting is not yet available for the selected platform. If this
 The server to use for our MQTT global message gateway feature. If not set, the default server will be used
 
 #### Enable/Disable MQTT Server
+
 <Tabs
-  groupId="settings"
-  defaultValue="cli"
-  values={[
-    {label: 'CLI', value: 'cli'},
-    {label: 'Android', value: 'android'},
-    {label: 'iOS', value: 'iOS'},
-    {label: 'Web', value: 'web'},
-  ]}>
-  <TabItem value="cli">
+groupId="settings"
+defaultValue="cli"
+values={[
+{label: 'CLI', value: 'cli'},
+{label: 'Android', value: 'android'},
+{label: 'iOS', value: 'iOS'},
+{label: 'Web', value: 'web'},
+]}>
+<TabItem value="cli">
 
 :::tip
 When the mqtt_server is set to `""`, it will default to `mqtt.meshtastic.org`
 :::
 
-  ```bash title="Enable MQTT Server - Public Meshtastic MQTT Server (Default)"
-  meshtastic --set mqtt_server ""
-  ```
-  ```bash title="Enable MQTT Server - Personal MQTT Server (by IP)"
-  meshtastic --set mqtt_server 198.168.0.2
-  ```
-  ```bash title="Enable MQTT Server - Personal MQTT Server (by URL)"
-  meshtastic --set mqtt_server mqtt.mydomain.com
-  ```
+```bash title="Enable MQTT Server - Public Meshtastic MQTT Server (Default)"
+meshtastic --set mqtt_server ""
+```
+
+```bash title="Enable MQTT Server - Personal MQTT Server (by IP)"
+meshtastic --set mqtt_server 198.168.0.2
+```
+
+```bash title="Enable MQTT Server - Personal MQTT Server (by URL)"
+meshtastic --set mqtt_server mqtt.mydomain.com
+```
 
   </TabItem>
   <TabItem value="android">
@@ -293,26 +307,29 @@ Configuring this setting is not yet available for the selected platform. If this
 MQTT username to use (most useful for a custom MQTT server). If using a custom server, this will be honoured even if empty. If using the default server, this will only be honoured if set, otherwise the device will use the default username `meshdev`.
 
 #### Configure mqtt_username
-<Tabs
-  groupId="settings"
-  defaultValue="cli"
-  values={[
-    {label: 'CLI', value: 'cli'},
-    {label: 'Android', value: 'android'},
-    {label: 'iOS', value: 'iOS'},
-    {label: 'Web', value: 'web'},
-  ]}>
-  <TabItem value="cli">
 
-  ```bash title="Set mqtt_username"
-  meshtastic --set mqtt_username myusername
-  ```
-  ```bash title="Set mqtt_username (with spaces)"
-  meshtastic --set mqtt_username "my username"
-  ```
-  ```bash title="Unset mqtt_username (Default)"
-  meshtastic --set mqtt_username ""
-  ```
+<Tabs
+groupId="settings"
+defaultValue="cli"
+values={[
+{label: 'CLI', value: 'cli'},
+{label: 'Android', value: 'android'},
+{label: 'iOS', value: 'iOS'},
+{label: 'Web', value: 'web'},
+]}>
+<TabItem value="cli">
+
+```bash title="Set mqtt_username"
+meshtastic --set mqtt_username myusername
+```
+
+```bash title="Set mqtt_username (with spaces)"
+meshtastic --set mqtt_username "my username"
+```
+
+```bash title="Unset mqtt_username (Default)"
+meshtastic --set mqtt_username ""
+```
 
   </TabItem>
   <TabItem value="android">
@@ -343,29 +360,33 @@ Configuring this setting is not yet available for the selected platform. If this
 This is a channel specific setting. If your channel has this set to `true` and you are connected to WiFi, the device will forward along messages to whatever MQTT server is specified in [mqtt_server](#mqtt_server).
 
 #### Enable/Disable uplink_enabled
-<Tabs
-  groupId="settings"
-  defaultValue="cli"
-  values={[
-    {label: 'CLI', value: 'cli'},
-    {label: 'Android', value: 'android'},
-    {label: 'iOS', value: 'iOS'},
-    {label: 'Web', value: 'web'},
-  ]}>
-  <TabItem value="cli">
 
-  ```bash title="Enable uplink_enabled on PRIMARY channel"
-  meshtastic --ch-set uplink_enabled true --ch-index 0
-  ```
-  ```bash title="Disable uplink_enabled on PRIMARY channel"
-  meshtastic --ch-set uplink_enabled false --ch-index 0
-  ```
-  ```bash title="Enable uplink_enabled on OTHER channel"
-  meshtastic --ch-set uplink_enabled true --ch-index 1
-  ```
-  ```bash title="Disable uplink_enabled on OTHER channel"
-  meshtastic --ch-set uplink_enabled false --ch-index 1
-  ```
+<Tabs
+groupId="settings"
+defaultValue="cli"
+values={[
+{label: 'CLI', value: 'cli'},
+{label: 'Android', value: 'android'},
+{label: 'iOS', value: 'iOS'},
+{label: 'Web', value: 'web'},
+]}>
+<TabItem value="cli">
+
+```bash title="Enable uplink_enabled on PRIMARY channel"
+meshtastic --ch-set uplink_enabled true --ch-index 0
+```
+
+```bash title="Disable uplink_enabled on PRIMARY channel"
+meshtastic --ch-set uplink_enabled false --ch-index 0
+```
+
+```bash title="Enable uplink_enabled on OTHER channel"
+meshtastic --ch-set uplink_enabled true --ch-index 1
+```
+
+```bash title="Disable uplink_enabled on OTHER channel"
+meshtastic --ch-set uplink_enabled false --ch-index 1
+```
 
   </TabItem>
   <TabItem value="android">
@@ -406,7 +427,7 @@ values={[
 {label: 'iOS', value: 'iOS'},
 {label: 'Web', value: 'web'},
 ]}>
-  <TabItem value="cli">
+<TabItem value="cli">
 
 ```bash title="Set server"
 meshtastic --set mqtt_server 192.168.123.234
@@ -423,8 +444,8 @@ mosquitto_sub -h 192.168.123.234 -v -t msh/#
 :::note
 FIXME some documentation says msh/# , some says mesh/# . As of 1.2.39 the messages are on msh/#
 :::
-  </TabItem>
-  <TabItem value="android">
+</TabItem>
+<TabItem value="android">
 
 :::info
 Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.

@@ -1,7 +1,7 @@
 ---
-id: range-test-plugin
-title: Range Test Plugin Settings
-sidebar_label: Range Test Plugin
+id: range-test-module
+title: Range Test Module Settings
+sidebar_label: Range Test Module
 ---
 
 import Tabs from '@theme/Tabs';
@@ -9,42 +9,44 @@ import TabItem from '@theme/TabItem';
 
 ## Overview
 
-This plugin allows you to test the range of your Meshtastic nodes. It requires at least two nodes, a sender and a receiver. The receiving node then saves the messages along with the GPS coordinates at which they were received into a .csv file. This .csv file can then be integrated into [Google Earth](https://earth.google.com), [Google Maps - My Maps](https://mymaps.google.com), or any other program capable of processing .csv files. This can enable you to visualize your mesh.
+This module allows you to test the range of your Meshtastic nodes. It requires at least two nodes, a sender and a receiver. The receiving node then saves the messages along with the GPS coordinates at which they were received into a .csv file. This .csv file can then be integrated into [Google Earth](https://earth.google.com), [Google Maps - My Maps](https://mymaps.google.com), or any other program capable of processing .csv files. This can enable you to visualize your mesh.
 
 :::tip
-Once plugin settings are changed, a **reset** is required for them to take effect.
+Once module settings are changed, a **reset** is required for them to take effect.
 :::
 
 ## Settings
 
-| Setting | Acceptable Values | Default |
-| :-----: | :---------------: | :-----: |
-| range_test_plugin_enabled | `true`, `false` | `false` |
-| range_test_plugin_save | `true`, `false` | `false` |
-| range_test_plugin_sender | `integer` (Seconds) | `0` |
+|          Setting          |  Acceptable Values  | Default |
+| :-----------------------: | :-----------------: | :-----: |
+| range_test_module_enabled |   `true`, `false`   | `false` |
+|  range_test_module_save   |   `true`, `false`   | `false` |
+| range_test_module_sender  | `integer` (Seconds) |   `0`   |
 
-### range_test_plugin_enabled
+### range_test_module_enabled
 
-Enables the plugin.
+Enables the module.
 
-#### Enable/Disable the plugin
+#### Enable/Disable the module
+
 <Tabs
-  groupId="settings"
-  defaultValue="cli"
-  values={[
-    {label: 'CLI', value: 'cli'},
-    {label: 'Android', value: 'android'},
-    {label: 'iOS', value: 'iOS'},
-    {label: 'Web', value: 'web'},
-  ]}>
-  <TabItem value="cli">
+groupId="settings"
+defaultValue="cli"
+values={[
+{label: 'CLI', value: 'cli'},
+{label: 'Android', value: 'android'},
+{label: 'iOS', value: 'iOS'},
+{label: 'Web', value: 'web'},
+]}>
+<TabItem value="cli">
 
-  ```bash title="Enable the plugin"
-  meshtastic --set range_test_plugin_enabled true
-  ```
-  ```bash title="Disable the plugin"
-  meshtastic --set range_test_plugin_enabled true
-  ```
+```bash title="Enable the module"
+meshtastic --set range_test_module_enabled true
+```
+
+```bash title="Disable the module"
+meshtastic --set range_test_module_enabled true
+```
 
   </TabItem>
   <TabItem value="android">
@@ -70,28 +72,30 @@ Configuring this setting is not yet available for the selected platform. If this
   </TabItem>
 </Tabs>
 
-### range_test_plugin_save
+### range_test_module_save
 
 If enabled, we will save a log of all received messages to `/static/rangetest.csv` which you can access from the web server. We will abort writing if there is less than 50k of space on the filesystem to prevent filling up the storage.
 
 #### Enable/Disable range test save `csv`
-<Tabs
-  groupId="settings"
-  defaultValue="cli"
-  values={[
-    {label: 'CLI', value: 'cli'},
-    {label: 'Android', value: 'android'},
-    {label: 'iOS', value: 'iOS'},
-    {label: 'Web', value: 'web'},
-  ]}>
-  <TabItem value="cli">
 
-  ```bash title="Enable range test save"
-  meshtastic --set range_test_plugin_save true
-  ```
-  ```bash title="Disable range test save"
-  meshtastic --set range_test_plugin_save false
-  ```
+<Tabs
+groupId="settings"
+defaultValue="cli"
+values={[
+{label: 'CLI', value: 'cli'},
+{label: 'Android', value: 'android'},
+{label: 'iOS', value: 'iOS'},
+{label: 'Web', value: 'web'},
+]}>
+<TabItem value="cli">
+
+```bash title="Enable range test save"
+meshtastic --set range_test_module_save true
+```
+
+```bash title="Disable range test save"
+meshtastic --set range_test_module_save false
+```
 
   </TabItem>
   <TabItem value="android">
@@ -117,28 +121,30 @@ Configuring this setting is not yet available for the selected platform. If this
   </TabItem>
 </Tabs>
 
-### range_test_plugin_sender
+### range_test_module_sender
 
 Number of seconds to wait between sending packets. Using the long_slow channel configuration, it's best not to go more frequent than once every 60 seconds. You can be more aggressive with faster settings. `0` is default which disables sending messages.
 
 #### Enable/Disable range test sender
-<Tabs
-  groupId="settings"
-  defaultValue="cli"
-  values={[
-    {label: 'CLI', value: 'cli'},
-    {label: 'Android', value: 'android'},
-    {label: 'iOS', value: 'iOS'},
-    {label: 'Web', value: 'web'},
-  ]}>
-  <TabItem value="cli">
 
-  ```bash title="Enable range test sender (send every 60 seconds)"
-  meshtastic --set range_test_plugin_sender 60
-  ```
-  ```bash title="Disable range test sender"
-  meshtastic --set range_test_plugin_sender 0
-  ```
+<Tabs
+groupId="settings"
+defaultValue="cli"
+values={[
+{label: 'CLI', value: 'cli'},
+{label: 'Android', value: 'android'},
+{label: 'iOS', value: 'iOS'},
+{label: 'Web', value: 'web'},
+]}>
+<TabItem value="cli">
+
+```bash title="Enable range test sender (send every 60 seconds)"
+meshtastic --set range_test_module_sender 60
+```
+
+```bash title="Disable range test sender"
+meshtastic --set range_test_module_sender 0
+```
 
   </TabItem>
   <TabItem value="android">
@@ -166,14 +172,14 @@ Configuring this setting is not yet available for the selected platform. If this
 
 ## Details
 
-While a minimum of two radios is required, more can be used. You can have any number of receivers and senders that your mesh is able to handle. You can test having a single sender with multiple receivers or a single receiver with multiple senders. Let us know on the [forum thread](https://meshtastic.discourse.group/t/new-plugin-rangetestplugin/2591/) the results of your configuration.
+While a minimum of two radios is required, more can be used. You can have any number of receivers and senders that your mesh is able to handle. You can test having a single sender with multiple receivers or a single receiver with multiple senders. Let us know on the [forum thread](https://meshtastic.discourse.group/t/new-plugin-rangetestplugin/2591) the results of your configuration.
 
-Be sure to turn off either the plugin configured as a sender or the device where the plugin setup as sender when not in use. This will use a lot of time on air and will spam your channel.
+Be sure to turn off either the module configured as a sender or the device where the module setup as sender when not in use. This will use a lot of time on air and will spam your channel.
 
 Also be mindful of your space usage on the file system. It has protections from filling up the space but it's best to delete old range test results.
 
 :::note
-Leaving this plugin on can slow down your mesh. Currently, the messages are sent using the same `TEXT_MESSAGE_APP` [port that all other messages](/docs/developers/protobufs/api#portnumsproto) are sent on.
+Leaving this module on can slow down your mesh. Currently, the messages are sent using the same `TEXT_MESSAGE_APP` [port that all other messages](/docs/developers/protobufs/api#portnumsproto) are sent on.
 :::
 
 ### Accessing your CSV
@@ -187,7 +193,7 @@ http://198.168.0.X/static/rangetest.csv
 
 ### Recommended Sender Settings
 
-| Radio Setting | `range_test_plugin_sender` |
+| Radio Setting | `range_test_module_sender` |
 | :-----------: | :------------------------: |
 |   Long Slow   |             60             |
 |   Long Alt    |             30             |
@@ -210,8 +216,8 @@ values={[
 <TabItem value="cli">
 
 ```bash title="Example - Sender Node"
-meshtastic --set range_test_plugin_enabled true
-meshtastic --set range_test_plugin_sender 60
+meshtastic --set range_test_module_enabled true
+meshtastic --set range_test_module_sender 60
 ```
 
   </TabItem>
@@ -252,8 +258,8 @@ values={[
 <TabItem value="cli">
 
 ```bash title="Example - Receiver Node"
-meshtastic --set range_test_plugin_enabled true
-meshtastic --set range_test_plugin_save true
+meshtastic --set range_test_module_enabled true
+meshtastic --set range_test_module_save true
 ```
 
   </TabItem>

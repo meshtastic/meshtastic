@@ -144,8 +144,8 @@ Completed getting preferences
 
 For further reading, I recommend starting out with [Meshtastic-python](/docs/software/python/python-cli) if you haven't already gone through this (hopefully you have since you are reading this). But for a full reference to the settings you can change, please see:
 
-[Settings Overview](/docs/settings) and 
-[Complete list of user settings in Protobufs](https://meshtastic.org/docs/developers/protobufs/api#radioconfiguserpreferences)
+[Settings Overview](/docs/settings) and
+[Complete list of user settings in Protobufs](/docs/developers/protobufs/api#radioconfiguserpreferences)
 
 ## Areas for future development
 

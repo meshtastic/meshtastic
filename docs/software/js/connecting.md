@@ -4,17 +4,21 @@ title: Connecting to a device
 sidebar_label: Connecting
 ---
 
-Currently, two connection methods are supported, HTTP and BLE.
-
-## HTTP
-
-## BLE
-
-```typescript
-//connection method
-```
-
 ```tsx
-//connection button
-const a = <connectButton method={someMethod} />;
+import type React from "React";
+
+import { IHTTPConnection } from "@meshtastic/meshtasticjs";
+
+export const Connection = (): JSX.Element => {
+  const connection = new IHTTPConnection();
+
+  const connect = (): void => {
+    void connection.connect({
+      address: "10.0.0.10",
+      fetchInterval: 3000,
+    });
+  };
+
+  return <button onClick={connect}>Connect Bluetooth</button>;
+};
 ```

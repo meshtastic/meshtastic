@@ -27,9 +27,13 @@ const connection = client.createHTTPConnection();
 connection.connect("192.168.x.x");
 
 const restartDevice: Promise<void> = connection.restartDevice();
-const getStatistics: Promise<void | Types.WebSPIFFSResponse> = connection.getStatistics();
-const getNetworks: Promise<void | Types.WebNetworkResponse> = connection.getNetworks();
-const getSPIFFS: Promise<void | Types.WebSPIFFSResponse> = connection.getSPIFFS();
-const deleteSPIFFS: Promise<void | Types.WebSPIFFSResponse> = connection.deleteSPIFFS();
+const getStatistics: Promise<void | Types.WebSPIFFSResponse> =
+  connection.getStatistics();
+const getNetworks: Promise<void | Types.WebNetworkResponse> =
+  connection.getNetworks();
+const getSPIFFS: Promise<void | Types.WebSPIFFSResponse> =
+  connection.getSPIFFS();
+const deleteSPIFFS: Promise<void | Types.WebSPIFFSResponse> =
+  connection.deleteSPIFFS();
 const blinkLED: Promise<void | any> = connection.blinkLED();
 ```

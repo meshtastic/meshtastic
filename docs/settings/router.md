@@ -3,42 +3,42 @@ id: router
 title: Router Settings
 sidebar_label: Router
 ---
+
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-
 ## Overview
-
-
 
 ## Settings
 
-| Setting | Acceptable Values | Default |
-| :-----: | :---------------: | :-----: |
-| is_router | `true`, `false` | `false` |
+|  Setting  | Acceptable Values | Default |
+| :-------: | :---------------: | :-----: |
+| is_router |  `true`, `false`  | `false` |
 
 ### is_router
 
 Are we operating as a router. Changes behavior in the following ways: The device will only sleep for critically low battery level (i.e. always tries to stay alive for the mesh) In the future routing decisions will preferentially route packets through nodes with this attribute (because assumed good line of sight)
 
 #### Enable/Disable router mode
-<Tabs
-  groupId="settings"
-  defaultValue="cli"
-  values={[
-    {label: 'CLI', value: 'cli'},
-    {label: 'Android', value: 'android'},
-    {label: 'iOS', value: 'iOS'},
-    {label: 'Web', value: 'web'},
-  ]}>
-  <TabItem value="cli">
 
-  ```bash title="Enable router mode"
-  meshtastic --set is_router true
-  ```
-  ```bash title="Disable router mode"
-  meshtastic --set is_router false
-  ```
+<Tabs
+groupId="settings"
+defaultValue="cli"
+values={[
+{label: 'CLI', value: 'cli'},
+{label: 'Android', value: 'android'},
+{label: 'iOS', value: 'iOS'},
+{label: 'Web', value: 'web'},
+]}>
+<TabItem value="cli">
+
+```bash title="Enable router mode"
+meshtastic --set is_router true
+```
+
+```bash title="Disable router mode"
+meshtastic --set is_router false
+```
 
   </TabItem>
   <TabItem value="android">
@@ -64,20 +64,21 @@ Configuring this setting is not yet available for the selected platform. If this
   </TabItem>
 </Tabs>
 
-
 ## Details
 
 Toggling `is_router` changes your device settings in the following ways.
 
-| Setting | `is_router` Default | Normal Default |
-| :-----: | :-----------------: | :------------: |
-| `send_owner_interval` | 2 | 4 |
-| `position_broadcast_secs` | 12 hours | 15 minutes |
-| `wait_bluetooth_secs` | 1 | 60 |
-| `mesh_sds_timeout_secs` | NODE_DELAY_FOREVER | 2 hours |
-| `phone_sds_timeout_sec` | NODE_DELAY_FOREVER | 2 hours |
-| `ls_secs` | 1 day | 5 minutes |
+|          Setting          | `is_router` Default | Normal Default |
+| :-----------------------: | :-----------------: | :------------: |
+|   `send_owner_interval`   |          2          |       4        |
+| `position_broadcast_secs` |      12 hours       |   15 minutes   |
+|   `wait_bluetooth_secs`   |          1          |       60       |
+|  `mesh_sds_timeout_secs`  | NODE_DELAY_FOREVER  |    2 hours     |
+|  `phone_sds_timeout_sec`  | NODE_DELAY_FOREVER  |    2 hours     |
+|         `ls_secs`         |        1 day        |   5 minutes    |
 
 ### Altered Behaviors
+
 #### Screen Wake
+
 #### Bluetooth

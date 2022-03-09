@@ -19,7 +19,7 @@ sidebar_label: Heltec
 - No GPS
 
 - Firmware file: `firmware-heltec-1.x.x.bin`
-- [Purchase link](https://heltec.org/project/wifi-lora-32/)
+- [Purchase link](https://heltec.org/project/wifi-lora-32)
 
 [<img src="Heltec WiFi LoRa 32 (V2)" src="/img/hardware/heltec-v2.png" style={{zoom:'25%'}} />](/img/hardware/heltec-v2.png)
 

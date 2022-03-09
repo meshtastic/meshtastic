@@ -15,24 +15,25 @@ For a description and more information on what exactly all of these mean, please
 
 ## Settings
 
-| Setting | Acceptable Values | Default |
-| :-----: | :---------------: | :-----: |
-| charge_current | `MAUnset`, `MA100`, `MA190`, `MA280`, `MA360`, `MA450`, `MA550`, `MA630`, `MA700`, `MA780`, `MA880`, `MA960`, `MA1000`, `MA1080`, `MA1160`, `MA1240`, `MA1320`: | `MAUnset` |
-| is_always_powered | `true`, `false` | `false` |
-| is_low_power | `true`, `false` | `false` |
-| is_router | `true`, `false` | `false` |
-| ls_secs | `integer` (seconds) | `0` |
-| mesh_sds_timeout_secs | `integer` (seconds) | `0` |
-| min_wake_secs | `integer` (seconds) | `0` |
-| on_battery_shutdown_after_secs | `integer` (seconds) | `0` |
-| phone_sds_timeout_sec | `integer` (seconds) | `0` |
-| phone_timeout_secs | `integer` (seconds) | `0` |
-| screen_on_secs | `integer` (seconds) | `0` |
-| sds_secs | `integer` (seconds) | `0` |
-| send_owner_interval | `integer` (sent every x network pings) | `4` |
-| wait_bluetooth_secs | `integer` (seconds) | `0` |
+|            Setting             |                                                                        Acceptable Values                                                                        |  Default  |
+| :----------------------------: | :-------------------------------------------------------------------------------------------------------------------------------------------------------------: | :-------: |
+|         charge_current         | `MAUnset`, `MA100`, `MA190`, `MA280`, `MA360`, `MA450`, `MA550`, `MA630`, `MA700`, `MA780`, `MA880`, `MA960`, `MA1000`, `MA1080`, `MA1160`, `MA1240`, `MA1320`: | `MAUnset` |
+|       is_always_powered        |                                                                         `true`, `false`                                                                         |  `false`  |
+|          is_low_power          |                                                                         `true`, `false`                                                                         |  `false`  |
+|           is_router            |                                                                         `true`, `false`                                                                         |  `false`  |
+|            ls_secs             |                                                                       `integer` (seconds)                                                                       |    `0`    |
+|     mesh_sds_timeout_secs      |                                                                       `integer` (seconds)                                                                       |    `0`    |
+|         min_wake_secs          |                                                                       `integer` (seconds)                                                                       |    `0`    |
+| on_battery_shutdown_after_secs |                                                                       `integer` (seconds)                                                                       |    `0`    |
+|     phone_sds_timeout_sec      |                                                                       `integer` (seconds)                                                                       |    `0`    |
+|       phone_timeout_secs       |                                                                       `integer` (seconds)                                                                       |    `0`    |
+|         screen_on_secs         |                                                                       `integer` (seconds)                                                                       |    `0`    |
+|            sds_secs            |                                                                       `integer` (seconds)                                                                       |    `0`    |
+|      send_owner_interval       |                                                             `integer` (sent every x network pings)                                                              |    `4`    |
+|      wait_bluetooth_secs       |                                                                       `integer` (seconds)                                                                       |    `0`    |
 
 :::note
+
 When you change the following settings to `0` they assume the following defaults:
 
 - `ls_secs`: 1 hour
@@ -43,7 +44,7 @@ When you change the following settings to `0` they assume the following defaults
 - `screen_on_secs`: 1 minute
 - `sds_secs`: 1 year
 - `wait_bluetooth_secs`: 1 minute
-:::
+  :::
 
 ### charge_current
 
@@ -52,44 +53,33 @@ Sets the current of the battery charger.
 #### Specify charge_current
 
 <Tabs
-  groupId="settings"
-  defaultValue="cli"
-  values={[
-    {label: 'CLI', value: 'cli'},
-    {label: 'Android', value: 'android'},
-    {label: 'iOS', value: 'iOS'},
-    {label: 'Web', value: 'web'},
-  ]}>
-  <TabItem value="cli">
+groupId="settings"
+defaultValue="cli"
+values={[
+{label: 'CLI', value: 'cli'},
+{label: 'Android', value: 'android'},
+{label: 'iOS', value: 'iOS'},
+{label: 'Web', value: 'web'},
+]}>
+<TabItem value="cli">
 
-  ```bash title="Unset charge current"
-  meshtastic --set  charge_current MAUnset
-  ```
-  ```bash title="Set charge current"
-  meshtastic --set  charge_current MA100
-  ```
+```bash title="Unset charge current"
+meshtastic --set  charge_current MAUnset
+```
+
+```bash title="Set charge current"
+meshtastic --set  charge_current MA100
+```
 
   </TabItem>
   <TabItem value="android">
-
-:::info
 Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
   </TabItem>
   <TabItem value="iOS">
-
-:::info
 Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
   </TabItem>
   <TabItem value="web">
-
-:::info
 Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
   </TabItem>
 </Tabs>
 
@@ -98,45 +88,35 @@ Configuring this setting is not yet available for the selected platform. If this
 Circumvents the logic block for determining whether the device is powered or not. Useful for devices with finicky ADC issues on the battery sense pins.
 
 #### Enable/Disable is_always_powered
-<Tabs
-  groupId="settings"
-  defaultValue="cli"
-  values={[
-    {label: 'CLI', value: 'cli'},
-    {label: 'Android', value: 'android'},
-    {label: 'iOS', value: 'iOS'},
-    {label: 'Web', value: 'web'},
-  ]}>
-  <TabItem value="cli">
 
-  ```bash title="Enable is_always_powered"
-  meshtastic --set is_always_powered true
-  ```
-  ```bash title="Disable is_always_powered"
-  meshtastic --set is_always_powered false
-  ```
+<Tabs
+groupId="settings"
+defaultValue="cli"
+values={[
+{label: 'CLI', value: 'cli'},
+{label: 'Android', value: 'android'},
+{label: 'iOS', value: 'iOS'},
+{label: 'Web', value: 'web'},
+]}>
+<TabItem value="cli">
+
+```bash title="Enable is_always_powered"
+meshtastic --set is_always_powered true
+```
+
+```bash title="Disable is_always_powered"
+meshtastic --set is_always_powered false
+```
 
   </TabItem>
   <TabItem value="android">
-
-:::info
 Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
   </TabItem>
   <TabItem value="iOS">
-
-:::info
 Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
   </TabItem>
   <TabItem value="web">
-
-:::info
 Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
   </TabItem>
 </Tabs>
 
@@ -145,49 +125,41 @@ Configuring this setting is not yet available for the selected platform. If this
 If set, we are powered from a low-current source (i.e. solar), so even if it looks like we have power flowing in we should try to minimize power consumption as much as possible.
 
 :::note
+
 You do **not** need to set this if you've set `is_router` (it is implied in that case).
+
 :::
 
 #### Enable/Disable is_low_power
-<Tabs
-  groupId="settings"
-  defaultValue="cli"
-  values={[
-    {label: 'CLI', value: 'cli'},
-    {label: 'Android', value: 'android'},
-    {label: 'iOS', value: 'iOS'},
-    {label: 'Web', value: 'web'},
-  ]}>
-  <TabItem value="cli">
 
-  ```bash title="Enable is_low_power"
-  meshtastic --set is_low_power true
-  ```
-  ```bash title="Disable is_low_power"
-  meshtastic --set is_low_power false
-  ```
+<Tabs
+groupId="settings"
+defaultValue="cli"
+values={[
+{label: 'CLI', value: 'cli'},
+{label: 'Android', value: 'android'},
+{label: 'iOS', value: 'iOS'},
+{label: 'Web', value: 'web'},
+]}>
+<TabItem value="cli">
+
+```bash title="Enable is_low_power"
+meshtastic --set is_low_power true
+```
+
+```bash title="Disable is_low_power"
+meshtastic --set is_low_power false
+```
 
   </TabItem>
   <TabItem value="android">
-
-:::info
 Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
   </TabItem>
   <TabItem value="iOS">
-
-:::info
 Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
   </TabItem>
   <TabItem value="web">
-
-:::info
 Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
   </TabItem>
 </Tabs>
 
@@ -195,47 +167,36 @@ Configuring this setting is not yet available for the selected platform. If this
 
 Are we operating as a router. Changes behavior in the following ways: The device will only sleep for critically low battery level (i.e. always tries to stay alive for the mesh) In the future routing decisions will preferentially route packets through nodes with this attribute (because assumed good line of sight).
 
-
 #### Enable/Disable is_router
-<Tabs
-  groupId="settings"
-  defaultValue="cli"
-  values={[
-    {label: 'CLI', value: 'cli'},
-    {label: 'Android', value: 'android'},
-    {label: 'iOS', value: 'iOS'},
-    {label: 'Web', value: 'web'},
-  ]}>
-  <TabItem value="cli">
 
-  ```bash title="Enable is_router"
-  meshtastic --set is_router true
-  ```
-  ```bash title="Disable is_router"
-  meshtastic --set is_router false
-  ```
+<Tabs
+groupId="settings"
+defaultValue="cli"
+values={[
+{label: 'CLI', value: 'cli'},
+{label: 'Android', value: 'android'},
+{label: 'iOS', value: 'iOS'},
+{label: 'Web', value: 'web'},
+]}>
+<TabItem value="cli">
+
+```bash title="Enable is_router"
+meshtastic --set is_router true
+```
+
+```bash title="Disable is_router"
+meshtastic --set is_router false
+```
 
   </TabItem>
   <TabItem value="android">
-
-:::info
 Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
   </TabItem>
   <TabItem value="iOS">
-
-:::info
 Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
   </TabItem>
   <TabItem value="web">
-
-:::info
 Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
   </TabItem>
 </Tabs>
 
@@ -244,45 +205,35 @@ Configuring this setting is not yet available for the selected platform. If this
 Power management state machine option. See the [power page](/docs/software/other/power) for details. 0 for default of 3600.
 
 #### Configure ls_secs
-<Tabs
-  groupId="settings"
-  defaultValue="cli"
-  values={[
-    {label: 'CLI', value: 'cli'},
-    {label: 'Android', value: 'android'},
-    {label: 'iOS', value: 'iOS'},
-    {label: 'Web', value: 'web'},
-  ]}>
-  <TabItem value="cli">
 
-  ```bash title="Set ls_secs to default (1 hour/3600 seconds)"
-  meshtastic --set ls_secs 0
-  ```
-  ```bash title="Set ls_secs to 120 seconds"
-  meshtastic --set ls_secs 120
-  ```
+<Tabs
+groupId="settings"
+defaultValue="cli"
+values={[
+{label: 'CLI', value: 'cli'},
+{label: 'Android', value: 'android'},
+{label: 'iOS', value: 'iOS'},
+{label: 'Web', value: 'web'},
+]}>
+<TabItem value="cli">
+
+```bash title="Set ls_secs to default (1 hour/3600 seconds)"
+meshtastic --set ls_secs 0
+```
+
+```bash title="Set ls_secs to 120 seconds"
+meshtastic --set ls_secs 120
+```
 
   </TabItem>
   <TabItem value="android">
-
-:::info
 Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
   </TabItem>
   <TabItem value="iOS">
-
-:::info
 Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
   </TabItem>
   <TabItem value="web">
-
-:::info
 Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
   </TabItem>
 </Tabs>
 
@@ -291,48 +242,39 @@ Configuring this setting is not yet available for the selected platform. If this
 Power management state machine option. See the [power page](/docs/software/other/power) for details. 0 for default of two hours, use the MAXUINT or 4294967295 to disable.
 
 #### Configure mesh_sds_timeout_secs
-<Tabs
-  groupId="settings"
-  defaultValue="cli"
-  values={[
-    {label: 'CLI', value: 'cli'},
-    {label: 'Android', value: 'android'},
-    {label: 'iOS', value: 'iOS'},
-    {label: 'Web', value: 'web'},
-  ]}>
-  <TabItem value="cli">
 
-  ```bash title="Set mesh_sds_timeout_secs to default (2 hour/7200 seconds)"
-  meshtastic --set mesh_sds_timeout_secs 0
-  ```
-  ```bash title="Set mesh_sds_timeout_secs to 120 seconds"
-  meshtastic --set mesh_sds_timeout_secs 120
-  ```
-  ```bash title="Disable mesh_sds_timeout_secs (using MAXUINT)"
-  meshtastic --set mesh_sds_timeout_secs 4294967295
-  ```
+<Tabs
+groupId="settings"
+defaultValue="cli"
+values={[
+{label: 'CLI', value: 'cli'},
+{label: 'Android', value: 'android'},
+{label: 'iOS', value: 'iOS'},
+{label: 'Web', value: 'web'},
+]}>
+<TabItem value="cli">
+
+```bash title="Set mesh_sds_timeout_secs to default (2 hour/7200 seconds)"
+meshtastic --set mesh_sds_timeout_secs 0
+```
+
+```bash title="Set mesh_sds_timeout_secs to 120 seconds"
+meshtastic --set mesh_sds_timeout_secs 120
+```
+
+```bash title="Disable mesh_sds_timeout_secs (using MAXUINT)"
+meshtastic --set mesh_sds_timeout_secs 4294967295
+```
 
   </TabItem>
   <TabItem value="android">
-
-:::info
 Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
   </TabItem>
   <TabItem value="iOS">
-
-:::info
 Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
   </TabItem>
   <TabItem value="web">
-
-:::info
 Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
   </TabItem>
 </Tabs>
 
@@ -343,44 +285,33 @@ Power management state machine option. See the [power page](/docs/software/other
 #### Configure min_wake_secs
 
 <Tabs
-  groupId="settings"
-  defaultValue="cli"
-  values={[
-    {label: 'CLI', value: 'cli'},
-    {label: 'Android', value: 'android'},
-    {label: 'iOS', value: 'iOS'},
-    {label: 'Web', value: 'web'},
-  ]}>
-  <TabItem value="cli">
+groupId="settings"
+defaultValue="cli"
+values={[
+{label: 'CLI', value: 'cli'},
+{label: 'Android', value: 'android'},
+{label: 'iOS', value: 'iOS'},
+{label: 'Web', value: 'web'},
+]}>
+<TabItem value="cli">
 
-  ```bash title="Set min_wake_secs to default (10 seconds)"
-  meshtastic --set min_wake_secs 0
-  ```
-  ```bash title="Set min_wake_secs to 120 seconds"
-  meshtastic --set min_wake_secs 120
-  ```
+```bash title="Set min_wake_secs to default (10 seconds)"
+meshtastic --set min_wake_secs 0
+```
+
+```bash title="Set min_wake_secs to 120 seconds"
+meshtastic --set min_wake_secs 120
+```
 
   </TabItem>
   <TabItem value="android">
-
-:::info
 Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
   </TabItem>
   <TabItem value="iOS">
-
-:::info
 Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
   </TabItem>
   <TabItem value="web">
-
-:::info
 Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
   </TabItem>
 </Tabs>
 
@@ -389,45 +320,35 @@ Configuring this setting is not yet available for the selected platform. If this
 If non-zero, the device will fully power off this many seconds after external power is removed.
 
 #### Enable/Disable on_battery_shutdown_after_secs
-<Tabs
-  groupId="settings"
-  defaultValue="cli"
-  values={[
-    {label: 'CLI', value: 'cli'},
-    {label: 'Android', value: 'android'},
-    {label: 'iOS', value: 'iOS'},
-    {label: 'Web', value: 'web'},
-  ]}>
-  <TabItem value="cli">
 
-  ```bash title="Disable on_battery_shutdown_after_secs"
-  meshtastic --set on_battery_shutdown_after_secs 0
-  ```
-  ```bash title="Set device to shutdown after 120 seconds on battery"
-  meshtastic --set on_battery_shutdown_after_secs 120
-  ```
+<Tabs
+groupId="settings"
+defaultValue="cli"
+values={[
+{label: 'CLI', value: 'cli'},
+{label: 'Android', value: 'android'},
+{label: 'iOS', value: 'iOS'},
+{label: 'Web', value: 'web'},
+]}>
+<TabItem value="cli">
+
+```bash title="Disable on_battery_shutdown_after_secs"
+meshtastic --set on_battery_shutdown_after_secs 0
+```
+
+```bash title="Set device to shutdown after 120 seconds on battery"
+meshtastic --set on_battery_shutdown_after_secs 120
+```
 
   </TabItem>
   <TabItem value="android">
-
-:::info
 Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
   </TabItem>
   <TabItem value="iOS">
-
-:::info
 Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
   </TabItem>
   <TabItem value="web">
-
-:::info
 Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
   </TabItem>
 </Tabs>
 
@@ -436,48 +357,39 @@ Configuring this setting is not yet available for the selected platform. If this
 Power management state machine option. See the [power page](/docs/software/other/power) for details. 0 for default of two hours, use the MAXUINT or 4294967295 to disable.
 
 #### Enable/Disable phone_sds_timeout_sec
-<Tabs
-  groupId="settings"
-  defaultValue="cli"
-  values={[
-    {label: 'CLI', value: 'cli'},
-    {label: 'Android', value: 'android'},
-    {label: 'iOS', value: 'iOS'},
-    {label: 'Web', value: 'web'},
-  ]}>
-  <TabItem value="cli">
 
-  ```bash title="Set phone_sds_timeout_sec to default (2 hours)"
-  meshtastic --set phone_sds_timeout_sec 0
-  ```
-  ```bash title="Disable phone_sds_timeout_sec"
-  meshtastic --set phone_sds_timeout_sec 4294967295
-  ```
-  ```bash title="Set phone_sds_timeout_sec to 120 seconds"
-  meshtastic --set phone_sds_timeout_sec 120
-  ```
+<Tabs
+groupId="settings"
+defaultValue="cli"
+values={[
+{label: 'CLI', value: 'cli'},
+{label: 'Android', value: 'android'},
+{label: 'iOS', value: 'iOS'},
+{label: 'Web', value: 'web'},
+]}>
+<TabItem value="cli">
+
+```bash title="Set phone_sds_timeout_sec to default (2 hours)"
+meshtastic --set phone_sds_timeout_sec 0
+```
+
+```bash title="Disable phone_sds_timeout_sec"
+meshtastic --set phone_sds_timeout_sec 4294967295
+```
+
+```bash title="Set phone_sds_timeout_sec to 120 seconds"
+meshtastic --set phone_sds_timeout_sec 120
+```
 
   </TabItem>
   <TabItem value="android">
-
-:::info
 Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
   </TabItem>
   <TabItem value="iOS">
-
-:::info
 Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
   </TabItem>
   <TabItem value="web">
-
-:::info
 Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
   </TabItem>
 </Tabs>
 
@@ -488,44 +400,33 @@ Power management state machine option. See the [power page](/docs/software/other
 #### Configure phone_timeout_secs
 
 <Tabs
-  groupId="settings"
-  defaultValue="cli"
-  values={[
-    {label: 'CLI', value: 'cli'},
-    {label: 'Android', value: 'android'},
-    {label: 'iOS', value: 'iOS'},
-    {label: 'Web', value: 'web'},
-  ]}>
-  <TabItem value="cli">
+groupId="settings"
+defaultValue="cli"
+values={[
+{label: 'CLI', value: 'cli'},
+{label: 'Android', value: 'android'},
+{label: 'iOS', value: 'iOS'},
+{label: 'Web', value: 'web'},
+]}>
+<TabItem value="cli">
 
-  ```bash title="Set phone_timeout_secs to default (15 minutes)"
-  meshtastic --set phone_timeout_secs 0
-  ```
-  ```bash title="Set phone_timeout_secs to 120 seconds"
-  meshtastic --set phone_timeout_secs 120
-  ```
+```bash title="Set phone_timeout_secs to default (15 minutes)"
+meshtastic --set phone_timeout_secs 0
+```
+
+```bash title="Set phone_timeout_secs to 120 seconds"
+meshtastic --set phone_timeout_secs 120
+```
 
   </TabItem>
   <TabItem value="android">
-
-:::info
 Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
   </TabItem>
   <TabItem value="iOS">
-
-:::info
 Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
   </TabItem>
   <TabItem value="web">
-
-:::info
 Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
   </TabItem>
 </Tabs>
 
@@ -536,44 +437,33 @@ Power management state machine option. See the [power page](/docs/software/other
 #### Configure screen_on_secs
 
 <Tabs
-  groupId="settings"
-  defaultValue="cli"
-  values={[
-    {label: 'CLI', value: 'cli'},
-    {label: 'Android', value: 'android'},
-    {label: 'iOS', value: 'iOS'},
-    {label: 'Web', value: 'web'},
-  ]}>
-  <TabItem value="cli">
+groupId="settings"
+defaultValue="cli"
+values={[
+{label: 'CLI', value: 'cli'},
+{label: 'Android', value: 'android'},
+{label: 'iOS', value: 'iOS'},
+{label: 'Web', value: 'web'},
+]}>
+<TabItem value="cli">
 
-  ```bash title="Set screen_on_secs to default (1 minute)"
-  meshtastic --set screen_on_secs 0
-  ```
-  ```bash title="Set screen_on_secs to 120 seconds"
-  meshtastic --set screen_on_secs 120
-  ```
+```bash title="Set screen_on_secs to default (1 minute)"
+meshtastic --set screen_on_secs 0
+```
+
+```bash title="Set screen_on_secs to 120 seconds"
+meshtastic --set screen_on_secs 120
+```
 
   </TabItem>
   <TabItem value="android">
-
-:::info
 Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
   </TabItem>
   <TabItem value="iOS">
-
-:::info
 Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
   </TabItem>
   <TabItem value="web">
-
-:::info
 Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
   </TabItem>
 </Tabs>
 
@@ -584,44 +474,33 @@ Power management state machine option. See the [power page](/docs/software/other
 #### Configure sds_secs
 
 <Tabs
-  groupId="settings"
-  defaultValue="cli"
-  values={[
-    {label: 'CLI', value: 'cli'},
-    {label: 'Android', value: 'android'},
-    {label: 'iOS', value: 'iOS'},
-    {label: 'Web', value: 'web'},
-  ]}>
-  <TabItem value="cli">
+groupId="settings"
+defaultValue="cli"
+values={[
+{label: 'CLI', value: 'cli'},
+{label: 'Android', value: 'android'},
+{label: 'iOS', value: 'iOS'},
+{label: 'Web', value: 'web'},
+]}>
+<TabItem value="cli">
 
-  ```bash title="Set sds_secs to default (1 year)"
-  meshtastic --set sds_secs 0
-  ```
-  ```bash title="Set sds_secs to 120 seconds"
-  meshtastic --set sds_secs 120
-  ```
+```bash title="Set sds_secs to default (1 year)"
+meshtastic --set sds_secs 0
+```
+
+```bash title="Set sds_secs to 120 seconds"
+meshtastic --set sds_secs 120
+```
 
   </TabItem>
   <TabItem value="android">
-
-:::info
 Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
   </TabItem>
   <TabItem value="iOS">
-
-:::info
 Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
   </TabItem>
   <TabItem value="web">
-
-:::info
 Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
   </TabItem>
 </Tabs>
 
@@ -632,44 +511,33 @@ This sets how often to send the database of node owner information with other no
 #### Configure send_owner_interval
 
 <Tabs
-  groupId="settings"
-  defaultValue="cli"
-  values={[
-    {label: 'CLI', value: 'cli'},
-    {label: 'Android', value: 'android'},
-    {label: 'iOS', value: 'iOS'},
-    {label: 'Web', value: 'web'},
-  ]}>
-  <TabItem value="cli">
+groupId="settings"
+defaultValue="cli"
+values={[
+{label: 'CLI', value: 'cli'},
+{label: 'Android', value: 'android'},
+{label: 'iOS', value: 'iOS'},
+{label: 'Web', value: 'web'},
+]}>
+<TabItem value="cli">
 
-  ```bash title="Set send_owner_interval to default (every 4 network pings)"
-  meshtastic --set send_owner_interval 0
-  ```
-  ```bash title="Set send_owner_interval to every 10 network pings"
-  meshtastic --set send_owner_interval 10
-  ```
+```bash title="Set send_owner_interval to default (every 4 network pings)"
+meshtastic --set send_owner_interval 0
+```
+
+```bash title="Set send_owner_interval to every 10 network pings"
+meshtastic --set send_owner_interval 10
+```
 
   </TabItem>
   <TabItem value="android">
-
-:::info
 Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
   </TabItem>
   <TabItem value="iOS">
-
-:::info
 Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
   </TabItem>
   <TabItem value="web">
-
-:::info
 Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
   </TabItem>
 </Tabs>
 
@@ -680,44 +548,34 @@ For instance the default interval of 4 will send the node owner information for 
 Wait number of seconds for Bluetooth - Power management state machine option. See the [power page](/docs/software/other/power) for details. 0 for default of 1 minute.
 
 #### Configure wait_bluetooth_secs
-<Tabs
-  groupId="settings"
-  defaultValue="cli"
-  values={[
-    {label: 'CLI', value: 'cli'},
-    {label: 'Android', value: 'android'},
-    {label: 'iOS', value: 'iOS'},
-    {label: 'Web', value: 'web'},
-  ]}>
-  <TabItem value="cli">
 
-  ```bash title="Set wait_bluetooth_secs to default (60 seconds)"
-  meshtastic --set wait_bluetooth_secs 0
-  ```
-  ```bash title="Set wait_bluetooth_secs to 120 seconds"
-  meshtastic --set wait_bluetooth_secs 120
-  ```
+<Tabs
+groupId="settings"
+defaultValue="cli"
+values={[
+{label: 'CLI', value: 'cli'},
+{label: 'Android', value: 'android'},
+{label: 'iOS', value: 'iOS'},
+{label: 'Web', value: 'web'},
+]}>
+<TabItem value="cli">
+
+```bash title="Set wait_bluetooth_secs to default (60 seconds)"
+meshtastic --set wait_bluetooth_secs 0
+```
+
+```bash title="Set wait_bluetooth_secs to 120 seconds"
+meshtastic --set wait_bluetooth_secs 120
+```
 
   </TabItem>
   <TabItem value="android">
-
-:::info
 Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
   </TabItem>
   <TabItem value="iOS">
-
-:::info
 Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
   </TabItem>
   <TabItem value="web">
-
-:::info
 Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
   </TabItem>
 </Tabs>

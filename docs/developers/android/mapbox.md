@@ -12,9 +12,9 @@ In order to compile a new version of Meshtastic that can use MapBox you will nee
 
 This is fairly simple to do.
 
-* Create an account at MapBox
-* Copy the public token associated with that account to the clipboard
-* Paste that into the file "…/src/main/res/values/mapbox-token.xml"
+- Create an account at MapBox
+- Copy the public token associated with that account to the clipboard
+- Paste that into the file "…/src/main/res/values/mapbox-token.xml"
 
 ## Examples of what can be achieved with MapBox
 

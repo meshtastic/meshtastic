@@ -3,6 +3,7 @@ id: client-web
 title: FAQs - Web
 sidebar_label: Web
 ---
+
 ## Overview
 
 ### How do I access the network from my web browser?

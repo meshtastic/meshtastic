@@ -4,6 +4,7 @@ title: About Meshtastic
 sidebar_label: About Meshtastic
 slug: /about
 ---
+
 :::info
 This section is new and is still being developed. If you'd like to contribute, please do!
 :::
@@ -25,6 +26,7 @@ When a receiving radio captures a packet, it checks to see if it has heard that 
 For each message a radio rebroadcasts, it marks the "hop limit" down by one. When a radio receives a packet with a hop limit of zero, it will not rebroadcast the message.
 
 ## Who develops Meshtastic
+
 <!--- FIXME add Github organization list/contributor list --->
 
 Meshtastic is an open source project available on GitHub. Our generous volunteers donate their personal time to write and maintain this codebase. If you would like to contribute see our [GitHub](https://github.com/meshtastic), join our [Discord server](https://discord.com/invite/UQJ5QuM7vq), and read up on our [forum](https://meshtastic.discourse.group).
