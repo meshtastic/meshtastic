@@ -11,7 +11,7 @@ If you encounter any problems, please post a question in [our forum](https://mes
 ## GUI
 
 1. Purchase a suitable [radio](/docs/hardware).
-2. Install [Python](https://www.python.org/downloads/).
+2. Install [Python](https://www.python.org/downloads).
 3. Install [Git](https://git-scm.com/downloads).
 4. Reboot your computer.
 5. Install [PlatformIO](https://platformio.org/platformio-ide).

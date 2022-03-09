@@ -5,29 +5,30 @@ sidebar_label: MQTT
 ---
 
 ## MQTT
- 
-Meshtastic devices with wifi hardware (ESP32) are able to connect to an MQTT broker to uplink and downlink mesh packets.  This is useful for a number of purposes:
 
-- Connecting your mesh to the official Meshtastic MQTT broker.  This makes your devices appear on the world map, and provides a limited copy of your mesh traffic, translated into JSON.
+Meshtastic devices with wifi hardware (ESP32) are able to connect to an MQTT broker to uplink and downlink mesh packets. This is useful for a number of purposes:
+
+- Connecting your mesh to the official Meshtastic MQTT broker. This makes your devices appear on the world map, and provides a limited copy of your mesh traffic, translated into JSON.
 - Using a custom MQTT broker to bridge several mesh networks together, via the internet (or just a local IP network)
-- Using a custom MQTT broker and a translator program to decode the raw protobuf packets and translate them into a plain text form for use in other systems.  eg plotting temperature readings in Grafana, or device positions in Traccar.
+- Using a custom MQTT broker and a translator program to decode the raw protobuf packets and translate them into a plain text form for use in other systems. eg plotting temperature readings in Grafana, or device positions in Traccar.
 
-When MQTT enabled, the Meshtastic device simply uplinks and/or downlinks every raw protobuf packet that it sees to the MQTT broker.  All packets are sent to the broker, whether they originate from another device on the mesh, or the gateway node itself.
+When MQTT enabled, the Meshtastic device simply uplinks and/or downlinks every raw protobuf packet that it sees to the MQTT broker. All packets are sent to the broker, whether they originate from another device on the mesh, or the gateway node itself.
 
-Packets may be encrypted.  If you use the default meshtastic MQTT server, packets are always encrypted.  If you use a custom MQTT broker (ie set `mqtt_server`), the `mqtt_encryption_enabled` setting applies, which by default is false.
+Packets may be encrypted. If you use the default meshtastic MQTT server, packets are always encrypted. If you use a custom MQTT broker (ie set `mqtt_server`), the `mqtt_encryption_enabled` setting applies, which by default is false.
 
-IMPORTANT: When MQTT is turned on, you are potentially broadcasting your entire mesh traffic onto the public internet.  This includes messages and position information.
+IMPORTANT: When MQTT is turned on, you are potentially broadcasting your entire mesh traffic onto the public internet. This includes messages and position information.
 
 ### MQTT Topic
 
 The device will uplink and downlink packets to the `msh/` prefix:
 
-`msh/1/c/ShortFast/!12345678` where 
+`msh/1/c/ShortFast/!12345678` where
 
 - `!12345678` is the address of the gateway device.
 - `ShortFast` is the channel name.
 
-The payload is a raw protobuf.  Looking at the MQTT traffic with a program like `mosquitto_sub` will tell you it's working, but you won't get much useful information out of it. For example:
+The payload is a raw protobuf. Looking at the MQTT traffic with a program like `mosquitto_sub` will tell you it's working, but you won't get much useful information out of it. For example:
+
 ```
 苓????"!
 	!937bed1cTanksTnk"D???05??=???aP`
@@ -36,36 +37,34 @@ The payload is a raw protobuf.  Looking at the MQTT traffic with a program like 
 
 ### Basic Configuration
 
-Check out [MQTT Settings](https://meshtastic.org/docs/software/settings/mqtt) for full information.  For quick start instructions, read on.
+Check out [MQTT Settings](/docs/software/settings/mqtt) for full information. For quick start instructions, read on.
 
 - Connect your gateway node to wifi, by setting the `wifi_ssid` and `wifi_password` preferences.
-- Configure your broker settings: `mqtt_server`, `mqtt_username`, and `mqtt_password`.  If all are left blank, the device will connect to the Meshtastic broker.
-- Set `uplink_enabled` and `downlink_enabled` as appropriate for each channel.  Most users will just have a single channel (at channel index 0). `meshtastic --ch-index 0 --ch-set uplink_enabled true`
+- Configure your broker settings: `mqtt_server`, `mqtt_username`, and `mqtt_password`. If all are left blank, the device will connect to the Meshtastic broker.
+- Set `uplink_enabled` and `downlink_enabled` as appropriate for each channel. Most users will just have a single channel (at channel index 0). `meshtastic --ch-index 0 --ch-set uplink_enabled true`
 
 `uplink_enabled` will tell the device to publish mesh packets to MQTT.
 `downlink_enabled` will tell the device to subscribe to MQTT, and forward any packets from there onto the mesh.
 
 ### Getting plain data out of the mesh
 
-As of firmware 1.2.53, it is possible for the device to decrypt the protobufs before publishing to MQTT.  To translate this into a plain format:
+As of firmware 1.2.53, it is possible for the device to decrypt the protobufs before publishing to MQTT. To translate this into a plain format:
 
 - Set up a gateway node to uplink packets to your MQTT broker:
-    - `meshtastic --set wifi_ssid XXXX`
-    - `meshtastic --set wifi_password XXXX`
-    - `meshtastic --set mqtt_server 192.168.1.1`
-    - `meshtastic --set mqtt_username XXXX`
-    - `meshtastic --set mqtt_password XXXX`
-    - `meshtastic --set mqtt_encryption_enabled false`
-    - `meshtastic --ch-index 0 --ch-set uplink_enabled true`
+  - `meshtastic --set wifi_ssid XXXX`
+  - `meshtastic --set wifi_password XXXX`
+  - `meshtastic --set mqtt_server 192.168.1.1`
+  - `meshtastic --set mqtt_username XXXX`
+  - `meshtastic --set mqtt_password XXXX`
+  - `meshtastic --set mqtt_encryption_enabled false`
+  - `meshtastic --ch-index 0 --ch-set uplink_enabled true`
 - Grab the meshtastic-mqtt script from [here](https://github.com/joshpirihi/meshtastic-mqtt)
-    - `git clone https://github.com/joshpirihi/meshtastic-mqtt && cd meshtastic-mqtt`
-    - Edit `meshtastic_mqtt/meshtastic_mqtt.py` and enter your mqtt broker details
-    - Install the script with `pip install .`
-    - Run `meshtastic-mqtt`.  It will print some debug output by default, and publish the plain values to the `meshtastic/` prefix.
-    - View the plain data with `mosquitto_sub -h YOUR_MQTT_SERVER -t meshtastic/# -v`
-    - You can then consume the data easily in other systems.  For example, nodered->influx db->grafana.
-
-
+  - `git clone https://github.com/joshpirihi/meshtastic-mqtt && cd meshtastic-mqtt`
+  - Edit `meshtastic_mqtt/meshtastic_mqtt.py` and enter your mqtt broker details
+  - Install the script with `pip install .`
+  - Run `meshtastic-mqtt`. It will print some debug output by default, and publish the plain values to the `meshtastic/` prefix.
+  - View the plain data with `mosquitto_sub -h YOUR_MQTT_SERVER -t meshtastic/# -v`
+  - You can then consume the data easily in other systems. For example, nodered->influx db->grafana.
 
 #Original brainstorming for MQTT:
 
@@ -82,7 +81,7 @@ This is a mini-doc/RFC sketching out a development plan to satisfy a number of 1
 - A text messaging bridge when a node in the mesh can gateway to the internet. Issue #[353](https://github.com/meshtastic/Meshtastic-device/issues/353) and this nicely documented [android issue](https://github.com/meshtastic/Meshtastic-Android/issues/2).
 - An easy way to let desktop app developers remotely control GPIOs. Issue #[182](https://github.com/meshtastic/Meshtastic-device/issues/182)
 - Remote attribute access (to change settings of distant nodes). Issue #182
-- Be sure to checkout [MQTT Settings](https://meshtastic.org/docs/software/settings/mqtt)
+- Be sure to checkout [MQTT Settings](/docs/software/settings/mqtt)
 
 ## Short term goals
 
@@ -118,7 +117,7 @@ Any gateway-device will contact the MQTT broker.
 
 ### Topics
 
-The "mesh/crypt/CHANNELID/NODEID/PORTID" [topic](https://www.hivemq.com/blog/mqtt-essentials-part-5-mqtt-topics-best-practices/) will be used for messages sent from/to a mesh.
+The "mesh/crypt/CHANNELID/NODEID/PORTID" [topic](https://www.hivemq.com/blog/mqtt-essentials-part-5-mqtt-topics-best-practices) will be used for messages sent from/to a mesh.
 
 Gateway nodes will forward any MeshPacket from a local mesh channel with uplink_enabled. The packet (encapsulated in a ServiceEnvelope) will remain encrypted with the key for the specified channel.
 
@@ -132,7 +131,7 @@ FIXME, discuss possible attacks by griefers and how they can be prevented
 
 #### Service Envelope
 
-The payload published on mesh/... will always be wrapped in a [ServiceEnvelope protobuf](https://meshtastic.org/docs/developers/protobufs/api#serviceenvelope).
+The payload published on mesh/... will always be wrapped in a [ServiceEnvelope protobuf](/docs/developers/protobufs/api#serviceenvelope).
 
 ServiceEnvelope will include the message, and full information about arrival time, who forwarded it, source channel, source mesh id, etc...
 
@@ -161,7 +160,7 @@ deduplicate if needed by using the packet ID of each message.
 
 #### Public MQTT broker service
 
-An existing public [MQTT broker](https://mosquitto.org/) will be the default for this service, but clients can use any MQTT broker they choose.
+An existing public [MQTT broker](https://mosquitto.org) will be the default for this service, but clients can use any MQTT broker they choose.
 
 FIXME - figure out how to avoid impersonation (because we are initially using a public MQTT server with no special security options). FIXME, include some ideas on this in the ServiceEnvelope documentation.
 
@@ -169,7 +168,7 @@ FIXME - figure out how to avoid impersonation (because we are initially using a 
 
 @Geeksville will run a riot.im bridge that talks to the public MQTT broker and sends/receives into the riot.im network.
 
-There is apparently [already](https://github.com/derEisele/tuple) a riot.im [bridge](https://matrix.org/bridges/) for MQTT. That will possibly need to be customized a bit. But by doing this, we should be able to let random riot.im users send/receive messages to/from any meshtastic device. (FIXME ponder security). See this [issue](https://github.com/meshtastic/Meshtastic-Android/issues/2#issuecomment-645660990) with discussion with the dev.
+There is apparently [already](https://github.com/derEisele/tuple) a riot.im [bridge](https://matrix.org/bridges) for MQTT. That will possibly need to be customized a bit. But by doing this, we should be able to let random riot.im users send/receive messages to/from any meshtastic device. (FIXME ponder security). See this [issue](https://github.com/meshtastic/Meshtastic-Android/issues/2#issuecomment-645660990) with discussion with the dev.
 
 ### Deprecated concepts
 
@@ -282,12 +281,13 @@ mosquitto_pub -h localhost -q 0 -t test/hello -m 'yo!'
 ```
 
 5. For Meshtastic to be able to access that server, two settings need to be changed in the
-`/usr/local/etc/mosquitto/mosquitto.conf` file:
+   `/usr/local/etc/mosquitto/mosquitto.conf` file:
 
 ```
 listener 1883 0.0.0.0
 allow_anonymous true
 ```
+
 6. Restart the service:
 
 ```

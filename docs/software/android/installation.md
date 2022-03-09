@@ -3,9 +3,10 @@ id: android-installation
 title: Android application installation
 sidebar_label: Installation
 ---
+
 Our Android application is available to download on Google Play Store.
 
-<p align="center"><a href="https://play.google.com/store/apps/details?id=com.geeksville.mesh&referrer=utm_source%3Dgithub-homepage"><img alt="Download at https://play.google.com/store/apps/details?id=com.geeksville.mesh" src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" style={{zoom:'35%'}} /></a></p>
+<p align="center"><a href="https://play.google.com/store/apps/details?id=com.geeksville.mesh"><img alt="Download at https://play.google.com/store/apps/details?id=com.geeksville.mesh" src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" style={{zoom:'35%'}} /></a></p>
 
 The app is also available on the Amazon [Appstore](https://www.amazon.com/Geeksville-Industries-Meshtastic/dp/B08CY9394Q). You will need to install the Amazon Appstore onto your phone in order to install the Meshtastic application.
 
@@ -30,7 +31,7 @@ Click on the image to see a quick video of where I found it on my phone.
 
 There is a [beta program](https://play.google.com/apps/testing/com.geeksville.mesh) for the app, which will let you test the cutting edge changes, though this may come with extra bugs. You can join this via Google Play. It is recommended that you follow the [Meshtastic Discourse Alpha Testers](https://meshtastic.discourse.group/c/development/alpha-testers) channel if you decide to join this.
 
-The app uses anonymous usage statistics and crash reports to allow us to catch problems with Meshtastic and fix them. Analytics are also required to be able to use the "free" plan of our map provider [Mapbox](https://docs.mapbox.com/help/how-mapbox-works/). You can disable this by unticking the checkbox on the settings page.
+The app uses anonymous usage statistics and crash reports to allow us to catch problems with Meshtastic and fix them. Analytics are also required to be able to use the "free" plan of our map provider [Mapbox](https://docs.mapbox.com/help/how-mapbox-works). You can disable this by unticking the checkbox on the settings page.
 
 [![Settings page with statistics consent box highlighted](/img/android/android-stats-consent-sm.png)](/img/android/android-stats-consent.png)
 

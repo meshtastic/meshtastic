@@ -7,12 +7,12 @@ import Layout from '@theme/Layout';
 
 import { Release } from '../../utils/github';
 import { fetcher } from '../../utils/swr';
+import { DownloadCard } from './_components/DownloadCard';
 import {
   FirmwareCard,
   PlaceholderFirmwareCard,
 } from './_components/FirmwareCard';
-import { HeaderText } from './_components/HeaderText'
-import { DownloadCard } from './_components/DownloadCard'
+import { HeaderText } from './_components/HeaderText';
 
 const Firmware = (): JSX.Element => {
   const { data, error } = useSWR<Release[]>(
@@ -30,10 +30,7 @@ const Firmware = (): JSX.Element => {
     >
       <main className="margin-vert--xl">
         <div className="container">
-          <HeaderText
-            type="h1"
-            text="Downloads"
-          />
+          <HeaderText type="h1" text="Downloads" />
         </div>
         <div className="container">
           <HeaderText
@@ -46,7 +43,13 @@ const Firmware = (): JSX.Element => {
             buttonText="Download Meshtastic Flasher"
             url="https://github.com/meshtastic/Meshtastic-gui-installer/releases/latest"
             notes={[
-              "To download using ", <code>pip</code>, " follow ",<a href="https://meshtastic.org/docs/getting-started/meshtastic-flasher#install-using-pip">these instructions</a>,"."
+              "To download using ",
+              <code>pip</code>,
+              " follow ",
+              <a href="/docs/getting-started/meshtastic-flasher#install-using-pip">
+                these instructions
+              </a>,
+              ".",
             ]}
           />
         </div>
@@ -69,7 +72,17 @@ const Firmware = (): JSX.Element => {
               client="Android"
               imgUrl="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png"
               url="https://play.google.com/store/apps/details?id=com.geeksville.mesh&referrer=utm_source=downloads-page"
-              notes={["To sideload, ",<a href="https://github.com/meshtastic/Meshtastic-Android/releases/latest" rel="noreferrer" target="_blank">download the latest .apk</a>," from Github", ]}
+              notes={[
+                "To sideload, ",
+                <a
+                  href="https://github.com/meshtastic/Meshtastic-Android/releases/latest"
+                  rel="noreferrer"
+                  target="_blank"
+                >
+                  download the latest .apk
+                </a>,
+                " from Github",
+              ]}
             />
             <DownloadCard
               client="iOS"
@@ -134,10 +147,36 @@ const Firmware = (): JSX.Element => {
               </>
             )}
           </ul>
-          Once downloaded, follow the flashing instructions for <a href="https://meshtastic.org/docs/getting-started/flashing-esp32" rel="noreferrer" target="_blank">ESP32 chipsets</a>, <a href="https://meshtastic.org/docs/getting-started/flashing-nrf52" rel="noreferrer" target="_blank">NRF52 chipsets</a>, or the <a href="https://meshtastic.org/docs/getting-started/meshtastic-flasher" rel="noreferrer" target="_blank">GUI instructions for Meshtastic Flasher</a>.
+          Once downloaded, follow the flashing instructions for{" "}
+          <a
+            href="/docs/getting-started/flashing-esp32"
+            rel="noreferrer"
+            target="_blank"
+          >
+            ESP32 chipsets
+          </a>
+          ,{" "}
+          <a
+            href="/docs/getting-started/flashing-nrf52"
+            rel="noreferrer"
+            target="_blank"
+          >
+            NRF52 chipsets
+          </a>
+          , or the{" "}
+          <a
+            href="/docs/getting-started/meshtastic-flasher"
+            rel="noreferrer"
+            target="_blank"
+          >
+            GUI instructions for Meshtastic Flasher
+          </a>
+          .
         </div>
         <div className="container">
-          <i>Google Play and the Google Play logo are trademarks of Google LLC.</i>
+          <i>
+            Google Play and the Google Play logo are trademarks of Google LLC.
+          </i>
         </div>
       </main>
     </Layout>

@@ -4,6 +4,7 @@ title: FAQs - General
 sidebar_label: General
 slug: /faq
 ---
+
 <!---
 Note to Contributors:
 
@@ -20,6 +21,7 @@ Details about FAQ page
 Answer (Include links to settings/developers/supported hardware etc)
 
  --->
+
 ## Overview
 
 ### What is Meshtastic?
@@ -32,4 +34,4 @@ After reading this FAQ and checking out the links on the left, there are two pla
 
 ### How can I contribute to Meshtastic?
 
-Everyone contributes in a different way. Join the [Forum](https://meshtastic.discourse.group) and/or the [Meshtastic Discord](https://discord.com/invite/UQJ5QuM7vq) and introduce yourself. We're all very friendly. If you'd like to pitch in some code, check out the [Developers](https://meshtastic.org/docs/developers) menu on the left.
+Everyone contributes in a different way. Join the [Forum](https://meshtastic.discourse.group) and/or the [Meshtastic Discord](https://discord.com/invite/UQJ5QuM7vq) and introduce yourself. We're all very friendly. If you'd like to pitch in some code, check out the [Developers](/docs/developers) menu on the left.

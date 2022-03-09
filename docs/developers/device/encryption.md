@@ -9,7 +9,7 @@ Cryptography is tricky, so we've tried to 'simply' apply standard crypto solutio
 - If you are a cryptography expert, please review these notes and our questions below. Can you help us by reviewing our notes below and offering advice? We will happily give as much or as little credit as you wish ;-).
 - Consider our existing solution 'alpha' and probably fairly secure against a not particularly aggressive adversary (but we can't yet make a more confident statement).
 
-Always keep in mind [xkcd's note on encryption](https://xkcd.com/538/).
+Always keep in mind [xkcd's note on encryption](https://xkcd.com/538).
 
 ## Summary of strengths/weaknesses of our current implementation
 
@@ -31,7 +31,7 @@ Possible future areas of work (if there is enough interest - post in our [forum]
 If you are reviewing our implementation, this is a brief statement of our method.
 
 - We do all crypto at the SubPacket (payload) level only, so that all meshtastic nodes will route for others - even those channels which are encrypted with a different key.
-- Mostly based on reading [Wikipedia](https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#Counter_(CTR)) and using the modes the ESP32 provides support for in hardware.
+- Mostly based on reading [Wikipedia](<https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#Counter_(CTR)>) and using the modes the ESP32 provides support for in hardware.
 - We use AES256-CTR as a stream cypher (with zero padding on the last BLOCK) because it is well supported with hardware acceleration.
 - Our AES key is 128 or 256 bits, shared as part of the 'Channel' specification.
 - The node number concatenated with the packet number is used as the NONCE. This nonce will be stored in flash in the device and should essentially never repeat. If the user makes a new 'Channel' (i.e. picking a new random 256 bit key), the packet number will start at zero.

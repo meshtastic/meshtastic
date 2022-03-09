@@ -6,7 +6,7 @@ sidebar_label: Overview
 
 <!--- FIXME add self hosting details link --->
 
-Meshtastic Web is a [Progressive Web App](https://web.dev/progressive-web-apps/) that runs directly in your browser.
+Meshtastic Web is a [Progressive Web App](https://web.dev/progressive-web-apps) that runs directly in your browser.
 There are three ways of accessing the app:
 
 1. Served directly from an ESP32 based node via [meshtastic.local](http://meshtastic.local) or the device's IP Address.
@@ -15,7 +15,7 @@ There are three ways of accessing the app:
 
 ## Compatibility
 
-The application will work in all major browsers, but specific functionality is limited in some cases, for the best experience we reccomend using [Google Chrome](https://www.google.com/chrome/)
+The application will work in all major browsers, but specific functionality is limited in some cases, for the best experience we reccomend using [Google Chrome](https://www.google.com/chrome)
 
 ### HTTP
 
@@ -34,23 +34,19 @@ You have two primary options for accessing your device over HTTP, those being [C
 
 ### Bluetooth
 
-Bluetooth support is governed by the availability of the [Web Bluetooth API](https://web.dev/bluetooth/) as illustrated blow, support is primarily available in Chromium browsers
+Bluetooth support is governed by the availability of the [Web Bluetooth API](https://web.dev/bluetooth) as illustrated blow, support is primarily available in Chromium browsers
 
 ![Web Bluetooth compatability matrix](https://caniuse.bitsofco.de/image/web-bluetooth.png)
 
-
-
 ### Serial (USB)
 
-The method with the least platform support, uses the [Web Serial API](https://web.dev/serial/) allows us to connect directly to a Meshtastic node over USB, accessing it directly within your browser.
+The method with the least platform support, uses the [Web Serial API](https://web.dev/serial) allows us to connect directly to a Meshtastic node over USB, accessing it directly within your browser.
 
 ![Web Serial compatability matrix](https://caniuse.bitsofco.de/image/web-serial.png)
 
 ## Updating
 
 The web interface is now included in firmware releases. There is active development ongoing to fix some issues with updating the web interface from the web interface directly. Please be patient with us as we work on this. Use [Meshtastic-flasher](/docs/getting-started/meshtastic-flasher) to update your device to the current stable build which includes the web interface.
-
-
 
 :::warning
 

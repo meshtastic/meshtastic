@@ -1,24 +1,23 @@
 ---
 id: community-atak
-title: ATAK plugin
-sidebar_label: ATAK plugin
+title: ATAK module
+sidebar_label: ATAK module
 ---
 
 :::note
 This is a community project maintained by @paulmandal.
-Development can be followed on [GitHub](https://github.com/paulmandal/atak-forwarder/).
+Development can be followed on [GitHub](https://github.com/paulmandal/atak-forwarder).
 Support should be sought from the respective authors.
 :::
 
-This is a plugin for ATAK (Android Team Awareness Kit) that uses Meshtastic to provide off-grid communications. This includes plotting the position of others on the map, transmission of markers and routes, and chat messages. It has been signed by the TAK Product Center for use with the Play Store version of ATAK. He is currently distributing development builds via [Google Drive](https://drive.google.com/drive/folders/1xeKJnn9tmzkkmuDbMp0LCLOV9OzHU-Ex), aiming to publish it to the Play Store in the future.
+This is a module for ATAK (Android Team Awareness Kit) that uses Meshtastic to provide off-grid communications. This includes plotting the position of others on the map, transmission of markers and routes, and chat messages. It has been signed by the TAK Product Center for use with the Play Store version of ATAK. He is currently distributing development builds via [Google Drive](https://drive.google.com/drive/folders/1xeKJnn9tmzkkmuDbMp0LCLOV9OzHU-Ex), aiming to publish it to the Play Store in the future.
 
-![ATAK Plugin](/img/atak-animation.gif)
+![ATAK Module](/img/atak-animation.gif)
 
-The builds of the plugin on the Google Drive are now signed for the Play Store version of ATAK, as of 6/3/2021.
+The builds of the module on the Google Drive are now signed for the Play Store version of ATAK, as of 6/3/2021.
 
-The ATAK plugin requires the Meshtastic Android app to be installed.
+The ATAK module requires the Meshtastic Android app to be installed.
 
-* A walk-through on how to [set up ATAK](https://paul-mandal.medium.com/atak-for-hikers-d96d5246193e).
-* The plugin source is available on [GitHub](https://github.com/paulmandal/atak-forwarder/), along with instructions for setting it up.
-* Development builds are available on [Google Drive](https://drive.google.com/drive/folders/1xeKJnn9tmzkkmuDbMp0LCLOV9OzHU-Ex).
-
+- A walk-through on how to [set up ATAK](https://paul-mandal.medium.com/atak-for-hikers-d96d5246193e).
+- The module source is available on [GitHub](https://github.com/paulmandal/atak-forwarder), along with instructions for setting it up.
+- Development builds are available on [Google Drive](https://drive.google.com/drive/folders/1xeKJnn9tmzkkmuDbMp0LCLOV9OzHU-Ex).

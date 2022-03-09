@@ -3,7 +3,7 @@ module.exports = {
     "About Meshtastic": [
       "about/overview",
       {
-        "Concepts": [
+        Concepts: [
           "about/concepts/overview",
           "about/concepts/channels",
           "about/concepts/clients",
@@ -14,13 +14,13 @@ module.exports = {
       },
       "about/expectations",
       {
-        "FAQs": [
+        FAQs: [
           "faq/faq",
           "faq/antenna",
           "faq/bluetooth",
           "faq/channel",
           {
-            "Clients": [
+            Clients: [
               "faq/client-android",
               "faq/client-python-cli",
               "faq/client-ios",
@@ -30,10 +30,10 @@ module.exports = {
           "faq/device",
           "faq/mesh",
           "faq/mqtt",
-          "faq/plugins",
+          "faq/modules",
           "faq/wifi",
         ],
-      }
+      },
     ],
   },
   Software: {
@@ -88,14 +88,14 @@ module.exports = {
         ],
       },
       {
-        Plugins: [
-          "software/plugins/plugins",
-          "software/plugins/range-test-plugin",
-          "software/plugins/ext-notif-plugin",
-          "software/plugins/canned-message-plugin",
-          "software/plugins/serial-plugin",
-          "software/plugins/store-forward-plugin",
-          "software/plugins/environment-plugin",
+        Modules: [
+          "software/modules/modules",
+          "software/modules/range-test-module",
+          "software/modules/ext-notif-module",
+          "software/modules/canned-message-module",
+          "software/modules/serial-module",
+          "software/modules/store-forward-module",
+          "software/modules/environment-module",
         ],
       },
       {
@@ -130,12 +130,12 @@ module.exports = {
       },
     ],
     "Additional Documentation": [
-      {type: "ref", id: "getting-started/overview"},
-      {type: "ref", id: "settings/overview"},
-      {type: "ref", id: "hardware/overview"},
-      {type: "ref", id: "developers/overview"},
-      {type: "ref", id: "developers/maintaining-documentation/overview"},
-      {type: "ref", id: "legal/overview"},
+      { type: "ref", id: "getting-started/overview" },
+      { type: "ref", id: "settings/overview" },
+      { type: "ref", id: "hardware/overview" },
+      { type: "ref", id: "developers/overview" },
+      { type: "ref", id: "developers/maintaining-documentation/overview" },
+      { type: "ref", id: "legal/overview" },
     ],
   },
   Configuration: {
@@ -154,9 +154,7 @@ module.exports = {
         ],
       },
       {
-        "Connect to Device": [
-          "getting-started/clients",
-        ],
+        "Connect to Device": ["getting-started/clients"],
       },
       "getting-started/first-steps",
     ],
@@ -171,27 +169,24 @@ module.exports = {
       "settings/router",
       "settings/wifi",
       {
-        Plugins: [
-          "settings/canned-message-plugin",
-          "settings/environmental-measurement-plugin",
-          "settings/external-notification-plugin",
-          "settings/range-test-plugin",
-          "settings/rotary-encoder-plugin",
-          "settings/serial-plugin",
-          "settings/store-and-forward-plugin",
+        Modules: [
+          "settings/canned-message-module",
+          "settings/environmental-measurement-module",
+          "settings/external-notification-module",
+          "settings/range-test-module",
+          "settings/rotary-encoder-module",
+          "settings/serial-module",
+          "settings/store-and-forward-module",
         ],
-        Advanced: [
-          "settings/channel-advanced",
-          "settings/misc",
-        ],
+        Advanced: ["settings/channel-advanced", "settings/misc"],
       },
     ],
     "Additional Documentation": [
-      {type: "ref", id: "hardware/overview"},
-      {type: "ref", id: "software/overview"},
-      {type: "ref", id: "developers/overview"},
-      {type: "ref", id: "developers/maintaining-documentation/overview"},
-      {type: "ref", id: "legal/overview"},
+      { type: "ref", id: "hardware/overview" },
+      { type: "ref", id: "software/overview" },
+      { type: "ref", id: "developers/overview" },
+      { type: "ref", id: "developers/maintaining-documentation/overview" },
+      { type: "ref", id: "legal/overview" },
     ],
   },
   Hardware: {
@@ -220,12 +215,12 @@ module.exports = {
       },
     ],
     "Additional Documentation": [
-      {type: "ref", id: "getting-started/overview"},
-      {type: "ref", id: "settings/overview"},
-      {type: "ref", id: "software/overview"},
-      {type: "ref", id: "developers/overview"},
-      {type: "ref", id: "developers/maintaining-documentation/overview"},
-      {type: "ref", id: "legal/overview"},
+      { type: "ref", id: "getting-started/overview" },
+      { type: "ref", id: "settings/overview" },
+      { type: "ref", id: "software/overview" },
+      { type: "ref", id: "developers/overview" },
+      { type: "ref", id: "developers/maintaining-documentation/overview" },
+      { type: "ref", id: "legal/overview" },
     ],
   },
   Contribute: {
@@ -244,7 +239,7 @@ module.exports = {
           "developers/device/mesh-alg",
           "developers/device/encryption",
           "developers/device/portnum",
-          "developers/device/plugin-api",
+          "developers/device/module-api",
           "developers/device/http-api",
           "developers/device/documents",
         ],
@@ -277,11 +272,11 @@ module.exports = {
       },
     ],
     "Additional Documentation": [
-      {type: "ref", id: "getting-started/overview"},
-      {type: "ref", id: "settings/overview"},
-      {type: "ref", id: "hardware/overview"},
-      {type: "ref", id: "software/overview"},
-      {type: "ref", id: "legal/overview"},
+      { type: "ref", id: "getting-started/overview" },
+      { type: "ref", id: "settings/overview" },
+      { type: "ref", id: "hardware/overview" },
+      { type: "ref", id: "software/overview" },
+      { type: "ref", id: "legal/overview" },
     ],
   },
   Legal: {
@@ -292,11 +287,11 @@ module.exports = {
       "legal/privacy",
     ],
     "Additional Documentation": [
-      {type: "ref", id: "getting-started/overview"},
-      {type: "ref", id: "settings/overview"},
-      {type: "ref", id: "hardware/overview"},
-      {type: "ref", id: "software/overview"},
-      {type: "ref", id: "developers/overview"},
+      { type: "ref", id: "getting-started/overview" },
+      { type: "ref", id: "settings/overview" },
+      { type: "ref", id: "hardware/overview" },
+      { type: "ref", id: "software/overview" },
+      { type: "ref", id: "developers/overview" },
     ],
   },
 };
