@@ -6,11 +6,20 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           submodules: true
-      - uses: actions/setup-node@v2-beta
+      - uses: pnpm/action-setup@v2.2.1
         with:
-          node-version: 16
-      - run: yarn install
-      - run: yarn run build
+          version: latest
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 17
+          cache: 'pnpm'
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+          cache: 'pnpm'
+      - run: pnpm install
+      - run: pnpm format
+      - run: pnpm build

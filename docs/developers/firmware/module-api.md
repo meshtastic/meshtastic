@@ -48,7 +48,7 @@ A number of [key services](http://github.com/meshtastic/meshtastic-device/tree/m
 
 The easiest way to get started is:
 
-- [Build and install](/docs/developers/firmware/build-env) the standard codebase from GitHub.
+- [Build and install](/docs/developers/firmware/build) the standard codebase from GitHub.
 - Copy [src/modules/ReplyModule.\*](http://github.com/meshtastic/meshtastic-device/tree/master/src/modules/ReplyModule.cpp) into src/modules/YourModule.*. Then change the port number from *PortNum_REPLY_APP* to *PortNum_PRIVATE_APP\*.
 - Edit moduless/Moduless.cpp:setupModules() to add a call to create an instance of your module (see comment at head of that function)
 - Rebuild with your new messaging goodness and install on the device

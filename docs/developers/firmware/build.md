@@ -1,5 +1,5 @@
 ---
-id: build-env
+id: build
 title: Creating a build environment
 sidebar_label: Building Meshtastic
 ---

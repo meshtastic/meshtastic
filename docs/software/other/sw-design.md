@@ -6,7 +6,7 @@ sidebar_label: Software Design
 
 This is a mini design doc for developing the meshtastic software.
 
-- [Build instructions](/docs/developers/firmware/build-env)
+- [Build instructions](/docs/developers/firmware/build)
 - [On device module API](/docs/developers/firmware/module-api) - a tutorial on how to write small modules which run on the device and can message other nodes.
 - Our [project board](https://github.com/orgs/meshtastic/projects/1) - shows what things we are currently working on and remaining work items for the current release.
 - [Power Management](power.md)

@@ -223,7 +223,7 @@ module.exports = {
     ],
   },
   Contribute: {
-    "Contribute to Meshtastic": [
+    "Developers": [
       "developers/overview",
       {
         Protobufs: ["developers/protobufs/api"],
@@ -232,7 +232,8 @@ module.exports = {
       "developers/publish",
       {
         Firmware: [
-          "developers/firmware/build-env",
+          "developers/firmware/build",
+          "developers/firmware/stacktrace-decode",
           "developers/firmware/device-api",
           "developers/firmware/radio-settings",
           "developers/firmware/mesh-alg",
@@ -276,6 +277,7 @@ module.exports = {
       { type: "ref", id: "hardware/overview" },
       { type: "ref", id: "software/overview" },
       { type: "ref", id: "legal/overview" },
+      { type: "ref", id: "developers/overview" },
     ],
   },
   Legal: {
