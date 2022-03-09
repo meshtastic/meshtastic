@@ -33,6 +33,7 @@ For a description and more information on what exactly all of these mean, please
 |      wait_bluetooth_secs       |                                                                       `integer` (seconds)                                                                       |    `0`    |
 
 :::note
+
 When you change the following settings to `0` they assume the following defaults:
 
 - `ls_secs`: 1 hour
@@ -72,25 +73,13 @@ meshtastic --set  charge_current MA100
 
   </TabItem>
   <TabItem value="android">
-
-:::info
 Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
   </TabItem>
   <TabItem value="iOS">
-
-:::info
 Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
   </TabItem>
   <TabItem value="web">
-
-:::info
 Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
   </TabItem>
 </Tabs>
 
@@ -121,25 +110,13 @@ meshtastic --set is_always_powered false
 
   </TabItem>
   <TabItem value="android">
-
-:::info
 Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
   </TabItem>
   <TabItem value="iOS">
-
-:::info
 Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
   </TabItem>
   <TabItem value="web">
-
-:::info
 Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
   </TabItem>
 </Tabs>
 
@@ -148,7 +125,9 @@ Configuring this setting is not yet available for the selected platform. If this
 If set, we are powered from a low-current source (i.e. solar), so even if it looks like we have power flowing in we should try to minimize power consumption as much as possible.
 
 :::note
+
 You do **not** need to set this if you've set `is_router` (it is implied in that case).
+
 :::
 
 #### Enable/Disable is_low_power
@@ -174,25 +153,13 @@ meshtastic --set is_low_power false
 
   </TabItem>
   <TabItem value="android">
-
-:::info
 Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
   </TabItem>
   <TabItem value="iOS">
-
-:::info
 Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
   </TabItem>
   <TabItem value="web">
-
-:::info
 Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
   </TabItem>
 </Tabs>
 
@@ -223,25 +190,13 @@ meshtastic --set is_router false
 
   </TabItem>
   <TabItem value="android">
-
-:::info
 Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
   </TabItem>
   <TabItem value="iOS">
-
-:::info
 Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
   </TabItem>
   <TabItem value="web">
-
-:::info
 Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
   </TabItem>
 </Tabs>
 
@@ -272,25 +227,13 @@ meshtastic --set ls_secs 120
 
   </TabItem>
   <TabItem value="android">
-
-:::info
 Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
   </TabItem>
   <TabItem value="iOS">
-
-:::info
 Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
   </TabItem>
   <TabItem value="web">
-
-:::info
 Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
   </TabItem>
 </Tabs>
 
@@ -325,25 +268,13 @@ meshtastic --set mesh_sds_timeout_secs 4294967295
 
   </TabItem>
   <TabItem value="android">
-
-:::info
 Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
   </TabItem>
   <TabItem value="iOS">
-
-:::info
 Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
   </TabItem>
   <TabItem value="web">
-
-:::info
 Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
   </TabItem>
 </Tabs>
 
@@ -374,25 +305,13 @@ meshtastic --set min_wake_secs 120
 
   </TabItem>
   <TabItem value="android">
-
-:::info
 Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
   </TabItem>
   <TabItem value="iOS">
-
-:::info
 Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
   </TabItem>
   <TabItem value="web">
-
-:::info
 Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
   </TabItem>
 </Tabs>
 
@@ -423,25 +342,13 @@ meshtastic --set on_battery_shutdown_after_secs 120
 
   </TabItem>
   <TabItem value="android">
-
-:::info
 Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
   </TabItem>
   <TabItem value="iOS">
-
-:::info
 Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
   </TabItem>
   <TabItem value="web">
-
-:::info
 Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
   </TabItem>
 </Tabs>
 
@@ -476,25 +383,13 @@ meshtastic --set phone_sds_timeout_sec 120
 
   </TabItem>
   <TabItem value="android">
-
-:::info
 Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
   </TabItem>
   <TabItem value="iOS">
-
-:::info
 Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
   </TabItem>
   <TabItem value="web">
-
-:::info
 Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
   </TabItem>
 </Tabs>
 
@@ -525,25 +420,13 @@ meshtastic --set phone_timeout_secs 120
 
   </TabItem>
   <TabItem value="android">
-
-:::info
 Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
   </TabItem>
   <TabItem value="iOS">
-
-:::info
 Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
   </TabItem>
   <TabItem value="web">
-
-:::info
 Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
   </TabItem>
 </Tabs>
 
@@ -574,25 +457,13 @@ meshtastic --set screen_on_secs 120
 
   </TabItem>
   <TabItem value="android">
-
-:::info
 Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
   </TabItem>
   <TabItem value="iOS">
-
-:::info
 Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
   </TabItem>
   <TabItem value="web">
-
-:::info
 Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
   </TabItem>
 </Tabs>
 
@@ -623,25 +494,13 @@ meshtastic --set sds_secs 120
 
   </TabItem>
   <TabItem value="android">
-
-:::info
 Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
   </TabItem>
   <TabItem value="iOS">
-
-:::info
 Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
   </TabItem>
   <TabItem value="web">
-
-:::info
 Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
   </TabItem>
 </Tabs>
 
@@ -672,25 +531,13 @@ meshtastic --set send_owner_interval 10
 
   </TabItem>
   <TabItem value="android">
-
-:::info
 Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
   </TabItem>
   <TabItem value="iOS">
-
-:::info
 Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
   </TabItem>
   <TabItem value="web">
-
-:::info
 Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
   </TabItem>
 </Tabs>
 
@@ -723,24 +570,12 @@ meshtastic --set wait_bluetooth_secs 120
 
   </TabItem>
   <TabItem value="android">
-
-:::info
 Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
   </TabItem>
   <TabItem value="iOS">
-
-:::info
 Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
   </TabItem>
   <TabItem value="web">
-
-:::info
 Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
   </TabItem>
 </Tabs>
