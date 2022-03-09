@@ -9,8 +9,16 @@ Meshtastic uses the [PlatformIO](https://platformio.org) development environment
 ## Setup
 
 1. Install PlatformIO, following the instructions available [here](https://platformio.org/platformio-ide).
+
 2. Clone the `meshtastic-device` repository located [here](https://github.com/meshtastic/meshtastic-device). ([Instructions on cloning](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository))
-3. Some utilities and scripts use the Python programming language, Downloads available [here](https://www.python.org/downloads).
+
+3. Clone the [Submodules](https://git-scm.com/book/en/v2/Git-Tools-Submodules)
+
+   ```bash
+   git submodule update --init
+   ```
+
+4. Some utilities and scripts use the Python programming language, Downloads available [here](https://www.python.org/downloads).
 
 ## Building
 
