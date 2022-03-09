@@ -1,7 +1,7 @@
 ---
-id: environmental-measurement-module
-title: Environmental Measurement Module Settings
-sidebar_label: Environmental Measurement Module
+id: telemetry-module
+title: Telemetry Module Settings
+sidebar_label: Telemetry Module
 ---
 
 import Tabs from '@theme/Tabs';
@@ -19,7 +19,7 @@ This module requires attaching a peripheral accessory to your device. It will no
 
 ## Overview
 
-The Environment Measurement Module will allow nodes to send a specific message with information from connected environmental sensors. Currently supported sensors are BME280, BME680, DHT11, DHT12, DHT21, DHT22 and Dallas 1-wire DS18B20.
+The Telemetry Module will allow nodes to send a specific message with information from connected sensors. Currently supported sensors are BME280, BME680, DHT11, DHT12, DHT21, DHT22 and Dallas 1-wire DS18B20.
 
 :::tip
 Once module settings are changed, a **reset** is required for them to take effect.
@@ -228,7 +228,7 @@ Configuring this setting is not yet available for the selected platform. If this
 
 ### telemetry_module_screen_enabled
 
-Enable/Disable the environmental measurement module on-device display.
+Enable/Disable the Telemetry Module on-device display.
 
 #### Enable/Disable the module on device screen
 

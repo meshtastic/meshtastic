@@ -1,12 +1,12 @@
 ---
-id: environment-module
-title: Environment measurement
-sidebar_label: Environment measurement
+id: telemetry-module
+title: Telemetry
+sidebar_label: Telemetry
 ---
 
 ## About
 
-The Environment Measurement Module will allow nodes to send a specific message with information from connected environmental sensors. Currently supported sensors are `BME280`, `BME680`, `DHT11`, `DHT12`, `DHT21`, `DHT22`, Dallas 1-wire `DS18B20`, and `MCP9808`.
+The Telemetry Module will allow nodes to send a specific message with information from connected sensors. Currently supported sensors are `BME280`, `BME680`, `DHT11`, `DHT12`, `DHT21`, `DHT22`, Dallas 1-wire `DS18B20`, and `MCP9808`.
 
 The preferred setup is using I2C, so the `telemetry_module_sensor_pin` may not be needed.
 
@@ -126,7 +126,7 @@ You can change the values above to suit your needs. The commands can be run one 
 :::
 
 - reboot/reset the device (press the RST button or unplug/plug in the device)
-- when the device boots it should say "Environment" and it may show the sensor data
+- when the device boots it should say "Telemetry" and it may show the sensor data
 - if "no data", then triple check the wiring
 - if still "no data", run:
 
@@ -174,7 +174,7 @@ You can change the values above to suit your needs. The commands can be run one 
 :::
 
 - reboot/reset the device (press the RST button or unplug/plug in the device)
-- when the device boots it should say "Environment" and it may show the sensor data
+- when the device boots it should say "Telemetry" and it may show the sensor data
 - if "no data", then triple check the wiring
 - if still "no data", run:
 
@@ -208,7 +208,7 @@ You can change the values above to suit your needs. The commands can be run one 
 :::
 
 - reboot/reset the device (press the button or unplug/plug in the device)
-- when the device boots it should say "Environment" and it may show the sensor data
+- when the device boots it should say "Telemetry" and it may show the sensor data
 - if still "no data", run:
 
 ```bash

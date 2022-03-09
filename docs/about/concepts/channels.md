@@ -18,7 +18,7 @@ Meshtastic Channels: Can create a _somewhat_ secure method of communication on t
 
 ## Data
 
-### Environmental Measurment Data
+### Telemetry Data
 
 ### MQTT Bridges
 

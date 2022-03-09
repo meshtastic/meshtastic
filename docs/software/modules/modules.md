@@ -16,4 +16,4 @@ These modules are currently integrated into the firmware:
 These modules are currently in development:
 
 - Store and forward - Allows a node to store messages and resend them to nodes that have intermittent connection to the mesh
-- Environment measurement - Allows a node to measure it's local environment and report across the mesh
+- Telemetry - Allows a node to measure it's local environment and report across the mesh

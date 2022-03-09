@@ -95,7 +95,7 @@ module.exports = {
           "software/modules/canned-message-module",
           "software/modules/serial-module",
           "software/modules/store-forward-module",
-          "software/modules/environment-module",
+          "software/modules/telemetry-module",
         ],
       },
       {
@@ -171,7 +171,7 @@ module.exports = {
       {
         Modules: [
           "settings/canned-message-module",
-          "settings/environmental-measurement-module",
+          "settings/telemetry-module",
           "settings/external-notification-module",
           "settings/range-test-module",
           "settings/rotary-encoder-module",
