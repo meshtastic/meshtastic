@@ -125,6 +125,7 @@ module.exports = {
           "software/other/install-OSX",
           "software/other/esp32-arduino-build",
           "software/other/ant",
+          "software/other/docker",
         ],
       },
     ],
@@ -224,7 +225,7 @@ module.exports = {
     ],
   },
   Contribute: {
-    "Developers": [
+    Developers: [
       "developers/overview",
       {
         Protobufs: ["developers/protobufs/api"],
