@@ -3,6 +3,7 @@ id: modules
 title: FAQs - Modules
 sidebar_label: Modules
 ---
+
 ## Overview
 
 ### What are Modules?
@@ -11,7 +12,7 @@ Modules are features that expand the basic device functionality and/or integrate
 
 ### What modules do we have available?
 
-A list of available modules is available [here](/docs/software/modus).
+A list of available modules is available [here](/docs/software/modules).
 
 ### I'd like to write a module. How do I get started?
 

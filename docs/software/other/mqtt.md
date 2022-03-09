@@ -37,7 +37,7 @@ The payload is a raw protobuf. Looking at the MQTT traffic with a program like `
 
 ### Basic Configuration
 
-Check out [MQTT Settings](/docs/software/settings/mqtt) for full information. For quick start instructions, read on.
+Check out [MQTT Settings](/docs/settings/mqtt) for full information. For quick start instructions, read on.
 
 - Connect your gateway node to wifi, by setting the `wifi_ssid` and `wifi_password` preferences.
 - Configure your broker settings: `mqtt_server`, `mqtt_username`, and `mqtt_password`. If all are left blank, the device will connect to the Meshtastic broker.
@@ -81,7 +81,7 @@ This is a mini-doc/RFC sketching out a development plan to satisfy a number of 1
 - A text messaging bridge when a node in the mesh can gateway to the internet. Issue #[353](https://github.com/meshtastic/Meshtastic-device/issues/353) and this nicely documented [android issue](https://github.com/meshtastic/Meshtastic-Android/issues/2).
 - An easy way to let desktop app developers remotely control GPIOs. Issue #[182](https://github.com/meshtastic/Meshtastic-device/issues/182)
 - Remote attribute access (to change settings of distant nodes). Issue #182
-- Be sure to checkout [MQTT Settings](/docs/software/settings/mqtt)
+- Be sure to checkout [MQTT Settings](/docs/settings/mqtt)
 
 ## Short term goals
 
