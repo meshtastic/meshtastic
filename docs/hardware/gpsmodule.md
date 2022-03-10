@@ -12,10 +12,10 @@ External GPS modules can be installed to extend the capabilities of simple board
 
 ## GY-GPS6MV2 GPS module
 - Based on the ublox/u-blox NEO-6M module
-- Input 3 to 5V
+- Input: 3 to 5V
 - Interface: RS232 TTL
 - Default baud rate: 9600 bps
-- Outputs NMEA sentences
+- Output: NMEA sentences
 
 [<img src="/img/hardware/gy-gps6mv2.jpg" alt="GY-GPS6MV2" style={{zoom:'50%'}} />](/img/hardware/gy-gps6mv2.jpg)
 
