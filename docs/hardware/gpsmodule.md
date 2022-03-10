@@ -16,11 +16,11 @@ External GPS modules can be installed to extend the capabilities of simple board
 [<img src="/img/hardware/gy-gps6mv2.jpg" alt="GY-GPS6MV2" style={{zoom:'50%'}} />](/img/hardware/gy-gps6mv2.jpg)
 
 
-### LILYGO TTGO Lora32 V2.1-1.6
+### LILYGO TTGO Lora32 v2.1-1.6
 
 - Wiring instructions:
 
-| GPS Module Pin | TTGO Lora32 V2.1-1.6 Pin |
+| GPS Module Pin | TTGO Lora32 v2.1-1.6 Pin |
 | :-----: | :---------------: |
 | VCC | 3.3V |
 | RX | IO13 |
@@ -59,7 +59,7 @@ External GPS modules can be installed to extend the capabilities of simple board
 
 - Wiring instructions:
 
-| GPS Module Pin | TTGO Lora32 V1.0 Pin|
+| GPS Module Pin | TTGO Lora32 v1.0 Pin|
 | :-----: | :---------------: |
 | VCC | 3.3V |
 | RX | 37 |
