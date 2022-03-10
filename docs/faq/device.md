@@ -12,7 +12,7 @@ Each [supported device](/docs/hardware/supported/tbeam) has a "Purchase Link".
 
 ### I have my hardware. How do I install the firmware and any required drivers?
 
-See: https://meshtastic.org/docs/getting-started/flashing-esp32
+[See our guide here](/docs/getting-started/flashing-firmware).
 
 ### How do I update the firmware to the latest version?
 
