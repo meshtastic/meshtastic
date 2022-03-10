@@ -16,15 +16,67 @@ External GPS modules can be installed to extend the capabilities of simple board
 [<img src="/img/hardware/gy-gps6mv2.jpg" alt="GY-GPS6MV2" style={{zoom:'50%'}} />](/img/hardware/gy-gps6mv2.jpg)
 
 
-### TTGO Lora32 V2.1-1.6
+### LILYGO TTGO Lora32 V2.1-1.6
 
 - Wiring instructions:
 
-| GPS Module Pin | TTGO Lora32 Pin |
+| GPS Module Pin | TTGO Lora32 V2.1-1.6 Pin |
 | :-----: | :---------------: |
 | VCC | 3.3V |
 | RX | IO13 |
 | TX | IO15  |
+| GND | GND |
+
+- Once the module is connected, it should be detected automatically by the firmware.
+
+### LILYGO TTGO Lora32 v2.0
+
+- Wiring instructions:
+
+| GPS Module Pin | TTGO Lora32 v2.0 Pin |
+| :-----: | :---------------: |
+| VCC | 3.3V |
+| RX | 13 |
+| TX | 36  |
+| GND | GND |
+
+- Once the module is connected, it should be detected automatically by the firmware.
+
+### LILYGO TTGO Lora32 v1.3
+
+- Wiring instructions:
+
+| GPS Module Pin | TTGO Lora32 v1.3 Pin|
+| :-----: | :---------------: |
+| VCC | 3.3V |
+| RX | 13 |
+| TX | 36  |
+| GND | GND |
+
+- Once the module is connected, it should be detected automatically by the firmware.
+
+### LILYGO TTGO Lora32 V1.0
+
+- Wiring instructions:
+
+| GPS Module Pin | TTGO Lora32 V1.0 Pin|
+| :-----: | :---------------: |
+| VCC | 3.3V |
+| RX | 37 |
+| TX | 36  |
+| GND | GND |
+
+- Once the module is connected, it should be detected automatically by the firmware.
+
+### HelTec Lora32 v2.0 and v2.1
+
+- Wiring instructions:
+
+| GPS Module Pin | Heltec Lora32 Pin|
+| :-----: | :---------------: |
+| VCC | 3.3V |
+| RX | 37 |
+| TX | 36  |
 | GND | GND |
 
 - Once the module is connected, it should be detected automatically by the firmware.
