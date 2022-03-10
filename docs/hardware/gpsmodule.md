@@ -4,6 +4,10 @@ title: External GPS Module
 sidebar_label: GPS Module
 ---
 
+:::warning
+GPIO access is fundamentally dangerous because invalid options can physically damage or destroy your hardware. Ensure that you fully understand the schematic for your particular device before trying this as we do not offer a warranty. Use at your own risk.
+:::
+
 External GPS modules can be installed to extend the capabilities of simple boards.
 
 ## GY-GPS6MV2 GPS module
