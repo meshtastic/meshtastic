@@ -68,7 +68,7 @@ External GPS modules can be installed to extend the capabilities of simple board
 
 - Once the module is connected, it should be detected automatically by the firmware.
 
-### HelTec Lora32 v2.0 and v2.1
+### Heltec Lora32 v2.0 and v2.1
 
 - Wiring instructions:
 
