@@ -49,7 +49,7 @@ With an aftermarket coaxial antenna or moxon antenna, that will give you roughly
 
 ### Router setup
 
-- Configure your device as a [Meshtastic router](/docs/software/settings/router).
+- Configure your device as a [Meshtastic router](/docs/settings/router).
 - Configure the Store and Forward Module
 - - Required configuration
 - - - store_forward_module_enabled - Set this to true to enable the module. False to disable the module.
