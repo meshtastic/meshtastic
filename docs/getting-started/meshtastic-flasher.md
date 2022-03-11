@@ -10,11 +10,13 @@ import TabItem from '@theme/TabItem';
 
 ## Overview
 
-Meshtastic Flasher is a graphical user interface for flashing [supported devices](/docs/hardware) with Meshtastic.
+Meshtastic Flasher (aka m-flasher) is a graphical user interface for flashing [supported devices](/docs/hardware) with Meshtastic.
+The following operating systems are currently supported: Windows, Mac, and Ubuntu.
 
 ## Prerequisites
 
-Install Meshtastic Flasher by either [downloading the executable file](https://github.com/meshtastic/Meshtastic-gui-installer/releases) or installing using `pip`. The following operating systems are currently supported: Windows, Mac, and Ubuntu.
+* Python 3 is required
+* Download the App (Windows or Mac)
 
 ### Check Data Cable
 
@@ -56,7 +58,65 @@ Navigate to `Device Manager > Ports (COM & LPT)`. You should see something like 
   </TabItem>
 </Tabs>
 
+### Install App
+
+This is the preferred installation method for `meshtastic-flasher`.
+
+<Tabs
+groupId="operating-system"
+defaultValue="linux"
+values={[
+{label: 'Linux', value: 'linux'},
+{label: 'macOS', value: 'macos'},
+{label: 'Windows', value: 'windows'},
+]}>
+<TabItem value="linux">
+
+```bash title="Install Meshtastic Flasher"
+python3 --version
+# ensure you are using at least python v3.6
+# change to a directory where you want to create a python virtual environment
+mkdir some_dir
+cd some_dir
+# if the following command fails, it might tell you what package to install
+python3 -m venv venv
+# activate the python virtual environment
+source venv/bin/activate
+# your prompt should change - it should include "(venv) in the front
+# upgrade pip
+pip install --upgrade pip
+pip install meshtastic-flasher
+```
+
+```bash title="Running Meshtastic Flasher"
+meshtastic-flasher
+```
+
+  </TabItem>
+  <TabItem value="macos">
+
+This application requires that you have `python3` installed. There are many ways to do this:
+
+* install from https://www.python.org/downloads/macos/ , or
+* use brew - see https://brew.sh/ , or
+* use macports - see https://www.macports.org/
+
+To install `meshtastic-flasher`, download Meshtastic-flasher.app.zip from https://github.com/meshtastic/Meshtastic-gui-installer/releases/tag/macapp1.0.0 , unzip and drag to /Applications.
+
+  </TabItem>
+  <TabItem value="windows">
+
+To install python3, see https://www.python.org/downloads/windows/
+
+To install meshtastic-flasher, download meshtastic-flasher.zip from https://github.com/meshtastic/Meshtastic-gui-installer/releases/tag/winapp1.0.0, unzip and run.
+
+
+  </TabItem>
+</Tabs>
+
 ### Install using `pip`
+
+This option is typically for developers.
 
 <Tabs
 groupId="operating-system"
