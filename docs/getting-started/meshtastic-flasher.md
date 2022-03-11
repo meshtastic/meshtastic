@@ -65,7 +65,11 @@ values={[
 ]}>
 <TabItem value="linux">
 
-TODO
+```
+sudo apt update
+sudo apt upgrade
+sudo apt install -y python3 python3-pip python3-venv
+```
 
 </TabItem>
 <TabItem value="macos">
