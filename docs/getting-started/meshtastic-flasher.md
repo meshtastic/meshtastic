@@ -27,30 +27,30 @@ values={[
 {label: 'macOS', value: 'macos'},
 {label: 'Windows', value: 'windows'},
 ]}>
-  <TabItem value="linux">
+<TabItem value="linux">
 
-  ```bash title="Check python3 version"
-  python3 --version
-  # If version is less than v3.6, please update python3
-  ```
+```bash title="Check python3 version"
+python3 --version
+# If version is less than v3.6, please update python3
+```
 
-  </TabItem>
-  <TabItem value="macos">
+</TabItem>
+<TabItem value="macos">
 
-  ```bash title="Check python3 version"
-  python3 --version
-  # If version is less than v3.6, please update python3
-  ```
+```bash title="Check python3 version"
+python3 --version
+# If version is less than v3.6, please update python3
+```
 
-  </TabItem>
-  <TabItem value="windows">
+</TabItem>
+<TabItem value="windows">
 
-  ```bash title="Check python3 version"
-  python3 --version
-  # If version is less than v3.9+, please update python3
-  ```
+```bash title="Check python3 version"
+python3 --version
+# If version is less than v3.9+, please update python3
+```
 
-  </TabItem>
+</TabItem>
 </Tabs>
 
 #### Install `python3`
@@ -63,23 +63,23 @@ values={[
 {label: 'macOS', value: 'macos'},
 {label: 'Windows', value: 'windows'},
 ]}>
-  <TabItem value="linux">
+<TabItem value="linux">
 
-  TODO
+TODO
 
-  </TabItem>
-  <TabItem value="macos">
+</TabItem>
+<TabItem value="macos">
 
-  - [Download directly from python.org](https://www.python.org/downloads/macos/)
-  - [Homebrew](https://brew.sh/)
-  - [MacPorts](https://www.macports.org/)
+- [Download directly from python.org](https://www.python.org/downloads/macos/)
+- [Homebrew](https://brew.sh/)
+- [MacPorts](https://www.macports.org/)
 
-  </TabItem>
-  <TabItem value="windows">
+</TabItem>
+<TabItem value="windows">
 
-  - [Download directly from python.org](https://www.python.org/downloads/windows/)
+- [Download directly from python.org](https://www.python.org/downloads/windows/)
 
-  </TabItem>
+</TabItem>
 </Tabs>
 
 ### Install App
@@ -96,38 +96,38 @@ values={[
 ]}>
 <TabItem value="linux">
 
-  ```bash title="Install Meshtastic Flasher"
-  python3 --version
-  # ensure you are using at least python v3.6
-  # change to a directory where you want to create a python virtual environment
-  mkdir some_dir
-  cd some_dir
-  # if the following command fails, it might tell you what package to install
-  python3 -m venv venv
-  # activate the python virtual environment
-  source venv/bin/activate
-  # your prompt should change - it should include "(venv) in the front
-  # upgrade pip
-  pip install --upgrade pip
-  pip install meshtastic-flasher
-  ```
+```bash title="Install Meshtastic Flasher"
+python3 --version
+# ensure you are using at least python v3.6
+# change to a directory where you want to create a python virtual environment
+mkdir some_dir
+cd some_dir
+# if the following command fails, it might tell you what package to install
+python3 -m venv venv
+# activate the python virtual environment
+source venv/bin/activate
+# your prompt should change - it should include "(venv) in the front
+# upgrade pip
+pip install --upgrade pip
+pip install meshtastic-flasher
+```
 
-  ```bash title="Running Meshtastic Flasher"
-  meshtastic-flasher
-  ```
+```bash title="Running Meshtastic Flasher"
+meshtastic-flasher
+```
 
-  </TabItem>
-  <TabItem value="macos">
+</TabItem>
+<TabItem value="macos">
 
-  To install `meshtastic-flasher`, download Meshtastic-flasher.app.zip from https://github.com/meshtastic/Meshtastic-gui-installer/releases/tag/macapp1.0.0 , unzip and drag to /Applications.
+To install `meshtastic-flasher`, download Meshtastic-flasher.app.zip from https://github.com/meshtastic/Meshtastic-gui-installer/releases/tag/macapp1.0.0 , unzip and drag to /Applications.
 
-  </TabItem>
-  <TabItem value="windows">
+</TabItem>
+<TabItem value="windows">
 
-  To install meshtastic-flasher, download meshtastic-flasher.zip from https://github.com/meshtastic/Meshtastic-gui-installer/releases/tag/winapp1.0.0, unzip and run.
+To install meshtastic-flasher, download meshtastic-flasher.zip from https://github.com/meshtastic/Meshtastic-gui-installer/releases/tag/winapp1.0.0, unzip and run.
 
 
-  </TabItem>
+</TabItem>
 </Tabs>
 
 ### Install using `pip`
