@@ -15,17 +15,9 @@ The following operating systems are currently supported: Windows, Mac, and Ubunt
 
 ## Prerequisites
 
-* Python 3 is required
-* Download the App (Windows or Mac)
+### Verify `python3` is installed
 
-### Check Data Cable
-
-Plug your device into your computer using a USB cable and then do the following:
-:::important
-You may need to install a driver from Silicon Labs for the [CP210X USB to UART bridge](https://www.silabs.com/products/development-tools/software/usb-to-uart-bridge-vcp-drivers)
-
-Some newer boards may require the drivers for the [CH9102 Windows](http://www.wch.cn/downloads/CH343SER_ZIP.html) or [Direct Download](https://github.com/Xinyuan-LilyGO/CH9102_Driver) for Windows 7. For [CH9102 Mac](http://www.wch.cn/downloads/CH34XSER_MAC_ZIP.html). Click the big blue button with the down arrow. Be sure to open up the application and click "Install" after the package is installed. Also, reboot.
-:::
+#### Check `python3` version
 
 <Tabs
 groupId="operating-system"
@@ -37,25 +29,61 @@ values={[
 ]}>
 <TabItem value="linux">
 
-Connect your Meshtastic device to your USB port, open a `Terminal` and enter the following command:
-
-```bash
-lsusb
+```bash title="Check python3 version"
+python3 --version
+# If version is less than v3.6, please update python3
 ```
 
-You should see something like: `ID 10c4:ea60 Silicon Labs CP210x UART Bridge` for CP210X or `ID 1a86:55d4 QinHeng Electronics USB Single Serial` for CH9102
+</TabItem>
+<TabItem value="macos">
 
-  </TabItem>
-  <TabItem value="macos">
+```bash title="Check python3 version"
+python3 --version
+# If version is less than v3.6, please update python3
+```
 
-Navigate to `Apple Menu  > About This Mac > System Report... > Hardware > USB`. You should see something like `CP210X USB to UART Bridge Controller`. If not download the appropriate drivers
+</TabItem>
+<TabItem value="windows">
 
-  </TabItem>
-  <TabItem value="windows">
+```bash title="Check python3 version"
+python3 --version
+# If version is less than v3.9+, please update python3
+```
 
-Navigate to `Device Manager > Ports (COM & LPT)`. You should see something like `Silicon Labs CP210X USB to UART Bridge (COM5)`. If not download the appropriate drivers
+</TabItem>
+</Tabs>
 
-  </TabItem>
+#### Install `python3`
+
+<Tabs
+groupId="operating-system"
+defaultValue="linux"
+values={[
+{label: 'Linux', value: 'linux'},
+{label: 'macOS', value: 'macos'},
+{label: 'Windows', value: 'windows'},
+]}>
+<TabItem value="linux">
+
+```bash title="Install python3, pip, and venv"
+sudo apt update
+sudo apt upgrade
+sudo apt install -y python3 python3-pip python3-venv
+```
+
+</TabItem>
+<TabItem value="macos">
+
+- [Download directly from python.org](https://www.python.org/downloads/macos/)
+- [Homebrew](https://brew.sh/)
+- [MacPorts](https://www.macports.org/)
+
+</TabItem>
+<TabItem value="windows">
+
+- [Download directly from python.org](https://www.python.org/downloads/windows/)
+
+</TabItem>
 </Tabs>
 
 ### Install App
@@ -92,26 +120,18 @@ pip install meshtastic-flasher
 meshtastic-flasher
 ```
 
-  </TabItem>
-  <TabItem value="macos">
-
-This application requires that you have `python3` installed. There are many ways to do this:
-
-* install from https://www.python.org/downloads/macos/ , or
-* use brew - see https://brew.sh/ , or
-* use macports - see https://www.macports.org/
+</TabItem>
+<TabItem value="macos">
 
 To install `meshtastic-flasher`, download Meshtastic-flasher.app.zip from https://github.com/meshtastic/Meshtastic-gui-installer/releases/tag/macapp1.0.0 , unzip and drag to /Applications.
 
-  </TabItem>
-  <TabItem value="windows">
-
-To install python3, see https://www.python.org/downloads/windows/
+</TabItem>
+<TabItem value="windows">
 
 To install meshtastic-flasher, download meshtastic-flasher.zip from https://github.com/meshtastic/Meshtastic-gui-installer/releases/tag/winapp1.0.0, unzip and run.
 
 
-  </TabItem>
+</TabItem>
 </Tabs>
 
 ### Install using `pip`
