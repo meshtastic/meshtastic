@@ -30,6 +30,15 @@ pip install --upgrade meshtastic
 Some installations of python may require you to substitute 'pip3' for the 'pip' command.
 :::
 
+After installing, run
+
+``` bash title="Query nodes"
+meshtastic --nodes
+meshtastic --info
+```
+
+to see if the device is working.
+
 ### Mobile Client Downloads
 
 <ul
