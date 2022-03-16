@@ -28,6 +28,11 @@ module.exports = {
             ],
           },
           "faq/device",
+          {
+            "Flashing Firmware": [
+              "faq/m-flasher",
+            ],
+          },
           "faq/mesh",
           "faq/mqtt",
           "faq/modules",
