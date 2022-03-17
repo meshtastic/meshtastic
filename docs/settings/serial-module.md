@@ -15,12 +15,21 @@ GPIO access is fundamentally dangerous because invalid options can physically da
 This module requires attaching a peripheral accessory to your device. It will not work without one.
 :::
 
+:::note
+This module has not been implemented yet. Even if you enable the serial module, nothing will happen.  
+:::
+
+
 ## Overview
 
 This is a simple interface to send messages over the mesh network by sending strings over a serial port.
 
 :::tip
 Once module settings are changed, a **reset** is required for them to take effect.
+:::
+
+:::tip
+Connect the TX pin to the other device's RX pin, and vice versa. Connect their grounds to each other (not necessary if they're both plugged into the same USB power source.)
 :::
 
 ## Settings
