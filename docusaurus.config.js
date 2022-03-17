@@ -13,6 +13,45 @@ const config = {
   favicon: "design/web/favicon.ico",
   organizationName: "meshtastic",
   projectName: "meshtastic",
+  ssrTemplate: `<!DOCTYPE html>
+  <html <%~ it.htmlAttributes %>>
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="generator" content="Docusaurus v<%= it.version %>">
+      <% if (it.noIndex) { %>
+        <meta name="robots" content="noindex, nofollow" />
+      <% } %>
+      <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "url": "https://meshtastic.org",
+        "logo": "https://meshtastic.org/design/logo/logo.svg"
+      }
+      </script>
+      <%~ it.headTags %>
+      <% it.metaAttributes.forEach((metaAttribute) => { %>
+        <%~ metaAttribute %>
+      <% }); %>
+      <% it.stylesheets.forEach((stylesheet) => { %>
+        <link rel="stylesheet" href="<%= it.baseUrl %><%= stylesheet %>" />
+      <% }); %>
+      <% it.scripts.forEach((script) => { %>
+        <link rel="preload" href="<%= it.baseUrl %><%= script %>" as="script">
+      <% }); %>
+    </head>
+    <body <%~ it.bodyAttributes %>>
+      <%~ it.preBodyTags %>
+      <div id="__docusaurus">
+        <%~ it.appHtml %>
+      </div>
+      <% it.scripts.forEach((script) => { %>
+        <script src="<%= it.baseUrl %><%= script %>"></script>
+      <% }); %>
+      <%~ it.postBodyTags %>
+    </body>
+  </html>`,
   themeConfig: /** @type {import('@docusaurus/preset-classic').ThemeConfig} */ {
     colorMode: {
       respectPrefersColorScheme: true,
