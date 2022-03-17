@@ -15,12 +15,17 @@ GPIO access is fundamentally dangerous because invalid options can physically da
 This module requires attaching a peripheral accessory to your device. It will not work without one.
 :::
 
+
 ## Overview
 
-This is a simple interface to send messages over the mesh network by sending strings over a serial port.
+This is a simple interface to send messages over the mesh network by sending strings over a serial port. Anything you send the node will be turned into a message sent out over the mesh, and anything received from the mesh will be sent to the serial port. Note that this module does not (yet) allow arbitrary protobuf commands to be sent over the serial connection.
 
 :::tip
 Once module settings are changed, a **reset** is required for them to take effect.
+:::
+
+:::tip
+Connect the TX pin to the other device's RX pin, and vice versa. Connect their grounds to each other (not necessary if they're both plugged into the same USB power source.)
 :::
 
 ## Settings
