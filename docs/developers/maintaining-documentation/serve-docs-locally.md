@@ -57,3 +57,35 @@ yarn build
 ```
 
 :::
+
+## Update Local Repository
+
+### Verify Upstream Remote is Set
+
+```bash title="Check Remote and Upstream Repositories"
+git remote -v
+```
+If it's set, skip to [Align with meshtastic/Meshtastic Master branch](#align-with-meshtasticmeshtastic-master-branch)
+#### Update/Set Upstream if it isn't configured properly
+If upstream exists, set the url:
+```bash title="Update Upstream Repository"
+git remote set-url upstream https://github.com/meshtastic/Meshtastic.git
+```
+
+If upstream doesn't exist, add the url:
+```bash title="Add Upstream Repository"
+git remote add upstream https://github.com/meshtastic/Meshtastic.git
+```
+### Align with meshtastic/Meshtastic Master branch
+
+:::caution
+This will delete any unfinished work. Make sure that you've saved and committed any work you wish to push up to your fork.
+:::
+
+:::info
+The following command assumes the clone of your Meshtastic fork is in the home directory (`~/Meshtastic`). Adjust the path to the correct path on your machine.
+:::
+
+```bash title="Rebase local Meshtastic to remote Meshtastic"
+cd ~/Meshtastic ; git fetch upstream ; git checkout master ; git rebase upstream/master
+```
