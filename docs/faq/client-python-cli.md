@@ -8,8 +8,8 @@ sidebar_label: CLI
 
 ### How do I find out more about installing (and using) Meshtastic via command line?
 
-See https://meshtastic.org/docs/software/python/python-installation
+[See our guide here](/docs/software/python/python-installation).
 
 ### How do I find out more about using python to interact?
 
-See https://meshtastic.org/docs/software/python/python-uses
+[See our guide here](/docs/software/python/python-uses).

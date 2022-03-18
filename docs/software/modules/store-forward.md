@@ -23,15 +23,15 @@ Because of the increased network traffic for this overhead, it's not advised to 
 Initial Requirements:
 
 - Must be installed on a router node.
-- - This is an artificial limitation, but is in place to enforce best practices.
-- - Router nodes are intended to be always online. If this module misses any messages, the reliability of the stored messages will be reduced.
+  - This is an artificial limitation, but is in place to enforce best practices.
+  - Router nodes are intended to be always online. If this module misses any messages, the reliability of the stored messages will be reduced.
 - Esp32 Processor based device with external PSRAM. (tbeam v1.0 and tbeamv1.1, and maybe others)
 
 ## Usage Overview
 
-- To use / test this you will want at least 3 devices
-- - One device will (currently) need be a tbeam v1.0 and tbeamv1.1 configured as a Meshtastic router. Other devices with built in PSRAM will be supported at some point.
-- - Two others will be regular clients. Nothing special required.
+To use / test this you will want at least 3 devices
+- One device will (currently) need be a tbeam v1.0 and tbeamv1.1 configured as a Meshtastic router. Other devices with built in PSRAM will be supported at some point.
+- Two others will be regular clients. Nothing special required.
 
 ### Meshtastic channel configuration
 
@@ -49,13 +49,12 @@ With an aftermarket coaxial antenna or moxon antenna, that will give you roughly
 
 ### Router setup
 
-- Configure your device as a meshtastic router.
-- - https://meshtastic.org/docs/software/settings/router
+- Configure your device as a [Meshtastic router](/docs/settings/router).
 - Configure the Store and Forward Module
-- - Required configuration
-- - - store_forward_module_enabled - Set this to true to enable the module. False to disable the module.
-- - Optional configuration
-- - - store_forward_module_records - Set this to the maximum number of records to save. Best to leave this at the default (0) where the module will use 2/3 of your device's available PSRAM. This is about 11,000 records.
+  - Required configuration
+    - `store_forward_module_enabled` - Set this to true to enable the module. False to disable the module.
+  - Optional configuration
+    - `store_forward_module_records` - Set this to the maximum number of records to save. Best to leave this at the default (0) where the module will use 2/3 of your device's available PSRAM. This is about 11,000 records.
 - Name your router node something that makes it easily identifiable, aka "Router".
 
 Don't enable the Store and Forward module on multiple routers!
@@ -89,45 +88,45 @@ The Store and Forward module will only service one client at a time. If a second
 Story: Carol has been away from the mesh with device turned off. She would like to get a replay of what she has missed. The router will return the messages.
 
 - Carol
-- - Packet (Port: STORE_FORWARD_APP)
-- - - To: Broadcast (Optionally, direct to router)
-- - - StoreAndForward.rr.CLIENT_HISTORY
+  - Packet (Port: STORE_FORWARD_APP)
+    - To: Broadcast (Optionally, direct to router)
+    - StoreAndForward.rr.CLIENT_HISTORY
 - Router
-- - Packet (Port: STORE_FORWARD_APP)
-- - - To: Carol
-- - - StoreAndForward.rr.ROUTER_HISTORY
-- - - StoreAndForward.history.HistoryMessages = 42 // Router has 42 messages that will be sent to Carol.
-- - - StoreAndForward.history.Window = 120 // Router searched for messages over the last two hours.
-- - - StoreAndForward.history.LastRequest = 0 // Carol has never asked for the history.
-- - Packet (Port: TEXT_MESSAGE_APP)
-- - - ... a series of 42 text messages
+  - Packet (Port: STORE_FORWARD_APP)
+    - To: Carol
+    - StoreAndForward.rr.ROUTER_HISTORY
+    - StoreAndForward.history.HistoryMessages = 42 // Router has 42 messages that will be sent to Carol.
+    - StoreAndForward.history.Window = 120 // Router searched for messages over the last two hours.
+    - StoreAndForward.history.LastRequest = 0 // Carol has never asked for the history.
+  - Packet (Port: TEXT_MESSAGE_APP)
+    - ... a series of 42 text messages
 
 ### Request History (No history available)
 
 Story: Carol has been away from the mesh with device turned off. She would like to get a replay of what she has missed but the router indicates there are no messages available.
 
 - Carol
-- - Packet (Port: STORE_FORWARD_APP)
-- - - To: Broadcast (Optionally, direct to router)
-- - - StoreAndForward.rr.CLIENT_HISTORY
+  - Packet (Port: STORE_FORWARD_APP)
+    - To: Broadcast (Optionally, direct to router)
+    - StoreAndForward.rr.CLIENT_HISTORY
 - Router
-- - Packet (Port: STORE_FORWARD_APP)
-- - - To: Carol
-- - - StoreAndForward.rr.ROUTER_HISTORY
-- - - StoreAndForward.history.HistoryMessages = 0 // Router has no messages to be sent to Carol.
-- - - StoreAndForward.history.Window = 120 // Router searched for messages over the last two hours.
-- - - StoreAndForward.history.LastRequest = (timestamp) // Last time carol requested the history.
+  - Packet (Port: STORE_FORWARD_APP)
+    - To: Carol
+    - StoreAndForward.rr.ROUTER_HISTORY
+    - StoreAndForward.history.HistoryMessages = 0 // Router has no messages to be sent to Carol.
+    - StoreAndForward.history.Window = 120 // Router searched for messages over the last two hours.
+    - StoreAndForward.history.LastRequest = (timestamp) // Last time carol requested the history.
 
 ### Store & Forward Router Heartbeat
 
 Story: The Store & Forward Router sends a periodic message onto the network. This allows connected devices to know that a router is in range and listening to received messages. Client will not respond to network but (optionally) indicate to the user that a S&F router is available or not available.
 
 - Router
-- - Packet (Port: STORE_FORWARD_APP)
-- - - To: Broadcast
-- - - StoreAndForward.rr.ROUTER_HEARTBEAT
-- - - StoreAndForward.heartbeat.Period = 120 // Expect a heartbeat every 2 minutes.
-- - - StoreAndForward.heartbeat.Secondary = false // If true, this is a secondary "backup" S&F node. Will be (eventually) used for router election in the event there are multiple S&F Routers.
+  - Packet (Port: STORE_FORWARD_APP)
+    - To: Broadcast
+    - StoreAndForward.rr.ROUTER_HEARTBEAT
+    - StoreAndForward.heartbeat.Period = 120 // Expect a heartbeat every 2 minutes.
+    - StoreAndForward.heartbeat.Secondary = false // If true, this is a secondary "backup" S&F node. Will be (eventually) used for router election in the event there are multiple S&F Routers.
 
 ## Meshpacket
 
@@ -150,21 +149,21 @@ As a reminder, broadcast messages are messages where the "to" of a payload is di
 Example Cases:
 
 - Real time :: BROADCAST
-- - Delayed = MeshPacket_Delayed_NO_DELAY
-- - From: Ann
-- - To: BROADCAST
+  - Delayed = MeshPacket_Delayed_NO_DELAY
+  - From: Ann
+  - To: BROADCAST
 - Real time :: Direct
-- - Delayed = MeshPacket_Delayed_NO_DELAY
-- - From: Ann
-- - To: Bob
+  - Delayed = MeshPacket_Delayed_NO_DELAY
+  - From: Ann
+  - To: Bob
 - Delayed :: BROADCAST
-- - Delayed = MeshPacket_Delayed_DELAYED_BROADCAST
-- - From: Ann
-- - To: Bob
+  - Delayed = MeshPacket_Delayed_DELAYED_BROADCAST
+  - From: Ann
+  - To: Bob
 - Delayed :: Direct
-- - Delayed = MeshPacket_Delayed_DELAYED_DIRECT
-- - From: Ann
-- - To: Bob
+  - Delayed = MeshPacket_Delayed_DELAYED_DIRECT
+  - From: Ann
+  - To: Bob
 
 When a message is 'real time', time a message is sent is the same as the time the message was received. In the case the message is delayed, there is no timestamp available for the message.
 

@@ -8,7 +8,7 @@ sidebar_label: WiFi
 
 ### How do I turn on the WiFI radio?
 
-See: https://meshtastic.org/docs/software/device/device-wifi
+[See our guide here](/docs/settings/wifi).
 
 ### When I turn on WiFi, Bluetooth turns off. Why is this?
 
