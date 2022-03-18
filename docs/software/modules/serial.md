@@ -11,7 +11,7 @@ This is a simple interface to send messages over the mesh network by sending str
 
 Default is to use RX GPIO 16 and TX GPIO 17.
 
-<PluginModule />
+<PluginModule name="serial_" rename="serial_" />
 
 ## Basic Usage:
 

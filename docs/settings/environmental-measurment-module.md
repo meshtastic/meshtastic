@@ -6,13 +6,13 @@ sidebar_label: Telemetry Module
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
-import PluginModule from '@site/docs/_blocks/_telemetry_caution.mdx';
+import PluginModule from '@site/docs/_blocks/_plugin_module.mdx';
 
 :::warning
 GPIO access is fundamentally dangerous because invalid options can physically damage or destroy your hardware. Ensure that you fully understand the schematic for your particular device before trying this as we do not offer a warranty. Use at your own risk.
 :::
 
-<PluginModule />
+<PluginModule name="telemetry_" rename="environmental_measurment_"/>
 
 <!--- TODO add link to hardware setup to admonition--->
 

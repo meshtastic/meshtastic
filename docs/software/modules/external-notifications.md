@@ -11,7 +11,7 @@ The ExternalNotification Module will allow you to connect a speaker, LED or othe
 
 ## Configuration
 
-<PluginModule />
+<PluginModule name="ext_notification_" rename="ext_notification_"/>
 
 These are the settings that can be configured.
 

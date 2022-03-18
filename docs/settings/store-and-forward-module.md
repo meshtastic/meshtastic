@@ -20,7 +20,7 @@ Currently only available for ESP32 based devices with external PSRAM. Requires t
 This is a work in progress and is partially available. Stability is not guaranteed.
 :::
 
-<PluginModule />
+<PluginModule name="store_forward_" rename="store_forward_" />
 
 The Store Forward Module is an implementation of a Store and Forward system to enable resilient messaging in the event that a client device is disconnected from the main network.
 

@@ -50,7 +50,7 @@ With an aftermarket coaxial antenna or moxon antenna, that will give you roughly
 
 ### Router setup
 
-<PluginModule />
+<PluginModule name="store_forward_" rename="store_forward_" />
 
 - Configure your device as a [Meshtastic router](/docs/settings/router).
 - Configure the Store and Forward Module

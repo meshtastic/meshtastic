@@ -97,7 +97,7 @@ The rotary encoder #1 will send input events under name "rotEnc1".
 
 ## Configuration of the module
 
-<PluginModule />
+<PluginModule name="canned_message_" rename="canned_message_" />
 
 Following configuration can be set for the module.
 

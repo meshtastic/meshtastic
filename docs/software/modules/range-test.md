@@ -9,7 +9,7 @@ This module allows you to test the range of your Meshtastic nodes. It uses two n
 
 ## Configuration
 
-<PluginModule />
+<PluginModule name="range_test_" rename="range_test_" />
 
 These are the settings that can be configured.
 

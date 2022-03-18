@@ -11,7 +11,7 @@ import PluginModule from '@site/docs/_blocks/_plugin_module.mdx';
 ## Overview
 
 This module allows you to test the range of your Meshtastic nodes. It requires at least two nodes, a sender and a receiver. The receiving node then saves the messages along with the GPS coordinates at which they were received into a .csv file. This .csv file can then be integrated into [Google Earth](https://earth.google.com), [Google Maps - My Maps](https://mymaps.google.com), or any other program capable of processing .csv files. This can enable you to visualize your mesh.
-<PluginModule />
+<PluginModule name="range_test_" rename="range_test_" />
 
 :::tip
 Once module settings are changed, a **reset** is required for them to take effect.
