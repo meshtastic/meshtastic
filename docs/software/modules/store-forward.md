@@ -3,6 +3,7 @@ id: store-forward-module
 title: Store and Forward Module
 sidebar_label: Store and Forward
 ---
+import PluginModule from '@site/docs/_blocks/_plugin_module.mdx';
 
 ## About
 
@@ -48,6 +49,8 @@ meshtastic --setchan spread_factor 11 --setchan coding_rate 4 --setchan bandwidt
 With an aftermarket coaxial antenna or moxon antenna, that will give you roughly the same range as "Long Range / Slow" and 5x the bitrate.
 
 ### Router setup
+
+<PluginModule />
 
 - Configure your device as a [Meshtastic router](/docs/settings/router).
 - Configure the Store and Forward Module

@@ -3,12 +3,15 @@ id: ext-notif-module
 title: External notifications
 sidebar_label: External notifications
 ---
+import PluginModule from '@site/docs/_blocks/_plugin_module.mdx';
 
 ## About
 
 The ExternalNotification Module will allow you to connect a speaker, LED or other device to notify you when a message has been received from the mesh network.
 
 ## Configuration
+
+<PluginModule />
 
 These are the settings that can be configured.
 
