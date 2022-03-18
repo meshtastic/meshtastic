@@ -3,27 +3,30 @@ id: range-test-module
 title: Range Test Module
 sidebar_label: Range Test
 ---
+import PluginModule from '@site/docs/_blocks/_plugin_module.mdx';
 
 This module allows you to test the range of your Meshtastic nodes. It uses two nodes, one to send a message every minute, and another to receive the messages. The receiving node then saves the messages along with the GPS coordinates at which they were received into a .csv file. This .csv file can then be integrated into, for example, Google Earth, allowing you to see where you have coverage.
 
 ## Configuration
 
+<PluginModule name="range_test_" rename="range_test_" />
+
 These are the settings that can be configured.
 
-    range_test_plugin_enabled
+    range_test_module_enabled
         Is the Module enabled?
 
         0 = Disabled (Default)
         1 = Enabled
 
-    range_test_plugin_save
+    range_test_module_save
         If enabled, we will save a log of all received messages to /static/rangetest.csv which you can access from the webserver. We will abort
         writing if there is less than 50k of space on the filesystem to prevent filling up the storage.
 
         0 = Disabled (Default)
         1 = Enabled
 
-    range_test_plugin_sender
+    range_test_module_sender
         Number of seconds to wait between sending packets. Using the long_slow channel configuration, it's best not to go more frequent than once every 60 seconds. You can be more agressive with faster settings. 0 is default which disables sending messages.
 
 :::note
@@ -36,36 +39,36 @@ For basic usage, you will need two devices both with a GPS. A device with a pair
 
 The first thing to do is to turn on the module. The device will need to be restarted after applying the settings. With the module turned on, the other settings will be available:
 
-    range_test_plugin_enabled = 1
+    range_test_module_enabled = 1
 
 If you want to send a message every 60 seconds:
 
-    range_test_plugin_sender = 60
+    range_test_module_sender = 60
 
 To save a log of the messages:
 
-    range_test_plugin_save = 1
+    range_test_module_save = 1
 
 Recommended settings for a sender at different radio settings:
 
-    Long Slow  ... range_test_plugin_sender = 60
-    Long Alt   ... range_test_plugin_sender = 30
-    Medium     ... range_test_plugin_sender = 15
-    Short Fast ... range_test_plugin_sender = 15
+    Long Slow  ... range_test_module_sender = 60
+    Long Alt   ... range_test_module_sender = 30
+    Medium     ... range_test_module_sender = 15
+    Short Fast ... range_test_module_sender = 15
 
 ### Python API Examples
 
 Sender
 
-`meshtastic --set range_test_plugin_enabled 1`
+`meshtastic --set range_test_module_enabled 1`
 
-`meshtastic --set range_test_plugin_sender 60`
+`meshtastic --set range_test_module_sender 60`
 
 Receiver
 
-`meshtastic --set range_test_plugin_enabled 1`
+`meshtastic --set range_test_module_enabled 1`
 
-`meshtastic --set range_test_plugin_save 1`
+`meshtastic --set range_test_module_save 1`
 
 ### Other things to keep in mind
 

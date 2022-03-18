@@ -3,6 +3,7 @@ id: canned-message-module
 title: Canned messages
 sidebar_label: Canned messages
 ---
+import PluginModule from '@site/docs/_blocks/_plugin_module.mdx';
 
 ## About
 
@@ -95,6 +96,8 @@ There is a reference case 3D-design utilizing the rotary encoder for TTGO LoRa V
 The rotary encoder #1 will send input events under name "rotEnc1".
 
 ## Configuration of the module
+
+<PluginModule name="canned_message_" rename="canned_message_" />
 
 Following configuration can be set for the module.
 

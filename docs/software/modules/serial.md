@@ -3,12 +3,15 @@ id: serial-module
 title: Serial communication module
 sidebar_label: Serial communication
 ---
+import PluginModule from '@site/docs/_blocks/_plugin_module.mdx';
 
 ## About
 
 This is a simple interface to send messages over the mesh network by sending strings over a serial port.
 
 Default is to use RX GPIO 16 and TX GPIO 17.
+
+<PluginModule name="serial_" rename="serial_" />
 
 ## Basic Usage:
 
