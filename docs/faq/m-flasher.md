@@ -12,4 +12,4 @@ The flasher contains no malware and completely passed the Microsoft malware scan
 
 ### What if I'm still having issues on Windows 10?
 
-It's been reported that `App execution aliases` might conflict with one another and prevent python from being able to run properly. There is an example of a fix located [here](https://github.com/meshtastic/Meshtastic-gui-installer/issues/154).
+It's been reported that `App execution aliases` might conflict with one another and prevent python3 from being able to run properly. There is an example of a fix located [here](https://github.com/meshtastic/Meshtastic-gui-installer/issues/154).
