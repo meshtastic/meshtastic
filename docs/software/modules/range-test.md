@@ -10,20 +10,20 @@ This module allows you to test the range of your Meshtastic nodes. It uses two n
 
 These are the settings that can be configured.
 
-    range_test_module_enabled
+    range_test_plugin_enabled
         Is the Module enabled?
 
         0 = Disabled (Default)
         1 = Enabled
 
-    range_test_module_save
+    range_test_plugin_save
         If enabled, we will save a log of all received messages to /static/rangetest.csv which you can access from the webserver. We will abort
         writing if there is less than 50k of space on the filesystem to prevent filling up the storage.
 
         0 = Disabled (Default)
         1 = Enabled
 
-    range_test_module_sender
+    range_test_plugin_sender
         Number of seconds to wait between sending packets. Using the long_slow channel configuration, it's best not to go more frequent than once every 60 seconds. You can be more agressive with faster settings. 0 is default which disables sending messages.
 
 :::note
@@ -36,36 +36,36 @@ For basic usage, you will need two devices both with a GPS. A device with a pair
 
 The first thing to do is to turn on the module. The device will need to be restarted after applying the settings. With the module turned on, the other settings will be available:
 
-    range_test_module_enabled = 1
+    range_test_plugin_enabled = 1
 
 If you want to send a message every 60 seconds:
 
-    range_test_module_sender = 60
+    range_test_plugin_sender = 60
 
 To save a log of the messages:
 
-    range_test_module_save = 1
+    range_test_plugin_save = 1
 
 Recommended settings for a sender at different radio settings:
 
-    Long Slow  ... range_test_module_sender = 60
-    Long Alt   ... range_test_module_sender = 30
-    Medium     ... range_test_module_sender = 15
-    Short Fast ... range_test_module_sender = 15
+    Long Slow  ... range_test_plugin_sender = 60
+    Long Alt   ... range_test_plugin_sender = 30
+    Medium     ... range_test_plugin_sender = 15
+    Short Fast ... range_test_plugin_sender = 15
 
 ### Python API Examples
 
 Sender
 
-`meshtastic --set range_test_module_enabled 1`
+`meshtastic --set range_test_plugin_enabled 1`
 
-`meshtastic --set range_test_module_sender 60`
+`meshtastic --set range_test_plugin_sender 60`
 
 Receiver
 
-`meshtastic --set range_test_module_enabled 1`
+`meshtastic --set range_test_plugin_enabled 1`
 
-`meshtastic --set range_test_module_save 1`
+`meshtastic --set range_test_plugin_save 1`
 
 ### Other things to keep in mind
 
