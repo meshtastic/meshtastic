@@ -88,7 +88,7 @@ Gets a preferences field.
 **Usage**
 
 ```shell
-meshtastic --get modem_config
+meshtastic --get region
 ```
 
 ### --set SET SET
