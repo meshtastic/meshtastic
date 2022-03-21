@@ -128,7 +128,7 @@ To install `meshtastic-flasher`, download Meshtastic-flasher.app.zip from https:
 </TabItem>
 <TabItem value="windows">
 
-To install meshtastic-flasher, download meshtastic-flasher.zip from https://github.com/meshtastic/Meshtastic-gui-installer/releases/tag/winapp1.0.2, unzip and run.
+To install meshtastic-flasher, download meshtastic-flasher.zip from https://github.com/meshtastic/Meshtastic-gui-installer/releases/tag/winapp1.0.3, unzip and run.
 
 
 </TabItem>
