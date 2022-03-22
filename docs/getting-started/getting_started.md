@@ -33,7 +33,7 @@ The easiest way is to [buy a device with the software already installed](https:/
 
 #### Purchase battery
 
-One of our favorite places for folks in the US to buy the necessary 18650 Li-Ion battery is https://www.18650batterystore.com/. At this store, we recommend the [Sanyo NCR18650GA 3500mAh 10A Battery](https://www.18650batterystore.com/collections/featured-products/products/sanyo-ncr18650ga).
+One option for people located in the US to buy the necessary 18650 Li-Ion battery from https://www.18650batterystore.com/. At this store, the [Sanyo NCR18650GA 3500mAh 10A Battery](https://www.18650batterystore.com/collections/featured-products/products/sanyo-ncr18650ga) is considered a good option.
 
 #### Purchase other accessories
 
