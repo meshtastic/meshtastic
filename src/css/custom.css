@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 /* You can override the default Infima variables here. */
 :root {
   --ifm-color-primary: #67ea94;
@@ -90,4 +94,28 @@ html[data-theme="dark"] .header-github-link:before {
 
 .indexCtas a:last-of-type {
   margin: 20px 36px;
+}
+
+.theme-doc-markdown {
+  max-width: none;
+}
+
+.navbar__link > span {
+  display: flex;
+  gap: 2px;
+}
+
+.navbar__link > span > svg {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+@layer base {
+  .markdown {
+    @apply prose prose-lg dark:prose-invert;
+  }
+  .col,
+  .row {
+    @apply w-full h-full m-0 p-0 flex-grow;
+  }
 }
