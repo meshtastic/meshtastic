@@ -90,7 +90,7 @@ values={[
 
 [CP210X USB to UART bridge - Download](https://www.silabs.com/products/development-tools/software/usb-to-uart-bridge-vcp-drivers)
 
-[CH9102 Driver - MacOS Download](http://www.wch.cn/downloads/CH34XSER_MAC_ZIP.html)
+[CH9102 Driver - MacOS Download](https://github.com/WCHSoftGroup/ch34xser_macos)
 
   </TabItem>
   <TabItem value="windows">
@@ -125,7 +125,7 @@ values={[
   </TabItem>
   <TabItem value="macos">
 
-[CH9102 Driver - MacOS Download](http://www.wch-ic.com/downloads/CH341SER_MAC_ZIP.html)
+[CH9102 Driver - MacOS Download](https://github.com/WCHSoftGroup/ch34xser_macos)
 
 :::caution
 With the latest versions of MacOS, the USB Serial driver is built-in. Do _NOT_ download the USB device drivers unless required. If you downloaded/installed any already, please remove them:
