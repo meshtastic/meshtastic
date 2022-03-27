@@ -133,12 +133,12 @@ need to execute a sequence like this:
 
     meshtastic --set canned_message_module_allow_input_source "_any"
     meshtastic --set canned_message_module_messages "I'm fine|I'm out|I'm back|Need helping hand|Help me with saw|I need an alpinist|I need ambulance|Keep Calm|On my way|I will be late|I'm already waiting|We have company|Beer is cold|Roger"
-    meshtastic --set canned_message_module_send_bell False
     meshtastic --set canned_message_module_enabled True
 
+    meshtastic --set-canned-message "What am I doing?|I'm fine|Don't follow me|I'm out|I'm back|Need helping hand|Help me with saw|I need an alpinist|I need ambulance|Keep Calm|On my way|Need 5 mins|I will be late|I'm already waiting|I couldn't join|We have company|Beer is cold|Roger"
+
 :::note
-You can define up to 50 messages with a total length 200 bytes.
-(We are working on a solution to extend total length.)
+You can define up to 50 messages with a total length 800 bytes.
 Use short texts as end of line will be truncated on the screen.
 :::
 
