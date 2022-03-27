@@ -26,8 +26,9 @@ Once plugin settings are changed, a **reset** is required for them to take effec
 | canned_message_plugin_allow_input_source | `rotEnc1`, `_any` | `_any` |
 | canned_message_plugin_enabled | `true`, `false` | `false` |
 | canned_message_plugin_send_bell | `true`, `false` | `false` |
+| (Messages)* | `string` | `""` |
 
-Messages can be set with a dedicated option:
+- Messages can be set with a dedicated option:
 
 `--set-canned-message "<messages>"`
 
@@ -133,8 +134,12 @@ Configuring this setting is not yet available for the selected platform. If this
 
 ### canned_message_plugin_send_bell
 
-CannedMessagePlugin also sends a bell character with the messages.
-The [External Notification Plugin](external-notification-plugin) can benefit from this feature as it utilizes the bell character.
+CannedMessagePlugin also sends a "bell character" with the messages.
+The [External Notification Module](external-notification-plugin) can benefit from this feature.
+
+_We have an "External Notification Module", that can be set up to beep, when new message arrives.
+This module can also be configured to beep only when message contains the "bell character".
+See module documentation (link above) for details._
 
 #### Enable/Disable bell character
 <Tabs
@@ -178,11 +183,14 @@ Configuring this setting is not yet available for the selected platform. If this
   </TabItem>
 </Tabs>
 
-### --set-canned-message
+### Messages
 
-Predefined messages for CannedMessagePlugin separated by `|` characters.
+CLI has a dedicated option for canned message module to set predefines messages: `--set-canned-message <message>`
+Predefined messages separated by `|` characters.
 
 You can define up to 50 messages with a total length 800 bytes.
+
+Existing configuration can be queried with CLI option: `--get-canned-message`
 
 #### Set canned messages
 <Tabs
