@@ -194,7 +194,11 @@ module.exports = {
   Hardware: {
     Hardware: [
       "hardware/overview",
-      "hardware/test",
+      {
+        type: "link",
+        label: "Hardware List",
+        href: "/hardware",
+      },
       {
         "Supported Hardware": [
           "hardware/supported/tbeam",

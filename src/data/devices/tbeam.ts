@@ -1,4 +1,4 @@
-import { IDevice, Stability, UseCase } from "../devices";
+import { IDevice, Stability, UseCase } from "../device";
 
 export const tbeam: IDevice = {
   name: "T-Beam",

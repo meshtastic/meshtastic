@@ -1,11 +1,14 @@
-import React from 'react';
+import React from "react";
 
-import Head from '@docusaurus/Head';
-import useBaseUrl from '@docusaurus/useBaseUrl';
-import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
-import Layout from '@theme/Layout';
-import Link from '@docusaurus/Link';
-import { HeaderText } from './downloads/_components/HeaderText';
+import Head from "@docusaurus/Head";
+import useBaseUrl from "@docusaurus/useBaseUrl";
+import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
+import Layout from "@theme/Layout";
+import Link from "@docusaurus/Link";
+import { HeaderText } from "./downloads/_components/HeaderText";
+import { SocialCard, SocialCardProps } from "../components/homepage/SocialCard";
+import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
+import { Carousel } from "react-responsive-carousel";
 
 const features = [
   {
@@ -78,6 +81,47 @@ const features = [
   },
 ];
 
+const SocialCards: SocialCardProps[] = [
+  {
+    color: "5865F2",
+    link: "https://discord.com/invite/UQJ5QuM7vq",
+    children: (
+      <img className="m-auto h-10" src="/img/homepage/Discord-Logo-White.svg" />
+    ),
+  },
+  {
+    color: "FF0000",
+    link: "https://www.youtube.com/meshtastic",
+    children: (
+      <img className="m-auto h-16" src="/img/homepage/YouTube-Logo-White.svg" />
+    ),
+  },
+  {
+    color: "ffffff",
+    link: "https://meshtastic.discourse.group",
+    children: (
+      <img
+        className="m-auto h-12"
+        src="/img/homepage/Discourse-Logo-White.svg"
+      />
+    ),
+  },
+  {
+    color: "FF4500",
+    link: "https://reddit.com/r/meshtastic",
+    children: (
+      <img className="m-auto h-20" src="/img/homepage/Reddit-Logo-White.svg" />
+    ),
+  },
+  {
+    color: "ffffff",
+    link: "https://github.com/meshtastic",
+    children: (
+      <img className="m-auto w-12" src="/img/homepage/GitHub-Logo-White.svg" />
+    ),
+  },
+];
+
 function Feature({ imageUrl, title, description }) {
   const imgUrl = useBaseUrl(imageUrl);
   return (
@@ -124,38 +168,48 @@ function Home() {
           <p className="hero__subtitle">{siteConfig.tagline}</p>
           <div className="indexCtas">
             <Link className="button button--lg" to="/docs/about">
-            Learn More
+              Learn More
             </Link>
             <Link className="button button--lg" to="/docs/getting-started">
-            Get Started
+              Get Started
             </Link>
           </div>
         </div>
       </header>
-      <main>
-        {features && features.length > 0 && (
-          <section
-            style={{ display: "flex", alignItems: "center", padding: "2rem" }}
-          >
-            <div className="container">
-              <div className="row">
-                {features.map((props, idx) => (
-                  <Feature key={idx} {...props} />
-                ))}
+      <main className="flex flex-col gap-4">
+        <Carousel autoPlay infiniteLoop showStatus={false} showThumbs={false}>
+          {features.map((feature, index) => (
+            <div key={index} className="flex p-12">
+              <img
+                className="h-40 my-auto"
+                src={feature.imageUrl}
+                alt={feature.title}
+              />
+              <div className="my-auto">
+                <h3 className="font-medium text-xl">{feature.title}</h3>
+                <p>{feature.description}</p>
               </div>
             </div>
-          </section>
-        )}
-        <div className="container">
-          <HeaderText
-            type="h1"
-            text="Getting Started"
-            link="getting-started"
-          />
-          <p>
+          ))}
+        </Carousel>
+
+        <div className="flex flex-col bg-primaryDark gap-4 w-full p-4 shadow-inner">
+          <h3 className="font-bold text-xl">Connect with us.</h3>
+          <div className="flex w-full overflow-x-auto">
+            {SocialCards.map((card, index) => (
+              <SocialCard key={index} color={card.color} link={card.link}>
+                {card.children}
+              </SocialCard>
+            ))}
+          </div>
+        </div>
+
+        <div className="flex flex-col container">
+          <h2 className="font-medium text-xl mb-2">
             Getting started with Meshtastic is as easy as 1, 2, 3!
-          </p>
+          </h2>
           <ul
+            className="mx-auto"
             style={{
               position: "relative",
               display: "grid",
@@ -169,28 +223,22 @@ function Home() {
                 className="card__header"
                 style={{ display: "flex", justifyContent: "space-between" }}
               >
-                <h3>
-                  1. Purchase Supported Hardware
-                </h3>
+                <h3>1. Purchase Supported Hardware</h3>
               </div>
               <div
                 className="card__body"
-                style={{ display: "flex", justifyContent: "center"}}
+                style={{ display: "flex", justifyContent: "center" }}
               >
                 <p>
                   Hardware you will want to consider:
                   <ul>
+                    <li>Radio</li>
+                    <li>Battery</li>
+                    <li>Case</li>
                     <li>
-                      Radio
-                    </li>
-                    <li>
-                      Battery
-                    </li>
-                    <li>
-                      Case
-                    </li>
-                    <li>
-                      Antenna (most devices include an antenna, but the quality can be a bit of a mixed bag from some suppliers on stock antennas)
+                      Antenna (most devices include an antenna, but the quality
+                      can be a bit of a mixed bag from some suppliers on stock
+                      antennas)
                     </li>
                   </ul>
                 </p>
@@ -201,16 +249,15 @@ function Home() {
                 className="card__header"
                 style={{ display: "flex", justifyContent: "space-between" }}
               >
-                <h3>
-                  2. Flash & Configure Node
-                </h3>
+                <h3>2. Flash & Configure Node</h3>
               </div>
               <div
                 className="card__body"
-                style={{ display: "flex", justifyContent: "center"}}
+                style={{ display: "flex", justifyContent: "center" }}
               >
                 <p>
-                  The Meshtastic Flasher application can assist you in flashing the firmware and configuring settings.
+                  The Meshtastic Flasher application can assist you in flashing
+                  the firmware and configuring settings.
                 </p>
               </div>
             </div>
@@ -219,42 +266,26 @@ function Home() {
                 className="card__header"
                 style={{ display: "flex", justifyContent: "space-between" }}
               >
-                <h3>
-                  3. Connect to Node
-                </h3>
+                <h3>3. Connect to Node</h3>
               </div>
               <div
                 className="card__body"
-                style={{ display: "flex", justifyContent: "center"}}
+                style={{ display: "flex", justifyContent: "center" }}
               >
-              <p>
-                Applications are available for the following systems:
-                <ul>
-                  <li>
-                    Android
-                  </li>
-                  <li>
-                    iOS
-                  </li>
-                  <li>
-                    Mac
-                  </li>
-                  <li>
-                    Web Browser
-                  </li>
-                </ul>
-              </p>
+                <p>
+                  Applications are available for the following systems:
+                  <ul>
+                    <li>Android</li>
+                    <li>iOS</li>
+                    <li>Mac</li>
+                    <li>Web Browser</li>
+                  </ul>
+                </p>
               </div>
             </div>
           </ul>
-          <div className="indexCtasBody">
-            <Link
-            className="button button--outline button--lg cta--button" to="/docs/getting-started"
-            >
-            Getting Started
-            </Link>
-          </div>
         </div>
+        <br />
       </main>
     </Layout>
   );

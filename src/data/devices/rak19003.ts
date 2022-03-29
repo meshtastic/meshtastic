@@ -1,4 +1,4 @@
-import { IDevice, Stability, UseCase } from "../devices";
+import { IDevice, Stability, UseCase } from "../device";
 
 export const rak19003: IDevice = {
   name: "WisBlock 19003",
