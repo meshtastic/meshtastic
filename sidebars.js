@@ -175,9 +175,9 @@ module.exports = {
       {
         Modules: [
           "settings/canned-message-module",
+          "settings/input-broker-module",
           "settings/external-notification-module",
           "settings/range-test-module",
-          "settings/rotary-encoder-module",
           "settings/serial-module",
           "settings/store-and-forward-module",
           "settings/telemetry-module",

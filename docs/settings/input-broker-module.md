@@ -1,7 +1,7 @@
 ---
-id: rotary-encoder-module
-title: Rotary Encoder
-sidebar_label: Rotary Encoder
+id: input-broker-module
+title: Input Broker
+sidebar_label: Input Broker
 ---
 
 import Tabs from '@theme/Tabs';
