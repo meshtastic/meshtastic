@@ -32,16 +32,14 @@ Once module settings are changed, a **reset** is required for them to take effec
 
 |                   Setting                   |  Acceptable Values  | Default |
 | :-----------------------------------------: | :-----------------: | :-----: |
-|     telemetry_module_display_farenheit      |   `true`, `false`   | `false` |
-|    telemetry_module_measurement_enabled     |   `true`, `false`   | `false` |
-| telemetry_module_read_error_count_threshold |      `integer`      |   `0`   |
-|     telemetry_module_recovery_interval      | `integer` (seconds) |   `0`   |
-|       telemetry_module_screen_enabled       |   `true`, `false`   |   `0`   |
-|         telemetry_module_sensor_pin         |      `integer`      |   `0`   |
-|        telemetry_module_sensor_type         |        `0-6`        |   `0`   |
-|      telemetry_module_update_interval       | `integer` (seconds) |   `0`   |
-
-### telemetry_module_display_farenheit
+|     telemetry_module_environment_display_fahrenheit     |   `true`, `false`   | `false` |
+|    telemetry_module_environment_measurement_enabled     |   `true`, `false`   | `false` |
+| telemetry_module_environment_read_error_count_threshold |      `integer`      |   `0`   |
+|     telemetry_module_environment_recovery_interval      | `integer` (seconds) |   `0`   |
+|       telemetry_module_environment_screen_enabled       |   `true`, `false`   |   `0`   |
+|         telemetry_module_environment_sensor_pin         |      `integer`      |   `0`   |
+|        telemetry_module_environment_sensor_type         |        `0-6`        |   `0`   |
+|      telemetry_module_environment_update_interval       | `integer` (seconds) |   `0`   |
 
 The sensor is always read in Celsius, but the user can opt to view the temperature display in Fahrenheit using this setting.
 
