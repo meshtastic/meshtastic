@@ -12,7 +12,7 @@ import PluginModule from '@site/docs/_blocks/_plugin_module.mdx';
 GPIO access is fundamentally dangerous because invalid options can physically damage or destroy your hardware. Ensure that you fully understand the schematic for your particular device before trying this as we do not offer a warranty. Use at your own risk.
 :::
 
-<PluginModule name="telemetry_" rename="environmental_measurment_"/>
+<PluginModule name="telemetry_module" rename="environmental_measurment_plugin"/>
 
 <!--- TODO add link to hardware setup to admonition--->
 
