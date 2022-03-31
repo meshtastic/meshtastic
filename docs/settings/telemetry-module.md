@@ -41,6 +41,8 @@ Once module settings are changed, a **reset** is required for them to take effec
 |        telemetry_module_environment_sensor_type         |        `0-6`        |   `0`   |
 |      telemetry_module_environment_update_interval       | `integer` (seconds) |   `0`   |
 
+### telemetry_module_display_fahrenheit
+
 The sensor is always read in Celsius, but the user can opt to view the temperature display in Fahrenheit using this setting.
 
 #### Display Farenheit/Celsius
@@ -57,11 +59,11 @@ values={[
 <TabItem value="cli">
 
 ```bash title="Display Farenheit"
-meshtastic --set telemetry_module_display_farenheit true
+meshtastic --set telemetry_module_display_fahrenheit true
 ```
 
 ```bash title="Display Celsius"
-meshtastic --set telemetry_module_display_farenheit false
+meshtastic --set telemetry_module_display_fahrenheit false
 ```
 
   </TabItem>
