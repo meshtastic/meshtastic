@@ -32,6 +32,7 @@ Once module settings are changed, a **reset** is required for them to take effec
 
 |                   Setting                   |  Acceptable Values  | Default |
 | :-----------------------------------------: | :-----------------: | :-----: |
+|         telemetry_module_device_update_interval         | `integer` (seconds) |   `0`   |
 |     telemetry_module_environment_display_fahrenheit     |   `true`, `false`   | `false` |
 |    telemetry_module_environment_measurement_enabled     |   `true`, `false`   | `false` |
 | telemetry_module_environment_read_error_count_threshold |      `integer`      |   `0`   |
@@ -40,6 +41,50 @@ Once module settings are changed, a **reset** is required for them to take effec
 |         telemetry_module_environment_sensor_pin         |      `integer`      |   `0`   |
 |        telemetry_module_environment_sensor_type         |        `0-6`        |   `0`   |
 |      telemetry_module_environment_update_interval       | `integer` (seconds) |   `0`   |
+
+### telemetry_module_device_update_interval
+
+Interval in seconds of how often we should try to send our measurements to the mesh.
+
+<Tabs
+groupId="settings"
+defaultValue="cli"
+values={[
+{label: 'CLI', value: 'cli'},
+{label: 'Android', value: 'android'},
+{label: 'iOS', value: 'iOS'},
+{label: 'Web', value: 'web'},
+]}>
+<TabItem value="cli">
+
+```bash title="Set module update interval to 15 seconds"
+meshtastic --set telemetry_module_device_update_interval 15
+```
+
+  </TabItem>
+  <TabItem value="android">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+  <TabItem value="iOS">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+  <TabItem value="web">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+</Tabs>
+
 
 ### telemetry_module_display_fahrenheit
 
@@ -369,51 +414,6 @@ meshtastic --set telemetry_module_sensor_type 1
 
 ```bash title="Set sensor type to DS18B20"
 meshtastic --set telemetry_module_sensor_type DS18B20
-```
-
-  </TabItem>
-  <TabItem value="android">
-
-:::info
-Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
-  </TabItem>
-  <TabItem value="iOS">
-
-:::info
-Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
-  </TabItem>
-  <TabItem value="web">
-
-:::info
-Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
-  </TabItem>
-</Tabs>
-
-### telemetry_module_update_interval
-
-Interval in seconds of how often we should try to send our measurements to the mesh.
-
-#### Set module update interval
-
-<Tabs
-groupId="settings"
-defaultValue="cli"
-values={[
-{label: 'CLI', value: 'cli'},
-{label: 'Android', value: 'android'},
-{label: 'iOS', value: 'iOS'},
-{label: 'Web', value: 'web'},
-]}>
-<TabItem value="cli">
-
-```bash title="Set module update interval to 15 seconds"
-meshtastic --set telemetry_module_update_interval 15
 ```
 
   </TabItem>
