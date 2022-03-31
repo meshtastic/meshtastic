@@ -16,7 +16,7 @@ GPIO access is fundamentally dangerous because invalid options can physically da
 <!--- TODO add link to hardware setup to admonition--->
 
 :::note
-This module requires attaching a peripheral accessory to your device. It will not work without one. It also requires use of the [Rotary Encoder Module](rotary-encoder-module) to configure the input source.
+This module requires attaching a peripheral accessory to your device. It will not work without one. It also requires use of the [Rotary Encoder Module](input-broker-module) to configure the input source.
 :::
 
 ## Overview
@@ -100,7 +100,7 @@ Configuring this setting is not yet available for the selected platform. If this
 Enables the module.
 
 :::tip
-Using the canned message module requires you set up the [Rotary Encoder Module](rotary-encoder-module). See [prerequisites](#prerequisites) below.
+Using the canned message module requires you set up the [Rotary Encoder Module](input-broker-module). See [prerequisites](#prerequisites) below.
 :::
 
 #### Enable/Disable the module
@@ -259,7 +259,7 @@ Configuring this setting is not yet available for the selected platform. If this
 <!--- TODO add link to hardware pages to first bullet point --->
 
 - Attach a compatible peripheral device. Take note of the GPIO numbers you use, as they will be used in the following step.
-- Once attached, configure peripheral device with [Rotary Encoder Module](rotary-encoder-module) Settings.
+- Once attached, configure peripheral device with [Rotary Encoder Module](input-broker-module) Settings.
 
 :::note
 Replace each `GPIO` (x3) below with the GPIO numbers from hardware setup.
