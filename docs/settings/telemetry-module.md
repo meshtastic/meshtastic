@@ -140,7 +140,7 @@ Configuring this setting is not yet available for the selected platform. If this
 
 ### telemetry_module_environment_measurement_enabled
 
-Enables the module.
+Enables the module to utilize environmental metrics.
 
 #### Enable/Disable the module
 
