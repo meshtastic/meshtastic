@@ -47,24 +47,24 @@ nodejs is required in your dev. environment. The method for installing nodejs de
 
 Fork then clone the repository:
 
-```bash
+```shell
 git clone https://github.com/meshtastic/meshtastic
 ```
 
 Go to the root directory of your repository and install dependencies:
 
-```bash
+```shell
 yarn install
 ```
 
 Build the project with the following command
 
-```bash
+```shell
 yarn build
 ```
 
 Start a local dev. instance with the following command
 
-```bash
+```shell
 yarn start
 ```

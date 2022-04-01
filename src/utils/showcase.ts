@@ -2,7 +2,7 @@ export const sortBy = <T>(array: T[], getter: (item: T) => unknown): T[] => {
   const sortedArray = [...array];
   sortedArray.sort((a, b) =>
     // @ts-ignore
-    getter(a) > getter(b) ? 1 : getter(b) > getter(a) ? -1 : 0
+    getter(a) > getter(b) ? 1 : getter(b) > getter(a) ? -1 : 0,
   );
   return sortedArray;
 };

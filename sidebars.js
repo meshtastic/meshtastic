@@ -29,9 +29,7 @@ module.exports = {
           },
           "faq/device",
           {
-            "Flashing Firmware": [
-              "faq/m-flasher",
-            ],
+            "Flashing Firmware": ["faq/m-flasher"],
           },
           "faq/mesh",
           "faq/mqtt",
@@ -201,6 +199,11 @@ module.exports = {
   Hardware: {
     Hardware: [
       "hardware/overview",
+      {
+        type: "link",
+        label: "Hardware List",
+        href: "/hardware",
+      },
       {
         "Supported Hardware": [
           "hardware/supported/tbeam",

@@ -16,12 +16,12 @@ export const Network = ({ id }: NetworkProps): JSX.Element => {
 
   const { data, error } = useSWR<Showcase>(
     `${siteConfig.customFields.API_URL}/showcase/${id}`,
-    fetcher
+    fetcher,
   );
 
   const githubData = useSWR<User>(
     `https://api.github.com/users/${data?.author?.githubUsername}`,
-    fetcher
+    fetcher,
   ).data;
 
   return (
@@ -48,15 +48,15 @@ export const Network = ({ id }: NetworkProps): JSX.Element => {
           <div
             className="card"
             style={{
-              marginLeft: "auto",
-              marginRight: "auto",
-              maxWidth: "900px",
+              marginLeft: 'auto',
+              marginRight: 'auto',
+              maxWidth: '900px',
             }}
           >
             <div
               className="card__header"
               style={{
-                margin: "8px",
+                margin: '8px',
               }}
             >
               <h2>Bill of Materials</h2>
@@ -66,14 +66,14 @@ export const Network = ({ id }: NetworkProps): JSX.Element => {
                 <div
                   key={index}
                   style={{
-                    borderTop: "2px solid gray",
-                    display: "flex",
+                    borderTop: '2px solid gray',
+                    display: 'flex',
                   }}
                 >
                   <div
                     style={{
-                      width: "4rem",
-                      display: "flex",
+                      width: '4rem',
+                      display: 'flex',
                     }}
                   >
                     <img
@@ -81,13 +81,13 @@ export const Network = ({ id }: NetworkProps): JSX.Element => {
                       height="auto"
                       width="100%"
                       style={{
-                        margin: "auto",
-                        padding: "4px",
-                        display: "block",
-                        maxWidth: "60px",
-                        maxHeight: "60px",
-                        width: "auto",
-                        height: "auto",
+                        margin: 'auto',
+                        padding: '4px',
+                        display: 'block',
+                        maxWidth: '60px',
+                        maxHeight: '60px',
+                        width: 'auto',
+                        height: 'auto',
                       }}
                     />
                   </div>
@@ -99,11 +99,12 @@ export const Network = ({ id }: NetworkProps): JSX.Element => {
                   </div>
                   <a
                     target="_blank"
+                    rel="noreferrer"
                     href={material.url}
                     className="button button--outline button--secondary"
                     style={{
-                      marginTop: "auto",
-                      marginBottom: "auto",
+                      marginTop: 'auto',
+                      marginBottom: 'auto',
                     }}
                   >
                     View
@@ -128,74 +129,74 @@ export const PlaceholderNetwork = (): JSX.Element => {
     <div
       className="container"
       style={{
-        display: "flex",
-        flexDirection: window.innerWidth > 768 ? "row" : "column",
-        gap: "2rem",
+        display: 'flex',
+        flexDirection: window.innerWidth > 768 ? 'row' : 'column',
+        gap: '2rem',
       }}
     >
       <div
         style={{
-          width: window.innerWidth > 768 ? "60%" : "100%",
+          width: window.innerWidth > 768 ? '60%' : '100%',
         }}
       >
         <div
           className="card"
           style={{
-            width: "100%",
-            animation: "pulse 2s infinite",
-            transform: "scale(1)",
-            display: "flex",
-            flexDirection: "column",
-            gap: "2rem",
-            padding: "2rem",
+            width: '100%',
+            animation: 'pulse 2s infinite',
+            transform: 'scale(1)',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '2rem',
+            padding: '2rem',
           }}
         >
           <div
             style={{
-              borderRadius: "0.4rem",
-              backgroundColor: "gray",
-              height: "4rem",
+              borderRadius: '0.4rem',
+              backgroundColor: 'gray',
+              height: '4rem',
             }}
           />
           <div
             style={{
-              borderRadius: "0.4rem",
-              backgroundColor: "gray",
-              height: "12rem",
+              borderRadius: '0.4rem',
+              backgroundColor: 'gray',
+              height: '12rem',
             }}
           />
-          <div style={{ display: "flex", gap: "1rem" }}>
+          <div style={{ display: 'flex', gap: '1rem' }}>
             <div
               style={{
-                borderRadius: "999px",
-                backgroundColor: "gray",
-                height: "4rem",
-                width: "4rem",
-                minWidth: "4rem",
+                borderRadius: '999px',
+                backgroundColor: 'gray',
+                height: '4rem',
+                width: '4rem',
+                minWidth: '4rem',
               }}
             />
             <div
               style={{
-                display: "flex",
-                flexDirection: "column",
-                gap: "1rem",
-                width: "100%",
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '1rem',
+                width: '100%',
               }}
             >
               <div
                 style={{
-                  width: "100%",
-                  borderRadius: "0.4rem",
-                  backgroundColor: "gray",
-                  height: "1rem",
+                  width: '100%',
+                  borderRadius: '0.4rem',
+                  backgroundColor: 'gray',
+                  height: '1rem',
                 }}
               />
               <div
                 style={{
-                  width: "100%",
-                  borderRadius: "0.4rem",
-                  backgroundColor: "gray",
-                  height: "2rem",
+                  width: '100%',
+                  borderRadius: '0.4rem',
+                  backgroundColor: 'gray',
+                  height: '2rem',
                 }}
               />
             </div>
@@ -204,108 +205,108 @@ export const PlaceholderNetwork = (): JSX.Element => {
       </div>
       <div
         style={{
-          width: window.innerWidth > 768 ? "40%" : "100%",
+          width: window.innerWidth > 768 ? '40%' : '100%',
         }}
       >
         <div
           className="card"
           style={{
-            width: "100%",
-            animation: "pulse 2s infinite",
-            transform: "scale(1)",
-            display: "flex",
-            flexDirection: "column",
-            gap: "2rem",
-            padding: "2rem",
+            width: '100%',
+            animation: 'pulse 2s infinite',
+            transform: 'scale(1)',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '2rem',
+            padding: '2rem',
           }}
         >
           <div
             style={{
-              borderRadius: "0.4rem",
-              backgroundColor: "gray",
-              height: "12rem",
+              borderRadius: '0.4rem',
+              backgroundColor: 'gray',
+              height: '12rem',
             }}
           />
           <div
             style={{
-              borderRadius: "0.4rem",
-              backgroundColor: "gray",
-              height: "2rem",
+              borderRadius: '0.4rem',
+              backgroundColor: 'gray',
+              height: '2rem',
             }}
           />
-          <div style={{ display: "flex", gap: "0.5rem" }}>
+          <div style={{ display: 'flex', gap: '0.5rem' }}>
             <div
               style={{
-                width: "7rem",
-                height: "1.8rem",
-                borderRadius: "0.4rem",
-                backgroundColor: "gray",
+                width: '7rem',
+                height: '1.8rem',
+                borderRadius: '0.4rem',
+                backgroundColor: 'gray',
               }}
             />
             <div
               style={{
-                width: "7rem",
-                height: "1.8rem",
-                borderRadius: "0.4rem",
-                backgroundColor: "gray",
+                width: '7rem',
+                height: '1.8rem',
+                borderRadius: '0.4rem',
+                backgroundColor: 'gray',
               }}
             />
             <div
               style={{
-                width: "7rem",
-                height: "1.8rem",
-                borderRadius: "0.4rem",
-                backgroundColor: "gray",
+                width: '7rem',
+                height: '1.8rem',
+                borderRadius: '0.4rem',
+                backgroundColor: 'gray',
               }}
             />
           </div>
           <div
-            style={{ display: "flex", flexDirection: "column", gap: "1rem" }}
+            style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}
           >
-            <div style={{ display: "flex", gap: "1rem" }}>
+            <div style={{ display: 'flex', gap: '1rem' }}>
               <div
                 style={{
-                  borderRadius: "0.4rem",
-                  backgroundColor: "gray",
-                  height: "2.5rem",
-                  width: "20%",
+                  borderRadius: '0.4rem',
+                  backgroundColor: 'gray',
+                  height: '2.5rem',
+                  width: '20%',
                 }}
               />
               <div
                 style={{
-                  borderRadius: "0.4rem",
-                  backgroundColor: "gray",
-                  height: "2.5rem",
-                  width: "60%",
+                  borderRadius: '0.4rem',
+                  backgroundColor: 'gray',
+                  height: '2.5rem',
+                  width: '60%',
                 }}
               />
               <a
                 className="button disabled button--primary button--block"
-                style={{ width: "20%" }}
+                style={{ width: '20%' }}
               >
                 &nbsp;
               </a>
             </div>
-            <div style={{ display: "flex", gap: "1rem" }}>
+            <div style={{ display: 'flex', gap: '1rem' }}>
               <div
                 style={{
-                  borderRadius: "0.4rem",
-                  backgroundColor: "gray",
-                  height: "2.5rem",
-                  width: "20%",
+                  borderRadius: '0.4rem',
+                  backgroundColor: 'gray',
+                  height: '2.5rem',
+                  width: '20%',
                 }}
               />
               <div
                 style={{
-                  borderRadius: "0.4rem",
-                  backgroundColor: "gray",
-                  height: "2.5rem",
-                  width: "60%",
+                  borderRadius: '0.4rem',
+                  backgroundColor: 'gray',
+                  height: '2.5rem',
+                  width: '60%',
                 }}
               />
               <a
                 className="button disabled button--primary button--block"
-                style={{ width: "20%" }}
+                style={{ width: '20%' }}
               >
                 &nbsp;
               </a>

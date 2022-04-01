@@ -15,18 +15,18 @@ export const Filters = (): JSX.Element => {
 
   const { data, error } = useSWR<ShowcaseTag[]>(
     `${siteConfig.customFields.API_URL}/showcase/tags`,
-    fetcher
+    fetcher,
   );
 
   return (
-    <section className="container margin-top--l margin-bottom--lg">
+    <section className="margin-top--l margin-bottom--lg container">
       {data && !error ? (
         <ul
           style={{
-            padding: "0",
-            display: "flex",
-            alignItems: "center",
-            flexWrap: "wrap",
+            padding: '0',
+            display: 'flex',
+            alignItems: 'center',
+            flexWrap: 'wrap',
           }}
         >
           {data.map((tag, i) => {
@@ -37,17 +37,17 @@ export const Filters = (): JSX.Element => {
               <div
                 key={i}
                 style={{
-                  boxSizing: "border-box",
-                  position: "relative",
-                  display: "inline-flex",
-                  alignItems: "center",
-                  height: "2rem",
-                  marginTop: "0.5rem",
-                  marginRight: "0.5rem",
-                  fontSize: "0.875rem",
-                  lineHeight: "1.25rem",
-                  verticalAlign: "middle",
-                  userSelect: "none",
+                  boxSizing: 'border-box',
+                  position: 'relative',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  height: '2rem',
+                  marginTop: '0.5rem',
+                  marginRight: '0.5rem',
+                  fontSize: '0.875rem',
+                  lineHeight: '1.25rem',
+                  verticalAlign: 'middle',
+                  userSelect: 'none',
                 }}
               >
                 <TagSelect
@@ -55,12 +55,12 @@ export const Filters = (): JSX.Element => {
                   id={id}
                   label={label}
                   icon={
-                    tag.label === "Favorite" ? (
+                    tag.label === 'Favorite' ? (
                       <span
                         style={{
-                          display: "flex",
-                          marginLeft: "0.5rem",
-                          color: "rgb(190 24 93)",
+                          display: 'flex',
+                          marginLeft: '0.5rem',
+                          color: 'rgb(190 24 93)',
                         }}
                       >
                         <FiHeart />
@@ -71,7 +71,7 @@ export const Filters = (): JSX.Element => {
                           backgroundColor: color,
                           width: 10,
                           height: 10,
-                          borderRadius: "50%",
+                          borderRadius: '50%',
                           marginLeft: 8,
                         }}
                       />

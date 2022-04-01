@@ -28,7 +28,7 @@ export interface Node {
   longitude: string;
 
   showcase?: Showcase;
-  showcaseId?: String;
+  showcaseId?: string;
 }
 
 export interface Material {

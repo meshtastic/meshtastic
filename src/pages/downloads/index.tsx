@@ -16,8 +16,8 @@ import { HeaderText } from './_components/HeaderText';
 
 const Firmware = (): JSX.Element => {
   const { data, error } = useSWR<Release[]>(
-    "https://api.github.com/repos/meshtastic/meshtastic-device/releases",
-    fetcher
+    'https://api.github.com/repos/meshtastic/meshtastic-device/releases',
+    fetcher,
   );
 
   const beta = data?.filter((release) => release.prerelease === false);
@@ -43,13 +43,13 @@ const Firmware = (): JSX.Element => {
             buttonText="Download Meshtastic Flasher"
             url="https://github.com/meshtastic/Meshtastic-gui-installer/releases/latest"
             notes={[
-              "To download using ",
+              'To download using ',
               <code>pip</code>,
-              " follow ",
+              ' follow ',
               <a href="/docs/getting-started/meshtastic-flasher#install-using-pip">
                 these instructions
               </a>,
-              ".",
+              '.',
             ]}
           />
         </div>
@@ -61,11 +61,11 @@ const Firmware = (): JSX.Element => {
           />
           <ul
             style={{
-              position: "relative",
-              display: "grid",
-              gap: "1.5rem",
-              gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
-              paddingLeft: "0",
+              position: 'relative',
+              display: 'grid',
+              gap: '1.5rem',
+              gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
+              paddingLeft: '0',
             }}
           >
             <DownloadCard
@@ -73,7 +73,7 @@ const Firmware = (): JSX.Element => {
               imgUrl="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png"
               url="https://play.google.com/store/apps/details?id=com.geeksville.mesh&referrer=utm_source=downloads-page"
               notes={[
-                "To sideload, ",
+                'To sideload, ',
                 <a
                   href="https://github.com/meshtastic/Meshtastic-Android/releases/latest"
                   rel="noreferrer"
@@ -81,7 +81,7 @@ const Firmware = (): JSX.Element => {
                 >
                   download the latest .apk
                 </a>,
-                " from Github",
+                ' from Github',
               ]}
             />
             <DownloadCard
@@ -100,11 +100,11 @@ const Firmware = (): JSX.Element => {
           />
           <ul
             style={{
-              position: "relative",
-              display: "grid",
-              gap: "1.5rem",
-              gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
-              paddingLeft: "0",
+              position: 'relative',
+              display: 'grid',
+              gap: '1.5rem',
+              gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
+              paddingLeft: '0',
             }}
           >
             {data && !error ? (
@@ -129,7 +129,7 @@ const Firmware = (): JSX.Element => {
                       things.
                     </p>
                   </div>
-                  <div className="card__footer" style={{ marginTop: "1rem" }}>
+                  <div className="card__footer" style={{ marginTop: '1rem' }}>
                     <a
                       href="https://nightly.link/meshtastic/meshtastic-device/workflows/main/master/built.zip"
                       className="button button--secondary button--block"
@@ -147,7 +147,7 @@ const Firmware = (): JSX.Element => {
               </>
             )}
           </ul>
-          Once downloaded, follow the flashing instructions for{" "}
+          Once downloaded, follow the flashing instructions for{' '}
           <a
             href="/docs/getting-started/flashing-esp32"
             rel="noreferrer"
@@ -155,7 +155,7 @@ const Firmware = (): JSX.Element => {
           >
             ESP32 chipsets
           </a>
-          ,{" "}
+          ,{' '}
           <a
             href="/docs/getting-started/flashing-nrf52"
             rel="noreferrer"
@@ -163,7 +163,7 @@ const Firmware = (): JSX.Element => {
           >
             NRF52 chipsets
           </a>
-          , or the{" "}
+          , or the{' '}
           <a
             href="/docs/getting-started/meshtastic-flasher"
             rel="noreferrer"
