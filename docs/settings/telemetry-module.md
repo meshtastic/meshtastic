@@ -57,8 +57,11 @@ values={[
 ]}>
 <TabItem value="cli">
 
-```bash title="Set module update interval to 15 seconds"
-meshtastic --set telemetry_module_device_update_interval 15
+```bash title="Set module update interval to default"
+meshtastic --set telemetry_module_device_update_interval 0
+```
+```bash title="Set module update interval to 120 seconds"
+meshtastic --set telemetry_module_device_update_interval 120
 ```
 
   </TabItem>
