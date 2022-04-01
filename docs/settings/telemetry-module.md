@@ -22,7 +22,7 @@ The environment metrics feature of this module requires attaching a peripheral a
 
 ## Overview
 
-The Telemetry Module will allow nodes to send a specific message with information from connected sensors. Currently supported sensors are BME280, BME680, DHT11, DHT12, DHT21, DHT22 and Dallas 1-wire DS18B20.
+In addition to key device metrics such as battery level, the Telemetry Module will also allow nodes to send environmental metrics from externally connected sensors. Currently supported sensors are BME280, BME680, DHT11, DHT12, DHT21, DHT22, Dallas 1-wire DS18B20 and MCP9808.
 
 :::tip
 Once module settings are changed, a **reset** is required for them to take effect.
