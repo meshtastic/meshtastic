@@ -3,6 +3,7 @@ id: canned-message-module
 title: Canned Message Module
 sidebar_label: Canned Message Module
 ---
+
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import PluginModule from '@site/docs/_blocks/_plugin_module.mdx';
@@ -35,7 +36,7 @@ Once module settings are changed, a **reset** is required for them to take effec
 |      canned_message_module_enabled       |  `true`, `false`  | `false` |
 |      canned_message_module_messages      |     `string`      |  `""`   |
 |     canned_message_module_send_bell      |  `true`, `false`  | `false` |
-| (Messages)* | `string` | `""` |
+|               (Messages)\*               |     `string`      |  `""`   |
 
 - Messages can be set with a dedicated option:
 
@@ -169,7 +170,6 @@ values={[
 {label: 'Web', value: 'web'},
 ]}>
 <TabItem value="cli">
-
 
 ```shell title="Enable Bell Character"
 meshtastic --set canned_message_module_send_bell true
