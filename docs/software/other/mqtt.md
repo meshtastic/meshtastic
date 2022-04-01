@@ -11,16 +11,17 @@ Meshtastic devices with wifi hardware (ESP32) are able to connect to an MQTT bro
 - Connecting your mesh to the official Meshtastic MQTT broker. This makes your devices appear on the world map, and provides a limited copy of your mesh traffic, translated into JSON.
 - Using a custom MQTT broker to bridge several mesh networks together, via the internet (or just a local IP network)
 - Using a custom MQTT broker and a translator program to decode the raw protobuf packets and translate them into a plain text form for use in other systems. eg plotting temperature readings in Grafana, or device positions in Traccar.
+- Using or emitting packets directly in/from smart home control software such as Home Assistant or other consumers that can work with JSON messages.
 
-When MQTT enabled, the Meshtastic device simply uplinks and/or downlinks every raw protobuf packet that it sees to the MQTT broker. All packets are sent to the broker, whether they originate from another device on the mesh, or the gateway node itself.
+When MQTT enabled, the Meshtastic device simply uplinks and/or downlinks every raw protobuf packet that it sees to the MQTT broker. In addition, some packet types are serialized or deserialized from/to JSON messages for easier use in consumers. All packets are sent to the broker, whether they originate from another device on the mesh, or the gateway node itself.
 
 Packets may be encrypted. If you use the default meshtastic MQTT server, packets are always encrypted. If you use a custom MQTT broker (ie set `mqtt_server`), the `mqtt_encryption_enabled` setting applies, which by default is false.
 
 IMPORTANT: When MQTT is turned on, you are potentially broadcasting your entire mesh traffic onto the public internet. This includes messages and position information.
 
-### MQTT Topic
+### MQTT Topics
 
-The device will uplink and downlink packets to the `msh/` prefix:
+The device will uplink and downlink raw ([protobuf](https://developers.google.com/protocol-buffers)) packets to the `msh/` prefix:
 
 `msh/1/c/ShortFast/!12345678` where
 
@@ -34,6 +35,44 @@ The payload is a raw protobuf. Looking at the MQTT traffic with a program like `
 	!937bed1cTanksTnk"D???05??=???aP`
 	ShortFast	!937bed1c
 ```
+
+Packets from the following [port numbers](docs/developers/firmware/portnum) are serialized to JSON and then forwarded to the `msh/1/json/CHANNELID/DEVICEID` topic: `TEXT_MESSAGE_APP`, `ENVIRONMENTAL_MEASUREMENT_APP`, `NODEINFO_APP` and `POSITION_APP`. 
+
+An example of a received `NODEINFO_APP` message:
+```json
+{
+   "id":452664778,
+   "channel":0,
+   "from":2130636288,
+   "payload":{
+      "hardware":10,
+      "id":"!7efeee00",
+      "longname":"base0",
+      "shortname":"BA0"
+   },
+   "sender":"!7efeee00",
+   "timestamp":1646832724,
+   "to":-1,
+   "type":"nodeinfo"
+}
+```
+
+If the message received contains valid JSON in the payload, the JSON is deserialized and added as a JSON object rather than a string containing the serialized JSON.
+
+**Sent messages** will be checked if the MQTT payload contains a valid JSON-encoded envelope:
+
+```json
+{
+   "sender": "SENDER",
+   "payload": {
+       "key":"value"
+       ...
+    }
+}
+```
+
+`sender` and `payload` fields are required for a valid envelope. If a valid MQTT message is found, the message is sent over the radio as a message of type `TEXT_MESSAGE_APP` with the serialized `payload` value in the message payload.
+
 
 ### Basic Configuration
 
