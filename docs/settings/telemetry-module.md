@@ -401,7 +401,7 @@ The sensor values changed between 1.2 and 1.3. The docs represent the 1.3 values
 #### Set sensor type
 
 :::important
-The sensor values changed between 1.2 and 1.3. The docs represent the 1.3 values. When configuring devices on 1.2, please subtract 1 from the numbers below for the appropriate sensor.
+The sensor values changed between 1.2 and 1.3. The docs represent the 1.3 values. When configuring devices on 1.2, please subtract 1 from the numbers on the table above for the appropriate sensor.
 :::
 
 <Tabs
