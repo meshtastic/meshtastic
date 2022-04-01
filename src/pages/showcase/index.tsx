@@ -11,7 +11,7 @@ import { Networks } from './_components/Networks';
 
 const Showcase = (): JSX.Element => {
   const location = useLocation();
-  const id = new URLSearchParams(location.search).get("id");
+  const id = new URLSearchParams(location.search).get('id');
 
   return (
     <Layout

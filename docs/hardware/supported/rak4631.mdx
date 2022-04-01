@@ -1,0 +1,53 @@
+---
+id: wisBlock
+title: RAK WisBlock 4631
+sidebar_label: RAK WisBlock
+---
+
+The RAK WisBlock is a low power modular hardware system that can be used to build Meshtastic devices. Soldering is only required for the optional OLED screen.
+
+As of February 6, 2022, there is a [Meshtastic Getting Started kit](https://store.rakwireless.com/products/wisblock-meshtastic-starter-kit) that has the minimum you need to get started.
+
+You will need a [base board](https://store.rakwireless.com/collections/wisblock-base), a [core 4631 LPWAN module](https://store.rakwireless.com/collections/wisblock-core/products/rak4631-lpwan-node), and optionally a GPS Sensor to build a Meshtastic device.
+
+Both available base boards ([5005](https://store.rakwireless.com/collections/wisblock-base/products/rak5005-o-base-board) & [19003](https://store.rakwireless.com/collections/wisblock-base/products/wisblock-base-board-rak19003)) have a reset button, support an OLED screen, and have built in connectors for a 3.7V LIPO battery (max 4.3V) and 5V Solar panel (max 5.5V)
+
+A user button is not possible with the 19003 base board. It may be possible to add a user button to the 5005 base board using the [13002 IO module](https://store.rakwireless.com/collections/wisblock-interface/products/adapter-module-rak13002).
+
+To add a GPS to the 5005 base board, you need the [1910 GPS sensor](https://store.rakwireless.com/collections/wisblock-sensor/products/rak1910-max-7q-gnss-location-sensor). It is supported on slot A of the 5005 board via UART.
+
+To add a GPS to the 19003 base board, you need the [12500 GPS sensor](https://store.rakwireless.com/products/wisblock-gnss-location-module-rak12500). It is supported via I2C on slot B for firmware versions 1.49 and above.
+
+Flashing the firmware is a simple process. Connect your device via USB, click the reset button twice, and a drive will appear. On Windows, Linux, or Mac, drag the appropriate .uf2 firmware file onto the root of the drive and the firmware will be updated. Or, you can use [Meshtastic-flasher](https://github.com/meshtastic/Meshtastic-gui-installer)
+
+There is currently no pin required to pair RAK devices via BLE.
+
+- nRF52840 - Bluetooth BLE 5.0 and very low power consumption
+- SX1262 - LoRa transceiver
+- Frequency options:
+  - 433 MHz
+  - 470 MHz
+  - 799 MHz
+  - 865 MHz
+  - 868 MHz
+  - 915 MHz
+  - 920 MHz
+  - 923 MHz
+- Optional GPS
+- U.FL antenna connector
+- Optional switches
+- Optional screen
+
+- Firmware for 5005 base board: [`firmware-rak4631_5005-1.x.x.uf2`](/downloads)
+- Firmware for 19003 base board: [`firmware-rak4631_19003-1.x.x.uf2`](/downloads)
+- [Installation instructions](https://docs.rakwireless.com/Product-Categories/WisBlock/RAK4631/Quickstart/#rak4631-lora-mesh-via-meshtastic)
+- Don't forget to [update the bootloader](https://docs.rakwireless.com/Product-Categories/WisBlock/RAK4631/Quickstart/#updating-the-bootloader) first! This can be done easily with [Meshtastic-flasher](https://github.com/meshtastic/Meshtastic-gui-installer)
+- RAK's [GitHub Page](https://github.com/RAKWireless/WisBlock) for the WisBlock
+
+<img
+  alt="RAK4631 Core Module"
+  src="/img/hardware/rak4631.png"
+  style={{ zoom: '50%' }}
+/>
+
+There is development activity to get sensors added in Meshtastic core. For example, the Environment Sensor.

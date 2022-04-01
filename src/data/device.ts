@@ -10,21 +10,21 @@ export enum UseCase {
   Portable,
 }
 
-export type DeviceName = "tbeam" | "techo";
+export type DeviceName = 'tbeam' | 'techo';
 
-export type BLEVersion = "4.2" | "5.0";
+export type BLEVersion = '4.2' | '5.0';
 
-export type AntennaType = "Integrated";
+export type AntennaType = 'Integrated';
 
-export type Chipset = "ESP32" | "NRF52";
+export type Chipset = 'ESP32' | 'NRF52';
 
 export type Frequency = 433 | 868 | 915 | 923;
 
-export type SerialAdapter = "CP210X" | "CH9102";
+export type SerialAdapter = 'CP210X' | 'CH9102';
 
-export type GNSSModule = "NEO-6M" | "NEO-8M";
+export type GNSSModule = 'NEO-6M' | 'NEO-8M';
 
-export type LORAModule = "SX1276" | "SX1262";
+export type LORAModule = 'SX1276' | 'SX1262';
 
 export enum Stability {
   Stable,
@@ -34,12 +34,12 @@ export enum Stability {
 }
 
 export type Module =
-  | "cannedMessage"
-  | "externalNotification"
-  | "rangeTest"
-  | "rotaryEncoder"
-  | "storeAndForward"
-  | "telemetry";
+  | 'cannedMessage'
+  | 'externalNotification'
+  | 'rangeTest'
+  | 'rotaryEncoder'
+  | 'storeAndForward'
+  | 'telemetry';
 
 export interface IDevice {
   name: string;
@@ -67,5 +67,5 @@ export interface IDevice {
     PSRAM: number;
     RAM?: number;
   };
-  variants: (DeepPartial<Omit<IDevice, "variants">> & { name: string })[];
+  variants: (DeepPartial<Omit<IDevice, 'variants'>> & { name: string })[];
 }

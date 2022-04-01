@@ -1,19 +1,21 @@
-import React from "react";
+import 'react-responsive-carousel/lib/styles/carousel.min.css'; // requires a loader
 
-import Head from "@docusaurus/Head";
-import useBaseUrl from "@docusaurus/useBaseUrl";
-import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
-import Layout from "@theme/Layout";
-import Link from "@docusaurus/Link";
-import { HeaderText } from "./downloads/_components/HeaderText";
-import { SocialCard, SocialCardProps } from "../components/homepage/SocialCard";
-import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
-import { Carousel } from "react-responsive-carousel";
+import React from 'react';
+
+import { Carousel } from 'react-responsive-carousel';
+
+import Head from '@docusaurus/Head';
+import Link from '@docusaurus/Link';
+import useBaseUrl from '@docusaurus/useBaseUrl';
+import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
+import Layout from '@theme/Layout';
+
+import { SocialCard, SocialCardProps } from '../components/homepage/SocialCard';
 
 const features = [
   {
-    title: "Radio Mesh Text Messaging",
-    imageUrl: "img/homepage/messages.svg",
+    title: 'Radio Mesh Text Messaging',
+    imageUrl: 'img/homepage/messages.svg',
     description: (
       <>
         Off-grid messaging using inexpensive hardware to create your personal
@@ -24,8 +26,8 @@ const features = [
     ),
   },
   {
-    title: "Encryption",
-    imageUrl: "img/homepage/encryption.svg",
+    title: 'Encryption',
+    imageUrl: 'img/homepage/encryption.svg',
     description: (
       <>
         Messages are AES256 encrypted. Only radios supplied with your channel
@@ -36,8 +38,8 @@ const features = [
     ),
   },
   {
-    title: "Conserve Battery",
-    imageUrl: "img/homepage/battery.svg",
+    title: 'Conserve Battery',
+    imageUrl: 'img/homepage/battery.svg',
     description: (
       <>
         Go for days on end and on a single battery or extend it infinitely with
@@ -47,8 +49,8 @@ const features = [
     ),
   },
   {
-    title: "Extendable",
-    imageUrl: "img/homepage/extendable.svg",
+    title: 'Extendable',
+    imageUrl: 'img/homepage/extendable.svg',
     description: (
       <>
         Create a highly scalable mesh with hardware on a multitude of platforms
@@ -59,8 +61,8 @@ const features = [
     ),
   },
   {
-    title: "Platform Agnostic",
-    imageUrl: "img/homepage/platforms.svg",
+    title: 'Platform Agnostic',
+    imageUrl: 'img/homepage/platforms.svg',
     description: (
       <>
         Meshtastic clients are built or being built for all major desktop and
@@ -70,8 +72,8 @@ const features = [
     ),
   },
   {
-    title: "Open Source",
-    imageUrl: "img/homepage/opensource.svg",
+    title: 'Open Source',
+    imageUrl: 'img/homepage/opensource.svg',
     description: (
       <>
         All Meshtastic software is open source. If you want an improvement,
@@ -83,22 +85,22 @@ const features = [
 
 const SocialCards: SocialCardProps[] = [
   {
-    color: "5865F2",
-    link: "https://discord.com/invite/UQJ5QuM7vq",
+    color: 'bg-[#5865F2]',
+    link: 'https://discord.com/invite/UQJ5QuM7vq',
     children: (
       <img className="m-auto h-10" src="/img/homepage/Discord-Logo-White.svg" />
     ),
   },
   {
-    color: "FF0000",
-    link: "https://www.youtube.com/meshtastic",
+    color: 'bg-[#FF0000]',
+    link: 'https://www.youtube.com/meshtastic',
     children: (
       <img className="m-auto h-16" src="/img/homepage/YouTube-Logo-White.svg" />
     ),
   },
   {
-    color: "ffffff",
-    link: "https://meshtastic.discourse.group",
+    color: 'bg-[#ffffff]',
+    link: 'https://meshtastic.discourse.group',
     children: (
       <img
         className="m-auto h-12"
@@ -107,15 +109,15 @@ const SocialCards: SocialCardProps[] = [
     ),
   },
   {
-    color: "FF4500",
-    link: "https://reddit.com/r/meshtastic",
+    color: 'bg-[#FF4500]',
+    link: 'https://reddit.com/r/meshtastic',
     children: (
       <img className="m-auto h-20" src="/img/homepage/Reddit-Logo-White.svg" />
     ),
   },
   {
-    color: "ffffff",
-    link: "https://github.com/meshtastic",
+    color: 'bg-[#ffffff]',
+    link: 'https://github.com/meshtastic',
     children: (
       <img className="m-auto w-12" src="/img/homepage/GitHub-Logo-White.svg" />
     ),
@@ -146,7 +148,7 @@ function Home() {
         <meta property="og:title" content="Meshtastic" />
         <meta
           property="og:image"
-          content={useBaseUrl("design/web/social-preview-1200x630.png")}
+          content={useBaseUrl('design/web/social-preview-1200x630.png')}
         />
         <meta
           property="og:description"
@@ -155,14 +157,14 @@ function Home() {
         <meta property="og:url" content="https://meshtastic.org/" />
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
-      <header style={{ textAlign: "center" }} className="hero hero--primary">
+      <header style={{ textAlign: 'center' }} className="hero hero--primary">
         <div className="container">
           <h1 className="hero__title">
             <img
-              style={{ paddingTop: "2rem", paddingBottom: "2rem" }}
+              style={{ paddingTop: '2rem', paddingBottom: '2rem' }}
               alt="Meshtastic Logo"
               className="header__logo"
-              src={useBaseUrl("design/typelogo/typelogo.svg")}
+              src={useBaseUrl('design/typelogo/typelogo.svg')}
             />
           </h1>
           <p className="hero__subtitle">{siteConfig.tagline}</p>
@@ -181,20 +183,20 @@ function Home() {
           {features.map((feature, index) => (
             <div key={index} className="flex p-12">
               <img
-                className="h-40 my-auto"
+                className="my-auto h-40"
                 src={feature.imageUrl}
                 alt={feature.title}
               />
               <div className="my-auto">
-                <h3 className="font-medium text-xl">{feature.title}</h3>
+                <h3 className="text-xl font-medium">{feature.title}</h3>
                 <p>{feature.description}</p>
               </div>
             </div>
           ))}
         </Carousel>
 
-        <div className="flex flex-col bg-primaryDark gap-4 w-full p-4 shadow-inner">
-          <h3 className="font-bold text-xl">Connect with us.</h3>
+        <div className="flex w-full flex-col gap-4 bg-primaryDark p-4 shadow-inner">
+          <h3 className="text-xl font-bold">Connect with us.</h3>
           <div className="flex w-full overflow-x-auto">
             {SocialCards.map((card, index) => (
               <SocialCard key={index} color={card.color} link={card.link}>
@@ -204,30 +206,30 @@ function Home() {
           </div>
         </div>
 
-        <div className="flex flex-col container">
-          <h2 className="font-medium text-xl mb-2">
+        <div className="container flex flex-col">
+          <h2 className="mb-2 text-xl font-medium">
             Getting started with Meshtastic is as easy as 1, 2, 3!
           </h2>
           <ul
             className="mx-auto"
             style={{
-              position: "relative",
-              display: "grid",
-              gap: "1.5rem",
-              gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
-              paddingLeft: "0",
+              position: 'relative',
+              display: 'grid',
+              gap: '1.5rem',
+              gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
+              paddingLeft: '0',
             }}
           >
             <div className="card">
               <div
                 className="card__header"
-                style={{ display: "flex", justifyContent: "space-between" }}
+                style={{ display: 'flex', justifyContent: 'space-between' }}
               >
                 <h3>1. Purchase Supported Hardware</h3>
               </div>
               <div
                 className="card__body"
-                style={{ display: "flex", justifyContent: "center" }}
+                style={{ display: 'flex', justifyContent: 'center' }}
               >
                 <p>
                   Hardware you will want to consider:
@@ -247,13 +249,13 @@ function Home() {
             <div className="card">
               <div
                 className="card__header"
-                style={{ display: "flex", justifyContent: "space-between" }}
+                style={{ display: 'flex', justifyContent: 'space-between' }}
               >
                 <h3>2. Flash & Configure Node</h3>
               </div>
               <div
                 className="card__body"
-                style={{ display: "flex", justifyContent: "center" }}
+                style={{ display: 'flex', justifyContent: 'center' }}
               >
                 <p>
                   The Meshtastic Flasher application can assist you in flashing
@@ -264,13 +266,13 @@ function Home() {
             <div className="card">
               <div
                 className="card__header"
-                style={{ display: "flex", justifyContent: "space-between" }}
+                style={{ display: 'flex', justifyContent: 'space-between' }}
               >
                 <h3>3. Connect to Node</h3>
               </div>
               <div
                 className="card__body"
-                style={{ display: "flex", justifyContent: "center" }}
+                style={{ display: 'flex', justifyContent: 'center' }}
               >
                 <p>
                   Applications are available for the following systems:

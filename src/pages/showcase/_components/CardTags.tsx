@@ -16,8 +16,8 @@ export const CardTags = ({ tags }: CardTagsProps) => {
             key={index}
             style={{
               backgroundColor: color,
-              marginRight: "0.3rem",
-              userSelect: "none",
+              marginRight: '0.3rem',
+              userSelect: 'none',
             }}
           >
             {label}
