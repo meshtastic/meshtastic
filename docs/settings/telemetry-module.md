@@ -383,6 +383,10 @@ Configuring this setting is not yet available for the selected platform. If this
 
 Specify the sensor type.
 
+:::important
+The sensor values changed between 1.2 and 1.3. The docs represent the 1.3 values. When configuring devices on 1.2, please subtract 1 from the numbers below for the appropriate sensor.
+:::
+
 | Value |       Description       |             Sensor Features              |
 | :---: | :---------------------: | :--------------------------------------: |
 |  `1`  |          DHT11          |          Temperature, Humidity           |
@@ -395,6 +399,10 @@ Specify the sensor type.
 |  `8`  |         MCP9808         |          Precision Temperature           |
 
 #### Set sensor type
+
+:::important
+The sensor values changed between 1.2 and 1.3. The docs represent the 1.3 values. When configuring devices on 1.2, please subtract 1 from the numbers below for the appropriate sensor.
+:::
 
 <Tabs
 groupId="settings"
