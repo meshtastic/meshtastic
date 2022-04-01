@@ -27,7 +27,13 @@ module.exports = {
               "faq/client-web",
             ],
           },
-          "faq/device",
+          {
+            Devices: [
+              "faq/device",
+              "faq/device-tbeam",
+              "faq/device-wisblock",
+            ]
+          },
           {
             "Flashing Firmware": ["faq/m-flasher"],
           },
