@@ -1,15 +1,18 @@
 ---
-id: rotary-encoder-module
-title: Rotary Encoder
-sidebar_label: Rotary Encoder
+id: input-broker-module
+title: Input Broker
+sidebar_label: Input Broker
 ---
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
+import PluginModule from '@site/docs/_blocks/_plugin_module.mdx';
 
 :::warning
 GPIO access is fundamentally dangerous because invalid options can physically damage or destroy your hardware. Ensure that you fully understand the schematic for your particular device before trying this as we do not offer a warranty. Use at your own risk.
 :::
+
+<PluginModule name="inputbroker_" rename="rotary1_"/>
 
 <!--- TODO add link to hardware setup to admonition--->
 
@@ -66,18 +69,21 @@ meshtastic --set rotary1_enabled true
 
   </TabItem>
   <TabItem value="android">
+
 :::info
 Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
 :::
 
   </TabItem>
   <TabItem value="iOS">
+
 :::info
 Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
 :::
 
   </TabItem>
   <TabItem value="web">
+
 :::info
 Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
 :::
@@ -116,18 +122,21 @@ meshtastic --set rotary1_event_press ""
 
   </TabItem>
   <TabItem value="android">
+
 :::info
 Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
 :::
 
   </TabItem>
   <TabItem value="iOS">
+
 :::info
 Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
 :::
 
   </TabItem>
   <TabItem value="web">
+
 :::info
 Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
 :::
@@ -166,18 +175,21 @@ meshtastic --set rotary1_event_ccw ""
 
   </TabItem>
   <TabItem value="android">
+
 :::info
 Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
 :::
 
   </TabItem>
   <TabItem value="iOS">
+
 :::info
 Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
 :::
 
   </TabItem>
   <TabItem value="web">
+
 :::info
 Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
 :::
@@ -216,18 +228,21 @@ meshtastic --set rotary1_event_press ""
 
   </TabItem>
   <TabItem value="android">
+
 :::info
 Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
 :::
 
   </TabItem>
   <TabItem value="iOS">
+
 :::info
 Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
 :::
 
   </TabItem>
   <TabItem value="web">
+
 :::info
 Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
 :::
@@ -266,18 +281,21 @@ meshtastic --set rotary1_pin_a GPIO
 
   </TabItem>
   <TabItem value="android">
+
 :::info
 Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
 :::
 
   </TabItem>
   <TabItem value="iOS">
+
 :::info
 Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
 :::
 
   </TabItem>
   <TabItem value="web">
+
 :::info
 Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
 :::
@@ -316,18 +334,21 @@ meshtastic --set rotary1_pin_b GPIO
 
   </TabItem>
   <TabItem value="android">
+
 :::info
 Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
 :::
 
   </TabItem>
   <TabItem value="iOS">
+
 :::info
 Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
 :::
 
   </TabItem>
   <TabItem value="web">
+
 :::info
 Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
 :::
@@ -366,18 +387,21 @@ meshtastic --set rotary1_pin_press GPIO
 
   </TabItem>
   <TabItem value="android">
+
 :::info
 Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
 :::
 
   </TabItem>
   <TabItem value="iOS">
+
 :::info
 Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
 :::
 
   </TabItem>
   <TabItem value="web">
+
 :::info
 Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
 :::
@@ -422,18 +446,21 @@ meshtastic --set rotary1_enabled True
 
   </TabItem>
   <TabItem value="android">
+
 :::info
 Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
 :::
 
   </TabItem>
   <TabItem value="iOS">
+
 :::info
 Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
 :::
 
   </TabItem>
   <TabItem value="web">
+
 :::info
 Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
 :::
