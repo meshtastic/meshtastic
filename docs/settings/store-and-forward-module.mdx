@@ -6,6 +6,7 @@ sidebar_label: Store and Forward
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
+import PluginModule from '@site/docs/_blocks/_plugin_module.mdx';
 
 :::info
 Currently only available for ESP32 based devices with external PSRAM. Requires the device to be set as a router.
@@ -18,6 +19,8 @@ Currently only available for ESP32 based devices with external PSRAM. Requires t
 :::caution
 This is a work in progress and is partially available. Stability is not guaranteed.
 :::
+
+<PluginModule name="store_forward_module" rename="store_forward_plugin" />
 
 The Store Forward Module is an implementation of a Store and Forward system to enable resilient messaging in the event that a client device is disconnected from the main network.
 

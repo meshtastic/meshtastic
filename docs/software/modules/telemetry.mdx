@@ -3,6 +3,9 @@ id: telemetry-module
 title: Telemetry
 sidebar_label: Telemetry
 ---
+import PluginModule from '@site/docs/_blocks/_plugin_module.mdx';
+
+<PluginModule name="telemetry_" rename="environmental_measurment_"/>
 
 ## About
 

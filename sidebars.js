@@ -60,7 +60,12 @@ module.exports = {
         ],
       },
       {
-        "Meshtastic iOS": ["software/ios/ios-development"],
+        "Meshtastic Apple": [
+          "software/apple/ios-development",
+          "software/apple/ios",
+          "software/apple/ipados",
+          "software/apple/macos",
+        ],
       },
       {
         "Meshtastic.js": [
@@ -173,12 +178,12 @@ module.exports = {
       {
         Modules: [
           "settings/canned-message-module",
-          "settings/telemetry-module",
+          "settings/input-broker-module",
           "settings/external-notification-module",
           "settings/range-test-module",
-          "settings/rotary-encoder-module",
           "settings/serial-module",
           "settings/store-and-forward-module",
+          "settings/telemetry-module",
         ],
         Advanced: ["settings/channel-advanced", "settings/misc"],
       },
@@ -211,6 +216,7 @@ module.exports = {
       },
       "hardware/buttons",
       "hardware/battery",
+      "hardware/gpsmodule",
       {
         Antennas: [
           "hardware/antenna/antenna",

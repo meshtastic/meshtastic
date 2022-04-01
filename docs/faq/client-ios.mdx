@@ -12,4 +12,4 @@ The now-in-beta iOS app requires iOS v15.
 
 ### How do I get the Meshtastic iOS App?
 
-See [iOS App](/docs/software/ios/ios-development)
+See [iOS App](/docs/software/apple/ios-development)
