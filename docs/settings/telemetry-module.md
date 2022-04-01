@@ -17,7 +17,7 @@ GPIO access is fundamentally dangerous because invalid options can physically da
 <!--- TODO add link to hardware setup to admonition--->
 
 :::note
-This module requires attaching a peripheral accessory to your device. It will not work without one.
+The environment metrics feature of this module requires attaching a peripheral accessory to your device. It will not work without one.
 :::
 
 ## Overview
