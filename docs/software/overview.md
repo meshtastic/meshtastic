@@ -9,7 +9,7 @@ The following applications are available to support your Meshtastic network:
 
 - The [firmware](/docs/software/device/device-firmware) to run on the devices
 - Connect to the devices with our [Android app](/docs/software/android/android-installation)
-- An [iOS application](/docs/software/ios/ios-development) is in the works
+- An [iOS application](/docs/software/apple/ios-development) is in the works
 - [Meshtastic.js](/docs/software/js/getting-started) provides a JavaScript library to interface with devices
 - [Meshtastic-python](/docs/software/python/python-installation) provides access from desktop computers including a command line interface
 - A [web interface](/docs/software/web/web-app-software) can be accessed over Wifi on ESP32 devices

@@ -62,7 +62,12 @@ module.exports = {
         ],
       },
       {
-        "Meshtastic iOS": ["software/ios/ios-development"],
+        "Meshtastic Apple": [
+          "software/apple/ios-development",
+          "software/apple/ios",
+          "software/apple/ipados",
+          "software/apple/macos",
+        ],
       },
       {
         "Meshtastic.js": [
