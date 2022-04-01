@@ -5,3 +5,11 @@ sidebar_label: Mesh
 ---
 
 ## Overview
+
+### Does Meshtastic use LoRaWAN?
+
+Meshtastic uses LoRa peer to peer (p2p), which allows much more flexibility in how LoRa is utilized. Our messaging and position updates are far too "random" compared to LoRaWAN requirements.
+
+### Will Meshtastic work with (insert LoRa service)
+
+Meshtastic uses LoRa peer to peer (p2p), which has allowed us to customize how we use the protocol. Likely it will not work with the service you have in mind, but it may be possible to build a bridge between services using MQTT. That will require further development outside the scope of this project to implement.
