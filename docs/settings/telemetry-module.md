@@ -385,14 +385,14 @@ Specify the sensor type.
 
 | Value |       Description       |             Sensor Features              |
 | :---: | :---------------------: | :--------------------------------------: |
-|  `0`  |          DHT11          |          Temperature, Humidity           |
-|  `1`  | DS18B20 (Dallas 1-wire) |               Temperature                |
-|  `2`  |          DHT12          |          Temperature, Humidity           |
-|  `3`  |          DHT21          |          Temperature, Humidity           |
-|  `4`  |          DHT22          |          Temperature, Humidity           |
-|  `5`  |         BME280          |     Temperature, Humidity, Pressure      |
-|  `6`  |         BME680          | Temperature, Humidity, Pressure, VOC Gas |
-|  `7`  |         MCP9808         |          Precision Temperature           |
+|  `1`  |          DHT11          |          Temperature, Humidity           |
+|  `2`  | DS18B20 (Dallas 1-wire) |               Temperature                |
+|  `3`  |          DHT12          |          Temperature, Humidity           |
+|  `4`  |          DHT21          |          Temperature, Humidity           |
+|  `5`  |          DHT22          |          Temperature, Humidity           |
+|  `6`  |         BME280          |     Temperature, Humidity, Pressure      |
+|  `7`  |         BME680          | Temperature, Humidity, Pressure, VOC Gas |
+|  `8`  |         MCP9808         |          Precision Temperature           |
 
 #### Set sensor type
 
@@ -412,11 +412,11 @@ The CLI is able to take the `value` or the `name` of the sensor from the table a
 :::
 
 ```bash title="Set sensor type to DS18B20"
-meshtastic --set telemetry_module_sensor_type 1
+meshtastic --set telemetry_module_environment_sensor_type 2
 ```
 
 ```bash title="Set sensor type to DS18B20"
-meshtastic --set telemetry_module_sensor_type DS18B20
+meshtastic --set telemetry_module_environment_sensor_type DS18B20
 ```
 
   </TabItem>
