@@ -89,7 +89,7 @@ Configuring this setting is not yet available for the selected platform. If this
 </Tabs>
 
 
-### telemetry_module_display_fahrenheit
+### telemetry_module_environment_display_fahrenheit
 
 The sensor is always read in Celsius, but the user can opt to view the temperature display in Fahrenheit using this setting.
 
@@ -107,11 +107,11 @@ values={[
 <TabItem value="cli">
 
 ```bash title="Display Farenheit"
-meshtastic --set telemetry_module_display_fahrenheit true
+meshtastic --set telemetry_module_environment_display_fahrenheit true
 ```
 
 ```bash title="Display Celsius"
-meshtastic --set telemetry_module_display_fahrenheit false
+meshtastic --set telemetry_module_environment_display_fahrenheit false
 ```
 
   </TabItem>
@@ -138,7 +138,7 @@ Configuring this setting is not yet available for the selected platform. If this
   </TabItem>
 </Tabs>
 
-### telemetry_module_measurement_enabled
+### telemetry_module_environment_measurement_enabled
 
 Enables the module.
 
@@ -156,11 +156,11 @@ values={[
 <TabItem value="cli">
 
 ```bash title="Enable Module"
-meshtastic --set telemetry_module_measurement_enabled true
+meshtastic --set telemetry_module_environment_measurement_enabled true
 ```
 
 ```bash title="Disable Module"
-meshtastic --set telemetry_module_measurement_enabled false
+meshtastic --set telemetry_module_environment_measurement_enabled false
 ```
 
   </TabItem>
@@ -187,11 +187,11 @@ Configuring this setting is not yet available for the selected platform. If this
   </TabItem>
 </Tabs>
 
-### telemetry_module_read_error_count_threshold
+### telemetry_module_environment_read_error_count_threshold
 
 Sometimes sensor reads can fail. If this happens, we will retry a configurable number of attempts. Each attempt will be delayed by the minimum required refresh rate for that sensor
 
-#### Configure telemetry_module_read_error_count_threshold
+#### Configure telemetry_module_environment_read_error_count_threshold
 
 <Tabs
 groupId="settings"
@@ -204,8 +204,8 @@ values={[
 ]}>
 <TabItem value="cli">
 
-```bash title="Configure telemetry_module_read_error_count_threshold to 3 tries"
-meshtastic --set telemetry_module_read_error_count_threshold 3
+```bash title="Configure telemetry_module_environment_read_error_count_threshold to 3 tries"
+meshtastic --set telemetry_module_environment_read_error_count_threshold 3
 ```
 
   </TabItem>
@@ -232,11 +232,11 @@ Configuring this setting is not yet available for the selected platform. If this
   </TabItem>
 </Tabs>
 
-### telemetry_module_recovery_interval
+### telemetry_module_environment_recovery_interval
 
 Sometimes we can end up with more than read_error_count_threshold failures. In this case, we will stop trying to read from the sensor for a while. Wait this long until trying to read from the sensor again.
 
-#### Configure telemetry_module_recovery_interval
+#### Configure telemetry_module_environment_recovery_interval
 
 <Tabs
 groupId="settings"
@@ -249,8 +249,8 @@ values={[
 ]}>
 <TabItem value="cli">
 
-```bash title="Configure telemetry_module_recovery_interval to 120 seconds"
-meshtastic --set telemetry_module_recovery_interval 120
+```bash title="Configure telemetry_module_environment_recovery_interval to 120 seconds"
+meshtastic --set telemetry_module_environment_recovery_interval 120
 ```
 
   </TabItem>
@@ -277,7 +277,7 @@ Configuring this setting is not yet available for the selected platform. If this
   </TabItem>
 </Tabs>
 
-### telemetry_module_screen_enabled
+### telemetry_module_environment_screen_enabled
 
 Enable/Disable the Telemetry Module on-device display.
 
@@ -295,11 +295,11 @@ values={[
 <TabItem value="cli">
 
 ```bash title="Enable on device screen"
-meshtastic --set telemetry_module_screen_enabled true
+meshtastic --set telemetry_module_environment_screen_enabled true
 ```
 
 ```bash title="Disable on device screen"
-meshtastic --set telemetry_module_screen_enabled false
+meshtastic --set telemetry_module_environment_screen_enabled false
 ```
 
   </TabItem>
@@ -326,10 +326,10 @@ Configuring this setting is not yet available for the selected platform. If this
   </TabItem>
 </Tabs>
 
-### telemetry_module_sensor_pin
+### telemetry_module_environment_sensor_pin
 
 :::note
-The preferred setup is using I2C, so the `telemetry_module_sensor_pin` may not be needed.
+The preferred setup is using I2C, so the `telemetry_module_environment_sensor_pin` may not be needed.
 :::
 
 Specify the preferred GPIO Pin for sensor readings. May not be needed if using I2C.
@@ -352,7 +352,7 @@ values={[
 <TabItem value="cli">
 
 ```bash title="Set module sensor pin"
-meshtastic --set telemetry_module_sensor_pin PINNUMBER
+meshtastic --set telemetry_module_environment_sensor_pin PINNUMBER
 ```
 
   </TabItem>
@@ -379,7 +379,7 @@ Configuring this setting is not yet available for the selected platform. If this
   </TabItem>
 </Tabs>
 
-### telemetry_module_sensor_type
+### telemetry_module_environment_sensor_type
 
 Specify the sensor type.
 
