@@ -3,7 +3,7 @@ import { IDevice, Stability, UseCase } from '../device';
 export const techo: IDevice = {
   name: 'T-Echo',
   misc: {
-    Stability: Stability.Stable,
+    Stability: Stability.Semi,
     SuggestedUse: [UseCase.Portable],
     ImagePath: '/img/hardware/t-echo-lilygo.jpg',
     Gradient: 'from-gray-700 via-gray-900 to-black',

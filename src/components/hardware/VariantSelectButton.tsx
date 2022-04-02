@@ -4,21 +4,16 @@ import { FiCheck } from 'react-icons/fi';
 import { HiSelector } from 'react-icons/hi';
 
 import { Listbox, Transition } from '@headlessui/react';
-
-const people = [
-  { id: 1, name: 'T-Beam 1.1' },
-  { id: 2, name: 'T-Beam 1.0' },
-  { id: 3, name: 'T-Beam 0.7' },
-];
+import type { Variant } from '@site/src/data/device.js';
 
 export interface VariantSelectButtonProps {
-  options: any[];
+  options: Variant[];
 }
 
 export const VariantSelectButton = ({
   options,
 }: VariantSelectButtonProps): JSX.Element => {
-  const [selected, setSelected] = useState(people[0]);
+  const [selected, setSelected] = useState(options[options.length - 1]);
 
   return (
     <Listbox value={selected} onChange={setSelected}>
@@ -43,15 +38,15 @@ export const VariantSelectButton = ({
               leaveTo="opacity-0"
             >
               <Listbox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-primary py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                {people.map((person) => (
+                {options.map((variant, index) => (
                   <Listbox.Option
-                    key={person.id}
+                    key={index}
                     className={({ active }) =>
                       `relative cursor-default select-none py-2 pl-3 pr-9 ${
                         active ? 'bg-indigo-600' : ''
                       }`
                     }
-                    value={person}
+                    value={variant.name}
                   >
                     {({ selected, active }) => (
                       <>
@@ -60,7 +55,7 @@ export const VariantSelectButton = ({
                             selected ? 'font-semibold' : 'font-normal'
                           }`}
                         >
-                          {person.name}
+                          {variant.name}
                         </span>
 
                         {selected ? (

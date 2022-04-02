@@ -20,16 +20,11 @@ const Hardware = (): JSX.Element => {
     rak19003,
     rak19003,
     rak19003,
-    rak19003,
-    rak19003,
-    rak19003,
-    rak19003,
-    rak19003,
   ];
 
   return (
     <PageLayout title="Hardware" description="Supported hardware">
-      <div className="border-b border-gray-200 p-4">
+      <div className="border-b border-tertiary p-4">
         <div className="sm:flex sm:items-baseline">
           <h3 className="text-lg font-medium leading-6 text-gray-900">
             Issues
@@ -62,19 +57,19 @@ const Hardware = (): JSX.Element => {
           {hardware.map((device, index) => (
             <HardwareCard key={index} device={device} />
           ))}
-          <li className="relative">
+          <li className="group relative">
             <a
               href="https://github.com/meshtastic/Meshtastic-device/issues/new?assignees=&labels=enhancement%2Ctriage&template=New+Board.yml&title=%5BBoard%5D%3A+"
-              className="flex aspect-[4/3] rounded-lg border-2 border-dashed border-gray-300 hover:border-gray-400"
+              className="flex aspect-[4/3] rounded-lg border-2 border-dashed border-mute group-hover:border-tertiaryInv"
               target="_blank"
               rel="noreferrer"
             >
-              <FiPlus className="m-auto h-12 w-12 text-gray-400" />
+              <FiPlus className="m-auto h-12 w-12 text-mute group-hover:text-tertiaryInv" />
             </a>
-            <p className="pointer-events-none mt-2 block truncate text-sm font-medium text-gray-900">
+            <p className="pointer-events-none mt-2 block truncate text-sm font-medium text-primaryInv">
               New Board
             </p>
-            <p className="pointer-events-none block text-sm font-medium text-gray-500">
+            <p className="pointer-events-none block text-sm font-medium text-mute">
               Want to support a board?
             </p>
           </li>

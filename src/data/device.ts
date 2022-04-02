@@ -26,6 +26,8 @@ export type GNSSModule = 'NEO-6M' | 'NEO-8M';
 
 export type LORAModule = 'SX1276' | 'SX1262';
 
+export type Variant = DeepPartial<Omit<IDevice, 'variants'>> & { name: string };
+
 export enum Stability {
   Stable,
   Semi,
@@ -68,5 +70,5 @@ export interface IDevice {
     PSRAM: number;
     RAM?: number;
   };
-  variants: (DeepPartial<Omit<IDevice, 'variants'>> & { name: string })[];
+  variants: Variant[];
 }

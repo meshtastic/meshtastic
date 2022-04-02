@@ -3,7 +3,7 @@ import { IDevice, Stability, UseCase } from '../device';
 export const heltec: IDevice = {
   name: 'Heltec',
   misc: {
-    Stability: Stability.Stable,
+    Stability: Stability.Unstable,
     SuggestedUse: [UseCase.Portable],
     ImagePath: '/img/hardware/heltec-v2.png',
     Gradient: 'from-pink-300 via-purple-300 to-indigo-400',

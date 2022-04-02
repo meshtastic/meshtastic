@@ -63,7 +63,7 @@ export const HardwareModal = ({
           </div>
           <div className="md: w-full">
             <div className="flex shadow-md md:pb-2">
-              <VariantSelectButton options={[]} />
+              <VariantSelectButton options={device.variants} />
             </div>
             <div className="bg-base p-2 md:p-4">
               <Tab.Group as="div" className="rounded-2xl bg-primary p-2">
