@@ -12,6 +12,19 @@
   --ifm-color-primary-lighter: rgb(102, 212, 189);
   --ifm-color-primary-lightest: rgb(146, 224, 208);
   --ifm-code-font-size: 95%;
+  --ifm-z-index-fixed: 1;
+  --accent: #67ea94;
+  --base: #f3f4f6;
+  --primary: #ffffff;
+  --secondary: #e5e7eb;
+  --tertiary: #d1d5db;
+}
+
+[data-theme="dark"] {
+  --base: #38393B;
+  --primary: #242526;
+  --secondary: #18191a;
+  --tertiary: #4C4E50;
 }
 
 .docusaurus-highlight-code-line {
@@ -112,10 +125,10 @@ a + .navbar__link > svg {
 
 @layer base {
   .markdown {
-    @apply prose prose-lg dark:prose-invert;
+    @apply prose prose-lg;
   }
-  .col,
-  .row {
-    @apply w-full h-full m-0 p-0 flex-grow;
+
+  [data-theme="dark"] .markdown {
+    @apply prose-invert; 
   }
 }

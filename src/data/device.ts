@@ -47,6 +47,7 @@ export interface IDevice {
     SuggestedUse: UseCase[];
     Stability: Stability;
     ImagePath: string;
+    Gradient: string;
   };
   features: {
     BLE: boolean;

@@ -1,18 +1,18 @@
 // @ts-check
 
-require("dotenv").config();
+require('dotenv').config();
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: "Meshtastic",
-  tagline: "Open Source hiking, pilot, skiing and secure GPS mesh communicator",
-  url: "https://meshtastic.org",
-  baseUrl: "/",
-  onBrokenLinks: "throw",
-  onBrokenMarkdownLinks: "warn",
-  favicon: "design/web/favicon.ico",
-  organizationName: "meshtastic",
-  projectName: "meshtastic",
+  title: 'Meshtastic',
+  tagline: 'Open Source hiking, pilot, skiing and secure GPS mesh communicator',
+  url: 'https://meshtastic.org',
+  baseUrl: '/',
+  onBrokenLinks: 'throw',
+  onBrokenMarkdownLinks: 'warn',
+  favicon: 'design/web/favicon.ico',
+  organizationName: 'meshtastic',
+  projectName: 'meshtastic',
   ssrTemplate: `<!DOCTYPE html>
   <html <%~ it.htmlAttributes %>>
     <head>
@@ -57,12 +57,12 @@ const config = {
       respectPrefersColorScheme: true,
     },
     navbar: {
-      title: "Meshtastic",
+      title: 'Meshtastic',
       hideOnScroll: true,
       logo: {
-        alt: "Meshtastic Logo",
-        src: "design/logo/svg/Mesh_Logo_Black.svg",
-        srcDark: "design/logo/svg/Mesh_Logo_White.svg",
+        alt: 'Meshtastic Logo',
+        src: 'design/logo/svg/Mesh_Logo_Black.svg',
+        srcDark: 'design/logo/svg/Mesh_Logo_White.svg',
       },
 
       items: [
@@ -74,9 +74,9 @@ const config = {
         },
 */
         {
-          label: "About Meshtastic",
-          to: "docs/about",
-          activeBasePath: "docs/about",
+          label: 'About Meshtastic',
+          to: 'docs/about',
+          activeBasePath: 'docs/about',
         },
         /*
         {
@@ -86,20 +86,20 @@ const config = {
         },
 */
         {
-          label: "Documentation",
+          label: 'Documentation',
           items: [
             {
-              label: "Getting Started",
-              to: "docs/getting-started",
+              label: 'Getting Started',
+              to: 'docs/getting-started',
             },
             // FIXME create configuration & settings landing page and adjust path below
             {
-              label: "Configuration & Settings",
-              to: "docs/settings",
+              label: 'Configuration & Settings',
+              to: 'docs/settings',
             },
             {
-              label: "Hardware Details",
-              to: "docs/hardware",
+              label: 'Hardware Details',
+              to: 'docs/hardware',
             },
             /*
             {
@@ -108,43 +108,43 @@ const config = {
             },
 */
             {
-              label: "Meshtastic Software",
-              to: "docs/software",
+              label: 'Meshtastic Software',
+              to: 'docs/software',
             },
           ],
         },
         {
-          label: "Contribute",
+          label: 'Contribute',
           items: [
             {
-              label: "Developers",
-              to: "docs/developers",
+              label: 'Developers',
+              to: 'docs/developers',
             },
             {
-              label: "Maintaining Documentation",
-              to: "docs/developers/maintaining-documentation/overview",
+              label: 'Maintaining Documentation',
+              to: 'docs/developers/maintaining-documentation/overview',
             },
             {
-              label: "Legal",
-              to: "docs/legal",
+              label: 'Legal',
+              to: 'docs/legal',
             },
           ],
         },
         {
-          label: "Downloads",
-          to: "downloads",
-          activeBasePath: "downloads",
+          label: 'Downloads',
+          to: 'downloads',
+          activeBasePath: 'downloads',
         },
         {
-          href: "https://meshtastic.discourse.group",
-          label: "Forum",
-          position: "left",
+          href: 'https://meshtastic.discourse.group',
+          label: 'Forum',
+          position: 'left',
         },
         {
-          href: "https://github.com/meshtastic/meshtastic",
-          position: "right",
-          className: "header-github-link",
-          "aria-label": "GitHub repository",
+          href: 'https://github.com/meshtastic/meshtastic',
+          position: 'right',
+          className: 'header-github-link',
+          'aria-label': 'GitHub repository',
         },
       ],
     },
@@ -152,21 +152,21 @@ const config = {
       copyright: `<a href="https://vercel.com/?utm_source=meshtastic&utm_campaign=oss" style="color: var(--ifm-footer-color)">Powered by ▲ Vercel</a> | Meshtastic® is a registered trademark of Geeksville Industries LLC`,
     },
     algolia: {
-      appId: "IG2GQB8L3V",
-      apiKey: "2e4348812173ec7ea6f7879c7032bb21",
-      indexName: "meshtastic",
+      appId: 'IG2GQB8L3V',
+      apiKey: '2e4348812173ec7ea6f7879c7032bb21',
+      indexName: 'meshtastic',
       contextualSearch: false,
-      searchPagePath: "search",
+      searchPagePath: 'search',
     },
   },
   plugins: [
     () => {
       return {
-        name: "docusaurus-tailwindcss",
+        name: 'docusaurus-tailwindcss',
         configurePostCss(postcssOptions) {
           // Appends TailwindCSS and AutoPrefixer.
-          postcssOptions.plugins.push(require("tailwindcss"));
-          postcssOptions.plugins.push(require("autoprefixer"));
+          postcssOptions.plugins.push(require('tailwindcss'));
+          postcssOptions.plugins.push(require('autoprefixer'));
           return postcssOptions;
         },
       };
@@ -174,15 +174,15 @@ const config = {
   ],
   presets: [
     [
-      "@docusaurus/preset-classic",
+      '@docusaurus/preset-classic',
       /** @type {import('@docusaurus/preset-classic').Options} */
       {
         docs: {
-          sidebarPath: require.resolve("./sidebars.js"),
-          editUrl: "https://github.com/meshtastic/meshtastic/edit/master/",
+          sidebarPath: require.resolve('./sidebars.js'),
+          editUrl: 'https://github.com/meshtastic/meshtastic/edit/master/',
         },
         theme: {
-          customCss: require.resolve("./src/css/custom.css"),
+          customCss: require.resolve('./src/css/custom.css'),
         },
       },
     ],

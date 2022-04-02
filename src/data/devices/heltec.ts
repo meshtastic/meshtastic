@@ -1,12 +1,12 @@
 import { IDevice, Stability, UseCase } from '../device';
 
-export const rak19003: IDevice = {
-  name: 'WisBlock 19003',
+export const heltec: IDevice = {
+  name: 'Heltec',
   misc: {
     Stability: Stability.Stable,
     SuggestedUse: [UseCase.Portable],
-    ImagePath: '/img/hardware/rak/RAK19003.png',
-    Gradient: 'from-green-300 via-blue-500 to-purple-600',
+    ImagePath: '/img/hardware/heltec-v2.png',
+    Gradient: 'from-pink-300 via-purple-300 to-indigo-400',
   },
   features: {
     BLE: true,
