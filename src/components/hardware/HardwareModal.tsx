@@ -31,7 +31,7 @@ export const HardwareModal = ({
   return (
     <Modal open={open} onClose={close}>
       <div className="inline-block w-full max-w-md transform overflow-hidden rounded-2xl bg-base text-left align-middle transition-all md:max-w-2xl md:bg-primary lg:max-w-4xl xl:max-w-6xl">
-        <div className="flex aspect-[3/2] flex-col md:flex-row">
+        <div className="flex aspect-[3/2] flex-col md:aspect-[2/1] md:flex-row">
           <div
             className={`relative flex h-full rounded-t-2xl bg-gradient-to-r md:rounded-l-2xl md:rounded-tr-none ${
               device.misc.Gradient
