@@ -26,3 +26,44 @@ Meshtastic uses the [PlatformIO](https://platformio.org) development environment
 1. To select the device you you wish to build for, first open your [command palette](https://code.visualstudio.com/docs/getstarted/userinterface#_command-palette) (`Ctrl + Shift + P`) and enter: `platformio: Switch Project Environment` and select your target.
 1. To build the firmware, simply run `PlatformIO: Build` from your command palette.
 1. Finally flashing the firmware to your device is as easy as running `PlatformIO: Upload`
+
+## Adding your own Hardware
+
+The build system is modular. Adding a new board variant for an already supported architecture is straigtforward. 
+
+### Building for your own DIY hardware or mod that you don't want to distribute
+
+1. go to the `variants` folder in the Meshtastic-device sourcecode and make a new directory for your hardware, let's call it `m5stack_core` and copy an existing configuration you wanna modify
+   
+   ```shell
+   cd variants; mkdir m5stack_core
+   cp ../heltec_v1/* m5stack_core
+   cd m5stack_core
+   ```
+
+2. modify the `platformio.ini` *in this subdirectory* from the canonical define of the hardware variant (`HELTEC_V1` in this case) to `PRIVATE_HW` and make the `-I` on the `build_flags` point to the newly created dir.
+
+   ```shell
+   [env:m5stack-core]
+   extends = esp32_base
+   board = m5stack-core-esp32
+   monitor_filters = esp32_exception_decoder
+   build_flags = 
+      ${esp32_base.build_flags} -D PRIVATE_HW -I variants/m5stack_core
+   lib_deps = 
+      ${esp32_base.lib_deps}
+   ```
+   
+3. edit the `variant.h` file *in this subdirectory* to reflect the defines and configurations for your board. The example is very well commented.
+   
+3. build, run and debug until you are satisfied with the result.
+
+### Adding a new off-the-shelf or DIY hardware that you want to distribute (e.g. add a new canon board)
+
+1. do all of the above until your hardware runs fine
+2. [Send in a proposal to add a new board](https://github.com/meshtastic/Meshtastic-device/issues/new?assignees=&labels=enhancement%2Ctriage&template=New+Board.yml&title=%5BBoard%5D%3A+)
+3. if approved, go to (https://github.com/meshtastic/Meshtastic-protobufs) and send a Pull Request for the mesh.proto file, adding your board to the HardwareModel enum.
+4. change your define in `platformio.ini` from `PRIVATE_HW` to `YOUR_BOARD`. Adjust any macro guards in the code you need to support your board.
+5. add your board identifier to `configuration.h` on the Meshtastic-device repo and send in that Pull Request too.
+6. wait for the Pulls to be merged back into Master.
+7. profit :-)
