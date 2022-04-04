@@ -4,11 +4,11 @@ import { IDevice, Stability } from '@site/src/data/device';
 
 import { HardwareModal } from './HardwareModal';
 
-export interface HardwareCard {
+export interface HardwareCardProps {
   device: IDevice;
 }
 
-export const HardwareCard = ({ device }: HardwareCard): JSX.Element => {
+export const HardwareCard = ({ device }: HardwareCardProps): JSX.Element => {
   const [open, setOpen] = useState(false);
 
   return (
@@ -21,12 +21,12 @@ export const HardwareCard = ({ device }: HardwareCard): JSX.Element => {
       >
         <div className="overflow-hidden rounded-lg">
           <div
-            className={`flex aspect-[4/3] overflow-hidden bg-gradient-to-r ${device.misc.Gradient}`}
+            className={`flex aspect-[4/3] overflow-hidden ${device.misc.Gradient}`}
           >
             <img
               src={device.misc.ImagePath}
               alt=""
-              className="pointer-events-none m-auto object-cover p-2 group-hover:opacity-75"
+              className="pointer-events-none m-auto max-h-full max-w-full object-cover p-2 group-hover:opacity-75"
             />
           </div>
           <button type="button" className="absolute inset-0 focus:outline-none">

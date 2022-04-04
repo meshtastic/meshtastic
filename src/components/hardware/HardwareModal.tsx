@@ -1,17 +1,16 @@
 import React, { useState } from 'react';
 
 import { FiBluetooth, FiChevronRight, FiWifi, FiX } from 'react-icons/fi';
-import {
-  VictoryChart,
-  VictoryLine,
-  VictoryPolarAxis,
-  VictoryTheme,
-} from 'victory';
 
 import { Tab, Transition } from '@headlessui/react';
 import type { IDevice } from '@site/src/data/device';
 
 import { Modal } from '../Modal';
+import { Badge } from './Badge';
+import { CardTab } from './CardTab';
+import { InfoTab } from './Tabs/InfoTab';
+import { PinoutTab } from './Tabs/PinoutTab';
+import { PowerTab } from './Tabs/PowerTab';
 import { VariantSelectButton } from './VariantSelectButton';
 
 export interface HardwareModal {
@@ -33,7 +32,7 @@ export const HardwareModal = ({
       <div className="inline-block w-full max-w-md transform overflow-hidden rounded-2xl bg-base text-left align-middle transition-all md:max-w-2xl md:bg-primary lg:max-w-4xl xl:max-w-6xl">
         <div className="flex aspect-[3/2] flex-col md:aspect-[2/1] md:flex-row">
           <div
-            className={`relative flex h-full rounded-t-2xl bg-gradient-to-r md:rounded-l-2xl md:rounded-tr-none ${
+            className={`relative flex h-full rounded-t-2xl md:rounded-l-2xl md:rounded-tr-none ${
               device.misc.Gradient
             } ${hideDetails ? 'w-full' : ''}`}
           >
@@ -61,16 +60,14 @@ export const HardwareModal = ({
             {!hideDetails && (
               <div className="absolute -bottom-3 right-0 m-auto mr-2 ml-auto flex gap-2 md:bottom-2 md:mr-14 md:mt-2">
                 {device.features.BLE && (
-                  <div className="flex h-min gap-1 rounded-md bg-blue-500 px-1 text-white shadow-md">
-                    <FiBluetooth className="m-auto" />
-                    <span>Bluetooth</span>
-                  </div>
+                  <Badge
+                    name="Bluetooth"
+                    color="bg-blue-500"
+                    icon={<FiBluetooth />}
+                  />
                 )}
                 {device.features.WiFi && (
-                  <div className="m-auto flex h-min gap-1 rounded-md bg-orange-500 px-1 text-white shadow-md">
-                    <FiWifi className="m-auto" />
-                    <span>WiFi</span>
-                  </div>
+                  <Badge name="WiFi" color="bg-orange-500" icon={<FiWifi />} />
                 )}
               </div>
             )}
@@ -83,7 +80,7 @@ export const HardwareModal = ({
             <FiX className="m-auto" />
           </div>
           <div
-            className={`transition-[width] duration-100 ease-linear ${
+            className={`transition-[all] duration-100 ease-linear ${
               hideDetails ? 'h-7 bg-base md:h-auto md:w-7' : 'w-full'
             }`}
           >
@@ -109,70 +106,14 @@ export const HardwareModal = ({
                     className="flex-grow rounded-2xl bg-primary p-2"
                   >
                     <Tab.List className="flex gap-2">
-                      <Tab
-                        className={({ selected }) =>
-                          `w-1/3 truncate rounded-md px-3 py-2 text-sm font-medium hover:bg-tertiary ${
-                            selected ? 'bg-secondary shadow-md' : ''
-                          }`
-                        }
-                      >
-                        Info
-                      </Tab>
-                      <Tab
-                        className={({ selected }) =>
-                          `w-1/3 truncate rounded-md px-3 py-2 text-sm font-medium hover:bg-tertiary ${
-                            selected ? 'bg-secondary shadow-md' : ''
-                          }`
-                        }
-                      >
-                        Power
-                      </Tab>
-                      <Tab
-                        className={({ selected }) =>
-                          `w-1/3 truncate rounded-md px-3 py-2 text-sm font-medium hover:bg-tertiary ${
-                            selected ? 'bg-secondary shadow-md' : ''
-                          }`
-                        }
-                      >
-                        Pinout
-                      </Tab>
+                      <CardTab title="Info" />
+                      <CardTab title="Power" />
+                      <CardTab title="Pinout" />
                     </Tab.List>
                     <Tab.Panels as="div" className="">
-                      <Tab.Panel className="h-32">Content 1</Tab.Panel>
-                      <Tab.Panel className="h-96">
-                        <VictoryChart
-                          polar
-                          theme={VictoryTheme.material}
-                          domain={{ y: [0, 10] }}
-                        >
-                          <VictoryPolarAxis
-                            dependentAxis
-                            style={{ axis: { stroke: 'none' } }}
-                            tickFormat={() => ''}
-                          />
-                          <VictoryPolarAxis
-                            tickValues={[
-                              0,
-                              Math.PI / 2,
-                              Math.PI,
-                              (3 * Math.PI) / 2,
-                            ]}
-                            tickFormat={['2π', 'π/2', 'π', '3π/2']}
-                            labelPlacement="vertical"
-                          />
-                          {[5, 4, 3, 2, 1].map((val, i) => {
-                            return (
-                              <VictoryLine
-                                key={i}
-                                samples={100}
-                                style={{ data: { stroke: colors[i] } }}
-                                y={(d) => val * (1 - Math.cos(d.x))}
-                              />
-                            );
-                          })}
-                        </VictoryChart>
-                      </Tab.Panel>
-                      <Tab.Panel>Content 3</Tab.Panel>
+                      <InfoTab device={device} />
+                      <PowerTab device={device} />
+                      <PinoutTab device={device} />
                     </Tab.Panels>
                   </Tab.Group>
                 </div>

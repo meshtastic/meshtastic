@@ -46,7 +46,7 @@ export const VariantSelectButton = ({
                         active ? 'bg-indigo-600' : ''
                       }`
                     }
-                    value={variant.name}
+                    value={variant}
                   >
                     {({ selected, active }) => (
                       <>

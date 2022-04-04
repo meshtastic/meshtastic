@@ -5,6 +5,7 @@ import { FiPlus } from 'react-icons/fi';
 import { HardwareCard } from '../../components/hardware/HardwareCard';
 import { PageLayout } from '../../components/PageLayout';
 import { heltec } from '../../data/devices/heltec';
+import { hydra } from '../../data/devices/hydra';
 import { rak19003 } from '../../data/devices/rak19003';
 import { tbeam } from '../../data/devices/tbeam';
 import { techo } from '../../data/devices/techo';
@@ -12,6 +13,7 @@ import { techo } from '../../data/devices/techo';
 const Hardware = (): JSX.Element => {
   const hardware = [
     tbeam,
+    hydra,
     rak19003,
     heltec,
     techo,

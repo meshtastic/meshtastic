@@ -1,12 +1,12 @@
 import { IDevice, Stability, UseCase } from '../device';
 
-export const rak19003: IDevice = {
-  name: 'WisBlock 19003',
+export const hydra: IDevice = {
+  name: 'Hydra',
   misc: {
     Stability: Stability.Stable,
     SuggestedUse: [UseCase.Portable],
-    ImagePath: '/img/hardware/rak/RAK19003.png',
-    Gradient: 'bg-gradient-to-b from-orange-500 to-yellow-300',
+    ImagePath: '/img/hardware/Hydra-PCB.2.1.svg',
+    Gradient: 'bg-gradient-to-r from-indigo-200 via-red-200 to-yellow-100',
   },
   features: {
     BLE: true,
