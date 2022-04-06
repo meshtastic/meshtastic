@@ -16,15 +16,13 @@ Open the App and you should see a screen like this. Notice the cloud with a slas
 
 You will need a device with Meshtastic installed to go any further. See the [getting started](/docs/getting-started) section for information on how to do this.
 
-Open the Settings tab (last tab), and it should look similar to the screen below. It shows any Meshtastic devices that are found over Bluetooth.
+Open the Settings tab (last tab), and it should look similar to the screen above. To find devices via Bluetooth click the button on the bottom right corner:
 
-:::note
-Android requires location permission granted and location must be turned on to find new devices via Bluetooth. You can turn it off again afterwards.
-:::
+![Add](/img/android/android-add-button.png)
 
-[![Device available to select](/img/android/android-settings-deselected-c.png)](/img/android/android-settings-deselected.png)
+[![Device available to select](/img/android/android-settings-connect.png)](/img/android/android-settings-connect.png)
 
-1. Select the Device by name, "Meshtastic_c830" in the example below. (You will see any active devices within range, so make sure to get the right one.)
+1. Select the Device by name, "Meshtastic_bebc" in the example above. (You will see any active devices within range, so make sure to get the right one.)
 2. You will need to "pair" the device by entering a PIN shown on the device screen. This can alternatively be done in the phone Bluetooth settings. If the Device has no screen, but it's connected via USB, it may be displayed on a serial terminal (921600 Baud). For a development device, the PlatformIO terminal would come in handy. Some nodes have buttons allowing you to change the page displayed on the nodes screen. If you double click this button, it will set the pairing code to `123456`.
 3. Edit the "Your name", e.g. to be "Mike Bird". This is the name that other people will see, so make it unique within your group.
 4. The initials e.g. "MB" should also be unique and will be used to identify you in the message history and on the device screens.
@@ -53,13 +51,13 @@ Once you are connected to a device, the App will work, and you can test it by "s
 
 ### Setup a channel
 
-To use Meshtastic, you need to setup a Channel and share the details with your group. The group is private and only those who have the details can join the group and see the messages. You will need to do this once initially, and then only when you want to change or make a new mesh network group. For a new device you will see there is a default setting, shown as `#LongSlow-1, Very long range (but slow)`. It is OK to use this initially.
+To use Meshtastic, you need to setup a Channel and share the details with your group. The group is private and only those who have the details can join the group and see the messages. You will need to do this once initially, and then only when you want to change or make a new mesh network group. For a new device you will see there is a default setting, shown as `#LongSlow-V, Long range / Slow)`. It is OK to use this initially.
 
 The Channel tab allows you to do this. This screen is initially locked so that you don't change it accidentally. Press the lock symbol, and you will be able to edit. First, select the Channel options, as shown here, and chose the most appropriate option:
 
 [![Changing channel settings](/img/android/android-change-channel-sm.png)](/img/android/android-change-channel.png)
 
-Here we selected `Very long range (but slow)`, and then made a Channel Name using the keyboard. This identifies your group, here "Owl Team".
+Here we selected `Long Range / Fast`, and then made a Channel Name using the keyboard. This identifies your group, here "Owl Team".
 
 [![Changing channel name](/img/android/android-channel-owl-sm.png)](/img/android/android-channel-owl.png)
 
@@ -71,14 +69,14 @@ The app will generate a new QR code on the screen, and this encodes the channel 
 
 ### Join a channel
 
-If another user shares a QR code, you will be able to scan it with your camera. If the channel is shared as a file or link via the Share button, you can click on the file or link and follow similar steps.
+If another user shares a QR code, you will be able to scan it directly with your camera using the Scan button.
 
-You should see a message with the option "open with Meshtastic".
+If the channel is shared as a file or link via the Share button, you can click on the file or link and you should see a message with the option to "Open with Meshtastic".
 
 [![Open with Meshtastic](/img/android/android-open-with-c.png)](/img/android/android-open-with.png)
 
 <details>
-  <summary>Troubleshooting: Can't "open with Meshtastic".</summary>
+  <summary>Troubleshooting shared links: Can't "open with Meshtastic".</summary>
   <div>
     <div>
       If you don't see "Meshtastic" as an option to open the file or link with:
@@ -119,7 +117,7 @@ Various data-rates are selectable when configuring a channel and are inversely p
 | Medium Range / Fast | 1227.18 bps          |
 | Medium Range / Slow | 763.29 bps           |
 | Long Range / Fast   | 196.74 bps           |
-| long Range / Slow   | 136.71 bps (default) |
+| Long Range / Slow   | 136.71 bps           |
 
 ### Send a message
 
@@ -166,21 +164,21 @@ Pressing the three vertical dots in the top right corner shows the configuration
 
 #### Broadcast position period
 
-This allows you to change the frequency with which your location is broadcast across the mesh. By default, this is set to 900 seconds (15 minutes). The minimum time this can be set for the default channel is 375 seconds, the reasons for which have been [discussed on the forum](https://meshtastic.discourse.group/t/lost-messages-while-testing/2455/19).
+This allows you to disable or change the frequency with which your location is broadcast across the mesh. By default, this is set to 900 seconds (15 minutes). The minimum time this can be set for the default channel is 375 seconds, the reasons for which have been [discussed on the forum](https://meshtastic.discourse.group/t/lost-messages-while-testing/2455/19).
 
-#### Device sleep period
+#### Device sleep period (This feature is disabled by default and no longer recommended)
 
 ESP32 devices can enter sleep mode to save battery life. During sleep Bluetooth is turned off. This setting allows the length of the sleep mode to be changed from the default 300 seconds (5 minutes). After this time period, they awake to check the phone for any queued messages and then go back to sleep, alternating between sleep and awake states. Receiving a message over LoRa (the LoRa receiver never switches off) or pressing a program button (if there is one on the device) also awakes the device.
 
-### Debug page
+### Debug Panel
 
 [![Debug page](/img/android/android-debug-sm.png)](/img/android/android-debug.png)
 
 The debug page allows you to see all packets sent between the application and the device. This can be useful for debugging purposes.
 
-### Save messages as CSV
+### Export rangetest.csv
 
-This allows you to save your messages to a .csv (comma separated value) file on your phone.
+This allows you to save all your position data with GPS coordinates into a .csv (comma separated value) file on your phone. This feature is similar but independent from the device range test module, and results may differ.
 
 ### Theme
 
