@@ -1,6 +1,8 @@
 <!-- markdownlint-disable MD033 -->
 <!-- markdownlint-disable MD041 -->
 
+<a href="https://cla-assistant.io/meshtastic/Meshtastic"><img src="https://cla-assistant.io/readme/badge/meshtastic/Meshtastic" alt="CLA assistant" /></a>
+
 <div align="center">
   <img src="https://raw.githubusercontent.com/meshtastic/meshtastic-design/4463325bedef20be5655c91c80d1cd32a625f3ff/logo/svg/Mesh_Logo_Dynamic.svg" width="256">
   <h1>Meshtastic</h1>
@@ -30,8 +32,6 @@
 </div>
 
 ## What is Meshtastic?
-
-<a href="https://cla-assistant.io/meshtastic/Meshtastic"><img src="https://cla-assistant.io/readme/badge/meshtastic/Meshtastic" alt="CLA assistant" /></a>
 
 Meshtastic® is a project that lets you use inexpensive LoRa radios as a long range off-grid communicator for areas without reliable cellular service. These radios are great for hiking, skiing, paragliding - essentially any hobby where you don't have reliable internet access. Each member of the mesh can send and view text messages and enable optional GPS based location features.
 
