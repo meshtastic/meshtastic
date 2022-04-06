@@ -29,7 +29,6 @@ For a description and more information on what exactly all of these mean, please
 |       phone_timeout_secs       |                                                                       `integer` (seconds)                                                                       |    `0`    |
 |         screen_on_secs         |                                                                       `integer` (seconds)                                                                       |    `0`    |
 |            sds_secs            |                                                                       `integer` (seconds)                                                                       |    `0`    |
-|      send_owner_interval       |                                                             `integer` (sent every x network pings)                                                              |    `4`    |
 |      wait_bluetooth_secs       |                                                                       `integer` (seconds)                                                                       |    `0`    |
 
 :::note
@@ -491,43 +490,6 @@ meshtastic --set sds_secs 0
 
 ```shell title="Set sds_secs to 120 seconds"
 meshtastic --set sds_secs 120
-```
-
-  </TabItem>
-  <TabItem value="android">
-Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-  </TabItem>
-  <TabItem value="iOS">
-Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-  </TabItem>
-  <TabItem value="web">
-Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-  </TabItem>
-</Tabs>
-
-### send_owner_interval
-
-This sets how often to send the database of node owner information with other nodes in the mesh (per mesh network ping).
-
-#### Configure send_owner_interval
-
-<Tabs
-groupId="settings"
-defaultValue="cli"
-values={[
-{label: 'CLI', value: 'cli'},
-{label: 'Android', value: 'android'},
-{label: 'iOS', value: 'iOS'},
-{label: 'Web', value: 'web'},
-]}>
-<TabItem value="cli">
-
-```shell title="Set send_owner_interval to default (every 4 network pings)"
-meshtastic --set send_owner_interval 0
-```
-
-```shell title="Set send_owner_interval to every 10 network pings"
-meshtastic --set send_owner_interval 10
 ```
 
   </TabItem>
