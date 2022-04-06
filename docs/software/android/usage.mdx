@@ -16,11 +16,15 @@ Open the App and you should see a screen like this. Notice the cloud with a slas
 
 You will need a device with Meshtastic installed to go any further. See the [getting started](/docs/getting-started) section for information on how to do this.
 
-Open the Settings tab (last tab), and it should look similar to the screen above. To find devices via Bluetooth click the button on the bottom right corner:
+[![Search for devices](/img/android/android-settings-none-c.png)](/img/android/android-settings-none-c.png)
 
-![Add](/img/android/android-add-button.png)
+To find devices via Bluetooth click the button on the bottom right corner of the Settings tab (last tab).
 
-[![Device available to select](/img/android/android-settings-connect.png)](/img/android/android-settings-connect.png)
+If the button is disabled, there are no devices available. To refresh the button state, click `None (disable)`.
+
+Make sure the device is turned on and not connected to any other app or client. Try to reset, or forget the device on Android Bluetooth settings.
+
+[![Device available to select](/img/android/android-settings-connect-sm.png)](/img/android/android-settings-connect.png)
 
 1. Select the Device by name, "Meshtastic_bebc" in the example above. (You will see any active devices within range, so make sure to get the right one.)
 2. You will need to "pair" the device by entering a PIN shown on the device screen. This can alternatively be done in the phone Bluetooth settings. If the Device has no screen, but it's connected via USB, it may be displayed on a serial terminal (921600 Baud). For a development device, the PlatformIO terminal would come in handy. Some nodes have buttons allowing you to change the page displayed on the nodes screen. If you double click this button, it will set the pairing code to `123456`.
@@ -35,7 +39,7 @@ Open the Settings tab (last tab), and it should look similar to the screen above
 
 If there is no Device shown, just the `None (disable)` as below, then the device may be off, or in a sleep mode. Try to reset, or press a button to wake it.
 
-[![No devices available](/img/android/android-settings-none-c.png)](/img/android/android-settings-none-c.png)
+[![No devices available](/img/android/android-settings-mike-c.png)](/img/android/android-settings-mike-c.png)
 
 The cloud icon at the top right corner indicates if you are connected to a device. This currently has three states:
 
@@ -51,7 +55,7 @@ Once you are connected to a device, the App will work, and you can test it by "s
 
 ### Setup a channel
 
-To use Meshtastic, you need to setup a Channel and share the details with your group. The group is private and only those who have the details can join the group and see the messages. You will need to do this once initially, and then only when you want to change or make a new mesh network group. For a new device you will see there is a default setting, shown as `#LongSlow-V, Long range / Slow)`. It is OK to use this initially.
+To use Meshtastic, you need to setup a Channel and share the details with your group. The group is private and only those who have the details can join the group and see the messages. You will need to do this once initially, and then only when you want to change or make a new mesh network group. For a new device you will see there is a default setting, shown as `#LongSlow-V (Long range / Slow)`. It is OK to use this initially.
 
 The Channel tab allows you to do this. This screen is initially locked so that you don't change it accidentally. Press the lock symbol, and you will be able to edit. First, select the Channel options, as shown here, and chose the most appropriate option:
 
