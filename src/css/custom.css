@@ -137,6 +137,18 @@ a + .navbar__link > svg {
   }
 
   [data-theme="dark"] .markdown {
-    @apply prose-invert; 
+    @apply prose-invert;
+  }
+  [data-theme="dark"] .hideDark {
+    @apply hidden
+  }
+  [data-theme="dark"] .hideLight {
+    @apply block
+  }
+  .hideLight {
+    @apply hidden
+  }
+  .hideDark {
+    @apply block
   }
 }
