@@ -1,15 +1,20 @@
 module.exports = {
-  content: ["./src/**/*.{js,jsx,ts,tsx}"],
+  content: ['./src/**/*.{js,jsx,ts,tsx}'],
+  darkMode: 'class',
   theme: {
     extend: {
       colors: {
-        accent: "#67ea94",
-        primary: "#f2f2f2",
-        secondary: "#ffffff",
-        primaryDark: "#242526",
-        secondaryDark: "#18191a",
+        accent: 'var(--accent)',
+        base: 'var(--base)',
+        primary: 'var(--primary)',
+        secondary: 'var(--secondary)',
+        tertiary: 'var(--tertiary)',
+        mute: 'var(--mute)',
+        primaryInv: 'var(--primaryInv)',
+        secondaryInv: 'var(--secondaryInv)',
+        tertiaryInv: 'var(--tertiaryInv)',
       },
     },
   },
-  plugins: [require("@tailwindcss/typography")],
+  plugins: [require('@tailwindcss/typography')],
 };

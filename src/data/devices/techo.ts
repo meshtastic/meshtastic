@@ -1,12 +1,12 @@
 import { IDevice, Stability, UseCase } from '../device';
 
-export const rak19003: IDevice = {
-  name: 'WisBlock 19003',
+export const techo: IDevice = {
+  name: 'T-Echo',
   misc: {
-    Stability: Stability.Stable,
+    Stability: Stability.Semi,
     SuggestedUse: [UseCase.Portable],
-    ImagePath: '/img/hardware/rak/RAK19003.png',
-    Gradient: 'bg-gradient-to-b from-orange-500 to-yellow-300',
+    ImagePath: '/img/hardware/t-echo-lilygo.jpg',
+    Gradient: 'from-gray-700 via-gray-900 to-black',
   },
   features: {
     BLE: true,

@@ -5,7 +5,8 @@ export const tbeam: IDevice = {
   misc: {
     Stability: Stability.Stable,
     SuggestedUse: [UseCase.Portable],
-    ImagePath: '/img/hardware/t-beam-meshtastic.png',
+    ImagePath: '/img/hardware/tbeam-v1.1.svg',
+    Gradient: 'bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500',
   },
   features: {
     BLE: true,

@@ -1,6 +1,8 @@
 <!-- markdownlint-disable MD033 -->
 <!-- markdownlint-disable MD041 -->
 
+[![CLA assistant](https://cla-assistant.io/readme/badge/meshtastic/Meshtastic)](https://cla-assistant.io/meshtastic/Meshtastic)
+
 <div align="center">
   <img src="https://raw.githubusercontent.com/meshtastic/meshtastic-design/4463325bedef20be5655c91c80d1cd32a625f3ff/logo/svg/Mesh_Logo_Dynamic.svg" width="256">
   <h1>Meshtastic</h1>
