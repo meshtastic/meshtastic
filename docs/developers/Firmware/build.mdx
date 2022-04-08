@@ -29,34 +29,33 @@ Meshtastic uses the [PlatformIO](https://platformio.org) development environment
 
 ## Adding your own Hardware
 
-The build system is modular. Adding a new board variant for an already supported architecture is straigtforward. 
+The build system is modular. Adding a new board variant for an already supported architecture is straigtforward.
 
 ### Building for your own DIY hardware or mod that you don't want to distribute
 
 1. go to the `variants` folder in the Meshtastic-device sourcecode and make a new directory for your hardware, let's call it `m5stack_core` and copy an existing configuration you wanna modify
-   
+
    ```shell
    cd variants; mkdir m5stack_core
    cp ../heltec_v1/* m5stack_core
    cd m5stack_core
    ```
 
-2. modify the `platformio.ini` *in this subdirectory* from the canonical define of the hardware variant (`HELTEC_V1` in this case) to `PRIVATE_HW` and make the `-I` on the `build_flags` point to the newly created dir.
+2. modify the `platformio.ini` _in this subdirectory_ from the canonical define of the hardware variant (`HELTEC_V1` in this case) to `PRIVATE_HW` and make the `-I` on the `build_flags` point to the newly created dir.
 
    ```shell
    [env:m5stack-core]
    extends = esp32_base
    board = m5stack-core-esp32
    monitor_filters = esp32_exception_decoder
-   build_flags = 
+   build_flags =
       ${esp32_base.build_flags} -D PRIVATE_HW -I variants/m5stack_core
-   lib_deps = 
+   lib_deps =
       ${esp32_base.lib_deps}
    ```
-   
-3. edit the `variant.h` file *in this subdirectory* to reflect the defines and configurations for your board. The example is very well commented.
-   
-3. build, run and debug until you are satisfied with the result.
+
+3. edit the `variant.h` file _in this subdirectory_ to reflect the defines and configurations for your board. The example is very well commented.
+4. build, run and debug until you are satisfied with the result.
 
 ### Adding a new off-the-shelf or DIY hardware that you want to distribute (e.g. add a new canon board)
 

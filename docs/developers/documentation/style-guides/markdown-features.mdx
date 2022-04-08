@@ -47,3 +47,37 @@ import { Dark, Light } from '/src/components/ColorMode';
     />
   </div>
 </Light>
+
+### Code Blocks
+
+#### Usage:
+
+Always specify the language used directly after the start of the code block (```).
+
+:::note
+For command line examples, please use `shell` and not any of the other aliases.
+:::
+
+for further information please see the relevant [Docusaurus page](https://docusaurus.io/docs/markdown-features/code-blocks)
+
+````
+```ts title="Demo"
+export const typedArrayToBuffer = (array: Uint8Array): ArrayBuffer => {
+  return array.buffer.slice(
+    array.byteOffset,
+    array.byteLength + array.byteOffset
+  );
+};
+```
+````
+
+#### Demo:
+
+```ts title="Demo"
+export const typedArrayToBuffer = (array: Uint8Array): ArrayBuffer => {
+  return array.buffer.slice(
+    array.byteOffset,
+    array.byteLength + array.byteOffset,
+  );
+};
+```
