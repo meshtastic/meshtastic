@@ -29,7 +29,7 @@ export const HardwareModal = ({
   close,
 }: HardwareModal): JSX.Element => {
   const [hideDetails, setHideDetails] = useState(false);
-  const { breakpoint } = useBreakpoint(BREAKPOINTS, 'sm');
+  const { breakpoint } = useBreakpoint(BREAKPOINTS);
 
   return (
     <Modal open={open} onClose={close}>
