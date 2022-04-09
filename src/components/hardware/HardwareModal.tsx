@@ -38,86 +38,108 @@ export const HardwareModal = ({
           <FiX />
         </Button>
       </div>
-      <motion.div
-        layout
-        animate={hideDetails ? 'hidden' : 'visible'}
-        variants={{
-          hidden: breakpoint === 'sm' ? { height: '100%' } : { width: '100%' },
-          visible: breakpoint === 'sm' ? { height: '25%' } : { width: '20%' },
-        }}
-        transition={{
-          type: 'just',
-        }}
-        className="absolute inset-0 flex flex-col md:h-full md:flex-row"
-      >
+      <div className="absolute inset-0">
         <motion.div
           layout
-          className={`relative z-10 flex h-full w-full rounded-t-2xl md:rounded-l-2xl md:rounded-tr-none ${device.misc.Gradient}`}
+          animate={
+            breakpoint === 'sm'
+              ? hideDetails
+                ? 'hiddenSm'
+                : 'visibleSm'
+              : hideDetails
+              ? 'hidden'
+              : 'visible'
+          }
+          variants={{
+            hidden: { width: '100%', height: '100%' },
+            hiddenSm: { height: '100%', width: '100%' },
+            visible: { width: '20%', height: '100%' },
+            visibleSm: { height: '33%', width: '100%' },
+          }}
+          transition={{
+            type: 'just',
+          }}
+          className="flex flex-col md:h-full md:flex-row"
         >
-          <motion.img
+          <motion.div
             layout
-            src={device.images.Front}
-            alt=""
-            className="pointer-events-none m-auto max-h-full max-w-full object-cover p-2"
+            className={`relative z-10 flex h-full w-full rounded-t-2xl md:rounded-l-2xl md:rounded-tr-none ${device.misc.Gradient}`}
+          >
+            <motion.img
+              layout
+              src={device.images.Front}
+              alt=""
+              className="pointer-events-none m-auto max-h-full max-w-full object-cover p-2"
+            />
+            <div className="absolute -bottom-5 z-20 flex w-full md:bottom-auto md:-right-5 md:h-full md:w-auto">
+              <Button
+                animate={
+                  breakpoint === 'sm'
+                    ? hideDetails
+                      ? 'hiddenSm'
+                      : 'visibleSm'
+                    : hideDetails
+                    ? 'hidden'
+                    : 'visible'
+                }
+                variants={{
+                  hidden: { rotate: 180 },
+                  hiddenSm: { rotate: -90 },
+                  visible: { rotate: 0 },
+                  visibleSm: { rotate: 90 },
+                }}
+                onClick={() => {
+                  setHideDetails(!hideDetails);
+                }}
+              >
+                <FiChevronRight />
+              </Button>
+            </div>
+            <AnimatePresence>
+              {!hideDetails && (
+                <>
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    className={`absolute -bottom-5 z-20 flex md:mt-0 md:hidden md:pb-2 ${
+                      hideDetails ? 'opacity-0' : 'opacity-100'
+                    }`}
+                  >
+                    <VariantSelectButton options={device.variants} />
+                  </motion.div>
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    className="absolute -bottom-3 right-0 m-auto mr-2 ml-auto flex gap-2 md:bottom-2 md:mr-14 md:mt-2"
+                  >
+                    {device.features.BLE && (
+                      <Badge
+                        name="Bluetooth"
+                        color="bg-blue-500"
+                        icon={<FiBluetooth />}
+                      />
+                    )}
+                    {device.features.WiFi && (
+                      <Badge
+                        name="WiFi"
+                        color="bg-orange-500"
+                        icon={<FiWifi />}
+                      />
+                    )}
+                  </motion.div>
+                </>
+              )}
+            </AnimatePresence>
+          </motion.div>
+          <div
+            className={`h-7 bg-base opacity-0 md:h-auto md:w-7 ${
+              hideDetails ? 'flex' : 'hidden'
+            }`}
           />
-          <div className="absolute -bottom-5 z-20 flex w-full md:bottom-auto md:-right-5 md:h-full md:w-auto">
-            <Button
-              animate={hideDetails ? 'hidden' : 'visible'}
-              variants={{
-                hidden: breakpoint === 'sm' ? { rotate: -90 } : { rotate: 180 },
-                visible: breakpoint === 'sm' ? { rotate: 90 } : { rotate: 0 },
-              }}
-              onClick={() => {
-                setHideDetails(!hideDetails);
-              }}
-            >
-              <FiChevronRight />
-            </Button>
-          </div>
-          <AnimatePresence>
-            {!hideDetails && (
-              <>
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  className={`absolute -bottom-5 z-20 flex md:mt-0 md:hidden md:pb-2 ${
-                    hideDetails ? 'opacity-0' : 'opacity-100'
-                  }`}
-                >
-                  <VariantSelectButton options={device.variants} />
-                </motion.div>
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  className="absolute -bottom-3 right-0 m-auto mr-2 ml-auto flex gap-2 md:bottom-2 md:mr-14 md:mt-2"
-                >
-                  {device.features.BLE && (
-                    <Badge
-                      name="Bluetooth"
-                      color="bg-blue-500"
-                      icon={<FiBluetooth />}
-                    />
-                  )}
-                  {device.features.WiFi && (
-                    <Badge
-                      name="WiFi"
-                      color="bg-orange-500"
-                      icon={<FiWifi />}
-                    />
-                  )}
-                </motion.div>
-              </>
-            )}
-          </AnimatePresence>
         </motion.div>
-        <div
-          className={`h-7 bg-base opacity-0 md:h-auto md:w-7 ${
-            hideDetails ? 'flex' : 'hidden'
-          }`}
-        />
-      </motion.div>
+      </div>
       <div className="mt-[25%] flex h-full flex-col md:ml-[20%] md:mt-0 md:w-4/5">
         <div className="z-0 hidden pb-2 md:flex">
           <VariantSelectButton options={device.variants} />
