@@ -5,8 +5,11 @@ export const rak19003: IDevice = {
   misc: {
     Stability: Stability.Stable,
     SuggestedUse: [UseCase.Portable],
-    ImagePath: '/img/hardware/rak/RAK19003.png',
     Gradient: 'bg-gradient-to-b from-orange-500 to-yellow-300',
+  },
+  images: {
+    Front: '/img/hardware/rak/RAK19003.png',
+    Back: '',
   },
   features: {
     BLE: true,

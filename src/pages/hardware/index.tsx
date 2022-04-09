@@ -1,28 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { FiPlus } from 'react-icons/fi';
+
+import { HardwareModal } from '@site/src/components/hardware/HardwareModal';
+import { IDevice } from '@site/src/data/device';
 
 import { HardwareCard } from '../../components/hardware/HardwareCard';
 import { PageLayout } from '../../components/PageLayout';
 import { heltec } from '../../data/devices/heltec';
 import { hydra } from '../../data/devices/hydra';
+import { nano_g1 } from '../../data/devices/nano_g1';
+import { rak19001 } from '../../data/devices/rak19001';
 import { rak19003 } from '../../data/devices/rak19003';
 import { tbeam } from '../../data/devices/tbeam';
 import { techo } from '../../data/devices/techo';
 
 const Hardware = (): JSX.Element => {
-  const hardware = [
-    tbeam,
-    hydra,
-    rak19003,
-    heltec,
-    techo,
-    rak19003,
-    rak19003,
-    rak19003,
-    rak19003,
-    rak19003,
-  ];
+  const hardware = [tbeam, hydra, rak19003, rak19001, nano_g1, heltec, techo];
+  const [modalData, setModalData] = useState<IDevice>();
 
   return (
     <PageLayout title="Hardware" description="Supported hardware">
@@ -57,7 +52,13 @@ const Hardware = (): JSX.Element => {
           className="grid grid-cols-2 gap-x-2 gap-y-4 sm:grid-cols-3 sm:gap-x-6 lg:grid-cols-4 xl:grid-cols-5 xl:gap-x-4"
         >
           {hardware.map((device, index) => (
-            <HardwareCard key={index} device={device} />
+            <HardwareCard
+              key={index}
+              device={device}
+              setDevice={(): void => {
+                setModalData(device);
+              }}
+            />
           ))}
           <li className="group relative">
             <a
@@ -77,6 +78,15 @@ const Hardware = (): JSX.Element => {
           </li>
         </ul>
       </div>
+      {modalData && (
+        <HardwareModal
+          open={!!modalData}
+          close={() => {
+            setModalData(undefined);
+          }}
+          device={modalData}
+        />
+      )}
     </PageLayout>
   );
 };

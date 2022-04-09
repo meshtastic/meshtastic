@@ -4,6 +4,7 @@ specifiers:
   '@algolia/client-search': ^4.13.0
   '@docusaurus/core': ^2.0.0-beta.18
   '@docusaurus/module-type-aliases': ^2.0.0-beta.18
+  '@docusaurus/plugin-content-docs': ^2.0.0-beta.18
   '@docusaurus/preset-classic': ^2.0.0-beta.18
   '@headlessui/react': ^1.5.0
   '@mdx-js/react': ^1.6.22
@@ -16,6 +17,7 @@ specifiers:
   '@types/w3c-web-serial': ^1.0.2
   autoprefixer: ^10.4.4
   dotenv: ^16.0.0
+  framer-motion: ^6.2.8
   postcss: ^8.4.12
   prettier: ^2.6.1
   react: ^17.0.2
@@ -27,16 +29,19 @@ specifiers:
   tailwindcss: ^3.0.23
   typescript: ^4.6.3
   url-search-params-polyfill: ^8.1.1
+  use-breakpoint: ^3.0.2
   victory: ^36.3.1
 
 dependencies:
   '@algolia/client-search': 4.13.0
   '@docusaurus/core': 2.0.0-beta.18_28e7016540b0a32b5f8d7be755522ab7
+  '@docusaurus/plugin-content-docs': 2.0.0-beta.18_28e7016540b0a32b5f8d7be755522ab7
   '@docusaurus/preset-classic': 2.0.0-beta.18_cd2ecee38e568e94b4890eebc445da58
   '@headlessui/react': 1.5.0_react-dom@17.0.2+react@17.0.2
   '@mdx-js/react': 1.6.22_react@17.0.2
   autoprefixer: 10.4.4_postcss@8.4.12
   dotenv: 16.0.0
+  framer-motion: 6.2.8_react-dom@17.0.2+react@17.0.2
   postcss: 8.4.12
   react: 17.0.2
   react-dom: 17.0.2_react@17.0.2
@@ -46,6 +51,7 @@ dependencies:
   swr: 1.2.2_react@17.0.2
   tailwindcss: 3.0.23_autoprefixer@10.4.4
   url-search-params-polyfill: 8.1.1
+  use-breakpoint: 3.0.2_react-dom@17.0.2+react@17.0.2
   victory: 36.3.1_react@17.0.2
 
 devDependencies:
@@ -638,7 +644,7 @@ packages:
       '@babel/core': ^7.0.0-0
     dependencies:
       '@babel/core': 7.12.9
-      '@babel/helper-plugin-utils': 7.10.4
+      '@babel/helper-plugin-utils': 7.16.7
       '@babel/plugin-syntax-object-rest-spread': 7.8.3_@babel+core@7.12.9
       '@babel/plugin-transform-parameters': 7.16.7_@babel+core@7.12.9
     dev: false
@@ -2181,6 +2187,19 @@ packages:
       - uglify-js
       - webpack-cli
     dev: false
+
+  /@emotion/is-prop-valid/0.8.8:
+    resolution: {integrity: sha512-u5WtneEAr5IDG2Wv65yhunPSMLIpuKsbuOktRojfrEiEvRyC85LgPMZI63cr7NUqT8ZIGdSVg8ZKGxIug4lXcA==}
+    requiresBuild: true
+    dependencies:
+      '@emotion/memoize': 0.7.4
+    dev: false
+    optional: true
+
+  /@emotion/memoize/0.7.4:
+    resolution: {integrity: sha512-Ja/Vfqe3HpuzRsG1oBtWTHk2PGZ7GR+2Vz5iYGelAw8dx32K0y7PjVuxK6z1nMpZOqAFsRUPCkK1YjJ56qJlgw==}
+    dev: false
+    optional: true
 
   /@eslint/eslintrc/1.2.1:
     resolution: {integrity: sha512-bxvbYnBPN1Gibwyp6NrpnFzA3YtRL3BBAyEAFVIpNTm2Rn4Vy87GA5M4aSn3InRrlsbX5N0GW7XIx+U4SAEKdQ==}
@@ -5182,6 +5201,29 @@ packages:
     resolution: {integrity: sha512-MhLuK+2gUcnZe8ZHlaaINnQLl0xRIGRfcGk2yl8xoQAfHrSsL3rYu6FCmBdkdbhc9EPlwyGHewaRsvwRMJtAlA==}
     dev: false
 
+  /framer-motion/6.2.8_react-dom@17.0.2+react@17.0.2:
+    resolution: {integrity: sha512-4PtBWFJ6NqR350zYVt9AsFDtISTqsdqna79FvSYPfYDXuuqFmiKtZdkTnYPslnsOMedTW0pEvaQ7eqjD+sA+HA==}
+    peerDependencies:
+      react: '>=16.8 || ^17.0.0 || ^18.0.0'
+      react-dom: '>=16.8 || ^17.0.0 || ^18.0.0'
+    dependencies:
+      framesync: 6.0.1
+      hey-listen: 1.0.8
+      popmotion: 11.0.3
+      react: 17.0.2
+      react-dom: 17.0.2_react@17.0.2
+      style-value-types: 5.0.0
+      tslib: 2.3.1
+    optionalDependencies:
+      '@emotion/is-prop-valid': 0.8.8
+    dev: false
+
+  /framesync/6.0.1:
+    resolution: {integrity: sha512-fUY88kXvGiIItgNC7wcTOl0SNRCVXMKSWW2Yzfmn7EKNc+MpCzcz9DhdHcdjbrtN3c6R4H5dTY2jiCpPdysEjA==}
+    dependencies:
+      tslib: 2.3.1
+    dev: false
+
   /fresh/0.5.2:
     resolution: {integrity: sha1-PYyt2Q2XZWn6g1qx+OSyOhBWBac=}
     engines: {node: '>= 0.6'}
@@ -5517,6 +5559,10 @@ packages:
   /he/1.2.0:
     resolution: {integrity: sha512-F/1DnUGPopORZi0ni+CvrCgHQ5FyEAHRLSApuYWMmrbSwoN2Mn/7k+Gl38gJnR7yyDZk6WLXwiGod1JOWNDKGw==}
     hasBin: true
+    dev: false
+
+  /hey-listen/1.0.8:
+    resolution: {integrity: sha512-COpmrF2NOg4TBWUJ5UVyaCU2A88wEMkUPK4hNqyCkqHbxT92BbvfjoSozkAIIm6XhicGlJHhFdullInrdhwU8Q==}
     dev: false
 
   /history/4.10.1:
@@ -6974,6 +7020,15 @@ packages:
     engines: {node: '>=8'}
     dependencies:
       find-up: 3.0.0
+    dev: false
+
+  /popmotion/11.0.3:
+    resolution: {integrity: sha512-Y55FLdj3UxkR7Vl3s7Qr4e9m0onSnP8W7d/xQLsoJM40vs6UKHFdygs6SWryasTZYqugMjm3BepCF4CWXDiHgA==}
+    dependencies:
+      framesync: 6.0.1
+      hey-listen: 1.0.8
+      style-value-types: 5.0.0
+      tslib: 2.3.1
     dev: false
 
   /portfinder/1.0.28:
@@ -8567,6 +8622,13 @@ packages:
       inline-style-parser: 0.1.1
     dev: false
 
+  /style-value-types/5.0.0:
+    resolution: {integrity: sha512-08yq36Ikn4kx4YU6RD7jWEv27v4V+PUsOGa4n/as8Et3CuODMJQ00ENeAVXAeydX4Z2j1XHZF1K2sX4mGl18fA==}
+    dependencies:
+      hey-listen: 1.0.8
+      tslib: 2.3.1
+    dev: false
+
   /stylehacks/5.1.0_postcss@8.4.12:
     resolution: {integrity: sha512-SzLmvHQTrIWfSgljkQCw2++C9+Ne91d/6Sp92I8c5uHTcy/PgeHamwITIbBW9wnFTY/3ZfSXR9HIL6Ikqmcu6Q==}
     engines: {node: ^10 || ^12 || >=14.0}
@@ -9003,6 +9065,17 @@ packages:
 
   /url-search-params-polyfill/8.1.1:
     resolution: {integrity: sha512-KmkCs6SjE6t4ihrfW9JelAPQIIIFbJweaaSLTh/4AO+c58JlDcb+GbdPt8yr5lRcFg4rPswRFRRhBGpWwh0K/Q==}
+    dev: false
+
+  /use-breakpoint/3.0.2_react-dom@17.0.2+react@17.0.2:
+    resolution: {integrity: sha512-O7qfp6QOOQI3CqLnJg6e5TgV2lSuLv3jQT48RAtScYTPbYjuGogPDQUS+Bz/MC0ZCYdZge262rKBi+jgZgCSHw==}
+    engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
+    peerDependencies:
+      react: '>=16.8'
+      react-dom: '>=16.8'
+    dependencies:
+      react: 17.0.2
+      react-dom: 17.0.2_react@17.0.2
     dev: false
 
   /use-composed-ref/1.2.1_react@17.0.2:

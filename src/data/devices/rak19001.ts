@@ -1,14 +1,14 @@
 import { IDevice, Stability, UseCase } from '../device';
 
-export const hydra: IDevice = {
-  name: 'Hydra',
+export const rak19001: IDevice = {
+  name: 'WisBlock 19001',
   misc: {
     Stability: Stability.Stable,
     SuggestedUse: [UseCase.Portable],
-    Gradient: 'bg-gradient-to-r from-indigo-200 via-red-200 to-yellow-100',
+    Gradient: 'bg-gradient-to-r from-indigo-300 to-purple-400',
   },
   images: {
-    Front: '/img/hardware/Hydra-PCB.2.1.svg',
+    Front: '/img/hardware/rak/RAK19001.png',
     Back: '',
   },
   features: {

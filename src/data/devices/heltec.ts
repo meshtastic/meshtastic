@@ -5,8 +5,11 @@ export const heltec: IDevice = {
   misc: {
     Stability: Stability.Unstable,
     SuggestedUse: [UseCase.Portable],
-    ImagePath: '/img/hardware/heltec-v2.png',
-    Gradient: 'from-pink-300 via-purple-300 to-indigo-400',
+    Gradient: 'bg-gradient-to-r from-pink-300 via-purple-300 to-indigo-400',
+  },
+  images: {
+    Front: '/img/hardware/heltec-v2.png',
+    Back: '',
   },
   features: {
     BLE: true,

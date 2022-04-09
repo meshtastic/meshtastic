@@ -48,8 +48,11 @@ export interface IDevice {
   misc: {
     SuggestedUse: UseCase[];
     Stability: Stability;
-    ImagePath: string;
     Gradient: string;
+  };
+  images: {
+    Front: string;
+    Back: string;
   };
   features: {
     BLE: boolean;

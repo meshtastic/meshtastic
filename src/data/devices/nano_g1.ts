@@ -1,15 +1,15 @@
 import { IDevice, Stability, UseCase } from '../device';
 
-export const hydra: IDevice = {
-  name: 'Hydra',
+export const nano_g1: IDevice = {
+  name: 'Nano G1',
   misc: {
-    Stability: Stability.Stable,
+    Stability: Stability.Unstable,
     SuggestedUse: [UseCase.Portable],
-    Gradient: 'bg-gradient-to-r from-indigo-200 via-red-200 to-yellow-100',
+    Gradient: 'bg-gradient-to-r from-green-200 to-green-500',
   },
   images: {
-    Front: '/img/hardware/Hydra-PCB.2.1.svg',
-    Back: '',
+    Front: '/img/hardware/nano_g1_front.svg',
+    Back: '/img/hardware/nano_g1_back.svg',
   },
   features: {
     BLE: true,

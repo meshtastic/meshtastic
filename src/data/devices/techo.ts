@@ -5,8 +5,11 @@ export const techo: IDevice = {
   misc: {
     Stability: Stability.Semi,
     SuggestedUse: [UseCase.Portable],
-    ImagePath: '/img/hardware/t-echo-lilygo.jpg',
-    Gradient: 'from-gray-700 via-gray-900 to-black',
+    Gradient: 'bg-gradient-to-r from-gray-700 via-gray-900 to-black',
+  },
+  images: {
+    Front: '/img/hardware/t-echo-lilygo.jpg',
+    Back: '',
   },
   features: {
     BLE: true,
