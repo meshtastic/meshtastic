@@ -29,7 +29,7 @@ export const HardwareModal = ({
   close,
 }: HardwareModal): JSX.Element => {
   const [hideDetails, setHideDetails] = useState(false);
-  const { breakpoint } = useBreakpoint(BREAKPOINTS);
+  const { breakpoint } = useBreakpoint(BREAKPOINTS, 'sm');
 
   return (
     <Modal open={open} onClose={close}>
@@ -112,22 +112,24 @@ export const HardwareModal = ({
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
-                    className="absolute -bottom-3 right-0 m-auto mr-2 ml-auto flex gap-2 md:bottom-2 md:mr-14 md:mt-2"
+                    className="absolute -bottom-3 right-0 m-auto mr-2 ml-auto flex md:inset-x-1 md:bottom-4 md:mt-2"
                   >
-                    {device.features.BLE && (
-                      <Badge
-                        name="Bluetooth"
-                        color="bg-blue-500"
-                        icon={<FiBluetooth />}
-                      />
-                    )}
-                    {device.features.WiFi && (
-                      <Badge
-                        name="WiFi"
-                        color="bg-orange-500"
-                        icon={<FiWifi />}
-                      />
-                    )}
+                    <div className="m-auto flex gap-2">
+                      {device.features.BLE && (
+                        <Badge
+                          name="Bluetooth"
+                          color="bg-blue-500"
+                          icon={<FiBluetooth />}
+                        />
+                      )}
+                      {device.features.WiFi && (
+                        <Badge
+                          name="WiFi"
+                          color="bg-orange-500"
+                          icon={<FiWifi />}
+                        />
+                      )}
+                    </div>
                   </motion.div>
                 </>
               )}

@@ -19,7 +19,7 @@ export const Modal = ({ open, onClose, children }: ModalProps): JSX.Element => {
         open={open}
         onClose={onClose}
       >
-        <div className="min-h-screen px-4 text-center">
+        <div className="min-h-screen px-0.5 text-center md:px-4">
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -37,7 +37,7 @@ export const Modal = ({ open, onClose, children }: ModalProps): JSX.Element => {
           <div className="inline-block w-full transform text-left align-middle transition-all 2xl:max-w-7xl">
             <div className="group relative">
               <div className="animate-tilt absolute -inset-0.5 rotate-2 rounded-lg bg-accent shadow-md transition duration-1000 group-hover:opacity-100 group-hover:duration-200"></div>
-              <div className="relative flex aspect-[3/2] flex-col overflow-hidden rounded-2xl bg-base shadow-md md:aspect-[2/1] md:flex-row md:bg-primary">
+              <div className="relative flex flex-col overflow-hidden rounded-2xl bg-base shadow-md md:aspect-[2/1] md:flex-row md:bg-primary">
                 {children}
               </div>
             </div>
