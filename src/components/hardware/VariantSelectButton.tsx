@@ -50,7 +50,7 @@ export const VariantSelectButton = ({
                     key={index}
                     className={({ active }) =>
                       `relative cursor-default select-none py-2 pl-3 pr-9 ${
-                        active ? 'bg-indigo-600' : ''
+                        active ? 'bg-secondary' : ''
                       }`
                     }
                     value={variant}
@@ -68,7 +68,7 @@ export const VariantSelectButton = ({
                         {selected ? (
                           <span
                             className={`absolute inset-y-0 right-0 flex items-center pr-4 ${
-                              active ? '' : 'text-indigo-600'
+                              active ? '' : 'text-primaryInv'
                             }`}
                           >
                             <FiCheck className="h-5 w-5" aria-hidden="true" />
