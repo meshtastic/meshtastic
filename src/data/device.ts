@@ -10,6 +10,21 @@ export enum UseCase {
   Portable,
 }
 
+enum PinUsage {
+  LoRa,
+  GNSS,
+}
+
+export interface Pin {
+  offset: {
+    x: number;
+    y: number;
+  };
+  name: string;
+  label: string;
+  usage?: PinUsage;
+}
+
 export type DeviceName = 'tbeam' | 'techo';
 
 export type BLEVersion = '4.2' | '5.0';
@@ -49,6 +64,7 @@ export interface IDevice {
     SuggestedUse: UseCase[];
     Stability: Stability;
     Gradient: string;
+    pinoutSplit: number;
   };
   images: {
     Front: string;
@@ -73,5 +89,6 @@ export interface IDevice {
     PSRAM: number;
     RAM?: number;
   };
+  pinout: Pin[];
   variants: Variant[];
 }

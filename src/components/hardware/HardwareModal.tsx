@@ -29,7 +29,7 @@ export const HardwareModal = ({
   close,
 }: HardwareModal): JSX.Element => {
   const [hideDetails, setHideDetails] = useState(false);
-  const { breakpoint } = useBreakpoint(BREAKPOINTS);
+  const { breakpoint } = useBreakpoint(BREAKPOINTS, 'md');
 
   return (
     <Modal open={open} onClose={close}>
@@ -142,7 +142,7 @@ export const HardwareModal = ({
           />
         </motion.div>
       </div>
-      <div className="mt-[25%] flex h-full flex-col md:ml-[20%] md:mt-0 md:w-4/5">
+      <div className="z-[1] mt-[25%] flex h-full flex-col md:ml-[20%] md:mt-0 md:w-4/5">
         <div className="z-0 hidden pb-2 md:flex">
           <VariantSelectButton options={device.variants} />
         </div>
