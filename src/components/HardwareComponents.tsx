@@ -98,7 +98,7 @@
 //         </tr>
 //         <tr>
 //           <td style={{align: "center"}}>
-//             Module - Telemetry (aka Environmental Measurment)
+//             Module - Telemetry (aka Environmental Measurement)
 //           </td>
 //           <td style={{align: "center"}}>
 //             VALUE
