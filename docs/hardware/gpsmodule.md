@@ -2,6 +2,7 @@
 id: gpsmodule
 title: External GPS Module
 sidebar_label: GPS Module
+sidebar_position: 3
 ---
 
 :::warning

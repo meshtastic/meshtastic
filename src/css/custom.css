@@ -11,6 +11,7 @@
   --ifm-color-primary-light: rgb(70, 203, 174);
   --ifm-color-primary-lighter: rgb(102, 212, 189);
   --ifm-color-primary-lightest: rgb(146, 224, 208);
+  --ifm-list-item-margin: 0;
   --ifm-code-font-size: 95%;
   --ifm-z-index-fixed: 1;
   --accent: #67ea94;
@@ -153,4 +154,14 @@ a + .navbar__link > svg {
   .hideDark {
     @apply block
   }
+}
+
+.markdown :where(li):not(:where([class~=not-prose] *)){
+  margin-bottom:0;
+  margin-top:0;
+}
+
+.markdown :where(ul ul,ul ol,ol ul,ol ol):not(:where([class~=not-prose] *)){
+  margin-bottom:0;
+  margin-top: 0;
 }
