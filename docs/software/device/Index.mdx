@@ -2,6 +2,7 @@
 id: device-firmware
 title: Device firmware
 sidebar_label: Device firmware
+sidebar_position: 1
 ---
 
 The device firmware runs on the nodes to build the mesh for communication. Each different make and model of device requires a different build of the Meshtastic firmware in order to run properly. Thankfully, due to the design of Meshtastic, it is possible to port the firmware to new devices as they become available. The firmware currently runs on a range of ESP32 based devices, but there is also increasing support for the nRF52 microprocessor with some more recent devices coming to market.
@@ -9,6 +10,10 @@ The device firmware runs on the nodes to build the mesh for communication. Each 
 The current firmware has support for a screen to display received messages, along with information about nodes on the mesh, and more detailed information about the device on which it is running.
 
 The latest firmware can be downloaded from the [Downloads](/downloads) page. If you wish to view the code or contribute to development of the firmware, please visit the device code <a href="https://github.com/meshtastic/Meshtastic-device">GitHub page</a>.
+
+:::info
+Please be aware that there are significant changes between version branches 1.2.x and 1.3.x which mean that devices need to be running the same branch of firmware to be able to talk to each other. Python, Android, and other software applications will also need to be running the same branch to be able to talk to the device.
+:::
 
 ### Buttons
 
