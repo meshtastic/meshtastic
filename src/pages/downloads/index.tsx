@@ -46,7 +46,7 @@ const Firmware = (): JSX.Element => {
               'To download using ',
               <code>pip</code>,
               ' follow ',
-              <a href="/docs/getting-started/meshtastic-flasher#install-using-pip">
+              <a href="/docs/getting-started/flashing-firmware/meshtastic-flasher#install-using-pip">
                 these instructions
               </a>,
               '.',
@@ -149,7 +149,7 @@ const Firmware = (): JSX.Element => {
           </ul>
           Once downloaded, follow the flashing instructions for{' '}
           <a
-            href="/docs/getting-started/flashing-esp32"
+            href="/docs/getting-started/flashing-firmware/flashing-esp32"
             rel="noreferrer"
             target="_blank"
           >
@@ -157,7 +157,7 @@ const Firmware = (): JSX.Element => {
           </a>
           ,{' '}
           <a
-            href="/docs/getting-started/flashing-nrf52"
+            href="/docs/getting-started/flashing-firmware/flashing-nrf52"
             rel="noreferrer"
             target="_blank"
           >
@@ -165,7 +165,7 @@ const Firmware = (): JSX.Element => {
           </a>
           , or the{' '}
           <a
-            href="/docs/getting-started/meshtastic-flasher"
+            href="/docs/getting-started/flashing-firmware/meshtastic-flasher"
             rel="noreferrer"
             target="_blank"
           >
