@@ -6,27 +6,25 @@ sidebar_label: Usage
 
 ## Introduction
 
-The Meshtastic Android app handles the communication and shows the location of everyone in your private group. Each member of your private mesh can always see the location and distance of all other members and any text messages sent to your group chat.
-
-Open the App and you should see a screen like this. Notice the cloud with a slash through it in the upper right, showing no device connection. You can move through the tabs but nothing much will be visible until you connect to a radio device.
+The Meshtastic Android app handles the communication and can show the location of everyone in your private group. Each member of your private mesh can see the location and distance of members and text messages sent to your group chat.
 
 [![No device connected](/img/android/android-settings-none-sm.png)](/img/android/android-settings-none.png)
+
+Open the app and you should see the Settings tab like the screen above. Notice the cloud with a slash through it in the upper right, showing no device connection. You can move through the tabs but nothing much will be visible until you connect to a radio device.
 
 ## Connecting
 
 You will need a device with Meshtastic installed to go any further. See the [getting started](/docs/getting-started) section for information on how to do this.
 
-[![Search for devices](/img/android/android-settings-none-c.png)](/img/android/android-settings-none-c.png)
+[![Search for devices](/img/android/android-settings-none-c.png)](/img/android/android-settings-none.png)
 
-To find devices via Bluetooth click the button on the bottom right corner of the Settings tab (last tab).
-
-If the button is disabled, there are no devices available. To refresh the button state, click `None (disable)`. Make sure the device is turned on and not connected to any other app or client. Try to reset, or forget the device on Android Bluetooth settings.
+To find devices to connect via Bluetooth click the button on the bottom right corner.
 
 [![Device available to select](/img/android/android-settings-connect-sm.png)](/img/android/android-settings-connect.png)
 
-1. Select the Device by name, "Meshtastic_bebc" in the example above. (You will see any active devices within range, so make sure to get the right one.)
-2. You will need to "pair" the device by entering a PIN shown on the device screen. This can alternatively be done in the phone Bluetooth settings. Some devices have buttons, where a double click sets the pairing PIN to `123456`.
-3. This should start the communication with the Device. The cloud icon, on the status bar, will have a tick.
+1. Select the device name, `Meshtastic_bebc` in this example. (You will see devices within range, so make sure to get the right one.)
+2. Before you can connect for the first time, you need to "pair" the devices to allow communication between them. Some devices are pinless, others require entering a PIN shown on the screen. On devices with a "user" button, double clicking sets the pairing PIN to `123456`.
+3. This starts the communication with the device. The cloud icon on the status bar should change and show a check mark.
 
 [![Device connected](/img/android/android-settings-mike-c.png)](/img/android/android-settings-mike-c.png)
 
@@ -68,11 +66,11 @@ The app will generate a new QR code on the screen, and this encodes the channel 
 
 ### Join a channel
 
-If another user shares a QR code, you will be able to scan it directly with your camera using the Scan button.
-
-If the channel is shared as a file or link via the Share button, you can click on the file or link and you should see a message with the option to "Open with Meshtastic".
+1. If another user shares a QR code, you will be able to scan it directly with your camera using the `Scan` button.
 
 [![Open with Meshtastic](/img/android/android-open-with-c.png)](/img/android/android-open-with.png)
+
+2. If the channel is shared from a file or link using the `Share` button, you can click on the file or link and you need to choose "Open with Meshtastic".
 
 <details>
   <summary>Troubleshooting shared links: Can't "open with Meshtastic".</summary>
@@ -92,13 +90,13 @@ If the channel is shared as a file or link via the Share button, you can click o
   </div>
 </details>
 
+[![Accept new channel](/img/android/android-accept-channel-c.png)](/img/android/android-accept-channel.png)
+
 Proceed and you should see a message like "Do you want to switch to the 'Owl Team' channel?".
 Accept this, and the app will change to this new channel. You will lose any current channel setting!
 
-[![Accept new channel](/img/android/android-accept-channel-c.png)](/img/android/android-accept-channel.png)
-
 :::note
-Setting the same Name and Options directly will not work as there is also a unique pre-shared key encoded in the QR code or link.
+Setting the same Name and Options directly doesn't work as there are other radio settings (like the unique pre-shared key) encoded in the QR code or link.
 :::
 
 You can test changing channels with the QR code shown below.
@@ -107,55 +105,66 @@ You can test changing channels with the QR code shown below.
 
 ### Configure a channel
 
-Various data-rates are selectable when configuring a channel and are inversely proportional to the theoretical range of the devices:
+Various data-rates are selectable when configuring a channel and are inversely proportional to the theoretical range of the devices. See [modem config](/docs/settings/channel#modem_config) for more information.
 
-| Channel setting     | Data-rate    |
-| ------------------- | ------------ |
-| Short Range / Fast  | 19346.94 bps |
-| Short Range / Slow  | 4800.00 bps  |
-| Medium Range / Fast | 1227.18 bps  |
-| Medium Range / Slow | 763.29 bps   |
-| Long Range / Fast   | 196.74 bps   |
-| Long Range / Slow   | 136.71 bps   |
+<div align="center">
+| Channel setting     | Data-rate            |
+|:-------------------:|:--------------------:|
+| Short Range / Fast  | 19346.94 bps         |
+| Short Range / Slow  | 4800.00 bps          |
+| Medium Range / Fast | 1227.18 bps          |
+| Medium Range / Slow | 763.29 bps           |
+| Long Range / Fast   | 196.74 bps           |
+| Long Range / Slow   | 136.71 bps           |
+</div>
 
 ### Send a message
 
-The message window operates like any chat applications. Note that any messages sent go to the whole group, and there is no one-to-one message feature.
+[![Messages](/img/android/android-messages-sm.png)](/img/android/android-messages.png)
+
+The message window operates like most messaging apps. Note that the `(All) Primary channel` contact is always shown and works as a group chat. Other contacts are for Direct Messaging, or private chat.
+
+- Long press contacts or messages for options, like delete.
+- Long press a node from the Nodes tab to send Direct Messages.
 
 With LoRa (or any radio) there is some uncertainty that the messages has been received, so there is a confirmation built-in to the protocol. There are small cloud icons shown to the right of the messages you send:
 
-- Cloud with an up arrow: the application is waiting for the device to some out of sleep mode (or come back into Bluetooth range), to upload the message to the device.
-- Cloud only: message has been sent via Bluetooth and transmitted via LoRa.
-- Cloud with a check mark: message has been delivered to at least one node in the mesh and at least one node sent back a confirmation (successfully received by the initial sender).
-- Cloud crossed out: message may have been delivered to at least one node in the mesh. The initial sender did not receive at least one node's confirmation within a certain timeout.
+- Cloud with an up arrow: the message is queued in the app, waiting to be handed to the device.
+- Cloud only: the device received the message from the app, and it has been sent and transmitted via LoRa.
+- Cloud with a check mark: received at least one node's acknowledgement response. Confirmations could be from any one device.
+- Cloud crossed out: the initial sender did not receive any confirmation within a certain timeout.
 
-Thus, in a group size of 3 and up, confirmations could be from any one device (not person), so it is good practice to respond, so the initial sender knows you have read their message.
-
-There is no long-term store-and-forward of messages, so messages not received within a time-out (duration?) are lost.
-
-[![Messages](/img/android/android-messages-sm.png)](/img/android/android-messages.png)
+By default there is no long-term store-and-forward of messages, so messages not received during transmission are lost.
 
 ### View your network
 
-The network list shows all the users (devices) that have connected to the same Channel. For each entry, it shows the last time they were active, their distance, and their last known power status (battery and percentage, or external power). In the example below, Lora V2 is the local user, m8n was last heard from 3 minutes ago and is 29m away, and 25C is active and 498m away.
-
-This is a list of network nodes, rather than users, so where there is a named user connected to the device, you will see the user name. Otherwise the node is shown as `Unknown a3c9` (where `a3c9` is the last 4 hex digits from the MAC address.)
-
 [![Local Meshtastic network](/img/android/android-nodes-sm.png)](/img/android/android-nodes.png)
+
+The network list shows all the users (devices) that have connected to the same Channel. For each entry, it shows the last time they were active, their location and distance (when available), and their last known power status. In the example above, Lora V2 is the local user, m8n was last heard from 3 minutes ago and is 29m away, and 25C is active and 498m away.
+
+This is a list of network nodes, unnamed nodes are shown as `Unknown a3c9` (where `a3c9` is the last 4 hex digits from the MAC address.)
+
+- Long press a node from the list to send Direct Messages.
 
 ### View the map
 
-The Map tab will show a local map with an icon for each active mesh node that has a known position. The users names are shown against the icon.
-
 [![Mapping provided by Mapbox](/img/android/android-map-sm.png)](/img/android/android-map.png)
 
-The map is not developed by the Meshtastic project, and the source of the mapping system is [Mapbox](https://docs.mapbox.com/help/how-mapbox-works) (free-tier), and the map data is sourced from [OpenStreetMap OSM](https://www.openstreetmap.org). Mapbox currently requires analytics to be enabled for you to use their mapping system. There is currently no off-line maps (phone needs mobile data or Wifi), although this will be improved in the future. If you don't see the features that you'd expect on the map then head over to [OpenStreetMap OSM](https://www.openstreetmap.org) where you can contribute new data to the map.
+The Map tab will show a local map with an icon for each active mesh node that has a known position. The users names are shown against the icon.
+
+The map is provided by [Mapbox](https://docs.mapbox.com/help/how-mapbox-works) (free-tier), and the map data is sourced from [OpenStreetMap OSM](https://www.openstreetmap.org). Mapbox currently requires analytics to be enabled for you to use their mapping system. There is currently no off-line maps (phone needs mobile data or Wifi), although this will be improved in the future. If you don't see the features that you'd expect on the map then head over to [OpenStreetMap OSM](https://www.openstreetmap.org) where you can contribute new data to the map.
 
 ## Configuration options
 
+[![Meshtastic configuration options](/img/android/android-settings-options-c.png)](/img/android/android-settings-options.png)
+
 Pressing the three vertical dots in the top right corner shows the configuration menu.
 
-[![Meshtastic configuration options](/img/android/android-settings-options-c.png)](/img/android/android-settings-options.png)
+### Debug Panel
+
+[![Debug page](/img/android/android-debug-sm.png)](/img/android/android-debug.png)
+
+The debug panel allows you to see all packets sent between the application and the device. This can be useful for debugging purposes.
 
 ### Advanced settings
 
@@ -169,18 +178,16 @@ This allows you to disable or change the frequency with which your location is b
 
 ESP32 devices can enter sleep mode to save battery life. During sleep Bluetooth is turned off. This setting allows the length of the sleep mode to be changed from the default 300 seconds (5 minutes). After this time period, they awake to check the phone for any queued messages and then go back to sleep, alternating between sleep and awake states. Receiving a message over LoRa (the LoRa receiver never switches off) or pressing a program button (if there is one on the device) also awakes the device.
 
-### Debug Panel
-
-[![Debug page](/img/android/android-debug-sm.png)](/img/android/android-debug.png)
-
-The debug panel allows you to see all packets sent between the application and the device. This can be useful for debugging purposes.
-
 ### Export rangetest.csv
 
 This allows you to save all your position data with GPS coordinates into a .csv (comma separated value) file on your phone. This feature is similar but independent from the device range test module, and results may differ.
 
 ### Theme
 
+[![Meshtastic theme](/img/android/android-settings-theme-c.png)](/img/android/android-settings-theme.png)
+
 This allows you to change between light and dark themes, or to select the system default.
 
-[![Meshtastic theme](/img/android/android-settings-theme-c.png)](/img/android/android-settings-theme.png)
+### About
+
+Clicking this shows the current app version.
