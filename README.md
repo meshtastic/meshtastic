@@ -17,7 +17,7 @@
     Forum
   </a>
   <span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
-  <a href="https://discord.gg/UQJ5QuM7vq" target="_blank">
+  <a href="https://discord.gg/ktMAKGBnBs" target="_blank">
     <img src="static/img/readme/discord.svg" width="16" />
     Discord
   </a>

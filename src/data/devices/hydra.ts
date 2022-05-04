@@ -5,8 +5,11 @@ export const hydra: IDevice = {
   misc: {
     Stability: Stability.Stable,
     SuggestedUse: [UseCase.Portable],
-    ImagePath: '/img/hardware/Hydra-PCB.2.1.svg',
     Gradient: 'bg-gradient-to-r from-indigo-200 via-red-200 to-yellow-100',
+  },
+  images: {
+    Front: '/img/hardware/Hydra-PCB.2.1.svg',
+    Back: '',
   },
   features: {
     BLE: true,

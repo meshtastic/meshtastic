@@ -5,8 +5,12 @@ export const tbeam: IDevice = {
   misc: {
     Stability: Stability.Stable,
     SuggestedUse: [UseCase.Portable],
-    ImagePath: '/img/hardware/tbeam-v1.1.svg',
     Gradient: 'bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500',
+    pinoutSplit: 13,
+  },
+  images: {
+    Front: '/img/hardware/tbeam-v1.1.svg',
+    Back: '',
   },
   features: {
     BLE: true,
@@ -57,6 +61,216 @@ export const tbeam: IDevice = {
       specifications: {
         Driver: 'CP210X',
         GNSS: 'NEO-6M',
+      },
+    },
+  ],
+  pinout: [
+    {
+      label: 'VP',
+      name: 'IO1',
+      offset: {
+        x: 5,
+        y: 5,
+      },
+    },
+    {
+      label: 'VN',
+      name: 'IO1',
+      offset: {
+        x: 5,
+        y: 5,
+      },
+    },
+    {
+      label: 'RST',
+      name: 'IO1',
+      offset: {
+        x: 5,
+        y: 5,
+      },
+    },
+    {
+      label: '15',
+      name: 'IO1',
+      offset: {
+        x: 5,
+        y: 5,
+      },
+    },
+    {
+      label: '35',
+      name: 'IO1',
+      offset: {
+        x: 5,
+        y: 5,
+      },
+    },
+    {
+      label: '32',
+      name: 'IO1',
+      offset: {
+        x: 5,
+        y: 5,
+      },
+    },
+    {
+      label: '33',
+      name: 'IO1',
+      offset: {
+        x: 5,
+        y: 5,
+      },
+    },
+    {
+      label: '25',
+      name: 'IO1',
+      offset: {
+        x: 5,
+        y: 5,
+      },
+    },
+    {
+      label: '14',
+      name: 'IO1',
+      offset: {
+        x: 5,
+        y: 5,
+      },
+    },
+    {
+      label: '13',
+      name: 'IO1',
+      offset: {
+        x: 5,
+        y: 5,
+      },
+    },
+    {
+      label: '2',
+      name: 'IO1',
+      offset: {
+        x: 5,
+        y: 5,
+      },
+    },
+    {
+      label: 'GND',
+      name: 'IO1',
+      offset: {
+        x: 5,
+        y: 5,
+      },
+    },
+    {
+      label: '5V',
+      name: 'IO1',
+      offset: {
+        x: 5,
+        y: 5,
+      },
+    },
+    {
+      label: 'TX',
+      name: 'IO1',
+      offset: {
+        x: 5,
+        y: 5,
+      },
+    },
+    {
+      label: 'RX',
+      name: 'IO1',
+      offset: {
+        x: 5,
+        y: 5,
+      },
+    },
+    {
+      label: '23',
+      name: 'IO1',
+      offset: {
+        x: 5,
+        y: 5,
+      },
+    },
+    {
+      label: '4',
+      name: 'IO1',
+      offset: {
+        x: 5,
+        y: 5,
+      },
+    },
+    {
+      label: '0',
+      name: 'IO1',
+      offset: {
+        x: 5,
+        y: 5,
+      },
+    },
+    {
+      label: 'GND',
+      name: 'IO1',
+      offset: {
+        x: 5,
+        y: 5,
+      },
+    },
+    {
+      label: '3V3',
+      name: 'IO1',
+      offset: {
+        x: 5,
+        y: 5,
+      },
+    },
+    {
+      label: 'GND',
+      name: 'IO1',
+      offset: {
+        x: 5,
+        y: 5,
+      },
+    },
+    {
+      label: '22',
+      name: 'IO1',
+      offset: {
+        x: 5,
+        y: 5,
+      },
+    },
+    {
+      label: '21',
+      name: 'IO1',
+      offset: {
+        x: 5,
+        y: 5,
+      },
+    },
+    {
+      label: '3.3V',
+      name: 'IO1',
+      offset: {
+        x: 5,
+        y: 5,
+      },
+    },
+    {
+      label: 'LoRa2',
+      name: 'IO1',
+      offset: {
+        x: 5,
+        y: 5,
+      },
+    },
+    {
+      label: 'LoRa1',
+      name: 'IO1',
+      offset: {
+        x: 5,
+        y: 5,
       },
     },
   ],

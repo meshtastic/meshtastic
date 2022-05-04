@@ -19,8 +19,9 @@ export const SocialCard = ({
     >
       {children}
       <a
-        className="absolute top-0 left-0 right-0 bottom-0 hidden rounded-xl border border-accent bg-secondaryDark bg-opacity-95 text-2xl shadow-xl group-hover:flex"
+        className="absolute top-0 left-0 right-0 bottom-0 hidden rounded-xl border border-accent bg-secondary bg-opacity-95 text-2xl shadow-xl group-hover:flex"
         href={link}
+        rel="noreferrer"
         target="_blank"
       >
         <FiExternalLink className="m-auto" />

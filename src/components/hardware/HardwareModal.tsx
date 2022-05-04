@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
 
+import { AnimatePresence, motion } from 'framer-motion';
 import { FiBluetooth, FiChevronRight, FiWifi, FiX } from 'react-icons/fi';
+import { useBreakpoint } from 'use-breakpoint';
 
-import { Tab, Transition } from '@headlessui/react';
+import { Tab } from '@headlessui/react';
 import type { IDevice } from '@site/src/data/device';
 
+import { Button } from '../../components/Button';
+import { BREAKPOINTS } from '../../utils/breakpoints';
 import { Modal } from '../Modal';
 import { Badge } from './Badge';
 import { CardTab } from './CardTab';
@@ -24,102 +28,144 @@ export const HardwareModal = ({
   open,
   close,
 }: HardwareModal): JSX.Element => {
-  const colors = ['#428517', '#77D200', '#D6D305', '#EC8E19', '#C92B05'];
   const [hideDetails, setHideDetails] = useState(false);
+  const { breakpoint } = useBreakpoint(BREAKPOINTS, 'md');
 
   return (
     <Modal open={open} onClose={close}>
-      <div className="inline-block w-full max-w-md transform overflow-hidden rounded-2xl bg-base text-left align-middle transition-all md:max-w-2xl md:bg-primary lg:max-w-4xl xl:max-w-6xl">
-        <div className="flex aspect-[3/2] flex-col md:aspect-[2/1] md:flex-row">
-          <div
-            className={`relative flex h-full rounded-t-2xl md:rounded-l-2xl md:rounded-tr-none ${
-              device.misc.Gradient
-            } ${hideDetails ? 'w-full' : ''}`}
+      <div className="absolute right-0 z-20 m-2 md:flex">
+        <Button onClick={close}>
+          <FiX />
+        </Button>
+      </div>
+      <div className="absolute inset-0">
+        <motion.div
+          layout
+          animate={
+            breakpoint === 'sm'
+              ? hideDetails
+                ? 'hiddenSm'
+                : 'visibleSm'
+              : hideDetails
+              ? 'hidden'
+              : 'visible'
+          }
+          variants={{
+            hidden: { width: '100%', height: '100%' },
+            hiddenSm: { height: '100%', width: '100%' },
+            visible: { width: '20%', height: '100%' },
+            visibleSm: { height: '33%', width: '100%' },
+          }}
+          transition={{
+            type: 'just',
+          }}
+          className="flex flex-col md:h-full md:flex-row"
+        >
+          <motion.div
+            layout
+            className={`relative z-10 flex h-full w-full rounded-t-2xl md:rounded-l-2xl md:rounded-tr-none ${device.misc.Gradient}`}
           >
-            <img
-              src={device.misc.ImagePath}
+            <motion.img
+              layout
+              src={device.images.Front}
               alt=""
-              className="pointer-events-none m-auto object-cover p-2 group-hover:opacity-75"
+              className="pointer-events-none m-auto max-h-full max-w-full object-cover p-2"
             />
-            <div className="absolute -bottom-4 flex w-full md:bottom-auto md:-right-4 md:h-full md:w-auto ">
-              <div
+            <div className="absolute -bottom-5 z-20 flex w-full md:bottom-auto md:-right-5 md:h-full md:w-auto">
+              <Button
+                animate={
+                  breakpoint === 'sm'
+                    ? hideDetails
+                      ? 'hiddenSm'
+                      : 'visibleSm'
+                    : hideDetails
+                    ? 'hidden'
+                    : 'visible'
+                }
+                variants={{
+                  hidden: { rotate: 180 },
+                  hiddenSm: { rotate: -90 },
+                  visible: { rotate: 0 },
+                  visibleSm: { rotate: 90 },
+                }}
                 onClick={() => {
                   setHideDetails(!hideDetails);
                 }}
-                className="m-auto flex cursor-pointer rounded-full bg-secondary p-2 shadow-md hover:bg-tertiary"
               >
-                <FiChevronRight
-                  className={`m-auto ${
-                    hideDetails
-                      ? 'rotate-90 md:rotate-180'
-                      : '-rotate-90 md:rotate-0'
-                  }`}
-                />
-              </div>
+                <FiChevronRight />
+              </Button>
             </div>
-            {!hideDetails && (
-              <div className="absolute -bottom-3 right-0 m-auto mr-2 ml-auto flex gap-2 md:bottom-2 md:mr-14 md:mt-2">
-                {device.features.BLE && (
-                  <Badge
-                    name="Bluetooth"
-                    color="bg-blue-500"
-                    icon={<FiBluetooth />}
-                  />
-                )}
-                {device.features.WiFi && (
-                  <Badge name="WiFi" color="bg-orange-500" icon={<FiWifi />} />
-                )}
-              </div>
-            )}
-          </div>
-
-          <div
-            className="absolute right-0 mr-2 flex cursor-pointer rounded-b-full bg-secondary p-3 shadow-md hover:bg-tertiary md:mt-2 md:rounded-full"
-            onClick={close}
-          >
-            <FiX className="m-auto" />
-          </div>
-          <div
-            className={`transition-[all] duration-100 ease-linear ${
-              hideDetails ? 'h-7 bg-base md:h-auto md:w-7' : 'w-full'
-            }`}
-          >
-            <Transition
-              appear
-              as={'div'}
-              className="flex h-full flex-col"
-              show={!hideDetails}
-              enter="ease-out duration-100 delay-100"
-              enterFrom="opacity-0"
-              enterTo="opacity-100"
-              leave="ease-in duration-100 delay-100"
-              leaveFrom="opacity-100"
-              leaveTo="opacity-0"
-            >
-              <>
-                <div className="flex shadow-md md:pb-2">
-                  <VariantSelectButton options={device.variants} />
-                </div>
-                <div className="flex h-full bg-base p-2 md:p-4">
-                  <Tab.Group
-                    as="div"
-                    className="flex-grow rounded-2xl bg-primary p-2"
+            <AnimatePresence>
+              {!hideDetails && (
+                <>
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    className={`absolute -bottom-5 z-20 flex md:mt-0 md:hidden md:pb-2 ${
+                      hideDetails ? 'opacity-0' : 'opacity-100'
+                    }`}
                   >
-                    <Tab.List className="flex gap-2">
-                      <CardTab title="Info" />
-                      <CardTab title="Power" />
-                      <CardTab title="Pinout" />
-                    </Tab.List>
-                    <Tab.Panels as="div" className="">
-                      <InfoTab device={device} />
-                      <PowerTab device={device} />
-                      <PinoutTab device={device} />
-                    </Tab.Panels>
-                  </Tab.Group>
-                </div>
-              </>
-            </Transition>
-          </div>
+                    <VariantSelectButton options={device.variants} />
+                  </motion.div>
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    className="absolute -bottom-3 right-0 m-auto mr-2 ml-auto flex md:inset-x-1 md:bottom-4 md:mt-2"
+                  >
+                    <div className="m-auto flex gap-2">
+                      {device.features.BLE && (
+                        <Badge
+                          name="Bluetooth"
+                          color="bg-blue-500"
+                          icon={<FiBluetooth />}
+                        />
+                      )}
+                      {device.features.WiFi && (
+                        <Badge
+                          name="WiFi"
+                          color="bg-orange-500"
+                          icon={<FiWifi />}
+                        />
+                      )}
+                    </div>
+                  </motion.div>
+                </>
+              )}
+            </AnimatePresence>
+          </motion.div>
+          <div
+            className={`h-7 bg-base opacity-0 md:h-auto md:w-7 ${
+              hideDetails ? 'flex' : 'hidden'
+            }`}
+          />
+        </motion.div>
+      </div>
+      <div className="z-[1] mt-[25%] flex h-full flex-col md:ml-[20%] md:mt-0 md:w-4/5">
+        <div className="z-0 hidden pb-2 md:flex">
+          <VariantSelectButton options={device.variants} />
+        </div>
+        <div
+          className={`mt-1 flex flex-grow rounded-2xl bg-base p-2 shadow-inner transition-opacity duration-100 ease-linear md:mt-0 md:rounded-l-none md:rounded-r-2xl md:p-4 ${
+            hideDetails ? 'opacity-0' : 'opacity-100'
+          }`}
+        >
+          <Tab.Group
+            as="div"
+            className="flex flex-grow flex-col rounded-2xl bg-primary p-2"
+          >
+            <Tab.List className="flex gap-2">
+              <CardTab title="Info" />
+              <CardTab title="Power" />
+              <CardTab title="Pinout" />
+            </Tab.List>
+            <Tab.Panels as="div" className="flex-grow overflow-y-auto">
+              <InfoTab device={device} />
+              <PowerTab device={device} />
+              <PinoutTab device={device} />
+            </Tab.Panels>
+          </Tab.Group>
         </div>
       </div>
     </Modal>

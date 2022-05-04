@@ -56,6 +56,7 @@ const config = {
     colorMode: {
       respectPrefersColorScheme: true,
     },
+    autoCollapseSidebarCategories: true,
     navbar: {
       title: 'Meshtastic',
       hideOnScroll: true,
@@ -66,90 +67,50 @@ const config = {
       },
 
       items: [
-        /*
         {
-          label: "Start Here",
-          to: "docs/academy",
-          activeBasePath: "docs/academy",
-        },
-*/
-        {
-          label: 'About Meshtastic',
-          to: 'docs/about',
-          activeBasePath: 'docs/about',
-        },
-        /*
-        {
-          label: "Showcase",
-          to: "showcase",
-          activeBasePath: "showcase",
-        },
-*/
-        {
-          label: 'Documentation',
+          label: 'Docs',
           items: [
             {
               label: 'Getting Started',
               to: 'docs/getting-started',
             },
-            // FIXME create configuration & settings landing page and adjust path below
             {
-              label: 'Configuration & Settings',
+              label: 'Configuration',
               to: 'docs/settings',
             },
             {
-              label: 'Hardware Details',
+              label: 'Hardware',
               to: 'docs/hardware',
             },
-            /*
             {
-              label: "Mesh Radio Details",
-              to: "docs/mesh"
-            },
-*/
-            {
-              label: 'Meshtastic Software',
+              label: 'Software',
               to: 'docs/software',
             },
           ],
         },
         {
-          label: 'Contribute',
+          label: 'Developers',
+          to: 'docs/developers',
+        },
+        {
+          label: 'Other',
           items: [
             {
-              label: 'Developers',
-              to: 'docs/developers',
+              label: 'Downloads',
+              to: 'downloads',
+              activeBasePath: 'downloads',
             },
             {
-              label: 'Maintaining Documentation',
-              to: 'docs/developers/maintaining-documentation/overview',
-            },
-            {
-              label: 'Legal',
-              to: 'docs/legal',
+              label: 'Showcase',
+              to: 'showcase',
+              activeBasePath: 'showcase',
             },
           ],
-        },
-        {
-          label: 'Downloads',
-          to: 'downloads',
-          activeBasePath: 'downloads',
-        },
-        {
-          href: 'https://meshtastic.discourse.group',
-          label: 'Forum',
-          position: 'left',
-        },
-        {
-          href: 'https://github.com/meshtastic/meshtastic',
-          position: 'right',
-          className: 'header-github-link',
-          'aria-label': 'GitHub repository',
         },
       ],
     },
     footer: {
-      copyright: `<a href="https://vercel.com/?utm_source=meshtastic&utm_campaign=oss" style="color: var(--ifm-footer-color)">Powered by ▲ Vercel</a> | Meshtastic® is a registered trademark of Geeksville Industries LLC`,
+      copyright: `<a href="https://vercel.com/?utm_source=meshtastic&utm_campaign=oss">Powered by ▲ Vercel</a> | Meshtastic® is a registered trademark of Geeksville Industries LLC. | <a href="/docs/legal">Legal Information</a>.`,
     },
     algolia: {
       appId: 'IG2GQB8L3V',
@@ -180,6 +141,8 @@ const config = {
         docs: {
           sidebarPath: require.resolve('./sidebars.js'),
           editUrl: 'https://github.com/meshtastic/meshtastic/edit/master/',
+          breadcrumbs: false,
+          showLastUpdateAuthor: true,
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),

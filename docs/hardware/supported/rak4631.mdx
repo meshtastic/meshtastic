@@ -1,28 +1,161 @@
 ---
 id: wisBlock
-title: RAK WisBlock 4631
+title: RAK WisBlock
 sidebar_label: RAK WisBlock
+sidebar_position: 3
 ---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 
 The RAK WisBlock is a low power modular hardware system that can be used to build Meshtastic devices. Soldering is only required for the optional OLED screen.
 
-As of February 6, 2022, there is a [Meshtastic Getting Started kit](https://store.rakwireless.com/products/wisblock-meshtastic-starter-kit) that has the minimum you need to get started.
+RAK Wireless currently sell a [Meshtastic Starter kit](https://store.rakwireless.com/products/wisblock-meshtastic-starter-kit) that has the minimum you need to get started. If you wish to purchase parts separately, you will need a [base board](https://store.rakwireless.com/collections/wisblock-base), a [core 4631 LPWAN module](https://store.rakwireless.com/collections/wisblock-core/products/rak4631-lpwan-node), and optionally a GPS Sensor, screen or other module to build a Meshtastic device. Please ensure you choose the correct operating frequency for your country when purchasing.
 
-You will need a [base board](https://store.rakwireless.com/collections/wisblock-base), a [core 4631 LPWAN module](https://store.rakwireless.com/collections/wisblock-core/products/rak4631-lpwan-node), and optionally a GPS Sensor to build a Meshtastic device.
+Please see the RAK documentation for the correct way to connect your hardware to ensure that you do not damage the device. There is currently no pin required to pair RAK devices via BLE.
 
-Both available base boards ([5005](https://store.rakwireless.com/collections/wisblock-base/products/rak5005-o-base-board) & [19003](https://store.rakwireless.com/collections/wisblock-base/products/wisblock-base-board-rak19003)) have a reset button, support an OLED screen, and have built in connectors for a 3.7V LIPO battery (max 4.3V) and 5V Solar panel (max 5.5V)
+## RAK base boards
+<Tabs
+groupId="rakbase board"
+defaultValue="RAK5005-O"
+values={[
+{label: 'RAK5005-O', value: 'RAK5005-O'},
+{label: 'RAK19003', value: 'RAK19003'},
+{label: 'RAK19001', value: 'RAK19001'},
+{label: 'RAK19007', value:'RAK19007'}
+]}>
+<TabItem value="RAK5005-O">
 
-A user button is not possible with the 19003 base board. It may be possible to add a user button to the 5005 base board using the [13002 IO module](https://store.rakwireless.com/collections/wisblock-interface/products/adapter-module-rak13002).
+[RAK5005-O](https://store.rakwireless.com/products/rak5005-o-base-board) - The original WisBlock Base Board
 
-To add a GPS to the 5005 base board, you need the [1910 GPS sensor](https://store.rakwireless.com/collections/wisblock-sensor/products/rak1910-max-7q-gnss-location-sensor). It is supported on slot A of the 5005 board via UART.
+- Reset button 
+- OLED screen support (OLED screen sold separately)
+- Connector for 3.7v LiPo battery (with charge controller)
+- Connector for 5v solar panel (max 5.5v)
+- 1x Core Module slot
+- 1x WisBlock IO Module slot
+- 4x WisBlock Sensor Module slots
+- I2C, UART, GPIOs and analog input accessible with solder contacts
+- Micro USB port for debugging and power
 
-To add a GPS to the 19003 base board, you need the [12500 GPS sensor](https://store.rakwireless.com/products/wisblock-gnss-location-module-rak12500). It is supported via I2C on slot B for firmware versions 1.49 and above.
 
-Flashing the firmware is a simple process. Connect your device via USB, click the reset button twice, and a drive will appear. On Windows, Linux, or Mac, drag the appropriate .uf2 firmware file onto the root of the drive and the firmware will be updated. Or, you can use [Meshtastic-flasher](https://github.com/meshtastic/Meshtastic-gui-installer)
+Further information on the RAK5005-O can be found on the [RAK Documentation Center](https://docs.rakwireless.com/Product-Categories/WisBlock/RAK5005-O/Overview/#product-description).
 
-There is currently no pin required to pair RAK devices via BLE.
+It may be possible to add a user button using the [13002 IO module](https://store.rakwireless.com/collections/wisblock-interface/products/adapter-module-rak13002).
 
-- nRF52840 - Bluetooth BLE 5.0 and very low power consumption
+- [Update the bootloader](https://docs.rakwireless.com/Product-Categories/WisBlock/RAK4631/Quickstart/#updating-the-bootloader) on first use! This can be done easily with [Meshtastic-flasher](https://github.com/meshtastic/Meshtastic-gui-installer).
+- Firmware for 5005 base board: [`firmware-rak4631_5005-1.x.x.uf2`](/downloads) 
+
+
+  <img
+    alt="RAK4631 5005"
+    src="/img/hardware/rak4631_5005.png"
+    style={{ zoom: '50%' }}
+  />
+
+</TabItem>
+<TabItem value="RAK19003">
+
+[RAK19003](https://store.rakwireless.com/products/wisblock-base-board-rak19003) - WisBlock Mini Base Board
+
+- Reset button 
+- OLED screen support (OLED screen sold separately)
+- Connector for 3.7v LiPo battery (with charge controller)
+- Connector for 5v solar panel (max 5.5v)
+- 1x Core Module slot
+- 2x WisBlock Sensor Module slots
+- I2C, UART and BOOT headers accessible with solder contacts
+- Micro USB port for debugging and power
+
+
+Further information on the RAK19003 can be found on the [RAK Documentation Center](https://docs.rakwireless.com/Product-Categories/WisBlock/RAK19003/Overview/#product-description).
+
+It is currently not possible to add a user button to this board.
+
+- [Update the bootloader](https://docs.rakwireless.com/Product-Categories/WisBlock/RAK4631/Quickstart/#updating-the-bootloader) on first use! This can be done easily with [Meshtastic-flasher](https://github.com/meshtastic/Meshtastic-gui-installer).
+- Firmware for 19003 base board: [`firmware-rak4631_19003-1.x.x.uf2`](/downloads)
+
+
+  <img
+    alt="RAK4631 19003"
+    src="/img/hardware/rak4631_19003.png"
+    style={{ zoom: '50%' }}
+  />
+
+</TabItem>
+<TabItem value="RAK19001">
+
+[RAK19001](https://store.rakwireless.com/products/rak19001-wisblock-dual-io-base-board) - WisBlock Dual IO Base Board
+
+:::caution
+This board should work with the RAK5005-O firmware, however this is currently uncomfirmed.
+:::
+
+- Reset and user definable buttons
+- OLED screen support (OLED screen sold separately)
+- Connector for 3.7v LiPo battery (with charge controller)
+- Separate connector for non-rechargeable batteries
+- Connector for 5v solar panel (max 5.5v)
+- 1x Core Module slot
+- 2x WisBlock IO Module slot
+- 6x WisBlock Sensor Module slots
+- I2C, SPI, UART, BOOT and GPIOs accessible with solder contacts
+- USB-C port for debugging and power
+- Battery selector switch
+
+
+Further information on the RAK19001 can be found on the [RAK Documentation Center](https://docs.rakwireless.com/Product-Categories/WisBlock/RAK19001/Overview/#product-description).
+
+It may be possible to add a user button using the [13002 IO module](https://store.rakwireless.com/collections/wisblock-interface/products/adapter-module-rak13002).
+
+</TabItem>
+<TabItem value="RAK19007">
+
+[RAK19007](https://store.rakwireless.com/products/rak19007-wisblock-base-board-2nd-gen) - WisBlock Base Board - 2nd Generation  
+This is an upgrade to the original RAK5005-O base board.
+
+:::caution
+This board should work with the RAK5005-O firmware, however this is currently uncomfirmed.
+:::
+
+- Reset button 
+- OLED screen support (OLED screen sold separately)
+- Connector for 3.7v LiPo battery (with charge controller)
+- Connector for 5v solar panel (max 5.5v)
+- 1x Core Module slot
+- 1x WisBlock IO Module slot
+- 4x WisBlock Sensor Module slots
+- I2C, UART, BOOT and GPIOs accessible with solder contacts
+- USB-C port for debugging and power
+
+
+Further information on the RAK19007 can be found on the [RAK Documentation Center](https://docs.rakwireless.com/Product-Categories/WisBlock/RAK19007/Overview/#product-description).
+
+It may be possible to add a user button using the [13002 IO module](https://store.rakwireless.com/collections/wisblock-interface/products/adapter-module-rak13002).
+
+</TabItem>
+</Tabs>
+
+Flashing the firmware is a simple process. Connect your device to your computer via USB, click the reset button twice, and a drive will appear. On Windows, Linux, or Mac, drag the appropriate .uf2 firmware file onto the root of the drive and the device will restart and the firmware will be updated. Or, you can use [Meshtastic-flasher](https://github.com/meshtastic/Meshtastic-gui-installer). RAK have also provided [Installation instructions](https://docs.rakwireless.com/Product-Categories/WisBlock/RAK4631/Quickstart/#rak4631-lora-mesh-via-meshtastic) for Meshtastic.
+
+
+## Core Module
+
+There are two core modules supported by Meshtastic:
+
+<Tabs
+groupId="rakcore"
+defaultValue="RAK4631"
+values={[
+{label: 'RAK4631', value: 'RAK4631'},
+{label: 'RAK11200', value: 'RAK11200'}
+]}>
+<TabItem value="RAK4631">
+
+The main supported code is the [WisBlock LPWAN Module RAK4631](https://store.rakwireless.com/products/rak4631-lpwan-node).  
+(Please note this is different to the RAK4631-R which uses different firmware incompatible with Meshtastic).
+
+- nRF52840 microprocessor - Bluetooth BLE 5.0 and very low power consumption
 - SX1262 - LoRa transceiver
 - Frequency options:
   - 433 MHz
@@ -33,26 +166,8 @@ There is currently no pin required to pair RAK devices via BLE.
   - 915 MHz
   - 920 MHz
   - 923 MHz
-- Optional GPS
 - U.FL antenna connector
-- Optional switches
-- Optional screen
 
-- Firmware for 5005 base board: [`firmware-rak4631_5005-1.x.x.uf2`](/downloads)
-<img alt="RAK4631 5005" src="/img/hardware/rak4631_5005.png" style={{zoom:'50%'}} />
-
-- Firmware for 19003 base board: [`firmware-rak4631_19003-1.x.x.uf2`](/downloads)
-<img alt="RAK4631 19003" src="/img/hardware/rak4631_19003.png" style={{zoom:'50%'}} />
-
-- Firmware for 5005 with RAK14000 epaper: [`firmware-rak4631_19003-epaper-1.3.x.uf2`](/downloads)
-<img alt="RAK4631 5005 14000" src="/img/hardware/rak4631_5005_epaper.jpg" style={{zoom:'50%'}} />
-
-- Firmware for 5005 with 11200: [`firmware-11200-1.3.x.bin`](/downloads)
-<img alt="RAK4631 5005 11200" src="/img/hardware/rak11200.jpg" style={{zoom:'50%'}} />
-
-- [Installation instructions](https://docs.rakwireless.com/Product-Categories/WisBlock/RAK4631/Quickstart/#rak4631-lora-mesh-via-meshtastic)
-- Don't forget to [update the bootloader](https://docs.rakwireless.com/Product-Categories/WisBlock/RAK4631/Quickstart/#updating-the-bootloader) first! This can be done easily with [Meshtastic-flasher](https://github.com/meshtastic/Meshtastic-gui-installer)
-- RAK's [GitHub Page](https://github.com/RAKWireless/WisBlock) for the WisBlock
 
 <img
   alt="RAK4631 Core Module"
@@ -60,4 +175,176 @@ There is currently no pin required to pair RAK devices via BLE.
   style={{ zoom: '50%' }}
 />
 
-There is development activity to get sensors added in Meshtastic core. For example, the Environment Sensor.
+Further information on the RAK4631 can be found on the [RAK Documentation Center](https://docs.rakwireless.com/Product-Categories/WisBlock/RAK4631/Overview/#product-description).
+
+</TabItem>
+<TabItem value="RAK11200">
+
+The [RAK11200](https://store.rakwireless.com/products/wiscore-esp32-module-rak11200) is currently only supported on the RAK5005-O base board. This provides the benefits of WiFi, but sacrifices the very low power consumption of the nRF microprocessor used on the RAK4631.
+
+- ESP32-WROVER microprocessor - Bluetooth 4.2 & WiFi 802.11 b/g/n
+
+Further information on the RAK11200 can be found on the [RAK Documentation Center](https://docs.rakwireless.com/Product-Categories/WisBlock/RAK11200/Overview/#product-description).
+
+The RAK11200 does not contain a LoRa transceiver, and this needs to be added separately in the form of the [RAK13300 LPWAN module](https://store.rakwireless.com/products/rak13300-wisblock-lpwan). This occupies the IO Port of the base board.
+
+The RAK13300 has the following specifications:
+- SX1262 - LoRa transceiver
+- Frequency options:
+  - 433 MHz
+  - 470 MHz
+  - 864 MHz
+  - 865 MHz
+  - 868 MHz
+  - 915 MHz
+  - 920 MHz
+  - 923 MHz
+- U.FL antenna connector
+
+
+Further information on the RAK13300 can be found on the [RAK Documentation Center](https://docs.rakwireless.com/Product-Categories/WisBlock/RAK13300/Overview/#product-description).
+
+- Firmware for 5005 with 11200: [`firmware-11200-1.3.x.bin`](/downloads)
+
+  <img
+    alt="RAK4631 5005 11200"
+    src="/img/hardware/rak11200.jpg"
+    style={{ zoom: '50%' }}
+  />
+
+</TabItem>
+</Tabs>
+
+## Screens
+
+There are currently two different screens supported by the RAK WisBlock system:
+
+<Tabs
+groupId="rakscreens"
+defaultValue="OLED"
+values={[
+{label: 'OLED Display', value: 'OLED'},
+{label: 'E-Ink Display', value: 'E-Ink'}
+]}>
+<TabItem value="OLED">
+
+The [RAK1921 OLED display](https://store.rakwireless.com/products/rak1921-oled-display-panel) is a 0.96 inch monocrome display.
+
+- 0.96 inch OLED display
+- Resolution 128 x 64 pixels
+- I2C interface
+
+
+This item requires soldering.  
+Further information on the RAK1921 can be found on the [RAK Documentation Center](https://docs.rakwireless.com/Product-Categories/WisBlock/RAK1921/Overview/#product-description).  
+Similar modules are widely available from other suppliers, but do check the boards as some have the VDD and GND pins swapped round.
+
+[<img alt="0.96 inch OLED display" src="/img/hardware/screen.png" style={{zoom:'25%'}} />](/img/hardware/screen.png)
+
+</TabItem>
+<TabItem value="E-Ink">
+
+The [RAK1400 EPD module](https://store.rakwireless.com/products/wisblock-epd-module-rak14000) is an ultra low power E-Ink display with three user buttons.
+
+- 2.13 inch black and white E-Ink display
+- Three button module
+- Resolution 212 x 104 pixels
+- Occupies the IO Port of a Wisblock Base
+
+
+- Firmware for 5005 with RAK14000 epaper: [`firmware-rak4631_19003-epaper-1.3.x.uf2`](/downloads)
+
+  <img
+    alt="RAK4631 5005 14000"
+    src="/img/hardware/rak4631_5005_epaper.jpg"
+    style={{ zoom: '50%' }}
+  />
+
+Please note only the white-black display is supported at this time, the white-black-red display may work, but is not supported.  
+Further information on the RAK14000 can be found on the [RAK Documentation Center](https://docs.rakwireless.com/Product-Categories/WisBlock/RAK14000/Overview/#product-description).
+
+</TabItem>
+</Tabs>
+
+## Supported modules
+
+<Tabs
+groupId="rakmodules"
+defaultValue="GPS"
+values={[
+{label: 'GPS Module', value: 'GPS'},
+{label: 'Buzzer', value: 'Buzzer'},
+{label: 'I/O Module', value: 'IO'},
+{label: 'Environmental Sensor', value:'BME680'}
+]}>
+<TabItem value="GPS">
+
+To add a GPS to the RAK5005-O base board, you need the [RAK1910 GPS sensor](https://store.rakwireless.com/collections/wisblock-sensor/products/rak1910-max-7q-gnss-location-sensor). It is supported on slot A of the 5005 board via UART.
+
+- uBlox MAX-7Q GPS module
+- GPS and GLONASS satelite support
+
+
+Further information on the RAK1910 can be found on the [RAK Documentation Center](https://docs.rakwireless.com/Product-Categories/WisBlock/RAK1910/Overview/#product-description).
+
+To add a GPS to the RAK19003 base board, you need the [RAK12500 GPS sensor](https://store.rakwireless.com/products/wisblock-gnss-location-module-rak12500). It is supported via I2C on slot B for firmware versions 1.49 and above.
+
+- uBlox Zoe-M8Q GNSS receiver
+- GPS, GLONASS, QZSS and BeiDou satelite support
+
+
+Further information on the RAK12500 can be found on the [RAK Documentation Center](https://docs.rakwireless.com/Product-Categories/WisBlock/RAK12500/Overview/#product-description).
+
+</TabItem>
+<TabItem value="Buzzer">
+
+The [RAK18001 Buzzer Module](https://store.rakwireless.com/products/wisblock-buzzer-module-rak18001) is currently being tested for integration with the External Notifications plugin. There is currently a known conflict with buzzer if the module is placed in Slot D, although other slots should work.
+
+Further information on the RAK18001 can be found on the [RAK Documentation Center](https://docs.rakwireless.com/Product-Categories/WisBlock/RAK18001/Overview/#product-description).
+
+</TabItem>
+<TabItem value="IO">
+
+The [RAK13002 IO Module](https://store.rakwireless.com/collections/wisblock-interface/products/adapter-module-rak13002) can be used to, amongst other things, add a user button to the RAK base boards (excluding the RAK19003 Mini base board). It features a number of different interface options:
+
+- 2x I2C interfaces
+- 2x UART interfaces
+- 1x SPI interface
+- Upto 6x GPIOs
+- 2x ADC interfaces
+- 3.3v Power rails
+
+
+There is development activity in progress to get sensors such as this added to the Meshtastic Core.  
+Further information on the RAK13002 can be found on the [RAK Documentation Center](https://docs.rakwireless.com/Product-Categories/WisBlock/RAK13002/Overview).
+
+</TabItem>
+<TabItem value="BME680">
+
+The [RAK1906 Environmental Sensor](https://store.rakwireless.com/products/rak1906-bme680-environment-sensor) is based on the Bosch BME680 module and has the following features:
+
+- Temperature measurement (Range -40&deg;C to +85&deg;C)
+- Humidity measurement (Range 0% to 100%)
+- Barometer measurement (Range 300 to 1100 hPa)
+- Air Quality measurement
+
+
+There is development activity in progress to get sensors such as this added to the Meshtastic Core.  
+Further information on the RAK1906 can be found on the [RAK Documentation Center](https://docs.rakwireless.com/Product-Categories/WisBlock/RAK1906/Overview/#product-description).
+
+</TabItem>
+</Tabs>
+
+## RAK Wireless' Resources
+
+- RAK's Wisblock [Documentation Center](https://docs.rakwireless.com/Product-Categories/WisBlock)
+- RAK's [GitHub Page](https://github.com/RAKWireless/WisBlock) for the WisBlock
+
+## MAC Address Conflict
+
+Some of the RAK Meshtastic starter kits that come pre-installed with Meshtastic have an error where the same MAC address is applied to more than one unit. If you have a number of RAK devices but are unable to connect to more than one of them, or they will not talk to each other despite being on the same mesh, please try a [factory reset](/docs/settings/misc#factory_reset) using the Meshtastic CLI, and then restart the device. This reset will wipe all settings on the device back to their defaults including the stored MAC address. If you have already configured your node and wish to keep the configuration, then please export it first:
+
+- `meshtastic --export-config > settings_file.txt` - This will save the node's settings to the file `settings_file.txt`
+- `meshtastic --set factory_reset true` - This will reset the device and wipe the configuration
+- Power cycle the device
+- `meshtastic --configure settings_files.txt` - This will restore the settings saved in the file `settings_file.txt`

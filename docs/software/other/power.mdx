@@ -55,7 +55,7 @@ From lower to higher power consumption.
 - At cold boot: The initial state (after setup() has run) is DARK
 - While in DARK: if we receive EVENT_BOOT, transition to ON (and show the bootscreen). This event will be sent if we detect we woke due to reset (as opposed to deep sleep)
 - While in LS: Once every position_broadcast_secs (default 15 mins) - the unit will wake into DARK mode and broadcast a "networkPing" (our position) and stay alive for wait_bluetooth_secs (default 60 seconds). This allows other nodes to have a record of our last known position if we go away and allows a paired phone to hear from us and download messages.
-- While in LS: Every one hour, when we wake to send our position we \_also* broadcast our owner. This lets new nodes on the network find out about us or correct duplicate node number assignments.
+- While in LS: Every one hour, when we wake to send our position we \_also\* broadcast our owner. This lets new nodes on the network find out about us or correct duplicate node number assignments.
 - While in LS/NB/DARK: If the user presses a button (EVENT_PRESS) we go to full ON mode for screen_on_secs (default 30 seconds). Multiple presses keeps resetting this timeout
 - While in LS/NB/DARK: If we receive new text messages (EVENT_RECEIVED_TEXT_MSG), we go to full ON mode for screen_on_secs (same as if user pressed a button)
 - While in LS: while we receive packets on the radio (EVENT_RECEIVED_PACKET) we will wake and handle them and stay awake in NB mode for min_wake_secs (default 10 seconds)
@@ -74,8 +74,7 @@ From lower to higher power consumption.
 - While in ON: If it has been more than screen_on_secs since a press, lower to DARK
 - While in DARK: If time since last contact by our phone exceeds phone_timeout_secs (15 minutes), we transition down into NB mode
 - While in DARK or NB: If nothing above is forcing us to stay in a higher mode (wait_bluetooth_secs, min_wake_secs) we will lower down to LS state
-- While in LS: If either phone_sds_timeout_secs (default 2 hr) or mesh_sds_timeout_secs (default 2 hr) are exceeded we will lower into SDS mode for sds_secs (default 1 yr) (or a button press). (Note: phone_sds_timeout_secs is currently disabled for now, because most users
-  are using without a phone)
+- While in LS: If mesh_sds_timeout_secs (default 2 hr) are exceeded we will lower into SDS mode for sds_secs (default 1 yr) (or a button press).
 - Any time we enter LS mode: We stay in that until an interrupt, button press or other state transition. Every ls_secs (default 1 hr) and let the Arduino loop() run one iteration (FIXME, not sure if we need this at all), and then immediately reenter lightsleep mode on the CPU.
 
 TODO: Eventually these scheduled intervals should be synchronized to the GPS clock, so that we can consider leaving the LoRa receiver off to save even more power.
