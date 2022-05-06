@@ -182,14 +182,14 @@ function Home() {
         <Carousel autoPlay infiniteLoop showStatus={false} showThumbs={false}>
           {features.map((feature, index) => (
             <div key={index} className="flex p-12">
-              <div style={{width:'50%'}}>
+              <div className="half">
               <img
                 className="my-auto h-40"
                 src={feature.imageUrl}
                 alt={feature.title}
               />
               </div>
-              <div className="my-auto" style={{width:'50%'}}>
+              <div className="my-auto half" >
                 <h3 className="text-xl font-medium">{feature.title}</h3>
                 <p>{feature.description}</p>
               </div>
@@ -197,7 +197,7 @@ function Home() {
           ))}
         </Carousel>
 
-        <div className="flex w-full flex-col gap-4 bg-primaryDark p-4 shadow-inner" style={{width:'auto',margin:'auto'}}>
+        <div className="flex w-full flex-col gap-4 bg-primaryDark p-4 shadow-inner fpblock">
           <h3 className="text-xl font-bold">Connect with us.</h3>
           <div className="flex w-full overflow-x-auto">
             {SocialCards.map((card, index) => (
@@ -208,7 +208,7 @@ function Home() {
           </div>
         </div>
 
-        <div className="container flex flex-col" style={{width:'auto',margin:'auto'}}>
+        <div className="container flex flex-col fpblock">
           <h2 className="mb-2 text-xl font-medium">
             Getting started with Meshtastic is as easy as 1, 2, 3!
           </h2>
