@@ -56,7 +56,11 @@ const config = {
     colorMode: {
       respectPrefersColorScheme: true,
     },
-    autoCollapseSidebarCategories: true,
+    docs: {
+      sidebar: {
+        autoCollapseCategories: true,
+      },
+    },
     navbar: {
       title: 'Meshtastic',
       hideOnScroll: true,
