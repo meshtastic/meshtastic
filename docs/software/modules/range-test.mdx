@@ -9,6 +9,9 @@ import PluginModule from '@site/docs/_blocks/_plugin_module.mdx';
 
 This module allows you to test the range of your Meshtastic nodes. It uses two nodes, one to send a message every minute, and another to receive the messages. The receiving node then saves the messages along with the GPS coordinates at which they were received into a .csv file. This .csv file can then be integrated into, for example, Google Earth, allowing you to see where you have coverage.
 
+:::compatibility
+The Range Test module is currently only compatible with ESP32 devices. nRF52 devices are not yet supported. ::: 
+
 ## Configuration
 
 <PluginModule name="range_test_module_" rename="range_test_plugin_" />
