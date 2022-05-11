@@ -13,43 +13,8 @@ The ExternalNotification Module will allow you to connect a speaker, LED or othe
 
 ## Configuration
 
-<PluginModule name="ext_notification_plugin" rename="ext_notification_module" />
-
-These are the settings that can be configured.
-
-    ext_notification_module_enabled
-        Is the module enabled?
-
-        0 = Disabled (Default)
-        1 = Enabled
-
-    ext_notification_module_active
-        Is your external circuit triggered when our GPIO is low or high?
-
-        0 = Active Low (Default)
-        1 = Active High
-
-    ext_notification_module_alert_message
-        Do you want to be notified on an incoming message?
-
-        0 = Disabled (Default)
-        1 = Alert when a text message comes
-
-    ext_notification_module_alert_bell
-        Do you want to be notified on an incoming bell?
-
-        0 = Disabled (Default)
-        1 = Alert when the bell character is received
-
-    ext_notification_module_output
-        What GPIO is your external circuit attached?
-
-        GPIO of the output. (Default = 13)
-
-    ext_notification_module_output_ms
-        How long do you want us to trigger your external circuit?
-
-        Amount of time in ms for the alert. Default is 1000.
+Configuration details are available on the [Device Settings](/docs/settings) pages. Configuring the External Notification Module requires configuring the following modules:
+- [External Notification Module](/docs/settings/modules/external-notification-module)
 
 ## Usage Notes
 

@@ -11,29 +11,8 @@ This module allows you to test the range of your Meshtastic nodes. It uses two n
 
 ## Configuration
 
-<PluginModule name="range_test_module_" rename="range_test_plugin_" />
-
-These are the settings that can be configured.
-
-    range_test_module_enabled
-        Is the Module enabled?
-
-        0 = Disabled (Default)
-        1 = Enabled
-
-    range_test_module_save
-        If enabled, we will save a log of all received messages to /static/rangetest.csv which you can access from the webserver. We will abort
-        writing if there is less than 50k of space on the filesystem to prevent filling up the storage.
-
-        0 = Disabled (Default)
-        1 = Enabled
-
-    range_test_module_sender
-        Number of seconds to wait between sending packets. Using the long_slow channel configuration, it's best not to go more frequent than once every 60 seconds. You can be more agressive with faster settings. 0 is default which disables sending messages.
-
-:::note
-The device must be restarted after the settings have been changed for the module to take effect.
-:::
+Configuration details are available on the [Device Settings](/docs/settings) pages. Configuring the Range Test Module requires configuring the following modules:
+- [Range Test Module](/docs/settings/modules/range-test-module)
 
 ### Usage Notes
 

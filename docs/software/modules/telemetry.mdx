@@ -17,57 +17,8 @@ The preferred setup is using I2C, so the `telemetry_module_sensor_pin` may not b
 
 ## Configuration
 
-These are the settings that can be configured.
-
-    telemetry_module_enabled
-        Is the module enabled?
-
-        0 = Disabled (Default)
-        1 = Enabled
-
-    telemetry_module_screen_enabled
-        Show received sensor readings on device screen.
-
-        0 = Disabled (Default)
-        1 = Enabled
-
-    telemetry_module_read_error_count_threshold
-        Error count threshold for failed sensor readings.
-
-        Default = 0
-
-    preferences.telemetry_module_update_interval
-        How often (in seconds) should sensor readings be broadcasted?
-
-        Default = 0
-
-    telemetry_module_recovery_interval
-        For how long should we wait (in seconds) before trying to read sensors again upon exceeded error threshold?
-
-        Default = 0
-
-    telemetry_module_display_fahrenheit
-        Should temperature readings be converted to fahrenheit?
-
-        0 = Disabled (Default)
-        1 = Enabled
-
-    telemetry_module_sensor_type
-        What sensor is connected?
-
-        0 = DHT11 (Default)
-        1 = Dallas 1-wire DS18B20
-        2 = DHT12
-        3 = DHT21
-        4 = DHT22
-        5 = BME280
-        6 = BME680
-        7 = MCP9808
-
-    telemetry_module_sensor_pin
-        Which pin is the sensor connected to?
-
-        Default = 0
+Configuration details are available on the [Device Settings](/docs/settings) pages. Configuring the Telemetry Module requires configuring the following modules:
+- [Telemetry Module](/docs/settings/modules/telemetry-module)
 
 ## Usage Notes
 
