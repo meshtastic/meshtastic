@@ -77,7 +77,7 @@ Configuring this setting is not yet available for the selected platform. If this
 
 ### range_test_module_save
 
-If enabled, we will save a log of all received messages to `/static/rangetest.csv` which you can access from the web server. We will abort writing if there is less than 50k of space on the filesystem to prevent filling up the storage.
+If enabled, we will save a log of all received messages to a file named `rangetest.csv` which you can access from the web server `Extensions > File Browser > rangetest.csv`. The file will be created after receiving messages. The device will abort writing if there is less than 50k of space on the filesystem to prevent filling up the storage.
 
 #### Enable/Disable range test save `csv`
 
@@ -187,11 +187,11 @@ Leaving this module on can slow down your mesh. Currently, the messages are sent
 
 ### Accessing your CSV
 
-Connect to your device over WiFi, either using the [software access point](/docs/settings/wifi#software-access-point) or [WiFi Client](/docs/settings/wifi#wifi-client). Then navigate to `meshtastic.local` (or your IP address) `/static/rangetest.csv` where your file will be available for download.
+Connect to your device over WiFi, either using the [software access point](/docs/settings/wifi#software-access-point) or [WiFi Client](/docs/settings/wifi#wifi-client). Then navigate to `meshtastic.local` (or your IP address). Your file will be available for download under `Extensions > File Browser > rangetest.csv` once it has been created by receiving messages.
 
 ```plaintext title="Example URLs"
-http://meshtastic.local/static/rangetest.csv
-http://198.168.0.X/static/rangetest.csv
+http://meshtastic.local
+http://198.168.0.X
 ```
 
 ### Recommended Sender Settings
