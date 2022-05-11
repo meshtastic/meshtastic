@@ -29,17 +29,21 @@ You will need a generic rotary encoder. The types listed below has five legs whe
 
 Connect your rotary encoder as follows. The rotary encoder has two rows of legs. One of the rows contains two legs, the other contains three legs. Bottom side view:
 
-      B o --- o PRESS
-    GND o | |
-      A o --- o GND
+```
+  B o --- o PRESS
+GND o | |
+  A o --- o GND
+```
 
 The two legs is to sense the press action (or push). Connect one of the two to GROUND and the other to a GPIO pin. (No matter which one goes where.) Let's call this connected ports 'PRESS'.
 
 The three legs is to sense the rotation action. Connect the middle leg to GROUND and the ones on the side to GPIO pins. Let's call these ports 'A' and 'B', according to the scheme below.
 
-    A   --||
-    GND --||]========
-    B   --||
+```
+A   --||
+GND --||]========
+B   --||
+```
 
 Recommended GPIO pins for connecting a rotary encoder.
 
