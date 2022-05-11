@@ -9,28 +9,17 @@ import PluginModule from '@site/docs/_blocks/_plugin_module.mdx';
 
 ## About
 
-The Canned Message Module will allow you to send messages to the mesh network
-from the device without using the phone app.
-You can predefine text messages to choose from.
+The Canned Message Module will allow you to send messages to the mesh network from the device without using the phone app. You can predefine text messages to choose from.
 
 ## Hardware
 
-To navigate through messages and select one, you will require some
-hardware attached to your device.
-Currently, the module is tested with a generic rotary encoder, but this is
-not a limitation further input methods can be added in the future.
+To navigate through messages and select one, you will require some hardware attached to your device. Currently, the module is tested with a generic rotary encoder, but this is not a limitation further input methods can be added in the future.
 
 ### Rotary encoder
 
-Meshtastic supports hardwired rotary encoders as input devices.
-(Technically the Canned Message Module is independent of rotary
-encoders. It is described here, because no other module utilizes rotary encoders just yet.)
+Meshtastic supports hardwired rotary encoders as input devices. (Technically the Canned Message Module is independent of rotary encoders. It is described here, because no other module utilizes rotary encoders just yet.)
 
-You will need a generic rotary encoder. The types listed below has five legs
-where two is dedicated to a "press" action,
-but any other types will likely do the job. You can also use a
-three-legged version, where the "press" action should be wired from
-an independent switch.
+You will need a generic rotary encoder. The types listed below has five legs where two is dedicated to a "press" action, but any other types will likely do the job. You can also use a three-legged version, where the "press" action should be wired from an independent switch.
 
 - [Amazon link](https://www.amazon.com/Rotary-Encoder-Washers-Digital-Potentiometer/dp/B07Y619CZR/ref=sr_1_21?keywords=rotary+encoder&qid=1642317807&sprefix=rotary+enco%2Caps%2C186&sr=8-21)
 - [Amazon.DE link](https://www.amazon.de/-/en/sourcing-Degree-Rotary-Encoder-Digital/dp/B07RLZPX5K/ref=sr_1_12?keywords=rotary+encoder&qid=1642320025&sprefix=rotary%2Caps%2C105&sr=8-12)
@@ -38,22 +27,15 @@ an independent switch.
 - [Aliexpress link2](https://www.aliexpress.com/item/32946444853.html?spm=a2g0o.productlist.0.0.1afe21a50SLvi2&algo_pvid=a19c4182-08aa-406d-bfdf-132582ef5ebb&aem_p4p_detail=2022011523263276283624312400022072680&algo_exp_id=a19c4182-08aa-406d-bfdf-132582ef5ebb-6&pdp_ext_f=%7B%22sku_id%22%3A%2266223434642%22%7D&pdp_pi=-1%3B1.91%3B-1%3B-1%40salePrice%3BUSD%3Bsearch-mainSearch)
 - [Aliexpress link3](https://www.aliexpress.com/item/10000056483250.html?spm=a2g0o.productlist.0.0.1afe21a50SLvi2&algo_pvid=a19c4182-08aa-406d-bfdf-132582ef5ebb&algo_exp_id=a19c4182-08aa-406d-bfdf-132582ef5ebb-9&pdp_ext_f=%7B%22sku_id%22%3A%2220000000116682147%22%7D&pdp_pi=-1%3B2.51%3B-1%3B-1%40salePrice%3BUSD%3Bsearch-mainSearch)
 
-Connect your rotary encoder as follows. The rotary encoder has two
-rows of legs. One of the rows contains two legs, the other contains three
-legs. Bottom side view:
+Connect your rotary encoder as follows. The rotary encoder has two rows of legs. One of the rows contains two legs, the other contains three legs. Bottom side view:
 
       B o --- o PRESS
     GND o | |
       A o --- o GND
 
-The two legs is to sense the press action (or push). Connect
-one of the two to GROUND and the other to a GPIO pin. (No matter which one
-goes where.) Let's call this connected ports 'PRESS'.
+The two legs is to sense the press action (or push). Connect one of the two to GROUND and the other to a GPIO pin. (No matter which one goes where.) Let's call this connected ports 'PRESS'.
 
-The three legs is to sense the rotation action.
-Connect the middle leg to GROUND and the ones on the side
-to GPIO pins. Let's call these ports 'A' and 'B', according to
-the scheme below.
+The three legs is to sense the rotation action. Connect the middle leg to GROUND and the ones on the side to GPIO pins. Let's call these ports 'A' and 'B', according to the scheme below.
 
     A   --||
     GND --||]========
@@ -150,6 +132,4 @@ The device must be restarted after the settings have been changed for the module
 
 ## Known Problems
 
-- Rotary encoder input uses a technology called "interrupts". Using the
-  rotary encoder might cause unexpected software problems. This needs to be
-  tested.
+- Rotary encoder input uses a technology called "interrupts". Using the rotary encoder might cause unexpected software problems. This needs to be tested.
