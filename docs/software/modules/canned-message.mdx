@@ -55,84 +55,11 @@ Recommended GPIO pins for connecting a rotary encoder.
 There is a reference case 3D-design utilizing the rotary encoder for TTGO LoRa V1:
 [Case for TTGO-ESP32-LORA-OLED-v1.0 with rotary encoder](https://www.thingiverse.com/thing:5178495)
 
-### Configuration of the rotary encoder #1
+## Configuration
 
-    rotary1_enabled
-        Enable the rotary encoder #1
-
-    rotary1_pin_a
-        GPIO pin for rotary encoder A port.
-
-    rotary1_pin_b
-        GPIO pin for rotary encoder B port.
-
-    rotary1_pin_press
-        GPIO pin for rotary encoder Press port.
-
-    rotary1_event_cw
-        Generate input event on CW of this kind.
-        For using with CannedMessageModule you must choose value "UP" here!
-
-    rotary1_event_ccw
-        Generate input event on CCW of this kind.
-        For using with CannedMessageModule you must choose value "DOWN" here!
-
-    rotary1_event_press
-        Generate input event on Press of this kind.
-        For using with CannedMessageModule you must choose value "SELECT" here!
-
-The rotary encoder #1 will send input events under name "rotEnc1".
-
-## Configuration of the module
-
-<PluginModule name="canned_message_plugin" rename="canned_message_module" />
-
-Following configuration can be set for the module.
-
-    canned_message_module_enabled
-        Enable/disable CannedMessageModule.
-
-    canned_message_module_allow_input_source
-        Input event origin accepted by the Canned Message Module.
-        Can be e.g. "rotEnc1" or keyword "_any"
-
-    canned_message_module_messages
-        Predefined messages for CannedMessageModule separated by '|' characters.
-
-    canned_message_module_send_bell
-        CannedMessagemodule also sends a bell character with the messages.
-        ExternalNotificationModule can benefit from this feature.
-
-## Usage Notes
-
-For setting up the rotary encoder #1 using the Python CLI you will
-need to execute a sequence like this:
-
-    meshtastic --set rotary1_pin_a 22
-    meshtastic --set rotary1_pin_b 23
-    meshtastic --set rotary1_pin_press 21
-    meshtastic --set rotary1_event_cw KEY_UP
-    meshtastic --set rotary1_event_ccw KEY_DOWN
-    meshtastic --set rotary1_event_press KEY_SELECT
-    meshtastic --set rotary1_enabled True
-
-For setting up the module you will
-need to execute a sequence like this:
-
-    meshtastic --set canned_message_module_allow_input_source "_any"
-    meshtastic --set canned_message_module_messages "I'm fine|I'm out|I'm back|Need helping hand|Help me with saw|I need an alpinist|I need ambulance|Keep Calm|On my way|I will be late|I'm already waiting|We have company|Beer is cold|Roger"
-    meshtastic --set canned_message_module_enabled True
-
-    meshtastic --set-canned-message "What am I doing?|I'm fine|Don't follow me|I'm out|I'm back|Need helping hand|Help me with saw|I need an alpinist|I need ambulance|Keep Calm|On my way|Need 5 mins|I will be late|I'm already waiting|I couldn't join|We have company|Beer is cold|Roger"
-
-:::note
-You can define up to 50 messages with a total length 800 bytes.
-Use short texts as end of line will be truncated on the screen.
-:::
-
-:::note
-The device must be restarted after the settings have been changed for the module to take effect.
-:::
+Configuration details are available on the [Device Settings](/docs/settings) pages. Configuring the Canned Message Module requires configuring both of the following modules:
+- [Input Broker Module](/docs/settings/modules/input-broker-module)
+- [Canned Message Module](/docs/settings/modules/canned-messaged-module).
 
 ## Known Problems
 
