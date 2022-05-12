@@ -14,43 +14,6 @@ This module allows you to test the range of your Meshtastic nodes. It uses two n
 Configuration details are available on the [Device Settings](/docs/settings) pages. Configuring the Range Test Module requires configuring the following modules:
 - [Range Test Module](/docs/settings/modules/range-test-module)
 
-### Usage Notes
-
-For basic usage, you will need two devices both with a GPS. A device with a paired phone with GPS may work, I have not tried it.
-
-The first thing to do is to turn on the module. The device will need to be restarted after applying the settings. With the module turned on, the other settings will be available:
-
-    range_test_module_enabled = 1
-
-If you want to send a message every 60 seconds:
-
-    range_test_module_sender = 60
-
-To save a log of the messages:
-
-    range_test_module_save = 1
-
-Recommended settings for a sender at different radio settings:
-
-    Long Slow  ... range_test_module_sender = 60
-    Long Alt   ... range_test_module_sender = 30
-    Medium     ... range_test_module_sender = 15
-    Short Fast ... range_test_module_sender = 15
-
-### Python API Examples
-
-Sender
-
-`meshtastic --set range_test_module_enabled 1`
-
-`meshtastic --set range_test_module_sender 60`
-
-Receiver
-
-`meshtastic --set range_test_module_enabled 1`
-
-`meshtastic --set range_test_module_save 1`
-
 ### Other things to keep in mind
 
 Be sure to turn off either the module configured as a sender or the device where the module setup as sender when not in use. This will use a lot of time on air and will spam your channel.
@@ -96,7 +59,7 @@ Right now range test messages go over the `TEXT_MESSAGE_APP` port. We need a tog
 
 Q: Where is rangetest.csv saved?
 
-- Turn on the WiFi on your device as either a WiFi client or a WiFi AP. Once you can connect to your device, go to /static and you will see rangetest.csv.
+- Turn on the WiFi on your device as either a WiFi client or a WiFi AP. Once you can connect to your device, navigate to `Extensions > File Browser` and you will see `rangetest.csv` once messages have been saved and the file has been created.
 
 Q: Do I need to have WiFi turned on for the file to be saved?
 
