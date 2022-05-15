@@ -9,8 +9,6 @@ We currently support devices that use the ESP32 and the nRF52 microcontrollers. 
 
 ## ESP32
 
-The ESP32 devices have the advantage of having a Wifi interface. This allows you to connect to an access point, or run the device as an access point, and host the [web interface](/docs/software/web).
-
 The following ESP32 devices are supported:
 
 - [Lilygo TTGO T-Beam](/docs/hardware/supported/tbeam) - 1.1 (including M8N GPS and SX1262 LoRa variants)
@@ -20,15 +18,37 @@ The following ESP32 devices are supported:
 :::caution
 Supported but not encouraged:
 
-- Lilygo TTGO T-Beam - version 0.7 -- Very old, no power management chip, difficulty with GPS module and is freqeuntly confused with other devices.
+- Lilygo TTGO T-Beam - version 0.7 -- Very old, no power management chip, difficulty with GPS module and is frequently confused with other devices.
 
 :::
 
-## nRF52
+Advantages:
+- Strong hardware/software support, as these devices have been on the market for a longer period of time
+- Wi-Fi capable, with full [web interface](/docs/software/web) support
+- Numerous 3D printed case designs are available
+- Range Test module is supported
 
-The nRF52 devices have the advantage of a Bluetooth 5.0 implementation. This allows for very low power Bluetooth connections to be maintained without having to wake the microprocessor up at regular intervals. Unfortunately, the nRF52 devices do not have Wifi built in, meaning that currently you cannot use the web interface with these devices.
+Disadvantages:
+- Devices do not use Bluetooth 5.0 (BLE), as such may may draw more power
+
+
+
+## nRF52
 
 The following nRF52 devices are currently supported:
 
+- [Wisblock RAK4631](/docs/hardware/supported/wisBlock) (Modular system, requires wisBlock Base)
 - [Lilygo TTGO T-Echo](/docs/hardware/supported/techo)
-- [Wisblock RAK4631](/docs/hardware/supported/wisBlock)
+
+
+Advantages:
+- Smaller, more compact designs are available
+- Very low power usage due to Bluetooth 5.0 (BLE)
+- Strong manufacturer documentation for RAK Wireless products
+
+Disadvantages:
+- No Wi-Fi without additional hardware, the Web interface can only be used via the Serial connection option.
+- Newer hardware, as such less software-side support.
+- Currently, cannot be used with the Range Test module.
+- Fewer 3D printed case options.
+
