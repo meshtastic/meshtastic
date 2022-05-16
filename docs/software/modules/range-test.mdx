@@ -4,8 +4,7 @@ title: Range Test Module
 sidebar_label: Range Test
 sidebar_position: 1
 ---
-
-import PluginModule from '@site/docs/_blocks/_plugin_module.mdx';
+## About
 
 This module allows you to test the range of your Meshtastic nodes. It uses two nodes, one to send a message every minute, and another to receive the messages. The receiving node then saves the messages along with the GPS coordinates at which they were received into a .csv file. This .csv file can then be integrated into, for example, Google Earth, allowing you to see where you have coverage.
 
@@ -14,69 +13,6 @@ This module allows you to test the range of your Meshtastic nodes. It uses two n
 The Range Test module is currently only compatible with ESP32 devices. nRF52 devices are not yet supported.
 
 ::: 
-
-## Configuration
-
-<PluginModule name="range_test_module_" rename="range_test_plugin_" />
-
-These are the settings that can be configured.
-
-    range_test_module_enabled
-        Is the Module enabled?
-
-        0 = Disabled (Default)
-        1 = Enabled
-
-    range_test_module_save
-        If enabled, we will save a log of all received messages to /static/rangetest.csv which you can access from the webserver. We will abort
-        writing if there is less than 50k of space on the filesystem to prevent filling up the storage.
-
-        0 = Disabled (Default)
-        1 = Enabled
-
-    range_test_module_sender
-        Number of seconds to wait between sending packets. Using the long_slow channel configuration, it's best not to go more frequent than once every 60 seconds. You can be more agressive with faster settings. 0 is default which disables sending messages.
-
-:::note
-The device must be restarted after the settings have been changed for the module to take effect.
-:::
-
-### Usage Notes
-
-For basic usage, you will need two devices both with a GPS. A device with a paired phone with GPS may work, I have not tried it.
-
-The first thing to do is to turn on the module. The device will need to be restarted after applying the settings. With the module turned on, the other settings will be available:
-
-    range_test_module_enabled = 1
-
-If you want to send a message every 60 seconds:
-
-    range_test_module_sender = 60
-
-To save a log of the messages:
-
-    range_test_module_save = 1
-
-Recommended settings for a sender at different radio settings:
-
-    Long Slow  ... range_test_module_sender = 60
-    Long Alt   ... range_test_module_sender = 30
-    Medium     ... range_test_module_sender = 15
-    Short Fast ... range_test_module_sender = 15
-
-### Python API Examples
-
-Sender
-
-`meshtastic --set range_test_module_enabled 1`
-
-`meshtastic --set range_test_module_sender 60`
-
-Receiver
-
-`meshtastic --set range_test_module_enabled 1`
-
-`meshtastic --set range_test_module_save 1`
 
 ### Other things to keep in mind
 
@@ -111,6 +47,11 @@ Google has instructions on how to do that [here](https://support.google.com/myma
 
 You can style the ranges differently based on the values, so you can have the pins be darker the if the SNR or RSSI (if that gets added) is higher.
 
+## Configuration
+
+Configuration details are available on the [Device Settings](/docs/settings) pages. Configuring the Range Test Module requires configuring the following modules:
+- [Range Test Module](/docs/settings/modules/range-test-module)
+
 ## Known Problems
 
 If turned on, using mesh network will become unwieldy because messages are sent over the same channel as the other messages. See TODO below.
@@ -123,7 +64,7 @@ Right now range test messages go over the `TEXT_MESSAGE_APP` port. We need a tog
 
 Q: Where is rangetest.csv saved?
 
-- Turn on the WiFi on your device as either a WiFi client or a WiFi AP. Once you can connect to your device, go to /static and you will see rangetest.csv.
+- Turn on the WiFi on your device as either a WiFi client or a WiFi AP. Once you can connect to your device, navigate to `Extensions > File Browser` and you will see `rangetest.csv` once messages have been saved and the file has been created.
 
 Q: Do I need to have WiFi turned on for the file to be saved?
 

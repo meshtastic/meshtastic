@@ -4,9 +4,6 @@ title: Store and Forward Module
 sidebar_label: Store and Forward
 sidebar_position: 5
 ---
-
-import PluginModule from '@site/docs/_blocks/_plugin_module.mdx';
-
 ## About
 
 :::caution
@@ -52,8 +49,6 @@ meshtastic --setchan spread_factor 11 --setchan coding_rate 4 --setchan bandwidt
 With an aftermarket coaxial antenna or moxon antenna, that will give you roughly the same range as "Long Range / Slow" and 5x the bitrate.
 
 ### Router setup
-
-<PluginModule name="store_forward_module" rename="store_forward_plugin" />
 
 - Configure your device as a [Meshtastic router](/docs/settings/router).
 - Configure the Store and Forward Module
@@ -174,6 +169,11 @@ Example Cases:
 When a message is 'real time', time a message is sent is the same as the time the message was received. In the case the message is delayed, there is no timestamp available for the message.
 
 Where the message is a delayed broadcast, the "To" is _not_ a broadcast address but rather the address of the device that requested the messages to be replayed. This is to allow the message to be routed over the mesh network and not displayed in the message screen of other devices.
+
+## Configuration
+
+Configuration details are available on the [Device Settings](/docs/settings) pages. Configuring the Store and Forward requires configuring the following modules:
+- [Store and Forward](/docs/settings/modules/store-and-forward-module)
 
 ## Developer TODO
 
