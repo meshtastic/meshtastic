@@ -89,18 +89,11 @@ Connected to radio
 Using the node ID from that list, send a message through the mesh telling that node to change its owner name.
 
 ```shell title="Expected output"
-$ meshtastic --dest \!28979058 --set-owner "Im Remote"
+$ meshtastic --dest '!28979058' --set-owner "Im Remote"
 Connected to radio
 Setting device owner to Im Remote
 INFO:root:Requesting configuration from remote node (this could take a while)
 ```
-
-:::note
-You will need to escape the `!` using `\!` otherwise the command will fail.
-:::
-:::note
-The above note needs clarification. Currently, you refer to other nodes with `!########`. No backslashes are used.
-:::
 
 And you can now confirm via the local node that the remote node has changed:
 

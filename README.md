@@ -1,72 +1,36 @@
-<!-- markdownlint-disable MD033 -->
-<!-- markdownlint-disable MD041 -->
+# Meshtastic
 
-[![CLA assistant](https://cla-assistant.io/readme/badge/meshtastic/Meshtastic)](https://cla-assistant.io/meshtastic/Meshtastic)
+[![CI](https://img.shields.io/github/workflow/status/meshtastic/meshtastic/CI?label=actions&logo=github&color=yellow)](https://github.com/meshtastic/meshtastic/actions/workflows/ci.yml)
+[![CLA assistant](https://cla-assistant.io/readme/badge/meshtastic/meshtastic)](https://cla-assistant.io/meshtastic/repo)
+[![Fiscal Contributors](https://opencollective.com/meshtastic/tiers/badge.svg?label=Fiscal%20Contributors&color=deeppink)](https://opencollective.com/meshtastic/)
+[![Vercel](https://img.shields.io/static/v1?label=Powered%20by&message=Vercel&style=flat&logo=vercel&color=000000)](https://vercel.com?utm_source=meshtastic&utm_campaign=oss)
 
-<div align="center">
-  <img src="https://raw.githubusercontent.com/meshtastic/meshtastic-design/4463325bedef20be5655c91c80d1cd32a625f3ff/logo/svg/Mesh_Logo_Dynamic.svg" width="256">
-  <h1>Meshtastic</h1>
-<span>
-  <a href="https://www.meshtastic.org" target="_blank">
-    <img src="static/img/readme/globe.svg" width="16" />
-    Website
-  </a>
-  <span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
-  <a href="https://meshtastic.discourse.group" target="_blank">
-    <img src="static/img/readme/comment-alt.svg" width="16" />
-    Forum
-  </a>
-  <span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
-  <a href="https://discord.gg/ktMAKGBnBs" target="_blank">
-    <img src="static/img/readme/discord.svg" width="16" />
-    Discord
-  </a>
-  <span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
-  <a href="https://play.google.com/store/apps/details?id=com.geeksville.mesh" target="_blank">
-    <img src="static/img/readme/google-play.svg" width="16" />
-    App
-  </a>
-  </span>
-  <br />
-  <hr />
-</div>
+## Overview
 
-## What is Meshtastic?
+Website and documentation source for the Meshtastic project.
 
-Meshtastic® is a project that lets you use inexpensive LoRa radios as a long range off-grid communicator for areas without reliable cellular service. These radios are great for hiking, skiing, paragliding - essentially any hobby where you don't have reliable internet access. Each member of the mesh can send and view text messages and enable optional GPS based location features.
+## Stats
 
-The radios automatically create a mesh to forward packets as needed, so everyone in the group can receive messages from even the furthest member. The radios will optionally work with your phone, but no phone is required.
+![Alt](https://repobeats.axiom.co/api/embed/e6da6ff0a9523a4eee6931d675dfeefdb7ca8692.svg "Repobeats analytics image")
 
-Meshtastic uses LoRa for the long range communications and depending on settings used, the maximum theoretical group size ranges from 30-200 device nodes. Currently each device can only support a connection from a single user at a time.
-
-Please see our [website](https://meshtastic.org) for more information about Meshtastic.
-
-[![Powered by Vercel](https://raw.githubusercontent.com/abumalick/powered-by-vercel/master/powered-by-vercel.svg)](https://vercel.com?utm_source=meshtastic&utm_campaign=oss)
-
-## Installation
+## Development & Building
 
 nodejs is required in your dev. environment. The method for installing nodejs depends on your operating system. This software is built using [Docusaurus](https://docusaurus.io).
-
-Fork then clone the repository:
-
-```shell
-git clone https://github.com/meshtastic/meshtastic
-```
 
 Go to the root directory of your repository and install dependencies:
 
 ```shell
-yarn install
+pnpm install
 ```
 
 Build the project with the following command
 
 ```shell
-yarn build
+pnpm build
 ```
 
 Start a local dev. instance with the following command
 
 ```shell
-yarn start
+pnpm start
 ```

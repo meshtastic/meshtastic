@@ -1,0 +1,89 @@
+---
+id: flashing-external-serial-adapter
+title: Flashing ESP32 Devices with an External Serial Adapter
+sidebar_label: Flashing with External Serial Adapter - ESP32 Devices
+pagination_prev: getting-started/flashing-firmware/flashing-firmware
+pagination_next: getting-started/flashing-firmware/meshtastic-flasher
+sidebar_position: 1
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+:::info
+This information will likely only be helpful if you've already attempted to go through the prerequisites and processes outlined in [meshtastic flasher](https://meshtastic.org/docs/getting-started/flashing-firmware/meshtastic-flasher) or [manually flashing](https://meshtastic.org/docs/getting-started/flashing-firmware/flashing-esp32)
+:::
+
+:::caution
+Make sure not to power the radio on without first attaching the antenna! You could damage the radio chip!
+:::
+
+## Background
+
+Situations that may require usage an external USB to Serial Adapter:
+* Due to the chip shortage, recently purchased devices such as the TTGO T-Beam may come with legacy or non-standard USB to Serial adapter chips that are unreliable in some cases. 
+* Certain devices might have defective USB to Serial chip.
+* Certain devices, such as the [Hydra](https://github.com/Hydra-Designs/project-hydra-meshtastic-pcb) (Meshtastic-diy target).
+
+### USB Serial Adapters
+
+There are many options on the marketplace. It is recommended to purchase an adapter featuring the Silicon Labs CP2102 chip, as it is a reliable industry standard.
+
+The adapter featured in this document can be purchased from:
+https://www.amazon.com/gp/product/B078W5L8W1/
+
+Plug the adapter into your computer without connecting it to any devices yet. Ensure that your computer has drivers installed for the adapter. On Windows, the correct drivers should install automatically.
+![image](https://user-images.githubusercontent.com/9000580/168445869-f73667f5-0169-46fd-ae13-15c3abad31aa.png)
+
+### Connecting Adapter to the Device
+
+:::info
+There are multiple ways to connect the pins of the adapter to the target device: pressing jumpers against contacts, using pogo pin jigs, etc. This tutorial features offset dupont headers soldered onto the operative gpio pins and connected via jumpers.
+:::
+Disconnect your USB to Serial Adapter from the computer before starting this process. 
+
+1) Connect the RX pin of the adapter to the TX pin of the device
+
+2) Connect the TX pin of the adapter to the RX pin of the device
+
+3) Connect a GND pin of the adapter to the GND pin of the device
+
+4) Connect either the 5V pin of the adapter to the 5V pin of the device (illustrated) or the 3.3V pin of the adapter to the 3.3V pin of device.
+
+5) Bridge GPIO 0 to GND on the device with a jumper. (This places the device into flash mode when the device is powered up)
+
+Example wiring featuring a T-Beam
+![image](https://user-images.githubusercontent.com/9000580/168446438-d14f34a0-b92d-4716-87fd-e0c2927a35fd.png)
+
+6) Connect the device to a USB port on the computer
+
+7) Remove the jumper bridging GPIO 0 to GND
+
+![enter-flash-mode](https://user-images.githubusercontent.com/9000580/168446974-c31d3e9c-3397-4cb1-90a4-91ef2e4d5fac.gif)
+
+### Flashing
+
+After following the steps above, your device should be in flash mode. You can flash your device using the [Meshtastic flasher](https://meshtastic.org/docs/getting-started/flashing-firmware/meshtastic-flasher) or [manual method](https://meshtastic.org/docs/getting-started/flashing-firmware/flashing-esp32)
+
+Example using the Meshtastic Flasher
+![image](https://user-images.githubusercontent.com/9000580/168447086-313e0649-1bfe-4ccb-b891-0f56059d8063.png)
+
+After flashing the device is complete, reset your device (via the RST button if available).
+If you have the meshastic python cli installed, you can run `meshatstic --noproto` to connect the device again over the adapter and view the serial output to confirm meshtastic installed correctly.
+![image](https://user-images.githubusercontent.com/9000580/168447159-71a6546a-f487-4bc2-86c1-4c489b2a8975.png)
+
+
+### Troubleshooting
+
+In the Mesthastic Flasher, device detection may not work when using the external USB to Serial adapter. You might need to manually select the correct device type from the dropdown.
+
+![image](https://user-images.githubusercontent.com/9000580/168447197-206f7e14-debe-4b6a-bb2a-7647418075e4.png)
+
+Sometimes you might receive an error for COM port permission in the Mestastic Flasher or the manual device install scripts, this can be caused by a number of different issues. 
+
+You might need to run the process as an administrator, check to ensure software like Cura isn't monopolizing COM ports, or reboot. 
+![image](https://user-images.githubusercontent.com/9000580/168447232-1a3af39b-e3cc-44b9-bc3a-32843a9e6f1f.png)
+
+
+
+
