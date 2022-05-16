@@ -30,11 +30,6 @@ Initial Requirements:
   - Router nodes are intended to be always online. If this module misses any messages, the reliability of the stored messages will be reduced.
 - Esp32 Processor based device with external PSRAM. (tbeam v1.0 and tbeamv1.1, and maybe others)
 
-## Configuration
-
-Configuration details are available on the [Device Settings](/docs/settings) pages. Configuring the Store and Forward requires configuring the following modules:
-- [Store and Forward](/docs/settings/modules/store-and-forward-module)
-
 ## Usage Overview
 
 To use / test this you will want at least 3 devices
@@ -179,6 +174,11 @@ Example Cases:
 When a message is 'real time', time a message is sent is the same as the time the message was received. In the case the message is delayed, there is no timestamp available for the message.
 
 Where the message is a delayed broadcast, the "To" is _not_ a broadcast address but rather the address of the device that requested the messages to be replayed. This is to allow the message to be routed over the mesh network and not displayed in the message screen of other devices.
+
+## Configuration
+
+Configuration details are available on the [Device Settings](/docs/settings) pages. Configuring the Store and Forward requires configuring the following modules:
+- [Store and Forward](/docs/settings/modules/store-and-forward-module)
 
 ## Developer TODO
 
