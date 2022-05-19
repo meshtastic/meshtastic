@@ -83,9 +83,7 @@ The default messaging provided by Layer 1 is extended by setting the `WantAck` f
 > Broadcast messages treat this flag specially: Since ACKs for broadcasts would rapidly flood the channel, the normal ACK behavior is suppressed. Instead, the original sender listens to see if at least one node is rebroadcasting this
 > packet (because naive flooding algorithm). If it hears that, the odds (given typical LoRa topologies) are very high that every node should eventually receive the message. So FloodingRouter.cpp generates an implicit ACK which is delivered to the original sender. If after some time we don't hear anyone rebroadcast our packet, we will timeout and retransmit, using the regular resend logic.
 
-If a transmitting node does not receive an ACK (or NAK) packet within FIXME milliseconds, it will use Layer 1 to attempt a retransmission of the sent packet. A reliable packet (at this 'zero hop' level) will be resent a maximum of three times. If no ACK or NAK has been received by then the local node will internally generate a NAK (either for local consumption or use by higher layers of the protocol).
-
-Similarly to the delay used for [collision avoidance](#collision-avoidance), a delay is used before attempting to retransmit a dropped packet. The delay is calculated based on the time it takes to transmit just the header, which is a packet with a 0 Byte payload, and is a random value between `9 * header time` and `10 * header time`, in milliseconds.
+If a transmitting node does not receive an ACK (or NAK) packet after a certain expiration time, it will use Layer 1 to attempt a retransmission of the sent packet. A reliable packet (at this 'zero hop' level) will be resent a maximum of three times. If no ACK or NAK has been received by then the local node will internally generate a NAK (either for local consumption or use by higher layers of the protocol). The retransmission expiration time is based on the maximum time it would take to receive an (implicit) ACK, taking the airtime of the sent packet and any processing delay into account.
 
 ### Layer 3: (Naive) Flooding for Multi-Hop Messaging
 
