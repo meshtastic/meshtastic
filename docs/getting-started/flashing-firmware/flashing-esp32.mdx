@@ -152,7 +152,13 @@ values={[
 {label: 'Windows', value: 'windows'},
 ]}>
 <TabItem value="linux"></TabItem>
-<TabItem value="macos"></TabItem>
+<TabItem value="macos">
+
+:::important
+On MacOS, you may need to explicitly declare esptool as a .py script. Use `esptool.py chip_id`.
+:::
+
+</TabItem>
 <TabItem value="windows">
 
 :::important
