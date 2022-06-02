@@ -18,7 +18,7 @@ const Sponsor = (): JSX.Element => {
             As with everything we do here, Open Collective provides a fully transparent framework for our budget and expenses. You can see what we’re bringing in, who is spending money and where that money is going <a className="underline" href="https://opencollective.com/meshtastic" target="_blank">here</a>.
           </p>
           <p>
-            In addition to our partnership with Open Collective and Open Source Collective, we have also been approved into the <a className="underline" href="https://github.com/sponsors" target="_blank">GitHub Sponsors</a> program where we can set fundraising goals with GitHub. Check them out too:
+            In addition to our partnership with Open Collective and Open Source Collective, we have also been approved into the <a className="underline" href="https://github.com/sponsors" target="_blank">GitHub Sponsors</a> program where we can set fundraising goals with GitHub.
           </p>
           <p>
             All donations made through GitHub will be deposited to our account with the Open Source Collective and managed by the Open Collective. This means we have a single place to monitor and maintain transparency of our finances.
