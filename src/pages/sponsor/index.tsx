@@ -1,5 +1,6 @@
 import React from 'react';
 import Layout from '@theme/Layout';
+import Link from '@docusaurus/Link';
 
 const Sponsor = (): JSX.Element => {
   return(
@@ -25,6 +26,14 @@ const Sponsor = (): JSX.Element => {
           <p>
             If you are able, please contribute to this amazing project.
           </p>
+          <div className="indexCtasBody">
+            <Link
+            className={'button button--outline  button--lg cta--button'}
+            to={'https://opencollective.com/meshtastic/donate'}
+            >
+            Sponsor Meshtastic
+            </Link>
+          </div>
         </div>
       </main>
     </Layout>
