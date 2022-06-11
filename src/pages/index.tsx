@@ -55,7 +55,7 @@ const features = [
       <>
         Create a highly scalable mesh with hardware on a multitude of platforms
         to fit your unique requirements: Create an environment monitoring mesh
-        and produce real-time heatmaps, or maybe decentralized, encrypted
+        and produce real-time heatmaps, or maybe decentralizeds, encrypted
         messaging network, your imagination is the limit.
       </>
     ),
