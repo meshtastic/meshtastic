@@ -1,0 +1,100 @@
+---
+id: display
+title: Display Configuration
+sidebar_label: Display
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+The display config options are: Screen On Duration, Auto Carousel Interval, and GPS Format.  Display config uses an admin message sending a `Config.Display` protobuf.
+
+## Device Config Values
+
+### Screen On Duration
+How long the screen remains on after the user button is pressed or messages are received.
+
+### Auto Carousel Interval
+
+Automatically toggles to the next page on the screen like a carousel, based the specified interval.
+### GPS Format
+
+The format used to display GPS coordinates on the device screen.
+
+Acceptable values:
+
+|   Value   |     Description              |
+| :-------: | :--------------------------: |
+|  `gpsFormatDec`   | Decimal Degrees |
+| `gpsFormatDms` | Degrees Minutes Seconds |
+| `gpsFormatUtm` | Universal Transverse Mercator |
+| `gpsFormatMgrs` | Military Grid Reference System |
+| `gpsFormatOlc` | Open Location Code (Plus Codes) |
+| `gpsFormatOsgr` | Ordnance Survey Grid Reference |
+
+## Device Config Client Availability
+
+<Tabs
+groupId="settings"
+defaultValue="flasher"
+values={[
+{label: 'Android', value: 'android'},
+{label: 'Apple', value: 'apple'},
+{label: 'Command Line', value: 'cli'},
+{label: 'Flasher', value: 'flasher'},
+{label: 'Web', value: 'web'},
+]}>
+<TabItem value="android">
+
+:::info
+Display config is not available for Android.
+:::
+
+</TabItem>
+<TabItem value="apple">
+
+:::info
+All display config options are available on iOS, iPadOS and macOS at Settings > Radio Configuration > Display.
+:::
+
+</TabItem>
+<TabItem value="cli">
+
+All display config options are available in the python CLI. Example commands are below:
+
+```shell title="Set display_screen_on_secs to default (10 minutes)"
+meshtastic --set display_screen_on_secs 0
+```
+
+```shell title="Set display_screen_on_secs to 120 seconds (2 minutes)"
+meshtastic --set display_screen_on_secs 120
+```
+
+```shell title="Set display_auto_screen_carousel_secs to default value of off"
+meshtastic --set display_auto_screen_carousel_secs 0
+```
+
+```shell title="Set display_auto_screen_carousel_secs to 120 seconds (2 minutes)"
+meshtastic --set display_auto_screen_carousel_secs 120
+```
+
+```shell title="Specify GPS format on device screen"
+meshtastic --set display_gps_format GpsFormatUTM
+```
+
+</TabItem>
+<TabItem value="flasher">
+
+:::info
+Display config is not available in the Flasher.
+:::
+
+  </TabItem>
+  <TabItem value="web">
+
+:::info
+Display config is not available in the Web UI.
+:::
+    
+  </TabItem>
+</Tabs>
