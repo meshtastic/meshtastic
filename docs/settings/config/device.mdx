@@ -1,0 +1,110 @@
+---
+id: device
+title: Device Configuration
+sidebar_label: Device
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+The device config options are: Role, Serial Output, Debug Log, NTP Server and Factory Reset.  Device config uses an admin message sending a `Config.Device` protobuf.
+
+## Device Config Values
+
+### Role
+Sets the role of node. 
+
+Acceptable values:
+
+|   Value   |                                                                  Description                                                                                                              |
+| :-------: | :---------------------------------------------------------------------------------------: |
+|  `client`   | Client (default) - App connected client. |
+| `clientMute` | Client Mute - Same as a client except packets will not hop over this node, does not contribute to routing packets for mesh. |
+| `router` | Router -  Mesh packets will prefer to be routed over this node. This node will not be used by client apps. The wifi/ble radios and the oled screen will be put to sleep. |
+| `routerClient` | Router Client - Mesh packets will prefer to be routed over this node. The Router Client can be used as both a Router and an app connected Client. |
+
+
+### Serial Console 
+Acceptable values: `true` or `false`
+
+On by default. If set to true this will disable the serial console by not initilizing the StreamAPI.
+
+### Debug Log
+Acceptable values: `true` or `false`
+
+By default we turn off logging as soon as an API client connects Set this to true to leave the debug log outputting even when API is active.
+
+### NTP Server
+Acceptable value: `string`
+
+NTP server to use if WiFi is conneced, defaults to `0.pool.ntp.org`
+
+### Factory Reset
+Acceptable values: `true` or `false`
+
+This setting is never saved to disk, but if set, all device settings will be returned to factory defaults.
+
+## Device Config Client Availability
+
+<Tabs
+groupId="settings"
+defaultValue="flasher"
+values={[
+{label: 'Android', value: 'android'},
+{label: 'Apple', value: 'apple'},
+{label: 'Command Line', value: 'cli'},
+{label: 'Flasher', value: 'flasher'},
+{label: 'Web', value: 'web'},
+]}>
+<TabItem value="android">
+
+:::info
+Device config is not available for Android.
+:::
+
+</TabItem>
+<TabItem value="apple">
+
+:::info
+All device config options other than NTP Server are available on iOS, iPadOS and macOS at Settings > Radio Configuration > Device.
+
+WiFi related settings are not available on Apple OS's.
+:::
+
+</TabItem>
+<TabItem value="cli">
+
+All device config options are available in the python CLI. Example commands are below:
+
+```shell title="Set the role to client"
+meshtastic --set role client
+```
+
+```shell title="Disable serial console"
+meshtastic --set serial_disabled true
+```
+
+```shell title="Enable debug logging"
+meshtastic --set debug_log_enabled true
+```
+
+```shell title="Factory reset your radio"
+meshtastic --set factory_reset true
+```
+
+</TabItem>
+<TabItem value="flasher">
+
+:::info
+Device config is not available in the Flasher.
+:::
+
+  </TabItem>
+  <TabItem value="web">
+
+:::info
+Device config is not available for the Web UI.
+:::
+    
+  </TabItem>
+</Tabs>

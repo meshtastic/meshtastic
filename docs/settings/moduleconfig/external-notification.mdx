@@ -1,30 +1,48 @@
 ---
-id: misc
-title: 1.2 Miscellaneous Settings
-sidebar_label: 1.2 Miscellaneous
+id: external-notification
+title: External Notification Module Settings
+sidebar_label: External Notification
 ---
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
+:::warning
+GPIO access is fundamentally dangerous because invalid options can physically damage or destroy your hardware. Ensure that you fully understand the schematic for your particular device before trying this as we do not offer a warranty. Use at your own risk.
+:::
+
+:::note
+This module requires attaching a peripheral accessory to your device. It will not work without one.
+:::
+
 ## Overview
+
+The External Notification Module will allow you to connect a speaker, LED, or other device to notify you when a message has been received from the mesh network.
+
+:::tip
+Once module settings are changed, a **reset** is required for them to take effect.
+:::
 
 ## Settings
 
-|          Setting          |           Acceptable Values            | Default |
-| :-----------------------: | :------------------------------------: | :-----: |
-| auto_screen_carousel_secs |          `integer` (seconds)           |   `0`   |
-|     debug_log_enabled     |            `true`, `false`             | `false` |
-|       factory_reset       |            `true`, `false`             | `false` |
-|      ignore_incoming      | `string` – list of node nums to ignore |   `0`   |
-|         hop_limit         |                `0`-`7`                 |   `0`   |
-|      serial_disabled      |            `true`, `false`             | `false` |
+|                Setting                |    Acceptable Values     | Default |
+| :-----------------------------------: | :----------------------: | :-----: |
+|    ext_notification_module_active     |     `true`, `false`      | `false` |
+|  ext_notification_module_alert_bell   |     `true`, `false`      | `false` |
+| ext_notification_module_alert_message |     `true`, `false`      | `false` |
+|    ext_notification_module_enabled    |     `true`, `false`      | `false` |
+|    ext_notification_module_output     |        `integer`         |   `0`   |
+|   ext_notification_module_output_ms   | `integer` (milliseconds) |   `0`   |
 
-### auto_screen_carousel_secs
+### ext_notification_module_active
 
-Automatically toggles to the next page on the screen like a carousel, based the specified interval in seconds. Potentially useful for devices without user buttons.
+Specifies whether the external circuit is triggered when the device's GPIO is low or high.
 
-#### Configure auto_screen_carousel_secs
+:::caution
+To prevent damaging your device, double check your device's schematics before attaching to the GPIO pins and setting this value.
+:::
+
+#### Specify High/Low GPIO triggers circuit
 
 <Tabs
 groupId="settings"
@@ -37,12 +55,12 @@ values={[
 ]}>
 <TabItem value="cli">
 
-```shell title="Set auto_screen_carousel_secs to default"
-meshtastic --set auto_screen_carousel_secs 0
+```shell title="GPIO active high"
+meshtastic --set ext_notification_module_active true
 ```
 
-```shell title="Set auto_screen_carousel_secs to 120 seconds"
-meshtastic --set auto_screen_carousel_secs 120
+```shell title="GPIO active low (default)"
+meshtastic --set ext_notification_module_active false
 ```
 
   </TabItem>
@@ -69,11 +87,11 @@ Configuring this setting is not yet available for the selected platform. If this
   </TabItem>
 </Tabs>
 
-### debug_log_enabled
+### ext_notification_module_alert_bell
 
-By default we turn off logging as soon as an API client connects (to keep shared serial link quiet and save bandwidth). Set this to true to leave the debug log outputting even when API is active.
+Specifies if an alert should be sent when receiving an incoming bell.
 
-#### Enable/Disable Debug Log
+#### Enable/Disable alert on incoming bell
 
 <Tabs
 groupId="settings"
@@ -86,12 +104,12 @@ values={[
 ]}>
 <TabItem value="cli">
 
-```shell title="Enable debug log"
-meshtastic --set debug_log_enabled true
+```shell title="Enable alert on incoming bell"
+meshtastic --set ext_notification_module_alert_bell true
 ```
 
-```shell title="Disable debug log"
-meshtastic --set debug_log_enabled false
+```shell title="Disable alert on incoming bell"
+meshtastic --set ext_notification_module_alert_bell false
 ```
 
   </TabItem>
@@ -118,11 +136,11 @@ Configuring this setting is not yet available for the selected platform. If this
   </TabItem>
 </Tabs>
 
-### factory_reset
+### ext_notification_module_alert_message
 
-This setting is never saved to disk, but if set, all device settings will be returned to factory defaults. (Region, serial number etc... will be preserved)
+Specifies if an alert should be sent when receiving an incoming message.
 
-#### Factory reset
+#### Enable/Disable Alert on incoming message
 
 <Tabs
 groupId="settings"
@@ -135,8 +153,12 @@ values={[
 ]}>
 <TabItem value="cli">
 
-```shell title="Example - Factory reset"
-meshtastic --set factory_reset true
+```shell title="Enable alert on incoming message"
+meshtastic --set ext_notification_module_alert_message true
+```
+
+```shell title="Disable alert on incoming message"
+meshtastic --set ext_notification_module_alert_message false
 ```
 
   </TabItem>
@@ -163,11 +185,11 @@ Configuring this setting is not yet available for the selected platform. If this
   </TabItem>
 </Tabs>
 
-### ignore_incoming
+### ext_notification_module_enabled
 
-If true, radio should not try to be smart about what packets to queue to the phone bool keep_all_packets = 101; If true, we will try to capture all the packets sent on the mesh, not just the ones destined to our node. bool promiscuous_mode = 102; For testing it is useful sometimes to force a node to never listen to particular other nodes (simulating radio out of range). All nodenums listed in ignore_incoming will have packets they send dropped on receive (by router.cpp)
+Enables the module.
 
-#### Enable/Disable ignore_incoming
+#### Enable/Disable the module
 
 <Tabs
 groupId="settings"
@@ -180,12 +202,12 @@ values={[
 ]}>
 <TabItem value="cli">
 
-```shell title="Enable ignore_incoming"
-meshtastic --set ignore_incoming true
+```shell title="Enable Module"
+meshtastic --set ext_notification_module_enabled true
 ```
 
-```shell title="Disable ignore_incoming"
-meshtastic --set ignore_incoming false
+```shell title="Disable Module"
+meshtastic --set ext_notification_module_enabled false
 ```
 
   </TabItem>
@@ -212,11 +234,15 @@ Configuring this setting is not yet available for the selected platform. If this
   </TabItem>
 </Tabs>
 
-### serial_disabled
+### ext_notification_module_output
 
-If set, this will disable the SerialConsole by not initializing the StreamAPI.
+Specifies the GPIO that your external circuit is attached to on the device.
 
-#### Enable/Disable Serial
+:::caution
+To prevent damaging your device, double check your device's schematics before attaching to the GPIO pins and setting this value.
+:::
+
+#### Specify GPIO for circuit to monitor
 
 <Tabs
 groupId="settings"
@@ -228,48 +254,44 @@ values={[
 {label: 'Web', value: 'web'},
 ]}>
 <TabItem value="cli">
-
-```shell title="Enable serial"
-meshtastic --set serial_disabled false
-```
-
-```shell title="Disable serial"
-meshtastic --set serial_disabled true
-```
-
-  </TabItem>
-  <TabItem value="android">
-
-:::info
-Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
-  </TabItem>
-  <TabItem value="iOS">
-
-:::info
-Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
-  </TabItem>
-  <TabItem value="web">
-
-:::info
-Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
-  </TabItem>
-</Tabs>
-
-### hop_limit
-
-Overrides the default number of hops a message will be passed. If not set, will default to 3 hops.
 
 :::note
-Meshtastic allows a maximum of 7 hops (this is a limit of the protocol). Setting a hop_limit of greater than 7 will be replaced with 7 on the device.
+Replace `GPIO` in the below command with the GPIO number your circuit is attached to.
 :::
 
-#### Configure hop_limit
+```shell title="Specify GPIO that circuit is connected to"
+meshtastic --set ext_notification_module_output GPIO
+```
+
+  </TabItem>
+  <TabItem value="android">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+  <TabItem value="iOS">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+  <TabItem value="web">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+  </TabItem>
+</Tabs>
+
+### ext_notification_module_output_ms
+
+Specifies how long in milliseconds you would like your external circuit triggered. Default is `1000`. (Because of the way that defaults are handled in the protobufs `0` is interpreted as `1000`)
+
+#### Specify how many milliseconds to trigger circuit
 
 <Tabs
 groupId="settings"
@@ -282,12 +304,12 @@ values={[
 ]}>
 <TabItem value="cli">
 
-```shell title="Set hop_limit to default (3 hops)"
-meshtastic --set hop_limit 0
+```shell title="Set to default (1000ms)"
+meshtastic --set ext_notification_module_output_ms 0
 ```
 
-```shell title="Set hop_limit to max (7 hops)"
-meshtastic --set hop_limit 7
+```shell title="Set to other value"
+meshtastic --set ext_notification_module_output_ms 1500
 ```
 
   </TabItem>

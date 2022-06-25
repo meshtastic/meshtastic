@@ -1,8 +1,22 @@
 ---
 id: modules
-title: Firmware Modules Overview
-sidebar_label: Firmware Modules
+title: 1.2 Plugin Configuration
+sidebar_label: 1.2 Plugin Config
 ---
-import ModuleOverviewText from '@site/docs/_blocks/_module_overview_text.mdx';
+Modules are included in the firmware and allow users to extend the functionality of their mesh or device.
 
-<ModuleOverviewText/>
+The list of current modules is as follows:
+
+| Name | Description |
+|:----:|:-----------:|
+| Canned Message Plugin | Set a number of predefined messages to send out directly from the device with the use of an input device like a rotary encoder. |
+| External Notification Plugin | Incoming messages are able to alert you using circuits you attach to the device (LEDs, Buzzers, etc) |
+| Rotary Encoder Plugin | Attach and define input devices such as external keyboards and rotary encoders. |
+| Range Test Plugin | Send messages with GPS location at an interval to test the distance your devices can communicate. Requires (at least) one device set up as a sender and one as a receiver. The receiver(s) will log all incoming messages to a CSV. |
+| Serial Plugin | Send messages across the mesh by sending strings over a serial port. |
+| Store and Forward Plugin | Set a designated node to store messages and resend them to nodes with intermittent connection to a mesh. |
+| Telemetry Plugin | Attach sensors to the device and transmit readings on a regular interval to the mesh. |
+
+:::tip
+Once Plugin settings are changed, a **reset** is required for them to take effect.
+:::

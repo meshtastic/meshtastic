@@ -1,20 +1,15 @@
 ---
 id: input-broker-module
-title: Input Broker
-sidebar_label: Input Broker
+title: Rotary Encoder
+sidebar_label: Rotary Encoder
 ---
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
-import PluginModule from '@site/docs/_blocks/_plugin_module.mdx';
 
 :::warning
 GPIO access is fundamentally dangerous because invalid options can physically damage or destroy your hardware. Ensure that you fully understand the schematic for your particular device before trying this as we do not offer a warranty. Use at your own risk.
 :::
-
-<PluginModule name="inputbroker_" rename="rotary1_" />
-
-<!--- TODO add link to hardware setup to admonition--->
 
 :::note
 This module requires attaching a peripheral accessory to your device. It will not work without one.
@@ -34,15 +29,15 @@ Once module settings are changed, a **reset** is required for them to take effec
 
 |       Setting       | Acceptable Values |    Default    |
 | :-----------------: | :---------------: | :-----------: |
-|   inputbroker_enabled   |  `true`, `false`  |    `false`    |
-|  inputbroker_event_cw   | `InputEventChar`  | (not defined) |
-|  inputbroker_event_ccw  | `InputEventChar`  | (not defined) |
-| inputbroker_event_press | `InputEventChar`  | (not defined) |
-|    inputbroker_pin_a    |     `integer`     | (not defined) |
-|    inputbroker_pin_b    |     `integer`     | (not defined) |
-|  inputbroker_pin_press  |     `integer`     | (not defined) |
+|   rotary1_enabled   |  `true`, `false`  |    `false`    |
+|  rotary1_event_cw   | `InputEventChar`  | (not defined) |
+|  rotary1_event_ccw  | `InputEventChar`  | (not defined) |
+| rotary1_event_press | `InputEventChar`  | (not defined) |
+|    rotary1_pin_a    |     `integer`     | (not defined) |
+|    rotary1_pin_b    |     `integer`     | (not defined) |
+|  rotary1_pin_press  |     `integer`     | (not defined) |
 
-### inputbroker_enabled
+### rotary1_enabled
 
 Enable the rotary encoder #1
 
@@ -60,11 +55,11 @@ values={[
 <TabItem value="cli">
 
 ```shell title="Enable rotary1"
-meshtastic --set inputbroker_enabled true
+meshtastic --set rotary1_enabled true
 ```
 
 ```shell title="Disable rotary1"
-meshtastic --set inputbroker_enabled true
+meshtastic --set rotary1_enabled true
 ```
 
   </TabItem>
@@ -91,7 +86,7 @@ Configuring this setting is not yet available for the selected platform. If this
   </TabItem>
 </Tabs>
 
-### inputbroker_event_cw
+### rotary1_event_cw
 
 Generate input event on CW of this kind.
 
@@ -113,11 +108,11 @@ values={[
 <TabItem value="cli">
 
 ```shell title="Set rotary1 event cw to 'KEY_UP'"
-meshtastic --set inputbroker_event_press KEY_UP
+meshtastic --set rotary1_event_press KEY_UP
 ```
 
 ```shell title="Unset rotary1 event cw"
-meshtastic --set inputbroker_event_press ""
+meshtastic --set rotary1_event_press ""
 ```
 
   </TabItem>
@@ -144,7 +139,7 @@ Configuring this setting is not yet available for the selected platform. If this
   </TabItem>
 </Tabs>
 
-### inputbroker_event_ccw
+### rotary1_event_ccw
 
 Generate input event on CCW of this kind.
 
@@ -166,11 +161,11 @@ values={[
 <TabItem value="cli">
 
 ```shell title="Set rotary1 event ccw to 'KEY_DOWN'"
-meshtastic --set inputbroker_event_ccw KEY_DOWN
+meshtastic --set rotary1_event_ccw KEY_DOWN
 ```
 
 ```shell title="Unset rotary1 event ccw"
-meshtastic --set inputbroker_event_ccw ""
+meshtastic --set rotary1_event_ccw ""
 ```
 
   </TabItem>
@@ -197,7 +192,7 @@ Configuring this setting is not yet available for the selected platform. If this
   </TabItem>
 </Tabs>
 
-### inputbroker_event_press
+### rotary1_event_press
 
 Generate input event on Press of this kind.
 
@@ -219,11 +214,11 @@ values={[
 <TabItem value="cli">
 
 ```shell title="Set rotary1 event press to 'KEY_SELECT'"
-meshtastic --set inputbroker_event_press KEY_SELECT
+meshtastic --set rotary1_event_press KEY_SELECT
 ```
 
 ```shell title="Unset rotary1 event press"
-meshtastic --set inputbroker_event_press ""
+meshtastic --set rotary1_event_press ""
 ```
 
   </TabItem>
@@ -250,7 +245,7 @@ Configuring this setting is not yet available for the selected platform. If this
   </TabItem>
 </Tabs>
 
-### inputbroker_pin_a
+### rotary1_pin_a
 
 GPIO pin for rotary encoder A port.
 
@@ -276,7 +271,7 @@ Replace `GPIO` below with the GPIO number from hardware setup.
 :::
 
 ```shell title="Specify rotary1 pin a"
-meshtastic --set inputbroker_pin_a GPIO
+meshtastic --set rotary1_pin_a GPIO
 ```
 
   </TabItem>
@@ -303,7 +298,7 @@ Configuring this setting is not yet available for the selected platform. If this
   </TabItem>
 </Tabs>
 
-### inputbroker_pin_b
+### rotary1_pin_b
 
 GPIO pin for rotary encoder B port.
 
@@ -329,7 +324,7 @@ Replace `GPIO` below with the GPIO number from hardware setup.
 :::
 
 ```shell title="Specify rotary1 pin b"
-meshtastic --set inputbroker_pin_b GPIO
+meshtastic --set rotary1_pin_b GPIO
 ```
 
   </TabItem>
@@ -356,7 +351,7 @@ Configuring this setting is not yet available for the selected platform. If this
   </TabItem>
 </Tabs>
 
-### inputbroker_pin_press
+### rotary1_pin_press
 
 GPIO pin for rotary encoder Press port.
 
@@ -382,7 +377,7 @@ Replace `GPIO` below with the GPIO number from hardware setup.
 :::
 
 ```shell title="Specify rotary1 pin press"
-meshtastic --set inputbroker_pin_press GPIO
+meshtastic --set rotary1_pin_press GPIO
 ```
 
   </TabItem>
@@ -435,13 +430,13 @@ Replace each `GPIO` (x3) below with the GPIO numbers from hardware setup.
 :::
 
 ```shell title="Canned Message Module - Required Rotary Encoder Module Settings"
-meshtastic --set inputbroker_pin_a GPIO
-meshtastic --set inputbroker_pin_b GPIO
-meshtastic --set inputbroker_pin_press GPIO
-meshtastic --set inputbroker_event_cw KEY_UP
-meshtastic --set inputbroker_event_ccw KEY_DOWN
-meshtastic --set inputbroker_event_press KEY_SELECT
-meshtastic --set inputbroker_enabled True
+meshtastic --set rotary1_pin_a GPIO
+meshtastic --set rotary1_pin_b GPIO
+meshtastic --set rotary1_pin_press GPIO
+meshtastic --set rotary1_event_cw KEY_UP
+meshtastic --set rotary1_event_ccw KEY_DOWN
+meshtastic --set rotary1_event_press KEY_SELECT
+meshtastic --set rotary1_enabled True
 ```
 
   </TabItem>
