@@ -1,50 +1,55 @@
 ---
-id: canned-message-module
-title: Canned Message Plugin Settings
-sidebar_label: Canned Message Plugin
+id: canned-message
+title: Canned Message Module Configuration
+sidebar_label: Canned Message
 ---
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
+import PluginModule from '@site/docs/_blocks/_plugin_module.mdx';
 
 :::warning
 GPIO access is fundamentally dangerous because invalid options can physically damage or destroy your hardware. Ensure that you fully understand the schematic for your particular device before trying this as we do not offer a warranty. Use at your own risk.
 :::
 
+<PluginModule name="canned_message_module" rename="canned_message_plugin" />
+
+<!--- TODO add link to hardware setup to admonition--->
+
 :::note
-This plugin requires attaching a peripheral accessory to your device. It will not work without one. It also requires use of the [Rotary Encoder](input-broker-module) to configure the input source.
+This module requires attaching a peripheral accessory to your device. It will not work without one. It also requires use of the [Rotary Encoder Module](input-broker-module) to configure the input source.
 :::
 
 ## Overview
 
-The CannedMessage Plugin will allow you to send messages to the mesh network from the device without using the phone app. You can predefine text messages to choose from.
+The CannedMessage Module will allow you to send messages to the mesh network from the device without using the phone app. You can predefine text messages to choose from.
 
 :::tip
-Once plugin settings are changed, a **reset** is required for them to take effect.
+Once module settings are changed, a **reset** is required for them to take effect.
 :::
 
 ## Settings
 
 |                 Setting                  | Acceptable Values | Default |
 | :--------------------------------------: | :---------------: | :-----: |
-| canned_message_plugin_allow_input_source | `rotEnc1`, `_any` | `_any`  |
-|      canned_message_plugin_enabled       |  `true`, `false`  | `false` |
-|      canned_message_plugin_messages      |     `string`      |  `""`   |
-|     canned_message_plugin_send_bell      |  `true`, `false`  | `false` |
+| canned_message_module_allow_input_source | `rotEnc1`, `_any` | `_any`  |
+|      canned_message_module_enabled       |  `true`, `false`  | `false` |
+|      canned_message_module_messages      |     `string`      |  `""`   |
+|     canned_message_module_send_bell      |  `true`, `false`  | `false` |
 |               (Messages)\*               |     `string`      |  `""`   |
 
 - Messages can be set with a dedicated option:
 
 `--set-canned-message "<messages>"`
 
-### canned_message_plugin_allow_input_source
+### canned_message_module_allow_input_source
 
-Input event source accepted by the canned message plugin.
+Input event source accepted by the canned message module.
 
 |   Value   |                                                                                                              Description                                                                                                              |
 | :-------: | :-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
 |  `_any`   |                                                                                 Default. Allows any peripheral input device connected to the device.                                                                                  |
-| `rotEnc1` | Hardcoded value naming the input device that this plugin listens to. This could allow multiple input devices to be named with future software development. At present, this doesn't do anything differently than the default setting. |
+| `rotEnc1` | Hardcoded value naming the input device that this module listens to. This could allow multiple input devices to be named with future software development. At present, this doesn't do anything differently than the default setting. |
 
 #### Set input source
 
@@ -60,11 +65,11 @@ values={[
 <TabItem value="cli">
 
 ```shell title="Set Allowed Input Source"
-meshtastic --set canned_message_plugin_allow_input_source "_any"
+meshtastic --set canned_message_module_allow_input_source "_any"
 ```
 
 ```shell title="Specify Allowed Input Source"
-meshtastic --set canned_message_plugin_allow_input_source "rotEnc1"
+meshtastic --set canned_message_module_allow_input_source "rotEnc1"
 ```
 
   </TabItem>
@@ -91,15 +96,15 @@ Configuring this setting is not yet available for the selected platform. If this
   </TabItem>
 </Tabs>
 
-### canned_message_plugin_enabled
+### canned_message_module_enabled
 
-Enables the plugin.
+Enables the module.
 
 :::tip
-Using the canned message plugin requires you set up the [Rotary Encoder](input-broker-module). See [prerequisites](#prerequisites) below.
+Using the canned message module requires you set up the [Rotary Encoder Module](input-broker-module). See [prerequisites](#prerequisites) below.
 :::
 
-#### Enable/Disable the plugin
+#### Enable/Disable the module
 
 <Tabs
 groupId="settings"
@@ -112,12 +117,12 @@ values={[
 ]}>
 <TabItem value="cli">
 
-```shell title="Enable Canned Message Plugin"
-meshtastic --set canned_message_plugin_enabled true
+```shell title="Enable Canned Message Module"
+meshtastic --set canned_message_module_enabled true
 ```
 
-```shell title="Disable Canned Message Plugin"
-meshtastic --set canned_message_plugin_enabled false
+```shell title="Disable Canned Message Module"
+meshtastic --set canned_message_module_enabled false
 ```
 
   </TabItem>
@@ -144,14 +149,14 @@ Configuring this setting is not yet available for the selected platform. If this
   </TabItem>
 </Tabs>
 
-### canned_message_plugin_send_bell
+### canned_message_module_send_bell
 
-CannedMessagePlugin also sends a "bell character" with the messages.
-The [External Notification Plugin](external-notification-module) can benefit from this feature as it utilizes the bell character.
+CannedMessageModule also sends a "bell character" with the messages.
+The [External Notification Module](external-notification-module) can benefit from this feature as it utilizes the bell character.
 
-_We have an "External Notification Plugin", that can be set up to beep, when new message arrives.
-This plugin can also be configured to beep only when message contains the "bell character".
-See plugin documentation (link above) for details._
+_We have an "External Notification Module", that can be set up to beep, when new message arrives.
+This module can also be configured to beep only when message contains the "bell character".
+See module documentation (link above) for details._
 
 #### Enable/Disable bell character
 
@@ -167,11 +172,11 @@ values={[
 <TabItem value="cli">
 
 ```shell title="Enable Bell Character"
-meshtastic --set canned_message_plugin_send_bell true
+meshtastic --set canned_message_module_send_bell true
 ```
 
 ```shell title="Disable Bell Character"
-meshtastic --set canned_message_plugin_send_bell false
+meshtastic --set canned_message_module_send_bell false
 ```
 
   </TabItem>
@@ -200,7 +205,7 @@ Configuring this setting is not yet available for the selected platform. If this
 
 ### Messages
 
-CLI has a dedicated option for canned message plugin to set predefines messages: `--set-canned-message <message>`
+CLI has a dedicated option for canned message module to set predefines messages: `--set-canned-message <message>`
 Predefined messages separated by `|` characters.
 
 You can define up to 50 messages with a total length 800 bytes.
@@ -221,7 +226,7 @@ values={[
 <TabItem value="cli">
 
 ```shell title="Set Canned Messages"
-meshtastic --set canned_message_plugin_messages "I'm fine|I'm out|I'm back|Need helping hand|Help me with saw|I need an alpinist|I need ambulance|Keep Calm|On my way|I will be late|I'm already waiting|We have company|Beer is cold|Roger"
+meshtastic --set canned_message_module_messages "I'm fine|I'm out|I'm back|Need helping hand|Help me with saw|I need an alpinist|I need ambulance|Keep Calm|On my way|I will be late|I'm already waiting|We have company|Beer is cold|Roger"
 ```
 
   </TabItem>
@@ -255,12 +260,12 @@ Configuring this setting is not yet available for the selected platform. If this
 <!--- TODO add link to hardware pages to first bullet point --->
 
 - Attach a compatible peripheral device. Take note of the GPIO numbers you use, as they will be used in the following step.
-- Once attached, configure peripheral device with [Rotary Encoder](input-broker-module) Settings.
+- Once attached, configure peripheral device with [Rotary Encoder Module](input-broker-module) Settings.
 
 :::note
 Replace each `GPIO` (x3) below with the GPIO numbers from hardware setup.
 
-```shell title="Canned Message Plugin - Required Rotary Encoder Settings"
+```shell title="Canned Message Module - Required Rotary Encoder Module Settings"
 meshtastic --set rotary1_pin_a GPIO
 meshtastic --set rotary1_pin_b GPIO
 meshtastic --set rotary1_pin_press GPIO
@@ -271,4 +276,4 @@ meshtastic --set rotary1_enabled True
 ```
 
 :::
-That's it! With a functioning and enabled rotary encoder, you're ready to begin configuring the Canned Message Plugin.
+That's it! With a functioning and enabled rotary encoder, you're ready to begin configuring the Canned Message Module.

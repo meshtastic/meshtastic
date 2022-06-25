@@ -1,44 +1,51 @@
 ---
-id: telemetry-module
-title: Environmental Measurement Plugin Settings
-sidebar_label: Environmental Measurement Plugin
+id: telemetry
+title: Telemetry Module Configuration
+sidebar_label: Telemetry
 ---
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
+import PluginModule from '@site/docs/_blocks/_plugin_module.mdx';
 
 :::warning
 GPIO access is fundamentally dangerous because invalid options can physically damage or destroy your hardware. Ensure that you fully understand the schematic for your particular device before trying this as we do not offer a warranty. Use at your own risk.
 :::
 
+<PluginModule
+  name="telemetry_module_environment"
+  rename="environmental_measurement_plugin"
+/>
+
+<!--- TODO add link to hardware setup to admonition--->
 
 :::note
-The environment metrics feature of this plugin requires attaching a peripheral accessory to your device. It will not work without one.
+The environment metrics feature of this module requires attaching a peripheral accessory to your device. It will not work without one.
 :::
 
 ## Overview
 
-In addition to key device metrics such as battery level, the Environment Monitoring Plugin will also allow nodes to send environmental metrics from externally connected sensors. Currently supported sensors are BME280, BME680, DHT11, DHT12, DHT21, DHT22, Dallas 1-wire DS18B20 and MCP9808.
+In addition to key device metrics such as battery level, the Telemetry Module will also allow nodes to send environmental metrics from externally connected sensors. Currently supported sensors are BME280, BME680, DHT11, DHT12, DHT21, DHT22, Dallas 1-wire DS18B20 and MCP9808.
 
 :::tip
-Once plugin settings are changed, a **reset** is required for them to take effect.
+Once module settings are changed, a **reset** is required for them to take effect.
 :::
 
 ## Settings
 
 |                         Setting                         |  Acceptable Values  | Default |
 | :-----------------------------------------------------: | :-----------------: | :-----: |
-|         environmental_measurement_plugin_device_update_interval         | `integer` (seconds) |   `0`   |
-|     environmental_measurement_plugin_display_fahrenheit     |   `true`, `false`   | `false` |
-|    environmental_measurement_plugin_measurement_enabled     |   `true`, `false`   | `false` |
-| environmental_measurement_plugin_read_error_count_threshold |      `integer`      |   `0`   |
-|     environmental_measurement_plugin_recovery_interval      | `integer` (seconds) |   `0`   |
-|       environmental_measurement_plugin_screen_enabled       |   `true`, `false`   |   `0`   |
-|         environmental_measurement_plugin_sensor_pin         |      `integer`      |   `0`   |
-|        environmental_measurement_plugin_sensor_type         |        `0-6`        |   `0`   |
-|      environmental_measurement_plugin_update_interval       | `integer` (seconds) |   `0`   |
+|         telemetry_module_device_update_interval         | `integer` (seconds) |   `0`   |
+|     telemetry_module_environment_display_fahrenheit     |   `true`, `false`   | `false` |
+|    telemetry_module_environment_measurement_enabled     |   `true`, `false`   | `false` |
+| telemetry_module_environment_read_error_count_threshold |      `integer`      |   `0`   |
+|     telemetry_module_environment_recovery_interval      | `integer` (seconds) |   `0`   |
+|       telemetry_module_environment_screen_enabled       |   `true`, `false`   |   `0`   |
+|         telemetry_module_environment_sensor_pin         |      `integer`      |   `0`   |
+|        telemetry_module_environment_sensor_type         |        `0-6`        |   `0`   |
+|      telemetry_module_environment_update_interval       | `integer` (seconds) |   `0`   |
 
-### environmental_measurement_plugin_device_update_interval
+### telemetry_module_device_update_interval
 
 Interval in seconds of how often we should try to send our measurements to the mesh.
 
@@ -53,12 +60,12 @@ values={[
 ]}>
 <TabItem value="cli">
 
-```shell title="Set plugin update interval to default"
-meshtastic --set environmental_measurement_plugin_device_update_interval 0
+```shell title="Set module update interval to default"
+meshtastic --set telemetry_module_device_update_interval 0
 ```
 
-```shell title="Set plugin update interval to 120 seconds"
-meshtastic --set environmental_measurement_plugin_device_update_interval 120
+```shell title="Set module update interval to 120 seconds"
+meshtastic --set telemetry_module_device_update_interval 120
 ```
 
   </TabItem>
@@ -85,7 +92,7 @@ Configuring this setting is not yet available for the selected platform. If this
   </TabItem>
 </Tabs>
 
-### environmental_measurement_plugin_display_fahrenheit
+### telemetry_module_environment_display_fahrenheit
 
 The sensor is always read in Celsius, but the user can opt to view the temperature display in Fahrenheit using this setting.
 
@@ -103,11 +110,11 @@ values={[
 <TabItem value="cli">
 
 ```shell title="Display Farenheit"
-meshtastic --set environmental_measurement_plugin_display_fahrenheit true
+meshtastic --set telemetry_module_environment_display_fahrenheit true
 ````
 
 ```shell title="Display Celsius"
-meshtastic --set environmental_measurement_plugin_display_fahrenheit false
+meshtastic --set telemetry_module_environment_display_fahrenheit false
 ```
 
   </TabItem>
@@ -134,11 +141,11 @@ Configuring this setting is not yet available for the selected platform. If this
   </TabItem>
 </Tabs>
 
-### environmental_measurement_plugin_measurement_enabled
+### telemetry_module_environment_measurement_enabled
 
-Enables the plugin to utilize environmental metrics.
+Enables the module to utilize environmental metrics.
 
-#### Enable/Disable the plugin
+#### Enable/Disable the module
 
 <Tabs
 groupId="settings"
@@ -151,12 +158,12 @@ values={[
 ]}>
 <TabItem value="cli">
 
-```shell title="Enable Plugin"
-meshtastic --set environmental_measurement_plugin_measurement_enabled true
+```shell title="Enable Module"
+meshtastic --set telemetry_module_environment_measurement_enabled true
 ````
 
-```shell title="Disable Plugin"
-meshtastic --set environmental_measurement_plugin_measurement_enabled false
+```shell title="Disable Module"
+meshtastic --set telemetry_module_environment_measurement_enabled false
 ```
 
   </TabItem>
@@ -183,11 +190,11 @@ Configuring this setting is not yet available for the selected platform. If this
   </TabItem>
 </Tabs>
 
-### environmental_measurement_plugin_read_error_count_threshold
+### telemetry_module_environment_read_error_count_threshold
 
 Sometimes sensor reads can fail. If this happens, we will retry a configurable number of attempts. Each attempt will be delayed by the minimum required refresh rate for that sensor
 
-#### Configure environmental_measurement_plugin_read_error_count_threshold
+#### Configure telemetry_module_environment_read_error_count_threshold
 
 <Tabs
 groupId="settings"
@@ -200,8 +207,8 @@ values={[
 ]}>
 <TabItem value="cli">
 
-```shell title="Configure environmental_measurement_plugin_read_error_count_threshold to 3 tries"
-meshtastic --set environmental_measurement_plugin_read_error_count_threshold 3
+```shell title="Configure telemetry_module_environment_read_error_count_threshold to 3 tries"
+meshtastic --set telemetry_module_environment_read_error_count_threshold 3
 ````
 
   </TabItem>
@@ -228,11 +235,11 @@ Configuring this setting is not yet available for the selected platform. If this
   </TabItem>
 </Tabs>
 
-### environmental_measurement_plugin_recovery_interval
+### telemetry_module_environment_recovery_interval
 
 Sometimes we can end up with more than read_error_count_threshold failures. In this case, we will stop trying to read from the sensor for a while. Wait this long until trying to read from the sensor again.
 
-#### Configure environmental_measurement_plugin_recovery_interval
+#### Configure telemetry_module_environment_recovery_interval
 
 <Tabs
 groupId="settings"
@@ -245,8 +252,8 @@ values={[
 ]}>
 <TabItem value="cli">
 
-```shell title="Configure environmental_measurement_plugin_recovery_interval to 120 seconds"
-meshtastic --set environmental_measurement_plugin_recovery_interval 120
+```shell title="Configure telemetry_module_environment_recovery_interval to 120 seconds"
+meshtastic --set telemetry_module_environment_recovery_interval 120
 ````
 
   </TabItem>
@@ -273,11 +280,11 @@ Configuring this setting is not yet available for the selected platform. If this
   </TabItem>
 </Tabs>
 
-### environmental_measurement_plugin_screen_enabled
+### telemetry_module_environment_screen_enabled
 
-Enable/Disable the Environmental Measurement Plugin on-device display.
+Enable/Disable the Telemetry Module on-device display.
 
-#### Enable/Disable the plugin on device screen
+#### Enable/Disable the module on device screen
 
 <Tabs
 groupId="settings"
@@ -291,11 +298,11 @@ values={[
 <TabItem value="cli">
 
 ```shell title="Enable on device screen"
-meshtastic --set environmental_measurement_plugin_screen_enabled true
+meshtastic --set telemetry_module_environment_screen_enabled true
 ````
 
 ```shell title="Disable on device screen"
-meshtastic --set environmental_measurement_plugin_screen_enabled false
+meshtastic --set telemetry_module_environment_screen_enabled false
 ```
 
   </TabItem>
@@ -322,10 +329,10 @@ Configuring this setting is not yet available for the selected platform. If this
   </TabItem>
 </Tabs>
 
-### environmental_measurement_plugin_sensor_pin
+### telemetry_module_environment_sensor_pin
 
 :::note
-The preferred setup is using I2C, so the `environmental_measurement_plugin_sensor_pin` may not be needed.
+The preferred setup is using I2C, so the `telemetry_module_environment_sensor_pin` may not be needed.
 :::
 
 Specify the preferred GPIO Pin for sensor readings. May not be needed if using I2C.
@@ -334,7 +341,7 @@ Specify the preferred GPIO Pin for sensor readings. May not be needed if using I
 To prevent damaging your device, double check your device's schematics before attaching to the GPIO pins and setting this value.
 :::
 
-#### Set plugin sensor pin
+#### Set module sensor pin
 
 <Tabs
 groupId="settings"
@@ -347,8 +354,8 @@ values={[
 ]}>
 <TabItem value="cli">
 
-```shell title="Set plugin sensor pin"
-meshtastic --set environmental_measurement_plugin_sensor_pin PINNUMBER
+```shell title="Set module sensor pin"
+meshtastic --set telemetry_module_environment_sensor_pin PINNUMBER
 ````
 
   </TabItem>
@@ -375,7 +382,7 @@ Configuring this setting is not yet available for the selected platform. If this
   </TabItem>
 </Tabs>
 
-### environmental_measurement_plugin_sensor_type
+### telemetry_module_environment_sensor_type
 
 Specify the sensor type.
 
@@ -416,11 +423,11 @@ The CLI is able to take the `value` or the `name` of the sensor from the table a
 :::
 
 ```shell title="Set sensor type to DS18B20"
-meshtastic --set environmental_measurement_plugin_sensor_type 2
+meshtastic --set telemetry_module_environment_sensor_type 2
 ````
 
 ```shell title="Set sensor type to DS18B20"
-meshtastic --set environmental_measurement_plugin_sensor_type DS18B20
+meshtastic --set telemetry_module_environment_sensor_type DS18B20
 ```
 
   </TabItem>
@@ -447,7 +454,7 @@ Configuring this setting is not yet available for the selected platform. If this
   </TabItem>
 </Tabs>
 
-#### Set plugin update interval
+#### Set module update interval
 
 <Tabs
 groupId="settings"
@@ -460,8 +467,8 @@ values={[
 ]}>
 <TabItem value="cli">
 
-```shell title="Set plugin update interval to 120 seconds"
-meshtastic --set environmental_measurement_plugin_update_interval 120
+```shell title="Set module update interval to 120 seconds"
+meshtastic --set telemetry_module_environment_update_interval 120
 ````
 
   </TabItem>
@@ -496,4 +503,4 @@ The sensors can be wired differently, here's [one example](https://randomnerdtut
 
 ### Known Problems
 
-- No default configuration values are currently set, so this must be done when enabling the plugin.
+- No default configuration values are currently set, so this must be done when enabling the module.
