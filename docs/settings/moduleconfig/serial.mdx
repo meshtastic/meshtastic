@@ -1,0 +1,146 @@
+---
+id: serial
+title: Serial Module Settings
+sidebar_label: Serial
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+The serial module config options are: Enabled, Echo, Mode, Receive GPIO, Transmit GPIO and Sender.  Serial Module config uses an admin message sending a `ConfigModule.Serial` protobuf.
+
+This is a simple interface to send messages over the mesh network by sending strings over a serial port. Anything you send the node will be turned into a message sent out over the mesh, and anything received from the mesh will be sent to the serial port. Note that this module does not (yet) allow arbitrary protobuf commands to be sent over the serial connection.
+
+:::warning
+GPIO access is fundamentally dangerous because invalid options can physically damage or destroy your hardware. Ensure that you fully understand the schematic for your particular device before trying this as we do not offer a warranty. Use at your own risk.
+:::
+
+:::note
+This module requires attaching a peripheral accessory to your device. It will not work without one.
+:::
+
+## Serial Module Config Values
+
+### Enabled
+
+Enables the serial module.
+
+### Echo
+
+If set, any packets you send will be echoed back to your device.
+
+### Mode
+
+### Receive GPIO Pin
+
+Set the GPIO pin to the RXD pin you have set up.
+
+### Transmit GPIO Pin
+
+Set the GPIO pin to the RXD pin you have set up.
+
+:::tip
+Connect the TX pin to the other device's RX pin, and vice versa. Connect their grounds to each other (not necessary if they're both plugged into the same USB power source.)
+:::
+
+### Baud Rate
+
+The serial baud rate.
+
+### Timeout
+
+The amount of time to wait before we consider your packet as "done".
+
+:::tip
+Once module settings are changed, a **reset** is required for them to take effect.
+:::
+
+## Serial Module Config Client Availability
+
+<Tabs
+groupId="settings"
+defaultValue="flasher"
+values={[
+{label: 'Android', value: 'android'},
+{label: 'Apple', value: 'apple'},
+{label: 'Command Line', value: 'cli'},
+{label: 'Flasher', value: 'flasher'},
+{label: 'Web', value: 'web'},
+]}>
+<TabItem value="android">
+
+:::info
+Serial module config is not available for Android.
+:::
+
+</TabItem>
+<TabItem value="apple">
+
+:::info
+Serial module config is not yet available on Apple OS's.
+:::
+
+</TabItem>
+<TabItem value="cli">
+
+All serial module config options are available in the python CLI. Example commands are below:
+
+|        Setting        |  Acceptable Values  | Default |
+| :-------------------: | :-----------------: | :-----: |
+| serial_module_enabled |   `true`, `false`   | `false` |
+|  serial_module_echo   |   `true`, `false`   | `false` |
+|  serial_module_mode   |      `modeDefault` `modeSimple` `modeProto`  |  `modeDefault`   |
+|   serial_module_rxd   |  GPIO Pin Number 1-39    | Default of `0` is Unset |
+|   serial_module_txd   |  GPIO Pin Number 1-39   |  Defaunlt of `0` is Unset  |
+| serial_module_baud    | `baudDefault` `baud110` `baud300` `baud600` `baud1200` `baud2400` `baud4800` `baud9600` `baud19200` `baud38400` `baud57600` `baud115200` `baud230400` `baud460800` `baud576000` `baud921600` |  `baudDefault`  |
+| serial_module_timeout | `integer` (seconds) |   `0`   |
+
+
+```shell title="Enable / Disable Module"
+meshtastic --set serial_module_enabled true
+meshtastic --set serial_module_enabled false
+```
+
+```shell title="Enable / Disable Echo"
+meshtastic --set serial_module_echo true
+meshtastic --set serial_module_echo false
+```
+
+```shell title="Set Mode"
+meshtastic --set serial_module_mode modeDefault
+meshtastic --set serial_module_mode modeProto
+``` 
+
+```shell title="Set RXD to GPIO pin number 7"
+meshtastic --set serial_module_rxd 7
+```
+
+```shell title="Set TXD to GPIO pin number 28"
+meshtastic --set serial_module_txd 28
+```
+
+```shell title="Set Baud Rate"
+meshtastic --set serial_module_baud baudDefault
+meshtastic --set serial_module_baud baud576000
+```
+
+```shell title="Set Timeout to 15 seconds"
+meshtastic --set serial_module_timeout 15
+```
+
+</TabItem>
+<TabItem value="flasher">
+
+:::info
+Serial module config is not available in the Flasher.
+:::
+
+  </TabItem>
+  <TabItem value="web">
+
+:::info
+Serial module config is not available for the Web UI.
+:::
+    
+  </TabItem>
+</Tabs>
