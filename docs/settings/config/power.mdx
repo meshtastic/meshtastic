@@ -114,71 +114,45 @@ All Power config options are available in the python CLI.
 |         min_wake_secs          |                                                                       `integer` (seconds)                                                                       |   Default of `0` is 10 seconds   |
 
 
-```shell title="Unset charge current"
+```shell title="Set / Unset charge current (Tbeam 1.1 only)"
 meshtastic --set  charge_current MAUnset
-```
-
-```shell title="Set charge current"
 meshtastic --set  charge_current MA100
 ```
 
-```shell title="Enable is_power_saving"
+```shell title="Enable / Disable Power Saving"
 meshtastic --set is_power_saving true
-```
-
-```shell title="Disable is_power_saving"
 meshtastic --set is_power_saving false
 ```
 
-```shell title="Disable on_battery_shutdown_after_secs"
+```shell title="Enable / Disable Shutdown after losing power"
+meshtastic --set on_battery_shutdown_after_secs 120
 meshtastic --set on_battery_shutdown_after_secs 0
 ```
 
-```shell title="Set device to shutdown after 120 seconds on battery"
-meshtastic --set on_battery_shutdown_after_secs 120
-```
-
-```shell title="Set wait_bluetooth_secs to default (60 seconds)"
+```shell title="Set  Wait Bluetooth Interval  (Default of 0 is 60 seconds)"
 meshtastic --set wait_bluetooth_secs 0
-```
-
-```shell title="Set wait_bluetooth_secs to 120 seconds"
 meshtastic --set wait_bluetooth_secs 120
 ```
 
-```shell title="Set mesh_sds_timeout_secs to default (2 hour/7200 seconds)"
+```shell title="Set Mesh Super Deep Sleep Timeout (Default of 0 is 2 hours/7200 seconds)"
 meshtastic --set mesh_sds_timeout_secs 0
-```
-
-```shell title="Set mesh_sds_timeout_secs to 120 seconds"
 meshtastic --set mesh_sds_timeout_secs 120
-```
-
-```shell title="Disable mesh_sds_timeout_secs (using MAXUINT)"
+// Disable using MAXUINT
 meshtastic --set mesh_sds_timeout_secs 4294967295
 ```
 
-```shell title="Set sds_secs to default (1 year)"
+```shell title="Set Super Deep Sleep (Default of 0 is 1 year)"
 meshtastic --set sds_secs 0
-```
-
-```shell title="Set sds_secs to 120 seconds"
 meshtastic --set sds_secs 120
 ```
 
-```shell title="Set ls_secs to default (5 minutes 300 seconds)"
+```shell title="Set Light Sleep to default (Default of 0 is 5 minutes)"
 meshtastic --set ls_secs 0
-```
-
-```shell title="Set ls_secs to 120 seconds"
 meshtastic --set ls_secs 120
 ```
 
-```shell title="Set min_wake_secs to default (10 seconds)"
+```shell title="Set Minimum Wake Interval (Default of 0 is 10 seconds)"
 meshtastic --set min_wake_secs 0
-```
-
-```shell title="Set min_wake_secs to 120 seconds"
 meshtastic --set min_wake_secs 120
 ```
 </TabItem>
