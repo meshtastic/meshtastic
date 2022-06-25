@@ -1,6 +1,6 @@
 ---
-title: Device Settings
-sidebar_label: Device Settings
+title: Radio Configuration
+sidebar_label: Radio Configuration
 slug: /settings
 sidebar_position: 5
 ---
@@ -8,73 +8,16 @@ sidebar_position: 5
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-Customization of your settings is vital to configuring your own mesh. Changing settings is currently most reliably done using the command line interface available within `Meshtastic-python`. Setting support is being added to all other methods of interfacing with your device.
+Configuration for Meshtastic devices has been completely overhauled in version 1.3.  
 
-## Settings
+In order to facilitate a more stable admin channel for remote management of nodes we have broken our large monolithic config structure into six sections that can be saved individually, protecting our precious mesh bandwidth.
 
-Below are some of the most common settings that a new user will want to become acquainted with, but it isn't an exhaustive list. Make sure to take a look at the sidebar for additional settings. If you find something missing or incorrect, please help us improve our docs by filing an issue, creating a pull request, or mentioning it in our forum.
+Default settings values are prefered whenever possible as they consume no bandwidth when sent over the mesh.
 
-### Channel Settings
+## Config Sections
 
-Channel settings are very important, if channels are misconfigured between devices they won't be able to communicate! A freshly flashed device will use the default channel settings. Depending on your use case you may want to change your encryption using `psk`, your range of communication by setting one of the four pre-set bands using `modem_config`, or even just the name of your channel! Before you begin, don't forget to set your `region` correctly! Take a look at the [basic channel configuration](settings/channel) and if you're tech savvy or a radio head check out the [advanced channel settings](settings/channel-advanced).
+Meshtastic config is now broken into 6 sections. [Device](/docs/settings/config/device), [Display](/docs/config/display), [LoRa](/docs/config/lora), [Position](/docs/config/position), [Power](/docs/config/power) and [WiFi](/docs/config/wifi)
 
-:::note
-It is very important that you set your device's `region` setting. This will ensure that you are operating within the legal limits for your area.
-:::
+## Module Config
 
-### GPS Settings
-
-For most, GPS is a really cool, desirable feature. Knowing where everyone on your local mesh is has some major advantages. However, it's possible you want to hide the location of a particular device (like a router mounted on your home). All of the settings related to GPS are located [here](settings/gps).
-
-### WiFi Settings
-
-Whether you're using the upcoming [web interface](software/web) or you're interested in broadcasting messages to/from the internet using [MQTT](settings/mqtt), the [WiFi settings](settings/wifi) are your first stop towards an IoT radio.
-
-## Examples
-
-At the bottom of each setting page, examples will be available displaying how to adjust settings using the various platforms available to interface with your device. The examples will look like this:
-
-### Introducing Examples
-
-<Tabs
-groupId="settings"
-defaultValue="cli"
-values={[
-{label: 'CLI', value: 'cli'},
-{label: 'Android', value: 'android'},
-{label: 'iOS', value: 'iOS'},
-{label: 'Web', value: 'web'},
-]}>
-<TabItem value="cli">
-
-:::note
-The CLI examples will require you to utilize the Command line Interface that is available through Meshtastic-python. Installation instructions can be found [here](software/python/python-installation).
-:::
-
-```shell title="Example - Set Region (an important first step!)"
-meshtastic --set region Unset
-```
-
-  </TabItem>
-  <TabItem value="android">
-
-:::info
-Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
-  </TabItem>
-  <TabItem value="iOS">
-
-:::info
-Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
-  </TabItem>
-  <TabItem value="web">
-
-:::info
-Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
-  </TabItem>
-</Tabs>
+Meshtastic includes the following modules: Canned Messages, External Notification, Range Test, Serial, Store & Forward and Telemetry (sensors).

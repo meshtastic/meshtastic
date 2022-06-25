@@ -1,0 +1,200 @@
+---
+id: config-position
+title: Position Configuration
+sidebar_label: Position
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+The positon config options are: GPS Enabled, GPS Update Interval, GPS Attempt Time, Fixed Postion, Smart Broadcast, Broadcast Interval and Position Packet Flags.  Position config uses an admin message sending a `Config.Position` protobuf.
+
+Position data from GPS is provided by either the radio or your paired phone. Position data is not required to use Meshtastic but time calculations require at least one device on the mesh have either a gps or internet connection for time.
+
+## Position Config Values
+
+### GPS Enabled
+Acceptable values: `true` or `false` 
+
+Enabled by default. Should the device GPS be enabled for this node?
+
+### GPS Update Interval
+
+How often should we try to get GPS position (in seconds), or zero for the default of once every 30 seconds, or a very large value (maxint) to update only once at boot.
+
+### GPS Attempt Time
+
+How long should we try to get our position during each GPS update interval attempt?  (in seconds) Or if zero, use the default of 30 seconds.
+
+### Fixed Position
+
+Acceptable values: `true` or `false` 
+
+Off by default
+
+If set, this node is at a fixed position. The device will generate GPS updates at the regular GPS update interval, but use whatever the last lat/lon/alt it saved for the node. The lat/lon/alt can be set by an internal GPS or with the help of the mobile device's GPS.
+
+### Smart Broadcast
+Acceptable values: `true` or `false` 
+
+On by default
+
+Smart broadcast will send out your position at an increased frequency only if your location has changed enough for a position update to be useful.
+
+Smart broadcast complements broadcast interval (doesn't override that setting) but will apply an algorithm to more frequently update your mesh network if you are in motion and then throttle it down when you are standing still. If you use this feature, it's best to leave broadcast interval at the default.
+
+Smart broadcast will calculate an ideal position update interval based on the data rate of your selected channel configuration.
+
+### Broadcast Interval
+
+Default of `0` is 15 minutes
+
+If smart broadcast is of we should send our position this often (but only if it has changed significantly)
+
+The GPS updates will be sent out every Broadcast Interval, with either the actual GPS location, or an empty location if no GPS fix was achieved. This defaults to broadcast every 15 minutes.
+
+ ### Position Flags 
+
+ Bit field of boolean configuration options for POSITION messages (bitwise OR of PositionFlags)
+
+|     Value     |                         Description                         |
+| :-----------: | :---------------------------------------------------------: | 
+| POS_UNDEFINED |                  Required for compilation                   |
+| POS_ALTITUDE  |          Include an altitude value (if available)           |
+|  POS_ALT_MSL  |                    Altitude value is MSL                    |
+|  POS_GEO_SEP  |                 Include geoidal separation                  |
+|    POS_DOP    |   Include the DOP value ; PDOP used by default, see below   |
+|   POS_HVDOP   | If POS_DOP set, send separate HDOP / VDOP values instead of PDOP |
+| POS_SATINVIEW |           Include number of "satellites in view"            |
+|  POS_SEQ_NOS  |      Include a sequence number incremented per packet       |
+| POS_TIMESTAMP |      Include positional timestamp (from GPS solution)       |
+| POS_HEADING |      Include positional heading (from GPS solution)       |
+| POS_SPEED |      Include positional speed (from GPS solution)       |
+
+
+
+ ## Position Config Client Availability
+
+<Tabs
+groupId="settings"
+defaultValue="flasher"
+values={[
+{label: 'Android', value: 'android'},
+{label: 'Apple', value: 'apple'},
+{label: 'Command Line', value: 'cli'},
+{label: 'Flasher', value: 'flasher'},
+{label: 'Web', value: 'web'},
+]}>
+<TabItem value="android">
+
+:::info
+Position config is not available for Android.
+:::
+
+</TabItem>
+<TabItem value="apple">
+
+:::info
+All position config values except for postion flag are available on iOS, iPadOS and macOS at Settings > Radio Configuration > Position.
+:::
+
+</TabItem>
+<TabItem value="cli">
+
+Select Position config conmmands are available in the python CLI. Example commands are below:
+
+|         Setting          |                                                                       Acceptable Values                                                                       |     Default     |
+| :----------------------: | :-----------------------------------------------------------------------------------------------------------------------------------------------------------: | :-------------: |
+|      gps_enabled      |                                                                        `true`, `false`                                                                        |     `true`     |
+|   gps_update_interval    |                                                                      `integer` (seconds)                                                                      | Default `0` is 30 Seconds  |
+|     gps_attempt_time     |                                                                      `integer` (seconds)                                                                      | Default of `0` is 30 Seconds  |
+|      fixed_position      |                                                                        `true`, `false`                                                                        |     `false`     |
+| position_broadcast_smart |                                                                        `true`, `false`                                                                        |     `true`     |
+| position_broadcast_secs  |                                                                      `integer` (seconds)                                                                      | Default of `0` is 15 Minutes  |
+|      position_flags      | `POS_UNDEFINED`, `POS_ALTITUDE`, `POS_ALT_MSL`, `POS_GEO_SEP`, `POS_DOP`, `POS_HVDOP`, `PDOP`, `POS_BATTERY`, `POS_SATINVIEW`, `POS_SEQ_NOS`, `POS_TIMESTAMP` | `POS_UNDEFINED` |
+
+
+```shell title="Set GPS update interval to default settings (every 30 seconds)"
+meshtastic --set gps_update_interval 0
+```
+
+```shell title="Set GPS update interval to every 45 seconds"
+meshtastic --set gps_update_interval 45
+```
+
+```shell title="Set GPS attempt time to default (30 seconds)"
+meshtastic --set gps_attempt_time 0
+```
+
+```shell title="Set GPS attempt time to 45 seconds"
+meshtastic --set gps_attempt_time 45
+```
+
+```shell title="Set Fixed Position - Current Location"
+meshtastic --set fixed_position true
+```
+
+:::note
+The device will continue to acquire GPS coordinates according to the `gps_update_interval`, but will use the last saved coordinates as its fixed point.
+:::
+
+```shell title="Set Fixed Position - User Defined"
+meshtastic --setlat 37.8651 --setlon -119.5383
+```
+
+```shell title="Unset Fixed Position"
+meshtastic --set fixed_position false
+```
+
+```shell title="Enable smart position broadcast (default)"
+meshtastic --set position_broadcast_smart true
+```
+
+```shell title="Disable smart position broadcast"
+meshtastic --set position_broadcast_smart false
+```
+
+```shell title="Set GPS update interval to default settings (every 15 minutes)"
+meshtastic --set position_broadcast_secs 0
+```
+
+```shell title="Set GPS update interval to every 60 seconds"
+meshtastic --set position_broadcast_secs 60
+```
+
+:::note
+It may take some time to see that the change has taken effect. The GPS location is updated according to the value specified on `gps_update_interval` and the mesh will be notified of the new position in relation to the `position_broadcast_secs` value.
+:::
+
+:::tip
+Include each flag desired separated by a single space.
+:::
+
+```shell title="Set Position Flags"
+meshtastic --pos-fields POS_ALTITUDE POS_ALT_MSL
+```
+
+```shell title="Unset Position Flags"
+meshtastic --pos-fields POS_UNDEFINED
+```
+
+</TabItem>
+<TabItem value="flasher">
+
+:::info
+Position config is not available in the Flasher.
+:::
+
+  </TabItem>
+  <TabItem value="web">
+
+:::info
+Position config is not available in the Web UI.
+:::
+    
+  </TabItem>
+</Tabs>
+
+:::caution
+Altering/disabling the GPS functionality does not mean that you will be unable to be found. Via triangulation of your radio, location may be given up to someone if they are determined enough.
+:::

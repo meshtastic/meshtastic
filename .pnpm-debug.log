@@ -1,0 +1,22 @@
+{
+  "0 debug pnpm:scope": {
+    "selected": 1
+  },
+  "1 error pnpm": {
+    "code": "ELIFECYCLE",
+    "errno": "ENOENT",
+    "syscall": "spawn",
+    "file": "sh",
+    "pkgid": "meshtastic@0.0.0",
+    "stage": "build",
+    "script": "docusaurus build",
+    "pkgname": "meshtastic",
+    "err": {
+      "name": "pnpm",
+      "message": "meshtastic@0.0.0 build: `docusaurus build`\nspawn ENOENT",
+      "code": "ELIFECYCLE",
+      "stack": "pnpm: meshtastic@0.0.0 build: `docusaurus build`\nspawn ENOENT\n    at ChildProcess.<anonymous> (/opt/homebrew/Cellar/pnpm/7.3.0/libexec/lib/node_modules/pnpm/dist/pnpm.cjs:94974:22)\n    at ChildProcess.emit (node:events:537:28)\n    at maybeClose (node:internal/child_process:1091:16)\n    at ChildProcess._handle.onexit (node:internal/child_process:302:5)"
+    }
+  },
+  "2 warn pnpm:global": " Local package.json exists, but node_modules missing, did you mean to install?"
+}

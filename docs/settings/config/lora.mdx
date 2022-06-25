@@ -1,0 +1,94 @@
+---
+id: lora
+title: LoRa Configuration
+sidebar_label: LoRa
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+The LoRa config options are: Region, Modem Preset, and Number of Hops.  LoRa config uses an admin message sending a `Config.LoRa` protobuf.
+
+## LoRa Config Values
+
+:::note
+It is very important that you set your device's `lora_region` setting. This will ensure that you are operating within the legal limits for your area.
+:::
+
+### Region
+Sets the region for your node. Default is `unset`.
+
+|   Region Code   |                                                                  Description                                                                                                              |
+| :-------: | :---------------------------------------------------------------------------------------: |
+|  `unset`   | Unset |
+| `us` | United States |
+| `eu433` | European Union 433mhz |
+| `eu868` | European Union 868mhz |
+| `cn` | China |
+| `jp` | Japan |
+| `anz` | Australia & New Zealand |
+| `kr` | Korea |
+| `tw` | Taiwan |
+| `ru` | Russia |
+| `in` | India |
+| `nz865` | New Zealand 865mhz |
+| `th` | Thailand |
+
+
+### Modem Preset
+
+### Max Hops
+
+
+## LoRa Config Client Availability
+
+<Tabs
+groupId="settings"
+defaultValue="flasher"
+values={[
+{label: 'Android', value: 'android'},
+{label: 'Apple', value: 'apple'},
+{label: 'Command Line', value: 'cli'},
+{label: 'Flasher', value: 'flasher'},
+{label: 'Web', value: 'web'},
+]}>
+<TabItem value="android">
+
+:::info
+Region and Modem Preset can be configured on Android.
+:::
+
+</TabItem>
+<TabItem value="apple">
+
+:::info
+Configuration of Region, Modem Preset and Hop Limit is available on iOS, iPadOS and macOS at Settings > Radio Configuration > LoRa.
+:::
+
+</TabItem>
+<TabItem value="cli">
+
+Select LoRa config conmmands are available in the python CLI. Example commands are below:
+
+|   Setting    |                               Acceptable Values                               |      Default      |
+| :----------: | :---------------------------------------------------------------------------: | :---------------: |
+| lora_modem_preset |   `longFast`, `longSlow`, `vlongSlow`, `medSlow`, `medFast`, `shortSlow`, `shortFast`       | `longFast` |
+|    lora_region    |     `Unset`, `us`, `eu433`, `eu868`, `cn`, `jp`, `anz`, `kr`, `tw`, `ru` ,`in`, ` nz865`, `th`       |      `Unset`      |
+| lora_hop_limit     |     `1`,`2`,`3`,`4`,`5`,`6`,`7`   |   `3`
+
+</TabItem>
+<TabItem value="flasher">
+
+:::info
+LoRa config is not available in the Flasher.
+:::
+
+  </TabItem>
+  <TabItem value="web">
+
+:::info
+LoRa config is not available for in the Web UI.
+:::
+    
+  </TabItem>
+</Tabs>
