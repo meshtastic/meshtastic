@@ -6,18 +6,13 @@ sidebar_label: Canned Message
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
-import PluginModule from '@site/docs/_blocks/_plugin_module.mdx';
 
 :::warning
 GPIO access is fundamentally dangerous because invalid options can physically damage or destroy your hardware. Ensure that you fully understand the schematic for your particular device before trying this as we do not offer a warranty. Use at your own risk.
 :::
 
-<PluginModule name="canned_message_module" rename="canned_message_plugin" />
-
-<!--- TODO add link to hardware setup to admonition--->
-
 :::note
-This module requires attaching a peripheral accessory to your device. It will not work without one. It also requires use of the [Rotary Encoder Module](input-broker-module) to configure the input source.
+This module requires attaching a peripheral accessory to your device. It will not work without one. It also requires use of the [Rotary Encoder Module](input-broker) to configure the input source.
 :::
 
 ## Overview
@@ -152,7 +147,7 @@ Configuring this setting is not yet available for the selected platform. If this
 ### canned_message_module_send_bell
 
 CannedMessageModule also sends a "bell character" with the messages.
-The [External Notification Module](external-notification-module) can benefit from this feature as it utilizes the bell character.
+The [External Notification Module](external-notification) can benefit from this feature as it utilizes the bell character.
 
 _We have an "External Notification Module", that can be set up to beep, when new message arrives.
 This module can also be configured to beep only when message contains the "bell character".
