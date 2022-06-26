@@ -87,11 +87,8 @@ All WiFi config options are available in the python CLI.
 | wifi_password |      string       |  `""`   |
 |   wifi_ssid   |      string       |  `""`   |
 
-```shell title="Enable SoftAP"
+```shell title="Enable / Disable SoftAP"
 meshtastic --set wifi_ap_mode true
-```
-
-```shell title="Disable SoftAP"
 meshtastic --set wifi_ap_mode false
 ```
 
@@ -99,19 +96,16 @@ meshtastic --set wifi_ap_mode false
 meshtastic --set wifi_ap_hidden false
 ```
 
-```shell title="Set WiFi network"
-meshtastic --set wifi_ssid mynetwork
-```
+```shell title="Set WiFi SSID"
 
-```shell title="Set WiFi network (with spaces)"
+meshtastic --set wifi_ssid mynetwork
+// With spaces
 meshtastic --set wifi_ssid "my network"
 ```
 
 ```shell title="Set WiFi password"
 meshtastic --set wifi_password mypassword
-```
-
-```shell title="Set WiFi password (with spaces)"
+// With spaces
 meshtastic --set wifi_password "my password"
 ```
 
