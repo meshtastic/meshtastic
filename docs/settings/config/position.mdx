@@ -111,22 +111,16 @@ All Position config conmmands are available in the python CLI. Example commands 
 |      fixed_position      |                                                                        `true`, `false`                                                                        |     `false`     |
 | position_broadcast_smart |                                                                        `true`, `false`                                                                        |     `true`     |
 | position_broadcast_secs  |                                                                      `integer` (seconds)                                                                      | Default of `0` is 15 Minutes  |
-|      position_flags      | `POS_UNDEFINED`, `POS_ALTITUDE`, `POS_ALT_MSL`, `POS_GEO_SEP`, `POS_DOP`, `POS_HVDOP`, `PDOP`, `POS_BATTERY`, `POS_SATINVIEW`, `POS_SEQ_NOS`, `POS_TIMESTAMP` | `POS_UNDEFINED` |
+|      position_flags      | `POS_UNDEFINED`, `POS_ALTITUDE`, `POS_ALT_MSL`, `POS_GEO_SEP`, `POS_DOP`, `POS_HVDOP`, `PDOP`, `POS_BATTERY`, `POS_SATINVIEW`, `POS_SEQ_NOS`, `POS_TIMESTAMP`, `POS_HEADING`, `POS_SPEED` | `POS_UNDEFINED` |
 
 
-```shell title="Set GPS update interval to default settings (every 30 seconds)"
+```shell title="Set GPS update interval (Default of 0 is 30 seconds)"
 meshtastic --set gps_update_interval 0
-```
-
-```shell title="Set GPS update interval to every 45 seconds"
 meshtastic --set gps_update_interval 45
 ```
 
-```shell title="Set GPS attempt time to default (30 seconds)"
+```shell title="Set GPS attempt time (Default of 0 is 30 seconds)"
 meshtastic --set gps_attempt_time 0
-```
-
-```shell title="Set GPS attempt time to 45 seconds"
 meshtastic --set gps_attempt_time 45
 ```
 
@@ -146,19 +140,13 @@ meshtastic --setlat 37.8651 --setlon -119.5383
 meshtastic --set fixed_position false
 ```
 
-```shell title="Enable smart position broadcast (default)"
+```shell title="Enable / Disable Smart position broadcast (Enabled by default)"
 meshtastic --set position_broadcast_smart true
-```
-
-```shell title="Disable smart position broadcast"
 meshtastic --set position_broadcast_smart false
 ```
 
-```shell title="Set GPS update interval to default settings (every 15 minutes)"
+```shell title="Set Position Broadcast Interval (Default of 0 is 15 minutes)"
 meshtastic --set position_broadcast_secs 0
-```
-
-```shell title="Set GPS update interval to every 60 seconds"
 meshtastic --set position_broadcast_secs 60
 ```
 
@@ -170,11 +158,8 @@ It may take some time to see that the change has taken effect. The GPS location 
 Include each flag desired separated by a single space.
 :::
 
-```shell title="Set Position Flags"
+```shell title="Set / Unset Position Flags"
 meshtastic --pos-fields POS_ALTITUDE POS_ALT_MSL
-```
-
-```shell title="Unset Position Flags"
 meshtastic --pos-fields POS_UNDEFINED
 ```
 
