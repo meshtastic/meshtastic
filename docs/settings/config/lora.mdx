@@ -7,7 +7,7 @@ sidebar_label: LoRa
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-The LoRa config options are: Region, Modem Preset, and Number of Hops.  LoRa config uses an admin message sending a `Config.LoRa` protobuf.
+The LoRa config options are: Region, Modem Preset, Max Hops, Transmit Power, Bandwidth, Spread Factor, Coding Rate, Frequency Offset, Transmit Disabled and Ignore Incoming Array.  LoRa config uses an admin message sending a `Config.LoRa` protobuf.
 
 ## LoRa Config Values
 
@@ -39,6 +39,41 @@ Sets the region for your node. Default is `unset`.
 
 ### Max Hops
 
+### Transmit Power
+
+If zero then, use default max legal continuous power (ie. something that won't burn out the radio hardware)
+
+In most cases you should use zero here. Units are in dBm.
+
+### Bandwidth
+
+Bandwidth in MHz
+
+Certain bandwidth numbers are 'special' and will be converted to the appropriate floating point value: 31 -> 31.25MHz
+
+### Spread Factor 
+
+A number from 7 to 12. Indicates the number of chirps per symbol as 1<<spread_factor.
+
+### Coding Rate
+
+The denominator of the coding rate. ie for 4/8, the value is 8. 5/8 the value is 5.
+
+### Frequency Offset
+
+This parameter is for advanced users with advanced test equipment, we do not recommend most users use it.
+
+A frequency offset that is added to to the calculated band center frequency. Used to correct for crystal calibration errors.
+
+### Transmit Disabled 
+
+Disable transmit (TX) from the LoRa radio. Useful for hot-swapping antennas and other tests.
+
+Defaults to false
+
+### Ignore Incoming Array
+
+For testing it is useful sometimes to force a node to never listen to particular other nodes (simulating radio out of range). All nodenums listed in the ignore_incoming array will have packets they send droped on receive (by router.cpp)
 
 ## LoRa Config Client Availability
 
@@ -48,7 +83,7 @@ defaultValue="flasher"
 values={[
 {label: 'Android', value: 'android'},
 {label: 'Apple', value: 'apple'},
-{label: 'Command Line', value: 'cli'},
+{label: 'CLI', value: 'cli'},
 {label: 'Flasher', value: 'flasher'},
 {label: 'Web', value: 'web'},
 ]}>
