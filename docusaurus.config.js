@@ -92,7 +92,7 @@ const config = {
             },
             {
               label: 'Developers',
-              to: 'docs/developers',
+              to: 'docs/category/developers',
             },
           ],
         },
