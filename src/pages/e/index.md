@@ -4,6 +4,8 @@ title: Meshtastic URL
 sidebar_label: e
 ---
 
-# 1.3 Share Channel URL Should be opened in the appropriate app
+# QR Code Share Channel URL Should be opened in the appropriate app
 
-For Android use the QR code scanner in the app, on Apple devices use the camera.
+## Meshtastic QR Code URL Format For Firmware version 1.3
+
+For Android use the QR code scanner in the app, on Apple devices use the camera to open the QR code URL in the Meshtastic App.

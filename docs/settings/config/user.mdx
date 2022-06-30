@@ -1,0 +1,86 @@
+---
+id: user
+title: User Configuration
+sidebar_label: User
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+The user config options are: Short Name, Long Name, Licensed Operator, Transmit Power at Antenna Connector, Antenna Gain and Antenna Azimuth.  User config uses an admin message sending a `User` protobuf.
+
+## User Config Values
+
+### Short Name
+
+### Long Name
+
+### Licensed Operator
+
+### Transmit Power at Antenna Connector
+
+### Antenna Gain
+
+### Antenna Azimuth
+
+## Device Config Client Availability
+
+<Tabs
+groupId="settings"
+defaultValue="flasher"
+values={[
+{label: 'Android', value: 'android'},
+{label: 'Apple', value: 'apple'},
+{label: 'CLI', value: 'cli'},
+{label: 'Flasher', value: 'flasher'},
+{label: 'Web', value: 'web'},
+]}>
+<TabItem value="android">
+
+:::info
+Long Name can be edited on Android.
+:::
+
+</TabItem>
+<TabItem value="apple">
+
+:::info
+Short Name and Long Name user config options are available on iOS, iPadOS and macOS at Settings > Radio Configuration > User.
+:::
+
+</TabItem>
+<TabItem value="cli">
+
+All display config options are available in the python CLI. Example commands are below:
+
+```shell title="Set Screen On Duration (Default of 0 is 10 minutes)"
+meshtastic --set screen_on_secs 0
+meshtastic --set screen_on_secs 120
+```
+
+```shell title="Set Auto Carousel Interval (Default of 0 is Off)"
+meshtastic --set auto_screen_carousel_secs 0
+// Set to 2 Minutes (120 Seconds)
+meshtastic --set auto_screen_carousel_secs 120
+```
+
+```shell title="Specify GPS format on device screen"
+meshtastic --set gps_format GpsFormatUTM
+```
+
+</TabItem>
+<TabItem value="flasher">
+
+:::info
+All user config options are available in the Flasher.
+:::
+
+  </TabItem>
+  <TabItem value="web">
+
+:::info
+All user config options are available in the Web UI.
+:::
+    
+  </TabItem>
+</Tabs>

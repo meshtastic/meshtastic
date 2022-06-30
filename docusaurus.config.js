@@ -90,26 +90,15 @@ const config = {
               label: 'Software',
               to: 'docs/software',
             },
+            {
+              label: 'Developers',
+              to: 'docs/developers',
+            },
           ],
         },
         {
-          label: 'Developers',
-          to: 'docs/developers',
-        },
-        {
-          label: 'Other',
-          items: [
-            {
-              label: 'Downloads',
-              to: 'downloads',
-              activeBasePath: 'downloads',
-            },
-            {
-              label: 'Showcase',
-              to: 'showcase',
-              activeBasePath: 'showcase',
-            },
-          ],
+          label: 'Downloads',
+          to: 'downloads',
         },
       ],
     },
