@@ -88,7 +88,7 @@ const config = {
             },
             {
               label: 'Software',
-              to: 'docs/software',
+              to: 'docs/category/software',
             },
             {
               label: 'Developers',
