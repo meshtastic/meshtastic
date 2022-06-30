@@ -1,9 +1,8 @@
 ---
 id: flashing-esp32
-title: Flashing ESP32 devices firmware
-sidebar_label: CLI Script - ESP32 devices
+title: Flashing ESP32 device firmware
+sidebar_label: CLI Script - ESP32
 pagination_prev: getting-started/flashing-firmware/flashing-firmware
-pagination_next: getting-started/first-steps/first-steps
 sidebar_position: 3
 ---
 
@@ -14,15 +13,11 @@ import TabItem from '@theme/TabItem';
 Make sure not to power the radio on without first attaching the antenna! You could damage the radio chip!
 :::
 
-## Prerequisites
 
-### Device connectivity
+For ESP32 devices if the device already has a version of Meshtastic installed using the OTA firmware upgrade tool in the Android app is the friendliest path for users. OTA firmware updates are not yet available on Apple platforms.
 
-Ensure your computer is communicating with the device correctly by following [these instructions](/docs/getting-started/flashing-firmware/).
-
-### Download Latest Firmware
-
-Firmware can be downloaded from the [Downloads](/downloads) page. Your initial installation has to happen over USB from your Mac, Windows, or Linux computer. Over the air updates are currently only available using the Android application after this initial installation.
+If your ESP32 device does not have Meshtastic pre-installed flashing
+Before you flash your device start by verifiying connectivity with the device being flashed. Outlined below are steps that can be taken to verify connectivity and, if necessary, to install the appropriate drivers. If you end up needing to install drivers be sure to reboot your computer afterwards to verify the installation is complete.
 
 :::note
 The [T-Beam 0.7](/docs/hardware/supported/tbeam#t-beam---v07) board is an earlier version of the T-Beam board, and due to changes in the design in subsequent iterations this board uses a specific firmware file different from the other T-Beam boards.
