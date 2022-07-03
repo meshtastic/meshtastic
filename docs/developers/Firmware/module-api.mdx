@@ -80,6 +80,6 @@ All other values are reserved.
 
 If you would like to use protocol buffers to define the structures you send over the mesh (recommended), here's how to do that.
 
-- Create a new .proto file in the protos directory. You can use the existing [remote_hardware.proto](https://github.com/meshtastic/Meshtastic-protobufs/blob/master/remote_hardware.proto) file as an example.
+- Create a new .proto file in the protos directory.
 - Run "bin/regen-protos.sh" to regenerate the C code for accessing the protocol buffers. If you don't have the required nanopb tool, follow the instructions printed by the script to get it.
 - Done! You can now use your new protobuf just like any of the existing protobufs in meshtastic.
