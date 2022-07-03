@@ -504,3 +504,40 @@ The sensors can be wired differently, here's [one example](https://randomnerdtut
 ### Known Problems
 
 - No default configuration values are currently set, so this must be done when enabling the module.
+
+
+
+## Examples
+
+### RAK 4631 with Environment Sensor
+
+Setup of a RAK 4631 with Environment Sensor
+
+[<img src="RAK4631_with_EnvSensor" src="/img/hardware/rak/RAK4631_with_EnvSensor.jpg" style={{zoom:'25%'}} />](/img/hardware/rak/RAK4631_with_EnvSensor.jpg)
+
+Requirements:
+
+- RAK4631
+- Environment Sensor
+
+Steps:
+
+- configure the device:
+
+```shell
+meshtastic --set telemetry_module_measurement_enabled true --set telemetry_module_screen_enabled true --set telemetry_module_update_interval 15 --set telemetry_module_display_farenheit true --set telemetry_module_sensor_type 6
+```
+
+:::tip
+You can change the values above to suit your needs. The commands can be run one at a time or in a group as show above.
+:::
+
+- reboot/reset the device (press the button or unplug/plug in the device)
+- when the device boots it should say "Telemetry" and it may show the sensor data
+- if still "no data", run:
+
+```shell
+meshtastic --info
+```
+
+and verify the the `telemetry_module_sensor_type`

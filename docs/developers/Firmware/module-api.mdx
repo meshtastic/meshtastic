@@ -41,7 +41,7 @@ A number of [key services](http://github.com/meshtastic/meshtastic-device/tree/m
 
 - [TextMessageModule](http://github.com/meshtastic/meshtastic-device/tree/master/src/modules/TextMessageModule.h) - receives text messages and displays them on the LCD screen/stores them in the local DB
 - [NodeInfoModule](http://github.com/meshtastic/meshtastic-device/tree/master/src/modules/NodeInfoModule.h) - receives/sends User information to other nodes so that usernames are available in the databases
-- [RemoteHardwareModule](http://github.com/meshtastic/meshtastic-device/tree/master/src/modules/RemoteHardwareModule.h) - a module that provides easy remote access to device hardware (for things like turning GPIOs on or off). Intended to be a more extensive example and provide a useful feature of its own. See [remote-hardware](/docs/software/other/remote-hardware-service) for details.
+- [RemoteHardwareModule](http://github.com/meshtastic/meshtastic-device/tree/master/src/modules/RemoteHardwareModule.h) - a module that provides easy remote access to device hardware (for things like turning GPIOs on or off). Intended to be a more extensive example and provide a useful feature of its own. See [remote-hardware](/docs/software/device/remote-hardware-service) for details.
 - [ReplyModule](http://github.com/meshtastic/meshtastic-device/tree/master/src/modules/ReplyModule.h) - a simple module that just replies to any packet it receives (provides a 'ping' service).
 
 ## Getting started
@@ -57,7 +57,7 @@ The easiest way to get started is:
 ## Threading
 
 It is very common that you would like your module to be invoked periodically.
-We use a crude/basic cooperative threading system to allow this on any of our supported platforms. Simply inherit from OSThread and implement runOnce(). See the OSThread [documentation](http://github.com/meshtastic/meshtastic-device/tree/master/src/concurrency/OSThread.h) for more details. For an example consumer of this API see RemoteHardwareModule::runOnce.
+We use a crude/basic cooperative threading system to allow this on any of our supported platforms. Simply inherit from OSThread and implement runOnce(). See the OSThread [documentation](http://github.com/meshtastic/meshtastic-device/tree/master/src/concurrency/OSThread.h) for more details.
 
 ## Sending messages
 
@@ -80,6 +80,6 @@ All other values are reserved.
 
 If you would like to use protocol buffers to define the structures you send over the mesh (recommended), here's how to do that.
 
-- Create a new .proto file in the protos directory. You can use the existing [remote_hardware.proto](https://github.com/meshtastic/Meshtastic-protobufs/blob/master/remote_hardware.proto) file as an example.
+- Create a new .proto file in the protos directory.
 - Run "bin/regen-protos.sh" to regenerate the C code for accessing the protocol buffers. If you don't have the required nanopb tool, follow the instructions printed by the script to get it.
 - Done! You can now use your new protobuf just like any of the existing protobufs in meshtastic.

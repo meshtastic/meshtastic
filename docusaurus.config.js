@@ -88,11 +88,11 @@ const config = {
             },
             {
               label: 'Software',
-              to: 'docs/category/software',
+              to: 'docs/software',
             },
             {
               label: 'Developers',
-              to: 'docs/category/developers',
+              to: 'docs/developers',
             },
           ],
         },
