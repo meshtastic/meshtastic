@@ -73,15 +73,3 @@ If a transmitting node does not receive an ACK (or NAK) packet after a certain e
 Given our use-case for the initial release, most of our protocol is built around [flooding](<https://en.wikipedia.org/wiki/Flooding_(computer_networking)>). The implementation is currently 'naive' and doesn't try to optimize flooding, except by abandoning retransmission once a node has seen a nearby receiver ACK the packet it's trying to flood. This means that up to N retransmissions of a packet could occur in an N node mesh.
 
 If any mesh node sees a packet with a HopLimit other than zero, it will decrement that HopLimit and attempt retransmission on behalf of the original sending node. In order to promote letting nodes that are further away flood the message, such that the message eventually reaches farther, the contention window (see Layer 1) for a flooding message depends on the Signal-to-Noise Ratio (SNR) of the received packet. The CW size is small for a low SNR, such that nodes that are further away are more likely to flood first and closer nodes that hear this will refrain from flooding.
-
-:::note
-A node being in router mode will have a CW size that is a fraction of that of a normal node at the same SNR, such that it is more likely to flood first. For an explanation of what router mode does additionally, see [settings](/docs/settings/router#enabledisable-router-mode).
-:::
-
-### Layer 4: DSR for Multi-Hop Unicast Messaging
-
-This layer is not yet fully implemented and is currently unused. Eventually conventional [DSR](https://en.wikipedia.org/wiki/Dynamic_Source_Routing) will be used for for unicast messaging, unless transport is switched to [QMesh](https://github.com/faydr/QMesh) or [Reticulum](https://github.com/markqvist/Reticulum).
-
-Currently, we send any multi-hop unicasts as broadcasts so that we can leverage the existing flooding implementation, even when broadcasts are not required. While this is suboptimal, it is a very rare use-case, because current networks are small and are geared towards a hiking use case, which means that most nodes are withing a very small number of hops.
-
-If a node is attemptimg to broadcast a packet and receives an ACK for that packet, it can stop trying to broadcast that packet.
