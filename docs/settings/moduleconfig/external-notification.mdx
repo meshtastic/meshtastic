@@ -127,6 +127,12 @@ External Notification module config is not available for the Web UI.
 Once module settings are changed, a **reset** is required for them to take effect.
 :::
 
+:::warning
+GPIO access is fundamentally dangerous because invalid options can physically damage or destroy your hardware. Ensure that you fully understand the schematic for your particular device before trying this as we do not offer a warranty. Use at your own risk.
+
+This module requires attaching a peripheral accessory to your device. It will not work without one.
+:::
+
 ## Examples
 
 ### Alert Types
@@ -157,10 +163,3 @@ Ideas for external hardware:
 
 - This won't directly support a passive (normal) speaker as it does not generate any audio wave forms.
 - This module only monitors text messages. We won't trigger on any other packet types.
-
-
-:::warning
-GPIO access is fundamentally dangerous because invalid options can physically damage or destroy your hardware. Ensure that you fully understand the schematic for your particular device before trying this as we do not offer a warranty. Use at your own risk.
-
-This module requires attaching a peripheral accessory to your device. It will not work without one.
-:::
