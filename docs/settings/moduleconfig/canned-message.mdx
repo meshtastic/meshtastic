@@ -7,273 +7,187 @@ sidebar_label: Canned Message
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-:::warning
-GPIO access is fundamentally dangerous because invalid options can physically damage or destroy your hardware. Ensure that you fully understand the schematic for your particular device before trying this as we do not offer a warranty. Use at your own risk.
-:::
+The Canned Message Module will allow you to send messages to the mesh network from the device without using the phone app. You can predefine text messages to choose from.
 
-:::note
-This module requires attaching a peripheral accessory to your device. It will not work without one. It also requires use of the [Rotary Encoder Module](input-broker) to configure the input source.
-:::
+The canned message module config options are: Enabled, Save, and Sender.  Range Test Module config uses an admin message sending a `ConfigModule.CannedMessage` protobuf.
 
-## Overview
-
-The CannedMessage Module will allow you to send messages to the mesh network from the device without using the phone app. You can predefine text messages to choose from.
-
-:::tip
-Once module settings are changed, a **reset** is required for them to take effect.
-:::
-
-## Settings
-
-|                 Setting                  | Acceptable Values | Default |
-| :--------------------------------------: | :---------------: | :-----: |
-| canned_message_module_allow_input_source | `rotEnc1`, `_any` | `_any`  |
-|      canned_message_module_enabled       |  `true`, `false`  | `false` |
-|      canned_message_module_messages      |     `string`      |  `""`   |
-|     canned_message_module_send_bell      |  `true`, `false`  | `false` |
-|               (Messages)\*               |     `string`      |  `""`   |
-
-- Messages can be set with a dedicated option:
-
-`--set-canned-message "<messages>"`
+## Canned Message Module Config Values
 
 ### Enabled
 
-### Allow Input Source
+Enables the canned message module.
 
-Input event source accepted by the canned message module.
+### Send Bell
 
-|   Value   |                                                                                                              Description                                                                                                              |
-| :-------: | :-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
-|  `_any`   |                                                                                 Default. Allows any peripheral input device connected to the device.                                                                                  |
-| `rotEnc1` | Hardcoded value naming the input device that this module listens to. This could allow multiple input devices to be named with future software development. At present, this doesn't do anything differently than the default setting. |
+Sends a bell character with each message.
 
-#### Set input source
-
-<Tabs
-groupId="settings"
-defaultValue="cli"
-values={[
-{label: 'CLI', value: 'cli'},
-{label: 'Android', value: 'android'},
-{label: 'iOS', value: 'iOS'},
-{label: 'Web', value: 'web'},
-]}>
-<TabItem value="cli">
-
-```shell title="Set Allowed Input Source"
-meshtastic --set canned_message_module_allow_input_source "_any"
-```
-
-```shell title="Specify Allowed Input Source"
-meshtastic --set canned_message_module_allow_input_source "rotEnc1"
-```
-
-  </TabItem>
-  <TabItem value="android">
-
-:::info
-Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
-  </TabItem>
-  <TabItem value="iOS">
-
-:::info
-Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
-  </TabItem>
-  <TabItem value="web">
-
-:::info
-Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
-  </TabItem>
-</Tabs>
-
-### canned_message_module_enabled
-
-Enables the module.
-
-:::tip
-Using the canned message module requires you set up the [Rotary Encoder Module](input-broker). See [prerequisites](#prerequisites) below.
-:::
-
-#### Enable/Disable the module
-
-<Tabs
-groupId="settings"
-defaultValue="cli"
-values={[
-{label: 'CLI', value: 'cli'},
-{label: 'Android', value: 'android'},
-{label: 'iOS', value: 'iOS'},
-{label: 'Web', value: 'web'},
-]}>
-<TabItem value="cli">
-
-```shell title="Enable Canned Message Module"
-meshtastic --set canned_message_module_enabled true
-```
-
-```shell title="Disable Canned Message Module"
-meshtastic --set canned_message_module_enabled false
-```
-
-  </TabItem>
-  <TabItem value="android">
-
-:::info
-Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
-  </TabItem>
-  <TabItem value="iOS">
-
-:::info
-Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
-  </TabItem>
-  <TabItem value="web">
-
-:::info
-Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
-  </TabItem>
-</Tabs>
-
-### canned_message_module_send_bell
-
-CannedMessageModule also sends a "bell character" with the messages.
-The [External Notification Module](external-notification) can benefit from this feature as it utilizes the bell character.
-
-_We have an "External Notification Module", that can be set up to beep, when new message arrives.
-This module can also be configured to beep only when message contains the "bell character".
-See module documentation (link above) for details._
-
-#### Enable/Disable bell character
-
-<Tabs
-groupId="settings"
-defaultValue="cli"
-values={[
-{label: 'CLI', value: 'cli'},
-{label: 'Android', value: 'android'},
-{label: 'iOS', value: 'iOS'},
-{label: 'Web', value: 'web'},
-]}>
-<TabItem value="cli">
-
-```shell title="Enable Bell Character"
-meshtastic --set canned_message_module_send_bell true
-```
-
-```shell title="Disable Bell Character"
-meshtastic --set canned_message_module_send_bell false
-```
-
-  </TabItem>
-  <TabItem value="android">
-
-:::info
-Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
-  </TabItem>
-  <TabItem value="iOS">
-
-:::info
-Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
-  </TabItem>
-  <TabItem value="web">
-
-:::info
-Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
-  </TabItem>
-</Tabs>
+The [External Notification Module](external-notification) can be set up to beep when a new message arrives.
+This module can also be configured to beep only when message contains the bell character. 
 
 ### Messages
 
-CLI has a dedicated option for canned message module to set predefines messages: `--set-canned-message <message>`
-Predefined messages separated by `|` characters.
+The list of pre-set messages, up to 200 bytes.
 
-You can define up to 50 messages with a total length 800 bytes.
+### Input Source
 
-Existing configuration can be queried with CLI option: `--get-canned-message`
+Input event sources accepted by the canned message module.
 
-#### Set canned messages
+|   Value      |                            Description                                  |
+| :----------: | :---------------------------------------------------------------------: |
+|  `_any`      |    Default. Allows any peripheral input device connected to the device.                                                                                  |
+| `rotEnc1`    | Basic Rotary Encoder |
+| `upDownEnc1` | Up Down Encoder  |
+| `cardkb`     | M5 Stack CardKB (Discontinued) |
+| `faceskb`    | M5 Stack Faces KB |
+
+### Rotary Encoder Enabled
+
+Enable the default rotary encoder.
+
+### Up Down Encoder Enabled
+
+Enable the up / down encoder.
+
+### Input Broker Pin A
+
+GPIO Pin Value (1-39) For encoder port A
+
+### Input Broker Pin B
+
+GPIO Pin Value (1-39) For encoder port B
+
+### Input Broker Pin Press
+
+GPIO Pin Value (1-39) For encoder Press port
+
+### Input Broker Event CW
+
+Generate input event on CW of this kind.
+
+### Input Broker Event CCW
+
+Generate input event on CCW of this kind.
+
+### Input Broker Event Press
+
+Generate input event on Press of this kind.
+
+## Canned Message Module Config Client Availability
 
 <Tabs
 groupId="settings"
-defaultValue="cli"
+defaultValue="apple"
 values={[
-{label: 'CLI', value: 'cli'},
 {label: 'Android', value: 'android'},
-{label: 'iOS', value: 'iOS'},
+{label: 'Apple', value: 'apple'},
+{label: 'CLI', value: 'cli'},
+{label: 'Flasher', value: 'flasher'},
 {label: 'Web', value: 'web'},
 ]}>
-<TabItem value="cli">
-
-```shell title="Set Canned Messages"
-meshtastic --set canned_message_module_messages "I'm fine|I'm out|I'm back|Need helping hand|Help me with saw|I need an alpinist|I need ambulance|Keep Calm|On my way|I will be late|I'm already waiting|We have company|Beer is cold|Roger"
-```
-
-  </TabItem>
-  <TabItem value="android">
+<TabItem value="android">
 
 :::info
-Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+Canned Message module config is not available for Android.
 :::
 
-  </TabItem>
-  <TabItem value="iOS">
+</TabItem>
+<TabItem value="apple">
 
 :::info
-Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+All canned message module config options are available on iOS, iPadOS and macOS at Settings > Modules > Canned Messages.
+:::
+
+</TabItem>
+<TabItem value="cli">
+
+:::info
+No canned message module config options are available in the python CLI. 
+:::
+
+Example commands are below:
+
+|                 Setting                  | Acceptable Values | Default |
+| :--------------------------------------: | :---------------: | :-----: |
+|      canned_message_module_enabled       |  `true`, `false`  | `false` |
+|     canned_message_module_send_bell      |  `true`, `false`  | `false` |
+| canned_message_module_allow_input_source | `rotEnc1`, `_any`, `upDownEnc1`, `cardkb`, `faceskb`  | `_any`  |
+|      canned_message_module_messages      |     `string`      |  `""`   |
+|               (Messages)\*               |     `string`      |  `""`   |
+|  inputbroker_event_cw   | `InputEventChar`  | (not defined) |
+|  inputbroker_event_ccw  | `InputEventChar`  | (not defined) |
+| inputbroker_event_press | `InputEventChar`  | (not defined) |
+|    inputbroker_pin_a    |     `integer`     | (not defined) |
+|    inputbroker_pin_b    |     `integer`     | (not defined) |
+|  inputbroker_pin_press  |     `integer`     | (not defined) |
+
+```shell title="Enable/Disable the Canned Message Module"
+meshtastic --set canned_message_module_enabled true
+meshtastic --set canned_message_module_enabled false
+```
+
+```shell title="Enable/Disable send bell character"
+meshtastic --set canned_message_module_send_bell true
+meshtastic --set canned_message_module_send_bell false
+```
+
+```shell title="Set Messages"
+meshtastic --set-canned-message "I need an alpinist!|Call Me|Roger Roger|Keep Calm|On my way|"
+```
+
+```shell title="Set Input Source"
+meshtastic --set canned_message_module_allow_input_source "_any"
+meshtastic --set canned_message_module_allow_input_source "rotEnc1"
+```
+
+```shell title="Enable/Disable rotary1"
+meshtastic --set 
+```
+
+```shell title="Set/Unset Encoder Pin A"
+meshtastic --set inputbroker_pin_a 17
+meshtastic --set inputbroker_pin_a 0
+```
+
+```shell title="Set/Unset Encoder Pin B"
+meshtastic --set inputbroker_pin_b 39
+meshtastic --set inputbroker_pin_b 0
+```
+
+```shell title="Set/Unset Encoder Pin Press"
+meshtastic --set inputbroker_pin_press 21
+meshtastic --set inputbroker_pin_press 0
+```
+
+```shell title="Set/Unset Input Broker CW Event"
+meshtastic --set inputbroker_event_cw KEY_UP
+meshtastic --set inputbroker_event_cw ""
+```
+
+```shell title="Set/Unset Input Broker CCW Event"
+meshtastic --set inputbroker_event_ccw KEY_DOWN
+meshtastic --set inputbroker_event_ccw ""
+```
+
+```shell title="Set/Unset Input Broker Press Event"
+meshtastic --set inputbroker_event_press KEY_SELECT
+meshtastic --set inputbroker_event_press ""
+```
+</TabItem>
+<TabItem value="flasher">
+
+:::info
+No canned message test module config options are available in the Flasher.
 :::
 
   </TabItem>
   <TabItem value="web">
 
 :::info
-Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+No canned message test module config options are available in the Web UI.
 :::
-
+    
   </TabItem>
 </Tabs>
-
-## Details
-
-### Prerequisites
-
-<!--- TODO add link to hardware pages to first bullet point --->
-
-- Attach a compatible peripheral device. Take note of the GPIO numbers you use, as they will be used in the following step.
-- Once attached, configure peripheral device with [Rotary Encoder Module](input-broker) Settings.
-
-:::note
-Replace each `GPIO` (x3) below with the GPIO numbers from hardware setup.
-
-```shell title="Canned Message Module - Required Rotary Encoder Module Settings"
-meshtastic --set rotary1_pin_a GPIO
-meshtastic --set rotary1_pin_b GPIO
-meshtastic --set rotary1_pin_press GPIO
-meshtastic --set rotary1_event_cw KEY_UP
-meshtastic --set rotary1_event_ccw KEY_DOWN
-meshtastic --set rotary1_event_press KEY_SELECT
-meshtastic --set rotary1_enabled True
-```
-
-:::
-That's it! With a functioning and enabled rotary encoder, you're ready to begin configuring the Canned Message Module.
 
 ## Hardware
 
@@ -320,3 +234,33 @@ Recommended GPIO pins for connecting a rotary encoder.
 
 There is a reference case 3D-design utilizing the rotary encoder for TTGO LoRa V1:
 [Case for TTGO-ESP32-LORA-OLED-v1.0 with rotary encoder](https://www.thingiverse.com/thing:5178495)
+
+
+## Examples
+
+- Attach a compatible peripheral device. Take note of the GPIO numbers you use, as they will be used in the following step.
+
+:::note
+Replace each `GPIO` (x3) below with the GPIO numbers from your hardware setup.
+:::
+
+```shell title="Canned Message Module - Required Rotary Encoder Module Settings"
+meshtastic --set rotary1_pin_a GPIO
+meshtastic --set rotary1_pin_b GPIO
+meshtastic --set rotary1_pin_press GPIO
+meshtastic --set rotary1_event_cw KEY_UP
+meshtastic --set rotary1_event_ccw KEY_DOWN
+meshtastic --set rotary1_event_press KEY_SELECT
+meshtastic --set rotary1_enabled True
+```
+
+
+That's it! With a functioning and enabled rotary encoder, you're ready to begin configuring the Canned Message Module.
+
+:::tip
+Once module settings are changed, a **reset** is required for them to take effect.
+:::
+
+:::warning
+GPIO access is fundamentally dangerous because invalid options can physically damage or destroy your hardware. Ensure that you fully understand the schematic for your particular device before trying this as we do not offer a warranty. Use at your own risk.
+:::
