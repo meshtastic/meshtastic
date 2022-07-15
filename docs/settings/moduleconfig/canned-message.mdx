@@ -189,6 +189,12 @@ No canned message test module config options are available in the Web UI.
   </TabItem>
 </Tabs>
 
+:::warning
+GPIO access is fundamentally dangerous because invalid options can physically damage or destroy your hardware. Ensure that you fully understand the schematic for your particular device before trying this as we do not offer a warranty. Use at your own risk.
+
+This module requires attaching a peripheral accessory to your device. It will not work without one.
+:::
+
 ## Hardware
 
 To navigate through messages and select one, you will require some hardware attached to your device. Currently, the module is tested with a generic rotary encoder, but this is not a limitation further input methods can be added in the future.
@@ -257,10 +263,3 @@ meshtastic --set rotary1_enabled True
 
 That's it! With a functioning and enabled rotary encoder, you're ready to begin configuring the Canned Message Module.
 
-:::tip
-Once module settings are changed, a **reset** is required for them to take effect.
-:::
-
-:::warning
-GPIO access is fundamentally dangerous because invalid options can physically damage or destroy your hardware. Ensure that you fully understand the schematic for your particular device before trying this as we do not offer a warranty. Use at your own risk.
-:::

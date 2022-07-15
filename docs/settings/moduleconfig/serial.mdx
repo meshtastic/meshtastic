@@ -11,14 +11,6 @@ The serial module config options are: Enabled, Echo, Mode, Receive GPIO, Transmi
 
 This is a simple interface to send messages over the mesh network by sending strings over a serial port. Anything you send the node will be turned into a message sent out over the mesh, and anything received from the mesh will be sent to the serial port. Note that this module does not (yet) allow arbitrary protobuf commands to be sent over the serial connection.
 
-:::warning
-GPIO access is fundamentally dangerous because invalid options can physically damage or destroy your hardware. Ensure that you fully understand the schematic for your particular device before trying this as we do not offer a warranty. Use at your own risk.
-:::
-
-:::note
-This module requires attaching a peripheral accessory to your device. It will not work without one.
-:::
-
 ## Serial Module Config Values
 
 ### Enabled
@@ -59,7 +51,7 @@ Once module settings are changed, a **reset** is required for them to take effec
 
 <Tabs
 groupId="settings"
-defaultValue="flasher"
+defaultValue="apple"
 values={[
 {label: 'Android', value: 'android'},
 {label: 'Apple', value: 'apple'},
@@ -144,6 +136,12 @@ No serial test module config options are available in the Web UI.
     
   </TabItem>
 </Tabs>
+
+:::warning
+GPIO access is fundamentally dangerous because invalid options can physically damage or destroy your hardware. Ensure that you fully understand the schematic for your particular device before trying this as we do not offer a warranty. Use at your own risk.
+
+This module requires attaching a peripheral accessory to your device. It will not work without one.
+:::
 
 ## Examples
 
