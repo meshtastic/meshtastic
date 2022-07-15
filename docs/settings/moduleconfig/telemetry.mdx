@@ -6,30 +6,94 @@ sidebar_label: Telemetry
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
-import PluginModule from '@site/docs/_blocks/_plugin_module.mdx';
 
-:::warning
-GPIO access is fundamentally dangerous because invalid options can physically damage or destroy your hardware. Ensure that you fully understand the schematic for your particular device before trying this as we do not offer a warranty. Use at your own risk.
+The Telemetry Module provides two types of data over the mesh.  Device metrics (Battery Level, Voltage, Channel Utilization and Airtime) from your meshtastic device and Environement Metrics from attached I2C sensors.
+
+The telemetry module config options are: Device Metrics Update Interval, Environment Metrics Update Interval, Environement Telemetry Enabled, Sensor Type, Show on Device Screen, Display Fahrenheit, Error Threshold and Error Recovery Interval.  Range Test Module config uses an admin message sending a `ConfigModule.Telemetry` protobuf.
+
+## Telemetry Module Config Values
+
+## Update Intervals
+
+### Device Metrics Update Interval
+
+How often we should send Device Metrics over the mesh.
+
+Default is every 5 minutes.
+
+### Environment Metrics Update Interval
+
+How often we should send Environment(Sensor) Metrics over the mesh.
+
+Default is every 5 minutes.
+
+## Sensor options
+
+### Environment Telemetry Enabled
+
+Enable the Environment Telemetry (Sensors)
+
+### Sensor Type
+
+Specify the sensor type.
+
+| Sensor  |  Data Points                                                  |
+| :-----: | :-----------------------------------------------------------: |
+| BME280  | Temperature, barometric pressure and humidity                 |
+| BME680  | Temperature, barometric pressure, humidity and air resistance |
+| MCP9808 | Temperature                                                   | 
+| SHTC3   | Temperature and humidity                                      |
+| INA260  | Current and Voltage                                           |
+| INA219  | Current and Voltage                                           | 
+
+### Show on device screen
+
+Show the Telemetry Module on-device display.
+
+### Display Fahrenheit
+
+The sensor is always read in Celsius, but the user can opt to view the temperature display in Fahrenheit using this setting.
+
+Default is off
+
+### Error Threshold
+
+Sometimes sensor reads can fail. If this happens, we will retry a configurable number of attempts. Each attempt will be delayed by the minimum required refresh rate for that sensor.
+
+### Error Recovery Interval
+
+Sometimes we can end up with more than our configured threshold for errors. In this case, we will stop trying to read from the sensor for a while. Wait this long until trying to read from the sensor again.
+
+## Device Config Client Availability
+
+<Tabs
+groupId="settings"
+defaultValue="apple"
+values={[
+{label: 'Android', value: 'android'},
+{label: 'Apple', value: 'apple'},
+{label: 'CLI', value: 'cli'},
+{label: 'Flasher', value: 'flasher'},
+{label: 'Web', value: 'web'},
+]}>
+<TabItem value="android">
+
+:::info
+Telemetry Module config is not available for Android.
 :::
 
-<PluginModule
-  name="telemetry_module_environment"
-  rename="environmental_measurement_plugin"
-/>
+</TabItem>
+<TabItem value="apple">
 
-<!--- TODO add link to hardware setup to admonition--->
+:::info
+All telemetry module config options are available on iOS, iPadOS and macOS at Settings > Radio Configuration > Modules.
 
-:::note
-The environment metrics feature of this module requires attaching a peripheral accessory to your device. It will not work without one.
 :::
 
-## Overview
+</TabItem>
+<TabItem value="cli">
 
-In addition to key device metrics such as battery level, the Telemetry Module will also allow nodes to send environmental metrics from externally connected sensors. Currently supported sensors are BME280, BME680, DHT11, DHT12, DHT21, DHT22, Dallas 1-wire DS18B20 and MCP9808.
-
-:::tip
-Once module settings are changed, a **reset** is required for them to take effect.
-:::
+No telemetry module config options are available in the python CLI. Example commands are below:
 
 ## Settings
 
@@ -45,467 +109,66 @@ Once module settings are changed, a **reset** is required for them to take effec
 |        telemetry_module_environment_sensor_type         |        `0-6`        |   `0`   |
 |      telemetry_module_environment_update_interval       | `integer` (seconds) |   `0`   |
 
-### telemetry_module_device_update_interval
-
-Interval in seconds of how often we should try to send our measurements to the mesh.
-
-<Tabs
-groupId="settings"
-defaultValue="cli"
-values={[
-{label: 'CLI', value: 'cli'},
-{label: 'Android', value: 'android'},
-{label: 'iOS', value: 'iOS'},
-{label: 'Web', value: 'web'},
-]}>
-<TabItem value="cli">
-
-```shell title="Set module update interval to default"
+```shell title="Set module update intervals (Default of 0 is 5 Minutes)"
 meshtastic --set telemetry_module_device_update_interval 0
-```
-
-```shell title="Set module update interval to 120 seconds"
+// Device Metrics Two Minutes
 meshtastic --set telemetry_module_device_update_interval 120
-```
-
-  </TabItem>
-  <TabItem value="android">
-
-:::info
-Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
-  </TabItem>
-  <TabItem value="iOS">
-
-:::info
-Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
-  </TabItem>
-  <TabItem value="web">
-
-:::info
-Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
-  </TabItem>
-</Tabs>
-
-### telemetry_module_environment_display_fahrenheit
-
-The sensor is always read in Celsius, but the user can opt to view the temperature display in Fahrenheit using this setting.
-
-#### Display Farenheit/Celsius
-
-<Tabs
-groupId="settings"
-defaultValue="cli"
-values={[
-{label: 'CLI', value: 'cli'},
-{label: 'Android', value: 'android'},
-{label: 'iOS', value: 'iOS'},
-{label: 'Web', value: 'web'},
-]}>
-<TabItem value="cli">
-
-```shell title="Display Farenheit"
-meshtastic --set telemetry_module_environment_display_fahrenheit true
-````
-
-```shell title="Display Celsius"
-meshtastic --set telemetry_module_environment_display_fahrenheit false
-```
-
-  </TabItem>
-  <TabItem value="android">
-
-:::info
-Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
-  </TabItem>
-  <TabItem value="iOS">
-
-:::info
-Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
-  </TabItem>
-  <TabItem value="web">
-
-:::info
-Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
-  </TabItem>
-</Tabs>
-
-### telemetry_module_environment_measurement_enabled
-
-Enables the module to utilize environmental metrics.
-
-#### Enable/Disable the module
-
-<Tabs
-groupId="settings"
-defaultValue="cli"
-values={[
-{label: 'CLI', value: 'cli'},
-{label: 'Android', value: 'android'},
-{label: 'iOS', value: 'iOS'},
-{label: 'Web', value: 'web'},
-]}>
-<TabItem value="cli">
-
-```shell title="Enable Module"
-meshtastic --set telemetry_module_environment_measurement_enabled true
-````
-
-```shell title="Disable Module"
-meshtastic --set telemetry_module_environment_measurement_enabled false
-```
-
-  </TabItem>
-  <TabItem value="android">
-
-:::info
-Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
-  </TabItem>
-  <TabItem value="iOS">
-
-:::info
-Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
-  </TabItem>
-  <TabItem value="web">
-
-:::info
-Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
-  </TabItem>
-</Tabs>
-
-### telemetry_module_environment_read_error_count_threshold
-
-Sometimes sensor reads can fail. If this happens, we will retry a configurable number of attempts. Each attempt will be delayed by the minimum required refresh rate for that sensor
-
-#### Configure telemetry_module_environment_read_error_count_threshold
-
-<Tabs
-groupId="settings"
-defaultValue="cli"
-values={[
-{label: 'CLI', value: 'cli'},
-{label: 'Android', value: 'android'},
-{label: 'iOS', value: 'iOS'},
-{label: 'Web', value: 'web'},
-]}>
-<TabItem value="cli">
-
-```shell title="Configure telemetry_module_environment_read_error_count_threshold to 3 tries"
-meshtastic --set telemetry_module_environment_read_error_count_threshold 3
-````
-
-  </TabItem>
-  <TabItem value="android">
-
-:::info
-Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
-  </TabItem>
-  <TabItem value="iOS">
-
-:::info
-Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
-  </TabItem>
-  <TabItem value="web">
-
-:::info
-Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
-  </TabItem>
-</Tabs>
-
-### telemetry_module_environment_recovery_interval
-
-Sometimes we can end up with more than read_error_count_threshold failures. In this case, we will stop trying to read from the sensor for a while. Wait this long until trying to read from the sensor again.
-
-#### Configure telemetry_module_environment_recovery_interval
-
-<Tabs
-groupId="settings"
-defaultValue="cli"
-values={[
-{label: 'CLI', value: 'cli'},
-{label: 'Android', value: 'android'},
-{label: 'iOS', value: 'iOS'},
-{label: 'Web', value: 'web'},
-]}>
-<TabItem value="cli">
-
-```shell title="Configure telemetry_module_environment_recovery_interval to 120 seconds"
-meshtastic --set telemetry_module_environment_recovery_interval 120
-````
-
-  </TabItem>
-  <TabItem value="android">
-
-:::info
-Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
-  </TabItem>
-  <TabItem value="iOS">
-
-:::info
-Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
-  </TabItem>
-  <TabItem value="web">
-
-:::info
-Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
-  </TabItem>
-</Tabs>
-
-### telemetry_module_environment_screen_enabled
-
-Enable/Disable the Telemetry Module on-device display.
-
-#### Enable/Disable the module on device screen
-
-<Tabs
-groupId="settings"
-defaultValue="cli"
-values={[
-{label: 'CLI', value: 'cli'},
-{label: 'Android', value: 'android'},
-{label: 'iOS', value: 'iOS'},
-{label: 'Web', value: 'web'},
-]}>
-<TabItem value="cli">
-
-```shell title="Enable on device screen"
-meshtastic --set telemetry_module_environment_screen_enabled true
-````
-
-```shell title="Disable on device screen"
-meshtastic --set telemetry_module_environment_screen_enabled false
-```
-
-  </TabItem>
-  <TabItem value="android">
-
-:::info
-Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
-  </TabItem>
-  <TabItem value="iOS">
-
-:::info
-Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
-  </TabItem>
-  <TabItem value="web">
-
-:::info
-Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
-  </TabItem>
-</Tabs>
-
-### telemetry_module_environment_sensor_pin
-
-:::note
-The preferred setup is using I2C, so the `telemetry_module_environment_sensor_pin` may not be needed.
-:::
-
-Specify the preferred GPIO Pin for sensor readings. May not be needed if using I2C.
-
-:::caution
-To prevent damaging your device, double check your device's schematics before attaching to the GPIO pins and setting this value.
-:::
-
-#### Set module sensor pin
-
-<Tabs
-groupId="settings"
-defaultValue="cli"
-values={[
-{label: 'CLI', value: 'cli'},
-{label: 'Android', value: 'android'},
-{label: 'iOS', value: 'iOS'},
-{label: 'Web', value: 'web'},
-]}>
-<TabItem value="cli">
-
-```shell title="Set module sensor pin"
-meshtastic --set telemetry_module_environment_sensor_pin PINNUMBER
-````
-
-  </TabItem>
-  <TabItem value="android">
-
-:::info
-Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
-  </TabItem>
-  <TabItem value="iOS">
-
-:::info
-Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
-  </TabItem>
-  <TabItem value="web">
-
-:::info
-Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
-  </TabItem>
-</Tabs>
-
-### telemetry_module_environment_sensor_type
-
-Specify the sensor type.
-
-:::important
-The sensor values changed between 1.2 and 1.3. The docs represent the 1.3 values. When configuring devices on 1.2, please subtract 1 from the numbers below for the appropriate sensor.
-:::
-
-| Value |       Description       |             Sensor Features              |
-| :---: | :---------------------: | :--------------------------------------: |
-|  `1`  |          DHT11          |          Temperature, Humidity           |
-|  `2`  | DS18B20 (Dallas 1-wire) |               Temperature                |
-|  `3`  |          DHT12          |          Temperature, Humidity           |
-|  `4`  |          DHT21          |          Temperature, Humidity           |
-|  `5`  |          DHT22          |          Temperature, Humidity           |
-|  `6`  |         BME280          |     Temperature, Humidity, Pressure      |
-|  `7`  |         BME680          | Temperature, Humidity, Pressure, VOC Gas |
-|  `8`  |         MCP9808         |          Precision Temperature           |
-
-#### Set sensor type
-
-:::important
-The sensor values changed between 1.2 and 1.3. The docs represent the 1.3 values. When configuring devices on 1.2, please subtract 1 from the numbers on the table above for the appropriate sensor.
-:::
-
-<Tabs
-groupId="settings"
-defaultValue="cli"
-values={[
-{label: 'CLI', value: 'cli'},
-{label: 'Android', value: 'android'},
-{label: 'iOS', value: 'iOS'},
-{label: 'Web', value: 'web'},
-]}>
-<TabItem value="cli">
-
-:::note
-The CLI is able to take the `value` or the `name` of the sensor from the table above.
-:::
-
-```shell title="Set sensor type to DS18B20"
-meshtastic --set telemetry_module_environment_sensor_type 2
-````
-
-```shell title="Set sensor type to DS18B20"
-meshtastic --set telemetry_module_environment_sensor_type DS18B20
-```
-
-  </TabItem>
-  <TabItem value="android">
-
-:::info
-Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
-  </TabItem>
-  <TabItem value="iOS">
-
-:::info
-Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
-  </TabItem>
-  <TabItem value="web">
-
-:::info
-Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
-  </TabItem>
-</Tabs>
-
-#### Set module update interval
-
-<Tabs
-groupId="settings"
-defaultValue="cli"
-values={[
-{label: 'CLI', value: 'cli'},
-{label: 'Android', value: 'android'},
-{label: 'iOS', value: 'iOS'},
-{label: 'Web', value: 'web'},
-]}>
-<TabItem value="cli">
-
-```shell title="Set module update interval to 120 seconds"
+// Environment Metrics Two Minutes
 meshtastic --set telemetry_module_environment_update_interval 120
 ````
 
-  </TabItem>
-  <TabItem value="android">
+```shell title="Enable/Disable Environment Module"
+meshtastic --set telemetry_module_environment_measurement_enabled true
+meshtastic --set telemetry_module_environment_measurement_enabled false
+```
 
-:::info
-Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
+| Sensor  |  Data Points                                                  |
+| :-----: | :-----------------------------------------------------------: |
+| BME280  | Temperature, barometric pressure and humidity                 |
+| BME680  | Temperature, barometric pressure, humidity and air resistance |
+| MCP9808 | Temperature                                                   | 
+| SHTC3   | Temperature and humidity                                      |
+| INA260  | Current and Voltage                                           |
+| INA219  | Current and Voltage    
 
-  </TabItem>
-  <TabItem value="iOS">
 
-:::info
-Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+```shell title="Set sensor type to BME680"
+meshtastic --set telemetry_module_environment_sensor_type BME680
+```
+
+```shell title="Enable/Disable on device screen"
+meshtastic --set telemetry_module_environment_screen_enabled true
+meshtastic --set telemetry_module_environment_screen_enabled false
+```
+
+```shell title="Enable / Disable Display Farenheit"
+meshtastic --set telemetry_module_environment_display_fahrenheit true
+meshtastic --set telemetry_module_environment_display_fahrenheit false
+````
+
+```shell title="Set the error threshold to 3 tries"
+meshtastic --set telemetry_module_environment_read_error_count_threshold 3
+````
+
+```shell title="Set the error recovery interval to 120 seconds"
+meshtastic --set telemetry_module_environment_recovery_interval 120
+````
+</TabItem>
+<TabItem value="flasher">
+
+:::danger
+No telemetry module config options are available in the Flasher.
 :::
 
   </TabItem>
   <TabItem value="web">
 
 :::info
-Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+No telemetry module config options are available in the Web UI.
 :::
-
+    
   </TabItem>
 </Tabs>
-
-## Details
-
-### Hardware
-
-The sensors can be wired differently, here's [one example](https://randomnerdtutorials.com/esp32-ds18b20-temperature-arduino-ide) for sensor DS18B20.
-
-### Known Problems
-
-- No default configuration values are currently set, so this must be done when enabling the module.
-
-
 
 ## Examples
 
