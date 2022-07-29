@@ -13,6 +13,17 @@ Supported sensors connected to the I2C bus of the device will be automattically 
 
 The telemetry module config options are: Device Metrics Update Interval, Environment Metrics Update Interval, Environement Telemetry Enabled, Show on Device Screen, and Display Fahrenheit.
 
+### Currently Supported Sensor Types
+
+| Sensor  |  Data Points                                                  |
+| :-----: | :-----------------------------------------------------------: |
+| DHT22   | Temperature and humidity                                      |
+| BME280  | Temperature, barometric pressure and humidity                 |
+| BME680  | Temperature, barometric pressure, humidity and air resistance |
+| MCP9808 | Temperature                                                   | 
+| INA260  | Current and Voltage                                           |
+| INA219  | Current and Voltage                                           | 
+
 ## Telemetry Module Config Values
 
 ## Update Intervals
@@ -34,19 +45,6 @@ Default is every 5 minutes.
 ### Environment Telemetry Enabled
 
 Enable the Environment Telemetry (Sensors)
-
-### Sensor Type
-
-Supported sensor types.
-
-| Sensor  |  Data Points                                                  |
-| :-----: | :-----------------------------------------------------------: |
-| BME280  | Temperature, barometric pressure and humidity                 |
-| BME680  | Temperature, barometric pressure, humidity and air resistance |
-| MCP9808 | Temperature                                                   | 
-| SHTC3   | Temperature and humidity                                      |
-| INA260  | Current and Voltage                                           |
-| INA219  | Current and Voltage                                           | 
 
 ### Show on device screen
 
@@ -112,15 +110,6 @@ meshtastic --set telemetry_module_environment_measurement_enabled true
 meshtastic --set telemetry_module_environment_measurement_enabled false
 ```
 
-| Sensor  |  Data Points                                                  |
-| :-----: | :-----------------------------------------------------------: |
-| BME280  | Temperature, barometric pressure and humidity                 |
-| BME680  | Temperature, barometric pressure, humidity and air resistance |
-| MCP9808 | Temperature                                                   | 
-| INA260  | Current and Voltage                                           |
-| INA219  | Current and Voltage    
-
-
 ```shell title="Enable/Disable on device screen"
 meshtastic --set telemetry_module_environment_screen_enabled true
 meshtastic --set telemetry_module_environment_screen_enabled false
@@ -173,12 +162,13 @@ meshtastic --set telemetry_module_measurement_enabled true --set telemetry_modul
 You can change the values above to suit your needs. The commands can be run one at a time or in a group as show above.
 :::
 
-- reboot/reset the device (press the button or unplug/plug in the device)
-- when the device boots it should say "Telemetry" and it may show the sensor data
-- if still "no data", run:
+- Reboot/reset the device (press the button or unplug/plug in the device)
+- When the device boots it should say "Telemetry" and it may show the sensor data
+- If this does not appear to have any effects, run:
 
 ```shell
-meshtastic --info
+meshtastic --noproto
 ```
 
-and verify the the `telemetry_module_sensor_type`
+And examine the serial logs for Telemetry diagnostic information.
+
