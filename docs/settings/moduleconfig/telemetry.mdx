@@ -9,7 +9,9 @@ import TabItem from '@theme/TabItem';
 
 The Telemetry Module provides two types of data over the mesh.  Device metrics (Battery Level, Voltage, Channel Utilization and Airtime) from your meshtastic device and Environement Metrics from attached I2C sensors.
 
-The telemetry module config options are: Device Metrics Update Interval, Environment Metrics Update Interval, Environement Telemetry Enabled, Sensor Type, Show on Device Screen, Display Fahrenheit, Error Threshold and Error Recovery Interval.  Range Test Module config uses an admin message sending a `ConfigModule.Telemetry` protobuf.
+Supported sensors connected to the I2C bus of the device will be automattically detected at startup. Environement Telemetry must be enabled for them to be instrumented and their readings sent over the mesh.
+
+The telemetry module config options are: Device Metrics Update Interval, Environment Metrics Update Interval, Environement Telemetry Enabled, Show on Device Screen, and Display Fahrenheit.
 
 ## Telemetry Module Config Values
 
@@ -35,7 +37,7 @@ Enable the Environment Telemetry (Sensors)
 
 ### Sensor Type
 
-Specify the sensor type.
+Supported sensor types.
 
 | Sensor  |  Data Points                                                  |
 | :-----: | :-----------------------------------------------------------: |
@@ -55,14 +57,6 @@ Show the Telemetry Module on-device display.
 The sensor is always read in Celsius, but the user can opt to view the temperature display in Fahrenheit using this setting.
 
 Default is off
-
-### Error Threshold
-
-Sometimes sensor reads can fail. If this happens, we will retry a configurable number of attempts. Each attempt will be delayed by the minimum required refresh rate for that sensor.
-
-### Error Recovery Interval
-
-Sometimes we can end up with more than our configured threshold for errors. In this case, we will stop trying to read from the sensor for a while. Wait this long until trying to read from the sensor again.
 
 ## Device Config Client Availability
 
@@ -102,11 +96,7 @@ No telemetry module config options are available in the python CLI. Example comm
 |         telemetry_module_device_update_interval         | `integer` (seconds) |   `0`   |
 |     telemetry_module_environment_display_fahrenheit     |   `true`, `false`   | `false` |
 |    telemetry_module_environment_measurement_enabled     |   `true`, `false`   | `false` |
-| telemetry_module_environment_read_error_count_threshold |      `integer`      |   `0`   |
-|     telemetry_module_environment_recovery_interval      | `integer` (seconds) |   `0`   |
 |       telemetry_module_environment_screen_enabled       |   `true`, `false`   |   `0`   |
-|         telemetry_module_environment_sensor_pin         |      `integer`      |   `0`   |
-|        telemetry_module_environment_sensor_type         |        `0-6`        |   `0`   |
 |      telemetry_module_environment_update_interval       | `integer` (seconds) |   `0`   |
 
 ```shell title="Set module update intervals (Default of 0 is 5 Minutes)"
@@ -127,14 +117,9 @@ meshtastic --set telemetry_module_environment_measurement_enabled false
 | BME280  | Temperature, barometric pressure and humidity                 |
 | BME680  | Temperature, barometric pressure, humidity and air resistance |
 | MCP9808 | Temperature                                                   | 
-| SHTC3   | Temperature and humidity                                      |
 | INA260  | Current and Voltage                                           |
 | INA219  | Current and Voltage    
 
-
-```shell title="Set sensor type to BME680"
-meshtastic --set telemetry_module_environment_sensor_type BME680
-```
 
 ```shell title="Enable/Disable on device screen"
 meshtastic --set telemetry_module_environment_screen_enabled true
@@ -146,13 +131,6 @@ meshtastic --set telemetry_module_environment_display_fahrenheit true
 meshtastic --set telemetry_module_environment_display_fahrenheit false
 ````
 
-```shell title="Set the error threshold to 3 tries"
-meshtastic --set telemetry_module_environment_read_error_count_threshold 3
-````
-
-```shell title="Set the error recovery interval to 120 seconds"
-meshtastic --set telemetry_module_environment_recovery_interval 120
-````
 </TabItem>
 <TabItem value="flasher">
 
@@ -188,7 +166,7 @@ Steps:
 - configure the device:
 
 ```shell
-meshtastic --set telemetry_module_measurement_enabled true --set telemetry_module_screen_enabled true --set telemetry_module_update_interval 15 --set telemetry_module_display_farenheit true --set telemetry_module_sensor_type 6
+meshtastic --set telemetry_module_measurement_enabled true --set telemetry_module_screen_enabled true --set telemetry_module_display_farenheit true
 ```
 
 :::tip
