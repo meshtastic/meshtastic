@@ -77,19 +77,19 @@ WiFi related settings are not available on Apple OS's.
 No device config options are available in the python CLI. Example commands are below:
 
 ```shell title="Set the role to client"
-meshtastic --set role client
+meshtastic --set device.role client
 ```
 
 ```shell title="Disable serial console"
-meshtastic --set serial_disabled true
+meshtastic --set device.serial_disabled true
 ```
 
 ```shell title="Enable debug logging"
-meshtastic --set debug_log_enabled true
+meshtastic --set device.debug_log_enabled true
 ```
 
 ```shell title="Factory reset your radio"
-meshtastic --set factory_reset true
+meshtastic --set device.factory_reset true
 ```
 
 </TabItem>
@@ -103,7 +103,7 @@ No device config options are available in the Flasher.
   <TabItem value="web">
 
 :::info
-No device config options are available in the Web UI.
+All device config options are available in the Web UI.
 :::
     
   </TabItem>

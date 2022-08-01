@@ -63,18 +63,18 @@ All display config options are available on iOS, iPadOS and macOS at Settings > 
 No display config options are available in the python CLI. Example commands are below:
 
 ```shell title="Set Screen On Duration (Default of 0 is 10 minutes)"
-meshtastic --set screen_on_secs 0
-meshtastic --set screen_on_secs 120
+meshtastic --set display.screen_on_secs 0
+meshtastic --set display.screen_on_secs 120
 ```
 
 ```shell title="Set Auto Carousel Interval (Default of 0 is Off)"
 meshtastic --set auto_screen_carousel_secs 0
 // Set to 2 Minutes (120 Seconds)
-meshtastic --set auto_screen_carousel_secs 120
+meshtastic --set display.auto_screen_carousel_secs 120
 ```
 
 ```shell title="Specify GPS format on device screen"
-meshtastic --set gps_format GpsFormatUTM
+meshtastic --set display.gps_format GpsFormatUTM
 ```
 
 </TabItem>
@@ -88,7 +88,7 @@ No display config options are available in the Flasher.
   <TabItem value="web">
 
 :::info
-No display config options are available in the Web UI.
+All display config options are available in the Web UI.
 :::
     
   </TabItem>

@@ -139,7 +139,7 @@ No telemetry module config options are available in the Web UI.
 
 ## Examples
 
-### RAK 4631 with Environment Sensor
+### RAK 4631 with BME680 Environment Sensor
 
 Setup of a RAK 4631 with Environment Sensor
 
@@ -171,4 +171,21 @@ meshtastic --noproto
 ```
 
 And examine the serial logs for Telemetry diagnostic information.
+
+## Supporting Additional Sensors
+
+### Environment Metrics
+
+The environment metrics in the telemetry module supports a limited amount of fields as they are stored in memory on the device.  Support for sensors that provide one or more of the following fields can potentially be added to the main firmare provided there is a GPL licensed library for us to include to support it, and the libary size is not prohibitive.
+
+* Temperature 
+* Relative Humidity
+* Barometric Pressure
+* Gas Resistance (AQI)
+* Voltage 
+* Current
+
+### Supporting Other Sensor types
+
+For other interesting sensor types and use cases we need to add a portnum for more generic telemetry packets and a second MCU will be required to interact with the sensor and process the data to be sent over the mesh.  This data will not be stored in the nodedb on the device.
 
