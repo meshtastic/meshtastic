@@ -2,10 +2,10 @@ name: CI
 on:
   push:
     branches:
-      - "master"
+      - 'master'
   workflow_run:
     workflows:
-      - "Update protobufs"
+      - 'Update protobufs'
 
 jobs:
   deploy-website:
@@ -26,11 +26,11 @@ jobs:
         with:
           submodules: true
       - name: Generate protobuf docs
-        run: protoc --doc_out="docs/developers/protobufs" --doc_opt="./protobuf.tmpl,api.md" --proto_path="protobufs" protobufs/*.proto
+        run: protoc --doc_out="docs/developers/protobufs" --doc_opt="./protobuf.tmpl,api.mdx" --proto_path="protobufs" protobufs/*.proto
       - uses: amondnet/vercel-action@v20
         with:
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
-          vercel-args: "--prod"
+          vercel-args: '--prod'
           vercel-org-id: ${{ secrets.ORG_ID}}
           vercel-project-id: ${{ secrets.PROJECT_ID}}
           scope: ${{ secrets.ORG_ID}}
