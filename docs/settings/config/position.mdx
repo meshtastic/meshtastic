@@ -103,29 +103,29 @@ All position config values except for postion flag are available on iOS, iPadOS 
 
 No Position config conmmands are available in the python CLI. Example commands are below:
 
-|         Setting          |                                                                       Acceptable Values                                                                       |     Default     |
-| :----------------------: | :-----------------------------------------------------------------------------------------------------------------------------------------------------------: | :-------------: |
-|      gps_enabled      |                                                                        `true`, `false`                                                                        |     `true`     |
-|   gps_update_interval    |                                                                      `integer` (seconds)                                                                      | Default `0` is 30 Seconds  |
-|     gps_attempt_time     |                                                                      `integer` (seconds)                                                                      | Default of `0` is 30 Seconds  |
-|      fixed_position      |                                                                        `true`, `false`                                                                        |     `false`     |
-| position_broadcast_smart |                                                                        `true`, `false`                                                                        |     `true`     |
-| position_broadcast_secs  |                                                                      `integer` (seconds)                                                                      | Default of `0` is 15 Minutes  |
-|      position_flags      | `POS_UNDEFINED`, `POS_ALTITUDE`, `POS_ALT_MSL`, `POS_GEO_SEP`, `POS_DOP`, `POS_HVDOP`, `PDOP`, `POS_BATTERY`, `POS_SATINVIEW`, `POS_SEQ_NOS`, `POS_TIMESTAMP`, `POS_HEADING`, `POS_SPEED` | `POS_UNDEFINED` |
+|         Setting                |                                                                       Acceptable Values                                                                       |     Default     |
+| :----------------------------: | :-----------------------------------------------------------------------------------------------------------------------------------------------------------: | :-------------: |
+|      position.gps_enabled      |                                                                        `true`, `false`                                                                        |     `true`     |
+|   position.gps_update_interval |                                                                      `integer` (seconds)                                                                      | Default `0` is 30 Seconds  |
+|    position.gps_attempt_time   |                                                                      `integer` (seconds)                                                                      | Default of `0` is 30 Seconds  |
+|      position.fixed_position   |                                                                        `true`, `false`                                                                        |     `false`     |
+| position.broadcast_smart       |                                                                        `true`, `false`                                                                        |     `true`     |
+| position.broadcast_secs        |                                                                      `integer` (seconds)                                                                      | Default of `0` is 15 Minutes  |
+|      position.flags            | `POS_UNDEFINED`, `POS_ALTITUDE`, `POS_ALT_MSL`, `POS_GEO_SEP`, `POS_DOP`, `POS_HVDOP`, `PDOP`, `POS_BATTERY`, `POS_SATINVIEW`, `POS_SEQ_NOS`, `POS_TIMESTAMP`, `POS_HEADING`, `POS_SPEED` | `POS_UNDEFINED` |
 
 
 ```shell title="Set GPS update interval (Default of 0 is 30 seconds)"
-meshtastic --set gps_update_interval 0
-meshtastic --set gps_update_interval 45
+meshtastic --set position.gps_update_interval 0
+meshtastic --set position.gps_update_interval 45
 ```
 
 ```shell title="Set GPS attempt time (Default of 0 is 30 seconds)"
-meshtastic --set gps_attempt_time 0
-meshtastic --set gps_attempt_time 45
+meshtastic --set position.gps_attempt_time 0
+meshtastic --set position.gps_attempt_time 45
 ```
 
 ```shell title="Set Fixed Position - Current Location"
-meshtastic --set fixed_position true
+meshtastic --set position.fixed_position true
 ```
 
 :::note
@@ -137,17 +137,17 @@ meshtastic --setlat 37.8651 --setlon -119.5383
 ```
 
 ```shell title="Unset Fixed Position"
-meshtastic --set fixed_position false
+meshtastic --set position.fixed_position false
 ```
 
 ```shell title="Enable / Disable Smart position broadcast (Enabled by default)"
-meshtastic --set position_broadcast_smart true
-meshtastic --set position_broadcast_smart false
+meshtastic --set position.broadcast_smart true
+meshtastic --set position.broadcast_smart false
 ```
 
 ```shell title="Set Position Broadcast Interval (Default of 0 is 15 minutes)"
-meshtastic --set position_broadcast_secs 0
-meshtastic --set position_broadcast_secs 60
+meshtastic --set position.broadcast_secs 0
+meshtastic --set position.broadcast_secs 60
 ```
 
 :::note

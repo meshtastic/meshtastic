@@ -101,59 +101,59 @@ Power config is not available on Apple OS's.
 
 No Power config options are available in the python CLI.
 
-|            Setting             |                                                                        Acceptable Values                                                                        |  Default  |
-| :----------------------------: | :-------------------------------------------------------------------------------------------------------------------------------------------------------------: | :-------: |
-|         charge_current         | `MAUnset`, `MA100`, `MA190`, `MA280`, `MA360`, `MA450`, `MA550`, `MA630`, `MA700`, `MA780`, `MA880`, `MA960`, `MA1000`, `MA1080`, `MA1160`, `MA1240`, `MA1320`: | `MAUnset` |
-|          is_power_saving       |                                                                         `true`, `false`                                                                         |  `false`  |
-| on_battery_shutdown_after_secs |                                                                       `integer` (seconds)                                                                       |    Default of `0` is off    |
-|    adc_multiplier_override     |                                                                       `2-4` (floating point value)                                                              | Default of `0` uses firmware values    |
-|      wait_bluetooth_secs       |                                                                       `integer` (seconds)                                                                       |    Default of `0` is 1 minute   |
-|     mesh_sds_timeout_secs      |                                                                       `integer` (seconds)                                                                       |   Default of `0` is 2 hours   |
-|            sds_secs            |                                                                       `integer` (seconds)                                                                       |   Default of `0` is 1 year  |
-|            ls_secs             |                                                                       `integer` (seconds)                                                                       |   Default of `0` is 1 hour   |
-|         min_wake_secs          |                                                                       `integer` (seconds)                                                                       |   Default of `0` is 10 seconds   |
+|            Setting                   |                                                                        Acceptable Values                                                                        |  Default  |
+| :----------------------------------: | :-------------------------------------------------------------------------------------------------------------------------------------------------------------: | :-------: |
+|         power.charge_current         | `MAUnset`, `MA100`, `MA190`, `MA280`, `MA360`, `MA450`, `MA550`, `MA630`, `MA700`, `MA780`, `MA880`, `MA960`, `MA1000`, `MA1080`, `MA1160`, `MA1240`, `MA1320`: | `MAUnset` |
+|          power.is_power_saving       |                                                                         `true`, `false`                                                                         |  `false`  |
+| power.on_battery_shutdown_after_secs |                                                                       `integer` (seconds)                                                                       |    Default of `0` is off    |
+|    power.adc_multiplier_override     |                                                                       `2-4` (floating point value)                                                              | Default of `0` uses firmware values    |
+|      power.wait_bluetooth_secs       |                                                                       `integer` (seconds)                                                                       |    Default of `0` is 1 minute   |
+|     power.mesh_sds_timeout_secs      |                                                                       `integer` (seconds)                                                                       |   Default of `0` is 2 hours   |
+|            power.sds_secs            |                                                                       `integer` (seconds)                                                                       |   Default of `0` is 1 year  |
+|            power.ls_secs             |                                                                       `integer` (seconds)                                                                       |   Default of `0` is 1 hour   |
+|         power.min_wake_secs          |                                                                       `integer` (seconds)                                                                       |   Default of `0` is 10 seconds   |
 
 
 ```shell title="Set / Unset charge current (Tbeam 1.1 only)"
-meshtastic --set  charge_current MAUnset
-meshtastic --set  charge_current MA100
+meshtastic --set  power.charge_current MAUnset
+meshtastic --set  power.charge_current MA100
 ```
 
 ```shell title="Enable / Disable Power Saving"
-meshtastic --set is_power_saving true
-meshtastic --set is_power_saving false
+meshtastic --set power.is_power_saving true
+meshtastic --set power.is_power_saving false
 ```
 
 ```shell title="Enable / Disable Shutdown after losing power"
-meshtastic --set on_battery_shutdown_after_secs 120
-meshtastic --set on_battery_shutdown_after_secs 0
+meshtastic --set power.on_battery_shutdown_after_secs 120
+meshtastic --set power.on_battery_shutdown_after_secs 0
 ```
 
 ```shell title="Set  Wait Bluetooth Interval  (Default of 0 is 60 seconds)"
-meshtastic --set wait_bluetooth_secs 0
-meshtastic --set wait_bluetooth_secs 120
+meshtastic --set power.wait_bluetooth_secs 0
+meshtastic --set power.wait_bluetooth_secs 120
 ```
 
 ```shell title="Set Mesh Super Deep Sleep Timeout (Default of 0 is 2 hours/7200 seconds)"
-meshtastic --set mesh_sds_timeout_secs 0
-meshtastic --set mesh_sds_timeout_secs 120
+meshtastic --set power.mesh_sds_timeout_secs 0
+meshtastic --set power.mesh_sds_timeout_secs 120
 // Disable using MAXUINT
-meshtastic --set mesh_sds_timeout_secs 4294967295
+meshtastic --set power.mesh_sds_timeout_secs 4294967295
 ```
 
 ```shell title="Set Super Deep Sleep (Default of 0 is 1 year)"
-meshtastic --set sds_secs 0
-meshtastic --set sds_secs 120
+meshtastic --set power.sds_secs 0
+meshtastic --set power.sds_secs 120
 ```
 
 ```shell title="Set Light Sleep to default (Default of 0 is 5 minutes)"
-meshtastic --set ls_secs 0
-meshtastic --set ls_secs 120
+meshtastic --set power.ls_secs 0
+meshtastic --set power.ls_secs 120
 ```
 
 ```shell title="Set Minimum Wake Interval (Default of 0 is 10 seconds)"
-meshtastic --set min_wake_secs 0
-meshtastic --set min_wake_secs 120
+meshtastic --set power.min_wake_secs 0
+meshtastic --set power.min_wake_secs 120
 ```
 </TabItem>
 <TabItem value="flasher">
