@@ -69,42 +69,42 @@ All external notification module config options are available on iOS, iPadOS and
 
 All external noftification module config options are available in the python CLI. Example commands are below:
 
-|                Setting                |    Acceptable Values     | Default |
-| :-----------------------------------: | :----------------------: | :-----: |
-|    ext_notification_module_enabled    |     `true`, `false`      | `false` |
-|    ext_notification_module_active     |     `true`, `false`      | `false` |
-|  ext_notification_module_alert_bell   |     `true`, `false`      | `false` |
-| ext_notification_module_alert_message |     `true`, `false`      | `false` |
-|    ext_notification_module_output     |        `integer`         |   `0`   |
-|   ext_notification_module_output_ms   | `integer` (milliseconds) |   `0`   |
+|         Setting                |    Acceptable Values     | Default |
+| :----------------------------: | :----------------------: | :-----: |
+|    ext_notification.enabled    |     `true`, `false`      | `false` |
+|    ext_notification.active     |     `true`, `false`      | `false` |
+|  ext_notification.alert_bell   |     `true`, `false`      | `false` |
+| ext_notification.alert_message |     `true`, `false`      | `false` |
+|    ext_notification.output     |        `integer`         |   `0`   |
+|   ext_notification.output_ms   | `integer` (milliseconds) |   `0`   |
 
 ```shell title="Enable/Disable External Notification Module"
-meshtastic --set ext_notification_module_enabled true
-meshtastic --set ext_notification_module_enabled false
+meshtastic --set ext_notification.enabled true
+meshtastic --set ext_notification.enabled false
 ```
 
 ```shell title="Enable/Disable alert on incoming bell"
-meshtastic --set ext_notification_module_alert_bell true
-meshtastic --set ext_notification_module_alert_bell false
+meshtastic --set ext_notification.alert_bell true
+meshtastic --set ext_notification.alert_bell false
 ```
 
 ```shell title="Set GPIO active high / low (defalut of false is low)"
-meshtastic --set ext_notification_module_active false
-meshtastic --set ext_notification_module_active true
+meshtastic --set ext_notification.active false
+meshtastic --set ext_notification.active true
 ```
 
 ```shell title="Enable/Disable alert on incoming message"
-meshtastic --set ext_notification_module_alert_message true
-meshtastic --set ext_notification_module_alert_message false
+meshtastic --set ext_notification.alert_message true
+meshtastic --set ext_notification.alert_message false
 ```
 
 ```shell title="Set GPIO to monitor to 21"
-meshtastic --set ext_notification_module_output 21
+meshtastic --set ext_notification.output 21
 ```
 
 ```shell title="Set monitored GPIO output duration (default of 0 is 1000ms)"
-meshtastic --set ext_notification_module_output_ms 0
-meshtastic --set ext_notification_module_output_ms 1500
+meshtastic --set ext_notification.output_ms 0
+meshtastic --set ext_notification.output_ms 1500
 ```
 </TabItem>
 <TabItem value="flasher">
@@ -117,7 +117,7 @@ External Notification module config is not available in the Flasher.
   <TabItem value="web">
 
 :::info
-External Notification module config is not available for the Web UI.
+All External Notification module config is available for the Web UI.
 :::
     
   </TabItem>
@@ -140,7 +140,7 @@ We support being alerted on two events:
 2. Incoming Text Message that contains the ASCII bell character. At present, only the Python API can send an ASCII bell character, but more support may be added in the future.
 
 :::info
-The bell character is ASCII 0x07. Include 0x07 anywhere in the text message and with ext_notification_module_alert_bell enabled, we will issue an external notification.
+The bell character is ASCII 0x07. Include 0x07 anywhere in the text message and with ext_notification.alert_bell enabled, we will issue an external notification.
 :::
 
 ## External Hardware

@@ -59,26 +59,26 @@ No range test module config options are available in the python CLI. Example com
 
 |          Setting          |  Acceptable Values  | Default |
 | :-----------------------: | :-----------------: | :-----: |
-| range_test_module_enabled |   `true`, `false`   | `false` |
-|  range_test_module_save   |   `true`, `false`   | `false` |
-| range_test_module_sender  | `integer` (Seconds) |   `0`   |
+| range_test.enabled |   `true`, `false`   | `false` |
+|  range_test.save   |   `true`, `false`   | `false` |
+| range_test.sender  | `integer` (Seconds) |   `0`   |
 
 ```shell title="Enable / Disable the range test"
-meshtastic --set range_test_module_enabled true
-meshtastic --set range_test_module_enabled false
+meshtastic --set range_test.enabled true
+meshtastic --set range_test.enabled false
 ```
 
 ```shell title="Enable / Disable range test save"
-meshtastic --set range_test_module_save true
-meshtastic --set range_test_module_save false
+meshtastic --set range_test.save true
+meshtastic --set range_test.save false
 ```
 
 ```shell title="Enable range test sender (send every 60 seconds)"
-meshtastic --set range_test_module_sender 60
+meshtastic --set range_test.sender 60
 ```
 
 ```shell title="Disable range test sender"
-meshtastic --set range_test_module_sender 0
+meshtastic --set range_test.sender 0
 ```
 
 </TabItem>
@@ -121,12 +121,12 @@ http://198.168.0.15
 
 ### Recommended Sender Settings
 
-| Radio Setting | `range_test_module_sender` |
-| :-----------: | :------------------------: |
-|   Long Slow   |             60             |
-|   Long Alt    |             30             |
-|    Medium     |             15             |
-|  Short Fast   |             15             |
+| Radio Setting | `range_test.sender` |
+| :-----------: | :-----------------: |
+|   Long Slow   |             60      |
+|   Long Alt    |             30      |
+|    Medium     |             15      |
+|  Short Fast   |             15      |
 
 
 

@@ -9,7 +9,7 @@ import TabItem from '@theme/TabItem';
 
 The power config options are: Charge Current, Power Saving, Shutdown after losing power, ADC Multiplier Override Wait Bluetooth Interval, Mesh Super Deep Sleep Timeout, Super Deep Sleep Interval, Light Sleep Interval and Minimum Wake Interval.  Power config uses an admin message sending a `Config.Power` protobuf.
 
-Power settings are advanced configuration, most users should choose a role under Device Config to manage power for their device.
+Power settings are advanced configuration, most users should choose a role under Device Config to manage power for their device and should never need to touch any of these settings.
 
 ## Power Config Values
 
@@ -99,7 +99,7 @@ Power config is not available on Apple OS's.
 </TabItem>
 <TabItem value="cli">
 
-No Power config options are available in the python CLI.
+All Power config options are available in the python CLI.
 
 |            Setting                   |                                                                        Acceptable Values                                                                        |  Default  |
 | :----------------------------------: | :-------------------------------------------------------------------------------------------------------------------------------------------------------------: | :-------: |
@@ -166,7 +166,7 @@ Power config is not available in the Flasher.
   <TabItem value="web">
 
 :::info
-No power config options are available in the Web UI.
+All power config options are available in the Web UI.
 :::
     
   </TabItem>
