@@ -101,33 +101,33 @@ All canned message module config options are available on iOS, iPadOS and macOS 
 <TabItem value="cli">
 
 :::info
-No canned message module config options are available in the python CLI. 
+All canned message module config options are available in the python CLI. 
 :::
 
 Example commands are below:
 
-|                 Setting                  | Acceptable Values | Default |
-| :--------------------------------------: | :---------------: | :-----: |
-|      canned_message_module_enabled       |  `true`, `false`  | `false` |
-|     canned_message_module_send_bell      |  `true`, `false`  | `false` |
-| canned_message_module_allow_input_source | `rotEnc1`, `_any`, `upDownEnc1`, `cardkb`, `faceskb`  | `_any`  |
-|      canned_message_module_messages      |     `string`      |  `""`   |
-|               (Messages)\*               |     `string`      |  `""`   |
-|  inputbroker_event_cw   | `InputEventChar`  | (not defined) |
-|  inputbroker_event_ccw  | `InputEventChar`  | (not defined) |
-| inputbroker_event_press | `InputEventChar`  | (not defined) |
-|    inputbroker_pin_a    |     `integer`     | (not defined) |
-|    inputbroker_pin_b    |     `integer`     | (not defined) |
-|  inputbroker_pin_press  |     `integer`     | (not defined) |
+|                 Setting                  | Acceptable Values | Default       |
+| :--------------------------------------: | :---------------: | :-----------: |
+|      canned_message.enabled              |  `true`, `false`  |     `false`   |
+|     canned_message.send_bell             |  `true`, `false`  |     `false`   |
+| canned_message.allow_input_source        | `rotEnc1`, `_any`, `upDownEnc1`, `cardkb`, `faceskb`  | `_any`  |
+|        canned_message.messages           |     `string`      |      `""`     |
+|               (Messages)\*               |     `string`      |      `""`     |
+|  canned_message.inputbroker_event_cw     | `InputEventChar`  | (not defined) |
+|  canned_message.inputbroker_event_ccw    | `InputEventChar`  | (not defined) |
+| canned_message.inputbroker_event_press   | `InputEventChar`  | (not defined) |
+|    canned_message.inputbroker_pin_a      |     `integer`     | (not defined) |
+|    canned_message.inputbroker_pin_b      |     `integer`     | (not defined) |
+|  canned_message.inputbroker_pin_press    |     `integer`     | (not defined) |
 
 ```shell title="Enable/Disable the Canned Message Module"
-meshtastic --set canned_message_module_enabled true
-meshtastic --set canned_message_module_enabled false
+meshtastic --set canned_message.enabled true
+meshtastic --set canned_message.enabled false
 ```
 
 ```shell title="Enable/Disable send bell character"
-meshtastic --set canned_message_module_send_bell true
-meshtastic --set canned_message_module_send_bell false
+meshtastic --set canned_message.send_bell true
+meshtastic --set canned_message.send_bell false
 ```
 
 ```shell title="Set Messages"
@@ -135,8 +135,8 @@ meshtastic --set-canned-message "I need an alpinist!|Call Me|Roger Roger|Keep Ca
 ```
 
 ```shell title="Set Input Source"
-meshtastic --set canned_message_module_allow_input_source "_any"
-meshtastic --set canned_message_module_allow_input_source "rotEnc1"
+meshtastic --set canned_message.allow_input_source "_any"
+meshtastic --set canned_message.allow_input_source "rotEnc1"
 ```
 
 ```shell title="Enable/Disable rotary1"
@@ -144,33 +144,33 @@ meshtastic --set
 ```
 
 ```shell title="Set/Unset Encoder Pin A"
-meshtastic --set inputbroker_pin_a 17
-meshtastic --set inputbroker_pin_a 0
+meshtastic --set canned_message.inputbroker_pin_a 17
+meshtastic --set canned_message.inputbroker_pin_a 0
 ```
 
 ```shell title="Set/Unset Encoder Pin B"
-meshtastic --set inputbroker_pin_b 39
-meshtastic --set inputbroker_pin_b 0
+meshtastic --set canned_message.inputbroker_pin_b 39
+meshtastic --set canned_message.inputbroker_pin_b 0
 ```
 
 ```shell title="Set/Unset Encoder Pin Press"
-meshtastic --set inputbroker_pin_press 21
-meshtastic --set inputbroker_pin_press 0
+meshtastic --set canned_message.inputbroker_pin_press 21
+meshtastic --set canned_message.inputbroker_pin_press 0
 ```
 
 ```shell title="Set/Unset Input Broker CW Event"
-meshtastic --set inputbroker_event_cw KEY_UP
-meshtastic --set inputbroker_event_cw ""
+meshtastic --set canned_message.inputbroker_event_cw KEY_UP
+meshtastic --set canned_message.inputbroker_event_cw ""
 ```
 
 ```shell title="Set/Unset Input Broker CCW Event"
-meshtastic --set inputbroker_event_ccw KEY_DOWN
-meshtastic --set inputbroker_event_ccw ""
+meshtastic --set canned_message.inputbroker_event_ccw KEY_DOWN
+meshtastic --set canned_message.inputbroker_event_ccw ""
 ```
 
 ```shell title="Set/Unset Input Broker Press Event"
-meshtastic --set inputbroker_event_press KEY_SELECT
-meshtastic --set inputbroker_event_press ""
+meshtastic --set canned_message.inputbroker_event_press KEY_SELECT
+meshtastic --set canned_message.inputbroker_event_press ""
 ```
 </TabItem>
 <TabItem value="flasher">
@@ -183,7 +183,7 @@ No canned message test module config options are available in the Flasher.
   <TabItem value="web">
 
 :::info
-No canned message test module config options are available in the Web UI.
+All canned message module config options are available in the Web UI.
 :::
     
   </TabItem>
@@ -251,13 +251,13 @@ Replace each `GPIO` (x3) below with the GPIO numbers from your hardware setup.
 :::
 
 ```shell title="Canned Message Module - Required Rotary Encoder Module Settings"
-meshtastic --set rotary1_pin_a GPIO
-meshtastic --set rotary1_pin_b GPIO
-meshtastic --set rotary1_pin_press GPIO
-meshtastic --set rotary1_event_cw KEY_UP
-meshtastic --set rotary1_event_ccw KEY_DOWN
-meshtastic --set rotary1_event_press KEY_SELECT
-meshtastic --set rotary1_enabled True
+meshtastic --set canned_message.rotary1_pin_a GPIO
+meshtastic --set canned_message.rotary1_pin_b GPIO
+meshtastic --set canned_message.rotary1_pin_press GPIO
+meshtastic --set canned_message.rotary1_event_cw KEY_UP
+meshtastic --set canned_message.rotary1_event_ccw KEY_DOWN
+meshtastic --set canned_message.rotary1_event_press KEY_SELECT
+meshtastic --set canned_message.rotary1_enabled True
 ```
 
 

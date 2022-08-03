@@ -75,32 +75,32 @@ All serial module config options are available on iOS, iPadOS and macOS at Setti
 </TabItem>
 <TabItem value="cli">
 
-No serial module config options are available in the python CLI. Example commands are below:
+All serial module config options are available in the python CLI. Example commands are below:
 
 |        Setting        |  Acceptable Values  | Default |
 | :-------------------: | :-----------------: | :-----: |
-| serial_module_enabled |   `true`, `false`   | `false` |
-|  serial_module_echo   |   `true`, `false`   | `false` |
-|  serial_module_mode   |      `modeDefault` `modeSimple` `modeProto`  |  `modeDefault`   |
-|   serial_module_rxd   |  GPIO Pin Number 1-39    | Default of `0` is Unset |
-|   serial_module_txd   |  GPIO Pin Number 1-39   |  Defaunlt of `0` is Unset  |
-| serial_module_baud    | `baudDefault` `baud110` `baud300` `baud600` `baud1200` `baud2400` `baud4800` `baud9600` `baud19200` `baud38400` `baud57600` `baud115200` `baud230400` `baud460800` `baud576000` `baud921600` |  `baudDefault`  |
-| serial_module_timeout | `integer` (seconds) |   `0`   |
+| serial.enabled |   `true`, `false`   | `false` |
+|  serial.echo   |   `true`, `false`   | `false` |
+|  serial.mode   |      `modeDefault` `modeSimple` `modeProto`  |  `modeDefault`   |
+|   serial.rxd   |  GPIO Pin Number 1-39    | Default of `0` is Unset |
+|   serial.txd   |  GPIO Pin Number 1-39   |  Defaunlt of `0` is Unset  |
+| serial.baud    | `baudDefault` `baud110` `baud300` `baud600` `baud1200` `baud2400` `baud4800` `baud9600` `baud19200` `baud38400` `baud57600` `baud115200` `baud230400` `baud460800` `baud576000` `baud921600` |  `baudDefault`  |
+| serial.timeout | `integer` (seconds) |   `0`   |
 
 
 ```shell title="Enable / Disable Module"
-meshtastic --set serial_module_enabled true
-meshtastic --set serial_module_enabled false
+meshtastic --set serial.enabled true
+meshtastic --set serial.enabled false
 ```
 
 ```shell title="Enable / Disable Echo"
-meshtastic --set serial_module_echo true
-meshtastic --set serial_module_echo false
+meshtastic --set serial.echo true
+meshtastic --set serial.echo false
 ```
 
 ```shell title="Set Mode"
-meshtastic --set serial_module_mode modeDefault
-meshtastic --set serial_module_mode modeProto
+meshtastic --set serial.mode modeDefault
+meshtastic --set serial.mode modeProto
 ``` 
 
 ```shell title="Set RXD to GPIO pin number 7"
@@ -112,26 +112,26 @@ meshtastic --set serial_module_txd 28
 ```
 
 ```shell title="Set Baud Rate"
-meshtastic --set serial_module_baud baudDefault
-meshtastic --set serial_module_baud baud576000
+meshtastic --set serial.baud baudDefault
+meshtastic --set serial.baud baud576000
 ```
 
 ```shell title="Set Timeout to 15 seconds"
-meshtastic --set serial_module_timeout 15
+meshtastic --set serial.timeout 15
 ```
 
 </TabItem>
 <TabItem value="flasher">
 
 :::info
-No serial test module config options are available in the Flasher.
+No serial module config options are available in the Flasher.
 :::
 
   </TabItem>
   <TabItem value="web">
 
 :::info
-No serial test module config options are available in the Web UI.
+All serial module config options are available in the Web UI.
 :::
     
   </TabItem>
@@ -149,10 +149,10 @@ Default is to use RX GPIO 16 and TX GPIO 17.
 ### Basic Usage:
 
 1. Enable the module by setting `serial_module_enabled` to `1`.
-2. Set the pins (`serial_module_rxd` / `serial_module_rxd`) for your preferred RX and TX GPIO pins. On tbeam boards it is recommended to use:
+2. Set the pins (`serial.rxd` / `serial.txd`) for your preferred RX and TX GPIO pins. On tbeam boards it is recommended to use:
    - RXD 35
    - TXD 15
-3. Set `serial_module_timeout` to the amount of time to wait before we consider your packet as "done".
+3. Set `serial.timeout` to the amount of time to wait before we consider your packet as "done".
 4. (Optional) In serial_module.h set the port to `PortNum_TEXT_MESSAGE_APP`if you want to send messages to/from the general text message channel.
 5. Connect to your device over the serial interface at `38400 8N1`.
 6. Send a packet up to 240 bytes in length. This will get relayed over the mesh network.

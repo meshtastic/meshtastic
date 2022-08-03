@@ -85,39 +85,39 @@ All telemetry module config options are available on iOS, iPadOS and macOS at Se
 </TabItem>
 <TabItem value="cli">
 
-No telemetry module config options are available in the python CLI. Example commands are below:
+All telemetry module config options are available in the python CLI. Example commands are below:
 
 ## Settings
 
 |                         Setting                         |  Acceptable Values  | Default |
 | :-----------------------------------------------------: | :-----------------: | :-----: |
-|         telemetry_module_device_update_interval         | `integer` (seconds) |   `0`   |
-|     telemetry_module_environment_display_fahrenheit     |   `true`, `false`   | `false` |
-|    telemetry_module_environment_measurement_enabled     |   `true`, `false`   | `false` |
-|       telemetry_module_environment_screen_enabled       |   `true`, `false`   |   `0`   |
-|      telemetry_module_environment_update_interval       | `integer` (seconds) |   `0`   |
+|         telemetry.device_update_interval         | `integer` (seconds) |   `0`   |
+|     telemetry.environment_display_fahrenheit     |   `true`, `false`   | `false` |
+|    telemetry.environment_measurement_enabled     |   `true`, `false`   | `false` |
+|       telemetry.environment_screen_enabled       |   `true`, `false`   |   `0`   |
+|      telemetry.environment_update_interval       | `integer` (seconds) |   `0`   |
 
 ```shell title="Set module update intervals (Default of 0 is 5 Minutes)"
-meshtastic --set telemetry_module_device_update_interval 0
+meshtastic --set telemetry.device_update_interval 0
 // Device Metrics Two Minutes
-meshtastic --set telemetry_module_device_update_interval 120
+meshtastic --set telemetry.device_update_interval 120
 // Environment Metrics Two Minutes
-meshtastic --set telemetry_module_environment_update_interval 120
+meshtastic --set telemetry.environment_update_interval 120
 ````
 
 ```shell title="Enable/Disable Environment Module"
-meshtastic --set telemetry_module_environment_measurement_enabled true
-meshtastic --set telemetry_module_environment_measurement_enabled false
+meshtastic --set telemetry.environment_measurement_enabled true
+meshtastic --set telemetry.environment_measurement_enabled false
 ```
 
 ```shell title="Enable/Disable on device screen"
-meshtastic --set telemetry_module_environment_screen_enabled true
-meshtastic --set telemetry_module_environment_screen_enabled false
+meshtastic --set telemetry.environment_screen_enabled true
+meshtastic --set telemetry.environment_screen_enabled false
 ```
 
 ```shell title="Enable / Disable Display Farenheit"
-meshtastic --set telemetry_module_environment_display_fahrenheit true
-meshtastic --set telemetry_module_environment_display_fahrenheit false
+meshtastic --set telemetry.environment_display_fahrenheit true
+meshtastic --set telemetry.environment_display_fahrenheit false
 ````
 
 </TabItem>
@@ -131,7 +131,7 @@ No telemetry module config options are available in the Flasher.
   <TabItem value="web">
 
 :::info
-No telemetry module config options are available in the Web UI.
+All telemetry module config options are available in the Web UI.
 :::
     
   </TabItem>
@@ -155,7 +155,7 @@ Steps:
 - configure the device:
 
 ```shell
-meshtastic --set telemetry_module_measurement_enabled true --set telemetry_module_screen_enabled true --set telemetry_module_display_farenheit true
+meshtastic --set telemetry.measurement_enabled true --set telemetry.screen_enabled true --set telemetry.display_farenheit true
 ```
 
 :::tip
