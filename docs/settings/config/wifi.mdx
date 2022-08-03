@@ -15,13 +15,17 @@ Enabling WiFi will disable bluetooth. Only one connection method will work at a 
 
 ESP32 devices have the ability to connect to WiFi as a client and also are able to create a software based access point (SoftAP). WiFi can be configured in either mode.
 
-:::note
-The device can be either a WiFi client or a software access point. It **cannot** operate as both at the same time.
-:::
-
-You can [force the device to boot into SoftAP mode](#software-access-point) by rebooting the device with the program switch depressed. If forced into AP mode, it will revert to previous settings after a reboot.
+You can [force the device to boot into SoftAP mode](#software-access-point) by rebooting the device with the program switch depressed. If forced into AP mode, it will revert to previous settings after a reboot. The device can be either a WiFi client or a software access point. It **cannot** operate as both at the same time.
 
 ## WiFi Config Values
+
+### WiFi SSID
+
+In [SoftAP](#software-access-point) mode, this is the SSID broadcast to access your device's WiFi. In [Client](#wifi-client) mode, this is your WiFi Networks SSID. This string is case sensitive.
+
+### WiFi Password
+
+In [SoftAP](#software-access-point) mode, this is the password to access your device's WiFi. In [Client](#wifi-client) mode, this is your WiFi Networks password. This string is case sensitive.
 
 ### Software Access Point (AP)
 
@@ -36,14 +40,6 @@ A boolean value that toggles the hidden access point
 Acceptable values are `true` or `false` 
 
 If set, the node AP will broadcast as a hidden SSID
-
-### WiFi SSID
-
-In [SoftAP](#software-access-point) mode, this is the SSID broadcast to access your device's WiFi. In [Client](#wifi-client) mode, this is your WiFi Networks SSID. This string is case sensitive.
-
-### WiFi Password
-
-In [SoftAP](#software-access-point) mode, this is the password to access your device's WiFi. In [Client](#wifi-client) mode, this is your WiFi Networks password. This string is case sensitive.
 
 :::tip
 The first time your device restarts after enabling the WiFi access point, it will take an additional 20-30 seconds to boot. This is to generate self-signed SSL keys. The keys will be saved for future reuse.
@@ -88,19 +84,19 @@ No WiFi config options are available in the python CLI.
 |   wifi.ssid   |      string       |  `""`   |
 
 ```shell title="Enable / Disable SoftAP"
-meshtastic --set wifi_ap_mode true
-meshtastic --set wifi_ap_mode false
+meshtastic --set wifi.ap_mode true
+meshtastic --set wifi.ap_mode false
 ```
 
 ```shell title="Make Access Point Hidden"
-meshtastic --set wifi_ap_hidden false
+meshtastic --set wifi.ap_hidden false
 ```
 
 ```shell title="Set WiFi SSID"
 
-meshtastic --set wifi_ssid mynetwork
+meshtastic --set wifi.ssid mynetwork
 // With spaces
-meshtastic --set wifi_ssid "my network"
+meshtastic --set wifi.ssid "my network"
 ```
 
 ```shell title="Set WiFi password"
@@ -126,7 +122,7 @@ All WiFI config options are available in the Web UI.
   </TabItem>
 </Tabs>
 
-## Details
+## Examples
 
 ### Software Access Point
 
@@ -186,150 +182,3 @@ You should then be able to connect to the node using either the displayed IP add
 ### Disable WiFi
 
 To disable WiFi completely, set `wifi.ap_mode` to `false`, and both `wifi.ssid` & `wifi.password` to an empty string `""`.
-
-## Examples
-
-### Enable WiFi (as client)
-
-<Tabs
-groupId="settings"
-defaultValue="web"
-values={[
-{label: 'CLI', value: 'cli'},
-{label: 'Android', value: 'android'},
-{label: 'iOS', value: 'iOS'},
-{label: 'Web', value: 'web'},
-]}>
-<TabItem value="cli">
-
-```shell title="Enabling WiFi Client"
-meshtastic --set wifi.ap_mode false --set wifi.ssid mywifissid --set wifi.password mywifipassword
-```
-
-:::note
-If your `wifi.ssid` or `wifi.password` contain spaces, be sure to put quotation marks around the whole thing:
-
-```shell title="Example with spaces"
-meshtastic --set wifi.ssid "my wifi ssid" --set wifi.password "my wifi password"
-```
-
-:::
-
-</TabItem>
-<TabItem value="android">
-
-:::info
-Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
-  </TabItem>
-  <TabItem value="iOS">
-
-:::info
-Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
-  </TabItem>
-  <TabItem value="web">
-
-:::info
-Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
-  </TabItem>
-</Tabs>
-
-In the above example, the device will join a network with the SSID `mywifissid` and the password `mywifipassword`.
-
-### Enable WiFi (as SoftAP)
-
-<Tabs
-groupId="settings"
-defaultValue="cli"
-values={[
-{label: 'CLI', value: 'cli'},
-{label: 'Android', value: 'android'},
-{label: 'iOS', value: 'iOS'},
-{label: 'Web', value: 'web'},
-]}>
-<TabItem value="cli">
-
-```shell title="Software Access Point Example"
-meshtastic --set wifi.ap_mode true --set wifi.ssid mywifissid --set wifi.password mywifipassword
-```
-
-:::note
-If your `wifi.ssid` or `wifi.password` contain spaces, be sure to put quotation marks around the whole thing:
-
-```shell title="Example with spaces"
-meshtastic --set wifi.ssid "my wifi ssid" --set wifi.password "my wifi password"
-```
-
-:::
-
-  </TabItem>
-  <TabItem value="android">
-
-:::info
-Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
-  </TabItem>
-  <TabItem value="iOS">
-
-:::info
-Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
-  </TabItem>
-  <TabItem value="web">
-
-:::info
-Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
-  </TabItem>
-</Tabs>
-
-In the above example, the device will broadcast a network with the SSID `mywifissid` and the password `mywifipassword`.
-
-### Disable WiFi Completely
-
-<Tabs
-groupId="settings"
-defaultValue="cli"
-values={[
-{label: 'CLI', value: 'cli'},
-{label: 'Android', value: 'android'},
-{label: 'iOS', value: 'iOS'},
-{label: 'Web', value: 'web'},
-]}>
-<TabItem value="cli">
-
-```shell title="Example - Disabling WiFi"
-meshtastic --set wifi.ap_mode false --set wifi.ssid "" --set wifi.password ""
-```
-
-  </TabItem>
-  <TabItem value="android">
-
-:::info
-Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
-  </TabItem>
-  <TabItem value="iOS">
-
-:::info
-Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
-  </TabItem>
-  <TabItem value="web">
-
-:::info
-Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
-  </TabItem>
-</Tabs>
