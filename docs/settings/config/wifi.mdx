@@ -80,7 +80,7 @@ No WiFi config options are available in the python CLI.
 | :-----------: | :---------------: | :-----: |
 | wifi.ap_mode  |  `true`, `false`  | `false` |
 | wifi.ap_hidden     |  `true`, `false`  | `false` |
-| wifi.password |      string       |  `""`   |
+| wifi.psk |      string       |  `""`   |
 |   wifi.ssid   |      string       |  `""`   |
 
 ```shell title="Enable / Disable SoftAP"
@@ -100,9 +100,9 @@ meshtastic --set wifi.ssid "my network"
 ```
 
 ```shell title="Set WiFi password"
-meshtastic --set wifi.password mypassword
+meshtastic --set wifi.psk mypassword
 // With spaces
-meshtastic --set wifi.password "my password"
+meshtastic --set wifi.psk "my password"
 ```
 
 </TabItem>
@@ -165,7 +165,7 @@ You should then be able to connect to the node using either the displayed IP add
 
 ### WiFi Client
 
-With `wifi.ssid` & `wifi.password` populated, the device will now to connect to your network. Make sure you are in range of your WiFi. If you have a single device on your local network it's easy to connect to your device `http://meshtastic.local`. If you have multiple devices you will need to connect using their respective IP addresses.
+With `wifi.ssid` & `wifi.psk` populated, the device will now to connect to your network. Make sure you are in range of your WiFi. If you have a single device on your local network it's easy to connect to your device `http://meshtastic.local`. If you have multiple devices you will need to connect using their respective IP addresses.
 
 If you have a screen attached to your device, the final page will display something similar to the following:
 
@@ -181,4 +181,4 @@ You should then be able to connect to the node using either the displayed IP add
 
 ### Disable WiFi
 
-To disable WiFi completely, set `wifi.ap_mode` to `false`, and both `wifi.ssid` & `wifi.password` to an empty string `""`.
+To disable WiFi completely, set `wifi.ap_mode` to `false`, and both `wifi.ssid` & `wifi.psk` to an empty string `""`.
