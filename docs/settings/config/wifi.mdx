@@ -7,7 +7,7 @@ sidebar_label: WiFi
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-The WiFi config options are: AP Mode, Hidden AP, SSID and Password. WiFi config uses an admin message sending a `Config.WiFi` protobuf.
+The WiFi config options are: Enabled, SSID, Password and WiFi Mode. WiFi config uses an admin message sending a `Config.WiFi` protobuf.
 
 :::info
 Enabling WiFi will disable bluetooth. Only one connection method will work at a time.
@@ -19,6 +19,10 @@ You can [force the device to boot into SoftAP mode](#software-access-point) by r
 
 ## WiFi Config Values
 
+### Wifi Enabled
+
+Enables WiFi.
+
 ### WiFi SSID
 
 In [SoftAP](#software-access-point) mode, this is the SSID broadcast to access your device's WiFi. In [Client](#wifi-client) mode, this is your WiFi Networks SSID. This string is case sensitive.
@@ -27,19 +31,15 @@ In [SoftAP](#software-access-point) mode, this is the SSID broadcast to access y
 
 In [SoftAP](#software-access-point) mode, this is the password to access your device's WiFi. In [Client](#wifi-client) mode, this is your WiFi Networks password. This string is case sensitive.
 
-### Software Access Point (AP)
+### WiFi Mode
 
-A boolean value that toggles the [Software Access Point](#software-access-point)
+#### Acceptable values
 
-Acceptable values are `true` or `false` 
-
-### Hidden Access Point (AP)
-
-A boolean value that toggles the hidden access point
-
-Acceptable values are `true` or `false` 
-
-If set, the node AP will broadcast as a hidden SSID
+|   Value   |     Description              |
+| :-------: | :--------------------------: |
+|  `client`   | Client |
+| `accessPoint` | [Software Access Point](#software-access-point) |
+| `AccessPointHidden` | Software Access Point (Hidden) |
 
 :::tip
 The first time your device restarts after enabling the WiFi access point, it will take an additional 20-30 seconds to boot. This is to generate self-signed SSL keys. The keys will be saved for future reuse.
@@ -78,18 +78,19 @@ No WiFi config options are available in the python CLI.
 
 |    Setting    | Acceptable Values | Default |
 | :-----------: | :---------------: | :-----: |
-| wifi.ap_mode  |  `true`, `false`  | `false` |
-| wifi.ap_hidden     |  `true`, `false`  | `false` |
+| wifi.enabled  |  `true`, `false`  | `false` |
+
 | wifi.psk |      string       |  `""`   |
 |   wifi.ssid   |      string       |  `""`   |
+| wifi.mode     |  `client`, `accessPoint`, `accessPointHidden`  | `client` |
 
-```shell title="Enable / Disable SoftAP"
-meshtastic --set wifi.ap_mode true
-meshtastic --set wifi.ap_mode false
+```shell title="Enable / Disable WiFi"
+meshtastic --set wifi.enabled true
+meshtastic --set wifi.enabled false
 ```
 
 ```shell title="Make Access Point Hidden"
-meshtastic --set wifi.ap_hidden false
+meshtastic --set wifi.mode accessPointHidden
 ```
 
 ```shell title="Set WiFi SSID"
@@ -181,4 +182,4 @@ You should then be able to connect to the node using either the displayed IP add
 
 ### Disable WiFi
 
-To disable WiFi completely, set `wifi.ap_mode` to `false`, and both `wifi.ssid` & `wifi.psk` to an empty string `""`.
+To disable WiFi completely, set `wifi.enabled` to `false`.
