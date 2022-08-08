@@ -125,6 +125,13 @@ This indicates an OS permission problem for access by your user to the USB seria
 sudo usermod -a -G dialout <username>
 ```
 
+If the adding the user to the dialout group does not work, you can use the following command to find out which group to add your user to. 
+In this example (from Arch Linux) the group was "uucp"
+```shell
+❯ ls -al /dev/ttyACM0
+crw-rw---- 1 root uucp 166, 0 Jul 20 21:52 /dev/ttyACM0
+```
+
 ### Mac OS Big Sur
 
 There is a problem with Big Sur and pyserial. The workaround is to install a newer version of pyserial:
