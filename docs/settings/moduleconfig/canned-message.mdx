@@ -60,13 +60,13 @@ GPIO Pin Value (1-39) For encoder port B
 
 GPIO Pin Value (1-39) For encoder Press port
 
-### Input Broker Event CW
+### Input Broker Event Clockwise
 
-Generate input event on CW of this kind.
+Generate the rotary cloockwise event.
 
-### Input Broker Event CCW
+### Input Broker Event Counter Clockwise
 
-Generate input event on CCW of this kind.
+Generate the rotary counter cloockwise event.
 
 ### Input Broker Event Press
 
@@ -251,12 +251,12 @@ Replace each `GPIO` (x3) below with the GPIO numbers from your hardware setup.
 :::
 
 ```shell title="Canned Message Module - Required Rotary Encoder Module Settings"
-meshtastic --set canned_message.rotary1_pin_a GPIO
-meshtastic --set canned_message.rotary1_pin_b GPIO
-meshtastic --set canned_message.rotary1_pin_press GPIO
-meshtastic --set canned_message.rotary1_event_cw KEY_UP
-meshtastic --set canned_message.rotary1_event_ccw KEY_DOWN
-meshtastic --set canned_message.rotary1_event_press KEY_SELECT
+meshtastic --set canned_message.inputbroker_pin_a GPIO
+meshtastic --set canned_message.inputbroker_pin_b GPIO
+meshtastic --set canned_message.inputbroker_pin_press GPIO
+meshtastic --set canned_message.inputbroker_event_cw KEY_UP
+meshtastic --set canned_message.inputbroker_event_ccw KEY_DOWN
+meshtastic --set canned_message.inputbroker_event_press KEY_SELECT
 meshtastic --set canned_message.rotary1_enabled True
 ```
 
