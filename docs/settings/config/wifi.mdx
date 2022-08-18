@@ -7,7 +7,7 @@ sidebar_label: WiFi
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-The WiFi config options are: Enabled, SSID, Password and WiFi Mode. WiFi config uses an admin message sending a `Config.WiFi` protobuf.
+The WiFi config options are: Enabled, SSID, PSK and WiFi Mode. WiFi config uses an admin message sending a `Config.WiFi` protobuf.
 
 :::info
 Enabling WiFi will disable bluetooth. Only one connection method will work at a time.
@@ -27,7 +27,7 @@ Enables WiFi.
 
 In [SoftAP](#software-access-point) mode, this is the SSID broadcast to access your device's WiFi. In [Client](#wifi-client) mode, this is your WiFi Networks SSID. This string is case sensitive.
 
-### WiFi Password
+### WiFi PSK
 
 In [SoftAP](#software-access-point) mode, this is the password to access your device's WiFi. In [Client](#wifi-client) mode, this is your WiFi Networks password. This string is case sensitive.
 
@@ -79,7 +79,6 @@ No WiFi config options are available in the python CLI.
 |    Setting    | Acceptable Values | Default |
 | :-----------: | :---------------: | :-----: |
 | wifi.enabled  |  `true`, `false`  | `false` |
-
 | wifi.psk |      string       |  `""`   |
 |   wifi.ssid   |      string       |  `""`   |
 | wifi.mode     |  `client`, `accessPoint`, `accessPointHidden`  | `client` |
