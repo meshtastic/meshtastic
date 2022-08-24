@@ -1,0 +1,34 @@
+---
+id: bluetooth
+title: Bluetooth Settings
+sidebar_label: Bluetooth
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import PluginModule from '@site/docs/_blocks/_plugin_module.mdx';
+
+The bluetooth config options are: Enabled, Pairing Mode and Fixed PIN Value.  Bluetooth config uses an admin message sending a `Config.Bluetooth` protobuf.
+
+## Bluetooth Config Values
+
+### Enabled
+
+Enables bluetooth
+
+### Pairing Mode
+
+### Fixed PIN
+
+If your pairing mode is set to fixed PIN this is the value of that fixed 6 digit pin. Default value is 123456
+
+
+
+|          Setting          |  Acceptable Values  | Default |
+| :-----------------------: | :-----------------: | :-----: |
+| bluetooth.enabled |   `true`, `false`   | `true` |
+|  bluetooth.mode  |   `randomPin`, `fixedPin`, `noPin`   | `randomPin` |
+| bluetooth.fixedPin  | `integer` 6 Digits |   `123456`   |
+
+
+
