@@ -9,8 +9,6 @@ import TabItem from '@theme/TabItem';
 
 The External Notification Module will allow you to connect a buzzer, speaker, LED, or other device to notify you when a message has been received from the mesh network.
 
-
-
  ## External Notification Module Config Values
 
 ### Enabled
@@ -71,40 +69,40 @@ All external noftification module config options are available in the python CLI
 
 |         Setting                |    Acceptable Values     | Default |
 | :----------------------------: | :----------------------: | :-----: |
-|    ext_notification.enabled    |     `true`, `false`      | `false` |
-|    ext_notification.active     |     `true`, `false`      | `false` |
-|  ext_notification.alert_bell   |     `true`, `false`      | `false` |
-| ext_notification.alert_message |     `true`, `false`      | `false` |
-|    ext_notification.output     |        `integer`         |   `0`   |
-|   ext_notification.output_ms   | `integer` (milliseconds) |   `0`   |
+|    external_notification.enabled    |     `true`, `false`      | `false` |
+|    external_notification.active     |     `true`, `false`      | `false` |
+|  external_notification.alert_bell   |     `true`, `false`      | `false` |
+| external_notification.alert_message |     `true`, `false`      | `false` |
+|    external_notification.output     |        `integer`         |   `0`   |
+|   external_notification.output_ms   | `integer` (milliseconds) |   `0`   |
 
 ```shell title="Enable/Disable External Notification Module"
-meshtastic --set ext_notification.enabled true
-meshtastic --set ext_notification.enabled false
+meshtastic --set external_notification.enabled true
+meshtastic --set external_notification.enabled false
 ```
 
 ```shell title="Enable/Disable alert on incoming bell"
-meshtastic --set ext_notification.alert_bell true
-meshtastic --set ext_notification.alert_bell false
+meshtastic --set external_notification.alert_bell true
+meshtastic --set external_notification.alert_bell false
 ```
 
 ```shell title="Set GPIO active high / low (defalut of false is low)"
-meshtastic --set ext_notification.active false
-meshtastic --set ext_notification.active true
+meshtastic --set external_notification.active false
+meshtastic --set external_notification.active true
 ```
 
 ```shell title="Enable/Disable alert on incoming message"
-meshtastic --set ext_notification.alert_message true
-meshtastic --set ext_notification.alert_message false
+meshtastic --set external_notification.alert_message true
+meshtastic --set external_notification.alert_message false
 ```
 
 ```shell title="Set GPIO to monitor to 21"
-meshtastic --set ext_notification.output 21
+meshtastic --set external_notification.output 21
 ```
 
 ```shell title="Set monitored GPIO output duration (default of 0 is 1000ms)"
-meshtastic --set ext_notification.output_ms 0
-meshtastic --set ext_notification.output_ms 1500
+meshtastic --set external_notification.output_ms 0
+meshtastic --set external_notification.output_ms 1500
 ```
 </TabItem>
 <TabItem value="flasher">
