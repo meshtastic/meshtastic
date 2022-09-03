@@ -9,7 +9,7 @@ import TabItem from '@theme/TabItem';
 
 If your device is connected to WiFi you can enable it to forward packets along to an MQTT server. This allows users on the local mesh to communicate with users on the internet.
 
-The canned message module config options are: Enabled, Server Address, Username, Password and Encryption Enabled. MQTT Module config uses an admin message sending a `ConfigModule.MQTT` protobuf.
+The canned message module config options are: Enabled, Server Address, Username, Password, Encryption Enabled and JSON Enabled. MQTT Module config uses an admin message sending a `ConfigModule.MQTT` protobuf.
 
 ## Settings
 
@@ -34,6 +34,10 @@ MQTT password to use (most useful for a custom MQTT server). If using a custom s
 ### Encryption Enabled
 
 Whether to send encrypted or decrypted packets to MQTT. This parameter is only honoured if you also set server (the default official mqtt.meshtastic.org server can handle encrypted packets) Decrypted packets may be useful for external systems that want to consume meshtastic packets.
+
+### JSON Enabled
+
+Enable the sending / consumption of JSON packets on MQTT. These packets are not encrypted, but offer an easy way to integrate with systems that can read JSON.
 
 ## MQTT Module Config Client Availability
 
@@ -72,6 +76,7 @@ All MQTT module config options are available in the python CLI. Example commands
 |    mqtt.username             |     `string`             |         |
 |    mqtt.password             |     `string`             |         |
 |    mqtt.encryption_enabled   |     `string`             |         |
+|    mqtt.json_enabled         |     `true`, `false`      | `false` |
 
 ```shell title="Enable/Disable MQTT Module"
 meshtastic --set mqtt.enabled true
