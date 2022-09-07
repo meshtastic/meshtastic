@@ -339,12 +339,3 @@ Further information on the RAK1906 can be found on the [RAK Documentation Center
 
 - RAK's Wisblock [Documentation Center](https://docs.rakwireless.com/Product-Categories/WisBlock)
 - RAK's [GitHub Page](https://github.com/RAKWireless/WisBlock) for the WisBlock
-
-## MAC Address Conflict
-
-Some of the RAK Meshtastic starter kits that come pre-installed with Meshtastic have an error where the same MAC address is applied to more than one unit. If you have a number of RAK devices but are unable to connect to more than one of them, or they will not talk to each other despite being on the same mesh, please try a [factory reset](/docs/settings/misc#factory_reset) using the Meshtastic CLI, and then restart the device. This reset will wipe all settings on the device back to their defaults including the stored MAC address. If you have already configured your node and wish to keep the configuration, then please export it first:
-
-- `meshtastic --export-config > settings_file.txt` - This will save the node's settings to the file `settings_file.txt`
-- `meshtastic --set factory_reset true` - This will reset the device and wipe the configuration
-- Power cycle the device
-- `meshtastic --configure settings_files.txt` - This will restore the settings saved in the file `settings_file.txt`
