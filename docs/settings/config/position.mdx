@@ -13,10 +13,10 @@ Position data from GPS is provided by either the radio or your paired phone. Pos
 
 ## Position Config Values
 
-### GPS Enabled
+### GPS Disabled
 Acceptable values: `true` or `false` 
 
-Enabled by default. Should the device GPS be enabled for this node?
+Defaults to false. Should the device GPS be disabled for this node?
 
 ### GPS Update Interval
 
@@ -105,7 +105,7 @@ All Position config conmmands are available in the python CLI. Example commands 
 
 |         Setting                |                                                                       Acceptable Values                                                                       |     Default     |
 | :----------------------------: | :-----------------------------------------------------------------------------------------------------------------------------------------------------------: | :-------------: |
-|      position.gps_enabled      |                                                                        `true`, `false`                                                                        |     `true`     |
+|      position.gps_disabled      |                                                                        `true`, `false`                                                                        |     `false`     |
 |   position.gps_update_interval |                                                                      `integer` (seconds)                                                                      | Default `0` is 30 Seconds  |
 |    position.gps_attempt_time   |                                                                      `integer` (seconds)                                                                      | Default of `0` is 30 Seconds  |
 |      position.fixed_position   |                                                                        `true`, `false`                                                                        |     `false`     |
