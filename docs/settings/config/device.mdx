@@ -18,10 +18,10 @@ Acceptable values:
 
 |   Value   |                                                                  Description                                                                                                              |
 | :-------: | :---------------------------------------------------------------------------------------: |
-|  `client`   | Client (default) - App connected client. |
-| `clientMute` | Client Mute - Same as a client except packets will not hop over this node, does not contribute to routing packets for mesh. |
-| `router` | Router -  Mesh packets will prefer to be routed over this node. This node will not be used by client apps. The wifi/ble radios and the oled screen will be put to sleep. |
-| `routerClient` | Router Client - Mesh packets will prefer to be routed over this node. The Router Client can be used as both a Router and an app connected Client. |
+|  `Client`   | Client (default) - App connected client. |
+| `ClientMute` | Client Mute - Same as a client except packets will not hop over this node, does not contribute to routing packets for mesh. |
+| `Router` | Router -  Mesh packets will prefer to be routed over this node. This node will not be used by client apps. The wifi/ble radios and the oled screen will be put to sleep. |
+| `RouterClient` | Router Client - Mesh packets will prefer to be routed over this node. The Router Client can be used as both a Router and an app connected Client. |
 
 
 ### Serial Console 
@@ -75,7 +75,7 @@ All device config options other than NTP Server are available on iOS, iPadOS and
 All device config options are available in the python CLI. Example commands are below:
 
 ```shell title="Set the role to client"
-meshtastic --set device.role client
+meshtastic --set device.role Client
 ```
 
 ```shell title="Disable serial console"
