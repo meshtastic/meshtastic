@@ -34,7 +34,7 @@ Off by default
 
 If set, this node is at a fixed position. The device will generate GPS updates at the regular GPS update interval, but use whatever the last lat/lon/alt it saved for the node. The lat/lon/alt can be set by an internal GPS or with the help of the mobile device's GPS.
 
-### Smart Broadcast
+### Smart Broadcast 
 Acceptable values: `true` or `false` 
 
 On by default
@@ -141,8 +141,8 @@ meshtastic --set position.fixed_position false
 ```
 
 ```shell title="Enable / Disable Smart position broadcast (Enabled by default)"
-meshtastic --set position.broadcast_smart true
-meshtastic --set position.broadcast_smart false
+meshtastic --set position.broadcast_smart_disabled true
+meshtastic --set position.broadcast_smart_disabled false
 ```
 
 ```shell title="Set Position Broadcast Interval (Default of 0 is 15 minutes)"
