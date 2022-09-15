@@ -109,7 +109,7 @@ All Position config conmmands are available in the python CLI. Example commands 
 |   position.gps_update_interval |                                                                      `integer` (seconds)                                                                      | Default `0` is 30 Seconds  |
 |    position.gps_attempt_time   |                                                                      `integer` (seconds)                                                                      | Default of `0` is 30 Seconds  |
 |      position.fixed_position   |                                                                        `true`, `false`                                                                        |     `false`     |
-| position.broadcast_smart       |                                                                        `true`, `false`                                                                        |     `true`     |
+| position.broadcast_smart_disabled       |                                                                        `true`, `false`                                                                        |     `true`     |
 | position.broadcast_secs        |                                                                      `integer` (seconds)                                                                      | Default of `0` is 15 Minutes  |
 |      position.flags            | `POS_UNDEFINED`, `POS_ALTITUDE`, `POS_ALT_MSL`, `POS_GEO_SEP`, `POS_DOP`, `POS_HVDOP`, `PDOP`, `POS_BATTERY`, `POS_SATINVIEW`, `POS_SEQ_NOS`, `POS_TIMESTAMP`, `POS_HEADING`, `POS_SPEED` | `POS_UNDEFINED` |
 
@@ -141,8 +141,8 @@ meshtastic --set position.fixed_position false
 ```
 
 ```shell title="Enable / Disable Smart position broadcast (Enabled by default)"
-meshtastic --set position.broadcast_smart true
-meshtastic --set position.broadcast_smart false
+meshtastic --set position.broadcast_smart_disabled true
+meshtastic --set position.broadcast_smart_disabled false
 ```
 
 ```shell title="Set Position Broadcast Interval (Default of 0 is 15 minutes)"
