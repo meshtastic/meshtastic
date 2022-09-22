@@ -81,10 +81,10 @@ All serial module config options are available in the python CLI. Example comman
 | :-------------------: | :-----------------: | :-----: |
 | serial.enabled |   `true`, `false`   | `false` |
 |  serial.echo   |   `true`, `false`   | `false` |
-|  serial.mode   |      `modeDefault` `modeSimple` `modeProto`  |  `modeDefault`   |
+|  serial.mode   |      `DEFAULT` `SIMPLE` `PROTO` `TEXTMSG` |  `DEFAULT`   |
 |   serial.rxd   |  GPIO Pin Number 1-39    | Default of `0` is Unset |
 |   serial.txd   |  GPIO Pin Number 1-39   |  Defaunlt of `0` is Unset  |
-| serial.baud    | `baudDefault` `baud110` `baud300` `baud600` `baud1200` `baud2400` `baud4800` `baud9600` `baud19200` `baud38400` `baud57600` `baud115200` `baud230400` `baud460800` `baud576000` `baud921600` |  `baudDefault`  |
+| serial.baud    | `BAUD_DEFAULT` `BAUD_110` `BAUD_300` `BAUD_600` `BAUD_1200` `BAUD_2400` `BAUD_4800` `BAUD_9600` `BAUD_19200` `BAUD_38400` `BAUD_57600` `BAUD_115200` `BAUD_230400` `BAUD_460800` `BAUD_576000` `BAUD_921600` |  `BAUD_DEFAULT`  |
 | serial.timeout | `integer` (seconds) |   `0`   |
 
 
@@ -99,8 +99,8 @@ meshtastic --set serial.echo false
 ```
 
 ```shell title="Set Mode"
-meshtastic --set serial.mode modeDefault
-meshtastic --set serial.mode modeProto
+meshtastic --set serial.mode DEFAULT
+meshtastic --set serial.mode PROTO
 ``` 
 
 ```shell title="Set RXD to GPIO pin number 7"
@@ -112,8 +112,8 @@ meshtastic --set serial_module_txd 28
 ```
 
 ```shell title="Set Baud Rate"
-meshtastic --set serial.baud baudDefault
-meshtastic --set serial.baud baud576000
+meshtastic --set serial.baud BAUD_DEFAULT
+meshtastic --set serial.baud BAUD_576000
 ```
 
 ```shell title="Set Timeout to 15 seconds"
