@@ -7,7 +7,7 @@ sidebar_label: LoRa
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-The LoRa config options are: Region, Modem Preset, Max Hops, Transmit Power, Bandwidth, Spread Factor, Coding Rate, Frequency Offset, Transmit Disabled and Ignore Incoming Array.  LoRa config uses an admin message sending a `Config.LoRa` protobuf.
+The LoRa config options are: Region, Modem Preset, Max Hops, Transmit Power, Bandwidth, Spread Factor, Coding Rate, Frequency Offset, Transmit Enabled and Ignore Incoming Array.  LoRa config uses an admin message sending a `Config.LoRa` protobuf.
 
 ## LoRa Config Values
 
@@ -65,9 +65,9 @@ This parameter is for advanced users with advanced test equipment, we do not rec
 
 A frequency offset that is added to to the calculated band center frequency. Used to correct for crystal calibration errors.
 
-### Transmit Disabled 
+### Transmit Enabled 
 
-Disable transmit (TX) from the LoRa radio. Useful for hot-swapping antennas and other tests.
+Allows you to enable and disable transmit (TX) from the LoRa radio. Useful for hot-swapping antennas and other tests.
 
 Defaults to false
 
