@@ -95,6 +95,15 @@ Setting Ham ID to KI1345 and turning off encryption
 Writing modified channels to device
 ```
 
+Toggling `set-ham` changes your device settings in the following ways.
+
+|         Setting          | `set-ham` Default |              Normal Default               |
+| :----------------------: | :---------------: | :---------------------------------------: |
+| `IsLicensed`  |   `true`   | See [User Config - IsLicensed](/docs/settings/config/user#is-licensed-ham) |
+| `LongName`    |    _Your CallSign_    | See [User Config - LongName](/docs/settings/config/user#long-name)         |
+| `ShortName`   |    _Abrv CallSign_    | See [User Config - ShortName](/docs/settings/config/user#short-name)       |
+| `PSK`         |    `""`    | See [Channel Settings - PSK](#changing-the-preshared-key)            |
+
 ## Changing the preshared key:
 
 You can set the channel preshared key to a particular AES128 or AES256 sequence.
