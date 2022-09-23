@@ -27,7 +27,7 @@ Acceptable values:
 ### Serial Console 
 Acceptable values: `true` or `false`
 
-On by default. If set to true this will disable the serial console by not initilizing the StreamAPI.
+Disabling this will disable the SerialConsole by not initilizing the StreamAPI
 
 ### Debug Log
 Acceptable values: `true` or `false`
@@ -38,11 +38,6 @@ By default we turn off logging as soon as an API client connects Set this to tru
 Acceptable value: `string`
 
 NTP server to use if WiFi is conneced, defaults to `0.pool.ntp.org`
-
-### Factory Reset
-Acceptable values: `true` or `false`
-
-This setting is never saved to disk, but if set, all device settings will be returned to factory defaults.
 
 ## Device Config Client Availability
 
@@ -79,7 +74,7 @@ meshtastic --set device.role Client
 ```
 
 ```shell title="Disable serial console"
-meshtastic --set device.serial_disabled true
+meshtastic --set device.serial_enabled false
 ```
 
 ```shell title="Enable debug logging"

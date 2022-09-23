@@ -21,13 +21,57 @@ Enables bluetooth
 
 If your pairing mode is set to fixed PIN this is the value of that fixed 6 digit pin. Default value is 123456
 
+## Bluetooth Module Config Client Availability
 
+<Tabs
+groupId="settings"
+defaultValue="apple"
+values={[
+{label: 'Android', value: 'android'},
+{label: 'Apple', value: 'apple'},
+{label: 'CLI', value: 'cli'},
+{label: 'Flasher', value: 'flasher'},
+{label: 'Web', value: 'web'},
+]}>
+<TabItem value="android">
+
+:::info
+Bluetooth module config is not available for Android.
+:::
+
+</TabItem>
+<TabItem value="apple">
+
+:::info
+All bluetooth config values are available on iOS, iPadOS and macOS at Settings > Radio Configuration > Position.
+:::
+
+</TabItem>
+<TabItem value="cli">
+
+All bluetooth module config options are available in the python CLI. Example commands are below:
 
 |          Setting          |  Acceptable Values  | Default |
 | :-----------------------: | :-----------------: | :-----: |
 | bluetooth.enabled |   `true`, `false`   | `true` |
-|  bluetooth.mode  |   `RandomPin`, `FixedPin`, `NoPin`   | `RandomPin` |
+|  bluetooth.mode  |   `RANDOM_PIN`, `FIXED_PIN`, `NO_PIN`   | `RANDOM_PIN` |
 | bluetooth.fixedPin  | `integer` 6 Digits |   `123456`   |
 
+```shell title="Enable/Disable Bluetooth Module"
+meshtastic --set bluetooth.enabled true
+meshtastic --set mqtt.enabled false
+```
 
+```shell title="Set a fixed pin"
+meshtastic --set bluetooth.mode FIXED_PIN
+meshtastic --set bluetooth.fixed_pin 111111
+```
+  </TabItem>
+  <TabItem value="web">
 
+:::info
+All bluettoth module config options are available for the Web UI.
+:::
+    
+  </TabItem>
+</Tabs>
