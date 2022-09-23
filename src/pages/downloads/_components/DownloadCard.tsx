@@ -4,6 +4,8 @@ export interface downloadCardProps {
   client: string;
   imgUrl: string;
   url: string;
+  imgUrl2: string;
+  url2: string;
   notes: string;
   buttonText: string;
 }
@@ -12,6 +14,8 @@ export const DownloadCard = ({
   client,
   imgUrl,
   url,
+  imgUrl2,
+  url2,
   notes,
   buttonText,
 }: downloadCardProps): JSX.Element => {
@@ -32,9 +36,14 @@ export const DownloadCard = ({
             {buttonText}
           </a>
         ) : (
+        <div>
           <a href={url}>
             <img style={{ height: '4rem' }} src={imgUrl}></img>
           </a>
+          <a href={url2}>
+            <img style={{ height: '4rem' }} src={imgUrl2}></img>
+          </a>
+        </div>
         )}
       </div>
       <div className="card__footer">{notes ? notes : null}</div>
