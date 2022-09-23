@@ -54,7 +54,7 @@ All bluetooth module config options are available in the python CLI. Example com
 |          Setting          |  Acceptable Values  | Default |
 | :-----------------------: | :-----------------: | :-----: |
 | bluetooth.enabled |   `true`, `false`   | `true` |
-|  bluetooth.mode  |   `RandomPin`, `FixedPin`, `NoPin`   | `RandomPin` |
+|  bluetooth.mode  |   `RANDOM_PIN`, `FIXED_PIN`, `NO_PIN`   | `RANDOM_PIN` |
 | bluetooth.fixedPin  | `integer` 6 Digits |   `123456`   |
 
 ```shell title="Enable/Disable Bluetooth Module"
@@ -63,8 +63,8 @@ meshtastic --set mqtt.enabled false
 ```
 
 ```shell title="Set a fixed pin"
-meshtastic --set bluetooth.mode fixedPin
-meshtastic --set bluetooth.FixedPin 111111
+meshtastic --set bluetooth.mode FIXED_PIN
+meshtastic --set bluetooth.fixed_pin 111111
 ```
   </TabItem>
   <TabItem value="web">
