@@ -22,53 +22,45 @@ You can [force the device to boot into SoftAP mode](#software-access-point) by r
 
 ### NTP Server
 
-Type: **string** (Max Length: 33)
+The NTP server used if IP networking is available.
 
-Default: `0.pool.ntp.org`
-
-The NTP server used if WiFi is conneced. 
+Set to `0.pool.ntp.org` by default. (Max Length: 33)
 
 ### Wifi Enabled
 
-Type: **bool**
+Enables or Disables WiFi.
 
-Default: `false` (Disabled)
-
-Enables and Disables WiFi.
+Set to `false` (Disabled) by default.
 
 ### WiFi SSID
-
-Type: **string** (Case Sensitive, Max Length: 33)
-
-Default: `""` (Empty)
 
 In [SoftAP](#software-access-point) mode, this is the SSID broadcast to access your device's WiFi. 
 
 In [Client](#wifi-client) mode, this is your WiFi Networks SSID.
 
+Empty `""` by default. (Case Sensitive, Max Length: 33)
+
 ### WiFi PSK
-
-Type: **string** (Case Sensitive, Max Length: 64)
-
-Default: `""` (Empty)
 
 In [SoftAP](#software-access-point) mode, this is the password to access your device's WiFi.
 
 In [Client](#wifi-client) mode, this is your WiFi Networks password.
 
+Empty `""` by default. (Case Sensitive, Max Length: 64)
+
 ### WiFi Mode
 
-Type: **enum**
+Used to set either [SoftAP](#software-access-point) or [Client](#wifi-client) WiFi modes.
 
-Default: `Client`
+Set to `CLIENT` by default.
 
 #### Acceptable values
 
 |   Value   |     Description              |
 | :-------: | :--------------------------: |
 |  `CLIENT`   | Client |
-| `ACCESS_POINT` | [Software Access Point](#software-access-point) |
-| `ACCESS_POINT_HIDDEN` | Software Access Point (Hidden) |
+| `ACCESS_POINT` | (SoftAP) [Software Access Point](#software-access-point) |
+| `ACCESS_POINT_HIDDEN` | (SoftAP) Software Access Point (Hidden) |
 
 :::tip
 The first time your device restarts after enabling the WiFi access point, it will take an additional 20-30 seconds to boot. This is to generate self-signed SSL keys. The keys will be saved for future reuse.
@@ -205,7 +197,7 @@ You should then be able to connect to the node using either the displayed IP add
 
 ### WiFi Client
 
-With `network.wifi_ssid` & `network.wifi_psk` populated, the device will know to connect to your network. Make sure you are in range of your WiFi. If you have a single device on your local network it's easy to connect to your device `http://meshtastic.local`. If you have multiple devices you will need to connect using their respective IP addresses.
+With `network.wifi_ssid` & `network.wifi_psk` populated, the device will know to connect to your network. Make sure you are in range of your WiFi. If you have a single Meshtastic device on your local network it's easy to connect to your device with DNS `http://meshtastic.local`. If you have multiple Meshtastic devices you will need to connect using their respective IP addresses.
 
 If you have a screen attached to your device, the final page will display something similar to the following:
 
