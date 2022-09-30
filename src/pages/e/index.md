@@ -1,11 +1,12 @@
 ---
 id: e
-title: Meshtastic Channel Settings URL
+title: Meshtastic Channel Settings
 sidebar_label: e
 ---
 
 <head>
-    <meta property="og:site_name" content="Meshtastic Channel Settings Link" />
+    <meta property="og:title" content="Meshtastic Channel Settings" />
+    <meta property="og:site_name" content="Meshtastic.org" />
 </head>
 
 # QR Code Share Channel URL Should be opened in the appropriate app
