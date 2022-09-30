@@ -7,7 +7,7 @@ sidebar_label: Device
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-The device config options are: Role, Serial Output, Debug Log, NTP Server and Factory Reset.  Device config uses an admin message sending a `Config.Device` protobuf.
+The device config options are: Role, Serial Output, and Debug Log.  Device config uses an admin message sending a `Config.Device` protobuf.
 
 ## Device Config Values
 
@@ -18,10 +18,10 @@ Acceptable values:
 
 |   Value   |                                                                  Description                                                                                                              |
 | :-------: | :---------------------------------------------------------------------------------------: |
-|  `Client`   | Client (default) - App connected client. |
-| `ClientMute` | Client Mute - Same as a client except packets will not hop over this node, does not contribute to routing packets for mesh. |
-| `Router` | Router -  Mesh packets will prefer to be routed over this node. This node will not be used by client apps. The wifi/ble radios and the oled screen will be put to sleep. |
-| `RouterClient` | Router Client - Mesh packets will prefer to be routed over this node. The Router Client can be used as both a Router and an app connected Client. |
+|  `CLIENT`   | Client (default) - App connected client. |
+| `CLIENT_MUTE` | Client Mute - Same as a client except packets will not hop over this node, does not contribute to routing packets for mesh. |
+| `ROUTER` | Router -  Mesh packets will prefer to be routed over this node. This node will not be used by client apps. The wifi/ble radios and the oled screen will be put to sleep. |
+| `ROUTER_CLIENT` | Router Client - Mesh packets will prefer to be routed over this node. The Router Client can be used as both a Router and an app connected Client. |
 
 
 ### Serial Console 
@@ -33,11 +33,6 @@ Disabling this will disable the SerialConsole by not initilizing the StreamAPI
 Acceptable values: `true` or `false`
 
 By default we turn off logging as soon as an API client connects Set this to true to leave the debug log outputting even when API is active.
-
-### NTP Server
-Acceptable value: `string`
-
-NTP server to use if WiFi is conneced, defaults to `0.pool.ntp.org`
 
 ## Device Config Client Availability
 
@@ -70,7 +65,7 @@ All device config options other than NTP Server are available on iOS, iPadOS and
 All device config options are available in the python CLI. Example commands are below:
 
 ```shell title="Set the role to client"
-meshtastic --set device.role Client
+meshtastic --set device.role CLIENT
 ```
 
 ```shell title="Disable serial console"
@@ -79,10 +74,6 @@ meshtastic --set device.serial_enabled false
 
 ```shell title="Enable debug logging"
 meshtastic --set device.debug_log_enabled true
-```
-
-```shell title="Factory reset your radio"
-meshtastic --set device.factory_reset true
 ```
 
 </TabItem>

@@ -141,8 +141,8 @@ meshtastic --set position.fixed_position false
 ```
 
 ```shell title="Enable / Disable Smart position broadcast (Enabled by default)"
-meshtastic --set position.broadcast_smart_enabled true
-meshtastic --set position.broadcast_smart_enabled false
+meshtastic --set position.position_broadcast_smart_enabled true
+meshtastic --get position.position_broadcast_smart_enabled false
 ```
 
 ```shell title="Set Position Broadcast Interval (Default of 0 is 15 minutes)"
@@ -159,7 +159,7 @@ Include each flag desired separated by a single space.
 :::
 
 ```shell title="Set / Unset Position Flags"
-meshtastic --pos-fields ALTITUDE POS_ALTITUDE_MSL
+meshtastic --pos-fields ALTITUDE ALTITUDE_MSL
 meshtastic --pos-fields UNSET
 ```
 
