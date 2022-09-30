@@ -67,13 +67,20 @@ values={[
 
 All User config options are available in the python CLI. Example commands are below:
 
-|    Setting    | Acceptable Values | Default |
-| :-----------: | :---------------: | :-----: |
-| LongName      |      string       | auto-generated |
-| ShortName     |      string       | auto-generated |
-| IsLicensed    |       bool        | `false`        |
-
 Please see instructions for [Enabling HAM License](/docs/software/python/python-uses#ham-radio-support)
+
+```shell title="Set the LongName Value"
+meshtastic --set-owner 'your node name'
+```
+
+```shell title="Set the ShortName Value"
+meshtastic --set-owner-short  'NODE'
+```
+
+```shell title="Enable Ham Mode, set name to license, disable encryption"
+meshtastic  --set-ham 'CALLSIGN'
+```
+
 
 </TabItem>
 
