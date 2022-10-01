@@ -5,7 +5,7 @@ sidebar_label: HTTP API
 ---
 
 :::info
-This is a mini-spec on a HTTP API which can be used by browser based clients to do operations with devices.
+This is a mini-spec of the HTTP REST API which can be used by browser based clients to interact with Meshtastic devices.
 :::
 
 ## Why protobufs
@@ -17,18 +17,19 @@ This is a mini-spec on a HTTP API which can be used by browser based clients to 
 
 ## Request headers
 
-- Content-Type: `application/x-protobuf`
-  - Indicates Meshtatics protobufs
-- Cookie: `session=ABAD1D` (not yet implemented)
+- `Content-Type: application/x-protobuf`
+  - Indicates protobuf content (Meshtatic protobufs)
+- `Cookie: session=ABAD1D` (not yet implemented)
   - Added automatically by the browser client.
 
 ## Response headers
 
-- Content-Type: `application/x-protobuf`
-  - Indicates Meshtatics protobufs
-- X-Protobuf-Schema: _<URI to the .proto schema file>_ 
+- `Content-Type: application/x-protobuf`
+  - Indicates protobuf content (Meshtatic protobufs)
+- `X-Protobuf-Schema: <URI to the .proto schema file>`
   - Not required but recommended for documentation/reflection purposes
-- Set-Cookie: `session=ABAD1D;path=/` (not yet implemented, consider security implications of `path=/`)
+- `Set-Cookie: session=ABAD1D;path=/` (not yet implemented)
+  <!-- - Consider the security implications of using `path=/` - cookie will be accessible from any path on the same domain.-->
   - All client requests that did not include a session cookie will be assigned a random and unique session key. The cookie will not be set if the client already has one.
 
 ## Endpoints
@@ -36,6 +37,8 @@ This is a mini-spec on a HTTP API which can be used by browser based clients to 
 Two endpoints are specified:
 
 ### /api/v1/toradio
+
+Allows `PUT` and `OPTION` requests.
 
 #### PUT 
 
@@ -50,6 +53,8 @@ For the initial implementation, only one ToRadio message per request is supporte
 An `OPTIONS`request to this endpoint will return a response status code `204` and headers only.
 
 ### /api/v1/fromradio
+
+Allows `GET` requests.
 
 #### GET 
 
@@ -73,7 +78,7 @@ The protobufs will be sent in binary as the body for the request.
 
 ## Authentication
 
-The initial release will not have **any** user authentication. i.e. we assume access to the HTTP server is enough to establish trust.
+The initial release will not have **any** user authentication. We assume access to the HTTP server is enough to establish trust.
 
 Since authentication is also eventually needed for our other transports (TCP and eventually open BLE), we will be adding authentication **in-band**. When added in the second release there will be a new payload supported inside ToRadio for `SignIn <userid> <usersecret>`. The server will respond with a FromRadio `SignInResponse okay|fail`. Also, in the case of the REST API, that SignIn status will then be associated with the current session key. Most (all?) ToRadio packets will be ignored if the client is not signed in. Most (all?) FromRadio packets will be sent to clients that are not signed in.
 
@@ -83,7 +88,7 @@ Since authentication is also eventually needed for our other transports (TCP and
 
 See: <https://github.com/meshtastic/meshtastic.js>
 
-A reference client written in JavaScript will provide a JavaScript API for using this transport. That client will do HTTP connections, use the generated protobuf JavaScript code and provide an API that hides all of this REST plumbing. The two key methods will be "sendToRadio(packet) and onFromRadio(callback)".
+A reference client written in JavaScript will provide a JavaScript API for using this transport. That client will do HTTP connections, use the generated protobuf JavaScript code and provide an API that hides all of this REST plumbing. The two key methods will be `sendToRadio(packet)` and `onFromRadio(callback)`.
 
 ### Protoman
 
