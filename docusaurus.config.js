@@ -5,7 +5,7 @@ require('dotenv').config();
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: 'Meshtastic',
-  tagline: 'Open Source hiking, pilot, skiing and secure GPS mesh communicator',
+  tagline: 'An open source, off-grid, decentralized, mesh network built to run on affordable, low-power devices',
   url: 'https://meshtastic.org',
   baseUrl: '/',
   onBrokenLinks: 'throw',
