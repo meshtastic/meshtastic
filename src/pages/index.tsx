@@ -49,7 +49,7 @@ const features = [
     ),
   },
   {
-    title: 'Extendable',
+    title: 'Extensible',
     imageUrl: 'img/homepage/extendable.svg',
     description: (
       <>
