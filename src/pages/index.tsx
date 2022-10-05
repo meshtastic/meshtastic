@@ -49,7 +49,7 @@ const features = [
     ),
   },
   {
-    title: 'Extendable',
+    title: 'Extensible',
     imageUrl: 'img/homepage/extendable.svg',
     description: (
       <>
@@ -152,7 +152,7 @@ function Home() {
         />
         <meta
           property="og:description"
-          content="Open Source hiking, pilot, skiing and secure LoRa mesh communicator"
+          content="An open source, off-grid, decentralized, mesh network built to run on affordable, low-power devices"
         />
         <meta property="og:url" content="https://meshtastic.org/" />
         <meta name="twitter:card" content="summary_large_image" />
