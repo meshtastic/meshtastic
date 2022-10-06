@@ -5,7 +5,7 @@ sidebar_label: HTTP API
 ---
 
 :::info
-This is a mini-spec of the HTTP REST API which can be used by browser based clients to interact with Meshtastic devices.
+This is a mini-spec on a HTTP API which can be used by browser based clients to interact with Meshtastic devices.
 :::
 
 ## Why protobufs
@@ -19,8 +19,6 @@ This is a mini-spec of the HTTP REST API which can be used by browser based clie
 
 - `Content-Type: application/x-protobuf`
   - Indicates protobuf content (Meshtatic protobufs)
-- `Cookie: session=ABAD1D` (not yet implemented)
-  - Added automatically by the browser client.
 
 ## Response headers
 
@@ -28,9 +26,6 @@ This is a mini-spec of the HTTP REST API which can be used by browser based clie
   - Indicates protobuf content (Meshtatic protobufs)
 - `X-Protobuf-Schema: <URI to the .proto schema file>`
   - Not required but recommended for documentation/reflection purposes
-- `Set-Cookie: session=ABAD1D;path=/` (not yet implemented)
-  <!-- - Consider the security implications of using `path=/` - cookie will be accessible from any path on the same domain.-->
-  - All client requests that did not include a session cookie will be assigned a random and unique session key. The cookie will not be set if the client already has one.
 
 ## Endpoints
 
