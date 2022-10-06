@@ -17,6 +17,12 @@ Enables bluetooth
 
 ### Pairing Mode
 
+Specify pairing mode.
+
+`RANDOM_PIN` generates a random PIN during runtime.
+`FIXED_PIN` uses the fixed PIN that should then be additionally specified.
+Finally, `NO_PIN` disables PIN authentication.
+
 ### Fixed PIN
 
 If your pairing mode is set to fixed PIN this is the value of that fixed 6 digit pin. Default value is 123456
@@ -53,9 +59,9 @@ All bluetooth module config options are available in the python CLI. Example com
 
 |          Setting          |  Acceptable Values  | Default |
 | :-----------------------: | :-----------------: | :-----: |
-| bluetooth.enabled |   `true`, `false`   | `true` |
-|  bluetooth.mode  |   `RANDOM_PIN`, `FIXED_PIN`, `NO_PIN`   | `RANDOM_PIN` |
-| bluetooth.fixedPin  | `integer` 6 Digits |   `123456`   |
+| `bluetooth.enabled`       | `true`, `false`     | `true` |
+| `bluetooth.mode`          | `RANDOM_PIN`, `FIXED_PIN`, `NO_PIN` | `RANDOM_PIN` |
+| `bluetooth.fixedPin`      | `integer` (6 digits) | `123456` |
 
 ```shell title="Enable/Disable Bluetooth Module"
 meshtastic --set bluetooth.enabled true
@@ -70,8 +76,8 @@ meshtastic --set bluetooth.fixed_pin 111111
   <TabItem value="web">
 
 :::info
-All bluettoth module config options are available for the Web UI.
+All bluetooth module config options are available for the Web UI.
 :::
-    
+
   </TabItem>
 </Tabs>
