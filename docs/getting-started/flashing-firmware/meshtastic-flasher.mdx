@@ -1,10 +1,11 @@
 ---
 id: meshtastic-flasher
 title: Using Meshtastic Flasher
-sidebar_label: Meshtastic Flasher Method
-pagination_next: getting-started/first-steps/first-steps
+sidebar_label: Meshtastic Flasher
 pagination_prev: getting-started/flashing-firmware/flashing-firmware
-sidebar_position: 1
+pagination_next: getting-started/flashing-firmware/flashing-nrf52
+
+sidebar_position: 2
 ---
 
 import Tabs from '@theme/Tabs';
@@ -99,74 +100,11 @@ sudo apt install -y python3 python3-pip python3-venv
 
 ### Install App
 
-This is the preferred installation method for `meshtastic-flasher`.
 
-<Tabs
-groupId="operating-system"
-defaultValue="linux"
-values={[
-{label: 'Linux', value: 'linux'},
-{label: 'macOS', value: 'macos'},
-{label: 'Windows', value: 'windows'},
-]}>
-<TabItem value="linux">
-
-```shell title="Install Meshtastic Flasher"
-python3 --version
-# ensure you are using at least python v3.6
-# change to a directory where you want to create a python virtual environment
-mkdir some_dir
-cd some_dir
-# if the following command fails, it might tell you what package to install
-python3 -m venv venv
-# activate the python virtual environment
-source venv/bin/activate
-# your prompt should change - it should include "(venv) in the front
-# upgrade pip
-pip install --upgrade pip
-pip install meshtastic-flasher
-```
-
-```shell title="Running Meshtastic Flasher"
-meshtastic-flasher
-```
-
-</TabItem>
-<TabItem value="macos">
-
-<div className="indexCtasBody">
-  <Link
-    className={'button button--outline  button--lg cta--button'}
-    to={'https://github.com/meshtastic/Meshtastic-gui-installer/releases/tag/macapp1.0.0'}
-  >
-    Download macOS application
-  </Link>
-</div>
-
-Once downloaded, unzip the file and drag it to `~/Applications`. It may take a moment to load as it downloads dependencies required to interact with your device, so be patient. The first time running it can take a few minutes.
-
-</TabItem>
-<TabItem value="windows">
-
-<div className="indexCtasBody">
-  <Link
-    className={'button button--outline  button--lg cta--button'}
-    to={'https://github.com/meshtastic/Meshtastic-gui-installer/releases/tag/winapp1.0.3'}
-  >
-    Download Windows application
-  </Link>
-</div>
-
-Once downloaded, unzip the file and run it. It may take a moment to load as it downloads dependencies required to interact with your device, so be patient. The first time running it can take a few minutes.
-
-</TabItem>
-</Tabs>
-
-<details>
 <summary>
 Install using `pip`
 </summary>
-This option is typically for developers.
+Note: The previous "single executable" installation option has been deprecated as of March 10, 2022.
 
 <Tabs
 groupId="operating-system"
@@ -244,7 +182,7 @@ meshtastic-flasher
   </TabItem>
 </Tabs>
 
-</details>
+
 
 ## Flashing the Device
 

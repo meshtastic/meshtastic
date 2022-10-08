@@ -1,0 +1,173 @@
+---
+id: power
+title: Power Configuration
+sidebar_label: Power
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+The power config options are: Charge Current, Power Saving, Shutdown after losing power, ADC Multiplier Override Wait Bluetooth Interval, Mesh Super Deep Sleep Timeout, Super Deep Sleep Interval, Light Sleep Interval and Minimum Wake Interval.  Power config uses an admin message sending a `Config.Power` protobuf.
+
+Power settings are advanced configuration, most users should choose a role under Device Config to manage power for their device and should never need to touch any of these settings.
+
+## Power Config Values
+
+### Charge Current
+
+**Tbeam 1.1 only setting**
+
+Sets the current of the battery charger using the AXP power chip on the Tbeam 1.1
+
+### Power Saving
+
+If set, we are powered from a low-current source (i.e. solar), so even if it looks like we have power flowing in we should try to minimize power consumption as much as possible.
+
+### Shutdown after losing power
+
+Automatically shut down a device after a defined time period if power is lost.
+
+### ADC Multiplier Override
+**Fixes issues on Heltec v2**
+
+Ratio of voltage divider for battery pin e.g. 3.20 (R1=100k, R2=220k)
+
+Overrides the ADC_MULTIPLIER defined in the firmware device variant file for battery voltage calculation.
+
+Should be set to floating point value between 2 and 4
+
+### Wait Bluetooth Interval
+
+How long wait before turning off BLE in no Bluetooth states
+
+`0` for default of 1 minute
+
+### Mesh Super Deep Sleep Timeout
+
+While in Light Sleep if this value is exceeded we will lower into super deep sleep 
+
+or Super Deep Sleep Interval (default 1 year) or a button press
+
+`0` for default of two hours, MAXUINT for disabled
+
+### Super Deep Sleep Interval 
+
+While in Light Sleep if Mesh Super Deep Sleep Timeout Seconds is exceeded we will lower into super deep sleep or this value (default 1 year) or a button press
+
+`0` for default of one year
+
+### Light Sleep Interval
+
+**ESP32 Only Setting**
+
+In light sleep the CPU is suspended, LoRa radio is on, BLE is off an GPS is on
+
+`0` for default of five minutes
+
+### Minimum Wake Interval
+
+While in light sleep when we receive packets on the LoRa radio we will wake and handle them and stay awake in no Bluetooth mode for this interval
+
+`0` for default of 10 seconds
+
+## Power Config Client Availability
+
+<Tabs
+groupId="settings"
+defaultValue="cli"
+values={[
+{label: 'Android', value: 'android'},
+{label: 'Apple', value: 'apple'},
+{label: 'CLI', value: 'cli'},
+{label: 'Flasher', value: 'flasher'},
+{label: 'Web', value: 'web'},
+]}>
+<TabItem value="android">
+
+:::info
+Light Sleep Interval and Wait Bluetooth Interval are available under advanced settings for Android.
+:::
+
+</TabItem>
+<TabItem value="apple">
+
+:::info
+
+Power config is not available on Apple OS's.
+:::
+
+</TabItem>
+<TabItem value="cli">
+
+All Power config options are available in the python CLI.
+
+|            Setting                   |                                                                        Acceptable Values                                                                        |  Default  |
+| :----------------------------------: | :-------------------------------------------------------------------------------------------------------------------------------------------------------------: | :-------: |
+|         power.charge_current         | `MAUnset`, `MA100`, `MA190`, `MA280`, `MA360`, `MA450`, `MA550`, `MA630`, `MA700`, `MA780`, `MA880`, `MA960`, `MA1000`, `MA1080`, `MA1160`, `MA1240`, `MA1320`: | `MAUnset` |
+|          power.is_power_saving       |                                                                         `true`, `false`                                                                         |  `false`  |
+| power.on_battery_shutdown_after_secs |                                                                       `integer` (seconds)                                                                       |    Default of `0` is off    |
+|    power.adc_multiplier_override     |                                                                       `2-4` (floating point value)                                                              | Default of `0` uses firmware values    |
+|      power.wait_bluetooth_secs       |                                                                       `integer` (seconds)                                                                       |    Default of `0` is 1 minute   |
+|     power.mesh_sds_timeout_secs      |                                                                       `integer` (seconds)                                                                       |   Default of `0` is 2 hours   |
+|            power.sds_secs            |                                                                       `integer` (seconds)                                                                       |   Default of `0` is 1 year  |
+|            power.ls_secs             |                                                                       `integer` (seconds)                                                                       |   Default of `0` is 1 hour   |
+|         power.min_wake_secs          |                                                                       `integer` (seconds)                                                                       |   Default of `0` is 10 seconds   |
+
+
+```shell title="Set / Unset charge current (Tbeam 1.1 only)"
+meshtastic --set  power.charge_current MAUnset
+meshtastic --set  power.charge_current MA100
+```
+
+```shell title="Enable / Disable Power Saving"
+meshtastic --set power.is_power_saving true
+meshtastic --set power.is_power_saving false
+```
+
+```shell title="Enable / Disable Shutdown after losing power"
+meshtastic --set power.on_battery_shutdown_after_secs 120
+meshtastic --set power.on_battery_shutdown_after_secs 0
+```
+
+```shell title="Set  Wait Bluetooth Interval  (Default of 0 is 60 seconds)"
+meshtastic --set power.wait_bluetooth_secs 0
+meshtastic --set power.wait_bluetooth_secs 120
+```
+
+```shell title="Set Mesh Super Deep Sleep Timeout (Default of 0 is 2 hours/7200 seconds)"
+meshtastic --set power.mesh_sds_timeout_secs 0
+meshtastic --set power.mesh_sds_timeout_secs 120
+// Disable using MAXUINT
+meshtastic --set power.mesh_sds_timeout_secs 4294967295
+```
+
+```shell title="Set Super Deep Sleep (Default of 0 is 1 year)"
+meshtastic --set power.sds_secs 0
+meshtastic --set power.sds_secs 120
+```
+
+```shell title="Set Light Sleep to default (Default of 0 is 5 minutes)"
+meshtastic --set power.ls_secs 0
+meshtastic --set power.ls_secs 120
+```
+
+```shell title="Set Minimum Wake Interval (Default of 0 is 10 seconds)"
+meshtastic --set power.min_wake_secs 0
+meshtastic --set power.min_wake_secs 120
+```
+</TabItem>
+<TabItem value="flasher">
+
+:::info
+Power config is not available in the Flasher.
+:::
+
+  </TabItem>
+  <TabItem value="web">
+
+:::info
+All power config options are available in the Web UI.
+:::
+    
+  </TabItem>
+</Tabs>

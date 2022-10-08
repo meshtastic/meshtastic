@@ -49,13 +49,13 @@ const features = [
     ),
   },
   {
-    title: 'Extendable',
+    title: 'Extensible',
     imageUrl: 'img/homepage/extendable.svg',
     description: (
       <>
         Create a highly scalable mesh with hardware on a multitude of platforms
         to fit your unique requirements: Create an environment monitoring mesh
-        and produce real-time heatmaps, or maybe decentralised, encrypted
+        and produce real-time heatmaps, or maybe decentralized, encrypted
         messaging network, your imagination is the limit.
       </>
     ),
@@ -152,7 +152,7 @@ function Home() {
         />
         <meta
           property="og:description"
-          content="Open Source hiking, pilot, skiing and secure LoRa mesh communicator"
+          content="An open source, off-grid, decentralized, mesh network built to run on affordable, low-power devices"
         />
         <meta property="og:url" content="https://meshtastic.org/" />
         <meta name="twitter:card" content="summary_large_image" />
@@ -183,13 +183,13 @@ function Home() {
           {features.map((feature, index) => (
             <div key={index} className="flex p-12">
               <div className="w-1/2">
-              <img
-                className="my-auto h-40"
-                src={feature.imageUrl}
-                alt={feature.title}
-              />
+                <img
+                  className="my-auto h-40"
+                  src={feature.imageUrl}
+                  alt={feature.title}
+                />
               </div>
-              <div className="my-auto w-1/2" >
+              <div className="my-auto w-1/2">
                 <h3 className="text-xl font-medium">{feature.title}</h3>
                 <p>{feature.description}</p>
               </div>
@@ -197,7 +197,7 @@ function Home() {
           ))}
         </Carousel>
 
-        <div className="flex w-full flex-col gap-4 bg-primaryDark p-4 shadow-inner mx-auto w-auto">
+        <div className="bg-primaryDark mx-auto flex w-full w-auto flex-col gap-4 p-4 shadow-inner">
           <h3 className="text-xl font-bold">Connect with us.</h3>
           <div className="flex w-full overflow-x-auto">
             {SocialCards.map((card, index) => (
@@ -208,7 +208,7 @@ function Home() {
           </div>
         </div>
 
-        <div className="container flex flex-col mx-auto w-auto">
+        <div className="container mx-auto flex w-auto flex-col">
           <h2 className="mb-2 text-xl font-medium">
             Getting started with Meshtastic is as easy as 1, 2, 3!
           </h2>

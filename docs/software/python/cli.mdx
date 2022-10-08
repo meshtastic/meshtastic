@@ -1,7 +1,7 @@
 ---
 id: python-cli
-title: meshtastic command line interface guide
-sidebar_label: meshtastic cli
+title: Meshtastic Command Line Interface
+sidebar_label: Meshtastic CLI
 ---
 
 # Meshtastic CLI Guide
@@ -88,17 +88,19 @@ Gets a preferences field.
 **Usage**
 
 ```shell
-meshtastic --get region
+meshtastic --get lora.region
 ```
 
-### --set SET SET
+### --set [config_section].[option] [value]
 
 Sets a preferences field.
+
+Configuration values are described in this section: [Configuration Sections](https://meshtastic.org/docs/settings/config/)
 
 **Usage**
 
 ```shell
-meshtastic --set region Unset
+meshtastic --set lora.region Unset
 ```
 
 ### --seturl SETURL

@@ -70,8 +70,10 @@ const Firmware = (): JSX.Element => {
           >
             <DownloadCard
               client="Android"
-              imgUrl="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png"
-              url="https://play.google.com/store/apps/details?id=com.geeksville.mesh&referrer=utm_source=downloads-page"
+              imgUrl="https://f-droid.org/badge/get-it-on.png"
+              url="https://mesh.tastic.app/fdroid/repo"
+              imgUrl2="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png"
+              url2="https://play.google.com/store/apps/details?id=com.geeksville.mesh&referrer=utm_source=downloads-page"
               notes={[
                 'To sideload, ',
                 <a

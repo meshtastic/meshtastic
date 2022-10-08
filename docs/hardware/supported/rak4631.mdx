@@ -2,7 +2,7 @@
 id: wisBlock
 title: RAK WisBlock
 sidebar_label: RAK WisBlock
-sidebar_position: 3
+sidebar_position: 1
 ---
 
 import Tabs from '@theme/Tabs';
@@ -44,7 +44,7 @@ Further information on the RAK5005-O can be found on the [RAK Documentation Cent
 It may be possible to add a user button using the [13002 IO module](https://store.rakwireless.com/collections/wisblock-interface/products/adapter-module-rak13002).
 
 - [Update the bootloader](https://docs.rakwireless.com/Product-Categories/WisBlock/RAK4631/Quickstart/#updating-the-bootloader) on first use! This can be done easily with [Meshtastic-flasher](https://github.com/meshtastic/Meshtastic-gui-installer).
-- Firmware for 5005 base board: [`firmware-rak4631_5005-1.x.x.uf2`](/downloads) 
+- Firmware for 5005 base board: [`firmware-rak4631-1.x.x.uf2`](/downloads) 
 
 
   <img
@@ -73,7 +73,7 @@ Further information on the RAK19003 can be found on the [RAK Documentation Cente
 It is currently not possible to add a user button to this board.
 
 - [Update the bootloader](https://docs.rakwireless.com/Product-Categories/WisBlock/RAK4631/Quickstart/#updating-the-bootloader) on first use! This can be done easily with [Meshtastic-flasher](https://github.com/meshtastic/Meshtastic-gui-installer).
-- Firmware for 19003 base board: [`firmware-rak4631_19003-1.x.x.uf2`](/downloads)
+- Firmware for 19003 base board: [`firmware-rak4631-1.x.x.uf2`](/downloads)
 
 
   <img
@@ -252,7 +252,7 @@ The [RAK1400 EPD module](https://store.rakwireless.com/products/wisblock-epd-mod
 - Occupies the IO Port of a Wisblock Base
 
 
-- Firmware for 5005 with RAK14000 epaper: [`firmware-rak4631_19003-epaper-1.3.x.uf2`](/downloads)
+- Firmware for 5005 with RAK14000 epaper: [`firmware-rak4631_eink-1.3.x.uf2`](/downloads)
 
   <img
     alt="RAK4631 5005 14000"
@@ -339,12 +339,3 @@ Further information on the RAK1906 can be found on the [RAK Documentation Center
 
 - RAK's Wisblock [Documentation Center](https://docs.rakwireless.com/Product-Categories/WisBlock)
 - RAK's [GitHub Page](https://github.com/RAKWireless/WisBlock) for the WisBlock
-
-## MAC Address Conflict
-
-Some of the RAK Meshtastic starter kits that come pre-installed with Meshtastic have an error where the same MAC address is applied to more than one unit. If you have a number of RAK devices but are unable to connect to more than one of them, or they will not talk to each other despite being on the same mesh, please try a [factory reset](/docs/settings/misc#factory_reset) using the Meshtastic CLI, and then restart the device. This reset will wipe all settings on the device back to their defaults including the stored MAC address. If you have already configured your node and wish to keep the configuration, then please export it first:
-
-- `meshtastic --export-config > settings_file.txt` - This will save the node's settings to the file `settings_file.txt`
-- `meshtastic --set factory_reset true` - This will reset the device and wipe the configuration
-- Power cycle the device
-- `meshtastic --configure settings_files.txt` - This will restore the settings saved in the file `settings_file.txt`

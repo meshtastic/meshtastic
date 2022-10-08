@@ -1,0 +1,94 @@
+---
+id: mqtt
+title: MQTT Module Configuration
+sidebar_label: MQTT
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+If your device is connected to WiFi you can enable it to forward packets along to an MQTT server. This allows users on the local mesh to communicate with users on the internet.
+
+The MQTT module config options are: Enabled, Server Address, Username, Password, Encryption Enabled and JSON Enabled. MQTT Module config uses an admin message sending a `ConfigModule.MQTT` protobuf.
+
+## Settings
+
+ ## MQTT Module Config Values
+
+### Enabled
+
+Enables the MQTT module.
+
+### Server Address
+
+The server to use for MQTT. If not set, the default server public will be used.
+
+### Username
+
+MQTT Server username to use (most useful for a custom MQTT server). If using a custom server, this will be honoured even if empty. If using the default public server, this will only be honoured if set, otherwise the device will use the default username.
+
+### Password
+
+MQTT password to use (most useful for a custom MQTT server). If using a custom server, this will be honoured even if empty. If using the default server, this will only be honoured if set, otherwise the device will use the default password
+
+### Encryption Enabled
+
+Whether to send encrypted or decrypted packets to MQTT. This parameter is only honoured if you also set server (the default official mqtt.meshtastic.org server can handle encrypted packets) Decrypted packets may be useful for external systems that want to consume meshtastic packets.
+
+### JSON Enabled
+
+Enable the sending / consumption of JSON packets on MQTT. These packets are not encrypted, but offer an easy way to integrate with systems that can read JSON.
+
+## MQTT Module Config Client Availability
+
+<Tabs
+groupId="settings"
+defaultValue="apple"
+values={[
+{label: 'Android', value: 'android'},
+{label: 'Apple', value: 'apple'},
+{label: 'CLI', value: 'cli'},
+{label: 'Flasher', value: 'flasher'},
+{label: 'Web', value: 'web'},
+]}>
+<TabItem value="android">
+
+:::info
+MQTT module config is not available for Android.
+:::
+
+</TabItem>
+<TabItem value="apple">
+
+:::info
+MQTT module config is not available for Apple.
+:::
+
+</TabItem>
+<TabItem value="cli">
+
+All MQTT module config options are available in the python CLI. Example commands are below:
+
+|     Setting                  |    Acceptable Values     | Default |
+| :--------------------------: | :----------------------: | :-----: |
+|    mqtt.enabled              |     `true`, `false`      | `false` |
+|    mqtt.address              |     `string`             |         |
+|    mqtt.username             |     `string`             |         |
+|    mqtt.password             |     `string`             |         |
+|    mqtt.encryption_enabled   |     `string`             |         |
+|    mqtt.json_enabled         |     `true`, `false`      | `false` |
+
+```shell title="Enable/Disable MQTT Module"
+meshtastic --set mqtt.enabled true
+meshtastic --set mqtt.enabled false
+```
+
+  </TabItem>
+  <TabItem value="web">
+
+:::info
+All MQTT module config options are available for the Web UI.
+:::
+    
+  </TabItem>
+</Tabs>

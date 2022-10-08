@@ -1,0 +1,128 @@
+---
+id: lora
+title: LoRa Configuration
+sidebar_label: LoRa
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+The LoRa config options are: Region, Modem Preset, Max Hops, Transmit Power, Bandwidth, Spread Factor, Coding Rate, Frequency Offset, Transmit Enabled and Ignore Incoming Array.  LoRa config uses an admin message sending a `Config.LoRa` protobuf.
+
+## LoRa Config Values
+
+:::note
+You must set your device's `lora.region` setting. This will ensure that you are operating within the legal limits for your area.
+:::
+
+### Region
+Sets the region for your node. Default is `unset`.
+
+|   Region Code   |                                                                  Description                                                                                                              |
+| :-------: | :---------------------------------------------------------------------------------------: |
+|  `unset`   | Unset |
+| `us` | United States |
+| `eu433` | European Union 433MHz |
+| `eu868` | European Union 868MHz |
+| `cn` | China |
+| `jp` | Japan |
+| `anz` | Australia & New Zealand |
+| `kr` | Korea |
+| `tw` | Taiwan |
+| `ru` | Russia |
+| `in` | India |
+| `nz865` | New Zealand 865MHz |
+| `th` | Thailand |
+
+
+### Modem Preset
+
+### Max Hops
+
+### Transmit Power
+
+If zero then, use default max legal continuous power (i.e. something that won't burn out the radio hardware)
+
+In most cases you should use zero here. Units are in dBm.
+
+### Bandwidth
+
+Bandwidth in MHz
+
+Certain bandwidth numbers are 'special' and will be converted to the appropriate floating point value: 31 -> 31.25MHz
+
+### Spread Factor 
+
+A number from 7 to 12. Indicates the number of chirps per symbol as 1<<spread_factor.
+
+### Coding Rate
+
+The denominator of the coding rate. ie for 4/5, the value is 5. 4/8 the value is 8.
+
+### Frequency Offset
+
+This parameter is for advanced users with advanced test equipment, we do not recommend most users use it.
+
+A frequency offset that is added to to the calculated band center frequency. Used to correct for crystal calibration errors.
+
+### Transmit Enabled 
+
+Allows you to enable and disable transmit (TX) from the LoRa radio. Useful for hot-swapping antennas and other tests.
+
+Defaults to false
+
+### Ignore Incoming Array
+
+For testing it is useful sometimes to force a node to never listen to particular other nodes (simulating radio out of range). All nodenums listed in the ignore_incoming array will have packets they send dropped on receive (by router.cpp)
+
+## LoRa Config Client Availability
+
+<Tabs
+groupId="settings"
+defaultValue="apple"
+values={[
+{label: 'Android', value: 'android'},
+{label: 'Apple', value: 'apple'},
+{label: 'CLI', value: 'cli'},
+{label: 'Flasher', value: 'flasher'},
+{label: 'Web', value: 'web'},
+]}>
+<TabItem value="android">
+
+:::info
+Region and Modem Preset can be configured on Android.
+:::
+
+</TabItem>
+<TabItem value="apple">
+
+:::info
+Configuration of Region, Modem Preset and Hop Limit is available on iOS, iPadOS and macOS at Settings > Radio Configuration > LoRa.
+:::
+
+</TabItem>
+<TabItem value="cli">
+
+LoRa config commands are available in the python CLI. Example commands are below:
+
+|   Setting    |                               Acceptable Values                               |      Default      |
+| :----------: | :---------------------------------------------------------------------------: | :---------------: |
+| lora.modem_preset |   `LONG_FAST`, `LONG_SLOW`, `VERY_LONG_SLOW`, `MEDIUM_SLOW`, `MEDIUM_FAST`, `SHORT_SLOW`, `SHORT_FAST`       | `LONG_FAST` |
+|    lora.region    |     `UNSET`, `US`, `EU_433`, `EU_868`, `CN`, `JP`, `ANZ`, `KR`, `TW`, `RU` ,`IN`, `NZ_865`, `TH`       |      `UNSET`      |
+| lora.hop_limit    |     `1`,`2`,`3`,`4`,`5`,`6`,`7`   |   `3` |
+</TabItem>
+<TabItem value="flasher">
+
+:::info
+No lora config options are available in the Flasher.
+:::
+
+  </TabItem>
+  <TabItem value="web">
+
+:::info
+All lora config options are available in the Web UI.
+:::
+    
+  </TabItem>
+</Tabs>
