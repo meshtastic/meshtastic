@@ -12,16 +12,16 @@ The Channels config options are: Index, Roles, and Settings. Channel config uses
 :::info
 **Channel Settings** (as described on this page) should not be confused with [LoRa Radio Settings](/docs/settings/config/lora)
 
-[LoRa Radio Settings](/docs/settings/config/lora) contain the modem configuration (frequency settings, spreading factor, bandwidth, and error correction) used for the radio. These settings are identical accross all channels and can *not* be unique. These settings are directly applied to the Primary channel from which all Secondary channels derive their settings.
+[LoRa Radio Settings](/docs/settings/config/lora) contain the modem configuration (frequency settings, spreading factor, bandwidth, etc.) used for the radio. These settings are identical for all channels and can *not* be unique per channel. Radio settings are directly applied to the Primary channel from which all Secondary channels derive their radio settings.
 
-**Channel Settings** contain information for segregating conversations, configuring encryption, and enabling or disabling messaging over internet gateways. These settings are unique per channel.
+**Channel Settings** contain information for segregating message groups, configuring optional encryption, and enabling or disabling messaging over internet gateways. These settings *are* unique and configurable per channel.
 :::
 
 ## Channel Config Values
 
 ### Index
 
-The channel index begins at 0 and ends at 7 (total of 8 channels)
+The channel index begins at 0 and ends at 7.
 
 _Indexing_ can not be modified.
 
@@ -40,18 +40,18 @@ _Indexing_ can not be modified.
 
 Each channel is assigned one of 3 roles:
 
-1. `DISABLED` or `0` 
-	- The channel is no longer available for use. 
-	- Channel Settings are cleared.
-2. `PRIMARY` or `1` 
+1. `PRIMARY` or `1` 
 	- This is the first channel that is created for you on initial setup.
 	- Can not be disabled.
-	- Only one Primary channel can exist.
-	- All Secondary channels derive their [Radio Settings](/docs/settings/config/lora) from this channel. 
-	- Direct Messages are only available on this channel.
-3. `SECONDARY` or `2`
-	- Derives its [Radio Settings](/docs/settings/config/lora) from the Primary channel.
-	- Can modify encryption key (psk).
+	- Only one primary channel can exist.
+	- All secondary channels derive their [Radio Settings](/docs/settings/config/lora) from this channel. 
+	- Direct messages are only available on this channel.
+2. `SECONDARY` or `2`
+	- Derives its [Radio Settings](/docs/settings/config/lora) from the primary channel.
+	- Can modify the encryption key (psk).
+3. `DISABLED` or `0` 
+	- The channel is no longer available for use.
+	- Channel Settings are cleared.
 
 ## Channel Settings Values
 
@@ -133,16 +133,15 @@ meshtastic --ch-set id 1234 --ch-index 0
 **Name**
 
 ```shell title="Set channel name for the PRIMARY channel"
+# without spaces
 meshtastic --ch-set name MyChannel --ch-index 0
-```
-
-```shell title="Set channel name for the PRIMARY channel with spaces"
+# with spaces
 meshtastic --ch-set name "My Channel" --ch-index 0
 ```
 
 **PSK**
 
-If you use Meshtastic for exchanging messages you don't want other people to see, `random` is the setting you should use. Selecting a `default` or any of the `simple` values from the following table will use publicly known encryption keys. They're shipped with Meshtastic source code and thus, anyone can listen to messages encrypted by them. They're great for testing and public channels.
+If you use Meshtastic for exchanging messages you don't want other people to see, `random` is the setting you should use. Selecting `default` or any of the `simple` values from the following table will use publicly known encryption keys. They're shipped with Meshtastic source code and thus, anyone can listen to messages encrypted by them. They're great for testing and public channels.
 
 |        Setting         |                                       Behavior                                        |
 | :--------------------: | :-----------------------------------------------------------------------------------: |
