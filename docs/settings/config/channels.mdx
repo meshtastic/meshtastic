@@ -1,0 +1,206 @@
+---
+id: channels
+title: Channel Configuration
+sidebar_label: Channels
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+The Channels config options are: Index, Roles, and Settings. Channel config uses an admin message sending a `Channel` protobuf which also consists of a `ChannelSettings` protobuf.
+
+:::info
+**Channel Settings** (as described on this page) should not be confused with [LoRa Radio Settings](/docs/settings/config/lora)
+
+[LoRa Radio Settings](/docs/settings/config/lora) contain the modem configuration (frequency settings, spreading factor, bandwidth, and error correction) used for the radio. These settings are identical accross all channels, can *not* be unique. These settings are directly applied to the Primary channel from which all Secondary channels derive their settings.
+
+**Channel Settings** contain information for segregating conversations, configuring encryption, and the ability to enable or disable messaging over internet gateways. These settings are unique per channel.
+:::
+
+## Channel Config Values
+
+### Index
+
+The channel index begins at 0 and ends at 7 (total of 8 channels)
+
+_Indexing_ can not be modified.
+
+|        Index         |     Channel       | Default Role | Purpose | 
+| :--------------------: | :----------------: | :----------------: | :----------------: |
+| 0 | 1 | `PRIMARY` | Used as `default` channel |
+| 1 | 2 | `DISABLED` | User defined |
+| 2 | 3 | `DISABLED` | User defined |
+| 3 | 4 | `DISABLED` | User defined |
+| 4 | 5 | `DISABLED` | User defined |
+| 5 | 6 | `DISABLED` | User defined |
+| 6 | 7 | `DISABLED` | User defined |
+| 7 | 8 | `SECONDARY` | Used as `admin` channel |
+
+### Role
+
+Each channel is assigned one of 3 roles:
+
+1. `DISABLED` or `0` 
+	- The channel is no longer available for use. 
+	- Channel Settings are cleared.
+2. `PRIMARY` or `1` 
+	- This is the first channel that's created for you on initial setup.
+	- Defaults: `Index` is `0`. `ID` is `0`. `Name` is empty `""`.
+	- Can not be disabled.
+	- Only one Primary channel can exist.
+	- All Secondary channels derive their [Radio Settings](/docs/settings/config/lora) from this channel. 
+	- Direct Messages are only available on this channel.
+3. `SECONDARY` or `2`
+	- Derives its [Radio Settings](/docs/settings/config/lora) from the Primary channel.
+	- Can modify encryption key (psk).
+
+## Channel Settings Values
+
+If a channel is disabled, all channel settings are set to default. 
+
+Channel settings are unique per channel and consist of:
+
+### ID
+
+Used to construct a globally unique channel ID.
+
+`0` by default for `default` channel.
+
+The full globally unique ID will be `name.id` where ID is base36 encoded. Assuming that the number of Meshtastic users is below 20K (true for a long time) the chance of this 64 bit random number colliding with anyone else is super low. The penalty for collision is low as well.
+
+### Name
+
+A short identifier (< 12 bytes) for the channel.
+
+Empty `""` by default for all channels. 
+
+If this is left an empty string it is assumed that this channel is the `default` channel.
+
+### PSK
+
+Hex byte `0x01` for `default` channel.
+
+Must be either 0 bytes (no crypto), 16 bytes (AES128), or 32 bytes (AES256).
+
+### Downlink Enabled
+
+If enabled, messages captured from a **public** internet gateway will be forwarded to the local mesh.
+
+Set to `false` by default for all channels.
+
+### Uplink Enabled
+
+If enabled, messages from the mesh will be sent to the **public** internet through any node's configured gateway.
+
+Set to `false` by default for all channels.
+
+<Tabs
+groupId="settings"
+defaultValue="cli"
+values={[
+{label: 'Android', value: 'android'},
+{label: 'Apple', value: 'apple'},
+{label: 'CLI', value: 'cli'},
+{label: 'Flasher', value: 'flasher'},
+{label: 'Web', value: 'web'},
+]}>
+
+<TabItem value="android">
+
+:::info
+All Channel config options are available on Android.
+:::
+
+</TabItem>
+
+<TabItem value="apple">
+
+:::info
+All Channel config options are available on iOS, iPadOS and macOS.
+:::
+
+</TabItem>
+
+<TabItem value="cli">
+
+All Channel config options are available in the python CLI. Example commands are below:
+
+**Id**
+
+```shell title="Set the PRIMARY channel ID"
+meshtastic --ch-set id 1234 --ch-index 0
+```
+
+**Name**
+
+```shell title="Set channel name for the PRIMARY channel"
+meshtastic --ch-set name MyChannel --ch-index 0
+```
+
+```shell title="Set channel name for the PRIMARY channel with spaces"
+meshtastic --ch-set name "My Channel" --ch-index 0
+```
+
+**PSK**
+
+If you use Meshtastic for exchanging messages you don't want other people to see, `random` is the setting you should use. Selecting a `default` or any of the `simple` values from the following table will use publicly known encryption keys. They're shipped with Meshtastic source code and thus, anyone can listen to messages encrypted by them. They're great for testing and public channels.
+
+|        Setting         |                                       Behavior                                        |
+| :--------------------: | :-----------------------------------------------------------------------------------: |
+|         `none`         |                                  Disable Encryption                                   |
+|       `default`        |                   Default Encryption (use the weak encryption key)                    |
+|        `random`        | Generate a secure 256-bit encryption key. Use this setting for private communication. |
+| `simple0`- `simple254` |                      Uses a single byte encoding for encryption                       |
+
+```shell title="Set encryption to default on PRIMARY channel"
+meshtastic --ch-set psk default --ch-index 0
+```
+
+```shell title="Set encryption to random on PRIMARY channel"
+meshtastic --ch-set psk random --ch-index 0
+```
+
+```shell title="Set encryption to single byte  on PRIMARY channel"
+meshtastic --ch-set psk simple15 --ch-index 0
+```
+
+```shell title="Set encryption to your own key on PRIMARY channel"
+meshtastic --ch-set psk 0x1a1a1a1a2b2b2b2b1a1a1a1a2b2b2b2b1a1a1a1a2b2b2b2b1a1a1a1a2b2b2b2b --ch-index 0
+```
+
+```shell title="Disable encryption on PRIMARY channel"
+meshtastic --ch-set psk none --ch-index 0
+```
+
+**Uplink / Downlink**
+
+For configuring gateways, please see [MQTT](/docs/settings/moduleconfig/mqtt)
+
+```shell title="Enable/Disable Uplink on PRIMARY channel"
+meshtastic --ch-set uplink_enabled true --ch-index 0
+meshtastic --ch-set uplink_enabled false --ch-index 0
+```
+
+```shell title="Enable/Disable Downlink on SECONDARY channel"
+meshtastic --ch-set downlink_enabled true --ch-index 1
+meshtastic --ch-set downlink_enabled false --ch-index 5
+```
+
+</TabItem>
+
+<TabItem value="flasher">
+
+:::info
+All Channel config options are available in the Flasher.
+:::
+
+</TabItem>
+
+<TabItem value="web">
+
+:::info
+All Channel config options are available in the Web UI.
+:::
+
+</TabItem>
+</Tabs>
