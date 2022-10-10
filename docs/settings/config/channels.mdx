@@ -12,9 +12,9 @@ The Channels config options are: Index, Roles, and Settings. Channel config uses
 :::info
 **Channel Settings** (as described on this page) should not be confused with [LoRa Radio Settings](/docs/settings/config/lora)
 
-[LoRa Radio Settings](/docs/settings/config/lora) contain the modem configuration (frequency settings, spreading factor, bandwidth, and error correction) used for the radio. These settings are identical accross all channels, can *not* be unique. These settings are directly applied to the Primary channel from which all Secondary channels derive their settings.
+[LoRa Radio Settings](/docs/settings/config/lora) contain the modem configuration (frequency settings, spreading factor, bandwidth, and error correction) used for the radio. These settings are identical accross all channels and can *not* be unique. These settings are directly applied to the Primary channel from which all Secondary channels derive their settings.
 
-**Channel Settings** contain information for segregating conversations, configuring encryption, and the ability to enable or disable messaging over internet gateways. These settings are unique per channel.
+**Channel Settings** contain information for segregating conversations, configuring encryption, and enabling or disabling messaging over internet gateways. These settings are unique per channel.
 :::
 
 ## Channel Config Values
@@ -44,8 +44,7 @@ Each channel is assigned one of 3 roles:
 	- The channel is no longer available for use. 
 	- Channel Settings are cleared.
 2. `PRIMARY` or `1` 
-	- This is the first channel that's created for you on initial setup.
-	- Defaults: `Index` is `0`. `ID` is `0`. `Name` is empty `""`.
+	- This is the first channel that is created for you on initial setup.
 	- Can not be disabled.
 	- Only one Primary channel can exist.
 	- All Secondary channels derive their [Radio Settings](/docs/settings/config/lora) from this channel. 
@@ -56,9 +55,7 @@ Each channel is assigned one of 3 roles:
 
 ## Channel Settings Values
 
-If a channel is disabled, all channel settings are set to default. 
-
-Channel settings are unique per channel and consist of:
+If a channel is disabled, all channel settings are set to default. Channel settings are unique per channel and consist of:
 
 ### ID
 
@@ -77,6 +74,8 @@ Empty `""` by default for all channels.
 If this is left an empty string it is assumed that this channel is the `default` channel.
 
 ### PSK
+
+The encryption key used for private channels.
 
 Hex byte `0x01` for `default` channel.
 
