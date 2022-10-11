@@ -59,7 +59,7 @@ Each channel is assigned one of 3 roles:
 The Channel Settings options are: ID, Name, PSK, Downlink Enabled, and Uplink Enabled. Channel settings are embeded in the `Channel` protobuf as a `ChannelSettings` protobuf and sent as an admin message.
 
 :::note
-The full globally unique ID will be constructed with the Name and ID (`<name>.<id>`) where ID is base36 encoded. Assuming that the number of Meshtastic users is below 20K (true for a long time) the chance of this 64 bit random number colliding with anyone else is super low. The penalty for collision is low as well.
+The full globally unique ID will be constructed from the Name and ID (`<name>.<id>`) where ID is base36 encoded. Assuming that the number of Meshtastic users is below 20K (true for a long time) the chance of this 64 bit random number colliding with anyone else is super low. The penalty for collision is low as well.
 :::
 
 ### ID
@@ -74,14 +74,14 @@ A short identifier for the channel. _(< 12 bytes)_
 
 |        Reserved Name         |     Purpose       | 
 | :--------------------: | :----------------: | 
-| `""` (default) | If left empty on the primary channel, this designates the `default` channel. | 
+| `""` (default) | If left empty on the Primary channel, this designates the `default` channel. | 
 | `admin` | On Secondary channels, the name `admin` (case sensitive) designates the  `admin` channel used to administer nodes over the mesh |
 
 ### PSK
 
 The encryption key used for private channels.
 
-Hex byte `0x01` for `default` channel.
+Hex byte `0x01` for the Primary `default` channel.
 
 Must be either 0 bytes (no crypto), 16 bytes (AES128), or 32 bytes (AES256).
 
