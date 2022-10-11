@@ -46,20 +46,17 @@ Each channel is assigned one of 3 roles:
 
 1. `PRIMARY` or `1` 
 	- This is the first channel that is created for you on initial setup.
-	- Can not be disabled.
-	- Only one primary channel can exist.
+	- Only one primary channel can exist and can not be disabled.
 	- Direct messages are only available on this channel.
 2. `SECONDARY` or `2`
 	- Can modify the encryption key (psk).
 3. `DISABLED` or `0` 
 	- The channel is no longer available for use.
-	- Channel settings are cleared.
+	- All channel settings are set to default.
 
 ## Channel Settings Values
 
 The Channel Settings options are: ID, Name, PSK, Downlink Enabled, and Uplink Enabled. Channel settings are embeded in the `Channel` protobuf as a `ChannelSettings` protobuf and sent as an admin message.
-
-If a channel is disabled, all channel settings are set to default.
 
 ### ID
 
@@ -67,7 +64,9 @@ Used to construct a globally unique channel ID.
 
 `0` by default for `default` channel.
 
-The full globally unique ID will be `name.id` where ID is base36 encoded. Assuming that the number of Meshtastic users is below 20K (true for a long time) the chance of this 64 bit random number colliding with anyone else is super low. The penalty for collision is low as well.
+:::note
+The full globally unique ID will be `<name>.<id>` where ID is base36 encoded. Assuming that the number of Meshtastic users is below 20K (true for a long time) the chance of this 64 bit random number colliding with anyone else is super low. The penalty for collision is low as well.
+:::
 
 ### Name
 
