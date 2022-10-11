@@ -57,7 +57,9 @@ Each channel is assigned one of 3 roles:
 
 ## Channel Settings Values
 
-If a channel is disabled, all channel settings are set to default. Channel settings are unique per channel and consist of:
+The Channel Settings options are: ID, Name, PSK, Downlink Enabled, and Uplink Enabled. Channel settings are embeded in the `Channel` protobuf as a `ChannelSettings` protobuf and sent as an admin message.
+
+If a channel is disabled, all channel settings are set to default.
 
 ### ID
 
