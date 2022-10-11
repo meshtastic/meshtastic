@@ -52,21 +52,21 @@ Each channel is assigned one of 3 roles:
 	- Can modify the encryption key (psk).
 3. `DISABLED` or `0` 
 	- The channel is no longer available for use.
-	- All channel settings are set to default.
+	- The channel settings are set to default.
 
 ## Channel Settings Values
 
 The Channel Settings options are: ID, Name, PSK, Downlink Enabled, and Uplink Enabled. Channel settings are embeded in the `Channel` protobuf as a `ChannelSettings` protobuf and sent as an admin message.
 
+:::note
+The full globally unique ID will be constructed with the Name and ID (`<name>.<id>`) where ID is base36 encoded. Assuming that the number of Meshtastic users is below 20K (true for a long time) the chance of this 64 bit random number colliding with anyone else is super low. The penalty for collision is low as well.
+:::
+
 ### ID
 
 Used to construct a globally unique channel ID.
 
-`0` by default for `default` channel.
-
-:::note
-The full globally unique ID will be `<name>.<id>` where ID is base36 encoded. Assuming that the number of Meshtastic users is below 20K (true for a long time) the chance of this 64 bit random number colliding with anyone else is super low. The penalty for collision is low as well.
-:::
+Set to `0` by default.
 
 ### Name
 
