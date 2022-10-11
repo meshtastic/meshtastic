@@ -12,7 +12,7 @@ The Channels config options are: Index, Roles, and Settings. Channel config uses
 :::info
 **Channel Settings** (as described on this page) should not be confused with [Modem Preset Settings](/docs/settings/config/lora#modem-preset)
 
-[Modem Preset Settings](/docs/settings/config/lora#modem-preset) contain the modem configuration (frequency settings, spreading factor, bandwidth, etc.) used for the LoRa radio. These settings are identical for all channels and can **not** be unique per channel. Modem settings are directly applied to the Primary channel from which all Secondary channels derive their modem settings.
+[Modem Preset Settings](/docs/settings/config/lora#modem-preset) contain the modem configuration (frequency settings, spreading factor, bandwidth, etc.) used for the LoRa radio. These settings are identical for all channels and can **not** be unique per channel.
 
 **Channel Settings** contain information for segregating message groups, configuring optional encryption, and enabling or disabling messaging over internet gateways. These settings **are** unique and configurable per channel.
 :::
@@ -40,7 +40,6 @@ _Indexing_ can not be modified.
 You can **not** have `DISABLED` channels inbetween active channels such as `PRIMARY` and `SECONDARY`. Active channels must be consecutive.
 :::
 
-
 ### Role
 
 Each channel is assigned one of 3 roles:
@@ -49,10 +48,8 @@ Each channel is assigned one of 3 roles:
 	- This is the first channel that is created for you on initial setup.
 	- Can not be disabled.
 	- Only one primary channel can exist.
-	- All secondary channels derive their [Modem Presets](/docs/settings/config/lora#modem-preset) from this channel. 
 	- Direct messages are only available on this channel.
 2. `SECONDARY` or `2`
-	- Derives its [Modem Preset](/docs/settings/config/lora#modem-preset) from the primary channel.
 	- Can modify the encryption key (psk).
 3. `DISABLED` or `0` 
 	- The channel is no longer available for use.
@@ -72,13 +69,12 @@ The full globally unique ID will be `name.id` where ID is base36 encoded. Assumi
 
 ### Name
 
-A short identifier _(< 12 bytes)_ for the channel.
+A short identifier for the channel. _(< 12 bytes)_ 
 
 |        Reserved Name         |     Purpose       | 
 | :--------------------: | :----------------: | 
 | `""` (default) | If left empty on the primary channel, this designates the `default` channel. | 
 | `admin` | On Secondary channels, the name `admin` (case sensitive) designates the  `admin` channel used to administer nodes over the mesh |
-
 
 ### PSK
 
