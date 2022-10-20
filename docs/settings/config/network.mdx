@@ -50,9 +50,9 @@ Empty `""` by default. (Case Sensitive, Max Length: 64)
 
 ### WiFi Mode
 
-Used to set either [SoftAP](#software-access-point) or [Client](#wifi-client) WiFi modes.
+Used to set WiFi mode.
 
-Set to `CLIENT` by default.
+Set to [`CLIENT`](#wifi-client) by default.
 
 #### Acceptable values
 
@@ -155,45 +155,6 @@ All Network config options are available in the Web UI.
 </Tabs>
 
 ## Examples
-
-### Software Access Point
-
-With the SoftAP enabled, a DNS server will run on the device. The DNS server will respond to all DNS requests with the IP address of your device. This will simplify device discovery because you will not have to remember the device's IP – any unencrypted HTTP request will direct you to the right location.
-
-If you set your SoftAP up using a client like the CLI and have a screen attached to your device, the final page will display something similar to the following:
-
-```
-WiFi: Software AP
-IP: 192.168.42.1    (0/4)
-SSID: myNetwork / PWD: myPassword (alternating)
-http://meshtastic.local
-      * * * * *
-```
-
-You should then be able to connect to the node using either the displayed IP address or the HTTP link.
-
-#### Force SoftAP
-
-You can also enable the SoftAP by following these directions:
-
-- Hold down the user button
-- Press and release the reset button
-- Count to two
-- Let go of the user button
-
-This will reboot the device with the SSID set to `meshtasticAdmin` and the password set to `12345678`. Using the Force SoftAP method, once you reboot, the SoftAP will be turned off.
-
-If you have a screen attached to your device, the final page will display something similar to the following:
-
-```
-WiFi: Software AP (Admin)
-IP: 192.168.42.1    (0/4)
-SSID: meshtasticAdmin / PWD: 12345678 (alternating)
-http://meshtastic.local
-      * * * * *
-```
-
-You should then be able to connect to the node using either the displayed IP address or the HTTP link.
 
 ### WiFi Client
 
