@@ -31,6 +31,10 @@ Specifies whether the external circuit is triggered when the device's GPIO is lo
 
 Specifies the GPIO that your external circuit is attached to on the device.
 
+:::info
+on ESP32 based boards, GPIOs 34 to 39 are GPIs – input only pins. These pins don’t have internal pull-up or pull-down resistors. They can’t be used as outputs, so you can NOT use these pins as outputs.
+:::
+
 ### How long monitored GPIO is triggered
 
 Specifies how long in milliseconds you would like your external circuit to be triggered.
