@@ -20,19 +20,19 @@ Sets the region for your node. Default is `unset`.
 
 |   Region Code   |                                                                  Description                                                                                                              |
 | :-------: | :---------------------------------------------------------------------------------------: |
-|  `unset`   | Unset |
-| `us` | United States |
-| `eu433` | European Union 433MHz |
-| `eu868` | European Union 868MHz |
-| `cn` | China |
-| `jp` | Japan |
-| `anz` | Australia & New Zealand |
-| `kr` | Korea |
-| `tw` | Taiwan |
-| `ru` | Russia |
-| `in` | India |
-| `nz865` | New Zealand 865MHz |
-| `th` | Thailand |
+|  `UNSET`   | Unset |
+| `US` | United States |
+| `EU_433` | European Union 433MHz |
+| `EU_868` | European Union 868MHz |
+| `CN` | China |
+| `JP` | Japan |
+| `ANZ` | Australia & New Zealand |
+| `KR` | Korea |
+| `TW` | Taiwan |
+| `RU` | Russia |
+| `IN` | India |
+| `NZ_865` | New Zealand 865MHz |
+| `TH` | Thailand |
 
 
 ### Modem Preset
@@ -51,7 +51,7 @@ Bandwidth in MHz
 
 Certain bandwidth numbers are 'special' and will be converted to the appropriate floating point value: 31 -> 31.25MHz
 
-### Spread Factor 
+### Spread Factor
 
 A number from 7 to 12. Indicates the number of chirps per symbol as 1<<spread_factor.
 
@@ -65,7 +65,7 @@ This parameter is for advanced users with advanced test equipment, we do not rec
 
 A frequency offset that is added to to the calculated band center frequency. Used to correct for crystal calibration errors.
 
-### Transmit Enabled 
+### Transmit Enabled
 
 Allows you to enable and disable transmit (TX) from the LoRa radio. Useful for hot-swapping antennas and other tests.
 
@@ -123,6 +123,6 @@ No lora config options are available in the Flasher.
 :::info
 All lora config options are available in the Web UI.
 :::
-    
+
   </TabItem>
 </Tabs>
