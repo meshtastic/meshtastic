@@ -87,6 +87,7 @@ Connected to radio
 ```
 
 Using the node ID from that list, send a message through the mesh telling that node to change its owner name.
+The --dest argument value must be in single quotes for linux/mac '!28979058', no quotes for Windows !28979058.
 
 ```shell title="Expected output"
 $ meshtastic --dest '!28979058' --set-owner "Im Remote"

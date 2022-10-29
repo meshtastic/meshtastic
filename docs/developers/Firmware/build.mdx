@@ -33,23 +33,23 @@ The build system is modular. Adding a new board variant for an already supported
 
 ### Building for your own DIY hardware or mod that you don't want to distribute
 
-1. go to the `variants` folder in the Meshtastic-device sourcecode and make a new directory for your hardware, let's call it `m5stack_core` and copy an existing configuration you wanna modify
+1. go to the `variants` folder in the Meshtastic-device sourcecode and make a new directory for your hardware, let's call it `m5stack_atom` and copy an existing configuration you wanna modify
 
    ```shell
-   cd variants; mkdir m5stack_core
-   cp heltec_v1/* m5stack_core
-   cd m5stack_core
+   cd variants; mkdir m5stack_atom
+   cp heltec_v1/* m5stack_atom
+   cd m5stack_atom
    ```
 
 2. modify the `platformio.ini` _in this subdirectory_ from the canonical define of the hardware variant (`HELTEC_V1` in this case) to `PRIVATE_HW` and make the `-I` on the `build_flags` point to the newly created dir.
 
    ```shell
-   [env:m5stack-core]
+   [env:m5stack-atom]
    extends = esp32_base
-   board = m5stack-core-esp32
+   board = m5stack-atom
    monitor_filters = esp32_exception_decoder
    build_flags =
-      ${esp32_base.build_flags} -D PRIVATE_HW -I variants/m5stack_core
+      ${esp32_base.build_flags} -D PRIVATE_HW -I variants/m5stack_atom
    lib_deps =
       ${esp32_base.lib_deps}
    ```
