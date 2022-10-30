@@ -7,16 +7,13 @@ sidebar_label: Network
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-The Network config options are: WiFi Enabled, WiFi Mode, WiFi SSID, WiFi PSK, and NTP Server. Network config uses an admin message sending a `Config.Network` protobuf.
+The Network config options are: WiFi Enabled, WiFi SSID, WiFi PSK, and NTP Server. Network config uses an admin message sending a `Config.Network` protobuf.
 
 :::info
 Enabling WiFi will disable bluetooth. Only one connection method will work at a time.
 :::
 
-ESP32 devices have the ability to connect to WiFi as a client and also are able to create a software based access point (SoftAP). WiFi can be configured in either mode.
-
-You can [force the device to boot into SoftAP mode](#software-access-point) by rebooting the device with the program switch depressed. If forced into AP mode, it will revert to previous settings after a reboot. The device can be either a WiFi client or a software access point. It **cannot** operate as both at the same time.
-
+ESP32 devices have the ability to connect to WiFi as a client. SoftAP mode is not supported by the Meshtastic firmware.
 
 ## Network Config Values
 
@@ -34,36 +31,19 @@ Set to `false` (Disabled) by default.
 
 ### WiFi SSID
 
-In [SoftAP](#software-access-point) mode, this is the SSID broadcast to access your device's WiFi. 
-
-In [Client](#wifi-client) mode, this is your WiFi Networks SSID.
+This is your WiFi Networks SSID.
 
 Empty `""` by default. (Case Sensitive, Max Length: 33)
 
 ### WiFi PSK
 
-In [SoftAP](#software-access-point) mode, this is the password to access your device's WiFi.
-
-In [Client](#wifi-client) mode, this is your WiFi Networks password.
+This is your WiFi Networks password.
 
 Empty `""` by default. (Case Sensitive, Max Length: 64)
 
-### WiFi Mode
-
-Used to set WiFi mode.
-
-Set to [`CLIENT`](#wifi-client) by default.
-
-#### Acceptable values
-
-|   Value   |     Description              |
-| :-------: | :--------------------------: |
-|  `CLIENT`   | Client |
-| `ACCESS_POINT` | (SoftAP) [Software Access Point](#software-access-point) |
-| `ACCESS_POINT_HIDDEN` | (SoftAP) Software Access Point (Hidden) |
 
 :::tip
-The first time your device restarts after enabling the WiFi access point, it will take an additional 20-30 seconds to boot. This is to generate self-signed SSL keys. The keys will be saved for future reuse.
+The first time your device restarts after enabling WiFi, it will take an additional 20-30 seconds to boot. This is to generate self-signed SSL keys. The keys will be saved for future reuse.
 :::
 
 ## Network Config Client Availability
@@ -106,7 +86,6 @@ All Network config options are available in the python CLI.
 | network.wifi_enabled  |  `true`, `false`  | `false`          |
 | network.wifi_psk      |      string       |  `""`            |
 | network.wifi_ssid     |      string       |  `""`            |
-| network.wifi_mode     |  `CLIENT`, `ACCESS_POINT`, `ACCESS_POINT_HIDDEN`  | `CLIENT` |
 
 ```shell title="Set NTP Server"
 meshtastic --set network.ntp_server "0.pool.ntp.org"
@@ -115,10 +94,6 @@ meshtastic --set network.ntp_server "0.pool.ntp.org"
 ```shell title="Enable / Disable WiFi"
 meshtastic --set network.wifi_enabled true
 meshtastic --set network.wifi_enabled false
-```
-
-```shell title="Make Access Point Hidden"
-meshtastic --set network.wifi_mode ACCESS_POINT_HIDDEN
 ```
 
 ```shell title="Set WiFi SSID"
