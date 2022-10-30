@@ -36,9 +36,8 @@ Input event sources accepted by the canned message module.
 | :----------: | :---------------------------------------------------------------------: |
 |  `_any`      |    Default. Allows any peripheral input device connected to the device.                                                                                  |
 | `rotEnc1`    | Basic Rotary Encoder |
-| `upDownEnc1` | Up Down Encoder  |
-| `cardkb`     | M5 Stack CardKB (Discontinued) |
-| `faceskb`    | M5 Stack Faces KB |
+| `upDownEnc1` | Up Down Encoder (use this also for RAK14006) |
+| `cardkb`     | M5 Stack CardKB |
 
 ### Rotary Encoder Enabled
 
@@ -110,7 +109,7 @@ Example commands are below:
 | :--------------------------------------: | :---------------: | :-----------: |
 |      canned_message.enabled              |  `true`, `false`  |     `false`   |
 |     canned_message.send_bell             |  `true`, `false`  |     `false`   |
-| canned_message.allow_input_source        | `rotEnc1`, `_any`, `upDownEnc1`, `cardkb`, `faceskb`  | `_any`  |
+| canned_message.allow_input_source        | `rotEnc1`, `_any`, `upDownEnc1`, `cardkb`  | `_any`  |
 |        canned_message.messages           |     `string`      |      `""`     |
 |               (Messages)\*               |     `string`      |      `""`     |
 |  canned_message.inputbroker_event_cw     | `InputEventChar`  | (not defined) |
