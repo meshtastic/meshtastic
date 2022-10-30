@@ -1,7 +1,7 @@
 ---
 id: mqtt
 title: MQTT
-sidebar_label: MQTT
+sidebar_label: 1.2 MQTT
 ---
 
 ## MQTT
@@ -105,6 +105,45 @@ As of firmware 1.2.53, it is possible for the device to decrypt the protobufs be
   - View the plain data with `mosquitto_sub -h YOUR_MQTT_SERVER -t meshtastic/# -v`
   - You can then consume the data easily in other systems. For example, nodered->influx db->grafana.
 
+#Original brainstorming for MQTT:
+
+## Abstract
+
+:::note
+
+This is a mini-doc/RFC sketching out a development plan to satisfy a number of 1.1 goals.
+
+:::
+
+- [MQTT](https://opensource.com/article/18/6/mqtt) internet accessible API. Issue #[369](https://github.com/meshtastic/Meshtastic-device/issues/169)
+- An open API to easily run custom mini-apps on the devices
+- A text messaging bridge when a node in the mesh can gateway to the internet. Issue #[353](https://github.com/meshtastic/Meshtastic-device/issues/353) and this nicely documented [android issue](https://github.com/meshtastic/Meshtastic-Android/issues/2).
+- An easy way to let desktop app developers remotely control GPIOs. Issue #[182](https://github.com/meshtastic/Meshtastic-device/issues/182)
+- Remote attribute access (to change settings of distant nodes). Issue #182
+
+## Short term goals
+
+- We want a clean API for novice developers to write mini "apps" that run **on the device** with the existing messaging/location "apps".
+- We want the ability to have a gateway web service, so that if any node in the mesh can connect to the internet (via its connected phone app or directly) then that node will provide bidirectional messaging between nodes and the internet.
+- We want an easy way for novice developers to remotely read and control GPIOs (because this is an often requested use case), without those developers having to write any device code.
+- We want a way to gateway text messaging between our current private meshes and the broader internet (when that mesh is able to connect to the internet)
+- We want a way to remotely set any device/channel parameter on a node. This is particularly important for administering physically inaccessible router nodes. Ideally this mechanism would also be used for administering the local node (so one common mechanism for both cases).
+- This work should be independent of our current (semi-custom) LoRa transport, so that in the future we can swap out that transport if we wish (to QMesh or Reticulum?)
+- Our networks are (usually) very slow and low bandwidth, so the messaging must be very airtime efficient.
+
+## Long term goals
+
+- Store and forward messaging should be supported, so apps can send messages that might be delivered to their destination in **hours** or **days** if a node/mesh was partitioned.
+
+## Multiple Channel support / Security
+
+Mini-apps API can bind to particular channels. They will only see messages sent on that channel.
+
+During the 1.0 timeframe only one channel was supported per node. Starting in the 1.1 tree we will do things like "remote admin operations / channel settings etc..." are on the "Control" channel and only especially trusted users should have the keys to access that channel.
+
+FIXME - explain this more, talk about how useful for users and security domains.
+
+- add channels as security
 
 ## On device API
 
@@ -123,6 +162,10 @@ Gateway nodes will forward any MeshPacket from a local mesh channel with uplink_
 For any channels in the local node with downlink_enabled, the gateway node will forward packets from MQTT to the local mesh. It will do this by subscribing to mesh/crypt/CHANNELID/# and forwarding relevant packets.
 
 If the channelid 'well known'/public it could be decrypted by a web service (if the web service was provided with the associated channel key), in which case it will be decrypted by a web service and appear at "mesh/clear/CHANNELID/NODEID/PORTID". Note: This is not in the initial deliverable.
+
+FIXME, discuss how text message global mirroring could scale (or not)
+FIXME, possibly don't global mirror text messages - instead rely on matrix/riot?
+FIXME, discuss possible attacks by griefers and how they can be prevented
 
 #### Service Envelope
 
@@ -204,6 +247,48 @@ Can be...
 - an internet username: kevinh@geeksville.com
 - ^ALL for anyone
 - An app ID (to allow apps out on the web to receive arbitrary binary data from nodes or simply other apps using meshtastic as a transport). They would connect to the MQTT broker and subscribe to their topic
+
+## Rejected idea: RAW UDP
+
+:::warning
+
+This idea has been rejected
+
+:::
+
+A number of commenters have requested/proposed using UDP for the transport. We've considered this option and decided to use MQTT instead for the following reasons:
+
+- Most UDP uses cases would need to have a server anyways so that nodes can reach each other from anywhere (i.e. if most gateways will be behind some form of NAT which would need to be tunneled)
+- Raw UDP is dropped **very** aggressively by many cellular providers. MQTT from the gateway to a broker can be done over a TCP connection for this reason.
+- MQTT provides a nice/documented/standard security model to build upon
+- MQTT is fairly wire efficient with multiple broker implementations/providers and numerous client libraries for any language. The actual implementation of MQTT is quite simple.
+
+## Development plan
+
+Given the previous problem/goals statement, here's the initial thoughts on the work items required. As this idea becomes a bit more fully baked we should add details
+on how this will be implemented and guesses at approximate work items.
+
+### Work items
+
+- Change nodeIDs to be base64 instead of eight hex digits.
+- DONE Refactor the position features into a position "mini-app". Use only the new public on-device API to implement this app.
+- DONE Refactor the on device texting features into a messaging "mini-app". (Similar to the position mini-app)
+- Add new multi channel concept
+- Send new channels to python client
+- Let python client add channels
+- Add portion of channelid to the raw LoRa packet header
+- Confirm that we can now forward encrypted packets without decrypting at each node
+- Use a channel named "remotehw" to secure the GPIO service. If that channel is not found, don't even start the service. Document this as the standard method for securing services.
+- Add first cut of the "gateway node" code (i.e. MQTT broker client) to the python API (very little code needed for this component)
+- Confirm that texting works to/from the internet
+- Confirm that positions are optionally sent to the internet
+- Add the first cut of the "gateway node" code to the android app (very little code needed for this component)
+
+### Enhancements in following releases
+
+The initial gateway will be added to the python tool. But the gateway implementation is designed to be fairly trivial/dumb. After the initial release, the actual gateway code can be ported to also run inside the android app. In fact, we could have ESP32 based nodes include a built-in "gateway node" implementation.
+
+Store and forward could be added so that nodes on the mesh could deliver messages (i.e. text messages) on an "as possible" basis. This would allow things like "hiker sends a message to friend - mesh can not currently reach friend - eventually (days later) mesh can somehow reach friend, message gets delivered"
 
 ### Mini tutorial on how to get up and running with mosquitto on a mac
 
@@ -295,34 +380,3 @@ if __name__ == '__main__':
     while client.loop() == 0:
         pass
 ```
-### Tutorial on using MQTT with version 1.3.46+
-
-Version 1.3.46+ is the first 1.3 release with MQTT and JSON fully functional on supported devices. Heltec JSON over MQTT is unlikely to work reliably.
-
-One of the major changes is that the TOPICs are different from prior versions.
-`msh/1/c/ChannelName/!12345678` and
-`msh/1/json/ChannelName/!12345678`
-
-are now
-`msh/2/c/ChannelName/!12345678` and
-`msh/2/json/ChannelName/!12345678`
-Please see the documentation at the top of this topic for that.
-
-Node-RED is a free cross-platform programming tool for wiring together hardware, APIs, and online services developed originally by IBM for IOT. It is widely used for home automation by many non-professional programmers and runs well on Pi's. Node-red has many plug-in modules written by the community. I will use this platform as a practical example on how to interface with the MQTT features of Meshtastic. Everything can be done from GUI's without using command line.
-
-Step one: use http://client.meshtastic.org/ to connect to your device via usb and adjust these settings using the web GUI.
-Enable and enter network ssid/psk. Settings-->Device Config-->Network; Save.
-Set MQTT server address. Settings-->Module Config -->MQTT config; Verify Encryption Enabled is OFF. Turn JSON Output Enabled ON. Save.
-Go to Channel Editor and set uplink and downling enabled to True. Save.
-
-Step two: if you don't want to depend on JSON decoding on the device, you can decode the proto messages off-device. To do that you will need to get the .proto files from https://github.com/meshtastic/Meshtastic-protobufs. They function as a schema and are required for decoding in Node-RED. Save the files where the node-RED application can access them and note the file path of the "mqtt.proto" file.
-
-Step three: install Node-RED plug-ins to your node-RED application for an embedded mqqt server and a protobuf decoder.
-https://flows.nodered.org/node/node-red-contrib-aedes
-https://flows.nodered.org/node/node-red-contrib-protobuf
-
-Drag, drop, and wire the nodes like this. For this example, I ran node-RED on a Windows machine. Note that file paths might be specified differently on different platforms. MQTT server wild cards are usually the same. A "+" is a single level wildcard for a specific topic level. A "#" is a multiple level wildcard that can be used at the end of a topic filter. The debug messages shown are what happens when the inject button sends a json message with a topic designed to be picked up by the specified Meshtastic device and then having it resend the message by both radio and MQTT.
-
-[<img src="/documents/mqtt/NodeRedTwo.jpg" style={{zoom:'50%'}} />](/documents/mqtt/NodeRedTwo.jpg)
-[<img src="/documents/mqtt/NodeRedThree.jpg" style={{zoom:'50%'}} />](/documents/mqtt/NodeRedThree.jpg)
-[<img src="/documents/mqtt/NR_nodes.jpg" style={{zoom:'50%'}} />](/documents/mqtt/NR_nodes.jpg)
