@@ -83,31 +83,6 @@ Check out [MQTT Settings](/docs/settings/moduleconfig/mqtt) for full information
 `uplink_enabled` will tell the device to publish mesh packets to MQTT.
 `downlink_enabled` will tell the device to subscribe to MQTT, and forward any packets from there onto the mesh.
 
-### Getting plain data out of the mesh
-
-It is possible for the device to decrypt the protobufs before publishing to MQTT. To translate this into a plain format:
-
-- Set up a gateway node to uplink packets to your MQTT broker:
-  - `meshtastic --set network.wifi_ssid XXXX`
-  - `meshtastic --set network.wifi_password XXXX`
-  - `meshtastic --set mqtt.address 192.168.1.1`
-  - `meshtastic --set mqtt.username XXXX`
-  - `meshtastic --set mqtt.password XXXX`
-  - `meshtastic --set mqtt_encryption_enabled false`
-  - `meshtastic --ch-index 0 --ch-set uplink_enabled true`
-- Grab the meshtastic-mqtt script from [here](https://github.com/joshpirihi/meshtastic-mqtt)
-  - `git clone https://github.com/joshpirihi/meshtastic-mqtt && cd meshtastic-mqtt`
-  - Edit `meshtastic_mqtt/meshtastic_mqtt.py` and enter your mqtt broker details
-  - Install the script with `pip install .`
-  - Run `meshtastic-mqtt`. It will print some debug output by default, and publish the plain values to the `meshtastic/` prefix.
-  - View the plain data with `mosquitto_sub -h YOUR_MQTT_SERVER -t meshtastic/# -v`
-  - You can then consume the data easily in other systems. For example, nodered->influx db->grafana.
-
-
-## On device API
-
-For information on the related on-device API see [here](/docs/developers/firmware/device-api).
-
 ## MQTT transport
 
 Any gateway-device will contact the MQTT broker.
