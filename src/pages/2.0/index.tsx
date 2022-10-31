@@ -12,7 +12,7 @@ const TwoPointZero = (): JSX.Element => {
   const stats = [
     { label: 'Active Nodes', value: 'xx+' },
     { label: 'Community Members', value: '4000+' },
-    { label: 'Total Commits', value: '4800+' },
+    { label: 'Firmware Commits', value: '4900+' },
     { label: 'Community Donations', value: '$5700+' },
   ];
   const logos = [
@@ -87,12 +87,12 @@ const TwoPointZero = (): JSX.Element => {
                       giveaways, so jump in and win some prizes.
                     </p>
                     <div className="flex gap-2">
-                      <button
-                        type="submit"
-                        className="block w-full rounded-md border border-transparent bg-rose-500 px-5 py-3 text-base font-medium text-white shadow hover:bg-rose-600 focus:outline-none focus:ring-2 focus:ring-rose-500 focus:ring-offset-2 sm:px-10"
+                      <a
+                        href="#start"
+                        className="flex w-full rounded-md border border-transparent bg-rose-500 px-5 py-3 text-base font-medium text-white shadow hover:bg-rose-600 hover:text-black hover:no-underline focus:outline-none focus:ring-2 focus:ring-rose-500 focus:ring-offset-2 sm:px-10"
                       >
-                        Find Out More
-                      </button>
+                        <span className="m-auto">Find Out More</span>
+                      </a>
                       <a
                         className="flex w-16 rounded-md border border-transparent bg-[#1DA1F2] shadow hover:bg-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2"
                         target="_blank"
@@ -254,7 +254,10 @@ const TwoPointZero = (): JSX.Element => {
                 </div>
               </div>
 
-              <div className="relative mx-auto max-w-md px-4 sm:max-w-3xl sm:px-6 lg:px-0">
+              <div
+                id="start"
+                className="relative mx-auto max-w-md px-4 sm:max-w-3xl sm:px-6 lg:px-0"
+              >
                 {/* Content area */}
                 <div className="pt-12 sm:pt-16 lg:pt-20">
                   <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
@@ -415,7 +418,7 @@ const TwoPointZero = (): JSX.Element => {
                   </div>
                   <FlipClockCountdown
                     className="m-auto"
-                    to={new Date(2022, 12, 1).getTime()}
+                    to={new Date(2022, 11, 1).getTime()}
                   />
                 </div>
               </div>
