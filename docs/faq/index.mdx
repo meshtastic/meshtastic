@@ -99,12 +99,11 @@ Your Meshtastic client (Android, Web, or Python) will provide you a URL or QR co
 
 ### How do I find out more about installing (and using) Meshtastic via command line?
 
-[See our guide here](/docs/software/python/python-installation).
+[See our guide here](/docs/software/python/cli/installation).
 
 ### How do I find out more about using python to interact?
 
-[See our guide here](/docs/software/python/python-uses).
-
+[See our guide here](/docs/software/python/cli/usage).
 
 <!-- Devices -->
 
@@ -149,7 +148,7 @@ Push the left PWR button for about 10 seconds.
 ### How can I tell the device not to sleep?
 
 - Android instructions see: [Android Usage](/docs/software/android/android-usage#configuration-options)
-- Python CLI instructions see: [Python Usage](/docs/software/python/python-cli#changing-device-settings)
+- Python CLI instructions see: [Python Usage](/docs/software/python/cli/usage#changing-settings)
 
 ### Why does only one RAK Meshtastic Starter kit show up in my node list?
 
@@ -159,6 +158,7 @@ There was a bug where Meshtastic Starter kits were sent out with the same MAC ad
 
 There was a bug where Meshtastic Starter kits were sent out with the same MAC address. With a single MAC address the devices all report as being the same device. Without the battery connected, flash the starter kit device(s) to 1.2.59 and then do a factory reset, disconnect and reconnect the board and run `meshtastic --info`.
 
+<!-- HAM -->
 
 ## Amateur Radio (HAM)
 
@@ -182,8 +182,9 @@ If you use your HAM radio license with Meshtastic, consider both the privileges 
 
 ### How do I set my HAM call sign?
 
-Please see instructions for [Enabling HAM License from the Python CLI](/docs/software/python/python-uses#ham-radio-support)
+Please see instructions for [Enabling HAM License from the Python CLI](/docs/software/python/cli/usage#ham-radio-support)
 
+<!-- Flasher -->
 
 ## Flasher
 
@@ -195,6 +196,7 @@ The flasher contains no malware and completely passed the Microsoft malware scan
 
 It's been reported that `App execution aliases` might conflict with one another and prevent python3 from being able to run properly. There is an example of a fix located [here](https://github.com/meshtastic/Meshtastic-gui-installer/issues/154).
 
+<!-- Mesh -->
 
 ## Mesh
 
@@ -210,6 +212,7 @@ Meshtastic uses LoRa peer to peer (p2p), which has allowed us to customize how w
 
 There is a [community project](https://github.com/a-f-G-U-C/Meshtastic-ZPS) that has worked out how to accomplish this.
 
+<!-- Modules -->
 
 ## Modules
 
