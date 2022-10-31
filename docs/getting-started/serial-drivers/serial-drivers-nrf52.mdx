@@ -5,6 +5,9 @@ sidebar_label: NRF52 Drivers
 sidebar_position: 2
 ---
 
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 ## Install USB to Serial Drivers
 
 ### NRF52 Drivers
@@ -17,14 +20,16 @@ values={[
 {label: 'macOS', value: 'macos'},
 {label: 'Windows', value: 'windows'},
 ]}>
+
 <TabItem value="linux">
 
-[CH9102 Driver - Linux Download](http://www.wch-ic.com/downloads/CH341SER_LINUX_ZIP.html)
+- [CH9102 Driver - Linux Download](http://www.wch-ic.com/downloads/CH341SER_LINUX_ZIP.html)
 
-  </TabItem>
-  <TabItem value="macos">
+</TabItem>
 
-[CH9102 Driver - MacOS Download](https://github.com/WCHSoftGroup/ch34xser_macos)
+<TabItem value="macos">
+
+- [CH9102 Driver - MacOS Download](https://github.com/WCHSoftGroup/ch34xser_macos)
 
 :::caution
 With the latest versions of MacOS, the USB Serial driver is built-in. Do _NOT_ download the USB device drivers unless required. If you downloaded/installed any already, please remove them:
@@ -51,12 +56,14 @@ With the latest versions of MacOS, the USB Serial driver is built-in. Do _NOT_ d
 
 :::
 
-  </TabItem>
-  <TabItem value="windows">
+</TabItem>
 
-[CH9102 Driver - Windows Download](http://www.wch-ic.com/downloads/CH341SER_EXE.html)
+<TabItem value="windows">
 
-  </TabItem>
+- [CH9102 Driver - Windows Download](http://www.wch-ic.com/downloads/CH341SER_EXE.html)
+
+</TabItem>
+
 </Tabs>
 
 :::important

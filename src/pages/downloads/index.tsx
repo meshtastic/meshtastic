@@ -46,7 +46,7 @@ const Firmware = (): JSX.Element => {
               'To download using ',
               <code>pip</code>,
               ' follow ',
-              <a href="/docs/getting-started/flashing-firmware/meshtastic-flasher#install-using-pip">
+              <a href="/docs/software/python/meshtastic-flasher#install-using-pip">
                 these instructions
               </a>,
               '.',
@@ -167,7 +167,7 @@ const Firmware = (): JSX.Element => {
           </a>
           , or the{' '}
           <a
-            href="/docs/getting-started/flashing-firmware/meshtastic-flasher"
+            href="/docs/software/python/meshtastic-flasher"
             rel="noreferrer"
             target="_blank"
           >
