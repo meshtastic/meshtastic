@@ -13,12 +13,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Install Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: 1.19
       - name: Install Protoc
         uses: arduino/setup-protoc@v1
-      - name: Install Go
-        uses: actions/setup-go@v2
         with:
-          go-version: 1.17.2
+          version: '3.x'
       - name: Install protoc-gen-doc
         run: go get -u github.com/pseudomuto/protoc-gen-doc/cmd/protoc-gen-doc
       - name: Checkout code

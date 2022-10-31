@@ -1,0 +1,51 @@
+---
+id: installing-esp32-serial-drivers
+title: ESP32 Serial Drivers
+sidebar_label: ESP32 Drivers
+sidebar_position: 1
+---
+
+## Install USB to Serial Drivers
+
+### ESP32 Drivers
+
+You may need to install a driver from Silicon Labs for the [CP210X USB to UART bridge](https://www.silabs.com/products/development-tools/software/usb-to-uart-bridge-vcp-drivers)
+
+Some newer boards may require the CH9102 (CH340/CH341) Driver.
+
+<Tabs
+groupId="operating-system"
+defaultValue="linux"
+values={[
+{label: 'Linux', value: 'linux'},
+{label: 'macOS', value: 'macos'},
+{label: 'Windows', value: 'windows'},
+]}>
+<TabItem value="linux">
+
+[CP210X USB to UART bridge - Download](https://www.silabs.com/products/development-tools/software/usb-to-uart-bridge-vcp-drivers)
+
+[CH9102 Driver - Linux Download](http://www.wch-ic.com/downloads/CH341SER_LINUX_ZIP.html)
+
+  </TabItem>
+  <TabItem value="macos">
+
+[CP210X USB to UART bridge - Download](https://www.silabs.com/products/development-tools/software/usb-to-uart-bridge-vcp-drivers)
+
+[CH9102 Driver - MacOS Download](https://github.com/WCHSoftGroup/ch34xser_macos)
+
+  </TabItem>
+  <TabItem value="windows">
+
+[CP210X USB to UART bridge - Download](https://www.silabs.com/products/development-tools/software/usb-to-uart-bridge-vcp-drivers)
+
+[CH9102 Driver - Windows Download](http://www.wch.cn/downloads/CH343SER_ZIP.html)
+
+[CH9102 Driver - Windows Download (Direct Download for Windows 7)](https://github.com/Xinyuan-LilyGO/CH9102_Driver)
+
+  </TabItem>
+</Tabs>
+
+:::important
+Reboot your computer after you have installed the driver to complete the installation.
+:::

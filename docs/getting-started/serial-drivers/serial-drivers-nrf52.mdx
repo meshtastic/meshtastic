@@ -1,0 +1,64 @@
+---
+id: installing-nrf52-serial-drivers
+title: NRF52 Serial Drivers
+sidebar_label: NRF52 Drivers
+sidebar_position: 2
+---
+
+## Install USB to Serial Drivers
+
+### NRF52 Drivers
+
+<Tabs
+groupId="operating-system"
+defaultValue="linux"
+values={[
+{label: 'Linux', value: 'linux'},
+{label: 'macOS', value: 'macos'},
+{label: 'Windows', value: 'windows'},
+]}>
+<TabItem value="linux">
+
+[CH9102 Driver - Linux Download](http://www.wch-ic.com/downloads/CH341SER_LINUX_ZIP.html)
+
+  </TabItem>
+  <TabItem value="macos">
+
+[CH9102 Driver - MacOS Download](https://github.com/WCHSoftGroup/ch34xser_macos)
+
+:::caution
+With the latest versions of MacOS, the USB Serial driver is built-in. Do _NOT_ download the USB device drivers unless required. If you downloaded/installed any already, please remove them:
+
+<details>
+  <summary>Removing the CH34x (CH340/CH341) USB Drivers</summary>
+  <div>
+    <div>
+      If you have already downloaded/installed the MacOS WCH-IC CH340
+      ("CH341SER_MAC") drivers via the CH34x_Install_V1.5.pkg, you will have to
+      Uninstall the kernel extension:
+      <br />
+      <br />
+      1. Unplug your device
+      <br />
+      2. Open the Terminal and run:
+      <br />
+      3. sudo rm -rf /Library/Extensions/usbserial.kext
+      <br />
+      4. Reboot
+    </div>
+  </div>
+</details>
+
+:::
+
+  </TabItem>
+  <TabItem value="windows">
+
+[CH9102 Driver - Windows Download](http://www.wch-ic.com/downloads/CH341SER_EXE.html)
+
+  </TabItem>
+</Tabs>
+
+:::important
+Reboot your computer after you have installed the driver to complete the installation.
+:::

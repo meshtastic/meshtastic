@@ -1,0 +1,61 @@
+---
+id: serial-drivers
+title: Installing Serial Drivers
+sidebar_label: Install Serial Drivers
+sidebar_position: 1
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+
+## Verify data cable
+
+Verify you have a data cable (not a charging only cable) before proceeding. There's no definitive way to determine the difference in cables if you aren't willing to pull it apart. Trying out a few cables will be the best way to verify.
+
+Once you've located a data cable, check the following to see if you need to install a driver to communicate with your device.
+
+:::tip
+If you know you have installed the correct driver, the following step can be used to check if your cable is a data cable.
+:::
+
+## Test for driver installation
+
+You can verify that you have a proper data cable (rather than a charge-only type cable) and that the appropriate drivers for your system are installed by performing the following test. Select your operating system below.
+
+If you can see your device, you are ready to flash the firmware. Skip to the [Choose Firmware Flashing Method section](#choose-firmware-flashing-method).
+
+If you do not see your device in the following test, you either:
+
+1. Need to [install a driver](#install-appropriate-drivers).
+2. Are currently using a charging only cable.
+
+<Tabs
+groupId="operating-system"
+defaultValue="linux"
+values={[
+{label: 'Linux', value: 'linux'},
+{label: 'macOS', value: 'macos'},
+{label: 'Windows', value: 'windows'},
+]}>
+<TabItem value="linux">
+Connect your Meshtastic device to your USB port, open a `Terminal` and enter the following command:
+
+```shell
+lsusb
+```
+
+You should see something like: `ID xxxx:xxxx Silicon Labs CP210x UART Bridge`, `ID xxxx:xxxx QinHeng Electronics USB Single Serial`, or `FIXME (WISBLOCK OUTPUT)`.
+
+</TabItem>
+<TabItem value="macos">
+
+Navigate to `Apple Menu  > About This Mac > System Report... > Hardware > USB`. You should see something like `CP210X USB to UART Bridge Controller`, `CH9102 USB to UART Bridge Controller`, or `WisCore RAK4631 Board`. If not download the appropriate drivers below.
+
+  </TabItem>
+  <TabItem value="windows">
+
+Navigate to `Device Manager > Ports (COM & LPT)`. You should see something like `Silicon Labs CP210X USB to UART Bridge (COM5)`, `Silicon Labs CH9102 USB to UART Bridge (COM5)`, or `FIXME (WISBLOCK OUTPUT)`. If not download the appropriate drivers below.
+
+  </TabItem>
+</Tabs>
