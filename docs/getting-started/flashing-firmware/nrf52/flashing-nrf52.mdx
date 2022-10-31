@@ -14,10 +14,14 @@ import TabItem from '@theme/TabItem';
 Before flashing confirm that you have [RAK4631](https://docs.rakwireless.com/Product-Categories/WisBlock/RAK4631/) and not a [RAK4631-R](https://docs.rakwireless.com/Product-Categories/WisBlock/RAK4631-R/) If this is not the case, fear not. The hardware is identical but requires changing the bootloader. Instructions on how to do this are located [here](/docs/getting-started/flashing-firmware/nrf52/#convert-rak4631-r-to-rak4631).
 :::
 
-The NRF52 based devices (LilyGO T-Echo, RAK Wisblock 4631) have the easiest firmware upgrade process. (No driver or software install is required on any platform)
+The NRF52 based devices (LilyGO T-Echo, RAK Wisblock 4631) have the easiest firmware upgrade process. No driver or software install is required on any platform.
 
-Connect your device to your computer with a data USB cable. Double click the reset button on your device, this will put it into bootloader mode and and a drive will appear on Windows, Mac and Linux.
+Download and unzip the latest frimware from [Meshtastic Downloads](https://meshtastic.org/downloads).
 
-A new drive will be mounted on your computer. Open this drive and you should see three files: `CURRENT.UF2`, `INDEX.HTM`, and `INFO_UF2.TXT`
+1. Connect your device to your computer with a data USB cable.
+2. Double click the reset button on your device (this will put it into bootloader mode) 
+3. Notice a new drive will be mounted on your computer (Windows, Mac, or Linux)
+4. Open this drive and you should see three files: `CURRENT.UF2`, `INDEX.HTM`, and `INFO_UF2.TXT`
+5. Drop the appropriate appropriate `firmware-DEVICE_NAME-vx.x.x-xxxxxxx.uf2` file from the release you want to install onto this drive
 
-Drop the appropriate appropriate `firmware-DEVICE_NAME-vx.x.x-xxxxxxx.uf2` file from the release you want to install onto this drive and the meshtastic firmware will be installed on the device. Once the file has finished copying onto the drive the device will reboot and load Meshtastic.
+Once the file has finished copying onto the drive, the device will reboot and install the Meshtastic firmware. 

@@ -2,6 +2,7 @@
 id: web-app-software
 title: Web interface overview
 sidebar_label: Web Interface
+sidebar_position: 8
 ---
 
 <!--- FIXME add self hosting details link --->
@@ -46,7 +47,7 @@ The method with the least platform support, uses the [Web Serial API](https://we
 
 ## Updating
 
-The web interface is now included in firmware releases. There is active development ongoing to fix some issues with updating the web interface from the web interface directly. Please be patient with us as we work on this. Use [Meshtastic-flasher](/docs/getting-started/flashing-firmware/meshtastic-flasher) to update your device to the current stable build which includes the web interface.
+The web interface is now included in firmware releases. There is active development ongoing to fix some issues with updating the web interface from the web interface directly. Please be patient with us as we work on this. Use [Meshtastic-flasher](/docs/software/python/meshtastic-flasher) to update your device to the current stable build which includes the web interface.
 
 :::warning
 
@@ -65,7 +66,7 @@ The first time your device restarts after enabling WiFi, it will take an additio
 ### Problem: File not found: /static/index.html
 
 :::note
-This issue is likely found on old versions of the web interface. Device firmware now includes the web interface and the file system has been changed. Flashing the device with [Meshtastic-flasher](/docs/getting-started/flashing-firmware/meshtastic-flasher) will update you to the current web interface. Access to the files in the filesystem is actively being developed, but is not currently available.
+This issue is likely found on old versions of the web interface. Device firmware now includes the web interface and the file system has been changed. Flashing the device with [Meshtastic-flasher](/docs/software/python/meshtastic-flasher) will update you to the current web interface. Access to the files in the filesystem is actively being developed, but is not currently available.
 :::
 
 Cause: This most likely means that the file system for the web server has not been loaded. You probably used esphome-flasher or some other GUI tool to flash the firmware.
@@ -81,7 +82,7 @@ Option 3) Flash the device with the SPIFFS instructions in platform.io.
 ### Insufficient space to upload new files
 
 :::note
-This issue is likely found on old versions of the web interface. Device firmware now includes the web interface and the file system has been changed. Flashing the device with [Meshtastic-flasher](/docs/getting-started/flashing-firmware/meshtastic-flasher) will update you to the current web interface. Access to the files in the filesystem is actively being developed, but is not currently available.
+This issue is likely found on old versions of the web interface. Device firmware now includes the web interface and the file system has been changed. Flashing the device with [Meshtastic-flasher](/docs/software/python/meshtastic-flasher) will update you to the current web interface. Access to the files in the filesystem is actively being developed, but is not currently available.
 :::
 
 Cause: Typically a small partition has been set aside from previous firmware installed on the module. Instructions for how to fix this can be found on the [ESP32-Partitions](/docs/software/web/web-partitions-software) page.

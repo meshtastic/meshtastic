@@ -28,7 +28,7 @@ jobs:
         with:
           submodules: true
       - name: Generate protobuf docs
-        run: protoc --doc_out="docs/developers/protobufs" --doc_opt="./protobuf.tmpl,api.mdx" --proto_path="protobufs" protobufs/*.proto
+        run: protoc --doc_out="docs/developers/Protobufs" --doc_opt="./protobuf.tmpl,api.mdx" --proto_path="protobufs" protobufs/*.proto
       - uses: amondnet/vercel-action@v20
         with:
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
