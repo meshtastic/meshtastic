@@ -89,10 +89,6 @@ Check out [MQTT Settings](/docs/settings/moduleconfig/mqtt) for full information
 `uplink_enabled` will tell the device to publish mesh packets to MQTT.
 `downlink_enabled` will tell the device to subscribe to MQTT, and forward any packets from there onto the mesh.
 
-## MQTT transport
-
-Any gateway-device will contact the MQTT broker.
-
 ### Topics
 
 The "mesh/crypt/CHANNELID/NODEID/PORTID" [topic](https://www.hivemq.com/blog/mqtt-essentials-part-5-mqtt-topics-best-practices) will be used for messages sent from/to a mesh.
@@ -136,8 +132,9 @@ deduplicate if needed by using the packet ID of each message.
 
 An existing public [MQTT broker](https://mosquitto.org) will be the default for this service, but clients can use any MQTT broker they choose.
 
+## Examples
 
-### Mini tutorial on how to get up and running with mosquitto on a mac
+### Using mosquitto on a mac
 
 1. install mqtt server
 
@@ -227,15 +224,13 @@ if __name__ == '__main__':
     while client.loop() == 0:
         pass
 ```
-### Tutorial on using MQTT with version 1.3.46+
-
-Version 1.3.46+ is the first 1.3 release with MQTT and JSON fully functional on supported devices. Heltec JSON over MQTT is unlikely to work reliably.
+### Using MQTT with version Node-RED
 
 Node-RED is a free cross-platform programming tool for wiring together hardware, APIs, and online services developed originally by IBM for IOT. It is widely used for home automation by many non-professional programmers and runs well on Pi's. Node-red has many plug-in modules written by the community. I will use this platform as a practical example on how to interface with the MQTT features of Meshtastic. Everything can be done from GUI's without using command line.
 
-Step one: use http://client.meshtastic.org/ to connect to your device via usb and adjust these settings using the web GUI.
-Enable and enter network ssid/psk. Settings-->Device Config-->Network; Save.
-Set MQTT server address. Settings-->Module Config -->MQTT config; Verify Encryption Enabled is OFF. Turn JSON Output Enabled ON. Save.
+Step one: use http://client.meshtastic.org/ one of the Apple apps or the CLI to connect to your device and adjust these settings.
+Enable and enter network ssid/psk. Settings--> Device Config--> Network; Save.
+Set MQTT server address. Settings--> Module Config--> MQTT config; Verify Encryption Enabled is OFF. Turn JSON Output Enabled ON. Save.
 Go to Channel Editor and set uplink and downling enabled to True. Save.
 
 Step two: if you don't want to depend on JSON decoding on the device, you can decode the proto messages off-device. To do that you will need to get the .proto files from https://github.com/meshtastic/Meshtastic-protobufs. They function as a schema and are required for decoding in Node-RED. Save the files where the node-RED application can access them and note the file path of the "mqtt.proto" file.
