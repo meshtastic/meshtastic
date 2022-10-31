@@ -22,7 +22,7 @@ jobs:
         with:
           version: '3.x'
       - name: Install protoc-gen-doc
-        run: go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
+        run: go install github.com/pseudomuto/protoc-gen-doc/cmd/protoc-gen-doc@latest
       - name: Checkout code
         uses: actions/checkout@v3
         with:
