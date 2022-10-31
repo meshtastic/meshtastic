@@ -8,9 +8,11 @@ sidebar_position: 2
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-## Install USB to Serial Drivers
+:::important
+Reboot your computer after you have installed the driver to complete the installation.
+:::
 
-### NRF52 Drivers
+## Install NRF52 USB to Serial Drivers
 
 <Tabs
 groupId="operating-system"
@@ -31,31 +33,6 @@ values={[
 
 - [CH9102 Driver - MacOS Download](https://github.com/WCHSoftGroup/ch34xser_macos)
 
-:::caution
-With the latest versions of MacOS, the USB Serial driver is built-in. Do _NOT_ download the USB device drivers unless required. If you downloaded/installed any already, please remove them:
-
-<details>
-  <summary>Removing the CH34x (CH340/CH341) USB Drivers</summary>
-  <div>
-    <div>
-      If you have already downloaded/installed the MacOS WCH-IC CH340
-      ("CH341SER_MAC") drivers via the CH34x_Install_V1.5.pkg, you will have to
-      Uninstall the kernel extension:
-      <br />
-      <br />
-      1. Unplug your device
-      <br />
-      2. Open the Terminal and run:
-      <br />
-      3. sudo rm -rf /Library/Extensions/usbserial.kext
-      <br />
-      4. Reboot
-    </div>
-  </div>
-</details>
-
-:::
-
 </TabItem>
 
 <TabItem value="windows">
@@ -66,6 +43,19 @@ With the latest versions of MacOS, the USB Serial driver is built-in. Do _NOT_ d
 
 </Tabs>
 
-:::important
-Reboot your computer after you have installed the driver to complete the installation.
+## Remove the CH34x USB Driver (macOS)
+
+:::caution
+With the latest versions of MacOS, the USB Serial driver is built-in. Do _NOT_ download the USB device drivers unless required. If you downloaded/installed any already, please remove them:
 :::
+
+If you have already downloaded/installed the MacOS WCH-IC CH340/CH341
+("CH341SER_MAC") drivers via the CH34x_Install_V1.5.pkg, you will have to
+Uninstall the kernel extension:
+
+1. Unplug your device
+2. Open the Terminal and run:
+3. `sudo rm -rf /Library/Extensions/usbserial.kext`
+4. Reboot
+
+
