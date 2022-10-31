@@ -413,7 +413,7 @@ const TwoPointZero = (): JSX.Element => {
                   </div>
                   <FlipClockCountdown
                     className="m-auto"
-                    to={new Date(2022, 10, 1).getTime()}
+                    to={new Date(2022, 12, 1).getTime()}
                   />
                 </div>
               </div>
