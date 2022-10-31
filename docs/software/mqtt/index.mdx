@@ -227,6 +227,15 @@ if __name__ == '__main__':
 
 ### Using MQTT with Node-RED
 
+Below is a valid json envelope for information sent by MQTT to a device for broadcast onto the mesh.
+ ```
+ {
+   "sender":"whatever you want to be the SENDER",
+   "type":"sendtext",
+   "payload": text or a json object go here
+ }
+ ```
+
 Node-RED is a free cross-platform programming tool for wiring together hardware, APIs, and online services developed originally by IBM for IOT. It is widely used for home automation by many non-professional programmers and runs well on Pi's. Node-red has many plug-in modules written by the community. I will use this platform as a practical example on how to interface with the MQTT features of Meshtastic. Everything can be done from GUI's without using command line.
 
 Step one: use http://client.meshtastic.org/ one of the Apple apps or the CLI to connect to your device and adjust these settings.
