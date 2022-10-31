@@ -227,13 +227,13 @@ Version 1.3.46+ is the first 1.3 release with MQTT and JSON fully functional on 
 
 As of 1.3.48, there is a change in what is a valid json envelope for information sent by MQTT to a device for broadcast onto the mesh.
 In addition to a "sender" and "payload" field, there must now be a "type":"sendtext" field for a valid envelope check.
-'''
+```
 {
   "sender":"whatever you want to be the SENDER",
   "type":"sendtext",
   "payload": text or a json object go here
 }
-'''
+```
 
 Node-RED is a free cross-platform programming tool for wiring together hardware, APIs, and online services developed originally by IBM for IOT. It is widely used for home automation by many non-professional programmers and runs well on Pi's. Node-red has many plug-in modules written by the community. I will use this platform as a practical example on how to interface with the MQTT features of Meshtastic. Everything can be done from GUI's without using command line.
 
