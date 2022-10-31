@@ -2,6 +2,8 @@ import '@leenguyen/react-flip-clock-countdown/dist/index.css';
 
 import React from 'react';
 
+import { FiTwitter } from 'react-icons/fi';
+
 import { ChevronRightIcon } from '@heroicons/react/20/solid';
 import FlipClockCountdown from '@leenguyen/react-flip-clock-countdown';
 import Layout from '@theme/Layout';
@@ -32,7 +34,7 @@ const TwoPointZero = (): JSX.Element => {
     },
     {
       name: 'LILYGO',
-      url: '/',
+      url: '/2.0/LILYGO.png',
     },
     {
       name: 'Discord',
@@ -84,12 +86,20 @@ const TwoPointZero = (): JSX.Element => {
                       As a part of the launch event, we are running a number of
                       giveaways, so jump in and win some prizes.
                     </p>
-                    <button
-                      type="submit"
-                      className="block w-full rounded-md border border-transparent bg-rose-500 px-5 py-3 text-base font-medium text-white shadow hover:bg-rose-600 focus:outline-none focus:ring-2 focus:ring-rose-500 focus:ring-offset-2 sm:px-10"
-                    >
-                      Find Out More
-                    </button>
+                    <div className="flex gap-2">
+                      <button
+                        type="submit"
+                        className="block w-full rounded-md border border-transparent bg-rose-500 px-5 py-3 text-base font-medium text-white shadow hover:bg-rose-600 focus:outline-none focus:ring-2 focus:ring-rose-500 focus:ring-offset-2 sm:px-10"
+                      >
+                        Find Out More
+                      </button>
+                      <a
+                        className="flex w-16 rounded-md border border-transparent bg-[#1DA1F2] shadow hover:bg-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2"
+                        href="https://twitter.com/TheMeshtastic/status/1586933393526333441"
+                      >
+                        <FiTwitter className="m-auto text-white" />
+                      </a>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -210,7 +220,7 @@ const TwoPointZero = (): JSX.Element => {
                         <img
                           className="h-8 text-white"
                           src="/2.0/typelogo.svg"
-                          alt="Workcation"
+                          alt="Meshtastic"
                         />
                       </div>
                       <blockquote className="mt-8">
@@ -398,7 +408,7 @@ const TwoPointZero = (): JSX.Element => {
                 <div className="flex flex-col gap-12">
                   <div className="sm:text-center">
                     <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
-                      Countdown to Launch!
+                      Countdown to Prize Draw!
                     </h2>
                   </div>
                   <FlipClockCountdown
