@@ -7,9 +7,9 @@ sidebar_position: 4
 
 ## Bridging networks
 
-Meshtastic networks in different locations beyond the reach of LoRa can be easily bridged together using MQTT. The simplest option is to connect your mesh to the official Meshtastic MQTT broker. This makes your devices appear on the world map, and provides a copy of your mesh traffic, translated into JSON. All you have to do to join the public MQTT server is to Enable MQTT and set uplink and downlink on the channels that you want to share over MQTT.
+Meshtastic networks in different locations beyond the reach of LoRa can be easily bridged together using MQTT. The simplest option is to connect your mesh to the official Meshtastic MQTT broker. This makes your devices appear on the world map, and provides a copy of your mesh traffic, translated into JSON. All you have to do to join the public MQTT server is to Enable MQTT and set uplink and downlink on the channels that you want to share over MQTT. The default device configuration using the public MQTT Server is encrypted.
 
-You can also share channel settings with a remote network and enable encryption for MQTT, encryption is off by default for MQTT. You can also specify your own private MQTT broker and specify authentication for that broker to bridge several mesh networks together, via the internet (or just a local IP network).
+You can also share channel settings with a remote network. If you use the default meshtastic MQTT server, packets are always encrypted. If you use a custom MQTT broker (ie set `mqtt.address`), the `mqtt.encryption_enabled` setting applies, which by default is false. You can also specify your own private MQTT broker and specify authentication for that broker to bridge several mesh networks together, via the internet (or just a local IP network).
 
 You can find the settings available for MQTT [here](https://meshtastic.org/docs/settings/moduleconfig/mqtt).
 
@@ -19,7 +19,7 @@ Using or emitting packets directly in/from smart home control software such as H
 
 When MQTT is enabled, the Meshtastic device simply uplinks and/or downlinks every raw protobuf packet that it sees to the MQTT broker. In addition, some packet types are serialized or deserialized from/to JSON messages for easier use in consumers. All packets are sent to the broker, whether they originate from another device on the mesh, or the gateway node itself.
 
-Packets may be encrypted. If you use the default meshtastic MQTT server, packets are always encrypted. If you use a custom MQTT broker (ie set `mqtt_server`), the `mqtt_encryption_enabled` setting applies, which by default is false.
+Packets may be encrypted. If you use the default meshtastic MQTT server, packets are always encrypted. If you use a custom MQTT broker (ie set `mqtt.address`), the `mqtt.encryption_enabled` setting applies, which by default is false.
 
 IMPORTANT: When MQTT is turned on, you are potentially broadcasting your entire mesh traffic onto the public internet. This includes messages and position information.
 
