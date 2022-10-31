@@ -14,7 +14,7 @@ export const FirmwareCard = ({
   release,
 }: releaseCardProps): JSX.Element => {
   return (
-    <div className="card">
+    <div className="card m-4 border-2 border-secondary">
       <div
         className="card__header"
         style={{ display: 'flex', justifyContent: 'space-between' }}
