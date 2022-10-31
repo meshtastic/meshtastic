@@ -41,13 +41,7 @@ meshtastic --setlat 25.2 --setlon -16.8 --setalt 120
 Or to configure an ESP32 based board to join a Wifi network as a station:
 
 ```shell
-meshtastic --set wifi_ap_mode false --set wifi_ssid mywifissid --set wifi_password mywifipsw
-```
-
-Or to configure an ESP32 to run as a Wifi access point:
-
-```shell
-meshtastic --set wifi_ap_mode true --set wifi_ssid mywifissid --set wifi_password mywifipsw
+meshtastic --set network.wifi_ssid mywifissid --set network.wifi_password mywifipsw
 ```
 
 :::note
