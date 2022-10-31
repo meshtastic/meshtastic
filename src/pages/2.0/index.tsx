@@ -95,6 +95,8 @@ const TwoPointZero = (): JSX.Element => {
                       </button>
                       <a
                         className="flex w-16 rounded-md border border-transparent bg-[#1DA1F2] shadow hover:bg-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2"
+                        target="_blank"
+                        rel="noreferrer noopener"
                         href="https://twitter.com/TheMeshtastic/status/1586933393526333441"
                       >
                         <FiTwitter className="m-auto text-white" />
