@@ -62,7 +62,7 @@ const Hardware = (): JSX.Element => {
           ))}
           <li className="group relative">
             <a
-              href="https://github.com/meshtastic/Meshtastic-device/issues/new?assignees=&labels=enhancement%2Ctriage&template=New+Board.yml&title=%5BBoard%5D%3A+"
+              href="https://github.com/meshtastic/firmware/issues/new?assignees=&labels=enhancement%2Ctriage&template=New+Board.yml&title=%5BBoard%5D%3A+"
               className="flex aspect-[4/3] rounded-lg border-2 border-dashed border-mute group-hover:border-tertiaryInv"
               target="_blank"
               rel="noreferrer"

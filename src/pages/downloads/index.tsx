@@ -16,7 +16,7 @@ import { HeaderText } from './_components/HeaderText';
 
 const Firmware = (): JSX.Element => {
   const { data, error } = useSWR<Release[]>(
-    'https://api.github.com/repos/meshtastic/meshtastic-device/releases',
+    'https://api.github.com/repos/meshtastic/firmware/releases',
     fetcher,
   );
 
@@ -133,7 +133,7 @@ const Firmware = (): JSX.Element => {
                   </div>
                   <div className="card__footer" style={{ marginTop: '1rem' }}>
                     <a
-                      href="https://nightly.link/meshtastic/meshtastic-device/workflows/main/master/built.zip"
+                      href="https://nightly.link/meshtastic/firmware/workflows/main/master/built.zip"
                       className="button button--secondary button--block"
                     >
                       Download

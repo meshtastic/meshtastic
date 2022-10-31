@@ -36,7 +36,7 @@ pio run --target erase --environment tbeam
 
 Then re-install the firmware ie using ESPHome Flasher.
 
-Requires: [Python](https://www.python.org), [Pio](https://pypi.org/project/pio), command to be run in the root directory of the meshtastic-device project once you’ve cloned it (this last requirement is an assumption based on pio not knowing what a tbeam is, may also require Visual Studio Code and PlatformIO as these were installed during use).
+Requires: [Python](https://www.python.org), [Pio](https://pypi.org/project/pio), command to be run in the root directory of the firmware project once you’ve cloned it (this last requirement is an assumption based on pio not knowing what a tbeam is, may also require Visual Studio Code and PlatformIO as these were installed during use).
 
 ### Esptool.py
 
@@ -53,13 +53,13 @@ Requires: [Python](https://www.python.org) and [esptool.py](https://github.com/e
 
 ### Visual Studio & PlatformIO
 
-There is also the method of using the Visual Studio IDE. This requires having Visual Studio and PlatformIO installed, along with having cloned the meshtastic-device code as per the [build instructions](/docs/developers/firmware/build). After loading the project in Visual Studio, select the PlatformIO alien icon, then find the appropriate device, and then click the Erase Flash command.
+There is also the method of using the Visual Studio IDE. This requires having Visual Studio and PlatformIO installed, along with having cloned the firmware code as per the [build instructions](/docs/developers/firmware/build). After loading the project in Visual Studio, select the PlatformIO alien icon, then find the appropriate device, and then click the Erase Flash command.
 
 ![Erasing the flash using PlatformIO in Visual Studio Code](/img/platformio-erase.png)
 
 https://meshtastic.discourse.group/t/configuring-channel-via-python-api/1948/17
 
-Requires: [Visual Studio Code](https://code.visualstudio.com), [PlatformIO](https://platformio.org), cloned copy of the Meshtastic-device project
+Requires: [Visual Studio Code](https://code.visualstudio.com), [PlatformIO](https://platformio.org), cloned copy of the Meshtastic Firmware project
 
 ## How do I know it's worked?
 

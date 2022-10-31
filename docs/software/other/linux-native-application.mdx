@@ -2,35 +2,36 @@
 id: linux-native-application
 title: Linux native application
 sidebar_label: Linux native application
-
 ---
 
-The device software can also run on a native Linux machine thanks to the [Portduino framework](https://github.com/geeksville/framework-portduino). 
-See either [Usage with a Linux machine](#usage-with-a-linux-machine) or [Usage with Docker](#usage-with-docker) for instructions to run it. 
+The device software can also run on a native Linux machine thanks to the [Portduino framework](https://github.com/geeksville/framework-portduino).
+See either [Usage with a Linux machine](#usage-with-a-linux-machine) or [Usage with Docker](#usage-with-docker) for instructions to run it.
 
-The application either simulates some of the interfaces, or uses the real hardware of your machine. 
-Device firmware from 1.3.42 and on even allows you to simulate the LoRa chip by sending and receiving Meshtastic packets via a local TCP port. 
-In this way, you can let multiple instances of the application communicate with each other as if they did via LoRa. 
-For instructions on how to use it, see the [interactive simulator](https://github.com/GUVWAF/Meshtasticator/blob/master/INTERACTIVE_SIM.md) that also emulates a wireless environment using simulated positions of the nodes. 
+The application either simulates some of the interfaces, or uses the real hardware of your machine.
+Device firmware from 1.3.42 and on even allows you to simulate the LoRa chip by sending and receiving Meshtastic packets via a local TCP port.
+In this way, you can let multiple instances of the application communicate with each other as if they did via LoRa.
+For instructions on how to use it, see the [interactive simulator](https://github.com/GUVWAF/Meshtasticator/blob/master/INTERACTIVE_SIM.md) that also emulates a wireless environment using simulated positions of the nodes.
 
 ## Usage with a Linux machine {#usage-with-a-linux-machine}
-The easiest way of building the native application is using Visual Studio Code with the PlatformIO extension. 
-See the instructions for creating such a building environment [here](/docs/developers/Firmware/build). 
 
-Then after opening the Meshtastic-device repository in Visual Studio Code, simply click on the PlatformIO extension in the left bar, select native and click on 'Build'. 
-This will generate the binary file 'program' which you can find in `.pio/build/native/`. 
-Once in this directory or when you copied the file to your current directory, launch the application with `./program`. 
+The easiest way of building the native application is using Visual Studio Code with the PlatformIO extension.
+See the instructions for creating such a building environment [here](/docs/developers/Firmware/build).
 
-Additional arguments can be given to the program, which are listed as follows: 
-- `-d DIRECTORY`: The directory to use as the virtual filesystem (VFS). 
-- `-e`: Erase the virtual filesystem before use. 
-- `-h MAC_ADDRESS`: The MAC address to assign to this virtual machine. 
-- `-p TCP_PORT`: The local TCP port to use for running the Meshtastic API. 
+Then after opening the firmware repository in Visual Studio Code, simply click on the PlatformIO extension in the left bar, select native and click on 'Build'.
+This will generate the binary file 'program' which you can find in `.pio/build/native/`.
+Once in this directory or when you copied the file to your current directory, launch the application with `./program`.
+
+Additional arguments can be given to the program, which are listed as follows:
+
+- `-d DIRECTORY`: The directory to use as the virtual filesystem (VFS).
+- `-e`: Erase the virtual filesystem before use.
+- `-h MAC_ADDRESS`: The MAC address to assign to this virtual machine.
+- `-p TCP_PORT`: The local TCP port to use for running the Meshtastic API.
 
 ## Usage with Docker {#usage-with-docker}
 
 If you do not own a Linux machine, or you just want to separate things, you might want
-to run the application inside a docker container. 
+to run the application inside a docker container.
 
 ### The Image
 
@@ -49,7 +50,7 @@ or, to get an interactive shell on the docker created container:
 `docker run -it -p 4403:4403 meshtastic/device bash`
 
 You might want to mount your local development folder:
-
+firmware
 `docker run -it --mount type=bind,source=/PathToMyProjects/Meshtastic/Meshtastic-device-mybranch,target=/Meshtastic-device-mybranch -p 4403:4403 meshtastic/device bash`
 
 ### Build the native application
