@@ -10,7 +10,7 @@ The routing protocol for Meshtastic is really quite simple (and suboptimal). If 
 
 ### A Note About Protocol Buffers
 
-Because we want our devices to work across various vendors and implementations, we use [Protocol Buffers](https://github.com/meshtastic/Meshtastic-protobufs) pervasively. For purposes of this document you mostly only
+Because we want our devices to work across various vendors and implementations, we use [Protocol Buffers](https://github.com/meshtastic/protobufs) pervasively. For purposes of this document you mostly only
 need to consider the MeshPacket and Subpacket message types.
 
 ### Layer 0: LoRa Radio
@@ -74,11 +74,11 @@ Given our use-case for the initial release, most of our protocol is built around
 
 If any mesh node sees a packet with a HopLimit other than zero, it will decrement that HopLimit and attempt retransmission on behalf of the original sending node. In order to promote letting nodes that are further away flood the message, such that the message eventually reaches farther, the contention window (see Layer 1) for a flooding message depends on the Signal-to-Noise Ratio (SNR) of the received packet. The CW size is small for a low SNR, such that nodes that are further away are more likely to flood first and closer nodes that hear this will refrain from flooding.
 
-### Example 
+### Example
 
-Below you see an example topology consisting of four nodes, where at a certain point node 0 wants to send a broadcast message. 
-Due to limited coverage, it only reaches nodes 1 and 2. Since node 2 is farther away, its SNR is lower and therefore starts rebroadcasting earlier than 1. 
-After node 0 received this rebroadcast, its message is acknowledged. Note that a message is already acknowledged once a rebroadcast from any Meshtastic node (whether or not it has the same encryption key) is received. 
+Below you see an example topology consisting of four nodes, where at a certain point node 0 wants to send a broadcast message.
+Due to limited coverage, it only reaches nodes 1 and 2. Since node 2 is farther away, its SNR is lower and therefore starts rebroadcasting earlier than 1.
+After node 0 received this rebroadcast, its message is acknowledged. Note that a message is already acknowledged once a rebroadcast from any Meshtastic node (whether or not it has the same encryption key) is received.
 Since node 1 heard the rebroadcast by 2, it will not rebroadcast again. Node 3 heard the message for the first time and the HopLimit is not yet zero, so it starts a rebroadcast for potential other receivers.
 
 ![Mesh algorithm example](/img/SNR_based_flooding.png)

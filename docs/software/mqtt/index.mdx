@@ -224,6 +224,7 @@ if __name__ == '__main__':
     while client.loop() == 0:
         pass
 ```
+
 ### Using MQTT with Node-RED
 
 Node-RED is a free cross-platform programming tool for wiring together hardware, APIs, and online services developed originally by IBM for IOT. It is widely used for home automation by many non-professional programmers and runs well on Pi's. Node-red has many plug-in modules written by the community. I will use this platform as a practical example on how to interface with the MQTT features of Meshtastic. Everything can be done from GUI's without using command line.
@@ -233,7 +234,7 @@ Enable and enter network ssid/psk. Settings--> Device Config--> Network; Save.
 Set MQTT server address. Settings--> Module Config--> MQTT config; Verify Encryption Enabled is OFF. Turn JSON Output Enabled ON. Save.
 Go to Channel Editor and set uplink and downling enabled to True. Save.
 
-Step two: if you don't want to depend on JSON decoding on the device, you can decode the proto messages off-device. To do that you will need to get the .proto files from https://github.com/meshtastic/Meshtastic-protobufs. They function as a schema and are required for decoding in Node-RED. Save the files where the node-RED application can access them and note the file path of the "mqtt.proto" file.
+Step two: if you don't want to depend on JSON decoding on the device, you can decode the proto messages off-device. To do that you will need to get the .proto files from https://github.com/meshtastic/protobufs. They function as a schema and are required for decoding in Node-RED. Save the files where the node-RED application can access them and note the file path of the "mqtt.proto" file.
 
 Step three: install Node-RED plug-ins to your node-RED application for an embedded mqqt server and a protobuf decoder.
 https://flows.nodered.org/node/node-red-contrib-aedes
