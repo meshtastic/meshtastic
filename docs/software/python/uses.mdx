@@ -25,9 +25,9 @@ to keep the Bluetooth link alive for eight hours (any usage of the Bluetooth pro
 
 ```shell title="Expected Output"
 # You should see a result similar to this:
-mydir$ meshtastic --set wait_bluetooth_secs 28800
+mydir$ meshtastic --set bluetooth.wait_bluetooth_secs 28800
 Connected to radio...
-Setting preference wait_bluetooth_secs to 28800
+Setting bluetooth.wait_bluetooth_secs to 28800
 Writing modified preferences to device...
 ```
 
@@ -40,13 +40,7 @@ meshtastic --setlat 25.2 --setlon -16.8 --setalt 120
 Or to configure an ESP32 based board to join a Wifi network as a station:
 
 ```shell
-meshtastic --set wifi_ap_mode false --set wifi_ssid mywifissid --set wifi_password mywifipsw
-```
-
-Or to configure an ESP32 to run as a Wifi access point:
-
-```shell
-meshtastic --set wifi_ap_mode true --set wifi_ssid mywifissid --set wifi_password mywifipsw
+meshtastic --set network.wifi_ssid mywifissid --set network.wifi_psk mywifipsw
 ```
 
 :::note
