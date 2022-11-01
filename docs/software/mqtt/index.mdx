@@ -249,8 +249,20 @@ Step three: install Node-RED plug-ins to your node-RED application for an embedd
 https://flows.nodered.org/node/node-red-contrib-aedes
 https://flows.nodered.org/node/node-red-contrib-protobuf
 
-Drag, drop, and wire the nodes like this. For this example, I ran node-RED on a Windows machine. Note that file paths might be specified differently on different platforms. MQTT server wild cards are usually the same. A "+" is a single level wildcard for a specific topic level. A "#" is a multiple level wildcard that can be used at the end of a topic filter. The debug messages shown are what happens when the inject button sends a json message with a topic designed to be picked up by the specified Meshtastic device and then having it resend the message by both radio and MQTT.
+Drag, drop, and wire the nodes like this. For this example, I ran node-RED on a Windows machine. Note that file paths might be specified differently on different platforms. MQTT server wild cards are usually the same. A "+" is a single level wildcard for a specific topic level. A "#" is a multiple level wildcard that can be used at the end of a topic filter. The debug messages shown are what happens when the inject button sends a json message with a topic designed to be picked up by the specified Meshtastic device and then having it rebroadcast the message.
 
 [<img src="/documents/mqtt/NodeRedTwo.jpg" style={{zoom:'50%'}} />](/documents/mqtt/NodeRedTwo.jpg)
 [<img src="/documents/mqtt/NodeRedThree.jpg" style={{zoom:'50%'}} />](/documents/mqtt/NodeRedThree.jpg)
 [<img src="/documents/mqtt/NR_nodes.jpg" style={{zoom:'50%'}} />](/documents/mqtt/NR_nodes.jpg)
+
+The aedes broker must be set up on the same flow as the other nodes. By activating the Publish debug node, you can see all the published messages.
+[<img src="/documents/mqtt/Broker1.jpg" style={{zoom:'50%'}} />](/documents/mqtt/Broker1.jpg)
+Receiving a json mqqt message is very simple.
+[<img src="/documents/mqtt/Consume.jpg" style={{zoom:'50%'}} />](/documents/mqtt/Consume.jpg)
+Injecting a json message to be sent by a device is also very simple. You do need the correct enevelope.
+[<img src="/documents/mqtt/Inject.jpg" style={{zoom:'50%'}} />](/documents/mqtt/Inject.jpg)
+Forwarding a text message from one device, through a broker, to another broker/device/channel would look like this.
+[<img src="/documents/mqtt/Forward.jpg" style={{zoom:'50%'}} />](/documents/mqtt/Forward.jpg)
+If you want to decode text and position messages without json, it gets complicated:
+[<img src="/documents/mqtt/Decode.jpg" style={{zoom:'50%'}} />](/documents/mqtt/Decode.jpg)
+
