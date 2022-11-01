@@ -35,25 +35,66 @@ const Firmware = (): JSX.Element => {
     >
       <div className="container mt-8 flex flex-col gap-3">
         <h1 className="m-2">Flasher</h1>
-        <div className="flex h-48 w-full overflow-hidden rounded-xl">
+        <div className="flex h-64 w-full overflow-hidden rounded-xl">
           <div className="flex w-1/5 bg-gradient-to-r from-green-500 to-primary">
             <BoltIcon className="m-auto h-20" />
           </div>
-          <div className="w-full bg-primary">
-            <div className="m-auto mt-8 w-96">
-              <h3>Meshtastic Flasher</h3>
-              <p className="mb-3">
+          <div className="flex w-full bg-primary">
+            <div className="card m-4 border-2 border-secondary">
+              <div className="card__header">
+                <h3>Meshtastic Flasher</h3>
+              </div>
+              <div className="card__body">
+                <p>
                 Desktop application to flash fimware to your devices.
-              </p>
-              <a
-                target="_blank"
-                rel="noopener noreferrer"
-                href="https://github.com/meshtastic/Meshtastic-gui-installer/releases/latest"
-                className="m-auto flex rounded-lg border-4 border-transparent bg-accent p-1 font-semibold text-black shadow-md hover:text-black hover:brightness-110 active:border-green-200"
-              >
-                Download
-                <ArrowTopRightOnSquareIcon className="m-auto ml-2 h-4" />
-              </a>
+                </p>
+              </div>
+              <div className="card__footer" style={{ marginTop: '1rem' }}>
+                <a
+                  href="https://github.com/meshtastic/Meshtastic-gui-installer/releases/latest"
+                  className="m-auto flex rounded-lg border-4 border-transparent bg-accent p-1 font-semibold text-black shadow-md hover:text-black hover:brightness-110 active:border-green-200"
+                >
+                  Download
+                  <ArrowTopRightOnSquareIcon className="m-auto ml-2 h-4" />
+                </a>
+              </div>
+            </div>
+            <div className="card m-4 border-2 border-secondary">
+              <div className="card__header">
+                <h3>ESP32 Web Flasher</h3>
+              </div>
+              <div className="card__body">
+                <p>
+                  Web based installer for easy flashing with Chrome and Edge Browser. Works with T-Beam, T-Lora, Nano-G1 and similar boards.
+                </p>
+              </div>
+              <div className="card__footer" style={{ marginTop: '1rem' }}>
+                <a
+                  href="https://flasher.meshtastic.org/"
+                  className="m-auto flex rounded-lg border-4 border-transparent bg-accent p-1 font-semibold text-black shadow-md hover:text-black hover:brightness-110 active:border-green-200"
+                >
+                  Go to Flasher
+                  <ArrowTopRightOnSquareIcon className="m-auto ml-2 h-4" />
+                </a>
+              </div>
+            </div>
+            <div className="card m-4 border-2 border-secondary">
+              <div className="card__header">
+                <h3>nRF52 Drag & Drop</h3>
+              </div>
+              <div className="card__body">
+                <p>
+                  Devices such as T-Echo and RAK4631 are flashed via filesystem.
+                </p>
+              </div>
+              <div className="card__footer" style={{ marginTop: '1rem' }}>
+                <a
+                  href="/docs/getting-started/flashing-firmware/nrf52/drag-n-drop"
+                  className="m-auto flex rounded-lg border-4 border-transparent bg-accent p-1 font-semibold text-black shadow-md hover:text-black hover:brightness-110 active:border-green-200"
+                >
+                  view Instructions
+                </a>
+              </div>
             </div>
           </div>
         </div>
