@@ -20,9 +20,7 @@ The following operating systems are currently supported: Windows, Mac, and Ubunt
 
 ## Prerequisites
 
-### Verify `python3` is installed
-
-#### Check `python3` version
+### Verify that Python3 is installed
 
 <Tabs
 groupId="operating-system"
@@ -58,10 +56,8 @@ python3 --version
 </TabItem>
 </Tabs>
 
-<details>
-<summary>
-Install/Update `python3`
-</summary>
+### Install or Update Python3
+
 <Tabs
 groupId="operating-system"
 defaultValue="linux"
@@ -82,7 +78,7 @@ sudo apt install -y python3 python3-pip python3-venv
 <TabItem value="macos">
 
 - [Download directly from python.org](https://www.python.org/downloads/macos/)
-- [Homebrew](https://brew.sh/)
+- [Homebrew](https://brew.sh/): `brew install python@3.9`
 - [MacPorts](https://www.macports.org/)
 
 </TabItem>
@@ -93,15 +89,12 @@ sudo apt install -y python3 python3-pip python3-venv
 </TabItem>
 </Tabs>
 
-</details>
 
 ### Install App
 
-<summary>
-For windows there is an [executable file](https://github.com/meshtastic/Meshtastic-gui-installer/releases/tag/untagged-9a69e6946635cd38df7d) that will manage installing python and flasher updates for you.
+For **Windows**, the [installer](https://github.com/meshtastic/Meshtastic-gui-installer/releases/tag/untagged-9a69e6946635cd38df7d) will manage installing python and flasher updates automatically.
 
-For MacOS and Linux it is recommended that you install using `pip`
-</summary>
+For **MacOS** and **Linux**, it is recommended that you install using `pip`.
 
 <Tabs
 groupId="operating-system"
@@ -179,17 +172,15 @@ meshtastic-flasher
   </TabItem>
 </Tabs>
 
-
-
 ## Flashing the Device
 
-The Meshtastic Flasher will flash the latest firmware to esp32 and nrf52 devices. This is a newly developed application (as of February 1, 2022), so there may be some issues discovered as it is tested by users.
+The Meshtastic Flasher will flash the latest firmware on esp32 and nrf52 devices. This is a newly developed application (as of February 1, 2022), so there may be some issues discovered as it is tested by users.
 
 There are three steps:
 
-- Click the "GET VERSIONS" button to get the versions available (from GitHub).
-- Click the "DETECT DEVICE" button to determine the port and device variant connected.
-- Click the "FLASH" button to flash the version selected, using the port selected to the device.
+1. Click the **GET VERSIONS** button to get the versions available (from GitHub).
+2. Click the **DETECT DEVICE** button to determine the port and device variant connected.
+3. Click the **FLASH** button to flash the version selected using the port selected to the device.
 
 ## Issues?
 
@@ -202,5 +193,5 @@ The code can be found at the [Meshtastic-gui-installer repo](https://github.com/
 The following are known limitations:
 
 - Raspberry Pi is not available, since it is arm-based and there are no pre-built libraries for [PySide](https://wiki.qt.io/Qt_for_Python)
-- Ubuntu 20.04 is the version used for testing, it may work with other versions
-- see [README](https://github.com/meshtastic/Meshtastic-gui-installer/blob/master/README.md) for more details
+- Ubuntu 20.04 is the version used for testing, it may work with other versions.
+- See [README](https://github.com/meshtastic/Meshtastic-gui-installer/blob/master/README.md) for more details.
