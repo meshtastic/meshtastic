@@ -88,21 +88,21 @@ const SocialCards: SocialCardProps[] = [
     color: 'bg-[#5865F2]',
     link: 'https://discord.com/invite/UQJ5QuM7vq',
     children: (
-      <img className="m-auto h-10" src="/img/homepage/Discord-Logo-White.svg" />
+      <img alt="discord" className="m-auto h-10" src="/img/homepage/Discord-Logo-White.svg" />
     ),
   },
   {
     color: 'bg-[#FF0000]',
     link: 'https://www.youtube.com/meshtastic',
     children: (
-      <img className="m-auto h-16" src="/img/homepage/YouTube-Logo-White.svg" />
+      <img alt="youtube" className="m-auto h-16" src="/img/homepage/YouTube-Logo-White.svg" />
     ),
   },
   {
     color: 'bg-[#ffffff]',
     link: 'https://meshtastic.discourse.group',
     children: (
-      <img
+      <img alt="discourse"
         className="m-auto h-12"
         src="/img/homepage/Discourse-Logo-White.svg"
       />
@@ -112,14 +112,14 @@ const SocialCards: SocialCardProps[] = [
     color: 'bg-[#FF4500]',
     link: 'https://reddit.com/r/meshtastic',
     children: (
-      <img className="m-auto h-20" src="/img/homepage/Reddit-Logo-White.svg" />
+      <img alt="reddit" className="m-auto h-20" src="/img/homepage/Reddit-Logo-White.svg" />
     ),
   },
   {
     color: 'bg-[#ffffff]',
     link: 'https://github.com/meshtastic',
     children: (
-      <img className="m-auto w-12" src="/img/homepage/GitHub-Logo-White.svg" />
+      <img alt="github" className="m-auto w-12" src="/img/homepage/GitHub-Logo-White.svg" />
     ),
   },
 ];

@@ -91,21 +91,21 @@ const Firmware = (): JSX.Element => {
                 <div className="m-auto flex flex-col gap-3">
                   <h2>Android</h2>
                   <a
+                    className="m-auto flex rounded-lg border-4 border-transparent bg-accent p-1 font-semibold text-black shadow-md hover:text-black hover:brightness-110 active:border-green-200"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href="https://meshtastic.org/docs/software/android/#f-droid"
+                  >
+                    F-Droid
+                    <ArrowTopRightOnSquareIcon className="m-auto ml-2 h-4" />
+                  </a>
+                  <a
                     target="_blank"
                     rel="noopener noreferrer"
                     href="https://play.google.com/store/apps/details?id=com.geeksville.mesh&referrer=utm_source=downloads-page"
                     className="m-auto flex rounded-lg border-4 border-transparent bg-accent p-1 font-semibold text-black shadow-md hover:text-black hover:brightness-110 active:border-green-200"
                   >
                     Play Store
-                    <ArrowTopRightOnSquareIcon className="m-auto ml-2 h-4" />
-                  </a>
-                  <a
-                    className="absolute bottom-2 flex"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    href="https://meshtastic.org/docs/software/android/#f-droid"
-                  >
-                    F-Droid
                     <ArrowTopRightOnSquareIcon className="m-auto ml-2 h-4" />
                   </a>
                 </div>
