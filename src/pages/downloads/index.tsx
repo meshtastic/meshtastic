@@ -181,59 +181,6 @@ const Firmware = (): JSX.Element => {
           </div>
         </div>
       </div>
-      {/*  */}
-      {/* <main className="margin-vert--xl">
-       
-       
-        <div className="container">
-          <HeaderText
-            type="h2"
-            text="Firmware Downloads"
-            link="firmware-downloads"
-          />
-          <ul
-            style={{
-              position: 'relative',
-              display: 'grid',
-              gap: '1.5rem',
-              gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
-              paddingLeft: '0',
-            }}
-          >
-            
-          </ul>
-          Once downloaded, follow the flashing instructions for{' '}
-          <a
-            href="/docs/getting-started/flashing-firmware/flashing-esp32"
-            rel="noreferrer"
-            target="_blank"
-          >
-            ESP32 chipsets
-          </a>
-          ,{' '}
-          <a
-            href="/docs/getting-started/flashing-firmware/flashing-nrf52"
-            rel="noreferrer"
-            target="_blank"
-          >
-            NRF52 chipsets
-          </a>
-          , or the{' '}
-          <a
-            href="/docs/software/python/meshtastic-flasher"
-            rel="noreferrer"
-            target="_blank"
-          >
-            GUI instructions for Meshtastic Flasher
-          </a>
-          .
-        </div>
-        <div className="container">
-          <i>
-            Google Play and the Google Play logo are trademarks of Google LLC.
-          </i>
-        </div>
-      </main> */}
     </Layout>
   );
 };
