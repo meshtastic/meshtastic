@@ -1,7 +1,7 @@
 ---
-id: flashing-external-serial-adapter
-title: Flashing Firmware with an External Serial Adapter (ESP32)
-sidebar_label: Serial Adapters
+id: external-serial-adapter
+title: Flashing with an External Serial Adapter
+sidebar_label: External Serial Adapter
 sidebar_position: 4
 ---
 
@@ -9,7 +9,7 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
 :::info
-This information will likely only be helpful if you've already attempted to go through the prerequisites and processes outlined in [meshtastic flasher](/docs/software/python/flasher) or [manually flashing](/docs/getting-started/flashing-firmware/esp32/flashing-esp32)
+This information will likely only be helpful if you've already attempted to go through the prerequisites and processes outlined in [meshtastic flasher](/docs/software/python/flasher) or [manually flashing](/docs/getting-started/flashing-firmware/esp32/cli-script)
 :::
 
 :::caution
@@ -40,7 +40,7 @@ There are multiple ways to connect the pins of the adapter to the target device:
 :::
 Disconnect your USB to Serial Adapter from the computer before starting this process. 
 
-1. Connect the RX pin of the adapter to the TX pin of the device
+1. Connect the RX pin of the adapter to the TX pin of the devices
 2. Connect the TX pin of the adapter to the RX pin of the device
 3. Connect a GND pin of the adapter to the GND pin of the device
 4. Connect either the 5V pin of the adapter to the 5V pin of the device (illustrated) or the 3.3V pin of the adapter to the 3.3V pin of device.
@@ -53,7 +53,7 @@ Disconnect your USB to Serial Adapter from the computer before starting this pro
 
 ### Flashing
 
-After following the steps above, your device should be in flash mode. You can flash your device using the [Meshtastic flasher](/docs/software/python/flasher) or [manual method](https://meshtastic.org/docs/getting-started/flashing-firmware/flashing-esp32)
+After following the steps above, your device should be in flash mode. You can flash your device using the [Meshtastic flasher](/docs/software/python/flasher) or [manual method](/docs/getting-started/flashing-firmware/esp32/cli-script)
 
 Example using the Meshtastic Flasher
 ![image](https://user-images.githubusercontent.com/9000580/168447086-313e0649-1bfe-4ccb-b891-0f56059d8063.png)
@@ -73,7 +73,3 @@ Sometimes you might receive an error for COM port permission in the Mestastic Fl
 
 You might need to run the process as an administrator, check to ensure software like Cura isn't monopolizing COM ports, or reboot. 
 ![image](https://user-images.githubusercontent.com/9000580/168447232-1a3af39b-e3cc-44b9-bc3a-32843a9e6f1f.png)
-
-
-
-

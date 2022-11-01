@@ -38,10 +38,10 @@ export const DownloadCard = ({
         ) : (
         <div>
           <a href={url}>
-            <img style={{ height: '4rem' }} src={imgUrl}></img>
+            <img alt="img1" style={{ height: '4rem' }} src={imgUrl}></img>
           </a>
           <a href={url2}>
-            <img style={{ height: '4rem' }} src={imgUrl2}></img>
+            <img alt="img2" style={{ height: '4rem' }} src={imgUrl2}></img>
           </a>
         </div>
         )}

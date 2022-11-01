@@ -7,46 +7,157 @@ sidebar_position: 2
 ---
 
 import Link from '@docusaurus/Link';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 
-## What is Meshtastic?
+## Identify your Hardware
 
-Meshtastic® is a project that lets you use inexpensive LoRa radios as a long range off-grid communicator for areas without reliable cellular service. These radios are great for hiking, skiing, paragliding - essentially any hobby where you don't have reliable internet access. Each member of the mesh can send and view text messages and enable optional GPS based location features.
+The first order of business in getting started is determining what type of hardware you will be working with. Meshtastic currently supports devices with either of the two Microcontroller Units (MCU):
 
-The radios automatically create a mesh to forward packets as needed, so everyone in the group can receive messages from even the furthest member. The radios will optionally work with your phone, but no phone is required.
+### ESP32
 
-Meshtastic uses LoRa for the long range communications and depending on settings used up to 80 device nodes. Each device supports a connection from a single user at a time.
+The ESP32 is older and consumes more power than the nrf52, but is equiped with both WiFi and Bluetooth. Supported ESP32 devices:
+
+- LILYGO® TTGO T-Beam
+- LILYGO® TTGO Lora
+- Nano G1
+- Station G1
+
+### NRF52
+
+The NRF52 is much more power effecient than the esp32 and easier to update, but is only equiped Bluetooth. Supported NRF52 devices:
+
+- RAK WisBlock
+- LILYGO® TTGO T-Echo
+
+:::info
+If your device is not listed above, please review our [supported hardware](/docs/category/supported-hardware) devices to determine which MCU your device has or contact us in [Discord](https://discord.gg/ktMAKGBnBs) with any questions.
+:::
+
+## Connect your device
+
+:::danger
+Stop! Never power on the radio without attaching an antenna! (it could damage the radio chip)
+:::
+
+Prior to connecting your Meshtastic device to the computer, you should perform the following basic checks.
+
+### Verify data cable
+
+Some cables only provide _charging_, verify that your cable is also capable of _transfering data_ before proceeding. 
+
+There is no definitive way to determine the difference in cables if you aren't willing to pull it apart. Trying out a few cables will be the best way to verify.
+
+Once you've located a working data cable, [install the correct serial driver](#install-serial-drivers) and [test for driver installation](#test-for-driver-installation).
+
+
+### Install Serial Drivers
 
 <div className="indexCtasBody">
-  <Link
+  <Link target="_blank"
     className={'button button--outline  button--lg cta--button'}
-    to={'/docs/about'}
+    to={'/docs/getting-started/serial-drivers'}
   >
-    Learn More
+    Install Serial Drivers
   </Link>
 </div>
 
-## Supported Hardware
+### Test for driver installation
 
-<div className="indexCtasBody">
-  <Link
-    className={'button button--outline  button--lg cta--button'}
-    to={'/docs/category/supported-hardware'}
-  >
-    Supported Hardware
-  </Link>
-</div>
+You can verify that you have a proper data cable (rather than a charge-only type cable) and that the appropriate drivers for your system are installed by performing the following test: 
+
+<Tabs
+groupId="operating-system"
+defaultValue="linux"
+values={[
+{label: 'Linux', value: 'linux'},
+{label: 'macOS', value: 'macos'},
+{label: 'Windows', value: 'windows'},
+]}>
+<TabItem value="linux">
+
+1. Connect your Meshtastic device to your USB port
+2. Open a **Terminal** and enter the following command:
+
+  ```shell
+  lsusb
+  ```
+3. You should see something like: 
+
+  ```shell
+  ID xxxx:xxxx Silicon Labs CP210x UART Bridge
+  # or
+  ID xxxx:xxxx QinHeng Electronics USB Single Serial
+  # or
+  FIXME (WISBLOCK OUTPUT)
+  ```
+
+</TabItem>
+<TabItem value="macos">
+
+1. Navigate to `Apple Menu  > About This Mac > System Report... > Hardware > USB`. 
+2. You should see similar to one of the following entries:
+  - `CP210X USB to UART Bridge Controller`
+  - `CH9102 USB to UART Bridge Controller`
+  - `WisCore RAK4631 Board`
+
+</TabItem>
+<TabItem value="windows">
+
+1. Navigate to `Device Manager > Ports (COM & LPT)`
+2. You should see similar to one of the following entries:
+  - `Silicon Labs CP210X USB to UART Bridge (COM5)`
+  - `Silicon Labs CH9102 USB to UART Bridge (COM5)`
+  - `FIXME (WISBLOCK OUTPUT)`
+
+</TabItem>
+</Tabs>
+
+:::info
+If you do not see your device:
+
+1. You may be using a charging-only cable, [verify your cable](#verify-data-cable).
+2. You may need to [install the USB serial driver](/docs/getting-started/serial-drivers)).
+:::
 
 ## Flashing Firmware
 
+### ESP32
+
 <div className="indexCtasBody">
-  <Link
-    className={'button button--outline  button--lg cta--button'}
-    to={'/docs/getting-started/flashing-firmware'}
+  <Link target="_blank"
+    className={'button button--outline button--lg cta--button'}
+    to={'/docs/getting-started/flashing-firmware/esp32/'}
   >
-    Flash Firmware
+    Flash ESP32 Firmware
   </Link>
 </div>
 
-## Troubleshooting
+### NRF52
 
-Hopefully your "getting started" experience has been straight forward and headache free. If you've had issues, please consider updating our documentation to improve future user experiences. If you're still having issues. Reach out on the [forum](https://meshtastic.discourse.group) or [Discord](https://discord.gg/ktMAKGBnBs). Our support is 100% volunteer based. We are passionate about the project hope to help newcomers become Meshtastic experts.
+For RAK4631 users, if you have a RAK4631-R (the RUI3 bootloader version of the RAK4631), please [convert to the Arduino bootloader](/docs/getting-started/flashing-firmware/nrf52/#convert-rak4631-r-to-rak4631)
+
+<div className="indexCtasBody">
+  <Link target="_blank"
+    className={'button button--outline button--lg cta--button'}
+    to={'/docs/getting-started/flashing-firmware/nrf52/'}
+  >
+    Flash NRF52 Firmware
+  </Link>
+</div>
+
+## Use Meshtastic
+
+There are many ways to interact with and use Meshtastic, please visit the [Software](/docs/software) page for more information.
+
+### with mobile apps
+  - [Android](/docs/software/android/)
+  - [Apple](/docs/software/apple/)
+
+### with a browser
+  - https://client.meshtastic.org
+  - [Meshtastic Web](/docs/software/web/)
+
+### over the internet with MQTT
+  - [MQTT](/docs/software/mqtt/)
+
