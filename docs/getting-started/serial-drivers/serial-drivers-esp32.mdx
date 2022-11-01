@@ -5,9 +5,10 @@ sidebar_label: ESP32 Drivers
 sidebar_position: 1
 ---
 
-## Install USB to Serial Drivers
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 
-### ESP32 Drivers
+## Install ESP32 USB to Serial Drivers
 
 You may need to install a driver from Silicon Labs for the [CP210X USB to UART bridge](https://www.silabs.com/products/development-tools/software/usb-to-uart-bridge-vcp-drivers)
 
@@ -21,29 +22,29 @@ values={[
 {label: 'macOS', value: 'macos'},
 {label: 'Windows', value: 'windows'},
 ]}>
+
 <TabItem value="linux">
 
-[CP210X USB to UART bridge - Download](https://www.silabs.com/products/development-tools/software/usb-to-uart-bridge-vcp-drivers)
+- [CP210X USB to UART bridge - Download](https://www.silabs.com/products/development-tools/software/usb-to-uart-bridge-vcp-drivers)
+- [CH9102 Driver - Linux Download](http://www.wch-ic.com/downloads/CH341SER_LINUX_ZIP.html)
 
-[CH9102 Driver - Linux Download](http://www.wch-ic.com/downloads/CH341SER_LINUX_ZIP.html)
+</TabItem>
 
-  </TabItem>
-  <TabItem value="macos">
+<TabItem value="macos">
 
-[CP210X USB to UART bridge - Download](https://www.silabs.com/products/development-tools/software/usb-to-uart-bridge-vcp-drivers)
+- [CP210X USB to UART bridge - Download](https://www.silabs.com/products/development-tools/software/usb-to-uart-bridge-vcp-drivers)
+- [CH9102 Driver - MacOS Download](https://github.com/WCHSoftGroup/ch34xser_macos)
 
-[CH9102 Driver - MacOS Download](https://github.com/WCHSoftGroup/ch34xser_macos)
+</TabItem>
 
-  </TabItem>
-  <TabItem value="windows">
+<TabItem value="windows">
 
-[CP210X USB to UART bridge - Download](https://www.silabs.com/products/development-tools/software/usb-to-uart-bridge-vcp-drivers)
+- [CP210X USB to UART bridge - Download](https://www.silabs.com/products/development-tools/software/usb-to-uart-bridge-vcp-drivers)
+- [CH9102 Driver - Windows Download](http://www.wch.cn/downloads/CH343SER_ZIP.html)
+- [CH9102 Driver - Windows Download (Direct Download for Windows 7)](https://github.com/Xinyuan-LilyGO/CH9102_Driver)
 
-[CH9102 Driver - Windows Download](http://www.wch.cn/downloads/CH343SER_ZIP.html)
+</TabItem>
 
-[CH9102 Driver - Windows Download (Direct Download for Windows 7)](https://github.com/Xinyuan-LilyGO/CH9102_Driver)
-
-  </TabItem>
 </Tabs>
 
 :::important

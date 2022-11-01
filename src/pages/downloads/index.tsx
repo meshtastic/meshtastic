@@ -103,7 +103,7 @@ const Firmware = (): JSX.Element => {
                     className="absolute bottom-2 flex"
                     target="_blank"
                     rel="noopener noreferrer"
-                    href="https://mesh.tastic.app/fdroid/repo"
+                    href="https://meshtastic.org/docs/software/android/#f-droid"
                   >
                     F-Droid
                     <ArrowTopRightOnSquareIcon className="m-auto ml-2 h-4" />
@@ -220,7 +220,7 @@ const Firmware = (): JSX.Element => {
           </a>
           , or the{' '}
           <a
-            href="/docs/getting-started/flashing-firmware/meshtastic-flasher"
+            href="/docs/software/python/meshtastic-flasher"
             rel="noreferrer"
             target="_blank"
           >

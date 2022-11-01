@@ -13,22 +13,22 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Install Go
-        uses: actions/setup-go@v3
-        with:
-          go-version: 1.19
-      - name: Install Protoc
-        uses: arduino/setup-protoc@v1
-        with:
-          version: '3.x'
-      - name: Install protoc-gen-doc
-        run: go install github.com/pseudomuto/protoc-gen-doc/cmd/protoc-gen-doc@latest
       - name: Checkout code
         uses: actions/checkout@v3
         with:
           submodules: true
-      - name: Generate protobuf docs
-        run: protoc --doc_out="docs/developers/protobufs" --doc_opt="./protobuf.tmpl,api.mdx" --proto_path="protobufs" protobufs/*.proto
+      #- name: Install Go
+      #  uses: actions/setup-go@v3
+      #  with:
+      #    go-version: 1.19
+      #- name: Install Protoc
+      #  uses: arduino/setup-protoc@v1
+      #  with:
+      #    version: '3.x'
+      #- name: Install protoc-gen-doc
+      #  run: go install github.com/pseudomuto/protoc-gen-doc/cmd/protoc-gen-doc@latest
+      #- name: Generate protobuf docs
+      #  run: protoc --doc_out="docs/developers/Protobufs" --doc_opt="./protobuf.tmpl,api.mdx" --proto_path="protobufs" protobufs/*.proto
       - uses: amondnet/vercel-action@v20
         with:
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
