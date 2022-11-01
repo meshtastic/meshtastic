@@ -1,18 +1,23 @@
 import React from 'react';
 
+import { FaAndroid, FaApple } from 'react-icons/fa';
 import useSWR from 'swr';
 
-// import { Endpoints } from '@octokit/types';
+import {
+  ArrowTopRightOnSquareIcon,
+  BoltIcon,
+  ComputerDesktopIcon,
+  CpuChipIcon,
+  GlobeAltIcon,
+} from '@heroicons/react/24/solid';
 import Layout from '@theme/Layout';
 
 import { Release } from '../../utils/github';
 import { fetcher } from '../../utils/swr';
-import { DownloadCard } from './_components/DownloadCard';
 import {
   FirmwareCard,
   PlaceholderFirmwareCard,
 } from './_components/FirmwareCard';
-import { HeaderText } from './_components/HeaderText';
 
 const Firmware = (): JSX.Element => {
   const { data, error } = useSWR<Release[]>(
@@ -28,87 +33,112 @@ const Firmware = (): JSX.Element => {
       title="Downloads"
       description="Downloads for the Meshtastic project"
     >
-      <main className="margin-vert--xl">
-        <div className="container">
-          <HeaderText type="h1" text="Downloads" />
+      <div className="container mt-8 flex flex-col gap-3">
+        <h1 className="m-2">Flasher</h1>
+        <div className="flex h-48 w-full overflow-hidden rounded-xl">
+          <div className="flex w-1/5 bg-gradient-to-r from-green-500 to-primary">
+            <BoltIcon className="m-auto h-20" />
+          </div>
+          <div className="w-full bg-primary">
+            <div className="m-auto mt-8 w-96">
+              <h3>Meshtastic Flasher</h3>
+              <p className="mb-3">
+                Desktop application to flash fimware to your devices.
+              </p>
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                href="https://github.com/meshtastic/Meshtastic-gui-installer/releases/latest"
+                className="m-auto flex rounded-lg border-4 border-transparent bg-accent p-1 font-semibold text-black shadow-md hover:text-black hover:brightness-110 active:border-green-200"
+              >
+                Download
+                <ArrowTopRightOnSquareIcon className="m-auto ml-2 h-4" />
+              </a>
+            </div>
+          </div>
         </div>
-        <div className="container">
-          <HeaderText
-            type="h2"
-            text="Install Meshtastic"
-            link="install-meshtastic"
-          />
-          <DownloadCard
-            client="Meshtastic Flasher"
-            buttonText="Download Meshtastic Flasher"
-            url="https://github.com/meshtastic/Meshtastic-gui-installer/releases/latest"
-            notes={[
-              'To download using ',
-              <code>pip</code>,
-              ' follow ',
-              <a href="/docs/software/python/meshtastic-flasher#install-using-pip">
-                these instructions
-              </a>,
-              '.',
-            ]}
-          />
+        {/*  */}
+        <h1 className="m-2">Apps</h1>
+        <div className="flex h-48 w-full overflow-hidden rounded-xl">
+          <div className="flex w-1/5 bg-gradient-to-r from-rose-500 to-primary">
+            <ComputerDesktopIcon className="m-auto h-20" />
+          </div>
+          <div className="flex w-full bg-primary">
+            <div className="flex w-1/3 p-4">
+              <div className="flex flex-grow rounded-md border-2 border-secondary bg-primary shadow-md hover:brightness-90">
+                <div className="m-auto">
+                  <FaApple className="h-20 w-20" />
+                </div>
+                <div className="m-auto flex flex-col gap-3">
+                  <h2>Apple</h2>
+                  <a
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href="https://testflight.apple.com/join/c8nNl8q1"
+                    className="m-auto flex rounded-lg border-4 border-transparent bg-accent p-1 font-semibold text-black shadow-md hover:text-black hover:brightness-110 active:border-green-200"
+                  >
+                    App Store
+                    <ArrowTopRightOnSquareIcon className="m-auto ml-2 h-4" />
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div className="flex w-1/3 p-4">
+              <div className="relative flex flex-grow rounded-md border-2 border-secondary bg-primary shadow-md hover:brightness-90">
+                <div className="m-auto">
+                  <FaAndroid className="h-20 w-20" />
+                </div>
+                <div className="m-auto flex flex-col gap-3">
+                  <h2>Android</h2>
+                  <a
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href="https://play.google.com/store/apps/details?id=com.geeksville.mesh&referrer=utm_source=downloads-page"
+                    className="m-auto flex rounded-lg border-4 border-transparent bg-accent p-1 font-semibold text-black shadow-md hover:text-black hover:brightness-110 active:border-green-200"
+                  >
+                    Play Store
+                    <ArrowTopRightOnSquareIcon className="m-auto ml-2 h-4" />
+                  </a>
+                  <a
+                    className="absolute bottom-2 flex"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href="https://meshtastic.org/docs/software/android/#f-droid"
+                  >
+                    F-Droid
+                    <ArrowTopRightOnSquareIcon className="m-auto ml-2 h-4" />
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div className="flex w-1/3 p-4">
+              <div className="flex flex-grow rounded-md border-2 border-secondary bg-primary shadow-md hover:brightness-90">
+                <div className="m-auto">
+                  <GlobeAltIcon className="h-20 w-20" />
+                </div>
+                <div className="m-auto flex flex-col gap-3">
+                  <h2>Web</h2>
+                  <a
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href="https://client.meshtastic.org"
+                    className="m-auto flex rounded-lg border-4 border-transparent bg-accent p-1 font-semibold text-black shadow-md hover:text-black hover:brightness-110 active:border-green-200"
+                  >
+                    meshtastic.org
+                    <ArrowTopRightOnSquareIcon className="m-auto ml-2 h-4" />
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <div className="container">
-          <HeaderText
-            type="h2"
-            text="Mobile Downloads"
-            link="mobile-downloads"
-          />
-          <ul
-            style={{
-              position: 'relative',
-              display: 'grid',
-              gap: '1.5rem',
-              gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
-              paddingLeft: '0',
-            }}
-          >
-            <DownloadCard
-              client="Android"
-              imgUrl="https://f-droid.org/badge/get-it-on.png"
-              url="https://meshtastic.org/docs/software/android/#f-droid"
-              imgUrl2="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png"
-              url2="https://play.google.com/store/apps/details?id=com.geeksville.mesh&referrer=utm_source=downloads-page"
-              notes={[
-                'To sideload, ',
-                <a
-                  href="https://github.com/meshtastic/Meshtastic-Android/releases/latest"
-                  rel="noreferrer"
-                  target="_blank"
-                >
-                  download the latest .apk
-                </a>,
-                ' from Github',
-              ]}
-            />
-            <DownloadCard
-              client="iOS"
-              url="https://testflight.apple.com/join/c8nNl8q1"
-              buttonText="Download on TestFlight"
-              notes="Currently only available in TestFlight"
-            />
-          </ul>
-        </div>
-        <div className="container">
-          <HeaderText
-            type="h2"
-            text="Firmware Downloads"
-            link="firmware-downloads"
-          />
-          <ul
-            style={{
-              position: 'relative',
-              display: 'grid',
-              gap: '1.5rem',
-              gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
-              paddingLeft: '0',
-            }}
-          >
+        {/*  */}
+        <h1 className="m-2">Firmware</h1>
+        <div className="flex w-full overflow-hidden rounded-xl">
+          <div className="flex w-1/5 bg-gradient-to-r from-orange-500 to-primary">
+            <CpuChipIcon className="m-auto h-20" />
+          </div>
+          <div className="flex w-full bg-primary">
             {data && !error ? (
               <>
                 <FirmwareCard
@@ -121,7 +151,7 @@ const Firmware = (): JSX.Element => {
                   description="Upcoming changes for testing. For those who want new features."
                   release={alpha}
                 />
-                <div className="card">
+                <div className="card m-4 border-2 border-secondary">
                   <div className="card__header">
                     <h3>Bleeding</h3>
                   </div>
@@ -148,39 +178,9 @@ const Firmware = (): JSX.Element => {
                 <PlaceholderFirmwareCard />
               </>
             )}
-          </ul>
-          Once downloaded, follow the flashing instructions for{' '}
-          <a
-            href="/docs/getting-started/flashing-firmware/flashing-esp32"
-            rel="noreferrer"
-            target="_blank"
-          >
-            ESP32 chipsets
-          </a>
-          ,{' '}
-          <a
-            href="/docs/getting-started/flashing-firmware/flashing-nrf52"
-            rel="noreferrer"
-            target="_blank"
-          >
-            NRF52 chipsets
-          </a>
-          , or the{' '}
-          <a
-            href="/docs/software/python/meshtastic-flasher"
-            rel="noreferrer"
-            target="_blank"
-          >
-            GUI instructions for Meshtastic Flasher
-          </a>
-          .
+          </div>
         </div>
-        <div className="container">
-          <i>
-            Google Play and the Google Play logo are trademarks of Google LLC.
-          </i>
-        </div>
-      </main>
+      </div>
     </Layout>
   );
 };

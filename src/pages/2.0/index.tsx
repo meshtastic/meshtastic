@@ -10,9 +10,9 @@ import Layout from '@theme/Layout';
 
 const TwoPointZero = (): JSX.Element => {
   const stats = [
-    { label: 'Active Nodes', value: 'xx+' },
+    { label: 'Active Nodes', value: 'A Lot!' },
     { label: 'Community Members', value: '4000+' },
-    { label: 'Total Commits', value: '4800+' },
+    { label: 'Firmware Commits', value: '4900+' },
     { label: 'Community Donations', value: '$5700+' },
   ];
   const logos = [
@@ -87,12 +87,12 @@ const TwoPointZero = (): JSX.Element => {
                       giveaways, so jump in and win some prizes.
                     </p>
                     <div className="flex gap-2">
-                      <button
-                        type="submit"
-                        className="block w-full rounded-md border border-transparent bg-rose-500 px-5 py-3 text-base font-medium text-white shadow hover:bg-rose-600 focus:outline-none focus:ring-2 focus:ring-rose-500 focus:ring-offset-2 sm:px-10"
+                      <a
+                        href="#start"
+                        className="flex w-full rounded-md border border-transparent bg-rose-500 px-5 py-3 text-base font-medium text-white shadow hover:bg-rose-600 hover:text-black hover:no-underline focus:outline-none focus:ring-2 focus:ring-rose-500 focus:ring-offset-2 sm:px-10"
                       >
-                        Find Out More
-                      </button>
+                        <span className="m-auto">Find Out More</span>
+                      </a>
                       <a
                         className="flex w-16 rounded-md border border-transparent bg-[#1DA1F2] shadow hover:bg-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2"
                         target="_blank"
@@ -236,16 +236,14 @@ const TwoPointZero = (): JSX.Element => {
                             <path d="M9.352 4C4.456 7.456 1 13.12 1 19.36c0 5.088 3.072 8.064 6.624 8.064 3.36 0 5.856-2.688 5.856-5.856 0-3.168-2.208-5.472-5.088-5.472-.576 0-1.344.096-1.536.192.48-3.264 3.552-7.104 6.624-9.024L9.352 4zm16.512 0c-4.8 3.456-8.256 9.12-8.256 15.36 0 5.088 3.072 8.064 6.624 8.064 3.264 0 5.856-2.688 5.856-5.856 0-3.168-2.304-5.472-5.184-5.472-.576 0-1.248.096-1.44.192.48-3.264 3.456-7.104 6.528-9.024L25.864 4z" />
                           </svg>
                           <p className="relative">
-                            Tincidunt integer commodo, cursus etiam aliquam
-                            neque, et. Consectetur pretium in volutpat, diam.
-                            Montes, magna cursus nulla feugiat dignissim id
-                            lobortis amet.
+                            Meshtastic is the neatest open source I've ever
+                            seen!
                           </p>
                         </div>
 
                         <footer className="mt-4">
                           <p className="text-base font-semibold text-rose-200">
-                            Quote author
+                            Elvis Presley
                           </p>
                         </footer>
                       </blockquote>
@@ -254,34 +252,64 @@ const TwoPointZero = (): JSX.Element => {
                 </div>
               </div>
 
-              <div className="relative mx-auto max-w-md px-4 sm:max-w-3xl sm:px-6 lg:px-0">
+              <div
+                id="start"
+                className="relative mx-auto max-w-md px-4 sm:max-w-3xl sm:px-6 lg:px-0"
+              >
                 {/* Content area */}
                 <div className="pt-12 sm:pt-16 lg:pt-20">
                   <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
                     A brief overview of all the changes and improvements
                   </h2>
                   <div className="mt-6 space-y-6 text-gray-500">
-                    <p className="text-lg">
-                      Sagittis scelerisque nulla cursus in enim consectetur
-                      quam. Dictum urna sed consectetur neque tristique
-                      pellentesque. Blandit amet, sed aenean erat arcu morbi.
-                      Cursus faucibus nunc nisl netus morbi vel porttitor vitae
-                      ut. Amet vitae fames senectus vitae.
-                    </p>
+                    <h2>Monumental stuff!</h2>
                     <p className="text-base leading-7">
-                      Sollicitudin tristique eros erat odio sed vitae, consequat
-                      turpis elementum. Lorem nibh vel, eget pretium arcu vitae.
-                      Eros eu viverra donec ut volutpat donec laoreet quam urna.
-                      Sollicitudin tristique eros erat odio sed vitae, consequat
-                      turpis elementum. Lorem nibh vel, eget pretium arcu vitae.
-                      Eros eu viverra donec ut volutpat donec laoreet quam urna.
+                      <li>
+                        Completely new LoRA band plan with faster messaging
+                      </li>
+                      <li>Smarter and more reliable mesh routing</li>
+                      <li>
+                        Unlimited nodes* (80 Connected at a time, oldest node
+                        will be removed when a new node joins the mesh)
+                      </li>
+                      <li>
+                        New messaging additions: waypoints, reactions
+                        (tap-backs), and telemetry
+                      </li>
+                      <li>
+                        Improvements for Canned Messages module and CardKB
+                        messaging for stand alone communicator devices
+                      </li>
+                      <li>Sensor, Screen, and Input device auto-detection</li>
+                      <li>New devices supported (6 new targets!)</li>
+                      <li>
+                        Added over the air bluetooth updates for NRF devices
+                        (RAK-4631)
+                      </li>
+                      <li>Ethernet support via RAK-13800</li>
+                      <li>
+                        Compass improvements for larger screens and
+                        customizations
+                      </li>
                     </p>
+                    <h2>Nerd stuff!</h2>
                     <p className="text-base leading-7">
-                      Rhoncus nisl, libero egestas diam fermentum dui. At quis
-                      tincidunt vel ultricies. Vulputate aliquet velit faucibus
-                      semper. Pellentesque in venenatis vestibulum consectetur
-                      nibh id. In id ut tempus egestas. Enim sit aliquam nec, a.
-                      Morbi enim fermentum lacus in. Viverra.
+                      <li>New filesystem for ESP32 (LittleFS)</li>
+                      <li>
+                        Upgraded Arduino framework for both NRF52 and ESP32
+                      </li>
+                      <li>New bluetooth stack for ESP32 (NimBLE)</li>
+                      <li>Unified GPS stack now using NMEA</li>
+                      <li>Support for more I2C sensors</li>
+                      <li>Support for ATECCA608B Cryptographic Coprocessor</li>
+                      <li>More Serial module I/O modes</li>
+                      <li>JSON messages over MQTT</li>
+                      <li>
+                        Device codebase refactored and optimized in many areas
+                      </li>
+                      <li>
+                        Completely restructured protobufs and configuration
+                      </li>
                     </p>
                   </div>
                 </div>
@@ -303,11 +331,6 @@ const TwoPointZero = (): JSX.Element => {
                       </div>
                     ))}
                   </dl>
-                  <div className="mt-10">
-                    <a href="#" className="text-base font-medium text-rose-500">
-                      Further reading...
-                    </a>
-                  </div>
                 </div>
               </div>
             </div>
@@ -415,7 +438,7 @@ const TwoPointZero = (): JSX.Element => {
                   </div>
                   <FlipClockCountdown
                     className="m-auto"
-                    to={new Date(2022, 12, 1).getTime()}
+                    to={new Date(2022, 11, 1).getTime()}
                   />
                 </div>
               </div>

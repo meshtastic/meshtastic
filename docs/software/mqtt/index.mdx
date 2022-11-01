@@ -82,8 +82,9 @@ If the message received contains valid JSON in the payload, the JSON is deserial
 
 Check out [MQTT Settings](/docs/settings/moduleconfig/mqtt) for full information. For quick start instructions, read on.
 
-- Connect your gateway node to wifi, by setting the `wifi_ssid` and `wifi_password` preferences.
-- Configure your broker settings: `mqtt_server`, `mqtt_username`, and `mqtt_password`. If all are left blank, the device will connect to the Meshtastic broker.
+- Connect your gateway node to wifi, by setting the `network.wifi_ssid`, `network.wifi_psk` and `network.wifi_enabled` preferences.
+- Alternatively use the RAK4631 with Ethernet Module RAK13800, by setting `network.eth_mode` and `network.eth_enabled`.
+- Configure your broker settings: `mqtt.address`, `mqtt.username`, and `mqtt.password`. If all are left blank, the device will connect to the Meshtastic broker.
 - Set `uplink_enabled` and `downlink_enabled` as appropriate for each channel. Most users will just have a single channel (at channel index 0). `meshtastic --ch-index 0 --ch-set uplink_enabled true`
 
 `uplink_enabled` will tell the device to publish mesh packets to MQTT.

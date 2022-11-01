@@ -15,6 +15,11 @@ const config = {
   organizationName: 'meshtastic',
   projectName: 'meshtastic',
   themeConfig: /** @type {import('@docusaurus/preset-classic').ThemeConfig} */ {
+    announcementBar: {
+      id: '2_0',
+      content:
+        '🎉 Meshtastic 2.0 Has Now Launched! Check it Out <a href="/2.0">Here</a> 🎉',
+    },
     colorMode: {
       respectPrefersColorScheme: true,
     },
@@ -64,7 +69,7 @@ const config = {
       ],
     },
     footer: {
-      copyright: `<a href="https://vercel.com/?utm_source=meshtastic&utm_campaign=oss">Powered by ▲ Vercel</a> | Meshtastic® is a registered trademark of Geeksville Industries LLC. | <a href="/docs/legal">Legal Information</a>.`,
+      copyright: `<a href="https://vercel.com/?utm_source=meshtastic&utm_campaign=oss">Powered by ▲ Vercel</a> | Meshtastic® is a registered trademark of Meshtastic LLC. | <a href="/docs/legal">Legal Information</a>.`,
     },
     algolia: {
       appId: 'IG2GQB8L3V',
