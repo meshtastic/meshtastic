@@ -1,8 +1,25 @@
 ---
-id: remote-hardware-service
-title: Remote Hardware Service
-sidebar_label: Remote Hardware
+id: peripherals
+title: Peripherals
+sidebar_label: Peripherals
+sidebar_position: 2
 ---
+
+## Firmware Versions
+
+The device firmware runs on the nodes to build the mesh for communication. Each different make and model of device requires a different build of the Meshtastic firmware in order to run properly. Thankfully, due to the design of Meshtastic, it is possible to port the firmware to new devices as they become available. The firmware currently runs on a range of ESP32 based devices, but there is also increasing support for the nRF52 microprocessor with some more recent devices coming to market.
+
+The current firmware has support for a screen to display received messages, along with information about nodes on the mesh, and more detailed information about the device on which it is running.
+
+The latest firmware can be downloaded from the [Downloads](/downloads) page. If you wish to view the code or contribute to development of the firmware, please visit the device code <a href="https://github.com/meshtastic/firmware">GitHub page</a>.
+
+:::info
+Please be aware that there are significant changes between version branches 1.2.x and 1.3.x which mean that devices need to be running the same branch of firmware to be able to talk to each other. Python, Android, and other software applications will also need to be running the same branch to be able to talk to the device.
+:::
+
+
+## Remote Hardware
+
 
 :::warning
 GPIO access is fundamentally dangerous because invalid options can physically damage or destroy your hardware. Ensure that you fully understand the schematic for your particular device before trying this as we do not offer a warranty. Use at your own risk.
@@ -14,13 +31,13 @@ This feature uses a preinstalled module in the device code and associated comman
 
 You can get the latest python tool/library with `pip3 install --upgrade meshtastic` on Windows/Linux/OS-X. See the [python section](/docs/software/python/cli/installation) for more details.
 
-## Supported operations in the initial release
+### Supported operations in the initial release
 
 - Set any GPIO
 - Read any GPIO
 - Receive notification of changes in any GPIO
 
-## Setup
+### Setup
 
 To prevent access from untrusted users, you must first make a `gpio` channel that is used for authenticated access to this feature. You'll need to install this channel on both the local and remote node.
 
@@ -43,7 +60,7 @@ If doing local testing, may want to change the speed of the channel at this time
    meshtastic --info
    ```
 
-4. Connect the remote device via USB (or use the [remote admin](device-remote-admin) feature to reach it through the mesh)
+4. Connect the remote device via USB (or use the [remote admin](/docs/mesh/device-remote-admin) feature to reach it through the mesh)
 
 5. Set it to join the gpio channel you created
    ```shell
@@ -52,7 +69,7 @@ If doing local testing, may want to change the speed of the channel at this time
 
 Now both devices should be able to talk over the `gpio` channel. Send a text message from one the other other verify. Also run "--nodes" to verify the second node shows up.
 
-## A little bit of information about masks
+### A little bit of information about masks
 
 To determine the appropriate mask for the pin(s) that you want to know. The python program (and output) below might help:
 
@@ -106,7 +123,7 @@ GPIO:43 mask:0x80000000000
 GPIO:44 mask:0x100000000000
 ```
 
-## How to easily test GPIO operations?
+### How to easily test GPIO operations?
 
 You can add a simple LED and resistor to validate that the GPIO operations work as expected. Used the tutorial at https://www.instructables.com/Slide-Switch-With-Arduino-Uno-R3/ as a guide.
 
@@ -131,11 +148,11 @@ By default, the pin may be "off" or "on". (It will most likely "off".) See the s
 
 [<img alt="T-Lora v1 with LED on GPIO 21" src="/img/LED_on_TLoraV1.jpg" style={{zoom:'25%'}} />](/img/LED_on_TLoraV1.jpg)
 
-## Doing GPIO operations
+### Doing GPIO operations
 
 You can programmatically do operations from your own python code by using the Meshtastic `RemoteHardwareClient` class. See the [python API](/docs/software/python/cli/installation) documentation for more details.
 
-## Using GPIOs from the python CLI
+### Using GPIOs from the python CLI
 
 Writing a GPIO (ex: turn "on" GPIO4):
 

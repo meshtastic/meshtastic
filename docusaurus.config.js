@@ -39,10 +39,6 @@ const config = {
           to: 'docs/introduction',
         },
         {
-          label: 'Config',
-          to: 'docs/device',
-        },
-        {
           label: 'Downloads',
           to: 'downloads',
         },
@@ -50,6 +46,10 @@ const config = {
           label: 'About',
           position: 'right',
           items: [
+            {
+              label: 'Introduction',
+              to: 'docs/introduction',
+            },
             {
               label: 'Getting Started',
               to: 'docs/getting-started',
