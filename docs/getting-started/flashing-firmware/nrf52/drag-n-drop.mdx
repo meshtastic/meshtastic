@@ -22,4 +22,14 @@ Download and unzip the latest frimware from [Meshtastic Downloads](https://mesht
 4. Open this drive and you should see three files: `CURRENT.UF2`, `INDEX.HTM`, and `INFO_UF2.TXT`
 5. Drop the appropriate appropriate `firmware-DEVICE_NAME-vx.x.x-xxxxxxx.uf2` file from the release you want to install onto this drive
 
-Once the file has finished copying onto the drive, the device will reboot and install the Meshtastic firmware. 
+Once the file has finished copying onto the drive, the device will reboot and install the Meshtastic firmware.
+
+:::caution
+If you're upgrading your NRF52 device from a previous version of Meshtastic rather than starting from scratch, you may need to do a full factory reset of the internal flash memory. Stale data saved by previous versions of the Meshtastic firmware can cause devices to get stuck in a crash loop at startup.
+:::
+
+Meshtastic uses the [littlefs](https://github.com/littlefs-project/littlefs) library to store configuration, logs, and other data in the internal flash of NRF52 devices. Updating the firmware does _not_ erase this additional data, which can cause issues when the format and location of data changes between releases.
+
+To reset the flash storage on your NRF52 board, first follow steps 1-4 above. At step 5, copy the included file named `Meshtastic_nRF52_factory_erase.uf2` onto the virtual disk device instead of a `firmware-DEVICE_NAME...` binary. After the device resets, connect to it via serial console using the [Meshtastic CLI `--noproto`](/docs/software/python/cli/#--noproto) mode or a standalone serial client like `minicom`. When you connect to the serial console, press any key; you should see the message `Formating ... Done`.
+
+Once the flash is erased you can use steps 2-5 above to re-install the latest Meshtastic firmware on a clean storage filesystem.
