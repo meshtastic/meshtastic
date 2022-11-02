@@ -1,7 +1,8 @@
 ---
 id: installation
-title: Meshtastic-python installation
+title: Meshtastic Python CLI installation
 sidebar_label: Installation
+slug: /software/python/cli/installation
 sidebar_position: 1
 ---
 
@@ -14,7 +15,7 @@ The [Meshtastic-python repo](https://github.com/meshtastic/Meshtastic-python) an
 
 If you wish to view the code or contribute to development of the python library or the command line interface, please visit the Meshtastic python [GitHub page](https://github.com/meshtastic/Meshtastic-python).
 
-There are standalone executables for Mac, Windows and Ubuntu if you do not want to install python and/or the python libraries required to run the mestastic CLI tool. See [Standalone](/docs/software/python/python-standalone) for more information.
+There are standalone executables for Mac, Windows and Ubuntu if you do not want to install python and/or the python libraries required to run the mestastic CLI tool. See [Standalone](#standalone) for more information.
 
 Installation can also be easily done through the [Python package installer pip](https://pypi.org/project/meshtastic):
 :::note
@@ -202,3 +203,102 @@ Be aware that the Meshtastic CLI is not able to control the nodes over USB throu
 :::info
 You may need to close and re-open the CLI. The path variables may or may not update for the current session when installing.
 :::
+
+
+## Standalone
+
+
+There are standalone executable files for Mac, Windows and Ubuntu. A single file is all you need to run the command line interface (CLI) Meshtastic tool. There is a zip file per operating system. To use, see the operating system specific notes below:
+
+They can be found on the [Releases](https://github.com/meshtastic/Meshtastic-python/releases) page.
+
+<Tabs
+groupId="operating-system"
+defaultValue="windows"
+values={[
+{label: 'Ubuntu', value: 'ubuntu'},
+{label: 'macOS', value: 'macos'},
+{label: 'Windows', value: 'windows'},
+]}>
+<TabItem value="ubuntu">
+
+- Download meshtastic_ubuntu
+
+- Run the following command to make the file executable and rename it 'meshtastic':
+
+```
+chmod +x meshtastic_ubuntu && mv meshtastic_ubuntu meshtastic
+```
+
+- To run the cli:
+
+```
+./meshtastic
+```
+
+:::tip
+Copy (or move) this binary somewhere in your path.
+:::
+
+</TabItem>
+<TabItem value="macos">
+
+- Download meshtastic_mac
+
+- Run the following command to make the file executable and to rename it 'meshtastic':
+
+```
+chmod +x meshtastic_mac && mv meshtastic_mac meshtastic
+```
+
+- Try to run it:
+
+```
+./meshtastic
+```
+
+:::note
+You may get a dialog that says:
+"meshtastic" can't be opened because Apple cannot check it for malicious software.
+:::
+
+- To fix, go into "System Preferences", "Security & Privacy", "General" tab, and click on the "Allow Anyway" button.
+
+- Try to run it again:
+
+```
+./meshtastic
+```
+
+:::note
+You may get a dialog that says:
+"meshtastic" can't be opened because Apple cannot check it for malicious software.
+Click "Open".
+:::
+
+- Now when you want to run it, you can simply run:
+
+```
+./meshtastic
+```
+
+:::tip
+Copy (or move) this binary somewhere in your path.
+:::
+
+</TabItem>
+<TabItem value="windows">
+
+- Download meshtastic_windows
+
+- Rename to meshtastic.exe
+
+- To run, open a windows command prompt, navigate to the location of the executable and run:
+
+```
+meshtastic.exe
+```
+
+</TabItem>
+</Tabs>
+

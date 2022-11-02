@@ -59,6 +59,10 @@ const config = {
               to: 'docs/contributing',
             },
             {
+              label: 'Legal',
+              to: 'docs/legal',
+            },
+            {
               label: 'FAQs',
               to: 'docs/faq',
             },
