@@ -8,43 +8,41 @@ sidebar_label: Development
 
 We use the Visual Studio Code (VScode) default python formatting conventions (autopep8). So if you use that IDE you should be able to use "Format Document" and not generate unrelated diffs. If you use some other editor, please do not change formatting on lines you have not changed yourself.
 
-If you need to build a new release you will need:
 
-```
+### Building
+
+**To build a new release**
+
+```sh
 apt install pandoc
 sudo pip3 install markdown pdoc3 webencodings pyparsing twine autopep8 pylint pytest pytest-cov
 ```
 
-For development, you will probably want to run:
+**For development**
 
-```
+```sh
 pip3 install -r requirements.txt
 ```
 
-To lint, run:
+### Linting
 
-```
+```sh
 pylint meshtastic
 ```
+### Testing
 
-To test, first install this code locally, then run pytest:
+**Install and run pytest**
 
-```
+- For more verbosity, add `-v` or even `-vv` 
+
+```sh
 pip3 install .
-pytest
-```
-
-Possible options for testing:
-
-- For more verbosity, add "-v" or even "-vv" like this:
-
-```
 pytest -vv
 ```
 
 **Run just unit tests**
 
-```
+```sh
 pytest
 # or (more verbosely)
 pytest -m unit
@@ -54,34 +52,36 @@ make
 
 **Run just integration tests**
 
-```
+```sh
 pytest -m int
 ```
 
 **Run the smoke test with only one device connected serially (aka smoke1)**
 
-```
+```sh
 pytest -m smoke1
 ```
 
-CAUTION: Running smoke1 will reset values on the device, including the region to 1 (US).
+:::caution
+Running `smoke1` will reset values on the device, including the region to 1 (US).
 Be sure to hit the reset button on the device after the test is completed.
+:::
 
 **Run the smoke test with only two device connected serially (aka smoke2)**
 
-```
+```sh
 pytest -m smoke2
 ```
 
 **Run the wifi smoke test**
 
-```
+```sh
 pytest -m smokewifi
 ```
 
 **Run a specific test**
 
-```
+```sh
 pytest -msmoke1 meshtastic/tests/test_smoke1.py::test_smoke1_info
 
 # or to run a specific smoke2 test
@@ -91,13 +91,13 @@ pytest -m smoke2 meshtastic/tests/test_smoke2.py::test_smoke2_info
 pytest -m smokewifi meshtastic/tests/test_smoke_wifi.py::test_smokewifi_info
 ```
 
-**Add another classification of tests such as "unit" or "smoke1"**
+**Add another classification of tests such as `unit` or `smoke1`**
 
 See [pytest.ini](https://github.com/meshtastic/Meshtastic-python/blob/master/pytest.ini).
 
 **To see the unit test code coverage**
 
-```
+```sh
 pytest --cov=meshtastic
 # or if want html coverage report
 pytest --cov-report html --cov=meshtastic
@@ -107,17 +107,17 @@ make cov
 
 **To see slowest unit tests, you can run**
 
-```
+```sh
 pytest --durations=0
 # or
 make slow
 ```
 
-**Generate the Python API documentation** 
+### Generate the Python API documentation
 
 Pre-generated: [API documentation](https://python.meshtastic.org)
 
-```
+```sh
 bin/regen-docs.sh
 ```
 

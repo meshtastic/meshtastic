@@ -1,0 +1,208 @@
+---
+id: faq
+title: FAQs
+slug: /faq
+sidebar_position: 3
+---
+
+## Overview
+
+### Where can I get additional help, ask questions, or bond with the Meshtastic community?
+
+This site (which has a great search function) is the preferred place for up to date documentation. Many of our users and developers hang out on the [Meshtastic Discord](https://discord.gg/ktMAKGBnBs) server where you may connect with like-minded people.
+
+### How can I contribute to Meshtastic?
+
+Everyone contributes in a different way. Join the [Meshtastic Discord](https://discord.gg/ktMAKGBnBs) and introduce yourself. We're all very friendly. If you'd like to pitch in some code, check out the [Developers](/docs/developers) menu on the left.
+
+<!-- Android Client-->
+
+## Android Client
+
+### What versions of Android does the Meshtastic Android App require?
+
+Minimum requirement is Android 5 (Lollipop 2014, first BLE support), however Android 6 (Marshmallow 2015) is recommended as Bluetooth is more stable.
+
+### What's the cloud icon next to the message?
+
+- Empty Cloud - Queued on the app to be sent to your device.
+- Up Arrow - Queued on the device to be sent over the mesh.
+- Check Mark - Delivered over the mesh.
+- Cross Mark - Error.
+
+### How can I clear the message history?
+
+Long press any message to select and show the menu with "delete" and "select all" buttons.
+
+<!-- iOS Client-->
+
+## iOS Client
+
+### What version of iOS does the Meshtastic iOS App Require?
+
+The now-in-beta iOS app requires iOS v15.
+
+### How do I get the Meshtastic iOS App?
+
+See [iOS App](/docs/software/apple)
+
+### After updating firmware, my node is not connecting via Bluetooth. What should I do?
+
+Try forgetting the Bluetooth connection from the iOS System Settings. Re-pair and try again.
+
+<!-- Web Client-->
+
+## Web Client 
+
+### How do I access the network from my web browser?
+
+Visit http://meshtastic.local (Note: This is a work in progress.)
+
+### I've Flashed my device but I can't access the Web UI
+
+Ensure you have used the included `device-install` script to flash your device, and that the file `spiffs-*.bin` is present in the same folder as your firmware at the time of flashing.
+
+Note: Currently only Chrome and Chromium based browsers offer reliable support for the Web UI.
+
+<!-- Channels -->
+
+## Channels
+
+### How do I share my Meshtastic Channel with other people?
+
+Your Meshtastic client (Android, Web, or Python) will provide you a URL or QR code. You can email, text or print this URL or QR code and share it with people you want to join your Meshtastic Channel. Note: This feature is not yet available on the iOS app.
+
+<!-- Python -->
+
+## Python CLI
+
+### How do I find out more about installing (and using) Meshtastic via command line?
+
+[See our guide here](/docs/software/python/cli/installation).
+
+### How do I find out more about using python to interact?
+
+[See our guide here](/docs/software/python/cli/usage).
+
+<!-- Devices -->
+
+## Devices
+
+### How do I turn off an ESP32 t-beam based device?
+
+Hold down the left PWR button for about 10 seconds and the display should turn off.
+
+### How do I turn on an ESP32 t-beam based device?
+
+Push the left PWR button for about 1 second.
+
+### Where do I purchase the device hardware?
+
+Each [supported device](/docs/hardware/supported/tbeam) has a "Purchase Link".
+
+### I have my hardware. How do I install the firmware and any required drivers?
+
+[See our guide here](/docs/getting-started/flashing-firmware).
+
+### How do I update the firmware to the latest version?
+
+If the device is running Meshtastic firmware, you might be able to update over-the-air like via the Android app.
+
+### My device has gone to sleep. Are received messages lost?
+
+The LoRa radio on the node is still active and will wake up the CPU when the device is sleeping. If your phone is in range, the node will relay any messages your phone may have missed. If you're in range and your device is active, messages have not been lost.
+
+### My device has gone to sleep and I can't send any messages.
+
+Once the node wakes up from sleep, your phone will relay any delayed messages through your node and to the mesh network. Give it a few minutes and it'll do the right thing.
+
+### How do I turn off an ESP32 t-beam based device?
+
+Hold down the left PWR button for about 10 seconds and the display should turn off.
+
+### How do I turn on a t-beam?
+
+Push the left PWR button for about 10 seconds.
+
+### How can I tell the device not to sleep?
+
+- Android instructions see: [Android Usage](/docs/software/android/android-usage#configuration-options)
+- Python CLI instructions see: [Python Usage](/docs/software/python/cli/usage#changing-settings)
+
+### Why does only one RAK Meshtastic Starter kit show up in my node list?
+
+There was a bug where Meshtastic Starter kits were sent out with the same MAC address. With a single MAC address the devices all report as being the same device. Without the battery connected, flash the starter kit device(s) to 1.2.59 and then do a factory reset, disconnect and reconnect the board and run `meshtastic --info`.
+
+### Why does only one RAK Meshtastic Starter kit show up in my node list?
+
+There was a bug where Meshtastic Starter kits were sent out with the same MAC address. With a single MAC address the devices all report as being the same device. Without the battery connected, flash the starter kit device(s) to 1.2.59 and then do a factory reset, disconnect and reconnect the board and run `meshtastic --info`.
+
+<!-- HAM -->
+
+## Amateur Radio (HAM)
+
+Meshtastic can be used by both unlicensed people and licensed HAM operators. 
+
+### What is the benefit of using a HAM license with Meshtastic?
+
+If you use your HAM radio license with Meshtastic, consider both the privileges and restrictions:
+
+#### Privileges
+- Increased Transmit Power
+    - Up to 1500W transmit power! [FCC Part 97.313](https://www.ecfr.gov/current/title-47/chapter-I/subchapter-D/part-97/subpart-D/section-97.313)
+- Higher Gain Antennas
+
+#### Restrictions
+- Plain-Text Only
+    - On amateur radio bands, encryption is illegal. [FCC Part 97.113.C](https://www.ecfr.gov/current/title-47/chapter-I/subchapter-D/part-97/subpart-B/section-97.113)
+- Lack of Privacy
+    - As a HAM operator, it is a requirement that you identify yourself by your call sign periodically when transmitting. Your call sign will be publicly transmitted at least once every 10 minutes at minimum. [FCC Part 97.119.A](https://www.ecfr.gov/current/title-47/chapter-I/subchapter-D/part-97/subpart-B/section-97.119)
+
+
+### How do I set my HAM call sign?
+
+Please see instructions for [Enabling HAM License from the Python CLI](/docs/software/python/cli/usage#ham-radio-support)
+
+<!-- Flasher -->
+
+## Flasher
+
+### Why does my operating system flag Meshtastic Flasher as having malware?
+
+The flasher contains no malware and completely passed the Microsoft malware scanning. It appears that a lot of file download services are using the Windows Defender data, so if you're seeing alerts of a detected trojan please [update your Windows Defender definitions](https://www.microsoft.com/en-us/wdsi/defenderupdates).
+
+### What if I'm still having issues on Windows 10?
+
+It's been reported that `App execution aliases` might conflict with one another and prevent python3 from being able to run properly. There is an example of a fix located [here](https://github.com/meshtastic/Meshtastic-gui-installer/issues/154).
+
+<!-- Mesh -->
+
+## Mesh
+
+### Does Meshtastic use LoRaWAN?
+
+Meshtastic uses LoRa peer to peer (p2p), which allows much more flexibility in how LoRa is utilized. Our messaging and position updates are far too "random" compared to LoRaWAN requirements.
+
+### Will Meshtastic work with (insert LoRa service)
+
+Meshtastic uses LoRa peer to peer (p2p), which has allowed us to customize how we use the protocol. Likely it will not work with the service you have in mind, but it may be possible to build a bridge between services using MQTT. That will require further development outside the scope of this project to implement.
+
+### Can I locate a device via triangulation?
+
+There is a [community project](https://github.com/a-f-G-U-C/Meshtastic-ZPS) that has worked out how to accomplish this.
+
+<!-- Modules -->
+
+## Modules
+
+### What are Modules?
+
+Modules are features that expand the basic device functionality and/or integrate with other services.
+
+### What modules do we have available?
+
+A list of available modules is available [here](/docs/settings/moduleconfig).
+
+### I'd like to write a module. How do I get started?
+
+API documentation for creating modules is available [here](/docs/development/firmware/module-api).

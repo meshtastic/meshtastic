@@ -7,7 +7,7 @@ sidebar_position: 4
 
 ## Bridging networks
 
-Meshtastic networks in different locations beyond the reach of LoRa can be easily bridged together using MQTT. The simplest option is to connect your mesh to the official Meshtastic MQTT broker. This makes your devices appear on the world map, and provides a copy of your mesh traffic, translated into JSON. All you have to do to join the public MQTT server is to Enable MQTT and set uplink and downlink on the channels that you want to share over MQTT. The default device configuration using the public MQTT Server is encrypted.
+Meshtastic networks in different locations beyond the reach of LoRa can be easily bridged together using MQTT. The simplest option is to connect your mesh to the official Meshtastic MQTT broker. This makes your devices appear on the world map, and provides a copy of your mesh traffic, translated into JSON. All you have to do to join the public MQTT server is to Enable MQTT and set Uplink and Downlink on the channels that you want to share over MQTT. The default device configuration using the public MQTT Server is encrypted.
 
 You can also share channel settings with a remote network. If you use the default meshtastic MQTT server, packets are always encrypted. If you use a custom MQTT broker (ie set `mqtt.address`), the `mqtt.encryption_enabled` setting applies, which by default is false. You can also specify your own private MQTT broker and specify authentication for that broker to bridge several mesh networks together, via the internet (or just a local IP network).
 
@@ -40,7 +40,7 @@ The payload is a raw protobuf. Looking at the MQTT traffic with a program like `
 	ShortFast	!937bed1c
 ```
 
-Packets from the following [port numbers](/docs/developers/Firmware/portnum) are serialized to JSON and then forwarded to the `msh/2/json/CHANNELID/DEVICEID` topic: `TEXT_MESSAGE_APP`, `ENVIRONMENTAL_MEASUREMENT_APP`, `NODEINFO_APP` and `POSITION_APP`.
+Packets from the following [port numbers](/docs/development/firmware/portnum) are serialized to JSON and then forwarded to the `msh/2/json/CHANNELID/DEVICEID` topic: `TEXT_MESSAGE_APP`, `ENVIRONMENTAL_MEASUREMENT_APP`, `NODEINFO_APP` and `POSITION_APP`.
 
 An example of a received `NODEINFO_APP` message:
 
@@ -102,7 +102,7 @@ If the channelid 'well known'/public it could be decrypted by a web service (if 
 
 #### Service Envelope
 
-The payload published on mesh/... will always be wrapped in a [ServiceEnvelope protobuf](/docs/developers/protobufs/api#serviceenvelope).
+The payload published on mesh/... will always be wrapped in a [ServiceEnvelope protobuf](/docs/development/protobuf-api#serviceenvelope).
 
 ServiceEnvelope will include the message, and full information about arrival time, who forwarded it, source channel, source mesh id, etc...
 
@@ -112,7 +112,7 @@ The unique ID for a node. A hex string that starts with an ! symbol.
 
 #### USERID
 
-A user ID string. This string is either a user ID if known or a nodeid to simply deliver the message to whoever the local user is of a particular device (i.e. person who might see the screen). FIXME, see what riot.im uses and perhaps use that convention? Or use the signal +phone number convention? Or the email addr?
+A user ID string. This string is either a user ID if known or a nodeid to simply deliver the message to whoever the local user is of a particular device (i.e. person who might see the screen). FIXME, see what riot.im uses and perhaps use that convention? Or use the signal +phone number convention? Or the email address?
 
 #### CHANNELID
 
@@ -120,7 +120,7 @@ FIXME, figure out how channelids work
 
 ### Gateway nodes
 
-Any meshtastic node that has a direct connection to the internet (either via a helper app or installed Wifi/4G/satellite hardware) can function as a "Gateway node".
+Any meshtastic node that has a direct connection to the internet (either via a helper app or installed WiFi/4G/satellite hardware) can function as a "Gateway node".
 
 Gateway nodes (via code running in the phone) will contain two tables to whitelist particular traffic to either be delivered toward the internet, or down toward the mesh. Users that are developing custom apps will be able to customize these filters/subscriptions.
 
@@ -139,13 +139,13 @@ An existing public [MQTT broker](https://mosquitto.org) will be the default for 
 
 1. install mqtt server
 
-```
+```sh
 brew install mosquitto
 ```
 
 2. start the mqtt server
 
-```
+```sh
 brew services restart mosquitto
 ```
 
@@ -153,13 +153,13 @@ brew services restart mosquitto
 
 Note: this will wait until you press control-c (publish a message, see below)
 
-```
+```sh
 mosquitto_sub -t test/hello
 ```
 
 4. In another window, publish a message to that topic:
 
-```
+```sh
 mosquitto_pub -h localhost -q 0 -t test/hello -m 'yo!'
 ```
 
@@ -173,7 +173,7 @@ allow_anonymous true
 
 6. Restart the service:
 
-```
+```sh
 brew services restart mosquitto
 ```
 
@@ -183,7 +183,7 @@ brew services restart mosquitto
 
 Here is an example publish message in python:
 
-```
+```python
 #!/usr/bin/env python3
 import paho.mqtt.client as mqtt
 from random import randrange, uniform
@@ -201,7 +201,7 @@ while True:
 
 Here is example subscribe in python:
 
-```
+```python
 #!/usr/bin/env python3
 
 import paho.mqtt.client as paho
@@ -228,8 +228,9 @@ if __name__ == '__main__':
 
 ### Using MQTT with Node-RED
 
-Below is a valid json envelope for information sent by MQTT to a device for broadcast onto the mesh.
- ```
+Below is a valid JSON envelope for information sent by MQTT to a device for broadcast onto the mesh.
+
+ ```json
  {
    "sender":"whatever you want to be the SENDER",
    "type":"sendtext",
@@ -240,17 +241,17 @@ Below is a valid json envelope for information sent by MQTT to a device for broa
 Node-RED is a free cross-platform programming tool for wiring together hardware, APIs, and online services developed originally by IBM for IOT. It is widely used for home automation by many non-professional programmers and runs well on Pi's. Node-red has many plug-in modules written by the community. I will use this platform as a practical example on how to interface with the MQTT features of Meshtastic. Everything can be done from GUI's without using command line.
 
 Step one: use http://client.meshtastic.org/ one of the Apple apps or the CLI to connect to your device and adjust these settings.
-Enable and enter network ssid/psk. Settings--> Device Config--> Network; Save.
+Enable and enter network SSID/PSK. Settings--> Device Config--> Network; Save.
 Set MQTT server address. Settings--> Module Config--> MQTT config; Verify Encryption Enabled is OFF. Turn JSON Output Enabled ON. Save.
-Go to Channel Editor and set uplink and downling enabled to True. Save.
+Go to Channel Editor and set Uplink and Downlink enabled to True. Save.
 
-Step two: if you don't want to depend on JSON decoding on the device, you can decode the proto messages off-device. To do that you will need to get the .proto files from https://github.com/meshtastic/protobufs. They function as a schema and are required for decoding in Node-RED. Save the files where the node-RED application can access them and note the file path of the "mqtt.proto" file.
+Step two: if you don't want to depend on JSON decoding on the device, you can decode the protobuf messages off-device. To do that you will need to get the .proto files from https://github.com/meshtastic/protobufs. They function as a schema and are required for decoding in Node-RED. Save the files where the node-RED application can access them and note the file path of the "mqtt.proto" file.
 
-Step three: install Node-RED plug-ins to your node-RED application for an embedded mqqt server and a protobuf decoder.
+Step three: install Node-RED plug-ins to your node-RED application for an embedded MQQT server and a protobuf decoder.
 https://flows.nodered.org/node/node-red-contrib-aedes
 https://flows.nodered.org/node/node-red-contrib-protobuf
 
-Drag, drop, and wire the nodes like this. For this example, I ran node-RED on a Windows machine. Note that file paths might be specified differently on different platforms. MQTT server wild cards are usually the same. A "+" is a single level wildcard for a specific topic level. A "#" is a multiple level wildcard that can be used at the end of a topic filter. The debug messages shown are what happens when the inject button sends a json message with a topic designed to be picked up by the specified Meshtastic device and then having it rebroadcast the message.
+Drag, drop, and wire the nodes like this. For this example, I ran node-RED on a Windows machine. Note that file paths might be specified differently on different platforms. MQTT server wild cards are usually the same. A "+" is a single level wildcard for a specific topic level. A "#" is a multiple level wildcard that can be used at the end of a topic filter. The debug messages shown are what happens when the inject button sends a JSON message with a topic designed to be picked up by the specified Meshtastic device and then having it rebroadcast the message.
 
 [<img src="/documents/mqtt/NodeRedTwo.jpg" style={{zoom:'50%'}} />](/documents/mqtt/NodeRedTwo.jpg)
 [<img src="/documents/mqtt/NodeRedThree.jpg" style={{zoom:'50%'}} />](/documents/mqtt/NodeRedThree.jpg)
@@ -260,7 +261,7 @@ The aedes broker must be set up on the same flow as the other nodes. By activati
 [<img src="/documents/mqtt/Broker1.jpg" style={{zoom:'50%'}} />](/documents/mqtt/Broker1.jpg)
 Receiving a json mqqt message is very simple.
 [<img src="/documents/mqtt/Consume.jpg" style={{zoom:'50%'}} />](/documents/mqtt/Consume.jpg)
-Injecting a json message to be sent by a device is also very simple. You do need the correct enevelope.
+Injecting a json message to be sent by a device is also very simple. You do need the correct envelope.
 [<img src="/documents/mqtt/Inject.jpg" style={{zoom:'50%'}} />](/documents/mqtt/Inject.jpg)
 Forwarding a text message from one device, through a broker, to another broker/device/channel would look like this.
 [<img src="/documents/mqtt/Forward.jpg" style={{zoom:'50%'}} />](/documents/mqtt/Forward.jpg)

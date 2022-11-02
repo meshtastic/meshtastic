@@ -20,9 +20,6 @@ const config = {
       content:
         '🎉 Meshtastic 2.0 Has Now Launched! Check it Out <a href="/2.0">Here</a> 🎉',
     },
-    colorMode: {
-      respectPrefersColorScheme: true,
-    },
     docs: {
       sidebar: {
         autoCollapseCategories: true,
@@ -39,32 +36,39 @@ const config = {
       items: [
         {
           label: 'Docs',
+          to: 'docs/introduction',
+        },
+        {
+          label: 'Config',
+          to: 'docs/device',
+        },
+        {
+          label: 'Downloads',
+          to: 'downloads',
+        },
+        {
+          label: 'About',
+          position: 'right',
           items: [
             {
               label: 'Getting Started',
               to: 'docs/getting-started',
             },
             {
-              label: 'Configuration',
-              to: 'docs/settings',
+              label: 'Contributing',
+              to: 'docs/contributing',
             },
             {
-              label: 'Hardware',
-              to: 'docs/hardware',
-            },
-            {
-              label: 'Software',
-              to: 'docs/software',
-            },
-            {
-              label: 'Developers',
-              to: 'docs/developers',
+              label: 'FAQs',
+              to: 'docs/faq',
             },
           ],
         },
         {
-          label: 'Downloads',
-          to: 'downloads',
+          href: 'https://github.com/meshtastic',
+          position: 'right',
+          className: 'header-github-link',
+          'aria-label': 'GitHub repository',
         },
       ],
     },
@@ -77,6 +81,9 @@ const config = {
       indexName: 'meshtastic',
       contextualSearch: false,
       searchPagePath: 'search',
+    },
+    colorMode: {
+      respectPrefersColorScheme: true,
     },
   },
   plugins: [

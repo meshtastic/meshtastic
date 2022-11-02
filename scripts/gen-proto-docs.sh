@@ -10,7 +10,7 @@ cd "${PROJECT_BASE}"/protobufs || exit
 git checkout master
 
 if git submodule status | grep -q '^[-]|^[+]' ; then \
-  echo "INFO: Reinitializing git submodules..."; \
+  echo "INFO: Re-initializing git submodules..."; \
   git submodule update --init --recursive; \
 else \
   echo "INFO: Updating git submodules..."; \
@@ -21,4 +21,4 @@ fi
 # remove old generated protos
 rm -rf "${PROJECT_BASE}/docs/developers/Protobufs/*"
 
-protoc --doc_opt="${PROJECT_BASE}/protobuf.tmpl,api.mdx" --doc_out="${PROJECT_BASE}/docs/developers/Protobufs/" --proto_path="${PROJECT_BASE}/protobufs" *.proto
+protoc --doc_opt="${PROJECT_BASE}/protobuf.tmpl,protobuf-api.mdx" --doc_out="${PROJECT_BASE}/docs/development/" --proto_path="${PROJECT_BASE}/protobufs" *.proto

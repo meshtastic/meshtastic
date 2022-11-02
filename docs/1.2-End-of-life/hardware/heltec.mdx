@@ -1,46 +1,36 @@
 ---
-id: techo
-title: LILYGO® TTGO T-Echo devices
-sidebar_label: LILYGO® T-Echo
-sidebar_position: 2
+id: heltec
+title: Heltec device
+sidebar_label: Heltec
+sidebar_position: 6
 ---
 
-The T-Echo is the latest device to be release by LILYGO® supporting a low power consumption microcontroller.
+## WiFi LoRa 32 (V2) * Not Recommended - Support may be dropped
 
-### Features
+It continues to be a struggle to support this very old ESP32 chip, not officially supported in 1.3 / 2.0 and support may be dropped completely.
 
-- nRF52840 - Bluetooth BLE 5.0, NFC and very low power consumption
-- SX1262 - LoRa transceiver
-- 1.54" eInk display
-- L76K - GNSS receiver - Supporting GPS, BeiDou, GLONASS & QZSS
-- Reset, Program and capacitive touch buttons
+Using this device with a battery is not recommended.
+
+- ESP32 - Wifi & Bluetooth
+- SX127x - LoRa Transceiver
+- Frequency options:
+  - 433 MHz
+  - 470-510 MHz
+  - 863-870 MHz
+  - 902-928 MHz
+- Built in 0.96 inch OLED display
 - U.FL antenna connector
-- Optional BME280 - Humidity and Pressure Sensor
-- Comes with a case and battery
+- Reset and Program switches
+- No GPS
 
-### Resources
+- Firmware file: `firmware-heltec-1.x.x.bin`
 
-- Firmware file: `firmware-t-echo-2.x.x.uf2`
-- [Purchase link](https://www.aliexpress.com/item/1005002842456390.html)
-- TTGO's [GitHub page](https://github.com/Xinyuan-LilyGO/LilyGO-T-Echo) for the T-Echo
+[<img src="Heltec WiFi LoRa 32 (V2)" src="/img/hardware/heltec-v2.png" style={{zoom:'25%'}} />](/img/hardware/heltec-v2.png)
 
-<img
-  alt="LILYGO T-Echo"
-  src="/img/hardware/t-echo.png"
-  style={{ zoom: '15%' }}
-/>
+[<img src="Heltec WiFi LoRa 32 (V2) Pinouts" src="/img/hardware/heltec_v2_pinmap.png" style={{zoom:'25%'}} />](/img/hardware/heltec_v2_pinmap.png)
 
-### T-Echo button functions
+There are two versions of the Heltec (V2). Below is a picture highlighting the visual differences:
 
-- Capacitive top button
-  - A short press refreshes the current screen
-- Button 1
-  - A single press resets the device
-  - A double press puts the device into bootloader mode ready to receive a new firmware
-- Button 2
-  - A single press changes the page displayed on the device
-  - A double press turns the screen backlight on/off
-  - A long press turns the device off
+[<img src="Heltec WiFi LoRa 32 (V2)" src="/img/hardware/heltec_v2_vs_v21.png" style={{zoom:'25%'}} />](/img/hardware/heltec_v2_vs_v21.png)
 
-
-[<img alt="LILYGO T-Echo" src="/img/hardware/t-echo-lilygo.jpg" style={{zoom:'25%'}} />](/img/hardware/t-echo-lilygo.jpg)
+- See [hardware update log](https://docs.heltec.org/en/node/esp32/dev-board/hardware_update_log.html) for more details
