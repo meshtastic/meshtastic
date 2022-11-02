@@ -30,6 +30,6 @@ If you're upgrading your NRF52 device from a previous version of Meshtastic rath
 
 Meshtastic uses the [littlefs](https://github.com/littlefs-project/littlefs) library to store configuration, logs, and other data in the internal flash of NRF52 devices. Updating the firmware does _not_ erase this additional data, which can cause issues when the format and location of data changes between releases.
 
-To reset the flash storage on your NRF52 board, first follow steps 1-4 above. At step 5, copy the file named `Meshtastic_nRF52_factory_erase.uf2` onto the virtual disk device instead of a `firmware-DEVICE_NAME...` binary. After the device resets, connect to it via serial console using the [Meshtastic CLI `--noproto`](/docs/software/python/cli/#--noproto) mode or a standalone serial client like `minicom`. When you connect to the serial console, press any key; you should see the message `Formating ... Done`.
+To reset the flash storage on your NRF52 board, first follow steps 1-4 above. At step 5, copy the included file named `Meshtastic_nRF52_factory_erase.uf2` onto the virtual disk device instead of a `firmware-DEVICE_NAME...` binary. After the device resets, connect to it via serial console using the [Meshtastic CLI `--noproto`](/docs/software/python/cli/#--noproto) mode or a standalone serial client like `minicom`. When you connect to the serial console, press any key; you should see the message `Formating ... Done`.
 
 Once the flash is erased you can use steps 2-5 above to re-install the latest Meshtastic firmware on a clean storage filesystem.
