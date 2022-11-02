@@ -11,7 +11,7 @@ Meshtastic networks in different locations beyond the reach of LoRa can be easil
 
 You can also share channel settings with a remote network. If you use the default meshtastic MQTT server, packets are always encrypted. If you use a custom MQTT broker (ie set `mqtt.address`), the `mqtt.encryption_enabled` setting applies, which by default is false. You can also specify your own private MQTT broker and specify authentication for that broker to bridge several mesh networks together, via the internet (or just a local IP network).
 
-You can find the settings available for MQTT [here](https://meshtastic.org/docs/settings/moduleconfig/mqtt).
+You can find the settings available for MQTT [here](/docs/settings/moduleconfig/mqtt).
 
 ## Software Integrations
 
@@ -102,7 +102,7 @@ If the channelid 'well known'/public it could be decrypted by a web service (if 
 
 #### Service Envelope
 
-The payload published on mesh/... will always be wrapped in a [ServiceEnvelope protobuf](/docs/development/protobuf-api#serviceenvelope).
+The payload published on mesh/... will always be wrapped in a [ServiceEnvelope protobuf](/docs/protobufs/api#serviceenvelope).
 
 ServiceEnvelope will include the message, and full information about arrival time, who forwarded it, source channel, source mesh id, etc...
 
@@ -267,4 +267,8 @@ Forwarding a text message from one device, through a broker, to another broker/d
 [<img src="/documents/mqtt/Forward.jpg" style={{zoom:'50%'}} />](/documents/mqtt/Forward.jpg)
 If you want to decode text and position messages without json, it gets complicated:
 [<img src="/documents/mqtt/Decode.jpg" style={{zoom:'50%'}} />](/documents/mqtt/Decode.jpg)
+
+But node-red can rapidly (minutes vs days) put together some pretty impressive output when paired with meshtastic. Here is an example of geofencing and mapping of a single device via mqtt data.
+[<img src="/documents/mqtt/Mapping.jpg" style={{zoom:'50%'}} />](/documents/mqtt/Mapping.jpg)
+[<img src="/documents/mqtt/MapFlow.jpg" style={{zoom:'50%'}} />](/documents/mqtt/MapFlow.jpg)
 
