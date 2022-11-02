@@ -38,15 +38,15 @@ const OEM = (): JSX.Element => {
     : [];
 
   const readFile = (file: File) => {
-    return new Promise((resolve: (value: ArrayBuffer) => void, reject) => {
+    return new Promise((resolve: (value: string) => void, reject) => {
       const reader = new FileReader();
 
       reader.onload = (res) => {
-        resolve(res.target.result as ArrayBuffer);
+        resolve(res.target.result as string);
       };
       reader.onerror = (err) => reject(err);
 
-      reader.readAsArrayBuffer(file);
+      reader.readAsText(file);
     });
   };
 
@@ -100,7 +100,11 @@ const OEM = (): JSX.Element => {
           name="file"
           onChange={(e) => {
             readFile(e.target.files[0]).then((data) => {
-              setOemIconBits(new Uint8Array(data));
+              setOemIconBits(
+                new Uint8Array(
+                  data.split(',').map((s) => parseInt(s.trim(), 16)),
+                ),
+              );
             });
           }}
         />
