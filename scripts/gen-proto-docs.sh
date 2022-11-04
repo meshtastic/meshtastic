@@ -19,6 +19,6 @@ else \
 fi
 
 # remove old generated protos
-rm -rf "${PROJECT_BASE}/docs/developers/Protobufs/*"
+rm -rf "${PROJECT_BASE}/docs/development/reference/protobuf-api.mdx"
 
-protoc --doc_opt="${PROJECT_BASE}/protobuf.tmpl,protobuf-api.mdx" --doc_out="${PROJECT_BASE}/docs/development/" --proto_path="${PROJECT_BASE}/protobufs" *.proto
+protoc --doc_opt="${PROJECT_BASE}/protobuf.tmpl,protobuf-api.mdx" --doc_out="${PROJECT_BASE}/docs/development/reference/" --proto_path="${PROJECT_BASE}/protobufs" *.proto

@@ -11,7 +11,8 @@ Meshtastic® is a project that enables you to use inexpensive LoRa radios as a l
 
 ### Features
 
-- No phone required for node to node communication.
+- Long range ([_166km record by Puzzled Pancake_](/docs/about/overview/field-tests/range/#current-record))
+- No phone required for node to node communication
 - Encrypted communication
 - Excellent battery life (LoRa radios have a very low power draw)
 - Send and receive text messages between members of the mesh
@@ -26,13 +27,17 @@ The radios automatically rebroadcast messages they receive in order to create a 
 
 Radios can be paired to a single phone so that your friends and family are able to address a message to your specific radio. Each device supports a connection from a single user at a time.
 
-<!--- FIXME: too technical for intro ?
-When you send a message on your Meshtastic companion app, it is relayed to the radio using Bluetooth. That message is then broadcast by the radio three times over a certain interval in order to create redundancy for lost packets.
+If you are interested in a more technical overview of how Meshtastic works, visit the overview section below:
 
-When a receiving radio captures a packet, it checks to see if it has heard that message before. If it has it ignores the message. If it hasn't heard the message, it will rebroadcast it at a certain interval three times.
+<div className="indexCtasBody">
+  <Link
+    className={'button button--outline  button--lg cta--button'}
+    to={'/docs/overview'}
+  >
+    Overview
+  </Link>
+</div>
 
-For each message a radio rebroadcasts, it marks the "hop limit" down by one. When a radio receives a packet with a hop limit of zero, it will not rebroadcast the message.
---->
 
 ## Contributors
 

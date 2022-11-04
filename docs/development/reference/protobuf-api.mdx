@@ -2,7 +2,7 @@
 id: protobuf-api
 title: Protobuf API Reference
 slug: /protobufs/api
-sidebar_label: Protobuf Reference
+sidebar_label: Protobufs
 sidebar_position: 20
 ---
 
@@ -305,6 +305,7 @@ Display Config
 | compass_north_top | bool | If this is set, the displayed compass will always point north. if unset, the old behaviour (top of display is heading direction) is used. |
 | flip_screen | bool | Flip screen vertically, for cases that mount the screen upside down |
 | units | [`Config.DisplayConfig.DisplayUnits`](#configdisplayconfigdisplayunits) | Perferred display units |
+| oled | [`Config.DisplayConfig.OledType`](#configdisplayconfigoledtype) | Override auto-detect in screen |
 
 
 
@@ -477,6 +478,22 @@ How the GPS coordinates are displayed on the OLED screen.
 | `MGRS` | `3` | Military Grid Reference System format: ZZB CD EEEEE NNNNN, where Z is zone, B is band, C is the east 100k square, D is the north 100k square, E is easting, N is northing |
 | `OLC` | `4` | Open Location Code (aka Plus Codes). |
 | `OSGR` | `5` | Ordnance Survey Grid Reference (the National Grid System of the UK). Format: AB EEEEE NNNNN, where A is the east 100k square, B is the north 100k square, E is the easting, N is the northing |
+
+
+
+
+### Config.DisplayConfig.OledType
+
+:::note `enum` description
+Override OLED outo detect with this if it fails.
+:::
+
+
+| Name | Number | Description |
+| ---- | ------ | ----------- |
+| `OLED_AUTO` | `0` | Default / Auto |
+| `OLED_SSD1306` | `1` | Default / Auto |
+| `OLED_SH1106` | `2` | Default / Auto |
 
 
 
@@ -840,12 +857,12 @@ The other fields are either not sent at all, or sent in the special 16 byte LORA
 
 | Field | Type | Description |
 | ----- | ---- | ----------- |
-| from | fixed32 | The sending node number. Note: Our crypto implementation uses this field as well. See [crypto](/docs/mesh/encryption) for details. FIXME - really should be fixed32 instead, this encoding only hurts the ble link though. |
+| from | fixed32 | The sending node number. Note: Our crypto implementation uses this field as well. See [crypto](/docs/about/overview/encryption) for details. FIXME - really should be fixed32 instead, this encoding only hurts the ble link though. |
 | to | fixed32 | The (immediatSee Priority description for more details.y should be fixed32 instead, this encoding only hurts the ble link though. |
 | channel | uint32 | (Usually) If set, this indicates the index in the secondary_channels table that this packet was sent/received on. If unset, packet was on the primary channel. A particular node might know only a subset of channels in use on the mesh. Therefore channel_index is inherently a local concept and meaningless to send between nodes. Very briefly, while sending and receiving deep inside the device Router code, this field instead contains the 'channel hash' instead of the index. This 'trick' is only used while the payload_variant is an 'encrypted'. |
 | [**oneof**](https://developers.google.com/protocol-buffers/docs/proto3#oneof) payload_variant.decoded | [`Data`](#data) | TODO: REPLACE |
 | [**oneof**](https://developers.google.com/protocol-buffers/docs/proto3#oneof) payload_variant.encrypted | bytes | TODO: REPLACE |
-| id | fixed32 | A unique ID for this packet. Always 0 for no-ack packets or non broadcast packets (and therefore take zero bytes of space). Otherwise a unique ID for this packet, useful for flooding algorithms. ID only needs to be unique on a _per sender_ basis, and it only needs to be unique for a few minutes (long enough to last for the length of any ACK or the completion of a mesh broadcast flood). Note: Our crypto implementation uses this id as well. See [crypto](/docs/mesh/encryption) for details. FIXME - really should be fixed32 instead, this encoding only hurts the ble link though. |
+| id | fixed32 | A unique ID for this packet. Always 0 for no-ack packets or non broadcast packets (and therefore take zero bytes of space). Otherwise a unique ID for this packet, useful for flooding algorithms. ID only needs to be unique on a _per sender_ basis, and it only needs to be unique for a few minutes (long enough to last for the length of any ACK or the completion of a mesh broadcast flood). Note: Our crypto implementation uses this id as well. See [crypto](/docs/about/overview/encryption) for details. FIXME - really should be fixed32 instead, this encoding only hurts the ble link though. |
 | rx_time | fixed32 | The time this message was received by the esp32 (secs since 1970). Note: this field is _never_ sent on the radio link itself (to save space) Times are typically not sent over the mesh, but they will be added to any Packet (chain of SubPacket) sent to the phone (so the phone can know exact time of reception) |
 | rx_snr | float | Never* sent over the radio links. Set during reception to indicate the SNR of this packet. Used to collect statistics on current link quality. |
 | hop_limit | uint32 | If unset treated as zero (no forwarding, send to adjacent nodes only) if 1, allow hopping through one node, etc... For our usecase real world topologies probably have a max of about 3. This field is normally placed into a few of bits in the header. |
