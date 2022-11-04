@@ -1,7 +1,7 @@
 ---
-id: E
+id: e
 title: Meshtastic Channel Settings
-sidebar_label: E
+sidebar_label: e
 ---
 
 <head>
@@ -11,6 +11,6 @@ sidebar_label: E
 
 # QR Code Share Channel URL Should be opened in the appropriate app
 
-## Meshtastic QR Code URL Format For Firmware version 1.3
+## Meshtastic QR Code URL Format For Firmware version 2.0
 
 For Android use the QR code scanner in the app, on Apple devices use the camera to open the QR code URL in the Meshtastic App.
