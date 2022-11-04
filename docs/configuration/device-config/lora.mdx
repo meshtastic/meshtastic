@@ -7,6 +7,7 @@ sidebar_label: LoRa
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
+import LoRaRegions from '../../blocks/_lora-regions.mdx';
 
 The LoRa config options are: Region, Modem Preset, Max Hops, Transmit Power, Bandwidth, Spread Factor, Coding Rate, Frequency Offset, Transmit Enabled and Ignore Incoming Array.  LoRa config uses an admin message sending a `Config.LoRa` protobuf.
 
@@ -19,22 +20,7 @@ You must set your device's `lora.region` setting. This will ensure that you are 
 ### Region
 Sets the region for your node. Default is `unset`.
 
-|   Region Code   |                                                                  Description                                                                                                              |
-| :-------: | :---------------------------------------------------------------------------------------: |
-|  `UNSET`   | Unset |
-| `US` | United States |
-| `EU_433` | European Union 433MHz |
-| `EU_868` | European Union 868MHz |
-| `CN` | China |
-| `JP` | Japan |
-| `ANZ` | Australia & New Zealand |
-| `KR` | Korea |
-| `TW` | Taiwan |
-| `RU` | Russia |
-| `IN` | India |
-| `NZ_865` | New Zealand 865MHz |
-| `TH` | Thailand |
-
+<LoRaRegions />
 
 ### Modem Preset
 

@@ -33,7 +33,7 @@ The NRF52 is much more power efficient than the esp32 and easier to update, but 
 If your device is not listed above, please review our [supported hardware](/docs/supported-hardware) devices to determine which MCU your device has or contact us in [Discord](https://discord.gg/ktMAKGBnBs) with any questions.
 :::
 
-## Connect Device
+## Setup Working Environment
 
 :::danger STOP! Put the power cable down!
 Never power on the radio without attaching an antenna! _it could damage the radio chip._
@@ -144,7 +144,64 @@ For RAK4631 users, if you have a RAK4631-R (the RUI3 bootloader version of the R
   </Link>
 </div>
 
+## Connect to Device
+
+Depending on your device, there are 3 ways to connect to your device:
+
+### Serial
+
+<div className="indexCtasBody">
+  <Link target="_blank"
+    className={'button button--outline button--lg cta--button'}
+    to={'/docs/getting-started/connect-device/connect-serial'}
+  >
+    Connect using Serial
+  </Link>
+</div>
+
+
+### Bluetooth
+
+<div className="indexCtasBody">
+  <Link target="_blank"
+    className={'button button--outline button--lg cta--button'}
+    to={'/docs/getting-started/connect-device/connect-ble'}
+  >
+    Connect using Bluetooth
+  </Link>
+</div>
+
+### Network
+
+Connecting over network is only supported on ESP32 devices.
+
+<div className="indexCtasBody">
+  <Link target="_blank"
+    className={'button button--outline button--lg cta--button'}
+    to={'/docs/getting-started/connect-device/connect-network'}
+  >
+    Connect over Network
+  </Link>
+</div>
+
+
+## Configure Device
+
+The initial configuration of the device includes setting the regional settings...
+
+<div className="indexCtasBody">
+  <Link target="_blank"
+    className={'button button--outline button--lg cta--button'}
+    to={'/docs/getting-started/initial-config'}
+  >
+    Configure Device
+  </Link>
+</div>
+
 ## Use Meshtastic
+
+### with Command Line Tools
+  - [Python CLI](/docs/software/python/cli)
 
 ### with mobile apps
   - [Android](/docs/category/android-app)

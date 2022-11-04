@@ -11,27 +11,3 @@ The NRF52 based devices have the easiest firmware upgrade process. No driver or 
 
 1. The [drag and drop](/docs/getting-started/flashing-firmware/nrf52/drag-n-drop) firmware installation is considered the "manual process" and recommended as the easiest solution.
 2. The [Python Flasher](/docs/software/python/flasher) application does a lot under the hood to prevent you from needing to use the terminal. It also allows you to configure your device.
-
-## Convert RAK4631-R to RAK4631
-
-The only difference between the _RAK4631-R_ (RUI3) and the _RAK4631_ (Arduino) is the bootloader it is shipped with - the hardware is the same.
-
-Meshtastic requires the Arduino bootloader on RAK WisBlock NRF52-based boards. The process of converting the bootloader only needs to be performed once.
-
-This conversion requires the use of either a [DAPLink](https://daplink.io/) or [J-Link](https://www.segger.com/products/debug-probes/j-link/). The most reasonably priced and available is the [RAKDAP1](https://store.rakwireless.com/products/daplink-tool).
-
-1. Install [Python](https://www.python.org/downloads/)
-2. Install [pyOCD](https://pyocd.io/)
-   ```shell
-   pip3 install pyocd
-   ```
-3. Download the required bootloader: [WisCore_RAK4631_Board_Bootloader.hex](https://github.com/RAKWireless/WisBlock/releases/download/0.4.2/WisCore_RAK4631_Board_Bootloader.hex)
-4. Connect the RAKDAP as follows:
-   [<img src="/img/rak4631-rakdap1.png" style={{zoom:'25%'}} />](/img/rak4631-rakdap1.png)
-5. Flash the bootloader
-   ```shell
-   pyocd flash -t nrf52840 .\WisCore_RAK4631_Board_Bootloader.hex
-   ```
-6. Continue with the normal [flashing instructions](/docs/getting-started/flashing-firmware/nrf52/drag-n-drop)
-
-Alternate methods of flashing are outlined [here](https://github.com/RAKWireless/WisBlock/tree/master/bootloader/RAK4630).
