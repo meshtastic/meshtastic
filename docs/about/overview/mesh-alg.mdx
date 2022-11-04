@@ -50,7 +50,7 @@ This layer is conventional non-reliable LoRa packet transmission. The transmitte
 
 - **Packet Header - Unique ID:** The ID is a large, 32 bit ID to ensure there is enough unique state to protect an encrypted payload from attack.
 
-- **Payload:** An encrypted and packed protobuf encoding of the SubPacket protobuf. Only the SubPacket is encrypted, while headers are not. This allows the option of eventually allowing nodes to route packets without knowing anything about the encrypted payload. For more information, see the [encryption](/docs/about/overview/encryption) and [protobufs](/docs/protobufs/api) documentation. Any data past the maximum length is truncated.
+- **Payload:** An encrypted and packed protobuf encoding of the SubPacket protobuf. Only the SubPacket is encrypted, while headers are not. This allows the option of eventually allowing nodes to route packets without knowing anything about the encrypted payload. For more information, see the [encryption](/docs/about/overview/encryption) and [protobufs](/docs/developers/protobufs/api) documentation. Any data past the maximum length is truncated.
 
 #### Carrier-Sense Multiple Access with Collision Avoidance (CSMA/CA)
 
