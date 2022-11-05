@@ -36,7 +36,7 @@ The payload is a raw protobuf. Looking at the MQTT traffic with a program like `
 	ShortFast	!937bed1c
 ```
 
-Packets from the following [port numbers](/docs/developers/Firmware/portnum) are serialized to JSON and then forwarded to the `msh/1/json/CHANNELID/DEVICEID` topic: `TEXT_MESSAGE_APP`, `ENVIRONMENTAL_MEASUREMENT_APP`, `NODEINFO_APP` and `POSITION_APP`.
+Packets from the following [port numbers](/docs/development/firmware/portnum) are serialized to JSON and then forwarded to the `msh/1/json/CHANNELID/DEVICEID` topic: `TEXT_MESSAGE_APP`, `ENVIRONMENTAL_MEASUREMENT_APP`, `NODEINFO_APP` and `POSITION_APP`.
 
 An example of a received `NODEINFO_APP` message:
 
@@ -147,7 +147,7 @@ FIXME - explain this more, talk about how useful for users and security domains.
 
 ## On device API
 
-For information on the related on-device API see [here](/docs/developers/firmware/device-api).
+For information on the related on-device API see [here](/docs/developers/protobufs/api).
 
 ## MQTT transport
 

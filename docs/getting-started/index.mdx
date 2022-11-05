@@ -1,5 +1,4 @@
 ---
-id: overview
 title: Getting Started
 sidebar_label: Getting Started
 slug: /getting-started
@@ -10,13 +9,13 @@ import Link from '@docusaurus/Link';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-## Identify your Hardware
+## Identify Hardware
 
-The first order of business in getting started is determining what type of hardware you will be working with. Meshtastic currently supports devices with either of the two Microcontroller Units (MCU):
+The first order of business in getting started is determining what type of hardware you will be working with. Meshtastic currently supports devices with either of the two Micro-Controller Units (MCU):
 
 ### ESP32
 
-The ESP32 is older and consumes more power than the nrf52, but is equiped with both WiFi and Bluetooth. Supported ESP32 devices:
+The ESP32 is older and consumes more power than the nrf52, but is equipped with both WiFi and Bluetooth. Supported ESP32 devices:
 
 - LILYGO® TTGO T-Beam
 - LILYGO® TTGO Lora
@@ -25,33 +24,32 @@ The ESP32 is older and consumes more power than the nrf52, but is equiped with b
 
 ### NRF52
 
-The NRF52 is much more power effecient than the esp32 and easier to update, but is only equiped Bluetooth. Supported NRF52 devices:
+The NRF52 is much more power efficient than the esp32 and easier to update, but is only equipped with Bluetooth. Supported NRF52 devices:
 
 - RAK WisBlock
 - LILYGO® TTGO T-Echo
 
 :::info
-If your device is not listed above, please review our [supported hardware](/docs/category/supported-hardware) devices to determine which MCU your device has or contact us in [Discord](https://discord.gg/ktMAKGBnBs) with any questions.
+If your device is not listed above, please review our [supported hardware](/docs/supported-hardware) devices to determine which MCU your device has or contact us in [Discord](https://discord.gg/ktMAKGBnBs) with any questions.
 :::
 
-## Connect your device
+## Setup Working Environment
 
-:::danger
-Stop! Never power on the radio without attaching an antenna! (it could damage the radio chip)
+:::danger STOP! Put the power cable down!
+Never power on the radio without attaching an antenna! _it could damage the radio chip._
 :::
 
 Prior to connecting your Meshtastic device to the computer, you should perform the following basic checks.
 
 ### Verify data cable
 
-Some cables only provide _charging_, verify that your cable is also capable of _transfering data_ before proceeding. 
+Some cables only provide _charging_, verify that your cable is also capable of _transferring data_ before proceeding. 
 
 There is no definitive way to determine the difference in cables if you aren't willing to pull it apart. Trying out a few cables will be the best way to verify.
 
 Once you've located a working data cable, [install the correct serial driver](#install-serial-drivers) and [test for driver installation](#test-for-driver-installation).
 
-
-### Install Serial Drivers
+### Install serial drivers
 
 <div className="indexCtasBody">
   <Link target="_blank"
@@ -62,7 +60,7 @@ Once you've located a working data cable, [install the correct serial driver](#i
   </Link>
 </div>
 
-### Test for driver installation
+### Test driver installation
 
 You can verify that you have a proper data cable (rather than a charge-only type cable) and that the appropriate drivers for your system are installed by performing the following test: 
 
@@ -120,7 +118,7 @@ If you do not see your device:
 2. You may need to [install the USB serial driver](/docs/getting-started/serial-drivers)).
 :::
 
-## Flashing Firmware
+## Flash Firmware
 
 ### ESP32
 
@@ -135,7 +133,7 @@ If you do not see your device:
 
 ### NRF52
 
-For RAK4631 users, if you have a RAK4631-R (the RUI3 bootloader version of the RAK4631), please [convert to the Arduino bootloader](/docs/getting-started/flashing-firmware/nrf52/#convert-rak4631-r-to-rak4631)
+For RAK4631 users, if you have a RAK4631-R (the RUI3 bootloader version of the RAK4631), you must [convert it to use the Arduino bootloader](/docs/getting-started/flashing-firmware/nrf52/#convert-rak4631-r-to-rak4631)
 
 <div className="indexCtasBody">
   <Link target="_blank"
@@ -146,18 +144,74 @@ For RAK4631 users, if you have a RAK4631-R (the RUI3 bootloader version of the R
   </Link>
 </div>
 
+## Connect to Device
+
+Depending on your device, there are 3 ways to connect to your device:
+
+### Serial
+
+<div className="indexCtasBody">
+  <Link target="_blank"
+    className={'button button--outline button--lg cta--button'}
+    to={'/docs/getting-started/connect-device/connect-serial'}
+  >
+    Connect using Serial
+  </Link>
+</div>
+
+
+### Bluetooth
+
+<div className="indexCtasBody">
+  <Link target="_blank"
+    className={'button button--outline button--lg cta--button'}
+    to={'/docs/getting-started/connect-device/connect-ble'}
+  >
+    Connect using Bluetooth
+  </Link>
+</div>
+
+### Network
+
+Connecting over network is only supported on ESP32 devices.
+
+<div className="indexCtasBody">
+  <Link target="_blank"
+    className={'button button--outline button--lg cta--button'}
+    to={'/docs/getting-started/connect-device/connect-network'}
+  >
+    Connect over Network
+  </Link>
+</div>
+
+
+## Configure Device
+
+The initial configuration of the device includes setting the regional settings...
+
+<div className="indexCtasBody">
+  <Link target="_blank"
+    className={'button button--outline button--lg cta--button'}
+    to={'/docs/getting-started/initial-config'}
+  >
+    Configure Device
+  </Link>
+</div>
+
 ## Use Meshtastic
 
-There are many ways to interact with and use Meshtastic, please visit the [Software](/docs/software) page for more information.
+### with Command Line Tools
+  - [Python CLI](/docs/software/python/cli)
 
 ### with mobile apps
-  - [Android](/docs/software/android/)
-  - [Apple](/docs/software/apple/)
+  - [Android](/docs/category/android-app)
+  - [Apple](/docs/category/apple-apps)
 
 ### with a browser
   - https://client.meshtastic.org
-  - [Meshtastic Web](/docs/software/web/)
+  - [Meshtastic Web](/docs/software/web-client)
 
 ### over the internet with MQTT
   - [MQTT](/docs/software/mqtt/)
 
+There are many ways to interact with and use Meshtastic, please visit the [Software](/docs/software) page for more information.

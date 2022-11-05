@@ -1,0 +1,142 @@
+---
+id: publish
+title: Publishing Meshtastic.org
+sidebar_label: Publish
+---
+
+## Publish Live
+
+### Device
+
+- Update protobufs
+
+```shell
+cd proto
+git checkout master && git pull
+cd ..
+git add proto
+git commit -m "updating proto submodule to latest"
+run bin/regen-protos.sh
+```
+
+- edit version.properties to set release version
+- commit and push (or merge) to root of repo - this should cause GitHub to start a release build (see the CI actions)
+- edit the draft release text and click publish
+
+#### Update Protobufs
+
+### Android
+
+#### Pre-requisites
+
+- Add repository secrets
+- - KEYSTORE_FILENAME
+- - - name of the .jks
+- - KEYSTORE
+- - - we will convert the .jks to base64
+- - - openssl base64 < filename.jks | tr -d '\n' | tee filename.txt
+- - KEYSTORE_PROPERTIES
+- - - storePassword=nononononono
+      keyPassword=nononononono
+      keyAlias=upload
+      storeFile=nononononono.jks
+
+#### Instructions - Automated
+
+- Update protobufs
+- Go to Actions / Make Release / Run Workflow
+- Pick the Releases branch
+- Enter the version found in app/gradle.build
+
+### iOS
+
+TBD
+
+### Meshtastic-flasher
+
+A `meshtastic-flasher` release consists of publishing the release to PyPi https://pypi.org/project/meshtastic-flasher/ as well as producing single-executable files that are downloadable from Github https://github.com/meshtastic/Meshtastic-gui-installer/releases.
+
+#### Instructions - automated
+
+- Go to Actions / Make Release / Run Workflow https://github.com/meshtastic/Meshtastic-gui-installer/actions/workflows/release.yml
+- Draft & Publish release https://github.com/meshtastic/Meshtastic-gui-installer/releases
+
+### Python
+
+A python release consists of publishing the release to PyPi https://pypi.org/project/meshtastic/ as well as producing single-executable files that are downloadable from Github https://github.com/meshtastic/Meshtastic-python/releases.
+
+#### Pre-requisites
+
+No pre-requisites are needed locally to make a release. All builds are done via Github Actions currently.
+
+To test/validate, you will need to run:
+
+```
+pip3 install -r requirements.txt
+pip install .
+```
+
+#### Instructions
+
+- Update protobufs by running the "Update protobufs" workflow in Actions: https://github.com/meshtastic/Meshtastic-python/actions/workflows/update_protobufs.yml
+
+- run the "smoke1" test (optional):
+
+connect one device to the serial port and run:
+
+```
+pytest -m smoke1
+```
+
+- run unit tests: `pytest` (optional)
+
+- run bin/test-release.sh (optional)
+
+- Run the "Make Release" workflow in Actions: https://github.com/meshtastic/Meshtastic-python/actions/workflows/release.yml
+
+- After the "Make Release" is done, go into Releases: https://github.com/meshtastic/Meshtastic-python/releases There should be a draft. Add the title, update the "What's Changed" (Tip: Click on the "Auto-generate release notes" button.). Uncheck the "This is a pre-release" (if applicable).
+
+:::note
+You need permissions in the GitHub project to make a build
+:::
+
+### Web
+
+Releases are automatically generated for every commit as per out [CI](https://github.com/meshtastic/web/blob/master/.github/workflows/main.yml). This performs two actions:
+
+1. Generates a perpetually updated [GitHub release](https://github.com/meshtastic/web/releases/tag/latest) with an accompanying `build.tar` that a automatically get's pulled by the firmware CI at build time.
+2. A hosted version is deployed to [client.meshtastic.org](https://client.meshtastic.org).
+
+
+## Publish to Vercel
+
+Setting up a Vercel account is an optional step that can help you view your changes to the documentation in a server environment just like the actual docs. This can be helpful to include when submitting a pull request so that developers can review your changes and visually check that things look correct.
+
+### Set up Vercel account
+
+- Go to [vercel.com](https://vercel.com)
+- Login with your GitHub account, click `Continue with GitHub`
+
+### Link your fork of the project
+
+- Click `New Project`
+- Under `Import Git Repository` select `+ Add GitHub Account`
+  You'll be redirected to GitHub to allow access to select repositories.
+- Select your fork of the project: `username/Meshtastic`
+
+### Configure project
+
+Configure project:
+
+- Set a name for the project
+- Select a framework preset: `Docusaurus 2`
+- Click `Deploy`
+
+That's it! You should now see your project with a green or orange status dot showing that your fork of the project has been compiled. There will be a commit-specific url that you can share to view your changes. There also will be a branch-specific url that you can view. If there are any errors it will show up red and include the logs for you to figure out what has gone wrong.
+
+:::tip
+There is a limited number of branch urls that you will be able to view. If you notice that option has disappeared, you can delete unused branches on your fork and that will enable that feature again.
+
+Branch urls are helpful in PRs because they will remain constant, and you won't need to resubmit a new url for review each new commit if changes are requested.
+:::
+

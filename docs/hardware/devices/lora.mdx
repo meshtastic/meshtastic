@@ -1,0 +1,116 @@
+---
+id: lora
+title: LILYGO® TTGO Lora devices
+sidebar_label: LILYGO® Lora
+sidebar_position: 6
+---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+LILYGO® Lora23 v1-2.1 * Versions other than 2.1 not recommended with a battery
+
+<Tabs
+groupId="t-lora"
+defaultValue="v1"
+values={[
+{label: 'Lora V1', value: 'v1'},
+{label: 'Lora V1.3', value: 'v1.3'},
+{label: 'Lora V2.0', value: 'v2.0'},
+{label: 'Lora V2.1-1.6', value:'v2.1'}
+]}>
+<TabItem value="v1">
+
+- ESP32 - WiFi & Bluetooth
+- SX1276 - LoRa Transceiver
+- Frequency options:
+  - 868 MHz
+  - 915 MHz
+- Built in 0.96 inch OLED display
+- U.FL antenna connector
+- Reset and Program switches
+- No GPS
+
+- Firmware file: `firmware-tlora-v1-1.x.x.bin`
+- [Purchase link](https://www.aliexpress.com/item/32840238513.html)
+
+[<img alt="LILYGO® TTGO Lora V1" src="/img/hardware/lora-v1.png" style={{zoom:'25%'}} />](/img/hardware/lora-v1.png)
+
+</TabItem>
+<TabItem value="v1.3">
+
+- ESP32 - WiFi & Bluetooth
+- SX127x - LoRa Transceiver
+- Frequency options:
+  - 868 MHz
+  - 915 MHz
+- Built in 0.96 inch OLED display
+- U.FL antenna connector
+- Reset and Program switches
+- No GPS
+
+
+- Firmware file: `firmware-tlora_v1_3-1.x.x.bin`
+- [Purchase link](https://www.aliexpress.com/item/4000628100802.html)
+
+
+[<img alt="LILYGO® TTGO Lora V1.3" src="/img/hardware/lora-v1.3.png" style={{zoom:'25%'}} />](/img/hardware/lora-v1.3.png)
+[<img alt="LILYGO® TTGO Lora V1.3 pin map" src="/img/hardware/lora-v1.3_pinmap.webp" style={{zoom:'25%'}} />](/img/hardware/lora-v1.3_pinmap.webp)
+
+</TabItem>
+<TabItem value="v2.0">
+
+- ESP32 - WiFi & Bluetooth
+- SX127x - LoRa Transceiver
+- Frequency options:
+  - 433 MHz
+  - 868 MHz
+  - 915 MHz
+- Built in 0.96 inch OLED display
+- U.FL antenna connector
+- Power and Reset switches
+- microSD connector
+- No GPS
+
+
+- Firmware file: `firmware-tlora-v2-1.x.x.bin`
+- [Purchase link](https://www.aliexpress.com/item/32846302183.html)
+
+
+[<img alt="LILYGO® TTGO Lora V2" src="/img/hardware/lora-v2.0.png" style={{zoom:'25%'}} />](/img/hardware/lora-v2.0.png)
+
+</TabItem>
+<TabItem value="v2.1">
+
+- ESP32 - WiFi & Bluetooth
+- SX127x - LoRa Transceiver
+- Frequency options:
+  - 433 MHz
+  - 868 MHz
+  - 915 MHz
+- Built in 0.96 inch OLED display
+- SMA antenna connector
+- Power and Reset switches
+- microSD connector
+- No GPS
+
+
+- Firmware file: `firmware-tlora-v2-1-1.6-1.x.x.bin`
+- [Purchase link](https://www.aliexpress.com/item/32915894264.html)
+
+<br />
+
+:::warning
+Early versions of some of these boards contained the wrong component in the LiPo battery charging circuit allowing the battery to be overcharged.
+:::
+
+[<img src="/img/hardware/lora-v2.1-1.6.png" alt="LILYGO® TTGO Lora V2.1-1.6" style={{zoom:'25%'}} />](/img/hardware/lora-v2.1-1.6.png)
+
+Shorting IO12 to ground will progress the screen pages, wake up the device, etc. A simple push switch can be added for this purpose.
+
+[<img src="/img/hardware/lora32-v2-1.6-button.jpg" style={{zoom:'30%'}} />](/img/hardware/lora32-v2-1.6-button.jpg)
+[<img src="/img/hardware/lora32-v2-1.6-button-example.jpg" style={{zoom:'30%'}} />](/img/hardware/lora32-v2-1.6-button.jpg)
+
+</TabItem>
+</Tabs>
+
+Further information on the LILYGO® LoRa and T-beam devices can be found on LILYGO®'s [GitHub page](https://github.com/Xinyuan-LilyGO/LilyGo-LoRa-Series).
