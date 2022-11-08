@@ -35,7 +35,7 @@ const Firmware = (): JSX.Element => {
     >
       <div className="container mt-8 flex flex-col gap-3">
         <h1 className="m-2">Flasher</h1>
-        <div className="flex w-full overflow-hidden rounded-xl xl:h-64">
+        <div className="flex w-full overflow-hidden rounded-xl">
           <div className="flex w-1/5 bg-gradient-to-r from-green-500 to-primary">
             <BoltIcon className="m-auto h-20" />
           </div>
@@ -47,7 +47,7 @@ const Firmware = (): JSX.Element => {
               <div className="card__body">
                 <p>Desktop application to flash fimware to your devices.</p>
               </div>
-              <div className="card__footer" style={{ marginTop: '1rem' }}>
+              <div className="card__footer mt-auto">
                 <a
                   href="https://github.com/meshtastic/Meshtastic-gui-installer/releases/latest"
                   className="m-auto flex rounded-lg border-4 border-transparent bg-accent p-1 font-semibold text-black shadow-md hover:text-black hover:brightness-110 active:border-green-200"
@@ -68,7 +68,7 @@ const Firmware = (): JSX.Element => {
                   boards.
                 </p>
               </div>
-              <div className="card__footer" style={{ marginTop: '1rem' }}>
+              <div className="card__footer mt-auto">
                 <a
                   href="https://flasher.meshtastic.org/"
                   className="m-auto flex rounded-lg border-4 border-transparent bg-accent p-1 font-semibold text-black shadow-md hover:text-black hover:brightness-110 active:border-green-200"
@@ -87,7 +87,7 @@ const Firmware = (): JSX.Element => {
                   Devices such as T-Echo and RAK4631 are flashed via filesystem.
                 </p>
               </div>
-              <div className="card__footer" style={{ marginTop: '1rem' }}>
+              <div className="card__footer mt-auto">
                 <a
                   href="/docs/getting-started/flashing-firmware/nrf52/drag-n-drop"
                   className="m-auto flex rounded-lg border-4 border-transparent bg-accent p-1 font-semibold text-black shadow-md hover:text-black hover:brightness-110 active:border-green-200"
@@ -100,7 +100,7 @@ const Firmware = (): JSX.Element => {
         </div>
         {/*  */}
         <h1 className="m-2">Apps</h1>
-        <div className="flex w-full overflow-hidden rounded-xl lg:h-48">
+        <div className="flex w-full overflow-hidden rounded-xl">
           <div className="flex w-1/5 bg-gradient-to-r from-rose-500 to-primary">
             <ComputerDesktopIcon className="m-auto h-20" />
           </div>
@@ -202,7 +202,7 @@ const Firmware = (): JSX.Element => {
                       things.
                     </p>
                   </div>
-                  <div className="card__footer" style={{ marginTop: '1rem' }}>
+                  <div className="card__footer mt-auto">
                     <a
                       href="https://nightly.link/meshtastic/firmware/workflows/main/master/built.zip"
                       className="button button--secondary button--block"
