@@ -92,7 +92,7 @@ const Firmware = (): JSX.Element => {
                   href="/docs/getting-started/flashing-firmware/nrf52/drag-n-drop"
                   className="m-auto flex rounded-lg border-4 border-transparent bg-accent p-1 font-semibold text-black shadow-md hover:text-black hover:brightness-110 active:border-green-200"
                 >
-                  view Instructions
+                  View Instructions
                 </a>
               </div>
             </div>
