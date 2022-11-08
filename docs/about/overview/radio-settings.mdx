@@ -7,7 +7,7 @@ sidebar_position: 1
 ---
 
 :::info
-Meshtastic is **not** LoRaWAN, nor TTN (TheThingsNetwork). However, Meshtastic does use the same channel maps as LoRaWAN.
+Meshtastic is **not** LoRaWAN, nor TTN (TheThingsNetwork). Meshtastic uses the full spectrum frequency range designated to LoRa technology per region. This allows for several hundred possible frequency channels in the US region alone.
 :::
 
 ![freq table](/img/LoRa-Frequency-Bands.jpg)
@@ -16,15 +16,19 @@ See [this site](https://www.rfwireless-world.com/Tutorials/LoRa-channels-list.ht
 
 ## Europe Frequency Bands
 
-The maximum power allowed for Europe is +14dBm ERP ([Effective Radiated Power](https://en.wikipedia.org/wiki/Effective_radiated_power)).
+Power limits will generally be lifted in the software if `is_licensed` is set to `true` [HAM Mode](/docs/faq#amateur-radio-ham))
 
 ### 433 MHz
+
+The maximum power allowed for Europe is +14dBm ERP ([Effective Radiated Power](https://en.wikipedia.org/wiki/Effective_radiated_power)).
 
 The band range is from 433 to 434 MHz.
 
 There are eight channels defined with a 0.2 MHz gap between them. Channel zero starts at 433.175 MHz
 
 ### 868 MHz (ISM Band)
+
+The maximum power allowed for Europe is +27Bm ERP ([Effective Radiated Power](https://en.wikipedia.org/wiki/Effective_radiated_power)).
 
 The band range is from 863 to 870 MHz.
 
@@ -43,9 +47,11 @@ There are eight channels defined with a 0.3 MHz gap between them. Channel zero s
 
 ## North America Frequency Bands
 
-The maximum output power for North America is +30 dBm ERP ([Effective Radiated Power](https://en.wikipedia.org/wiki/Effective_radiated_power)).
+Power limits will generally be lifted in the software if `is_licensed` is set to `true` [HAM Mode](/docs/faq#amateur-radio-ham))
 
 ### 915 MHz (ISM Band)
+
+The maximum output power for North America is +30 dBm ERP ([Effective Radiated Power](https://en.wikipedia.org/wiki/Effective_radiated_power)).
 
 The band range is from 902 to 928 MHz.
 
