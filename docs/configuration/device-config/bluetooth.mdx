@@ -28,30 +28,30 @@ Finally, `NO_PIN` disables PIN authentication.
 
 If your pairing mode is set to fixed PIN this is the value of that fixed 6 digit pin. Default value is 123456
 
-## Bluetooth Module Config Client Availability
+## Configure Bluetooth Config
 
 <Tabs
 groupId="settings"
-defaultValue="apple"
+defaultValue="cli"
 values={[
 {label: 'Android', value: 'android'},
 {label: 'Apple', value: 'apple'},
 {label: 'CLI', value: 'cli'},
-{label: 'Flasher', value: 'flasher'},
 {label: 'Web', value: 'web'},
 ]}>
 <TabItem value="android">
 
 :::info
-Bluetooth module config is not available for Android.
+Bluetooth config is not available for Android.
 :::
 
 </TabItem>
 <TabItem value="apple">
 
-:::info
-All Bluetooth config values are available on iOS, iPadOS and macOS at Settings > Radio Configuration > Position.
-:::
+All Bluetooth config values are available on iOS, iPadOS and macOS.
+
+1. Open the Meshtastic App
+2. Navigate to: **Settings > Radio Configuration > Position**
 
 </TabItem>
 <TabItem value="cli">

@@ -1,8 +1,9 @@
 ---
-id: mesh-alg
+id: mesh-algo
 title: Mesh Broadcast Algorithm
+slug: /overview/mesh-algo
 sidebar_label: Mesh Algorithm
-sidebar_position: 1
+sidebar_position: 2
 ---
 
 ## Current Algorithm
@@ -25,7 +26,7 @@ This preamble allows receiving radios to synchronize clocks and start framing. W
 This layer is conventional non-reliable LoRa packet transmission. The transmitted packet has the following representation before encoding for transmission:
 
 | Offset       | Length                        | Type    | Usage                                                                                    |
-| ------------ | ----------------------------- | ------- | ---------------------------------------------------------------------------------------- |
+|:------------:|:-----------------------------:|:-------:|:---------------------------------------------------------------------------------------- |
 | 0x00         | 1 byte                        | Integer | syncWord, always `0x2B`.                                                                 |
 | 0x01         | 4 bytes                       | Integer | Packet header: Destination. The destination's unique NodeID. `0xFFFFFFFF` for broadcast. |
 | 0x05         | 4 bytes                       | Integer | Packet Header: Sender. The sender's unique NodeID.                                       |
@@ -37,7 +38,7 @@ This layer is conventional non-reliable LoRa packet transmission. The transmitte
 #### Packet Header Flags
 
 | Index   | # of Bits | Usage                          |
-| ------- | --------- | ------------------------------ |
+|:-------:|:---------:|:------------------------------|
 | 0       | 3         | HopLimit (see note in Layer 3) |
 | 3       | 1         | WantAck                        |
 | 4 .. 32 | 28        | Currently unused               |
@@ -50,7 +51,7 @@ This layer is conventional non-reliable LoRa packet transmission. The transmitte
 
 - **Packet Header - Unique ID:** The ID is a large, 32 bit ID to ensure there is enough unique state to protect an encrypted payload from attack.
 
-- **Payload:** An encrypted and packed protobuf encoding of the SubPacket protobuf. Only the SubPacket is encrypted, while headers are not. This allows the option of eventually allowing nodes to route packets without knowing anything about the encrypted payload. For more information, see the [encryption](/docs/about/overview/encryption) and [protobufs](/docs/developers/protobufs/api) documentation. Any data past the maximum length is truncated.
+- **Payload:** An encrypted and packed protobuf encoding of the SubPacket protobuf. Only the SubPacket is encrypted, while headers are not. This allows the option of eventually allowing nodes to route packets without knowing anything about the encrypted payload. For more information, see the [encryption](/docs/overview/encryption) and [protobufs](/docs/developers/protobufs/api) documentation. Any data past the maximum length is truncated.
 
 #### Carrier-Sense Multiple Access with Collision Avoidance (CSMA/CA)
 

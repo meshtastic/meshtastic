@@ -1,67 +1,97 @@
 ---
 id: radio-settings
 title: Radio Settings
+slug: /overview/radio-settings
 sidebar_label: Radio Settings
-sidebar_position: 3
+sidebar_position: 1
 ---
 
-We use the same channel maps as LoRaWAN (though this is not LoRaWAN).
-(Note, not the same channel map as TTN for US frequencies.)
+:::info
+Meshtastic is **not** LoRaWAN, nor TTN (TheThingsNetwork). However, Meshtastic does use the same channel maps as LoRaWAN.
+:::
 
 ![freq table](/img/LoRa-Frequency-Bands.jpg)
 
 See [this site](https://www.rfwireless-world.com/Tutorials/LoRa-channels-list.html) for more information.
 
-## LoRaWAN Europe Frequency Band
+## Europe Frequency Bands
 
-The maximum power allowed is +14dBm ERP (Effective Radiated Power, see [this site](https://en.wikipedia.org/wiki/Effective_radiated_power) for more information).
+The maximum power allowed for Europe is +14dBm ERP ([Effective Radiated Power](https://en.wikipedia.org/wiki/Effective_radiated_power)).
 
 ### 433 MHz
 
-There are eight channels defined with a 0.2 MHz gap between them.
-Channel zero starts at 433.175 MHz
+The band range is from 433 to 434 MHz.
 
-### 870 MHz
+There are eight channels defined with a 0.2 MHz gap between them. Channel zero starts at 433.175 MHz
 
-There are eight channels defined with a 0.3 MHz gap between them.
-Channel zero starts at 865.20 MHz
+### 868 MHz (ISM Band)
 
-## LoRaWAN for North America
+The band range is from 863 to 870 MHz.
 
-LoRaWAN defines 64, 125 kHz channels from 902.3 to 914.9 MHz increments.
+There are eight channels defined with a 0.3 MHz gap between them. Channel zero starts at 865.20 MHz.
 
-The maximum output power for North America is +30 dBm ERP.
+|Channel Number| Center Frequency|
+|:---:|:---:|
+| 10 |865.20 MHz|
+| 11 |865.50 MHz|
+| 12 |865.80 MHz|
+| 13 |866.10 MHz|
+| 14 |866.40 MHz|
+| 15 |866.70 MHz|
+| 16 |867 MHz|
+| 17 |868 MHz|
 
-The band is from 902 to 928 MHz. It mentions channel number and its respective channel frequency. All the 13 channels are separated by 2.16 MHz with respect to the adjacent channels.  
-Channel zero starts at 903.08 MHz center frequency.
+## North America Frequency Bands
 
-## Data-rates
+The maximum output power for North America is +30 dBm ERP ([Effective Radiated Power](https://en.wikipedia.org/wiki/Effective_radiated_power)).
 
-### About
+### 915 MHz (ISM Band)
 
-Various data-rates are selectable when configuring a channel and are inversely proportional to the theoretical range of the devices.
+The band range is from 902 to 928 MHz.
 
-Considerations:
+There are thirteen channels defined with a 2.16 MHz gap between them. Channel zero starts at 903.08 MHz.
 
-- Spreading Factor - How much we "spread" our data over time.
+|Channel Number| Center Frequency|
+|:---:|:---:|
+| 00 |903.08 MHz|
+| 01 |905.24 MHz|
+| 02 |907.40 MHz|
+| 03 |909.56 MHz|
+| 04 |911.72 MHz|
+| 05 |913.88 MHz|
+| 06 |916.04 MHz|
+| 07 |918.20 MHz|
+| 08 |920.36 MHz|
+| 09 |922.52 MHz|
+| 10 |924.68 MHz|
+| 11 |926.84 MHz|
+| 12 |915 MHz|
+
+## Data Rates
+
+### Considerations
+
+Various data-rate options are available when configuring a channel and are inversely proportional to the theoretical range of the devices. 
+
+- **Spreading Factor** - How much we "spread" our data over time.
   - Each step up in Spreading Factor doubles the airtime to transmit.
   - Each step up in Spreading Factor adds about 2.5db extra link budget.
-- Bandwidth - How big of a slice of the spectrum we use.
+- **Bandwidth** - How big of a slice of the spectrum we use.
   - Each doubling of the bandwidth is almost 3db less link budget.
   - Bandwidths less than 31 may be unstable unless you have a high quality Crystal Oscillator.
-- Coding Rate - How much redundancy we encode to resist noise.
+- **Coding Rate** - How much redundancy we encode to resist noise.
   - Increasing coding rate increases reliability while decreasing data-rate.
   - 4/5 - 1.25x overhead
   - 4/6 - 1.5x overhead
   - 4/7 - 1.75x overhead
   - 4/8 - 2x overhead
 
-### Pre-Defined
+### Predefined Channels
 
 We have six predefined channels. These are the most common settings and have been proven to work well:
 
-| Channel setting     | Alt Channel Name | Data-rate           | SF / Symbols | Coding Rate | Bandwidth | Link Budget |
-| :------------------ | :--------------- | :------------------ | :----------- | :---------- | :-------- | :---------- |
+| Channel setting     | Alt Channel Name | Data-Rate           | SF / Symbols | Coding Rate | Bandwidth | Link Budget |
+| :------------------: | :---------------: | :------------------: | :-----------: | :----------: | :--------:| :---------- :|
 | Short Range / Fast  | Short Fast       | 6.8 kbps            | 7 / 128      | 4/8         | 250       | 137dB       |
 | Short Range / Slow  | Short Slow       | 3.9 kbps            | 8 / 256      | 4/8         | 250       | 140dB       |
 | Medium Range / Fast | Medium Fast      | 2.2 kbps            | 9 / 512      | 4/8         | 250       | 143dB       |
@@ -70,7 +100,10 @@ We have six predefined channels. These are the most common settings and have bee
 | Long Range / Slow   | Long Slow        | 0.18 kbps           | 12 / 4096    | 4/8         | 125       | 154dB       |
 | Very Long Range - Slow   | Very Long Slow       | 0.05 kbps  | 12 / 4096    | 4/8         | 31.25     | 160.1dB    |
 
-Note: The link budget used by these calculations assumes a transmit power of 17dBm and an antenna with 0dB gain. Adjust your link budget assumptions based on your actual devices. Data-rate in this table is actual measured but doesn't count mesh overhead, hops and re-transmissions.
+
+:::note
+The link budget used by these calculations assumes a transmit power of 17dBm and an antenna with 0dB gain. Adjust your link budget assumptions based on your actual devices. Data-rate in this table is actual measured but doesn't count mesh overhead, hops and re-transmissions.
+:::
 
 ### Custom Settings
 
@@ -85,7 +118,7 @@ After applying the settings, you will need to restart the device. After your dev
 Some example settings:
 
 | Data-rate  | SF / Symbols | Coding Rate | Bandwidth | Link Budget | Note                                                                     |
-| :--------- | :----------- | :---------- | :-------- | :---------- | :----------------------------------------------------------------------- |
+| :---------:| :-----------:| :----------:| :--------:| :----------:| :----------------------------------------------------------------------- |
 | 37.50 kbps | 6 / 64       | 4/5         | 500       | 129dB       | Fastest possible speed                                                   |
 | 3.125 kbps | 8 / 256      | 4/5         | 125       | 143dB       |                                                                          |
 | 1.953 kbps | 8 / 256      | 4/8         | 125       | 143dB       |                                                                          |
@@ -104,7 +137,7 @@ These channel settings may have not been tested. Use at your own discretion. Sha
 
 ## Cryptography
 
-The preshared key used by the devices can be modified.
+The pre-shared key (PSK) used by the devices can be modified.
 
 - 0 = No crypto
 - 1 = Default channel key

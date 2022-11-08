@@ -1,4 +1,5 @@
 ---
+id: getting-started
 title: Getting Started
 sidebar_label: Getting Started
 slug: /getting-started
@@ -30,7 +31,7 @@ The NRF52 is much more power efficient than the esp32 and easier to update, but 
 - LILYGO® TTGO T-Echo
 
 :::info
-If your device is not listed above, please review our [supported hardware](/docs/supported-hardware) devices to determine which MCU your device has or contact us in [Discord](https://discord.gg/ktMAKGBnBs) with any questions.
+If your device is not listed above, please review our [supported devices](/docs/supported-hardware) to determine which MCU your device has or contact us in [Discord](https://discord.gg/ktMAKGBnBs) with any questions.
 :::
 
 ## Setup Working Environment
@@ -47,17 +48,32 @@ Some cables only provide _charging_, verify that your cable is also capable of _
 
 There is no definitive way to determine the difference in cables if you aren't willing to pull it apart. Trying out a few cables will be the best way to verify.
 
-Once you've located a working data cable, [install the correct serial driver](#install-serial-drivers) and [test for driver installation](#test-for-driver-installation).
+Once you've located a working data cable, [install the correct serial driver](#install-serial-drivers) and [test for driver installation](#test-driver-installation).
 
 ### Install serial drivers
 
 <div className="indexCtasBody">
+ <div class="split left">
+  <div class="centered">
   <Link target="_blank"
     className={'button button--outline  button--lg cta--button'}
-    to={'/docs/getting-started/serial-drivers'}
+    to={'/docs/getting-started/serial-drivers/esp32'}
   >
-    Install Serial Drivers
+    Install ESP32 Drivers
   </Link>
+  </div>
+</div>
+
+<div class="split right">
+  <div class="centered">
+  <Link target="_blank"
+    className={'button button--outline  button--lg cta--button'}
+    to={'/docs/getting-started/serial-drivers/nrf52'}
+  >
+    Install NRF52 Drivers
+  </Link>
+  </div>
+</div> 
 </div>
 
 ### Test driver installation
@@ -120,81 +136,45 @@ If you do not see your device:
 
 ## Flash Firmware
 
-### ESP32
+:::info
+If you have a RAK4631-R (the RUI3 bootloader version of the RAK4631), you must [convert the bootloader](/docs/guides/convert-rak4631r) for use with the Arduino before flashing Meshtastic firmware.
+:::
 
 <div className="indexCtasBody">
+ <div class="split left">
+  <div class="centered">
   <Link target="_blank"
     className={'button button--outline button--lg cta--button'}
     to={'/docs/getting-started/flashing-firmware/esp32/'}
   >
     Flash ESP32 Firmware
   </Link>
+  </div>
 </div>
 
-### NRF52
-
-For RAK4631 users, if you have a RAK4631-R (the RUI3 bootloader version of the RAK4631), you must [convert it to use the Arduino bootloader](/docs/getting-started/flashing-firmware/nrf52/#convert-rak4631-r-to-rak4631)
-
-<div className="indexCtasBody">
+<div class="split right">
+  <div class="centered">
   <Link target="_blank"
     className={'button button--outline button--lg cta--button'}
     to={'/docs/getting-started/flashing-firmware/nrf52/'}
   >
     Flash NRF52 Firmware
   </Link>
-</div>
-
-## Connect to Device
-
-Depending on your device, there are 3 ways to connect to your device:
-
-### Serial
-
-<div className="indexCtasBody">
-  <Link target="_blank"
-    className={'button button--outline button--lg cta--button'}
-    to={'/docs/getting-started/connect-device/connect-serial'}
-  >
-    Connect using Serial
-  </Link>
+  </div>
+</div> 
 </div>
 
 
-### Bluetooth
+## Connect and Configure Device
 
-<div className="indexCtasBody">
-  <Link target="_blank"
-    className={'button button--outline button--lg cta--button'}
-    to={'/docs/getting-started/connect-device/connect-ble'}
-  >
-    Connect using Bluetooth
-  </Link>
-</div>
-
-### Network
-
-Connecting over network is only supported on ESP32 devices.
-
-<div className="indexCtasBody">
-  <Link target="_blank"
-    className={'button button--outline button--lg cta--button'}
-    to={'/docs/getting-started/connect-device/connect-network'}
-  >
-    Connect over Network
-  </Link>
-</div>
-
-
-## Configure Device
-
-The initial configuration of the device includes setting the regional settings...
+After connecting to the device for the first time, you should set the regional settings for the radio as well as other optional settings such as the name of the device.
 
 <div className="indexCtasBody">
   <Link target="_blank"
     className={'button button--outline button--lg cta--button'}
     to={'/docs/getting-started/initial-config'}
   >
-    Configure Device
+    Connect and Configure Device
   </Link>
 </div>
 

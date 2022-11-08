@@ -8,28 +8,25 @@ sidebar_label: Stacktraces
 
 You may encounter a situation where your device crashes and are left with a stacktrace, below are two methods of decoding them.
 
-### Manual
+### Manually
 
 :::info
 This method uses the symbols of the `firmware.elf` file generated from your latest build, you may wish to rebuild to get up-to-date symbols.
 :::
 
-First save the backtrace string to a text file:
+ 1. Save the backtrace string to a text file:
+	```text title="backtrace.txt"
+	Backtrace: 0x....
+	```
 
-```text title="backtrace.txt"
-Backtrace: 0x....
-```
+2. Run the exception decoder:
+	```shell
+	bin/exception_decoder.py backtrace.txt
+	```
 
-Now run the exception decoder:
+### In Real-Time
 
-```shell
-bin/exception_decoder.py backtrace.txt
-```
-
-### Real-Time
-
-In order to decode stack traces in real time, keep the following command (replacing `DEVICE_PORT` with your device's port) running in your terminal with the suspect device connected
-
+In order to decode stack traces in real time, keep the following command (replacing `DEVICE_PORT` with your device's port) running in your terminal with the target device connected:
 ```shell
 pio device monitor --port DEVICE_PORT -f esp32_exception_decoder
 ```
