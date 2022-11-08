@@ -104,71 +104,86 @@ const Firmware = (): JSX.Element => {
           <div className="flex w-1/5 bg-gradient-to-r from-rose-500 to-primary">
             <ComputerDesktopIcon className="m-auto h-20" />
           </div>
-          <div className="flex w-full flex-col bg-primary lg:flex-row">
-            <div className="flex p-4 lg:w-1/3">
-              <div className="flex flex-grow rounded-md border-2 border-secondary bg-primary py-4 shadow-md hover:brightness-90 lg:py-0">
+          <div className="flex w-full flex-col columns-3 bg-primary lg:flex-row">
+            <div className="card m-4 border-2 border-secondary">
+              <div className="card__header">
+                <h3>Apple</h3>
+              </div>
+              <div className="card__body flex items-center">
                 <div className="m-auto">
                   <FaApple className="h-20 w-20" />
                 </div>
-                <div className="m-auto flex flex-col gap-3">
-                  <h2>Apple</h2>
-                  <a
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    href="https://testflight.apple.com/join/c8nNl8q1"
-                    className="m-auto flex rounded-lg border-4 border-transparent bg-accent p-1 font-semibold text-black shadow-md hover:text-black hover:brightness-110 active:border-green-200"
-                  >
-                    App Store
-                    <ArrowTopRightOnSquareIcon className="m-auto ml-2 h-4" />
-                  </a>
-                </div>
+              </div>
+              <div className="card__body">
+                Available on MacOS & iOS. Requires MacOS Ventura or iOS 16+.
+              </div>
+              <div className="card__footer mt-auto">
+                <a
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  href="https://testflight.apple.com/join/c8nNl8q1"
+                  className="m-auto flex rounded-lg border-4 border-transparent bg-accent p-1 font-semibold text-black shadow-md hover:text-black hover:brightness-110 active:border-green-200"
+                >
+                  App Store
+                  <ArrowTopRightOnSquareIcon className="m-auto ml-2 h-4" />
+                </a>
               </div>
             </div>
-            <div className="flex p-4 lg:w-1/3">
-              <div className="relative flex flex-grow rounded-md border-2 border-secondary bg-primary py-4 shadow-md hover:brightness-90 lg:py-0">
+            <div className="card m-4 border-2 border-secondary">
+              <div className="card__header">
+                <h3>Android</h3>
+              </div>
+              <div className="card__body flex items-center">
                 <div className="m-auto">
                   <FaAndroid className="h-20 w-20" />
                 </div>
-                <div className="m-auto flex flex-col gap-3">
-                  <h2>Android</h2>
-                  <a
-                    className="m-auto flex rounded-lg border-4 border-transparent bg-accent p-1 font-semibold text-black shadow-md hover:text-black hover:brightness-110 active:border-green-200"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    href="https://meshtastic.org/docs/software/android/android-installation"
-                  >
-                    F-Droid
-                    <ArrowTopRightOnSquareIcon className="m-auto ml-2 h-4" />
-                  </a>
-                  <a
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    href="https://play.google.com/store/apps/details?id=com.geeksville.mesh&referrer=utm_source=downloads-page"
-                    className="m-auto flex rounded-lg border-4 border-transparent bg-accent p-1 font-semibold text-black shadow-md hover:text-black hover:brightness-110 active:border-green-200"
-                  >
-                    Play Store
-                    <ArrowTopRightOnSquareIcon className="m-auto ml-2 h-4" />
-                  </a>
-                </div>
+              </div>
+              <div className="card__body">
+                Sideloading also available.
+              </div>
+              <div className="card__footer mt-auto">
+                <a
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  href="https://meshtastic.org/docs/software/android/android-installation"
+                  className="m-auto flex rounded-lg border-4 border-transparent bg-accent p-1 font-semibold text-black shadow-md hover:text-black hover:brightness-110 active:border-green-200"
+                >
+                  F-Droid
+                  <ArrowTopRightOnSquareIcon className="m-auto ml-2 h-4" />
+                </a>
+                <a
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  href="https://play.google.com/store/apps/details?id=com.geeksville.mesh&referrer=utm_source=downloads-page"
+                  className="mt-4 flex rounded-lg border-4 border-transparent bg-accent p-1 font-semibold text-black shadow-md hover:text-black hover:brightness-110 active:border-green-200"
+                >
+                  Play Store
+                  <ArrowTopRightOnSquareIcon className="m-auto ml-2 h-4" />
+                </a>
               </div>
             </div>
-            <div className="flex p-4 lg:w-1/3">
-              <div className="flex flex-grow rounded-md border-2 border-secondary bg-primary py-4 shadow-md hover:brightness-90 lg:py-0">
+            <div className="card m-4 border-2 border-secondary">
+              <div className="card__header">
+                <h3>Web</h3>
+              </div>
+              <div className="card__body flex items-center">
                 <div className="m-auto">
                   <GlobeAltIcon className="h-20 w-20" />
                 </div>
-                <div className="m-auto flex flex-col gap-3">
-                  <h2>Web</h2>
-                  <a
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    href="https://client.meshtastic.org"
-                    className="m-auto flex rounded-lg border-4 border-transparent bg-accent p-1 font-semibold text-black shadow-md hover:text-black hover:brightness-110 active:border-green-200"
-                  >
-                    client.meshtastic.org
-                    <ArrowTopRightOnSquareIcon className="m-auto ml-2 h-4" />
-                  </a>
-                </div>
+              </div>
+              <div className="card__body">
+                Requires Chromium based browsers.
+              </div>
+              <div className="card__footer mt-auto">
+                <a
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  href="https://client.meshtastic.org"
+                  className="m-auto flex rounded-lg border-4 border-transparent bg-accent p-1 font-semibold text-black shadow-md hover:text-black hover:brightness-110 active:border-green-200"
+                >
+                  client.meshtastic.org
+                  <ArrowTopRightOnSquareIcon className="m-auto ml-2 h-4" />
+                </a>
               </div>
             </div>
           </div>
