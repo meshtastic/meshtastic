@@ -27,27 +27,31 @@ export const FirmwareCard = ({
       <div className="card__body">
         <p>{description}</p>
       </div>
-      <div className="card__footer">
+      <div className="card__footer mt-auto">
+      <div className="margin-top--sm">
+        <details>
+          <summary>
+              Older Versions
+          </summary>
+          {release.slice(1, 6).map((release) => {
+            return (
+              <div key={release.id}>
+                <a href={release.assets[1]?.browser_download_url}>
+                  {release.tag_name}
+                </a>
+              </div>
+            );
+          })}
+        </details>
+      </div>
         {release?.length ? (
           <>
             <a
               href={release[0].assets[1]?.browser_download_url}
-              className="button button--secondary button--block"
+              className="button button--secondary button--block margin-top--sm"
             >
-              Download
+              Download {variant}
             </a>
-            <div className="margin-top--sm">
-              <h3>Older versions</h3>
-              {release.slice(1, 6).map((release) => {
-                return (
-                  <div key={release.id}>
-                    <a href={release.assets[1]?.browser_download_url}>
-                      {release.tag_name}
-                    </a>
-                  </div>
-                );
-              })}
-            </div>
           </>
         ) : (
           <button disabled className="button button--secondary button--block">

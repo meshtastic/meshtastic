@@ -207,7 +207,7 @@ const Firmware = (): JSX.Element => {
                       href="https://nightly.link/meshtastic/firmware/workflows/main/master/built.zip"
                       className="button button--secondary button--block"
                     >
-                      Download
+                      Download Bleeding
                     </a>
                   </div>
                 </div>
