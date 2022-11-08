@@ -165,7 +165,7 @@ const Firmware = (): JSX.Element => {
                     href="https://client.meshtastic.org"
                     className="m-auto flex rounded-lg border-4 border-transparent bg-accent p-1 font-semibold text-black shadow-md hover:text-black hover:brightness-110 active:border-green-200"
                   >
-                    meshtastic.org
+                    client.meshtastic.org
                     <ArrowTopRightOnSquareIcon className="m-auto ml-2 h-4" />
                   </a>
                 </div>
