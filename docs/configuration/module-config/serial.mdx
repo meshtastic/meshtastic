@@ -1,0 +1,160 @@
+---
+id: serial
+title: Serial Module Configuration
+slug: /settings/moduleconfig/serial
+sidebar_label: Serial
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+The serial module config options are: Enabled, Echo, Mode, Receive GPIO, Transmit GPIO and Sender.  Serial Module config uses an admin message sending a `ConfigModule.Serial` protobuf.
+
+This is a simple interface to send messages over the mesh network by sending strings over a serial port. Anything you send the node will be turned into a message sent out over the mesh, and anything received from the mesh will be sent to the serial port. Note that this module does not (yet) allow arbitrary protobuf commands to be sent over the serial connection.
+
+## Serial Module Config Values
+
+### Enabled
+
+Enables the serial module.
+
+### Echo
+
+If set, any packets you send will be echoed back to your device.
+
+### Mode
+
+### Receive GPIO Pin
+
+Set the GPIO pin to the RXD pin you have set up.
+
+### Transmit GPIO Pin
+
+Set the GPIO pin to the RXD pin you have set up.
+
+:::tip
+Connect the TX pin to the other device's RX pin, and vice versa. Connect their grounds to each other (not necessary if they're both plugged into the same USB power source.)
+:::
+
+### Baud Rate
+
+The serial baud rate.
+
+### Timeout
+
+The amount of time to wait before we consider your packet as "done".
+
+:::tip
+Once module settings are changed, a **reset** is required for them to take effect.
+:::
+
+## Serial Module Config Client Availability
+
+<Tabs
+groupId="settings"
+defaultValue="apple"
+values={[
+{label: 'Android', value: 'android'},
+{label: 'Apple', value: 'apple'},
+{label: 'CLI', value: 'cli'},
+{label: 'Flasher', value: 'flasher'},
+{label: 'Web', value: 'web'},
+]}>
+<TabItem value="android">
+
+:::info
+Serial module config is not available for Android.
+:::
+
+</TabItem>
+<TabItem value="apple">
+
+:::info
+All serial module config options are available on iOS, iPadOS and macOS at Settings > Modules > Serial.
+:::
+
+</TabItem>
+<TabItem value="cli">
+
+All serial module config options are available in the python CLI. Example commands are below:
+
+|        Setting        |  Acceptable Values  | Default |
+| :-------------------: | :-----------------: | :-----: |
+| serial.enabled |   `true`, `false`   | `false` |
+|  serial.echo   |   `true`, `false`   | `false` |
+|  serial.mode   |      `DEFAULT` `SIMPLE` `PROTO` `TEXTMSG` |  `DEFAULT`   |
+|   serial.rxd   |  GPIO Pin Number 1-39    | Default of `0` is Unset |
+|   serial.txd   |  GPIO Pin Number 1-39   |  Defaunlt of `0` is Unset  |
+| serial.baud    | `BAUD_DEFAULT` `BAUD_110` `BAUD_300` `BAUD_600` `BAUD_1200` `BAUD_2400` `BAUD_4800` `BAUD_9600` `BAUD_19200` `BAUD_38400` `BAUD_57600` `BAUD_115200` `BAUD_230400` `BAUD_460800` `BAUD_576000` `BAUD_921600` |  `BAUD_DEFAULT`  |
+| serial.timeout | `integer` (seconds) |   `0`   |
+
+
+```shell title="Enable / Disable Module"
+meshtastic --set serial.enabled true
+meshtastic --set serial.enabled false
+```
+
+```shell title="Enable / Disable Echo"
+meshtastic --set serial.echo true
+meshtastic --set serial.echo false
+```
+
+```shell title="Set Mode"
+meshtastic --set serial.mode DEFAULT
+meshtastic --set serial.mode PROTO
+``` 
+
+```shell title="Set RXD to GPIO pin number 7"
+meshtastic --set seria.rxd 7
+```
+
+```shell title="Set TXD to GPIO pin number 28"
+meshtastic --set serial.txd 28
+```
+
+```shell title="Set Baud Rate"
+meshtastic --set serial.baud BAUD_DEFAULT
+meshtastic --set serial.baud BAUD_576000
+```
+
+```shell title="Set Timeout to 15 seconds"
+meshtastic --set serial.timeout 15
+```
+
+</TabItem>
+<TabItem value="flasher">
+
+:::info
+No serial module config options are available in the Flasher.
+:::
+
+  </TabItem>
+  <TabItem value="web">
+
+:::info
+All serial module config options are available in the Web UI.
+:::
+    
+  </TabItem>
+</Tabs>
+
+:::warning
+GPIO access is fundamentally dangerous because invalid options can physically damage or destroy your hardware. Ensure that you fully understand the schematic for your particular device before trying this as we do not offer a warranty. Use at your own risk.
+
+This module requires attaching a peripheral accessory to your device. It will not work without one.
+:::
+
+## Examples
+
+Default is to use RX GPIO 16 and TX GPIO 17.
+### Basic Usage:
+
+1. Enable the module by setting `serial_module_enabled` to `1`.
+2. Set the pins (`serial.rxd` / `serial.txd`) for your preferred RX and TX GPIO pins. On tbeam boards it is recommended to use:
+   - RXD 35
+   - TXD 15
+3. Set `serial.timeout` to the amount of time to wait before we consider your packet as "done".
+4. (Optional) In serial_module.h set the port to `PortNum_TEXT_MESSAGE_APP`if you want to send messages to/from the general text message channel.
+5. Connect to your device over the serial interface at `38400 8N1`.
+6. Send a packet up to 240 bytes in length. This will get relayed over the mesh network.
+7. (Optional) Set `serial.echo` to `1` and any message you send out will be echoed back to your device.

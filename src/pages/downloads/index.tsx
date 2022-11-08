@@ -35,19 +35,17 @@ const Firmware = (): JSX.Element => {
     >
       <div className="container mt-8 flex flex-col gap-3">
         <h1 className="m-2">Flasher</h1>
-        <div className="flex h-64 w-full overflow-hidden rounded-xl">
+        <div className="flex w-full overflow-hidden rounded-xl xl:h-64">
           <div className="flex w-1/5 bg-gradient-to-r from-green-500 to-primary">
             <BoltIcon className="m-auto h-20" />
           </div>
-          <div className="flex w-full bg-primary">
+          <div className="flex w-full flex-col bg-primary xl:flex-row">
             <div className="card m-4 border-2 border-secondary">
               <div className="card__header">
                 <h3>Meshtastic Flasher</h3>
               </div>
               <div className="card__body">
-                <p>
-                Desktop application to flash fimware to your devices.
-                </p>
+                <p>Desktop application to flash fimware to your devices.</p>
               </div>
               <div className="card__footer" style={{ marginTop: '1rem' }}>
                 <a
@@ -65,7 +63,9 @@ const Firmware = (): JSX.Element => {
               </div>
               <div className="card__body">
                 <p>
-                  Web based installer for easy flashing with Chrome and Edge Browser. Works with T-Beam, T-Lora, Nano-G1 and similar boards.
+                  Web based installer for easy flashing with Chrome and Edge
+                  Browser. Works with T-Beam, T-Lora, Nano-G1 and similar
+                  boards.
                 </p>
               </div>
               <div className="card__footer" style={{ marginTop: '1rem' }}>
@@ -100,13 +100,13 @@ const Firmware = (): JSX.Element => {
         </div>
         {/*  */}
         <h1 className="m-2">Apps</h1>
-        <div className="flex h-48 w-full overflow-hidden rounded-xl">
+        <div className="flex w-full overflow-hidden rounded-xl lg:h-48">
           <div className="flex w-1/5 bg-gradient-to-r from-rose-500 to-primary">
             <ComputerDesktopIcon className="m-auto h-20" />
           </div>
-          <div className="flex w-full bg-primary">
-            <div className="flex w-1/3 p-4">
-              <div className="flex flex-grow rounded-md border-2 border-secondary bg-primary shadow-md hover:brightness-90">
+          <div className="flex w-full flex-col bg-primary lg:flex-row">
+            <div className="flex p-4 lg:w-1/3">
+              <div className="flex flex-grow rounded-md border-2 border-secondary bg-primary py-4 shadow-md hover:brightness-90 lg:py-0">
                 <div className="m-auto">
                   <FaApple className="h-20 w-20" />
                 </div>
@@ -124,8 +124,8 @@ const Firmware = (): JSX.Element => {
                 </div>
               </div>
             </div>
-            <div className="flex w-1/3 p-4">
-              <div className="relative flex flex-grow rounded-md border-2 border-secondary bg-primary shadow-md hover:brightness-90">
+            <div className="flex p-4 lg:w-1/3">
+              <div className="relative flex flex-grow rounded-md border-2 border-secondary bg-primary py-4 shadow-md hover:brightness-90 lg:py-0">
                 <div className="m-auto">
                   <FaAndroid className="h-20 w-20" />
                 </div>
@@ -135,7 +135,7 @@ const Firmware = (): JSX.Element => {
                     className="m-auto flex rounded-lg border-4 border-transparent bg-accent p-1 font-semibold text-black shadow-md hover:text-black hover:brightness-110 active:border-green-200"
                     target="_blank"
                     rel="noopener noreferrer"
-                    href="https://meshtastic.org/docs/software/android/#f-droid"
+                    href="https://meshtastic.org/docs/software/android/android-installation"
                   >
                     F-Droid
                     <ArrowTopRightOnSquareIcon className="m-auto ml-2 h-4" />
@@ -152,8 +152,8 @@ const Firmware = (): JSX.Element => {
                 </div>
               </div>
             </div>
-            <div className="flex w-1/3 p-4">
-              <div className="flex flex-grow rounded-md border-2 border-secondary bg-primary shadow-md hover:brightness-90">
+            <div className="flex p-4 lg:w-1/3">
+              <div className="flex flex-grow rounded-md border-2 border-secondary bg-primary py-4 shadow-md hover:brightness-90 lg:py-0">
                 <div className="m-auto">
                   <GlobeAltIcon className="h-20 w-20" />
                 </div>
@@ -179,7 +179,7 @@ const Firmware = (): JSX.Element => {
           <div className="flex w-1/5 bg-gradient-to-r from-orange-500 to-primary">
             <CpuChipIcon className="m-auto h-20" />
           </div>
-          <div className="flex w-full bg-primary">
+          <div className="flex w-full flex-col bg-primary lg:flex-row">
             {data && !error ? (
               <>
                 <FirmwareCard

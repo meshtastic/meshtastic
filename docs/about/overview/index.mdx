@@ -1,0 +1,14 @@
+---
+title: Overview
+sidebar_label: Overview
+slug: /overview
+sidebar_position: 2
+---
+
+## How it works
+
+When you send a message on your Meshtastic companion app, it is relayed to the radio using Bluetooth. That message is then broadcast by the radio three times over a certain interval in order to create redundancy for lost packets.
+
+When a receiving radio captures a packet, it checks to see if it has heard that message before. If it has it ignores the message. If it hasn't heard the message, it will rebroadcast it at a certain interval three times.
+
+For each message a radio rebroadcasts, it marks the "hop limit" down by one. When a radio receives a packet with a hop limit of zero, it will not rebroadcast the message.

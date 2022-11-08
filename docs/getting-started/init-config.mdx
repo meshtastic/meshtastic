@@ -1,0 +1,103 @@
+---
+title: Initial Configuration
+sidebar_label: Initial Configuration
+slug: /getting-started/initial-config
+sidebar_position: 4
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import LoRaRegions from '../blocks/_lora-regions.mdx';
+
+
+## Connection Supported Clients
+
+Depending on your connection, some configuration options are not fully supported. Find out which Client is best for your type of connection.
+
+<Tabs
+groupId="settings"
+defaultValue="serial"
+values={[
+{label: 'Serial', value: 'serial'},
+{label: 'Bluetooth', value: 'ble'},
+{label: 'Network', value: 'network'},
+]}>
+<TabItem value="serial">
+
+- [Python CLI](/docs/software/python/cli/)
+- [Web Client](https://client.meshtastic.org)
+
+
+</TabItem>
+<TabItem value="ble">
+
+- [Web Client](https://client.meshtastic.org)
+
+
+</TabItem>
+<TabItem value="network">
+
+- [Web Client](https://client.meshtastic.org)
+
+
+</TabItem>
+</Tabs>
+
+
+### Configure Regional Settings
+
+<LoRaRegions />
+
+
+
+<Tabs
+groupId="settings"
+defaultValue="apple"
+values={[
+{label: 'Android', value: 'android'},
+{label: 'Apple', value: 'apple'},
+{label: 'CLI', value: 'cli'},
+{label: 'Flasher', value: 'flasher'},
+{label: 'Web', value: 'web'},
+]}>
+<TabItem value="android">
+
+:::info
+Region and Modem Preset can be configured on Android.
+:::
+
+</TabItem>
+<TabItem value="apple">
+
+:::info
+Configuration of Region, Modem Preset and Hop Limit is available on iOS, iPadOS and macOS at Settings > Radio Configuration > LoRa.
+:::
+
+</TabItem>
+<TabItem value="cli">
+
+```sh
+meshtastic --set lora.region <REGION CODE>
+```
+
+</TabItem>
+<TabItem value="flasher">
+
+:::info
+No LoRa config options are available in the Flasher.
+:::
+
+  </TabItem>
+  <TabItem value="web">
+
+:::info
+All LoRa config options are available in the Web UI.
+:::
+
+  </TabItem>
+</Tabs>
+
+
+
+
+
