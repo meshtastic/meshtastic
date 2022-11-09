@@ -2,6 +2,11 @@ import React from 'react';
 import Layout from '@theme/Layout';
 import Link from '@docusaurus/Link';
 
+import {
+  Avatar,
+  AvatarLayout
+ } from './_components/Avatar';
+
 const Credits = (): JSX.Element => {
   const partnerLogos = [
     {
@@ -72,10 +77,12 @@ const Credits = (): JSX.Element => {
         <h3>
           Open Collective Donations
           {/*Open Collective Donations*/}
+          <AvatarLayout list={[]}/>
         </h3>
         <h3>
           GitHub Sponsor Donations
           {/*GitHub Sponsor Donations*/}
+          <AvatarLayout list={[]}/>
         </h3>
        </div>
        <div className="container mx-auto p-6 leading-normal space-y-4">
@@ -101,8 +108,12 @@ const Credits = (): JSX.Element => {
           Literally thousands of hours have gone into creating, maintaining, and improving Meshtastic. Without our contributors none of this would be possible. Thank you for donating the time for each and every commit, issue, and pull request.
         </p>
         {/*GitHub Organization Contributors*/}
+        <AvatarLayout list={[]}/>
        </div>
        {/*Admin Bios*/}
+       <div className="container mx-auto p-6 leading-normal space-y-4">
+         <AvatarLayout list={[]}/>
+        </div>
      </main>
    </Layout>
  )
