@@ -1,0 +1,102 @@
+---
+id: core-module
+title: RAK WisBlock Core Modules
+sidebar_label: Core Modules
+sidebar_position: 2
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+## WisBlock Core
+
+<Tabs
+groupId="rakcore"
+defaultValue="RAK4631"
+values={[
+{label: 'RAK4631', value: 'RAK4631'},
+{label: 'RAK11200', value: 'RAK11200'}
+]}>
+<TabItem value="RAK4631">
+
+### RAK4631
+
+- **MCU** nRF52840 
+  - Bluetooth BLE 5.0
+  - Very low power consumption
+- **Meshtastic Firmware**
+  - [`firmware-rak4631-2.X.X.xxxxxxx.uf2`](/downloads)
+- **LoRa transceiver**
+  - SX1262
+- **Frequency Options**
+  - 433 MHz
+  - 470 MHz
+  - 799 MHz
+  - 865 MHz
+  - 868 MHz
+  - 915 MHz
+  - 920 MHz
+  - 923 MHz
+- **Connectors**
+  - U.FL antenna
+
+
+Please be aware of the difference between the RAK4631 and the RAK4631-R which uses the RUI3 bootloader which is incompatible with Meshtastic. The RAK4631 uses the Arduino bootloader that is required for Meshtastic. If you have a RAK4631-R, please see the [instructions for converting the bootloader](/docs/guides/convert-rak4631r).
+
+Further information on the RAK4631 can be found on the [RAK Documentation Center](https://docs.rakwireless.com/Product-Categories/WisBlock/RAK4631/Overview/#product-description).
+
+<img
+  alt="RAK4631 Core Module"
+  src="/img/hardware/rak4631.png"
+  style={{ zoom: '50%' }}
+/>
+
+</TabItem>
+<TabItem value="RAK11200">
+
+
+### RAK11200 / RAK13300
+
+:::caution Note
+Only supported on the RAK5005-O base board.
+:::
+
+The RAK11200 does not contain a LoRa transceiver, and thus needs to be added separately in the form of the [RAK13300 LPWAN module](https://store.rakwireless.com/products/rak13300-wisblock-lpwan). This occupies the IO Port of the base board.
+
+- **RAK11200**
+  - **MCU** ESP32-WROVER
+    - Bluetooth 4.2
+    - WiFi 802.11 b/g/n
+    - High power consumption
+  - **Meshtastic Firmware**
+    - [`firmware-rak11200-2.X.X.xxxxxx.bin`](/downloads)
+
+
+Further information on the RAK11200 can be found on the [RAK Documentation Center](https://docs.rakwireless.com/Product-Categories/WisBlock/RAK11200/Overview/#product-description).
+
+- **RAK13300**
+  - **LoRa transceiver**
+    - SX1262
+  - **Frequency Options**
+    - 433 MHz
+    - 470 MHz
+    - 864 MHz
+    - 865 MHz
+    - 868 MHz
+    - 915 MHz
+    - 920 MHz
+    - 923 MHz
+  - **Connectors**
+    - U.FL antenna
+
+
+Further information on the RAK13300 can be found on the [RAK Documentation Center](https://docs.rakwireless.com/Product-Categories/WisBlock/RAK13300/Overview/#product-description).
+
+<img
+  alt="RAK4631 5005 11200"
+  src="/img/hardware/rak11200.jpg"
+  style={{ zoom: '50%' }}
+/>
+
+</TabItem>
+</Tabs>

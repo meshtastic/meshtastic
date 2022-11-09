@@ -1,0 +1,76 @@
+---
+id: peripherals
+title: Supported Peripherals
+sidebar_label: Peripherals
+sidebar_position: 3
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+<Tabs
+groupId="rakmodules"
+defaultValue="GPS"
+values={[
+{label: 'GPS Module', value: 'GPS'},
+{label: 'Buzzer', value: 'Buzzer'},
+{label: 'I/O Module', value: 'IO'},
+{label: 'Environmental Sensor', value:'BME680'}
+]}>
+<TabItem value="GPS">
+
+To add a GPS to the RAK5005-O base board, you need the [RAK1910 GPS sensor](https://store.rakwireless.com/collections/wisblock-sensor/products/rak1910-max-7q-gnss-location-sensor). It is supported on slot A of the 5005 board via UART.
+
+- uBlox MAX-7Q GPS module
+- GPS and GLONASS satellite support
+
+
+Further information on the RAK1910 can be found on the [RAK Documentation Center](https://docs.rakwireless.com/Product-Categories/WisBlock/RAK1910/Overview/#product-description).
+
+To add a GPS to the RAK19003 base board, you need the [RAK12500 GPS sensor](https://store.rakwireless.com/products/wisblock-gnss-location-module-rak12500). It is supported via I<sup>2</sup>C on slot B for firmware versions 1.49 and above.
+
+- uBlox Zoe-M8Q GNSS receiver
+- GPS, GLONASS, QZSS and BeiDou satellite support
+
+
+Further information on the RAK12500 can be found on the [RAK Documentation Center](https://docs.rakwireless.com/Product-Categories/WisBlock/RAK12500/Overview/#product-description).
+
+</TabItem>
+<TabItem value="Buzzer">
+
+The [RAK18001 Buzzer Module](https://store.rakwireless.com/products/wisblock-buzzer-module-rak18001) is currently being tested for integration with the External Notifications plugin. There is currently a known conflict with buzzer if the module is placed in Slot D, although other slots should work.
+
+Further information on the RAK18001 can be found on the [RAK Documentation Center](https://docs.rakwireless.com/Product-Categories/WisBlock/RAK18001/Overview/#product-description).
+
+</TabItem>
+<TabItem value="IO">
+
+The [RAK13002 IO Module](https://store.rakwireless.com/collections/wisblock-interface/products/adapter-module-rak13002) can be used to, among other things, add a user button to the RAK base boards (excluding the RAK19003 Mini base board). It features a number of different interface options:
+
+- 2x I<sup>2</sup>C interfaces
+- 2x UART interfaces
+- 1x SPI interface
+- Upto 6x GPIOs
+- 2x ADC interfaces
+- 3.3v Power rails
+
+
+There is development activity in progress to get sensors such as this added to the Meshtastic Core.  
+Further information on the RAK13002 can be found on the [RAK Documentation Center](https://docs.rakwireless.com/Product-Categories/WisBlock/RAK13002/Overview).
+
+</TabItem>
+<TabItem value="BME680">
+
+The [RAK1906 Environmental Sensor](https://store.rakwireless.com/products/rak1906-bme680-environment-sensor) is based on the Bosch BME680 module and has the following features:
+
+- Temperature measurement (Range -40&deg;C to +85&deg;C)
+- Humidity measurement (Range 0% to 100%)
+- Barometer measurement (Range 300 to 1100 hPa)
+- Air Quality measurement
+
+
+There is development activity in progress to get sensors such as this added to the Meshtastic Core.  
+Further information on the RAK1906 can be found on the [RAK Documentation Center](https://docs.rakwireless.com/Product-Categories/WisBlock/RAK1906/Overview/#product-description).
+
+</TabItem>
+</Tabs>

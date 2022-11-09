@@ -1,0 +1,155 @@
+---
+id: tbeam
+title: LILYGO® TTGO T-Beam Devices
+sidebar_label: LILYGO® T-Beam
+sidebar_position: 5
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+All T-beam models have an 18650 size battery holder on the rear of the device. This is designed to the original specification of the 18650 and only fits unprotected flat top 18650 cells. Button top and protected cells are typically longer than 650mm, often approaching 700mm.
+
+Further information on the LILYGO® T-Beam devices can be found on LILYGO®'s [GitHub page](https://github.com/Xinyuan-LilyGO/LilyGo-LoRa-Series).
+
+
+<Tabs
+groupId="t-beam"
+defaultValue="sx1262"
+values={[
+{label: 'T-Beam v0.7', value:'0.7'},
+{label: 'T-Beam v1.1', value: '1.1'},
+{label: 'T-Beam with M8N', value: 'm8n'},
+{label: 'T-Beam with M8N & SX1262', value: 'sx1262'}
+]}>
+
+<TabItem value="0.7">
+
+:::caution Firmware Version Notice
+This is an earlier version of the T-Beam board. Due to changes in the design this board uses a specific firmware file different from the other T-Beam boards.
+:::
+
+
+- **MCU** 
+  - ESP32 (WiFi & Bluetooth)
+- **LoRa Transceiver**
+  - Semtech SX1276
+- **Frequency options**
+  - 433 MHz  
+  - 868 MHz
+  - 915 MHz
+- **Navigation Module**
+  - NEO-6M (GPS receiver)
+- **Connectors**
+  - Micro USB
+  - Antenna: SMA antenna connector
+
+**Features**
+- Meshtastic preinstalled
+- Power, Program and Reset switches
+- Screen sold separately
+- No GPS
+
+**Resources**
+- Firmware file: `firmware-tbeam0.7-X.X.X.xxxxxxx.bin`
+- Purchase link: [AliExpress](https://www.aliexpress.com/item/4000469332610.html)
+
+
+![T-Beam v0.7](/img/hardware/t-beam-v0.7.png)
+![T-Beam v0.7 pin map](/img/hardware/t-beam_v0.7_pinmap.jpeg)
+
+</TabItem>
+<TabItem value="1.1">
+
+- **MCU** 
+  - ESP32 (WiFi & Bluetooth)
+- **LoRa Transceiver**
+  - Semtech SX1276
+- **Frequency options**
+  - 433 MHz
+  - 868 MHz
+  - 915 MHz
+  - 923 MHz
+- **Navigation Module**
+  - NEO-6M (GPS receiver)
+- **Connectors**
+  - Micro USB
+  - Antenna: SMA antenna connector
+
+**Features**
+- Meshtastic preinstalled
+- Power, Program and Reset switches
+- **Comes with 0.96 inch OLED display** (soldering required to assemble)
+
+**Resources**
+- Firmware file: `firmware-tbeam-X.X.X.xxxxxxx.bin`
+- Purchase link: [AliExpress](https://www.aliexpress.com/item/4001178678568.html)
+
+![TTGO T-Beam v1.1](/img/hardware/t-beam-v1.1.png)
+![TTGO T-Beam v1.1 pinmap](/img/hardware/t-beam_v1.1_pinmap.webp)
+
+</TabItem>
+
+<TabItem value="m8n">
+
+- **MCU** 
+  - ESP32 (WiFi & Bluetooth)
+- **LoRa Transceiver**
+  - Semtech SX1276
+- **Frequency options**
+  - 433 MHz
+  - 868 MHz
+  - 915 MHz
+  - 923 MHz
+- **Navigation Module**
+  - **NEO-M8N - GNSS receiver (supports GPS, GLONASS, Galileo, BeiDou)** (better GPS sensitivity)
+- **Connectors**
+  - Micro USB
+  - Antenna: U.FL antenna connector
+
+**Features**
+- Meshtastic preinstalled
+- Power, Program and Reset switches
+- Screen sold separately
+
+**Resources**
+- Firmware file: `firmware-tbeam-X.X.X.xxxxxxx.bin`
+- Purchase link: [AliExpress](https://www.aliexpress.com/item/33047631119.html)
+
+[TTGO T-Beam M8N](/img/hardware/t-beam-m8n.png)
+
+
+</TabItem>
+<TabItem value="sx1262">
+
+
+- **MCU** 
+  - ESP32 (WiFi & Bluetooth)
+- **LoRa Transceiver**
+  - **Semtech SX1262** (improved performance)
+- **Frequency options**
+  - 433 MHz
+  - 868 MHz
+  - 915 MHz
+  - 923 MHz
+- **Navigation Module**
+  - **NEO-M8N - GNSS receiver (supports GPS, GLONASS, Galileo, BeiDou)** (better GPS sensitivity)
+- **Connectors**
+  - Micro USB
+  - Antenna: U.FL antenna connector
+
+**Features**
+- Meshtastic preinstalled
+- Power, Program and Reset switches
+- Screen sold separately
+
+**Resources**
+- Firmware file: `firmware-tbeam-X.X.X.xxxxxxx.bin`
+- Purchase link: [AliExpress](https://www.aliexpress.com/item/4001287221970.html)
+
+
+[T-Beam M8N & SX1262](/img/hardware/t-beam-sx1262.png)
+
+
+</TabItem>
+</Tabs>
