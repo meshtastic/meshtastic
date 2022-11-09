@@ -1,0 +1,129 @@
+---
+id: audio
+title: Audio Module Configuration
+slug: /settings/moduleconfig/audio
+sidebar_label: Audio
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+The audio module config options are: Codec2 Enabled, Microphone ADC Channel, Speaker PWM GPIO, PTT GPIO, Audio Bitrate/Codec Mode.  Audio Module config uses an admin message sending a `ConfigModule.Audio` protobuf.
+
+With this **experimental** module, you can add a microphone and speaker to any ESP32 device that has a SX128x radio and operates on the 2.4 GHz ISM Band. The Sub-1GHz bands are not wide enough to support continuous audio packets on the mesh, even in the Short and Fast modes. Right now, the only device supported is the LilyGo TLora 2.1-1.8 board.
+
+## Audio Module Config Values
+
+### Codec2 Enabled
+
+Enables the audio module.
+
+### Microphone ADC Channel
+
+The ADC channel to use for the microphone. The default is 6 which maps to GPIO 34 on the ESP32.
+
+### Speaker PWM GPIO
+
+The GPIO to use for the speaker. The default is GPIO 14 on the ESP32.
+
+### PTT GPIO
+
+The GPIO to use for the Push-To-Talk button. The default is GPIO 39 on the ESP32.
+
+### Audio Bitrate/Codec Mode
+
+The bitrate to use for audio. The default is `CODEC2_700B`. The available options are:
+
+  * CODEC2_DEFAULT
+  * CODEC2_3200
+  * CODEC2_2400
+  * CODEC2_1600
+  * CODEC2_1400
+  * CODEC2_1300
+  * CODEC2_1200
+  * CODEC2_700B
+  * CODEC2_700
+
+## Audio Module Config Client Availability
+
+<Tabs
+groupId="settings"
+defaultValue="apple"
+values={[
+{label: 'Android', value: 'android'},
+{label: 'Apple', value: 'apple'},
+{label: 'CLI', value: 'cli'},
+{label: 'Flasher', value: 'flasher'},
+{label: 'Web', value: 'web'},
+]}>
+<TabItem value="android">
+
+:::info
+Audio module config is not available for Android.
+:::
+
+</TabItem>
+<TabItem value="apple">
+
+:::info
+Audio module config is not available on iOS, iPadOS and macOS.
+:::
+
+</TabItem>
+<TabItem value="cli">
+
+All audio module config options are available in the python CLI. Example commands are below:
+
+|        Setting        |  Acceptable Values  | Default |
+| :-------------------: | :-----------------: | :-----: |
+| audio.enabled |   `true`, `false`   | `false` |
+|   audio.mic_chan    |  ADC Number 0-7    | Default of `6` is Unset |
+|   audio.amp_pin    |  GPIO Pin Number 1-33   |  Default of `14` is Unset  |
+|   audio.ptt_pin    |  GPIO Pin Number 1-39   |  Default of `39` is Unset  |
+| audio.bitrate    | `CODEC2_DEFAULT` `CODEC2_3200` `CODEC2_2400` `CODEC2_1600` `CODEC2_1400` `CODEC2_1300` `CODEC2_1200` `CODEC2_700B` `CODEC2_700` |  `CODEC2_DEFAULT`  |
+
+
+```shell title="Enable / Disable Module"
+meshtastic --set audio.enabled true
+meshtastic --set audio.enabled false
+```
+
+```shell title="Set ADC Channel number 7"
+meshtastic --set audio.mic_chan 7
+```
+
+```shell title="Set PWM to GPIO pin number 28"
+meshtastic --set audio.amp_pin 28
+```
+
+```shell title="Set PTT to GPIO pin number 37"
+meshtastic --set audio.ptt_pin 37
+```
+
+```shell title="Set Codec Bitrate"
+meshtastic --set audio.bitrate CODEC2_DEFAULT
+meshtastic --set audio.bitrate CODEC2_1400
+```
+
+</TabItem>
+<TabItem value="flasher">
+
+:::info
+No audio module config options are available in the Flasher.
+:::
+
+  </TabItem>
+  <TabItem value="web">
+
+:::info
+All audio module config options are available in the Web UI.
+:::
+    
+  </TabItem>
+</Tabs>
+
+:::warning
+GPIO access is fundamentally dangerous because invalid options can physically damage or destroy your hardware. Ensure that you fully understand the schematic for your particular device before trying this as we do not offer a warranty. Use at your own risk.
+
+This module requires attaching a peripheral accessory to your device. It will not work without one.
+:::

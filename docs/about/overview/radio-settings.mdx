@@ -7,47 +7,32 @@ sidebar_position: 1
 ---
 
 :::info
-Meshtastic is **not** LoRaWAN, nor TTN (TheThingsNetwork). Meshtastic uses the full spectrum frequency range designated to LoRa technology per region. This allows for several hundred possible frequency channels in the US region alone.
+Meshtastic is **not** LoRaWAN, Helium or TTN (TheThingsNetwork). Meshtastic uses the full spectrum frequency range designated to LoRa technology per region. This allows for several hundred possible frequency channels in the US region alone.
 :::
 
-![freq table](/img/LoRa-Frequency-Bands.jpg)
-
-See [this site](https://www.rfwireless-world.com/Tutorials/LoRa-channels-list.html) for more information.
+:::info
+Power limits will generally be lifted in the software if `is_licensed` is set to `true`. See [HAM Mode](/docs/faq#amateur-radio-ham) for more information.
+:::
 
 ## Europe Frequency Bands
 
-Power limits will generally be lifted in the software if `is_licensed` is set to `true` [HAM Mode](/docs/faq#amateur-radio-ham))
-
 ### 433 MHz
 
-The maximum power allowed for Europe is +14dBm ERP ([Effective Radiated Power](https://en.wikipedia.org/wiki/Effective_radiated_power)).
+The maximum power allowed for Europe is +14 dBm ERP ([Effective Radiated Power](https://en.wikipedia.org/wiki/Effective_radiated_power)).
 
 The band range is from 433 to 434 MHz.
 
-There are eight channels defined with a 0.2 MHz gap between them. Channel zero starts at 433.175 MHz
+There are four channels defined with the standard radio preset `LongFast`. After factory reset the radio will be set to channel 3 with a center frequency of 433.875 MHz.
 
-### 868 MHz (ISM Band)
+### 868 MHz
 
-The maximum power allowed for Europe is +27Bm ERP ([Effective Radiated Power](https://en.wikipedia.org/wiki/Effective_radiated_power)).
+The maximum power allowed for Europe is +27 dBm ERP ([Effective Radiated Power](https://en.wikipedia.org/wiki/Effective_radiated_power)).
 
-The band range is from 863 to 870 MHz.
+The band range is from 869.40 to 869.65 MHz. This is less than the 863–870 MHz range defined as SRD Band, but allows for a higher ERP and a duty cycle of 10%.
 
-There are eight channels defined with a 0.3 MHz gap between them. Channel zero starts at 865.20 MHz.
-
-|Channel Number| Center Frequency|
-|:---:|:---:|
-| 10 |865.20 MHz|
-| 11 |865.50 MHz|
-| 12 |865.80 MHz|
-| 13 |866.10 MHz|
-| 14 |866.40 MHz|
-| 15 |866.70 MHz|
-| 16 |867 MHz|
-| 17 |868 MHz|
+There is one channel defined with the standard radio preset `LongFast`. After factory reset the radio will be set to channel 0 with a center frequency of 869.525 MHz.
 
 ## North America Frequency Bands
-
-Power limits will generally be lifted in the software if `is_licensed` is set to `true` [HAM Mode](/docs/faq#amateur-radio-ham))
 
 ### 915 MHz (ISM Band)
 
@@ -55,23 +40,7 @@ The maximum output power for North America is +30 dBm ERP ([Effective Radiated P
 
 The band range is from 902 to 928 MHz.
 
-There are thirteen channels defined with a 2.16 MHz gap between them. Channel zero starts at 903.08 MHz.
-
-|Channel Number| Center Frequency|
-|:---:|:---:|
-| 00 |903.08 MHz|
-| 01 |905.24 MHz|
-| 02 |907.40 MHz|
-| 03 |909.56 MHz|
-| 04 |911.72 MHz|
-| 05 |913.88 MHz|
-| 06 |916.04 MHz|
-| 07 |918.20 MHz|
-| 08 |920.36 MHz|
-| 09 |922.52 MHz|
-| 10 |924.68 MHz|
-| 11 |926.84 MHz|
-| 12 |915 MHz|
+There are 104 channels defined with the standard radio preset `LongFast`. After factory reset the radio will be set to channel 19 with a center frequency of 906.875 MHz.
 
 ## Data Rates
 

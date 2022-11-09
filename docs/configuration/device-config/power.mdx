@@ -8,17 +8,11 @@ sidebar_label: Power
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-The power config options are: Charge Current, Power Saving, Shutdown after losing power, ADC Multiplier Override Wait Bluetooth Interval, Mesh Super Deep Sleep Timeout, Super Deep Sleep Interval, Light Sleep Interval and Minimum Wake Interval.  Power config uses an admin message sending a `Config.Power` protobuf.
+The power config options are: Power Saving, Shutdown after losing power, ADC Multiplier Override Wait Bluetooth Interval, Mesh Super Deep Sleep Timeout, Super Deep Sleep Interval, Light Sleep Interval and Minimum Wake Interval.  Power config uses an admin message sending a `Config.Power` protobuf.
 
 Power settings are advanced configuration, most users should choose a role under Device Config to manage power for their device and should never need to touch any of these settings.
 
 ## Power Config Values
-
-### Charge Current
-
-**Tbeam 1.1 only setting**
-
-Sets the current of the battery charger using the AXP power chip on the Tbeam 1.1
 
 ### Power Saving
 
@@ -104,7 +98,6 @@ All Power config options are available in the python CLI.
 
 |            Setting                   |                                                                        Acceptable Values                                                                        |  Default  |
 | :----------------------------------: | :-------------------------------------------------------------------------------------------------------------------------------------------------------------: | :-------: |
-|         power.charge_current         | `MAUnset`, `MA100`, `MA190`, `MA280`, `MA360`, `MA450`, `MA550`, `MA630`, `MA700`, `MA780`, `MA880`, `MA960`, `MA1000`, `MA1080`, `MA1160`, `MA1240`, `MA1320`: | `MAUnset` |
 |          power.is_power_saving       |                                                                         `true`, `false`                                                                         |  `false`  |
 | power.on_battery_shutdown_after_secs |                                                                       `integer` (seconds)                                                                       |    Default of `0` is off    |
 |    power.adc_multiplier_override     |                                                                       `2-4` (floating point value)                                                              | Default of `0` uses firmware values    |
@@ -114,11 +107,6 @@ All Power config options are available in the python CLI.
 |            power.ls_secs             |                                                                       `integer` (seconds)                                                                       |   Default of `0` is 1 hour   |
 |         power.min_wake_secs          |                                                                       `integer` (seconds)                                                                       |   Default of `0` is 10 seconds   |
 
-
-```shell title="Set / Unset charge current (Tbeam 1.1 only)"
-meshtastic --set  power.charge_current MAUnset
-meshtastic --set  power.charge_current MA100
-```
 
 ```shell title="Enable / Disable Power Saving"
 meshtastic --set power.is_power_saving true

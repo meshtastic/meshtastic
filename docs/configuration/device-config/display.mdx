@@ -16,27 +16,41 @@ The display config options are: Screen On Duration, Auto Carousel Interval, Alwa
 How long the screen remains on after the user button is pressed or messages are received.
 
 ### Auto Carousel Interval
-
 Automatically toggles to the next page on the screen like a carousel, based the specified interval.
 
 ### Always Point North
-
 If this is set, the compass heading on the screen outside of the circle will always point north. This feature is off by default and the top of display represents your heading direction, the North indicator will move around the circle.
 
 ### GPS Format
-
 The format used to display GPS coordinates on the device screen.
 
 Acceptable values:
 
 |   Value   |     Description              |
 | :-------: | :--------------------------: |
-|  `gpsFormatDec`   | Decimal Degrees |
-| `gpsFormatDms` | Degrees Minutes Seconds |
-| `gpsFormatUtm` | Universal Transverse Mercator |
-| `gpsFormatMgrs` | Military Grid Reference System |
-| `gpsFormatOlc` | Open Location Code (Plus Codes) |
-| `gpsFormatOsgr` | Ordnance Survey Grid Reference |
+| `DEC` | Decimal Degrees |
+| `DMS` | Degrees Minutes Seconds |
+| `UTM` | Universal Transverse Mercator |
+| `MGRS` | Military Grid Reference System |
+| `OLC` | Open Location Code (Plus Codes) |
+| `OSGR` | Ordnance Survey Grid Reference |
+
+### Prefered display units
+switch between `METRIC` (default) and `IMPERIAL` units
+
+### Flip Screen
+If enabled, the screen will be rotated 180 degrees, for cases that mount the screen upside down
+
+### OLED Defintion
+The type of OLED Controller is auto-detected by default, but can be defined with this setting if the auto-detection fails.
+
+Acceptable values:
+
+|   Value   |     Description              |
+| :-------: | :--------------------------: |
+| `OLED_AUTO` | Auto detect display controller |
+| `OLED_SSD1306` | Always use SSD1306 driver |
+| `OLED_SH1106` | Always use SH1106 driver |
 
 ## Device Config Client Availability
 
@@ -80,7 +94,7 @@ meshtastic --set display.auto_screen_carousel_secs 120
 ```
 
 ```shell title="Specify GPS format on device screen"
-meshtastic --set display.gps_format GpsFormatUTM
+meshtastic --set display.gps_format UTM
 ```
 
 </TabItem>
