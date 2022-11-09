@@ -30,7 +30,7 @@ Specifies whether the external circuit is triggered when the device's GPIO is lo
 
 ### GPIO to monitor
 
-Specifies the GPIO that your external circuit is attached to on the device.
+Specifies the GPIO that your external circuit is attached to on the device. On devices that have a PWM buzzer, you can use the buzzer for notifications by setting this to the same pin the buzzer uses.
 
 :::info
 On ESP32 based boards, GPIOs 34 to 39 are GPIs – input only pins. These pins do not have internal pull-up or pull-down resistors. They can not be used as outputs, so you can NOT use these pins as outputs.
@@ -160,5 +160,4 @@ Ideas for external hardware:
 
 ## Known Problems
 
-- This won't directly support a passive (normal) speaker as it does not generate any audio wave forms.
 - This module only monitors text messages. We won't trigger on any other packet types.

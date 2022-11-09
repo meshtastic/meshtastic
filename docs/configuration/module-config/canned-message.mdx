@@ -35,9 +35,9 @@ Input event sources accepted by the canned message module.
 
 |   Value      |                            Description                                  |
 | :----------: | :---------------------------------------------------------------------: |
-|  `_any`      |    Default. Allows any peripheral input device connected to the device.                                                                                  |
+|  `_any`      | Default. Allows any peripheral input device connected to the device. |
 | `rotEnc1`    | Basic Rotary Encoder |
-| `upDownEnc1` | Up Down Encoder (use this also for RAK14006) |
+| `upDownEnc1` | Up Down Encoder (use this also for RAK14006 Rotary Encoder) |
 | `cardkb`     | M5 Stack CardKB (this covers RAK14004 Keymatrix) |
 
 ### Rotary Encoder Enabled
@@ -140,7 +140,7 @@ meshtastic --set canned_message.allow_input_source "rotEnc1"
 ```
 
 ```shell title="Enable/Disable rotary1"
-meshtastic --set 
+meshtastic --set canned_message.rotary1_enabled 1
 ```
 
 ```shell title="Set/Unset Encoder Pin A"
@@ -197,11 +197,28 @@ This module requires attaching a peripheral accessory to your device. It will no
 
 ## Hardware
 
-To navigate through messages and select one, you will require some hardware attached to your device. Currently, the module is tested with a generic rotary encoder, but this is not a limitation further input methods can be added in the future.
+To navigate through messages and select one, you will require some hardware attached to your device. Currently, the module is tested with a generic rotary encoder, an up/down/select 3 button logic and several I2C Keyboards. Further input methods will be added in the future.
+
+### I2C Keymatrix
+
+This is tested with the RAK14004 Keyboard. A keypress will immediately send the message attached to the button number. Buttons are numbered from upper left to lower right on the keypanels. So pressing the upper left button will send the first message. The second button will send the second message and so on.
+
+**Caveat:** the RAK 3x4 keymatrix is missing the 4th button row while scanning, so you have to skip every 4th message slot. Button 1 sends message 1 and button 4 will send message 5
+Example: 1|2|3||5|6|7||9|10|11||13|14|15 - the slots 4,8 and 12 can not be used.
+
+### CardKB
+
+The CardKB is fully supported in freetext mode and select mode. Use UP/DOWN/ENTER to select a predefined message and send it. For a freetext message, just type it in and press ENTER to send it.
+
+If you don't want to broadcast your freetext message, you can use the CardKB to send it to a specific node. Just press TAB and select the target node with the LEFT/RIGHT keys. The message will be sent to the node with the matching name and node number. The target node will be remebered for your nexxt message.
+
+### 3 Buttun up/down and RAK rotary encoder
+
+Just use UP/DOWN/ENTER to select a predefined message and send it.
 
 ### Rotary encoder
 
-Meshtastic supports hardwired rotary encoders as input devices. (Technically the Canned Message Module is independent of rotary encoders. It is described here, because no other module utilizes rotary encoders just yet.)
+Meshtastic supports hardwired rotary encoders as input devices. 
 
 You will need a generic rotary encoder. The types listed below has five legs where two is dedicated to a "press" action, but any other types will likely do the job. You can also use a three-legged version, where the "press" action should be wired from an independent switch.
 
