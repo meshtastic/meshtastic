@@ -105,14 +105,13 @@ values={[
 {label: 'Android', value: 'android'},
 {label: 'Apple', value: 'apple'},
 {label: 'CLI', value: 'cli'},
-{label: 'Flasher', value: 'flasher'},
 {label: 'Web', value: 'web'},
 ]}>
 
 <TabItem value="android">
 
 :::info
-All Channel config options are available on Android.
+Limited Channel config options are available on android. QR code scanning is available.
 :::
 
 </TabItem>
@@ -120,14 +119,16 @@ All Channel config options are available on Android.
 <TabItem value="apple">
 
 :::info
-All Channel config options are available on iOS, iPadOS and macOS.
+Channel settings are only available on Apple platforms by scanning QR codes.
 :::
 
 </TabItem>
 
 <TabItem value="cli">
 
+:::info
 All Channel config options are available in the python CLI. Example commands are below:
+:::
 
 **Id**
 
@@ -188,14 +189,6 @@ meshtastic --ch-set uplink_enabled false --ch-index 0
 meshtastic --ch-set downlink_enabled true --ch-index 1
 meshtastic --ch-set downlink_enabled false --ch-index 5
 ```
-
-</TabItem>
-
-<TabItem value="flasher">
-
-:::info
-All Channel config options are available in the Flasher.
-:::
 
 </TabItem>
 
