@@ -1,0 +1,144 @@
+---
+id: lora
+title: LILYGO® TTGO Lora Devices
+sidebar_label: LILYGO® Lora
+sidebar_position: 6
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Further information on the LILYGO® LoRa devices can be found on LILYGO®'s [GitHub page](https://github.com/Xinyuan-LilyGO/LilyGo-LoRa-Series).
+
+<Tabs
+groupId="t-lora"
+defaultValue="v1"
+values={[
+{label: 'Lora V1', value: 'v1'},
+{label: 'Lora V1.3', value: 'v1.3'},
+{label: 'Lora V2.0', value: 'v2.0'},
+{label: 'Lora V2.1-1.6', value:'v2.1'}
+]}>
+<TabItem value="v1">
+
+:::warning
+Not recommended with a battery! These boards contain the wrong component in the LiPo battery charging circuit allowing the battery to be overcharged.
+:::
+
+- **MCU** 
+  - ESP32 (WiFi & Bluetooth)
+- **LoRa Transceiver**
+  - Semtech SX1276
+- **Frequency options**
+  - 915 MHz
+  - 868 MHz
+- **Connectors**
+  - Micro USB
+  - Antenna: U.FL antenna connector
+
+**Features**
+- Built in 0.96 inch OLED display
+
+**Resources**
+- Firmware file: `firmware-tlora-v1-X.X.X.xxxxxxx.bin`
+- Purchase link: [AliExpress](https://www.aliexpress.com/item/32840238513.html)
+
+
+![LILYGO® TTGO Lora V1](/img/hardware/lora-v1.png)
+
+</TabItem>
+<TabItem value="v1.3">
+
+:::warning
+Not recommended with a battery! These boards contain the wrong component in the LiPo battery charging circuit allowing the battery to be overcharged.
+:::
+
+- **MCU** 
+  - ESP32 (WiFi & Bluetooth)
+- **LoRa Transceiver**
+  - Semtech SX127x
+- **Frequency options**
+  - 915 MHz
+  - 868 MHz
+- **Connectors**
+  - Micro USB
+  - Antenna: U.FL antenna connector
+
+**Features**
+- Built in 0.96 inch OLED display
+
+**Resources**
+- Firmware file: `firmware-tlora_v1_3-X.X.X.xxxxxxx.bin`
+- Purchase link: [AliExpress](https://www.aliexpress.com/item/4000628100802.html)
+
+![LILYGO® TTGO Lora V1.3](/img/hardware/lora-v1.3.png)
+![LILYGO® TTGO Lora V1.3 pin map](/img/hardware/lora-v1.3_pinmap.webp)
+
+</TabItem>
+<TabItem value="v2.0">
+
+
+:::warning
+Not recommended with a battery! These boards contain the wrong component in the LiPo battery charging circuit allowing the battery to be overcharged.
+:::
+
+
+- **MCU** 
+  - ESP32 (WiFi & Bluetooth)
+- **LoRa Transceiver**
+  - Semtech SX127x
+- **Frequency options**
+  - 433 MHz
+  - 868 MHz
+  - 915 MHz
+- **Connectors**
+  - Micro USB
+  - Antenna: U.FL antenna connector
+
+**Features**
+- Built in 0.96 inch OLED display
+- Power and Reset switches
+- microSD connector
+- No GPS
+
+**Resources**
+- Firmware file: `firmware-tlora-v2-X.X.X.xxxxxxx.bin`
+- Purchase link: [AliExpress](https://www.aliexpress.com/item/32846302183.html)
+
+![LILYGO® TTGO Lora V2](/img/hardware/lora-v2.0.png)
+
+</TabItem>
+<TabItem value="v2.1">
+
+
+:::caution
+Not recommended with a battery. Early versions of some of these boards contained the wrong component in the LiPo battery charging circuit allowing the battery to be overcharged.
+:::
+
+- **MCU** 
+  - ESP32 (WiFi & Bluetooth)
+- **LoRa Transceiver**
+  - Semtech SX127x
+- **Frequency options**
+  - 433 MHz
+  - 868 MHz
+  - 915 MHz
+- **Connectors**
+  - Micro USB
+  - Antenna: SMA antenna connector
+
+**Features**
+- Built in 0.96 inch OLED display
+- Power and Reset switches
+- microSD connector
+- No GPS
+
+**Resources**
+- Firmware file: `firmware-tlora-v2-1-1.6-X.X.X.xxxxxxx.bin`
+- Purchase link: [AliExpress](https://www.aliexpress.com/item/32915894264.html)
+
+
+![TTGO Lora V2.1-1.6](/img/hardware/lora-v2.1-1.6.png)
+
+</TabItem>
+</Tabs>

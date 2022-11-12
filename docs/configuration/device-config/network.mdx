@@ -8,7 +8,7 @@ sidebar_label: Network
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-The Network config options are: WiFi Enabled, WiFi SSID, WiFi PSK, and NTP Server. Network config uses an admin message sending a `Config.Network` protobuf.
+The Network config options are: WiFi Enabled, WiFi SSID, WiFi PSK, Ethernet Enabled, IPv4 Networking Mode, Static Address and NTP Server. Network config uses an admin message sending a `Config.Network` protobuf.
 
 :::info
 Enabling WiFi will disable Bluetooth. Only one connection method will work at a time.
@@ -42,9 +42,23 @@ This is your WiFi Networks password.
 
 Empty `""` by default. (Case Sensitive, Max Length: 64)
 
+### Ethernet Enabled
+
+Enables or Disables Ethernet.
+
+Set to `false` (Disabled) by default.
+
+### IPv4 Networking Mode
+
+Set to `DHCP` by default. Change to `STATIC` to use a static IP address. Applies to both Ethernet and WiFi.
+
+### IPv4 Static Address configuration
+
+contains ip, gateway, subnet and dns server in case you want a static configuration.
+
 
 :::tip
-The first time your device restarts after enabling WiFi, it will take an additional 20-30 seconds to boot. This is to generate self-signed SSL keys. The keys will be saved for future reuse.
+The first time your device restarts after enabling WiFi or Ethernet, it will take an additional 20-30 seconds to boot. This is to generate self-signed SSL keys. The keys will be saved for future reuse.
 :::
 
 ## Network Config Client Availability

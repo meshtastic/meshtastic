@@ -4,7 +4,18 @@ title: Remote Node Administration
 sidebar_label: Remote Nodes
 ---
 
-This feature will allow you to use the multiple channels feature to enable remote administration of Meshtastic nodes. This will let you talk through the mesh to some far away node and change that node's settings. This is an advanced feature that (currently) few users would need. Also, keep in mind it is possible (if you are not careful) to assign settings to that remote node that cause it to completely drop off of your mesh. We advise network admins have a test node to test settings with before applying changes to a remote node to prevent this.
+:::caution Disclaimer
+This is an advanced feature that few users should need. Keep in mind that it is possible (if you are not careful) to assign settings to a remote node that cause it to completely drop off of your mesh. We advise network admins have a test node to test settings with before applying changes to a remote node to prevent this.
+:::
+
+This feature allows you to remotely administer Meshtastic nodes through the mesh.
+
+## Prerequisites
+
+For any node that you want to administer, you must:
+
+1. Configure a channel with the channel name of `admin`.
+2. Set the PSK for the `admin` channel with the same key you wish to administer other all other nodes of the mesh with.
 
 ## Creating the admin channel
 
