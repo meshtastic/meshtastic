@@ -11,15 +11,9 @@ import TabItem from '@theme/TabItem';
 import LoRaRegions from '../blocks/_lora-regions.mdx';
 
 
-## Connect to Device
+## Supported Clients per Connection Type
 
-:::info
-Connecting over network is only supported on ESP32 devices.
-:::
-
-### Clients Supported by Connection Type
-
-Depending on your connection, some configuration options are not fully supported. Find out which Client is best for your type of connection.
+Depending on your connection, some configuration options are not fully supported. Find out which client is best for your type of connection.
 
 <Tabs
 groupId="settings"
@@ -46,6 +40,10 @@ values={[
 </TabItem>
 <TabItem value="network">
 
+:::info
+Connecting over network is only supported on ESP32 devices.
+:::
+
 - [Web Client](https://client.meshtastic.org)
 - [Android App](/docs/category/android-app)
 - [iOS App](/docs/category/apple-apps)
@@ -56,6 +54,9 @@ values={[
 </Tabs>
 
 ## Set Regional Settings
+
+In order to start communicating over the mesh, you must set your region. This setting controls which frequency range your device uses and should be set according to your regional location.
+
 
 <Tabs
 groupId="settings"

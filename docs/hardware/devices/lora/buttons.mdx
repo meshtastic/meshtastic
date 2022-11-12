@@ -1,6 +1,6 @@
 ---
 id: buttons
-title: Buttons
+title: Hardware Buttons
 sidebar_label: Buttons
 sidebar_position: 3
 ---
@@ -9,17 +9,7 @@ sidebar_position: 3
 
 - **Reset Button**
 	- _**Single press**_ resets the device.
-	- _**Double press**_ sets the Device in bootloader mode and mounts a drive to your computer (nRF52 devices only)
 - **Program button**
 	- _**Single press**_ changes the page of information displayed on the screen.
-	- _**Double press**_ sets the Bluetooth pairing code to `123456`.
 	- _**Long press**_ adjusts the contrast of the screen.
-	- _**Long press during reboot**_ turns on the software WiFi access point.
-
-
-## GPIO IO12 - TTGO Lora V2.1-1.6
-
-Shorting IO12 to ground will progress the screen pages, wake up the device, etc. A simple push switch can be added for this purpose.
-
-[<img src="/img/hardware/lora32-v2-1.6-button.jpg" style={{zoom:'30%'}} />](/img/hardware/lora32-v2-1.6-button.jpg)
-[<img src="/img/hardware/lora32-v2-1.6-button-example.jpg" style={{zoom:'30%'}} />](/img/hardware/lora32-v2-1.6-button.jpg)
+	- _**Triple press**_ sends a broadcast message of the device position.
