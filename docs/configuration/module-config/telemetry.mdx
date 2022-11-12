@@ -16,16 +16,16 @@ The telemetry module config options are: Device Metrics Update Interval, Environ
 
 ### Currently Supported Sensor Types
 
-| Sensor  |  Data Points                                                  |
-| :-----: | :-----------------------------------------------------------: |
-| BMP280  | Temperature and barometric pressure                           |
-| BME280  | Temperature, barometric pressure and humidity                 |
-| BME680  | Temperature, barometric pressure, humidity and air resistance |
-| MCP9808 | Temperature                                                   | 
-| INA260  | Current and Voltage                                           |
-| INA219  | Current and Voltage                                           |
-| LPS22   | Barometric pressure                                           |
-| SHTC3   | Temperature and humidity                                      |
+| Sensor  | I<sup>2</sup>C Address |  Data Points                                                  |
+| :-----: | :--------------------: | :-----------------------------------------------------------: |
+| BMP280  | 0x76                   | Temperature and barometric pressure                           |
+| BME280  | 0x76                   | Temperature, barometric pressure and humidity                 |
+| BME680  | 0x76                   | Temperature, barometric pressure, humidity and air resistance |
+| MCP9808 | 0x18                   | Temperature                                                   |
+| INA260  | 0x40                   | Current and Voltage                                           |
+| INA219  | 0x40                   | Current and Voltage                                           |
+| LPS22   | 0x5D                   | Barometric pressure                                           |
+| SHTC3   | 0x70                   | Temperature and humidity                                      |
 
 ##  Module Config Values
 
