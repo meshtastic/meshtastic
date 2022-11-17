@@ -115,7 +115,7 @@ const Firmware = (): JSX.Element => {
                 </div>
               </div>
               <div className="card__body">
-                Available on MacOS & iOS. Requires MacOS Ventura or iOS 16+.
+                Available on iOS and iPadOS. Requires iOS 16+.
               </div>
               <div className="card__footer mt-auto">
                 <a
