@@ -121,7 +121,7 @@ const Firmware = (): JSX.Element => {
                 <a
                   target="_blank"
                   rel="noopener noreferrer"
-                  href="https://testflight.apple.com/join/c8nNl8q1"
+                  href="https://itunes.apple.com/WebObjects/MZStore.woa/wa/viewSoftware?id=1586432531"
                   className="m-auto flex rounded-lg border-4 border-transparent bg-accent p-1 font-semibold text-black shadow-md hover:text-black hover:brightness-110 active:border-green-200"
                 >
                   App Store
