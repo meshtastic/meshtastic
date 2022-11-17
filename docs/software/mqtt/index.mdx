@@ -135,50 +135,6 @@ An existing public [MQTT broker](https://mosquitto.org) will be the default for 
 
 ## Examples
 
-### Using mosquitto on a mac
-
-1. install mqtt server
-
-```sh
-brew install mosquitto
-```
-
-2. start the mqtt server
-
-```sh
-brew services restart mosquitto
-```
-
-3. Do a quick test of server, start a subscriber on a topic:
-
-Note: this will wait until you press control-c (publish a message, see below)
-
-```sh
-mosquitto_sub -t test/hello
-```
-
-4. In another window, publish a message to that topic:
-
-```sh
-mosquitto_pub -h localhost -q 0 -t test/hello -m 'yo!'
-```
-
-5. For Meshtastic to be able to access that server, two settings need to be changed in the
-   `/usr/local/etc/mosquitto/mosquitto.conf` file:
-
-```
-listener 1883 0.0.0.0
-allow_anonymous true
-```
-
-6. Restart the service:
-
-```sh
-brew services restart mosquitto
-```
-
-7. If you are using the mac firewall, you will need to go into: System Preferences > Security & Privacy > Firewall > Firewall Options and add it.
-
 ### Sending/receiving messages on mosquitto server using python
 
 Here is an example publish message in python:
@@ -271,4 +227,3 @@ If you want to decode text and position messages without json, it gets complicat
 But node-red can rapidly (minutes vs days) put together some pretty impressive output when paired with meshtastic. Here is an example of geofencing and mapping of a single device via mqtt data.
 [<img src="/documents/mqtt/Mapping.jpg" style={{zoom:'50%'}} />](/documents/mqtt/Mapping.jpg)
 [<img src="/documents/mqtt/MapFlow.jpg" style={{zoom:'50%'}} />](/documents/mqtt/MapFlow.jpg)
-
