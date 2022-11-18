@@ -1,0 +1,51 @@
+---
+id: node-red
+title: Node-RED Integration
+sidebar_label: Node-RED
+slug: /software/mqtt/node-red
+sidebar_position: 3
+---
+
+Below is a valid JSON envelope for information sent by MQTT to a device for broadcast onto the mesh.
+
+ ```json
+ {
+   "sender":"whatever you want to be the SENDER",
+   "type":"sendtext",
+   "payload": text or a json object go here
+ }
+ ```
+
+Node-RED is a free cross-platform programming tool for wiring together hardware, APIs, and online services developed originally by IBM for IOT. It is widely used for home automation by many non-professional programmers and runs well on Pi's. Node-red has many plug-in modules written by the community. I will use this platform as a practical example on how to interface with the MQTT features of Meshtastic. Everything can be done from GUI's without using command line.
+
+Step one: use http://client.meshtastic.org/ one of the Apple apps or the CLI to connect to your device and adjust these settings.
+Enable and enter network SSID/PSK. Settings--> Device Config--> Network; Save.
+Set MQTT server address. Settings--> Module Config--> MQTT config; Verify Encryption Enabled is OFF. Turn JSON Output Enabled ON. Save.
+Go to Channel Editor and set Uplink and Downlink enabled to True. Save.
+
+Step two: if you don't want to depend on JSON decoding on the device, you can decode the protobuf messages off-device. To do that you will need to get the .proto files from https://github.com/meshtastic/protobufs. They function as a schema and are required for decoding in Node-RED. Save the files where the node-RED application can access them and note the file path of the "mqtt.proto" file.
+
+Step three: install Node-RED plug-ins to your node-RED application for an embedded MQQT server and a protobuf decoder.
+https://flows.nodered.org/node/node-red-contrib-aedes
+https://flows.nodered.org/node/node-red-contrib-protobuf
+
+Drag, drop, and wire the nodes like this. For this example, I ran node-RED on a Windows machine. Note that file paths might be specified differently on different platforms. MQTT server wild cards are usually the same. A "+" is a single level wildcard for a specific topic level. A "#" is a multiple level wildcard that can be used at the end of a topic filter. The debug messages shown are what happens when the inject button sends a JSON message with a topic designed to be picked up by the specified Meshtastic device and then having it rebroadcast the message.
+
+[<img src="/documents/mqtt/NodeRedTwo.jpg" style={{zoom:'50%'}} />](/documents/mqtt/NodeRedTwo.jpg)
+[<img src="/documents/mqtt/NodeRedThree.jpg" style={{zoom:'50%'}} />](/documents/mqtt/NodeRedThree.jpg)
+[<img src="/documents/mqtt/NR_nodes.jpg" style={{zoom:'50%'}} />](/documents/mqtt/NR_nodes.jpg)
+
+The aedes broker must be set up on the same flow as the other nodes. By activating the Publish debug node, you can see all the published messages.
+[<img src="/documents/mqtt/Broker1.jpg" style={{zoom:'50%'}} />](/documents/mqtt/Broker1.jpg)
+Receiving a json mqqt message is very simple.
+[<img src="/documents/mqtt/Consume.jpg" style={{zoom:'50%'}} />](/documents/mqtt/Consume.jpg)
+Injecting a json message to be sent by a device is also very simple. You do need the correct envelope.
+[<img src="/documents/mqtt/Inject.jpg" style={{zoom:'50%'}} />](/documents/mqtt/Inject.jpg)
+Forwarding a text message from one device, through a broker, to another broker/device/channel would look like this.
+[<img src="/documents/mqtt/Forward.jpg" style={{zoom:'50%'}} />](/documents/mqtt/Forward.jpg)
+If you want to decode text and position messages without json, it gets complicated:
+[<img src="/documents/mqtt/Decode.jpg" style={{zoom:'50%'}} />](/documents/mqtt/Decode.jpg)
+
+But node-red can rapidly (minutes vs days) put together some pretty impressive output when paired with meshtastic. Here is an example of geofencing and mapping of a single device via mqtt data.
+[<img src="/documents/mqtt/Mapping.jpg" style={{zoom:'50%'}} />](/documents/mqtt/Mapping.jpg)
+[<img src="/documents/mqtt/MapFlow.jpg" style={{zoom:'50%'}} />](/documents/mqtt/MapFlow.jpg)
