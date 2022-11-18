@@ -92,6 +92,15 @@ mosquitto_sub -t test/hello
 mosquitto_pub -h localhost -q 0 -t test/hello -m 'yo!'
 ```
 
+:::note
+```shell
+mosquitto_sub: command not found
+mosquitto_pub: command not found
+```
+
+If you get the above errors, try running `brew link mosquitto`. For further issues try `brew doctor` and follow the recommendations.
+:::
+
 </TabItem>
 <TabItem value="windows">
 </TabItem>
