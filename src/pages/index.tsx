@@ -95,7 +95,7 @@ const SocialCards: SocialCardProps[] = [
     color: 'bg-[#ffffff]',
     link: 'https://twitter.com/TheMeshtastic',
     children: (
-      <img alt="discord" className="m-auto h-10" src="/img/homepage/Twitter-logo.svg" />
+      <img alt="twitter" className="m-auto h-10" src="/img/homepage/Twitter-logo.svg" />
     ),
   },
   {
