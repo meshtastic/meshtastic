@@ -25,7 +25,11 @@ To find devices to connect via Bluetooth click the button on the bottom right co
 
 1. Select the device name, `Meshtastic_bebc` in this example. (You will see devices within range, so make sure to get the right one.)
 2. Before you can connect for the first time, you need to "pair" the devices to allow communication between them. Some devices are pinless, others require entering a PIN shown on the screen. On devices with a "user" button, double clicking sets the pairing PIN to `123456`.
-3. This starts the communication with the device. The cloud icon on the status bar should change and show a check mark.
+:::note
+If the device was flashed without a screen connected, it will automatically defauly to a pairing PIN of '123456'. If it was booted with a screen once, the config is set to random pin. If you remove the screen afterwards, it stays like this.
+Either set it to use the default pin manually, or factory reset it and it will revert to '123456' after the next boot.
+:::
+4. This starts the communication with the device. The cloud icon on the status bar should change and show a check mark.
 
 [![Device connected](/img/android/android-settings-mike-c.png)](/img/android/android-settings-mike-c.png)
 
