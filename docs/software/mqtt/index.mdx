@@ -78,54 +78,6 @@ If the message received contains valid JSON in the payload, the JSON is deserial
 
 `sender` and `payload` fields are required for a valid envelope. If a valid MQTT message is found, the message is sent over the radio as a message of type `TEXT_MESSAGE_APP` with the serialized `payload` value in the message payload.
 
-### Basic Configuration
-
-Check out [MQTT Settings](/docs/settings/moduleconfig/mqtt) for full information. For quick start instructions, read on.
-
-- Connect your gateway node to wifi, by setting the `network.wifi_ssid`, `network.wifi_psk` and `network.wifi_enabled` preferences.
-- Alternatively use the RAK4631 with Ethernet Module RAK13800, by setting `network.eth_mode` and `network.eth_enabled`.
-- Configure your broker settings: `mqtt.address`, `mqtt.username`, and `mqtt.password`. If all are left blank, the device will connect to the Meshtastic broker.
-- Set `uplink_enabled` and `downlink_enabled` as appropriate for each channel. Most users will just have a single channel (at channel index 0). `meshtastic --ch-index 0 --ch-set uplink_enabled true`
-
-`uplink_enabled` will tell the device to publish mesh packets to MQTT.
-`downlink_enabled` will tell the device to subscribe to MQTT, and forward any packets from there onto the mesh.
-
-### Topics
-
-The "mesh/crypt/CHANNELID/NODEID/PORTID" [topic](https://www.hivemq.com/blog/mqtt-essentials-part-5-mqtt-topics-best-practices) will be used for messages sent from/to a mesh.
-
-Gateway nodes will forward any MeshPacket from a local mesh channel with uplink_enabled. The packet (encapsulated in a ServiceEnvelope) will remain encrypted with the key for the specified channel.
-
-For any channels in the local node with downlink_enabled, the gateway node will forward packets from MQTT to the local mesh. It will do this by subscribing to mesh/crypt/CHANNELID/# and forwarding relevant packets.
-
-If the channelid 'well known'/public it could be decrypted by a web service (if the web service was provided with the associated channel key), in which case it will be decrypted by a web service and appear at "mesh/clear/CHANNELID/NODEID/PORTID". Note: This is not in the initial deliverable.
-
-#### Service Envelope
-
-The payload published on mesh/... will always be wrapped in a [ServiceEnvelope protobuf](/docs/developers/protobufs/api#serviceenvelope).
-
-ServiceEnvelope will include the message, and full information about arrival time, who forwarded it, source channel, source mesh id, etc...
-
-#### NODEID
-
-The unique ID for a node. A hex string that starts with an ! symbol.
-
-#### USERID
-
-A user ID string. This string is either a user ID if known or a nodeid to simply deliver the message to whoever the local user is of a particular device (i.e. person who might see the screen). FIXME, see what riot.im uses and perhaps use that convention? Or use the signal +phone number convention? Or the email address?
-
-#### CHANNELID
-
-FIXME, figure out how channelids work
-
-### Gateway nodes
-
-Any meshtastic node that has a direct connection to the internet (either via a helper app or installed WiFi/4G/satellite hardware) can function as a "Gateway node".
-
-Gateway nodes (via code running in the phone) will contain two tables to whitelist particular traffic to either be delivered toward the internet, or down toward the mesh. Users that are developing custom apps will be able to customize these filters/subscriptions.
-
-Since multiple gateway nodes might be connected to a single mesh, it is possible that duplicate messages will be published on any particular topic. Therefore, subscribers to these topics should
-deduplicate if needed by using the packet ID of each message.
 
 ### Optional web services
 
