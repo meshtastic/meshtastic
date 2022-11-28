@@ -21,7 +21,12 @@ Node-RED is a free cross-platform programming tool for wiring together hardware,
 Step one: use http://client.meshtastic.org/ one of the Apple apps or the CLI to connect to your device and adjust these settings.
 Enable and enter network SSID/PSK. Settings--> Device Config--> Network; Save.
 Set MQTT server address. Settings--> Module Config--> MQTT config; Verify Encryption Enabled is OFF. Turn JSON Output Enabled ON. Save.
-Go to Channel Editor and set Uplink and Downlink enabled to True. Save.
+Go to Channel Editor and set Uplink and Downlink enabled to True. Save. There is currently a bug for setting Uplink and Downlink Saving for the default channel. If you encounter this use the CLI commands:
+ ```
+meshtastic --ch-index 0 --ch-set uplink_enabled true
+meshtastic --ch-index 0 --ch-set downlink_enabled true
+ ```
+
 
 Step two: if you don't want to depend on JSON decoding on the device, you can decode the protobuf messages off-device. To do that you will need to get the .proto files from https://github.com/meshtastic/protobufs. They function as a schema and are required for decoding in Node-RED. Save the files where the node-RED application can access them and note the file path of the "mqtt.proto" file.
 
@@ -44,8 +49,9 @@ Injecting a json message to be sent by a device is also very simple. You do need
 Forwarding a text message from one device, through a broker, to another broker/device/channel would look like this.
 [<img src="/documents/mqtt/Forward.jpg" style={{zoom:'50%'}} />](/documents/mqtt/Forward.jpg)
 If you want to decode text and position messages without json, it gets complicated:
-[<img src="/documents/mqtt/Decode.jpg" style={{zoom:'50%'}} />](/documents/mqtt/Decode.jpg)
+[<img src="/documents/mqtt/DecodeNewest.jpg" style={{zoom:'50%'}} />](/documents/mqtt/Decode.jpg)
+If you are interested in my flow for this it is here:
+(documents/mqtt/Flow.txt)
 
-But node-red can rapidly (minutes vs days) put together some pretty impressive output when paired with meshtastic. Here is an example of geofencing and mapping of a single device via mqtt data.
+Node-red can rapidly (minutes vs days) put together some pretty impressive output when paired with meshtastic. Here is the output of that flow geofencing and mapping via mqtt data.
 [<img src="/documents/mqtt/Mapping.jpg" style={{zoom:'50%'}} />](/documents/mqtt/Mapping.jpg)
-[<img src="/documents/mqtt/MapFlow.jpg" style={{zoom:'50%'}} />](/documents/mqtt/MapFlow.jpg)
