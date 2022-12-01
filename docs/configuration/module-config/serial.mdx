@@ -29,7 +29,7 @@ Defaults to 'Simple'.
 Available Values:
 
 * `DEFAULT`
-* `SIMPLE` operate as an dumb UART tunnel. What goes in will come out, Requires a channel named 'gpio'.
+* `SIMPLE` operate as an dumb UART tunnel. What goes in will come out, Requires a channel named 'serial'.
 * `PROTO` not implemented yet, but will expose the Protobuf Client API on this serial port
 * `TEXTMSG` Will send the string received over the serial port as a Text Message for Display on the other devices.
 * `NMEA` Will output a NMEA 0183 Data stream containing the internal GPS or fixed position and other node locations as Waypoints (WPL).
@@ -159,12 +159,12 @@ This module requires attaching a peripheral accessory to your device. It will no
 Default is to use RX GPIO 16 and TX GPIO 17.
 ### Basic Usage:
 
-1. Enable the module by setting `serial_module_enabled` to `1`.
+1. Enable the module by setting `serial.enabled` to `1`.
 2. Set the pins (`serial.rxd` / `serial.txd`) for your preferred RX and TX GPIO pins. On tbeam boards it is recommended to use:
    - RXD 35
    - TXD 15
 3. Set `serial.timeout` to the amount of time to wait before we consider your packet as "done".
-4. (Optional) In serial_module.h set the port to `PortNum_TEXT_MESSAGE_APP`if you want to send messages to/from the general text message channel.
+4. (Optional) set serial.mode to TESTMSG if you want to send messages to/from the general text message channel
 5. Connect to your device over the serial interface at `38400 8N1`.
-6. Send a packet up to 240 bytes in length. This will get relayed over the mesh network.
+6. Send a packet up to 237 bytes in length. This will get relayed over the mesh network.
 7. (Optional) Set `serial.echo` to `1` and any message you send out will be echoed back to your device.
