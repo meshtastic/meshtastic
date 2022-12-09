@@ -12,6 +12,9 @@ The serial module config options are: Enabled, Echo, Mode, Receive GPIO, Transmi
 
 This is a simple interface to send messages over the mesh network by sending strings over a serial port. Anything you send the node will be turned into a message sent out over the mesh, and anything received from the mesh will be sent to the serial port. Note that this module does not (yet) allow arbitrary protobuf commands to be sent over the serial connection.
 
+![image](https://user-images.githubusercontent.com/9000580/205529843-962c3187-8411-452c-b729-42c58b1571f5.png)
+
+
 ## Serial Module Config Values
 
 ### Enabled
@@ -73,7 +76,12 @@ values={[
 <TabItem value="android">
 
 :::info
-Serial module config is not available for Android.
+
+Serial Module Config options are available for Android.
+
+1. Open the Meshtastic App
+2. Navigate to: **Vertical Ellipsis (3 dots top right) > Module Settings > Serial Config**
+
 :::
 
 </TabItem>
@@ -161,10 +169,12 @@ Default is to use RX GPIO 16 and TX GPIO 17.
 
 1. Enable the module by setting `serial.enabled` to `1`.
 2. Set the pins (`serial.rxd` / `serial.txd`) for your preferred RX and TX GPIO pins. On tbeam boards it is recommended to use:
-   - RXD 35
-   - TXD 15
+   - RXD 13
+   - TXD 14
 3. Set `serial.timeout` to the amount of time to wait before we consider your packet as "done".
-4. (Optional) set serial.mode to TESTMSG if you want to send messages to/from the general text message channel
+4. (Optional) set serial.mode to TEXTMSG if you want to send messages to/from the general text message channel
 5. Connect to your device over the serial interface at `38400 8N1`.
-6. Send a packet up to 237 bytes in length. This will get relayed over the mesh network.
-7. (Optional) Set `serial.echo` to `1` and any message you send out will be echoed back to your device.
+
+    With [tio](https://github.com/tio/tio) &ndash; `tio -e -b 38400 -f none /dev/myserialport`
+7. Send a packet up to 237 bytes in length. This will get relayed over the mesh network.
+8. (Optional) Set `serial.echo` to `1` and any message you send out will be echoed back to your device.
