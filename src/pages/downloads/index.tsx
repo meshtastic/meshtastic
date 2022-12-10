@@ -12,7 +12,7 @@ import {
 } from '@heroicons/react/24/solid';
 import Layout from '@theme/Layout';
 
-import { Release } from '../../utils/github';
+import { FirmwareReleases } from '../../utils/apiTypes.js';
 import { fetcher } from '../../utils/swr';
 import {
   FirmwareCard,
@@ -20,14 +20,11 @@ import {
 } from './_components/FirmwareCard';
 
 const Firmware = (): JSX.Element => {
-  const { data, error } = useSWR<Release[]>(
-    'https://api.github.com/repos/meshtastic/firmware/releases',
+  const { data, error } = useSWR<FirmwareReleases>(
+    'http://localhost:4000/github/firmware/list',
     fetcher,
   );
 
-  const beta = data?.filter((release) => release.prerelease === false);
-
-  const alpha = data?.filter((release) => release.prerelease === true);
   return (
     <Layout
       title="Downloads"
@@ -104,7 +101,7 @@ const Firmware = (): JSX.Element => {
           <div className="flex w-1/5 bg-gradient-to-r from-rose-500 to-primary">
             <ComputerDesktopIcon className="m-auto h-20" />
           </div>
-          <div className="flex w-full flex-col columns-3 bg-primary lg:flex-row">
+          <div className="flex w-full columns-3 flex-col bg-primary lg:flex-row">
             <div className="card m-4 border-2 border-secondary">
               <div className="card__header">
                 <h3>Apple</h3>
@@ -138,9 +135,7 @@ const Firmware = (): JSX.Element => {
                   <FaAndroid className="h-20 w-20" />
                 </div>
               </div>
-              <div className="card__body">
-                Sideloading also available.
-              </div>
+              <div className="card__body">Sideloading also available.</div>
               <div className="card__footer mt-auto">
                 <a
                   target="_blank"
@@ -198,14 +193,14 @@ const Firmware = (): JSX.Element => {
             {data && !error ? (
               <>
                 <FirmwareCard
-                  variant="Beta"
+                  variant="Stable"
                   description="Tested feature set. For those who want stability."
-                  release={beta}
+                  release={data.releases.stable}
                 />
                 <FirmwareCard
                   variant="Alpha"
                   description="Upcoming changes for testing. For those who want new features."
-                  release={alpha}
+                  release={data.releases.alpha}
                 />
                 <div className="card m-4 border-2 border-secondary">
                   <div className="card__header">
