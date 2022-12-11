@@ -21,7 +21,7 @@ import {
 
 const Firmware = (): JSX.Element => {
   const { data, error } = useSWR<FirmwareReleases>(
-    'http://localhost:4000/github/firmware/list',
+    'https://api.meshtastic.org/github/firmware/list',
     fetcher,
   );
 
