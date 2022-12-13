@@ -204,7 +204,7 @@ function Home() {
           ))}
         </Carousel>
 
-        <div className="bg-primaryDark mx-auto flex w-full w-auto flex-col gap-4 p-4 shadow-inner">
+        <div className="bg-primaryDark mx-auto flex w-full lg:w-auto flex-col gap-4 p-4 shadow-inner">
           <h3 className="text-xl font-bold">Connect with us.</h3>
           <div className="flex w-full overflow-x-auto">
             {SocialCards.map((card, index) => (
