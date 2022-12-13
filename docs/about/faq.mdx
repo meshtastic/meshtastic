@@ -13,7 +13,7 @@ This site (which has a great search function) is the preferred place for up-to-d
 
 ### How can I contribute to Meshtastic?
 
-Everyone contributes in a different way. Join the [Meshtastic Discord](https://discord.gg/ktMAKGBnBs) and introduce yourself. We're all very friendly. If you'd like to pitch in some code, check out the [Developers](/docs/developers) menu on the left.
+Everyone contributes in a different way. Join the [Meshtastic Discord](https://discord.gg/ktMAKGBnBs) and introduce yourself. We're all very friendly. If you'd like to pitch in some code, check out the [Development](/docs/developers) menu on the left.
 
 <!-- Android Client-->
 
@@ -21,34 +21,46 @@ Everyone contributes in a different way. Join the [Meshtastic Discord](https://d
 
 ### What versions of Android does the Meshtastic Android App require?
 
-Minimum requirement is Android 5 (Lollipop 2014, first BLE support), however Android 6 (Marshmallow 2015) is recommended as Bluetooth is more stable.
+Minimum requirement is Android 5 (Lollipop 2014, first BLE support), however at least Android 6 (Marshmallow 2015) is recommended as Bluetooth is more stable. While Android 5/6 are officially supported by Meshtastic, it is *not* recommended that you purchase devices with these versions due to their limited OS support and limited battery life due to age. Many newer models exist that are very affordable. A good resource to use when researching affordable devices is the [LineageOS Supported Devices List](https://wiki.lineageos.org/devices/).
+
+### Is location access required to use the Meshtastic App?
+
+Depending on which version of Android your device runs, you may have to enable location access to pair via Bluetooth. For Android 8+ we use [this API](https://developer.android.com/guide/topics/connectivity/companion-device-pairing) that does not require location access. However, each OS implements BLE differently and we have noticed some devices still require location access to scan for Bluetooth devices.
 
 ### What's the cloud icon next to the message?
 
-- Empty Cloud - Queued on the app to be sent to your device.
-- Up Arrow - Queued on the device to be sent over the mesh.
-- Check Mark - At least one other device on the mesh confirmed it received the message.
-- Cross Mark - No confirmation was received after the default three retransmissions.
+- Empty Cloud - Queued on the device to be sent over the mesh.
+- Up Arrow - Queued on the app to be sent to your device.
+- Check Mark - At least one other node on the mesh acknowledged the message. 
+- Cross Mark - Not acknowledged or message error.
 
 ### How can I clear the message history?
 
 Long press any message to select and show the menu with "delete" and "select all" buttons.
 
-<!-- iOS Client-->
+### After updating firmware, my node is not connecting via Bluetooth. What should I do?
 
-## iOS Client
+Try forgetting the Bluetooth connection from the Android Bluetooth Settings menu. Re-pair and try again.
 
-### What version of iOS does the Meshtastic iOS App Require?
+<!-- Apple Clients-->
 
-The iOS app requires iOS v16.
+## Apple Clients
 
-### How do I get the Meshtastic iOS App?
+### What version of iOS/iPadOS/macOS does the Meshtastic App Require?
 
-See [iOS App](/docs/software/apple/installation)
+The Meshtastic App on Apple Clients require the following minimum OS versions: iOS 16, iPadOS 16, and macOS 13.
+
+### How do I get the Apple Meshtastic App?
+
+See [Apple Apps](/docs/software/apple/installation)
 
 ### After updating firmware, my node is not connecting via Bluetooth. What should I do?
 
-Try forgetting the Bluetooth connection from the iOS System Settings. Re-pair and try again.
+Try forgetting the Bluetooth connection from the iOS/iPadOS/macOS System Settings. Re-pair and try again.
+
+### Do the Apple applications provide an indication if the message was acknowledged on the mesh?
+
+Yes, when the message is sent you will first see a `Waiting to be acknowledged...` status beneath the message. If the message is acknowledged by a node on the mesh this will update to `Acknowledged`, but if no nodes have responded it will indicate `Max Retransmission Reached`. If there is an error, the status will update to the appropriate error. Additionally, you can long press on the message and select `Message Details` to view the date/time sent, if ack was received and the time ack was received or the error (if there was one).
 
 <!-- Web Client-->
 
@@ -70,7 +82,7 @@ Note: Currently only Chrome and Chromium based browsers offer reliable support f
 
 ### How do I share my Meshtastic Channel with other people?
 
-Your Meshtastic client (Android, Web, or Python) will provide you a URL or QR code. You can email, text or print this URL or QR code and share it with people you want to join your Meshtastic Channel. Note: This feature is not yet available on the iOS app.
+Your Meshtastic client (Android, Apple, Web, or Python) will provide you a URL or QR code. You can email, text or print this URL or QR code and share it with people you want to join your Meshtastic Channel.
 
 <!-- Python -->
 
