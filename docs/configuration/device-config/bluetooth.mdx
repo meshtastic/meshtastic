@@ -11,7 +11,7 @@ import TabItem from '@theme/TabItem';
 The Bluetooth config options are: Enabled, Pairing Mode and Fixed PIN Value.  Bluetooth config uses an admin message sending a `Config.Bluetooth` protobuf.
 
 :::info
-On ESP32 Bluetooth will be disabled if WiFi is enabled. The WiFi setting takes precedence.
+ESP32 Devices: Bluetooth will be disabled if WiFi is enabled. The WiFi setting takes precedence.
 :::
 
 ## Bluetooth Config Values
@@ -30,7 +30,14 @@ Finally, `NO_PIN` disables PIN authentication.
 
 ### Fixed PIN
 
-If your pairing mode is set to fixed PIN this is the value of that fixed 6 digit pin. Default value is 123456. For all other pairing modes, this number is ignored.
+If your pairing mode is set to `FIXED_PIN`, the default value is 123456. For all other pairing modes, this number is ignored. A custom integer (6 digits) can be set via the Bluetooth config options.
+
+### Default Pairing Mode
+
+The default pairing mode will be determined based on whether the device has or does not have a screen attached to it during the first boot (or with a stale device state) unless manually configured via the Bluetooth config options.
+
+- **Screen Attached:** If your device boots up for the first time (or with a stale device state), and a screen is detected, the default pairing mode will be set to `RANDOM_PIN`. Should the attached screen be removed after the device has already been booted, the default pairing mode of `RANDOM_PIN` will remain unless manually changed to `FIXED_PIN` or `NO_PIN`. It is recommended the pairing mode be updated prior to removing the attached screen.
+- **No Screen Attached:** If your device boots up for the first time (or with a stale device state), and no screen is detected, the default paring mode will be set to `FIXED_PIN` with the aforementioned default value unless manually configured to a custom value.
 
 ## Configure Bluetooth Config
 
@@ -46,21 +53,34 @@ values={[
 <TabItem value="android">
 
 :::info
-Bluetooth config is not available for Android.
+
+All Bluetooth config options are available for Android.
+
+1. Open the Meshtastic App
+2. Navigate to: **Vertical Ellipsis (3 dots top right) > Device Settings > Bluetooth Config**
+
 :::
 
 </TabItem>
 <TabItem value="apple">
 
+:::info
+
 All Bluetooth config values are available on iOS, iPadOS and macOS.
 
 1. Open the Meshtastic App
-2. Navigate to: **Settings > Radio Configuration > Position**
+2. Navigate to: **Settings > Radio Configuration > Bluetooth (BLE)**
+
+:::
 
 </TabItem>
 <TabItem value="cli">
 
+:::info
+
 All Bluetooth module config options are available in the python CLI. Example commands are below:
+
+:::
 
 |          Setting          |  Acceptable Values  | Default |
 | :-----------------------: | :-----------------: | :-----: |
@@ -81,7 +101,12 @@ meshtastic --set bluetooth.fixed_pin 111111
   <TabItem value="web">
 
 :::info
+
 All Bluetooth module config options are available for the Web UI.
+
+1. Open the Meshtastic Web UI.
+2. Navigate to: **Device Config > Bluetooth**
+
 :::
 
   </TabItem>
