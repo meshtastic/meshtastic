@@ -2,6 +2,7 @@
 id: remote-admin
 title: Remote Node Administration
 sidebar_label: Remote Nodes
+sidebar_position: 4
 ---
 
 :::caution Disclaimer
@@ -28,8 +29,8 @@ $ meshtastic --info
 Connected to radio
 ...
 Channels:
-  PRIMARY psk=default { "modemConfig": "Bw125Cr48Sf4096", "psk": "AQ==" }
-Primary channel URL: https://www.meshtastic.org/d/#CgUYAyIBAQ
+  PRIMARY psk=default { "psk": "AQ==" }
+Primary channel URL: https://meshtastic.org/e/#CgMSAQESCggBOANAA0gBUBs
 ```
 
 So from this output you see can that this node knows about only one channel and that its PSK is set to the default value.
@@ -54,10 +55,10 @@ $ meshtastic --info
 Connected to radio
 ...
 Channels:
-  PRIMARY psk=default { "modemConfig": "Bw125Cr48Sf4096", "psk": "AQ==" }
-  SECONDARY psk=secret { "psk": "HW7E3nMbiNbvr6MhsDonLCmj7eSAhttzjbIx/r5OQmg=", "name": "admin" }
-Primary channel URL: https://www.meshtastic.org/d/#CgUYAyIBAQ
-Complete URL (includes all channels): https://www.meshtastic.org/d/#CgUYAyIBAQopIiAdbsTecxuI1u-voyGwOicsKaPt5ICG23ONsjH-vk5CaCoFYWRtaW4
+  PRIMARY psk=default { "psk": "AQ==" }
+  SECONDARY psk=secret { "psk": "YyDCitupTAOOXTcaMDxyNhDpPa3eThiQFziPFCqT0mo=", "name": "admin" }
+Primary channel URL: https://meshtastic.org/e/#CgMSAQESCggBOANAA0gBUBs
+Complete URL (includes all channels): https://meshtastic.org/e/#CgMSAQEKKRIgYyDCitupTAOOXTcaMDxyNhDpPa3eThiQFziPFCqT0moaBWFkbWluEgoIATgDQANIAVAb
 ```
 
 Notice that now we have a new secondary channel and the `--info` option prints out TWO URLs. The `Complete URL` includes all of the channels this node understands. The URL contains the preshared keys and should be treated with caution and kept a secret. When deploying remote administration, you only need the node you want to administer and the node you are locally connected to know this new "admin" channel. All of the other nodes will forward the packets as long as they are a member of the primary channel.
@@ -129,10 +130,10 @@ Set ls_secs to 301
 Writing modified preferences to device
 Preferences: { "lsSecs": 301, "region": "TW" }
 Channels:
-  PRIMARY psk=default { "modemConfig": "Bw125Cr48Sf4096", "psk": "AQ==" }
-  SECONDARY psk=secret { "psk": "HW7E3nMbiNbvr6MhsDonLCmj7eSAhttzjbIx/r5OQmg=", "name": "admin" }
-Primary channel URL: https://www.meshtastic.org/d/#CgUYAyIBAQ
-Complete URL (includes all channels): https://www.meshtastic.org/d/#CgUYAyIBAQopIiAdbsTecxuI1u-voyGwOicsKaPt5ICG23ONsjH-vk5CaCoFYWRtaW4
+  PRIMARY psk=default { "psk": "AQ==" }
+  SECONDARY psk=secret { "psk": "YyDCitupTAOOXTcaMDxyNhDpPa3eThiQFziPFCqT0mo=", "name": "admin" }
+Primary channel URL: https://meshtastic.org/e/#CgMSAQESCggBOANAA0gBUBs
+Complete URL (includes all channels): https://meshtastic.org/e/#CgMSAQEKKRIgYyDCitupTAOOXTcaMDxyNhDpPa3eThiQFziPFCqT0moaBWFkbWluEgoIATgDQANIAVAb
 ```
 
 ## Admin Channel Setup is Complete

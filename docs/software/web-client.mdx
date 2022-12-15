@@ -5,14 +5,14 @@ sidebar_label: Web Client
 sidebar_position: 3
 ---
 
-<!--- FIXME add self hosting details link --->
-
-Meshtastic Web is a [Progressive Web App](https://web.dev/progressive-web-apps) that runs directly in your browser.
+Meshtastic Web is a Meshtastic client that runs directly in your browser.
 There are three ways of accessing the app:
 
 1. Served directly from an ESP32 based node via [meshtastic.local](http://meshtastic.local) or the device's IP Address.
 2. A hosted version located at [client.meshtastic.org](https://client.meshtastic.org).
-3. Running it yourself.
+3. Hosting it yourself.
+
+![WebUI](/img/webUI.png)
 
 ## Compatibility
 
@@ -20,7 +20,7 @@ The application will work in all major browsers, but specific functionality is l
 
 ### HTTP
 
-This method of connecting has the best support, and has no incompatibilities.
+This method of connecting is limited to esp32 devices.
 
 :::caution
 
@@ -31,7 +31,7 @@ This can be found on the screen of the device, via your router's DHCP lease page
 
 :::
 
-You can accessing your device over HTTP after you set up and enabled the [Client](/docs/settings/config/network#wifi-client)
+You can accessing your device over HTTP after you set up your [Network Connection](/docs/settings/config/network)
 
 ### Bluetooth
 
@@ -47,42 +47,10 @@ The method with the least platform support, uses the [Web Serial API](https://we
 
 ## Updating
 
-The web interface is now included in firmware releases. There is active development ongoing to fix some issues with updating the web interface from the web interface directly. Please be patient with us as we work on this. Use [Meshtastic-flasher](/docs/software/python/flasher) to update your device to the current stable build which includes the web interface.
+The web interface is included in firmware releases. When a new firmware version is released, the latest WebUI will be automatically bundled.
 
-:::warning
+## Self Hosting
 
-Old documentation below.
+The source code for the WebUI can be found on out [GitHub](https://github.com/meshtastic/web)
 
-:::
-
-If you have just one Meshtastic device on your network, the easiest thing to do is to go to http://meshtastic.local printed on your device screen. That URL should work provided that mDNS (aka ZeroConf) is not blocked on your local network. If you have more than one device or there's a problem with mDNS name resolution, you will have to refer to the device's IP address. The IP address will also be available on the screen. It can also be found by reading the serial logs when the device boots up.
-
-:::note
-The first time your device restarts after enabling WiFi, it will take an additional 20-30 seconds to boot. This is to generate self-signed SSL keys. The keys will be saved for future reuse.
-:::
-
-## Common Problems
-
-### Problem: File not found: /static/index.html
-
-:::note
-This issue is likely found on old versions of the web interface. Device firmware now includes the web interface and the file system has been changed. Flashing the device with [Meshtastic-flasher](/docs/software/python/flasher) will update you to the current web interface. Access to the files in the filesystem is actively being developed, but is not currently available.
-:::
-
-Cause: This most likely means that the file system for the web server has not been loaded. You probably used esphome-flasher or some other GUI tool to flash the firmware.
-
-Solutions:
-
-Option 1) Flash the device with the `device-install.sh` script that comes packaged with the firmware zip file (you'll lose previous settings). Then follow the instructions under configuration to upload the web interface.
-
-Option 2) Flash the device with the OTA update from within the Android application.
-
-Option 3) Flash the device with the SPIFFS instructions in platform.io.
-
-### Insufficient space to upload new files
-
-:::note
-This issue is likely found on old versions of the web interface. Device firmware now includes the web interface and the file system has been changed. Flashing the device with [Meshtastic-flasher](/docs/software/python/flasher) will update you to the current web interface. Access to the files in the filesystem is actively being developed, but is not currently available.
-:::
-
-Cause: Typically a small partition has been set aside from previous firmware installed on the module. Instructions for how to fix this can be found on the [ESP32-Partitions](/docs/development/web/esp32-partitions) page.
+Instructions for building and running the project can be found in the repo's readme.
