@@ -15,7 +15,7 @@ values={[
 {label: 'GPS Module', value: 'GPS'},
 {label: 'Buzzer', value: 'Buzzer'},
 {label: 'I/O Module', value: 'IO'},
-{label: 'Environmental Sensor', value:'BME680'}
+{label: 'Environmental Sensors', value:'Sensors'}
 ]}>
 <TabItem value="GPS">
 
@@ -59,18 +59,55 @@ There is development activity in progress to get sensors such as this added to t
 Further information on the RAK13002 can be found on the [RAK Documentation Center](https://docs.rakwireless.com/Product-Categories/WisBlock/RAK13002/Overview).
 
 </TabItem>
-<TabItem value="BME680">
+<TabItem value="Sensors">
+<Tabs
+groupId="sensors"
+defaultValue="RAK1901"
+values={[
+{label: 'RAK1901', value: 'RAK1901'},
+{label: 'RAK1902', value: 'RAK1902'},
+{label: 'RAK1906', value: 'RAK1906'},
+]}>
 
-The [RAK1906 Environmental Sensor](https://store.rakwireless.com/products/rak1906-bme680-environment-sensor) is based on the Bosch BME680 module and has the following features:
+<TabItem value="RAK1901">
+
+The [RAK1901 Temperature and Humidity Sensor](https://store.rakwireless.com/products/rak1901-shtc3-temperature-humidity-sensor) is based on the Sensirion SHTC3 module and has the following features:
+
+- Temperature measurement (Range -40&deg;C to +125&deg;C)
+- Humidity measurement (Range 0% to 100%)
+- Lower power consumption
+
+Further information on the RAK1901 can be found on the [RAK Documentation Center](https://docs.rakwireless.com/Product-Categories/WisBlock/RAK1901/Overview/#product-description).
+
+</TabItem>
+
+<TabItem value="RAK1902">
+
+The [RAK1902 Barometric Pressure Sensor](https://store.rakwireless.com/products/rak1902-kps22hb-barometric-pressure-sensor) is based on the STMicroelectronics LPS22HB module and has the following features:
+
+- Barometer measurement (Range 260 to 1260 hPa)
+- Low power consumption of 3uA
+- Small form factor
+
+Further information on the RAK1902 can be found on the [RAK Documentation Center](https://docs.rakwireless.com/Product-Categories/WisBlock/RAK1902/Overview/#product-description).
+
+</TabItem>
+
+<TabItem value="RAK1906">
+
+The [RAK1906 Environment Sensor](https://store.rakwireless.com/products/rak1906-bme680-environment-sensor) is based on the Bosch BME680 module and has the following features:
 
 - Temperature measurement (Range -40&deg;C to +85&deg;C)
 - Humidity measurement (Range 0% to 100%)
 - Barometer measurement (Range 300 to 1100 hPa)
 - Air Quality measurement
-
-
-There is development activity in progress to get sensors such as this added to the Meshtastic Core.  
+ 
 Further information on the RAK1906 can be found on the [RAK Documentation Center](https://docs.rakwireless.com/Product-Categories/WisBlock/RAK1906/Overview/#product-description).
 
 </TabItem>
+
+</Tabs>
+
+</TabItem>
+
 </Tabs>
