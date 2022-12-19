@@ -28,7 +28,8 @@ The [RAK1921 OLED display](https://store.rakwireless.com/products/rak1921-oled-d
 
 This item requires soldering.  
 Further information on the RAK1921 can be found on the [RAK Documentation Center](https://docs.rakwireless.com/Product-Categories/WisBlock/RAK1921/Overview/#product-description).  
-Similar modules are widely available from other suppliers, but do check the boards as some have the VDD and GND pins swapped round.
+Similar modules are widely available from other suppliers, but do check the boards as some have the VDD and GND pins swapped round. This will prevent directly soldering the display to the baseboard. The preferred order is VDD, GND, SCL, SDA.
+If pin ordering on the OLED board are swapped, there are some tricks to allow either reconfiguring the pins of the OLED via soldered jumpers, or by carefully soldering wire for those pins that are out-of-sequence. The final option is to use longer wires between the board and display, which permits re-ordering the wires as required.
 
 [<img alt="0.96 inch OLED display" src="/img/hardware/screen.png" style={{zoom:'25%'}} />](/img/hardware/screen.png)
 
