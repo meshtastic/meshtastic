@@ -51,10 +51,11 @@ const TwoPointZero = (): JSX.Element => {
               <div>
                 <div>
                   <img
-                    className="h-11 w-auto"
+                    className="h-11 w-auto responsive-color-svg"
                     it
                     src="/design/logo/svg/Mesh_Logo_Black.svg"
-                    alt="Your Company"
+
+                    alt="Meshtastic Logo"
                   />
                 </div>
                 <div className="mt-20">
