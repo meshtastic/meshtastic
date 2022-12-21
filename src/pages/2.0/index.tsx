@@ -7,6 +7,8 @@ import { FiTwitter } from 'react-icons/fi';
 import { ChevronRightIcon } from '@heroicons/react/20/solid';
 import FlipClockCountdown from '@leenguyen/react-flip-clock-countdown';
 import Layout from '@theme/Layout';
+import { Dark, Light } from '/src/components/ColorMode';
+
 
 const TwoPointZero = (): JSX.Element => {
   const stats = [
@@ -50,13 +52,22 @@ const TwoPointZero = (): JSX.Element => {
             <div className="mx-auto max-w-md px-4 sm:max-w-3xl sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-2 lg:gap-24 lg:px-8">
               <div>
                 <div>
-                  <img
-                    className="h-11 w-auto responsive-color-svg"
-                    it
-                    src="/design/logo/svg/Mesh_Logo_Black.svg"
-
-                    alt="Meshtastic Logo"
-                  />
+                  <Dark>
+                    <img
+                      className="h-11 w-auto"
+                      it
+                      src="/design/logo/svg/Mesh_Logo_White.svg"
+                      alt="Meshtastic Logo"
+                    />
+                  </Dark>
+                  <Light>
+                    <img
+                        className="h-11 w-auto"
+                        it
+                        src="/design/logo/svg/Mesh_Logo_Black.svg"
+                        alt="Meshtastic Logo"
+                      />
+                  </Light>
                 </div>
                 <div className="mt-20">
                   <div>
