@@ -33,7 +33,7 @@ Available Values:
 
 * `DEFAULT`
 * `SIMPLE` operate as an dumb UART tunnel. What goes in will come out, Requires a channel named 'serial'.
-* `PROTO` not implemented yet, but will expose the Protobuf Client API on this serial port
+* `PROTO` Exposes the Protobuf Client API on this serial port. You can use this to connect from another device. [API Reference](/docs/development/device/client-api)
 * `TEXTMSG` Will send the string received over the serial port as a Text Message for Display on the other devices.
 * `NMEA` Will output a NMEA 0183 Data stream containing the internal GPS or fixed position and other node locations as Waypoints (WPL).
 
