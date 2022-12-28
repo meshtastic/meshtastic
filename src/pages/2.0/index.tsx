@@ -1,5 +1,3 @@
-import '@leenguyen/react-flip-clock-countdown/dist/index.css';
-
 import React from 'react';
 
 import { FiTwitter } from 'react-icons/fi';
@@ -445,13 +443,9 @@ const TwoPointZero = (): JSX.Element => {
                 <div className="flex flex-col gap-12">
                   <div className="sm:text-center">
                     <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
-                      Countdown to Prize Draw!
+                      Congratulations to the winners!
                     </h2>
                   </div>
-                  <FlipClockCountdown
-                    className="m-auto"
-                    to={new Date(2022, 11, 1).getTime()}
-                  />
                 </div>
               </div>
             </div>
