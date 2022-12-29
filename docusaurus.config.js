@@ -122,6 +122,10 @@ const config = {
   customFields: {
     API_URL: process.env.API_URL,
   },
+  markdown: {
+    mermaid: true,
+  },
+  themes: ['@docusaurus/theme-mermaid'],
 };
 
 module.exports = config;
