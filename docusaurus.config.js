@@ -89,6 +89,19 @@ const config = {
     colorMode: {
       respectPrefersColorScheme: true,
     },
+    mermaid: {
+      theme: {light: 'base', dark: 'base'},
+      options: {
+        themeVariables: {
+          primaryColor: '#67EA94',
+          primaryTextColor: 'var(--tw-prose-headings)',
+          primaryBorderColor: '#4D4D4D',
+          lineColor: '#EAD667',
+          secondaryColor: '#EA67BD',
+          tertiaryColor: '#677CEA'
+        },
+      },
+    }
   },
   plugins: [
     () => {
