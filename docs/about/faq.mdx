@@ -119,6 +119,11 @@ Once the node wakes up from sleep, your phone will relay any delayed messages th
 - Android instructions see: [Android Usage](/docs/software/android/usage#configuration-options)
 - Python CLI instructions see: [Python Usage](/docs/software/python/cli/usage#changing-settings)
 
+### I am in Europe and my device seems to stop transmitting after a while, what is going on? 
+
+Europe has an hourly duty cycle limit of 10% in the frequency band that Meshtastic uses. It might be that you hit this limit if you are sending a lot. You can confirm this by checking whether you see duty cycle limit errors in the serial log or the MeshLog of the iOS app. 
+To limit traffic, you can consider setting the device metrics and position update intervals higher. Alternatively, you can override the duty cycle limit, but then you will violate the regulations if you are not a HAM operator.
+
 ### Why does only one RAK Meshtastic Starter kit show up in my node list?
 
 There was a bug where Meshtastic Starter kits were sent out with the same MAC address. With a single MAC address the devices all report as being the same device. Without the battery connected, flash the starter kit device(s) to any firmware > 1.2.59 and then do a factory reset, disconnect and reconnect the board and run `meshtastic --info`.
