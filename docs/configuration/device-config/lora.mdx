@@ -67,6 +67,10 @@ This is controlling the actual hardware frequency the radio is transmitting on. 
 
 For testing it is useful sometimes to force a node to never listen to particular other nodes (simulating radio out of range). All nodenums listed in the ignore_incoming array will have packets they send dropped on receive (by router.cpp)
 
+### Override Duty Cycle Limit
+
+Setting this true to means that the device will override the hourly duty cycle limit that is induced in Europe, meaning that you will violate the regulations when you reach the limit. Defaults to false, meaning the device will drop all packets once you hit the limit and resume when it is allowed again.
+
 ## LoRa Config Client Availability
 
 <Tabs
