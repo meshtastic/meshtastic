@@ -178,3 +178,51 @@ Default is to use RX GPIO 16 and TX GPIO 17.
     With [tio](https://github.com/tio/tio) &ndash; `tio -e -b 38400 -f none /dev/myserialport`
 7. Send a packet up to 237 bytes in length. This will get relayed over the mesh network.
 8. (Optional) Set `serial.echo` to `1` and any message you send out will be echoed back to your device.
+
+### Interfacing PIR Sensor With External Microcontroller
+The following is an example of using a Raspberry Pi Pico connected to a PIR sensor to detect motion. When motion is detected, a message is sent via. serial  to the T-Beam. The T-Beam transmits the message as text over the default channel by utilizing the serial module in TXTMSG mode.
+
+#### BOM
+- Raspberry Pi Pico running [CircuitPython](https://learn.adafruit.com/getting-started-with-raspberry-pi-pico-circuitpython)
+- T-Beam V1.1 running Meshtastic
+- PIR Sensor ([Adafruit Breadboard Model](https://www.adafruit.com/product/4871))
+
+#### Meshtastic Software Configuration:
+- Serial module enabled, mode: TXTMSG
+- GPIO Pins (For T-Beam) RX 13, TX 14
+- 38400 Baud
+
+#### Wiring:
+
+![image](https://user-images.githubusercontent.com/2799310/210852481-21ea76e5-ecaa-40c1-8f34-635ef2a1c95b.png)
+
+- TX pin 14 on the T-Beam to RX pin 2 on the Pico
+- RX pin 13 on the T-Beam to TX pin 1 on the Pico
+- PIR sensor Vcc and GND pins to Vcc/GND on breadboard respectively
+- PIR sensor trigger line to Pico GPIO28 (Pico pin 34)
+- GND pin on T-Beam to GND pin 38 on the Pico
+- GND pin 38 on the Pico to breadboard ground rail
+- 3V3 pin 36 on the Pico to the breadboard positive voltage rail
+- Optional, to power the Pico off of the T-Beam instead of USB:
+	- Connect 5V pin on T-Beam to Vbus pin 40 on the Pico
+
+#### Circuit Python Code
+```python
+import time
+import board
+import busio
+import digitalio
+
+# Setup PIR sensor on GP28
+pir = digitalio.DigitalInOut(board.GP28)
+pir.direction = digitalio.Direction.INPUT
+
+# Setup serial UART connection TX/RX on (GP0/GP1)
+uart = busio.UART(board.GP0, board.GP1, baudrate=38400, timeout=0)
+
+while True:
+    if(pir.value == True):
+        uart.write(bytes("Motion Detected", "ascii"))
+        time.sleep(30)
+    time.sleep(0.5)
+```
