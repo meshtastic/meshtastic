@@ -69,7 +69,7 @@ For testing it is useful sometimes to force a node to never listen to particular
 
 ### Override Duty Cycle Limit
 
-Setting this true to means that the device will override the hourly duty cycle limit that is induced in Europe, meaning that you will violate the regulations when you reach the limit. Defaults to false, meaning the device will drop all packets once you hit the limit and resume when it is allowed again.
+Setting this option to 'true' means the device will ignore the hourly duty cycle limit in Europe. This means that you might violate regulations if the device transmits too much. By default, this option is set to 'false,' which means the device will stop sending data when it reaches the hourly limit and will start again when it is allowed to do so.
 
 ## LoRa Config Client Availability
 
