@@ -30,7 +30,7 @@ The telemetry module config options are: Device Metrics Update Interval, Environ
 
 ##  Module Config Values
 
-## Update Intervals
+### Update Intervals
 
 ### Device Metrics Update Interval
 
@@ -52,13 +52,13 @@ Enable the Environment Telemetry (Sensors)
 
 ### Show on device screen
 
-Show the Telemetry Module on-device display.
+Show the Telemetry Module on the device display.
 
 ### Display Fahrenheit
 
-The sensor is always read in Celsius, but the user can opt to view the temperature display in Fahrenheit using this setting.
+The sensor is always read in Celsius, but the user can opt to display in Fahrenheit using this setting.
 
-Default is off
+Default is `false`.
 
 ## Device Config Client Availability
 
@@ -69,7 +69,6 @@ values={[
 {label: 'Android', value: 'android'},
 {label: 'Apple', value: 'apple'},
 {label: 'CLI', value: 'cli'},
-{label: 'Flasher', value: 'flasher'},
 {label: 'Web', value: 'web'},
 ]}>
 <TabItem value="android">
@@ -94,22 +93,36 @@ All telemetry module config options are available on iOS, iPadOS and macOS at Se
 </TabItem>
 <TabItem value="cli">
 
+:::info
+
 All telemetry module config options are available in the python CLI. Example commands are below:
+
+:::
 
 ## Settings
 
 |                         Setting                         |  Acceptable Values  | Default |
 | :-----------------------------------------------------: | :-----------------: | :-----: |
-|         telemetry.device_update_interval         | `integer` (seconds) |   `0`   |
+|         telemetry.device_update_interval         | `integer` (seconds) |   `900`   |
 |     telemetry.environment_display_fahrenheit     |   `true`, `false`   | `false` |
 |    telemetry.environment_measurement_enabled     |   `true`, `false`   | `false` |
 |       telemetry.environment_screen_enabled       |   `true`, `false`   |   `0`   |
 |      telemetry.environment_update_interval       | `integer` (seconds) |   `0`   |
 
+:::tip
+
+Because the device will reboot after each command is sent via CLI, it is recommended when setting multiple values in a config section that commands be chained together as one.
+
+```shell title="Example:"
+meshtastic --set telemetry.device_update_interval 0 --set telemetry.device_update_interval 0
+````
+
+:::
+
 ```shell title="Set module update intervals (Default of 0 is 5 Minutes)"
 meshtastic --set telemetry.device_update_interval 0
 // Device Metrics Two Minutes
-meshtastic --set telemetry.device_update_interval 120
+meshtastic --set telemetry.device_update_interval 0
 // Environment Metrics Two Minutes
 meshtastic --set telemetry.environment_update_interval 120
 ````
@@ -124,23 +137,18 @@ meshtastic --set telemetry.environment_screen_enabled true
 meshtastic --set telemetry.environment_screen_enabled false
 ```
 
-```shell title="Enable / Disable Display Farenheit"
+```shell title="Enable / Disable Display Fahrenheit"
 meshtastic --set telemetry.environment_display_fahrenheit true
 meshtastic --set telemetry.environment_display_fahrenheit false
 ````
 
 </TabItem>
-<TabItem value="flasher">
+<TabItem value="web">
 
 :::info
-No telemetry module config options are available in the Flasher.
-:::
 
-  </TabItem>
-  <TabItem value="web">
-
-:::info
 All telemetry module config options are available in the Web UI.
+
 :::
     
   </TabItem>
@@ -164,15 +172,17 @@ Steps:
 - configure the device:
 
 ```shell
-meshtastic --set telemetry.measurement_enabled true --set telemetry.screen_enabled true --set telemetry.display_farenheit true
+meshtastic --set telemetry.environment_measurement_enabled true --set telemetry.environment_screen_enabled true --set telemetry.environment_display_fahrenheit true
 ```
 
 :::tip
-You can change the values above to suit your needs. The commands can be run one at a time or in a group as show above.
+
+You can change the values above to suit your needs but it is recommended that commands be chained together as one as shown.
+
 :::
 
-- Reboot/reset the device (press the button or unplug/plug in the device)
-- When the device boots it should say "Telemetry" and it may show the sensor data
+- Device will reboot after command is sent.
+- When the device boots again it should say "Telemetry" and it may show the sensor data
 - If this does not appear to have any effects, run:
 
 ```shell
@@ -197,4 +207,3 @@ The environment metrics in the telemetry module supports a limited amount of fie
 ### Supporting Other Sensor types
 
 For other interesting sensor types and use cases we need to add a portnum for more generic telemetry packets and a second MCU will be required to interact with the sensor and process the data to be sent over the mesh.  This data will not be stored in the nodedb on the device.
-
