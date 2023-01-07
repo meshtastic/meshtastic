@@ -49,7 +49,6 @@ values={[
 {label: 'Android', value: 'android'},
 {label: 'Apple', value: 'apple'},
 {label: 'CLI', value: 'cli'},
-{label: 'Flasher', value: 'flasher'},
 {label: 'Web', value: 'web'},
 ]}>
 <TabItem value="android">
@@ -73,7 +72,11 @@ MQTT module config is not available for Apple.
 </TabItem>
 <TabItem value="cli">
 
+:::info
+
 All MQTT module config options are available in the python CLI. Example commands are below:
+
+:::
 
 |     Setting                  |    Acceptable Values     | Default |
 | :--------------------------: | :----------------------: | :-----: |
@@ -84,9 +87,24 @@ All MQTT module config options are available in the python CLI. Example commands
 |    mqtt.encryption_enabled   |     `string`             |         |
 |    mqtt.json_enabled         |     `true`, `false`      | `false` |
 
+:::tip
+
+Because the device will reboot after each command is sent via CLI, it is recommended when setting multiple values in a config section that commands be chained together as one.
+
+```shell title="Example:"
+meshtastic --set mqtt.enabled true --set mqtt.json_enabled true
+```
+
+:::
+
 ```shell title="Enable/Disable MQTT Module"
 meshtastic --set mqtt.enabled true
 meshtastic --set mqtt.enabled false
+```
+
+```shell title="Enable/Disable MQTT JSON"
+meshtastic --set mqtt.json_enabled true
+meshtastic --set mqtt.json_enabled false
 ```
 
   </TabItem>

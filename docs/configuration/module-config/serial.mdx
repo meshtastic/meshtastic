@@ -70,7 +70,6 @@ values={[
 {label: 'Android', value: 'android'},
 {label: 'Apple', value: 'apple'},
 {label: 'CLI', value: 'cli'},
-{label: 'Flasher', value: 'flasher'},
 {label: 'Web', value: 'web'},
 ]}>
 <TabItem value="android">
@@ -94,7 +93,11 @@ All serial module config options are available on iOS, iPadOS and macOS at Setti
 </TabItem>
 <TabItem value="cli">
 
+:::info 
+
 All serial module config options are available in the python CLI. Example commands are below:
+
+:::
 
 |        Setting        |  Acceptable Values  | Default |
 | :-------------------: | :-----------------: | :-----: |
@@ -106,6 +109,15 @@ All serial module config options are available in the python CLI. Example comman
 | serial.baud    | `BAUD_DEFAULT` `BAUD_110` `BAUD_300` `BAUD_600` `BAUD_1200` `BAUD_2400` `BAUD_4800` `BAUD_9600` `BAUD_19200` `BAUD_38400` `BAUD_57600` `BAUD_115200` `BAUD_230400` `BAUD_460800` `BAUD_576000` `BAUD_921600` |  `BAUD_DEFAULT`  |
 | serial.timeout | `integer` (seconds) |   `0`   |
 
+:::tip
+
+Because the device will reboot after each command is sent via CLI, it is recommended when setting multiple values in a config section that commands be chained together as one.
+
+```shell title="Example:"
+meshtastic --set serial.enabled true --set serial.echo true
+```
+
+:::
 
 ```shell title="Enable / Disable Module"
 meshtastic --set serial.enabled true
@@ -140,20 +152,13 @@ meshtastic --set serial.timeout 15
 ```
 
 </TabItem>
-<TabItem value="flasher">
-
-:::info
-No serial module config options are available in the Flasher.
-:::
-
-  </TabItem>
-  <TabItem value="web">
+<TabItem value="web">
 
 :::info
 All serial module config options are available in the Web UI.
 :::
     
-  </TabItem>
+</TabItem>
 </Tabs>
 
 :::warning

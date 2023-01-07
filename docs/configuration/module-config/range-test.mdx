@@ -37,7 +37,6 @@ values={[
 {label: 'Android', value: 'android'},
 {label: 'Apple', value: 'apple'},
 {label: 'CLI', value: 'cli'},
-{label: 'Flasher', value: 'flasher'},
 {label: 'Web', value: 'web'},
 ]}>
 <TabItem value="android">
@@ -61,13 +60,27 @@ All range test module config options are available on iOS, iPadOS and macOS at S
 </TabItem>
 <TabItem value="cli">
 
+:::info
+
 Range Test module config options are available in the python CLI. Example commands are below:
+
+:::
 
 |          Setting          |  Acceptable Values  | Default |
 | :-----------------------: | :-----------------: | :-----: |
 | range_test.enabled |   `true`, `false`   | `false` |
 |  range_test.save   |   `true`, `false`   | `false` |
 | range_test.sender  | `integer` (Seconds) |   `0`   |
+
+:::tip
+
+Because the device will reboot after each command is sent via CLI, it is recommended when setting multiple values in a config section that commands be chained together as one.
+
+```shell title="Example:"
+meshtastic --set range_test.enabled true --set range_test.save false
+```
+
+:::
 
 ```shell title="Enable / Disable the range test"
 meshtastic --set range_test.enabled true
@@ -88,20 +101,15 @@ meshtastic --set range_test.sender 0
 ```
 
 </TabItem>
-<TabItem value="flasher">
+<TabItem value="web">
 
 :::info
-No range test module config options are available in the Flasher.
-:::
 
-  </TabItem>
-  <TabItem value="web">
-
-:::info
 No range test module config options are available in the Web UI.
+
 :::
-    
-  </TabItem>
+
+</TabItem>
 </Tabs>
 
 ## Examples
