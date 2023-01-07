@@ -88,6 +88,16 @@ All Bluetooth module config options are available in the python CLI. Example com
 | `bluetooth.mode`          | `RANDOM_PIN`, `FIXED_PIN`, `NO_PIN` | `RANDOM_PIN` |
 | `bluetooth.fixedPin`      | `integer` (6 digits) | `123456` |
 
+:::tip
+
+Because the device will reboot after each command is sent via CLI, it is recommended when setting multiple values in a config section that commands be chained together as one.
+
+```shell title="Example:"
+meshtastic --set bluetooth.enabled true  --set bluetooth.fixed_pin 111111
+```
+
+:::
+
 ```shell title="Enable/Disable Bluetooth Module"
 meshtastic --set bluetooth.enabled true
 meshtastic --set bluetooth.enabled false

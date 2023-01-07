@@ -130,6 +130,16 @@ Channel settings are only available on Apple platforms by scanning QR codes.
 All Channel config options are available in the python CLI. Example commands are below:
 :::
 
+:::tip
+
+Because the device will reboot after each command is sent via CLI, it is recommended when setting multiple values in a config section that commands be chained together as one.
+
+```shell title="Example:"
+meshtastic --ch-set name "My Channel" --ch-set psk random --ch-set uplink_enabled true --ch-index 4
+```
+
+:::
+
 **Id**
 
 ```shell title="Set the PRIMARY channel ID"
