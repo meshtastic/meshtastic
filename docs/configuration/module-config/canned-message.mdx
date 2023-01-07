@@ -81,7 +81,6 @@ values={[
 {label: 'Android', value: 'android'},
 {label: 'Apple', value: 'apple'},
 {label: 'CLI', value: 'cli'},
-{label: 'Flasher', value: 'flasher'},
 {label: 'Web', value: 'web'},
 ]}>
 <TabItem value="android">
@@ -106,7 +105,9 @@ All canned message module config options are available on iOS, iPadOS and macOS 
 <TabItem value="cli">
 
 :::info
+
 All canned message module config options are available in the python CLI. 
+
 :::
 
 Example commands are below:
@@ -124,6 +125,16 @@ Example commands are below:
 |    canned_message.inputbroker_pin_a      |     `integer`     | (not defined) |
 |    canned_message.inputbroker_pin_b      |     `integer`     | (not defined) |
 |  canned_message.inputbroker_pin_press    |     `integer`     | (not defined) |
+
+:::tip
+
+Because the device will reboot after each command is sent via CLI, it is recommended when setting multiple values in a config section that commands be chained together as one.
+
+```shell title="Example:"
+meshtastic --set canned_message.enabled true --set canned_message.send_bell true
+```
+
+:::
 
 ```shell title="Enable/Disable the Canned Message Module"
 meshtastic --set canned_message.enabled true
@@ -178,14 +189,7 @@ meshtastic --set canned_message.inputbroker_event_press KEY_SELECT
 meshtastic --set canned_message.inputbroker_event_press ""
 ```
 </TabItem>
-<TabItem value="flasher">
-
-:::info
-No canned message test module config options are available in the Flasher.
-:::
-
-  </TabItem>
-  <TabItem value="web">
+<TabItem value="web">
 
 :::info
 All canned message module config options are available in the Web UI.
