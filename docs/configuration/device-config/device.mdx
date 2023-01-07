@@ -28,12 +28,12 @@ Acceptable values:
 ### Serial Console 
 Acceptable values: `true` or `false`
 
-Disabling this will disable the SerialConsole by not initializing the StreamAPI
+Disabling this will disable the SerialConsole by not initializing the StreamAPI.
 
 ### Debug Log
 Acceptable values: `true` or `false`
 
-By default we turn off logging as soon as an API client connects Set this to true to leave the debug log outputting even when API is active.
+By default we turn off logging as soon as an API client connects. Set this to true to leave the debug log outputting even when API is active.
 
 ## Device Config Client Availability
 
@@ -44,7 +44,6 @@ values={[
 {label: 'Android', value: 'android'},
 {label: 'Apple', value: 'apple'},
 {label: 'CLI', value: 'cli'},
-{label: 'Flasher', value: 'flasher'},
 {label: 'Web', value: 'web'},
 ]}>
 <TabItem value="android">
@@ -68,7 +67,27 @@ All device config options other than NTP Server are available on iOS, iPadOS and
 </TabItem>
 <TabItem value="cli">
 
+:::info
+
 All device config options are available in the python CLI. Example commands are below:
+
+:::
+
+| Setting                  | Acceptable Values                                  | Default  |
+|--------------------------|----------------------------------------------------|----------|
+| device.debug_log_enabled | `true`, `false`                                    | `false`  |
+| device.role              | `CLIENT`, `CLIENT_MUTE`, `ROUTER`, `ROUTER_CLIENT` | `CLIENT` |
+| device.serial_enabled    | `true`, `false`                                    | `true`   |
+
+:::tip
+
+Because the device will reboot after each command is sent via CLI, it is recommended when setting multiple values in a config section that commands be chained together as one.
+
+```shell title="Example:"
+meshtastic --set device.role CLIENT --set device.debug_log_enabled true
+```
+
+:::
 
 ```shell title="Set the role to client"
 meshtastic --set device.role CLIENT
@@ -83,14 +102,7 @@ meshtastic --set device.debug_log_enabled true
 ```
 
 </TabItem>
-<TabItem value="flasher">
-
-:::danger
-No device config options are available in the Flasher.
-:::
-
-  </TabItem>
-  <TabItem value="web">
+<TabItem value="web">
 
 :::info
 All device config options are available in the Web UI.
