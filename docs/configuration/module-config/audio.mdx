@@ -65,7 +65,6 @@ values={[
 {label: 'Android', value: 'android'},
 {label: 'Apple', value: 'apple'},
 {label: 'CLI', value: 'cli'},
-{label: 'Flasher', value: 'flasher'},
 {label: 'Web', value: 'web'},
 ]}>
 <TabItem value="android">
@@ -89,7 +88,11 @@ Audio module config is not available on iOS, iPadOS and macOS.
 </TabItem>
 <TabItem value="cli">
 
+:::info 
+
 All audio module config options are available in the python CLI. Example commands are below:
+
+:::
 
 |        Setting        |  Acceptable Values  | Default |
 | :-------------------: | :-----------------: | :-----: |
@@ -101,6 +104,15 @@ All audio module config options are available in the python CLI. Example command
 | audio.i2s_din |  GPIO Pin Number 1-34   | no Default   |
 | audio.i2s_sck |  GPIO Pin Number 1-34   | no Default  |
 
+:::tip
+
+Because the device will reboot after each command is sent via CLI, it is recommended when setting multiple values in a config section that commands be chained together as one.
+
+```shell title="Example:"
+meshtastic --set audio.enabled true --set audio.bitrate CODEC2_1400
+```
+
+:::
 
 ```shell title="Enable / Disable Module"
 meshtastic --set audio.enabled true
@@ -125,14 +137,7 @@ meshtastic --set audio.bitrate CODEC2_1400
 ```
 
 </TabItem>
-<TabItem value="flasher">
-
-:::info
-No audio module config options are available in the Flasher.
-:::
-
-  </TabItem>
-  <TabItem value="web">
+<TabItem value="web">
 
 :::info
 All audio module config options are available in the Web UI.
@@ -142,7 +147,9 @@ All audio module config options are available in the Web UI.
 </Tabs>
 
 :::warning
+
 GPIO access is fundamentally dangerous because invalid options can physically damage or destroy your hardware. Ensure that you fully understand the schematic for your particular device before trying this as we do not offer a warranty. Use at your own risk.
 
 This module requires attaching a peripheral accessory to your device. It will not work without one.
+
 :::

@@ -61,7 +61,6 @@ values={[
 {label: 'Android', value: 'android'},
 {label: 'Apple', value: 'apple'},
 {label: 'CLI', value: 'cli'},
-{label: 'Flasher', value: 'flasher'},
 {label: 'Web', value: 'web'},
 ]}>
 <TabItem value="android">
@@ -85,7 +84,31 @@ All display config options are available on iOS, iPadOS and macOS at Settings > 
 </TabItem>
 <TabItem value="cli">
 
+:::info
+
 All display config options are available in the python CLI. Example commands are below:
+
+:::
+
+| Setting                           | Acceptable Values                          | Default                      |
+|-----------------------------------|--------------------------------------------|------------------------------|
+| display.auto_screen_carousel_secs | `integer`                                  | Default of `0` is 10 minutes |
+| display.compass_north_top         | `false`, `true`                            | `false`                      |
+| display.flip_screen               | `fasle`, `true`                            | `false`                      |
+| display.gps_format                | `DEC`, `DMS`, `UTM`, `MGRS`, `OLC`, `OSGR` | `DEC`                        |
+| display.oled                      | `OLED_AUTO`, `OLED_SSD1306`, `OLED_SH1106` | `OLED_AUTO`                  |
+| display.screen_on_secs            | `integer`                                  | Default of `0` is off.       |
+| display.units                     | `METRIC`, `IMPERIAL`                       | `METRIC`                     |
+
+:::tip
+
+Because the device will reboot after each command is sent via CLI, it is recommended when setting multiple values in a config section that commands be chained together as one.
+
+```shell title="Example:"
+meshtastic --set display.screen_on_secs 120 --set display.gps_format UTM
+```
+
+:::
 
 ```shell title="Set Screen On Duration (Default of 0 is 10 minutes)"
 meshtastic --set display.screen_on_secs 0
@@ -103,14 +126,7 @@ meshtastic --set display.gps_format UTM
 ```
 
 </TabItem>
-<TabItem value="flasher">
-
-:::info
-No display config options are available in the Flasher.
-:::
-
-  </TabItem>
-  <TabItem value="web">
+<TabItem value="web">
 
 :::info
 All display config options are available in the Web UI.

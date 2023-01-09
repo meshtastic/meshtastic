@@ -74,7 +74,6 @@ values={[
 {label: 'Android', value: 'android'},
 {label: 'Apple', value: 'apple'},
 {label: 'CLI', value: 'cli'},
-{label: 'Flasher', value: 'flasher'},
 {label: 'Web', value: 'web'},
 ]}>
 <TabItem value="android">
@@ -99,7 +98,11 @@ Power config is not available on Apple OS's.
 </TabItem>
 <TabItem value="cli">
 
+:::info 
+
 All Power config options are available in the python CLI.
+
+:::
 
 |            Setting                   |                                                                        Acceptable Values                                                                        |  Default  |
 | :----------------------------------: | :-------------------------------------------------------------------------------------------------------------------------------------------------------------: | :-------: |
@@ -112,6 +115,15 @@ All Power config options are available in the python CLI.
 |            power.ls_secs             |                                                                       `integer` (seconds)                                                                       |   Default of `0` is 1 hour   |
 |         power.min_wake_secs          |                                                                       `integer` (seconds)                                                                       |   Default of `0` is 10 seconds   |
 
+:::tip
+
+Because the device will reboot after each command is sent via CLI, it is recommended when setting multiple values in a config section that commands be chained together as one.
+
+```shell title="Example:"
+meshtastic --set power.is_power_saving true --set power.on_battery_shutdown_after_secs 120
+```
+
+:::
 
 ```shell title="Enable / Disable Power Saving"
 meshtastic --set power.is_power_saving true
@@ -150,14 +162,7 @@ meshtastic --set power.min_wake_secs 0
 meshtastic --set power.min_wake_secs 120
 ```
 </TabItem>
-<TabItem value="flasher">
-
-:::info
-Power config is not available in the Flasher.
-:::
-
-  </TabItem>
-  <TabItem value="web">
+<TabItem value="web">
 
 :::info
 All power config options are available in the Web UI.
