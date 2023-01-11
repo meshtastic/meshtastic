@@ -252,7 +252,7 @@ meshtastic --ch-index 0 --ch-set downlink_enabled true
 
 Step two: if you don't want to depend on JSON decoding on the device, you can decode the protobuf messages off-device. To do that you will need to get the .proto files from https://github.com/meshtastic/protobufs. They function as a schema and are required for decoding in Node-RED. Save the files where the node-RED application can access them and note the file path of the "mqtt.proto" file.
 
-Step three: install Node-RED plug-ins to your node-RED application for an embedded MQQT server and a protobuf decoder.
+Step three: install Node-RED plug-ins to your node-RED application for an embedded MQTT server and a protobuf decoder.
 https://flows.nodered.org/node/node-red-contrib-aedes
 https://flows.nodered.org/node/node-red-contrib-protobuf
 
@@ -264,7 +264,7 @@ Drag, drop, and wire the nodes like this. For this example, I ran node-RED on a 
 
 The aedes broker must be set up on the same flow as the other nodes. By activating the Publish debug node, you can see all the published messages.
 [<img src="/documents/mqtt/Broker1.jpg" style={{zoom:'50%'}} />](/documents/mqtt/Broker1.jpg)
-Receiving a json mqqt message is very simple.
+Receiving a json mqtt message is very simple.
 [<img src="/documents/mqtt/Consume.jpg" style={{zoom:'50%'}} />](/documents/mqtt/Consume.jpg)
 Injecting a json message to be sent by a device is also very simple. You do need the correct envelope.
 [<img src="/documents/mqtt/Inject.jpg" style={{zoom:'50%'}} />](/documents/mqtt/Inject.jpg)
