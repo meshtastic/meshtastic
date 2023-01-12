@@ -117,11 +117,12 @@ The message window operates like most messaging apps. Note that the `(All) Prima
 - Long press contacts or messages for options, like delete.
 - Long press a node from the Nodes tab to send Direct Messages.
 
-With LoRa (or any radio) there is some uncertainty that the messages has been received, so there is a confirmation built-in to the protocol. There are small cloud icons shown to the right of the messages you send:
+With LoRa (or any radio) there is some uncertainty that the messages has been received, so there is a confirmation built-in to the protocol. There are small icons shown to the right of the messages you send:
 
 - Cloud with an up arrow: the message is queued in the app, waiting to be handed to the device.
 - Cloud only: the device received the message from the app, and it has been sent and transmitted via LoRa.
 - Cloud with a check mark: received at least one node's acknowledgement response. Confirmations could be from any one device.
+- Person with a check mark - The intended recipient of your direct message acknowledged the message.
 - Cloud crossed out: the initial sender did not receive any confirmation within a certain timeout.
 
 By default there is no long-term store-and-forward of messages, so messages not received during transmission are lost.
