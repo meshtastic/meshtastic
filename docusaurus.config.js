@@ -36,7 +36,7 @@ const config = {
       items: [
         {
           label: 'Docs',
-          to: 'docs/about',
+          to: 'docs/introduction',
         },
         {
           label: 'Downloads',
