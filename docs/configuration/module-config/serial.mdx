@@ -93,7 +93,7 @@ All serial module config options are available on iOS, iPadOS and macOS at Setti
 </TabItem>
 <TabItem value="cli">
 
-:::info 
+:::info
 
 All serial module config options are available in the python CLI. Example commands are below:
 
@@ -107,7 +107,7 @@ All serial module config options are available in the python CLI. Example comman
 |   serial.rxd   |  GPIO Pin Number 1-39    | Default of `0` is Unset |
 |   serial.txd   |  GPIO Pin Number 1-33   |  Default of `0` is Unset |
 | serial.baud    | `BAUD_DEFAULT` `BAUD_110` `BAUD_300` `BAUD_600` `BAUD_1200` `BAUD_2400` `BAUD_4800` `BAUD_9600` `BAUD_19200` `BAUD_38400` `BAUD_57600` `BAUD_115200` `BAUD_230400` `BAUD_460800` `BAUD_576000` `BAUD_921600` |  `BAUD_DEFAULT`  |
-| serial.timeout | `integer` (seconds) |   `0`   |
+| serial.timeout | `integer` (milli seconds) |   Default of `0` corresponds to 250 ms   |
 
 :::tip
 
@@ -132,7 +132,7 @@ meshtastic --set serial.echo false
 ```shell title="Set Mode"
 meshtastic --set serial.mode DEFAULT
 meshtastic --set serial.mode PROTO
-``` 
+```
 
 ```shell title="Set RXD to GPIO pin number 7"
 meshtastic --set serial.rxd 7
@@ -147,7 +147,7 @@ meshtastic --set serial.baud BAUD_DEFAULT
 meshtastic --set serial.baud BAUD_576000
 ```
 
-```shell title="Set Timeout to 15 seconds"
+```shell title="Set Timeout to 15 milli seconds"
 meshtastic --set serial.timeout 15
 ```
 
@@ -157,7 +157,7 @@ meshtastic --set serial.timeout 15
 :::info
 All serial module config options are available in the Web UI.
 :::
-    
+
 </TabItem>
 </Tabs>
 
