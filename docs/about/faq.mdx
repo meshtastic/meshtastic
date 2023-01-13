@@ -23,12 +23,13 @@ Everyone contributes in a different way. Join the [Meshtastic Discord](https://d
 
 Minimum requirement is Android 5 (Lollipop 2014, first BLE support), however at least Android 6 (Marshmallow 2015) is recommended as Bluetooth is more stable. While Android 5/6 are officially supported by Meshtastic, it is *not* recommended that you purchase devices with these versions due to their limited OS support and limited battery life due to age. Many newer models exist that are very affordable. A good resource to use when researching affordable devices is the [LineageOS Supported Devices List](https://wiki.lineageos.org/devices/).
 
-### What is the cloud icon next to the message?
+### What does the icon next to the message mean?
 
-- Empty Cloud - Queued on the device to be sent over the mesh.
-- Up Arrow - Queued on the app to be sent to your device.
-- Check Mark - At least one other node on the mesh acknowledged the message. 
-- Cross Mark - Not acknowledged or message error.
+- Cloud with an up arrow - Queued on the app to be sent to your device.
+- Cloud only - Queued on the device to be sent over the mesh.
+- Cloud with a check mark - At least one other node on the mesh acknowledged the message. 
+- Person with a check mark - The intended recipient of your direct message acknowledged the message.
+- Cloud crossed out - Not acknowledged or message error.
 
 ### How can I clear the message history?
 
@@ -56,7 +57,7 @@ Try forgetting the Bluetooth connection from the iOS/iPadOS/macOS System Setting
 
 ### Do the Apple applications provide an indication if the message was acknowledged on the mesh?
 
-Yes, when the message is sent you will first see a `Waiting to be acknowledged...` status beneath the message. If the message is acknowledged by a node on the mesh this will update to `Acknowledged`, but if no nodes have responded it will indicate `Max Retransmission Reached`. If there is an error, the status will update to the appropriate error. Additionally, you can long press on the message and select `Message Details` to view the date/time sent, if ack was received and the time ack was received or the error (if there was one).
+Yes, when the message is sent you will first see a `Waiting to be acknowledged...` status beneath the message. If the message is acknowledged by a node on the mesh this will update to `Acknowledged` in orange, which turns into grey when sending a direct message and the intended recipient acknowledged it. If no nodes have responded it will indicate `Max Retransmission Reached`. If there is an error, the status will update to the appropriate error. Additionally, you can long press on the message and select `Message Details` to view the date/time sent, if ack was received and the time ack was received or the error (if there was one).
 
 <!-- Channels -->
 
@@ -118,6 +119,11 @@ Once the node wakes up from sleep, your phone will relay any delayed messages th
 
 - Android instructions see: [Android Usage](/docs/software/android/usage#configuration-options)
 - Python CLI instructions see: [Python Usage](/docs/software/python/cli/usage#changing-settings)
+
+### I am in Europe and my device seems to stop transmitting after a while, what is going on? 
+
+Europe has an hourly duty cycle limit of 10% in the frequency band that Meshtastic uses. It might be that you hit this limit if you are sending a lot. You can confirm this by checking whether you see duty cycle limit errors in the serial log, Mesh Log (Apple apps) or Debug Panel (Android). 
+To limit traffic, you can consider setting the device metrics and position update intervals higher. Alternatively, the device can be configured to override the duty cycle limit, but then you will violate the regulations.
 
 ### Why does only one RAK Meshtastic Starter kit show up in my node list?
 

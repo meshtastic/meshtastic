@@ -65,12 +65,11 @@ The first time your device restarts after enabling WiFi or Ethernet, it will tak
 
 <Tabs
 groupId="settings"
-defaultValue="flasher"
+defaultValue="cli"
 values={[
 {label: 'Android', value: 'android'},
 {label: 'Apple', value: 'apple'},
 {label: 'CLI', value: 'cli'},
-{label: 'Flasher', value: 'flasher'},
 {label: 'Web', value: 'web'},
 ]}>
 
@@ -98,7 +97,11 @@ Network config is not available on Apple OS's.
 
 <TabItem value="cli">
 
+:::info
+
 All Network config options are available in the python CLI.
+
+:::
 
 |    Setting    | Acceptable Values | Default |
 | :-----------: | :---------------: | :-----: |
@@ -106,6 +109,16 @@ All Network config options are available in the python CLI.
 | network.wifi_enabled  |  `true`, `false`  | `false`          |
 | network.wifi_psk      |      string       |  `""`            |
 | network.wifi_ssid     |      string       |  `""`            |
+
+:::tip
+
+Because the device will reboot after each command is sent via CLI, it is recommended when setting multiple values in a config section that commands be chained together as one.
+
+```shell title="Example:"
+meshtastic --set network.wifi_enabled true --set network.wifi_ssid "my network" --set network.wifi_psk mypassword
+```
+
+:::
 
 ```shell title="Set NTP Server"
 meshtastic --set network.ntp_server "0.pool.ntp.org"
@@ -128,14 +141,6 @@ meshtastic --set network.wifi_psk mypassword
 // With spaces
 meshtastic --set network.wifi_psk "my password"
 ```
-
-</TabItem>
-
-<TabItem value="flasher">
-
-:::info
-All Network config options are available in the Flasher.
-:::
 
 </TabItem>
 

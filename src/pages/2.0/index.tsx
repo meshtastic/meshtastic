@@ -1,5 +1,3 @@
-import '@leenguyen/react-flip-clock-countdown/dist/index.css';
-
 import React from 'react';
 
 import { FiTwitter } from 'react-icons/fi';
@@ -7,6 +5,8 @@ import { FiTwitter } from 'react-icons/fi';
 import { ChevronRightIcon } from '@heroicons/react/20/solid';
 import FlipClockCountdown from '@leenguyen/react-flip-clock-countdown';
 import Layout from '@theme/Layout';
+import { Dark, Light } from '/src/components/ColorMode';
+
 
 const TwoPointZero = (): JSX.Element => {
   const stats = [
@@ -43,19 +43,29 @@ const TwoPointZero = (): JSX.Element => {
   ];
   return (
     <Layout title="Meshtastic 2.0" description="Meshtastic 2.0 Landing Page">
-      <div className="bg-white">
+      <div>
         <main>
           {/* Hero section */}
           <div className="overflow-hidden pt-8 sm:pt-12 lg:relative lg:py-24">
             <div className="mx-auto max-w-md px-4 sm:max-w-3xl sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-2 lg:gap-24 lg:px-8">
               <div>
                 <div>
-                  <img
-                    className="h-11 w-auto"
-                    it
-                    src="/design/logo/svg/Mesh_Logo_Black.svg"
-                    alt="Your Company"
-                  />
+                  <Dark>
+                    <img
+                      className="h-11 w-auto"
+                      it
+                      src="/design/logo/svg/Mesh_Logo_White.svg"
+                      alt="Meshtastic Logo"
+                    />
+                  </Dark>
+                  <Light>
+                    <img
+                        className="h-11 w-auto"
+                        it
+                        src="/design/logo/svg/Mesh_Logo_Black.svg"
+                        alt="Meshtastic Logo"
+                      />
+                  </Light>
                 </div>
                 <div className="mt-20">
                   <div>
@@ -73,23 +83,23 @@ const TwoPointZero = (): JSX.Element => {
                     </a>
                   </div>
                   <div className="mt-6 sm:max-w-xl">
-                    <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">
+                    <h1 className="text-4xl font-bold tracking-tight --ifm-heading-color sm:text-5xl">
                       Meshtastic 2.0 🎉🎉🎉
                     </h1>
-                    <p className="mt-6 text-xl text-gray-500">
+                    <p className="mt-6 text-xl --ifm-font-color-base">
                       After 9 months in the making, we present to you the next
                       milestone for the Meshtastic project.
                     </p>
                   </div>
                   <div className="mt-12 sm:w-full sm:max-w-lg">
-                    <p className="mt-6 mb-4 text-xl text-gray-500">
+                    <p className="mt-6 mb-4 text-xl --ifm-font-color-base">
                       As a part of the launch event, we are running a number of
                       giveaways, so jump in and win some prizes.
                     </p>
                     <div className="flex gap-2">
                       <a
                         href="#start"
-                        className="flex w-full rounded-md border border-transparent bg-rose-500 px-5 py-3 text-base font-medium text-white shadow hover:bg-rose-600 hover:text-black hover:no-underline focus:outline-none focus:ring-2 focus:ring-rose-500 focus:ring-offset-2 sm:px-10"
+                        className="flex w-full rounded-md border border-transparent bg-rose-500 px-5 py-3 font-medium text-white shadow hover:bg-rose-600 hover:text-black hover:no-underline focus:outline-none focus:ring-2 focus:ring-rose-500 focus:ring-offset-2 sm:px-10"
                       >
                         <span className="m-auto">Find Out More</span>
                       </a>
@@ -258,12 +268,12 @@ const TwoPointZero = (): JSX.Element => {
               >
                 {/* Content area */}
                 <div className="pt-12 sm:pt-16 lg:pt-20">
-                  <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+                  <h2 className="text-3xl font-bold tracking-tight --ifm-heading-color sm:text-4xl">
                     A brief overview of all the changes and improvements
                   </h2>
-                  <div className="mt-6 space-y-6 text-gray-500">
+                  <div className="mt-6 space-y-6 --ifm-font-color-base">
                     <h2>Monumental stuff!</h2>
-                    <p className="text-base leading-7">
+                    <p className="leading-7 --ifm-font-color-base">
                       <li>
                         Completely new LoRA band plan with faster messaging
                       </li>
@@ -293,7 +303,7 @@ const TwoPointZero = (): JSX.Element => {
                       </li>
                     </p>
                     <h2>Nerd stuff!</h2>
-                    <p className="text-base leading-7">
+                    <p className="leading-7 --ifm-font-color-base">
                       <li>New filesystem for ESP32 (LittleFS)</li>
                       <li>
                         Upgraded Arduino framework for both NRF52 and ESP32
@@ -322,10 +332,10 @@ const TwoPointZero = (): JSX.Element => {
                         key={stat.label}
                         className="border-t-2 border-gray-100 pt-6"
                       >
-                        <dt className="text-base font-medium text-gray-500">
+                        <dt className="font-medium --ifm-font-color-base">
                           {stat.label}
                         </dt>
-                        <dd className="text-3xl font-bold tracking-tight text-gray-900">
+                        <dd className="text-3xl font-bold tracking-tight --ifm-heading-color">
                           {stat.value}
                         </dd>
                       </div>
@@ -341,10 +351,10 @@ const TwoPointZero = (): JSX.Element => {
             <div className="mx-auto max-w-md px-4 sm:max-w-3xl sm:px-6 lg:max-w-7xl lg:px-8">
               <div className="lg:grid lg:grid-cols-2 lg:items-center lg:gap-24">
                 <div>
-                  <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+                  <h2 className="text-3xl font-bold tracking-tight --ifm-heading-color sm:text-4xl">
                     All made possible by the amazing companies that support us.
                   </h2>
-                  <p className="mt-6 max-w-3xl text-lg leading-7 text-gray-500">
+                  <p className="mt-6 max-w-3xl text-lg leading-7 --ifm-font-color-base">
                     Running a project of this scale is no easy feat, without the
                     generosity of many of our vendors and providers, none of
                     this would be possible.
@@ -433,13 +443,9 @@ const TwoPointZero = (): JSX.Element => {
                 <div className="flex flex-col gap-12">
                   <div className="sm:text-center">
                     <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
-                      Countdown to Prize Draw!
+                      Congratulations to the winners!
                     </h2>
                   </div>
-                  <FlipClockCountdown
-                    className="m-auto"
-                    to={new Date(2022, 11, 1).getTime()}
-                  />
                 </div>
               </div>
             </div>

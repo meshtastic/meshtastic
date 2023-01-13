@@ -176,7 +176,7 @@ function Home() {
           </h1>
           <p className="hero__subtitle">{siteConfig.tagline}</p>
           <div className="indexCtas">
-            <Link className="button button--lg" to="/docs/about">
+            <Link className="button button--lg" to="/docs/introduction">
               Learn More
             </Link>
             <Link className="button button--lg" to="/docs/getting-started">

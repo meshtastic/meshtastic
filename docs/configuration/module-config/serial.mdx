@@ -33,7 +33,7 @@ Available Values:
 
 * `DEFAULT`
 * `SIMPLE` operate as an dumb UART tunnel. What goes in will come out, Requires a channel named 'serial'.
-* `PROTO` not implemented yet, but will expose the Protobuf Client API on this serial port
+* `PROTO` Exposes the Protobuf Client API on this serial port. You can use this to connect from another device. [API Reference](/docs/development/device/client-api)
 * `TEXTMSG` Will send the string received over the serial port as a Text Message for Display on the other devices.
 * `NMEA` Will output a NMEA 0183 Data stream containing the internal GPS or fixed position and other node locations as Waypoints (WPL).
 
@@ -70,7 +70,6 @@ values={[
 {label: 'Android', value: 'android'},
 {label: 'Apple', value: 'apple'},
 {label: 'CLI', value: 'cli'},
-{label: 'Flasher', value: 'flasher'},
 {label: 'Web', value: 'web'},
 ]}>
 <TabItem value="android">
@@ -94,7 +93,11 @@ All serial module config options are available on iOS, iPadOS and macOS at Setti
 </TabItem>
 <TabItem value="cli">
 
+:::info 
+
 All serial module config options are available in the python CLI. Example commands are below:
+
+:::
 
 |        Setting        |  Acceptable Values  | Default |
 | :-------------------: | :-----------------: | :-----: |
@@ -106,6 +109,15 @@ All serial module config options are available in the python CLI. Example comman
 | serial.baud    | `BAUD_DEFAULT` `BAUD_110` `BAUD_300` `BAUD_600` `BAUD_1200` `BAUD_2400` `BAUD_4800` `BAUD_9600` `BAUD_19200` `BAUD_38400` `BAUD_57600` `BAUD_115200` `BAUD_230400` `BAUD_460800` `BAUD_576000` `BAUD_921600` |  `BAUD_DEFAULT`  |
 | serial.timeout | `integer` (seconds) |   `0`   |
 
+:::tip
+
+Because the device will reboot after each command is sent via CLI, it is recommended when setting multiple values in a config section that commands be chained together as one.
+
+```shell title="Example:"
+meshtastic --set serial.enabled true --set serial.echo true
+```
+
+:::
 
 ```shell title="Enable / Disable Module"
 meshtastic --set serial.enabled true
@@ -140,20 +152,13 @@ meshtastic --set serial.timeout 15
 ```
 
 </TabItem>
-<TabItem value="flasher">
-
-:::info
-No serial module config options are available in the Flasher.
-:::
-
-  </TabItem>
-  <TabItem value="web">
+<TabItem value="web">
 
 :::info
 All serial module config options are available in the Web UI.
 :::
     
-  </TabItem>
+</TabItem>
 </Tabs>
 
 :::warning
@@ -178,3 +183,51 @@ Default is to use RX GPIO 16 and TX GPIO 17.
     With [tio](https://github.com/tio/tio) &ndash; `tio -e -b 38400 -f none /dev/myserialport`
 7. Send a packet up to 237 bytes in length. This will get relayed over the mesh network.
 8. (Optional) Set `serial.echo` to `1` and any message you send out will be echoed back to your device.
+
+### Interfacing PIR Sensor With External Microcontroller
+The following is an example of using a Raspberry Pi Pico connected to a PIR sensor to detect motion. When motion is detected, a message is sent via. serial  to the T-Beam. The T-Beam transmits the message as text over the default channel by utilizing the serial module in TXTMSG mode.
+
+#### BOM
+- Raspberry Pi Pico running [CircuitPython](https://learn.adafruit.com/getting-started-with-raspberry-pi-pico-circuitpython)
+- T-Beam V1.1 running Meshtastic
+- PIR Sensor ([Adafruit Breadboard Model](https://www.adafruit.com/product/4871))
+
+#### Meshtastic Software Configuration:
+- Serial module enabled, mode: TXTMSG
+- GPIO Pins (For T-Beam) RX 13, TX 14
+- 38400 Baud
+
+#### Wiring:
+
+![image](https://user-images.githubusercontent.com/2799310/210852481-21ea76e5-ecaa-40c1-8f34-635ef2a1c95b.png)
+
+- TX pin 14 on the T-Beam to RX pin 2 on the Pico
+- RX pin 13 on the T-Beam to TX pin 1 on the Pico
+- PIR sensor Vcc and GND pins to Vcc/GND on breadboard respectively
+- PIR sensor trigger line to Pico GPIO28 (Pico pin 34)
+- GND pin on T-Beam to GND pin 38 on the Pico
+- GND pin 38 on the Pico to breadboard ground rail
+- 3V3 pin 36 on the Pico to the breadboard positive voltage rail
+- Optional, to power the Pico off of the T-Beam instead of USB:
+	- Connect 5V pin on T-Beam to Vbus pin 40 on the Pico
+
+#### Circuit Python Code
+```python
+import time
+import board
+import busio
+import digitalio
+
+# Setup PIR sensor on GP28
+pir = digitalio.DigitalInOut(board.GP28)
+pir.direction = digitalio.Direction.INPUT
+
+# Setup serial UART connection TX/RX on (GP0/GP1)
+uart = busio.UART(board.GP0, board.GP1, baudrate=38400, timeout=0)
+
+while True:
+    if(pir.value == True):
+        uart.write(bytes("Motion Detected", "ascii"))
+        time.sleep(30)
+    time.sleep(0.5)
+```

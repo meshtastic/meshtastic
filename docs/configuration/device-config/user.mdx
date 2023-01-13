@@ -44,7 +44,6 @@ values={[
 {label: 'Android', value: 'android'},
 {label: 'Apple', value: 'apple'},
 {label: 'CLI', value: 'cli'},
-{label: 'Flasher', value: 'flasher'},
 {label: 'Web', value: 'web'},
 ]}>
 
@@ -71,9 +70,23 @@ User Config options are available for Android.
 
 <TabItem value="cli">
 
+:::info
+
 All User config options are available in the python CLI. Example commands are below:
 
+:::
+
 Please see instructions for [Enabling HAM License](/docs/software/python/cli/usage#ham-radio-support)
+
+:::tip
+
+Because the device will reboot after each command is sent via CLI, it is recommended when setting multiple values in a config section that commands be chained together as one.
+
+```shell title="Example:"
+meshtastic --set-owner 'your node name' --set-owner-short  'NODE'
+```
+
+:::
 
 ```shell title="Set the LongName Value"
 meshtastic --set-owner 'your node name'
@@ -86,14 +99,6 @@ meshtastic --set-owner-short  'NODE'
 ```shell title="Enable Ham Mode, set name to license, disable encryption"
 meshtastic  --set-ham 'CALLSIGN'
 ```
-
-</TabItem>
-
-<TabItem value="flasher">
-
-:::info
-No User config options are available in the Flasher.
-:::
 
 </TabItem>
 

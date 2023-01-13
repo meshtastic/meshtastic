@@ -51,7 +51,6 @@ values={[
 {label: 'Android', value: 'android'},
 {label: 'Apple', value: 'apple'},
 {label: 'CLI', value: 'cli'},
-{label: 'Flasher', value: 'flasher'},
 {label: 'Web', value: 'web'},
 ]}>
 <TabItem value="android">
@@ -75,7 +74,11 @@ All external notification module config options are available on iOS, iPadOS and
 </TabItem>
 <TabItem value="cli">
 
+:::info
+
 All external notification module config options are available in the python CLI. Example commands are below:
+
+:::
 
 |         Setting                |    Acceptable Values     | Default |
 | :----------------------------: | :----------------------: | :-----: |
@@ -85,6 +88,16 @@ All external notification module config options are available in the python CLI.
 | external_notification.alert_message |     `true`, `false`      | `false` |
 |    external_notification.output     |        `integer`         |   `0`   |
 |   external_notification.output_ms   | `integer` (milliseconds) |   `0`   |
+
+:::tip
+
+Because the device will reboot after each command is sent via CLI, it is recommended when setting multiple values in a config section that commands be chained together as one.
+
+```shell title="Example:"
+meshtastic --set external_notification.enabled true --set external_notification.alert_bell true
+```
+
+:::
 
 ```shell title="Enable/Disable External Notification Module"
 meshtastic --set external_notification.enabled true
@@ -115,20 +128,13 @@ meshtastic --set external_notification.output_ms 0
 meshtastic --set external_notification.output_ms 1500
 ```
 </TabItem>
-<TabItem value="flasher">
-
-:::info
-External Notification module config is not available in the Flasher.
-:::
-
-  </TabItem>
-  <TabItem value="web">
+<TabItem value="web">
 
 :::info
 All External Notification module config is available for the Web UI.
 :::
     
-  </TabItem>
+</TabItem>
 </Tabs>
 
 :::warning

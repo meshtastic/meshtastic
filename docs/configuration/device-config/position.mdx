@@ -83,7 +83,6 @@ values={[
 {label: 'Android', value: 'android'},
 {label: 'Apple', value: 'apple'},
 {label: 'CLI', value: 'cli'},
-{label: 'Flasher', value: 'flasher'},
 {label: 'Web', value: 'web'},
 ]}>
 <TabItem value="android">
@@ -107,7 +106,11 @@ All position config values are available on iOS, iPadOS and macOS at Settings > 
 </TabItem>
 <TabItem value="cli">
 
+:::info 
+
 All Position config commands are available in the python CLI. Example commands are below:
+
+:::
 
 |         Setting                |                                                                       Acceptable Values                                                                       |     Default     |
 | :----------------------------: | :-----------------------------------------------------------------------------------------------------------------------------------------------------------: | :-------------: |
@@ -119,6 +122,15 @@ All Position config commands are available in the python CLI. Example commands a
 | position.position_broadcast_secs        |                                                                      `integer` (seconds)                                                                      | Default of `0` is 15 Minutes  |
 |      position.flags            | `UNSET`, `ALTITUDE`, `ALTITUDE_MSL`, `GEOIDAL_SEPARATION`, `DOP`, `HVDOP`, `PDOP`, `SATINVIEW`, `SEQ_NO`, `TIMESTAMP`, `HEADING`, `SPEED` | `UNSET` |
 
+:::tip
+
+Because the device will reboot after each command is sent via CLI, it is recommended when setting multiple values in a config section that commands be chained together as one. **This is especially important for position values to ensure they are set at the same time and avoid being overwritten by subsequent commands.**
+
+```shell title="Example:"
+meshtastic --set position.fixed_position true --setlat 37.8651 --setlon -119.5383
+```
+
+:::
 
 ```shell title="Set GPS update interval (Default of 0 is 30 seconds)"
 meshtastic --set position.gps_update_interval 0
@@ -160,30 +172,19 @@ meshtastic --set position.broadcast_secs 60
 It may take some time to see that the change has taken effect. The GPS location is updated according to the value specified on `gps_update_interval` and the mesh will be notified of the new position in relation to the `position_broadcast_secs` value.
 :::
 
-:::tip
-Include each flag desired separated by a single space.
-:::
-
 ```shell title="Set / Unset Position Flags"
 meshtastic --pos-fields ALTITUDE ALTITUDE_MSL
 meshtastic --pos-fields UNSET
 ```
 
 </TabItem>
-<TabItem value="flasher">
-
-:::info
-No position config options are available in the Flasher.
-:::
-
-  </TabItem>
-  <TabItem value="web">
+<TabItem value="web">
 
 :::info
 All position config options are available in the Web UI.
 :::
     
-  </TabItem>
+</TabItem>
 </Tabs>
 
 :::caution
