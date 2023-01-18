@@ -13,6 +13,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2.2.1
+        with:
+          version: latest
+
+      - name: Install Dependencies
+        run: pnpm install
+
       - name: Trunk Check
         uses: trunk-io/trunk-action@v1
         with:
