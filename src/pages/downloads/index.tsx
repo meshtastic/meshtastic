@@ -1,28 +1,28 @@
-import React from 'react';
+import React from "react";
 
-import { FaAndroid, FaApple } from 'react-icons/fa';
-import useSWR from 'swr';
+import { FaAndroid, FaApple } from "react-icons/fa";
+import useSWR from "swr";
 
 import {
   ArrowTopRightOnSquareIcon,
   BoltIcon,
   ComputerDesktopIcon,
   CpuChipIcon,
-  GlobeAltIcon,
-} from '@heroicons/react/24/solid';
-import Layout from '@theme/Layout';
+  GlobeAltIcon
+} from "@heroicons/react/24/solid";
+import Layout from "@theme/Layout";
 
-import { FirmwareReleases } from '../../utils/apiTypes.js';
-import { fetcher } from '../../utils/swr';
+import { FirmwareReleases } from "../../utils/apiTypes.js";
+import { fetcher } from "../../utils/swr";
 import {
   FirmwareCard,
-  PlaceholderFirmwareCard,
-} from './_components/FirmwareCard';
+  PlaceholderFirmwareCard
+} from "./_components/FirmwareCard";
 
 const Firmware = (): JSX.Element => {
   const { data, error } = useSWR<FirmwareReleases>(
-    'https://api.meshtastic.org/github/firmware/list',
-    fetcher,
+    "https://api.meshtastic.org/github/firmware/list",
+    fetcher
   );
 
   return (

@@ -1,17 +1,17 @@
-import 'url-search-params-polyfill';
+import "url-search-params-polyfill";
 
-import React from 'react';
+import React from "react";
 
-import { useLocation } from '@docusaurus/router';
-import Layout from '@theme/Layout';
+import { useLocation } from "@docusaurus/router";
+import Layout from "@theme/Layout";
 
-import { Filters } from './_components/Filters';
-import { Network } from './_components/Network';
-import { Networks } from './_components/Networks';
+import { Filters } from "./_components/Filters";
+import { Network } from "./_components/Network";
+import { Networks } from "./_components/Networks";
 
 const Showcase = (): JSX.Element => {
   const location = useLocation();
-  const id = new URLSearchParams(location.search).get('id');
+  const id = new URLSearchParams(location.search).get("id");
 
   return (
     <Layout
@@ -19,7 +19,7 @@ const Showcase = (): JSX.Element => {
       description="Portfolio of projects from the Meshtastic community"
     >
       <main className="margin-vert--lg">
-        {!!id ? (
+        {id ? (
           <Network id={id} />
         ) : (
           <>

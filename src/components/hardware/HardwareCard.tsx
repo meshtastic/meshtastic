@@ -1,6 +1,6 @@
-import React from 'react';
+import React from "react";
 
-import { IDevice, Stability } from '@site/src/data/device';
+import { IDevice, Stability } from "@site/src/data/device";
 
 export interface HardwareCardProps {
   device: IDevice;
@@ -9,7 +9,7 @@ export interface HardwareCardProps {
 
 export const HardwareCard = ({
   device,
-  setDevice,
+  setDevice
 }: HardwareCardProps): JSX.Element => {
   return (
     <li
@@ -41,12 +41,12 @@ export const HardwareCard = ({
             <div
               className={`my-auto h-3 w-3 rounded-full ${
                 device.misc.Stability === Stability.Broken
-                  ? 'bg-red-500'
+                  ? "bg-red-500"
                   : device.misc.Stability === Stability.Unstable
-                  ? 'bg-orange-500'
+                  ? "bg-orange-500"
                   : device.misc.Stability === Stability.Semi
-                  ? 'bg-cyan-500'
-                  : 'bg-green-500'
+                  ? "bg-cyan-500"
+                  : "bg-green-500"
               }`}
             />
             <div className="my-auto">{Stability[device.misc.Stability]}</div>

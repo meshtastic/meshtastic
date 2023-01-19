@@ -1,8 +1,8 @@
-import React from 'react';
+import React from "react";
 
-import { Tab } from '@headlessui/react';
+import { Tab } from "@headlessui/react";
 
-import type { IDevice } from '../../../data/device';
+import type { IDevice } from "../../../data/device";
 
 export interface PinoutTabProps {
   device: IDevice;
@@ -14,13 +14,13 @@ export const PinoutTab = ({ device }: PinoutTabProps): JSX.Element => {
       <div className="m-auto flex gap-4 rounded-lg bg-slate-700 px-2 py-1 shadow-md">
         {[
           device.pinout.slice(0, device.misc.pinoutSplit),
-          device.pinout.slice(device.misc.pinoutSplit, device.pinout.length),
+          device.pinout.slice(device.misc.pinoutSplit, device.pinout.length)
         ].map((group, index) => (
           <div key={index}>
             {group.map((pin, pinIndex) => (
               <div
                 className={`flex gap-1 ${
-                  index === 0 ? 'flex-row' : 'flex-row-reverse'
+                  index === 0 ? "flex-row" : "flex-row-reverse"
                 }`}
                 key={pinIndex}
               >

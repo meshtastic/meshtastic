@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 export const BatteryCalculator = (): JSX.Element => {
   return (
@@ -6,7 +6,7 @@ export const BatteryCalculator = (): JSX.Element => {
       <div className="card__header">
         <h3>Battery Calculator</h3>
       </div>
-      <div className="card__body" style={{ display: 'flex', gap: '2rem' }}>
+      <div className="card__body" style={{ display: "flex", gap: "2rem" }}>
         <div>
           <input placeholder="Search" />
           <input placeholder="Search" />

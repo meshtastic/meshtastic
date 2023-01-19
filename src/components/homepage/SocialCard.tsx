@@ -1,6 +1,6 @@
-import React from 'react';
+import React from "react";
 
-import { FiExternalLink } from 'react-icons/fi';
+import { FiExternalLink } from "react-icons/fi";
 
 export interface SocialCardProps {
   children: React.ReactNode;
@@ -11,7 +11,7 @@ export interface SocialCardProps {
 export const SocialCard = ({
   children,
   color,
-  link,
+  link
 }: SocialCardProps): JSX.Element => {
   return (
     <div

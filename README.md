@@ -11,7 +11,7 @@ Website and documentation source for the Meshtastic project.
 
 ## Stats
 
-![Alt](https://repobeats.axiom.co/api/embed/9ef7282debe009789c697432a86499ac2b058a86.svg 'Repobeats analytics image')
+![Alt](https://repobeats.axiom.co/api/embed/9ef7282debe009789c697432a86499ac2b058a86.svg "Repobeats analytics image")
 
 ## Development & Building
 

@@ -1,7 +1,7 @@
-import React from 'react';
+import React from "react";
 
-import { Showcase } from '../../../utils/apiTypes';
-import { Card, PlaceholderCard } from './Card';
+import { Showcase } from "../../../utils/apiTypes";
+import { Card, PlaceholderCard } from "./Card";
 
 interface NetworkSectionProps {
   title: string;
@@ -14,26 +14,26 @@ export const NetworkSection = ({
   title,
   icon,
   iconColor,
-  networks,
+  networks
 }: NetworkSectionProps): JSX.Element => {
   return (
     <div className="margin-top--lg container">
       <div
         className="margin-bottom--sm"
         style={{
-          display: 'flex',
-          alignItems: 'center',
+          display: "flex",
+          alignItems: "center"
         }}
       >
         <h2>{title}</h2>
         {icon && (
           <span
             style={{
-              marginBottom: '0.5rem',
-              marginLeft: '0.5rem',
-              fontSize: '1.25rem',
-              lineHeight: '1.75rem',
-              color: iconColor,
+              marginBottom: "0.5rem",
+              marginLeft: "0.5rem",
+              fontSize: "1.25rem",
+              lineHeight: "1.75rem",
+              color: iconColor
             }}
           >
             {icon}
@@ -42,11 +42,11 @@ export const NetworkSection = ({
       </div>
       <ul
         style={{
-          position: 'relative',
-          display: 'grid',
-          gap: '1.5rem',
-          gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
-          paddingLeft: '0',
+          position: "relative",
+          display: "grid",
+          gap: "1.5rem",
+          gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
+          paddingLeft: "0"
         }}
       >
         {networks ? (

@@ -1,6 +1,6 @@
-import React from 'react';
+import React from "react";
 
-import { ShowcaseTag } from '../../../utils/apiTypes';
+import { ShowcaseTag } from "../../../utils/apiTypes";
 
 export interface CardTagsProps {
   tags: ShowcaseTag[];
@@ -16,8 +16,8 @@ export const CardTags = ({ tags }: CardTagsProps) => {
             key={index}
             style={{
               backgroundColor: color,
-              marginRight: '0.3rem',
-              userSelect: 'none',
+              marginRight: "0.3rem",
+              userSelect: "none"
             }}
           >
             {label}
