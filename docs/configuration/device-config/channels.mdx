@@ -5,8 +5,8 @@ slug: /settings/config/channels
 sidebar_label: Channels
 ---
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
 
 The Channels config options are: Index, Roles, and Settings. Channel config uses an admin message sending a `Channel` protobuf which also consists of a `ChannelSettings` protobuf.
 
@@ -26,16 +26,16 @@ The channel index begins at 0 and ends at 7.
 
 _Indexing_ can not be modified.
 
-|        Index         |     Channel       | Default Role | Purpose | 
-| :--------------------: | :----------------: | :----------------: | :----------------: |
-| 0 | 1 | `PRIMARY` | Used as `default` channel |
-| 1 | 2 | `DISABLED` | User defined |
-| 2 | 3 | `DISABLED` | User defined |
-| 3 | 4 | `DISABLED` | User defined |
-| 4 | 5 | `DISABLED` | User defined |
-| 5 | 6 | `DISABLED` | User defined |
-| 6 | 7 | `DISABLED` | User defined |
-| 7 | 8 | `DISABLED` | User defined |
+| Index | Channel | Default Role |          Purpose          |
+| :---: | :-----: | :----------: | :-----------------------: |
+|   0   |    1    |  `PRIMARY`   | Used as `default` channel |
+|   1   |    2    |  `DISABLED`  |       User defined        |
+|   2   |    3    |  `DISABLED`  |       User defined        |
+|   3   |    4    |  `DISABLED`  |       User defined        |
+|   4   |    5    |  `DISABLED`  |       User defined        |
+|   5   |    6    |  `DISABLED`  |       User defined        |
+|   6   |    7    |  `DISABLED`  |       User defined        |
+|   7   |    8    |  `DISABLED`  |       User defined        |
 
 :::note
 You can **not** have `DISABLED` channels in-between active channels such as `PRIMARY` and `SECONDARY`. Active channels must be consecutive.
@@ -45,15 +45,15 @@ You can **not** have `DISABLED` channels in-between active channels such as `PRI
 
 Each channel is assigned one of 3 roles:
 
-1. `PRIMARY` or `1` 
-	- This is the first channel that is created for you on initial setup.
-	- Only one primary channel can exist and can not be disabled.
-	- Direct messages are only available on this channel.
+1. `PRIMARY` or `1`
+   - This is the first channel that is created for you on initial setup.
+   - Only one primary channel can exist and can not be disabled.
+   - Direct messages are only available on this channel.
 2. `SECONDARY` or `2`
-	- Can modify the encryption key (PSK).
-3. `DISABLED` or `0` 
-	- The channel is no longer available for use.
-	- The channel settings are set to default.
+   - Can modify the encryption key (PSK).
+3. `DISABLED` or `0`
+   - The channel is no longer available for use.
+   - The channel settings are set to default.
 
 ## Channel Settings Values
 
@@ -71,12 +71,12 @@ Set to `0` by default.
 
 ### Name
 
-A short identifier for the channel. _(< 12 bytes)_ 
+A short identifier for the channel. _(< 12 bytes)_
 
-|        Reserved Name         |     Purpose       | 
-| :--------------------: | :----------------: | 
-| `""` (default) | If left empty on the Primary channel, this designates the `default` channel. | 
-| `admin` | On Secondary channels, the name `admin` (case sensitive) designates the  `admin` channel used to administer nodes over the mesh |
+| Reserved Name  |                                                            Purpose                                                             |
+| :------------: | :----------------------------------------------------------------------------------------------------------------------------: |
+| `""` (default) |                          If left empty on the Primary channel, this designates the `default` channel.                          |
+|    `admin`     | On Secondary channels, the name `admin` (case sensitive) designates the `admin` channel used to administer nodes over the mesh |
 
 ### PSK
 
@@ -140,13 +140,13 @@ meshtastic --ch-set name "My Channel" --ch-set psk random --ch-set uplink_enable
 
 :::
 
-**Id**
+### Id
 
 ```shell title="Set the PRIMARY channel ID"
 meshtastic --ch-set id 1234 --ch-index 0
 ```
 
-**Name**
+### Name
 
 ```shell title="Set channel name for the PRIMARY channel"
 # without spaces
@@ -155,7 +155,7 @@ meshtastic --ch-set name MyChannel --ch-index 0
 meshtastic --ch-set name "My Channel" --ch-index 0
 ```
 
-**PSK**
+### PSK
 
 If you use Meshtastic for exchanging messages you don't want other people to see, `random` is the setting you should use. Selecting `default` or any of the `simple` values from the following table will use publicly known encryption keys. They're shipped with Meshtastic source code and thus, anyone can listen to messages encrypted by them. They're great for testing and public channels.
 
@@ -186,7 +186,7 @@ meshtastic --ch-set psk 0x1a1a1a1a2b2b2b2b1a1a1a1a2b2b2b2b1a1a1a1a2b2b2b2b1a1a1a
 meshtastic --ch-set psk none --ch-index 0
 ```
 
-**Uplink / Downlink**
+### Uplink / Downlink
 
 For configuring gateways, please see [MQTT](/docs/settings/moduleconfig/mqtt)
 

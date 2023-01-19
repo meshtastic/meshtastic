@@ -6,10 +6,9 @@ slug: /getting-started/initial-config
 sidebar_position: 4
 ---
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
-import LoRaRegions from '../blocks/_lora-regions.mdx';
-
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+import LoRaRegions from "../blocks/_lora-regions.mdx";
 
 ## Supported Clients per Connection Type
 
@@ -36,7 +35,6 @@ values={[
 - [Web Client](https://client.meshtastic.org)
 - [iOS App](/docs/category/apple-apps)
 
-
 </TabItem>
 <TabItem value="network">
 
@@ -49,14 +47,12 @@ Connecting over network is only supported on ESP32 devices.
 - [iOS App](/docs/category/apple-apps)
 - [Python CLI](/docs/software/python/cli/)
 
-
 </TabItem>
 </Tabs>
 
 ## Set Regional Settings
 
 In order to start communicating over the mesh, you must set your region. This setting controls which frequency range your device uses and should be set according to your regional location.
-
 
 <Tabs
 groupId="settings"
@@ -85,14 +81,14 @@ Configuration of Region, Modem Preset and Hop Limit is available on iOS, iPadOS 
 <TabItem value="cli">
 
 1. Install [Meshtastic PythonCLI](/docs/software/python/cli/installation)
-	```sh
-	pip3 install --upgrade pytap2
-	pip3 install --upgrade meshtastic
-	```
+   ```sh
+   pip3 install --upgrade pytap2
+   pip3 install --upgrade meshtastic
+   ```
 2. Run the following command, replacing `<REGION-CODE>` with the region code listed above according to your regional location.
-	```sh
-	meshtastic --set lora.region <REGION-CODE>
-	```
+   ```sh
+   meshtastic --set lora.region <REGION-CODE>
+   ```
 
 </TabItem>
 <TabItem value="web">
@@ -108,7 +104,3 @@ Configuration of Region, Modem Preset and Hop Limit is available on iOS, iPadOS 
 ### Region Codes
 
 <LoRaRegions />
-
-
-
-

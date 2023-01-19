@@ -14,19 +14,21 @@ You may encounter a situation where your device crashes and are left with a stac
 This method uses the symbols of the `firmware.elf` file generated from your latest build, you may wish to rebuild to get up-to-date symbols.
 :::
 
- 1. Save the backtrace string to a text file:
-	```text title="backtrace.txt"
-	Backtrace: 0x....
-	```
+1. Save the backtrace string to a text file:
+
+   ```text title="backtrace.txt"
+   Backtrace: 0x....
+   ```
 
 2. Run the exception decoder:
-	```shell
-	bin/exception_decoder.py backtrace.txt
-	```
+   ```shell
+   bin/exception_decoder.py backtrace.txt
+   ```
 
 ### In Real-Time
 
 In order to decode stack traces in real time, keep the following command (replacing `DEVICE_PORT` with your device's port) running in your terminal with the target device connected:
+
 ```shell
 pio device monitor --port DEVICE_PORT -f esp32_exception_decoder
 ```

@@ -3,7 +3,6 @@ import React from "react";
 import { FiTwitter } from "react-icons/fi";
 
 import { ChevronRightIcon } from "@heroicons/react/20/solid";
-import FlipClockCountdown from "@leenguyen/react-flip-clock-countdown";
 import Layout from "@theme/Layout";
 import { Dark, Light } from "/src/components/ColorMode";
 

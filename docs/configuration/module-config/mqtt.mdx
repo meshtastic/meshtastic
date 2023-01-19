@@ -5,8 +5,8 @@ slug: /settings/moduleconfig/mqtt
 sidebar_label: MQTT
 ---
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
 
 If your device is connected to Internet via wifi or ethernet, you can enable it to forward packets along to an MQTT server. This allows users on the local mesh to communicate with users on the internet. One or more channels must be enabled as uplink and/or downlink for protobufs to be transmitted from and/or to the mesh (See [channels](/docs/settings/config/channels#downlink-enabled)). Without these settings the node will still connect to MQTT server and send status messages.
 
@@ -14,7 +14,7 @@ The MQTT module config options are: Enabled, Server Address, Username, Password,
 
 ## Settings
 
- ## MQTT Module Config Values
+## MQTT Module Config Values
 
 ### Enabled
 
@@ -78,14 +78,14 @@ All MQTT module config options are available in the python CLI. Example commands
 
 :::
 
-|     Setting                  |    Acceptable Values     | Default |
-| :--------------------------: | :----------------------: | :-----: |
-|    mqtt.enabled              |     `true`, `false`      | `false` |
-|    mqtt.address              |     `string`             |         |
-|    mqtt.username             |     `string`             |         |
-|    mqtt.password             |     `string`             |         |
-|    mqtt.encryption_enabled   |     `string`             |         |
-|    mqtt.json_enabled         |     `true`, `false`      | `false` |
+|         Setting         | Acceptable Values | Default |
+| :---------------------: | :---------------: | :-----: |
+|      mqtt.enabled       |  `true`, `false`  | `false` |
+|      mqtt.address       |     `string`      |         |
+|      mqtt.username      |     `string`      |         |
+|      mqtt.password      |     `string`      |         |
+| mqtt.encryption_enabled |     `string`      |         |
+|    mqtt.json_enabled    |  `true`, `false`  | `false` |
 
 :::tip
 
@@ -113,6 +113,6 @@ meshtastic --set mqtt.json_enabled false
 :::info
 All MQTT module config options are available for the Web UI.
 :::
-    
+
   </TabItem>
 </Tabs>

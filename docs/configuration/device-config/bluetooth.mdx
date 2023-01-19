@@ -5,10 +5,10 @@ slug: /settings/config/bluetooth
 sidebar_label: Bluetooth
 ---
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
 
-The Bluetooth config options are: Enabled, Pairing Mode and Fixed PIN Value.  Bluetooth config uses an admin message sending a `Config.Bluetooth` protobuf.
+The Bluetooth config options are: Enabled, Pairing Mode and Fixed PIN Value. Bluetooth config uses an admin message sending a `Config.Bluetooth` protobuf.
 
 :::info
 ESP32 Devices: Bluetooth will be disabled if WiFi is enabled. The WiFi setting takes precedence.
@@ -82,11 +82,11 @@ All Bluetooth module config options are available in the python CLI. Example com
 
 :::
 
-|          Setting          |  Acceptable Values  | Default |
-| :-----------------------: | :-----------------: | :-----: |
-| `bluetooth.enabled`       | `true`, `false`     | `true` |
-| `bluetooth.mode`          | `RANDOM_PIN`, `FIXED_PIN`, `NO_PIN` | `RANDOM_PIN` |
-| `bluetooth.fixedPin`      | `integer` (6 digits) | `123456` |
+|       Setting        |          Acceptable Values          |   Default    |
+| :------------------: | :---------------------------------: | :----------: |
+| `bluetooth.enabled`  |           `true`, `false`           |    `true`    |
+|   `bluetooth.mode`   | `RANDOM_PIN`, `FIXED_PIN`, `NO_PIN` | `RANDOM_PIN` |
+| `bluetooth.fixedPin` |        `integer` (6 digits)         |   `123456`   |
 
 :::tip
 
@@ -107,6 +107,7 @@ meshtastic --set bluetooth.enabled false
 meshtastic --set bluetooth.mode FIXED_PIN
 meshtastic --set bluetooth.fixed_pin 111111
 ```
+
   </TabItem>
   <TabItem value="web">
 

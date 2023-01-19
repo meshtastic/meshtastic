@@ -14,7 +14,6 @@ export interface avatarLayoutProps {
 export const Avatar = ({
   imgUrl,
   name,
-  userName,
   description
 }: avatarProps): JSX.Element => {
   return (
@@ -36,7 +35,7 @@ export const AvatarLayout = ({ list }: avatarLayoutProps): JSX.Element => {
   return (
     <div className="container">
       <div className="flex flex-wrap justify-center bg-primary">
-        {list.map((e) => {
+        {list.map(() => {
           return <Avatar />;
         })}
       </div>

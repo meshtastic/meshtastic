@@ -6,9 +6,9 @@ slug: /getting-started
 sidebar_position: 2
 ---
 
-import Link from '@docusaurus/Link';
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
+import Link from "@docusaurus/Link";
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
 
 ## Identify Hardware
 
@@ -44,7 +44,7 @@ Prior to connecting your Meshtastic device to the computer, you should perform t
 
 ### Verify data cable
 
-Some cables only provide _charging_, verify that your cable is also capable of _transferring data_ before proceeding. 
+Some cables only provide _charging_, verify that your cable is also capable of _transferring data_ before proceeding.
 
 There is no definitive way to determine the difference in cables if you aren't willing to pull it apart. Trying out a few cables will be the best way to verify.
 
@@ -78,7 +78,7 @@ Once you've located a working data cable, [install the correct serial driver](#i
 
 ### Test driver installation
 
-You can verify that you have a proper data cable (rather than a charge-only type cable) and that the appropriate drivers for your system are installed by performing the following test: 
+You can verify that you have a proper data cable (rather than a charge-only type cable) and that the appropriate drivers for your system are installed by performing the following test:
 
 <Tabs
 groupId="operating-system"
@@ -93,36 +93,39 @@ values={[
 1. Connect your Meshtastic device to your USB port
 2. Open a **Terminal** and enter the following command:
 
-  ```shell
-  lsusb
-  ```
-3. You should see something like: 
+```shell
+lsusb
+```
 
-  ```shell
-  ID xxxx:xxxx Silicon Labs CP210x UART Bridge
-  # or
-  ID xxxx:xxxx QinHeng Electronics USB Single Serial
-  # or
-  FIXME (WISBLOCK OUTPUT)
-  ```
+3. You should see something like:
+
+```shell
+ID xxxx:xxxx Silicon Labs CP210x UART Bridge
+# or
+ID xxxx:xxxx QinHeng Electronics USB Single Serial
+# or
+FIXME (WISBLOCK OUTPUT)
+```
 
 </TabItem>
 <TabItem value="macos">
 
-1. Navigate to `Apple Menu  > About This Mac > System Report... > Hardware > USB`. 
+1. Navigate to `Apple Menu  > About This Mac > System Report... > Hardware > USB`.
 2. You should see similar to one of the following entries:
-  - `CP210X USB to UART Bridge Controller`
-  - `CH9102 USB to UART Bridge Controller`
-  - `WisCore RAK4631 Board`
+
+- `CP210X USB to UART Bridge Controller`
+- `CH9102 USB to UART Bridge Controller`
+- `WisCore RAK4631 Board`
 
 </TabItem>
 <TabItem value="windows">
 
 1. Navigate to `Device Manager > Ports (COM & LPT)`
 2. You should see similar to one of the following entries:
-  - `Silicon Labs CP210X USB to UART Bridge (COM5)`
-  - `Silicon Labs CH9102 USB to UART Bridge (COM5)`
-  - `FIXME (WISBLOCK OUTPUT)`
+
+- `Silicon Labs CP210X USB to UART Bridge (COM5)`
+- `Silicon Labs CH9102 USB to UART Bridge (COM5)`
+- `FIXME (WISBLOCK OUTPUT)`
 
 </TabItem>
 </Tabs>
@@ -132,7 +135,7 @@ If you do not see your device:
 
 1. You may be using a charging-only cable, [verify your cable](#verify-data-cable).
 2. You may need to [install the USB serial driver](/docs/getting-started/serial-drivers)).
-:::
+   :::
 
 ## Flash Firmware
 
@@ -164,15 +167,15 @@ If you have a RAK4631-R (the RUI3 bootloader version of the RAK4631), you must [
 </div> 
 </div>
 
-
 ## Connect and Configure Device
 
 After connecting to the device for the first time, you should set the regional settings for the radio as well as other optional settings such as the name of the device.
 
 <div className="indexCtasBody">
-  <Link target="_blank"
-    className={'button button--outline button--lg cta--button'}
-    to={'/docs/getting-started/initial-config'}
+  <Link
+    target="_blank"
+    className={"button button--outline button--lg cta--button"}
+    to={"/docs/getting-started/initial-config"}
   >
     Connect and Configure Device
   </Link>
@@ -181,17 +184,21 @@ After connecting to the device for the first time, you should set the regional s
 ## Use Meshtastic
 
 ### with Command Line Tools
-  - [Python CLI](/docs/software/python/cli)
+
+- [Python CLI](/docs/software/python/cli)
 
 ### with mobile apps
-  - [Android](/docs/category/android-app)
-  - [Apple](/docs/category/apple-apps)
+
+- [Android](/docs/category/android-app)
+- [Apple](/docs/category/apple-apps)
 
 ### with a browser
-  - https://client.meshtastic.org
-  - [Meshtastic Web](/docs/software/web-client)
+
+- https://client.meshtastic.org
+- [Meshtastic Web](/docs/software/web-client)
 
 ### over the internet with MQTT
-  - [MQTT](/docs/software/mqtt/)
+
+- [MQTT](/docs/software/mqtt/)
 
 There are many ways to interact with and use Meshtastic, please visit the [Software](/docs/software) page for more information.

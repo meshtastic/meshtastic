@@ -5,32 +5,34 @@ slug: /settings/config/device
 sidebar_label: Device
 ---
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
 
-The device config options are: Role, Serial Output, and Debug Log.  Device config uses an admin message sending a `Config.Device` protobuf.
+The device config options are: Role, Serial Output, and Debug Log. Device config uses an admin message sending a `Config.Device` protobuf.
 
 ## Device Config Values
 
 ### Role
-Sets the role of node. 
+
+Sets the role of node.
 
 Acceptable values:
 
-|   Value   |                                                                  Description                                                                                                              |
-| :-------: | :---------------------------------------------------------------------------------------: |
-| `CLIENT` | Client (default) - App connected client. |
-| `CLIENT_MUTE` | Client Mute - Same as a client except packets will not hop over this node, does not contribute to routing packets for mesh. |
-| `ROUTER` | Router -  Mesh packets will prefer to be routed over this node. This node will not be used by client apps. The WiFi/BLE radios and the OLED screen will be put to sleep. |
-| `ROUTER_CLIENT` | Router Client - Mesh packets will prefer to be routed over this node. The Router Client can be used as both a Router and an app connected Client. |
+|      Value      |                                                                               Description                                                                               |
+| :-------------: | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
+|    `CLIENT`     |                                                                Client (default) - App connected client.                                                                 |
+|  `CLIENT_MUTE`  |                       Client Mute - Same as a client except packets will not hop over this node, does not contribute to routing packets for mesh.                       |
+|    `ROUTER`     | Router - Mesh packets will prefer to be routed over this node. This node will not be used by client apps. The WiFi/BLE radios and the OLED screen will be put to sleep. |
+| `ROUTER_CLIENT` |            Router Client - Mesh packets will prefer to be routed over this node. The Router Client can be used as both a Router and an app connected Client.            |
 
+### Serial Console
 
-### Serial Console 
 Acceptable values: `true` or `false`
 
 Disabling this will disable the SerialConsole by not initializing the StreamAPI.
 
 ### Debug Log
+
 Acceptable values: `true` or `false`
 
 By default we turn off logging as soon as an API client connects. Set this to true to leave the debug log outputting even when API is active.
@@ -74,7 +76,7 @@ All device config options are available in the python CLI. Example commands are 
 :::
 
 | Setting                  | Acceptable Values                                  | Default  |
-|--------------------------|----------------------------------------------------|----------|
+| ------------------------ | -------------------------------------------------- | -------- |
 | device.debug_log_enabled | `true`, `false`                                    | `false`  |
 | device.role              | `CLIENT`, `CLIENT_MUTE`, `ROUTER`, `ROUTER_CLIENT` | `CLIENT` |
 | device.serial_enabled    | `true`, `false`                                    | `true`   |
@@ -107,6 +109,6 @@ meshtastic --set device.debug_log_enabled true
 :::info
 All device config options are available in the Web UI.
 :::
-    
+
   </TabItem>
 </Tabs>

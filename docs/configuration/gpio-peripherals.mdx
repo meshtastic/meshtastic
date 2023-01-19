@@ -6,7 +6,6 @@ slug: /hardware/peripheral/
 sidebar_position: 6
 ---
 
-
 ## Firmware Versions
 
 :::warning
@@ -47,7 +46,7 @@ The procedure using the python command line tool is:
    meshtastic --ch-add gpio
    ```
 3. If doing local testing, you may also want to change the speed of the channel:
-   ```sh
+   ```shell
    meshtastic --ch-mediumfast
    ```
 4. Check the channel has been created and copy the long "Complete URL" that contains all the channels on that device:
@@ -143,7 +142,6 @@ You can add a simple LED and resistor to validate that the GPIO operations work 
 By default, the pin may be "off" or "on". (It will most likely "off".) See the steps below for running commands. In the example of GPIO21, the mask would be `0x200000`.
 
 ![T-Lora v1 with LED on GPIO 21](/img/LED_on_TLoraV1.jpg)
-
 
 ## Using GPIOs from the Python CLI
 

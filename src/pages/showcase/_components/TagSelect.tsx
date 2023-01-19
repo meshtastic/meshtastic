@@ -25,7 +25,7 @@ function replaceSearchTags(search: string, newTags: string[]) {
 }
 
 export const TagSelect = React.forwardRef<HTMLLabelElement, Props>(
-  ({ id, icon, label, tag, ...rest }, ref) => {
+  ({ icon, label, tag }) => {
     const location = useLocation();
     const history = useHistory();
     const [selected, setSelected] = React.useState(false);

@@ -152,21 +152,6 @@ const SocialCards: SocialCardProps[] = [
   }
 ];
 
-function Feature({ imageUrl, title, description }) {
-  const imgUrl = useBaseUrl(imageUrl);
-  return (
-    <div className="col col--4">
-      {imgUrl && (
-        <div className="text--center">
-          <img width={200} height={200} src={imgUrl} alt={title} />
-        </div>
-      )}
-      <h3>{title}</h3>
-      <p>{description}</p>
-    </div>
-  );
-}
-
 function Home() {
   const context = useDocusaurusContext();
   const { siteConfig } = context;

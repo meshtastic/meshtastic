@@ -5,17 +5,17 @@ sidebar_label: Connecting
 ---
 
 ```tsx
-import type React from 'React';
+import type React from "React";
 
-import { IHTTPConnection } from '@meshtastic/meshtasticjs';
+import { IHTTPConnection } from "@meshtastic/meshtasticjs";
 
 export const Connection = (): JSX.Element => {
   const connection = new IHTTPConnection();
 
   const connect = (): void => {
     void connection.connect({
-      address: '10.0.0.10',
-      fetchInterval: 3000,
+      address: "10.0.0.10",
+      fetchInterval: 3000
     });
   };
 

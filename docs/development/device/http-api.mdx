@@ -36,15 +36,15 @@ Two endpoints are specified:
 
 Allows `PUT` and `OPTION` requests.
 
-#### PUT 
+#### PUT
 
-A `PUT` request to this endpoint will be expected to contain a series of ToRadio protobuf payloads. 
+A `PUT` request to this endpoint will be expected to contain a series of ToRadio protobuf payloads.
 
 The protobufs will be sent in binary as the body for the request.
 
 For the initial implementation, only one ToRadio message per request is supported, but future optimizations to improve throughput might add support for multiple ToRadios in a single request.
 
-#### OPTIONS 
+#### OPTIONS
 
 An `OPTIONS`request to this endpoint will return a response status code `204` and headers only.
 
@@ -52,7 +52,7 @@ An `OPTIONS`request to this endpoint will return a response status code `204` an
 
 Allows `GET` requests.
 
-#### GET 
+#### GET
 
 A `GET` request from this endpoint will return a series of FromRadio protobufs.
 
@@ -61,12 +61,14 @@ The protobufs will be sent in binary as the body for the request.
 **Parameters**
 
 ##### **/api/v1/fromradio?all**
+
 - `all=false` (unset default)
-  -  Only one protobuf is returned.
-- `all=true` 
+  - Only one protobuf is returned.
+- `all=true`
   - All available protobufs are returned.
 
 ##### **/api/v1/fromradio?chunked**
+
 - `chunked=false` (unset default, not yet implemented)
   - The request returns all protobufs that can be delivered for the client's session (this would allow the client to poll by doing a series of requests). This is the only option that is supported in the initial release.
 - `chunked=true` (not yet implemented)

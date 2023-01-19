@@ -16,8 +16,6 @@ const OEM = (): JSX.Element => {
   const [oemText, setOemText] = useState<string>("");
   const [oemBytes, setOemBytes] = useState<Uint8Array>(new Uint8Array());
 
-  const encoder = new TextEncoder();
-
   useEffect(() => {
     setOemBytes(
       Protobuf.OEMStore.toBinary({

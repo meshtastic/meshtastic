@@ -5,10 +5,10 @@ slug: /settings/moduleconfig/telemetry
 sidebar_label: Telemetry
 ---
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
 
-The Telemetry Module provides two types of data over the mesh.  Device metrics (Battery Level, Voltage, Channel Utilization and Airtime) from your meshtastic device and Environment Metrics from attached I2C sensors.
+The Telemetry Module provides two types of data over the mesh. Device metrics (Battery Level, Voltage, Channel Utilization and Airtime) from your meshtastic device and Environment Metrics from attached I2C sensors.
 
 Supported sensors connected to the I2C bus of the device will be automatically detected at startup. Environment Telemetry must be enabled for them to be instrumented and their readings sent over the mesh.
 
@@ -16,19 +16,19 @@ The telemetry module config options are: Device Metrics Update Interval, Environ
 
 ### Currently Supported Sensor Types
 
-| Sensor  | I<sup>2</sup>C Address |  Data Points                                                  |
+| Sensor  | I<sup>2</sup>C Address |                          Data Points                          |
 | :-----: | :--------------------: | :-----------------------------------------------------------: |
-| BMP280  | 0x76, 0x77             | Temperature and barometric pressure                           |
-| BME280  | 0x76, 0x77             | Temperature, barometric pressure and humidity                 |
-| BME680  | 0x76, 0x77             | Temperature, barometric pressure, humidity and air resistance |
-| MCP9808 | 0x18                   | Temperature                                                   |
-| INA260  | 0x40, 0x41             | Current and Voltage                                           |
-| INA219  | 0x40, 0x41             | Current and Voltage                                           |
-| LPS22   | 0x5D, 0x5c             | Barometric pressure                                           |
-| SHTC3   | 0x70                   | Temperature and humidity                                      |
-| SHT31   | 0x44                   | Temperature and humidity                                      |
+| BMP280  |       0x76, 0x77       |              Temperature and barometric pressure              |
+| BME280  |       0x76, 0x77       |         Temperature, barometric pressure and humidity         |
+| BME680  |       0x76, 0x77       | Temperature, barometric pressure, humidity and air resistance |
+| MCP9808 |          0x18          |                          Temperature                          |
+| INA260  |       0x40, 0x41       |                      Current and Voltage                      |
+| INA219  |       0x40, 0x41       |                      Current and Voltage                      |
+|  LPS22  |       0x5D, 0x5c       |                      Barometric pressure                      |
+|  SHTC3  |          0x70          |                   Temperature and humidity                    |
+|  SHT31  |          0x44          |                   Temperature and humidity                    |
 
-##  Module Config Values
+## Module Config Values
 
 ### Update Intervals
 
@@ -101,13 +101,13 @@ All telemetry module config options are available in the python CLI. Example com
 
 ## Settings
 
-|                         Setting                         |  Acceptable Values  | Default |
-| :-----------------------------------------------------: | :-----------------: | :-----: |
-|         telemetry.device_update_interval         | `integer` (seconds) |   Default `0` is 15 minutes(`900` seconds).   |
-|     telemetry.environment_display_fahrenheit     |   `true`, `false`   | `false` |
-|    telemetry.environment_measurement_enabled     |   `true`, `false`   | `false` |
-|       telemetry.environment_screen_enabled       |   `true`, `false`   |   `0`   |
-|      telemetry.environment_update_interval       | `integer` (seconds) |   Default `0` is 15 minutes(`900` seconds).    |
+|                  Setting                  |  Acceptable Values  |                  Default                  |
+| :---------------------------------------: | :-----------------: | :---------------------------------------: |
+|     telemetry.device_update_interval      | `integer` (seconds) | Default `0` is 15 minutes(`900` seconds). |
+| telemetry.environment_display_fahrenheit  |   `true`, `false`   |                  `false`                  |
+| telemetry.environment_measurement_enabled |   `true`, `false`   |                  `false`                  |
+|   telemetry.environment_screen_enabled    |   `true`, `false`   |                    `0`                    |
+|   telemetry.environment_update_interval   | `integer` (seconds) | Default `0` is 15 minutes(`900` seconds). |
 
 :::tip
 
@@ -125,7 +125,7 @@ meshtastic --set telemetry.device_update_interval 0
 meshtastic --set telemetry.device_update_interval 0
 // Environment Metrics Two Minutes
 meshtastic --set telemetry.environment_update_interval 120
-````
+```
 
 ```shell title="Enable/Disable Environment Module"
 meshtastic --set telemetry.environment_measurement_enabled true
@@ -140,7 +140,7 @@ meshtastic --set telemetry.environment_screen_enabled false
 ```shell title="Enable / Disable Display Fahrenheit"
 meshtastic --set telemetry.environment_display_fahrenheit true
 meshtastic --set telemetry.environment_display_fahrenheit false
-````
+```
 
 </TabItem>
 <TabItem value="web">
@@ -150,7 +150,7 @@ meshtastic --set telemetry.environment_display_fahrenheit false
 All telemetry module config options are available in the Web UI.
 
 :::
-    
+
 </TabItem>
 </Tabs>
 
@@ -195,15 +195,15 @@ And examine the serial logs for Telemetry diagnostic information.
 
 ### Environment Metrics
 
-The environment metrics in the telemetry module supports a limited amount of fields as they are stored in memory on the device.  Support for sensors that provide one or more of the following fields can potentially be added to the main firmware provided there is a GPL licensed library for us to include to support it, and the library size is not prohibitive.
+The environment metrics in the telemetry module supports a limited amount of fields as they are stored in memory on the device. Support for sensors that provide one or more of the following fields can potentially be added to the main firmware provided there is a GPL licensed library for us to include to support it, and the library size is not prohibitive.
 
-* Temperature 
-* Relative Humidity
-* Barometric Pressure
-* Gas Resistance (AQI)
-* Voltage 
-* Current
+- Temperature
+- Relative Humidity
+- Barometric Pressure
+- Gas Resistance (AQI)
+- Voltage
+- Current
 
 ### Supporting Other Sensor types
 
-For other interesting sensor types and use cases we need to add a portnum for more generic telemetry packets and a second MCU will be required to interact with the sensor and process the data to be sent over the mesh.  This data will not be stored in the nodedb on the device.
+For other interesting sensor types and use cases we need to add a portnum for more generic telemetry packets and a second MCU will be required to interact with the sensor and process the data to be sent over the mesh. This data will not be stored in the nodedb on the device.

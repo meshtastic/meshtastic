@@ -6,8 +6,8 @@ slug: /software/python/cli/installation
 sidebar_position: 1
 ---
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
 
 This library provides a command line interface (CLI) for Meshtastic nodes and provides an easy API for sending and receiving messages over mesh radios, in addition to changing user settings. Using the command line is currently the most powerful. Events are delivered using a publish-subscribe model, and you can subscribe to only the message types you are interested in.
 
@@ -177,19 +177,19 @@ Wifi connection is currently under development and may not be working properly j
 
 - Install [Termux](https://f-droid.org/en/packages/com.termux) from the F-Droid app store (Google play does not currently support the latest builds)
 - Load Termux and update the package list
-  ```
+  ```shell
   pkg update
   ```
 - Upgrade the installed packages
-  ```
+  ```shell
   pkg upgrade
   ```
 - Install python
-  ```
+  ```shell
   pkg install python
   ```
 - Upgrade pip and installed meshtastic and some of its dependencies
-  ```
+  ```shell
   pip install --upgrade pip pygatt pytap2 wheel mesthtastic
   ```
 
@@ -204,9 +204,7 @@ Be aware that the Meshtastic CLI is not able to control the nodes over USB throu
 You may need to close and re-open the CLI. The path variables may or may not update for the current session when installing.
 :::
 
-
 ## Standalone
-
 
 There are standalone executable files for Mac, Windows and Ubuntu. A single file is all you need to run the command line interface (CLI) Meshtastic tool. There is a zip file per operating system. To use, see the operating system specific notes below:
 
@@ -226,13 +224,13 @@ values={[
 
 - Run the following command to make the file executable and rename it 'meshtastic':
 
-```
+```shell
 chmod +x meshtastic_ubuntu && mv meshtastic_ubuntu meshtastic
 ```
 
 - To run the cli:
 
-```
+```shell
 ./meshtastic
 ```
 
@@ -247,13 +245,13 @@ Copy (or move) this binary somewhere in your path.
 
 - Run the following command to make the file executable and to rename it 'meshtastic':
 
-```
+```shell
 chmod +x meshtastic_mac && mv meshtastic_mac meshtastic
 ```
 
 - Try to run it:
 
-```
+```shell
 ./meshtastic
 ```
 
@@ -266,7 +264,7 @@ You may get a dialog that says:
 
 - Try to run it again:
 
-```
+```shell
 ./meshtastic
 ```
 
@@ -278,7 +276,7 @@ Click "Open".
 
 - Now when you want to run it, you can simply run:
 
-```
+```shell
 ./meshtastic
 ```
 
@@ -295,10 +293,9 @@ Copy (or move) this binary somewhere in your path.
 
 - To run, open a windows command prompt, navigate to the location of the executable and run:
 
-```
+```shell
 meshtastic.exe
 ```
 
 </TabItem>
 </Tabs>
-

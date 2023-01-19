@@ -30,7 +30,7 @@ export const Filters = (): JSX.Element => {
           }}
         >
           {data.map((tag, i) => {
-            const { label, description, color } = tag;
+            const { label, color } = tag;
             const id = `showcase_checkbox_id_${tag};`;
 
             return (

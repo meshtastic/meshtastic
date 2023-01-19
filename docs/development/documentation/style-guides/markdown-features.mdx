@@ -4,7 +4,7 @@ title: Markdown Features
 sidebar_label: Markdown Features
 ---
 
-import { Dark, Light } from '/src/components/ColorMode';
+import { Dark, Light } from "/src/components/ColorMode";
 
 ## Overview
 
@@ -14,7 +14,7 @@ We have developed several [React](https://reactjs.org/) components for assisting
 
 ### Light/Dark Mode Switch
 
-#### Usage:
+#### Usage
 
 ```jsx
 import { Dark, Light } from '/src/components/ColorMode';
@@ -27,7 +27,7 @@ import { Dark, Light } from '/src/components/ColorMode';
 
 ```
 
-#### Demo:
+#### Demo
 
 <Dark>
   <div className="not-prose rounded-lg bg-primary shadow-md">
@@ -50,7 +50,7 @@ import { Dark, Light } from '/src/components/ColorMode';
 
 ### Code Blocks
 
-#### Usage:
+#### Usage
 
 Always specify the language used directly after the start of the code block (```).
 
@@ -71,13 +71,13 @@ export const typedArrayToBuffer = (array: Uint8Array): ArrayBuffer => {
 ```
 ````
 
-#### Demo:
+#### Demo
 
 ```ts title="Demo"
 export const typedArrayToBuffer = (array: Uint8Array): ArrayBuffer => {
   return array.buffer.slice(
     array.byteOffset,
-    array.byteLength + array.byteOffset,
+    array.byteLength + array.byteOffset
   );
 };
 ```

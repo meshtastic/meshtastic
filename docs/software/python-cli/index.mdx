@@ -1,12 +1,10 @@
 ---
 id: python-cli
-title: Meshtastic Command Line Interface
+title: Meshtastic Python CLI Guide
 slug: /software/python/cli
 sidebar_label: Python CLI
 sidebar_position: 4
 ---
-
-# Meshtastic Python CLI Guide
 
 The python pip package installs a "meshtastic" command line executable, which displays packets sent over the network as JSON and lets you see serial debugging information from the meshtastic devices. This command is not run inside of python, you run it from your operating system shell prompt directly. If when you type "meshtastic" it doesn't find the command and you are using Windows: Check that the python "scripts" directory is in your path.
 
@@ -16,9 +14,7 @@ The python pip package installs a "meshtastic" command line executable, which di
 
 Shows a help message that describes the arguments.
 
-**Usage**
-
-```shell
+```shell title="Usage"
 meshtastic -h
 ```
 
@@ -26,9 +22,7 @@ meshtastic -h
 
 The port the Meshtastic device is connected to, i.e. `/dev/ttyUSB0`, `/dev/cu.wchusbserial`, `COM4` etc. if unspecified, meshtastic will try to find it. Important to use when multiple devices are connected to ensure you call the command for the correct device.
 
-**Usage**
-
-```shell
+```shell title="Usage"
 meshtastic --port /dev/ttyUSB0 --info
 meshtastic --port COM4 --info
 ```
@@ -37,9 +31,7 @@ meshtastic --port COM4 --info
 
 The hostname/ipaddr of the device to connect to (over TCP).
 
-**Usage**
-
-```shell
+```shell title="Usage"
 meshtastic --host HOST
 ```
 
@@ -47,9 +39,7 @@ meshtastic --host HOST
 
 Logs device serial output to either 'stdout', 'none' or a filename to append to.
 
-**Usage**
-
-```shell
+```shell title="Usage"
 meshtastic --port /dev/ttyUSB0 --seriallog
 ```
 
@@ -57,9 +47,7 @@ meshtastic --port /dev/ttyUSB0 --seriallog
 
 Read and display the radio config information.
 
-**Usage**
-
-```shell
+```shell title="Usage"
 meshtastic --port /dev/ttyUSB0 --info
 ```
 
@@ -67,9 +55,7 @@ meshtastic --port /dev/ttyUSB0 --info
 
 Prints a node list in a pretty, formatted table.
 
-**Usage**
-
-```shell
+```shell title="Usage"
 meshtastic --nodes
 ```
 
@@ -77,9 +63,7 @@ meshtastic --nodes
 
 Displays the QR code that corresponds to the current channel.
 
-**Usage**
-
-```shell
+```shell title="Usage"
 meshtastic --qr
 ```
 
@@ -87,9 +71,7 @@ meshtastic --qr
 
 Gets a preferences field.
 
-**Usage**
-
-```shell
+```shell title="Usage"
 meshtastic --get lora.region
 ```
 
@@ -99,9 +81,7 @@ Sets a preferences field.
 
 Configuration values are described in this section: [Configuration Sections](https://meshtastic.org/docs/settings/config)
 
-**Usage**
-
-```shell
+```shell title="Usage"
 meshtastic --set lora.region Unset
 ```
 
@@ -109,9 +89,7 @@ meshtastic --set lora.region Unset
 
 Set a channel URL.
 
-**Usage**
-
-```shell
+```shell title="Usage"
 meshtastic --seturl https://www.meshtastic.org/c/GAMiIE67C6zsNmlWQ-KE1tKt0fRKFciHka-DShI6G7ElvGOiKgZzaGFyZWQ=
 ```
 
@@ -119,9 +97,7 @@ meshtastic --seturl https://www.meshtastic.org/c/GAMiIE67C6zsNmlWQ-KE1tKt0fRKFci
 
 Set the specified channel index
 
-**Usage**
-
-```shell
+```shell title="Usage"
 meshtastic --ch-index 1 --ch-disable
 ```
 
@@ -129,9 +105,7 @@ meshtastic --ch-index 1 --ch-disable
 
 Add a secondary channel, you must specify a channel name.
 
-**Usage**
-
-```shell
+```shell title="Usage"
 meshtastic --ch-add testing-channel
 ```
 
@@ -139,9 +113,7 @@ meshtastic --ch-add testing-channel
 
 Delete the ch-index channel.
 
-**Usage**
-
-```shell
+```shell title="Usage"
 meshtastic --ch-index 1 --ch-del
 ```
 
@@ -149,9 +121,7 @@ meshtastic --ch-index 1 --ch-del
 
 Enable the specified channel.
 
-**Usage**
-
-```shell
+```shell title="Usage"
 meshtastic --ch-index 1 --ch-enable
 ```
 
@@ -159,9 +129,7 @@ meshtastic --ch-index 1 --ch-enable
 
 Disable the specified channel.
 
-**Usage**
-
-```shell
+```shell title="Usage"
 meshtastic --ch-index 1 --ch-disable
 ```
 
@@ -169,9 +137,7 @@ meshtastic --ch-index 1 --ch-disable
 
 Set a channel parameter.
 
-**Usage**
-
-```shell
+```shell title="Usage"
 meshtastic --ch-set id 1234 --ch-index 0
 ```
 
@@ -179,9 +145,7 @@ meshtastic --ch-set id 1234 --ch-index 0
 
 Change to the standard long-range (but slow) channel.
 
-**Usage**
-
-```shell
+```shell title="Usage"
 meshtastic --ch-longslow
 ```
 
@@ -189,9 +153,7 @@ meshtastic --ch-longslow
 
 Change to the standard fast (but short range) channel.
 
-**Usage**
-
-```shell
+```shell title="Usage"
 meshtastic --ch-shortfast
 ```
 
@@ -199,9 +161,7 @@ meshtastic --ch-shortfast
 
 Set device owner name.
 
-**Usage**
-
-```shell
+```shell title="Usage"
 meshtastic --dest '!28979058' --set-owner "MeshyJohn"
 ```
 
@@ -209,9 +169,7 @@ meshtastic --dest '!28979058' --set-owner "MeshyJohn"
 
 Set licensed Ham ID and turn off encryption.
 
-**Usage**
-
-```shell
+```shell title="Usage"
 meshtastic --set-ham KI1345
 ```
 
@@ -219,9 +177,7 @@ meshtastic --set-ham KI1345
 
 The destination node id for any sent commands
 
-**Usage**
-
-```shell
+```shell title="Usage"
 meshtastic --dest '!28979058' --set-owner "MeshyJohn"
 ```
 
@@ -229,9 +185,7 @@ meshtastic --dest '!28979058' --set-owner "MeshyJohn"
 
 Send a text message. Can specify a channel index ('--ch-index') or a destination ('--dest')
 
-**Usage**
-
-```shell
+```shell title="Usage"
 meshtastic --sendtext "Hello Mesh!"
 ```
 
@@ -239,9 +193,7 @@ meshtastic --sendtext "Hello Mesh!"
 
 Send a ping message (which requests a reply).
 
-**Usage**
-
-```shell
+```shell title="Usage"
 meshtastic --sendping
 ```
 
@@ -249,9 +201,7 @@ meshtastic --sendping
 
 Tell the destination node to reboot.
 
-**Usage**
-
-```shell
+```shell title="Usage"
 meshtastic --dest '!28979058' --reboot
 ```
 
@@ -259,9 +209,7 @@ meshtastic --dest '!28979058' --reboot
 
 Reply to received messages.
 
-**Usage**
-
-```shell
+```shell title="Usage"
 meshtastic --reply
 ```
 
@@ -269,9 +217,7 @@ meshtastic --reply
 
 Set a particular GPIO # to 1 or 0.
 
-**Usage**
-
-```shell
+```shell title="Usage"
 meshtastic --port /dev/ttyUSB0 --gpio-wrb 4 1 --dest '!28979058'
 ```
 
@@ -279,9 +225,7 @@ meshtastic --port /dev/ttyUSB0 --gpio-wrb 4 1 --dest '!28979058'
 
 Read from a GPIO mask.
 
-**Usage**
-
-```shell
+```shell title="Usage"
 meshtastic --port /dev/ttyUSB0 --gpio-rd 0x10 --dest '!28979058'
 ```
 
@@ -289,9 +233,7 @@ meshtastic --port /dev/ttyUSB0 --gpio-rd 0x10 --dest '!28979058'
 
 Start watching a GPIO mask for changes.
 
-**Usage**
-
-```shell
+```shell title="Usage"
 meshtastic --port /dev/ttyUSB0 --gpio-watch 0x10 --dest '!28979058'
 ```
 
@@ -299,9 +241,7 @@ meshtastic --port /dev/ttyUSB0 --gpio-watch 0x10 --dest '!28979058'
 
 Suppress sending the current time to the mesh.
 
-**Usage**
-
-```shell
+```shell title="Usage"
 meshtastic --port /dev/ttyUSB0 --no-time
 ```
 
@@ -309,9 +249,7 @@ meshtastic --port /dev/ttyUSB0 --no-time
 
 Set device altitude (allows use without GPS).
 
-**Usage**
-
-```shell
+```shell title="Usage"
 meshtastic --setalt 120
 ```
 
@@ -319,9 +257,7 @@ meshtastic --setalt 120
 
 Set device latitude (allows use without GPS).
 
-**Usage**
-
-```shell
+```shell title="Usage"
 meshtastic --setlat 25.2
 ```
 
@@ -329,9 +265,7 @@ meshtastic --setlat 25.2
 
 Set device longitude (allows use without GPS).
 
-**Usage**
-
-```shell
+```shell title="Usage"
 meshtastic --setlon -16.8
 ```
 
@@ -339,9 +273,7 @@ meshtastic --setlon -16.8
 
 Show API library debug log messages.
 
-**Usage**
-
-```shell
+```shell title="Usage"
 meshtastic --debug --info
 ```
 
@@ -349,9 +281,7 @@ meshtastic --debug --info
 
 Run stress test against all connected Meshtastic devices.
 
-**Usage**
-
-```shell
+```shell title="Usage"
 meshtastic --test
 ```
 
@@ -359,9 +289,7 @@ meshtastic --test
 
 BLE mac address to connect to (BLE is not yet supported for this tool).
 
-**Usage**
-
-```shell
+```shell title="Usage"
 meshtastic --ble "83:38:92:32:37:48"
 ```
 
@@ -369,9 +297,7 @@ meshtastic --ble "83:38:92:32:37:48"
 
 Don't start the API, just function as a dumb serial terminal. Probably not very helpful from the command line. Used more for testing/internal needs.
 
-**Usage**
-
-```shell
+```shell title="Usage"
 meshtastic --noproto
 ```
 
@@ -379,9 +305,7 @@ meshtastic --noproto
 
 Show program's version number and exit.
 
-**Usage**
-
-```shell
+```shell title="Usage"
 meshtastic --version
 ```
 
@@ -389,9 +313,7 @@ meshtastic --version
 
 Configure all of the radio configuration from a yaml file.
 
-**Usage**
-
-```shell
+```shell title="Usage"
 meshtastic --configure example_config.yaml
 ```
 
@@ -401,15 +323,11 @@ Export the configuration of the device. (to be consumed by the '--configure' com
 
 To create to a file with the connected device's configuration, this command's output must be piped to a yaml file
 
-**Usage**
-
-```shell
+```shell title="Usage"
 meshtastic --export-config > example_config.yaml
 ```
 
-**Usage**
-
-```shell
+```title="Usage"shell
 meshtastic --export-config
 ```
 
@@ -417,9 +335,7 @@ meshtastic --export-config
 
 Print out info that would be helpful supporting any issues.
 
-**Usage**
-
-```shell
+```shell title="Usage"
 meshtastic --support
 ```
 

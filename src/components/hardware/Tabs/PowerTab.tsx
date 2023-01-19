@@ -8,6 +8,6 @@ export interface PowerTabProps {
   device: IDevice;
 }
 
-export const PowerTab = ({}: PowerTabProps): JSX.Element => {
+export const PowerTab = (): JSX.Element => {
   return <Tab.Panel className="h-32">Content 1</Tab.Panel>;
 };

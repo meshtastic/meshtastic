@@ -5,11 +5,11 @@ slug: /settings/config/lora
 sidebar_label: LoRa
 ---
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
-import LoRaRegions from '../../blocks/_lora-regions.mdx';
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+import LoRaRegions from "../../blocks/_lora-regions.mdx";
 
-The LoRa config options are: Region, Modem Preset, Max Hops, Transmit Power, Bandwidth, Spread Factor, Coding Rate, Frequency Offset, Transmit Enabled, Channel Number and Ignore Incoming Array.  LoRa config uses an admin message sending a `Config.LoRa` protobuf.
+The LoRa config options are: Region, Modem Preset, Max Hops, Transmit Power, Bandwidth, Spread Factor, Coding Rate, Frequency Offset, Transmit Enabled, Channel Number and Ignore Incoming Array. LoRa config uses an admin message sending a `Config.LoRa` protobuf.
 
 ## LoRa Config Values
 
@@ -18,14 +18,17 @@ You must set your device's `lora.region` setting. This will ensure that you are 
 :::
 
 ### Region
+
 Sets the region for your node. Default is `unset`. As long as this is not set, the node screen will display a message and not transmit any packets.
 
 <LoRaRegions />
 
 ### Modem Preset
+
 Use a sensible default for the modem. Default is `unset` which equates to `LONG_FAST`. Also 'Use Presets' has to be defined, which is the default. If 'Use Presets' is not defined, the modem will be configured manually with Bandwidth, Spread Factor, and Coding Rate.
 
 ### Max Hops
+
 Maximum number of hops. This can't be greater than 7. Default is 3 which should be fine for most applications. _**Really, 3 is fine.**_
 
 ### Transmit Power
@@ -61,6 +64,7 @@ Allows you to enable and disable transmit (TX) from the LoRa radio. Useful for h
 Defaults to true
 
 ### Channel Number
+
 This is controlling the actual hardware frequency the radio is transmitting on. A channel number between 1 and NUM_CHANNELS (whatever the max is in the current region). If this is ZERO/UNSET then the rule is "use the old channel name hash based algorithm to derive the channel number".
 
 ### Ignore Incoming Array
@@ -110,17 +114,16 @@ LoRa config commands are available in the python CLI. Example commands are below
 
 :::
 
-|   Setting    |                               Acceptable Values                               |      Default      |
-| :----------: | :---------------------------------------------------------------------------: | :---------------: |
-| lora.modem_preset |   `LONG_FAST`, `LONG_SLOW`, `VERY_LONG_SLOW`, `MEDIUM_SLOW`, `MEDIUM_FAST`, `SHORT_SLOW`, `SHORT_FAST`       | `LONG_FAST` |
-|    lora.region    |     `UNSET`, `US`, `EU_433`, `EU_868`, `CN`, `JP`, `ANZ`, `KR`, `TW`, `RU` ,`IN`, `NZ_865`, `TH`, `LORA_24` |      `UNSET`      |
-| lora.hop_limit    |     `1`,`2`,`3`,`4`,`5`,`6`,`7`   |   `3` |
-| lora.override_duty_cycle    |     `false`, `true`    |   `false` |
+|         Setting          |                                            Acceptable Values                                            |   Default   |
+| :----------------------: | :-----------------------------------------------------------------------------------------------------: | :---------: |
+|    lora.modem_preset     |  `LONG_FAST`, `LONG_SLOW`, `VERY_LONG_SLOW`, `MEDIUM_SLOW`, `MEDIUM_FAST`, `SHORT_SLOW`, `SHORT_FAST`   | `LONG_FAST` |
+|       lora.region        | `UNSET`, `US`, `EU_433`, `EU_868`, `CN`, `JP`, `ANZ`, `KR`, `TW`, `RU` ,`IN`, `NZ_865`, `TH`, `LORA_24` |   `UNSET`   |
+|      lora.hop_limit      |                                       `1`,`2`,`3`,`4`,`5`,`6`,`7`                                       |     `3`     |
+| lora.override_duty_cycle |                                             `false`, `true`                                             |   `false`   |
 
 :::tip
 
 Because the device will reboot after each command is sent via CLI, it is recommended when setting multiple values in a config section that commands be chained together as one.
-
 
 ```shell title="Example:"
 meshtastic --set lora.region US --set lora.modem_preset LONG_FAST

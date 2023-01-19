@@ -5,12 +5,12 @@ slug: /settings/moduleconfig/external-notification
 sidebar_label: External Notification
 ---
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
 
 The External Notification Module will allow you to connect a buzzer, speaker, LED, or other device to notify you when a message has been received from the mesh network.
 
- ## External Notification Module Config Values
+## External Notification Module Config Values
 
 ### Enabled
 
@@ -80,8 +80,8 @@ All external notification module config options are available in the python CLI.
 
 :::
 
-|         Setting                |    Acceptable Values     | Default |
-| :----------------------------: | :----------------------: | :-----: |
+|               Setting               |    Acceptable Values     | Default |
+| :---------------------------------: | :----------------------: | :-----: |
 |    external_notification.enabled    |     `true`, `false`      | `false` |
 |    external_notification.active     |     `true`, `false`      | `false` |
 |  external_notification.alert_bell   |     `true`, `false`      | `false` |
@@ -127,13 +127,14 @@ meshtastic --set external_notification.output 21
 meshtastic --set external_notification.output_ms 0
 meshtastic --set external_notification.output_ms 1500
 ```
+
 </TabItem>
 <TabItem value="web">
 
 :::info
 All External Notification module config is available for the Web UI.
 :::
-    
+
 </TabItem>
 </Tabs>
 

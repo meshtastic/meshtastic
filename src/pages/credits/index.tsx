@@ -2,7 +2,7 @@ import React from "react";
 import Layout from "@theme/Layout";
 import Link from "@docusaurus/Link";
 
-import { Avatar, AvatarLayout } from "./_components/Avatar";
+import { AvatarLayout } from "./_components/Avatar";
 
 const Credits = (): JSX.Element => {
   const partnerLogos = [
