@@ -49,7 +49,7 @@ If enabled, the screen will be rotated 180 degrees, for cases that mount the scr
 
 ### OLED Defintion
 
-The type of OLED Controller is auto-detected by default, but can be defined with this setting if the auto-detection fails.
+The type of OLED Controller is auto-detected by default, but can be defined with this setting if the auto-detection fails. For the SH1107, we assume a square display with 128x128 Pixels like the GME128128-1.
 
 Acceptable values:
 
@@ -58,6 +58,15 @@ Acceptable values:
 |  `OLED_AUTO`   | Auto detect display controller |
 | `OLED_SSD1306` |   Always use SSD1306 driver    |
 | `OLED_SH1106`  |    Always use SH1106 driver    |
+| `OLED_SH1107`  |    Always use SH1107 driver (Geometry 128x128)   |
+
+### Display Mode
+
+The display mode can be set to `NORMAL` (default), `TWOCOLOR` or `INVERTED`. The `TWOCOLOR` mode is intended for OLED displays with the first line of output being a different color than the rest of the display. The `INVERTED` mode will invert that bicolor area, resulting in a white background headline on monochrome displays.
+
+### Heading Bold
+
+The heading can be hard to read when 'INVERTED' or 'TWOCOLOR' display mode is used. This setting will make the heading bold, so it is easier to read.
 
 ## Device Config Client Availability
 
@@ -103,9 +112,11 @@ All display config options are available in the python CLI. Example commands are
 | display.compass_north_top         | `false`, `true`                            | `false`                      |
 | display.flip_screen               | `fasle`, `true`                            | `false`                      |
 | display.gps_format                | `DEC`, `DMS`, `UTM`, `MGRS`, `OLC`, `OSGR` | `DEC`                        |
-| display.oled                      | `OLED_AUTO`, `OLED_SSD1306`, `OLED_SH1106` | `OLED_AUTO`                  |
+| display.oled                      | `OLED_AUTO`, `OLED_SSD1306`, `OLED_SH1106`, `OLED_SH1107` | `OLED_AUTO`                  |
 | display.screen_on_secs            | `integer`                                  | Default of `0` is off.       |
 | display.units                     | `METRIC`, `IMPERIAL`                       | `METRIC`                     |
+| display.displaymode               | `NORMAL`, `TWOCOLOR`, `INVERTED`           | `NORMAL`                     |
+| display.heading_bold              | `false`, `true`                            | `false`                      |
 
 :::tip
 
