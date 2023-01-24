@@ -53,12 +53,12 @@ The type of OLED Controller is auto-detected by default, but can be defined with
 
 Acceptable values:
 
-|     Value      |          Description           |
-| :------------: | :----------------------------: |
-|  `OLED_AUTO`   | Auto detect display controller |
-| `OLED_SSD1306` |   Always use SSD1306 driver    |
-| `OLED_SH1106`  |    Always use SH1106 driver    |
-| `OLED_SH1107`  |    Always use SH1107 driver (Geometry 128x128)   |
+|     Value      |                 Description                 |
+| :------------: | :-----------------------------------------: |
+|  `OLED_AUTO`   |       Auto detect display controller        |
+| `OLED_SSD1306` |          Always use SSD1306 driver          |
+| `OLED_SH1106`  |          Always use SH1106 driver           |
+| `OLED_SH1107`  | Always use SH1107 driver (Geometry 128x128) |
 
 ### Display Mode
 
@@ -106,17 +106,17 @@ All display config options are available in the python CLI. Example commands are
 
 :::
 
-| Setting                           | Acceptable Values                          | Default                      |
-| --------------------------------- | ------------------------------------------ | ---------------------------- |
-| display.auto_screen_carousel_secs | `integer`                                  | Default of `0` is 10 minutes |
-| display.compass_north_top         | `false`, `true`                            | `false`                      |
-| display.flip_screen               | `fasle`, `true`                            | `false`                      |
-| display.gps_format                | `DEC`, `DMS`, `UTM`, `MGRS`, `OLC`, `OSGR` | `DEC`                        |
+| Setting                           | Acceptable Values                                         | Default                      |
+| --------------------------------- | --------------------------------------------------------- | ---------------------------- |
+| display.auto_screen_carousel_secs | `integer`                                                 | Default of `0` is 10 minutes |
+| display.compass_north_top         | `false`, `true`                                           | `false`                      |
+| display.flip_screen               | `fasle`, `true`                                           | `false`                      |
+| display.gps_format                | `DEC`, `DMS`, `UTM`, `MGRS`, `OLC`, `OSGR`                | `DEC`                        |
 | display.oled                      | `OLED_AUTO`, `OLED_SSD1306`, `OLED_SH1106`, `OLED_SH1107` | `OLED_AUTO`                  |
-| display.screen_on_secs            | `integer`                                  | Default of `0` is off.       |
-| display.units                     | `METRIC`, `IMPERIAL`                       | `METRIC`                     |
-| display.displaymode               | `NORMAL`, `TWOCOLOR`, `INVERTED`           | `NORMAL`                     |
-| display.heading_bold              | `false`, `true`                            | `false`                      |
+| display.screen_on_secs            | `integer`                                                 | Default of `0` is off.       |
+| display.units                     | `METRIC`, `IMPERIAL`                                      | `METRIC`                     |
+| display.displaymode               | `NORMAL`, `TWOCOLOR`, `INVERTED`                          | `NORMAL`                     |
+| display.heading_bold              | `false`, `true`                                           | `false`                      |
 
 :::tip
 
