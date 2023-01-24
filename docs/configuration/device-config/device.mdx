@@ -37,6 +37,14 @@ Acceptable values: `true` or `false`
 
 By default we turn off logging as soon as an API client connects. Set this to true to leave the debug log outputting even when API is active.
 
+### GPIO for user button
+
+This is the GPIO pin number that will be used for the user button, if your device does not come with a predefined user button.
+
+### GPIO for PWM Buzzer
+
+This is the GPIO pin number that will be used for the PWM buzzer, if your device does not come with a predefined buzzer.
+
 ## Device Config Client Availability
 
 <Tabs
@@ -80,6 +88,8 @@ All device config options are available in the python CLI. Example commands are 
 | device.debug_log_enabled | `true`, `false`                                    | `false`  |
 | device.role              | `CLIENT`, `CLIENT_MUTE`, `ROUTER`, `ROUTER_CLIENT` | `CLIENT` |
 | device.serial_enabled    | `true`, `false`                                    | `true`   |
+| device.button_gpio       | `0` - `34`                                         | `0`      |
+| device.buzzer_gpio       | `0` - `34`                                         | `0`      |
 
 :::tip
 

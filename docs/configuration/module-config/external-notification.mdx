@@ -8,7 +8,7 @@ sidebar_label: External Notification
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 
-The External Notification Module will allow you to connect a buzzer, speaker, LED, or other device to notify you when a message has been received from the mesh network.
+The External Notification Module will allow you to connect a buzzer, speaker, LED, or other device to notify you when a message has been received from the mesh network. You can enable up to 3 pins independently from each other.
 
 ## External Notification Module Config Values
 
@@ -16,21 +16,22 @@ The External Notification Module will allow you to connect a buzzer, speaker, LE
 
 Enables the external notification module.
 
-### Alert when receiving a bell
+### Alert when receiving a bell (general / LED, Vibra and Buzzer)
 
 Specifies if an alert should be triggered when receiving an incoming bell.
 
-### Alert when receiving a message
+### Alert when receiving a message (general / LED, Vibra and Buzzer)
 
 Specifies if an alert should be triggered when receiving an incoming message.
 
-### Active
+### Active (general / LED only)
 
-Specifies whether the external circuit is triggered when the device's GPIO is low or high.
+Specifies whether the external circuit is active when the device's GPIO is low or high.
 
-### GPIO to monitor
+### GPIO Pins (general / LED, Vibra and Buzzer)
 
-Specifies the GPIO that your external circuit is attached to on the device. On devices that have a PWM buzzer, you can use the buzzer for notifications by setting this to the same pin the buzzer uses.
+Specifies the GPIO that your external circuit is attached to on the device. On devices that have a PWM buzzer, you can use the buzzer for notifications by setting the use_pwm property to TRUE. The Buzzer Pin will be ignored and the device.buzzer_gpio is used instead. If you enable PWM mode, the device will use
+so-called RTTTL ring tones for notification. You can find examples of RTTTL ring tones [here](https://www.laub-home.de/wiki/RTTTL_Songs) and upload them to the device via a client application.
 
 :::info
 On ESP32 based boards, GPIOs 34 to 39 are GPIs – input only pins. These pins do not have internal pull-up or pull-down resistors. They can not be used as outputs, so you can NOT use these pins as outputs.
@@ -38,9 +39,13 @@ On ESP32 based boards, GPIOs 34 to 39 are GPIs – input only pins. These pins d
 
 ### How long monitored GPIO is triggered
 
-Specifies how long in milliseconds you would like your external circuit to be triggered.
+Specifies how long in milliseconds you would like your GPIOs to be active. In case of the repeat option, this is the duration of every tone and pause.
 
 Default of 0 is 1000ms
+
+### Repeat (Nag Timeout) (general / LED, Vibra and Buzzer)
+
+Specifies if the alert should be repeated. If set to a value greater than zero, the alert will be repeated until the user button is pressed or 'value' number of seconds have past.
 
 ## External Notification Module Config Client Availability
 
@@ -80,14 +85,22 @@ All external notification module config options are available in the python CLI.
 
 :::
 
-|               Setting               |    Acceptable Values     | Default |
-| :---------------------------------: | :----------------------: | :-----: |
-|    external_notification.enabled    |     `true`, `false`      | `false` |
-|    external_notification.active     |     `true`, `false`      | `false` |
-|  external_notification.alert_bell   |     `true`, `false`      | `false` |
-| external_notification.alert_message |     `true`, `false`      | `false` |
-|    external_notification.output     |        `integer`         |   `0`   |
-|   external_notification.output_ms   | `integer` (milliseconds) |   `0`   |
+|                  Setting                   |    Acceptable Values     | Default |
+| :----------------------------------------: | :----------------------: | :-----: |
+|       external_notification.enabled        |     `true`, `false`      | `false` |
+|        external_notification.active        |     `true`, `false`      | `false` |
+|      external_notification.alert_bell      |     `true`, `false`      | `false` |
+|   external_notification.alert_bell_vibra   |     `true`, `false`      | `false` |
+|  external_notification.alert_bell_buzzer   |     `true`, `false`      | `false` |
+|    external_notification.alert_message     |     `true`, `false`      | `false` |
+| external_notification.alert_message_vibra  |     `true`, `false`      | `false` |
+| external_notification.alert_message_buzzer |     `true`, `false`      | `false` |
+|        external_notification.output        |        `integer`         |   `0`   |
+|     external_notification.output_vibra     |        `integer`         |   `0`   |
+|    external_notification.output_buzzer     |        `integer`         |   `0`   |
+|      external_notification.output_ms       | `integer` (milliseconds) |   `0`   |
+|       external_notification.use_pwm        |     `true`, `false`      | `false` |
+|     external_notification.nag_timeout      |   `integer` (seconds)    |   `0`   |
 
 :::tip
 
