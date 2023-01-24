@@ -1,12 +1,13 @@
 ---
 id: external-serial-adapter
 title: Flashing with an External Serial Adapter
-sidebar_label: External Serial Adapter
+sidebar_label: External Serial Adapter (Advanced Users)
 sidebar_position: 4
 ---
 
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
+import Link from "@docusaurus/Link";
 
 :::info
 This information will likely only be helpful if you've already attempted to go through the prerequisites and processes outlined in [meshtastic flasher](/docs/software/python/flasher) or [manually flashing](/docs/getting-started/flashing-firmware/esp32/cli-script)
@@ -73,3 +74,16 @@ Sometimes you might receive an error for COM port permission in the Meshtastic F
 
 You might need to run the process as an administrator, check to ensure software like Cura isn't monopolizing COM ports, or reboot.
 ![image](https://user-images.githubusercontent.com/9000580/168447232-1a3af39b-e3cc-44b9-bc3a-32843a9e6f1f.png)
+
+## Connect and Configure Device
+
+After flashing the Meshtastic firmware to the device, you can proceed with the initial configuration.
+
+<div className="indexCtasBody">
+  <Link
+    className={"button button--outline button--lg cta--button"}
+    to={"/docs/getting-started/initial-config"}
+  >
+    Connect and Configure Device
+  </Link>
+</div>

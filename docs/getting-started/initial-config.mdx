@@ -9,6 +9,7 @@ sidebar_position: 4
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 import LoRaRegions from "../blocks/_lora-regions.mdx";
+import Link from "@docusaurus/Link";
 
 ## Supported Clients per Connection Type
 
@@ -16,7 +17,7 @@ Depending on your connection, some configuration options are not fully supported
 
 <Tabs
 groupId="settings"
-defaultValue="serial"
+defaultValue="ble"
 values={[
 {label: 'Serial', value: 'serial'},
 {label: 'Bluetooth', value: 'ble'},
@@ -104,3 +105,16 @@ Configuration of Region, Modem Preset and Hop Limit is available on iOS, iPadOS 
 ### Region Codes
 
 <LoRaRegions />
+
+## Continue Configuration
+
+Now that you have set the LoRa region on your device, you can continue with configuring any additional configs to suit your needs.
+
+<div className="indexCtasBody">
+  <Link
+    className={"button button--outline button--lg cta--button"}
+    to={"/docs/settings/"}
+  >
+    Device Configuration
+  </Link>
+</div>
