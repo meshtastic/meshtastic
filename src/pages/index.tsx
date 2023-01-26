@@ -86,7 +86,7 @@ const features = [
 const SocialCards: SocialCardProps[] = [
   {
     color: "bg-[#5865F2]",
-    link: "https://discord.com/invite/UQJ5QuM7vq",
+    link: "https://discord.com/invite/ktMAKGBnBs",
     children: (
       <img
         alt="discord"
