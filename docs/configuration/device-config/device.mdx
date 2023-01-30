@@ -27,7 +27,19 @@ Acceptable values:
 | `REPEATER`[^1]  | Repeater - Mesh packets will simply be rebroadcasted over this node. Nodes configured with this role will not originate NodeInfo, Position, Telemetry or any other packet type. They will simply rebroadcast any mesh packets on the same frequency, channel num, spread factor, and coding rate.[^1] |
 |  `TRACKER`[^1]  |                                                                                                  Tracker - Position Mesh packets will be prioritized higher and sent more frequently by default.[^1]                                                                                                  |
 
-[^1]: These roles are new as of the 2.0.15 alpha release. They are still a work in progress and as such features and functionality may evolve or change as work on them continues.
+[^1]: These roles are new as of the 2.0.15 alpha release. They are still a work in progress and as such features and functionality may not work as described and can evolve or change as development continues.
+
+### Rebroadcast Mode
+
+This setting defines the device's behavior for how messages are rebroadcasted. [^2]
+
+[^2]: This setting is new as of the 2.0.16 alpha release. It is still a work in progress and as such features and functionality may not work as described and can evolve or change as development continues.
+
+|        Value        |                                                                                      Description                                                                                      |
+| :-----------------: | :-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
+|        `ALL`        |                        ALL (Default) - Rebroadcast any observed message, whether it was on our private channel or from another mesh with the same lora params.                        |
+| `All_SKIP_DECODING` |                      ALL_SKIP_DECODING - Same as behavior as ALL, but skips packet decoding and simply rebroadcasts them. **Only available with Repeater role.**                      |
+|    `LOCAL_ONLY`     | LOCAL_ONLY - Ignores observed messages from foreign meshes that are open or those which it cannot decrypt. Only rebroadcasts message on the nodes local primary / secondary channels. |
 
 ### Serial Console
 
@@ -87,13 +99,14 @@ All device config options are available in the python CLI. Example commands are 
 
 :::
 
-| Setting                  | Acceptable Values                                  | Default  |
-| ------------------------ | -------------------------------------------------- | -------- |
-| device.debug_log_enabled | `true`, `false`                                    | `false`  |
-| device.role              | `CLIENT`, `CLIENT_MUTE`, `ROUTER`, `ROUTER_CLIENT` | `CLIENT` |
-| device.serial_enabled    | `true`, `false`                                    | `true`   |
-| device.button_gpio       | `0` - `34`                                         | `0`      |
-| device.buzzer_gpio       | `0` - `34`                                         | `0`      |
+| Setting                  | Acceptable Values                                                         | Default  |
+| ------------------------ | ------------------------------------------------------------------------- | -------- |
+| device.debug_log_enabled | `true`, `false`                                                           | `false`  |
+| device.role              | `CLIENT`, `CLIENT_MUTE`, `ROUTER`, `ROUTER_CLIENT`, `REPEATER`, `TRACKER` | `CLIENT` |
+| device.rebroadcast_mode  | `ALL`, `ALL_SKIP_DECODING`, `LOCAL_ONLY`                                  | `ALL`    |
+| device.serial_enabled    | `true`, `false`                                                           | `true`   |
+| device.button_gpio       | `0` - `34`                                                                | `0`      |
+| device.buzzer_gpio       | `0` - `34`                                                                | `0`      |
 
 :::tip
 
