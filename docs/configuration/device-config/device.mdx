@@ -18,12 +18,16 @@ Sets the role of node.
 
 Acceptable values:
 
-|      Value      |                                                                               Description                                                                               |
-| :-------------: | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
-|    `CLIENT`     |                                                                Client (default) - App connected client.                                                                 |
-|  `CLIENT_MUTE`  |                       Client Mute - Same as a client except packets will not hop over this node, does not contribute to routing packets for mesh.                       |
-|    `ROUTER`     | Router - Mesh packets will prefer to be routed over this node. This node will not be used by client apps. The WiFi/BLE radios and the OLED screen will be put to sleep. |
-| `ROUTER_CLIENT` |            Router Client - Mesh packets will prefer to be routed over this node. The Router Client can be used as both a Router and an app connected Client.            |
+|      Value      |                                                                                                                                              Description                                                                                                                                              |
+| :-------------: | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
+|    `CLIENT`     |                                                                                                                               Client (default) - App connected client.                                                                                                                                |
+|  `CLIENT_MUTE`  |                                                                                      Client Mute - Same as a client except packets will not hop over this node, does not contribute to routing packets for mesh.                                                                                      |
+|    `ROUTER`     |                                                                Router - Mesh packets will prefer to be routed over this node. This node will not be used by client apps. The WiFi/BLE radios and the OLED screen will be put to sleep.                                                                |
+| `ROUTER_CLIENT` |                                                                           Router Client - Mesh packets will prefer to be routed over this node. The Router Client can be used as both a Router and an app connected Client.                                                                           |
+| `REPEATER`[^1]  | Repeater - Mesh packets will simply be rebroadcasted over this node. Nodes configured with this role will not originate NodeInfo, Position, Telemetry or any other packet type. They will simply rebroadcast any mesh packets on the same frequency, channel num, spread factor, and coding rate.[^1] |
+|  `TRACKER`[^1]  |                                                                                                  Tracker - Position Mesh packets will be prioritized higher and sent more frequently by default.[^1]                                                                                                  |
+
+[^1]: These roles are new as of the 2.0.15 alpha release. They are still a work in progress and as such features and functionality may evolve or change as work on them continues.
 
 ### Serial Console
 
