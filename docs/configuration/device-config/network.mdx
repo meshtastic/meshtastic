@@ -159,18 +159,6 @@ All Network config options are available in the Web UI.
 
 With `network.wifi_ssid` & `network.wifi_psk` populated, the device will know to connect to your network. Make sure you are in range of your WiFi. If you have a single Meshtastic device on your local network it's easy to connect to your device with DNS `http://meshtastic.local`. If you have multiple Meshtastic devices you will need to connect using their respective IP addresses.
 
-If you have a screen attached to your device, the final page will display something similar to the following:
-
-```text
-WiFi: Software AP (Admin)
-IP: 192.168.42.1    (0/4)
-SSID: myNetwork
-http://meshtastic.local
-      * * * * *
-```
-
-You should then be able to connect to the node using either the displayed IP address or the HTTP link.
-
 ### Disable WiFi
 
 To disable WiFi completely, set `network.wifi_enabled` to `false`.
