@@ -55,6 +55,11 @@ Each channel is assigned one of 3 roles:
    - The channel is no longer available for use.
    - The channel settings are set to default.
 
+:::note
+While you can have a different PRIMARY channel and communicate over SECONDARY channels with the same PSK, a hash of the PRIMARY channel's name sets the LoRa channel number, which determines the actual frequency you are transmitting on in the band.
+To ensure devices with different PRIMARY channel name transmit on the same frequency, you must explicitly set the LoRa channel number.
+:::
+
 ## Channel Settings Values
 
 The Channel Settings options are: ID, Name, PSK, Downlink Enabled, and Uplink Enabled. Channel settings are embedded in the `Channel` protobuf as a `ChannelSettings` protobuf and sent as an admin message.
