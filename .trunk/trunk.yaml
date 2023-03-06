@@ -1,0 +1,23 @@
+version: 0.1
+cli:
+  version: 1.3.1
+plugins:
+  sources:
+    - id: trunk
+      ref: v0.0.8
+      uri: https://github.com/trunk-io/plugins
+lint:
+  enabled:
+    - markdownlint@0.33.0
+    - actionlint@1.6.22
+    - gitleaks@8.15.2
+    - git-diff-check
+    - shellcheck@0.9.0
+    - prettier@2.8.2
+    - shfmt@3.5.0
+    - eslint@8.31.0
+    - svgo@3.0.2
+runtimes:
+  enabled:
+    - go@1.18.3
+    - node@18.12.1

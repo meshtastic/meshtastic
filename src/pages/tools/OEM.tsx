@@ -1,22 +1,20 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 
-import { fromByteArray, toByteArray } from 'base64-js';
+import { fromByteArray, toByteArray } from "base64-js";
 
-import { Protobuf } from '@meshtastic/meshtasticjs';
-import Layout from '@theme/Layout';
+import { Protobuf } from "@meshtastic/meshtasticjs";
+import Layout from "@theme/Layout";
 
 const OEM = (): JSX.Element => {
   const [oemAesKey, setOemAesKey] = useState<Uint8Array>(new Uint8Array());
   const [oemFont, setOemFont] = useState<Protobuf.ScreenFonts>(
-    Protobuf.ScreenFonts.FONT_MEDIUM,
+    Protobuf.ScreenFonts.FONT_MEDIUM
   );
   const [oemIconBits, setOemIconBits] = useState<Uint8Array>(new Uint8Array());
   const [oemIconHeight, setOemIconHeight] = useState<number>(0);
   const [oemIconWidth, setOemIconWidth] = useState<number>(0);
-  const [oemText, setOemText] = useState<string>('');
+  const [oemText, setOemText] = useState<string>("");
   const [oemBytes, setOemBytes] = useState<Uint8Array>(new Uint8Array());
-
-  const encoder = new TextEncoder();
 
   useEffect(() => {
     setOemBytes(
@@ -26,14 +24,14 @@ const OEM = (): JSX.Element => {
         oemIconBits,
         oemIconHeight,
         oemIconWidth,
-        oemText,
-      }),
+        oemText
+      })
     );
   }, [oemAesKey, oemFont, oemIconBits, oemIconHeight, oemIconWidth, oemText]);
 
   const enumOptions = Protobuf.ScreenFonts
     ? Object.entries(Protobuf.ScreenFonts).filter(
-        (value) => typeof value[1] === 'number',
+        (value) => typeof value[1] === "number"
       )
     : [];
 
@@ -102,8 +100,8 @@ const OEM = (): JSX.Element => {
             readFile(e.target.files[0]).then((data) => {
               setOemIconBits(
                 new Uint8Array(
-                  data.split(',').map((s) => parseInt(s.trim(), 16)),
-                ),
+                  data.split(",").map((s) => parseInt(s.trim(), 16))
+                )
               );
             });
           }}
@@ -137,7 +135,7 @@ const OEM = (): JSX.Element => {
           download="OEM.bin"
           onClick={() => {
             const blob = new Blob([oemBytes], {
-              type: 'application/octet-stream',
+              type: "application/octet-stream"
             });
             window.open(URL.createObjectURL(blob));
           }}

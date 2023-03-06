@@ -8,9 +8,7 @@
     "start": "docusaurus start",
     "build": "docusaurus build",
     "serve": "docusaurus serve",
-    "clear": "docusaurus clear",
-    "format": "prettier --write 'docs/**/*{.md,.mdx}' 'src/**/*.{ts,tsx}'",
-    "lint": "eslint src/**/*.{ts,tsx}"
+    "clear": "docusaurus clear"
   },
   "dependencies": {
     "@algolia/client-search": "^4.14.3",
@@ -21,12 +19,15 @@
     "@headlessui/react": "^1.7.7",
     "@heroicons/react": "^2.0.13",
     "@mdx-js/react": "^1.6.22",
-    "@meshtastic/meshtasticjs": "^0.9.7",
+    "@meshtastic/meshtasticjs": "2.0.13-0",
+    "@typescript-eslint/eslint-plugin": "^5.48.2",
+    "@typescript-eslint/parser": "^5.48.2",
     "autoprefixer": "^10.4.13",
     "base64-js": "^1.5.1",
     "dotenv": "^16.0.3",
+    "eslint": "^8.32.0",
     "framer-motion": "^6.5.1",
-    "postcss": "^8.4.20",
+    "postcss": "^8.4.21",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-icons": "^4.7.1",
@@ -37,14 +38,13 @@
     "use-breakpoint": "^3.0.6"
   },
   "devDependencies": {
+    "@docusaurus/eslint-plugin": "^2.2.0",
     "@docusaurus/module-type-aliases": "2.2.0",
-    "@meshtastic/eslint-config": "^1.0.8",
-    "@tailwindcss/typography": "^0.5.8",
+    "@tailwindcss/typography": "^0.5.9",
     "@tsconfig/docusaurus": "^1.0.6",
     "@types/node": "^18.11.18",
     "@types/react": "^18.0.26",
     "@types/react-dom": "^18.0.10",
-    "prettier": "^2.8.1",
     "typescript": "^4.9.4"
   }
 }

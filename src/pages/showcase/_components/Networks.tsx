@@ -1,22 +1,22 @@
-import React from 'react';
+import React from "react";
 
-import { FiHeart, FiSearch } from 'react-icons/fi';
-import useSWR from 'swr';
+import { FiHeart, FiSearch } from "react-icons/fi";
+import useSWR from "swr";
 
-import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
-import { useSelectedTags } from '@site/src/hooks/useSelectedTags';
+import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
+import { useSelectedTags } from "@site/src/hooks/useSelectedTags";
 
-import { useFilteredNetworks } from '../../../hooks/useFilteredNetworks';
-import { Showcase } from '../../../utils/apiTypes';
-import { fetcher } from '../../../utils/swr';
-import { NetworkSection } from './NetworkSection';
+import { useFilteredNetworks } from "../../../hooks/useFilteredNetworks";
+import { Showcase } from "../../../utils/apiTypes";
+import { fetcher } from "../../../utils/swr";
+import { NetworkSection } from "./NetworkSection";
 
 export const Networks = (): JSX.Element => {
   const { siteConfig } = useDocusaurusContext();
 
   const { data, error } = useSWR<Showcase[]>(
     `${siteConfig.customFields.API_URL}/showcase`,
-    fetcher,
+    fetcher
   );
 
   const selectedTags = useSelectedTags();
@@ -32,7 +32,7 @@ export const Networks = (): JSX.Element => {
               icon={<FiHeart />}
               iconColor="rgb(190 24 93)"
               networks={data?.filter((network) =>
-                network.tags.find((tag) => tag.label === 'Favorite'),
+                network.tags.find((tag) => tag.label === "Favorite")
               )}
             />
             <NetworkSection title="All networks" networks={data} />

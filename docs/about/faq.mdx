@@ -21,13 +21,13 @@ Everyone contributes in a different way. Join the [Meshtastic Discord](https://d
 
 ### What versions of Android does the Meshtastic Android App require?
 
-Minimum requirement is Android 5 (Lollipop 2014, first BLE support), however at least Android 6 (Marshmallow 2015) is recommended as Bluetooth is more stable. While Android 5/6 are officially supported by Meshtastic, it is *not* recommended that you purchase devices with these versions due to their limited OS support and limited battery life due to age. Many newer models exist that are very affordable. A good resource to use when researching affordable devices is the [LineageOS Supported Devices List](https://wiki.lineageos.org/devices/).
+Minimum requirement is Android 5 (Lollipop 2014, first BLE support), however at least Android 6 (Marshmallow 2015) is recommended as Bluetooth is more stable. While Android 5/6 are officially supported by Meshtastic, it is _not_ recommended that you purchase devices with these versions due to their limited OS support and limited battery life due to age. Many newer models exist that are very affordable. A good resource to use when researching affordable devices is the [LineageOS Supported Devices List](https://wiki.lineageos.org/devices/).
 
 ### What does the icon next to the message mean?
 
 - Cloud with an up arrow - Queued on the app to be sent to your device.
 - Cloud only - Queued on the device to be sent over the mesh.
-- Cloud with a check mark - At least one other node on the mesh acknowledged the message. 
+- Cloud with a check mark - At least one other node on the mesh acknowledged the message.
 - Person with a check mark - The intended recipient of your direct message acknowledged the message.
 - Cloud crossed out - Not acknowledged or message error.
 
@@ -91,7 +91,7 @@ Hold down the left PWR button for about 10 seconds and the display should turn o
 
 Push the left PWR button for about 1 second.
 
-### Functionality of the T-Beam Buttons ### 
+### Functionality of the T-Beam Buttons
 
 [T-Beam Buttons](/docs/hardware/devices/tbeam/buttons) explained here
 
@@ -120,9 +120,9 @@ Once the node wakes up from sleep, your phone will relay any delayed messages th
 - Android instructions see: [Android Usage](/docs/software/android/usage#configuration-options)
 - Python CLI instructions see: [Python Usage](/docs/software/python/cli/usage#changing-settings)
 
-### I am in Europe and my device seems to stop transmitting after a while, what is going on? 
+### I am in Europe and my device seems to stop transmitting after a while, what is going on?
 
-Europe has an hourly duty cycle limit of 10% in the frequency band that Meshtastic uses. It might be that you hit this limit if you are sending a lot. You can confirm this by checking whether you see duty cycle limit errors in the serial log, Mesh Log (Apple apps) or Debug Panel (Android). 
+Europe has an hourly duty cycle limit of 10% in the frequency band that Meshtastic uses. It might be that you hit this limit if you are sending a lot. You can confirm this by checking whether you see duty cycle limit errors in the serial log, Mesh Log (Apple apps) or Debug Panel (Android).
 To limit traffic, you can consider setting the device metrics and position update intervals higher. Alternatively, the device can be configured to override the duty cycle limit, but then you will violate the regulations.
 
 ### Why does only one RAK Meshtastic Starter kit show up in my node list?
@@ -133,23 +133,24 @@ There was a bug where Meshtastic Starter kits were sent out with the same MAC ad
 
 ## Amateur Radio (HAM)
 
-Meshtastic can be used by both unlicensed people and licensed HAM operators. 
+Meshtastic can be used by both unlicensed people and licensed HAM operators.
 
 ### What is the benefit of using a HAM license with Meshtastic?
 
 If you use your HAM radio license with Meshtastic, consider both the privileges and restrictions:
 
 #### Privileges
+
 - Increased Transmit Power
-    - Up to 1500W transmit power! [FCC Part 97.313](https://www.ecfr.gov/current/title-47/chapter-I/subchapter-D/part-97/subpart-D/section-97.313)
+  - Up to 1500W transmit power! [FCC Part 97.313](https://www.ecfr.gov/current/title-47/chapter-I/subchapter-D/part-97/subpart-D/section-97.313)
 - Higher Gain Antennas
 
 #### Restrictions
-- Plain-Text Only
-    - On amateur radio bands, encryption is illegal. [FCC Part 97.113.C](https://www.ecfr.gov/current/title-47/chapter-I/subchapter-D/part-97/subpart-B/section-97.113)
-- Lack of Privacy
-    - As a HAM operator, it is a requirement that you identify yourself by your call sign periodically when transmitting. Your call sign will be publicly transmitted at least once every 10 minutes at minimum. [FCC Part 97.119.A](https://www.ecfr.gov/current/title-47/chapter-I/subchapter-D/part-97/subpart-B/section-97.119)
 
+- Plain-Text Only
+  - On amateur radio bands, encryption is illegal. [FCC Part 97.113.C](https://www.ecfr.gov/current/title-47/chapter-I/subchapter-D/part-97/subpart-B/section-97.113)
+- Lack of Privacy
+  - As a HAM operator, it is a requirement that you identify yourself by your call sign periodically when transmitting. Your call sign will be publicly transmitted at least once every 10 minutes at minimum. [FCC Part 97.119.A](https://www.ecfr.gov/current/title-47/chapter-I/subchapter-D/part-97/subpart-B/section-97.119)
 
 ### How do I set my HAM call sign?
 

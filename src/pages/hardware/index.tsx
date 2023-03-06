@@ -1,19 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
-import { FiPlus } from 'react-icons/fi';
+import { FiPlus } from "react-icons/fi";
 
-import { HardwareModal } from '@site/src/components/hardware/HardwareModal';
-import { IDevice } from '@site/src/data/device';
+import { HardwareModal } from "@site/src/components/hardware/HardwareModal";
+import { IDevice } from "@site/src/data/device";
 
-import { HardwareCard } from '../../components/hardware/HardwareCard';
-import { PageLayout } from '../../components/PageLayout';
-import { heltec } from '../../data/devices/heltec';
-import { hydra } from '../../data/devices/hydra';
-import { nano_g1 } from '../../data/devices/nano_g1';
-import { rak19001 } from '../../data/devices/rak19001';
-import { rak19003 } from '../../data/devices/rak19003';
-import { tbeam } from '../../data/devices/tbeam';
-import { techo } from '../../data/devices/techo';
+import { HardwareCard } from "../../components/hardware/HardwareCard";
+import { PageLayout } from "../../components/PageLayout";
+import { heltec } from "../../data/devices/heltec";
+import { hydra } from "../../data/devices/hydra";
+import { nano_g1 } from "../../data/devices/nano_g1";
+import { rak19001 } from "../../data/devices/rak19001";
+import { rak19003 } from "../../data/devices/rak19003";
+import { tbeam } from "../../data/devices/tbeam";
+import { techo } from "../../data/devices/techo";
 
 const Hardware = (): JSX.Element => {
   const hardware = [tbeam, hydra, rak19003, rak19001, nano_g1, heltec, techo];
@@ -31,7 +31,7 @@ const Hardware = (): JSX.Element => {
               <a
                 href="#"
                 className="border-indigo-500 text-indigo-600"
-                aria-current={'page'}
+                aria-current={"page"}
               >
                 Devices
               </a>

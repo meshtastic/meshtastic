@@ -1,8 +1,8 @@
-import React from 'react';
+import React from "react";
 
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, motion } from "framer-motion";
 
-import { Dialog } from '@headlessui/react';
+import { Dialog } from "@headlessui/react";
 
 export interface ModalProps {
   open: boolean;

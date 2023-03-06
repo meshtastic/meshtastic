@@ -1,38 +1,28 @@
 name: CI
+
 on:
   push:
-    branches:
-      - 'master'
-  workflow_run:
-    workflows:
-      - 'Update protobufs'
+  pull_request:
 
 jobs:
-  deploy-website:
-    environment: Production
+  build:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout code
+      - name: Checkout code & submodules
         uses: actions/checkout@v3
         with:
           submodules: true
-      #- name: Install Go
-      #  uses: actions/setup-go@v3
-      #  with:
-      #    go-version: 1.19
-      #- name: Install Protoc
-      #  uses: arduino/setup-protoc@v1
-      #  with:
-      #    version: '3.x'
-      #- name: Install protoc-gen-doc
-      #  run: go install github.com/pseudomuto/protoc-gen-doc/cmd/protoc-gen-doc@latest
-      #- name: Generate protobuf docs
-      #  run: protoc --doc_out="docs/developers/Protobufs" --doc_opt="./protobuf.tmpl,api.mdx" --proto_path="protobufs" protobufs/*.proto
-      - uses: amondnet/vercel-action@v20
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2.2.1
         with:
-          vercel-token: ${{ secrets.VERCEL_TOKEN }}
-          vercel-args: '--prod'
-          vercel-org-id: ${{ secrets.ORG_ID}}
-          vercel-project-id: ${{ secrets.PROJECT_ID}}
-          scope: ${{ secrets.ORG_ID}}
+          version: latest
+
+      - name: Install Dependencies
+        run: pnpm install
+
+      - name: Trunk Check
+        uses: trunk-io/trunk-action@v1
+
+      - name: Build Site
+        run: pnpm build

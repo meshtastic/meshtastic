@@ -5,10 +5,10 @@ slug: /settings/config/power
 sidebar_label: Power
 ---
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
 
-The power config options are: Power Saving, Shutdown after losing power, ADC Multiplier Override Wait Bluetooth Interval, Mesh Super Deep Sleep Timeout, Super Deep Sleep Interval, Light Sleep Interval and Minimum Wake Interval.  Power config uses an admin message sending a `Config.Power` protobuf.
+The power config options are: Power Saving, Shutdown after losing power, ADC Multiplier Override Wait Bluetooth Interval, Mesh Super Deep Sleep Timeout, Super Deep Sleep Interval, Light Sleep Interval and Minimum Wake Interval. Power config uses an admin message sending a `Config.Power` protobuf.
 
 Power settings are advanced configuration, most users should choose a role under Device Config to manage power for their device and should never need to touch any of these settings.
 
@@ -16,14 +16,13 @@ Power settings are advanced configuration, most users should choose a role under
 
 ### Power Saving
 
-If set, we are powered from a low-current source (i.e. solar), so even if it looks like we have power flowing in we should try to minimize power consumption as much as possible.
+If set, Bluetooth, Wifi, and screen (if applicable) are turned off. When using the Router device role, this setting is on by default. The assumption for a Router is that the device will be used in a standalone manner where these features are not needed, and will be shut off to conserve power. This is especially useful when a device is powered from a low-current source (i.e. solar).
 
 ### Shutdown after losing power
 
 Automatically shut down a device after a defined time period if power is lost.
 
-### ADC Multiplier Override
-**Fixes issues on Heltec v2**
+### ADC Multiplier Override `Fixes issues on Heltec v2`
 
 Ratio of voltage divider for battery pin e.g. 3.20 (R1=100k, R2=220k)
 
@@ -39,21 +38,19 @@ How long wait before turning off BLE in no Bluetooth states
 
 ### Mesh Super Deep Sleep Timeout
 
-While in Light Sleep if this value is exceeded we will lower into super deep sleep 
+While in Light Sleep if this value is exceeded we will lower into super deep sleep
 
 or Super Deep Sleep Interval (default 1 year) or a button press
 
 `0` for default of two hours, MAXUINT for disabled
 
-### Super Deep Sleep Interval 
+### Super Deep Sleep Interval
 
 While in Light Sleep if Mesh Super Deep Sleep Timeout Seconds is exceeded we will lower into super deep sleep or this value (default 1 year) or a button press
 
 `0` for default of one year
 
-### Light Sleep Interval
-
-**ESP32 Only Setting**
+### Light Sleep Interval `ESP32 Only Setting`
 
 In light sleep the CPU is suspended, LoRa radio is on, BLE is off an GPS is on
 
@@ -98,22 +95,22 @@ Power config is not available on Apple OS's.
 </TabItem>
 <TabItem value="cli">
 
-:::info 
+:::info
 
 All Power config options are available in the python CLI.
 
 :::
 
-|            Setting                   |                                                                        Acceptable Values                                                                        |  Default  |
-| :----------------------------------: | :-------------------------------------------------------------------------------------------------------------------------------------------------------------: | :-------: |
-|          power.is_power_saving       |                                                                         `true`, `false`                                                                         |  `false`  |
-| power.on_battery_shutdown_after_secs |                                                                       `integer` (seconds)                                                                       |    Default of `0` is off    |
-|    power.adc_multiplier_override     |                                                                       `2-4` (floating point value)                                                              | Default of `0` uses firmware values    |
-|      power.wait_bluetooth_secs       |                                                                       `integer` (seconds)                                                                       |    Default of `0` is 1 minute   |
-|     power.mesh_sds_timeout_secs      |                                                                       `integer` (seconds)                                                                       |   Default of `0` is 2 hours   |
-|            power.sds_secs            |                                                                       `integer` (seconds)                                                                       |   Default of `0` is 1 year  |
-|            power.ls_secs             |                                                                       `integer` (seconds)                                                                       |   Default of `0` is 1 hour   |
-|         power.min_wake_secs          |                                                                       `integer` (seconds)                                                                       |   Default of `0` is 10 seconds   |
+|               Setting                |      Acceptable Values       |               Default               |
+| :----------------------------------: | :--------------------------: | :---------------------------------: |
+|        power.is_power_saving         |       `true`, `false`        |               `false`               |
+| power.on_battery_shutdown_after_secs |     `integer` (seconds)      |        Default of `0` is off        |
+|    power.adc_multiplier_override     | `2-4` (floating point value) | Default of `0` uses firmware values |
+|      power.wait_bluetooth_secs       |     `integer` (seconds)      |     Default of `0` is 1 minute      |
+|     power.mesh_sds_timeout_secs      |     `integer` (seconds)      |      Default of `0` is 2 hours      |
+|            power.sds_secs            |     `integer` (seconds)      |      Default of `0` is 1 year       |
+|            power.ls_secs             |     `integer` (seconds)      |      Default of `0` is 1 hour       |
+|         power.min_wake_secs          |     `integer` (seconds)      |    Default of `0` is 10 seconds     |
 
 :::tip
 
@@ -161,12 +158,13 @@ meshtastic --set power.ls_secs 120
 meshtastic --set power.min_wake_secs 0
 meshtastic --set power.min_wake_secs 120
 ```
+
 </TabItem>
 <TabItem value="web">
 
 :::info
 All power config options are available in the Web UI.
 :::
-    
+
   </TabItem>
 </Tabs>

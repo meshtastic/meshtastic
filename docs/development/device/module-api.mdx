@@ -27,7 +27,7 @@ The relevant bits of the class hierarchy are as follows:
 ### First Level: MeshModule
 
 - [src/mesh/MeshModule.h](http://github.com/meshtastic/firmware/tree/master/src/mesh/MeshModule.h) - you probably don't want to use this base-class directly.
-  
+
 ### Second Level: SinglePortModule
 
 - [src/mesh/SinglePortModule.h](http://github.com/meshtastic/firmware/tree/master/src/mesh/SinglePortModule.h) - for modules that send/receive from a single port number (the normal case).
@@ -66,10 +66,10 @@ A number of [key services](http://github.com/meshtastic/firmware/tree/master/src
 The easiest way to get started is:
 
 1. [Build the firmware](/docs/development/firmware/build) codebase.
-2. Copy the [ReplyModule](http://github.com/meshtastic/firmware/tree/master/src/modules/ReplyModule.cpp) as a template into `src/modules/`. 
-  ```sh
-  cp src/modules/ReplyModule.* src/modules/YourModule.*
-  ```
+2. Copy the [ReplyModule](http://github.com/meshtastic/firmware/tree/master/src/modules/ReplyModule.cpp) as a template into `src/modules/`.
+   ```shell
+   cp src/modules/ReplyModule.* src/modules/YourModule.*
+   ```
 3. Change the port number from `PortNum_REPLY_APP` to `PortNum_PRIVATE_APP`.
 4. Edit the `setupModules()` function located at `modules/Moduless.cpp` to add a call to create an instance of your module (see comment at head of that function).
 5. Rebuild with your new module and install on the device.
@@ -96,4 +96,3 @@ If you would like to use protocol buffers to define the structures you send over
 1. Create a new `.proto` file in the protos directory.
 2. Run `./bin/regen-protos.sh` to regenerate the C code for accessing the protocol buffers. If you don't have the required nanopb tool, follow the instructions printed by the script to get it.
 3. Done! You can now use your new protobuf just like any of the existing protobufs in Meshtastic.
-

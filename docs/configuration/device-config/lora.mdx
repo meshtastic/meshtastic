@@ -5,11 +5,15 @@ slug: /settings/config/lora
 sidebar_label: LoRa
 ---
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
-import LoRaRegions from '../../blocks/_lora-regions.mdx';
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+import LoRaRegions from "../../blocks/_lora-regions.mdx";
 
-The LoRa config options are: Region, Modem Preset, Max Hops, Transmit Power, Bandwidth, Spread Factor, Coding Rate, Frequency Offset, Transmit Enabled, Channel Number and Ignore Incoming Array.  LoRa config uses an admin message sending a `Config.LoRa` protobuf.
+The LoRa config options are: Region, Modem Preset, Max Hops, Transmit Power, Bandwidth, Spread Factor, Coding Rate, Frequency Offset, Transmit Enabled, Channel Number and Ignore Incoming Array. LoRa config uses an admin message sending a `Config.LoRa` protobuf.
+
+:::note
+In order to communicate fully, devices within a mesh must have identical settings for Region and Modem Preset, or identical custom Modem settings.
+:::
 
 ## LoRa Config Values
 
@@ -18,14 +22,40 @@ You must set your device's `lora.region` setting. This will ensure that you are 
 :::
 
 ### Region
+
 Sets the region for your node. Default is `unset`. As long as this is not set, the node screen will display a message and not transmit any packets.
 
 <LoRaRegions />
 
 ### Modem Preset
-Use a sensible default for the modem. Default is `unset` which equates to `LONG_FAST`. Also 'Use Presets' has to be defined, which is the default. If 'Use Presets' is not defined, the modem will be configured manually with Bandwidth, Spread Factor, and Coding Rate.
+
+Default is `unset` which equates to `LONG_FAST`. Presets are pre-defined modem settings (Bandwidth, Spread Factor, and Coding Rate) which influence both message speed and range. The default will provide a strong mixture of speed and range, for most users.
+
+The presets are designed to provide further options for optimizing either speed (and reduced network congestion) or range, which can be useful for two real world scenarios:
+
+1. A high number of devices exist in the mesh, or messages are sent very frequently. Faster speeds (and therefore lower radio time per device) can help with mesh network congestion.
+2. Maximum range is desired, for long range scenarios where a several second delay in message receipt is acceptable (for instance, attempting to send messages from a town to a distant mountain top).
+
+The Presets available are as follows, and follow a linear pattern of Fastest <--> Slowest, and Shortest <--> Longest range:
+
+1. `SHORT_FAST` (Fastest, highest bandwidth, lowest airtime, shortest range)
+
+2. `SHORT_SLOW`
+
+3. `MEDIUM_FAST`
+
+4. `MEDIUM_SLOW`
+
+5. `LONG_FAST` (Default)
+
+6. `LONG_MODERATE`
+
+7. `LONG_SLOW`
+
+8. `VERY_LONG_SLOW` (Slowest, lowest bandwidth, highest airtime, longest range)
 
 ### Max Hops
+
 Maximum number of hops. This can't be greater than 7. Default is 3 which should be fine for most applications. _**Really, 3 is fine.**_
 
 ### Transmit Power
@@ -61,6 +91,7 @@ Allows you to enable and disable transmit (TX) from the LoRa radio. Useful for h
 Defaults to true
 
 ### Channel Number
+
 This is controlling the actual hardware frequency the radio is transmitting on. A channel number between 1 and NUM_CHANNELS (whatever the max is in the current region). If this is ZERO/UNSET then the rule is "use the old channel name hash based algorithm to derive the channel number".
 
 ### Ignore Incoming Array
@@ -110,17 +141,26 @@ LoRa config commands are available in the python CLI. Example commands are below
 
 :::
 
-|   Setting    |                               Acceptable Values                               |      Default      |
-| :----------: | :---------------------------------------------------------------------------: | :---------------: |
-| lora.modem_preset |   `LONG_FAST`, `LONG_SLOW`, `VERY_LONG_SLOW`, `MEDIUM_SLOW`, `MEDIUM_FAST`, `SHORT_SLOW`, `SHORT_FAST`       | `LONG_FAST` |
-|    lora.region    |     `UNSET`, `US`, `EU_433`, `EU_868`, `CN`, `JP`, `ANZ`, `KR`, `TW`, `RU` ,`IN`, `NZ_865`, `TH`, `LORA_24` |      `UNSET`      |
-| lora.hop_limit    |     `1`,`2`,`3`,`4`,`5`,`6`,`7`   |   `3` |
-| lora.override_duty_cycle    |     `false`, `true`    |   `false` |
+|           Setting           |                                                      Acceptable Values                                                      |   Default   |
+| :-------------------------: | :-------------------------------------------------------------------------------------------------------------------------: | :---------: |
+|      lora.modem_preset      |            `LONG_FAST`, `LONG_SLOW`, `VERY_LONG_SLOW`, `MEDIUM_SLOW`, `MEDIUM_FAST`, `SHORT_SLOW`, `SHORT_FAST`             | `LONG_FAST` |
+|       lora.use_preset       |                                                       `false`, `true`                                                       |   `false`   |
+|         lora.region         | `UNSET`, `US`, `EU_433`, `EU_868`, `CN`, `JP`, `ANZ`, `KR`, `TW`, `RU` ,`IN`, `NZ_865`, `TH`, `LORA_24`, `UA_433`, `UA_868` |   `UNSET`   |
+|       lora.bandwidth        |                                               `31`, `62`, `125`, `250`, `500`                                               |    `250`    |
+|     lora.spread_factor      |                                               `7`, `8`, `9`, `10`, `11`, `12`                                               |    `12`     |
+|      lora.coding_rate       |                                                     `5`, `6`, `7`, `8`                                                      |     `8`     |
+|    lora.frequency_offset    |                                                      `0` to `1000000`                                                       |     `0`     |
+|       lora.hop_limit        |                                                 `1`,`2`,`3`,`4`,`5`,`6`,`7`                                                 |     `3`     |
+|        lora.tx_power        |                                                         `0` to `30`                                                         |     `0`     |
+|       lora.tx_enabled       |                                                      `false`, `false`                                                       |   `true`    |
+|      lora.channel_num       |                                                 `0`, `1` to `NUM_CHANNELS`                                                  |     `0`     |
+|  lora.override_duty_cycle   |                                                       `false`, `true`                                                       |   `false`   |
+| lora.sx126x_rx_boosted_gain |                                                       `false`, `true`                                                       |   `false`   |
+|   lora.override_frequency   |              Any supported frequency the LoRA radio is capable of. Please respect local rules and regulations               |     `0`     |
 
 :::tip
 
 Because the device will reboot after each command is sent via CLI, it is recommended when setting multiple values in a config section that commands be chained together as one.
-
 
 ```shell title="Example:"
 meshtastic --set lora.region US --set lora.modem_preset LONG_FAST

@@ -1,8 +1,8 @@
-import React from 'react';
+import React from "react";
 
-import { useLocation } from '@docusaurus/router';
+import { useLocation } from "@docusaurus/router";
 
-import { readSearchTags } from '../pages/showcase/_components/TagSelect';
+import { readSearchTags } from "../pages/showcase/_components/TagSelect";
 
 export const useSelectedTags = () => {
   const location = useLocation();

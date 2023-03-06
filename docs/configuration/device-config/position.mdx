@@ -5,17 +5,18 @@ slug: /settings/config/position
 sidebar_label: Position
 ---
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
 
-The position config options are: GPS Enabled, GPS Update Interval, GPS Attempt Time, Fixed Position, Smart Broadcast, Broadcast Interval and Position Packet Flags.  Position config uses an admin message sending a `Config.Position` protobuf.
+The position config options are: GPS Enabled, GPS Update Interval, GPS Attempt Time, Fixed Position, Smart Broadcast, Broadcast Interval and Position Packet Flags. Position config uses an admin message sending a `Config.Position` protobuf.
 
 Position data from GPS is provided by either the radio or your paired phone. Position data is not required to use Meshtastic but time calculations require at least one device on the mesh have either a GPS or internet connection for time.
 
 ## Position Config Values
 
 ### GPS Disabled
-Acceptable values: `true` or `false` 
+
+Acceptable values: `true` or `false`
 
 Defaults to false. Should the device GPS be disabled for this node?
 
@@ -25,18 +26,19 @@ How often should we try to get GPS position (in seconds), or zero for the defaul
 
 ### GPS Attempt Time
 
-How long should we try to get our position during each GPS update interval attempt?  (in seconds) Or if zero, use the default of 30 seconds.
+How long should we try to get our position during each GPS update interval attempt? (in seconds) Or if zero, use the default of 30 seconds.
 
 ### Fixed Position
 
-Acceptable values: `true` or `false` 
+Acceptable values: `true` or `false`
 
 Off by default
 
 If set, this node is at a fixed position. The device will generate GPS updates at the regular GPS update interval, but use whatever the last lat/lon/alt it saved for the node. The lat/lon/alt can be set by an internal GPS or with the help of the mobile device's GPS.
 
 ### Smart Broadcast
-Acceptable values: `true` or `false` 
+
+Acceptable values: `true` or `false`
 
 On by default
 
@@ -54,27 +56,29 @@ If smart broadcast is of we should send our position this often (but only if it 
 
 The GPS updates will be sent out every Broadcast Interval, with either the actual GPS location, or an empty location if no GPS fix was achieved. This defaults to broadcast every 15 minutes.
 
- ### Position Flags 
+### Position Flags
 
- Bit field of boolean configuration options for POSITION messages (bitwise OR of PositionFlags)
+Bit field of boolean configuration options for POSITION messages (bitwise OR of PositionFlags)
 
-|     Value     |                         Description                         |
-| :-----------: | :---------------------------------------------------------: | 
-| UNSET         |                  Required for compilation                   |
-| ALTITUDE      |          Include an altitude value (if available)           |
-| ALTITUDE_MSL  |                    Altitude value is MSL                    |
-| GEOIDAL_SEPARATION  |                 Include geoidal separation                  |
-|    DOP        |   Include the DOP value ; PDOP used by default, see below   |
-|   HVDOP       | If POS_DOP set, send separate HDOP / VDOP values instead of PDOP |
-| SATINVIEW |           Include number of "satellites in view"            |
-|  SEQ_NO   |      Include a sequence number incremented per packet       |
-| TIMESTAMP |      Include positional timestamp (from GPS solution)       |
-| HEADING   |      Include positional heading (from GPS solution)       |
-| SPEED     |      Include positional speed (from GPS solution)       |
+|       Value        |                           Description                            |
+| :----------------: | :--------------------------------------------------------------: |
+|       UNSET        |                     Required for compilation                     |
+|      ALTITUDE      |             Include an altitude value (if available)             |
+|    ALTITUDE_MSL    |                      Altitude value is MSL                       |
+| GEOIDAL_SEPARATION |                    Include geoidal separation                    |
+|        DOP         |     Include the DOP value ; PDOP used by default, see below      |
+|       HVDOP        | If POS_DOP set, send separate HDOP / VDOP values instead of PDOP |
+|     SATINVIEW      |              Include number of "satellites in view"              |
+|       SEQ_NO       |         Include a sequence number incremented per packet         |
+|     TIMESTAMP      |         Include positional timestamp (from GPS solution)         |
+|      HEADING       |          Include positional heading (from GPS solution)          |
+|       SPEED        |           Include positional speed (from GPS solution)           |
 
+### GPIO RX/TX for GPS Module
 
+If your device does not have a fixed GPS chip, you can define the GPIO pins for the RX and TX pins of a GPS module.
 
- ## Position Config Client Availability
+## Position Config Client Availability
 
 <Tabs
 groupId="settings"
@@ -106,21 +110,23 @@ All position config values are available on iOS, iPadOS and macOS at Settings > 
 </TabItem>
 <TabItem value="cli">
 
-:::info 
+:::info
 
 All Position config commands are available in the python CLI. Example commands are below:
 
 :::
 
-|         Setting                |                                                                       Acceptable Values                                                                       |     Default     |
-| :----------------------------: | :-----------------------------------------------------------------------------------------------------------------------------------------------------------: | :-------------: |
-|      position.gps_enabled     |                                                                        `true`, `false`                                                                        |     `true`     |
-|   position.gps_update_interval |                                                                      `integer` (seconds)                                                                      | Default `0` is 30 Seconds  |
-|    position.gps_attempt_time   |                                                                      `integer` (seconds)                                                                      | Default of `0` is 30 Seconds  |
-|      position.fixed_position   |                                                                        `true`, `false`                                                                        |     `false`     |
-| position.position_broadcast_smart_enabled       |                                                                `true`, `false`                                                                        |     `true`     |
-| position.position_broadcast_secs        |                                                                      `integer` (seconds)                                                                      | Default of `0` is 15 Minutes  |
-|      position.flags            | `UNSET`, `ALTITUDE`, `ALTITUDE_MSL`, `GEOIDAL_SEPARATION`, `DOP`, `HVDOP`, `PDOP`, `SATINVIEW`, `SEQ_NO`, `TIMESTAMP`, `HEADING`, `SPEED` | `UNSET` |
+|                  Setting                  |                                                             Acceptable Values                                                             |           Default            |
+| :---------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------: | :--------------------------: |
+|           position.gps_enabled            |                                                              `true`, `false`                                                              |            `true`            |
+|       position.gps_update_interval        |                                                            `integer` (seconds)                                                            |  Default `0` is 30 Seconds   |
+|         position.gps_attempt_time         |                                                            `integer` (seconds)                                                            | Default of `0` is 30 Seconds |
+|          position.fixed_position          |                                                              `true`, `false`                                                              |           `false`            |
+| position.position_broadcast_smart_enabled |                                                              `true`, `false`                                                              |            `true`            |
+|     position.position_broadcast_secs      |                                                            `integer` (seconds)                                                            | Default of `0` is 15 Minutes |
+|              position.flags               | `UNSET`, `ALTITUDE`, `ALTITUDE_MSL`, `GEOIDAL_SEPARATION`, `DOP`, `HVDOP`, `PDOP`, `SATINVIEW`, `SEQ_NO`, `TIMESTAMP`, `HEADING`, `SPEED` |           `UNSET`            |
+|             position.rx_gpio              |                                                             `integer` (0-39)                                                              |           `UNSET`            |
+|             position.tx_gpio              |                                                             `integer` (0-34)                                                              |           `UNSET`            |
 
 :::tip
 
@@ -183,7 +189,7 @@ meshtastic --pos-fields UNSET
 :::info
 All position config options are available in the Web UI.
 :::
-    
+
 </TabItem>
 </Tabs>
 

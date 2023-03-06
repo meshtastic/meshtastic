@@ -13,8 +13,8 @@ import {
   Client,
   Types,
   Protobuf,
-  SettingsManager,
-} from '@meshtastic/meshtasticjs';
+  SettingsManager
+} from "@meshtastic/meshtasticjs";
 
 /**
  * Connection method
@@ -24,7 +24,7 @@ const client = new Client();
 SettingsManager.setDebugMode(Protobuf.LogLevelEnum.DEBUG);
 
 const connection = client.createHTTPConnection();
-connection.connect('192.168.x.x');
+connection.connect("192.168.x.x");
 
 const restartDevice: Promise<void> = connection.restartDevice();
 const getStatistics: Promise<void | Types.WebSPIFFSResponse> =

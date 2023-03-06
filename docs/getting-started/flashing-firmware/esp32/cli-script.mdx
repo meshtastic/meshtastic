@@ -1,12 +1,13 @@
 ---
 id: cli-script
 title: Flashing with the CLI
-sidebar_label: CLI Script
+sidebar_label: CLI Script (Advanced Users)
 sidebar_position: 3
 ---
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+import Link from "@docusaurus/Link";
 
 :::caution
 Make sure not to power the radio on without first attaching the antenna! You could damage the radio chip!
@@ -269,8 +270,15 @@ Be very careful to install the correct load for your board. In particular the po
 
 Select `Flash ESP`. It may take a minute or two. Once complete, "Done! Flashing is complete!" will be shown.
 
-## Over the Air Update Instructions
+## Connect and Configure Device
 
-OTA updates are only currently available on Android.
+After flashing the Meshtastic firmware to the device, you can proceed with the initial configuration.
 
-<!--- TODO --->
+<div className="indexCtasBody">
+  <Link
+    className={"button button--outline button--lg cta--button"}
+    to={"/docs/getting-started/initial-config"}
+  >
+    Connect and Configure Device
+  </Link>
+</div>

@@ -1,45 +1,43 @@
-import React from 'react';
+import React from "react";
 
-import { FiTwitter } from 'react-icons/fi';
+import { FiTwitter } from "react-icons/fi";
 
-import { ChevronRightIcon } from '@heroicons/react/20/solid';
-import FlipClockCountdown from '@leenguyen/react-flip-clock-countdown';
-import Layout from '@theme/Layout';
-import { Dark, Light } from '/src/components/ColorMode';
-
+import { ChevronRightIcon } from "@heroicons/react/20/solid";
+import Layout from "@theme/Layout";
+import { Dark, Light } from "/src/components/ColorMode";
 
 const TwoPointZero = (): JSX.Element => {
   const stats = [
-    { label: 'Active Nodes', value: 'A Lot!' },
-    { label: 'Community Members', value: '4000+' },
-    { label: 'Firmware Commits', value: '4900+' },
-    { label: 'Community Donations', value: '$5700+' },
+    { label: "Active Nodes", value: "A Lot!" },
+    { label: "Community Members", value: "4000+" },
+    { label: "Firmware Commits", value: "4900+" },
+    { label: "Community Donations", value: "$5700+" }
   ];
   const logos = [
     {
-      name: 'Vercel',
-      url: '/2.0/vercel-logotype-dark.svg',
+      name: "Vercel",
+      url: "/2.0/vercel-logotype-dark.svg"
     },
     {
-      name: 'Cloudflare',
-      url: '/2.0/CF_logo_horizontal_blktype.svg',
+      name: "Cloudflare",
+      url: "/2.0/CF_logo_horizontal_blktype.svg"
     },
     {
-      name: 'RAK Wireless',
-      url: '/2.0/RAK-blue-main.svg',
+      name: "RAK Wireless",
+      url: "/2.0/RAK-blue-main.svg"
     },
     {
-      name: 'Open Collective',
-      url: '/2.0/opencollectivelogo.svg',
+      name: "Open Collective",
+      url: "/2.0/opencollectivelogo.svg"
     },
     {
-      name: 'LILYGO',
-      url: '/2.0/LILYGO.png',
+      name: "LILYGO",
+      url: "/2.0/LILYGO.png"
     },
     {
-      name: 'Discord',
-      url: '/2.0/discord.svg',
-    },
+      name: "Discord",
+      url: "/2.0/discord.svg"
+    }
   ];
   return (
     <Layout title="Meshtastic 2.0" description="Meshtastic 2.0 Landing Page">
@@ -60,11 +58,11 @@ const TwoPointZero = (): JSX.Element => {
                   </Dark>
                   <Light>
                     <img
-                        className="h-11 w-auto"
-                        it
-                        src="/design/logo/svg/Mesh_Logo_Black.svg"
-                        alt="Meshtastic Logo"
-                      />
+                      className="h-11 w-auto"
+                      it
+                      src="/design/logo/svg/Mesh_Logo_Black.svg"
+                      alt="Meshtastic Logo"
+                    />
                   </Light>
                 </div>
                 <div className="mt-20">
@@ -246,8 +244,8 @@ const TwoPointZero = (): JSX.Element => {
                             <path d="M9.352 4C4.456 7.456 1 13.12 1 19.36c0 5.088 3.072 8.064 6.624 8.064 3.36 0 5.856-2.688 5.856-5.856 0-3.168-2.208-5.472-5.088-5.472-.576 0-1.344.096-1.536.192.48-3.264 3.552-7.104 6.624-9.024L9.352 4zm16.512 0c-4.8 3.456-8.256 9.12-8.256 15.36 0 5.088 3.072 8.064 6.624 8.064 3.264 0 5.856-2.688 5.856-5.856 0-3.168-2.304-5.472-5.184-5.472-.576 0-1.248.096-1.44.192.48-3.264 3.456-7.104 6.528-9.024L25.864 4z" />
                           </svg>
                           <p className="relative">
-                            Meshtastic is the neatest open source project I've ever
-                            seen!
+                            Meshtastic is the neatest open source project I've
+                            ever seen!
                           </p>
                         </div>
 

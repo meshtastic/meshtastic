@@ -27,7 +27,6 @@ The 4 byte header is constructed to both provide framing and to not look line 'n
 
 The receiver will validate length and if >512 it will assume the packet is corrupted and return to looking for START1. While looking for START1 any other characters are printed as "debug output". For small example implementation of this reader see the python implementation.
 
-
 ## Bluetooth (MeshBluetoothService)
 
 This is the main Bluetooth service for the device and provides the API your app should use to get information about the mesh, send packets, or provision the radio.

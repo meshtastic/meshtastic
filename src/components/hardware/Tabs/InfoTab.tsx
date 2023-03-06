@@ -1,8 +1,8 @@
-import React from 'react';
+import React from "react";
 
-import { Tab } from '@headlessui/react';
+import { Tab } from "@headlessui/react";
 
-import type { IDevice } from '../../../data/device';
+import type { IDevice } from "../../../data/device";
 
 export interface InfoTabProps {
   device: IDevice;

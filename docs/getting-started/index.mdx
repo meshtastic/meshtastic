@@ -6,192 +6,116 @@ slug: /getting-started
 sidebar_position: 2
 ---
 
-import Link from '@docusaurus/Link';
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
+import Link from "@docusaurus/Link";
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
 
 ## Identify Hardware
 
-The first order of business in getting started is determining what type of hardware you will be working with. Meshtastic currently supports devices with either of the two Micro-Controller Units (MCU):
+:::note
+
+This guide assumes that you have already purchased the devices you will be using with Meshtastic. If you haven't, you can check out our list of [supported hardware](/docs/supported-hardware/)
+to see your options.
+:::
+
+Before you begin, it's important to determine which kind of hardware you're using. Meshtastic works with devices that have either of these two types of Micro-Controller Units (MCU):
 
 ### ESP32
 
-The ESP32 is older and consumes more power than the nrf52, but is equipped with both WiFi and Bluetooth. Supported ESP32 devices:
+The ESP32 chip is older and consumes more power than the nRF52 chip, but is equipped with both WiFi and Bluetooth. Supported ESP32 devices:
 
 - LILYGO® TTGO T-Beam
 - LILYGO® TTGO Lora
 - Nano G1
 - Station G1
+- Heltec V3 and Wireless Stick Lite V3
 
-### NRF52
+### nRF52
 
-The NRF52 is much more power efficient than the esp32 and easier to update, but is only equipped with Bluetooth. Supported NRF52 devices:
+The nRF52 chip is much more power efficient than the ESP32 chip and easier to update, but is only equipped with Bluetooth. Supported nRF52 devices:
 
 - RAK WisBlock
 - LILYGO® TTGO T-Echo
 
 :::info
+
 If your device is not listed above, please review our [supported devices](/docs/supported-hardware) to determine which MCU your device has or contact us in [Discord](https://discord.gg/ktMAKGBnBs) with any questions.
+
 :::
 
-## Setup Working Environment
+:::danger STOP! Put The Power Cable Down!
 
-:::danger STOP! Put the power cable down!
-Never power on the radio without attaching an antenna! _it could damage the radio chip._
+Never power on the radio without attaching an antenna! _It_ could damage the radio chip.
+
 :::
 
 Prior to connecting your Meshtastic device to the computer, you should perform the following basic checks.
 
-### Verify data cable
+### Verify Data Cable
 
-Some cables only provide _charging_, verify that your cable is also capable of _transferring data_ before proceeding. 
+Some cables only provide _charging_, verify that your cable is also capable of _transferring data_ before proceeding. To check if your cable can also transfer data, try connecting it to another device (like a phone) and see if you can copy a file to or from it. If the file transfer works, then your cable is also able to transfer data and you can continue.
 
-There is no definitive way to determine the difference in cables if you aren't willing to pull it apart. Trying out a few cables will be the best way to verify.
+### Install Serial Drivers
 
-Once you've located a working data cable, [install the correct serial driver](#install-serial-drivers) and [test for driver installation](#test-driver-installation).
-
-### Install serial drivers
+If you don't have serial drivers installed on your computer, please choose one of the options below and install it before continuing.
 
 <div className="indexCtasBody">
- <div class="split left">
-  <div class="centered">
-  <Link target="_blank"
-    className={'button button--outline  button--lg cta--button'}
-    to={'/docs/getting-started/serial-drivers/esp32'}
-  >
-    Install ESP32 Drivers
-  </Link>
+  <div className="split-container">
+    <div className="split-item">
+      <Link
+        className={'button button--outline button--lg cta--button'}
+        to={'/docs/getting-started/serial-drivers/esp32'}
+      >
+        Install ESP32 Drivers
+      </Link>
+    </div>
+
+  <div className="split-item">
+      <Link
+        className={'button button--outline button--lg cta--button'}
+        to={'/docs/getting-started/serial-drivers/nrf52'}
+      >
+        Install NRF52 Drivers
+      </Link>
+    </div>
   </div>
 </div>
 
-<div class="split right">
-  <div class="centered">
-  <Link target="_blank"
-    className={'button button--outline  button--lg cta--button'}
-    to={'/docs/getting-started/serial-drivers/nrf52'}
-  >
-    Install NRF52 Drivers
-  </Link>
-  </div>
-</div> 
-</div>
+### Flash Firmware
 
-### Test driver installation
-
-You can verify that you have a proper data cable (rather than a charge-only type cable) and that the appropriate drivers for your system are installed by performing the following test: 
-
-<Tabs
-groupId="operating-system"
-defaultValue="linux"
-values={[
-{label: 'Linux', value: 'linux'},
-{label: 'macOS', value: 'macos'},
-{label: 'Windows', value: 'windows'},
-]}>
-<TabItem value="linux">
-
-1. Connect your Meshtastic device to your USB port
-2. Open a **Terminal** and enter the following command:
-
-  ```shell
-  lsusb
-  ```
-3. You should see something like: 
-
-  ```shell
-  ID xxxx:xxxx Silicon Labs CP210x UART Bridge
-  # or
-  ID xxxx:xxxx QinHeng Electronics USB Single Serial
-  # or
-  FIXME (WISBLOCK OUTPUT)
-  ```
-
-</TabItem>
-<TabItem value="macos">
-
-1. Navigate to `Apple Menu  > About This Mac > System Report... > Hardware > USB`. 
-2. You should see similar to one of the following entries:
-  - `CP210X USB to UART Bridge Controller`
-  - `CH9102 USB to UART Bridge Controller`
-  - `WisCore RAK4631 Board`
-
-</TabItem>
-<TabItem value="windows">
-
-1. Navigate to `Device Manager > Ports (COM & LPT)`
-2. You should see similar to one of the following entries:
-  - `Silicon Labs CP210X USB to UART Bridge (COM5)`
-  - `Silicon Labs CH9102 USB to UART Bridge (COM5)`
-  - `FIXME (WISBLOCK OUTPUT)`
-
-</TabItem>
-</Tabs>
-
-:::info
-If you do not see your device:
-
-1. You may be using a charging-only cable, [verify your cable](#verify-data-cable).
-2. You may need to [install the USB serial driver](/docs/getting-started/serial-drivers)).
-:::
-
-## Flash Firmware
-
-:::info
-If you have a RAK4631-R (the RUI3 bootloader version of the RAK4631), you must [convert the bootloader](/docs/getting-started/flashing-firmware/nrf52/convert-rak4631r) for use with the Arduino before flashing Meshtastic firmware.
-:::
+After completing the previous steps, you can now flash the Meshtastic firmware onto your device. To proceed, select the appropriate device type for your device.
 
 <div className="indexCtasBody">
- <div class="split left">
-  <div class="centered">
-  <Link target="_blank"
-    className={'button button--outline button--lg cta--button'}
-    to={'/docs/getting-started/flashing-firmware/esp32/'}
-  >
-    Flash ESP32 Firmware
-  </Link>
+  <div className="split-container">
+    <div className="split-item">
+      <Link
+        className={"button button--outline button--lg cta--button"}
+        to={"/docs/getting-started/flashing-firmware/esp32/"}
+      >
+        Flash ESP32 Firmware
+      </Link>
+    </div>
+
+  <div className="split-item">
+      <Link
+        className={"button button--outline button--lg cta--button"}
+        to={"/docs/getting-started/flashing-firmware/nrf52/"}
+      >
+        Flash nRF52 Firmware
+      </Link>
+    </div>
   </div>
 </div>
 
-<div class="split right">
-  <div class="centered">
-  <Link target="_blank"
-    className={'button button--outline button--lg cta--button'}
-    to={'/docs/getting-started/flashing-firmware/nrf52/'}
-  >
-    Flash NRF52 Firmware
-  </Link>
-  </div>
-</div> 
-</div>
+### Connect and Configure Device
 
-
-## Connect and Configure Device
-
-After connecting to the device for the first time, you should set the regional settings for the radio as well as other optional settings such as the name of the device.
+After flashing the Meshtastic firmware onto your device, you can now move on to initial configuration.
 
 <div className="indexCtasBody">
-  <Link target="_blank"
-    className={'button button--outline button--lg cta--button'}
-    to={'/docs/getting-started/initial-config'}
+  <Link
+    className={"button button--outline button--lg cta--button"}
+    to={"/docs/getting-started/initial-config"}
   >
     Connect and Configure Device
   </Link>
 </div>
-
-## Use Meshtastic
-
-### with Command Line Tools
-  - [Python CLI](/docs/software/python/cli)
-
-### with mobile apps
-  - [Android](/docs/category/android-app)
-  - [Apple](/docs/category/apple-apps)
-
-### with a browser
-  - https://client.meshtastic.org
-  - [Meshtastic Web](/docs/software/web-client)
-
-### over the internet with MQTT
-  - [MQTT](/docs/software/mqtt/)
-
-There are many ways to interact with and use Meshtastic, please visit the [Software](/docs/software) page for more information.

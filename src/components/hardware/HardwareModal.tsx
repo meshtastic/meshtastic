@@ -1,21 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
-import { AnimatePresence, motion } from 'framer-motion';
-import { FiBluetooth, FiChevronRight, FiWifi, FiX } from 'react-icons/fi';
-import { useBreakpoint } from 'use-breakpoint';
+import { AnimatePresence, motion } from "framer-motion";
+import { FiBluetooth, FiChevronRight, FiWifi, FiX } from "react-icons/fi";
+import { useBreakpoint } from "use-breakpoint";
 
-import { Tab } from '@headlessui/react';
-import type { IDevice } from '@site/src/data/device';
+import { Tab } from "@headlessui/react";
+import type { IDevice } from "@site/src/data/device";
 
-import { Button } from '../../components/Button';
-import { BREAKPOINTS } from '../../utils/breakpoints';
-import { Modal } from '../Modal';
-import { Badge } from './Badge';
-import { CardTab } from './CardTab';
-import { InfoTab } from './Tabs/InfoTab';
-import { PinoutTab } from './Tabs/PinoutTab';
-import { PowerTab } from './Tabs/PowerTab';
-import { VariantSelectButton } from './VariantSelectButton';
+import { Button } from "../../components/Button";
+import { BREAKPOINTS } from "../../utils/breakpoints";
+import { Modal } from "../Modal";
+import { Badge } from "./Badge";
+import { CardTab } from "./CardTab";
+import { InfoTab } from "./Tabs/InfoTab";
+import { PinoutTab } from "./Tabs/PinoutTab";
+import { PowerTab } from "./Tabs/PowerTab";
+import { VariantSelectButton } from "./VariantSelectButton";
 
 export interface HardwareModal {
   device: IDevice;
@@ -26,10 +26,10 @@ export interface HardwareModal {
 export const HardwareModal = ({
   device,
   open,
-  close,
+  close
 }: HardwareModal): JSX.Element => {
   const [hideDetails, setHideDetails] = useState(false);
-  const { breakpoint } = useBreakpoint(BREAKPOINTS, 'md');
+  const { breakpoint } = useBreakpoint(BREAKPOINTS, "md");
 
   return (
     <Modal open={open} onClose={close}>
@@ -42,22 +42,22 @@ export const HardwareModal = ({
         <motion.div
           layout
           animate={
-            breakpoint === 'sm'
+            breakpoint === "sm"
               ? hideDetails
-                ? 'hiddenSm'
-                : 'visibleSm'
+                ? "hiddenSm"
+                : "visibleSm"
               : hideDetails
-              ? 'hidden'
-              : 'visible'
+              ? "hidden"
+              : "visible"
           }
           variants={{
-            hidden: { width: '100%', height: '100%' },
-            hiddenSm: { height: '100%', width: '100%' },
-            visible: { width: '20%', height: '100%' },
-            visibleSm: { height: '33%', width: '100%' },
+            hidden: { width: "100%", height: "100%" },
+            hiddenSm: { height: "100%", width: "100%" },
+            visible: { width: "20%", height: "100%" },
+            visibleSm: { height: "33%", width: "100%" }
           }}
           transition={{
-            type: 'just',
+            type: "just"
           }}
           className="flex flex-col md:h-full md:flex-row"
         >
@@ -74,19 +74,19 @@ export const HardwareModal = ({
             <div className="absolute -bottom-5 z-20 flex w-full md:bottom-auto md:-right-5 md:h-full md:w-auto">
               <Button
                 animate={
-                  breakpoint === 'sm'
+                  breakpoint === "sm"
                     ? hideDetails
-                      ? 'hiddenSm'
-                      : 'visibleSm'
+                      ? "hiddenSm"
+                      : "visibleSm"
                     : hideDetails
-                    ? 'hidden'
-                    : 'visible'
+                    ? "hidden"
+                    : "visible"
                 }
                 variants={{
                   hidden: { rotate: 180 },
                   hiddenSm: { rotate: -90 },
                   visible: { rotate: 0 },
-                  visibleSm: { rotate: 90 },
+                  visibleSm: { rotate: 90 }
                 }}
                 onClick={() => {
                   setHideDetails(!hideDetails);
@@ -103,7 +103,7 @@ export const HardwareModal = ({
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
                     className={`absolute -bottom-5 z-20 flex md:mt-0 md:hidden md:pb-2 ${
-                      hideDetails ? 'opacity-0' : 'opacity-100'
+                      hideDetails ? "opacity-0" : "opacity-100"
                     }`}
                   >
                     <VariantSelectButton options={device.variants} />
@@ -137,7 +137,7 @@ export const HardwareModal = ({
           </motion.div>
           <div
             className={`h-7 bg-base opacity-0 md:h-auto md:w-7 ${
-              hideDetails ? 'flex' : 'hidden'
+              hideDetails ? "flex" : "hidden"
             }`}
           />
         </motion.div>
@@ -148,7 +148,7 @@ export const HardwareModal = ({
         </div>
         <div
           className={`mt-1 flex flex-grow rounded-2xl bg-base p-2 shadow-inner transition-opacity duration-100 ease-linear md:mt-0 md:rounded-l-none md:rounded-r-2xl md:p-4 ${
-            hideDetails ? 'opacity-0' : 'opacity-100'
+            hideDetails ? "opacity-0" : "opacity-100"
           }`}
         >
           <Tab.Group

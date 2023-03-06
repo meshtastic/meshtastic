@@ -55,62 +55,59 @@ I'm assuming that meshtastic is being used to hike in places where someone capab
 
 I'm guessing that the network behaves somewhat like a store-and-forward network - or, at least, that the goal is to avoid establishing a two-way connection to transmit data. I'm afraid I haven't worked with mesh networks much, but remember studying them briefly in school about ten years ago.
 
-
 ## Phased Proposal for the Meshtastic Security Framework
 
 ### Phase 1 - Fixed network encryption with AES-CTR
 
 The current implementation provides optional confidentiality to members of a configured network:
- * Encryption is implemented in devices/nodes with network-wide encryption keys.
- * Encryption is optional and is turned off when devices are in 'Ham mode'.
- * There is no encryption supported in the clients (iOS, Android) to facilitate distribution as mass market software.
- * Pairing from client-to-device is by:
-    * direct USB cable
-    * BT pairing
- * Devices are 'promiscuous' and will pair with any near-by client. Network confidentiality requires physical protextion of all nodes.
+
+- Encryption is implemented in devices/nodes with network-wide encryption keys.
+- Encryption is optional and is turned off when devices are in 'Ham mode'.
+- There is no encryption supported in the clients (iOS, Android) to facilitate distribution as mass market software.
+- Pairing from client-to-device is by:
+  - direct USB cable
+  - BT pairing
+- Devices are 'promiscuous' and will pair with any near-by client. Network confidentiality requires physical protextion of all nodes.
 
 ### Phase 2 - Strong device and client identity
 
 **Phase 2 security goals:**
- * Know who sent a message (strong binding of messages to a particular node and/or terminal device)
-    * This would be an optional feature for a message
- * Optionaly enforce identity based restrictions on some actions performed at nodes and/or clients
- * Optional support of strong pairing of a client to a device/node and restrict ability to manage and receive messages based on the pairing.
-    * The BT paring and the cryptographic paring are separate (to simplify pahse 1 deployment and testing)
- * Above features should be architected to be ‘cryptographically strong’ and algorithm agile.
+
+- Know who sent a message (strong binding of messages to a particular node and/or terminal device)
+  - This would be an optional feature for a message
+- Optionaly enforce identity based restrictions on some actions performed at nodes and/or clients
+- Optional support of strong pairing of a client to a device/node and restrict ability to manage and receive messages based on the pairing.
+  - The BT paring and the cryptographic paring are separate (to simplify pahse 1 deployment and testing)
+- Above features should be architected to be ‘cryptographically strong’ and algorithm agile.
 
 **Phase 2 Proposed mechanisms:**
- * Proposed initial algorithms
-    - Ed25519 for signatures based on NaCl libraries and iOS support for Ed25519
- * Clients and nodes to generate local identity Ed25519 keys 
- * Devices maintain knowledge of owner public key
- * Devices maintain knowledge of some peers public keys and associated information (name, etc.)
- * Experimental protobuf message type with
-     * cipher suite indicator (csi)
-     * wrapped data using a cipher suite identifier to indicate use of Ed25519 wrapping identified algorithms. 
-       Wrapped data to contain any of the existing message types.
-     * initial ‘cipher suite’ **only** signs a message
-     * new signed/authenticated messages to:
-      *  device->client:  provide ownership status of device (owner is identifed by a public key)
-      *  client->device:    set owner key (must be existing device owner or owner null)
-      *  any->all.  Broadcast public key and associated info (crude initial key distribution)
- 
+
+- Proposed initial algorithms
+  - Ed25519 for signatures based on NaCl libraries and iOS support for Ed25519
+- Clients and nodes to generate local identity Ed25519 keys
+- Devices maintain knowledge of owner public key
+- Devices maintain knowledge of some peers public keys and associated information (name, etc.)
+- Experimental protobuf message type with
+  - cipher suite indicator (csi)
+  - wrapped data using a cipher suite identifier to indicate use of Ed25519 wrapping identified algorithms.
+    Wrapped data to contain any of the existing message types.
+  - initial ‘cipher suite’ **only** signs a message
+  - new signed/authenticated messages to:
+  - device->client: provide ownership status of device (owner is identifed by a public key)
+  - client->device: set owner key (must be existing device owner or owner null)
+  - any->all. Broadcast public key and associated info (crude initial key distribution)
+
 ### Phase 3 and 3+:
- * Device/node e2e message confidentiality (1-to-1)
-    * NO client side encryption
-    * All encryption turned off for a network in 'Ham mode'
-  * Protect messages sent over LoRa from eavesdroppers outside of a well identified group
-       - multicast group key distribution / discovery (1-to-n)
- * Privacy 
-    * BT MAC layer address privatization
-    * Node address privatization (Use use if based on device public key and schedule based aliasing)
-    * Private peer discovery
- * Private service announcement and discovery
- * Device/node security (hardening key storage, tamper resistance, side channel protection, etc.)
- * Public key pairing process for client-to-device also sets up BT (no BT pin)
- 
 
-
-  
-
-
+- Device/node e2e message confidentiality (1-to-1)
+  - NO client side encryption
+  - All encryption turned off for a network in 'Ham mode'
+- Protect messages sent over LoRa from eavesdroppers outside of a well identified group
+  - multicast group key distribution / discovery (1-to-n)
+- Privacy
+  - BT MAC layer address privatization
+  - Node address privatization (Use use if based on device public key and schedule based aliasing)
+  - Private peer discovery
+- Private service announcement and discovery
+- Device/node security (hardening key storage, tamper resistance, side channel protection, etc.)
+- Public key pairing process for client-to-device also sets up BT (no BT pin)

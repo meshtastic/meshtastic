@@ -7,12 +7,12 @@ export type DeepPartial<T> = T extends object
 export enum UseCase {
   Solar,
   Router,
-  Portable,
+  Portable
 }
 
 enum PinUsage {
   LoRa,
-  GNSS,
+  GNSS
 }
 
 export interface Pin {
@@ -25,38 +25,38 @@ export interface Pin {
   usage?: PinUsage;
 }
 
-export type DeviceName = 'tbeam' | 'techo';
+export type DeviceName = "tbeam" | "techo";
 
-export type BLEVersion = '4.2' | '5.0';
+export type BLEVersion = "4.2" | "5.0";
 
-export type AntennaType = 'Integrated';
+export type AntennaType = "Integrated";
 
-export type Chipset = 'ESP32' | 'NRF52';
+export type Chipset = "ESP32" | "NRF52";
 
 export type Frequency = 433 | 868 | 915 | 923;
 
-export type SerialAdapter = 'CP210X' | 'CH9102';
+export type SerialAdapter = "CP210X" | "CH9102";
 
-export type GNSSModule = 'NEO-6M' | 'NEO-8M';
+export type GNSSModule = "NEO-6M" | "NEO-8M";
 
-export type LORAModule = 'SX1276' | 'SX1262';
+export type LORAModule = "SX1276" | "SX1262";
 
-export type Variant = DeepPartial<Omit<IDevice, 'variants'>> & { name: string };
+export type Variant = DeepPartial<Omit<IDevice, "variants">> & { name: string };
 
 export enum Stability {
   Stable,
   Semi,
   Unstable,
-  Broken,
+  Broken
 }
 
 export type Module =
-  | 'cannedMessage'
-  | 'externalNotification'
-  | 'rangeTest'
-  | 'rotaryEncoder'
-  | 'storeAndForward'
-  | 'telemetry';
+  | "cannedMessage"
+  | "externalNotification"
+  | "rangeTest"
+  | "rotaryEncoder"
+  | "storeAndForward"
+  | "telemetry";
 
 export interface IDevice {
   name: string;
