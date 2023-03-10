@@ -43,9 +43,9 @@ const config = {
           to: "downloads"
         },
         {
-          type: 'localeDropdown',
-          position: 'right',
-          className: 'header-language-link',
+          type: "localeDropdown",
+          position: "right",
+          className: "header-language-link"
         },
         {
           label: "About",
@@ -143,8 +143,8 @@ const config = {
     API_URL: process.env.API_URL
   },
   i18n: {
-    defaultLocale: 'en',
-    locales: ['en', 'de', 'pt-br', 'is'],
+    defaultLocale: "en",
+    locales: ["en", "de", "pt-br", "is"]
   },
   markdown: {
     mermaid: true
