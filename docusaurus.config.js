@@ -144,7 +144,7 @@ const config = {
   },
   i18n: {
     defaultLocale: 'en',
-    locales: ['en', 'de'],
+    locales: ['en', 'de', 'pt-br', 'is'],
   },
   markdown: {
     mermaid: true
