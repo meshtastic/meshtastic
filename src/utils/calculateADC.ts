@@ -1,17 +1,17 @@
 export default function calculateADC() {
   //const variables
-  let BAT_MILLIVOLTS_FULL = 4.2;
-  let BAT_MILLIVOLTS_EMPTY = 3.27;
-  let BAT_FULL_PERCENT = 1;
+  const BAT_MILLIVOLTS_FULL = 4.2;
+  const BAT_MILLIVOLTS_EMPTY = 3.27;
+  const BAT_FULL_PERCENT = 1;
   //variable
-  let batteryChargePercent =
+  const batteryChargePercent =
     parseFloat(
       (<HTMLInputElement>document.getElementById("batteryChargePercent")).value
     ) / 100;
-  let operativeAdcMultiplier = parseFloat(
+  const operativeAdcMultiplier = parseFloat(
     (<HTMLInputElement>document.getElementById("operativeAdcMultiplier")).value
   );
-  let result =
+  const result =
     (operativeAdcMultiplier *
       ((BAT_FULL_PERCENT - 1) * BAT_MILLIVOLTS_EMPTY -
         BAT_FULL_PERCENT * BAT_MILLIVOLTS_FULL)) /
