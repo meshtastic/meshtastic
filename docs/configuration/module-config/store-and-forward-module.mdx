@@ -1,7 +1,7 @@
 ---
 id: store-and-forward-module
 title: Store & Forward Module Settings
-sidebar_label: Store & Forward Module
+sidebar_label: Store & Forward
 ---
 
 import Tabs from "@theme/Tabs";
@@ -33,7 +33,7 @@ Because of the increased network traffic for this overhead, it's not advised to 
 | store_forward.history_return_window |     `integer`     |   `0`   |
 |        store_forward.records        |     `integer`     |   `0`   |
 
-### store_forward.enabled
+### Enabled
 
 Enables the module.
 
@@ -80,7 +80,7 @@ Configuring this setting is not yet available for the selected platform. If this
   </TabItem>
 </Tabs>
 
-### store_forward.heartbeat
+### Heartbeat
 
 The Store & Forward Router sends a periodic message onto the network. This allows connected devices to know that a router is in range and listening to received messages. A client like Android, iOS, or Web can (if supported) indicate to the user whether a store and forward router is available.
 
@@ -123,7 +123,7 @@ Configuring this setting is not yet available for the selected platform. If this
   </TabItem>
 </Tabs>
 
-### store_forward.history_return_max
+### History Return Max
 
 Sets the maximum number of messages to return to a client device.
 
@@ -170,7 +170,7 @@ Configuring this setting is not yet available for the selected platform. If this
   </TabItem>
 </Tabs>
 
-### store_forward.history_return_window
+### History Return Window
 
 Limits the time period (in minutes) a client device can request.
 
@@ -217,7 +217,7 @@ Configuring this setting is not yet available for the selected platform. If this
   </TabItem>
 </Tabs>
 
-### store_forward.records
+### Records
 
 Set this to the maximum number of records to save. Best to leave this at the default (`0`) where the module will use 2/3 of your device's available PSRAM. This is about 11,000 records.
 
