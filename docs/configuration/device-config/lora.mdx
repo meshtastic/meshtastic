@@ -66,9 +66,19 @@ In most cases you should use zero here. Units are in dBm.
 
 ### Bandwidth
 
-Bandwidth in MHz
+Bandwidth in kHz
 
-Certain bandwidth numbers are 'special' and will be converted by the device firmware to the appropriate floating point value: 31 -> 31.25MHz
+Certain bandwidth numbers are 'special' and will be converted by the device firmware to the appropriate floating point value:
+| Special Value | Interpreted as |
+| :---: | :---: |
+| 31 | 31.25kHz |
+| 62 | 62.5kHz |
+| 200 | 203.125kHz |
+| 400 | 406.25kHz |
+| 800 | 812.5kHz |
+| 1600 | 1625.0kHz |
+
+Please be aware that values < 62.5kHz may require a TCXO on some hardware devices.
 
 ### Spread Factor
 

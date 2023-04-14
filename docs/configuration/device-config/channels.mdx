@@ -187,6 +187,14 @@ meshtastic --ch-set psk simple15 --ch-index 0
 meshtastic --ch-set psk 0x1a1a1a1a2b2b2b2b1a1a1a1a2b2b2b2b1a1a1a1a2b2b2b2b1a1a1a1a2b2b2b2b --ch-index 0
 ```
 
+```shell title="Set encryption to your own key on PRIMARY channel (Base64 encoded)"
+meshtastic --ch-set psk base64:puavdd7vtYJh8NUVWgxbsoG2u9Sdqc54YvMLs+KNcMA= --ch-index 0
+```
+
+:::tip
+Use this to copy and paste the `base64` encoded (single channel) key from the meshtastic --info command. Please dont use the omnibus (all channels) code here, it is not a valid key.
+:::
+
 ```shell title="Disable encryption on PRIMARY channel"
 meshtastic --ch-set psk none --ch-index 0
 ```

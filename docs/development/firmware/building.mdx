@@ -15,16 +15,16 @@ Meshtastic uses [PlatformIO](https://platformio.org), a development environment 
    ```
 3. Update the repository's [submodules](https://github.com/meshtastic/firmware/blob/master/.gitmodules)
    ```shell
-   git submodule update --init
+   cd firmware && git submodule update --init
    ```
 
 ## Build
 
-1. Open the newly cloned folder in [Visual Studio Code](https://code.visualstudio.com).
+1. Open the newly cloned folder in [Visual Studio Code](https://code.visualstudio.com). If you do this for the first time, this can take quite some while as PlatformIO will download all the necessary tooling and libraries. Also if platformio is not installed, VSCode will ask you to install it, probably requiring a restart of the program.
 2. To select the device you you wish to build, open your [command palette](https://code.visualstudio.com/docs/getstarted/userinterface#_command-palette):
    - Windows: `Ctrl + Shift + P`
    - Mac: `command + Shift + P`
-3. Enter: `platformio: Switch Project Environment` and select your target.
+3. Enter: `PlatformIO: Pick Project Environment` and select your target.
 4. To build the firmware, simply run `PlatformIO: Build` from your command palette.
 5. Finally, flash the firmware to your device by running `PlatformIO: Upload`
 
