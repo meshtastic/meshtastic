@@ -1,0 +1,45 @@
+---
+id: nano-g1-explorer
+title: Nano G1 Explorer
+sidebar_label: Nano G1 Explorer
+sidebar_position: 5
+---
+
+The Nano G1 Explorer, powered by Meshtastic, is a significant upgrade from the Nano G1. It incorporates the latest RF technologies from B&Q Consulting, featuring a new internal wide-band LoRa antenna that can support frequencies ranging from 815 MHz to 940 MHz. With this new antenna, combined with an optimized wide-band LoRa RF frontend circuit, the Nano G1 Explorer is capable of working with the majority of LoRa frequency bands worldwide without the need for antenna changes. The device's design also takes into account the potential impact of the human body on its antenna performance, ensuring optimal RF performance even when carried in a pocket.
+
+### Specifications
+
+- **MCU:**
+  - ESP32 WROOM (WiFi & Bluetooth)
+    - Bluetooth 4.2
+- **LoRa Transceiver:**
+  - Semtech SX1262
+- **Frequency Options:**
+  - _US (902.0Mhz to 928.0Mhz), EU_868 (869.4Mhz to 869.65Mhz), JP (920.8Mhz to 927.8Mhz), ANZ (915.0Mhz to 928.0Mhz), RU (868.7Mhz to 869.2Mhz), KR (920.0Mhz to 923.0Mhz), TW (920.0Mhz to 925.0Mhz), IN (865.0Mhz to 867.0Mhz), NZ_865 (864.0Mhz to 868.0Mhz), TH (920.0Mhz to 925.0Mhz), UA_868 (868.0Mhz to 868.6Mhz)._
+- **Navigation Module:**
+  - ATGM336H-5N-71 (Supports GPS, BDS and GLONASS)
+- **Antenna:**
+  - New internal wide-band antenna with optimized wide-band LoRa RF frontend circuit.
+- **Connectors:**
+  - USB-C
+
+### Features
+
+- Meshtastic pre-installed.
+- New internal GPS antenna that significantly reduces GPS lock time compared to the Nano G1. Additionally, the GPS module can be set to a low-power mode with the GPS physical switch.
+- Integrated enhanced message notification circuit for LED or Buzzer, configurable via physical switches.
+- Physical power switch to easily turn the device on/off.
+- Replaceable 1.3" OLED screen with a FPC connector.
+- Internal Li-Polymer Battery Charger. _(An optional 3.7V 603450 JST 1.25mm Rechargeable Li-Polymer Battery can also be installed.)_
+- Buck-boost converter to provide stable 3.3V to the system even in the event the Li-Polymer battery voltage drops to as low as 2.5V. Supply voltage stability is very important to ensure that the performance of RF circuits meets design expectations.
+
+### Resources
+
+- Firmware file: `firmware-nano-g1-explorer-x.x.x.bin`
+- Official Purchase Links:
+  - [Official Store](https://shop.uniteng.com/product/meshtastic-mesh-device-nano-edition/)
+  - [Official Tindie Store](https://www.tindie.com/products/neilhao/meshtastic-mesh-device-nano-g1-explorer/)
+
+Further information on the Nano G1 can be found on [Unit Engineering's Wiki](https://wiki.uniteng.com/en/meshtastic/nano-g1-explorer).
+
+![Nano G1 Explorer](/img/hardware/nano_g1_explorer.jpeg)
