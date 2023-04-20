@@ -11,20 +11,20 @@ Button functionality for RAK devices greatly depends on the device specific conf
 
 ### RAK5005-O / RAK19007 / RAK19003
 
-- **Program button**
-  - _**Single press**_ changes the page of information displayed on the screen.
-  - _**Double press (nRF52 only)**_ puts the device in bootloader mode and mounts a drive to your computer.
-  - _**Long press**_ signals the device to shutdown.
-  - _**Triple press**_ sends a broadcast message of the device position.
+- **Reset Button:**
+  - **Single press:** Resets the device.
+  - **Double press:** Put device into bootloader mode.
+- **User/Program(if configured):**
+  - **Long press:** Will signal the device to shutdown after 5 seconds.
+  - **Single press:** Changes the information page displayed on the device's screen.
+  - **Double press:** Sends an adhoc ping of the device's position to the network.
 
 ### RAK19001
 
-- **Program button**
-
-  - _**Single press**_ changes the page of information displayed on the screen.
-  - _**Double press (nRF52 only)**_ puts the device in bootloader mode and mounts a drive to your computer.
-  - _**Long press**_ signals the device to shutdown.
-  - _**Triple press**_ sends a broadcast message of the device position.
-
-- **User Button**
-  - _Not yet implemented by Meshtastic_
+- **Reset Button:**
+  - **Single press:** Resets the device.
+  - **Double press:** Put device into bootloader mode.
+- **User/Program Button (if configured):**
+  - **Long press:** Will signal the device to shutdown after 5 seconds.
+  - **Single press:** Changes the information page displayed on the device's screen.
+  - **Double press:** Sends an adhoc ping of the device's position to the network.
