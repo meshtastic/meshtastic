@@ -62,6 +62,10 @@ This is the GPIO pin number that will be used for the PWM buzzer, if your device
 
 This is the number of seconds between NodeInfo message broadcasts from the device. The device will still respond ad-hoc to NodeInfo messages when a response is wanted.
 
+### Double Tap as Button Press
+
+This option will enable a double tap, when a supported accelerometer is attached to the device, to be treated as a button press.
+
 ## Device Config Client Availability
 
 <Tabs
@@ -100,15 +104,16 @@ All device config options are available in the python CLI. Example commands are 
 
 :::
 
-| Setting                         | Acceptable Values                                                                   | Default           |
-| ------------------------------- | ----------------------------------------------------------------------------------- | ----------------- |
-| device.debug_log_enabled        | `true`, `false`                                                                     | `false`           |
-| device.role                     | `CLIENT`, `CLIENT_MUTE`, `ROUTER`, `ROUTER_CLIENT`, `REPEATER`, `TRACKER`, `SENSOR` | `CLIENT`          |
-| device.rebroadcast_mode         | `ALL`, `ALL_SKIP_DECODING`, `LOCAL_ONLY`                                            | `ALL`             |
-| device.serial_enabled           | `true`, `false`                                                                     | `true`            |
-| device.button_gpio              | `0` - `34`                                                                          | `0`               |
-| device.buzzer_gpio              | `0` - `34`                                                                          | `0`               |
-| device.node_info_broadcast_secs | `0` - `UINT MAX`                                                                    | `10800` (3 hours) |
+| Setting                           | Acceptable Values                                                                   | Default           |
+| --------------------------------- | ----------------------------------------------------------------------------------- | ----------------- |
+| device.debug_log_enabled          | `true`, `false`                                                                     | `false`           |
+| device.role                       | `CLIENT`, `CLIENT_MUTE`, `ROUTER`, `ROUTER_CLIENT`, `REPEATER`, `TRACKER`, `SENSOR` | `CLIENT`          |
+| device.rebroadcast_mode           | `ALL`, `ALL_SKIP_DECODING`, `LOCAL_ONLY`                                            | `ALL`             |
+| device.serial_enabled             | `true`, `false`                                                                     | `true`            |
+| device.button_gpio                | `0` - `34`                                                                          | `0`               |
+| device.buzzer_gpio                | `0` - `34`                                                                          | `0`               |
+| device.node_info_broadcast_secs   | `0` - `UINT MAX`                                                                    | `10800` (3 hours) |
+| device.double_tap_as_button_press | `false`, `true`                                                                     | `false`           |
 
 :::tip
 
