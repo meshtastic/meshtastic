@@ -66,17 +66,16 @@ In most cases you should use zero here. Units are in dBm.
 
 ### Bandwidth
 
-Bandwidth in kHz
-
 Certain bandwidth numbers are 'special' and will be converted by the device firmware to the appropriate floating point value:
-| Special Value | Interpreted as |
-| :---: | :---: |
-| 31 | 31.25kHz |
-| 62 | 62.5kHz |
-| 200 | 203.125kHz |
-| 400 | 406.25kHz |
-| 800 | 812.5kHz |
-| 1600 | 1625.0kHz |
+
+| Special Value | Interpreted As |
+| :-----------: | :------------: |
+|      31       |   31.25 kHz    |
+|      62       |    62.5 kHz    |
+|      200      |  203.125 kHz   |
+|      400      |   406.25 kHz   |
+|      800      |   812.5 kHz    |
+|     1600      |   1625.0 kHz   |
 
 Please be aware that values < 62.5kHz may require a TCXO on some hardware devices.
 
@@ -111,6 +110,14 @@ For testing it is useful sometimes to force a node to never listen to particular
 ### Override Duty Cycle Limit
 
 Setting this option to 'true' means the device will ignore the hourly duty cycle limit in Europe. This means that you might violate regulations if the device transmits too much. By default, this option is set to 'false,' which means the device will stop sending data when it reaches the hourly limit and will start again when it is allowed to do so.
+
+### SX126x RX Boosted Gain
+
+This is an option specific to the SX126x chip series which allows the chip to consume a small amount of additional power to increase RX sensitivity.
+
+### Override Frequency
+
+This parameter is for advanced users and licensed HAM radio operators. When enabled, the channel calculation will be ignored, and the set frequency will be used instead (frequency_offset still applies). This will allow you to use out-of-band frequencies. Please respect your local laws and regulations. If you are a license HAM operator, make sure you enable HAM mode and turn off encryption.
 
 ## LoRa Config Client Availability
 
