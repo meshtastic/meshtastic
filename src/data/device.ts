@@ -1,28 +1,28 @@
 export type DeepPartial<T> = T extends object
-  ? {
-      [P in keyof T]?: DeepPartial<T[P]>;
-    }
-  : T;
+	? {
+			[P in keyof T]?: DeepPartial<T[P]>;
+	  }
+	: T;
 
 export enum UseCase {
-  Solar,
-  Router,
-  Portable
+	Solar = 0,
+	Router = 1,
+	Portable = 2,
 }
 
 enum PinUsage {
-  LoRa,
-  GNSS
+	LoRa = 0,
+	GNSS = 1,
 }
 
 export interface Pin {
-  offset: {
-    x: number;
-    y: number;
-  };
-  name: string;
-  label: string;
-  usage?: PinUsage;
+	offset: {
+		x: number;
+		y: number;
+	};
+	name: string;
+	label: string;
+	usage?: PinUsage;
 }
 
 export type DeviceName = "tbeam" | "techo";
@@ -44,51 +44,51 @@ export type LORAModule = "SX1276" | "SX1262";
 export type Variant = DeepPartial<Omit<IDevice, "variants">> & { name: string };
 
 export enum Stability {
-  Stable,
-  Semi,
-  Unstable,
-  Broken
+	Stable = 0,
+	Semi = 1,
+	Unstable = 2,
+	Broken = 3,
 }
 
 export type Module =
-  | "cannedMessage"
-  | "externalNotification"
-  | "rangeTest"
-  | "rotaryEncoder"
-  | "storeAndForward"
-  | "telemetry";
+	| "cannedMessage"
+	| "externalNotification"
+	| "rangeTest"
+	| "rotaryEncoder"
+	| "storeAndForward"
+	| "telemetry";
 
 export interface IDevice {
-  name: string;
-  misc: {
-    SuggestedUse: UseCase[];
-    Stability: Stability;
-    Gradient: string;
-    pinoutSplit: number;
-  };
-  images: {
-    Front: string;
-    Back: string;
-  };
-  features: {
-    BLE: boolean;
-    WiFi: boolean;
-    Modules: Module[];
-  };
-  specifications: {
-    BLEVersion?: BLEVersion;
-    BLEAntenna?: AntennaType;
-    WiFiVersion?: string;
-    WiFiAntenna?: AntennaType;
-    Chipset: Chipset;
-    Driver: SerialAdapter;
-    GNSS?: GNSSModule;
-    FlashSize: number;
-    Frequencies: Frequency[];
-    LoRa: LORAModule;
-    PSRAM: number;
-    RAM?: number;
-  };
-  pinout: Pin[];
-  variants: Variant[];
+	name: string;
+	misc: {
+		SuggestedUse: UseCase[];
+		Stability: Stability;
+		Gradient: string;
+		pinoutSplit: number;
+	};
+	images: {
+		Front: string;
+		Back: string;
+	};
+	features: {
+		BLE: boolean;
+		WiFi: boolean;
+		Modules: Module[];
+	};
+	specifications: {
+		BLEVersion?: BLEVersion;
+		BLEAntenna?: AntennaType;
+		WiFiVersion?: string;
+		WiFiAntenna?: AntennaType;
+		Chipset: Chipset;
+		Driver: SerialAdapter;
+		GNSS?: GNSSModule;
+		FlashSize: number;
+		Frequencies: Frequency[];
+		LoRa: LORAModule;
+		PSRAM: number;
+		RAM?: number;
+	};
+	pinout: Pin[];
+	variants: Variant[];
 }
