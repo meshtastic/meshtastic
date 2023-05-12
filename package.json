@@ -10,7 +10,8 @@
     "serve": "docusaurus serve",
     "clear": "docusaurus clear",
     "write-translations": "docusaurus write-translations",
-    "crowdin": "crowdin"
+    "crowdin": "crowdin",
+    "crowdin:sync": "docusaurus write-translations && crowdin upload && crowdin download"
   },
   "dependencies": {
     "@algolia/client-search": "^4.16.0",
