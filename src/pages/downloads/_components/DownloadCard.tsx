@@ -38,10 +38,10 @@ export const DownloadCard = ({
 				) : (
 					<div>
 						<a href={url}>
-							<img alt="img1" style={{ height: "4rem" }} src={imgUrl}></img>
+							<img alt="img1" style={{ height: "4rem" }} src={imgUrl} />
 						</a>
 						<a href={url2}>
-							<img alt="img2" style={{ height: "4rem" }} src={imgUrl2}></img>
+							<img alt="img2" style={{ height: "4rem" }} src={imgUrl2} />
 						</a>
 					</div>
 				)}
@@ -96,7 +96,7 @@ export const PlaceholderCard = (): JSX.Element => {
 					backgroundColor: "gray",
 					height: "3rem",
 					display: "flex",
-					jusifyContent: "center",
+					justifyContent: "center",
 					alignItems: "center",
 				}}
 			/>

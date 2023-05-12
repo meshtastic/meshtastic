@@ -51,7 +51,6 @@ const TwoPointZero = (): JSX.Element => {
 									<Dark>
 										<img
 											className="h-11 w-auto"
-											it
 											src="/design/logo/svg/Mesh_Logo_White.svg"
 											alt="Meshtastic Logo"
 										/>
@@ -59,7 +58,6 @@ const TwoPointZero = (): JSX.Element => {
 									<Light>
 										<img
 											className="h-11 w-auto"
-											it
 											src="/design/logo/svg/Mesh_Logo_Black.svg"
 											alt="Meshtastic Logo"
 										/>
@@ -67,7 +65,10 @@ const TwoPointZero = (): JSX.Element => {
 								</div>
 								<div className="mt-20">
 									<div>
-										<a href="#" className="inline-flex space-x-4">
+										<a
+											href="https://github.com/meshtastic/firmware/releases"
+											className="inline-flex space-x-4"
+										>
 											<span className="rounded bg-rose-50 px-2.5 py-1 text-sm font-semibold text-rose-500">
 												What's new
 											</span>
