@@ -6,6 +6,8 @@ sidebar_label: Radio Settings
 sidebar_position: 1
 ---
 
+import {FrequencyCalculator} from "/src/components/tools/FrequencyCalculator";
+
 :::info
 Meshtastic is **not** LoRaWAN, Helium or TTN (TheThingsNetwork). Meshtastic uses the full spectrum frequency range designated to LoRa technology per region. This allows for several hundred possible frequency channels in the US region alone.
 :::
@@ -13,6 +15,10 @@ Meshtastic is **not** LoRaWAN, Helium or TTN (TheThingsNetwork). Meshtastic uses
 :::info
 Power limits will generally be lifted in the software if `is_licensed` is set to `true`. See [HAM Mode](/docs/faq#amateur-radio-ham) for more information.
 :::
+
+## Channel Frequency Calculator
+
+<FrequencyCalculator />
 
 ## Europe Frequency Bands
 
