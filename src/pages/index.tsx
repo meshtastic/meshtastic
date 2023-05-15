@@ -96,13 +96,24 @@ const SocialCards: SocialCardProps[] = [
 		),
 	},
 	{
-		color: "bg-[#ffffff]",
+		color: "bg-[#4A99E9]",
 		link: "https://twitter.com/TheMeshtastic",
 		children: (
 			<img
 				alt="twitter"
-				className="m-auto h-10"
-				src="/img/homepage/Twitter-logo.svg"
+				className="m-auto h-14"
+				src="/img/homepage/Twitter-Logo-White.svg"
+			/>
+		),
+	},
+	{
+		color: "bg-[#3875EA]",
+		link: "https://facebook.com/themeshtastic",
+		children: (
+			<img
+				alt="facebook"
+				className="m-auto h-14"
+				src="/img/homepage/f_logo_RGB-White_1024.png"
 			/>
 		),
 	},
