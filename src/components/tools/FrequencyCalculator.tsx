@@ -318,7 +318,7 @@ export const FrequencyCalculator = (): JSX.Element => {
 				>
 					{Array.from(Array(numChannels).keys()).map((key) => (
 						<option key={key} value={key}>
-							{key}
+							{key + 1}
 						</option>
 					))}
 				</select>
