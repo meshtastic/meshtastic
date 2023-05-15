@@ -102,7 +102,7 @@ const SocialCards: SocialCardProps[] = [
 			<img
 				alt="twitter"
 				className="m-auto h-14"
-				src="/img/homepage/Twitter-social-icons-circle-white.svg"
+				src="/img/homepage/Twitter-Logo-White.svg"
 			/>
 		),
 	},
