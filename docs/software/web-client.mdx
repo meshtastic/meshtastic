@@ -16,7 +16,7 @@ There are three ways of accessing the app:
 
 ## Compatibility
 
-The application will work in all major browsers, but specific functionality is limited in some cases, for the best experience we recommend using [Google Chrome](https://www.google.com/chrome).
+The application will work in all major browsers, but specific functionality is limited in some cases. For the best experience we recommend using a Chromium based browser such as [Google Chrome](https://www.google.com/chrome) or [Microsoft Edge](https://www.microsoft.com/en-us/edge).
 
 ### HTTP
 
@@ -24,8 +24,8 @@ This method of connecting is limited to esp32 devices.
 
 :::caution
 
-When using the [hosted](https://client.meshtastic.org) version of the application, all traffic must be served over HTTPS,
-as Meshtastic nodes generate self-signed certificates, you must inform your browser that you wish to trust the aforementioned certificate.
+When using the [hosted](https://client.meshtastic.org) version of the application, all traffic must be served over HTTPS.
+Meshtastic nodes generate self-signed certificates, and you must inform your browser that you wish to trust the aforementioned certificate.
 This can be done by first accessing your node directly via your browser: `https://NODE_IP_ADDRESS/` replacing `NODE_IP_ADDRESS` with the IP address of your node.
 This can be found on the screen of the device, via your router's DHCP lease page or serial console.
 
@@ -35,13 +35,13 @@ You can accessing your device over HTTP after you set up your [Network Connectio
 
 ### Bluetooth
 
-Bluetooth support is governed by the availability of the [Web Bluetooth API](https://web.dev/bluetooth) as illustrated blow, support is primarily available in Chromium browsers
+Bluetooth support is governed by the availability of the [Web Bluetooth API](https://web.dev/bluetooth) as illustrated below. Support is primarily available in Chromium based browsers.
 
 ![Web Bluetooth compatibility matrix](https://caniuse.bitsofco.de/image/web-bluetooth.png)
 
 ### Serial (USB)
 
-The method with the least platform support, uses the [Web Serial API](https://web.dev/serial) allows us to connect directly to a Meshtastic node over USB, accessing it directly within your browser.
+The method with the least platform support, which uses the [Web Serial API](https://web.dev/serial), allows us to connect directly to a Meshtastic node over USB and access it from directly within your browser.
 
 ![Web Serial compatibility matrix](https://caniuse.bitsofco.de/image/web-serial.png)
 
