@@ -29,13 +29,13 @@ export const Filters = (): JSX.Element => {
 						flexWrap: "wrap",
 					}}
 				>
-					{data.map((tag, i) => {
+					{data.map((tag) => {
 						const { label, color } = tag;
 						const id = `showcase_checkbox_id_${tag};`;
 
 						return (
 							<div
-								key={i}
+								key={tag.id}
 								style={{
 									boxSizing: "border-box",
 									position: "relative",

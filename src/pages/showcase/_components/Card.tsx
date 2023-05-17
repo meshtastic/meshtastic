@@ -12,7 +12,7 @@ export const Card = React.memo(({ network }: CardProps) => (
 	<div className="card">
 		<div className="card__image">
 			<div style={{ height: "140px" }}>
-				<img img={mapUrl(network.nodes ?? [])} alt={network.title} />
+				<img src={mapUrl(network.nodes ?? [])} alt={network.title} />
 			</div>
 		</div>
 		<div className="card__body">
@@ -76,12 +76,12 @@ export const PlaceholderCard = (): JSX.Element => (
 			/>
 		</div>
 		<div className="card__footer">
-			<a
+			<button
 				className="button disabled button--primary button--block"
 				style={{ marginBottom: "0.5rem" }}
 			>
 				&nbsp;
-			</a>
+			</button>
 			<div
 				style={{
 					display: "flex",
