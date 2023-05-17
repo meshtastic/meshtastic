@@ -28,20 +28,18 @@ const Hardware = (): JSX.Element => {
 					</h3>
 					<div className="mt-4 sm:mt-0 sm:ml-10">
 						<nav className="-mb-px flex space-x-8">
-							<a
-								href="#"
+							<button
 								className="border-indigo-500 text-indigo-600"
 								aria-current={"page"}
 							>
 								Devices
-							</a>
-							<a
-								href="#"
+							</button>
+							<button
 								className="hover:border-gray-300', 'whitespace-nowrap border-b-2 border-transparent
                 px-1 pb-4 text-sm font-medium text-gray-500 hover:text-gray-700"
 							>
 								Antennas
-							</a>
+							</button>
 						</nav>
 					</div>
 				</div>
@@ -51,9 +49,9 @@ const Hardware = (): JSX.Element => {
 					role="list"
 					className="grid grid-cols-2 gap-x-2 gap-y-4 sm:grid-cols-3 sm:gap-x-6 lg:grid-cols-4 xl:grid-cols-5 xl:gap-x-4"
 				>
-					{hardware.map((device, index) => (
+					{hardware.map((device) => (
 						<HardwareCard
-							key={index}
+							key={device.name}
 							device={device}
 							setDevice={(): void => {
 								setModalData(device);
