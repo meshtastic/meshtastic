@@ -263,16 +263,22 @@ export const FrequencyCalculator = (): JSX.Element => {
 	useEffect(() => {
 		const selectedRegion = RegionData.get(region);
 		const selectedModemPreset = modemPresets.get(modemPreset);
-		setNumChannels(
-			Math.floor(
-				(selectedRegion.freq_end - selectedRegion.freq_start) /
-					(selectedRegion.spacing + selectedModemPreset.bw / 1000),
-			),
+		const calculatedNumChannels = Math.floor(
+			(selectedRegion.freq_end - selectedRegion.freq_start) /
+				(selectedRegion.spacing + selectedModemPreset.bw / 1000),
 		);
+		setNumChannels(calculatedNumChannels);
+
+		let updatedChannel = channel;
+		if (updatedChannel >= calculatedNumChannels) {
+			updatedChannel = calculatedNumChannels - 1;
+		}
+		setChannel(updatedChannel);
+
 		setChannelFrequency(
 			selectedRegion.freq_start +
 				selectedModemPreset.bw / 2000 +
-				channel * (selectedModemPreset.bw / 1000),
+				updatedChannel * (selectedModemPreset.bw / 1000),
 		);
 	}, [modemPreset, region, channel]);
 
@@ -323,6 +329,7 @@ export const FrequencyCalculator = (): JSX.Element => {
 					))}
 				</select>
 			</div>
+
 			<div className="flex gap-2">
 				<label className="font-semibold">Number of channels:</label>
 				<input type="number" disabled value={numChannels} />
