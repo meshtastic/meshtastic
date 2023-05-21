@@ -118,6 +118,17 @@ const SocialCards: SocialCardProps[] = [
 		),
 	},
 	{
+		color: "bg-[#ffffff]",
+		link: "https://www.instagram.com/themeshtastic/",
+		children: (
+			<img
+				alt="instagram"
+				className="m-auto h-14"
+				src="/img/homepage/Instagram_Glyph_Gradient.svg"
+			/>
+		),
+	},
+	{
 		color: "bg-[#FF0000]",
 		link: "https://www.youtube.com/meshtastic",
 		children: (
@@ -147,17 +158,6 @@ const SocialCards: SocialCardProps[] = [
 				alt="reddit"
 				className="m-auto h-20"
 				src="/img/homepage/Reddit-Logo-White.svg"
-			/>
-		),
-	},
-	{
-		color: "bg-[#ffffff]",
-		link: "https://github.com/meshtastic",
-		children: (
-			<img
-				alt="github"
-				className="m-auto w-12"
-				src="/img/homepage/GitHub-Logo-White.svg"
 			/>
 		),
 	},
