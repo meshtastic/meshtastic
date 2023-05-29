@@ -36,7 +36,7 @@ const Firmware = (): JSX.Element => {
 					<div className="flex w-1/5 bg-gradient-to-r from-green-500 to-primary">
 						<BoltIcon className="m-auto h-20" />
 					</div>
-					<div className="flex w-3/4 flex-col bg-primary xl:flex-row">
+					<div className="flex w-full flex-col bg-primary xl:flex-row">
 						<div className="card m-4 border-2 border-secondary">
 							<div className="card__header">
 								<h3>ESP32 Web Flasher</h3>
@@ -58,7 +58,7 @@ const Firmware = (): JSX.Element => {
 								</a>
 							</div>
 						</div>
-						<div className="card m-4 border-2 border-secondary">
+						<div className="card m-4 border-2 border-secondary w-full">
 							<div className="card__header">
 								<h3>nRF52 Drag & Drop</h3>
 							</div>
