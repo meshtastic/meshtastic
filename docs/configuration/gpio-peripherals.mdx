@@ -59,7 +59,7 @@ The procedure using the python command line tool is:
    meshtastic --seturl theurlyoucopiedinstep3
    ```
 
-Now both devices should be able to talk over the `gpio` channel. Send a text message from one to the other to verify. Also run `--nodes` to verify the second node shows up.
+Now both devices should be able to talk over the `gpio` channel. Send a text message from one the other other verify. Also run `--nodes` to verify the second node shows up.
 
 ### Masks
 
@@ -132,9 +132,9 @@ You can add a simple LED and resistor to validate that the GPIO operations work 
 ### Preparation
 
 1. Disconnect the remote device from power (battery/usb)
-2. Add a resistor from yellow wire to the one end of the LED (either end of the resistor is OK, either end of the LED is OK)
-3. Add the yellow wire from a GPIO pin that will not cause any issues (ex: for TLoraV1, we can use GPIO21)
-4. Add the black "ground" wire from the ground pin on the device (ex: for TLoraV1 it is the end pin next to the RST button) to the other end of the LED
+2. Connect the resistor to the longer (positive) lead of the LED and the yellow wire to the other end of the resistor
+3. Connect the other end of the yellow wire to a GPIO pin that will not cause any issues (ex: for TLoraV1, we can use GPIO21)
+4. Connect the black "ground" wire from the ground pin on the device (ex: for TLoraV1 it is the end pin next to the RST button) to the shorter (negative) lead of the LED
 5. Power on the device
 
 ### Validation
