@@ -139,6 +139,32 @@ a + .navbar__link > svg {
   margin-bottom: auto;
 }
 
+.tabs {
+  gap: 5px
+}
+
+.tabs li {
+  display: inline-flex;
+  justify-content: center;
+  border: 1px solid;
+  border-bottom-left-radius: 6.4px;
+  border-bottom-left-radius: 6.4px;
+  border-top-left-radius: 6.4px;
+  border-top-right-radius: 6.4px;
+  padding: 8px
+}
+
+.tabs li:hover {
+  color: var(--ifm-link-color);
+  border: 1px solid var(--ifm-link-color)
+}
+
+.tabs__item--active {
+  border-color: var(--ifm-tabs-color-active-border);
+  border-bottom-left-radius: 6.4px;
+  border-bottom-right-radius: 6.4px;
+  color: var(--ifm-tabs-color-active);}
+
 @layer base {
   .markdown {
     @apply prose prose-lg;
