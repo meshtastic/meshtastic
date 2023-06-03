@@ -19,7 +19,9 @@ values={[
 {label: 'T-Beam v0.7', value:'0.7'},
 {label: 'T-Beam v1.1', value: '1.1'},
 {label: 'T-Beam with M8N', value: 'm8n'},
-{label: 'T-Beam with M8N & SX1262', value: 'sx1262'}
+{label: 'T-Beam with M8N & SX1262', value: 'sx1262'},
+{label: 'T-Beam Supreme', value: 'supreme'},
+{label: 'T-Beam S3-Core', value: 's3core'}
 ]}>
 
 <TabItem value="0.7">
@@ -156,22 +158,63 @@ This is an earlier version of the T-Beam board. Due to changes in the design thi
 ![T-Beam M8N & SX1262](/img/hardware/t-beam-sx1262.png)
 
 </TabItem>
-<TabItem value = "Supreme">
+<TabItem value = "supreme">
 
   - **MCU**
-  - ESP32-S3 (WiFi & Bluetooth)
+  - ESP32-S3 (WiFi & Bluetooth 5LE)
 - **LoRa Transceiver**
   - **Semtech SX1262** (improved performance)
 - **Frequency options**
   - 433 MHz
   - 868 MHz
   - 915 MHz
-  - 923 MHz
 - **Navigation Module**
   - **NEO-M10S - GNSS receiver (supports GPS, GLONASS, Galileo, BeiDou)** (better GPS sensitivity)
+  - **Quectel L76K - (supports GPS, Beidou, GLONASS** (lower price)
 - **Connectors**
   - USB-C
   - Antenna: U.FL antenna connector
+  
+## Features
+  
+- Includes T-Beam S3-Core Module
+- SoftRF preinstalled (flashing to Meshtastic required)
+- Power, Boot and Reset switches
+- 1.3" OLED included
+- BME280 Air pressure sensor
+- QMI8658 IMU
+- QMC6310 Magnetometer
+- PCF8563 RTC
+- Micro-SD reader (not implemented in Meshtastic)
+  
+## Resources
+  - Purchase Link: [AliExpress](https://www.aliexpress.com/item/1005005418286231.html)
+  
+</TabItem>
+<TabItem value = "s3core">
+
+  - **MCU**
+  - ESP32-S3 (WiFi & Bluetooth 5LE)
+- **LoRa Transceiver**
+  - **Semtech SX1262** (improved performance)
+- **Frequency options**
+  - 433 MHz
+  - 868 MHz
+  - 915 MHz
+- **Navigation Module**
+  - **NEO-M10S - GNSS receiver (supports GPS, GLONASS, Galileo, BeiDou)** (better GPS sensitivity)
+  - **Quectel L76K - (supports GPS, Beidou, GLONASS** (lower price)
+- **Connectors**
+  - USB-C
+  - Antenna: U.FL antenna connector
+  
+## Features
+  
+- SoftRF preinstalled (flashing to Meshtastic required)
+- Boot and Reset switches
+  
+## Resources
+  - Purchase Link: [AliExpress](https://www.aliexpress.com/item/1005005418286231.html)
   
 </TabItem>
 </Tabs>
