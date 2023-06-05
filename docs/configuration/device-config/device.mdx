@@ -66,6 +66,10 @@ This is the number of seconds between NodeInfo message broadcasts from the devic
 
 This option will enable a double tap, when a supported accelerometer is attached to the device, to be treated as a button press.
 
+### Managed Mode
+
+Enabling Managed mode will restrict access to all radio configurations via client applications. Radio configurations will only be accessible through the Admin channel. To avoid being locked out, make sure the Admin channel is working properly before enabling it.
+
 ## Device Config Client Availability
 
 <Tabs
@@ -114,6 +118,7 @@ All device config options are available in the python CLI. Example commands are 
 | device.buzzer_gpio                | `0` - `34`                                                                          | `0`               |
 | device.node_info_broadcast_secs   | `0` - `UINT MAX`                                                                    | `10800` (3 hours) |
 | device.double_tap_as_button_press | `false`, `true`                                                                     | `false`           |
+|   device.is_managed | `false`, `true`                                                                     | `false`           |
 
 :::tip
 
