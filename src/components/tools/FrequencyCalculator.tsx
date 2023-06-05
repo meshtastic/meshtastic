@@ -263,21 +263,24 @@ export const FrequencyCalculator = (): JSX.Element => {
 	useEffect(() => {
 		const selectedRegion = RegionData.get(region);
 		const selectedModemPreset = modemPresets.get(modemPreset);
-		setNumChannels(
-			Math.floor(
-				(selectedRegion.freq_end - selectedRegion.freq_start) /
-					(selectedRegion.spacing + selectedModemPreset.bw / 1000),
-			),
+		const calculatedNumChannels = Math.floor(
+			(selectedRegion.freq_end - selectedRegion.freq_start) /
+				(selectedRegion.spacing + selectedModemPreset.bw / 1000),
 		);
 
-		if (channel >= numChannels) {
-			setChannel(numChannels - 1);
+		setNumChannels(calculatedNumChannels);
+
+		let updatedChannel = channel;
+		if (updatedChannel >= calculatedNumChannels) {
+			updatedChannel = 0;
 		}
+
+		setChannel(updatedChannel);
 
 		setChannelFrequency(
 			selectedRegion.freq_start +
 				selectedModemPreset.bw / 2000 +
-				channel * (selectedModemPreset.bw / 1000),
+				updatedChannel * (selectedModemPreset.bw / 1000),
 		);
 	}, [modemPreset, region, channel]);
 
