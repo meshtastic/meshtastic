@@ -61,9 +61,9 @@ export const Network = ({ id }: NetworkProps): JSX.Element => {
 							<h2>Bill of Materials</h2>
 						</div>
 						<div className="card__body">
-							{data.materials?.map((material, index) => (
+							{data.materials?.map((material) => (
 								<div
-									key={index}
+									key={material.id}
 									style={{
 										borderTop: "2px solid gray",
 										display: "flex",

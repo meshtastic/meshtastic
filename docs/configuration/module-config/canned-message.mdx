@@ -27,7 +27,7 @@ This module can also be configured to beep only when message contains the bell c
 
 ### Messages
 
-The list of pre-set messages, up to 200 bytes.
+The list of pre-set messages as configured by the user. Messages should be separated by pipes `|`. The total byte count for the message list can be up to 200 bytes
 
 ### Input Source
 
@@ -117,8 +117,7 @@ Example commands are below:
 |         canned_message.enabled         |              `true`, `false`              |    `false`    |
 |        canned_message.send_bell        |              `true`, `false`              |    `false`    |
 |   canned_message.allow_input_source    | `rotEnc1`, `_any`, `upDownEnc1`, `cardkb` |    `_any`     |
-|        canned_message.messages         |                 `string`                  |     `""`      |
-|              (Messages)\*              |                 `string`                  |     `""`      |
+|        canned_message.messages         |                 `string`                  |     `""` (separate using pipes)      |
 |  canned_message.inputbroker_event_cw   |             `InputEventChar`              | (not defined) |
 |  canned_message.inputbroker_event_ccw  |             `InputEventChar`              | (not defined) |
 | canned_message.inputbroker_event_press |             `InputEventChar`              | (not defined) |
@@ -147,7 +146,7 @@ meshtastic --set canned_message.send_bell false
 ```
 
 ```shell title="Set Messages"
-meshtastic --set-canned-message "I need an alpinist!|Call Me|Roger Roger|Keep Calm|On my way"
+meshtastic --set canned_message.messages "I need an alpinist!|Call Me|Roger Roger|Keep Calm|On my way"
 ```
 
 ```shell title="Set Input Source"

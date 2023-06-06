@@ -9,11 +9,11 @@ export interface CardTagsProps {
 export const CardTags = ({ tags }: CardTagsProps) => {
 	return (
 		<div>
-			{tags.map(({ color, label }, index) => {
+			{tags.map(({ color, label }) => {
 				return (
 					<span
 						className="badge"
-						key={index}
+						key={label}
 						style={{
 							backgroundColor: color,
 							marginRight: "0.3rem",

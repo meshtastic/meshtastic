@@ -39,23 +39,6 @@ const Firmware = (): JSX.Element => {
 					<div className="flex w-full flex-col bg-primary xl:flex-row">
 						<div className="card m-4 border-2 border-secondary">
 							<div className="card__header">
-								<h3>Meshtastic Flasher</h3>
-							</div>
-							<div className="card__body">
-								<p>Desktop application to flash fimware to your devices.</p>
-							</div>
-							<div className="card__footer mt-auto">
-								<a
-									href="https://github.com/meshtastic/Meshtastic-gui-installer/releases/latest"
-									className="m-auto flex rounded-lg border-4 border-transparent bg-accent p-1 font-semibold text-black shadow-md hover:text-black hover:brightness-110 active:border-green-200"
-								>
-									Download
-									<ArrowTopRightOnSquareIcon className="m-auto ml-2 h-4" />
-								</a>
-							</div>
-						</div>
-						<div className="card m-4 border-2 border-secondary">
-							<div className="card__header">
 								<h3>ESP32 Web Flasher</h3>
 							</div>
 							<div className="card__body">
@@ -75,7 +58,7 @@ const Firmware = (): JSX.Element => {
 								</a>
 							</div>
 						</div>
-						<div className="card m-4 border-2 border-secondary">
+						<div className="card m-4 border-2 border-secondary w-full">
 							<div className="card__header">
 								<h3>nRF52 Drag & Drop</h3>
 							</div>
@@ -214,7 +197,7 @@ const Firmware = (): JSX.Element => {
 									</div>
 									<div className="card__footer mt-auto">
 										<a
-											href="https://nightly.link/meshtastic/firmware/workflows/main/master/built.zip"
+											href="https://nightly.link/meshtastic/firmware/workflows/main_matrix/master"
 											className="button button--secondary button--block"
 										>
 											Download Bleeding

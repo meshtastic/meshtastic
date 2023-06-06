@@ -86,8 +86,8 @@ const OEM = (): JSX.Element => {
 						setOemFont(parseInt(e.target.value));
 					}}
 				>
-					{enumOptions.map(([name, value], index) => (
-						<option key={index} value={value}>
+					{enumOptions.map(([name, value]) => (
+						<option key={name} value={value}>
 							{name}
 						</option>
 					))}
