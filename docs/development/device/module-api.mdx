@@ -5,7 +5,7 @@ sidebar_label: Module API
 sidebar_position: 3
 ---
 
-The purpose of this tutorial is for writing new core modules that can be ran on a device. In most cases, it is best to start with utilizing the serial module rather than creating a new one. However, if you're interested in creating a new core functionality from scratch, then building a module would be appropriate.
+The purpose of this tutorial is for writing new core modules that can be run on a device. In most cases, it is best to start with utilizing the serial module rather than creating a new one. However, if you're interested in creating a new core functionality from scratch, then building a module would be appropriate.
 
 ## Key concepts
 
@@ -71,7 +71,7 @@ The easiest way to get started is:
    cp src/modules/ReplyModule.* src/modules/YourModule.*
    ```
 3. Change the port number from `PortNum_REPLY_APP` to `PortNum_PRIVATE_APP`.
-4. Edit the `setupModules()` function located at `modules/Moduless.cpp` to add a call to create an instance of your module (see comment at head of that function).
+4. Edit the `setupModules()` function located at `modules/Modules.cpp` to add a call to create an instance of your module (see comment at head of that function).
 5. Rebuild with your new module and install on the device.
 6. Use the [Meshtastic Python CLI tool](https://github.com/meshtastic/Meshtastic-python) to send a packet to your board, for example:
    - `meshtastic --dest 1234 --sendping` where _1234_ is another mesh node to send the ping to.
