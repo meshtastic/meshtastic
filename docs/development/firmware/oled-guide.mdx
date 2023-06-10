@@ -10,7 +10,7 @@ sidebar_label: OLED Localization
       Please note that the used font file format differs from common Adafruit GFX.
 2. Update the `customFontTableLookup` function in `Screen.h`
    1. To map the double-byte UTF-8 code to the corresponding extended ASCII character of the desired codepage update the `customFontTableLookup` function in the `Screen.h` file.
-   2. Modify the `switch (last)` statement: use left byte from UTF-8 code in the `case` label to map charachter's right byte to its extended ASCII code by specifying an offset.
+   2. Modify the `switch (last)` statement: use left byte from UTF-8 code in the `case` label to map character's right byte to its extended ASCII code by specifying an offset.
 3. Define language and font in `Screen.cpp`
 
    ```c

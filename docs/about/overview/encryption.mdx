@@ -67,7 +67,7 @@ The current implementation provides optional confidentiality to members of a con
 - Pairing from client-to-device is by:
   - direct USB cable
   - BT pairing
-- Devices are 'promiscuous' and will pair with any near-by client. Network confidentiality requires physical protextion of all nodes.
+- Devices are 'promiscuous' and will pair with any near-by client. Network confidentiality requires physical protection of all nodes.
 
 ### Phase 2 - Strong device and client identity
 
@@ -75,9 +75,9 @@ The current implementation provides optional confidentiality to members of a con
 
 - Know who sent a message (strong binding of messages to a particular node and/or terminal device)
   - This would be an optional feature for a message
-- Optionaly enforce identity based restrictions on some actions performed at nodes and/or clients
+- Optionally enforce identity based restrictions on some actions performed at nodes and/or clients
 - Optional support of strong pairing of a client to a device/node and restrict ability to manage and receive messages based on the pairing.
-  - The BT paring and the cryptographic paring are separate (to simplify pahse 1 deployment and testing)
+  - The BT paring and the cryptographic paring are separate (to simplify phase 1 deployment and testing)
 - Above features should be architected to be ‘cryptographically strong’ and algorithm agile.
 
 **Phase 2 Proposed mechanisms:**
@@ -93,7 +93,7 @@ The current implementation provides optional confidentiality to members of a con
     Wrapped data to contain any of the existing message types.
   - initial ‘cipher suite’ **only** signs a message
   - new signed/authenticated messages to:
-  - device->client: provide ownership status of device (owner is identifed by a public key)
+  - device->client: provide ownership status of device (owner is identified by a public key)
   - client->device: set owner key (must be existing device owner or owner null)
   - any->all. Broadcast public key and associated info (crude initial key distribution)
 
