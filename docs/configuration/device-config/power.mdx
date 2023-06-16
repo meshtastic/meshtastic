@@ -115,6 +115,14 @@ While in light sleep when we receive packets on the LoRa radio we will wake and 
 
 `0` for default of 10 seconds
 
+### Device Battery INA2xx Address
+
+If an INA-2XX device is auto-detected on one of the I2C buses at the specified address, it will be used as the authoritative source for reading device battery level voltage. Setting is ignored for devices with PMUs (e.g. T-beams)
+
+:::tip
+I2C addresses are normally represented in hexadecimal and will require conversion to decimal in order to set via Meshtastic clients. For example the I2C address of 0x40 converted to decimal is 64.
+:::
+
 ## Power Config Client Availability
 
 <Tabs
@@ -164,6 +172,7 @@ All Power config options are available in the python CLI.
 |            power.sds_secs            |     `integer` (seconds)      |      Default of `0` is 1 year       |
 |            power.ls_secs             |     `integer` (seconds)      |      Default of `0` is 1 hour       |
 |         power.min_wake_secs          |     `integer` (seconds)      |    Default of `0` is 10 seconds     |
+| power.device_battery_ina_address     | `integer` (I2C address as decimal)     |  Default of `0` is no address set   |
 
 :::tip
 

@@ -8,11 +8,9 @@ sidebar_label: Telemetry
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 
-The Telemetry Module provides two types of data over the mesh. Device metrics (Battery Level, Voltage, Channel Utilization and Airtime) from your meshtastic device and Environment Metrics from attached I2C sensors.
+The Telemetry Module provides three types of data over the mesh: Device metrics (Battery Level, Voltage, Channel Utilization and Airtime) from your Meshtastic device, Environment Metrics from attached I2C sensors, and Air Quality Metrics from attached I2C particle sensors.
 
-Supported sensors connected to the I2C bus of the device will be automatically detected at startup. Environment Telemetry must be enabled for them to be instrumented and their readings sent over the mesh.
-
-The telemetry module config options are: Device Metrics Update Interval, Environment Metrics Update Interval, Environment Telemetry Enabled, Show on Device Screen, and Display Fahrenheit.
+Supported sensors connected to the I2C bus of the device will be automatically detected at startup. Environment Telemetry and Air Quality must be enabled for them to be instrumented and their readings sent over the mesh.
 
 ### Currently Supported Sensor Types
 
@@ -27,38 +25,49 @@ The telemetry module config options are: Device Metrics Update Interval, Environ
 |  LPS22  |       0x5D, 0x5c       |                      Barometric pressure                      |
 |  SHTC3  |          0x70          |                   Temperature and humidity                    |
 |  SHT31  |          0x44          |                   Temperature and humidity                    |
+| PMSA003I|          0x12          |     Concentration units by size and particle counts by size   |
 
 ## Module Config Values
 
-### Update Intervals
+### Environment Telemetry Enabled
 
-### Device Metrics Update Interval
-
-How often we should send Device Metrics over the mesh.
-
-Default is every 15 minutes.
+Enable the Environment Telemetry (Sensors).
 
 ### Environment Metrics Update Interval
 
 How often we should send Environment(Sensor) Metrics over the mesh.
 
-Default is every 15 minutes.
+Default is `900` seconds (15 minutes).
 
-## Sensor options
+### Device Metrics Update Interval
 
-### Environment Telemetry Enabled
+How often we should send Device Metrics over the mesh.
 
-Enable the Environment Telemetry (Sensors)
+Default is `900` seconds (15 minutes).
 
-### Show on device screen
+### Environment Screen Enabled
 
-Show the Telemetry Module on the device display.
+Show the environment telemetry data on the device display.
+
+Default is `false`.
 
 ### Display Fahrenheit
 
-The sensor is always read in Celsius, but the user can opt to display in Fahrenheit using this setting.
+The sensor is always read in Celsius, but the user can opt to display in Fahrenheit (on the device display only) using this setting.
 
 Default is `false`.
+
+### Air Quality Enabled
+
+This option is used to enable/disable the sending of air quality metrics from an attached supported sensor over the mesh network.
+
+Default is `false`.
+
+### Air Quality Interval
+
+This option is used to configure the interval (in seconds) that should be used to send air quality metrics from an attached supported sensor over the mesh network.
+
+Default is `900` seconds (15 minutes).
 
 ## Device Config Client Availability
 
@@ -104,10 +113,12 @@ All telemetry module config options are available in the python CLI. Example com
 |                  Setting                  |  Acceptable Values  |                  Default                  |
 | :---------------------------------------: | :-----------------: | :---------------------------------------: |
 |     telemetry.device_update_interval      | `integer` (seconds) | Default `0` is 15 minutes(`900` seconds). |
-| telemetry.environment_display_fahrenheit  |   `true`, `false`   |                  `false`                  |
-| telemetry.environment_measurement_enabled |   `true`, `false`   |                  `false`                  |
-|   telemetry.environment_screen_enabled    |   `true`, `false`   |                    `0`                    |
+| telemetry.environment_display_fahrenheit  |   `true`, `false`   |                `false`                    |
+| telemetry.environment_measurement_enabled |   `true`, `false`   |                `false`                    |
+|   telemetry.environment_screen_enabled    |   `true`, `false`   |                `false`                    |
 |   telemetry.environment_update_interval   | `integer` (seconds) | Default `0` is 15 minutes(`900` seconds). |
+|   telemetry.air_quality_enabled           |   `true`, `false`   |                `false`                    |
+|   telemetry.air_quality_interval          | `integer` (seconds) | Default `0` is 15 minutes(`900` seconds). |
 
 :::tip
 
