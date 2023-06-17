@@ -13,12 +13,12 @@ Meshtastic can integrate with [CalTopo](https://caltopo.com/) Desktop edition qu
 
 To configure our Meshtastic device for this integration, we have a couple of different options, both of which utilize the [Serial module](/docs/settings/moduleconfig/serial):
 
-### Enabling serial over the device's USB port
+#### Enabling serial over the device's USB port
 ```shell title="Serial over USB"
 meshtastic --set serial.enabled true --set serial.baud BAUD_9600 --set serial.mode CALTOPO --set serial.override_console_serial_port true
 ```
 
-## Enabling serial over an external USB to Serial adapter
+#### Enabling serial over an external USB to Serial adapter
 ```shell title="External serial adapter"
 meshtastic --set serial.enabled true --set serial.baud BAUD_9600 --set serial.mode CALTOPO --set serial.txd = 13 --set serial.rxd = 14
 ```
@@ -32,5 +32,6 @@ Ensure that serial baud rate is set to `9600` on both the Meshtastic device and 
 
 To setup CalTopo for Meshtastic integration using the Live Tracking via APRS, refer to the [documentation](https://training.caltopo.com/all_users/share/live-tracking#aprs).
 
-Here is an example CalTopo configuration setup for Meshtastic:
+Example CalTopo `topo.properties` file configuration for use with Meshtastic:
 
+![topo.properties](properties.png)
