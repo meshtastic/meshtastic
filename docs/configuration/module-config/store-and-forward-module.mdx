@@ -39,11 +39,50 @@ Because of the increased network traffic for this overhead, it's not advised to 
 groupId="settings"
 defaultValue="cli"
 values={[
-{label: 'CLI', value: 'cli'},
 {label: 'Android', value: 'android'},
-{label: 'iOS', value: 'iOS'},
+{label: 'Apple', value: 'apple'},
+{label: 'CLI', value: 'cli'},
 {label: 'Web', value: 'web'},
 ]}>
+
+<TabItem value="android">
+
+:::info
+Store and Forward Config options are available for Android.
+
+1. Open the Meshtastic App
+2. Navigate to: **Vertical Ellipsis (3 dots top right) > Radio Configuration > Store & Forward**
+:::
+
+### Enabled
+
+Enables the module.
+
+### Heartbeat
+
+The Store & Forward Router sends a periodic message onto the network. This allows connected devices to know that a router is in range and listening to received messages. A client like Android, iOS, or Web can (if supported) indicate to the user whether a store and forward router is available.
+
+### History Return Max
+
+Sets the maximum number of messages to return to a client device.
+
+### History Return Window
+
+Limits the time period (in minutes) a client device can request.
+### Records
+
+Set this to the maximum number of records to save. Best to leave this at the default (`0`) where the module will use 2/3 of your device's available PSRAM. This is about 11,000 records.
+
+</TabItem>
+
+<TabItem value="apple">
+
+:::info
+Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
+:::
+
+</TabItem>
+
 <TabItem value="cli">
 
 ### Enabled
@@ -100,43 +139,6 @@ meshtastic --set store_forward.records 100
 ```
 </TabItem>
 
-<TabItem value="android">
-
-:::info
-Store and Forward Config options are available for Android.
-
-1. Open the Meshtastic App
-2. Navigate to: **Vertical Ellipsis (3 dots top right) > Radio Configuration > Store & Forward**
-:::
-
-### Enabled
-
-Enables the module.
-
-### Heartbeat
-
-The Store & Forward Router sends a periodic message onto the network. This allows connected devices to know that a router is in range and listening to received messages. A client like Android, iOS, or Web can (if supported) indicate to the user whether a store and forward router is available.
-
-### History Return Max
-
-Sets the maximum number of messages to return to a client device.
-
-### History Return Window
-
-Limits the time period (in minutes) a client device can request.
-### Records
-
-Set this to the maximum number of records to save. Best to leave this at the default (`0`) where the module will use 2/3 of your device's available PSRAM. This is about 11,000 records.
-
-</TabItem>
-
-<TabItem value="iOS">
-
-:::info
-Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
-</TabItem>
 
 <TabItem value="web">
 
