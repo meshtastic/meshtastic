@@ -24,132 +24,6 @@ The Store & Forward Module is an implementation of a Store and Forward system to
 
 Because of the increased network traffic for this overhead, it's not advised to use this if you are duty cycle limited for your airtime usage (EU_868 and EU_433) nor is it advised to use this for presets using SF11 or SF12 (e.g. all of the LongRange and VeryLongRange presets).
 
-## Settings
-
-|               Setting               | Acceptable Values | Default |
-| :---------------------------------: | :---------------: | :-----: |
-|        store_forward.enabled        |  `true`, `false`  | `false` |
-|       store_forward.heartbeat       |  `true`, `false`  | `false` |
-|  store_forward.history_return_max   |     `integer`     |   `0`   |
-| store_forward.history_return_window |     `integer`     |   `0`   |
-|        store_forward.records        |     `integer`     |   `0`   |
-
-
-<Tabs
-groupId="settings"
-defaultValue="cli"
-values={[
-{label: 'Android', value: 'android'},
-{label: 'Apple', value: 'apple'},
-{label: 'CLI', value: 'cli'},
-{label: 'Web', value: 'web'},
-]}>
-
-<TabItem value="android">
-
-:::info
-Store and Forward Config options are available for Android.
-
-1. Open the Meshtastic App
-2. Navigate to: **Vertical Ellipsis (3 dots top right) > Radio Configuration > Store & Forward**
-:::
-
-### Enabled
-
-Enables the module.
-
-### Heartbeat
-
-The Store & Forward Router sends a periodic message onto the network. This allows connected devices to know that a router is in range and listening to received messages. A client like Android, iOS, or Web can (if supported) indicate to the user whether a store and forward router is available.
-
-### History Return Max
-
-Sets the maximum number of messages to return to a client device.
-
-### History Return Window
-
-Limits the time period (in minutes) a client device can request.
-### Records
-
-Set this to the maximum number of records to save. Best to leave this at the default (`0`) where the module will use 2/3 of your device's available PSRAM. This is about 11,000 records.
-
-</TabItem>
-
-<TabItem value="apple">
-
-:::info
-Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
-</TabItem>
-
-<TabItem value="cli">
-
-### Enabled
-
-Enables the module.
-
-```shell title="Enable the module"
-meshtastic --set store_forward.enabled true
-```
-
-```shell title="Disable the module"
-meshtastic --set store_forward.enabled false
-```
-
-### Heartbeat
-
-The Store & Forward Router sends a periodic message onto the network. This allows connected devices to know that a router is in range and listening to received messages. A client like Android, iOS, or Web can (if supported) indicate to the user whether a store and forward router is available.
-
-```shell title="Set store_forward.heartbeat to default"
-meshtastic --set store_forward.heartbeat 0
-```
-
-### History Return Max
-
-Sets the maximum number of messages to return to a client device.
-
-```shell title="Set store_forward.history_return_max to default"
-meshtastic --set store_forward.history_return_max 0
-```
-```shell title="Set store_forward.history_return_max to 100 messages"
-meshtastic --set store_forward.history_return_max 100
-```
-
-### History Return Window
-
-Limits the time period (in minutes) a client device can request.
-
-```shell title="Set store_forward.history_return_window to default"
-meshtastic --set store_forward.history_return_window 0
-```
-```shell title="Set store_forward.history_return_window to 1 day (1440 minutes)"
-meshtastic --set store_forward.history_return_window 1440
-```
-
-### Records
-
-Set this to the maximum number of records to save. Best to leave this at the default (`0`) where the module will use 2/3 of your device's available PSRAM. This is about 11,000 records.
-
-```shell title="Set store_forward.records to default (≈11,000 records)"
-meshtastic --set store_forward.records 0
-```
-```shell title="Set store_forward.records to 100 records"
-meshtastic --set store_forward.records 100
-```
-</TabItem>
-
-
-<TabItem value="web">
-
-:::info
-Configuring this setting is not yet available for the selected platform. If this is incorrect please update the documentation for this page.
-:::
-
-</TabItem>
-</Tabs>
-
-
 ## Details
 
 ### How it works
@@ -210,3 +84,123 @@ Available Commands:
 |   SF    | Send the last hour worth of messages I may have missed |
 
 The Store and Forward module will only service one client at a time. If a second client requests messages while the S&F is busy, the S&F will send a private message to the second client that they will need to wait.
+
+## Settings
+
+### Enabled
+
+Enables the module.
+
+### Heartbeat
+
+The Store & Forward Router sends a periodic message onto the network. This allows connected devices to know that a router is in range and listening to received messages. A client like Android, iOS, or Web can (if supported) indicate to the user whether a store and forward router is available.
+
+### History Return Max
+
+Sets the maximum number of messages to return to a client device.
+
+### History Return Window
+
+Limits the time period (in minutes) a client device can request.
+
+### Records
+
+Set this to the maximum number of records to save. Best to leave this at the default (`0`) where the module will use 2/3 of your device's available PSRAM. This is about 11,000 records.
+
+### Client Config
+
+<Tabs
+groupId="settings"
+defaultValue="cli"
+values={[
+{label: 'Android', value: 'android'},
+{label: 'Apple', value: 'apple'},
+{label: 'CLI', value: 'cli'},
+{label: 'Web', value: 'web'},
+]}>
+
+<TabItem value="android">
+
+:::info
+Store and Forward Config options are available for Android.
+
+1. Open the Meshtastic App
+2. Navigate to: **Vertical Ellipsis (3 dots top right) > Radio Configuration > Store & Forward**
+:::
+
+</TabItem>
+
+<TabItem value="apple">
+
+:::info
+Store and Forward configuration is not currently available via the Apple clients.
+:::
+
+</TabItem>
+
+<TabItem value="cli">
+
+|               Setting               | Acceptable Values | Default |
+| :---------------------------------: | :---------------: | :-----: |
+|        store_forward.enabled        |  `true`, `false`  | `false` |
+|       store_forward.heartbeat       |  `true`, `false`  | `false` |
+|  store_forward.history_return_max   |     `integer`     |   `0`   |
+| store_forward.history_return_window |     `integer`     |   `0`   |
+|        store_forward.records        |     `integer`     |   `0`   |
+
+:::tip
+
+Because the device will reboot after each command is sent via CLI, it is recommended when setting multiple values in a config section that commands be chained together as one.
+
+```shell title="Example:"
+meshtastic --set store_forward.enabled true --set store_forward.history_return_max 0
+```
+
+:::
+
+### Examples of CLI Usage
+
+```shell title="Enable the module"
+meshtastic --set store_forward.enabled true
+```
+
+```shell title="Disable the module"
+meshtastic --set store_forward.enabled false
+```
+
+```shell title="Set store_forward.heartbeat to default"
+meshtastic --set store_forward.heartbeat 0
+```
+
+
+```shell title="Set store_forward.history_return_max to default"
+meshtastic --set store_forward.history_return_max 0
+```
+```shell title="Set store_forward.history_return_max to 100 messages"
+meshtastic --set store_forward.history_return_max 100
+```
+
+```shell title="Set store_forward.history_return_window to default"
+meshtastic --set store_forward.history_return_window 0
+```
+```shell title="Set store_forward.history_return_window to 1 day (1440 minutes)"
+meshtastic --set store_forward.history_return_window 1440
+```
+
+```shell title="Set store_forward.records to default (≈11,000 records)"
+meshtastic --set store_forward.records 0
+```
+```shell title="Set store_forward.records to 100 records"
+meshtastic --set store_forward.records 100
+```
+</TabItem>
+
+
+<TabItem value="web">
+
+:::info
+Store and Forward configuration is not currently available via the web client.
+:::
+
+</TabItem>
+</Tabs>
