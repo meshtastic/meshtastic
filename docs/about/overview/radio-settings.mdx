@@ -88,11 +88,7 @@ The link budget used by these calculations assumes a transmit power of 17dBm and
 
 ### Custom Settings
 
-You may want to select other channels for your usage. The other settings can be set by using the Python API.
-
-```shell
-meshtastic --ch-set spread_factor 10 --ch-set coding_rate 4 --ch-set bandwidth 125 --ch-index 0
-```
+Custom settings can be applied by using [supported software](/docs/software).
 
 After applying the settings, you will need to restart the device. After your device is restarted, it will generate a new crypto key and you will need to share the newly generated QR Code or URL to all your other devices.
 
@@ -113,18 +109,8 @@ Some example settings:
 
 The link budget used by these calculations assumes a transmit power of 17dBm and an antenna with 0dB gain. Adjust your link budget assumptions based on your actual devices.
 
-These channel settings may have not been tested. Use at your own discretion. Share on <https://meshtastic.discourse.group> with your successes or failure.
+These channel settings may not have been tested. Use at your own discretion. Share on <https://meshtastic.discourse.group> with your successes or failure.
 
 ## Cryptography
 
-The pre-shared key (PSK) used by the devices can be modified.
-
-- 0 = No crypto
-- 1 = Default channel key
-- 2 - 10 = The default channel key, except with 1 through 9 added to the last byte
-
-Use of cryptography can also be modified. To disable cryptography (maybe useful if you have Ham radio license):
-
-```shell
-meshtastic --setchan psk 0
-```
+The pre-shared key (PSK) used by the devices can be an AES128 or AES256 sequence.  Alternatively, encryption can be turned off, which may be useful if you are operating under a Ham Radio license.
