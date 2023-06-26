@@ -97,11 +97,11 @@ Push the left PWR button for about 1 second.
 
 ### Where do I purchase the device hardware?
 
-Each [supported device](/docs/hardware/devices/tbeam) has a "Purchase Link".
+Each [supported device](/docs/supported-hardware) has a "Purchase Link".
 
 ### I have my hardware. How do I install the firmware and any required drivers?
 
-[See our guide here](/docs/getting-started/flashing-firmware).
+[See our guide here](/docs/getting-started).
 
 ### How do I update the firmware to the latest version?
 
@@ -117,8 +117,7 @@ Once the node wakes up from sleep, your phone will relay any delayed messages th
 
 ### How can I tell the device not to sleep?
 
-- Android instructions see: [Android Usage](/docs/software/android/usage#configuration-options)
-- Python CLI instructions see: [Python Usage](/docs/software/python/cli/usage#changing-settings)
+See [Device Power Configuration](/docs/settings/config/power) options.
 
 ### I am in Europe and my device seems to stop transmitting after a while, what is going on?
 
@@ -148,13 +147,16 @@ If you use your HAM radio license with Meshtastic, consider both the privileges 
 #### Restrictions
 
 - Plain-Text Only
-  - On amateur radio bands, encryption is illegal. [FCC Part 97.113.C](https://www.ecfr.gov/current/title-47/chapter-I/subchapter-D/part-97/subpart-B/section-97.113)
+  - On amateur radio bands, encryption is illegal. [FCC Part 97.113.A.4](https://www.ecfr.gov/current/title-47/chapter-I/subchapter-D/part-97/subpart-B/section-97.113#p-97.113(a)(4))
 - Lack of Privacy
-  - As a HAM operator, it is a requirement that you identify yourself by your call sign periodically when transmitting. Your call sign will be publicly transmitted at least once every 10 minutes at minimum. [FCC Part 97.119.A](https://www.ecfr.gov/current/title-47/chapter-I/subchapter-D/part-97/subpart-B/section-97.119)
+  - As a HAM operator, it is a requirement that you identify yourself by your call sign periodically when transmitting. Your call sign will be publicly transmitted at least once every 10 minutes at minimum. [FCC Part 97.119.A](https://www.ecfr.gov/current/title-47/chapter-I/subchapter-D/part-97/subpart-B/section-97.119#p-97.119(a))
 
 ### How do I set my HAM call sign?
 
-Please see instructions for [Enabling HAM License from the Python CLI](/docs/software/python/cli/usage#ham-radio-support)
+- On Android navigate to Radio configuration -> User and set Long name to your Ham Radio callsign, then activate the slider for 'Licensed amateur radio'.
+- On iPhone navigate to Settings -> User and set Long Name to your Ham Radio callsign, then activate the slider for 'Licensed Operator'.
+- Instructions for Enabling HAM License from the Python CLI can be found [here](/docs/software/python/cli/usage#ham-radio-support).
+
 
 <!-- Flasher -->
 
