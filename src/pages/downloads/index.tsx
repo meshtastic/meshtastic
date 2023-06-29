@@ -31,54 +31,6 @@ const Firmware = (): JSX.Element => {
 			description="Downloads for the Meshtastic project"
 		>
 			<div className="container mt-8 flex flex-col gap-3">
-				<h1 className="m-2">Flasher</h1>
-				<div className="flex w-full overflow-hidden rounded-xl">
-					<div className="flex w-1/5 bg-gradient-to-r from-green-500 to-primary">
-						<BoltIcon className="m-auto h-20" />
-					</div>
-					<div className="flex w-full flex-col bg-primary xl:flex-row">
-						<div className="card m-4 border-2 border-secondary">
-							<div className="card__header">
-								<h3>ESP32 Web Flasher</h3>
-							</div>
-							<div className="card__body">
-								<p>
-									Web based installer for easy flashing with Chrome and Edge
-									Browser. Works with T-Beam, T-Lora, Nano-G1 and similar
-									boards.
-								</p>
-							</div>
-							<div className="card__footer mt-auto">
-								<a
-									href="https://flasher.meshtastic.org/"
-									className="m-auto flex rounded-lg border-4 border-transparent bg-accent p-1 font-semibold text-black shadow-md hover:text-black hover:brightness-110 active:border-green-200"
-								>
-									Go to Flasher
-									<ArrowTopRightOnSquareIcon className="m-auto ml-2 h-4" />
-								</a>
-							</div>
-						</div>
-						<div className="card m-4 border-2 border-secondary w-full">
-							<div className="card__header">
-								<h3>nRF52 Drag & Drop</h3>
-							</div>
-							<div className="card__body">
-								<p>
-									Devices such as T-Echo and RAK4631 are flashed via filesystem.
-								</p>
-							</div>
-							<div className="card__footer mt-auto">
-								<a
-									href="/docs/getting-started/flashing-firmware/nrf52/drag-n-drop"
-									className="m-auto flex rounded-lg border-4 border-transparent bg-accent p-1 font-semibold text-black shadow-md hover:text-black hover:brightness-110 active:border-green-200"
-								>
-									View Instructions
-								</a>
-							</div>
-						</div>
-					</div>
-				</div>
-				{/*  */}
 				<h1 className="m-2">Apps</h1>
 				<div className="flex w-full overflow-hidden rounded-xl">
 					<div className="flex w-1/5 bg-gradient-to-r from-rose-500 to-primary">
