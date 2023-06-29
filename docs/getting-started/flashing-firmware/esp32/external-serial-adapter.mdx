@@ -10,7 +10,7 @@ import TabItem from "@theme/TabItem";
 import Link from "@docusaurus/Link";
 
 :::info
-This information will likely only be helpful if you've already attempted to go through the prerequisites and processes outlined in [meshtastic flasher](/docs/software/python/flasher) or [manually flashing](/docs/getting-started/flashing-firmware/esp32/cli-script)
+This information will likely only be helpful if you've already attempted to go through the prerequisites and processes outlined in [manually flashing](/docs/getting-started/flashing-firmware/esp32/cli-script)
 :::
 
 :::caution
@@ -55,10 +55,7 @@ Disconnect your USB to Serial Adapter from the computer before starting this pro
 
 ### Flashing
 
-After following the steps above, your device should be in flash mode. You can flash your device using the [Meshtastic flasher](/docs/software/python/flasher) or [manual method](/docs/getting-started/flashing-firmware/esp32/cli-script)
-
-Example using the Meshtastic Flasher
-![image](https://user-images.githubusercontent.com/9000580/168447086-313e0649-1bfe-4ccb-b891-0f56059d8063.png)
+After following the steps above, your device should be in flash mode. You can flash your device using the [manual method](/docs/getting-started/flashing-firmware/esp32/cli-script)
 
 After flashing the device is complete, reset your device (via the RST button if available).
 If you have the Meshtastic Python CLI installed, you can run `meshtastic --noproto` to connect the device again over the adapter and view the serial output to confirm Meshtastic installed correctly.
