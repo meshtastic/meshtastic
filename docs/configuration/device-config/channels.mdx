@@ -62,17 +62,7 @@ To ensure devices with different PRIMARY channel name transmit on the same frequ
 
 ## Channel Settings Values
 
-The Channel Settings options are: ID, Name, PSK, Downlink Enabled, and Uplink Enabled. Channel settings are embedded in the `Channel` protobuf as a `ChannelSettings` protobuf and sent as an admin message.
-
-:::note
-The full globally unique ID will be constructed from the Name and ID (`<name>.<id>`) where ID is base36 encoded. Assuming that the number of Meshtastic users is below 20K (true for a long time) the chance of this 64 bit random number colliding with anyone else is super low. The penalty for collision is low as well.
-:::
-
-### ID
-
-Used to construct a globally unique channel ID.
-
-Set to `0` by default.
+The Channel Settings options are: Name, PSK, Downlink Enabled, and Uplink Enabled. Channel settings are embedded in the `Channel` protobuf as a `ChannelSettings` protobuf and sent as an admin message.
 
 ### Name
 
@@ -162,11 +152,6 @@ meshtastic --ch-set name "My Channel" --ch-set psk random --ch-set uplink_enable
 
 :::
 
-### Id
-
-```shell title="Set the PRIMARY channel ID"
-meshtastic --ch-set id 1234 --ch-index 0
-```
 
 ### Name
 
