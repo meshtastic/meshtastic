@@ -62,7 +62,7 @@ Acceptable values:
 
 ### Display Mode
 
-The display mode can be set to `NORMAL` (default), `TWOCOLOR` or `INVERTED`. The `TWOCOLOR` mode is intended for OLED displays with the first line of output being a different color than the rest of the display. The `INVERTED` mode will invert that bicolor area, resulting in a white background headline on monochrome displays.
+The display mode can be set to `DEFAULT` (default), `TWOCOLOR`, `INVERTED` or `COLOR`. The `TWOCOLOR` mode is intended for OLED displays with the first line of output being a different color than the rest of the display. The `INVERTED` mode will invert that bicolor area, resulting in a white background headline on monochrome displays.
 
 ### Heading Bold
 
@@ -119,7 +119,7 @@ All display config options are available in the python CLI. Example commands are
 | display.oled                      | `OLED_AUTO`, `OLED_SSD1306`, `OLED_SH1106`, `OLED_SH1107` | `OLED_AUTO`                   |
 | display.screen_on_secs            | `integer`                                                 | Default of `0` is 10 minutes. |
 | display.units                     | `METRIC`, `IMPERIAL`                                      | `METRIC`                      |
-| display.displaymode               | `NORMAL`, `TWOCOLOR`, `INVERTED`                          | `NORMAL`                      |
+| display.displaymode               | `DEFAULT`, `TWOCOLOR`, `INVERTED`, `COLOR`                | `DEFAULT`                     |
 | display.heading_bold              | `false`, `true`                                           | `false`                       |
 | display.wake_on_tap_or_motion     | `false`, `true`                                           | `false`                       |
 
