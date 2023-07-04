@@ -284,8 +284,8 @@ function Home() {
 								style={{ display: "flex", justifyContent: "center" }}
 							>
 								<p>
-									The Meshtastic Flasher application can assist you in flashing
-									the firmware and configuring settings.
+									The Meshtastic Web-Based Flasher & Clients can assist you in
+									flashing the firmware and configuring settings.
 								</p>
 							</div>
 						</div>
