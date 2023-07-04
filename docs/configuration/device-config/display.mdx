@@ -8,7 +8,7 @@ sidebar_label: Display
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 
-The display config options are: Screen On Duration, Auto Carousel Interval, Always Point North and GPS Format. Display config uses an admin message sending a `Config.Display` protobuf.
+The display config options are: Screen On Duration, Auto Carousel Interval, Always Point North, GPS Format, Preferred Display Units, OLED Definition, Display Mode, Heading Bold, and Wake on Tap or Motion. Display config uses an admin message sending a `Config.Display` protobuf.
 
 ## Device Config Values
 
@@ -39,7 +39,7 @@ Acceptable values:
 | `OLC`  | Open Location Code (Plus Codes) |
 | `OSGR` | Ordnance Survey Grid Reference  |
 
-### Preferred display units
+### Preferred Display Units
 
 switch between `METRIC` (default) and `IMPERIAL` units
 
@@ -47,7 +47,7 @@ switch between `METRIC` (default) and `IMPERIAL` units
 
 If enabled, the screen will be rotated 180 degrees, for cases that mount the screen upside down
 
-### OLED Defintion
+### OLED Definition
 
 The type of OLED Controller is auto-detected by default, but can be defined with this setting if the auto-detection fails. For the SH1107, we assume a square display with 128x128 Pixels like the GME128128-1.
 
