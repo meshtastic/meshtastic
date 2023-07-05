@@ -9,9 +9,15 @@ import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 import calculateADC from "/src/utils/calculateADC";
 
-The power config options are: Power Saving, Shutdown after losing power, ADC Multiplier Override Wait Bluetooth Interval, Mesh Super Deep Sleep Timeout, Super Deep Sleep Interval, Light Sleep Interval and Minimum Wake Interval. Power config uses an admin message sending a `Config.Power` protobuf.
+:::info
+Power settings are advanced configuration, most users should choose a role under [Device Config](/docs/settings/config/device) to manage power for their device and shouldn't ever need to adjust these settings.
+:::
 
-Power settings are advanced configuration, most users should choose a role under Device Config to manage power for their device and should never need to touch any of these settings.
+The power config options are: Power Saving, Shutdown after losing power, ADC Multiplier Override, Wait Bluetooth Interval, Mesh Super Deep Sleep Timeout, Super Deep Sleep Interval, Light Sleep Interval, and Minimum Wake Interval. Power config uses an admin message sending a `Config.Power` protobuf.
+
+:::info
+ADC Multiplier, Super Deep Sleep, and Light Sleep settings only apply to ESP32-based boards.  These settings will have no effect on nRF52 modules.
+:::
 
 ## Power Config Values
 
@@ -23,7 +29,7 @@ If set, Bluetooth, Wifi, and screen (if applicable) are turned off. When using t
 
 Automatically shut down a device after a defined time period if power is lost.
 
-### ADC Multiplier Override `Fixes issues on Heltec v2`
+### ADC Multiplier Override
 
 Ratio of voltage divider for battery pin e.g. 3.20 (R1=100k, R2=220k)
 
@@ -85,7 +91,7 @@ It's important to note that this calibration method only maps 4.2V to Battery Ch
 
 ### Wait Bluetooth Interval
 
-How long wait before turning off BLE in no Bluetooth states
+How long to wait before turning off BLE in no Bluetooth states
 
 `0` for default of 1 minute
 
@@ -103,9 +109,9 @@ While in Light Sleep if Mesh Super Deep Sleep Timeout Seconds is exceeded we wil
 
 `0` for default of one year
 
-### Light Sleep Interval `ESP32 Only Setting`
+### Light Sleep Interval
 
-In light sleep the CPU is suspended, LoRa radio is on, BLE is off an GPS is on
+In light sleep the CPU is suspended, LoRa radio is on, BLE is off and GPS is on
 
 `0` for default of five minutes
 
@@ -141,7 +147,7 @@ values={[
 Power Config options are available for Android.
 
 1. Open the Meshtastic App
-2. Navigate to: **Vertical Ellipsis (3 dots top right) > Device Settings > Power Config**
+2. Navigate to: **Vertical Ellipsis (3 dots top right) > Radio Configuration > Power**
 
 :::
 
