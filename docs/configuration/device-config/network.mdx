@@ -32,13 +32,13 @@ Set to `false` (Disabled) by default.
 
 ### WiFi SSID
 
-This is your WiFi Networks SSID.
+This is your WiFi Network's SSID.
 
 Empty `""` by default. (Case Sensitive, Max Length: 33)
 
 ### WiFi PSK
 
-This is your WiFi Networks password.
+This is your WiFi Network's password.
 
 Empty `""` by default. (Case Sensitive, Max Length: 64)
 
@@ -106,8 +106,10 @@ All Network config options are available in the python CLI.
 | :------------------: | :---------------: | :--------------: |
 |  network.ntp_server  |      string       | `0.pool.ntp.org` |
 | network.wifi_enabled |  `true`, `false`  |     `false`      |
-|   network.wifi_psk   |      string       |       `""`       |
 |  network.wifi_ssid   |      string       |       `""`       |
+|   network.wifi_psk   |      string       |       `""`       |
+| network.eth_enabled  |  `true`, `false`  |     `false`      |
+| network.address_mode | `DHCP`, `STATIC`  |      `DHCP`      |
 
 :::tip
 
