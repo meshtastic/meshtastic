@@ -22,7 +22,7 @@ The [T-Beam 0.7](/docs/hardware/devices/tbeam#t-beam---v07) board is an earlier 
 :::
 
 ## Command Line Interface Instructions
-
+### Install Prerequisite Software
 <Tabs
 groupId="operating-system"
 defaultValue="linux"
@@ -33,7 +33,6 @@ values={[
 ]}>
 <TabItem value="linux">
 
-### Install Prerequisite Software
 
 Check if you have `python3` and `pip` installed with the following command
 
@@ -55,16 +54,10 @@ If `pip` is not installed, install with
 sudo apt-get install python3-pip
 ```
 
-### Install `esptool`
-
-```shell
-pip3 install --upgrade esptool
-```
-
   </TabItem>
   <TabItem value="macos">
 
-### Install Prerequisite Software
+
 
 OS X comes with `Python 2.7` installed, but not `pip`. The following uses Homebrew to install `python3` which includes `pip3`. On MacOS you will use `pip3` instead > of `pip`.
 
@@ -98,12 +91,6 @@ Confirm `pip3` was installed alongside `python3`
 pip3 -v
 ```
 
-### Install `esptool`
-
-```shell
-pip3 install --upgrade esptool
-```
-
   </TabItem>
   <TabItem value="windows">
 
@@ -123,14 +110,16 @@ pip --version
 
 :::
 
-### Install `esptool`
-
-```shell
-pip install --upgrade esptool
-```
 
   </TabItem>
 </Tabs>
+
+### Install `esptool`
+
+```shell
+pip3 install --upgrade esptool
+```
+
 
 ### Confirm Communication With Chip
 
