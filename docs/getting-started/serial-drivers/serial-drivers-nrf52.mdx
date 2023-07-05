@@ -11,6 +11,12 @@ import Link from "@docusaurus/Link";
 
 ## Install nRF52 USB to Serial Drivers
 
+:::caution
+
+nRF52 devices typically do not require serial drivers. They use the UF2 bootloader which makes the devices appear as flash drives.  Do _NOT_ download the USB device drivers unless required to install UF2 support.
+
+:::
+
 <Tabs
 groupId="operating-system"
 defaultValue="windows"
@@ -22,17 +28,16 @@ values={[
 
 <TabItem value="linux">
 
-- [CH9102 Driver - Linux Download](http://www.wch-ic.com/downloads/CH341SER_LINUX_ZIP.html)
+- [CH34x Driver - Linux Download](http://www.wch-ic.com/downloads/CH341SER_LINUX_ZIP.html)
 
 </TabItem>
 
 <TabItem value="macos">
 
-- [CH9102 Driver - macOS Download](https://github.com/WCHSoftGroup/ch34xser_macos)
 
-:::caution
+:::info
 
-With the latest versions of MacOS, the USB Serial driver is built-in. Do _NOT_ download the USB device drivers unless required. If you downloaded/installed any already, please remove them.
+With the latest versions of MacOS, the USB Serial driver is built-in. If you downloaded/installed any already, please remove them.
 
 :::
 
@@ -47,11 +52,18 @@ Uninstall the kernel extension:
 3. `sudo rm -rf /Library/Extensions/usbserial.kext`
 4. Reboot
 
+
+### Install the CH34x Driver
+
+- [CH34x Driver- macOS Download](https://github.com/WCHSoftGroup/ch34xser_macos)
+
+
+
 </TabItem>
 
 <TabItem value="windows">
 
-- [CH9102 Driver - Windows Download](http://www.wch-ic.com/downloads/CH341SER_EXE.html)
+- [CH34x Driver - Windows Download](http://www.wch-ic.com/downloads/CH341SER_EXE.html)
 
 </TabItem>
 

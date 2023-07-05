@@ -116,8 +116,25 @@ values={[
 <TabItem value="android">
 
 :::info
-Limited Channel Config options are available on Android. QR code scanning is available.
+Channel Config options are available on Android.
 :::
+![Android Menu Tabs](/img/android/android-menu-channel.png)
+
+The Radio Configuration tab can be used for common tasks:
+1. View your current channel configuration QR code and URL.
+2. Quickly create or modify your primary channel.
+3. Select a modem preset for all your channels i.e. `Long Range / Fast`.
+
+See [Android App Usage](/docs/software/android/usage#setup-a-channel) for more further instruction on setting up your primary channel.
+
+[![Channel Editor](/img/android/android-channel-edit-sm.png)](/img/android/android-channel-edit.png)
+
+Tap the Channel Name (or the pen icon) to access the Channel Menu:
+
+1. Add, remove, or modify secondary channels
+2. Create or modify encryption keys
+3. Enable uplink and downlink for individual channels
+
 
 </TabItem>
 
@@ -192,7 +209,7 @@ meshtastic --ch-set psk base64:puavdd7vtYJh8NUVWgxbsoG2u9Sdqc54YvMLs+KNcMA= --ch
 ```
 
 :::tip
-Use this to copy and paste the `base64` encoded (single channel) key from the meshtastic --info command. Please dont use the omnibus (all channels) code here, it is not a valid key.
+Use this to copy and paste the `base64` encoded (single channel) key from the meshtastic --info command. Please don't use the omnibus (all channels) code here, it is not a valid key.
 :::
 
 ```shell title="Disable encryption on PRIMARY channel"
