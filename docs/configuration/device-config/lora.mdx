@@ -9,7 +9,7 @@ import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 import LoRaRegions from "../../blocks/_lora-regions.mdx";
 
-The LoRa config options are: Region, Modem Preset, Max Hops, Transmit Power, Bandwidth, Spread Factor, Coding Rate, Frequency Offset, Transmit Enabled, Channel Number and Ignore Incoming Array. LoRa config uses an admin message sending a `Config.LoRa` protobuf.
+The LoRa config options are: Region, Modem Preset, Max Hops, Transmit Power, Bandwidth, Spread Factor, Coding Rate, Frequency Offset, Transmit Enabled, Channel Number, Ignore Incoming Array, Override Duty Cycle Limit, SX126x RX Boosted Gain, and Override Frequency. LoRa config uses an admin message sending a `Config.LoRa` protobuf.
 
 :::note
 In order to communicate fully, devices within a mesh must have identical settings for Region and Modem Preset, or identical custom Modem settings.
@@ -134,7 +134,7 @@ values={[
 
 :::info
 
-LoRa Config options such as Region, Modem Preset, and Hop Limit can be configured on Android.
+LoRa Config options are available on Android.
 
 1. Open the Meshtastic App
 2. Navigate to: **Vertical Ellipsis (3 dots top right) > Radio Configuration > LoRa**
@@ -145,7 +145,7 @@ LoRa Config options such as Region, Modem Preset, and Hop Limit can be configure
 <TabItem value="apple">
 
 :::info
-Configuration of Region, Modem Preset and Hop Limit is available on iOS, iPadOS and macOS at Settings > Radio Configuration > LoRa.
+Configuration of Region, Modem Preset, Transmit Enabled, Hop Limit, Channel Number and RX Boosted gain is available on iOS, iPadOS and macOS at Settings > Radio Configuration > LoRa.
 :::
 
 </TabItem>
