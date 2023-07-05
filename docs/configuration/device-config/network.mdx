@@ -8,7 +8,7 @@ sidebar_label: Network
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 
-The Network config options are: WiFi Enabled, WiFi SSID, WiFi PSK, Ethernet Enabled, IPv4 Networking Mode, Static Address and NTP Server. Network config uses an admin message sending a `Config.Network` protobuf.
+The Network config options are: NTP Server, WiFi Enabled, WiFi SSID, WiFi PSK, Ethernet Enabled, IPv4 Networking Mode, and Static Address. Network config uses an admin message sending a `Config.Network` protobuf.
 
 :::info
 Enabling WiFi will disable Bluetooth. Only one connection method will work at a time.
@@ -32,13 +32,13 @@ Set to `false` (Disabled) by default.
 
 ### WiFi SSID
 
-This is your WiFi Networks SSID.
+This is your WiFi Network's SSID.
 
 Empty `""` by default. (Case Sensitive, Max Length: 33)
 
 ### WiFi PSK
 
-This is your WiFi Networks password.
+This is your WiFi Network's password.
 
 Empty `""` by default. (Case Sensitive, Max Length: 64)
 
@@ -79,7 +79,7 @@ values={[
 Network Config options are available for Android.
 
 1. Open the Meshtastic App
-2. Navigate to: **Vertical Ellipsis (3 dots top right) > Device Settings > Network Config**
+2. Navigate to: **Vertical Ellipsis (3 dots top right) > Radio Configuration > Network**
 
 :::
 
@@ -89,7 +89,8 @@ Network Config options are available for Android.
 
 :::info
 
-Network config is not available on Apple OS's.
+Network config options are available on iOS, iPadOS and macOS.
+
 :::
 
 </TabItem>
@@ -106,8 +107,10 @@ All Network config options are available in the python CLI.
 | :------------------: | :---------------: | :--------------: |
 |  network.ntp_server  |      string       | `0.pool.ntp.org` |
 | network.wifi_enabled |  `true`, `false`  |     `false`      |
-|   network.wifi_psk   |      string       |       `""`       |
 |  network.wifi_ssid   |      string       |       `""`       |
+|   network.wifi_psk   |      string       |       `""`       |
+| network.eth_enabled  |  `true`, `false`  |     `false`      |
+| network.address_mode | `DHCP`, `STATIC`  |      `DHCP`      |
 
 :::tip
 

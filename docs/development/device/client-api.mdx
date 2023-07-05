@@ -38,7 +38,7 @@ Typical flow when a phone connects to the device should be the following (if you
 - There are only three relevant endpoints (and they have built in BLE documentation - so use a BLE tool of your choice to watch them): FromRadio, FromNum (sends notifies when new data is available in FromRadio) and ToRadio
 - SetMTU size to 512
 - Write a ToRadio.startConfig protobuf to the "ToRadio" endpoint - this tells the radio you are a new connection and you need the entire NodeDB sent down.
-- Read repeatedly from the "FromRadio" endpoint. Each time you read you will get back a FromRadio protobuf (see Meshtatastic-protobuf). Keep reading from this endpoint until you get back and empty buffer.
+- Read repeatedly from the "FromRadio" endpoint. Each time you read you will get back a FromRadio protobuf (see Meshtastic-protobuf). Keep reading from this endpoint until you get back and empty buffer.
 - See below for the expected sequence for your initial download.
 - After the initial download, you should subscribe for BLE "notify" on the "FromNum" endpoint. If a notification arrives, that means there are now one or more FromRadio packets waiting inside FromRadio. Read from FromRadio until you get back an empty packet.
 - Any time you want to send packets to the radio, you should write a ToRadio packet into ToRadio.

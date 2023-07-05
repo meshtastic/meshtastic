@@ -24,8 +24,10 @@ By default, nodes will **only** respond to administrative commands via the local
 
 Before a node will allow remote admin access, it must have a primary channel:
 
-```shell title="Expected output"
-$ meshtastic --info
+```shell title="Command"
+meshtastic --info
+```
+```markdown title="Expected output"
 Connected to radio
 ...
 Channels:
@@ -33,25 +35,22 @@ Channels:
 Primary channel URL: https://meshtastic.org/e/#CgMSAQESCggBOANAA0gBUBs
 ```
 
-So from this output you see can that this node knows about only one channel and that its PSK is set to the default value.
+From this output you see can that this node knows about only one channel and that its PSK is set to the default value.
 
 Now we add an admin channel:
-
-```shell title="Command"
-meshtastic --ch-add admin
-```
-
 :::note
 The name of the channel is important and must be `admin`.
 :::
-
-Your channels will now look like this:
-
+```shell title="Command"
+meshtastic --ch-add admin
+```
 ```shell title="Expected output"
-$ meshtastic --ch-add admin
 Connected to radio
 Writing modified channels to device
-$ meshtastic --info
+```
+Run `meshtastic --info` and your channels will now look like this:
+
+```shell title="Expected output"
 Connected to radio
 ...
 Channels:
@@ -61,11 +60,11 @@ Primary channel URL: https://meshtastic.org/e/#CgMSAQESCggBOANAA0gBUBs
 Complete URL (includes all channels): https://meshtastic.org/e/#CgMSAQEKKRIgYyDCitupTAOOXTcaMDxyNhDpPa3eThiQFziPFCqT0moaBWFkbWluEgoIATgDQANIAVAb
 ```
 
-Notice that now we have a new secondary channel and the `--info` option prints out TWO URLs. The `Complete URL` includes all of the channels this node understands. The URL contains the preshared keys and should be treated with caution and kept a secret. When deploying remote administration, you only need the node you want to administer and the node you are locally connected to know this new "admin" channel. All of the other nodes will forward the packets as long as they are a member of the primary channel.
+Notice that now we have a new secondary channel and the `--info` option prints out TWO URLs. The `Complete URL` includes all of the channels this node understands. The URL contains the preshared keys and should be treated with caution and kept a secret. When deploying remote administration, you only need the node you want to administer and the node you are locally connected to, to know this new "admin" channel. All of the other nodes will forward the packets as long as they are a member of the primary channel.
 
 ## Sharing the admin channel with other nodes
 
-Creating an "admin" channel automatically generates a preshared key. In order to administer to other nodes remotely, we need to copy the preshared key to the new nodes.
+Creating an "admin" channel automatically generates a preshared key. In order to administer other nodes remotely, we need to copy the preshared key to the new nodes.
 
 For this step you need physical access to both the nodes.
 
@@ -80,16 +79,18 @@ meshtastic --seturl the-url-from-step-2
 
 5. Run `meshtastic --info` and confirm that the "Complete URL" is the same for both of the nodes.
 
-At this point you can take your remote node and install it far away and still be able to change any of its settings.
+At this point you can take your remote node and install it far away.  You will still be able to change any of its settings.
 
 ## Remotely administering your node
 
-Now that both your local node and the remote node contain your secret admin channel key, you can do things like:
+Now that both your local node and the remote node contain your secret admin channel key, you can now change settings remotely:
 
 Get the node list from the local node:
 
-```shell title="Expected output"
-$ meshtastic --nodes
+```shell title="Command"
+meshtastic --nodes
+```
+```markdown title="Expected output"
 Connected to radio
 /-------------------------------------------------------------------------------------------------------------\
 |N|    User    |AKA|   ID    |Latitude|Longitude|Altitude|Battery|   SNR   |     LastHeard     |    Since     |
@@ -99,19 +100,24 @@ Connected to radio
 ```
 
 Using the node ID from that list, send a message through the mesh telling that node to change its owner name.
-The --dest argument value must be in single quotes for linux/mac '!28979058', no quotes for Windows !28979058.
-
-```shell title="Expected output"
-$ meshtastic --dest '!28979058' --set-owner "Im Remote"
+:::info
+The --dest argument value must be in single quotes for linux/mac: '!28979058', no quotes for Windows: !28979058.
+:::
+```shell title="Command"
+meshtastic --dest '!28979058' --set-owner "Im Remote"
+```
+```markdown title="Expected output"
 Connected to radio
 Setting device owner to Im Remote
-INFO:root:Requesting configuration from remote node (this could take a while)
+Waiting for an acknowledgment from remote node (this could take a while)
 ```
 
 And you can now confirm via the local node that the remote node has changed:
 
-```shell title="Expected output"
-$ meshtastic --nodes
+```shell title="Command"
+meshtastic --nodes
+```
+```markdown title="Expected output"
 Connected to radio
 /----------------------------------------------------------------------------------------------------\
 |N|  User   |AKA|   ID    |        Position        |Battery|  SNR  |     LastHeard     |    Since    |
@@ -120,35 +126,77 @@ Connected to radio
 \----------------------------------------------------------------------------------------------------/
 ```
 
-Note: you can change **any** parameter, add channels or get info from the remote node. Here's an example of setting ls_secs and printing the complete device info from the remote node:
+Note: you can change **any** parameter, add channels or get settings from the remote node. Here's an example of setting ls_secs using the `--set` command and printing the position settings from the remote node using the `--get` command:
 
-```shell title="Expected output"
-$ meshtastic --dest \!28979058 --set ls_secs 301 --info
-Connected to radio
-INFO:root:Requesting configuration from remote node (this could take a while)
-Set ls_secs to 301
-Writing modified preferences to device
-Preferences: { "lsSecs": 301, "region": "TW" }
-Channels:
-  PRIMARY psk=default { "psk": "AQ==" }
-  SECONDARY psk=secret { "psk": "YyDCitupTAOOXTcaMDxyNhDpPa3eThiQFziPFCqT0mo=", "name": "admin" }
-Primary channel URL: https://meshtastic.org/e/#CgMSAQESCggBOANAA0gBUBs
-Complete URL (includes all channels): https://meshtastic.org/e/#CgMSAQEKKRIgYyDCitupTAOOXTcaMDxyNhDpPa3eThiQFziPFCqT0moaBWFkbWluEgoIATgDQANIAVAb
+```shell title="Command"
+meshtastic --dest '!28979058' --set power.ls_secs 301 --get position
 ```
 
-## Admin Channel Setup is Complete
-
-You've finished setting up and adding two devices to the admin channel. Remember, because this is a mesh network, it doesn't matter which node you are at; you could administer your first device we set up from the second one we added to the channel. And the settings and examples on this page are just a taste of the other settings you can set. Also, if you ever want to view a setting without having to read through the `--info`, you can always do the following:
-
-```shell title="--get vs. --info"
-$ meshtastic --dest \!28979058 --get ls_secs
+```markdown title="Expected output"
 Connected to radio
-INFO:root:Requesting preferences from remote node (this could take a while)
-ls_secs: 301
+Requesting current config from remote node (this can take a while).
+
+power:
+wait_bluetooth_secs: 60
+mesh_sds_timeout_secs: 7200
+sds_secs: 4294967295
+ls_secs: 300
+min_wake_secs: 10
+
+Set power.ls_secs to 301
+Writing modified preferences to device
+Requesting current config from remote node (this can take a while).
+Received an ACK.
+Completed getting preferences
+Waiting for an acknowledgment from remote node (this could take a while)
+
+position:
+position_broadcast_secs: 900
+position_broadcast_smart_enabled: true
+gps_enabled: true
+gps_update_interval: 120
+gps_attempt_time: 900
+position_flags: 3
+rx_gpio: 15
+tx_gpio: 13
+broadcast_smart_minimum_distance: 100
+broadcast_smart_minimum_interval_secs: 30
+
 Completed getting preferences
 ```
 
-For further reading, I recommend starting out with [Meshtastic-python](/docs/software/python/cli/) if you haven't already gone through this (hopefully you have since you are reading this). But for a full reference to the settings you can change, please see:
+To set the `hop_limit` to 4 and then get the lora settings to confirm your new settings:
+
+```shell title="Command"
+meshtastic --dest '!28979058' --set lora.hop_limit 4 --get lora
+```
+```markdown title="Expected output"
+lora:
+use_preset: true
+region: US
+hop_limit: 3
+tx_enabled: true
+tx_power: 30
+
+Set lora.hop_limit to 4
+Writing modified preferences to device
+Requesting current config from remote node (this can take a while).
+Received an ACK.
+Completed getting preferences
+Waiting for an acknowledgment from remote node (this could take a while)
+
+lora:
+use_preset: true
+region: US
+hop_limit: 4
+tx_enabled: true
+tx_power: 30
+```
+## Admin Channel Setup is Complete
+
+You've finished setting up and adding two devices to the admin channel. Remember, because this is a mesh network, it doesn't matter which node you are at; you could administer your first device we set up from the second one we added to the channel. And the settings and examples on this page are just a taste of the other settings you can set.
+
+For further reading, I recommend starting out with the [Meshtastic Python CLI Guide](/docs/software/python/cli/) if you haven't already gone through this (hopefully you have since you are reading this). But for a full reference to the settings you can change, please see:
 
 [Settings Overview](/docs/settings) and
 [Complete list of user settings in Protobufs](https://buf.build/meshtastic/protobufs/docs/main:meshtastic#meshtastic.User)
