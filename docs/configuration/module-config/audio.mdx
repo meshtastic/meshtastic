@@ -110,14 +110,14 @@ All audio module config options are available in the python CLI. Example command
 Because the device will reboot after each command is sent via CLI, it is recommended when setting multiple values in a config section that commands be chained together as one.
 
 ```shell title="Example:"
-meshtastic --set audio.enabled true --set audio.bitrate CODEC2_1400
+meshtastic --set audio.codec2_enabled true --set audio.bitrate CODEC2_1400
 ```
 
 :::
 
 ```shell title="Enable / Disable Module"
-meshtastic --set audio.enabled true
-meshtastic --set audio.enabled false
+meshtastic --set audio.codec2_enabled true
+meshtastic --set audio.codec2_enabled false
 ```
 
 ```shell title="Set WS to GPIO pin number 7"
