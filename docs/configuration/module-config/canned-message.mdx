@@ -10,7 +10,7 @@ import TabItem from "@theme/TabItem";
 
 The Canned Message Module will allow you to send messages to the mesh network from the device without using the phone app. You can predefine text messages to choose from.
 
-The canned message module config options are: Enabled, Save, and Sender. Range Test Module config uses an admin message sending a `ConfigModule.CannedMessage` protobuf.
+The canned message module config options are: Enabled, Send Bell, Messages, Input Source, Rotary Encoder Enabled, Up Down Encoder Enabled, Input Broker Pin A, Input Broker Pin B, Input Broker Pin Press, Input Broker Event Clockwise, Input Broker Event Counter Clockwise, and Input Broker Event Press. Canned Message config uses an admin message sending a `ConfigModule.CannedMessage` protobuf.
 
 <object data="https://www.youtube.com/embed/qKQVYUbLLkg?autohide=1&autoplay=0" width="100%" height="400"></object>
 
@@ -25,7 +25,7 @@ Enables the canned message module.
 Sends a bell character with each message.
 
 The [External Notification Module](external-notification) can be set up to beep when a new message arrives.
-This module can also be configured to beep only when message contains the bell character.
+This module can also be configured to beep only when a message contains the bell character.
 
 ### Messages
 
@@ -119,7 +119,7 @@ Example commands are below:
 |         canned_message.enabled         |              `true`, `false`              |    `false`    |
 |        canned_message.send_bell        |              `true`, `false`              |    `false`    |
 |   canned_message.allow_input_source    | `rotEnc1`, `_any`, `upDownEnc1`, `cardkb` |    `_any`     |
-|        canned_message.messages         |                 `string`                  |     `""` (separate using pipes)      |
+|         --set-canned-message           |                 `string`                  |     `""` (separate using pipes)      |
 |  canned_message.inputbroker_event_cw   |             `InputEventChar`              | (not defined) |
 |  canned_message.inputbroker_event_ccw  |             `InputEventChar`              | (not defined) |
 | canned_message.inputbroker_event_press |             `InputEventChar`              | (not defined) |
