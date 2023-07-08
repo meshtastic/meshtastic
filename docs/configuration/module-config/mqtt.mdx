@@ -22,7 +22,7 @@ Enables the MQTT module.
 
 ### Server Address
 
-The server to use for MQTT. If not set, the default server public will be used.
+The server to use for MQTT. If not set, the default public server will be used.
 
 ### Username
 
@@ -30,11 +30,11 @@ MQTT Server username to use (most useful for a custom MQTT server). If using a c
 
 ### Password
 
-MQTT password to use (most useful for a custom MQTT server). If using a custom server, this will be honored even if empty. If using the default server, this will only be honored if set, otherwise the device will use the default password
+MQTT password to use (most useful for a custom MQTT server). If using a custom server, this will be honored even if empty. If using the default server, this will only be honored if set, otherwise the device will use the default password.
 
 ### Encryption Enabled
 
-Whether to send encrypted or decrypted packets to MQTT. This parameter is only honored if you also set server (the default official mqtt.meshtastic.org server can handle encrypted packets) Decrypted packets may be useful for external systems that want to consume meshtastic packets.
+Whether to send encrypted or unencrypted packets to MQTT. This parameter is only honored if you also set server (the default official mqtt.meshtastic.org server can handle encrypted packets). Unencrypted packets may be useful for external systems that want to consume meshtastic packets.
 
 ### JSON Enabled
 
@@ -42,7 +42,7 @@ Enable the sending / consumption of JSON packets on MQTT. These packets are not 
 
 ### TLS Enabled
 
-If true, we attempt to establish a secure connection using TLS
+If true, we attempt to establish a secure connection using TLS.
 
 ### Root Topic
 
@@ -74,7 +74,9 @@ MQTT Config options are available for Android.
 <TabItem value="apple">
 
 :::info
-MQTT module config is not available for Apple.
+
+MQTT Config options are available on iOS, iPadOS and macOS at Settings > Modules > MQTT.
+
 :::
 
 </TabItem>
