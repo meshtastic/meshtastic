@@ -10,7 +10,7 @@ import TabItem from "@theme/TabItem";
 
 If your device is connected to Internet via wifi or ethernet, you can enable it to forward packets along to an MQTT server. This allows users on the local mesh to communicate with users on the internet. One or more channels must also be enabled as uplink and/or downlink for packets to be transmitted from and/or to your mesh (See [channels](/docs/settings/config/channels#downlink-enabled)). Without these settings enabled, the node will still connect to the MQTT server but only send status messages.
 
-The MQTT module config options are: Enabled, Server Address, Username, Password, Encryption Enabled and JSON Enabled. MQTT Module config uses an admin message sending a `ConfigModule.MQTT` protobuf.
+The MQTT module config options are: Enabled, Server Address, Username, Password, Encryption Enabled, JSON Enabled, TLS Enabled, and Root Topic. MQTT Module config uses an admin message sending a `ConfigModule.MQTT` protobuf.
 
 ## Settings
 
@@ -39,6 +39,14 @@ Whether to send encrypted or decrypted packets to MQTT. This parameter is only h
 ### JSON Enabled
 
 Enable the sending / consumption of JSON packets on MQTT. These packets are not encrypted, but offer an easy way to integrate with systems that can read JSON.
+
+### TLS Enabled
+
+If true, we attempt to establish a secure connection using TLS
+
+### Root Topic
+
+The root topic to use for MQTT messages. This is useful if you want to use a single MQTT server for multiple meshtastic networks and separate them via ACLs. Default is "msh".
 
 ## MQTT Module Config Client Availability
 
@@ -78,14 +86,16 @@ All MQTT module config options are available in the python CLI. Example commands
 
 :::
 
-|         Setting         | Acceptable Values | Default |
-| :---------------------: | :---------------: | :-----: |
-|      mqtt.enabled       |  `true`, `false`  | `false` |
-|      mqtt.address       |     `string`      |         |
-|      mqtt.username      |     `string`      |         |
-|      mqtt.password      |     `string`      |         |
-| mqtt.encryption_enabled |     `string`      |         |
-|    mqtt.json_enabled    |  `true`, `false`  | `false` |
+|         Setting         | Acceptable Values |        Default      |
+| :---------------------: | :---------------: | :-----------------: |
+|      mqtt.enabled       |  `true`, `false`  |       `false`       |
+|      mqtt.address       |     `string`      |`mqtt.meshtastic.org`|
+|      mqtt.username      |     `string`      |       `meshdev`     |
+|      mqtt.password      |     `string`      |     `large4cats`    |
+| mqtt.encryption_enabled |  `true`, `false`  |        `false`      |
+|    mqtt.json_enabled    |  `true`, `false`  |        `false`      |
+|    mqtt.tls_enabled     |  `true`, `false`  |        `false`      |
+|        mqtt.root        |     `string`      |         `msh`       |
 
 :::tip
 
