@@ -35,7 +35,11 @@ Saving files is only available on ESP32-based devises
 
 :::
 
-If enabled, a log of all received messages will be saved to a file named rangetest.csv This file can be accessed by first connecting your node to wifi and then navigating to meshtastic.local/rangetest.csv. This file will only be created after receiving messages. To prevent filling up the storage, the device will abort writing if there is less than 50kb of space on the filesystem.
+If enabled, a log of all received messages will be saved to a file named rangetest.csv.
+
+To access this file, first turn on the WiFi on your device and connect to your network. Once you can connect to your device, navigate to `meshtastic.local/rangetest.csv` (or your_device_ip/rangetest.csv) and the file will be downloaded automatically. This file will only be created after receiving initial messages.
+
+To prevent filling up the storage, the device will abort writing if there is less than 50kb of space on the filesystem.
 
 ### Sender Interval
 
@@ -168,10 +172,6 @@ Google has instructions on how to do that [here](https://support.google.com/myma
 You can style the ranges differently based on the values, so you can have the pins be darker the if the SNR or RSSI (if that gets added) is higher.
 
 ## FAQ
-
-Q: Where is rangetest.csv saved?
-
-- Turn on the WiFi on your device and connect to your network. Once you can connect to your device, navigate to `meshtastic.local/rangetest.csv` (or your_device_ip/rangetest.csv) and the file will be downloaded automatically.
 
 Q: Do I need to have WiFi turned on for the file to be saved?
 
