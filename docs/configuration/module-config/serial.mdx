@@ -8,7 +8,7 @@ sidebar_label: Serial
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 
-The serial module config options are: Enabled, Echo, Mode, Receive GPIO, Transmit GPIO and Sender. Serial Module config uses an admin message sending a `ConfigModule.Serial` protobuf.
+The serial module config options are: Enabled, Echo, Mode, Receive GPIO, Transmit GPIO, Baud Rate, Timeout, and Override Console Serial Port. Serial Module config uses an admin message sending a `ConfigModule.Serial` protobuf.
 
 This is a simple interface to send messages over the mesh network by sending strings over a serial port. Anything you send the node will be turned into a message sent out over the mesh, and anything received from the mesh will be sent to the serial port. Note that this module does not (yet) allow arbitrary protobuf commands to be sent over the serial connection.
 
