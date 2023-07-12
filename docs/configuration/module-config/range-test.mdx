@@ -8,7 +8,16 @@ sidebar_label: Range Test
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 
-This module allows you to test the range of your Meshtastic nodes. It requires at least two nodes, a sender and a receiver. The receiving node then saves the messages along with the GPS coordinates at which they were received into a .csv file. This .csv file can then be integrated into [Google Earth](https://earth.google.com), [Google Maps - My Maps](https://mymaps.google.com), or any other program capable of processing .csv files. This can enable you to visualize your mesh.
+This module allows you to test the range of your Meshtastic nodes. It requires at least two nodes, a sender and a receiver. The receiving node saves the messages along with the GPS coordinates at which they were received into a .csv file. This .csv file can then be integrated into [Google Earth](https://earth.google.com), [Google Maps - My Maps](https://mymaps.google.com), or any other program capable of processing .csv files. This can enable you to visualize your mesh.
+
+While a minimum of two radios is required, more can be used. You can have any number of receivers and senders that your mesh is able to handle. You can test having a single sender with multiple receivers or a single receiver with multiple senders. Let us know on the [forum thread](https://meshtastic.discourse.group/t/new-plugin-rangetestplugin/2591) the results of your configuration.
+
+:::info
+
+Be sure to turn off the module or disable sending when not in use. This will use a lot of time on air, slow down your mesh, and spam your channel.
+
+:::
+
 
 The range test module config options are: Enabled, Save, and Sender. Range Test Module config uses an admin message sending a `ConfigModule.RangeTest` protobuf.
 
@@ -18,13 +27,33 @@ The range test module config options are: Enabled, Save, and Sender. Range Test 
 
 Enables the range test module.
 
-### Save CSV File `ESP32 Only Setting`
+### Save CSV File
 
-If enabled, we will save a log of all received messages to a file named rangetest.csv which you can access from the web server Extensions > File Browser > rangetest.csv. The file will be created after receiving messages. The device will abort writing if there is less than 50k of space on the filesystem to prevent filling up the storage.
+:::info
+
+Saving files is only available on ESP32-based devises
+
+:::
+
+If enabled, a log of all received messages will be saved to a file named rangetest.csv.
+
+To access this file, first turn on the WiFi on your device and connect to your network. Once you can connect to your device, navigate to `meshtastic.local/rangetest.csv` (or your_device_ip/rangetest.csv) and the file will be downloaded automatically. This file will only be created after receiving initial messages.
+
+To prevent filling up the storage, the device will abort writing if there is less than 50kb of space on the filesystem.
 
 ### Sender Interval
 
-How long to wait between sending test packets. 0 is default which disables sending messages.
+How long to wait between sending sequential test packets. 0 is default which disables sending messages.
+
+### Recommended Sender Settings
+
+| Radio Setting | `range_test.sender` |
+| :-----------: | :-----------------: |
+|   Long Slow   |         60          |
+|   Long Alt    |         30          |
+|    Medium     |         15          |
+|  Short Fast   |         15          |
+
 
 ## Range Test Module Config Client Availability
 
@@ -48,12 +77,16 @@ Range Test Config options are available for Android.
 
 :::
 
+Android also had the option to download a rangetest.csv file which is stored on your phone.  This file does not require the Range Test module to be active and will log all incoming Nodeinfo, Position, Telemetry and Messages.
+
 </TabItem>
 <TabItem value="apple">
 
 :::info
 All range test module config options are available on iOS, iPadOS and macOS at Settings > Modules > Range Test.
 :::
+
+Apple apps also have the option to download logged position data which is stored on your iPhone/iPad/Mac.  Access this by clicking on the Nodes tab, selecting a node, then select Position Log and click Save.  This data file does not require the Range Test module to be active.
 
 </TabItem>
 <TabItem value="cli">
@@ -103,42 +136,13 @@ meshtastic --set range_test.sender 0
 
 :::info
 
-No range test module config options are available in the Web UI.
+All range test module config options are available in the Web UI.
 
 :::
 
 </TabItem>
 </Tabs>
 
-## Examples
-
-While a minimum of two radios is required, more can be used. You can have any number of receivers and senders that your mesh is able to handle. You can test having a single sender with multiple receivers or a single receiver with multiple senders. Let us know on the [forum thread](https://meshtastic.discourse.group/t/new-plugin-rangetestplugin/2591) the results of your configuration.
-
-Be sure to turn off either the module configured as a sender or the device where the module setup as sender when not in use. This will use a lot of time on air and will spam your channel.
-
-Also be mindful of your space usage on the file system. It has protections from filling up the space but it's best to delete old range test results.
-
-:::note
-Leaving this module on can slow down your mesh. Currently, the messages are sent using the same `TEXT_MESSAGE_APP` [port that all other messages](https://buf.build/meshtastic/protobufs/docs/main:meshtastic#meshtastic.PortNum) are sent on.
-:::
-
-### Accessing your CSV
-
-Connect to your device over WiFi, either using the [software access point](/docs/settings/config/network#software-access-point) or [WiFi Client](/docs/settings/config/network#wifi-client). Then navigate to `meshtastic.local` (or your IP address). Your file will be available for download under `Extensions > File Browser > rangetest.csv` once it has been created by receiving messages.
-
-```plaintext title="Example URLs"
-http://meshtastic.local
-http://198.168.0.15
-```
-
-### Recommended Sender Settings
-
-| Radio Setting | `range_test.sender` |
-| :-----------: | :-----------------: |
-|   Long Slow   |         60          |
-|   Long Alt    |         30          |
-|    Medium     |         15          |
-|  Short Fast   |         15          |
 
 ## Application Examples
 
@@ -169,10 +173,6 @@ You can style the ranges differently based on the values, so you can have the pi
 
 ## FAQ
 
-Q: Where is rangetest.csv saved?
-
-- Turn on the WiFi on your device as either a WiFi client or a WiFi AP. Once you can connect to your device, navigate to `Extensions > File Browser` and you will see `rangetest.csv` once messages have been saved and the file has been created.
-
 Q: Do I need to have WiFi turned on for the file to be saved?
 
 - Nope, it'll just work.
@@ -191,7 +191,7 @@ Q: What will happen if I run out of space on my device?
 
 Q: What do I do with the rangetest.csv file when I'm done?
 
-- Go to /static and delete the file.
+- Currently the only way to erase the file is to perform a factory reset.
 
 Q: Can I use this as a sender while on battery power?
 
