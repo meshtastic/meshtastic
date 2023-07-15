@@ -196,13 +196,7 @@ Default is to use RX GPIO 16 and TX GPIO 17.
 
 ### Interfacing PIR Sensor With External Microcontroller
 
-The following is an example of using a Raspberry Pi Pico connected to a PIR sensor to detect motion. When motion is detected, a message is sent via. serial to the T-Beam. The T-Beam transmits the message as text over the default channel by utilizing the serial module in TXTMSG mode.
-
-#### BOM
-
-- Raspberry Pi Pico running [CircuitPython](https://learn.adafruit.com/getting-started-with-raspberry-pi-pico-circuitpython)
-- T-Beam V1.1 running Meshtastic
-- PIR Sensor ([Adafruit Breadboard Model](https://www.adafruit.com/product/4871))
+The following are examples of using either a Raspberry Pi Pico or Arduino Mini Pro connected to a PIR sensor to detect motion. When motion is detected, a message is sent via serial to the T-Beam. The T-Beam transmits the message as text over the default channel by utilizing the serial module in TXTMSG mode.
 
 #### Meshtastic Software Configuration
 
@@ -210,7 +204,13 @@ The following is an example of using a Raspberry Pi Pico connected to a PIR sens
 - GPIO Pins (For T-Beam) RX 13, TX 14
 - 38400 Baud
 
-#### Wiring
+#### Rasberry Pi Pico BOM
+
+- A Raspberry Pi Pico running [CircuitPython](https://learn.adafruit.com/getting-started-with-raspberry-pi-pico-circuitpython)
+- T-Beam V1.1 running Meshtastic
+- PIR Sensor ([Adafruit Breadboard Model](https://www.adafruit.com/product/4871))
+
+#### Raspberry Pi Pico Wiring
 
 ![image](https://user-images.githubusercontent.com/2799310/210852481-21ea76e5-ecaa-40c1-8f34-635ef2a1c95b.png)
 
@@ -244,4 +244,47 @@ while True:
         uart.write(bytes("Motion Detected", "ascii"))
         time.sleep(30)
     time.sleep(0.5)
+```
+
+#### Arduino Mini Pro BOM
+- An Arduino Mini Pro with example sketch from below uploaded to it.
+- T-Beam V1.1 running Meshtastic
+- PIR Sensor ([Adafruit Breadboard Model](https://www.adafruit.com/product/4871))
+
+#### Arduino Mini Pro Wiring
+
+![image](/img/modules/Serial/arduino-mini-pro-pir-wiring.png)
+
+- T-BEAM RX PIN 13 to TX PIN on the ARDUINO MINI
+- T-BEAM TX PIN 14 to RX PINon the ARDUINO MINI
+- T-BEAM PIN 3.3V to 3.3V PIN on the ARDUINO MINI
+- T-BEAM PIN GND to GND PIN on the ARDUINO MINI
+- ARDUINO MINI PIN 2 to OUT PIN on the PIR SENSOR
+- ARDUINO MINI PIN 3.3V to 3.3V on the PIR SENSOR
+- ARDUINO MINI PIN GND to GND PIN on the PIR SENSOR
+
+#### Arduino Mini Pro Code
+
+```c++
+int LED = 13; // the pin that the LED is atteched to
+int PIR = 2;  // the pin that the sensor is atteched to
+
+void setup() {
+  pinMode(LED, OUTPUT); // initialize LED as an output
+  pinMode(PIR, INPUT);  // initialize sensor as an input
+  Serial.begin(9600);   // initialize serial
+}
+
+void loop(){
+  if (digitalRead(PIR) == HIGH) { // check if the sensor is HIGH
+    digitalWrite(LED, HIGH);  // turn LED ON
+    Serial.write(":Motion!:"); 
+    delay(10000); // delay 100 milliseconds
+  } 
+  else {
+    digitalWrite(LED, LOW);  // turn LED OFF
+    Serial.write("Motion stopped!");
+    delay(10000);  // delay 100 milliseconds
+  }
+}
 ```
