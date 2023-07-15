@@ -288,3 +288,129 @@ void loop(){
   }
 }
 ```
+
+### Interfacing relay module With External Microcontroller
+
+The following are examples of using either a Arduino Mini Pro connected to a relay module to turn on and off devices You need to choose the relay 3.3v and voltage according of your country. When motion is detected, a message is sent via serial to the T-Beam. 
+when the t-beam where the relay is connected receives a message with the text relay1on the relay is activated and the confirmation message will be returned, the same happens if a message relay1off is written, this way the relay will be deactivated.
+
+#### Meshtastic Software Configuration
+
+- Serial module enabled, mode: TXTMSG
+- GPIO Pins (For T-Beam) RX 13, TX 14
+- 9600 Baud
+
+
+
+#### Arduino Mini Pro BOM
+- An Arduino Mini Pro with example sketch from below uploaded to it.
+- T-Beam V1.1 running Meshtastic
+- Relay Module ([Adafruit Power Relay](https://www.adafruit.com/product/3191))
+
+#### Arduino Mini Pro Wiring
+
+https://imgur.com/a/NbChgFM
+
+
+
+- T-BEAM RX PIN 13 to TX PIN on the ARDUINO MINI
+- T-BEAM TX PIN 14 to RX PIN on the ARDUINO MINI
+- T-BEAM PIN 3.3V to 3.3V PIN on the ARDUINO MINI
+- T-BEAM PIN GND to GND PIN on the ARDUINO MINI
+- ARDUINO MINI PIN 2 to SIGNAL PIN on the RELAY MODULE
+- ARDUINO MINI PIN 3.3V to 3.3V on the RELAY MODULE
+- ARDUINO MINI PIN GND to GND PIN on the RELAY MODULE
+
+#### Arduino Mini Pro Code
+
+Thanks to bicuriousoyster (discord member)
+
+```
+/*
+  Remote Control Relay via Meshtastic sketch
+
+  - This sketch programs an ATMega328P to interface with and be controlled by a Meshtastic radio, the radio must have serial module configured correctly with matching baud rates.
+
+  created 13 May 2023
+  by Phil
+
+*/
+
+//define sketch constants (gpios, baud rate and other constants)
+#define RELAY_PIN 2 //pin 2 on the Uno is PD2 on the ATMega which is actually pin 4 on the DIP28 pinout, but you can choose whatever pin you like, just understand that you must determine the Arduino IDE pin number of the actual hardware pin you are using...
+#define BAUD_RATE 9600 // baud rate for MCU and meshtastic device have to be the same, also both devices must share a GND
+
+String relayOnCode = "relay1on";
+String relayOffCode = "relay1off";
+const char confirmationOnMessage[] = "Relay 1 has received the command and is now ON";
+const char confirmationOffMessage[] = "Relay 1 has received the command and is now OFF";
+const unsigned int MAX_INPUT = 30; // you can set this to whatever you want but the larger it is the longer it will take for the checkStringForPasscode funtion to find the passcode in the incoming string... But just be aware that a low number like 20 or 30 means that your code must be at the beginning of your message or it will get cut off by processIncomingByte function....
+
+
+void setup() {
+
+  Serial.begin(BAUD_RATE);   //enable UART comms between TBeam and ATMega328
+
+  //initialize pins for controlling LEDs and DPDT Relay, and Buzzer
+  pinMode(RELAY_PIN, OUTPUT);
+
+}
+
+void loop() {
+
+   //Check to see if anything is available in the serial receive buffer 
+   //if more than 0 bytes are avialable, pass the first byte to the processIncomingByte function
+  while (Serial.available() > 0) 
+    processIncomingByte(Serial.read());
+
+}
+
+//this function looks at each incoming byte and adds it to a char array of MAX_INPUT length and then passes that array to checkStringForPasscode() function. 
+//it knows there is no more data to be added to the array when a '\n' character is found, and ignores '\r' bytes
+//if the byte is neither \r or \n then it adds the byte to the array and then increases the index (input_pos) by 1, but only if the index hasn't exceeded the MAX_INPUT 
+void processIncomingByte(const byte inByte) {
+
+  static char input_line[MAX_INPUT];
+  static  unsigned int input_pos = 0;
+
+  switch (inByte) {
+
+    case '\n':
+      input_line[input_pos] = 0;
+      checkStringForPasscode(input_line);
+      input_pos = 0;
+      break;
+    case '\r':
+      break;
+    default:
+      if (input_pos < (MAX_INPUT - 1))
+        input_line[input_pos++] = inByte;
+      break;
+
+  }
+
+}
+
+//this function takes an incoming char array of MAX_INPUT length and turns it into a String object so that it can be processed by .indexOf() function
+//the indexOf() function checks a String to see if another String (the one you passed to indexOf) is within that function, and returns the index of the String within a String
+//if the string is not found then indexOf() returns -1, so as long as it doesn't return -1, you know the String is in the String
+//if relayOnCode is found, it flips the relay pin HIGH and vice versa if relayOffCode is found, and both return an ACK message to the mesh
+void checkStringForPasscode(const char *  data) {
+
+  String inputString = data;
+
+  if (inputString.indexOf(relayOnCode) != -1) {
+    
+    Serial.println(confirmationOnMessage);
+    digitalWrite(RELAY_PIN, HIGH);
+  
+  } else if (inputString.indexOf(relayOffCode) != -1) {
+    
+    Serial.println(confirmationOffMessage);
+    digitalWrite(RELAY_PIN, LOW);
+  
+  }
+
+}
+
+```
