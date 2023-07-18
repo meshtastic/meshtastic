@@ -263,7 +263,6 @@ while True:
 
 #### Arduino Mini Pro Code
 
-```
 
 int LED = 13; // the pin to which the LED is connected
 int PIR = 2;  // the pin to which the sensor is connected
@@ -287,10 +286,9 @@ void loop(){
       digitalWrite(LED, LOW);  // turn the LED off
       Serial.println("No Motion");
     }
-
+    
     previousState = currentState; // update the previous state
   }
   delay(100); // small delay to avoid false sensor readings
 
 }
-```
