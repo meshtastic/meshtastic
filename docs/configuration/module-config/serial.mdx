@@ -263,7 +263,7 @@ while True:
 - ARDUINO MINI PIN 3.3V to 3.3V on the PIR SENSOR
 - ARDUINO MINI PIN GND to GND PIN on the PIR SENSOR
 
-#### Arduino Mini Pro Code
+#### Arduino Mini Pro PIR Code
 
 ```cpp
 int LED = 13; // the pin to which the LED is connected
@@ -292,5 +292,172 @@ previousState = currentState; // update the previous state
   }
   delay(100); // small delay to avoid false sensor readings
 
+}
+```
+### Interfacing with button an relay With External Microcontroller
+
+Here are two different examples that work together or separately.
+In the first code when the button is pressed the word "relay1toogle" will be sent via serial which will turn on or off the relay that is connected in the example below.
+
+In the second code, the relay will be activated when t-beam receives the word "relay1toggle" or deactivated depending on its status.
+If you want to activate or deactivate it through the meshtastic application you can also send a message to the channel or directly to the t-beam, with the word "on" or "off" and the relay will be activated or deactivated depending on its status.
+
+Both situations are interesting, and can be explored also with nodered, and telegram use your imagination.
+
+Thanks to Phil Manofsky for sharing this code with us.
+
+#### Arduino Mini Pro BOM
+
+
+- An Arduino Mini Pro with example sketchs from below uploaded to it.
+- T-Beam V1.1 running Meshtastic
+- Relay ([Adafruit Breadboard Model](https://www.adafruit.com/product/3191)
+- Button ([Adafruit Breadboard Model](https://www.adafruit.com/product/1119)
+
+
+#### Arduino Mini Pro / button Wiring
+
+![image](/img/modules/Serial/button.png)
+
+- T-BEAM RX PIN 13 to TX PIN on the ARDUINO MINI
+- T-BEAM TX PIN 14 to RX PINon the ARDUINO MINI
+- T-BEAM PIN 3.3V to 3.3V PIN on the ARDUINO MINI
+- T-BEAM PIN GND to GND PIN on the ARDUINO MINI
+- ARDUINO MINI PIN 2 to  the BUTTON
+- ARDUINO MINI PIN GND to the BUTTON
+
+#### Arduino Mini Pro /button Code
+
+```cpp
+const int buttonPin = 2;
+String relayToggleCode = "relay1toggle";
+int lastButtonState;
+int buttonState;
+int debounceTime = 50;
+
+
+void setup() {
+
+  Serial.begin(9600);
+  pinMode(buttonPin, INPUT_PULLUP);
+  lastButtonState = digitalRead(buttonPin);
+
+}
+
+void loop() {
+
+  buttonState = digitalRead(buttonPin); //every loop, check the button state
+
+  if (buttonState != lastButtonState) { //if a button state change is detected...
+
+    lastButtonState = buttonState; //update the lastButtonState variable then...
+
+    if (buttonState == LOW) { //check to see if the button is pressed
+      delay(debounceTime); //wait a very short delay to make sure the change detected wasn't just noise
+      buttonState = digitalRead(buttonPin); //read the button pin again
+
+      if (buttonState == LOW) { // if the button pin is still LOW after debounce delay, that means the detected change was a real press, so we send the relay toggle command. If not, then we just assume the state change was noise and do nothing.
+
+        sendRelayToggleCommand();
+
+      }
+
+    }
+
+  }
+
+}
+
+void sendRelayToggleCommand() {
+
+  Serial.println(relayToggleCode);
+
+}
+
+```
+
+#### Arduino Mini Pro / relay Wiring
+
+![image](/img/modules/Serial/relay.png)
+
+- T-BEAM RX PIN 13 to TX PIN on the ARDUINO MINI
+- T-BEAM TX PIN 14 to RX PINon the ARDUINO MINI
+- T-BEAM PIN 3.3V to 3.3V PIN on the ARDUINO MINI
+- T-BEAM PIN GND to GND PIN on the ARDUINO MINI
+- ARDUINO MINI PIN 2 to SIGNAL PIN on the RELAY
+- ARDUINO MINI PIN GND to the GND on the RELAY
+- ARDUINO MINI PIN VCC to the VCC on the RELAY
+
+#### Arduino Mini Pro /relay Code
+
+```cpp
+//define sketch constants (gpios, baud rate and other constants)
+#define RELAY_PIN 2
+#define BAUD_RATE 9600
+
+int currentRelayState;
+const char* relayToggleCode = "relay1toggle";
+const char* relayOnCode = "on";
+const char* relayOffCode = "off";
+const unsigned int MAX_INPUT = 30;
+
+void setup() {
+  Serial.begin(BAUD_RATE);
+  pinMode(RELAY_PIN, OUTPUT);
+  digitalWrite(RELAY_PIN, LOW);
+  currentRelayState = LOW;
+}
+
+void loop() {
+  while (Serial.available() > 0) {
+    processIncomingByte(Serial.read());
+  }
+}
+
+void processIncomingByte(const byte inByte) {
+  static char input_line[MAX_INPUT];
+  static unsigned int input_pos = 0;
+
+  switch (inByte) {
+    case '\n':
+      input_line[input_pos] = 0;
+      checkStringForPasscode(input_line);
+      input_pos = 0;
+      break;
+    case '\r':
+      break;
+    default:
+      if (input_pos < (MAX_INPUT - 1))
+        input_line[input_pos++] = inByte;
+      break;
+  }
+}
+
+void checkStringForPasscode(const char* data) {
+  String inputString = data;
+
+  if (inputString.indexOf(relayToggleCode) != -1) {
+    if (currentRelayState == LOW) {
+      digitalWrite(RELAY_PIN, HIGH);
+      currentRelayState = HIGH;
+      const char* confirmationMessage = "Relay 1 has received the command and is now ON";
+      Serial.println(confirmationMessage);
+    } else {
+      digitalWrite(RELAY_PIN, LOW);
+      currentRelayState = LOW;
+      const char* confirmationMessage = "Relay 1 has received the command and is now OFF";
+      Serial.println(confirmationMessage);
+    }
+  } else if (inputString.indexOf(relayOnCode) != -1) {
+    digitalWrite(RELAY_PIN, HIGH);
+    currentRelayState = HIGH;
+    const char* confirmationMessage = "Relay 1 has received the command and is now ON";
+    Serial.println(confirmationMessage);
+  } else if (inputString.indexOf(relayOffCode) != -1) {
+    digitalWrite(RELAY_PIN, LOW);
+    currentRelayState = LOW;
+    const char* confirmationMessage = "Relay 1 has received the command and is now OFF";
+    Serial.println(confirmationMessage);
+  }
 }
 ```
