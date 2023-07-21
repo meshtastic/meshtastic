@@ -297,7 +297,7 @@ previousState = currentState; // update the previous state
 ### Interfacing with button an relay With External Microcontroller
 
 Here are two different examples that work together or separately.
-In the first code when the button is pressed the word "relay1toogle" will be sent via serial which will turn on or off the relay that is connected in the example below.
+In the first code when the button is pressed the word "relay1toggle" will be sent via serial which will turn on or off the relay that is connected in the example below.
 
 In the second code, the relay will be activated when t-beam receives the word "relay1toggle" or deactivated depending on its status.
 If you want to activate or deactivate it through the meshtastic application you can also send a message to the channel or directly to the t-beam, with the word "on" or "off" and the relay will be activated or deactivated depending on its status.
@@ -306,16 +306,16 @@ Both situations are interesting, and can be explored also with nodered, and tele
 
 Thanks to Phil Manofsky for sharing this code with us.
 
-#### Arduino Mini_Pro BOM
+#### Arduino Mini  Pro BOM
 
 
-- An Arduino Mini Pro with example sketchs from below uploaded to it.
+- An Arduino Mini Pro with example sketch from below uploaded to it.
 - T-Beam V1.1 running Meshtastic
 - Relay ([Adafruit Breadboard Model](https://www.adafruit.com/product/3191)
 - Button ([Adafruit Breadboard Model](https://www.adafruit.com/product/1119)
 
 
-#### Arduino Mini Pro / button Wiring
+#### Arduino Mini Pro / Button Wiring
 
 ![image](/img/modules/Serial/button.png)
 
@@ -326,7 +326,7 @@ Thanks to Phil Manofsky for sharing this code with us.
 - ARDUINO MINI PIN 2 to  the BUTTON
 - ARDUINO MINI PIN GND to the BUTTON
 
-#### Arduino Mini Pro /button Code
+#### Arduino Mini Pro /Button Code
 
 ```cpp
 const int buttonPin = 2;
@@ -376,7 +376,7 @@ void sendRelayToggleCommand() {
 
 ```
 
-#### Arduino Mini Pro / relay Wiring
+#### Arduino Mini Pro / Relay Wiring
 
 ![image](/img/modules/Serial/relay.png)
 
