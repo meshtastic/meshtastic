@@ -212,7 +212,7 @@ The following are examples of using either a Raspberry Pi Pico or Arduino Mini P
 
 #### Raspberry Pi Pico Wiring
 
-![image](https://user-images.githubusercontent.com/2799310/210852481-21ea76e5-ecaa-40c1-8f34-635ef2a1c95b.png)
+![image](/img/modules/Serial/pico-pir-wiring.png)
 
 - TX pin 14 on the T-Beam to RX pin 2 on the Pico
 - RX pin 13 on the T-Beam to TX pin 1 on the Pico
@@ -265,26 +265,32 @@ while True:
 
 #### Arduino Mini Pro Code
 
-```c++
-int LED = 13; // the pin that the LED is atteched to
-int PIR = 2;  // the pin that the sensor is atteched to
+```cpp
+int LED = 13; // the pin to which the LED is connected
+int PIR = 2;  // the pin to which the sensor is connected
+int previousState = LOW; // previous state of the sensor
+
 
 void setup() {
-  pinMode(LED, OUTPUT); // initialize LED as an output
-  pinMode(PIR, INPUT);  // initialize sensor as an input
-  Serial.begin(9600);   // initialize serial
+pinMode(LED, OUTPUT); // initialize the LED as an output
+pinMode(PIR, INPUT);  // initialize the sensor as an input
+Serial.begin(9600);   // initialize serial communication
 }
 
 void loop(){
-  if (digitalRead(PIR) == HIGH) { // check if the sensor is HIGH
-    digitalWrite(LED, HIGH);  // turn LED ON
-    Serial.write(":Motion!:"); 
-    delay(10000); // delay 100 milliseconds
-  } 
-  else {
-    digitalWrite(LED, LOW);  // turn LED OFF
-    Serial.write("Motion stopped!");
-    delay(10000);  // delay 100 milliseconds
+   int currentState = digitalRead(PIR); // read the current state of the sensor
+  if (currentState != previousState) { // check if the state has changed
+    if (currentState == HIGH) { // check if there is motion
+      digitalWrite(LED, HIGH);  // turn the LED on
+      Serial.println("Motion Detected");
+}
+    else {
+      digitalWrite(LED, LOW);  // turn the LED off
+      Serial.println("No Motion");
+    }
+previousState = currentState; // update the previous state
   }
+  delay(100); // small delay to avoid false sensor readings
+
 }
 ```
