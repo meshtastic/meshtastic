@@ -25,22 +25,34 @@ IMPORTANT: When MQTT is turned on, you are potentially broadcasting your entire 
 
 ### MQTT Topics
 
-The device will uplink and downlink raw ([protobuf](https://developers.google.com/protocol-buffers)) packets to the `msh/` prefix:
+If no specific [root topic](/docs/settings/moduleconfig/mqtt#root-topic) is configured, the default root topic will be `msh/`.
+Each device that is connected to MQTT will publish its MQTT state ("`online`"/"`offline`") to:
 
-`msh/2/c/ShortFast/!12345678` where
+`msh/2/stat/USERID`, where `USERID` is the user ID of the gateway device (the one connected to MQTT).
 
-- `!12345678` is the address of the gateway device.
-- `ShortFast` is the channel name.
+For each channel where uplink and/or downlink is enabled two other topics might be used.
+
+#### Protobufs topic
+A gateway node will uplink and/or downlink raw ([protobuf](https://developers.google.com/protocol-buffers)) packets to the topic:
+
+`msh/2/c/CHANNELNAME/USERID`, where `CHANNELNAME` is the name of the channel.
+
+For example: `msh/2/c/LongFast/!abcd1234`
 
 The payload is a raw protobuf. Looking at the MQTT traffic with a program like `mosquitto_sub` will tell you it's working, but you won't get much useful information out of it. For example:
 
 ```text
 苓????"!
-	!937bed1cTanksTnk"D???05??=???aP`
-	ShortFast	!937bed1c
+!937bed1cTanksTnk"D???05??=???aP`
+ShortFast	!937bed1c
 ```
 
-Packets from the following [port numbers](/docs/development/firmware/portnum) are serialized to JSON and then forwarded to the `msh/2/json/CHANNELID/DEVICEID` topic: `TEXT_MESSAGE_APP`, `ENVIRONMENTAL_MEASUREMENT_APP`, `NODEINFO_APP` and `POSITION_APP`.
+If [encryption_enabled](/docs/settings/moduleconfig/mqtt#encryption-enabled) is set to true, the packet will remain encrypted with the key for the specified channel.
+
+#### JSON topic
+If [JSON is enabled](/docs/settings/moduleconfig/mqtt/#json-enabled), packets from the following [port numbers](/docs/development/firmware/portnum) are serialized to JSON: `TEXT_MESSAGE_APP`, `ENVIRONMENTAL_MEASUREMENT_APP`, `NODEINFO_APP` and `POSITION_APP`. These are then forwarded to the topic: 
+
+`msh/2/json/CHANNELNAME/USERID`.
 
 An example of a received `NODEINFO_APP` message:
 
@@ -61,6 +73,20 @@ An example of a received `NODEINFO_APP` message:
   "type": "nodeinfo"
 }
 ```
+
+The meaning of these fields is as follows:
+
+- "`id`" is the unique ID for this message. 
+- "`channel`" is the channel index this message was received on.
+- "`from`" is the unique node number of the node on the mesh that sent this message. 
+- "`id`" inside the payload of a `NODEINFO_APP` message is the user ID of the node that sent it, which is currently just the hexadecimal representation of the node number. 
+- "`hardware`" is the [hardware model](https://github.com/meshtastic/protobufs/blob/master/meshtastic/mesh.proto#L215) of the node sending the `NODEINFO_APP` message.
+- "`longname`" is the long name of the device that sent the `NODEINFO_APP` message.
+- "`shortname`" is the short name of the device that sent the `NODEINFO_APP` message.
+- "`sender`" is the user ID of the gateway device, which is in this case the same node that sent the `NODEINFO_APP` message (the hexadecimal value `7efeee00` represented by an integer in decimal is `2130636288`). 
+- "`timestamp`" is the Unix Epoch when the message was received, represented as an integer in decimal.
+- "`to`" is the node number of the destination of the message. In this case, "-1" means it was a broadcast message (this is the decimal integer representation of `0xFFFFFFFF`). 
+- "`type`" is the type of the message, in this case it was a `NODEINFO_APP` message.
 
 If the message received contains valid JSON in the payload, the JSON is deserialized and added as a JSON object rather than a string containing the serialized JSON.
 
@@ -89,34 +115,6 @@ Check out [MQTT Settings](/docs/settings/moduleconfig/mqtt) for full information
 
 `uplink_enabled` will tell the device to publish mesh packets to MQTT.
 `downlink_enabled` will tell the device to subscribe to MQTT, and forward any packets from there onto the mesh.
-
-### Topics
-
-The "mesh/crypt/CHANNELID/NODEID/PORTID" [topic](https://www.hivemq.com/blog/mqtt-essentials-part-5-mqtt-topics-best-practices) will be used for messages sent from/to a mesh.
-
-Gateway nodes will forward any MeshPacket from a local mesh channel with uplink_enabled. The packet (encapsulated in a ServiceEnvelope) will remain encrypted with the key for the specified channel.
-
-For any channels in the local node with downlink_enabled, the gateway node will forward packets from MQTT to the local mesh. It will do this by subscribing to mesh/crypt/CHANNELID/# and forwarding relevant packets.
-
-If the channelid 'well known'/public it could be decrypted by a web service (if the web service was provided with the associated channel key), in which case it will be decrypted by a web service and appear at "mesh/clear/CHANNELID/NODEID/PORTID". Note: This is not in the initial deliverable.
-
-#### Service Envelope
-
-The payload published on mesh/... will always be wrapped in a [ServiceEnvelope protobuf](https://buf.build/meshtastic/protobufs/docs/main:meshtastic#meshtastic.ServiceEnvelope).
-
-ServiceEnvelope will include the message, and full information about arrival time, who forwarded it, source channel, source mesh id, etc...
-
-#### NODEID
-
-The unique ID for a node. A hex string that starts with an ! symbol.
-
-#### USERID
-
-A user ID string. This string is either a user ID if known or a nodeid to simply deliver the message to whoever the local user is of a particular device (i.e. person who might see the screen). FIXME, see what riot.im uses and perhaps use that convention? Or use the signal +phone number convention? Or the email address?
-
-#### CHANNELID
-
-FIXME, figure out how channelids work
 
 ### Gateway nodes
 
