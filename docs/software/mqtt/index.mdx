@@ -23,7 +23,7 @@ Packets may be encrypted. If you use the default meshtastic MQTT server, packets
 
 IMPORTANT: When MQTT is turned on, you are potentially broadcasting your entire mesh traffic onto the public internet. This includes messages and position information.
 
-### MQTT Topics
+### MQTT [Topics](https://www.hivemq.com/blog/mqtt-essentials-part-5-mqtt-topics-best-practices)
 
 If no specific [root topic](/docs/settings/moduleconfig/mqtt#root-topic) is configured, the default root topic will be `msh/`.
 Each device that is connected to MQTT will publish its MQTT state ("`online`"/"`offline`") to:
@@ -33,18 +33,18 @@ Each device that is connected to MQTT will publish its MQTT state ("`online`"/"`
 For each channel where uplink and/or downlink is enabled two other topics might be used.
 
 #### Protobufs topic
-A gateway node will uplink and/or downlink raw ([protobuf](https://developers.google.com/protocol-buffers)) packets to the topic:
+A gateway node will uplink and/or downlink raw ([protobuf](https://developers.google.com/protocol-buffers)) MeshPackets to the topic:
 
 `msh/2/c/CHANNELNAME/USERID`, where `CHANNELNAME` is the name of the channel.
 
 For example: `msh/2/c/LongFast/!abcd1234`
 
-The payload is a raw protobuf. Looking at the MQTT traffic with a program like `mosquitto_sub` will tell you it's working, but you won't get much useful information out of it. For example:
+The payload is a raw protobuf, whose definitions for Meshtastic can be found [here](https://github.com/meshtastic/protobufs/blob/master/meshtastic). Reference guides for working with protobufs in several popular programming languages can be found [here](https://protobuf.dev/reference/). Looking at the MQTT traffic with a program like `mosquitto_sub` will tell you it's working, but you won't get much useful information out of it. For example:
 
 ```text
 苓????"!
-!937bed1cTanksTnk"D???05??=???aP`
-ShortFast	!937bed1c
+	!937bed1cTanksTnk"D???05??=???aP`
+	ShortFast	!937bed1c
 ```
 
 If [encryption_enabled](/docs/settings/moduleconfig/mqtt#encryption-enabled) is set to true, the packet will remain encrypted with the key for the specified channel.
