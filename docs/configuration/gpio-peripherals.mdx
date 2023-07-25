@@ -6,25 +6,11 @@ slug: /hardware/peripheral/
 sidebar_position: 6
 ---
 
-## Firmware Versions
+## Remote Hardware
 
 :::warning
 GPIO access is fundamentally dangerous because invalid options can physically damage or destroy your hardware. Ensure that you fully understand the schematic for your particular device before trying this as we do not offer a warranty. Use at your own risk.
 :::
-
-The device firmware runs on the nodes to build the mesh for communication. Each different make and model of device requires a different build of the Meshtastic firmware in order to run properly. Thankfully, due to the design of Meshtastic, it is possible to port the firmware to new devices as they become available. The firmware currently runs on a range of ESP32 based devices, but there is also increasing support for the nRF52 microprocessor with some more recent devices coming to market.
-
-The current firmware has support for a screen to display received messages, along with information about nodes on the mesh, and more detailed information about the device on which it is running.
-
-The latest firmware can be downloaded from the [Downloads](/downloads) page. If you wish to view the code or contribute to development of the firmware, please visit the device code [GitHub page](https://github.com/meshtastic/firmware).
-
-:::info
-Please be aware that there are significant changes between version branches 1.2.x and 1.3.x which mean that devices need to be running the same branch of firmware to be able to talk to each other. Python, Android, and other software applications will also need to be running the same branch to be able to talk to the device.
-
-This feature uses a preinstalled module in the device code and associated command line flags/classes in the python code. You'll need to be running at least version 1.2.23 (or later) of the python and device code to use this feature.
-:::
-
-## Remote Hardware
 
 ### Supported Operations
 
