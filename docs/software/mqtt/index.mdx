@@ -78,7 +78,7 @@ The meaning of these fields is as follows:
 
 - "`id`" is the unique ID for this message. 
 - "`channel`" is the channel index this message was received on.
-- "`from`" is the unique node number of the node on the mesh that sent this message. 
+- "`from`" is the unique node number of the node on the mesh that sent this message, represented as a signed decimal number.
 - "`id`" inside the payload of a `NODEINFO_APP` message is the user ID of the node that sent it, which is currently just the hexadecimal representation of the node number. 
 - "`hardware`" is the [hardware model](https://github.com/meshtastic/protobufs/blob/master/meshtastic/mesh.proto#L215) of the node sending the `NODEINFO_APP` message.
 - "`longname`" is the long name of the device that sent the `NODEINFO_APP` message.
@@ -87,6 +87,8 @@ The meaning of these fields is as follows:
 - "`timestamp`" is the Unix Epoch when the message was received, represented as an integer in decimal.
 - "`to`" is the node number of the destination of the message. In this case, "-1" means it was a broadcast message (this is the decimal integer representation of `0xFFFFFFFF`). 
 - "`type`" is the type of the message, in this case it was a `NODEINFO_APP` message.
+
+The "from" field can thus be used as a stable identifier for a specific node. Note that (like the "`id`" and "`to`" fields) in JSON this is a signed value, whereas in protobufs it is unsigned.
 
 If the message received contains valid JSON in the payload, the JSON is deserialized and added as a JSON object rather than a string containing the serialized JSON.
 
