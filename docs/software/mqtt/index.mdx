@@ -17,7 +17,7 @@ You can find the settings available for MQTT [here](/docs/settings/moduleconfig/
 
 Using or emitting packets directly in/from smart home control software such as Home Assistant or other consumers that can work with JSON messages.
 
-When MQTT is enabled, the Meshtastic device simply uplinks and/or downlinks every raw protobuf packet that it sees to the MQTT broker. In addition, some packet types are serialized or deserialized from/to JSON messages for easier use in consumers. All packets are sent to the broker, whether they originate from another device on the mesh, or the gateway node itself.
+When MQTT is enabled, the Meshtastic device simply uplinks and/or downlinks every raw protobuf MeshPacket that it sees to the MQTT broker, encapsulated in a [ServiceEnvelope protobuf](https://buf.build/meshtastic/protobufs/docs/main:meshtastic#meshtastic.ServiceEnvelope). In addition, some packet types are serialized or deserialized from/to JSON messages for easier use in consumers. All packets are sent to the broker, whether they originate from another device on the mesh, or the gateway node itself.
 
 Packets may be encrypted. If you use the default meshtastic MQTT server, packets are always encrypted. If you use a custom MQTT broker (ie set `mqtt.address`), the `mqtt.encryption_enabled` setting applies, which by default is false.
 
