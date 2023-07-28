@@ -20,8 +20,8 @@ values={[
 {label: 'T-Beam v1.1', value: '1.1'},
 {label: 'T-Beam with M8N', value: 'm8n'},
 {label: 'T-Beam with M8N & SX1262', value: 'sx1262'},
-{label: 'T-Beam Supreme', value: 'supreme'},
-{label: 'T-Beam S3-Core', value: 's3core'}
+{label: 'T-Beam S3-Core', value: 's3core'},
+{label: 'T-Beam Supreme', value: 'supreme'}
 ]}>
 
 <TabItem value="0.7">
@@ -164,6 +164,39 @@ This is an earlier version of the T-Beam board. Due to changes in the design thi
 ![T-Beam M8N & SX1262](/img/hardware/t-beam-sx1262.png)
 
 </TabItem>
+<TabItem value = "s3core">
+
+  - **MCU**
+  - ESP32-S3 (WiFi & Bluetooth 5LE)
+- **LoRa Transceiver**
+  - **Semtech SX1262** (improved performance)
+- **Frequency options**
+  - 433 MHz
+  - 868 MHz
+  - 915 MHz
+- **Navigation Module**
+  - **NEO-M10S - GNSS receiver (supports GPS, GLONASS, Galileo, BeiDou)** (better GPS sensitivity)
+  - **Quectel L76K - (supports GPS, Beidou, GLONASS)** (lower price)
+- **Connectors**
+  - USB-C
+  - Antenna: U.FL antenna connector
+  
+<!-- trunk-ignore(markdownlint/MD024) -->
+## Features
+  
+- SoftRF preinstalled (flashing to Meshtastic required)
+- Boot and Reset switches
+- Can be used standalone without 'Supreme' daughterboard in a headless configuration
+  
+<!-- trunk-ignore(markdownlint/MD024) -->
+## Resources
+
+  - Firmware file: `firmware-tbeam-s3-core-X.X.X.xxxxxxx.bin`
+  - Purchase Link: [AliExpress](https://www.aliexpress.com/item/1005005418286231.html)
+
+![T-Beam S3-Core](/img/hardware/T-BEAM-S3Core.jpg)
+
+</TabItem>
 <TabItem value = "supreme">
 
   - **MCU**
@@ -200,40 +233,8 @@ This is an earlier version of the T-Beam board. Due to changes in the design thi
   - Firmware file: `firmware-tbeam-s3-core-X.X.X.xxxxxxx.bin`
   - Purchase Link: [AliExpress](https://www.aliexpress.com/item/1005005418286231.html)
 
-![T-Beam Supreme](/img/hardware/T-BEAM-S3-Supreme.png)
+![T-Beam Supreme](/img/hardware/T-BEAM-S3-Supreme.jpg)
 
 </TabItem>
-<TabItem value = "s3core">
 
-  - **MCU**
-  - ESP32-S3 (WiFi & Bluetooth 5LE)
-- **LoRa Transceiver**
-  - **Semtech SX1262** (improved performance)
-- **Frequency options**
-  - 433 MHz
-  - 868 MHz
-  - 915 MHz
-- **Navigation Module**
-  - **NEO-M10S - GNSS receiver (supports GPS, GLONASS, Galileo, BeiDou)** (better GPS sensitivity)
-  - **Quectel L76K - (supports GPS, Beidou, GLONASS)** (lower price)
-- **Connectors**
-  - USB-C
-  - Antenna: U.FL antenna connector
-  
-<!-- trunk-ignore(markdownlint/MD024) -->
-## Features
-  
-- SoftRF preinstalled (flashing to Meshtastic required)
-- Boot and Reset switches
-- Can be used standalone without 'Supreme' daughterboard in a headless configuration 
-  
-<!-- trunk-ignore(markdownlint/MD024) -->
-## Resources
-
-  - Firmware file: `firmware-tbeam-s3-core-X.X.X.xxxxxxx.bin`
-  - Purchase Link: [AliExpress](https://www.aliexpress.com/item/1005005418286231.html)
-
-![T-Beam S3-Core](/img/hardware/T-BEAM-S3Core.png)
-
-</TabItem>
 </Tabs>
