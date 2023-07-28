@@ -8,7 +8,7 @@ sidebar_position: 2
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 
-All T-beam models have an 18650 size battery holder on the rear of the device. This is designed to the original specification of the 18650 and only fits unprotected flat top 18650 cells. Button top and protected cells are typically longer than 65mm, often approaching 70mm.
+All T-beam models (with the exception of the S3-Core) have an 18650 size battery holder on the rear of the device. This is designed to the original specification of the 18650 and only fits unprotected flat top 18650 cells. Button top and protected cells are typically longer than 65mm, often approaching 70mm.
 
 Further information on the LILYGO® T-Beam devices can be found on LILYGO®'s [GitHub page](https://github.com/Xinyuan-LilyGO/LilyGo-LoRa-Series).
 
@@ -19,7 +19,9 @@ values={[
 {label: 'T-Beam v0.7', value:'0.7'},
 {label: 'T-Beam v1.1', value: '1.1'},
 {label: 'T-Beam with M8N', value: 'm8n'},
-{label: 'T-Beam with M8N & SX1262', value: 'sx1262'}
+{label: 'T-Beam with M8N & SX1262', value: 'sx1262'},
+{label: 'T-Beam S3-Core', value: 's3core'},
+{label: 'T-Beam Supreme', value: 'supreme'}
 ]}>
 
 <TabItem value="0.7">
@@ -75,12 +77,14 @@ This is an earlier version of the T-Beam board. Due to changes in the design thi
   - Micro USB
   - Antenna: SMA antenna connector
 
+<!-- trunk-ignore(markdownlint/MD024) -->
 ## Features
 
 - Meshtastic preinstalled
 - Power, Program and Reset switches
 - **Comes with 0.96 inch OLED display** (soldering required to assemble)
 
+<!-- trunk-ignore(markdownlint/MD024) -->
 ## Resources
 
 - Firmware file: `firmware-tbeam-X.X.X.xxxxxxx.bin`
@@ -109,12 +113,14 @@ This is an earlier version of the T-Beam board. Due to changes in the design thi
   - Micro USB
   - Antenna: U.FL antenna connector
 
+<!-- trunk-ignore(markdownlint/MD024) -->
 ## Features
 
 - Meshtastic preinstalled
 - Power, Program and Reset switches
 - Screen sold separately
 
+<!-- trunk-ignore(markdownlint/MD024) -->
 ## Resources
 
 - Firmware file: `firmware-tbeam-X.X.X.xxxxxxx.bin`
@@ -141,12 +147,14 @@ This is an earlier version of the T-Beam board. Due to changes in the design thi
   - Micro USB
   - Antenna: U.FL antenna connector
 
+<!-- trunk-ignore(markdownlint/MD024) -->
 ## Features
 
 - Meshtastic preinstalled
 - Power, Program and Reset switches
 - Screen sold separately
 
+<!-- trunk-ignore(markdownlint/MD024) -->
 ## Resources
 
 - Firmware file: `firmware-tbeam-X.X.X.xxxxxxx.bin`
@@ -156,4 +164,77 @@ This is an earlier version of the T-Beam board. Due to changes in the design thi
 ![T-Beam M8N & SX1262](/img/hardware/t-beam-sx1262.png)
 
 </TabItem>
+<TabItem value = "s3core">
+
+  - **MCU**
+  - ESP32-S3 (WiFi & Bluetooth 5LE)
+- **LoRa Transceiver**
+  - **Semtech SX1262** (improved performance)
+- **Frequency options**
+  - 433 MHz
+  - 868 MHz
+  - 915 MHz
+- **Navigation Module**
+  - **NEO-M10S - GNSS receiver (supports GPS, GLONASS, Galileo, BeiDou)** (better GPS sensitivity)
+  - **Quectel L76K - (supports GPS, Beidou, GLONASS)** (lower price)
+- **Connectors**
+  - USB-C
+  - Antenna: U.FL antenna connector
+  
+<!-- trunk-ignore(markdownlint/MD024) -->
+## Features
+  
+- SoftRF preinstalled (flashing to Meshtastic required)
+- Boot and Reset switches
+- Can be used standalone without 'Supreme' daughterboard in a headless configuration
+  
+<!-- trunk-ignore(markdownlint/MD024) -->
+## Resources
+
+  - Firmware file: `firmware-tbeam-s3-core-X.X.X.xxxxxxx.bin`
+  - Purchase Link: [AliExpress](https://www.aliexpress.com/item/1005005418286231.html)
+
+![T-Beam S3-Core](/img/hardware/T-BEAM-S3Core.jpg)
+
+</TabItem>
+<TabItem value = "supreme">
+
+  - **MCU**
+  - ESP32-S3 (WiFi & Bluetooth 5LE)
+- **LoRa Transceiver**
+  - **Semtech SX1262** (improved performance)
+- **Frequency options**
+  - 433 MHz
+  - 868 MHz
+  - 915 MHz
+- **Navigation Module**
+  - **NEO-M10S - GNSS receiver (supports GPS, GLONASS, Galileo, BeiDou)** (better GPS sensitivity)
+  - **Quectel L76K - (supports GPS, Beidou, GLONASS)** (lower price)
+- **Connectors**
+  - USB-C
+  - Antenna: U.FL antenna connector
+  
+<!-- trunk-ignore(markdownlint/MD024) -->
+## Features
+  
+- Includes T-Beam S3-Core Module
+- SoftRF preinstalled (flashing to Meshtastic required)
+- Power, Boot and Reset switches
+- 1.3" OLED included
+- BME280 Air pressure sensor
+- QMI8658 IMU
+- QMC6310 Magnetometer
+- PCF8563 RTC
+- Micro-SD reader (not implemented in Meshtastic)
+  
+<!-- trunk-ignore(markdownlint/MD024) -->
+## Resources
+
+  - Firmware file: `firmware-tbeam-s3-core-X.X.X.xxxxxxx.bin`
+  - Purchase Link: [AliExpress](https://www.aliexpress.com/item/1005005418286231.html)
+
+![T-Beam Supreme](/img/hardware/T-BEAM-S3-Supreme.jpg)
+
+</TabItem>
+
 </Tabs>
