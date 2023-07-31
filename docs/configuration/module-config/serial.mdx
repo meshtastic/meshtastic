@@ -391,29 +391,38 @@ void sendRelayToggleCommand() {
 #### Arduino Mini Pro /relay Code
 
 ```cpp
-//define sketch constants (gpios, baud rate and other constants)
+//define sketch constants (pins, baud rate and other constants)
 #define RELAY_PIN 2
 #define BAUD_RATE 9600
 
-int currentRelayState;
+int currentRelayState; //this variable can be checked to see the state of the relay pin and must be manually updated any time you change the state of the relay pin with digitalWrite(). HIGH means active coil, LOW means inactive coil
+
+//these "code" variables are the commands to control the relay, they can be whatever you want them to be, but make sure they are not too simple like "on" or "off" or you will accidentally activate/deactivate your relay while sending basic text conversation over the mesh. For example, if the relayOffCode is just "off" and you send "Hey Steve, what time are you off work?", you've just turned off your relay accidentally because the string "off" was in your message.
 const char* relayToggleCode = "relay1toggle";
-const char* relayOnCode = "on";
-const char* relayOffCode = "off";
+const char* relayOnCode = "relay1on";
+const char* relayOffCode = "relay1off";
+
+// the MAX_INPUT variable defines the size of the incoming message buffer that checkStringForPasscode() examines to see if it contains any of the "codes" above, this value can be whatever you want but smaller numbers will get processed faster. As long as you send the right command within the first 30 bytes (characters) of a message from another node, your command will be seen by the Arduino and processed. (it's actually more like the first 24 bytes because you have to account for the first 6 characters that the Serial Module prepends to each incoming message in the form of the sending node's shortname (4 characters) which is always followed by ": " (another 2 characters, so 6 in total). 
 const unsigned int MAX_INPUT = 30;
 
 void setup() {
-  Serial.begin(BAUD_RATE);
+  Serial.begin(BAUD_RATE); //enable UART so Tbeam and Arduino can talk to each other
   pinMode(RELAY_PIN, OUTPUT);
-  digitalWrite(RELAY_PIN, LOW);
+  
+  //the lines below were written so that the relay always starts off in the inactive state on the Arduino bootup.  But if you had some way of writing variables to non-volatile memory like flash memory you could save the most recent state of the relay to flash and set the relay to that state every time the Arduino is powered on. Just something to consider. 
+  digitalWrite(RELAY_PIN, LOW); 
   currentRelayState = LOW;
 }
 
 void loop() {
+  //the main loop() in this sketch is very simple, it just checks to see if any new data is in serial buffer and then if there is, it sends the next available byte (character) to the processIncomingByte() function
   while (Serial.available() > 0) {
     processIncomingByte(Serial.read());
   }
 }
 
+//Credit for the following function goes to Nick Gammon 
+//This function takes the incoming bytes from the serial buffer and stores them in a string or char array. Everytime the function is called it adds the new byte or character to the input_line array until the array has the MAX_INPUT number of elements or until a new-line character '\n' is received. Carriage returns '\r' are ignored. When the '\n\' character is received it is appended to the array and the whole array is passed to the checkStringForPasscode() function.
 void processIncomingByte(const byte inByte) {
   static char input_line[MAX_INPUT];
   static unsigned int input_pos = 0;
@@ -433,31 +442,38 @@ void processIncomingByte(const byte inByte) {
   }
 }
 
+//this function does the exciting stuff that you can see with your eyes. It stores the incoming char array as a String object (yes with a capital S, not to be confused with a string variable), so that we can process the data with the .indexOf() function. The indexOf() function is used to find a, let's call it a "sub-string", within the String object. If it finds the sub-string, the function returns the index of that sub-string. If the sub-string does not exist within the String object, the function returns a -1. So as long as .indexOf() does NOT return a -1, we know that the sub-string exists in the String.
 void checkStringForPasscode(const char* data) {
+  
+  //stores the incoming message as a String object
   String inputString = data;
 
-  if (inputString.indexOf(relayToggleCode) != -1) {
+  if (inputString.indexOf(relayToggleCode) != -1) { //if relayToggleCode exists in inputString, toggle the relay...
+    
+    //to toggle the relay, we first check "currentRelayState". If it is LOW, then we toggle the relay HIGH, and if it is HIGH, we set it back to LOW. We also respond to the mesh with a confirmationMessage or an acknowledgement that a command was received and the Arduino has reacted to that command appropriately. This way you can know for sure that your relay is working properly even if you are miles away.
     if (currentRelayState == LOW) {
       digitalWrite(RELAY_PIN, HIGH);
       currentRelayState = HIGH;
-      const char* confirmationMessage = "Relay 1 has received the command and is now ON";
-      Serial.println(confirmationMessage);
+      Serial.println("Relay 1 has received the command and is now ON");
     } else {
       digitalWrite(RELAY_PIN, LOW);
       currentRelayState = LOW;
-      const char* confirmationMessage = "Relay 1 has received the command and is now OFF";
-      Serial.println(confirmationMessage);
+      Serial.println("Relay 1 has received the command and is now OFF");
     }
-  } else if (inputString.indexOf(relayOnCode) != -1) {
-    digitalWrite(RELAY_PIN, HIGH);
-    currentRelayState = HIGH;
-    const char* confirmationMessage = "Relay 1 has received the command and is now ON";
-    Serial.println(confirmationMessage);
-  } else if (inputString.indexOf(relayOffCode) != -1) {
-    digitalWrite(RELAY_PIN, LOW);
-    currentRelayState = LOW;
-    const char* confirmationMessage = "Relay 1 has received the command and is now OFF";
-    Serial.println(confirmationMessage);
+  
+  } else if (inputString.indexOf(relayOnCode) != -1) { //if the message contains "relay1on"...
+  
+    digitalWrite(RELAY_PIN, HIGH); //turn on the relay
+    currentRelayState = HIGH; //update the currentRelayState variable
+    Serial.println("Relay 1 has received the command and is now ON"); //reply to the mesh with acknowledgement
+  
+  } else if (inputString.indexOf(relayOffCode) != -1) { //if the message contains "relay1off"...
+    
+    digitalWrite(RELAY_PIN, LOW); //turn off the relay
+    currentRelayState = LOW; //update the currentRelayState variable
+    Serial.println("Relay 1 has received the command and is now OFF"); // reply to the mesh with acknowledgement
+  
   }
+  
 }
 ```
