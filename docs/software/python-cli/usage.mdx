@@ -27,9 +27,9 @@ to keep the Bluetooth link alive for eight hours (any usage of the Bluetooth pro
 
 ```shell title="Expected Output"
 # You should see a result similar to this:
-mydir$ meshtastic --set bluetooth.wait_bluetooth_secs 28800
+mydir$ meshtastic --set power.wait_bluetooth_secs 28800
 Connected to radio...
-Setting bluetooth.wait_bluetooth_secs to 28800
+Setting power.wait_bluetooth_secs to 28800
 Writing modified preferences to device...
 ```
 
@@ -58,7 +58,7 @@ Meshtastic encodes the radio channel and PSK in the channel's URL. All nodes mus
 :::
 
 ```shell
-meshtastic --ch-set name mychan --ch-index 1 --ch-set channel_num 4 --info
+meshtastic --ch-set name mychan --ch-index 1 --info
 ```
 
 You can even set the channel preshared key to a particular AES128 or AES256 sequence.
@@ -76,7 +76,7 @@ Use `--ch-set psk default --ch-index 0` to restore the standard 'default' (minim
 All `ch-set` commands need to have the `ch-index` parameter specified:
 
 ```shell
-meshtastic --ch-index 1 --ch-set name mychan --ch-set channel_num 4 --info
+meshtastic --ch-index 1 --ch-set name mychan --info
 ```
 
 ### Ham radio support
@@ -85,7 +85,7 @@ Meshtastic is designed to be used without a radio operator license. If you do ha
 
 ```shell title="Expected Output"
 # You should see a result similar to this:
-mydir$ meshtastic --port /dev/ttyUSB1 --set-ham KI1345
+mydir$ meshtastic --set-ham KI1345
 Connected to radio
 Setting Ham ID to KI1345 and turning off encryption
 Writing modified channels to device
