@@ -51,7 +51,7 @@ For a full list of preferences which can be set (and their documentation) can be
 
 ### Changing channel settings
 
-The channel settings can also be changed, either by using a standard (shareable) meshtastic URL or you can set particular channel parameter (for advanced users).
+The channel settings can also be changed, either by using a standard (shareable) meshtastic URL or you can set a particular channel parameter (for advanced users).
 
 :::warning
 Meshtastic encodes the radio channel and PSK in the channel's URL. All nodes must connect to the channel again by using the URL provided after a change in this section by performing the `--info` switch.
@@ -69,7 +69,7 @@ meshtastic --ch-index 1 --ch-set psk 0x1a1a1a1a2b2b2b2b1a1a1a1a2b2b2b2b1a1a1a1a2
 
 Use `--ch-set psk none --ch-index 0` to turn off encryption.
 
-Use `--ch-set psk random --ch-index 0` will assign a new (high quality) random AES256 key to the primary channel (similar to what the Android app does when making new channels).
+Use `--ch-set psk random --ch-index 0` to assign a new (high quality) random AES256 key to the primary channel (similar to what the Android app does when making new channels).
 
 Use `--ch-set psk default --ch-index 0` to restore the standard 'default' (minimally secure, because it is in the source code for anyone to read) AES128 key.
 
@@ -130,7 +130,7 @@ This indicates an OS permission problem for access by your user to the USB seria
 sudo usermod -a -G dialout <username>
 ```
 
-If the adding the user to the dialout group does not work, you can use the following command to find out which group to add your user to.
+If adding your user to the dialout group does not work, you can use the following command to find out which group to add your user to.
 In this example (from Arch Linux) the group was "uucp"
 
 ```shell
