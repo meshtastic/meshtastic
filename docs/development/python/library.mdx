@@ -20,14 +20,14 @@ interface = meshtastic.serial_interface.SerialInterface()
 interface.sendText("hello mesh")
 
 ourNode = interface.getNode('^local')
-print(f'Our node preferences:{ourNode.radioConfig.preferences}')
+print(f'Our node preferences:{ourNode.localConfig.position.gps_update_interval}')
 
 # update a value
 print('Changing a preference...')
-ourNode.radioConfig.preferences.gps_update_interval = 60
+ourNode.localConfig.position.gps_update_interval = 60
 
-print(f'Our node preferences now:{ourNode.radioConfig.preferences}')
-ourNode.writeConfig()
+print(f'Our node preferences now:{ourNode.localConfig.position.gps_update_interval}')
+ourNode.writeConfig("position")
 
 interface.close()
 ```
