@@ -13,27 +13,29 @@ You can also share channel settings with a remote network. If you use the defaul
 
 You can find the settings available for MQTT [here](/docs/settings/moduleconfig/mqtt).
 
+:::important
+When MQTT is turned on, you are potentially broadcasting your entire mesh's traffic onto the public internet. This includes messages and position information.
+:::
+
 ## Software Integrations
 
 Using or emitting packets directly in/from smart home control software such as Home Assistant or other consumers that can work with JSON messages.
 
 When MQTT is enabled, the Meshtastic device simply uplinks and/or downlinks every raw protobuf MeshPacket that it sees to the MQTT broker, encapsulated in a [ServiceEnvelope protobuf](https://buf.build/meshtastic/protobufs/docs/main:meshtastic#meshtastic.ServiceEnvelope). In addition, some packet types are serialized or deserialized from/to JSON messages for easier use in consumers. All packets are sent to the broker, whether they originate from another device on the mesh, or the gateway node itself.
 
-IMPORTANT: When MQTT is turned on, you are potentially broadcasting your entire mesh traffic onto the public internet. This includes messages and position information.
-
 ### MQTT [Topics](https://www.hivemq.com/blog/mqtt-essentials-part-5-mqtt-topics-best-practices)
 
 If no specific [root topic](/docs/settings/moduleconfig/mqtt#root-topic) is configured, the default root topic will be `msh/`.
-Each device that is connected to MQTT will publish its MQTT state ("`online`"/"`offline`") to:
+Each device that is connected to MQTT will publish its MQTT state (`online`/`offline`) to:
 
-`msh/2/stat/USERID`, where `USERID` is the user ID of the gateway device (the one connected to MQTT).
+`msh/2/stat/NODEID`, where `NODEID` is the node ID of the gateway device (the one connected to MQTT).
 
-For each channel where uplink and/or downlink is enabled two other topics might be used.
+For each channel where uplink and/or downlink is enabled, two other topics might be used:
 
 #### Protobufs topic
 A gateway node will uplink and/or downlink raw ([protobuf](https://developers.google.com/protocol-buffers)) MeshPackets to the topic:
 
-`msh/2/c/CHANNELNAME/USERID`, where `CHANNELNAME` is the name of the channel.
+`msh/2/c/CHANNELNAME/NODEID`, where `CHANNELNAME` is the name of the channel.
 
 For example: `msh/2/c/LongFast/!abcd1234`
 
@@ -48,9 +50,9 @@ The payload is a raw protobuf, whose definitions for Meshtastic can be found [he
 If [encryption_enabled](/docs/settings/moduleconfig/mqtt#encryption-enabled) is set to true, the payload of the MeshPacket will remain encrypted with the key for the specified channel.
 
 #### JSON topic
-If [JSON is enabled](/docs/settings/moduleconfig/mqtt/#json-enabled), packets from the following [port numbers](/docs/development/firmware/portnum) are serialized to JSON: `TEXT_MESSAGE_APP`, `ENVIRONMENTAL_MEASUREMENT_APP`, `NODEINFO_APP` and `POSITION_APP`. These are then forwarded to the topic: 
+If [JSON is enabled](/docs/settings/moduleconfig/mqtt/#json-enabled), packets from the following [port numbers](/docs/development/firmware/portnum) are serialized to JSON: `TEXT_MESSAGE_APP`, `TELEMETRY_APP`, `NODEINFO_APP`, `POSITION_APP` and `WAYPOINT_APP`. These are then forwarded to the topic: 
 
-`msh/2/json/CHANNELNAME/USERID`.
+`msh/2/json/CHANNELNAME/NODEID`.
 
 An example of a received `NODEINFO_APP` message:
 
@@ -236,17 +238,12 @@ Below is a valid JSON envelope for information sent by MQTT to a device for broa
 }
 ```
 
-Node-RED is a free cross-platform programming tool for wiring together hardware, APIs, and online services developed originally by IBM for IOT. It is widely used for home automation by many non-professional programmers and runs well on Pi's. Node-red has many plug-in modules written by the community. I will use this platform as a practical example on how to interface with the MQTT features of Meshtastic. Everything can be done from GUI's without using command line.
+Node-RED is a free cross-platform programming tool for wiring together hardware, APIs, and online services developed originally by IBM for IOT. It is widely used for home automation by many non-professional programmers and runs well on Pi's. Node-RED has many plug-in modules written by the community. I will use this platform as a practical example on how to interface with the MQTT features of Meshtastic. Everything can be done from GUI's without using command line.
 
-Step one: use http://client.meshtastic.org/ one of the Apple apps or the CLI to connect to your device and adjust these settings.
+Step one: use http://client.meshtastic.org/ , the python CLI, or an Apple or Android app to connect to your device and adjust these settings.
 Enable and enter network SSID/PSK. Settings--> Device Config--> Network; Save.
 Set MQTT server address. Settings--> Module Config--> MQTT config; Verify Encryption Enabled is OFF. Turn JSON Output Enabled ON. Save.
-Go to Channel Editor and set Uplink and Downlink enabled to True. Save. There is currently a bug for setting Uplink and Downlink Saving for the default channel. If you encounter this use the CLI commands:
-
-```shell
-meshtastic --ch-index 0 --ch-set uplink_enabled true
-meshtastic --ch-index 0 --ch-set downlink_enabled true
-```
+Go to Channel Editor and set Uplink and Downlink enabled to True. Save. 
 
 Step two: if you don't want to depend on JSON decoding on the device, you can decode the protobuf messages off-device. To do that you will need to get the .proto files from https://github.com/meshtastic/protobufs. They function as a schema and are required for decoding in Node-RED. Save the files where the node-RED application can access them and note the file path of the "mqtt.proto" file.
 
