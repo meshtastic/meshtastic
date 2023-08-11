@@ -19,8 +19,6 @@ Using or emitting packets directly in/from smart home control software such as H
 
 When MQTT is enabled, the Meshtastic device simply uplinks and/or downlinks every raw protobuf MeshPacket that it sees to the MQTT broker, encapsulated in a [ServiceEnvelope protobuf](https://buf.build/meshtastic/protobufs/docs/main:meshtastic#meshtastic.ServiceEnvelope). In addition, some packet types are serialized or deserialized from/to JSON messages for easier use in consumers. All packets are sent to the broker, whether they originate from another device on the mesh, or the gateway node itself.
 
-Packets may be encrypted. If you use the default meshtastic MQTT server, packets are always encrypted. If you use a custom MQTT broker (ie set `mqtt.address`), the `mqtt.encryption_enabled` setting applies, which by default is false.
-
 IMPORTANT: When MQTT is turned on, you are potentially broadcasting your entire mesh traffic onto the public internet. This includes messages and position information.
 
 ### MQTT [Topics](https://www.hivemq.com/blog/mqtt-essentials-part-5-mqtt-topics-best-practices)
