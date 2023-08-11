@@ -28,14 +28,14 @@ When MQTT is enabled, the Meshtastic device simply uplinks and/or downlinks ever
 If no specific [root topic](/docs/settings/moduleconfig/mqtt#root-topic) is configured, the default root topic will be `msh/`.
 Each device that is connected to MQTT will publish its MQTT state (`online`/`offline`) to:
 
-`msh/2/stat/NODEID`, where `NODEID` is the node ID of the gateway device (the one connected to MQTT).
+`msh/2/stat/USERID`, where `USERID` is the node ID of the gateway device (the one connected to MQTT).
 
 For each channel where uplink and/or downlink is enabled, two other topics might be used:
 
 #### Protobufs topic
 A gateway node will uplink and/or downlink raw ([protobuf](https://developers.google.com/protocol-buffers)) MeshPackets to the topic:
 
-`msh/2/c/CHANNELNAME/NODEID`, where `CHANNELNAME` is the name of the channel.
+`msh/2/c/CHANNELNAME/USERID`, where `CHANNELNAME` is the name of the channel.
 
 For example: `msh/2/c/LongFast/!abcd1234`
 
@@ -52,7 +52,7 @@ If [encryption_enabled](/docs/settings/moduleconfig/mqtt#encryption-enabled) is 
 #### JSON topic
 If [JSON is enabled](/docs/settings/moduleconfig/mqtt/#json-enabled), packets from the following [port numbers](/docs/development/firmware/portnum) are serialized to JSON: `TEXT_MESSAGE_APP`, `TELEMETRY_APP`, `NODEINFO_APP`, `POSITION_APP` and `WAYPOINT_APP`. These are then forwarded to the topic: 
 
-`msh/2/json/CHANNELNAME/NODEID`.
+`msh/2/json/CHANNELNAME/USERID`.
 
 An example of a received `NODEINFO_APP` message:
 
