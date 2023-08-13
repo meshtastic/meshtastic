@@ -13,10 +13,10 @@ import calculateADC from "/src/utils/calculateADC";
 Power settings are advanced configuration, most users should choose a role under [Device Config](/docs/settings/config/device) to manage power for their device and shouldn't ever need to adjust these settings.
 :::
 
-The power config options are: Power Saving, Shutdown after losing power, ADC Multiplier Override, Wait Bluetooth Interval, Mesh Super Deep Sleep Timeout, Super Deep Sleep Interval, Light Sleep Interval, Minimum Wake Interval, and Device Battery INA2xx Address. Power config uses an admin message sending a `Config.Power` protobuf.
+The power config options are: Power Saving, Shutdown after losing power, ADC Multiplier Override, Wait Bluetooth Interval, Light Sleep Interval, Minimum Wake Interval, and Device Battery INA2xx Address. Power config uses an admin message sending a `Config.Power` protobuf.
 
 :::info
-ADC Multiplier, Super Deep Sleep, and Light Sleep settings only apply to ESP32-based boards.  These settings will have no effect on nRF52 modules.
+ADC Multiplier, The Light Sleep setting only applies to ESP32-based boards.  This settings will have no effect on nRF52 modules.
 :::
 
 ## Power Config Values
@@ -95,20 +95,6 @@ How long to wait before turning off BLE in no Bluetooth states
 
 `0` for default of 1 minute
 
-### Mesh Super Deep Sleep Timeout
-
-While in Light Sleep if this value is exceeded we will lower into super deep sleep
-
-or Super Deep Sleep Interval (default 1 year) or a button press
-
-`0` for default of two hours, MAXUINT for disabled
-
-### Super Deep Sleep Interval
-
-While in Light Sleep if Mesh Super Deep Sleep Timeout Seconds is exceeded we will lower into super deep sleep or this value (default 1 year) or a button press
-
-`0` for default of one year
-
 ### Light Sleep Interval
 
 In light sleep the CPU is suspended, LoRa radio is on, BLE is off and GPS is on
@@ -174,8 +160,6 @@ All Power config options are available in the python CLI.
 | power.on_battery_shutdown_after_secs |     `integer` (seconds)      |        Default of `0` is off        |
 |    power.adc_multiplier_override     | `2-4` (floating point value) | Default of `0` uses firmware values |
 |      power.wait_bluetooth_secs       |     `integer` (seconds)      |     Default of `0` is 1 minute      |
-|     power.mesh_sds_timeout_secs      |     `integer` (seconds)      |      Default of `0` is 2 hours      |
-|            power.sds_secs            |     `integer` (seconds)      |      Default of `0` is 1 year       |
 |            power.ls_secs             |     `integer` (seconds)      |      Default of `0` is 5 minutes    |
 |         power.min_wake_secs          |     `integer` (seconds)      |    Default of `0` is 10 seconds     |
 | power.device_battery_ina_address     | `integer` (I2C address as decimal)     |  Default of `0` is no address set   |
@@ -203,18 +187,6 @@ meshtastic --set power.on_battery_shutdown_after_secs 0
 ```shell title="Set  Wait Bluetooth Interval  (Default of 0 is 60 seconds)"
 meshtastic --set power.wait_bluetooth_secs 0
 meshtastic --set power.wait_bluetooth_secs 120
-```
-
-```shell title="Set Mesh Super Deep Sleep Timeout (Default of 0 is 2 hours/7200 seconds)"
-meshtastic --set power.mesh_sds_timeout_secs 0
-meshtastic --set power.mesh_sds_timeout_secs 120
-// Disable using MAXUINT
-meshtastic --set power.mesh_sds_timeout_secs 4294967295
-```
-
-```shell title="Set Super Deep Sleep (Default of 0 is 1 year)"
-meshtastic --set power.sds_secs 0
-meshtastic --set power.sds_secs 120
 ```
 
 ```shell title="Set Light Sleep to default (Default of 0 is 5 minutes)"
