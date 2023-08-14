@@ -88,7 +88,7 @@ The meaning of these fields is as follows:
 - "`to`" is the node number of the destination of the message. In this case, "-1" means it was a broadcast message (this is the decimal integer representation of `0xFFFFFFFF`). 
 - "`type`" is the type of the message, in this case it was a `NODEINFO_APP` message.
 
-The "from" field can thus be used as a stable identifier for a specific node. Note that (like the "`id`" and "`to`" fields) in JSON this is a signed value, whereas in protobufs it is unsigned.
+The "from" field can thus be used as a stable identifier for a specific node. Note that (like the "`id`" and "`to`" fields) in JSON this is a signed value, whereas in protobufs it is unsigned. In firmware >=2.2.0 the JSON values are properly using unsigned values.
 
 If the message received contains valid JSON in the payload, the JSON is deserialized and added as a JSON object rather than a string containing the serialized JSON.
 
