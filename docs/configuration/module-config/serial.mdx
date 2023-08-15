@@ -8,7 +8,7 @@ sidebar_label: Serial
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 
-The serial module config options are: Enabled, Echo, Mode, Receive GPIO, Transmit GPIO and Sender. Serial Module config uses an admin message sending a `ConfigModule.Serial` protobuf.
+The serial module config options are: Enabled, Echo, Mode, Receive GPIO, Transmit GPIO, Baud Rate, Timeout, and Override Console Serial Port. Serial Module config uses an admin message sending a `ConfigModule.Serial` protobuf.
 
 This is a simple interface to send messages over the mesh network by sending strings over a serial port. Anything you send the node will be turned into a message sent out over the mesh, and anything received from the mesh will be sent to the serial port. Note that this module does not (yet) allow arbitrary protobuf commands to be sent over the serial connection.
 
@@ -196,13 +196,7 @@ Default is to use RX GPIO 16 and TX GPIO 17.
 
 ### Interfacing PIR Sensor With External Microcontroller
 
-The following is an example of using a Raspberry Pi Pico connected to a PIR sensor to detect motion. When motion is detected, a message is sent via. serial to the T-Beam. The T-Beam transmits the message as text over the default channel by utilizing the serial module in TXTMSG mode.
-
-#### BOM
-
-- Raspberry Pi Pico running [CircuitPython](https://learn.adafruit.com/getting-started-with-raspberry-pi-pico-circuitpython)
-- T-Beam V1.1 running Meshtastic
-- PIR Sensor ([Adafruit Breadboard Model](https://www.adafruit.com/product/4871))
+The following are examples of using either a Raspberry Pi Pico or Arduino Mini Pro connected to a PIR sensor to detect motion. When motion is detected, a message is sent via serial to the T-Beam. The T-Beam transmits the message as text over the default channel by utilizing the serial module in TXTMSG mode.
 
 #### Meshtastic Software Configuration
 
@@ -210,9 +204,15 @@ The following is an example of using a Raspberry Pi Pico connected to a PIR sens
 - GPIO Pins (For T-Beam) RX 13, TX 14
 - 38400 Baud
 
-#### Wiring
+#### Rasberry Pi Pico BOM
 
-![image](https://user-images.githubusercontent.com/2799310/210852481-21ea76e5-ecaa-40c1-8f34-635ef2a1c95b.png)
+- A Raspberry Pi Pico running [CircuitPython](https://learn.adafruit.com/getting-started-with-raspberry-pi-pico-circuitpython)
+- T-Beam V1.1 running Meshtastic
+- PIR Sensor ([Adafruit Breadboard Model](https://www.adafruit.com/product/4871))
+
+#### Raspberry Pi Pico Wiring
+
+![image](/img/modules/Serial/pico-pir-wiring.png)
 
 - TX pin 14 on the T-Beam to RX pin 2 on the Pico
 - RX pin 13 on the T-Beam to TX pin 1 on the Pico
@@ -244,4 +244,53 @@ while True:
         uart.write(bytes("Motion Detected", "ascii"))
         time.sleep(30)
     time.sleep(0.5)
+```
+
+#### Arduino Mini Pro BOM
+- An Arduino Mini Pro with example sketch from below uploaded to it.
+- T-Beam V1.1 running Meshtastic
+- PIR Sensor ([Adafruit Breadboard Model](https://www.adafruit.com/product/4871))
+
+#### Arduino Mini Pro Wiring
+
+![image](/img/modules/Serial/arduino-mini-pro-pir-wiring.png)
+
+- T-BEAM RX PIN 13 to TX PIN on the ARDUINO MINI
+- T-BEAM TX PIN 14 to RX PINon the ARDUINO MINI
+- T-BEAM PIN 3.3V to 3.3V PIN on the ARDUINO MINI
+- T-BEAM PIN GND to GND PIN on the ARDUINO MINI
+- ARDUINO MINI PIN 2 to OUT PIN on the PIR SENSOR
+- ARDUINO MINI PIN 3.3V to 3.3V on the PIR SENSOR
+- ARDUINO MINI PIN GND to GND PIN on the PIR SENSOR
+
+#### Arduino Mini Pro Code
+
+```cpp
+int LED = 13; // the pin to which the LED is connected
+int PIR = 2;  // the pin to which the sensor is connected
+int previousState = LOW; // previous state of the sensor
+
+
+void setup() {
+pinMode(LED, OUTPUT); // initialize the LED as an output
+pinMode(PIR, INPUT);  // initialize the sensor as an input
+Serial.begin(9600);   // initialize serial communication
+}
+
+void loop(){
+   int currentState = digitalRead(PIR); // read the current state of the sensor
+  if (currentState != previousState) { // check if the state has changed
+    if (currentState == HIGH) { // check if there is motion
+      digitalWrite(LED, HIGH);  // turn the LED on
+      Serial.println("Motion Detected");
+}
+    else {
+      digitalWrite(LED, LOW);  // turn the LED off
+      Serial.println("No Motion");
+    }
+previousState = currentState; // update the previous state
+  }
+  delay(100); // small delay to avoid false sensor readings
+
+}
 ```

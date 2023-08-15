@@ -17,6 +17,27 @@ Shows a help message that describes the arguments.
 ```shell title="Usage"
 meshtastic -h
 ```
+### --export-config
+
+Export the configuration of the device. (to be consumed by the '--configure' command).
+
+To create to a file with the connected device's configuration, this command's output must be piped to a yaml file.
+
+```shell title="Usage"
+meshtastic --export-config > example_config.yaml
+```
+
+```title="Usage"shell
+meshtastic --export-config
+```
+
+### --configure
+
+Configure radio using a yaml file.
+
+```shell title="Usage"
+meshtastic --configure example_config.yaml
+```
 
 ### --port PORT
 
@@ -51,6 +72,38 @@ Read and display the radio config information.
 meshtastic --port /dev/ttyUSB0 --info
 ```
 
+### --set-canned-message
+
+Set the canned message plugin messages separated by pipes `|` (up to 200 characters).
+
+```shell title="Usage"
+meshtastic --set-canned-message "I need an alpinist!|Call Me|Roger Roger|Keep Calm|On my way"
+```
+
+### --get-canned-message
+
+Show the canned message plugin message.
+
+```shell title="Usage"
+meshtastic --get-canned-message
+```
+
+### --set-ringtone RINGTONE
+
+Set the Notification Ringtone (up to 230 characters).
+
+```shell title="Usage"
+meshtastic --set-ringtone "LeisureSuit:d=16,o=6,b=56:f.5,f#.5,g.5,g#5,32a#5,f5,g#.5,a#.5,32f5,g#5,32a#5,g#5,8c#.,a#5,32c#,a5,a#.5,c#.,32a5,a#5,32c#,d#,8e,c#.,f.,f.,f.,f.,f,32e,d#,8d,a#.5,e,32f,e,32f,c#,d#.,c#"
+```
+
+### --get-ringtone
+
+Show the stored ringtone.
+
+```shell title="Usage"
+meshtastic --get-ringtone
+```
+
 ### --nodes
 
 Prints a node list in a pretty, formatted table.
@@ -67,19 +120,22 @@ Displays the QR code that corresponds to the current channel.
 meshtastic --qr
 ```
 
-### --get GET
+### --get [config_section]
 
 Gets a preferences field.
 
+Configuration values are described in: [Configuration](https://meshtastic.org/docs/settings).
+
 ```shell title="Usage"
+meshtastic --get lora
 meshtastic --get lora.region
 ```
 
-### --set [config_section].[option] [value]
+### --set [config_section].[option]&nbsp; [value]
 
 Sets a preferences field.
 
-Configuration values are described in this section: [Configuration Sections](https://meshtastic.org/docs/settings/config)
+Configuration values are described in: [Configuration](https://meshtastic.org/docs/settings).
 
 ```shell title="Usage"
 meshtastic --set lora.region Unset
@@ -95,7 +151,7 @@ meshtastic --seturl https://www.meshtastic.org/c/GAMiIE67C6zsNmlWQ-KE1tKt0fRKFci
 
 ### --ch-index CH_INDEX
 
-Set the specified channel index
+Set the specified channel index.
 
 ```shell title="Usage"
 meshtastic --ch-index 1 --ch-disable
@@ -141,17 +197,57 @@ Set a channel parameter.
 meshtastic --ch-set id 1234 --ch-index 0
 ```
 
+### --ch-vlongslow
+
+Change modem preset to `VERY_LONG_SLOW`.
+
+```shell title="Usage"
+meshtastic --ch-vlongslow
+```
+
 ### --ch-longslow
 
-Change to the standard long-range (but slow) channel.
+Change modem preset to `LONG_SLOW`.
 
 ```shell title="Usage"
 meshtastic --ch-longslow
 ```
 
+### --ch-longfast
+
+Change modem preset to (the default) `LONG_FAST`.
+
+```shell title="Usage"
+meshtastic --ch-longfast
+```
+
+### --ch-medslow
+
+Change modem preset to `MEDIUM_SLOW`.
+
+```shell title="Usage"
+meshtastic --ch-medslow
+```
+
+### --ch-medfast
+
+Change modem preset to `MEDIUM_FAST`.
+
+```shell title="Usage"
+meshtastic --ch-medfast
+```
+
+### --ch-shortslow
+
+Change modem preset to `SHORT_SLOW`.
+
+```shell title="Usage"
+meshtastic --ch-shortslow
+```
+
 ### --ch-shortfast
 
-Change to the standard fast (but short range) channel.
+Change modem preset to `SHORT_FAST`.
 
 ```shell title="Usage"
 meshtastic --ch-shortfast
@@ -162,7 +258,15 @@ meshtastic --ch-shortfast
 Set device owner name.
 
 ```shell title="Usage"
-meshtastic --dest '!28979058' --set-owner "MeshyJohn"
+meshtastic --set-owner "MeshyJohn"
+```
+
+### --set-owner-short SET_OWNER_SHORT
+
+Set device owner short name (4 characters max).
+
+```shell title="Usage"
+meshtastic --set-owner-short "MJ"
 ```
 
 ### --set-ham SET_HAM
@@ -175,7 +279,7 @@ meshtastic --set-ham KI1345
 
 ### --dest DEST
 
-The destination node id for any sent commands
+The destination node id for any sent commands.  Used for [Remote Node Administration](/docs/configuration/remote-admin)
 
 ```shell title="Usage"
 meshtastic --dest '!28979058' --set-owner "MeshyJohn"
@@ -183,7 +287,7 @@ meshtastic --dest '!28979058' --set-owner "MeshyJohn"
 
 ### --sendtext SENDTEXT
 
-Send a text message. Can specify a channel index ('--ch-index') or a destination ('--dest')
+Send a text message. Can specify a channel index ('--ch-index') or a destination ('--dest').
 
 ```shell title="Usage"
 meshtastic --sendtext "Hello Mesh!"
@@ -197,12 +301,52 @@ Send a ping message (which requests a reply).
 meshtastic --sendping
 ```
 
-### --reboot
+### --traceroute TRACEROUTE
 
-Tell the destination node to reboot.
+Traceroute from connected node to a destination. You need pass the destination ID as an argument. Only nodes that have the encryption key can be traced.
 
 ```shell title="Usage"
-meshtastic --dest '!28979058' --reboot
+meshtastic --traceroute 'ba4bf9d0'
+```
+
+### --ack
+
+Used in combination with --sendtext to wait for an acknowledgment.
+
+```shell title="Usage"
+meshtastic --sendtext "Hello Mesh!" --ack
+```
+
+### --reboot
+
+Tell the node to reboot.
+
+```shell title="Usage"
+meshtastic --reboot
+```
+
+### --shutdown
+
+Tell the node to shutdown.
+
+```shell title="Usage"
+meshtastic --shutdown
+```
+
+### --factory-reset
+
+Tell the node to install the default config.
+
+```shell title="Usage"
+meshtastic --factory-reset
+```
+
+### --reset-nodedb
+
+Tell the node to clear its list of nodes.
+
+```shell title="Usage"
+meshtastic --reset-nodedb
 ```
 
 ### --reply
@@ -309,28 +453,6 @@ Show program's version number and exit.
 meshtastic --version
 ```
 
-### --configure
-
-Configure all of the radio configuration from a yaml file.
-
-```shell title="Usage"
-meshtastic --configure example_config.yaml
-```
-
-### --export-config
-
-Export the configuration of the device. (to be consumed by the '--configure' command)
-
-To create to a file with the connected device's configuration, this command's output must be piped to a yaml file
-
-```shell title="Usage"
-meshtastic --export-config > example_config.yaml
-```
-
-```title="Usage"shell
-meshtastic --export-config
-```
-
 ### --support
 
 Print out info that would be helpful supporting any issues.
@@ -338,17 +460,3 @@ Print out info that would be helpful supporting any issues.
 ```shell title="Usage"
 meshtastic --support
 ```
-
-## Deprecated Arguments
-
-### --setchan
-
-Deprecated - use "--ch-set param value" instead.
-
-### --set-router
-
-Deprecated - use "--set is_router true" instead.
-
-### --unset-router
-
-Deprecated - use "--set is_router false" instead.

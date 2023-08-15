@@ -10,6 +10,8 @@ import TabItem from "@theme/TabItem";
 
 The External Notification Module will allow you to connect a buzzer, speaker, LED, or other device to notify you when a message has been received from the mesh network. You can enable up to 3 pins independently from each other.
 
+The External Notification Module config options are: Enabled, Active, Alert Bell (General),Alert Bell Vibra, Alert Bell Buzzer, Alert Message (General), Alert Message Vibra, Alert Message Buzzer, Output (General), Output Vibra, Output Buzzer, Output Milliseconds, Use PWM, and Nag Timeout. External Notification config uses an admin message sending a `ConfigModule.ExternalNotificationConfig` protobuf.
+
 <object data="https://www.youtube.com/embed/MWt3RHMpifo?autohide=1&autoplay=0" width="100%" height="400"></object>
 
 ## External Notification Module Config Values
@@ -18,6 +20,10 @@ The External Notification Module will allow you to connect a buzzer, speaker, LE
 
 Enables the external notification module.
 
+### Active (general / LED only)
+
+Specifies whether the external circuit is active when the device's GPIO is low or high. If this is set true, the pin will be pulled active high, false means active low.
+
 ### Alert when receiving a bell (general / LED, Vibra and Buzzer)
 
 Specifies if an alert should be triggered when receiving an incoming bell.
@@ -25,10 +31,6 @@ Specifies if an alert should be triggered when receiving an incoming bell.
 ### Alert when receiving a message (general / LED, Vibra and Buzzer)
 
 Specifies if an alert should be triggered when receiving an incoming message.
-
-### Active (general / LED only)
-
-Specifies whether the external circuit is active when the device's GPIO is low or high.
 
 ### GPIO Pins (general / LED, Vibra and Buzzer)
 

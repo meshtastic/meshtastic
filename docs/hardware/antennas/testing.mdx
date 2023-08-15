@@ -9,8 +9,8 @@ Testing of antennas can be both simple and complex. At its simplest, testing inv
 
 If you have sufficient range with your existing aerial, skip this section. If you don't, consider either getting more nodes and / or replace the stock aerial with one tuned (to your region transmitter's frequency):
 
-- A quarter wave _tuned_ stubby aerial (<10cm for fit-in-pocket) should have a real-world range of a couple of km without significant obstacles (buildings / hills).
-- Aerial criteria: 50 Ohm, appropriate connector (usually SMA male or U.FL), low VSWR (<2) (at tuning frequency - see its datasheet), gain > 0 dBi .
+- A quarter wave _tuned_ stubby aerial (\<10cm for fit-in-pocket) should have a real-world range of a couple of km without significant obstacles (buildings / hills).
+- Aerial criteria: 50 Ohm, appropriate connector (usually SMA male or U.FL), low VSWR (\<2) (at tuning frequency - see its datasheet), gain > 0 dBi .
 - Caution, avoid suppliers who:
   - don't state the aerial's tuned frequency and its specific purpose (LoRa network)
   - claim huge gain figures on omni-directional aerials
@@ -27,7 +27,7 @@ Some understanding of the factors affecting radio communications will help achie
 The Meshtastic devices (of various flavors) lend themselves to experimentation, not only because you can replace their aerials, but also because of their mesh operation. All nodes will, without alteration, relay communications from any other members of the mesh around obstacles and over greater distances. The cost of aerial investment should be weighed against investment in additional low-cost nodes.
 
 :::caution
-While the LoRa devices we are using for Meshtastic are relatively low power radios, care should be taken _not_ to operate any radio transmission device without an aerial or with a poorly matched aerial. Un-transmitted radio signal reflected back to the transmitter can damage the device.
+While the LoRa devices we are using for Meshtastic are relatively low power radios, care should be taken _not_ to operate any radio transmission device without an aerial or with a poorly matched aerial. Radio signals transmitted without an antenna can reflect back and damage the device.
 :::
 
 The information collected here is by no means definitive, and necessarily abbreviated (it's a huge topic).
@@ -72,7 +72,7 @@ Unless you're using your devices in a vacuum, with clear line of sight between a
 - Absorption by materials (with varying degrees attenuation, by material and depth),
 - Reflection off surfaces (and channeling through material tunnels, including warm / cold air tunnels commonly present in the atmosphere),
 - Diffraction around obstacles (over forests and around corners).
-- [Fresnel Zone](They may not have been selected for your given frequency range, tuned or of a quality design.) - Football shape between antennas that must be clear of obstructions or else the signal is attenuated.
+- Fresnel Zone - A football shape between antennas that must be clear of obstructions or else the signal is attenuated.
 
 ### Environmental Factors
 
