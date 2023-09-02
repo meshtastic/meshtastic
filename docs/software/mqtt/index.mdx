@@ -50,7 +50,7 @@ The payload is a raw protobuf, whose definitions for Meshtastic can be found [he
 If [encryption_enabled](/docs/settings/moduleconfig/mqtt#encryption-enabled) is set to true, the payload of the MeshPacket will remain encrypted with the key for the specified channel.
 
 #### JSON topic
-If [JSON is enabled](/docs/settings/moduleconfig/mqtt/#json-enabled), packets from the following [port numbers](/docs/development/firmware/portnum) are serialized to JSON: `TEXT_MESSAGE_APP`, `TELEMETRY_APP`, `NODEINFO_APP`, `POSITION_APP` and `WAYPOINT_APP`. These are then forwarded to the topic: 
+If [JSON is enabled](/docs/settings/moduleconfig/mqtt/#json-enabled), packets from the following [port numbers](/docs/development/firmware/portnum) are serialized to JSON: `TEXT_MESSAGE_APP`, `TELEMETRY_APP`, `NODEINFO_APP`, `POSITION_APP`, `WAYPOINT_APP`, and `NEIGHBORINFO_APP`. These are then forwarded to the topic:
 
 `msh/2/json/CHANNELNAME/USERID`.
 
