@@ -200,7 +200,3 @@ For further reading, I recommend starting out with the [Meshtastic Python CLI Gu
 
 [Settings Overview](/docs/settings) and
 [Complete list of user settings in Protobufs](https://buf.build/meshtastic/protobufs/docs/main:meshtastic#meshtastic.User)
-
-## Areas for future development
-
-In the future we will add a "dead man's timer" to this feature so that the remote node will revert any changes if you fail to send a special "commit changes" command. This will protect against sending bad settings to nodes that you can't physically access. Instead, if the node does not receive a commit message within 10 minutes it will revert all changes and (hopefully) rejoin the mesh.
