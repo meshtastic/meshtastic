@@ -1,5 +1,5 @@
 {
-  "$schema": "../../node_modules/rome/configuration_schema.json",
+  "$schema": "./node_modules/rome/configuration_schema.json",
   "formatter": {
     "enabled": true,
     "indentStyle": "space",
@@ -13,5 +13,11 @@
   },
   "organizeImports": {
     "enabled": true
+  },
+  "files": {
+    "ignore": [
+      "node_modules",
+      "dist"
+    ]
   }
 }
