@@ -25,27 +25,10 @@ export const Network = ({ id }: NetworkProps): JSX.Element => {
 
 	return (
 		<div>
-			{data && !error ? (
 				<div className="container">
-					<h1>{data.title}</h1>
-					<p>{data.summary}</p>
-					{githubData && (
-					)}
 					<div className="markdown">{data.body}</div>
-						<div className="card__body">
-							{data.materials?.map((material) => (
-
-										View
-									</a>
-								</div>
-							))}
-						</div>
 					</div>
 				</div>
-			) : (
-
-			)}
-		</div>
 	);
 };
 
