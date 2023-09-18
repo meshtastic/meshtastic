@@ -25,10 +25,9 @@ export const Network = ({ id }: NetworkProps): JSX.Element => {
 
 	return (
 		<div>
-				<div className="container">
-					<div className="markdown">{data.body}</div>
-					</div>
-				</div>
+			<div className="container">
+				<div className="markdown">{data.body}</div>
+			</div>
+		</div>
 	);
 };
-
