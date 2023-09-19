@@ -139,29 +139,29 @@ a + .navbar__link > svg {
   margin-bottom: auto;
 }
 
-@layer base {
-  .markdown {
-    @apply prose prose-lg;
-  }
-  .markdown img {
-    @apply rounded-lg mx-auto;
-  }
-  [data-theme="dark"] .markdown {
-    @apply prose-invert;
-  }
-  [data-theme="dark"] .hideDark {
-    @apply hidden;
-  }
-  [data-theme="dark"] .hideLight {
-    @apply block;
-  }
-  .hideLight {
-    @apply hidden;
-  }
-  .hideDark {
-    @apply block;
-  }
+/* @layer base { */
+.markdown {
+  @apply prose prose-lg;
 }
+.markdown img {
+  @apply rounded-lg mx-auto;
+}
+[data-theme="dark"] .markdown {
+  @apply prose-invert;
+}
+[data-theme="dark"] .hideDark {
+  @apply hidden;
+}
+[data-theme="dark"] .hideLight {
+  @apply block;
+}
+.hideLight {
+  @apply hidden;
+}
+.hideDark {
+  @apply block;
+}
+/* } */
 
 .markdown :where(li):not(:where([class~="not-prose"] *)) {
   margin-bottom: 0;
