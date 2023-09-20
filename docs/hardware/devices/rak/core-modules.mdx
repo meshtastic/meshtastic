@@ -69,13 +69,13 @@ There is no usable GPIO pin on any RAK base board except the 'big' baseboard RAK
 
 The RAK4631 uses symbolic labels for its I/O Pins on the module and baseboard silk screens. The following table shows the mapping of the RAK4631 GPIO pins to the corresponding Arduino pins and the MCU Port numbers.
 
-| RAK Pin | nRF52840 Pin | Arduino GPIO | Remark                                                                   |
-| ------- | ------------ | ------------ | ------------------------------------------------------------------------ |
-| IO1     | P0.17        | 17           | used for GPS PPM signal if GPS module is connected                       |
-| IO2     | P1.02        | 34           | used to power all peripheral modules, not available for user application |
+| RAK Pin | nRF52840 Pin | Arduino GPIO | Remark                                                                                                |
+| ------- | ------------ | ------------ | ----------------------------------------------------------------------------------------------------- |
+| IO1     | P0.17        | 17           | used to toggle power to peripheral modules using 3v3_S power rail, not available for user application |
+| IO2     | P1.02        | 34           | used to power all peripheral modules, not available for user application                              |
 | IO3     | P0.21        | 21           |
 | IO4     | P0.04        | 4            |
-| IO5     | P0.09        | 9            | The 'User Button' is mapped here.                                        |
+| IO5     | P0.09        | 9            | The 'User Button' is mapped here.                                                                     |
 | IO6     | P0.10        | 10           |
 | IO7     | P0.28        | 28           |
 | SW1     | P0.01        | 1            |
