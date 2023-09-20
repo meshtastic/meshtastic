@@ -60,6 +60,37 @@ Please be aware of the difference between the RAK4631 (Arduino bootloader) and t
   style={{ zoom: "50%" }}
 />
 
+
+### GPIO
+
+:::caution Note
+There is no usable GPIO pin on any RAK base board except the 'big' baseboard RAK19001 without adding a RAK13002 IO module or a third party IO sensor breakout.
+:::
+
+The RAK4631 uses symbolic labels for its I/O Pins on the module and baseboard silk screens. The following table shows the mapping of the RAK4631 GPIO pins to the corresponding Arduino pins and the MCU Port numbers.
+
+| RAK Pin | nRF52840 Pin | Arduino GPIO | Remark                                                                   |
+| ------- | ------------ | ------------ | ------------------------------------------------------------------------ |
+| IO1     | P0.17        | 17           | used for GPS PPM signal if GPS module is connected                       |
+| IO2     | P1.02        | 34           | used to power all peripheral modules, not available for user application |
+| IO3     | P0.21        | 21           |
+| IO4     | P0.04        | 4            |
+| IO5     | P0.09        | 9            | The 'User Button' is mapped here.                                        |
+| IO6     | P0.10        | 10           |
+| IO7     | P0.28        | 28           |
+| SW1     | P0.01        | 1            |
+| A0      | P0.04/AIN2   | A2           |
+| A1      | P0.31/AIN7   | A7           |
+| SPI_CS  | P0.26        | 26           |
+
+When configuring GPIO pins in your device settings, the Arduino GPIO numbers should be used.
+
+```shell title="Example"
+meshtastic --set external_notification.output 10
+```
+
+This will use IO6 on a RAK4631
+
 </TabItem>
 <TabItem value="RAK11200">
 
