@@ -206,13 +206,13 @@ Always Check Configuration before reloading YAML or restarting Home Assistant to
 
 Create a new Entities Card and select the entities you have created.
 
-[<img src="/img/software/mqtt/ha_entities_card.png" style={{zoom: '40%'}} />](/img/software/mqtt/ha_entities_card.png)
+![HA Entities Card](/img/software/mqtt/ha_entities_card.png)
 
 ### Logbook Card for Messaging
 
 The logbook card is useful to keep a record of incoming messages from the mesh. Below is an example of how the logbook card would be set up.
 
-[<img src="/img/software/mqtt/ha_logbook_card.png" style={{zoom: '40%'}} />](/img/software/mqtt/ha_logbook_card.png)
+![HA Logbook Card](/img/software/mqtt/ha_logbook_card.png)
 
 
 ## Trigger HA Automations
@@ -223,7 +223,7 @@ It is possible to have Home Assistant trigger automations based on messages or e
 
 This example waits for a message containing @Tropho and then sends a pop-up notification to his flip phone with the message.  Optionally you can have ALL messages from the mesh sent as HA notifications to your phone.
 
-[<img src="/img/software/mqtt/ha_at_tropho.png" style={{zoom: '50%'}} />](/img/software/mqtt/ha_at_tropho.png)
+![HA At Tropho Message](/img/software/mqtt/ha_at_tropho.png)
 
 Add the following code to your automations.yaml file.  Be sure to modify the `topic`, `regex_search`, and `service` for your configuration.
 ```yaml
@@ -254,3 +254,60 @@ Add the following code to your automations.yaml file.  Be sure to modify the `to
 ```
 
 This same type of automation is very useful to trigger other actions in Home Assistant.  For example, you could turn on a fan when the temperature reaches a certain value, or a play a sound on a speaker when a new message is received. 
+
+
+## Create a Send Message Entity
+
+It is possible to create an input text box to send messages to your mesh from within Home Assistant.
+
+### Input Text Helper Entity
+
+First, create an input text helper entity. The preferred way to configure an input text is via the HA interface at Settings > Devices & Services > Helpers. Click the add button and then choose the Text option. Make a text input helper with a max length of 190 to be on the safe side. See example below:
+
+![HA Input Text Helper](/img/software/mqtt/ha_input_text_helper.png)
+
+### Create a Send Message Automation
+
+This automation will check the send box for changes.  After typing a message, either hit enter or click off the box and the automation will send a text string in JSON to the mqtt broker. Make sure to update the channel name and device ID in the example below. 
+
+```yaml
+- alias: Meshtastic - Send Automation
+  description: ""
+  trigger:
+    - platform: state
+      entity_id:
+        - input_text.meshtastic_send_box
+  condition: []
+  action:
+    - delay:
+        hours: 0
+        minutes: 0
+        seconds: 1
+        milliseconds: 0
+    - service: mqtt.publish
+      data:
+        qos: 0
+        retain: false
+        topic: msh/2/json/LongFast/!67ea9400
+        payload: >-
+          {"channel":"0","sender":"broker","type":"sendtext","payload":"{{    
+          states('input_text.meshtastic_send_box') }}"}
+    - delay:
+        hours: 0
+        minutes: 0
+        seconds: 1
+        milliseconds: 0
+    - service: input_text.set_value
+      data:
+        value: " "
+      target:
+        entity_id: input_text.meshtastic_send_box
+    - delay:
+        hours: 0
+        minutes: 0
+        seconds: 2
+        milliseconds: 0
+  mode: single
+  ```
+
+  Add this card to your dashboard by going to Edit Dashboard -> + ADD CARD.  Then search BY ENTITY for Meshtastic Send Box and check the box next to the entry.  Click CONTINUE, then ADD TO DASHBOARD.
