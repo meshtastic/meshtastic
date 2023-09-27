@@ -1,0 +1,53 @@
+---
+id: tips
+title: Configuration Tips
+sidebar_label: Tips
+sidebar_position: 4
+---
+
+
+## (Not) Sharing Your Location
+
+Telemetry is shared over your [PRIMARY channel](/docs/settings/config/channels#role).  This means that if your node has acquired GPS coordinates from an integrated GPS chip, or from your mobile device, your coordinates will be sent to the mesh over this channel, using it's defined encryption (if any).
+
+By default the PRIMARY channel's name is LongFast with the encryption key "AQ==" (Base64 equivalent of Hex 0x01).  If this is left unchanged, your location will be shared with all nodes in range that are also using the default channel.
+
+### Creating a Private Primary with Default Secondary
+
+If you'd like to connect with other Meshtastic users but only share your location with trusted parties, you may create a private PRIMARY channel and use the defaults for a SECONDARY channel.
+
+1. Ensure you have not changed the LoRa [Modem Preset](/docs/settings/config/lora#modem-preset) from the default `unset` / `LONG_FAST`.
+2. On your PRIMARY channel, set anything you'd like for the channel's name and choose a random PSK.
+3. Enable a SECONDARY channel with a blank name (will default to LongFast) with PSK "AQ==".
+4. Since the radio's frequency is automatically changed based on your PRIMARY channel's name, you will have to manually set it back to Channel 20 (in LoRa settings) in order to interface with users on the default channel.
+
+To quickly test this configuration, scan your region's QR from [this folder](https://github.com/meshtastic/meshtastic/tree/master/static/img/configuration/qr-private-primary-example/). Remember to generate a new PSK for your private channel before sharing with your trusted nodes.
+
+## Rebroadcast "Public" Traffic
+
+Meshtastic nodes will rebroadcast all packets if they share [LoRa modem settings](/docs/settings/config/lora#lora-config-values), regardless of encryption (unless [Rebroadcast mode](/docs/settings/config/device#rebroadcast-mode) is set to `LOCAL_ONLY`).
+
+:::info
+ If you would like your nodes to include/expand the "public" mesh, you must use the default [modem preset](/docs/settings/config/lora#modem-preset) `LONG_FAST`.  If you change your PRIMARY channel name, you must manually set the LoRa channel to 20.
+:::
+
+## Chat Channels VS LoRa Modem Channels
+
+Meshtastic uses the word "channels" to define two different configuration properties: [Messaging Channels](/docs/settings/config/channels) & [LoRa Modem Channels](/docs/settings/config/lora#channel-number)
+
+### Device Config: Channels
+
+These configure "message groups" and include your PRIMARY and SECONDARY channels.  All SECONDARY channels use the same LoRa modem config as your PRIMARY channel (including LoRa channel number).
+
+There are 8 total chat channels.  Channel 0 is your PRIMARY channel, with channels 1-7 available for private group messaging and/or special channels such as [`admin`](/docs/configuration/remote-admin).
+
+### Device Config: LoRa: Channel Number
+
+This configures the frequency the radio is set to.  Check out the [frequency calculator](/docs/overview/radio-settings#channel-frequency-calculator) to view the relationship between "channel number" and radio frequency.
+
+## Best Practices
+- If you are part of a large mesh and don't know what a setting does, don't change it (unless you're super curious).
+- Leave your [MAX HOPS](/docs/settings/config/lora#max-hops) set to 3 unless you're sure you need more (or less) to reach your destination node.
+- Leave your [ROLE](/docs/settings/config/device#role) set to `CLIENT` unless you're sure another role would suit the node's purpose.  For example, MQTT nodes do not need to be set to `ROUTER`.
+- TEST your settings and hardware before you install in hard-to-reach locations.
+- Connecting a node to the [public MQTT server](http://localhost:3000/docs/settings/moduleconfig/mqtt#connect-to-the-default-public-server) may publish the locations of all nodes in your mesh to the internet.  This will also add every globally connected node to your node database and potentially flood your mesh with all types of packets.
