@@ -1,12 +1,85 @@
 ---
-id: gpio-peripherals
-title: Configuring GPIO Peripherals
-sidebar_label: Setup GPIO Peripherals
-slug: /hardware/peripheral/
-sidebar_position: 6
+id: remote-hardware
+title: Remote Hardware Module Usage
+slug: /settings/moduleconfig/remote-hardware
+sidebar_label: Remote Hardware
 ---
 
-## Remote Hardware
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+The Remote Hardware Module allows control of a GPIO pin on a remote node. Config options are: Enabled, Allow Undefined Pin Access, Available Pins
+
+:::info
+
+While configuring this module may be available in clients, setting and reading GPIO's is currently only possible using the [Meshtastic Python CLI](/docs/software/python/cli)
+
+:::
+
+## Remote Hardware Config Values
+
+### Enabled
+
+Whether the module is enabled
+
+### Allow Undefined Pin Access
+
+Whether the module allows consumers to read/write to pins not that are not defined in available_pins
+
+### Available Pins
+
+Exposes the available pins to the mesh for reading and writing
+
+
+## Remote Hardware Module Client Availability
+
+<Tabs
+groupId="settings"
+defaultValue="cli"
+values={[
+{label: 'Android', value: 'android'},
+{label: 'Apple', value: 'apple'},
+{label: 'CLI', value: 'cli'},
+{label: 'Web', value: 'web'},
+]}>
+<TabItem value="android">
+
+
+:::info
+All Remote Hardware Module config options are available for Android in app.
+
+1. Open the Meshtastic App
+2. Navigate to: **Vertical Ellipsis (3 dots top right) > Radio Configuration > Remote Hardware**
+:::
+
+</TabItem>
+<TabItem value="apple">
+
+:::info
+All Remote Hardware Module config options are available on iOS, iPadOS and macOS app.and higher at Settings > Modules > Remote Hardware
+:::
+
+</TabItem>
+<TabItem value="cli">
+
+:::info
+
+All Remote Hardware Module config options are available in the python CLI.
+
+:::
+
+</TabItem>
+<TabItem value="web">
+
+Not implemented.
+
+</TabItem>
+</Tabs>
+
+
+
+
+## Remote Hardware Module Usage
 
 :::warning
 GPIO access is fundamentally dangerous because invalid options can physically damage or destroy your hardware. Ensure that you fully understand the schematic for your particular device before trying this as we do not offer a warranty. Use at your own risk.
