@@ -34,8 +34,8 @@ Available Values:
 
 - `DEFAULT`
 - `SIMPLE` operate as an dumb UART tunnel. What goes in will come out, Requires a channel named 'serial'.
-- `PROTO` Exposes the Protobuf Client API on this serial port. You can use this to connect from another device. [API Reference](/docs/development/device/client-api)
-- `TEXTMSG` Will send the string received over the serial port as a Text Message for Display on the other devices.
+- `PROTO` Exposes the Protobuf Client API on this serial port. You can use this to connect from another device, see the [Arduino client library](https://github.com/meshtastic/Meshtastic-arduino) and the [API Reference](/docs/development/device/client-api).
+- `TEXTMSG` Will broadcast the string received over the serial port as a Text Message to the default channel.
 - `NMEA` Will output a NMEA 0183 Data stream containing the internal GPS or fixed position and other node locations as Waypoints (WPL).
 - `CALTOPO` Will output NMEA 0183 Waypoints (WPL) every 10 seconds for all valid node locations, to be consumed by [CalTopo / SARTopo](/docs/software/integrations/caltopo.mdx).
 
@@ -112,7 +112,7 @@ All serial module config options are available in the python CLI. Example comman
 |  serial.mode   |                                                                                 `DEFAULT` `SIMPLE` `PROTO` `TEXTMSG`, `NMEA`, `CALTOPO`                                                                      |              `DEFAULT`               |
 |   serial.rxd   |                                                                                             GPIO Pin Number 1-39                                                                                             |       Default of `0` is Unset        |
 |   serial.txd   |                                                                                             GPIO Pin Number 1-33                                                                                             |       Default of `0` is Unset        |
-|  serial.baud   | `BAUD_DEFAULT` `BAUD_110` `BAUD_300` `BAUD_600` `BAUD_1200` `BAUD_2400` `BAUD_4800` `BAUD_9600` `BAUD_19200` `BAUD_38400` `BAUD_57600` `BAUD_115200` `BAUD_230400` `BAUD_460800` `BAUD_576000` `BAUD_921600` |            `BAUD_DEFAULT`            |
+|  serial.baud   | `BAUD_DEFAULT` `BAUD_110` `BAUD_300` `BAUD_600` `BAUD_1200` `BAUD_2400` `BAUD_4800` `BAUD_9600` `BAUD_19200` `BAUD_38400` `BAUD_57600` `BAUD_115200` `BAUD_230400` `BAUD_460800` `BAUD_576000` `BAUD_921600` |            `BAUD_DEFAULT` (38400)           |
 | serial.timeout |                                                                                          `integer` (milli seconds)                                                                                           | Default of `0` corresponds to 250 ms |
 | serial.override_console_serial_port |                                                                                               `true`, `false`                                                                                                |               `false`                |
 
@@ -186,12 +186,12 @@ Default is to use RX GPIO 16 and TX GPIO 17.
    - RXD 13
    - TXD 14
 3. Set `serial.timeout` to the amount of time to wait before we consider your packet as "done".
-4. (Optional) set serial.mode to TEXTMSG if you want to send messages to/from the general text message channel
+4. (Optional) set serial.mode to `TEXTMSG` if you want to send messages to/from the general text message channel. For more specific control, use the `PROTO` mode, e.g. in combination with the [Arduino client library](https://github.com/meshtastic/Meshtastic-arduino/blob/master/examples/SendReceiveClient/SendReceiveClient.ino).
 5. Connect to your device over the serial interface at `38400 8N1`.
 
    With [tio](https://github.com/tio/tio) &ndash; `tio -e -b 38400 -f none /dev/myserialport`
 
-6. Send a packet up to 237 bytes in length. This will get relayed over the mesh network.
+6. Send a packet up to 237 bytes in length. This will get broadcasted over the default channel.
 7. (Optional) Set `serial.echo` to `1` and any message you send out will be echoed back to your device.
 
 ### Interfacing PIR Sensor With External Microcontroller
@@ -200,7 +200,7 @@ The following are examples of using either a Raspberry Pi Pico or Arduino Mini P
 
 #### Meshtastic Software Configuration
 
-- Serial module enabled, mode: TXTMSG
+- Serial module enabled, mode: TEXTMSG
 - GPIO Pins (For T-Beam) RX 13, TX 14
 - 38400 Baud
 
