@@ -1,7 +1,6 @@
 ---
 id: channels
 title: Channel Configuration
-slug: /settings/config/channels
 sidebar_label: Channels
 ---
 
@@ -11,9 +10,9 @@ import TabItem from "@theme/TabItem";
 The Channels config options are: Index, Roles, and Settings. Channel config uses an admin message sending a `Channel` protobuf which also consists of a `ChannelSettings` protobuf.
 
 :::info
-**Channel Settings** (as described on this page) should not be confused with [Modem Preset Settings](/docs/settings/config/lora#modem-preset)
+**Channel Settings** (as described on this page) should not be confused with [Modem Preset Settings](/docs/configuration/radio/lora#modem-preset)
 
-[Modem Preset Settings](/docs/settings/config/lora#modem-preset) contain the modem configuration (frequency settings, spreading factor, bandwidth, etc.) used for the LoRa radio. These settings are identical for all channels and can **not** be unique per channel.
+[Modem Preset Settings](/docs/configuration/radio/lora#modem-preset) contain the modem configuration (frequency settings, spreading factor, bandwidth, etc.) used for the LoRa radio. These settings are identical for all channels and can **not** be unique per channel.
 
 **Channel Settings** contain information for segregating message groups, configuring optional encryption, and enabling or disabling messaging over internet gateways. These settings **are** unique and configurable per channel.
 :::
@@ -205,7 +204,7 @@ meshtastic --ch-set psk none --ch-index 0
 
 ### Uplink / Downlink
 
-For configuring gateways, please see [MQTT](/docs/settings/moduleconfig/mqtt)
+For configuring gateways, please see [MQTT](/docs/configuration/module/mqtt)
 
 ```shell title="Enable/Disable Uplink on PRIMARY channel"
 meshtastic --ch-set uplink_enabled true --ch-index 0
