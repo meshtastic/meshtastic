@@ -153,7 +153,7 @@ meshtastic --ch-set name "My Channel" --ch-set psk random --ch-set uplink_enable
 
 :::
 
-
+<!-- trunk-ignore(markdownlint/MD024) -->
 ### Name
 
 ```shell title="Set channel name for the PRIMARY channel"
@@ -162,7 +162,7 @@ meshtastic --ch-set name MyChannel --ch-index 0
 # with spaces
 meshtastic --ch-set name "My Channel" --ch-index 0
 ```
-
+<!-- trunk-ignore(markdownlint/MD024) -->
 ### PSK
 
 If you use Meshtastic for exchanging messages you don't want other people to see, `random` is the setting you should use. Selecting `default` or any of the `simple` values from the following table will use publicly known encryption keys. They're shipped with Meshtastic source code and thus, anyone can listen to messages encrypted by them. They're great for testing and public channels.
