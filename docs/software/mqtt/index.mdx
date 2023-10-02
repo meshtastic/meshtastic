@@ -11,7 +11,7 @@ Meshtastic networks in different locations beyond the reach of LoRa can be easil
 
 You can also share channel settings with a remote network. If you use the default Meshtastic MQTT server, packets are always encrypted. If you use a custom MQTT broker (ie set `mqtt.address`), the `mqtt.encryption_enabled` setting applies, which by default is false. You can also specify your own private MQTT broker and specify authentication for that broker to bridge several mesh networks together, via the internet (or just a local IP network).
 
-You can find the settings available for MQTT [here](/docs/settings/moduleconfig/mqtt).
+You can find the settings available for MQTT [here](/docs/configuration/module/mqtt).
 
 :::important
 When MQTT is turned on, you are potentially broadcasting your entire mesh's traffic onto the public internet. This includes messages and position information.
@@ -25,7 +25,7 @@ When MQTT is enabled, the Meshtastic device simply uplinks and/or downlinks ever
 
 ### MQTT [Topics](https://www.hivemq.com/blog/mqtt-essentials-part-5-mqtt-topics-best-practices)
 
-If no specific [root topic](/docs/settings/moduleconfig/mqtt#root-topic) is configured, the default root topic will be `msh/`.
+If no specific [root topic](/docs/configuration/module/mqtt#root-topic) is configured, the default root topic will be `msh/`.
 Each device that is connected to MQTT will publish its MQTT state (`online`/`offline`) to:
 
 `msh/2/stat/USERID`, where `USERID` is the node ID of the gateway device (the one connected to MQTT).
@@ -47,10 +47,10 @@ The payload is a raw protobuf, whose definitions for Meshtastic can be found [he
 	ShortFast	!937bed1c
 ```
 
-If [encryption_enabled](/docs/settings/moduleconfig/mqtt#encryption-enabled) is set to true, the payload of the MeshPacket will remain encrypted with the key for the specified channel.
+If [encryption_enabled](/docs/configuration/module/mqtt#encryption-enabled) is set to true, the payload of the MeshPacket will remain encrypted with the key for the specified channel.
 
 #### JSON topic
-If [JSON is enabled](/docs/settings/moduleconfig/mqtt/#json-enabled), packets from the following [port numbers](/docs/development/firmware/portnum) are serialized to JSON: `TEXT_MESSAGE_APP`, `TELEMETRY_APP`, `NODEINFO_APP`, `POSITION_APP`, `WAYPOINT_APP`, and `NEIGHBORINFO_APP`. These are then forwarded to the topic:
+If [JSON is enabled](/docs/configuration/module/mqtt/#json-enabled), packets from the following [port numbers](/docs/development/firmware/portnum) are serialized to JSON: `TEXT_MESSAGE_APP`, `TELEMETRY_APP`, `NODEINFO_APP`, `POSITION_APP`, `WAYPOINT_APP`, and `NEIGHBORINFO_APP`. These are then forwarded to the topic:
 
 `msh/2/json/CHANNELNAME/USERID`.
 
@@ -108,7 +108,7 @@ If the message received contains valid JSON in the payload, the JSON is deserial
 
 ### Basic Configuration
 
-Check out [MQTT Settings](/docs/settings/moduleconfig/mqtt) for full information. For quick start instructions, read on.
+Check out [MQTT Settings](/docs/configuration/module/mqtt) for full information. For quick start instructions, read on.
 
 - Connect your gateway node to wifi, by setting the `network.wifi_ssid`, `network.wifi_psk` and `network.wifi_enabled` preferences.
 - Alternatively use the RAK4631 with Ethernet Module RAK13800, by setting `network.eth_mode` and `network.eth_enabled`.
