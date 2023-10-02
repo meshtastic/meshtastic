@@ -126,7 +126,7 @@ By default there is no long-term store-and-forward of messages, so messages not 
 
 The network list shows all the users (devices) that have connected to the same Channel. For each entry, it shows the last time they were active, their location and distance (when available), and their last known power status. In the example above, Monkey is the local user, Rabbit was last heard from 10 minutes ago and is 50m away, and Panda was last heard 11 minutes ago and 5m away.
 
-- Tap on a node from the list to start Direct Messaging, request a position update, request a [traceroute](/docs/settings/moduleconfig/traceroute) or add it to your [Ignore Incoming Array](/docs/settings/config/lora#ignore-incoming-array).
+- Tap on a node from the list to start Direct Messaging, request a position update, request a [traceroute](/docs/configuration/module/traceroute) or add it to your [Ignore Incoming Array](/docs/configuration/radio/lora#ignore-incoming-array).
 - If you have an [Admin Channel](/docs/configuration/remote-admin) enabled on your devices, tapping on the node will also display an option to remotely configure the node.
 
 ### View the map
@@ -163,13 +163,13 @@ The debug panel allows you to see all packets sent between the application and t
 [![Meshtastic configuration options](/img/android/android-radio-configuration-c.png)](/img/android/android-radio-configuration.png)
 
 Radio Configuration opens a list of all radio and module configuration settings.
-- See [Device Config](/docs/settings/config) for radio settings.
-- See [Module Config](/docs/settings/moduleconfig) for module settings.
+- See [Device Config](/docs/configuration/radio) for radio settings.
+- See [Module Config](/docs/configuration/module) for module settings.
 - At the end of this list are buttons for Reboot, Shutdown, Factory reset, and NodeDB reset.
 
 ### Export rangetest.csv
 
-Allows you to save all your network's position data with GPS coordinates into a .csv (comma separated value) file on your phone. This file can be imported into the spreadsheet application of your choice for easy viewing. This feature is similar but independent from the device [range test module](/docs/settings/moduleconfig/range-test), and results may differ.
+Allows you to save all your network's position data with GPS coordinates into a .csv (comma separated value) file on your phone. This file can be imported into the spreadsheet application of your choice for easy viewing. This feature is similar but independent from the device [range test module](/docs/configuration/module/range-test), and results may differ.
 
 ### Theme
 
