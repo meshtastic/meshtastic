@@ -60,6 +60,6 @@ The build system is modular. Adding a new board variant for an already supported
 2. [Send a proposal](https://github.com/meshtastic/firmware/issues/new?assignees=&labels=enhancement%2Ctriage&template=New+Board.yml&title=%5BBoard%5D%3A+) to add a new board.
 3. If approved, go to (https://github.com/meshtastic/protobufs) and send a Pull Request for the `mesh.proto` file, adding your board to the `HardwareModel` Enum.
 4. Change your define in `platformio.ini` from `PRIVATE_HW` to `YOUR_BOARD`. Adjust any macro guards in the code you need to support your board.
-5. Add your board identifier to `configuration.h` on the firmware repo and send in that Pull Request too.
+5. Add your board identifier to `architecture.h` on the firmware repo in the folder of the platform you are using, and send in that Pull Request too.
 6. Wait for the Pulls to be merged back into Master.
 7. Profit :-)
