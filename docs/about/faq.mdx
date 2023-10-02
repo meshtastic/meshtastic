@@ -51,6 +51,7 @@ The Meshtastic App on Apple Clients require the following minimum OS versions: i
 
 See [Apple Apps](/docs/software/apple/installation)
 
+<!-- trunk-ignore(markdownlint/MD024) -->
 ### After a fresh firmware install, my node is not connecting via Bluetooth. What should I do?
 
 Try forgetting the Bluetooth connection from the iOS/iPadOS/macOS System Settings. Re-pair and try again. This is a security measure and there is no workaround for it. It prevents apps and other accessories from spoofing an existing accessory by un-pairing and "re-pairing" themselves without the users' knowledge.
@@ -111,13 +112,14 @@ Updating firmware varies with hardware. See [Flashing Firmware](/docs/getting-st
 
 The LoRa radio on the node is still active and will wake up the CPU when the device is sleeping. If your phone is in range, the node will relay any messages your phone may have missed. If you're in range and your device is active, messages have not been lost.
 
+<!-- trunk-ignore(markdownlint/MD026) -->
 ### My device has gone to sleep and I can't send any messages.
 
 Once the node wakes up from sleep, your phone will relay any delayed messages through your node and to the mesh network. Give it a few minutes and it'll do the right thing.
 
 ### How can I tell the device not to sleep?
 
-See [Device Power Configuration](/docs/settings/config/power) options.
+See [Device Power Configuration](/docs/configuration/radio/power) options.
 
 ### I am in Europe and my device seems to stop transmitting after a while, what is going on?
 
@@ -187,7 +189,7 @@ Modules are features that expand the basic device functionality and/or integrate
 
 ### What modules do we have available?
 
-A list of available modules is available [here](/docs/settings/moduleconfig).
+A list of available modules is available [here](/docs/configuration/module).
 
 ### I'd like to write a module. How do I get started?
 
