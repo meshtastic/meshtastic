@@ -5,7 +5,6 @@ sidebar_label: Tips
 sidebar_position: 4
 ---
 
-
 ## (Not) Sharing Your Location
 
 Telemetry is shared over your [PRIMARY channel](/docs/configuration/radio/channels#role).  This means that if your node has acquired GPS coordinates from an integrated GPS chip, or from your mobile device, your coordinates will be sent to the mesh over this channel, using it's defined encryption (if any).
@@ -32,7 +31,7 @@ To quickly test this configuration, find and scan your region's QR from [this re
 Meshtastic nodes will rebroadcast all packets if they share [LoRa modem settings](/docs/configuration/radio/lora#lora-config-values), regardless of encryption (unless [Rebroadcast mode](/docs/configuration/radio/device#rebroadcast-mode) is set to `LOCAL_ONLY`).
 
 :::info
- If you would like your nodes to include/expand the "public" mesh, you must use the default [modem preset](/docs/configuration/radio/lora#modem-preset) `LONG_FAST`.  If you change your PRIMARY channel name, you must manually set the LoRa channel to 20.
+ If you would like your nodes to include/expand the "public" mesh, you must use the default [modem preset](/docs/configuration/radio/lora#modem-preset) `LONG_FAST`.  If you change your PRIMARY channel name, you must manually set the LoRa channel to the default for your region (see above).
 :::
 
 ## Chat Channels VS LoRa Modem Channels
