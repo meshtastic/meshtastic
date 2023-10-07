@@ -21,9 +21,9 @@ If you'd like to connect with other Meshtastic users but only share your locatio
 3. Enable a SECONDARY channel with a blank name (will default to LongFast) with PSK "AQ==".
 4. Since the radio's frequency is automatically changed based on your PRIMARY channel's name, you will have to manually set it back to your region's default (in LoRa settings) in order to interface with users on the default channel:
 
-|  US  | EU_433 | EU_868 |  CN  |  JP | ANZ  |  KR  |  TW  |  RU  |  IN  | NZ_865 |  TH  | LORA_24 | UA_43 | UA_868 |
-| :--: | :----: | :----: | :--: | :-: | :--: | :--: | :--: | :--: | :--: | :----: | :--: | :-----: | :---: | :----: |
-|  20  |    4   |    1   |  36  |  20 |  20  |  12  |  16  |  2   |   4  |    4   |  16  |    6    |   6   |    2   |
+|  US  | EU_433 | EU_868 |  CN  |  JP | ANZ  |  KR  |  TW  |  RU  |  IN  | NZ_865 |  TH  | LORA_24 | UA_433 | UA_868 |
+| :--: | :----: | :----: | :--: | :-: | :--: | :--: | :--: | :--: | :--: | :----: | :--: | :-----: | :----: | :----: |
+|  20  |    4   |    1   |  36  |  20 |  20  |  12  |  16  |  2   |   4  |    4   |  16  |    6    |    6   |    2   |
 
 To quickly test this configuration, find and scan your region's QR from [this repository](https://github.com/meshtastic/meshtastic/tree/master/static/img/configuration/qr-private-primary-example/). Remember to generate a new PSK for your private channel before sharing with your trusted nodes.
 
