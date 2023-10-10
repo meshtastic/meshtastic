@@ -33,10 +33,10 @@ Available Values:
 
 - `DEFAULT` equals `SIMPLE`.
 - `SIMPLE` operates as a dumb UART tunnel. What goes in will come out, requires a channel named 'serial'.
-- `PROTO` exposes the Protobuf Client API on this serial port. You can use this to connect from another device, see the [Arduino client library](https://github.com/meshtastic/Meshtastic-arduino) and the [API Reference](/docs/development/device/client-api).
+- `PROTO` exposes the Protobuf Client API on this serial port. You can use this to connect from another device, see the [Arduino client library](https://github.com/meshtastic/Meshtastic-arduino) and the [API Reference](../../development/device/client-api).
 - `TEXTMSG` will allow you to send a string over the serial port to the device, which will be broadcasted as a text message to the default channel. Any text message received from the mesh will be sent to the serial port as follows: `<Short Name>: <text>`.
 - `NMEA` will output a NMEA 0183 Data stream containing the internal GPS or fixed position and other node locations as Waypoints (WPL).
-- `CALTOPO` will output NMEA 0183 Waypoints (WPL) every 10 seconds for all valid node locations, to be consumed by [CalTopo / SARTopo](/docs/software/integrations/caltopo.mdx).
+- `CALTOPO` will output NMEA 0183 Waypoints (WPL) every 10 seconds for all valid node locations, to be consumed by [CalTopo / SARTopo](../../software/integrations/caltopo.mdx).
 
 ### Receive GPIO Pin
 

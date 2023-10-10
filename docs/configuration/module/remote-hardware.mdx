@@ -11,7 +11,7 @@ The Remote Hardware Module allows control of a GPIO pin on a remote node. Config
 
 :::info
 
-While configuring this module may be available in clients, setting and reading GPIO's is currently only possible using the [Meshtastic Python CLI](/docs/software/python/cli)
+While configuring this module may be available in clients, setting and reading GPIO's is currently only possible using the [Meshtastic Python CLI](../../software/python/cli)
 
 :::
 
@@ -92,7 +92,7 @@ GPIO access is fundamentally dangerous because invalid options can physically da
 
 ### Setup
 
-You can get the latest python tool/library with `pip3 install --upgrade meshtastic` on Windows/Linux/OS-X. See the [python section](/docs/software/python/cli/installation) for more details.
+You can get the latest python tool/library with `pip3 install --upgrade meshtastic` on Windows/Linux/OS-X. See the [python section](../../software/python/cli/installation) for more details.
 
 To prevent access from untrusted users, you must first make a `gpio` channel that is used for authenticated access to this feature. You'll need to install this channel on both the local and remote node.
 
@@ -111,7 +111,7 @@ The procedure using the python command line tool is:
    ```shell
    meshtastic --info
    ```
-5. Connect the remote device via USB (or use the [remote admin](/docs/configuration/remote-admin) feature to reach it through the mesh)
+5. Connect the remote device via USB (or use the [remote admin](../../configuration/remote-admin) feature to reach it through the mesh)
 6. Set it to join the gpio channel you created:
    ```shell
    meshtastic --seturl theurlyoucopiedinstep3
@@ -175,7 +175,7 @@ GPIO:44 mask:0x100000000000
 
 ## Testing GPIO Operations
 
-You can programmatically do operations from your own python code by using the Meshtastic `RemoteHardwareClient` class. See the [Python API](/docs/software/python/cli/installation) documentation for more details.
+You can programmatically do operations from your own python code by using the Meshtastic `RemoteHardwareClient` class. See the [Python API](../../software/python/cli/installation) documentation for more details.
 
 You can add a simple LED and resistor to validate that the GPIO operations work as expected. Use [this tutorial](https://www.instructables.com/Slide-Switch-With-Arduino-Uno-R3/) as a guide.
 

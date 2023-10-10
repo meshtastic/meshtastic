@@ -57,7 +57,7 @@ A number of [key services](http://github.com/meshtastic/firmware/tree/master/src
 
 - [NodeInfoModule](http://github.com/meshtastic/firmware/tree/master/src/modules/NodeInfoModule.h) - Receives/sends User information to other nodes so that usernames are available in the databases.
 
-- [RemoteHardwareModule](http://github.com/meshtastic/firmware/tree/master/src/modules/RemoteHardwareModule.h) - A module that provides easy remote access to device hardware (for things like turning GPIOs on or off). Intended to be a more extensive example and provide a useful feature of its own. See [remote-hardware](/docs/configuration/module/remote-hardware) for details.
+- [RemoteHardwareModule](http://github.com/meshtastic/firmware/tree/master/src/modules/RemoteHardwareModule.h) - A module that provides easy remote access to device hardware (for things like turning GPIOs on or off). Intended to be a more extensive example and provide a useful feature of its own. See [remote-hardware](../../configuration/module/remote-hardware) for details.
 
 - [ReplyModule](http://github.com/meshtastic/firmware/tree/master/src/modules/ReplyModule.h) - A simple module that just replies to any packet it receives (provides a 'ping' service).
 
@@ -65,7 +65,7 @@ A number of [key services](http://github.com/meshtastic/firmware/tree/master/src
 
 The easiest way to get started is:
 
-1. [Build the firmware](/docs/development/firmware/build) codebase.
+1. [Build the firmware](../../development/firmware/build) codebase.
 2. Copy the [ReplyModule](http://github.com/meshtastic/firmware/tree/master/src/modules/ReplyModule.cpp) as a template into `src/modules/`.
    ```shell
    cp src/modules/ReplyModule.* src/modules/YourModule.*
@@ -87,7 +87,7 @@ If you would like to proactively send messages (rather than just responding to t
 
 ## Picking a port number
 
-See [Meshtastic Port Numbers](/docs/development/firmware/portnum)
+See [Meshtastic Port Numbers](../../development/firmware/portnum)
 
 ## How to add custom protocol buffers
 
