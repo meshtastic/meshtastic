@@ -8,15 +8,13 @@ import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 
 :::info
-Currently only available for ESP32 based devices with external PSRAM. Requires the device to be set as a ROUTER or ROUTER_CLIENT.
-
-**Don't enable Store & Forward Module on multiple nodes.**
+Currently only available for ESP32 based devices with external PSRAM like the tbeam. Requires the device to be set as a ROUTER or ROUTER_CLIENT.
 :::
 
 ## Overview
 
 :::caution
-This is a work in progress and is partially available. Stability is not guaranteed.
+This is a work in progress and the required client support is not yet available.
 :::
 
 The Store & Forward Module is an implementation of a Store and Forward system to enable resilient messaging in the event that a client device is disconnected from the main network.
@@ -52,10 +50,6 @@ Either use a custom channel configuration with at an at least 1kbit data rate or
 
 ### Router setup
 
-:::warning
-Don't enable the Store and Forward module on multiple nodes for now!
-:::
-
 - Configure your device as a router.
 - Name your router node something that makes it easily identifiable, aka "Router".
 - Configure the Store and Forward module
@@ -74,15 +68,7 @@ Don't enable the Store and Forward module on multiple nodes for now!
 
 ### Client Usage
 
-Currently, no special configuration is required. To request your history sent to you, send the command into the message field "SF". That's it. This will eventually change to make it easier. At the moment, that message will be sent to everyone on the mesh but we'll (eventually) make it easier to use where there'll be a button (or maybe it'll be transparent) and the command isn't sent as a text message to the mesh.
-
-Available Commands:
-
-| Command |                       Definition                       |
-| :-----: | :----------------------------------------------------: |
-|   SF    | Send the last hour worth of messages I may have missed |
-
-The Store and Forward module will only service one client at a time. If a second client requests messages while the S&F is busy, the S&F will send a private message to the second client that they will need to wait.
+Currently there are no clients that support store and forward.
 
 ## Settings
 
