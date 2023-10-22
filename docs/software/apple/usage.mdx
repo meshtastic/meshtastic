@@ -3,6 +3,71 @@ id: usage
 title: Apple Application Usage
 sidebar_label: Usage
 ---
+## Intro
+
+There is a Meshtastic app in the Apple App Store for iPhones, iPads and Macs (on their respective OSs: iOS, iPadOS, and macOS) with slightly different behaviour on each platform. On iOS and iPadOS, V16.2 or greater is required; macOS requires Sonoma.
+
+Let us call the thing with the antenna a "node" for now.
+
+On all platforms the app uses the usual features of the OS, i.e. for notifications (in "Notifications|Meshtastic"), for timestamps (in "General|Language&Region|Date Format"), plus on the Mac there is extra functionality in the menu bar.
+
+The app itself has help in the form of tips for many situations, and we will not duplicate them here.
+
+## First App Start
+
+First, the node should be prepared https://meshtastic.org/docs/getting-started - otherwise the app will look pretty boring - as most of the functionality depends on a connected node.
+
+The app always opens the "Bluetooth" page first. If your node does not show up on the page, make it physically start up now - a simple way is to disconnect power (a.k.a. the USB cable) for a moment. The app should now feel the node and you read a 6-digit number from the node and key it into the app. Then the node should show up as "connected". A green symbol with the node's short name will now show up in the upper right corner - and this indicator will be on each page from now on.
+
+NB: You do not use the iPhone's (or iPad or Mac) settings to connect the node as a Bluetooth device, but you will find the node under Bluetooth when you are done here.
+
+## the App
+
+The bottom app bar has tabs "Messages", "Bluetooth", "Nodes", "Mesh Map" and "Settings".
+
+The __Messages__ tab has channels and direct messages (DMs), comparable to groups and users, where there is a default group, where people can be received you have not known before. Other channels can be configured and there is a channel that will not be visible here, the admin channel. 
+
+__Messages|DirectMessages__ has all nodes as seen in the "Nodes" page, but this time as communication partners, i.e. people and routers and maybe sensors. Makes sense since you might need to give commands to a router or request data from a sensor. The number of people for DMs will grow over time.
+
+The __Bluetooth__ tab has the connection status of your directly connected node. (over BLE) If your node does not show up for connecting, reboot it - it will respond to connect requests for a minute or so. If you want to physically connect to a different node, restart the app and connect here.
+
+__Nodes__ over time builds up a list of nodes your node has "seen". This is technical info about nodes. Do not be surprised by the time that is reported, like "seen in 71 years"; this comes from the node device, not from the Apple app. A proper message would be "seen 24 seconds ago", but some nodes send a wrong timestamp. What is really helpful here is the signal strength (in dbm) and the signal-to-noise ratio (SNR), both of which may be not very precise, but can give an estimation of how far you can send; or if there is an improvement when you use a different antenna (or a different antenna placement or orientation).
+
+The __Mesh Map__ will show all nodes on a map, nicely showing you the area of your reach. Some nodes do not broadcast their location, so you might miss them on the map.
+
+In __Settings__, you can change the configuration of your nodes. Most features are documented here https://meshtastic.org/docs/configuration
+
+In __Settings|AppSettings__, the Name is used when you use the request location feature in a channel or DM. "Block Range Test" will filter out range test messages that you might not want to be shown.
+
+In __Settings|Share Channel QR Code__, a QR code is shown that contains all channels; so after each change in the channel settings, the QR code should be distributed to all nodes you administer.
+
+In __Settings|User__, the "Licensed Operator" switch enables a mode for licensed HAM radio amateurs (may be dependent on the country you live in).
+
+In __Settings|Channels__, channels, which is something like user groups, can be added or deleted. The Channel Role has to be Secondary. The key size should always be 256 bit - all else is too easy to decipher. What you see here is the base64-representation of the PSK. The maximum number of channels in Meshtastic is 8. One can be the admin channel for remote configuration of your nodes. 
+
+__Settings|Bluetooth__ should be activated and the pairing Mode set to random - for best security. This will show the 6-digit Number when the node is paired with a new client.
+
+Serial Console and Debug Log can be enabled in __Settings|DeviceConfiguration|Device__. This does not log anything into the Apple app, but over a serial connection on the device if you have (soldered) one.
+
+## Reset and Power Off
+
+The node can be reset or powered off by the app: On the "Nodes" page, from the list choose the node that is connected via BLE, it will have 2 extra buttons "Reset" and "Power Off" in the node details.
+
+## Configuring Other Nodes
+
+Your other nodes can be configured from the Settings page. Cool!
+For this, you set up a new channel in __Settings|Channels__. The channel name has to be "admin" and it shall be a secondary channel. The other nodes need your channel QR code now; this is in __Settings|Share Channel QR Code__. NB: If you want to be safe, you cannot use email to send the QR code or the link.  
+You can now "Settings|Configure|Request Admin" for each of the other nodes on this channel. You can now fully configure your other nodes plus on page "Nodes" in the node list your nodes which are in your admin channel will have "Power Off" and "Reset" buttons in the node details now - just like the one that is connected dirctly via BLE. More info: https://meshtastic.org/docs/configuration/remote-admin
+
+## not with Apple
+
+If you do not find a node setting in the Apple app, you might (have to) do it with the Python CLI.  
+Initial flashing or updating your node is best done so: https://meshtastic.org/docs/getting-started/flashing-firmware
+When being completely offline, Android apps can be sent from one phone to another (https://meshtastic.letstalkthis.com/ 9.), alas, with Apple devices, we do not have that.
+
+## more info
+
+There is also some info in https://meshtastic.org/docs/faq
 
 ## Offline Maps
 
