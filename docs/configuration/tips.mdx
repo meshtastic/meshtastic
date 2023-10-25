@@ -39,13 +39,13 @@ Meshtastic nodes will rebroadcast all packets if they share [LoRa modem settings
 
 Meshtastic uses the word "channels" to define two different configuration properties: [Messaging Channels](/docs/configuration/radio/channels) & [LoRa Modem Channels](/docs/configuration/radio/lora#channel-number)
 
-### Device Config: Channels
+### Radio Config: Channels
 
 These configure "message groups" and include your PRIMARY and SECONDARY channels.  All SECONDARY channels use the same LoRa modem config as your PRIMARY channel (including LoRa channel number).
 
 There are 8 total chat channels.  Channel 0 is your PRIMARY channel, with channels 1-7 available for private group messaging and/or special channels such as [`admin`](/docs/configuration/remote-admin).
 
-### Device Config: LoRa: Channel Number
+### Radio Config: LoRa: Channel Number
 
 This configures the frequency the radio is set to.  Check out the [frequency calculator](/docs/overview/radio-settings#channel-frequency-calculator) to view the relationship between "channel number" and radio frequency.
 
