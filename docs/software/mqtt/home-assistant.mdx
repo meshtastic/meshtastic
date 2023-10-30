@@ -235,8 +235,8 @@ Add the following code to your automations.yaml file.  Be sure to modify the `to
   condition:
     - condition: template
       value_template: "{{ trigger.payload_json.payload.text | regex_search('@Tropho') }}"
-    # or send ALL messages from the mesh to HA notifications
-    # value_template: "{{ trigger.payload_json.payload.text is defined}}"
+    # or send ALL messages from the mesh to HA notifications (except for range tests)
+    # value_template: "{{ trigger.payload_json.payload.text is defined and "seq " not in trigger.payload_json.payload.text}}"
       enabled: true
   action:
     - service: notify.mobile_app_trophos_galaxy_z_flip5
