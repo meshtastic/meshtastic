@@ -42,7 +42,7 @@ A `PUT` request to this endpoint will be expected to contain a series of ToRadio
 
 The protobufs will be sent in binary as the body for the request.
 
-For the initial implementation, only one ToRadio message per request is supported, but future optimizations to improve throughput might add support for multiple ToRadios in a single request.
+Only one ToRadio message per request is supported.
 
 #### OPTIONS
 
@@ -76,21 +76,19 @@ The protobufs will be sent in binary as the body for the request.
 
 ## Authentication
 
-The initial release will not have **any** user authentication. We assume access to the HTTP server is enough to establish trust.
-
-Since authentication is also eventually needed for our other transports (TCP and eventually open BLE), we will be adding authentication **in-band**. When added in the second release there will be a new payload supported inside ToRadio for `SignIn <userid> <usersecret>`. The server will respond with a FromRadio `SignInResponse okay|fail`. Also, in the case of the REST API, that SignIn status will then be associated with the current session key. Most (all?) ToRadio packets will be ignored if the client is not signed in. Most (all?) FromRadio packets will be sent to clients that are not signed in.
+There isn't **any** user authentication. We assume access to the HTTP server is enough to establish trust.
 
 ## Client
 
 ### JavaScript
 
-See: <https://github.com/meshtastic/meshtastic.js>
+See: https://github.com/meshtastic/meshtastic.js
 
 A reference client written in JavaScript will provide a JavaScript API for using this transport. That client will do HTTP connections, use the generated protobuf JavaScript code and provide an API that hides all of this REST plumbing. The two key methods will be `sendToRadio(packet)` and `onFromRadio(callback)`.
 
 ### Protoman
 
-See: <https://github.com/spluxx/Protoman>
+See: https://github.com/spluxx/Protoman
 
 Protoman is able to interface with the Meshtastic REST API out of the box. This is useful for manual testing of the endpoints.
 
@@ -100,4 +98,4 @@ HTTP and HTTPS are both supported on the ESP32 using self signed certificates on
 
 ## Related documents
 
-- Interesting slide pack on the concept: <https://www.slideshare.net/mokeefe/javaone-2009-ts5276-restful-protocol-buffers>
+- Interesting slide pack on the concept: https://www.slideshare.net/mokeefe/javaone-2009-ts5276-restful-protocol-buffers

@@ -45,12 +45,13 @@ Try forgetting the Bluetooth connection from the Android Bluetooth Settings menu
 
 ### What version of iOS/iPadOS/macOS does the Meshtastic App Require?
 
-The Meshtastic App on Apple Clients require the following minimum OS versions: iOS 16, iPadOS 16, and macOS 13.
+The Meshtastic App on Apple Clients require the following minimum OS versions: iOS 16.2, iPadOS 16.2, and macOS 13.
 
 ### How do I get the Apple Meshtastic App?
 
 See [Apple Apps](/docs/software/apple/installation)
 
+<!-- trunk-ignore(markdownlint/MD024) -->
 ### After a fresh firmware install, my node is not connecting via Bluetooth. What should I do?
 
 Try forgetting the Bluetooth connection from the iOS/iPadOS/macOS System Settings. Re-pair and try again. This is a security measure and there is no workaround for it. It prevents apps and other accessories from spoofing an existing accessory by un-pairing and "re-pairing" themselves without the users' knowledge.
@@ -97,28 +98,28 @@ Push the left PWR button for about 1 second.
 
 ### Where do I purchase the device hardware?
 
-Each [supported device](/docs/hardware/devices/tbeam) has a "Purchase Link".
+Each [supported device](/docs/supported-hardware) has a "Purchase Link".
 
 ### I have my hardware. How do I install the firmware and any required drivers?
 
-[See our guide here](/docs/getting-started/flashing-firmware).
+[See our guide here](/docs/getting-started).
 
 ### How do I update the firmware to the latest version?
 
-If the device is running Meshtastic firmware, you might be able to update over-the-air like via the Android app.
+Updating firmware varies with hardware. See [Flashing Firmware](/docs/getting-started/flashing-firmware).
 
 ### My device has gone to sleep. Are received messages lost?
 
 The LoRa radio on the node is still active and will wake up the CPU when the device is sleeping. If your phone is in range, the node will relay any messages your phone may have missed. If you're in range and your device is active, messages have not been lost.
 
+<!-- trunk-ignore(markdownlint/MD026) -->
 ### My device has gone to sleep and I can't send any messages.
 
 Once the node wakes up from sleep, your phone will relay any delayed messages through your node and to the mesh network. Give it a few minutes and it'll do the right thing.
 
 ### How can I tell the device not to sleep?
 
-- Android instructions see: [Android Usage](/docs/software/android/usage#configuration-options)
-- Python CLI instructions see: [Python Usage](/docs/software/python/cli/usage#changing-settings)
+See [Device Power Configuration](/docs/configuration/radio/power) options.
 
 ### I am in Europe and my device seems to stop transmitting after a while, what is going on?
 
@@ -142,27 +143,21 @@ If you use your HAM radio license with Meshtastic, consider both the privileges 
 #### Privileges
 
 - Increased Transmit Power
-  - Up to 1500W transmit power! [FCC Part 97.313](https://www.ecfr.gov/current/title-47/chapter-I/subchapter-D/part-97/subpart-D/section-97.313)
+  - Up to 10W transmit power in the United States! [47 CFR 97.313(j)](https://www.ecfr.gov/current/title-47/chapter-I/subchapter-D/part-97#p-97.313(j))
 - Higher Gain Antennas
 
 #### Restrictions
 
 - Plain-Text Only
-  - On amateur radio bands, encryption is illegal. [FCC Part 97.113.C](https://www.ecfr.gov/current/title-47/chapter-I/subchapter-D/part-97/subpart-B/section-97.113)
+  - On amateur radio bands, encryption is illegal. [FCC Part 97.113.A.4](https://www.ecfr.gov/current/title-47/chapter-I/subchapter-D/part-97/subpart-B/section-97.113#p-97.113(a)(4))
 - Lack of Privacy
-  - As a HAM operator, it is a requirement that you identify yourself by your call sign periodically when transmitting. Your call sign will be publicly transmitted at least once every 10 minutes at minimum. [FCC Part 97.119.A](https://www.ecfr.gov/current/title-47/chapter-I/subchapter-D/part-97/subpart-B/section-97.119)
+  - As a HAM operator, it is a requirement that you identify yourself by your call sign periodically when transmitting. Your call sign will be publicly transmitted at least once every 10 minutes at minimum. [FCC Part 97.119.A](https://www.ecfr.gov/current/title-47/chapter-I/subchapter-D/part-97/subpart-B/section-97.119#p-97.119(a))
 
 ### How do I set my HAM call sign?
 
-Please see instructions for [Enabling HAM License from the Python CLI](/docs/software/python/cli/usage#ham-radio-support)
-
-<!-- Flasher -->
-
-## Flasher
-
-### Why does my operating system flag Meshtastic Flasher as having malware?
-
-The flasher contains no malware and completely passed the Microsoft malware scanning. It appears that a lot of file download services are using the Windows Defender data, so if you're seeing alerts of a detected trojan please [update your Windows Defender definitions](https://www.microsoft.com/en-us/wdsi/defenderupdates).
+- On Android navigate to Radio configuration -> User and set Long name to your Ham Radio callsign, then activate the slider for 'Licensed amateur radio'.
+- On iPhone navigate to Settings -> User and set Long Name to your Ham Radio callsign, then activate the slider for 'Licensed Operator'.
+- Instructions for Enabling HAM License from the Python CLI can be found [here](/docs/software/python/cli/usage#ham-radio-support).
 
 ### What if I'm still having issues on Windows 10?
 
@@ -194,7 +189,7 @@ Modules are features that expand the basic device functionality and/or integrate
 
 ### What modules do we have available?
 
-A list of available modules is available [here](/docs/settings/moduleconfig).
+A list of available modules is available [here](/docs/configuration/module).
 
 ### I'd like to write a module. How do I get started?
 

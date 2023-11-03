@@ -13,19 +13,16 @@ import Link from "@docusaurus/Link";
 Make sure not to power the radio on without first attaching the antenna! You could damage the radio chip!
 :::
 
-For ESP32 devices if the device already has a version of Meshtastic installed using the OTA firmware upgrade tool in the Android app is the friendliest path for users. OTA firmware updates are not yet available on Apple platforms.
-
-If your ESP32 device does not have Meshtastic pre-installed flashing
 Before you flash your device start by verifying connectivity with the device being flashed. Outlined below are steps that can be taken to verify connectivity and, if necessary, to install the appropriate drivers. If you end up needing to install drivers be sure to reboot your computer afterwards to verify the installation is complete.
 
 :::note
 The [T-Beam 0.7](/docs/hardware/devices/tbeam#t-beam---v07) board is an earlier version of the T-Beam board, and due to changes in the design in subsequent iterations this board uses a specific firmware file different from the other T-Beam boards.
 
-`firmware-tbeam0.7-1.x.x.bin` is the correct firmware. `firmware-tbeam-1.x.x.bin` is incompatible. For all other [T-Beam](/docs/hardware/devices/tbeam) boards `firmware-tbeam-1.x.x.bin` is the correct selection.
+`firmware-tbeam0.7-X.X.X.xxxxxxx.bin` is the correct firmware. `firmware-tbeam-X.X.X.xxxxxxx.bin` is incompatible. For all other [T-Beam](/docs/hardware/devices/tbeam) boards `firmware-tbeam-X.X.X.xxxxxxx.bin` is the correct selection.
 :::
 
 ## Command Line Interface Instructions
-
+### Install Prerequisite Software
 <Tabs
 groupId="operating-system"
 defaultValue="linux"
@@ -36,7 +33,6 @@ values={[
 ]}>
 <TabItem value="linux">
 
-### Install Prerequisite Software
 
 Check if you have `python3` and `pip` installed with the following command
 
@@ -58,16 +54,10 @@ If `pip` is not installed, install with
 sudo apt-get install python3-pip
 ```
 
-### Install `esptool`
-
-```shell
-pip3 install --upgrade esptool
-```
-
   </TabItem>
   <TabItem value="macos">
 
-### Install Prerequisite Software
+
 
 OS X comes with `Python 2.7` installed, but not `pip`. The following uses Homebrew to install `python3` which includes `pip3`. On MacOS you will use `pip3` instead > of `pip`.
 
@@ -101,12 +91,6 @@ Confirm `pip3` was installed alongside `python3`
 pip3 -v
 ```
 
-### Install `esptool`
-
-```shell
-pip3 install --upgrade esptool
-```
-
   </TabItem>
   <TabItem value="windows">
 
@@ -126,14 +110,16 @@ pip --version
 
 :::
 
-### Install `esptool`
-
-```shell
-pip install --upgrade esptool
-```
 
   </TabItem>
 </Tabs>
+
+### Install `esptool`
+
+```shell
+pip3 install --upgrade esptool
+```
+
 
 ### Confirm Communication With Chip
 
@@ -200,7 +186,7 @@ cd ~/Downloads/firmware/
 Install or Update the device that you have by using the following commands according to your operating system:
 
 :::caution
-Be very careful to install the correct load for your board. In particular the popular 'T-BEAM' radio from TTGO is not called 'TTGO-Lora' (that is a different board). So don't install the 'TTGO-Lora' build on a TBEAM, it won't work correctly.
+Be very careful to install the correct firmware file for your board. In particular, the popular 'T-BEAM' radio from TTGO is not called 'TTGO-Lora' (that is a different board). So don't install the 'TTGO-Lora' build on a TBEAM, it won't work correctly. If you flash the incorrect device firmware, it may appear to successfully complete, yet the device will usually become unresponsive, displaying a blank screen (if equipped). Attempt to flash the correct version. Please note, while these devices are quite resilient and damage is not always likely, there is a possibility of onboard radio and peripheral damage due to incorrect GPIO pin direction.
 :::
 
 <Tabs
@@ -228,12 +214,14 @@ values={[
   </TabItem>
   <TabItem value="macos">
 
+<!-- trunk-ignore(markdownlint/MD024) -->
 #### Install
 
 ```shell title="Command"
 ./device-install.sh -f firmware-BOARD-VERSION.bin
 ```
 
+<!-- trunk-ignore(markdownlint/MD024) -->
 #### Update
 
 ```shell title="Command"
@@ -243,12 +231,14 @@ values={[
   </TabItem>
   <TabItem value="windows">
 
+<!-- trunk-ignore(markdownlint/MD024) -->
 #### Install
 
 ```shell title="Command"
 device-install.bat -f firmware-BOARD-VERSION.bin
 ```
 
+<!-- trunk-ignore(markdownlint/MD024) -->
 #### Update
 
 ```shell title="Command"
@@ -258,17 +248,6 @@ device-update.bat -f firmware-BOARD-VERSION.bin
   </TabItem>
 </Tabs>
 
-### Select Firmware
-
-Browse to the previously downloaded firmware and select the correct firmware based on the board type and frequency.
-
-:::caution
-Be very careful to install the correct load for your board. In particular the popular 'T-BEAM' radio from TTGO is not called 'TTGO-Lora' (that is a different board). So don't install the 'TTGO-Lora' build on a TBEAM, it won't work correctly. If you flash the incorrect firmware: It may appear to flash correctly, but if your device has a screen it might stay blank. On-board radio peripherals might be damaged because of GPIO pin direction, but you should just try to flash with the correct version.
-:::
-
-### Flash Firmware
-
-Select `Flash ESP`. It may take a minute or two. Once complete, "Done! Flashing is complete!" will be shown.
 
 ## Connect and Configure Device
 
