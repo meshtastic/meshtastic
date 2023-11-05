@@ -217,6 +217,18 @@ Early versions of some of these boards contained the wrong component in the LiPo
 - microSD connector
 - No GPS
 
+## Flashing the T3S3
+
+with antenna connected  
+
+- switch off the node
+- connect the USB-C data cable => a blue LED goes on, display is black
+- press the BOOT button - to the right of the display
+- switch node on
+- release BOOT button  
+
+this will put the node in flash mode. Now try flashing with the [Web Flasher](https://flasher.meshtastic.org/) with device "Tlora T3s3 V1"; if it finally says "Next" and the display stays dark with only the blue LED on, use the [CLI](https://meshtastic.org/docs/getting-started/flashing-firmware/esp32/cli-script) to flash Meshtasic to the node.
+
 ## Resources
 
 - Firmware file: `firmware-tlora-t3s3-v1.xxxxxxx.bin`
