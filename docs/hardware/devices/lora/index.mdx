@@ -219,15 +219,27 @@ Early versions of some of these boards contained the wrong component in the LiPo
 
 ## Flashing the T3S3
 
-with antenna connected  
+:::warning
 
-- switch off the node
-- connect the USB-C data cable => a blue LED goes on, display is black
-- press the BOOT button - to the right of the display
-- switch node on
-- release BOOT button  
+Do not proceed unless an antenna is connected to avoid possible damage to the device's radio.
 
-this will put the node in flash mode. Now try flashing with the [Web Flasher](https://flasher.meshtastic.org/) with device "Tlora T3s3 V1"; if it finally says "Next" and the display stays dark with only the blue LED on, use the [CLI](https://meshtastic.org/docs/getting-started/flashing-firmware/esp32/cli-script) to flash Meshtasic to the node.
+:::
+
+The following process will manually place the device into the Espressif Firmware Download mode:
+
+1. Switch off the device.
+2. Connect the USB-C data cable to the device. A blue LED will illuminate while display stays black.
+3. Press and hold the BOOT button to the right of the display.
+4. Switch the device on.
+5. After 2-3 seconds, release the BOOT button.
+
+With the device now in the Espressif Firmware Download mode, you can proceed with flashing using one of the supported flashing methods. It's generally recommended to use the [Web Flasher](https://flasher.meshtastic.org/). You can select "Tlora T3s3 V1" from the device drop-down.
+
+:::note
+
+If after successfully flashing the device and the screen remains black, you may need to use the [CLI Script](https://meshtastic.org/docs/getting-started/flashing-firmware/esp32/cli-script) to flash Meshtastic.
+
+:::
 
 ## Resources
 
