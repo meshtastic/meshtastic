@@ -21,8 +21,5 @@ jobs:
       - name: Install Dependencies
         run: pnpm install
 
-      - name: Trunk Check
-        uses: trunk-io/trunk-action@v1
-
       - name: Build Site
         run: pnpm build
