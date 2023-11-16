@@ -2,7 +2,7 @@
 id: lora
 title: LILYGO® TTGO Lora Devices
 sidebar_label: LILYGO® Lora
-sidebar_position: 3
+sidebar_position: 4
 ---
 
 import Tabs from "@theme/Tabs";
@@ -216,6 +216,30 @@ Early versions of some of these boards contained the wrong component in the LiPo
 - Power and Reset switches, Boot / User Button
 - microSD connector
 - No GPS
+
+## Flashing the T3S3
+
+:::warning
+
+Do not proceed unless an antenna is connected to avoid possible damage to the device's radio.
+
+:::
+
+The following process will manually place the device into the Espressif Firmware Download mode:
+
+1. Switch off the device.
+2. Connect the USB-C data cable to the device. A blue LED will illuminate while display stays black.
+3. Press and hold the BOOT button to the right of the display.
+4. Switch the device on.
+5. After 2-3 seconds, release the BOOT button.
+
+With the device now in the Espressif Firmware Download mode, you can proceed with flashing using one of the supported flashing methods. It's generally recommended to use the [Web Flasher](https://flasher.meshtastic.org/). You can select "Tlora T3s3 V1" from the device drop-down.
+
+:::note
+
+If after successfully flashing the device and the screen remains black, you may need to use the [CLI Script](https://meshtastic.org/docs/getting-started/flashing-firmware/esp32/cli-script) to flash Meshtastic.
+
+:::
 
 ## Resources
 

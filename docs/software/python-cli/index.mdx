@@ -124,7 +124,7 @@ meshtastic --qr
 
 Gets a preferences field.
 
-Configuration values are described in: [Configuration](https://meshtastic.org/docs/settings).
+Configuration values are described in: [Configuration](https://meshtastic.org/docs/configuration).
 
 ```shell title="Usage"
 meshtastic --get lora
@@ -135,7 +135,7 @@ meshtastic --get lora.region
 
 Sets a preferences field.
 
-Configuration values are described in: [Configuration](https://meshtastic.org/docs/settings).
+Configuration values are described in: [Configuration](https://meshtastic.org/docs/configuration).
 
 ```shell title="Usage"
 meshtastic --set lora.region Unset
@@ -306,7 +306,16 @@ meshtastic --sendping
 Traceroute from connected node to a destination. You need pass the destination ID as an argument. Only nodes that have the encryption key can be traced.
 
 ```shell title="Usage"
-meshtastic --traceroute 'ba4bf9d0'
+meshtastic --traceroute '!ba4bf9d0'
+```
+
+### --request-telemetry
+
+Request telemetry from a node. You need to pass the destination ID as an argument with '--dest'. For repeaters, the nodeNum is required.
+
+```shell title="Usage"
+meshtastic --request-telemetry --dest '!ba4bf9d0'
+meshtastic --request-telemetry --dest 1828779180
 ```
 
 ### --ack
