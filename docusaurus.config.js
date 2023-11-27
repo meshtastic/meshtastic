@@ -76,7 +76,6 @@ const config = {
 		},
 		algolia: {
 			appId: "IG2GQB8L3V",
-			// trunk-ignore(gitleaks/generic-api-key)
 			apiKey: "2e4348812173ec7ea6f7879c7032bb21",
 			indexName: "meshtastic",
 			contextualSearch: false,
