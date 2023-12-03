@@ -10,16 +10,18 @@ sidebar_position: 1
 ### [RAK Wisblock](./rak/)
 Modular hardware system with Base, Core and Peripheral modules including the low-power and solar ready nRF52840-based Meshtastic Starter Kit (19007 & 4631).
 
+[**WisBlock Core Modules**](./rak/core-module/)<br/>
+| Name | MCU | Radio | WiFi |  BT | GPS |
+| :-- | :-- | :-- | :--: | :--: | :--: |
+| RAK4631 | nRF52840 | SX1262 | NO | 5.0 | add-on  |
+| RAK11200 | ESP32 | add-on | 2.4 GHz b/g/n | 4.2 | add-on  |
+| RAK11310 | RP2040 | SX1262 | NO | NO | add-on  |
+
 [**Base Boards**](./rak/base-board/)<br/>
 RAK5005-O<br/>
 RAK19007<br/>
 RAK19003<br/>
 RAK19001<br/>
-
-[**WisBlock Core Modules**](./rak/core-module/)<br/>
-RAK4631<br/>
-RAK11200<br/>
-RAK11310<br/>
 
 [**WisBlock Screens**](./rak/screens/)<br/>
 RAK1921<br/>
@@ -37,53 +39,66 @@ RAK1906 Environment Sensor<br/>
 ### [LILYGO® T-Beam](./tbeam/)
 Boards complete with GPS, 18650 battery holder, and optional screen.
 
-T-Beam v0.7<br/>
-T-Beam v1.1<br/>
-T-Beam with M8N<br/>
-T-Beam with M8N & SX1262<br/>
-T-Beam S3-Core<br/>
-T-BeamSUPREME<br/>
+| Name | MCU | Radio | WiFi |  BT | GPS |
+| :-- | :-- | :-- | :--: | :--: | :--: |
+| T-Beam v0.7 | ESP32 | SX1276| 2.4 GHz b/g/n | 4.2 | YES |
+| T-Beam v1.1 | ESP32 | SX1276 | 2.4 GHz b/g/n | 4.2 | YES |
+| T-Beam with M8N | ESP32 | SX1276<br/>SX1262 | 2.4 GHz b/g/n | 4.2 | YES |
+| T-Beam S3-Core | ESP32-S3 | SX1262 | 2.4 GHz b/g/n | 4.2 | YES |
+| T-BeamSUPREME | ESP32-S3 | SX1262 | 2.4 GHz b/g/n | 4.2 | YES |
 
 ### [LILYGO® T-Echo](./techo/)
 All-in-one unit with E-Ink screen, GPS and battery in injection-molded case.  Features the low-power nRF52840 for long battery life.
 
-T-Echo<br/>
+| Name | MCU | Radio | WiFi |  BT | GPS |
+| :-- | :-- | :-- | :--: | :--: | :--: |
+| T-Echo | nRF52840 | SX1262 | NO | 5.0 | YES |
 
 ### [LILYGO® LoRa](./lora/)
 Inexpensive basic ESP32-based boards.
 
-LoRa32 V1<br/>
-LoRa32 V1.3<br/>
-LoRa32 V2.0<br/>
-LoRa32 V2.1-1.6<br/>
-LoRa32 V2.1-1.8<br/>
-LoRa32 T3-S3 V1.0<br/>
+| Name | MCU | Radio | WiFi |  BT | GPS |
+| :-- | :-- | :-- | :--: | :--: | :--: |
+| LoRa32 V1 | ESP32 | SX127x | 2.4 GHz b/g/n | 4.2 | NO |
+| LoRa32 V1.3 | ESP32 | SX127x | 2.4 GHz b/g/n | 4.2 | NO |
+| LoRa32 V2.0 | ESP32 | SX127x | 2.4 GHz b/g/n | 4.2 | NO |
+| LoRa32 V2.1-1.6 | ESP32 | SX127x| 2.4 GHz b/g/n | 4.2 | NO |
+| LoRa32 V2.1-1.8 | ESP32 | SX1280 | 2.4 GHz b/g/n | 4.2 | NO |
+| LoRa32 T3-S3 V1.0 | ESP32-S3 | SX1262<br/>SX1276<br/>SX1280 | 2.4 GHz b/g/n | 4.2 | NO |
 
 ### [HELTEC® LoRa 32](./heltec/)
 Inexpensive basic ESP32-based boards.
 
-LoRa32 V2.1<br/>
-LoRa32 V3<br/>
-Wireless Stick Lite V3<br/>
-Wireless Tracker<br/>
-Wireless Paper<br/>
+| Name | MCU | Radio | WiFi |  BT | GPS |
+| :-- | :-- | :-- | :--: | :--: | :--: |
+| LoRa32 V2.1 | ESP32 | SX127x | 2.4 GHz b/g/n | 4.2 | NO |
+| LoRa32 V3 | ESP32 | SX1262 | 2.4 GHz b/g/n | 4.2 | NO |
+| Wireless Stick Lite V3 | ESP32-S3FN8 | SX1262 | 2.4 GHz b/g/n | 4.2 | NO |
+| Wireless Tracker | ESP32-S3FN8 | SX1262 | 2.4 GHz b/g/n | 4.2 | YES |
+| Wireless Paper | ESP32-S3FN8 | SX1262 | 2.4 GHz b/g/n | 4.2 | NO |
 
 ### [Station G1](./station-g1/)
 High power LoRa transceiver designed for Meshtastic Licensed HAM operation.
 
-Station G1
+| Name | MCU | Radio | WiFi |  BT | GPS |
+| :-- | :-- | :-- | :--: | :--: | :--: |
+| Station G1 | ESP32 WROOM | SX1262 | 2.4 GHz b/g/n | 5.0 | UES |
 
 ### [Nano Series](./nano/)
 Portable and durable devices designed for Meshtastic.
 
-Nano G1<br/>
-Nano G1 Explorer<br/>
-Nano G2 Ultra<br/>
+| Name | MCU | Radio | WiFi |  BT | GPS |
+| :-- | :-- | :-- | :--: | :--: | :--: |
+| Nano G1 | ESP32 WROOM | SX1276 | 2.4 GHz b/g/n | 4.2 | YES |
+| Nano G1 Explorer | ESP32 WROOM | SX1262 | 2.4 GHz b/g/n | 4.2 | YES |
+| Nano G2 Ultra | NRF52840 | SX1262 | 2.4 GHz b/g/n | 5.0 | YES |
 
 ### [Raspberry Pi Pico](./raspberry-pi/)
 Fast versatile boards using the RP2040
 
-Raspberry Pi Pico
+| Name | MCU | Radio | WiFi |  BT | GPS |
+| :-- | :-- | :-- | :--: | :--: | :--: |
+| Raspberry Pi Pico | RP2040 | SX1262 | not supported | not supported | NO |
 
 [**Pico Peripherals**](./raspberry-pi/peripherals/)<br/>
 SSD1306 OLED Display<br/>
