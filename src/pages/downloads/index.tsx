@@ -64,7 +64,7 @@ const Firmware = (): JSX.Element => {
               </div>
               <div className="card__body">
                 <p>
-                  Devices such as T-Echo and RAK4631 are flashed via filesystem.
+                  Devices such as T-Echo, RAK4631, and RAK11300 are flashed via filesystem.
                 </p>
               </div>
               <div className="card__footer mt-auto">
