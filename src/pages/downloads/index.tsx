@@ -60,7 +60,7 @@ const Firmware = (): JSX.Element => {
             </div>
             <div className="card m-4 border-2 border-secondary w-full">
               <div className="card__header">
-                <h3>nRF52 Drag & Drop</h3>
+                <h3>nRF52/RP2040 Drag & Drop</h3>
               </div>
               <div className="card__body">
                 <p>
