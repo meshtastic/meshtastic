@@ -1,25 +1,39 @@
 ---
 id: nrf52-erase
-title: Flash nRF52 Factory Erase
-sidebar_label: Factory Erase nRF52
+title: Flash nRF52/RP2040 Factory Erase
+sidebar_label: Factory Erase
 sidebar_position: 3
 ---
 
 import Link from "@docusaurus/Link";
 
-Meshtastic uses the [littlefs](https://github.com/littlefs-project/littlefs) library to store configuration, logs, and other data in the internal flash of nRF52 devices. Updating the firmware does _not_ erase this additional data, which can cause issues when the format and location of data changes between releases.
+Meshtastic uses the [littlefs](https://github.com/littlefs-project/littlefs) library to store configuration, logs, and other data in the internal flash of nRF52 & RP2040 devices. Updating the firmware does _not_ erase this additional data, which can cause issues when the format and location of data changes between releases.
+
+### nRF52
 
 To reset the flash storage on your nRF52 board:
 
-Download and unzip the latest firmware from [Meshtastic Downloads](https://meshtastic.org/downloads).
+1. Download and unzip the latest firmware from [Meshtastic Downloads](https://meshtastic.org/downloads).
+2. Connect your device to your computer with a USB data cable.
+3. Double click the reset button on your device (this will put it into bootloader mode)
+4. Notice a new drive will be mounted on your computer (Windows, Mac, or Linux)
+5. Open this drive and you should see three files: `CURRENT.UF2`, `INDEX.HTM`, and `INFO_UF2.TXT`
+6. Find the file included in the downloaded firmware named `Meshtastic_nRF52_factory_erase.uf2` and copy it onto the new drive. The device should reboot.
+7. With the [Meshtastic CLI](/docs/software/python/cli/) installed, open your Terminal/Console and enter the command: `meshtastic --noproto`.
+8. Press any key, you should see the message: `Formatting... Done`.
 
-1. Connect your device to your computer with a USB data cable.
-2. Double click the reset button on your device (this will put it into bootloader mode)
-3. Notice a new drive will be mounted on your computer (Windows, Mac, or Linux)
-4. Open this drive and you should see three files: `CURRENT.UF2`, `INDEX.HTM`, and `INFO_UF2.TXT`
-5. Copy the included file named `Meshtastic_nRF52_factory_erase.uf2` onto the virtual disk device. The device should reboot.
-6. Connect to the device via serial console using the [Meshtastic CLI `--noproto`](/docs/software/python/cli/#--noproto) mode or a standalone serial client like `minicom`.
-7. Press any key, you should see the message: `Formatting... Done`.
+Once the device has been erased, you can proceed to install the latest Meshtastic firmware on a clean storage filesystem by clicking the link below.
+
+### RP2040
+
+To reset the flash storage on your RP2040 board:
+
+1. Download [flash_nuke.uf2](https://datasheets.raspberrypi.com/soft/flash_nuke.uf2) to your computer.
+2. Press the BOOTSEL button and while keeping it pressed, connect it to your computer via a USB cable.
+3. The board should now appear as a mass storage device on your computer with the label RPI-RP2.
+4. Copy the flash_nuke.uf2 file to the device.
+5. The board will now restart and the flash memory will be erased.
+
 
 Once the device has been erased, you can proceed to install the latest Meshtastic firmware on a clean storage filesystem by clicking the link below.
 
