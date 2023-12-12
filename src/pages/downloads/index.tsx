@@ -60,11 +60,11 @@ const Firmware = (): JSX.Element => {
             </div>
             <div className="card m-4 border-2 border-secondary w-full">
               <div className="card__header">
-                <h3>nRF52 Drag & Drop</h3>
+                <h3>nRF52/RP2040 Drag & Drop</h3>
               </div>
               <div className="card__body">
                 <p>
-                  Devices such as T-Echo and RAK4631 are flashed via filesystem.
+                  Devices such as T-Echo, RAK4631, and RAK11300 are flashed via filesystem.
                 </p>
               </div>
               <div className="card__footer mt-auto">
