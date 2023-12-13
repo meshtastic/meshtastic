@@ -29,6 +29,26 @@ The T-Deck is a compact device featuring a 2.8-inch IPS LCD touch screen with a 
 - 2.8 inch ST7789 SPI Interface IPS LCD (Resolution: 320 x 240)
 - I2S Speaker/Microphone
 
+## Flashing the T-Deck
+
+If you are having issues flashing the T-Deck, especially if it's your first attempt, you may need to manually place the device into Espressif's Firmware Download mode. Please follow the process below to do so.
+
+:::warning
+
+Do not proceed unless an antenna is connected to avoid possible damage to the device's radio.
+
+:::
+
+The following process will manually place the device into the Espressif Firmware Download mode:
+
+1. Ensure the device's power switch is toggled OFF.
+2. Press and hold the TRACKBALL.
+3. Toggle device's power switch ON.
+4. After 2-3 seconds, release the TRACKBALL button.
+5. If the device screen is black and the backlight is off, the device is in the Firmware Download mode. If the backlight is on, repeat these steps.
+
+With the device now in the Espressif Firmware Download mode, you can proceed with flashing using one of the supported flashing methods. It's generally recommended to use the [Web Flasher](https://flasher.meshtastic.org/). You can select "T Deck" from the device drop-down.
+
 ### Resources
 
 - Firmware file: `firmware-t-deck-X.X.X.xxxxxxx.bin`
