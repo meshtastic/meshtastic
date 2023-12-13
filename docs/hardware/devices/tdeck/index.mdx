@@ -1,0 +1,60 @@
+---
+id: tdeck
+title: LILYGO® T-Deck
+sidebar_label: LILYGO® T-Deck
+sidebar_position: 5
+---
+
+The T-Deck is a compact device featuring a 2.8-inch IPS LCD touch screen with a resolution of 320x240 pixels, integrated with a small keyboard, trackball, microphone and speaker running on an ESP32-S3 dual-core processor.
+
+### Specifications
+
+- **MCU**
+  - ESP32-S3FN16R8 (WiFi & Bluetooth 5 LE)
+- **LoRa Transceiver**
+  - Semtech SX1262
+- **Frequency options**
+  - 915 MHz
+  - 868 MHz
+  - 433 MHz
+- **Antenna**
+  - U.FL/IPEX antenna connector for LoRa
+- **Connectors**
+  - USB-C
+
+### Features
+
+- LILYGO® backlit T-Keyboard
+- Trackball
+- 2.8 inch ST7789 SPI Interface IPS LCD (Resolution: 320 x 240)
+- I2S Speaker/Microphone
+
+## Flashing the T-Deck
+
+If you are having issues flashing the T-Deck, especially if it's your first attempt, you may need to manually place the device into Espressif's Firmware Download mode. Please follow the process below to do so.
+
+:::warning
+
+Do not proceed unless an antenna is connected to avoid possible damage to the device's radio.
+
+:::
+
+The following process will manually place the device into the Espressif Firmware Download mode:
+
+1. Ensure the device's power switch is toggled OFF.
+2. Press and hold the TRACKBALL.
+3. Toggle device's power switch ON.
+4. After 2-3 seconds, release the TRACKBALL button.
+5. If the device screen is black and the backlight is off, the device is in the Firmware Download mode. If the backlight is on, repeat these steps.
+
+With the device now in the Espressif Firmware Download mode, you can proceed with flashing using one of the supported flashing methods. It's generally recommended to use the [Web Flasher](https://flasher.meshtastic.org/). You can select "T Deck" from the device drop-down.
+
+### Resources
+
+- Firmware file: `firmware-t-deck-X.X.X.xxxxxxx.bin`
+- Purchase links:
+  - LilyGO Store: [T-Deck 433/868/915Mhz](https://www.lilygo.cc/products/t-deck)
+  - AliExpress: [T-Deck 433/868/915MHz](https://www.aliexpress.us/item/3256805505920840.html)
+  - US Distributor - Purchase link: Rokland [915MHz](https://store.rokland.com/products/lilygo-t-deck-portable-microcontroller-programmer-lora-915-mhz-h642)
+
+![T-Deck](/img/hardware/LILYGO-T-DECK.jpg)

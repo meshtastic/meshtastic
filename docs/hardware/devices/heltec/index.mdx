@@ -2,7 +2,7 @@
 id: heltec
 title: HELTEC® LoRa 32
 sidebar_label: HELTEC® LoRa 32
-sidebar_position: 5
+sidebar_position: 7
 ---
 
 import Tabs from "@theme/Tabs";
@@ -77,9 +77,9 @@ This device may have issues charging a connected battery if utilizing a USB-C to
 
 ### Pin Map
 
-![HTIT-WSL_V3_PIN_MAP](/img/hardware/HTIT-WB32LA(F)_V3.png)
+![HTIT-WSL_V3_PIN_MAP](</img/hardware/HTIT-WB32LA(F)_V3.png>)
 
-Image Source: [Heltec](https://resource.heltec.cn/download/WiFi_LoRa32_V3/HTIT-WB32LA(F)_V3.png)
+Image Source: [Heltec](<https://resource.heltec.cn/download/WiFi_LoRa32_V3/HTIT-WB32LA(F)_V3.png>)
 
 ## Resources
 
@@ -117,6 +117,7 @@ This device may have issues charging a connected battery if utilizing a USB-C to
 - No GPS
 
 ### Meshtastic I2C Definitions
+
 - SCL: GPIO47
 - SDA: GPIO48
 
@@ -157,6 +158,25 @@ This device may have issues charging a connected battery if utilizing a USB-C to
 
 - Onboard 0.96-inch LCD display
 - User and Reset Buttons
+
+## Flashing the Wireless Tracker
+
+If you are having issues flashing the wireless tracker, especially if it's your first attempt, you may need to manually place the device into Espressif's Firmware Download mode. Please follow the process below to do so.
+
+:::warning
+
+Do not proceed unless an antenna is connected to avoid possible damage to the device's radio.
+
+:::
+
+The following process will manually place the device into the Espressif Firmware Download mode:
+
+1. Unplug the device.
+2. Press and hold the USER button.
+3. Plug device in.
+4. After 2-3 seconds, release the USER button.
+
+With the device now in the Espressif Firmware Download mode, you can proceed with flashing using one of the supported flashing methods. It's generally recommended to use the [Web Flasher](https://flasher.meshtastic.org/). You can select "Heltec Wireless Tracker" from the device drop-down.
 
 ## Pin Map
 
