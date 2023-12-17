@@ -14,6 +14,7 @@ Further information on the LILYGO® T-Beam devices can be found on LILYGO®'s [G
 
 <Tabs
 groupId="t-beam"
+queryString="t-beam"
 defaultValue="sx1262"
 values={[
 {label: 'T-Beam v0.7', value:'0.7'},
@@ -160,8 +161,8 @@ This is an earlier version of the T-Beam board. Due to changes in the design thi
 </TabItem>
 <TabItem value = "s3core">
 
-  - **MCU**
-  - ESP32-S3 (WiFi & Bluetooth 5LE)
+- **MCU**
+- ESP32-S3 (WiFi & Bluetooth 5LE)
 - **LoRa Transceiver**
   - **Semtech SX1262** (improved performance)
 - **Frequency options**
@@ -174,25 +175,25 @@ This is an earlier version of the T-Beam board. Due to changes in the design thi
 - **Connectors**
   - USB-C
   - Antenna: U.FL antenna connector
-  
+
 ## Features
-  
+
 - SoftRF preinstalled (flashing to Meshtastic required)
 - Boot and Reset switches
 - Can be used standalone without 'Supreme' daughterboard in a headless configuration
-  
+
 ## Resources
 
-  - Firmware file: `firmware-tbeam-s3-core-X.X.X.xxxxxxx.bin`
-  - Purchase Link: [AliExpress](https://www.aliexpress.com/item/1005005418286231.html)
+- Firmware file: `firmware-tbeam-s3-core-X.X.X.xxxxxxx.bin`
+- Purchase Link: [AliExpress](https://www.aliexpress.com/item/1005005418286231.html)
 
 ![T-Beam S3-Core](/img/hardware/T-BEAM-S3Core.jpg)
 
 </TabItem>
 <TabItem value = "supreme">
 
-  - **MCU**
-  - ESP32-S3 (WiFi & Bluetooth 5LE)
+- **MCU**
+- ESP32-S3 (WiFi & Bluetooth 5LE)
 - **LoRa Transceiver**
   - **Semtech SX1262** (improved performance)
 - **Frequency options**
@@ -205,9 +206,9 @@ This is an earlier version of the T-Beam board. Due to changes in the design thi
 - **Connectors**
   - USB-C
   - Antenna: U.FL antenna connector
-  
+
 ## Features
-  
+
 - Includes T-Beam S3-Core Module
 - SoftRF preinstalled (flashing to Meshtastic required)
 - Power, Boot and Reset switches
@@ -217,7 +218,26 @@ This is an earlier version of the T-Beam board. Due to changes in the design thi
 - QMC6310 Magnetometer
 - PCF8563 RTC
 - Micro-SD reader (not implemented in Meshtastic)
-  
+
+## Flashing the T-Beam Supreme
+
+If you are having issues flashing the T-Beam Supreme, especially if it's your first attempt, you may need to manually place the device into Espressif's Firmware Download mode. Please follow the process below to do so.
+
+:::warning
+
+Do not proceed unless an antenna is connected to avoid possible damage to the device's radio.
+
+:::
+
+The following process will manually place the device into the Espressif Firmware Download mode:
+
+1. Unplug the device.
+2. Press and hold the BOOT button.
+3. Plug device in.
+4. After 2-3 seconds, release the BOOT button.
+
+With the device now in the Espressif Firmware Download mode, you can proceed with flashing using one of the supported flashing methods. It's generally recommended to use the [Web Flasher](https://flasher.meshtastic.org/). You can select "Tbeam S3 Core from the device drop-down.
+
 ## Resources
 
 - Firmware file: `firmware-tbeam-s3-core-X.X.X.xxxxxxx.bin`
@@ -225,7 +245,6 @@ This is an earlier version of the T-Beam board. Due to changes in the design thi
   - LilyGO Store: [Meshtastic T-Beam 433/868/915/923Mhz](https://www.lilygo.cc/products/t-beam-v1-1-esp32-lora-module)
   - AliExpress: [Meshtastic T-Beam 868/915MHz](https://www.aliexpress.com/item/1005005418286231.html)
   - US Distributor - Purchase link: Rokland [NEO-M10S](https://store.rokland.com/products/lilygo-t-beam-supreme-esp32-s3-lora-development-board-sx1262-915mhz-gps-l76k-or-u-blox?variant=41051191378003), [Quectel L76K](https://store.rokland.com/products/lilygo-t-beam-supreme-esp32-s3-lora-development-board-sx1262-915mhz-gps-l76k-or-u-blox?variant=41051191345235)
-
 
 ![T-Beam Supreme](/img/hardware/T-BEAM-S3-Supreme.jpg)
 
