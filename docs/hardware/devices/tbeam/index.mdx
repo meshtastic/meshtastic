@@ -8,18 +8,21 @@ sidebar_position: 2
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 
-All T-beam models have an 18650 size battery holder on the rear of the device. This is designed to the original specification of the 18650 and only fits unprotected flat top 18650 cells. Button top and protected cells are typically longer than 65mm, often approaching 70mm.
+All T-beam models (with the exception of the S3-Core) have an 18650 size battery holder on the rear of the device. This is designed to the original specification of the 18650 and only fits unprotected flat top 18650 cells. Button top and protected cells are typically longer than 65mm, often approaching 70mm.
 
 Further information on the LILYGO® T-Beam devices can be found on LILYGO®'s [GitHub page](https://github.com/Xinyuan-LilyGO/LilyGo-LoRa-Series).
 
 <Tabs
 groupId="t-beam"
+queryString="t-beam"
 defaultValue="sx1262"
 values={[
 {label: 'T-Beam v0.7', value:'0.7'},
 {label: 'T-Beam v1.1', value: '1.1'},
 {label: 'T-Beam with M8N', value: 'm8n'},
-{label: 'T-Beam with M8N & SX1262', value: 'sx1262'}
+{label: 'T-Beam with M8N & SX1262', value: 'sx1262'},
+{label: 'T-Beam S3-Core', value: 's3core'},
+{label: 'T-Beam Supreme', value: 'supreme'}
 ]}>
 
 <TabItem value="0.7">
@@ -85,7 +88,7 @@ This is an earlier version of the T-Beam board. Due to changes in the design thi
 
 - Firmware file: `firmware-tbeam-X.X.X.xxxxxxx.bin`
 - Purchase link: [AliExpress](https://www.aliexpress.com/item/4001178678568.html)
-- US Distributor - Purchase link: [Rokland](https://store.rokland.com/products/lilygo-ttgo-t-beam-v1-1-lora-esp32-development-board-wifi-bluetooth-module-gps-neo-6m-sx1276-915mhz-q219?ref=8Bb2mUO5i-jKwt)
+- US Distributor - Purchase link: Rokland [No OLED](https://store.rokland.com/products/lilygo-ttgo-t-beam-v1-1-lora-esp32-development-board-wifi-bluetooth-module-gps-neo-6m-sx1276-915mhz-q219?ref=8Bb2mUO5i-jKwt), [OLED](https://store.rokland.com/products/lilygo-ttgo-meshtastic-t-beam-v1-1-esp32-lora-915-mhz-wireless-module-wifi-gps-neo-6m-with-oled-display-soldered-for-arduino-q349)
 
 ![TTGO T-Beam v1.1](/img/hardware/t-beam-v1.1.png)
 ![TTGO T-Beam v1.1 pinmap](/img/hardware/t-beam_v1.1_pinmap.webp)
@@ -156,4 +159,95 @@ This is an earlier version of the T-Beam board. Due to changes in the design thi
 ![T-Beam M8N & SX1262](/img/hardware/t-beam-sx1262.png)
 
 </TabItem>
+<TabItem value = "s3core">
+
+- **MCU**
+- ESP32-S3 (WiFi & Bluetooth 5LE)
+- **LoRa Transceiver**
+  - **Semtech SX1262** (improved performance)
+- **Frequency options**
+  - 433 MHz
+  - 868 MHz
+  - 915 MHz
+- **Navigation Module**
+  - **NEO-M10S - GNSS receiver (supports GPS, GLONASS, Galileo, BeiDou)** (better GPS sensitivity)
+  - **Quectel L76K - (supports GPS, Beidou, GLONASS)** (lower price)
+- **Connectors**
+  - USB-C
+  - Antenna: U.FL antenna connector
+
+## Features
+
+- SoftRF preinstalled (flashing to Meshtastic required)
+- Boot and Reset switches
+- Can be used standalone without 'Supreme' daughterboard in a headless configuration
+
+## Resources
+
+- Firmware file: `firmware-tbeam-s3-core-X.X.X.xxxxxxx.bin`
+- Purchase Link: [AliExpress](https://www.aliexpress.com/item/1005005418286231.html)
+
+![T-Beam S3-Core](/img/hardware/T-BEAM-S3Core.jpg)
+
+</TabItem>
+<TabItem value = "supreme">
+
+- **MCU**
+- ESP32-S3 (WiFi & Bluetooth 5LE)
+- **LoRa Transceiver**
+  - **Semtech SX1262** (improved performance)
+- **Frequency options**
+  - 433 MHz
+  - 868 MHz
+  - 915 MHz
+- **Navigation Module**
+  - **NEO-M10S - GNSS receiver (supports GPS, GLONASS, Galileo, BeiDou)** (better GPS sensitivity)
+  - **Quectel L76K - (supports GPS, Beidou, GLONASS)** (lower price)
+- **Connectors**
+  - USB-C
+  - Antenna: U.FL antenna connector
+
+## Features
+
+- Includes T-Beam S3-Core Module
+- SoftRF preinstalled (flashing to Meshtastic required)
+- Power, Boot and Reset switches
+- 1.3" OLED included
+- BME280 Air pressure sensor
+- QMI8658 IMU
+- QMC6310 Magnetometer
+- PCF8563 RTC
+- Micro-SD reader (not implemented in Meshtastic)
+
+## Flashing the T-Beam Supreme
+
+If you are having issues flashing the T-Beam Supreme, especially if it's your first attempt, you may need to manually place the device into Espressif's Firmware Download mode. Please follow the process below to do so.
+
+:::warning
+
+Do not proceed unless an antenna is connected to avoid possible damage to the device's radio.
+
+:::
+
+The following process will manually place the device into the Espressif Firmware Download mode:
+
+1. Unplug the device.
+2. Press and hold the BOOT button.
+3. Plug device in.
+4. After 2-3 seconds, release the BOOT button.
+
+With the device now in the Espressif Firmware Download mode, you can proceed with flashing using one of the supported flashing methods. It's generally recommended to use the [Web Flasher](https://flasher.meshtastic.org/). You can select "Tbeam S3 Core from the device drop-down.
+
+## Resources
+
+- Firmware file: `firmware-tbeam-s3-core-X.X.X.xxxxxxx.bin`
+- Purchase links:
+  - LilyGO Store: [Meshtastic T-Beam 433/868/915/923Mhz](https://www.lilygo.cc/products/t-beam-v1-1-esp32-lora-module)
+  - AliExpress: [Meshtastic T-Beam 868/915MHz](https://www.aliexpress.com/item/1005005418286231.html)
+  - US Distributor - Purchase link: Rokland [NEO-M10S](https://store.rokland.com/products/lilygo-t-beam-supreme-esp32-s3-lora-development-board-sx1262-915mhz-gps-l76k-or-u-blox?variant=41051191378003), [Quectel L76K](https://store.rokland.com/products/lilygo-t-beam-supreme-esp32-s3-lora-development-board-sx1262-915mhz-gps-l76k-or-u-blox?variant=41051191345235)
+
+![T-Beam Supreme](/img/hardware/T-BEAM-S3-Supreme.jpg)
+
+</TabItem>
+
 </Tabs>

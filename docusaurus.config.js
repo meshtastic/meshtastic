@@ -15,11 +15,6 @@ const config = {
 	organizationName: "meshtastic",
 	projectName: "meshtastic",
 	themeConfig: /** @type {import('@docusaurus/preset-classic').ThemeConfig} */ {
-		announcementBar: {
-			id: "2_0",
-			content:
-				'🎉 Meshtastic 2.0 Has Now Launched! Check it Out <a href="/2.0">Here</a> 🎉',
-		},
 		docs: {
 			sidebar: {
 				autoCollapseCategories: true,
@@ -81,7 +76,6 @@ const config = {
 		},
 		algolia: {
 			appId: "IG2GQB8L3V",
-			// trunk-ignore(gitleaks/generic-api-key)
 			apiKey: "2e4348812173ec7ea6f7879c7032bb21",
 			indexName: "meshtastic",
 			contextualSearch: false,
