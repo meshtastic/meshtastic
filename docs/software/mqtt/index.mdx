@@ -17,6 +17,8 @@ You can find the settings available for MQTT [here](/docs/configuration/module/m
 
 :::important
 When MQTT is turned on, you are potentially broadcasting your entire mesh's traffic onto the public internet. This includes messages and position information.
+
+The default channel (LongFast) on the public MQTT server usually has a lot of traffic. Your device may get overloaded and may no longer function properly anymore. It is recommended to use a different channel or to use your own MQTT server if you experience issues.
 :::
 
 ## Software Integrations
