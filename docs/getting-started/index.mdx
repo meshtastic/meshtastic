@@ -42,7 +42,7 @@ The nRF52 chip is much more power efficient than the ESP32 chip and easier to up
 
 The RP2040 is a dual-core ARM chip developed by Raspberry Pi. Supported RP2040 devices include:
 
- - Raspberry Pi Pico + Waveshare LoRa Module (Note: **Bluetooth and Wi-Fi on the Pico W is not yet supported by Meshtastic**)
+ - Raspberry Pi Pico + Waveshare LoRa Module (Note: **Bluetooth on the Pico W is not yet supported by Meshtastic**)
  - RAK11310 Core module for RAK WisBlock modular boards
 
 :::info
@@ -67,7 +67,7 @@ Some cables only provide _charging_, verify that your cable is also capable of _
 
 :::caution
 
-nRF52 devices typically do not require serial drivers. They use the UF2 bootloader which makes the devices appear as flash drives.  Do _NOT_ download the USB device drivers unless required to install UF2 support.
+nRF52/RP2040 devices typically do not require serial drivers. They use the UF2 bootloader which makes the devices appear as flash drives.  Do _NOT_ download the USB device drivers unless required to install UF2 support.
 
 :::
 
@@ -89,7 +89,7 @@ If you require serial drivers installed on your computer, please choose one of t
         className={'button button--outline button--lg cta--button'}
         to={'/docs/getting-started/serial-drivers/nrf52'}
       >
-        Install NRF52 Drivers
+        Install nRF52/RP2040 Drivers
       </Link>
     </div>
   </div>
@@ -115,7 +115,7 @@ After completing the previous steps, you can now flash the Meshtastic firmware o
         className={"button button--outline button--lg cta--button"}
         to={"/docs/getting-started/flashing-firmware/nrf52/"}
       >
-        Flash nRF52 Firmware
+        Flash nRF52/RP2040 Firmware
       </Link>
     </div>
   </div>
