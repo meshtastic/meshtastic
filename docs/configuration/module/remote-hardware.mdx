@@ -7,7 +7,7 @@ sidebar_label: Remote Hardware
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 
-The Remote Hardware Module allows control of a GPIO pin on a remote node. Config options are: Enabled, Allow Undefined Pin Access, Available Pins
+The Remote Hardware Module allows to read, write and watch GPIO pins on a remote node. Config options are: Enabled.
 
 :::info
 
@@ -19,16 +19,7 @@ While configuring this module may be available in clients, setting and reading G
 
 ### Enabled
 
-Whether the module is enabled
-
-### Allow Undefined Pin Access
-
-Whether the module allows consumers to read/write to pins not that are not defined in available_pins
-
-### Available Pins
-
-Exposes the available pins to the mesh for reading and writing
-
+Whether the module is enabled.
 
 ## Remote Hardware Module Client Availability
 
@@ -88,7 +79,10 @@ GPIO access is fundamentally dangerous because invalid options can physically da
 
 - Set any GPIO
 - Read any GPIO
-- Receive notification of changes in any GPIO
+- Receive a notification over the mesh if any GPIO changes state. 
+  Note that it cannot detect fast changes like button presses. For this, look at the [Detection Sensor module](/docs/configuration/module/detection-sensor) instead.
+
+The result of reading a GPIO or notifications of GPIO changes will also be sent over MQTT (if enabled) in JSON format (if enabled).
 
 ### Setup
 
@@ -103,16 +97,12 @@ The procedure using the python command line tool is:
    ```shell
    meshtastic --ch-add gpio
    ```
-3. If doing local testing, you may also want to change the speed of the channel:
-   ```shell
-   meshtastic --ch-mediumfast
-   ```
-4. Check the channel has been created and copy the long "Complete URL" that contains all the channels on that device:
+3. Check the channel has been created and copy the long "Complete URL" that contains all the channels on that device:
    ```shell
    meshtastic --info
    ```
-5. Connect the remote device via USB (or use the [remote admin](/docs/configuration/remote-admin) feature to reach it through the mesh)
-6. Set it to join the gpio channel you created:
+4. Connect the remote device via USB (or use the [remote admin](/docs/configuration/remote-admin) feature to reach it through the mesh)
+5. Set it to join the gpio channel you created:
    ```shell
    meshtastic --seturl theurlyoucopiedinstep3
    ```
@@ -121,7 +111,8 @@ Now both devices should be able to talk over the `gpio` channel. Send a text mes
 
 ### Masks
 
-To determine the appropriate mask for the pin(s) that you want to know. The python program (and output) below might help:
+A mask is used to set the GPIOs to control. For GPIO 1, bit 1 of the mask is set (0x2 in hexadecimal), for GPIO 2, bit 2 of the mask is set (0x4 in hexadecimal), and so on. 
+To determine the appropriate mask for the pin(s) that you want to know, the python program (and output) below might help:
 
 ```python
 >>> for i in range(1,45):
@@ -173,35 +164,11 @@ GPIO:43 mask:0x80000000000
 GPIO:44 mask:0x100000000000
 ```
 
-## Testing GPIO Operations
-
-You can programmatically do operations from your own python code by using the Meshtastic `RemoteHardwareClient` class. See the [Python API](/docs/software/python/cli/installation) documentation for more details.
-
-You can add a simple LED and resistor to validate that the GPIO operations work as expected. Use [this tutorial](https://www.instructables.com/Slide-Switch-With-Arduino-Uno-R3/) as a guide.
-
-### Requirements
-
-- (x2) Meshtastic devices (one device could be on a local computer, and the other one just has to be powered and is the one with the LED to be connected to it)
-- (x2) wires (black and yellow; they can be any color but typically black is used for ground)
-- (x1) LED
-- (x1) 220Ω resistor (somewhat optional, but recommended)
-- (x1) Breadboard (optional)
-
-### Preparation
-
-1. Disconnect the remote device from power (battery/usb)
-2. Connect the resistor to the longer (positive) lead of the LED and the yellow wire to the other end of the resistor
-3. Connect the other end of the yellow wire to a GPIO pin that will not cause any issues (ex: for TLoraV1, we can use GPIO21)
-4. Connect the black "ground" wire from the ground pin on the device (ex: for TLoraV1 it is the end pin next to the RST button) to the shorter (negative) lead of the LED
-5. Power on the device
-
-### Validation
-
-By default, the pin may be "off" or "on". (It will most likely "off".) See the steps below for running commands. In the example of GPIO21, the mask would be `0x200000`.
-
-![T-Lora v1 with LED on GPIO 21](/img/LED_on_TLoraV1.jpg)
-
 ## Using GPIOs from the Python CLI
+
+:::info
+You can also control or watch GPIOs of your USB-connected node by setting `--dest` to the local node's ID. No `gpio` channel is needed in this case.
+:::
 
 ### Writing a GPIO
 
@@ -235,3 +202,31 @@ meshtastic --port /dev/ttyUSB0 --gpio-watch 0x10 --dest 28979058
 # Received RemoteHardware typ=GPIOS_CHANGED, gpio_value=16
 # < press ctrl-c to exit >
 ```
+
+## Testing GPIO Operations
+
+You can programmatically do operations from your own python code by using the Meshtastic `RemoteHardwareClient` class. See the [Python API](/docs/software/python/cli/installation) documentation for more details.
+
+You can add a simple LED and resistor to validate that the GPIO operations work as expected. Use [this tutorial](https://www.instructables.com/Slide-Switch-With-Arduino-Uno-R3/) as a guide.
+
+### Requirements
+
+- (x2) Meshtastic devices (one device could be on a local computer, and the other one just has to be powered and is the one with the LED to be connected to it)
+- (x2) wires (black and yellow; they can be any color but typically black is used for ground)
+- (x1) LED
+- (x1) 220Ω resistor (somewhat optional, but recommended)
+- (x1) Breadboard (optional)
+
+### Preparation
+
+1. Disconnect the remote device from power (battery/usb)
+2. Connect the resistor to the longer (positive) lead of the LED and the yellow wire to the other end of the resistor
+3. Connect the other end of the yellow wire to a GPIO pin that will not cause any issues (ex: for TLoraV1, we can use GPIO21)
+4. Connect the black "ground" wire from the ground pin on the device (ex: for TLoraV1 it is the end pin next to the RST button) to the shorter (negative) lead of the LED
+5. Power on the device
+
+### Validation
+
+By default, the pin may be "off" or "on". (It will most likely "off".) See the steps below for running commands. In the example of GPIO21, the mask would be `0x200000`.
+
+![T-Lora v1 with LED on GPIO 21](/img/LED_on_TLoraV1.jpg)
