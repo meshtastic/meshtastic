@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import { fromByteArray, toByteArray } from "base64-js";
 
-import { Protobuf } from "@meshtastic/meshtasticjs";
+import { Protobuf } from "@meshtastic/js";
 import Layout from "@theme/Layout";
 
 const OEM = (): JSX.Element => {

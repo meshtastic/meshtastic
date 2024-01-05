@@ -1,4 +1,4 @@
-import { Protobuf, Types } from "@meshtastic/meshtasticjs";
+import { Protobuf, Types } from "@meshtastic/js";
 import React, { useEffect } from "react";
 
 interface Region {
