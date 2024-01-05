@@ -55,7 +55,7 @@ Each channel is assigned one of 3 roles:
    - The channel settings are set to default.
 
 :::note
-While you can have a different PRIMARY channel and communicate over SECONDARY channels with the same PSK, a hash of the PRIMARY channel's name sets the LoRa channel number, which determines the actual frequency you are transmitting on in the band.
+While you can have a different PRIMARY channel and communicate over SECONDARY channels with the same Name & PSK, a hash of the PRIMARY channel's name sets the LoRa channel number, which determines the actual frequency you are transmitting on in the band.
 To ensure devices with different PRIMARY channel name transmit on the same frequency, you must explicitly set the LoRa channel number.
 :::
 
@@ -72,6 +72,12 @@ A short identifier for the channel. _(< 12 bytes)_
 | `""` (default) |                          If left empty on the Primary channel, this designates the `default` channel.                          |
 |    `admin`     | On Secondary channels, the name `admin` (case sensitive) designates the `admin` channel used to administer nodes over the mesh |
 
+:::note
+
+Matching channel names are required in order to communicate on the same channel with other devices. Example: If your device is using the channel name `LongFast` the device you are attempting to communicate must also have a channel named `LongFast`.
+
+:::
+
 ### PSK
 
 The encryption key used for private channels.
@@ -79,6 +85,12 @@ The encryption key used for private channels.
 Hex byte `0x01` for the Primary `default` channel.
 
 Must be either 0 bytes (no crypto), 16 bytes (AES128), or 32 bytes (AES256).
+
+:::note
+
+Matching PSKs are required in order to communicate on the same channel with other devices. Example: If your device is using a channel with the default PSK of `AQ==` the device you are attempting to communicate with must also have a matching channel with the same PSK.
+
+:::
 
 ### Downlink Enabled
 
@@ -112,6 +124,7 @@ Channel Config options are available on Android.
 ![Android Menu Tabs](/img/android/android-menu-channel.png)
 
 The Radio Configuration tab can be used for common tasks:
+
 1. View your current channel configuration QR code and URL.
 2. Quickly create or modify your primary channel.
 3. Select a modem preset for all your channels i.e. `Long Range / Fast`.
@@ -125,7 +138,6 @@ Tap the Channel Name (or the pen icon) to access the Channel Menu:
 1. Add, remove, or modify secondary channels
 2. Create or modify encryption keys
 3. Enable uplink and downlink for individual channels
-
 
 </TabItem>
 
