@@ -11,7 +11,7 @@ sidebar_position: 6
 
 Meshtastic networks in different locations beyond the reach of LoRa can be easily bridged together using MQTT. The simplest option is to connect your mesh to the official Meshtastic MQTT broker. This makes your devices appear on the world map, and provides a copy of your mesh traffic, translated into JSON. All you have to do to join the public MQTT server is to Enable MQTT and set Uplink and Downlink on the channels that you want to share over MQTT. The default device configuration using the public MQTT Server is encrypted.
 
-You can also share channel settings with a remote network. If you use the default Meshtastic MQTT server, packets are always encrypted. If you use a custom MQTT broker (ie set `mqtt.address`), the `mqtt.encryption_enabled` setting applies, which by default is true. You can also specify your own private MQTT broker and specify authentication for that broker to bridge several mesh networks together, via the internet (or just a local IP network).
+You can also specify your own private MQTT broker to bridge mesh networks together, via the internet (or just a local IP network).
 
 You can find the settings available for MQTT [here](/docs/configuration/module/mqtt).
 
