@@ -17,6 +17,8 @@ The Channels config options are: Index, Roles, and Settings. Channel config uses
 **Channel Settings** contain information for segregating message groups, configuring optional encryption, and enabling or disabling messaging over internet gateways. These settings **are** unique and configurable per channel.
 :::
 
+Note that for successful communication to occur between nodes on a channel, both the channel settings `Name` and `PSK` must match across devices, as well as radio settings (see [here](/docs/configuration/tips) for more details). The channel config values (`Index`, `Role`) do not need to match.
+
 ## Channel Config Values
 
 ### Index
