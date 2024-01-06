@@ -8,7 +8,7 @@ import Layout from "@theme/Layout";
 const OEM = (): JSX.Element => {
   const [oemAesKey, setOemAesKey] = useState<Uint8Array>(new Uint8Array());
   const [oemFont, setOemFont] = useState<Protobuf.ScreenFonts>(
-    Protobuf.ScreenFonts.FONT_MEDIUM,
+    Protobuf.DeviceOnly.ScreenFonts.FONT_MEDIUM,
   );
   const [oemIconBits, setOemIconBits] = useState<Uint8Array>(new Uint8Array());
   const [oemIconHeight, setOemIconHeight] = useState<number>(0);
@@ -18,7 +18,7 @@ const OEM = (): JSX.Element => {
 
   useEffect(() => {
     setOemBytes(
-      new Protobuf.OEMStore({
+      new Protobuf.DeviceOnly.OEMStore({
         oemAesKey,
         oemFont,
         oemIconBits,
@@ -29,8 +29,8 @@ const OEM = (): JSX.Element => {
     );
   }, [oemAesKey, oemFont, oemIconBits, oemIconHeight, oemIconWidth, oemText]);
 
-  const enumOptions = Protobuf.ScreenFonts
-    ? Object.entries(Protobuf.ScreenFonts).filter(
+  const enumOptions = Protobuf.DeviceOnly.ScreenFonts
+    ? Object.entries(Protobuf.DeviceOnly.ScreenFonts).filter(
         (value) => typeof value[1] === "number",
       )
     : [];

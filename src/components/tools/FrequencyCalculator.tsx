@@ -15,9 +15,12 @@ interface Modem {
   sf: number;
 }
 
-const RegionData = new Map<Protobuf.Config_LoRaConfig_RegionCode, Region>([
+const RegionData = new Map<
+  Protobuf.Config.Config_LoRaConfig_RegionCode,
+  Region
+>([
   [
-    Protobuf.Config_LoRaConfig_RegionCode.US,
+    Protobuf.Config.Config_LoRaConfig_RegionCode.US,
     {
       freq_start: 902.0,
       freq_end: 928.0,
@@ -27,7 +30,7 @@ const RegionData = new Map<Protobuf.Config_LoRaConfig_RegionCode, Region>([
     },
   ],
   [
-    Protobuf.Config_LoRaConfig_RegionCode.EU_433,
+    Protobuf.Config.Config_LoRaConfig_RegionCode.EU_433,
     {
       freq_start: 433.0,
       freq_end: 434.0,
@@ -37,7 +40,7 @@ const RegionData = new Map<Protobuf.Config_LoRaConfig_RegionCode, Region>([
     },
   ],
   [
-    Protobuf.Config_LoRaConfig_RegionCode.EU_868,
+    Protobuf.Config.Config_LoRaConfig_RegionCode.EU_868,
     {
       freq_start: 869.4,
       freq_end: 869.65,
@@ -47,7 +50,7 @@ const RegionData = new Map<Protobuf.Config_LoRaConfig_RegionCode, Region>([
     },
   ],
   [
-    Protobuf.Config_LoRaConfig_RegionCode.CN,
+    Protobuf.Config.Config_LoRaConfig_RegionCode.CN,
     {
       freq_start: 470.0,
       freq_end: 510.0,
@@ -57,7 +60,7 @@ const RegionData = new Map<Protobuf.Config_LoRaConfig_RegionCode, Region>([
     },
   ],
   [
-    Protobuf.Config_LoRaConfig_RegionCode.JP,
+    Protobuf.Config.Config_LoRaConfig_RegionCode.JP,
     {
       freq_start: 920.8,
       freq_end: 927.8,
@@ -67,7 +70,7 @@ const RegionData = new Map<Protobuf.Config_LoRaConfig_RegionCode, Region>([
     },
   ],
   [
-    Protobuf.Config_LoRaConfig_RegionCode.ANZ,
+    Protobuf.Config.Config_LoRaConfig_RegionCode.ANZ,
     {
       freq_start: 915.0,
       freq_end: 928.0,
@@ -77,7 +80,7 @@ const RegionData = new Map<Protobuf.Config_LoRaConfig_RegionCode, Region>([
     },
   ],
   [
-    Protobuf.Config_LoRaConfig_RegionCode.RU,
+    Protobuf.Config.Config_LoRaConfig_RegionCode.RU,
     {
       freq_start: 868.7,
       freq_end: 869.2,
@@ -87,7 +90,7 @@ const RegionData = new Map<Protobuf.Config_LoRaConfig_RegionCode, Region>([
     },
   ],
   [
-    Protobuf.Config_LoRaConfig_RegionCode.KR,
+    Protobuf.Config.Config_LoRaConfig_RegionCode.KR,
     {
       freq_start: 920.0,
       freq_end: 923.0,
@@ -97,7 +100,7 @@ const RegionData = new Map<Protobuf.Config_LoRaConfig_RegionCode, Region>([
     },
   ],
   [
-    Protobuf.Config_LoRaConfig_RegionCode.TW,
+    Protobuf.Config.Config_LoRaConfig_RegionCode.TW,
     {
       freq_start: 920.0,
       freq_end: 925.0,
@@ -107,7 +110,7 @@ const RegionData = new Map<Protobuf.Config_LoRaConfig_RegionCode, Region>([
     },
   ],
   [
-    Protobuf.Config_LoRaConfig_RegionCode.IN,
+    Protobuf.Config.Config_LoRaConfig_RegionCode.IN,
     {
       freq_start: 865.0,
       freq_end: 867.0,
@@ -117,7 +120,7 @@ const RegionData = new Map<Protobuf.Config_LoRaConfig_RegionCode, Region>([
     },
   ],
   [
-    Protobuf.Config_LoRaConfig_RegionCode.NZ_865,
+    Protobuf.Config.Config_LoRaConfig_RegionCode.NZ_865,
     {
       freq_start: 864.0,
       freq_end: 868.0,
@@ -127,7 +130,7 @@ const RegionData = new Map<Protobuf.Config_LoRaConfig_RegionCode, Region>([
     },
   ],
   [
-    Protobuf.Config_LoRaConfig_RegionCode.TH,
+    Protobuf.Config.Config_LoRaConfig_RegionCode.TH,
     {
       freq_start: 920.0,
       freq_end: 925.0,
@@ -137,7 +140,7 @@ const RegionData = new Map<Protobuf.Config_LoRaConfig_RegionCode, Region>([
     },
   ],
   [
-    Protobuf.Config_LoRaConfig_RegionCode.UA_433,
+    Protobuf.Config.Config_LoRaConfig_RegionCode.UA_433,
     {
       freq_start: 433.0,
       freq_end: 434.7,
@@ -147,7 +150,7 @@ const RegionData = new Map<Protobuf.Config_LoRaConfig_RegionCode, Region>([
     },
   ],
   [
-    Protobuf.Config_LoRaConfig_RegionCode.UA_868,
+    Protobuf.Config.Config_LoRaConfig_RegionCode.UA_868,
     {
       freq_start: 868.0,
       freq_end: 868.6,
@@ -157,7 +160,7 @@ const RegionData = new Map<Protobuf.Config_LoRaConfig_RegionCode, Region>([
     },
   ],
   [
-    Protobuf.Config_LoRaConfig_RegionCode.LORA_24,
+    Protobuf.Config.Config_LoRaConfig_RegionCode.LORA_24,
     {
       freq_start: 2400.0,
       freq_end: 2483.5,
@@ -167,7 +170,7 @@ const RegionData = new Map<Protobuf.Config_LoRaConfig_RegionCode, Region>([
     },
   ],
   [
-    Protobuf.Config_LoRaConfig_RegionCode.UNSET,
+    Protobuf.Config.Config_LoRaConfig_RegionCode.UNSET,
     {
       freq_start: 902.0,
       freq_end: 928.0,
@@ -178,9 +181,12 @@ const RegionData = new Map<Protobuf.Config_LoRaConfig_RegionCode, Region>([
   ],
 ]);
 
-const modemPresets = new Map<Protobuf.Config_LoRaConfig_ModemPreset, Modem>([
+const modemPresets = new Map<
+  Protobuf.Config.Config_LoRaConfig_ModemPreset,
+  Modem
+>([
   [
-    Protobuf.Config_LoRaConfig_ModemPreset.SHORT_FAST,
+    Protobuf.Config.Config_LoRaConfig_ModemPreset.SHORT_FAST,
     {
       bw: 250,
       cr: 8,
@@ -188,7 +194,7 @@ const modemPresets = new Map<Protobuf.Config_LoRaConfig_ModemPreset, Modem>([
     },
   ],
   [
-    Protobuf.Config_LoRaConfig_ModemPreset.SHORT_SLOW,
+    Protobuf.Config.Config_LoRaConfig_ModemPreset.SHORT_SLOW,
     {
       bw: 250,
       cr: 8,
@@ -196,7 +202,7 @@ const modemPresets = new Map<Protobuf.Config_LoRaConfig_ModemPreset, Modem>([
     },
   ],
   [
-    Protobuf.Config_LoRaConfig_ModemPreset.MEDIUM_FAST,
+    Protobuf.Config.Config_LoRaConfig_ModemPreset.MEDIUM_FAST,
     {
       bw: 250,
       cr: 8,
@@ -204,7 +210,7 @@ const modemPresets = new Map<Protobuf.Config_LoRaConfig_ModemPreset, Modem>([
     },
   ],
   [
-    Protobuf.Config_LoRaConfig_ModemPreset.MEDIUM_SLOW,
+    Protobuf.Config.Config_LoRaConfig_ModemPreset.MEDIUM_SLOW,
     {
       bw: 250,
       cr: 8,
@@ -212,7 +218,7 @@ const modemPresets = new Map<Protobuf.Config_LoRaConfig_ModemPreset, Modem>([
     },
   ],
   [
-    Protobuf.Config_LoRaConfig_ModemPreset.LONG_FAST,
+    Protobuf.Config.Config_LoRaConfig_ModemPreset.LONG_FAST,
     {
       bw: 250,
       cr: 8,
@@ -220,7 +226,7 @@ const modemPresets = new Map<Protobuf.Config_LoRaConfig_ModemPreset, Modem>([
     },
   ],
   [
-    Protobuf.Config_LoRaConfig_ModemPreset.LONG_MODERATE,
+    Protobuf.Config.Config_LoRaConfig_ModemPreset.LONG_MODERATE,
     {
       bw: 125,
       cr: 8,
@@ -228,7 +234,7 @@ const modemPresets = new Map<Protobuf.Config_LoRaConfig_ModemPreset, Modem>([
     },
   ],
   [
-    Protobuf.Config_LoRaConfig_ModemPreset.LONG_SLOW,
+    Protobuf.Config.Config_LoRaConfig_ModemPreset.LONG_SLOW,
     {
       bw: 125,
       cr: 8,
@@ -236,7 +242,7 @@ const modemPresets = new Map<Protobuf.Config_LoRaConfig_ModemPreset, Modem>([
     },
   ],
   [
-    Protobuf.Config_LoRaConfig_ModemPreset.VERY_LONG_SLOW,
+    Protobuf.Config.Config_LoRaConfig_ModemPreset.VERY_LONG_SLOW,
     {
       bw: 62.5,
       cr: 8,
@@ -247,12 +253,12 @@ const modemPresets = new Map<Protobuf.Config_LoRaConfig_ModemPreset, Modem>([
 
 export const FrequencyCalculator = (): JSX.Element => {
   const [modemPreset, setModemPreset] =
-    React.useState<Protobuf.Config_LoRaConfig_ModemPreset>(
-      Protobuf.Config_LoRaConfig_ModemPreset.LONG_FAST,
+    React.useState<Protobuf.Config.Config_LoRaConfig_ModemPreset>(
+      Protobuf.Config.Config_LoRaConfig_ModemPreset.LONG_FAST,
     );
   const [region, setRegion] =
-    React.useState<Protobuf.Config_LoRaConfig_RegionCode>(
-      Protobuf.Config_LoRaConfig_RegionCode.US,
+    React.useState<Protobuf.Config.Config_LoRaConfig_RegionCode>(
+      Protobuf.Config.Config_LoRaConfig_RegionCode.US,
     );
   const [channel, setChannel] = React.useState<Types.ChannelNumber>(
     Types.ChannelNumber.PRIMARY,
@@ -294,13 +300,13 @@ export const FrequencyCalculator = (): JSX.Element => {
             setModemPreset(
               parseInt(
                 e.target.value,
-              ) as Protobuf.Config_LoRaConfig_ModemPreset,
+              ) as Protobuf.Config.Config_LoRaConfig_ModemPreset,
             )
           }
         >
           {Array.from(modemPresets.keys()).map((key) => (
             <option key={key} value={key}>
-              {Protobuf.Config_LoRaConfig_ModemPreset[key]}
+              {Protobuf.Config.Config_LoRaConfig_ModemPreset[key]}
             </option>
           ))}
         </select>
@@ -313,7 +319,7 @@ export const FrequencyCalculator = (): JSX.Element => {
         >
           {Array.from(RegionData.keys()).map((key) => (
             <option key={key} value={key}>
-              {Protobuf.Config_LoRaConfig_RegionCode[key]}
+              {Protobuf.Config.Config_LoRaConfig_RegionCode[key]}
             </option>
           ))}
         </select>
