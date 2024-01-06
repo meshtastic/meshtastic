@@ -1,5 +1,3 @@
-import React from "react";
-
 import { DeviceFirmwareResource } from "../../../utils/apiTypes";
 
 export interface releaseCardProps {
@@ -49,7 +47,7 @@ export const FirmwareCard = ({
         ) : (
           <button
             type="button"
-            disabled
+            disabled={true}
             className="button button--secondary button--block"
           >
             Loading...
