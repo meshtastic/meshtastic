@@ -1,7 +1,5 @@
-import React from "react";
-
 import { FaAndroid, FaApple } from "react-icons/fa";
-import useSWR from "swr";
+import useSwr from "swr";
 
 import {
   ArrowTopRightOnSquareIcon,
@@ -20,7 +18,7 @@ import {
 } from "./_components/FirmwareCard";
 
 const Firmware = (): JSX.Element => {
-  const { data, error } = useSWR<FirmwareReleases>(
+  const { data, error } = useSwr<FirmwareReleases>(
     "https://api.meshtastic.org/github/firmware/list",
     fetcher,
   );
@@ -64,7 +62,8 @@ const Firmware = (): JSX.Element => {
               </div>
               <div className="card__body">
                 <p>
-                  Devices such as T-Echo, RAK4631, and RAK11300 are flashed via filesystem.
+                  Devices such as T-Echo, RAK4631, and RAK11300 are flashed via
+                  filesystem.
                 </p>
               </div>
               <div className="card__footer mt-auto">

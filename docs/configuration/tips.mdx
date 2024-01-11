@@ -29,7 +29,7 @@ If you'd like to connect with other Meshtastic users but only share your locatio
 1. Ensure you have not changed the LoRa [Modem Preset](/docs/configuration/radio/lora#modem-preset) from the default `unset` / `LONG_FAST`.
 2. On your PRIMARY channel, set anything you'd like for the channel's name and choose a random PSK.
 3. Enable a SECONDARY channel named "LongFast" with PSK "AQ==".
-4. Since the radio's frequency is automatically changed based on your PRIMARY channel's name, you will have to manually set it back to your region's default (in LoRa settings) in order to interface with users on the default channel:
+4. If your LoRa channel is set to the default (`0`), the radio's frequency will be automatically changed based on your PRIMARY channel's name. In this case, you will have to manually set it back to your region's default (in LoRa settings) in order to interface with users on the default channel:
 
 ### Default Primary Channels by Region
 
@@ -65,4 +65,5 @@ This configures the frequency the radio is set to.  Check out the [frequency cal
 - If you are part of a large mesh and don't know what a setting does, don't change it (unless you're super curious).
 - Leave your [MAX HOPS](/docs/configuration/radio/lora#max-hops) set to 3 unless you're sure you need more (or less) to reach your destination node.
 - TEST your settings and hardware before you install in hard-to-reach locations.
-- Connecting a node to the [public MQTT server](http://localhost:3000/docs/configuration/module/mqtt#connect-to-the-default-public-server) may publish the locations of all nodes in your mesh to the internet.  This will also add every globally connected node to your node database and potentially flood your mesh with all types of packets.
+- Connecting a node to the [public MQTT server](./module/mqtt#connect-to-the-default-public-server) may publish the locations of all nodes in your mesh to the internet.  This will also add every globally connected node to your node database and potentially flood your mesh with all types of packets.
+

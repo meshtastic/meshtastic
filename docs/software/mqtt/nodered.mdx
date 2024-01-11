@@ -5,7 +5,56 @@ sidebar_label: Node-RED
 sidebar_position: 3
 ---
 
-### Using MQTT with Node-RED
+## Using MQTT with Node-RED
+
+Node-RED is a free cross-platform programming tool for wiring together hardware, APIs, and online services developed originally by IBM for IOT. It is widely used for home automation by many non-professional programmers and runs well on Pi's. Node-RED has many plug-in modules written by the community. 
+
+I will use this platform as a practical example on how to interface with the MQTT features of Meshtastic. Everything can be done from GUI's without using command line.
+
+
+### Enabling MQTT
+
+Use http://client.meshtastic.org/ , the python CLI, or an Apple or Android app to connect to your device and adjust these settings.
+
+
+1. Settings--> Radio Config--> Network 
+    - On the node that will act as the gateway between the mesh and MQTT enable a network connection (i.e. Wifi, Ethernet).
+    - Save
+
+2. Settings--> Module Config--> MQTT config 
+   - Configure the MQTT gateway's network configuration.
+   - Verify Encryption Enabled is OFF.
+   - (optional) Turn JSON Output Enabled ON.
+   - Save
+3. Channel Editor
+   - Go to Channel Editor and enable Uplink and Downlink on the channels you wish to publish to MQTT.
+   - Save 
+
+
+### Using Node-RED with Meshtastic
+There are three common approaches:
+
+1. Using JSON-encoded messages
+2. Using protobuf-encoded messages with the Meshtastic decode node
+3. Using protobuf-encoded messages with a protobuf decode node and the Meshtastic protobuf definitions
+
+The JSON output only publishes the following subset of the messages on a Meshtastic network:
+- Text Message
+- Telemetry
+  - Device Metrics
+  - Environment Metrics
+  - Power Metrics
+- Node Info
+- Position
+- Waypoint
+- Neighbor Info
+
+> JSON is intended to be a convenience for consuming data in other applications like Home Assistant.
+
+> Protobufs are mesh native.
+
+#### 1. Using JSON-encoded messages
+Make sure that option *JSON Output Enabled* is set in MQTT module options.
 
 Below is a valid JSON envelope for information sent by MQTT to a device for broadcast onto the mesh.
 
@@ -16,21 +65,25 @@ Below is a valid JSON envelope for information sent by MQTT to a device for broa
   "payload": text or a json object go here
 }
 ```
+#### 2. Using protobuf-encoded messages with the Meshtastic decode node
+Install Node-Red plug-in:
+https://flows.nodered.org/node/@meshtastic/node-red-contrib-meshtastic
 
-Node-RED is a free cross-platform programming tool for wiring together hardware, APIs, and online services developed originally by IBM for IOT. It is widely used for home automation by many non-professional programmers and runs well on Pi's. Node-RED has many plug-in modules written by the community. I will use this platform as a practical example on how to interface with the MQTT features of Meshtastic. Everything can be done from GUI's without using command line.
+More info is in the plug-in source repository.
 
-Step one: use http://client.meshtastic.org/ , the python CLI, or an Apple or Android app to connect to your device and adjust these settings.
-Enable and enter network SSID/PSK. Settings--> Radio Config--> Network; Save.
-Set MQTT server address. Settings--> Module Config--> MQTT config; Verify Encryption Enabled is OFF. Turn JSON Output Enabled ON. Save.
-Go to Channel Editor and set Uplink and Downlink enabled to True. Save. 
+There is an example flow using this mechanism available
+https://github.com/scruplelesswizard/meshtastic-node-red
 
-Step two: if you don't want to depend on JSON decoding on the device, you can decode the protobuf messages off-device. To do that you will need to get the .proto files from https://github.com/meshtastic/protobufs. They function as a schema and are required for decoding in Node-RED. Save the files where the node-RED application can access them and note the file path of the "mqtt.proto" file.
 
-Step three: install Node-RED plug-ins to your node-RED application for an embedded MQTT server and a protobuf decoder.
+#### 3. Using protobuf-encoded messages with a protobuf decode node and the Meshtastic protobuf definitions
+
+ If you don't want to depend on JSON decoding on the device, you can decode the protobuf messages off-device. To do that you will need to get the .proto files from https://github.com/meshtastic/protobufs. They function as a schema and are required for decoding in Node-RED. Save the files where the node-RED application can access them and note the file path of the "mqtt.proto" file.
+
+Install Node-RED plug-ins to your Node-RED application for an embedded MQTT server and a protobuf decoder.
 https://flows.nodered.org/node/node-red-contrib-aedes
 https://flows.nodered.org/node/node-red-contrib-protobuf
 
-Drag, drop, and wire the nodes like this. For this example, I ran node-RED on a Windows machine. Note that file paths might be specified differently on different platforms. MQTT server wild cards are usually the same. A "+" is a single level wildcard for a specific topic level. A "#" is a multiple level wildcard that can be used at the end of a topic filter. The debug messages shown are what happens when the inject button sends a JSON message with a topic designed to be picked up by the specified Meshtastic device and then having it rebroadcast the message.
+Drag, drop, and wire the nodes like this. For this example, I ran Node-RED on a Windows machine. Note that file paths might be specified differently on different platforms. MQTT server wild cards are usually the same. A "+" is a single level wildcard for a specific topic level. A "#" is a multiple level wildcard that can be used at the end of a topic filter. The debug messages shown are what happens when the inject button sends a JSON message with a topic designed to be picked up by the specified Meshtastic device and then having it rebroadcast the message.
 
 [<img src="/documents/mqtt/NodeRedTwo.jpg" style={{zoom:'50%'}} />](/documents/mqtt/NodeRedTwo.jpg)
 [<img src="/documents/mqtt/NodeRedThree.jpg" style={{zoom:'50%'}} />](/documents/mqtt/NodeRedThree.jpg)
