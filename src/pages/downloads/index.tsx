@@ -63,15 +63,16 @@ const Firmware = (): JSX.Element => {
               <div className="card__body">
                 <p>
                   Devices such as T-Echo, RAK4631, and RAK11300 are flashed via
-                  filesystem.
+                  filesystem. Use the web flasher to download applicable firmware.
                 </p>
               </div>
               <div className="card__footer mt-auto">
                 <a
-                  href="/docs/getting-started/flashing-firmware/nrf52/drag-n-drop"
+                  href="https://flasher.meshtastic.org/"
                   className="m-auto flex rounded-lg border-4 border-transparent bg-accent p-1 font-semibold text-black shadow-md hover:text-black hover:brightness-110 active:border-green-200"
                 >
-                  View Instructions
+                  Go to Flasher
+                  <ArrowTopRightOnSquareIcon className="m-auto ml-2 h-4" />
                 </a>
               </div>
             </div>
