@@ -129,6 +129,17 @@ The network list shows all the users (devices) that have connected to the same C
 - Tap on a node from the list to start Direct Messaging, request a position update, request a [traceroute](/docs/configuration/module/traceroute) or add it to your [Ignore Incoming Array](/docs/configuration/radio/lora#ignore-incoming-array).
 - If you have an [Admin Channel](/docs/configuration/remote-admin) enabled on your devices, tapping on the node will also display an option to remotely configure the node.
 
+### View other nodes
+
+This displays all nodes you have received information from.
+
+Tapping the short-name on the left of the node (or pressing and holding anywhere on the entry) opens a menu which allows you to
+- Send a direct message to that node.
+- Request an update to the position of that node. This update will be shared on that node's primary channel, so if you are not subscribed to that channel you will not receive this information - however you are able to trigger the update. This will also trigger an update of your own location, to your own primary channel. 
+- Traceroute: this displays a trace of the signal route, including the location of forwarding nodes in the chain. [this does not work?]
+
+
+
 ### View the map
 
 [![Meshtastic Map View](/img/android/android-map-sm.png)](/img/android/android-map.png)
@@ -139,6 +150,10 @@ The Map tab will show a local map with an icon for each active mesh node that ha
 [![Map Layers](/img/android/android-map-layers-c.png)](/img/android/android-map-layers.png)
 
 - Clicking the layers icon in the top-right will allow you to select the map type.
+
+Pressing and holding on a point of the map allows you to share a specific location. This point can then be named, and an icon can be chosen to represent it by tapping on the default 'pin' icon. This shared location is then shared [on your default channel?] [and via mqtt if enabled on that channel?]
+
+Tap-and-hold on an existing shared point allows it to be edited, or deleted. [If locked, it can only be deleted by the user who created it?]
 
 ### Offline maps
 
