@@ -11,12 +11,16 @@ import Link from "@docusaurus/Link";
 
 ## Flash Firmware
 
+:::info
+You may now use the [Meshtastic Web Flasher](https://flasher.mesthastic.org) to download and copy firmware to your nRF52 or RP2040-based devices. Alternatively, follow the instructions below to download and install firmware.
+:::
+
 ### nRF52
 
 1. Download and unzip the latest firmware from [Meshtastic Downloads](https://meshtastic.org/downloads).
 2. Connect your device to your computer with a USB data cable.
 3. Double click the reset button on your device (this will put it into bootloader mode).
-4. Notice a new drive will be mounted on your computer (Windows, Mac, or Linux).
+4. Notice a new drive will be mounted on your computer (Windows, Mac, Linux, or Android).
 5. Open this drive and you should see three files: `CURRENT.UF2`, `INDEX.HTM`, and `INFO_UF2.TXT`.
 6. Copy the appropriate firmware file (`firmware-DEVICE_NAME-X.X.X-xxxxxxx.uf2`) from the release onto this drive.
 7. Once the file has finished copying onto the drive, the device will reboot and install the Meshtastic firmware.
@@ -24,7 +28,7 @@ import Link from "@docusaurus/Link";
 ### RP2040
 1. Download and unzip the latest firmware from [Meshtastic Downloads](https://meshtastic.org/downloads).
 2. Press the BOOTSEL button and while keeping it pressed, connect the device to your computer via a USB cable.
-3. Notice a new drive will be mounted on your computer (Windows, Mac, or Linux).
+3. Notice a new drive will be mounted on your computer (Windows, Mac, Linux, or Android).
 4. Open this drive and you should see two files: `INDEX.HTM` and `INFO_UF2.TXT`.
 5. Copy the appropriate firmware file (`firmware-DEVICE_NAME-X.X.X-xxxxxxx.uf2`) from the release onto this drive.
 6. Once the file has finished copying onto the drive, the device will reboot and install the Meshtastic firmware.
