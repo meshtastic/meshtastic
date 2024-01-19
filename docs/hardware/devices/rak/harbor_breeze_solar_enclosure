@@ -1,0 +1,43 @@
+---
+id: harbor_breeze_solar
+title: Harbor Breeze Solar Light Enclosure Hack
+sidebar_label: Solar Light Enclosure Hack
+sidebar_position: 5
+---
+
+## Created by tavdog/Tavis Gustafson
+
+### Low Cost Harbor Breeze Solar Light RAK Enclosure Hack
+![Solar Hack Complete](/img/enclosures/hbmh_complete.png)
+
+The Harbor Breeze Solar LED light can be purchased for about $15 and includes a capable solar panel, lithium ion cell and charge controller in a waterproof enclosure.  The RAK baseboards fit perfectly inside the solar compartment.  Below are the steps for completing this hack for a completely weatherproof solar powered Meshtastic node.
+
+Skills needed : Some soldering is required as well as drilling a hole in the plastic case.  
+
+Items needed : An ipex to sma pigtail is needed if in order to have an external antenna.  A JST-PHR-2 connector is required if you want a plug-in type battery connection. Soldered connection will also work though. Sealing glue (silicone or marine sealant)
+
+Step 1. Unscrew 4 small screws to open the solar compartment.
+
+Step 2. Solder your battery JST-PHR-2 connector or power wires to the + and - terminals of the battery. If you don't have the proper connector you can solder directly to the pins on the back of the JST connector, just make sure you get the polarity correct.
+![Solder to battery terminals](/img/enclosures/harbor_breeze_solar_battery_solder_points.jpg)
+
+Step 3. Drill the hole for your sma pigtail.  This can any on the curved surfaces of the enclosure back.  A perfectly vertical antenna via 90 degree bend will not allow for a very flat solar panel to choose wisely or use an externally mounted antenna.  You can skip this step if you want to use an internal antenna that fits.
+![Drill sma holes](/img/enclosures/harbor_breeze_solar_sma_hole1.jpg)![Drill sma holes](/img/enclosures/harbor_breeze_solar_sma_hole2.jpg)
+
+Step 4. Install the sma pigtail. Seal with silicone or marine sealant.
+![Install sma pigtail](/img/enclosures/harbor_breeze_solar_sma_installed.jpg)![Seal](/img/enclosures/harbor_breeze_solar_sma_seal.jpg)
+
+Step 5.  Install the RAK module in the free space.  You can lightly tack glue this in place if you want to.
+![Instal module](/img/enclosures/harbor_breeze_solar_board_placement.jpg)
+
+Step 6. Connect the antenna and battery and close up the back. 
+
+The light housing can be removed if not needed.
+![External antenna via sma pigtail](/img/enclosures/harbor_breeze_solar_antenna_pigtail.jpg)
+
+The light housing is not as waterproof as the solar enclosure so be careful if putting electronics inside of it.
+Attach to a stick and put it high up.
+![External antenna via sma pigtail](/img/enclosures/harbor_breeze_solar_stick_mount.jpg)
+
+The light will still turn on at night for a very stealthy node.  To turn off the light there is a button on the back.
+
