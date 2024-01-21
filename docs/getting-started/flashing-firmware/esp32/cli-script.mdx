@@ -22,7 +22,9 @@ The [T-Beam 0.7](/docs/hardware/devices/tbeam#t-beam---v07) board is an earlier 
 :::
 
 ## Command Line Interface Instructions
+
 ### Install Prerequisite Software
+
 <Tabs
 groupId="operating-system"
 defaultValue="linux"
@@ -32,7 +34,6 @@ values={[
 {label: 'Windows', value: 'windows'},
 ]}>
 <TabItem value="linux">
-
 
 Check if you have `python3` and `pip` installed with the following command
 
@@ -56,8 +57,6 @@ sudo apt-get install python3-pip
 
   </TabItem>
   <TabItem value="macos">
-
-
 
 OS X comes with `Python 2.7` installed, but not `pip`. The following uses Homebrew to install `python3` which includes `pip3`. On MacOS you will use `pip3` instead > of `pip`.
 
@@ -110,7 +109,6 @@ pip --version
 
 :::
 
-
   </TabItem>
 </Tabs>
 
@@ -119,7 +117,6 @@ pip --version
 ```shell
 pip3 install --upgrade esptool
 ```
-
 
 ### Confirm Communication With Chip
 
@@ -131,7 +128,13 @@ values={[
 {label: 'macOS', value: 'macos'},
 {label: 'Windows', value: 'windows'},
 ]}>
-<TabItem value="linux"></TabItem>
+<TabItem value="linux">
+
+:::important
+On Linux, you may need to explicitly declare esptool as a .py script. Use `esptool.py chip_id`.
+:::
+
+</TabItem>
 <TabItem value="macos">
 
 :::important
@@ -243,7 +246,6 @@ device-update.bat -f firmware-BOARD-VERSION.bin
 
   </TabItem>
 </Tabs>
-
 
 ## Connect and Configure Device
 
