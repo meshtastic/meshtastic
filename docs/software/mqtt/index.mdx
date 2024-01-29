@@ -111,7 +111,7 @@ You can also send a JSON message to the topic `msh/2/json/mqtt/` to instruct a g
 }
 ```
 
-`from` and `payload` fields are required for a valid envelope (note that in firmware <2.2.20 a field `sender` was required, but this is no longer the case). The `from` field should be equal to the node number of the node that will transmit the message. Optionally, you can specify a destination by setting the `to` field to the node number of the destination. If the `to` field is not set, the message will be broadcast to all nodes on the mesh.
+`from` and `payload` fields are required for a valid envelope (note that in firmware &lt;2.2.20 a field `sender` was required, but this is no longer the case). The `from` field should be equal to the node number of the node that will transmit the message. Optionally, you can specify a destination by setting the `to` field to the node number of the destination. If the `to` field is not set, the message will be broadcast to all nodes on the mesh.
 
 Currently two types of messages are supported: `"sendtext"` and `"sendposition"`.
 For the type `sendtext`, the `payload` should be a string containing the text to send. For the type `sendposition`, the payload should be an object with the fields `latitude_i`, `longitude_i`, `altitude` (optional) and `time` (optional).
