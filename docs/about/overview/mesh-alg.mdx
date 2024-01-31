@@ -45,7 +45,8 @@ This layer is conventional non-reliable LoRa packet transmission. A packet gener
 | :----: | :-------: | :----------------------------- |
 |   0    |     3     | HopLimit (see note in Layer 3) |
 |   3    |     1     | WantAck                        |
-| 4 .. 7 |     4     | Currently unused               |
+|   4    |     1     | ViaMQTT (packet came via MQTT) |
+| 5 .. 7 |     3     | Currently unused               |
 
 #### Usage Details
 
