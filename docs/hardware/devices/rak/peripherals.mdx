@@ -1,6 +1,6 @@
 ---
 id: peripherals
-title: Supported Peripherals
+title: RAK WisBlock Supported Peripherals
 sidebar_label: Peripherals
 sidebar_position: 3
 ---
@@ -20,33 +20,51 @@ values={[
 ]}>
 <TabItem value="GPS">
 
+## GPS Modules
+
+### RAK5005-0 / RAK1910
+
 To add a GPS to the RAK5005-O base board, you need the [RAK1910 GPS sensor](https://store.rakwireless.com/collections/wisblock-sensor/products/rak1910-max-7q-gnss-location-sensor). It is supported on slot A of the 5005 board via UART.
 
 - uBlox MAX-7Q GPS module
 - GPS and GLONASS satellite support
 
-Further information on the RAK1910 can be found on the [RAK Documentation Center](https://docs.rakwireless.com/Product-Categories/WisBlock/RAK1910/Overview/#product-description).
-
-US Distributor - Purchase link: [Rokland](https://store.rokland.com/products/rak-wireless-rak1910-wisblock-gnss-location-module)
+### RAK19003 / RAK12500
 
 To add a GPS to the RAK19003 base board, you need the [RAK12500 GPS sensor](https://store.rakwireless.com/products/wisblock-gnss-location-module-rak12500). It is supported via I<sup>2</sup>C on slot B for firmware versions 1.49 and above.
 
 - uBlox Zoe-M8Q GNSS receiver
 - GPS, GLONASS, QZSS and BeiDou satellite support
 
-Further information on the RAK12500 can be found on the [RAK Documentation Center](https://docs.rakwireless.com/Product-Categories/WisBlock/RAK12500/Overview/#product-description).
-
-US Distributor - Purchase link: [Rokland](https://store.rokland.com/products/rak-wireless-rak12500-gnss-gps-location-module-u-blox-zoe-m8q)
+### Resources
+- RAK Documentation Center
+  - [RAK12500](https://docs.rakwireless.com/Product-Categories/WisBlock/RAK12500/Overview/#product-description)
+  - [RAK1910](https://docs.rakwireless.com/Product-Categories/WisBlock/RAK1910/Overview/#product-description)
+- Purchase Links:
+  - US
+    - [Rokland RAK1910](https://store.rokland.com/products/rak-wireless-rak1910-wisblock-gnss-location-module)
+    - [Rokland RAK12500](https://store.rokland.com/products/rak-wireless-rak12500-gnss-gps-location-module-u-blox-zoe-m8q)
+  - International
+    - [RAK Wireless RAK1910](https://store.rakwireless.com/products/rak1910-max-7q-gnss-location-sensor)
+    - [RAK Wireless RAK12500](https://store.rakwireless.com/products/wisblock-gnss-location-module-rak12500)
 
 </TabItem>
 <TabItem value="Buzzer">
 
+## Buzzer
+
 The [RAK18001 Buzzer Module](https://store.rakwireless.com/products/wisblock-buzzer-module-rak18001) is currently being tested for integration with the External Notifications plugin. There is currently a known conflict with buzzer if the module is placed in Slot D, although other slots should work.
 
-Further information on the RAK18001 can be found on the [RAK Documentation Center](https://docs.rakwireless.com/Product-Categories/WisBlock/RAK18001/Overview/#product-description).
+### Resources
+- [RAK Documentation Center RAK18001](https://docs.rakwireless.com/Product-Categories/WisBlock/RAK18001/Overview/#product-description)
+- Purchase Links:
+  - International
+    - [RAK Wireless](https://store.rakwireless.com/products/wisblock-buzzer-module-rak18001)
 
 </TabItem>
 <TabItem value="IO">
+
+## IO Module
 
 The [RAK13002 IO Module](https://store.rakwireless.com/collections/wisblock-interface/products/adapter-module-rak13002) can be used to, among other things, add a user button to the RAK base boards (excluding the RAK19003 Mini base board). It features a number of different interface options:
 
@@ -57,22 +75,22 @@ The [RAK13002 IO Module](https://store.rakwireless.com/collections/wisblock-inte
 - 2x ADC interfaces
 - 3.3v Power rails
 
-There is development activity in progress to get sensors such as this added to the Meshtastic Core.  
-Further information on the RAK13002 can be found on the [RAK Documentation Center](https://docs.rakwireless.com/Product-Categories/WisBlock/RAK13002/Overview).
+There is development activity in progress to get sensors such as this added to the Meshtastic Core.
+
+### Resources
+- [RAK Documentation Center RAK13002](https://docs.rakwireless.com/Product-Categories/WisBlock/RAK13002/Overview)
+- Purchase Links:
+  - US
+    - [Rokland](https://store.rokland.com/products/rak-wireless-rak13002-wisblock-io-adapter-module)
+  - International
+    - [RAK Wireless](https://store.rakwireless.com/collections/wisblock-interface/products/adapter-module-rak13002)
 
 </TabItem>
 <TabItem value="Sensors">
-<Tabs
-groupId="sensors"
-queryString="sensors"
-defaultValue="RAK1901"
-values={[
-{label: 'RAK1901', value: 'RAK1901'},
-{label: 'RAK1902', value: 'RAK1902'},
-{label: 'RAK1906', value: 'RAK1906'},
-]}>
 
-<TabItem value="RAK1901">
+## Environmental Sensors
+
+### RAK1901 Temperature and Humidity Sensor
 
 The [RAK1901 Temperature and Humidity Sensor](https://store.rakwireless.com/products/rak1901-shtc3-temperature-humidity-sensor) is based on the Sensirion SHTC3 module and has the following features:
 
@@ -80,13 +98,7 @@ The [RAK1901 Temperature and Humidity Sensor](https://store.rakwireless.com/prod
 - Humidity measurement (Range 0% to 100%)
 - Lower power consumption
 
-Further information on the RAK1901 can be found on the [RAK Documentation Center](https://docs.rakwireless.com/Product-Categories/WisBlock/RAK1901/Overview/#product-description).
-
-US Distributor - Purchase link: [Rokland](https://store.rokland.com/products/rak-wireless-rak1901-temperature-and-humidity-sensor-sensirion-shtc3-pid-100001)
-
-</TabItem>
-
-<TabItem value="RAK1902">
+### RAK-1902 Barometric Pressure Sensor
 
 The [RAK1902 Barometric Pressure Sensor](https://store.rakwireless.com/products/rak1902-kps22hb-barometric-pressure-sensor) is based on the STMicroelectronics LPS22HB module and has the following features:
 
@@ -94,11 +106,7 @@ The [RAK1902 Barometric Pressure Sensor](https://store.rakwireless.com/products/
 - Low power consumption of 3uA
 - Small form factor
 
-Further information on the RAK1902 can be found on the [RAK Documentation Center](https://docs.rakwireless.com/Product-Categories/WisBlock/RAK1902/Overview/#product-description).
-
-</TabItem>
-
-<TabItem value="RAK1906">
+### RAK1906 Environment Sensor
 
 The [RAK1906 Environment Sensor](https://store.rakwireless.com/products/rak1906-bme680-environment-sensor) is based on the Bosch BME680 module and has the following features:
 
@@ -107,11 +115,20 @@ The [RAK1906 Environment Sensor](https://store.rakwireless.com/products/rak1906-
 - Barometer measurement (Range 300 to 1100 hPa)
 - Air Quality measurement
 
-Further information on the RAK1906 can be found on the [RAK Documentation Center](https://docs.rakwireless.com/Product-Categories/WisBlock/RAK1906/Overview/#product-description).
-
-</TabItem>
-
-</Tabs>
+#### Resources
+- RAK Documentation Center 
+  - [RAK1901](https://docs.rakwireless.com/Product-Categories/WisBlock/RAK1901/Overview/#product-description)
+  - [RAK1902](https://docs.rakwireless.com/Product-Categories/WisBlock/RAK1902/Overview/#product-description)
+  - [RAK1906](https://docs.rakwireless.com/Product-Categories/WisBlock/RAK1906/Overview/#product-description)
+- Purchase Links:
+  - US
+    - [Rokland RAK1901](https://store.rokland.com/products/rak-wireless-rak1901-temperature-and-humidity-sensor-sensirion-shtc3-pid-100001)
+    - [Rokland RAK1902](https://store.rokland.com/products/rak-wireless-rak1902-barometric-pressure-sensor-stmicroelectronics-lps22hb-100010-2-pack)
+    - [Rokland RAK1906](https://store.rokland.com/products/rak-wireless-rak1906-wisblock-environment-sensor-bosch-bme680)
+  - International
+    - [RAK Wireless RAK1901](https://store.rakwireless.com/products/rak1901-shtc3-temperature-humidity-sensor)
+    - [RAK Wireless RAK1902](https://store.rakwireless.com/products/rak1902-kps22hb-barometric-pressure-sensor)
+    - [RAK Wireless RAK1906](https://store.rakwireless.com/products/rak1906-bme680-environment-sensor)
 
 </TabItem>
 
