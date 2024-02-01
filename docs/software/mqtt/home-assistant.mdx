@@ -268,7 +268,7 @@ First, create an input text helper entity. The preferred way to configure an inp
 
 ### Create a Send Message Automation
 
-This automation will check the send box for changes.  After typing a message, either hit enter or click off the box and the automation will send a text string in JSON to the mqtt broker. Make sure to update the channel name and device ID in the example below. 
+This automation will check the send box for changes.  After typing a message, either hit enter or click off the box and the automation will send a text string in JSON to the mqtt broker. Make sure to call your channel "mqtt" and to update the device ID and `from` field in the example below. 
 
 ```yaml
 - alias: Meshtastic - Send Automation
@@ -288,9 +288,9 @@ This automation will check the send box for changes.  After typing a message, ei
       data:
         qos: 0
         retain: false
-        topic: msh/2/json/LongFast/!67ea9400
+        topic: msh/2/json/mqtt/!67ea9400
         payload: >-
-          {"channel":"0","sender":"broker","type":"sendtext","payload":"{{    
+          {"from":1743426560,"type":"sendtext","payload":"{{    
           states('input_text.meshtastic_send_box') }}"}
     - delay:
         hours: 0
