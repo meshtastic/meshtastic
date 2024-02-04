@@ -198,7 +198,7 @@ Always Check Configuration before reloading YAML or restarting Home Assistant to
 
 :::
 
-![HA Developer Tools](/img/software/mqtt/ha_developer_tools.png)
+![HA Developer Tools](/img/software/mqtt/ha_developer_tools.webp)
 
 ## Create Dashboard Cards
 
@@ -206,13 +206,13 @@ Always Check Configuration before reloading YAML or restarting Home Assistant to
 
 Create a new Entities Card and select the entities you have created.
 
-![HA Entities Card](/img/software/mqtt/ha_entities_card.png)
+![HA Entities Card](/img/software/mqtt/ha_entities_card.webp)
 
 ### Logbook Card for Messaging
 
 The logbook card is useful to keep a record of incoming messages from the mesh. Below is an example of how the logbook card would be set up.
 
-![HA Logbook Card](/img/software/mqtt/ha_logbook_card.png)
+![HA Logbook Card](/img/software/mqtt/ha_logbook_card.webp)
 
 
 ## Trigger HA Automations
@@ -223,7 +223,7 @@ It is possible to have Home Assistant trigger automations based on messages or e
 
 This example waits for a message containing @Tropho and then sends a pop-up notification to his flip phone with the message.  Optionally you can have ALL messages from the mesh sent as HA notifications to your phone.
 
-![HA At Tropho Message](/img/software/mqtt/ha_at_tropho.png)
+![HA At Tropho Message](/img/software/mqtt/ha_at_tropho.webp)
 
 Add the following code to your automations.yaml file.  Be sure to modify the `topic`, `regex_search`, and `service` for your configuration.
 ```yaml
@@ -264,7 +264,7 @@ It is possible to create an input text box to send messages to your mesh from wi
 
 First, create an input text helper entity. The preferred way to configure an input text is via the HA interface at Settings > Devices & Services > Helpers. Click the add button and then choose the Text option. Make a text input helper with a max length of 190 to be on the safe side. See example below:
 
-![HA Input Text Helper](/img/software/mqtt/ha_input_text_helper.png)
+![HA Input Text Helper](/img/software/mqtt/ha_input_text_helper.webp)
 
 ### Create a Send Message Automation
 
