@@ -36,7 +36,7 @@ const SocialCards: SocialCardProps[] = [
       <img
         alt="facebook"
         className="m-auto h-14"
-        src="/img/homepage/f_logo_RGB-White_1024.png"
+        src="/img/homepage/f_logo_RGB-White_1024.webp"
       />
     ),
   },
