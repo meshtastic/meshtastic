@@ -9,6 +9,7 @@ const config = {
         "An open source, off-grid, decentralized, mesh network built to run on affordable, low-power devices",
     url: "https://meshtastic.org",
     baseUrl: "/",
+    trailingSlash: true,
     onBrokenLinks: "throw",
     onBrokenMarkdownLinks: "warn",
     favicon: "design/web/favicon.ico",
