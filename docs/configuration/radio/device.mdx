@@ -30,6 +30,24 @@ Acceptable values:
 | `CLIENT_HIDDEN`  |                                                                                                                            Client Hidden - Used for nodes that "only speak when spoken to." Turns off all of the routine broadcasts but allows for ad-hoc communication. Still rebroadcasts, but with local only rebroadcast mode (known meshes only). Can be used for clandestine operation or to dramatically reduce airtime / power consumption                                                                                                                             |
 | `LOST_AND_FOUND` |                                                                                                                                                                                                  Lost and Found - Used to automatically send a text message with current position at frequent intervals to the primary channel for the device: "I'm lost! Position: lat / long"                                                                                                                                                                                                   |
 
+#### Role Comparison
+
+This table shows the **default** values after selecting a preset. As always, individual settings can be adjusted after choosing a preset.
+
+| Device Role    | Bluetooth/Wi-Fi Enabled | Screen Enabled | Power Consumption | Retransmit | Prioritized Routing | Visible in Nodes List |
+| -------------- | ----------------------- | -------------- | ----------------- | ---------- | ------------------- | --------------------- |
+| CLIENT         | Yes                     | Yes            | Regular           | Yes        | No                  | Yes                   |
+| CLIENT_MUTE    | Yes                     | Yes            | Lowest            | No         | No                  | Yes                   |
+| CLIENT_HIDDEN  | Yes                     | Yes            | Lowest            | Local only | No                  | No                    |
+| TRACKER        | Yes                     | No             | Regular           | No         | No                  | Yes                   |
+| LOST_AND_FOUND | Yes                     | No             | Regular           | No         | No                  | Yes                   |
+| SENSOR         | Yes                     | No             | High              | No         | No                  | Yes                   |
+| TAK            | Yes                     | Optional       | Low               | Yes        | No                  | Yes                   |
+| ROUTER         | No                      | No             | High              | Yes        | Yes                 | Yes                   |
+| ROUTER_CLIENT  | Yes                     | Yes            | Highest           | Yes        | Yes                 | Yes                   |
+| REPEATER       | Yes                     | No             | High              | Yes        | Yes                 | No                    |
+
+
 ### Rebroadcast Mode
 
 This setting defines the device's behavior for how messages are rebroadcasted.
