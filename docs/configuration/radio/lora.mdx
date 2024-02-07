@@ -8,7 +8,7 @@ import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 import LoRaRegions from "../../blocks/_lora-regions.mdx";
 
-The LoRa config options are: Region, Modem Preset, Max Hops, Transmit Power, Bandwidth, Spread Factor, Coding Rate, Frequency Offset, Transmit Enabled, Channel Number, Ignore Incoming Array, Override Duty Cycle Limit, SX126x RX Boosted Gain, and Override Frequency. LoRa config uses an admin message sending a `Config.LoRa` protobuf.
+The LoRa config options are: Region, Modem Preset, Max Hops, Transmit Power, Bandwidth, Spread Factor, Coding Rate, Frequency Offset, Transmit Enabled, Channel Number, Ignore Incoming Array, Ignore MQTT, Override Duty Cycle Limit, SX126x RX Boosted Gain, and Override Frequency. LoRa config uses an admin message sending a `Config.LoRa` protobuf.
 
 :::note
 In order to communicate fully, devices within a mesh must have identical settings for Region and Modem Preset, or identical custom Modem settings.
@@ -57,7 +57,7 @@ The Presets available are as follows, and follow a linear pattern of Fastest \<\
 
 Maximum number of hops. This can't be greater than 7. Default is 3 which should be fine for most applications. _**Really, 3 is fine.**_
 
-![Hop Count](/img/configuration/max-hops.png)
+![Hop Count](/img/configuration/max-hops.webp)
 
 ### Transmit Power
 
@@ -111,6 +111,10 @@ LoRa Channel Configuration should not to be confused with messaging [Channel Con
 ### Ignore Incoming Array
 
 For testing it is useful sometimes to force a node to never listen to particular other nodes (simulating radio out of range). All nodenums listed in the ignore_incoming array will have packets they send dropped on receive (by router.cpp)
+
+### Ignore MQTT
+
+Setting this to option to 'true' means the device will ignore any messages it receives via LoRa that came via MQTT somewhere along the path towards the device. Note this only works when your device and the MQTT node are running at least firmware version 2.2.19.
 
 ### Override Duty Cycle Limit
 
@@ -175,6 +179,7 @@ LoRa config commands are available in the python CLI. Example commands are below
 |        lora.tx_power        |                                                                   `0` to `30`                                                                   |             `0`              |
 |       lora.tx_enabled       |                                                                 `false`, `true`                                                                 |            `true`            |
 |      lora.channel_num       |                                                           `0`, `1` to `NUM_CHANNELS`                                                            |             `0`              |
+|      lora.ignore_mqtt       |                                                                 `false`, `true`                                                                 |           `false`            |
 |  lora.override_duty_cycle   |                                                                 `false`, `true`                                                                 |           `false`            |
 | lora.sx126x_rx_boosted_gain |                                                                 `false`, `true`                                                                 |           `false`            |
 |   lora.override_frequency   |                        Any supported frequency the LoRA radio is capable of. Please respect local rules and regulations                         |             `0`              |

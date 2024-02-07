@@ -45,7 +45,8 @@ This layer is conventional non-reliable LoRa packet transmission. A packet gener
 | :----: | :-------: | :----------------------------- |
 |   0    |     3     | HopLimit (see note in Layer 3) |
 |   3    |     1     | WantAck                        |
-| 4 .. 7 |     4     | Currently unused               |
+|   4    |     1     | ViaMQTT (packet came via MQTT) |
+| 5 .. 7 |     3     | Currently unused               |
 
 #### Usage Details
 
@@ -88,4 +89,4 @@ Due to limited coverage, it only reaches nodes 1 and 2. Since node 2 is farther 
 After node 0 received this rebroadcast, its message is acknowledged. Note that a message is already acknowledged once a rebroadcast from any Meshtastic node (whether or not it has the same encryption key) is received.
 Since node 1 heard the rebroadcast by 2, it will not rebroadcast again. Node 3 heard the message for the first time and the HopLimit is not yet zero, so it starts a rebroadcast for potential other receivers.
 
-![Mesh algorithm example](/img/SNR_based_flooding.png)
+![Mesh algorithm example](/img/SNR_based_flooding.webp)
