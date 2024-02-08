@@ -1,4 +1,4 @@
-import { DeviceFirmwareResource } from "../../../utils/apiTypes";
+import type { DeviceFirmwareResource } from "../../../utils/apiTypes";
 
 export interface releaseCardProps {
   variant: string;
@@ -66,7 +66,9 @@ export const PlaceholderFirmwareCard = (): JSX.Element => {
         <div className="rounded-md bg-gray-500 w-32 h-4" />
       </div>
       <div className="card__body rounded-md bg-gray-500 h-12" />
-      <a className="button disabled button--primary button--block">&nbsp;</a>
+      <span className="button disabled button--primary button--block" href="#">
+        &nbsp;
+      </span>
       <div className="rounded-md bg-gray-500 w-32 h-8" />
       <div className="rounded-md bg-gray-500 w-44 h-4" />
       <div className="rounded-md bg-gray-500 w-36 h-4" />

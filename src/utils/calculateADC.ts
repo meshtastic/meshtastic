@@ -5,10 +5,10 @@ export default function calculateADC() {
   const batFullPercent = 1;
   //variable
   const batteryChargePercent =
-    parseFloat(
+    Number.parseFloat(
       (<HTMLInputElement>document.getElementById("batteryChargePercent")).value,
     ) / 100;
-  const operativeAdcMultiplier = parseFloat(
+  const operativeAdcMultiplier = Number.parseFloat(
     (<HTMLInputElement>document.getElementById("operativeAdcMultiplier")).value,
   );
   const result =
