@@ -2,11 +2,11 @@ import { Protobuf, Types } from "@meshtastic/js";
 import React, { useEffect } from "react";
 
 interface Region {
-  freq_start: number;
-  freq_end: number;
-  duty_cycle: number;
+  freqStart: number;
+  freqEnd: number;
+  dutyCycle: number;
   spacing: number;
-  power_limit: number;
+  powerLimit: number;
 }
 
 interface Modem {
@@ -22,181 +22,181 @@ const RegionData = new Map<
   [
     Protobuf.Config.Config_LoRaConfig_RegionCode.US,
     {
-      freq_start: 902.0,
-      freq_end: 928.0,
-      duty_cycle: 100,
+      freqStart: 902.0,
+      freqEnd: 928.0,
+      dutyCycle: 100,
       spacing: 0,
-      power_limit: 30,
+      powerLimit: 30,
     },
   ],
   [
     Protobuf.Config.Config_LoRaConfig_RegionCode.EU_433,
     {
-      freq_start: 433.0,
-      freq_end: 434.0,
-      duty_cycle: 10,
+      freqStart: 433.0,
+      freqEnd: 434.0,
+      dutyCycle: 10,
       spacing: 0,
-      power_limit: 12,
+      powerLimit: 12,
     },
   ],
   [
     Protobuf.Config.Config_LoRaConfig_RegionCode.EU_868,
     {
-      freq_start: 869.4,
-      freq_end: 869.65,
-      duty_cycle: 10,
+      freqStart: 869.4,
+      freqEnd: 869.65,
+      dutyCycle: 10,
       spacing: 0,
-      power_limit: 27,
+      powerLimit: 27,
     },
   ],
   [
     Protobuf.Config.Config_LoRaConfig_RegionCode.CN,
     {
-      freq_start: 470.0,
-      freq_end: 510.0,
-      duty_cycle: 100,
+      freqStart: 470.0,
+      freqEnd: 510.0,
+      dutyCycle: 100,
       spacing: 0,
-      power_limit: 19,
+      powerLimit: 19,
     },
   ],
   [
     Protobuf.Config.Config_LoRaConfig_RegionCode.JP,
     {
-      freq_start: 920.8,
-      freq_end: 927.8,
-      duty_cycle: 100,
+      freqStart: 920.8,
+      freqEnd: 927.8,
+      dutyCycle: 100,
       spacing: 0,
-      power_limit: 16,
+      powerLimit: 16,
     },
   ],
   [
     Protobuf.Config.Config_LoRaConfig_RegionCode.ANZ,
     {
-      freq_start: 915.0,
-      freq_end: 928.0,
-      duty_cycle: 100,
+      freqStart: 915.0,
+      freqEnd: 928.0,
+      dutyCycle: 100,
       spacing: 0,
-      power_limit: 30,
+      powerLimit: 30,
     },
   ],
   [
     Protobuf.Config.Config_LoRaConfig_RegionCode.RU,
     {
-      freq_start: 868.7,
-      freq_end: 869.2,
-      duty_cycle: 100,
+      freqStart: 868.7,
+      freqEnd: 869.2,
+      dutyCycle: 100,
       spacing: 0,
-      power_limit: 20,
+      powerLimit: 20,
     },
   ],
   [
     Protobuf.Config.Config_LoRaConfig_RegionCode.KR,
     {
-      freq_start: 920.0,
-      freq_end: 923.0,
-      duty_cycle: 100,
+      freqStart: 920.0,
+      freqEnd: 923.0,
+      dutyCycle: 100,
       spacing: 0,
-      power_limit: 0,
+      powerLimit: 0,
     },
   ],
   [
     Protobuf.Config.Config_LoRaConfig_RegionCode.TW,
     {
-      freq_start: 920.0,
-      freq_end: 925.0,
-      duty_cycle: 100,
+      freqStart: 920.0,
+      freqEnd: 925.0,
+      dutyCycle: 100,
       spacing: 0,
-      power_limit: 0,
+      powerLimit: 0,
     },
   ],
   [
     Protobuf.Config.Config_LoRaConfig_RegionCode.IN,
     {
-      freq_start: 865.0,
-      freq_end: 867.0,
-      duty_cycle: 100,
+      freqStart: 865.0,
+      freqEnd: 867.0,
+      dutyCycle: 100,
       spacing: 0,
-      power_limit: 30,
+      powerLimit: 30,
     },
   ],
   [
     Protobuf.Config.Config_LoRaConfig_RegionCode.NZ_865,
     {
-      freq_start: 864.0,
-      freq_end: 868.0,
-      duty_cycle: 100,
+      freqStart: 864.0,
+      freqEnd: 868.0,
+      dutyCycle: 100,
       spacing: 0,
-      power_limit: 36,
+      powerLimit: 36,
     },
   ],
   [
     Protobuf.Config.Config_LoRaConfig_RegionCode.TH,
     {
-      freq_start: 920.0,
-      freq_end: 925.0,
-      duty_cycle: 100,
+      freqStart: 920.0,
+      freqEnd: 925.0,
+      dutyCycle: 100,
       spacing: 0,
-      power_limit: 16,
+      powerLimit: 16,
     },
   ],
   [
     Protobuf.Config.Config_LoRaConfig_RegionCode.UA_433,
     {
-      freq_start: 433.0,
-      freq_end: 434.7,
-      duty_cycle: 10,
+      freqStart: 433.0,
+      freqEnd: 434.7,
+      dutyCycle: 10,
       spacing: 0,
-      power_limit: 10,
+      powerLimit: 10,
     },
   ],
   [
     Protobuf.Config.Config_LoRaConfig_RegionCode.UA_868,
     {
-      freq_start: 868.0,
-      freq_end: 868.6,
-      duty_cycle: 1,
+      freqStart: 868.0,
+      freqEnd: 868.6,
+      dutyCycle: 1,
       spacing: 0,
-      power_limit: 14,
+      powerLimit: 14,
     },
   ],
   [
     Protobuf.Config.Config_LoRaConfig_RegionCode.MY_433,
     {
-      freq_start: 433.0,
-      freq_end: 435.0,
-      duty_cycle: 100,
+      freqStart: 433.0,
+      freqEnd: 435.0,
+      dutyCycle: 100,
       spacing: 0,
-      power_limit: 20,
+      powerLimit: 20,
     },
   ],
   [
     Protobuf.Config.Config_LoRaConfig_RegionCode.MY_919,
     {
-      freq_start: 919.0,
-      freq_end: 924.0,
-      duty_cycle: 100,
+      freqStart: 919.0,
+      freqEnd: 924.0,
+      dutyCycle: 100,
       spacing: 0,
-      power_limit: 27,
+      powerLimit: 27,
     },
   ],
   [
     Protobuf.Config.Config_LoRaConfig_RegionCode.LORA_24,
     {
-      freq_start: 2400.0,
-      freq_end: 2483.5,
-      duty_cycle: 100,
+      freqStart: 2400.0,
+      freqEnd: 2483.5,
+      dutyCycle: 100,
       spacing: 0,
-      power_limit: 10,
+      powerLimit: 10,
     },
   ],
   [
     Protobuf.Config.Config_LoRaConfig_RegionCode.UNSET,
     {
-      freq_start: 902.0,
-      freq_end: 928.0,
-      duty_cycle: 100,
+      freqStart: 902.0,
+      freqEnd: 928.0,
+      dutyCycle: 100,
       spacing: 0,
-      power_limit: 30,
+      powerLimit: 30,
     },
   ],
 ]);
@@ -290,7 +290,7 @@ export const FrequencyCalculator = (): JSX.Element => {
     const selectedRegion = RegionData.get(region);
     const selectedModemPreset = modemPresets.get(modemPreset);
     const calculatedNumChannels = Math.floor(
-      (selectedRegion.freq_end - selectedRegion.freq_start) /
+      (selectedRegion.freqEnd - selectedRegion.freqStart) /
         (selectedRegion.spacing + selectedModemPreset.bw / 1000),
     );
 
@@ -304,7 +304,7 @@ export const FrequencyCalculator = (): JSX.Element => {
     setChannel(updatedChannel);
 
     setChannelFrequency(
-      selectedRegion.freq_start +
+      selectedRegion.freqStart +
         selectedModemPreset.bw / 2000 +
         updatedChannel * (selectedModemPreset.bw / 1000),
     );
@@ -318,7 +318,7 @@ export const FrequencyCalculator = (): JSX.Element => {
           value={modemPreset}
           onChange={(e) =>
             setModemPreset(
-              parseInt(
+              Number.parseInt(
                 e.target.value,
               ) as Protobuf.Config.Config_LoRaConfig_ModemPreset,
             )
@@ -335,7 +335,7 @@ export const FrequencyCalculator = (): JSX.Element => {
         <label>Region:</label>
         <select
           value={region}
-          onChange={(e) => setRegion(parseInt(e.target.value))}
+          onChange={(e) => setRegion(Number.parseInt(e.target.value))}
         >
           {Array.from(RegionData.keys()).map((key) => (
             <option key={key} value={key}>
@@ -348,7 +348,7 @@ export const FrequencyCalculator = (): JSX.Element => {
         <label>Channel:</label>
         <select
           value={channel}
-          onChange={(e) => setChannel(parseInt(e.target.value))}
+          onChange={(e) => setChannel(Number.parseInt(e.target.value))}
         >
           {Array.from(Array(numChannels).keys()).map((key) => (
             <option key={key} value={key}>

@@ -19,7 +19,7 @@ jobs:
           version: latest
 
       - name: Run Biome
-        run: biome ci .
+        run: biome ci . --diagnostic-level=error
   build:
     runs-on: ubuntu-latest
     steps:
