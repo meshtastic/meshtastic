@@ -15,7 +15,9 @@ Website and documentation source for the Meshtastic project.
 
 ## Development & Building
 
-nodejs is required in your dev. environment. The method for installing nodejs depends on your operating system. This software is built using [Docusaurus](https://docusaurus.io).
+_nodejs_ is required in your dev. environment. The method for installing _nodejs_ depends on your operating system. This software is built using [Docusaurus](https://docusaurus.io).
+
+Before installing dependencies, make sure you have _pnpm_ installed. Follow the documentation at [pnpm installation guide](https://pnpm.io/installation) to install _pnpm_ if you haven't already.
 
 Go to the root directory of your repository and install dependencies:
 
