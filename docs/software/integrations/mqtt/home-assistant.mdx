@@ -268,7 +268,7 @@ First, create an input text helper entity. The preferred way to configure an inp
 
 ### Create a Send Message Automation
 
-This automation will check the send box for changes.  After typing a message, either hit enter or click off the box and the automation will send a text string in JSON to the mqtt broker. Make sure to call your channel "mqtt" and to update the device ID and `from` field in the example below. 
+This automation will check the send box for changes.  After typing a message, either hit enter or click off the box and the automation will send a text string in JSON to the mqtt broker. Make sure to publish to a channel called "mqtt" and to update the device ID and `from` field in the example below. A field `channel` can be added to transmit on a different channel index than the primary, or a `to` field can be added with a node number to send a DM.
 
 ```yaml
 - alias: Meshtastic - Send Automation
