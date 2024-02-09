@@ -11,10 +11,11 @@ import TabItem from "@theme/TabItem";
 <Tabs
 groupId="heltec"
 queryString="heltec"
-defaultValue="v3"
+defaultValue="v3.1"
 values={[
 {label: 'LoRa32 V2.1', value: 'v2.1'},
 {label: 'LoRa32 V3', value:'v3'},
+{label: 'LoRa32 V3.1', value:'v3.1'},
 {label: 'Wireless Stick Lite V3', value:'Wireless Stick Lite V3'},
 {label: 'Wireless Tracker', value: 'tracker'},
 {label: 'Wireless Paper', value: 'paper'}
@@ -113,7 +114,7 @@ The schematic between V3.0 and V3.1 is virtually identical, with only two differ
 - V3.0 had different ESP32-S3 antenna filters:
   - V3.0: L11 = 1.6nH, C15 = 6.9pF, C24 = 2.4pF
   - V3.1: L11 = 1.8pF(?), C15 = 2.7nH (?), C24 = 1.8pF
-Question marks above on V3.1 because pF are typically capacitors and nH are typically inductors. Did they mess something up, or did this require an odd swap like this? TODO: someone please confirm the V3.1 ESP-S3 Bluetooth and Wifi are functional with Meshtastic.
+Question marks above on V3.1 because pF are typically capacitors and nH are typically inductors.
 
 </TabItem>
 
