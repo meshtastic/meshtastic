@@ -115,7 +115,7 @@ const config = {
       {
         docsDir: "./docs/",
         termsDir: "./docs/terms/",
-        glossaryFilepath: "./docs/glossary.mdx",
+        glossaryFilepath: "./docs/terms/index.mdx",
       },
     ],
   ],
