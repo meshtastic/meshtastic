@@ -1,4 +1,3 @@
-import { Config_LoRaConfig_ModemPreset } from "@buf/meshtastic_protobufs.bufbuild_es/meshtastic/config_pb";
 import { Protobuf, Types } from "@meshtastic/js";
 import React, { useEffect, useState } from "react";
 
