@@ -56,11 +56,7 @@ Not recommended because of design issues! Support is being phased out. Use V3 in
 
 ## HELTEC v3.1
 
-Use the same V3 firmware files as V3.1 as the hardware is nearly identical. On the top right side of the board where it normally says "V3" next to the U.FL/IPEX antenna connector, there is a "V3.1" instead of "V3". These started appearing around November 2023.
-
-[V3.0 schematic](https://web.archive.org/web/20221127054612/https://resource.heltec.cn/download/WiFi_LoRa32_V3/HTIT-WB32LA(F)_V3_Schematic_Diagram.pdf)
-
-[V3.1 schematic](https://resource.heltec.cn/download/WiFi_LoRa_32_V3/HTIT-WB32LA(F)_V3.1_Schematic_Diagram.pdf)
+Use the same V3 firmware file. Right side of board says V3.1. [V3.0 schematic](https://web.archive.org/web/20221127054612/https://resource.heltec.cn/download/WiFi_LoRa32_V3/HTIT-WB32LA(F)_V3_Schematic_Diagram.pdf) | [V3.1 schematic](https://resource.heltec.cn/download/WiFi_LoRa_32_V3/HTIT-WB32LA(F)_V3.1_Schematic_Diagram.pdf)
 
 The schematic between V3.0 and V3.1 is virtually identical, with only two differences:
 
@@ -68,8 +64,7 @@ The schematic between V3.0 and V3.1 is virtually identical, with only two differ
 
 - V3.0 had different ESP32-S3 antenna filters:
   - V3.0: L11 = 1.6nH, C15 = 6.9pF, C24 = 2.4pF
-  - V3.1: L11 = 1.8pF(?), C15 = 2.7nH (?), C24 = 1.8pF
-Question marks above on V3.1 because pF are typically capacitors and nH are typically inductors.
+  - V3.1: L11 = 1.8pF(?), C15 = 2.7nH (?), C24 = 1.8pF, Question marks because pF are typically capacitors and nH are typically inductors and they have swapped these.
 
 ## HELTEC v3
 
