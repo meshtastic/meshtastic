@@ -110,6 +110,14 @@ const config = {
         },
       };
     },
+    [
+      "@grnet/docusaurus-terminology",
+      {
+        docsDir: "./docs/",
+        termsDir: "./docs/terms/",
+        glossaryFilepath: "./docs/glossary.mdx",
+      },
+    ],
   ],
   presets: [
     [
