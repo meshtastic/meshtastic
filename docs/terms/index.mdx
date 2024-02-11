@@ -4,10 +4,7 @@ title: Glossary of Terms
 slug: /terms/
 ---
 
-App
-: An application that connects to a Meshtastic node, typically for the purpose of sending or receiving data through the mesh network.
-
-Application
+App / Application / Client Application
 : An application that connects to a Meshtastic node, typically for the purpose of sending or receiving data through the mesh network.
 
 Band
@@ -16,10 +13,10 @@ Band
 Broadcast
 : Sending a message or data from one device to all other devices within range in the Meshtastic network, rather than to a specific recipient.
 
-Channel
+Channel | [Configuration](/docs/configuration/radio/channels/) | [Frequency Calculator](/docs/overview/radio-settings/#channel-frequency-calculator)
 : At least two definitions in Meshtastic usage: 1) One of 8 configurable channels in the firmware, each supporting a separate name and encryption, with one set as primary and the rest secondary. 2) A specific frequency within a LoRa band that a device can be configured to use.
 
-CLI
+CLI | [Guide](/docs/software/python/cli/)
 : Command Line Interface, a text-based interface used for interacting with software or devices like Meshtastic.
 
 Client
@@ -28,16 +25,13 @@ Client
 Device
 : A physical piece of hardware that utilizes the Meshtastic software and LoRa (Long Range) radio technology to create a decentralized, long-range mesh network.
 
-ESP32
-: A chipset of microcontroller made/designed by Espressif, used by a number of devices. Higher power usage than NRF52, but often cheaper and supports WiFi if desired.
+ESP32 | [Drivers](/docs/getting-started/serial-drivers/esp32/) | [Firmware](/docs/getting-started/flashing-firmware/esp32/)
+: A chipset of microcontroller made/designed by Espressif, used by a number of devices. Higher power usage than NRF52, but often cheaper and supports WiFi if desired. 
 
-Firmware
-: The low-level software programmed onto a Meshtastic device, controlling its hardware functions and enabling it to communicate within the mesh network using LoRa technology.
+Firmware | [Guide](https://meshtastic.org/docs/getting-started/flashing-firmware/)
+: The low-level software programmed onto a Meshtastic device, controlling its hardware functions and enabling it to communicate within the mesh network using LoRa technology. Firmware
 
-Flash
-: To program or write firmware onto the device's memory. It involves transferring the Meshtastic firmware onto the device's onboard storage.
-
-Flashing
+Flash/Flashing | [Guide](https://meshtastic.org/docs/getting-started/flashing-firmware/)
 : The process of updating or installing firmware on a Meshtastic device. This is typically done using a computer to load new firmware versions or custom software to enhance or modify device functionality.
 
 GPIO
@@ -49,7 +43,7 @@ LoRa
 LoS
 : Line of Sight, a pathway through only air between two points.
 
-Mesh
+Mesh | [Algorythm](/docs/overview/mesh-algo/)
 : In the context of Meshtastic and networking, a mesh refers to a network topology where devices (nodes) are interconnected, allowing them to directly and dynamically communicate with each other. This setup enables data to be relayed across the network, improving coverage and reliability, especially in challenging environments.
 
 Message
@@ -58,10 +52,10 @@ Message
 MHz
 : Megahertz, a unit of frequency equal to one million hertz (cycles per second), used to specify the operating frequency of LoRa devices in the Meshtastic network, affecting range and data rate.
 
-Module
+Module | [Software Modules](/docs/configuration/module/) | [Hardware Modules](/docs/hardware/devices/)
 : At least two definitions in Meshtastic usage: 1) A software plug-in to expand the capabilities of a Meshtastic device. 2) A hardware component or add-on for a Meshtastic device, such as a temperature sensor or GPS.
 
-MQTT
+[MQTT](/docs/software/integrations/mqtt/)
 : An acronym for Message Queuing Telemetry Transport, is a lightweight messaging protocol designed for small sensors and mobile devices, enabling efficient data transmission in the Meshtastic network for Internet connectivity and integration with IoT platforms. See https://en.wikipedia.org/wiki/MQTT. In Meshtastic, MQTT is used to connect a node to the internet, and can be used to connect multiple meshes to each other.
 
 Node
@@ -73,16 +67,16 @@ NRF52
 Packet
 : A formatted unit of data sent over the network. In Meshtastic, packets carry messages, GPS locations, and other information through the LoRa mesh network.
 
-Protobuf
+Protobuf | [Reference](/docs/development/reference/protobufs/)
 : Protocol Buffers, a method developed by Google for serializing structured data, used in Meshtastic for efficient communication protocol between devices.
 
-PSK
+PSK | [Encryption](/docs/overview/encryption/)
 : Pre-Shared Key, a secret code or passphrase used in Meshtastic channels for encryption, ensuring that only devices with the matching PSK can communicate within that specific channel.
 
-Repeater
+Repeater | [Role Definitions](/docs/configuration/radio/device/#roles)
 : Infrastructure node for extending network coverage by relaying messages with minimal overhead. Not visible in Nodes list.
 
-Router
+Router | [Role Definitions](/docs/configuration/radio/device/#roles)
 : Infrastructure node for extending network coverage by relaying messages. Visible in Nodes list.
 
 rp2040
