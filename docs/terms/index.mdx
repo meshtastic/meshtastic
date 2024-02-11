@@ -17,7 +17,7 @@ Broadcast
 : Sending a message or data from one device to all other devices within range in the Meshtastic network, rather than to a specific recipient.
 
 Channel
-: At least two definitions in Meshtastic usage: 1) One of 8 configurable channels in firmware, each supporting a separate name and encryption, with one set as primary and the rest secondary. 2) A specific range of frequency within a LoRa band that a device can be configured to use.
+: At least two definitions in Meshtastic usage: 1) One of 8 configurable channels in the firmware, each supporting a separate name and encryption, with one set as primary and the rest secondary. 2) A specific frequency within a LoRa band that a device can be configured to use.
 
 CLI
 : Command Line Interface, a text-based interface used for interacting with software or devices like Meshtastic.
@@ -55,20 +55,20 @@ Mesh
 Message
 : A piece of data or text sent between Meshtastic devices over the mesh network, which can include text communications, GPS location updates, and other small data payloads.
 
-Mhz
-: Megahertz, a unit of frequency equal to one million hertz, used to specify the operating frequency of LoRa devices in the Meshtastic network, affecting range and data rate.
+MHz
+: Megahertz, a unit of frequency equal to one million hertz (cycles per second), used to specify the operating frequency of LoRa devices in the Meshtastic network, affecting range and data rate.
 
 Module
-: A component or add-on for a Meshtastic device, typically referring to a hardware piece such as a LoRa radio module, that provides specific functionalities like communication or GPS tracking.
+: At least two definitions in Meshtastic usage: 1) A software plug-in to expand the capabilities of a Meshtastic device. 2) A hardware component or add-on for a Meshtastic device, such as a temperature sensor or GPS.
 
 MQTT
-: A lightweight messaging protocol designed for small sensors and mobile devices, enabling efficient data transmission in the Meshtastic network for Internet connectivity and integration with IoT platforms. See https://en.wikipedia.org/wiki/MQTT. In Meshtastic, MQTT is used to connect a node to the internet, and can be used to connect multiple meshes to each other.
+: An acronym for Message Queuing Telemetry Transport, is a lightweight messaging protocol designed for small sensors and mobile devices, enabling efficient data transmission in the Meshtastic network for Internet connectivity and integration with IoT platforms. See https://en.wikipedia.org/wiki/MQTT. In Meshtastic, MQTT is used to connect a node to the internet, and can be used to connect multiple meshes to each other.
 
 Node
 : A unit within the Meshtastic network that can send, receive, and relay messages, helping to form and extend the mesh network's coverage.
 
 NRF52
-: A chipset of microcontroller made by Nordic, used by a number of devices. Lower power usage than ESP32.
+: A microcontroller chipset made by Nordic, used by a number of devices used by several devices such as the RAK Meshtastic Starter Kit and the Lilygo T-Echo. Lower power usage than ESP32.
 
 Packet
 : A formatted unit of data sent over the network. In Meshtastic, packets carry messages, GPS locations, and other information through the LoRa mesh network.
@@ -89,7 +89,7 @@ rp2040
 : A microcontroller chip developed by Raspberry Pi, featuring dual ARM Cortex-M0+ processors.
 
 RX
-: Short for Receive.
+: Abbreviation for Receive.
 
 Sensor
 : A device component that detects and responds to some type of input from the physical environment. In Meshtastic, sensors can be used to gather environmental data (e.g., temperature, humidity, GPS location) which can then be transmitted over the mesh network for monitoring or other applications.
@@ -103,9 +103,6 @@ SNR
 SWR
 : Standing Wave Ratio, a measure of the efficiency of the radio frequency (RF) power transmission from a transmitter through a transmission line to an antenna in Meshtastic devices. It indicates the ratio of the amplitude of a standing wave at maximum to the amplitude at minimum, with an ideal SWR close to 1:1, signifying that most of the power is transmitted to the antenna with minimal reflections.
 
-SX1262
-: A model of LoRa transceiver module known for its low power consumption and long-range capabilities, commonly used in Meshtastic devices for communication.
-
 Telemetry
 : The sending of sensor data or system metrics over the mesh network.
 
@@ -116,4 +113,4 @@ Transmit
 : The act of sending data, such as messages or GPS locations, from one Meshtastic device to another over the LoRa network.
 
 TX
-: Short for Transmit.
+: Abbreviation for Transmit.
