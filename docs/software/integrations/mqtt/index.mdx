@@ -98,11 +98,13 @@ If the message received contains valid JSON in the payload, the JSON is deserial
 
 
 #### JSON downlink to instruct a node to send a message
-You can also send a JSON message to the topic `msh/2/json/mqtt/` to instruct a gateway node to send a message to the mesh. Note that the channel **must** be called "mqtt". The JSON message should contain the following fields:
+You can also send a JSON message to the topic `msh/2/json/mqtt/` to instruct a gateway node to send a message to the mesh. Note that the channel you publish it on **must** be called "mqtt". The JSON message should contain the following fields:
 
 ```json
 {
-   "from": <node number>,
+   "from": <node number of MQTT node>,
+   "to": <node number of recipient for a DM (optional)>,
+   "channel": <channel index (optional)>,
    "type": "type",
    "payload": {
        "key":"value"
@@ -111,7 +113,7 @@ You can also send a JSON message to the topic `msh/2/json/mqtt/` to instruct a g
 }
 ```
 
-`from` and `payload` fields are required for a valid envelope (note that in firmware &lt;2.2.20 a field `sender` was required, but this is no longer the case). The `from` field should be equal to the node number of the node that will transmit the message. Optionally, you can specify a destination by setting the `to` field to the node number of the destination. If the `to` field is not set, the message will be broadcast to all nodes on the mesh.
+`from` and `payload` fields are required for a valid envelope (note that in firmware &lt;2.2.20 a field `sender` was required, but this is no longer the case). The `from` field should be equal to the node number of the node that will transmit the message. Optionally, you can specify a different channel than the primary channel by setting the `channel` field to a channel index (0-7). Furthermore, you can send a direct message by setting the `to` field to the node number of the destination. If the `to` field is not set, the message will be broadcast to all nodes on the mesh.
 
 Currently two types of messages are supported: `"sendtext"` and `"sendposition"`.
 For the type `sendtext`, the `payload` should be a string containing the text to send. For the type `sendposition`, the payload should be an object with the fields `latitude_i`, `longitude_i`, `altitude` (optional) and `time` (optional).
