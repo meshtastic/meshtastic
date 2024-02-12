@@ -1,0 +1,48 @@
+---
+id: update-techo-bootloader
+title: How to Update the LilyGo T-Echo Bootloader to the Latest Version
+sidebar_label: Update T-Echo Bootloader
+sidebar_position: 5
+---
+
+If you're experiencing issues with updating or flashing newer versions of the Meshtastic firmware, and your LilyGo T-Echo is not running the latest bootloader version (0.6.1), updating the bootloader may resolve these problems.
+
+To check which version of the bootloader your device is running, place the device into DFU mode by double-pressing the reset button. Then, open the mounted drive that appears on your computer and check the INFO_UF2.TXT file.
+
+## Updating bootloader
+
+Below are the steps to update your bootloader.
+
+### Method 1: Using the UF2 File (Recommended)
+
+1. Download the Latest UF2 Bootloader File for the T-Echo from [Github](https://github.com/meshtastic/firmware/blob/master/bin/update-lilygo_techo_bootloader-0.6.1_nosd.uf2).
+2. Connect your LilyGo T-Echo to your computer via USB.
+3. Activate bootloader mode by quickly double pressing the RESET button on your T-Echo. The device should appear as a removable drive on your computer.
+4. Drag and drop the .uf2 file you downloaded into the T-Echo's drive. The device will automatically update the bootloader and reset.
+5. Once the device resets, the update is complete. Your T-Echo is now running the latest bootloader version and you can proceed with [flashing the firmware](/docs/getting-started/flashing-firmware/nrf52/drag-n-drop/).
+
+### Method 2: Using adafruit-nrfutil
+
+Should flashing the UF2 file to update your bootloader fail, you can use adafruit-nrfutil.
+
+:::info
+
+These instructions assume you have python and pip already installed. If you do not, please install the latest verion of python (which includes pip) from [Python.org](https://www.python.org/downloads/).
+
+:::
+
+1. Open a terminal or command prompt and install adafruit-nrfutil by running:
+
+```bash
+pip install adafruit-nrfutil
+```
+
+2. Obtain the lilygo_techo_bootloader-0.6.1.zip package from [Github](https://github.com/meshtastic/firmware/blob/master/bin/lilygo_techo_bootloader-0.6.1.zip).
+3. Connect your LilyGo T-Echo to your computer via USB.
+4. In the terminal or command prompt, navigate to the directory where you downloaded the bootloader zip package and execute the following command, replacing /dev/ttyACM0 with the correct port for your device (Windows users might use COMx):
+
+```bash
+adafruit-nrfutil --verbose dfu serial --package lilygo_techo_bootloader-0.6.1.zip -p /dev/ttyACM0 -b 115200 --singlebank --touch 1200
+```
+
+5. Once the process finishes, the update is complete. Your T-Echo is now running the latest bootloader version and you can proceed with [flashing the firmware](/docs/getting-started/flashing-firmware/nrf52/drag-n-drop/).

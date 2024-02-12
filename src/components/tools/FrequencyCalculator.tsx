@@ -1,5 +1,5 @@
 import { Protobuf, Types } from "@meshtastic/js";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 interface Region {
   freqStart: number;
@@ -273,18 +273,18 @@ const modemPresets = new Map<
 
 export const FrequencyCalculator = (): JSX.Element => {
   const [modemPreset, setModemPreset] =
-    React.useState<Protobuf.Config.Config_LoRaConfig_ModemPreset>(
+    useState<Protobuf.Config.Config_LoRaConfig_ModemPreset>(
       Protobuf.Config.Config_LoRaConfig_ModemPreset.LONG_FAST,
     );
   const [region, setRegion] =
-    React.useState<Protobuf.Config.Config_LoRaConfig_RegionCode>(
+    useState<Protobuf.Config.Config_LoRaConfig_RegionCode>(
       Protobuf.Config.Config_LoRaConfig_RegionCode.US,
     );
-  const [channel, setChannel] = React.useState<Types.ChannelNumber>(
-    Types.ChannelNumber.PRIMARY,
+  const [channel, setChannel] = useState<Types.ChannelNumber>(
+    Types.ChannelNumber.Primary,
   );
-  const [numChannels, setNumChannels] = React.useState<number>(0);
-  const [channelFrequency, setChannelFrequency] = React.useState<number>(0);
+  const [numChannels, setNumChannels] = useState<number>(0);
+  const [channelFrequency, setChannelFrequency] = useState<number>(0);
 
   useEffect(() => {
     const selectedRegion = RegionData.get(region);
@@ -344,6 +344,12 @@ export const FrequencyCalculator = (): JSX.Element => {
           ))}
         </select>
       </div>
+
+      <div className="flex gap-2 mb-4">
+        <label className="font-semibold">Number of channels:</label>
+        <input type="number" disabled={true} value={numChannels} />
+      </div>
+
       <div className="flex gap-2">
         <label>Channel:</label>
         <select
@@ -358,10 +364,6 @@ export const FrequencyCalculator = (): JSX.Element => {
         </select>
       </div>
 
-      <div className="flex gap-2">
-        <label className="font-semibold">Number of channels:</label>
-        <input type="number" disabled={true} value={numChannels} />
-      </div>
       <div className="flex gap-2">
         <label className="font-semibold">Channel Frequency:</label>
         <input type="number" disabled={true} value={channelFrequency} />
