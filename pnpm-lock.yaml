@@ -50,12 +50,18 @@ dependencies:
   react:
     specifier: ^18.2.0
     version: 18.2.0
+  react-accessible-accordion:
+    specifier: ^5.0.0
+    version: 5.0.0(react-dom@18.2.0)(react@18.2.0)
   react-dom:
     specifier: ^18.2.0
     version: 18.2.0(react@18.2.0)
   react-icons:
     specifier: ^4.12.0
     version: 4.12.0(react@18.2.0)
+  react-markdown:
+    specifier: ^9.0.1
+    version: 9.0.1(@types/react@18.2.47)(react@18.2.0)
   remark-deflist:
     specifier: ^1.0.0
     version: 1.0.0
@@ -5793,6 +5799,10 @@ packages:
     engines: {node: '>=8'}
     dev: false
 
+  /html-url-attributes@3.0.0:
+    resolution: {integrity: sha512-/sXbVCWayk6GDVg3ctOX6nxaVj7So40FcFAnWlWGNAB1LpYKcV5Cd10APjPjW80O7zYW2MsjBV4zZ7IZO5fVow==}
+    dev: false
+
   /html-void-elements@3.0.0:
     resolution: {integrity: sha512-bEqo66MRXsUGxWHV5IP0PUiAWwoEjba4VCzg0LjFJBpchPaTfyfCKTG6bc5F8ucKec3q5y6qOdGyYTSBEvhCrg==}
     dev: false
@@ -8413,6 +8423,16 @@ packages:
       strip-json-comments: 2.0.1
     dev: false
 
+  /react-accessible-accordion@5.0.0(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-MT2obYpTgLIIfPr9d7hEyvPB5rg8uJcHpgA83JSRlEUHvzH48+8HJPvzSs+nM+XprTugDgLfhozO5qyJpBvYRQ==}
+    peerDependencies:
+      react: ^16.3.2 || ^17.0.0 || ^18.0.0
+      react-dom: ^16.3.3 || ^17.0.0 || ^18.0.0
+    dependencies:
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+    dev: false
+
   /react-dev-utils@12.0.1(typescript@5.3.3)(webpack@5.89.0):
     resolution: {integrity: sha512-84Ivxmr17KjUupyqzFode6xKhjwuEJDROWKJy/BthkL7Wn6NJ8h4WE6k/exAv6ImS+0oZLRRW5j/aINMHyeGeQ==}
     engines: {node: '>=14'}
@@ -8527,6 +8547,28 @@ packages:
       '@babel/runtime': 7.23.7
       react-loadable: /@docusaurus/react-loadable@5.5.2(react@18.2.0)
       webpack: 5.89.0
+    dev: false
+
+  /react-markdown@9.0.1(@types/react@18.2.47)(react@18.2.0):
+    resolution: {integrity: sha512-186Gw/vF1uRkydbsOIkcGXw7aHq0sZOCRFFjGrr7b9+nVZg4UfA4enXCaxm4fUzecU38sWfrNDitGhshuU7rdg==}
+    peerDependencies:
+      '@types/react': '>=18'
+      react: '>=18'
+    dependencies:
+      '@types/hast': 3.0.3
+      '@types/react': 18.2.47
+      devlop: 1.1.0
+      hast-util-to-jsx-runtime: 2.3.0
+      html-url-attributes: 3.0.0
+      mdast-util-to-hast: 13.0.2
+      react: 18.2.0
+      remark-parse: 11.0.0
+      remark-rehype: 11.0.0
+      unified: 11.0.4
+      unist-util-visit: 5.0.0
+      vfile: 6.0.1
+    transitivePeerDependencies:
+      - supports-color
     dev: false
 
   /react-router-config@5.1.1(react-router@5.3.4)(react@18.2.0):

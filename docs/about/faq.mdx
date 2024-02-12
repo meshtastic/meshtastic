@@ -5,39 +5,51 @@ slug: /faq
 sidebar_position: 3
 ---
 
-## Overview
+import { FaqAccordion } from "/src/components/FaqAccordion";
 
-### Where can I get additional help, ask questions, or bond with the Meshtastic community?
+export const GeneralFaq = [
+  {
+    title: "Where can I get additional help, ask questions, or bond with the Meshtastic community?",
+    content: `This site (which has a great search function) is the preferred place for up-to-date documentation. Many of our users and developers hang out on the [Meshtastic Discord](https://discord.gg/ktMAKGBnBs) server where you may connect with like-minded people.`,
+  },
+  {
+    title: "How can I contribute to Meshtastic?",
+    content: "Everyone contributes in a different way. Join the [Meshtastic Discord](https://discord.gg/ktMAKGBnBs) and introduce yourself. We're all very friendly. If you'd like to pitch in some code, check out the [Development](/docs/developers) menu on the left.",
+  },
+];
 
-This site (which has a great search function) is the preferred place for up-to-date documentation. Many of our users and developers hang out on the [Meshtastic Discord](https://discord.gg/ktMAKGBnBs) server where you may connect with like-minded people.
-
-### How can I contribute to Meshtastic?
-
-Everyone contributes in a different way. Join the [Meshtastic Discord](https://discord.gg/ktMAKGBnBs) and introduce yourself. We're all very friendly. If you'd like to pitch in some code, check out the [Development](/docs/developers) menu on the left.
-
-<!-- Android Client-->
-
-## Android Client
-
-### What versions of Android does the Meshtastic Android App require?
-
-Minimum requirement is Android 5 (Lollipop 2014, first BLE support), however at least Android 6 (Marshmallow 2015) is recommended as Bluetooth is more stable. While Android 5/6 are officially supported by Meshtastic, it is _not_ recommended that you purchase devices with these versions due to their limited OS support and limited battery life due to age. Many newer models exist that are very affordable. A good resource to use when researching affordable devices is the [LineageOS Supported Devices List](https://wiki.lineageos.org/devices/).
-
-### What does the icon next to the message mean?
-
+export const AndroidFaq = [
+  {
+    title: "What versions of Android does the Meshtastic Android App require?",
+    content: `Minimum requirement is Android 5 (Lollipop 2014, first BLE support), however at least Android 6 (Marshmallow 2015) is recommended as Bluetooth is more stable. While Android 5/6 are officially supported by Meshtastic, it is _not_ recommended that you purchase devices with these versions due to their limited OS support and limited battery life due to age. Many newer models exist that are very affordable. A good resource to use when researching affordable devices is the [LineageOS Supported Devices List](https://wiki.lineageos.org/devices/).`,
+  },
+  {
+    title: "What does the icon next to the message mean?",
+    content: `
 - Cloud with an up arrow - Queued on the app to be sent to your device.
 - Cloud only - Queued on the device to be sent over the mesh.
 - Cloud with a check mark - At least one other node on the mesh acknowledged the message.
 - Person with a check mark - The intended recipient of your direct message acknowledged the message.
-- Cloud crossed out - Not acknowledged or message error.
+- Cloud crossed out - Not acknowledged or message error.`,
+  },
+  {
+    title: "How can I clear the message history?",
+    content: `Long press any message to select and show the menu with "delete" and "select all" buttons.`,
+  },
+  {
+    title: "After a fresh firmware install, my node is not connecting via Bluetooth. What should I do?",
+    content: `Try forgetting the Bluetooth connection from the Android Bluetooth Settings menu. Re-pair and try again. This is a security measure and there is no workaround for it. It prevents apps and other accessories from spoofing an existing accessory by un-pairing and "re-pairing" themselves without the users' knowledge.`,
+  },
+];
 
-### How can I clear the message history?
+## Overview
 
-Long press any message to select and show the menu with "delete" and "select all" buttons.
+<FaqAccordion rows={GeneralFaq} slug="general" />
 
-### After a fresh firmware install, my node is not connecting via Bluetooth. What should I do?
+<!-- Android Client-->
 
-Try forgetting the Bluetooth connection from the Android Bluetooth Settings menu. Re-pair and try again. This is a security measure and there is no workaround for it. It prevents apps and other accessories from spoofing an existing accessory by un-pairing and "re-pairing" themselves without the users' knowledge.
+## Android Client
+<FaqAccordion rows={AndroidFaq} slug="android" />
 
 <!-- Apple Clients-->
 
