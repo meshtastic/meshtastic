@@ -1,13 +1,13 @@
 import React from "react";
-import ReactMarkdown from "react-markdown";
 import {
   Accordion,
   AccordionItem,
-  AccordionItemHeading,
   AccordionItemButton,
+  AccordionItemHeading,
   AccordionItemPanel,
 } from "react-accessible-accordion";
 import "react-accessible-accordion/dist/fancy-example.css";
+import ReactMarkdown from "react-markdown";
 
 export interface Faq {
   title: string;
@@ -19,7 +19,7 @@ export interface Faq {
  * faq items that should be pre-opened
  * @type {Function}
  */
-const getOpenFaqItemsFromUrl = (slug: String): string[] => {
+const getOpenFaqItemsFromUrl = (slug: string): string[] => {
   // Use URLSearchParams to parse the query parameters from the current URL
   const searchParams = new URLSearchParams(window.location.search);
 
@@ -27,13 +27,13 @@ const getOpenFaqItemsFromUrl = (slug: String): string[] => {
   const openFaqItemsString = searchParams.get(`openFaqItems-${slug}`);
 
   // If the parameter exists, split it by commas into an array; otherwise, return an empty array
-  return openFaqItemsString ? openFaqItemsString.split(',') : [];
+  return openFaqItemsString ? openFaqItemsString.split(",") : [];
 };
 
 export const FaqAccordion = ({
   rows,
-  slug
-}: { rows: Faq[], slug: String }): JSX.Element => {
+  slug,
+}: { rows: Faq[]; slug: string }): JSX.Element => {
   // Set the faq structured data
   const faqStructuredData = {
     "@context": "https://schema.org",
@@ -50,7 +50,9 @@ export const FaqAccordion = ({
 
   // Use the getOpenFaqItemsFromUrl function to set the
   // initial state of preExpanded based on URL parameters
-  const [preExpanded, setPreExpanded] = React.useState<string[]>(getOpenFaqItemsFromUrl(slug));
+  const [preExpanded, setPreExpanded] = React.useState<string[]>(
+    getOpenFaqItemsFromUrl(slug),
+  );
 
   /**
    * Updates query parameters in the url when items are opened
@@ -62,17 +64,22 @@ export const FaqAccordion = ({
 
     if (openFaqItems.length > 0) {
       // Convert openFaqItems to a comma-separated string and update/add the parameter
-      searchParams.set(`openFaqItems-${slug}`, openFaqItems.map(String).join(','));
+      searchParams.set(
+        `openFaqItems-${slug}`,
+        openFaqItems.map(String).join(","),
+      );
     } else {
       // If openFaqItems is empty, remove the parameter from the URL
       searchParams.delete(`openFaqItems-${slug}`);
     }
 
     // Construct the new URL, preserve existing parameters
-    const newUrl = `${window.location.protocol}//${window.location.host}${window.location.pathname}?${searchParams.toString()}`;
+    const newUrl = `${window.location.protocol}//${window.location.host}${
+      window.location.pathname
+    }?${searchParams.toString()}`;
 
     // Use history.pushState to change the URL without reloading the page
-    window.history.pushState({ path: newUrl }, '', newUrl);
+    window.history.pushState({ path: newUrl }, "", newUrl);
   };
 
   return (
@@ -89,7 +96,7 @@ export const FaqAccordion = ({
         preExpanded={preExpanded}
       >
         {rows.map((row, index) => (
-          <AccordionItem key={index}>
+          <AccordionItem>
             <AccordionItemHeading aria-level="2">
               <AccordionItemButton>{row.title}</AccordionItemButton>
             </AccordionItemHeading>
