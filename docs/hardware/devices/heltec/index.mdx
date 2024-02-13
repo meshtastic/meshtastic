@@ -62,9 +62,9 @@ The schematic between V3.0 and V3.1 is virtually identical, with only two differ
 
 - V3.0 has a [FDG6322C](https://www.mouser.com/datasheet/2/308/1/FDG6322C_D-2312203.pdf) in the power supply circuitry. (FDG6322C is a dual N & P channel digital FET on the output of the LDO regulator. Seems like a cost cutting measure, but it might impact the maximum current or stability of the 3.3V rail.)
 
-- V3.0 had different ESP32-S3 antenna filters:
+- V3.0 had different ESP32-S3 antenna filters than v3.1:
   - V3.0: L11 = 1.6nH, C15 = 6.9pF, C24 = 2.4pF
-  - V3.1: L11 = 1.8pF(?), C15 = 2.7nH (?), C24 = 1.8pF, Question marks because pF are typically capacitors and nH are typically inductors and they have swapped these.
+  - V3.1: L11 = 1.8pF, C15 = 2.7nH, C24 = 1.8pF, more closely matches π-type matching circuit of reference design in esp32-s3-pico-1.
 
 ## HELTEC v3
 
