@@ -180,6 +180,16 @@ const RegionData = new Map<
     },
   ],
   [
+    Protobuf.Config.Config_LoRaConfig_RegionCode.SG_923,
+    {
+      freq_start: 917.0,
+      freq_end: 925.0,
+      duty_cycle: 100,
+      spacing: 0,
+      power_limit: 20,
+    },
+  ],
+  [
     Protobuf.Config.Config_LoRaConfig_RegionCode.LORA_24,
     {
       freq_start: 2400.0,
