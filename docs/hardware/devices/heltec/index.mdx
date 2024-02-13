@@ -56,15 +56,10 @@ Not recommended because of design issues! Support is being phased out. Use V3 in
 
 ## HELTEC v3.1
 
-Use the same V3 firmware file. Right side of board says V3.1. [V3.0 schematic](https://web.archive.org/web/20221127054612/https://resource.heltec.cn/download/WiFi_LoRa32_V3/HTIT-WB32LA(F)_V3_Schematic_Diagram.pdf) | [V3.1 schematic](https://resource.heltec.cn/download/WiFi_LoRa_32_V3/HTIT-WB32LA(F)_V3.1_Schematic_Diagram.pdf)
+Firmware remains the same as V3 below. Compare schematics: [V3.0](https://web.archive.org/web/20221127054612/https://resource.heltec.cn/download/WiFi_LoRa32_V3/HTIT-WB32LA(F)_V3_Schematic_Diagram.pdf) and [V3.1](https://resource.heltec.cn/download/WiFi_LoRa_32_V3/HTIT-WB32LA(F)_V3.1_Schematic_Diagram.pdf). Key differences:
 
-The schematic between V3.0 and V3.1 is virtually identical, with only two differences:
-
-- V3.0 has a [FDG6322C](https://www.mouser.com/datasheet/2/308/1/FDG6322C_D-2312203.pdf) in the power supply circuitry. (FDG6322C is a dual N & P channel digital FET on the output of the LDO regulator. Seems like a cost cutting measure, but it might impact the maximum current or stability of the 3.3V rail.)
-
-- V3.0 had different ESP32-S3 antenna filters than v3.1:
-  - V3.0: L11 = 1.6nH, C15 = 6.9pF, C24 = 2.4pF
-  - V3.1: L11 = 1.8pF, C15 = 2.7nH, C24 = 1.8pF, more closely matches π-type matching circuit of reference design in esp32-s3-pico-1.
+- Removal of [FDG6322C](https://www.mouser.com/datasheet/2/308/1/FDG6322C_D-2312203.pdf) (a dual N & P channel FET) from the V3.1 power supply.
+- Antenna filter values in V3.1 (L11 = 1.8pF, C15 = 2.7nH, C24 = 1.8pF) align more closely with ESP32-S3 reference design than V3.0 (L11 = 1.6nH, C15 = 6.9pF, C24 = 2.4pF).
 
 ## HELTEC v3
 
