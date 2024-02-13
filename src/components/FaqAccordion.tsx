@@ -6,8 +6,9 @@ import {
   AccordionItemHeading,
   AccordionItemPanel,
 } from "react-accessible-accordion";
-import "react-accessible-accordion/dist/fancy-example.css";
 import ReactMarkdown from "react-markdown";
+
+import "../css/faq.css";
 
 export interface Faq {
   title: string;
