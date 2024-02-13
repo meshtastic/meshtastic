@@ -85,7 +85,7 @@ const OEM = (): JSX.Element => {
         <span>Font</span>
         <select
           onChange={(e) => {
-            setOemFont(parseInt(e.target.value));
+            setOemFont(Number.parseInt(e.target.value));
           }}
         >
           {enumOptions.map(([name, value]) => (
@@ -102,7 +102,7 @@ const OEM = (): JSX.Element => {
             readFile(e.target.files[0]).then((data) => {
               setOemIconBits(
                 new Uint8Array(
-                  data.split(",").map((s) => parseInt(s.trim(), 16)),
+                  data.split(",").map((s) => Number.parseInt(s.trim(), 16)),
                 ),
               );
             });
@@ -113,7 +113,7 @@ const OEM = (): JSX.Element => {
           type="number"
           name="oemIconHeight"
           onChange={(e) => {
-            setOemIconHeight(parseInt(e.target.value));
+            setOemIconHeight(Number.parseInt(e.target.value));
           }}
         />
         <span>Logo Width</span>
@@ -121,7 +121,7 @@ const OEM = (): JSX.Element => {
           type="number"
           name="oemIconWidth"
           onChange={(e) => {
-            setOemIconWidth(parseInt(e.target.value));
+            setOemIconWidth(Number.parseInt(e.target.value));
           }}
         />
         <span>Boot Text</span>
@@ -132,7 +132,7 @@ const OEM = (): JSX.Element => {
             setOemText(e.target.value);
           }}
         />
-        <a
+        <button
           className="cursor-pointer rounded-md bg-tertiary p-2 hover:brightness-90"
           download="OEM.bin"
           onClick={() => {
@@ -141,9 +141,10 @@ const OEM = (): JSX.Element => {
             });
             window.open(URL.createObjectURL(blob));
           }}
+          type="button"
         >
           Download
-        </a>
+        </button>
         {oemBytes.toString()}
       </div>
     </Layout>
