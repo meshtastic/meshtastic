@@ -60,8 +60,13 @@ export const FaqAccordion = ({
     // Get current url params
     const searchParams = new URLSearchParams(window.location.search);
 
-    // Convert openFaqItems to a comma-separated string and update/add the parameter
-    searchParams.set(`openFaqItems-${slug}`, openFaqItems.map(String).join(','));
+    if (openFaqItems.length > 0) {
+      // Convert openFaqItems to a comma-separated string and update/add the parameter
+      searchParams.set(`openFaqItems-${slug}`, openFaqItems.map(String).join(','));
+    } else {
+      // If openFaqItems is empty, remove the parameter from the URL
+      searchParams.delete(`openFaqItems-${slug}`);
+    }
 
     // Construct the new URL, preserve existing parameters
     const newUrl = `${window.location.protocol}//${window.location.host}${window.location.pathname}?${searchParams.toString()}`;
