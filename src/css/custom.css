@@ -82,12 +82,29 @@ html[data-theme="dark"] .header-github-link:before {
   color: var(--ifm-link-color);
 }
 
+
 .split-container {
   display: flex;
+  justify-content: space-between;
 }
+
 .split-item {
   flex: 1;
+  padding: 0 10px;
 }
+
+/* mobile screens */
+@media (max-width: 768px) {
+  .split-container {
+    flex-direction: column;
+  }
+
+  .split-item {
+    width: 100%;
+    padding: 10px 0;
+  }
+}
+
 
 .indexCtasBody {
   --ifm-button-size-multiplier: 1.6;
