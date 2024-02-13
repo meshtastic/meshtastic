@@ -83,30 +83,6 @@ export const PythonFaq = [
   },
 ];
 
-## Overview
-
-<FaqAccordion rows={GeneralFaq} slug="general" />
-
-## Android Client
-
-<FaqAccordion rows={AndroidFaq} slug="android" />
-
-## Apple Clients
-
-<FaqAccordion rows={AppleFaq} slug="apple" />
-
-## Channels
-
-<FaqAccordion rows={ChannelsFaq} slug="channels" />
-
-## Python CLI
-
-<FaqAccordion rows={PythonFaq} slug="python" />
-
-<!-- Devices -->
-
-## Devices
-
 export const DevicesFaq = [
   {
     title: "How do I turn **off** an ESP32 T-Beam based device?",
@@ -155,15 +131,11 @@ To limit traffic, you can consider setting the device metrics and position updat
   },
 ];
 
-<FaqAccordion rows={DevicesFaq} slug="devices" />
-
-## Amateur Radio (HAM)
-
 export const HamFaq = [
   {
-    title: "What is the benefit of using a HAM license with Meshtastic?",
+    title: "What is the benefit of using a ham license with Meshtastic?",
     content: `
-If you use your HAM radio license with Meshtastic, consider both the privileges and restrictions:
+If you use your ham radio license with Meshtastic, consider both the privileges and restrictions:
 #### Privileges
 
 - Increased Transmit Power
@@ -175,24 +147,18 @@ If you use your HAM radio license with Meshtastic, consider both the privileges 
 - Plain-Text Only
   - On amateur radio bands, encryption is illegal. [FCC Part 97.113.A.4](https://www.ecfr.gov/current/title-47/chapter-I/subchapter-D/part-97/subpart-B/section-97.113#p-97.113(a)(4))
 - Lack of Privacy
-  - As a HAM operator, it is a requirement that you identify yourself by your call sign periodically when transmitting. Your call sign will be publicly transmitted at least once every 10 minutes at minimum. [FCC Part 97.119.A](https://www.ecfr.gov/current/title-47/chapter-I/subchapter-D/part-97/subpart-B/section-97.119#p-97.119(a))
+  - As a ham operator, it is a requirement that you identify yourself by your call sign periodically when transmitting. Your call sign will be publicly transmitted at least once every 10 minutes at minimum. [FCC Part 97.119.A](https://www.ecfr.gov/current/title-47/chapter-I/subchapter-D/part-97/subpart-B/section-97.119#p-97.119(a))
   `,
   },
   {
-    title: "How do I set my HAM call sign?",
+    title: "How do I set my ham call sign?",
     content: `
     - On Android navigate to Radio configuration -> User and set Long name to your Ham Radio callsign, then activate the slider for 'Licensed amateur radio'.
 - On iPhone navigate to Settings -> User and set Long Name to your Ham Radio callsign, then activate the slider for 'Licensed Operator'.
-- Instructions for Enabling HAM License from the Python CLI can be found [here](/docs/software/python/cli/usage#ham-radio-support).
+- Instructions for Enabling ham License from the Python CLI can be found [here](/docs/software/python/cli/usage#ham-radio-support).
     `,
   },
 ];
-
-Meshtastic can be used by both unlicensed people and licensed HAM operators.
-
-<FaqAccordion rows={HamFaq} slug="ham" />
-
-## Mesh
 
 export const MeshFaq = [
   {
@@ -209,10 +175,6 @@ export const MeshFaq = [
   },
 ];
 
-<FaqAccordion rows={MeshFaq} slug="mesh" />
-
-## Modules
-
 export const ModulesFaq = [
   {
     title: "What are Modules?",
@@ -227,5 +189,41 @@ export const ModulesFaq = [
     content: `API documentation for creating modules is available [here](/docs/development/device/module-api).`,
   },
 ];
+
+## Overview
+
+<FaqAccordion rows={GeneralFaq} slug="general" />
+
+## Android Client
+
+<FaqAccordion rows={AndroidFaq} slug="android" />
+
+## Apple Clients
+
+<FaqAccordion rows={AppleFaq} slug="apple" />
+
+## Channels
+
+<FaqAccordion rows={ChannelsFaq} slug="channels" />
+
+## Python CLI
+
+<FaqAccordion rows={PythonFaq} slug="python" />
+
+## Devices
+
+<FaqAccordion rows={DevicesFaq} slug="devices" />
+
+## Amateur Radio (ham)
+
+Meshtastic can be used by both unlicensed people and licensed HAM operators.
+
+<FaqAccordion rows={HamFaq} slug="ham" />
+
+## Mesh
+
+<FaqAccordion rows={MeshFaq} slug="mesh" />
+
+## Modules
 
 <FaqAccordion rows={ModulesFaq} slug="modules" />
