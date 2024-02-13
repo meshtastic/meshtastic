@@ -10,7 +10,7 @@ import {
 } from "@heroicons/react/24/solid";
 import Layout from "@theme/Layout";
 
-import { FirmwareReleases } from "../../utils/apiTypes";
+import type { FirmwareReleases } from "../../utils/apiTypes";
 import { fetcher } from "../../utils/swr";
 import {
   FirmwareCard,
@@ -63,7 +63,8 @@ const Firmware = (): JSX.Element => {
               <div className="card__body">
                 <p>
                   Devices such as T-Echo, RAK4631, and RAK11300 are flashed via
-                  filesystem. Use the web flasher to download applicable firmware.
+                  filesystem. Use the web flasher to download applicable
+                  firmware.
                 </p>
               </div>
               <div className="card__footer mt-auto">
