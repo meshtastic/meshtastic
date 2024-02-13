@@ -16,5 +16,3 @@ Website and documentation source for the Meshtastic project.
 ## Development & Building
 
 For complete instructions on setting up your development environment and for building and running the project locally, please refer to our [Local Development Guide](https://meshtastic.org/docs/development/documentation/local-dev/).
-
-Our guide provides all the necessary steps to contribute to the Meshtastic project effectively.
