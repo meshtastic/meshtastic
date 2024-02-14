@@ -104,7 +104,7 @@ export const FaqAccordion = ({
               {rows.map((row, index) => (
                 // biome-ignore lint/suspicious/noArrayIndexKey: React complains if there is no key
                 <AccordionItem key={index}>
-                  <AccordionItemHeading aria-level="2">
+                  <AccordionItemHeading aria-level="3">
                     <AccordionItemButton>{row.title}</AccordionItemButton>
                   </AccordionItemHeading>
                   <AccordionItemPanel>
