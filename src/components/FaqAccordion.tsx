@@ -67,53 +67,30 @@ export const FaqAccordion = ({
   rows,
   slug,
 }: { rows: Faq[]; slug: string }): JSX.Element => {
-  // Set the faq structured data
-  const faqStructuredData = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: rows.map((row) => ({
-      "@type": "Question",
-      name: row.title,
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: row.content,
-      },
-    })),
-  };
-
   return (
     <BrowserOnly fallback={<div>Loading FAQ's...</div>}>
       {() => {
         return (
-          <>
-            <script
-              type="application/ld+json"
-              // biome-ignore lint: we need dangerouslySetInnerHTML here, and since we're the ones setting the content it's should be safe
-              dangerouslySetInnerHTML={{
-                __html: JSON.stringify(faqStructuredData),
-              }}
-            />
-            <Accordion
-              allowMultipleExpanded={true}
-              allowZeroExpanded={true}
-              onChange={(itemUuids) => {
-                handleChange(itemUuids, slug);
-              }}
-              preExpanded={getOpenFaqItemsFromUrl(slug)}
-            >
-              {rows.map((row, index) => (
-                // biome-ignore lint/suspicious/noArrayIndexKey: React complains if there is no key
-                <AccordionItem key={index}>
-                  <AccordionItemHeading aria-level="3">
-                    <AccordionItemButton>{row.title}</AccordionItemButton>
-                  </AccordionItemHeading>
-                  <AccordionItemPanel>
-                    <ReactMarkdown>{row.content}</ReactMarkdown>
-                  </AccordionItemPanel>
-                </AccordionItem>
-              ))}
-            </Accordion>
-          </>
+          <Accordion
+            allowMultipleExpanded={true}
+            allowZeroExpanded={true}
+            onChange={(itemUuids) => {
+              handleChange(itemUuids, slug);
+            }}
+            preExpanded={getOpenFaqItemsFromUrl(slug)}
+          >
+            {rows.map((row, index) => (
+              // biome-ignore lint/suspicious/noArrayIndexKey: React complains if there is no key
+              <AccordionItem key={index}>
+                <AccordionItemHeading aria-level="3">
+                  <AccordionItemButton>{row.title}</AccordionItemButton>
+                </AccordionItemHeading>
+                <AccordionItemPanel>
+                  <ReactMarkdown>{row.content}</ReactMarkdown>
+                </AccordionItemPanel>
+              </AccordionItem>
+            ))}
+          </Accordion>
         );
       }}
     </BrowserOnly>

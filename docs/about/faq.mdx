@@ -6,6 +6,7 @@ sidebar_position: 3
 ---
 
 import { FaqAccordion } from "/src/components/FaqAccordion";
+import { FaqStructuredData } from "/src/components/FaqStructuredData";
 
 export const Faq = {
   "general": [
@@ -26,11 +27,11 @@ export const Faq = {
     {
       title: "What does the icon next to the message mean?",
       content: `
-        - Cloud with an up arrow - Queued on the app to be sent to your device.
-        - Cloud only - Queued on the device to be sent over the mesh.
-        - Cloud with a check mark - At least one other node on the mesh acknowledged the message.
-        - Person with a check mark - The intended recipient of your direct message acknowledged the message.
-        - Cloud crossed out - Not acknowledged or message error.`,
+  - Cloud with an up arrow - Queued on the app to be sent to your device.
+  - Cloud only - Queued on the device to be sent over the mesh.
+  - Cloud with a check mark - At least one other node on the mesh acknowledged the message.
+  - Person with a check mark - The intended recipient of your direct message acknowledged the message.
+  - Cloud crossed out - Not acknowledged or message error.`,
     },
     {
       title: "How can I clear the message history?",
@@ -130,19 +131,19 @@ export const Faq = {
     {
       title: "What is the benefit of using a ham license with Meshtastic?",
       content: `
-        If you use your ham radio license with Meshtastic, consider both the privileges and restrictions:
-        #### Privileges
+If you use your ham radio license with Meshtastic, consider both the privileges and restrictions:
+#### Privileges
 
-        - Increased Transmit Power
-          - Up to 10W transmit power in the United States! [47 CFR 97.313(j)](https://www.ecfr.gov/current/title-47/chapter-I/subchapter-D/part-97#p-97.313(j))
-        - Higher Gain Antennas
+- Increased Transmit Power
+  - Up to 10W transmit power in the United States! [47 CFR 97.313(j)](https://www.ecfr.gov/current/title-47/chapter-I/subchapter-D/part-97#p-97.313(j))
+- Higher Gain Antennas
 
-        #### Restrictions
+#### Restrictions
 
-        - Plain-Text Only
-          - On amateur radio bands, encryption is illegal. [FCC Part 97.113.A.4](https://www.ecfr.gov/current/title-47/chapter-I/subchapter-D/part-97/subpart-B/section-97.113#p-97.113(a)(4))
-        - Lack of Privacy
-          - As a ham operator, it is a requirement that you identify yourself by your call sign periodically when transmitting. Your call sign will be publicly transmitted at least once every 10 minutes at minimum. [FCC Part 97.119.A](https://www.ecfr.gov/current/title-47/chapter-I/subchapter-D/part-97/subpart-B/section-97.119#p-97.119(a))
+- Plain-Text Only
+  - On amateur radio bands, encryption is illegal. [FCC Part 97.113.A.4](https://www.ecfr.gov/current/title-47/chapter-I/subchapter-D/part-97/subpart-B/section-97.113#p-97.113(a)(4))
+- Lack of Privacy
+  - As a ham operator, it is a requirement that you identify yourself by your call sign periodically when transmitting. Your call sign will be publicly transmitted at least once every 10 minutes at minimum. [FCC Part 97.119.A](https://www.ecfr.gov/current/title-47/chapter-I/subchapter-D/part-97/subpart-B/section-97.119#p-97.119(a))
     `,
     },
     {
@@ -184,10 +185,11 @@ export const Faq = {
   ],
 };
 
+<FaqStructuredData faqs={Faq} />
 
 ## Overview
 
-{<FaqAccordion rows={Faq.general} slug="general" />}
+<FaqAccordion rows={Faq.general} slug="general" />
 
 ## Android Client
 
