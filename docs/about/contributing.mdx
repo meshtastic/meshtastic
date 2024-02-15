@@ -1,10 +1,14 @@
 ---
-title: Community Guide
+title: Contributing to Meshtastic
 sidebar_label: Contributing
 slug: /contributing
 sidebar_position: 3
 ---
-### Volunteer Based Development
+
+import Link from "@docusaurus/Link"
+
+## Volunteer Based Development
+
 
 Meshtastic is a team of volunteers, and as such there are always plenty of ways to help. This project gets great contributions from people in their off hours. Those contributors work on the features they are interested in. It is a very open and welcoming developer community, and we are always looking for help to improve Meshtastic.
 
@@ -19,38 +23,62 @@ Meshtastic is a team of volunteers, and as such there are always plenty of ways 
 
 There are several developers, testers, and active users on [Discord](https://discord.gg/ktMAKGBnBs).
 
-## Meshtastic Ecosystem
+### Meshtastic Ecosystem
 
-There are many technologies (and repositories) used in creating the Meshtastic ecosystem. Below is a breakdown:
+The Meshtastic ecosystem leverages a variety of technologies and repositories to provide a robust decentralized communication platform. This ecosystem is continuously evolving, thanks to the collaborative effort of developers, contributors, and the community, aiming to enhance and expand Meshtastic's capabilities for decentralized off-grid communication. 
 
-### Protocol Buffers
+Key components include:
+- **Protocol Buffers**: The backbone of communication and interactions, with changes and definitions managed in the [Meshtastic Protobuf Definitions repository](https://github.com/meshtastic/protobufs). For detailed information, see the [Protobuf API Reference](https://buf.build/meshtastic/protobufs/).
+- **Device Firmware**: Development for ESP32, nRF52, and RP2040 based devices occurs in the [firmware repository](https://github.com/meshtastic/firmware), focusing on C and C++ code for hardware interaction and communication.
+- **Firmware Modules**: Extend the core functionalities of devices and mesh networks, implemented mainly within the firmware repository. Modules are essential for adding new features and integrating devices within the ecosystem.
+- **CLI Apps (Device Interface)**: The [Meshtastic Python CLI](https://github.com/meshtastic/Meshtastic-python) enables interaction with device settings and functionalities, serving both as a utility and a library for application development.
+- **Web and JavaScript Apps**: Development for the hosted web server on ESP32 devices is done in [Meshtastic Web](https://github.com/meshtastic/web), with a JavaScript library for device interfaces available in [Meshtastic JS](https://github.com/meshtastic/meshtastic.js).
+- **Mobile and Desktop Apps**: Android, iOS, iPadOS, and macOS applications provide user interfaces for interacting with Meshtastic devices. Development for Android is detailed in the [Meshtastic-Android repository](https://github.com/meshtastic/Meshtastic-Android), while Apple platforms are supported by the [Meshtastic-Apple repository](https://github.com/meshtastic/Meshtastic-Apple).
+- **Documentation**: The source for the Meshtastic website and documentation resides in the [meshtastic/meshtastic repository](https://github.com/meshtastic/meshtastic). For guidelines on maintaining documentation, visit the [Maintaining Documentation](/docs/development/docs) page.
 
-Most communication and interactions happen with protocol buffers. The [Meshtastic Protobuf Definitions](https://github.com/meshtastic/protobufs) repo is where all of the protocol buffer changes happen. See the [Protobuf API Reference](https://buf.build/meshtastic/protobufs/) for more details.
+This ecosystem is continuously evolving, thanks to the collaborative effort of developers, contributors and the community, aiming to enhance and expand Meshtastic's capabilities for decentralized off-grid communication.
 
-### Device Firmware
 
-The [firmware repo](https://github.com/meshtastic/firmware) is where all of the device firmware development happens. This is where the code for the ESP32, nRF52 and RP2040 based devices is developed. It is mainly C and C++ code. Think Arduino. It is where the first level of hardware interaction begins and ends.
+## Supporting and Contributing to Meshtastic
 
-### Firmware Modules
+The Meshtastic project benefits greatly from the contributions of our volunteers and the financial support from our community. As the project has evolved, the expansion of features and services has led to increased financial needs, including hardware for development, GitHub fees, hosting for public MQTT services, among others. This growth into a robust platform for decentralized off-grid mesh networking solutions showcases the dedication of our developers and the generosity of our financial supporters.
 
-[Modules](/docs/configuration/module) extend device and mesh functionality beyond core functions.  These are also implemented mainly in the firmware repo above. Typically, you would add functions in the protobufs repo and the device repo to implement module functionality. You probably also want to have some client or device, use or interact with the module. This is where Device Interface support comes into play.
+### How You Can Support Meshtastic Financially
 
-### CLI Apps (Device Interface)
+If direct development contribution is not feasible for you, financial support is another invaluable way to help Meshtastic grow and thrive. We offer two primary options for monetary donations:
 
-- **Meshtastic Python CLI** - The [meshtastic/Meshtastic-python repository](https://github.com/meshtastic/Meshtastic-python) is a command line utility that allows you to interact with most of the device settings and functionality. This python library can also be consumed for other applications.  See [Meshtastic Python Development](/docs/development/python/) for more details
+<div className="indexCtasBody">
+  <div className="split-container">
+    <div className="split-item">
+      <a
+        className="button button--outline button--lg cta--button"
+        href="https://opencollective.com/meshtastic"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Support on Open Collective
+      </a>
+    </div>
 
-### Web Apps (Device Interface)
+    <div className="split-item">
+      <a
+        className="button button--outline button--lg cta--button"
+        href="https://github.com/sponsors/meshtastic"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Sponsor on GitHub
+      </a>
+    </div>
+  </div>
+</div>
 
-- **Meshtastic Web** - The [meshtastic/web repository](https://github.com/meshtastic/web) is where the hosted web server on the ESP32 devices in Typescript is developed. See the [Web Development Overview](/docs/development/web/) for more details.
-- **Meshtastic JS** - The [meshtastic/meshtastic.js](https://github.com/meshtastic/meshtastic.js) repository is a JavaScript library that provides an interface for Meshtastic devices. See [Javascript Development](/docs/development/js) for more details
+### Fiscal Sponsorships
 
-### Mobile and Desktop Apps (Device Interface)
+We're deeply thankful for the backing from the Open Collective, Open Source Collective, DigitalOcean, and Vercel, which has been instrumental in our project's sustainability and growth:
 
-There are Android, iOS, iPadOS, and macOS apps that interact with Meshtastic devices:
+- **Open Collective & Open Source Collective**: Our collaboration with these organizations offers a robust fiscal management framework and banking solutions, supporting our project alongside over three thousand other open source initiatives. Open Collective's transparent framework lets everyone see our finances, including income, expenditures, and contributions on [Meshtastic's Open Collective page](https://opencollective.com/meshtastic). This transparency and support affirm that we're in excellent company.
 
-- **Android App** - The [meshtastic/Meshtastic-Android](https://github.com/meshtastic/Meshtastic-Android) repository contains the Kotlin code for Android based interactions with Meshtastic devices. See the [Android development instructions](/docs/development/android) on how to create a development environment and build the Meshtastic Android App.
-- **Apple Apps** - The [meshtastic/Meshtastic-Apple](https://github.com/meshtastic/Meshtastic-Apple) repository contains the SwiftUI client applications code for iPhone, iPad and Mac.
+- **DigitalOcean**: Champions of open source, DigitalOcean supports Meshtastic through credits, which significantly aid our development, infrastructure, and testing efforts. This contribution is part of their commitment to fostering innovation and collaboration within the open source ecosystem.
 
-### Documentation
-
-The Meshtastic website (the one you are looking at right now) is in the [meshtastic/Meshtastic](https://github.com/meshtastic/meshtastic) repository.  See [Maintaining Documentation](/docs/development/docs) for more details.
+- **Vercel**: By covering our hosting costs, Vercel directly contributes to Meshtastic's growth, enhancing our web scalability and presence. Their sponsorship is crucial for our continued development and focus on creating a robust platform for decentralized communication.
