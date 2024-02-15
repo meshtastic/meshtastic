@@ -1,0 +1,53 @@
+## GPS Module
+
+### Introduction
+In this guide, we'll explore how to significantly upgrade your Heltec ESP32 V3 board by integrating the GT-U7 GPS Module. This addition not only equips your device with precise GPS capabilities but also embeds a real-time clock (RTC), eliminating the need for WiFi or a smartphone to track time. This is particularly beneficial for mesh networks, where knowing the duration since the last seen device is crucial.
+
+However, it's important to note that the GPS module increases the power demand of your node. We'll address this by detailing how to incorporate a switch or an NPN 2N2222 transistor into your setup. This enables firmware-controlled power management, conserving battery life without sacrificing functionality.
+
+### Benefits
+- **GPS Capabilities**: Enhance your node with the ability to determine its location with high precision. This is invaluable for tracking, mapping, and numerous other applications where location data is critical.
+- **Real-Time Clock (RTC)**: Maintain accurate timekeeping on your mesh network without external time sources like the internet or a connected smartphone.
+
+### Considering Power Consumption
+The GT-U7 module is power-hungry, potentially shortening the battery lifespan of your node. To mitigate this, we recommend two approaches:
+ - **Manual Switch**: A simple on/off switch for the GPS module, allowing for manual power management.
+ - **NPN 2N2222 Transistor**: Offers automatic power control through the firmware. For example, programming the device to turn off the GPS module after a set period or upon specific conditions, like pressing the user button three times.
+
+### Materials Needed
+ - Heltec ESP32 V3 board
+ - GT-U7 GPS Module
+ - NPN 2N2222 Transistor
+ - Wires and soldering equipment
+ - (Optional) Switch for manual power control
+
+### Instructions
+
+ 1. Solder a cable from the TXD slot on the GPS module to GPIO 48 on Heltec board. (You may choose your own GPIO pin)
+ 2. Solder a cable from the RXD slot on the GPS module to GPIO 47 on Heltec board. (You may choose your own GPIO pin)
+ 3. Solder a cable from the GND slot on the GPS module to GND pin on Heltec board.
+ 4. Solder a cable from left leg of NPN 2N2222 Transistor to VCC skit on GPS module.
+ 5. Solder a cable from Right leg of NPN 2N2222 Transistor to 3V/5V pin on Heltec board.
+ 6. Solder a cable from Middle leg of NPN 2N2222 Transistor to GPIO 48 of Heltec board. (You may choose your own GPIO pin)
+ 7. Go to Meshtastic app > Radio Configurations > Position
+ 8. Set GPS_RX_PIN to 48 (This will communicate to the TXD slot on the GPS)
+ 9. Set GPS_TX_PIN to 47 (This will communicate to the RXD slot on the GPS)
+ 10. Set PIN_GPS_EN to 46 (This will allow the meshtastic firmware to turn off the power on the GPS board with the user button of the Heltec Board by pressing it 3 times)
+
+## Wiring Diagram
+
+!!!! i have a picture I'd like to updload to help understand this better if I can Upload it. Don't know how.
+
+https://media.printables.com/media/prints/750293/rich_content/00b6d653-db78-4ad7-852d-19feb2095dc3/thumbs/cover/800x806/png/hook-up-gps-module.webp
+
+## Troubleshooting Tips
+
+If the GPS module does not power on, check the connections to the transistor and ensure that the middle pin is properly configured on the firmware's settings.
+If "GPS is Dissable" message, press the user button on the Heltec 3 times to enable.
+If "No GPS Present" message, Check the TXD and RXD are configure correctly
+If "No GPS Lock" message, walk around or move node to another location with access to the sky for a bit to lock on properly.
+If the location is not accurate, walk around to properly lock on.
+
+## Conclusion
+
+By following this guide, you'll enhance your Heltec ESP32 V3 board with valuable GPS capabilities and an RTC, all while managing power consumption effectively. Whether for a hobby project or a more serious application, these additions will significantly expand the potential of your device. Happy Meshing
