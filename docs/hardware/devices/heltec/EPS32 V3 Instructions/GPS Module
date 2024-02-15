@@ -1,18 +1,19 @@
 ## GPS Module
 
 ### Introduction
-In this guide, we'll explore how to significantly upgrade your Heltec ESP32 V3 board by integrating the GT-U7 GPS Module. This addition not only equips your device with precise GPS capabilities but also embeds a real-time clock (RTC), eliminating the need for WiFi or a smartphone to track time. This is particularly beneficial for mesh networks, where knowing the duration since the last seen device is crucial.
-
+This informational guide outlines the process of enhancing the Heltec ESP32 V3 board by integrating the GT-U7 GPS Module. The addition of this module provides precise GPS capabilities and a real-time clock (RTC), eliminating the need for WiFi or a smartphone for time tracking. This enhancement is particularly beneficial for the mesh, where tracking the duration since the last seen device is crucial.
 However, it's important to note that the GPS module increases the power demand of your node. We'll address this by detailing how to incorporate a switch or an NPN 2N2222 transistor into your setup. This enables firmware-controlled power management, conserving battery life without sacrificing functionality.
 
-### Benefits
-- **GPS Capabilities**: Enhance your node with the ability to determine its location with high precision. This is invaluable for tracking, mapping, and numerous other applications where location data is critical.
-- **Real-Time Clock (RTC)**: Maintain accurate timekeeping on your mesh network without external time sources like the internet or a connected smartphone.
+It is important to note that the GPS module increases the power demand of the node. This guide details the incorporation of a switch or an NPN 2N2222 transistor to enable firmware-controlled power management, conserving battery life without compromising functionality.
 
-### Considering Power Consumption
-The GT-U7 module is power-hungry, potentially shortening the battery lifespan of your node. To mitigate this, we recommend two approaches:
+### Benefits
+- **GPS Capabilities**: Provides the node with the ability to determine its location with high precision, which is invaluable for tracking, mapping, and various other applications requiring location data.
+- **Real-Time Clock (RTC)**: Ensures accurate timekeeping on the mesh network without relying on external time sources such as the internet or a connected smartphone.
+
+### Power Consumption Considerations
+The GT-U7 module is known for its high power consumption, which can potentially shorten the battery lifespan of the node. To mitigate this, two approaches are recommended:
  - **Manual Switch**: A simple on/off switch for the GPS module, allowing for manual power management.
- - **NPN 2N2222 Transistor**: Offers automatic power control through the firmware. For example, programming the device to turn off the GPS module after a set period or upon specific conditions, like pressing the user button three times.
+ - **NPN 2N2222 Transistor**: Facilitates automatic power control through the firmware, enabling the device to turn off the GPS module based on specific conditions or after a set period.
 
 ### Materials Needed
  - Heltec ESP32 V3 board
@@ -42,12 +43,12 @@ https://media.printables.com/media/prints/750293/rich_content/00b6d653-db78-4ad7
 
 ## Troubleshooting Tips
 
-If the GPS module does not power on, check the connections to the transistor and ensure that the middle pin is properly configured on the firmware's settings.
-If "GPS is Dissable" message, press the user button on the Heltec 3 times to enable.
-If "No GPS Present" message, Check the TXD and RXD are configure correctly
-If "No GPS Lock" message, walk around or move node to another location with access to the sky for a bit to lock on properly.
-If the location is not accurate, walk around to properly lock on.
+If the GPS module does not power on, check the connections to the transistor and ensure that the middle pin is properly configured in the firmware settings.
+If the message "GPS is Disabled" appears, press the user button on the Heltec board three times to enable it.
+If the message "No GPS Present" appears, check that the TXD and RXD are correctly configured.
+If the message "No GPS Lock" appears, move the node to another location with access to the sky for a bit to lock on properly.
+If the location is not accurate, walk around to allow the GPS to properly lock on.
 
 ## Conclusion
 
-By following this guide, you'll enhance your Heltec ESP32 V3 board with valuable GPS capabilities and an RTC, all while managing power consumption effectively. Whether for a hobby project or a more serious application, these additions will significantly expand the potential of your device. Happy Meshing
+By following this guide, you can enhance your Heltec ESP32 V3 board with valuable GPS capabilities and an RTC, while effectively managing power consumption. Whether for a hobby project or a more serious application, these additions significantly expand the potential of your device. Happy Meshing!
