@@ -15,22 +15,4 @@ Website and documentation source for the Meshtastic project.
 
 ## Development & Building
 
-nodejs is required in your dev. environment. The method for installing nodejs depends on your operating system. This software is built using [Docusaurus](https://docusaurus.io).
-
-Go to the root directory of your repository and install dependencies:
-
-```shell
-pnpm install
-```
-
-Build the project with the following command
-
-```shell
-pnpm build
-```
-
-Start a local dev. instance with the following command
-
-```shell
-pnpm start
-```
+For complete instructions on setting up your development environment and for building and running the project locally, please refer to our [Local Development Guide](https://meshtastic.org/docs/development/documentation/local-dev/).
