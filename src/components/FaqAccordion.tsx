@@ -49,18 +49,30 @@ const handleChange = (
       `openFaqItems-${slug}`,
       openFaqItems.map(String).join(","),
     );
+
+    // Update the hash to be the first item in the openFaqItems array
+    // Ensure the first item is a string and encode it for URL hash
+    const hash = `accordion__heading-${openFaqItems[0]}`;
+    console.log("hash", hash);
+    window.location.hash = hash;
   } else {
-    // If openFaqItems is empty, remove the parameter from the URL
+    // If openFaqItems is empty, remove the parameter and hash from the URL
     searchParams.delete(`openFaqItems-${slug}`);
+    window.location.hash = "";
   }
 
   // Construct the new URL, preserve existing parameters
-  const newUrl = `${window.location.protocol}//${window.location.host}${
-    window.location.pathname
-  }?${searchParams.toString()}`;
+  const newUrlWithoutHash = `${window.location.protocol}//${
+    window.location.host
+  }${window.location.pathname}?${searchParams.toString()}`;
 
-  // Change the URL without reloading the page
-  window.history.pushState({ path: newUrl }, "", newUrl);
+  // Change the URL without reloading the page, including the new hash if applicable
+  // Note: We don't directly include the hash in newUrl because changing window.location.hash already modifies it
+  window.history.pushState(
+    { path: newUrlWithoutHash + window.location.hash },
+    "",
+    newUrlWithoutHash + window.location.hash,
+  );
 };
 
 export const FaqAccordion = ({
