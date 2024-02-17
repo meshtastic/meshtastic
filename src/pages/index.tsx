@@ -118,16 +118,16 @@ function Home() {
           </h1>
           <p className="hero__subtitle">{siteConfig.tagline}</p>
           <div className="indexCtas">
-            <Link className="button button--lg" to="/docs/introduction">
+            <Link className="button button--lg button--primary" to="/docs/introduction">
               Learn More
             </Link>
-            <Link className="button button--lg" to="/docs/getting-started">
+            <Link className="button button--lg button--secondary" to="/docs/getting-started">
               Get Started
             </Link>
           </div>
         </div>
       </header>
-      <main className="flex flex-col gap-4">
+      <main className="flex flex-col gap-4 py-10">
         <div className="bg-primaryDark mx-auto flex w-full lg:w-auto flex-col gap-4 p-4 shadow-inner">
           <h3 className="text-xl font-bold">Connect with us.</h3>
           <div className="flex w-full overflow-x-auto">

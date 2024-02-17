@@ -77,6 +77,68 @@ html[data-theme="dark"] .header-github-link:before {
   }
 }
 
+.button {
+  letter-spacing: .05rem;
+}
+
+.button--primary {
+  background-color: var(--ifm-font-color-base-inverse);
+  border-color: var(--ifm-font-color-base-inverse);
+  background-image: url("/design/logo/svg/Mesh_Logo_White.svg");
+  background-repeat: no-repeat;
+  background-position: 90% 50%;
+  background-size: 26px;
+  color: white;
+  cursor: pointer;
+  overflow: hidden; /* Ensures the lines don't go outside the button boundaries */
+  padding-right: 50px;
+  position: relative; /* Needed for absolute positioning of pseudo-elements */
+}
+
+.button--primary:hover {
+  color: white;
+}
+
+.button--primary::before, .button--primary::after {
+  background-color: white; /* Line color */
+  left: 80%; /* Start from further below the button to ensure full coverage */
+  content: '';
+  top: 34%;
+  height: 15px; /* Increased line length to ensure it covers the entire button */
+/*  left: 100%;*/
+  position: absolute;
+  transform: rotate(33.5deg); /* Rotate lines to 45 degrees */
+  transition: left .8s linear, height .8s cubic-bezier(0.48, 0.18, 0.89, 0.34), top .8s cubic-bezier(0.48, 0.18, 0.89, 0.34), opacity .8s cubic-bezier(0.95, 0.05, 0.98, 0.06);
+  opacity: 0;
+  width: .1rem; /* Line thickness */
+}
+
+.button--primary::after {
+  /* Adjusting for the second line, 5px apart from the first */
+  transform: rotate(33.5deg) translate(6px, -4px);
+}
+
+.button--primary:hover::before, .button--primary:hover::after {
+  /* Lines appear and move on hover */
+  left: -15%; /* Move lines to the top beyond the button to ensure full coverage */
+  height: 60px;
+  top: -6px;
+  opacity: 1;
+  transition: left 1s linear, height 0.2s linear, top 0.2s linear, opacity .1s cubic-bezier(0.08, 0.85, 0.03, 1);
+}
+
+
+
+.indexCtas {
+  .button + .button {
+    margin-left: 40px;
+  }
+}
+
+.button--secondary {
+/*  color: white;*/
+}
+
 .cta--button {
   --ifm-button-border-color: var(--ifm-link-color);
   color: var(--ifm-link-color);
@@ -126,20 +188,6 @@ html[data-theme="dark"] .header-github-link:before {
   align-items: center;
   justify-content: center;
   margin-top: 24px;
-}
-
-.indexCtas a {
-  color: var(--ifm-font-color-base-inverse);
-  --ifm-button-border-color: var(--ifm-font-color-base-inverse);
-}
-
-.indexCtas a:hover {
-  color: rgb(77, 77, 77);
-  --ifm-button-border-color: rgb(77, 77, 77);
-}
-
-.indexCtas a:last-of-type {
-  margin: 20px 36px;
 }
 
 .theme-doc-markdown {
