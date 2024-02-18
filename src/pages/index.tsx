@@ -4,7 +4,10 @@ import useBaseUrl from "@docusaurus/useBaseUrl";
 import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
 import Layout from "@theme/Layout";
 
-import { SocialCard, SocialCardProps } from "../components/homepage/SocialCard";
+import {
+  SocialCard,
+  type SocialCardProps,
+} from "../components/homepage/SocialCard";
 
 const SocialCards: SocialCardProps[] = [
   {
@@ -36,7 +39,7 @@ const SocialCards: SocialCardProps[] = [
       <img
         alt="facebook"
         className="m-auto h-14"
-        src="/img/homepage/f_logo_RGB-White_1024.png"
+        src="/img/homepage/f_logo_RGB-White_1024.webp"
       />
     ),
   },
