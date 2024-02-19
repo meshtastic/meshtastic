@@ -61,6 +61,8 @@ values={[
 ]}>
 <TabItem value="android">
 
+#### Android
+
 :::info
 
 MQTT Config options are available for Android.
@@ -73,6 +75,8 @@ MQTT Config options are available for Android.
 </TabItem>
 <TabItem value="apple">
 
+#### Apple
+
 :::info
 
 MQTT Config options are available on iOS, iPadOS and macOS at Settings > Modules > MQTT.
@@ -81,6 +85,8 @@ MQTT Config options are available on iOS, iPadOS and macOS at Settings > Modules
 
 </TabItem>
 <TabItem value="cli">
+
+#### CLI
 
 :::info
 
@@ -119,14 +125,16 @@ meshtastic --set mqtt.json_enabled true
 meshtastic --set mqtt.json_enabled false
 ```
 
-  </TabItem>
-  <TabItem value="web">
+</TabItem>
+<TabItem value="web">
+
+#### Web
 
 :::info
 All MQTT module config options are available for the Web UI.
 :::
 
-  </TabItem>
+</TabItem>
 </Tabs>
 
 ## Connect to the Default Public Server
@@ -146,7 +154,9 @@ values={[
 
 <TabItem value="android">
 
-<h3>1. Enable the MQTT Module</h3>
+#### Android
+
+##### 1. Enable the MQTT Module
 
 Navigate to: Vertical Ellipsis (3 dots top right) > Radio configuration > MQTT: Turn on the slider for **MQTT enabled** and tap **Send**.
 
@@ -156,13 +166,13 @@ Navigate to: Vertical Ellipsis (3 dots top right) > Radio configuration > MQTT: 
 
 [![Client Proxy](/img/modules/mqtt/android_mqtt_proxy_sm.webp)](/img/modules/mqtt/android_mqtt_proxy_encryption.webp)
 
-<h3>2. Enable Channel Uplink & Downlink</h3>
+##### 2. Enable Channel Uplink & Downlink
 
 Navigate to: Vertical Ellipsis (3 dots top right) > Radio configuration > Channels > LongFast: Turn on the sliders for **Uplink enabled** and **Downlink enabled**, then tap **Save** and tap **Send**.
 
 [![Channel Settings](/img/modules/mqtt/android_channel_sm.webp)](/img/modules/mqtt/android_channel.webp)
 
-<h3>3. Configure Network Settings</h3>
+##### 3. Configure Network Settings
 
 Navigate to: Vertical Ellipsis (3 dots top right) > Radio configuration > Network: Turn on the slider for **WiFi enabled**, Enter the **SSID** and **PSK** for your network, then tap **Send**.
 
@@ -171,7 +181,9 @@ Navigate to: Vertical Ellipsis (3 dots top right) > Radio configuration > Networ
 </TabItem>
 <TabItem value="apple">
 
-<h3>1. Enable the MQTT Module</h3>
+#### Apple
+
+##### 1. Enable the MQTT Module
 
 Navigate to Settings > MQTT: Turn on the slider for MQTT enabled and tap **Save**
 
@@ -182,13 +194,13 @@ Navigate to Settings > MQTT: Turn on the slider for MQTT enabled and tap **Save*
 
 [![Client Proxy](/img/modules/mqtt/apple_mqtt_1_proxy_sm.webp)](/img/modules/mqtt/apple_mqtt_1_proxy_encryption.webp)
 
-<h3>2. Enable Channel Uplink & Downlink</h3>
+##### 2. Enable Channel Uplink & Downlink
 
 Navigate to Settings > Channels > Primary Channel: Turn on the sliders for **Uplink enabled** and **Downlink enabled** - Tap **Save**
 
 [![Channel Settings](/img/modules/mqtt/apple_channel_sm.webp)](/img/modules/mqtt/apple_channel.webp)
 
-<h3>3. Configure Network Settings</h3>
+##### 3. Configure Network Settings
 
 Navigate to Settings > Network: Turn on the slider for **WiFi enabled** - Enter your **SSID** and **PSK** for your network - Tap **Save**
 
@@ -197,13 +209,15 @@ Navigate to Settings > Network: Turn on the slider for **WiFi enabled** - Enter 
 </TabItem>
 <TabItem value="cli">
 
-<h3>1. Enable the MQTT Module</h3>
+#### CLI
+
+##### 1. Enable the MQTT Module
 
 ```shell
 meshtastic --set mqtt.enabled true
 ```
 
-<h3>2. Enable Channel Uplink & Downlink</h3>
+##### 2. Enable Channel Uplink & Downlink
 
 ```shell
 meshtastic --ch-set uplink_enabled true --ch-index 0
@@ -215,7 +229,7 @@ or chained together:
 meshtastic --ch-set uplink_enabled true --ch-index 0 --ch-set downlink_enabled true --ch-index 0
 ```
 
-<h3>3. Configure Network Settings</h3>
+##### 3. Configure Network Settings
 
 ```shell
 meshtastic --set network.wifi_enabled true
@@ -231,7 +245,9 @@ meshtastic --set network.wifi_enabled true --set network.wifi_ssid "your network
 </TabItem>
 <TabItem value="web">
 
-<h3>1. Enable the MQTT Module</h3>
+#### Web
+
+##### 1. Enable the MQTT Module
 
 Navigate to Config > Module Config > MQTT - Turn on the slider for MQTT enabled - Click the **Save** icon.
 
@@ -248,13 +264,13 @@ Though this option may be visible in your UI, Client Proxy is not yet functional
 :::
 
 
-<h3>2. Enable Channel Uplink & Downlink</h3>
+##### 2. Enable Channel Uplink & Downlink
 
 Navigate to Channels > Primary: Turn on the sliders for **Uplink Enabled** and **Downlink Enabled** - Click the **Save** icon.
 
 [![Channel Settings](/img/modules/mqtt/web_channel_sm.webp)](/img/modules/mqtt/web_channel.webp)
 
-<h3>3. Configure Network Settings</h3>
+##### 3. Configure Network Settings
 
 Navigate to Radio Config > Device > Network: Turn on the slider for **Enabled** - Enter your **SSID** and **PSK** for your network - Click the **Save** icon.
 
