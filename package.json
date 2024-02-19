@@ -9,7 +9,8 @@
     "build": "docusaurus build",
     "swizzle": "docusaurus swizzle",
     "serve": "docusaurus serve",
-    "clear": "docusaurus clear"
+    "clear": "docusaurus clear",
+    "pdf": "pnpm docusaurus-prince-pdf -u http://localhost:3000/docs/about/ --dest ./static/documents/pdf --output ./static/documents/pdf/Meshtastic-Documentation.pdf"
   },
   "dependencies": {
     "@algolia/client-search": "^4.22.1",
@@ -24,6 +25,7 @@
     "autoprefixer": "^10.4.17",
     "base64-js": "^1.5.1",
     "clsx": "^2.1.0",
+    "docusaurus-prince-pdf": "^1.2.1",
     "dotenv": "^16.4.4",
     "postcss": "^8.4.35",
     "react": "^18.2.0",
