@@ -26,7 +26,7 @@ jobs:
         git config --global user.email "github-actions[bot]@users.noreply.github.com"
         git config --global user.name "GitHub Actions Bot"
         git clone --single-branch -b docs https://github.com/meshtastic/artifacts.git --depth=1
-        DATE_TIME=$(date +'%Y-%m-%d_%H-%M-%S')
+        DATE_TIME=$(date +'%Y-%m-%d_%H-%M')
         mv ./pdf/Meshtastic-Documentation.pdf ./artifacts/Meshtastic-Documentation-${DATE_TIME}_${{ github.sha }}.pdf
         cd artifacts
         git add .
