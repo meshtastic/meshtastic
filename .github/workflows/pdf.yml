@@ -1,0 +1,34 @@
+name: Generate Documentation PDF
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Install Prince
+      run: |
+        curl https://www.princexml.com/download/prince-14.2-linux-generic-x86_64.tar.gz -O
+        tar zxf prince-14.2-linux-generic-x86_64.tar.gz
+        cd prince-14.2-linux-generic-x86_64
+        yes "" | sudo ./install.sh
+
+    - name: Build PDF
+      run: npx docusaurus-prince-pdf -u https://meshtastic.org/docs/about/ --dest ./pdf --output ./pdf/Meshtastic-Documentation.pdf
+
+    - name: Fetch GitHub App Installation Access Token
+      id: generate_token
+      uses: tibdex/github-app-token@v2
+      with:
+        app_id: ${{ secrets.APP_ID }}
+        private_key: ${{ secrets.APP_PRIVATE_KEY }}
+
+    - name: Commit and push PDF to the artifacts repository
+      run: |
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
+        git config --global user.name "GitHub Actions Bot"
+        git clone --single-branch -b docs https://github.com/meshtastic/artifacts.git --depth=1
+        DATE_TIME=$(date +'%Y-%m-%d_%H-%M-%S')
+        mv ./pdf/Meshtastic-Documentation.pdf ./artifacts/Meshtastic-Documentation-${DATE_TIME}_${{ github.sha }}.pdf
+        cd artifacts
+        git add .
+        git commit -m "Auto generated PDF documentation ${DATE_TIME}"
+        git push --set-upstream https://x-access-token:${{ steps.generate_token.outputs.token }}@github.com/meshtastic/artifacts.git docs
