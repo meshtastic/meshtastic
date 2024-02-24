@@ -1,4 +1,3 @@
-import BrowserOnly from "@docusaurus/BrowserOnly";
 import {
   Accordion,
   AccordionItem,
@@ -21,7 +20,8 @@ export interface Faq {
  * @return {Element|null} The heading or null
  */
 const findNearestHeading = (element: Element): Element | null => {
-  const isHeading = (element: Element): boolean => /^H[1-6]$/.test(element.tagName);
+  const isHeading = (element: Element): boolean =>
+    /^H[1-6]$/.test(element.tagName);
   let currentElement: Element | null = element;
 
   while (currentElement !== null) {
@@ -47,25 +47,33 @@ const findNearestHeading = (element: Element): Element | null => {
  * @param  {[type]} void [description]
  * @return {[type]}      [description]
  */
-const updateURLWithNearestHeadingId = (targetElementUuid: string): void => {
-  const targetElement: HTMLElement | null = document.getElementById(`accordion__heading-${targetElementUuid}`);
+const updateUrlWithNearestHeadingId = (targetElementUuid: string): void => {
+  const targetElement: HTMLElement | null = document.getElementById(
+    `accordion__heading-${targetElementUuid}`,
+  );
 
-  const nearestHeading: Element | null = targetElement ? findNearestHeading(targetElement) : null;
+  const nearestHeading: Element | null = targetElement
+    ? findNearestHeading(targetElement)
+    : null;
 
-  if (nearestHeading && nearestHeading.id) {
-    window.history.pushState({}, '', `#${nearestHeading.id}`);
+  // Add the hash without scrolling the page
+  if (nearestHeading?.id) {
+    window.history.pushState({}, "", `#${nearestHeading.id}`);
   }
-}
 
-export const FaqAccordion = ({
-  rows,
-}: { rows: Faq[] }): JSX.Element => {
+  // If they're all collapsed, remove the hash
+  if (!targetElement) {
+    window.location.hash = '';
+  }
+};
+
+export const FaqAccordion = ({ rows }: { rows: Faq[] }): JSX.Element => {
   return (
     <Accordion
       allowMultipleExpanded={true}
       allowZeroExpanded={true}
       onChange={(itemUuids) => {
-        updateURLWithNearestHeadingId(itemUuids);
+        updateUrlWithNearestHeadingId(itemUuids);
       }}
     >
       {rows.map((row, index) => (
