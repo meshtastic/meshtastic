@@ -16,83 +16,69 @@ export interface Faq {
 }
 
 /**
- * Gets the query parameter `openFaqItems` which is an array of
- * faq items that should be pre-opened
- * @type {Function}
+ * Finds the nearest heading to an element
+ * @param  {Element} null The element to find the nearest heading to
+ * @return {Element|null} The heading or null
  */
-const getOpenFaqItemsFromUrl = (slug: string): string[] => {
-  if (typeof window !== "undefined") {
-    // Use URLSearchParams to parse the query parameters from the current URL
-    const searchParams = new URLSearchParams(window.location.search);
+const findNearestHeading = (element: Element): Element | null => {
+  const isHeading = (element: Element): boolean => /^H[1-6]$/.test(element.tagName);
+  let currentElement: Element | null = element;
 
-    // Get the 'openFaqItems' parameter as a comma-separated string
-    const openFaqItemsString = searchParams.get(`openFaqItems-${slug}`);
+  while (currentElement !== null) {
+    // Check previous siblings
+    let prevSibling: Element | null = currentElement.previousElementSibling;
+    while (prevSibling) {
+      if (isHeading(prevSibling)) {
+        return prevSibling;
+      }
+      prevSibling = prevSibling.previousElementSibling;
+    }
 
-    // If the parameter exists, split it by commas into an array; otherwise, return an empty array
-    return openFaqItemsString ? openFaqItemsString.split(",") : [];
+    // If no heading is found among siblings, move to the parent node
+    currentElement = currentElement.parentElement;
   }
+
+  return null;
 };
 
 /**
- * Updates query parameters in the url when items are opened
- * so that a link can be shared with the faq item already opened
+ * Takes in uuids from react-accessible-accordion onchange event
+ * and updates the browser url with the nearest heading's id
+ * @param  {[type]} void [description]
+ * @return {[type]}      [description]
  */
-const handleChange = (
-  openFaqItems: (string | number)[],
-  slug: string,
-): void => {
-  const searchParams = new URLSearchParams(window.location.search);
+const updateURLWithNearestHeadingId = (targetElementUuid: string): void => {
+  const targetElement: HTMLElement | null = document.getElementById(`accordion__heading-${targetElementUuid}`);
 
-  if (openFaqItems.length > 0) {
-    // Create comma-separated string and update/add the parameter
-    searchParams.set(
-      `openFaqItems-${slug}`,
-      openFaqItems.map(String).join(","),
-    );
-  } else {
-    // If openFaqItems is empty, remove the parameter from the URL
-    searchParams.delete(`openFaqItems-${slug}`);
+  const nearestHeading: Element | null = targetElement ? findNearestHeading(targetElement) : null;
+
+  if (nearestHeading && nearestHeading.id) {
+    window.history.pushState({}, '', `#${nearestHeading.id}`);
   }
-
-  // Construct the new URL, preserve existing parameters
-  const newUrl = `${window.location.protocol}//${window.location.host}${
-    window.location.pathname
-  }?${searchParams.toString()}`;
-
-  // Change the URL without reloading the page
-  window.history.pushState({ path: newUrl }, "", newUrl);
-};
+}
 
 export const FaqAccordion = ({
   rows,
-  slug,
-}: { rows: Faq[]; slug: string }): JSX.Element => {
+}: { rows: Faq[] }): JSX.Element => {
   return (
-    <BrowserOnly fallback={<div>Loading FAQ's...</div>}>
-      {() => {
-        return (
-          <Accordion
-            allowMultipleExpanded={true}
-            allowZeroExpanded={true}
-            onChange={(itemUuids) => {
-              handleChange(itemUuids, slug);
-            }}
-            preExpanded={getOpenFaqItemsFromUrl(slug)}
-          >
-            {rows.map((row, index) => (
-              // biome-ignore lint/suspicious/noArrayIndexKey: React complains if there is no key
-              <AccordionItem key={index}>
-                <AccordionItemHeading aria-level="3">
-                  <AccordionItemButton>{row.title}</AccordionItemButton>
-                </AccordionItemHeading>
-                <AccordionItemPanel>
-                  <ReactMarkdown>{row.content}</ReactMarkdown>
-                </AccordionItemPanel>
-              </AccordionItem>
-            ))}
-          </Accordion>
-        );
+    <Accordion
+      allowMultipleExpanded={true}
+      allowZeroExpanded={true}
+      onChange={(itemUuids) => {
+        updateURLWithNearestHeadingId(itemUuids);
       }}
-    </BrowserOnly>
+    >
+      {rows.map((row, index) => (
+        // biome-ignore lint/suspicious/noArrayIndexKey: React complains if there is no key
+        <AccordionItem key={index}>
+          <AccordionItemHeading aria-level="3">
+            <AccordionItemButton>{row.title}</AccordionItemButton>
+          </AccordionItemHeading>
+          <AccordionItemPanel>
+            <ReactMarkdown>{row.content}</ReactMarkdown>
+          </AccordionItemPanel>
+        </AccordionItem>
+      ))}
+    </Accordion>
   );
 };
