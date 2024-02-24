@@ -49,7 +49,7 @@ const findNearestHeading = (element: Element): Element | null => {
  */
 const updateUrlWithNearestHeadingId = (targetElementUuid: string): void => {
   const targetElement: HTMLElement | null = document.getElementById(
-    `accordion__heading-${targetElementUuid}`,
+    `accordion__heading-${targetElementUuid[0]}`,
   );
 
   const nearestHeading: Element | null = targetElement
@@ -63,7 +63,7 @@ const updateUrlWithNearestHeadingId = (targetElementUuid: string): void => {
 
   // If they're all collapsed, remove the hash
   if (!targetElement) {
-    window.location.hash = '';
+    window.location.hash = "";
   }
 };
 
