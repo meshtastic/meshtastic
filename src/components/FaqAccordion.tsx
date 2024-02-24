@@ -63,7 +63,7 @@ const updateUrlWithNearestHeadingId = (targetElementUuid: string): void => {
 
   // If they're all collapsed, remove the hash
   if (!targetElement) {
-    window.location.hash = "";
+    history.pushState(null, null, window.location.origin + window.location.pathname + window.location.search);
   }
 };
 
