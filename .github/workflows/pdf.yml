@@ -1,12 +1,25 @@
 name: Generate Documentation PDF
 on:
-  schedule:
-    - cron: '0 0 * * *'
+  # # Triggers the workflow on push but only for the master branch
+  push:
+    branches: [master]
+
+  # Note: This is different from "pull_request". Need to specify ref when doing checkouts.
+  pull_request_target:
+    branches: [master]
+    paths-ignore:
+      - "**.md"
 jobs:
   build:
     if: github.repository == 'meshtastic/meshtastic' && github.ref == 'refs/heads/master'
     runs-on: ubuntu-latest
     steps:
+    - name: Get filename with date and sha
+      run: |
+        DATE_TIME=$(date +'%Y-%m-%d_%H-%M')
+        echo "filename=Meshtastic-Documentation-${DATE_TIME}-${{ github.sha }}.pdf" >> $GITHUB_OUTPUT
+      id: filename
+
     - name: Install Prince
       run: |
         curl https://www.princexml.com/download/prince-14.2-linux-generic-x86_64.tar.gz -O
@@ -15,23 +28,15 @@ jobs:
         yes "" | sudo ./install.sh
 
     - name: Build PDF
-      run: npx docusaurus-prince-pdf -u https://meshtastic.org/docs/about/ --dest ./pdf --output ./pdf/Meshtastic-Documentation.pdf
+      run: npx docusaurus-prince-pdf -u https://meshtastic.org/docs/about/ --dest ./pdf --output ./pdf/${{ steps.filename.outputs.filename }}
 
-    - name: Fetch GitHub App Installation Access Token
-      id: generate_token
-      uses: tibdex/github-app-token@v2
+    - name: Create request artifacts
+      if: ${{ github.event_name == 'pull_request_target' || github.event_name == 'pull_request' }}
+      uses: gavv/pull-request-artifacts@v2.1.0
       with:
-        app_id: ${{ secrets.APP_ID }}
-        private_key: ${{ secrets.APP_PRIVATE_KEY }}
-
-    - name: Commit and push PDF to the artifacts repository
-      run: |
-        git config --global user.email "github-actions[bot]@users.noreply.github.com"
-        git config --global user.name "GitHub Actions Bot"
-        git clone --single-branch -b docs https://github.com/meshtastic/artifacts.git --depth=1
-        DATE_TIME=$(date +'%Y-%m-%d_%H-%M')
-        mv ./pdf/Meshtastic-Documentation.pdf ./artifacts/Meshtastic-Documentation-${DATE_TIME}_${{ github.sha }}.pdf
-        cd artifacts
-        git add .
-        git commit -m "Auto generated PDF documentation ${DATE_TIME}"
-        git push --set-upstream https://x-access-token:${{ steps.generate_token.outputs.token }}@github.com/meshtastic/artifacts.git docs
+        commit: ${{ (github.event.pull_request_target || github.event.pull_request).head.sha }}
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
+        artifacts-token: ${{ secrets.ARTIFACTS_TOKEN }}
+        artifacts-repo: meshtastic/artifacts
+        artifacts-branch: docs
+        artifacts: ./pdf/${{ steps.version.outputs.version }}
