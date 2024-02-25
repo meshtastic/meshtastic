@@ -11,7 +11,6 @@ on:
       - "**.md"
 jobs:
   build:
-    if: github.repository == 'meshtastic/meshtastic' && github.ref == 'refs/heads/master'
     runs-on: ubuntu-latest
     steps:
     - name: Get filename with date and sha
