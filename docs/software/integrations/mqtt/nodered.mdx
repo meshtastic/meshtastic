@@ -54,13 +54,15 @@ The JSON output only publishes the following subset of the messages on a Meshtas
 > Protobufs are mesh native.
 
 #### 1. Using JSON-encoded messages
-Make sure that option *JSON Output Enabled* is set in MQTT module options and your channel is called "mqtt".
+Make sure that option *JSON Output Enabled* is set in MQTT module options and you have a channel called "mqtt".
 
-Below is a valid JSON envelope for information sent by MQTT to a device for broadcast onto the mesh.
+Below is a valid JSON envelope for information sent by MQTT to a device for broadcast onto the mesh. The `to` field is optional and can be omitted for broadcast. The `channel` field is also optional and can be omitted to send to the primary channel.
 
 ```json
 {
   "from":<node number of the transmitter>,
+  "to": <node number of the receiver for a DM (optional)>,
+  "channel": <channel index (optional)>,
   "type":"sendtext",
   "payload": text or a json object go here
 }
@@ -979,7 +981,7 @@ The flow is:
 ]
 ```
 
-Sending a position to a device for broadcast to the mesh is much easier with JSON. It requires a channel called "mqtt". This introduces a new MQTT Service Envelope type: "sendposition". A valid MQTT envelope and message to broadcast lat, lon, altitude (optional) and time (optional) looks like this:
+Sending a position to a device for broadcast to the mesh is much easier with JSON. It requires the message to be published to a channel called "mqtt". You can let the message send out to a different channel by setting the `channel` field to a channel index (0-7). Then use the MQTT Service Envelope type: "sendposition". A valid MQTT envelope and message to broadcast lat, lon, altitude (optional) and time (optional) looks like this:
 
 ```json
 {

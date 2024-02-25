@@ -11,24 +11,20 @@ The device config options are: Role, Serial Output, and Debug Log. Device config
 
 ## Device Config Values
 
-### Role
-
-Sets the role of the node.
-
-Acceptable values:
-
-|      Value       |                                                                                                                                                                                                                                                                                Description                                                                                                                                                                                                                                                                                 |
-|:----------------:|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|
-|     `CLIENT`     |                                                                                                                                                                                                 Client (default) - This role will follow the standard routing rules while also allowing the device to interact with client applications via BLE/Wi-Fi (Android/Apple/Web).                                                                                                                                                                                                 |
-|  `CLIENT_MUTE`   |                                                                                                                                                                                                                        Client Mute - Same as a client except packets will not hop over this node, does not contribute to routing packets for mesh.                                                                                                                                                                                                                         |
-|     `ROUTER`     |                                                          Router - Mesh packets will prefer to be routed over this node. The assumption is that Router-type devices will be placed in locations with a height/range/antenna advantage, and therefore have better overall coverage. This node will not be used by client apps. The BLE/Wi-Fi radios and the OLED screen will be put to sleep. Please note: Due to the preferred routing, this role may cause higher power usage due to more frequent transmission.                                                           |
-| `ROUTER_CLIENT`  |                                                                                                                                                                              Router Client - Hybrid of the Client and Router roles. Similar to Router, except the Router Client can be used as both a Router and an app connected Client. BLE/Wi-Fi and OLED screen will not be put to sleep.                                                                                                                                                                              |
-|    `REPEATER`    | Repeater - Mesh packets will prefer to be routed over this node. This role eliminates unnecessary overhead such as NodeInfo, DeviceTelemetry, and any other mesh packet, resulting in the device not appearing as part of the network. As such, direct messaging this node is not available, as it will not appear in your nodes list which results in a cleaner mesh network. Channel and modem settings of the mesh packets being repeated must be identical to the repeater's configuration. Please see Rebroadcast Mode for additional settings specific to this role. |
-|    `TRACKER`     |                                                                                                     Tracker - For use with devices intended as a GPS tracker. Position packets sent from this device will be higher priority. Smart Position Broadcast will default to the currently configured settings. When used in conjunction with power.is_power_saving = true, nodes will wake up, send position, and then sleep for position.position_broadcast_secs seconds.                                                                                                      |
-|     `SENSOR`     |                                                                                                        Sensor - For use with devices intended to primarily collect sensor readings. Telemetry packets sent from this device will be higher priority, broadcasting every five minutes. When used in conjunction with power.is_power_saving = true, nodes will wake up, send environment telemetry, and then sleep for telemetry.environment_update_interval seconds.                                                                                                        |
-|      `TAK`       |                                                                                                                                                                                        TAK - Used for nodes dedicated for connection to an ATAK EUD.  Turns off many of the routine broadcasts to favor CoT packet stream from the Meshtastic ATAK plugin -> IMeshService -> Node.                                                                                                                                                                                         |
-| `CLIENT_HIDDEN`  |                                                                                                                            Client Hidden - Used for nodes that "only speak when spoken to." Turns off all of the routine broadcasts but allows for ad-hoc communication. Still rebroadcasts, but with local only rebroadcast mode (known meshes only). Can be used for clandestine operation or to dramatically reduce airtime / power consumption                                                                                                                             |
-| `LOST_AND_FOUND` |                                                                                                                                                                                                  Lost and Found - Used to automatically send a text message with current position at frequent intervals to the primary channel for the device: "I'm lost! Position: lat / long"                                                                                                                                                                                                   |
+### Roles
+| Device Role    | Description                                                                                                               | Best Uses                                                                                                                              |
+| -------------- | ------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| CLIENT         | App connected or stand alone messaging device.                                                                            | General use for individuals needing to communicate over the Meshtastic network with support for client applications.                   |
+| CLIENT_MUTE    | Device that does not forward packets from other devices.                                                                  | Situations where a device needs to participate in the network without assisting in packet routing, reducing network load.              |
+| CLIENT_HIDDEN  | Device that only broadcasts as needed for stealth or power savings.                                                       | Use in stealth/hidden deployments or to reduce airtime/power consumption while still participating in the network.                     |
+| TRACKER        | Broadcasts GPS position packets as priority.                                                                              | Tracking the location of individuals or assets, especially in scenarios where timely and efficient location updates are critical.      |
+| LOST_AND_FOUND | Broadcasts location as message to default channel regularly for to assist with device recovery.                           | Used for recovery efforts of a lost device.                                                                                            |
+| SENSOR         | Broadcasts telemetry packets as priority.                                                                                 | Deploying in scenarios where gathering environmental or other sensor data is crucial, with efficient power usage and frequent updates. |
+| TAK            | Optimized for ATAK system communication, reduces routine broadcasts.                                                      | Integration with ATAK systems (via the Mesthastic ATAK Plugin) for communication in tactical or coordinated operations.                |
+| TAK_TRACKER    | Enables automatic TAK PLI broadcasts and reduces routine broadcasts.                                                      | Standalone PLI integration with ATAK systems for communication in tactical or coordinated operations.                                  |
+| REPEATER       | Infrastructure node for extending network coverage by relaying messages with minimal overhead. Not visible in Nodes list. | Best positioned in strategic locations to maximize the network's overall coverage. Device is not shown in topology.                    |
+| ROUTER         | Infrastructure node for extending network coverage by relaying messages. Visible in Nodes list.                           | Best positioned in strategic locations to maximize the network's overall coverage. Device is shown in topology.                        |
+| ROUTER_CLIENT  | Combination of both ROUTER and CLIENT. Not for mobile devices.                                                            | Devices in a strategic position for priority routing that need to also serve as a standard CLIENT.                                     |
 
 #### Role Comparison
 
@@ -42,7 +38,8 @@ This table shows the **default** values after selecting a preset. As always, ind
 | TRACKER        | Yes                     | No             | Regular           | No         | No                  | Yes                   |
 | LOST_AND_FOUND | Yes                     | No             | Regular           | No         | No                  | Yes                   |
 | SENSOR         | Yes                     | No             | High              | No         | No                  | Yes                   |
-| TAK            | Yes                     | Optional       | Low               | Yes        | No                  | Yes                   |
+| TAK            | Yes                     | Optional       | Regular           | Yes        | No                  | Yes                   |
+| TAK_TRACKER    | Yes                     | Optional       | Regular           | Yes        | No                  | Yes                   |
 | ROUTER         | No                      | No             | High              | Yes        | Yes                 | Yes                   |
 | ROUTER_CLIENT  | Yes                     | Yes            | Highest           | Yes        | Yes                 | Yes                   |
 | REPEATER       | Yes                     | No             | High              | Yes        | Yes                 | No                    |
@@ -104,6 +101,8 @@ values={[
 ]}>
 <TabItem value="android">
 
+#### Android
+
 :::info
 
 Device Config is available for Android.
@@ -116,12 +115,16 @@ Device Config is available for Android.
 </TabItem>
 <TabItem value="apple">
 
+#### Apple
+
 :::info
 All device config options other than NTP Server are available on iOS, iPadOS and macOS at Settings > Radio Configuration > Device.
 :::
 
 </TabItem>
 <TabItem value="cli">
+
+#### CLI
 
 :::info
 
@@ -166,9 +169,11 @@ meshtastic --set device.debug_log_enabled true
 </TabItem>
 <TabItem value="web">
 
+#### Web
+
 :::info
 All device config options are available in the Web UI.
 :::
 
-  </TabItem>
+</TabItem>
 </Tabs>

@@ -1,6 +1,7 @@
 // @ts-check
 
 require("dotenv").config();
+import remarkDefList from "remark-deflist";
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
@@ -121,6 +122,7 @@ const config = {
           editUrl: "https://github.com/meshtastic/meshtastic/edit/master/",
           breadcrumbs: false,
           showLastUpdateAuthor: true,
+          remarkPlugins: [remarkDefList],
         },
         theme: {
           customCss: require.resolve("./src/css/custom.css"),
