@@ -54,6 +54,10 @@ The payload is a raw protobuf, whose definitions for Meshtastic can be found [he
 If [encryption_enabled](/docs/configuration/module/mqtt#encryption-enabled) is set to true, the payload of the MeshPacket will remain encrypted with the key for the specified channel.
 
 #### JSON topic
+:::note
+JSON is not supported on the nRF52 platform.
+:::
+
 If [JSON is enabled](/docs/configuration/module/mqtt#json-enabled), packets from the following [port numbers](/docs/development/firmware/portnum) are serialized to JSON: `TEXT_MESSAGE_APP`, `TELEMETRY_APP`, `NODEINFO_APP`, `POSITION_APP`, `WAYPOINT_APP`, `NEIGHBORINFO_APP`, `TRACEROUTE_APP`, `DETECTION_SENSOR_APP`, `PAXCOUNTER_APP` and `REMOTE_HARDWARE_APP`. These are then forwarded to the topic:
 
 `msh/2/json/CHANNELNAME/USERID`.
@@ -123,7 +127,7 @@ For the type `sendtext`, the `payload` should be a string containing the text to
 Check out [MQTT Settings](/docs/configuration/module/mqtt) for full information. For quick start instructions, read on.
 
 - Connect your gateway node to wifi, by setting the `network.wifi_ssid`, `network.wifi_psk` and `network.wifi_enabled` preferences.
-- Alternatively use the RAK4631 with Ethernet Module RAK13800, by setting `network.eth_mode` and `network.eth_enabled`.
+- Alternatively use the RAK4631 with Ethernet Module RAK13800, by setting `network.eth_mode` and `network.eth_enabled` (note that JSON is not supported on the nRF52 platform).
 - Configure your broker settings: `mqtt.address`, `mqtt.username`, and `mqtt.password`. If all are left blank, the device will connect to the Meshtastic broker.
 - Set `uplink_enabled` and `downlink_enabled` as appropriate for each channel. Most users will just have a single channel (at channel index 0). `meshtastic --ch-index 0 --ch-set uplink_enabled true`
 
