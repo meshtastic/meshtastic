@@ -54,6 +54,10 @@ The JSON output only publishes the following subset of the messages on a Meshtas
 > Protobufs are mesh native.
 
 #### 1. Using JSON-encoded messages
+:::note 
+JSON is not supported on the nRF52 platform.
+:::
+
 Make sure that option *JSON Output Enabled* is set in MQTT module options and you have a channel called "mqtt".
 
 Below is a valid JSON envelope for information sent by MQTT to a device for broadcast onto the mesh. The `to` field is optional and can be omitted for broadcast. The `channel` field is also optional and can be omitted to send to the primary channel.
