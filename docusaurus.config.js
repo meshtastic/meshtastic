@@ -23,7 +23,6 @@ const config = {
       },
     },
     navbar: {
-      title: "Meshtastic",
       hideOnScroll: true,
       logo: {
         alt: "Meshtastic Logo",
@@ -38,6 +37,10 @@ const config = {
         {
           label: "Downloads",
           to: "downloads",
+        },
+        {
+          label: "Donate",
+          to: "docs/contributing/#supporting-and-contributing-to-meshtastic",
         },
         {
           label: "About",
