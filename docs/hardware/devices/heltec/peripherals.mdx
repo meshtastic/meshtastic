@@ -87,5 +87,80 @@ Coming Soon
 Coming Soon
 
 </TabItem>
+
+<TabItem value="Telemetry">
+
+## Telemetry
+
+In this guide, we'll walk you through adding a telemetry sensor (BMP280)  module to your existing Heltec V3 Lora ESP32 Meshtastic Node. This guide will work also for any ESP32 boards but slight changes might be required.
+
+Hardware
+--------
+
+Now let's get started with the hardware you need:
+
+![](https://adrelien.com/blog/content/images/2024/02/BMP280.png)
+
+
+:::info
+BMP280 sensor comes with two flavors 5V and 3.3V . Choose either 5V or 3.3V based on your system requirements
+:::
+
+*   1x BMP280 Module
+*   2x 17 Pins(Get 20 Pins and Trim It) 2.54mm Header Pin 
+*   1x 4 Pins 2.54mm Header Pin
+*   4x Female to Female Pin Connector
+*   1x Soldering Iron + 60/40 Solder Wire (Optional - You can go to a nearby electronic shop to solder the headers on the board)
+
+The hardware selection can be changed but we went with easy-to-get parts. **One thing to note here is that soldering will be needed only to solder headers to the Heltec and the BMP280 module**. This task can be outsourced to any nearby electronic shop and save you the money and the hassle.
+
+Assembly
+--------
+
+The hardware is all ready and set now to the wiring. For this, we will follow the following Schematics.
+
+:::info
+Please keep in mind we are assuming here you already soldered the headers on the board so it will be a matter of connecting pins to the right place.
+:::
+
+### BMP280 Telemetry Module - Heltec V3 Lora ESP32
+
+![](https://adrelien.com/blog/content/images/2024/02/How-To-Add-Telemetry-Sensor-To-Heltec-Lora-v3-Meshtastic-Node---v5.png)
+
+BMP280-5V For The 5V Module
+
+![](https://adrelien.com/blog/content/images/2024/02/How-To-Add-Telemetry-Sensor-To-Heltec-Lora-v3-Meshtastic-Node---v3.png)
+
+BMP280-3.3V For The 3.3V Module
+
+*   VCC -> 5V For BMP280-5V OR 3.3V For BMP280-3.3V
+*   SCL -> PIN 42
+*   SDA -> PIN 41
+*   GND -> GND
+
+:::info
+The BMP280-5V Module Will Not Work With Battery, It Works Only With USB
+:::
+:::info
+Capacitors are good practice for decoupling one part of a circuit from another
+:::
+:::info
+It's Important To Note That The Order Of The Connections Might Vary. Follow The Labels And Io Ports On Your Specific Components And The Provided Schematics To Ensure Accurate Wiring. Paying Attention To These Details Ensures That You Establish The Correct Connections And Avoid Potential Issues or Damaging Your Components
+:::
+Once all the wiring is completed. Double-check your connections and ensure they match the suggested layout before proceeding to the next steps.
+
+Meshtastic Settings
+-------------------
+
+1.  Open Meshtastic App (IOS for this guide)
+2.  Go to the Settings page
+3.  In the module configuration section go to Telemetry (Sensor)
+4.  Scroll down to the Sensor Options
+5.  Toggle the switch Enable and other switches according to your preference
+
+In conclusion, adding a Telemetry module to your existing Heltec V3 Lora ESP32 Meshtastic Node is a straightforward process that enhances the functionality of your device. The chosen hardware components, including the BMP280 Module and header pins, provide a reliable and readily available solution. Soldering may be required, but it can be outsourced to electronic shops for convenience. By following this guide, users can easily integrate a BMP280 module into their Meshtastic Node, expanding its capabilities for telemetry tracking and enhancing overall functionality.
+</TabItem>
+
+
 </Tabs>
 
