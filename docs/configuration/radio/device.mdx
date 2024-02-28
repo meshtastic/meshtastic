@@ -61,6 +61,7 @@ This setting defines the device's behavior for how messages are rebroadcasted.
 Acceptable values: `true` or `false`
 
 Disabling this will disable the SerialConsole by not initializing the StreamAPI.
+Note: Devices using the "ROUTER" role will have unreliable serial access, as it is disabled when the device enters sleep. To keep serial active, consider switching to ROUTER_CLIENT.
 
 ### Debug Log
 
