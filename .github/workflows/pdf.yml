@@ -1,0 +1,41 @@
+name: Generate Documentation PDF
+on:
+  # # Triggers the workflow on push but only for the master branch
+  push:
+    branches: [master]
+
+  # Note: This is different from "pull_request". Need to specify ref when doing checkouts.
+  pull_request_target:
+    branches: [master]
+    paths-ignore:
+      - "**.md"
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Get filename with date and sha
+      run: |
+        DATE_TIME=$(date +'%Y-%m-%d_%H-%M')
+        echo "filename=Meshtastic-Documentation-${DATE_TIME}-${{ github.sha }}.pdf" >> $GITHUB_OUTPUT
+      id: filename
+
+    - name: Install Prince
+      run: |
+        curl https://www.princexml.com/download/prince-14.2-linux-generic-x86_64.tar.gz -O
+        tar zxf prince-14.2-linux-generic-x86_64.tar.gz
+        cd prince-14.2-linux-generic-x86_64
+        yes "" | sudo ./install.sh
+
+    - name: Build PDF
+      run: npx docusaurus-prince-pdf -u https://meshtastic.org/docs/about/ --dest ./pdf --output ./pdf/${{ steps.filename.outputs.filename }}
+
+    - name: Create request artifacts
+      if: ${{ github.event_name == 'pull_request_target' || github.event_name == 'pull_request' }}
+      uses: gavv/pull-request-artifacts@v2.1.0
+      with:
+        commit: ${{ (github.event.pull_request_target || github.event.pull_request).head.sha }}
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
+        artifacts-token: ${{ secrets.ARTIFACTS_TOKEN }}
+        artifacts-repo: meshtastic/artifacts
+        artifacts-branch: docs
+        artifacts: ./pdf/${{ steps.version.outputs.version }}
