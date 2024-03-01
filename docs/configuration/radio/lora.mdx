@@ -102,11 +102,7 @@ Defaults to true
 
 ### Frequency Slot
 
-This setting controls the actual hardware frequency at which the radio transmits, represented by a frequency slot between 1 and NUM_SLOTS (the maximum for the current region). If set to `0`/UNSET, the device reverts to the older channel name hash-based algorithm for determining the frequency slot.
-
-:::info
-LoRa Channel Configuration should not to be confused with messaging [Channel Configuration](/docs/configuration/radio/channels). See [Chat Channels VS Lora Modem Channels](/docs/configuration/tips#chat-channels-vs-lora-modem-channels) for further clarification.
-:::
+This setting controls the actual hardware frequency at which the radio transmits, represented by a frequency slot between 1 and NUM_SLOTS (the maximum for the current region and modem preset). If set to `0`/UNSET, the device reverts to the older channel name hash-based algorithm for determining the frequency slot.
 
 ### Ignore Incoming Array
 
