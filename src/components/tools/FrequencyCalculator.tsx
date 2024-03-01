@@ -375,7 +375,7 @@ export const FrequencyCalculator = (): JSX.Element => {
       </div>
 
       <div className="flex gap-2">
-        <label className="font-semibold">Slot Frequency:</label>
+        <label className="font-semibold">Frequency of slot:</label>
         <input type="number" disabled={true} value={channelFrequency} />
       </div>
     </div>
