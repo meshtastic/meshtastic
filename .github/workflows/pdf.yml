@@ -27,10 +27,10 @@ jobs:
         yes "" | sudo ./install.sh
 
     - name: Build PDF
-      run: npx docusaurus-prince-pdf -u https://meshtastic.org/docs/about/ --dest ./pdf --output ./pdf/${{ steps.filename.outputs.filename }}
+      run: npx docusaurus-prince-pdf -u https://meshtastic.org/docs/about/ --dest ./ --output ./${{ steps.filename.outputs.filename }}
 
     - name: Create request artifacts
-      if: ${{ github.event_name == 'pull_request_target' || github.event_name == 'pull_request' }}
+      if: github.event.pull_request.merged
       uses: gavv/pull-request-artifacts@v2.1.0
       with:
         commit: ${{ (github.event.pull_request_target || github.event.pull_request).head.sha }}
@@ -38,4 +38,4 @@ jobs:
         artifacts-token: ${{ secrets.ARTIFACTS_TOKEN }}
         artifacts-repo: meshtastic/artifacts
         artifacts-branch: docs
-        artifacts: ./pdf/${{ steps.version.outputs.version }}
+        artifacts: ./${{ steps.filename.outputs.filename }}
