@@ -9,7 +9,8 @@
     "build": "docusaurus build",
     "swizzle": "docusaurus swizzle",
     "serve": "docusaurus serve",
-    "clear": "docusaurus clear"
+    "clear": "docusaurus clear",
+    "pdf": "npx docusaurus-prince-pdf -u http://localhost:3000/docs/about/ --dest ./static/documents/pdf --output ./static/documents/pdf/Meshtastic-Documentation.pdf"
   },
   "dependencies": {
     "@algolia/client-search": "^4.22.1",
@@ -44,6 +45,7 @@
     "@types/node": "^20.11.19",
     "@types/react": "^18.2.56",
     "@types/react-dom": "^18.2.19",
+    "docusaurus-prince-pdf": "^1.2.1",
     "typescript": "^5.3.3"
   }
 }
