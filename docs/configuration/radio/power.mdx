@@ -19,7 +19,13 @@ The power config options are: Power Saving, Shutdown after losing power, ADC Mul
 
 ### Power Saving
 
-If set, Bluetooth, Wifi, and screen (if applicable) are turned off. When using the Router device role, this setting is on by default. The assumption for a Router is that the device will be used in a standalone manner where these features are not needed, and will be shut off to conserve power. This is especially useful when a device is powered from a low-current source (i.e. solar).
+:::warning 
+Enabling Power Saving will disable Bluetooth, Serial, and WiFi, preventing further changes to the device. Press the user button or reset the device to make changes.
+:::
+
+If enabled, turns off Bluetooth, Serial, WiFi, and Screen. Useful when a device is powered from a low-current source (i.e. solar). To see device roles this is enabled for by default, visit [Device Config](/docs/configuration/radio/device).
+
+
 
 ### Shutdown after losing power
 
