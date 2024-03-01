@@ -1,14 +1,9 @@
 name: Generate Documentation PDF
 on:
-  # # Triggers the workflow on push but only for the master branch
-  push:
-    branches: [master]
+  pull_request:
+    types:
+      - closed
 
-  # Note: This is different from "pull_request". Need to specify ref when doing checkouts.
-  pull_request_target:
-    branches: [master]
-    paths-ignore:
-      - "**.md"
 jobs:
   build:
     runs-on: ubuntu-latest
