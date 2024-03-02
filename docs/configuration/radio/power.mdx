@@ -4,19 +4,16 @@ title: Power Configuration
 sidebar_label: Power
 ---
 
+import Admonition from '@theme/Admonition';
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 import calculateADC from "/src/utils/calculateADC";
 
-:::info
+:::info Use Device Config first
 Power settings are advanced configuration, most users should choose a role under [Device Config](/docs/configuration/radio/device) to manage power for their device and shouldn't ever need to adjust these settings.
 :::
 
 The power config options are: Power Saving, Shutdown after losing power, ADC Multiplier Override, Wait Bluetooth Interval, Light Sleep Interval, Minimum Wake Interval, and Device Battery INA2xx Address. Power config uses an admin message sending a `Config.Power` protobuf.
-
-:::info
-ADC Multiplier, The Light Sleep setting only applies to ESP32-based boards.  This settings will have no effect on nRF52/RP2040 modules.
-:::
 
 ## Power Config Values
 
@@ -29,6 +26,10 @@ If set, Bluetooth, Wifi, and screen (if applicable) are turned off. When using t
 Automatically shut down a device after a defined time period if power is lost.
 
 ### ADC Multiplier Override
+
+:::info ESP32 Only
+This setting only applies to ESP32-based boards, it will have no effect on nRF52/RP2040 boards.
+:::
 
 Ratio of voltage divider for battery pin e.g. 3.20 (R1=100k, R2=220k)
 
@@ -44,49 +45,50 @@ Should be set to floating point value between 2 and 6
 4. If "Battery Charge Percent" (e.g., B 3.82V 60%) is not displayed on the screen, it means that the default value of "Operative Adc Multiplier" is too high. Lower the "Operative Adc Multiplier" to a smaller number (it is recommended to decrease by 0.1) until the screen displays "Battery Charge Percent". Enter the current "Operative Adc Multiplier" in use into the "Operative Adc Multiplier" field in the calculator. Also, input the "Battery Charge Percent" displayed on the screen into the calculator.
 5. Click the "Calculate" button to compute the "Calculated New Operative Adc Multiplier", and set it as the new "Operative Adc Multiplier" for the device.
 
-:::tip ADC Calculator
-
-<table>
-  <tr>
-    <td> Battery Charge Percent: </td>
-    <td>
-      <input type="text" id="batteryChargePercent" defaultValue="65" />
-    </td>
-  </tr>
-  <tr>
-    <td>Current Adc Multiplier: </td>
-    <td>
-      <input type="text" id="operativeAdcMultiplier" defaultValue="2" />
-    </td>
-  </tr>
-  <tr>
-    <td>Calculated New Operative Adc Multiplier: </td>
-    <td>
-      <input
-        type="text"
-        id="newOperativeAdcMultiplier"
-        value="2"
-        disabled="disabled"
-      />
-    </td>
-  </tr>
-  <tr>
-    <td></td>
-    <td>
-      <button
-        className="button button--outline  button--lg cta--button"
-        onClick={calculateADC}
-      >
-        Calculate
-      </button>
-    </td>
-  </tr>
-</table>
-:::
-
-:::info
-It's important to note that this calibration method only maps 4.2V to Battery Charge Percent 100%, and does not address the potential non-linearities of the ADC.
-:::
+<details>
+  <summary>ADC Calculator</summary>
+  <div>
+    <Admonition type="info">
+      <p>This calibration method only maps 4.2V to Battery Charge Percent 100%, and does not address the potential non-linearities of the ADC.</p>
+    </Admonition>
+    <table>
+      <tr>
+        <td> Battery Charge Percent: </td>
+        <td>
+          <input type="text" id="batteryChargePercent" defaultValue="65" />
+        </td>
+      </tr>
+      <tr>
+        <td>Current Adc Multiplier: </td>
+        <td>
+          <input type="text" id="operativeAdcMultiplier" defaultValue="2" />
+        </td>
+      </tr>
+      <tr>
+        <td>Calculated New Operative Adc Multiplier: </td>
+        <td>
+          <input
+            type="text"
+            id="newOperativeAdcMultiplier"
+            value="2"
+            disabled="disabled"
+          />
+        </td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>
+          <button
+            className="button button--outline  button--lg cta--button"
+            onClick={calculateADC}
+          >
+            Calculate
+          </button>
+        </td>
+      </tr>
+    </table>
+  </div>
+</details>
 
 ### Wait Bluetooth Interval
 
@@ -95,6 +97,10 @@ How long to wait before turning off BLE in no Bluetooth states
 `0` for default of 1 minute
 
 ### Light Sleep Interval
+
+:::info ESP32 Only
+This setting only applies to ESP32-based boards, it will have no effect on nRF52/RP2040 boards.
+:::
 
 In light sleep the CPU is suspended, LoRa radio is on, BLE is off and GPS is on
 
@@ -110,7 +116,7 @@ While in light sleep when we receive packets on the LoRa radio we will wake and 
 
 If an INA-2XX device is auto-detected on one of the I2C buses at the specified address, it will be used as the authoritative source for reading device battery level voltage. Setting is ignored for devices with PMUs (e.g. T-beams)
 
-:::tip
+:::tip[Convert hexadecimal to decimal]
 I2C addresses are normally represented in hexadecimal and will require conversion to decimal in order to set via Meshtastic clients. For example the I2C address of 0x40 converted to decimal is 64.
 :::
 
