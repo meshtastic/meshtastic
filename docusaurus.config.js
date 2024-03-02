@@ -102,6 +102,9 @@ const config = {
         },
       },
     },
+    prism: {
+      additionalLanguages: ["shell-session", "bash"],
+    },
   },
   plugins: [
     () => {
