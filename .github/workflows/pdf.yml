@@ -1,0 +1,36 @@
+name: Generate Documentation PDF
+on:
+  pull_request:
+    types:
+      - closed
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Get filename with date and sha
+      run: |
+        DATE_TIME=$(date +'%Y-%m-%d_%H-%M')
+        echo "filename=Meshtastic-Documentation-${DATE_TIME}-${{ github.sha }}.pdf" >> $GITHUB_OUTPUT
+      id: filename
+
+    - name: Install Prince
+      run: |
+        curl https://www.princexml.com/download/prince-15.3-linux-generic-x86_64.tar.gz -O
+        tar zxf prince-15.3-linux-generic-x86_64.tar.gz
+        cd prince-15.3-linux-generic-x86_64
+        yes "" | sudo ./install.sh
+
+    - name: Build PDF
+      run: npx docusaurus-prince-pdf -u https://meshtastic.org/docs/about/ --dest ./ --output ./${{ steps.filename.outputs.filename }}
+
+    - name: Create request artifacts
+      if: github.event.pull_request.merged
+      uses: gavv/pull-request-artifacts@v2.1.0
+      with:
+        commit: ${{ (github.event.pull_request_target || github.event.pull_request).head.sha }}
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
+        artifacts-token: ${{ secrets.ARTIFACTS_TOKEN }}
+        artifacts-repo: meshtastic/artifacts
+        artifacts-branch: docs
+        artifacts: ./${{ steps.filename.outputs.filename }}

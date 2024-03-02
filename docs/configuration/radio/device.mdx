@@ -78,7 +78,7 @@ This is the GPIO pin number that will be used for the PWM buzzer, if your device
 
 ### Node Info Broadcast Seconds
 
-This is the number of seconds between NodeInfo message broadcasts from the device. The device will still respond ad-hoc to NodeInfo messages when a response is wanted.
+This is the number of seconds between NodeInfo message (containing i.a. long and short name) broadcasts from the device. The device will still respond ad-hoc to NodeInfo messages when a response is wanted. When the device hears any packet from a node it doesn't know yet, it will send its NodeInfo and ask for a response automatically.
 
 ### Double Tap as Button Press
 
@@ -101,6 +101,8 @@ values={[
 ]}>
 <TabItem value="android">
 
+#### Android
+
 :::info
 
 Device Config is available for Android.
@@ -113,12 +115,16 @@ Device Config is available for Android.
 </TabItem>
 <TabItem value="apple">
 
+#### Apple
+
 :::info
 All device config options other than NTP Server are available on iOS, iPadOS and macOS at Settings > Radio Configuration > Device.
 :::
 
 </TabItem>
 <TabItem value="cli">
+
+#### CLI
 
 :::info
 
@@ -163,9 +169,11 @@ meshtastic --set device.debug_log_enabled true
 </TabItem>
 <TabItem value="web">
 
+#### Web
+
 :::info
 All device config options are available in the Web UI.
 :::
 
-  </TabItem>
+</TabItem>
 </Tabs>

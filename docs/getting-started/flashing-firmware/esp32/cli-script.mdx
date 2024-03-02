@@ -35,6 +35,8 @@ values={[
 ]}>
 <TabItem value="linux">
 
+#### Linux
+
 Check if you have `python3` and `pip` installed with the following command
 
 ```shell
@@ -57,6 +59,8 @@ sudo apt-get install python3-pip
 
   </TabItem>
   <TabItem value="macos">
+
+#### macOS
 
 OS X comes with `Python 2.7` installed, but not `pip`. The following uses Homebrew to install `python3` which includes `pip3`. On MacOS you will use `pip3` instead > of `pip`.
 
@@ -92,6 +96,8 @@ pip3 -v
 
   </TabItem>
   <TabItem value="windows">
+
+#### Windows
 
 - Download and install [Python](https://www.python.org). When installing, make sure to click `Add Python X.Y to PATH`.
 - Download and install [Gitbash](https://gitforwindows.org) (or other appropriate shell) and run all subsequent commands from that shell.
@@ -130,6 +136,8 @@ values={[
 ]}>
 <TabItem value="linux">
 
+#### Linux
+
 :::important
 On Linux, you may need to explicitly declare esptool as a .py script. Use `esptool.py chip_id`.
 :::
@@ -137,12 +145,16 @@ On Linux, you may need to explicitly declare esptool as a .py script. Use `espto
 </TabItem>
 <TabItem value="macos">
 
+#### macOS
+
 :::important
 On macOS, you may need to explicitly declare esptool as a .py script. Use `esptool.py chip_id`.
 :::
 
 </TabItem>
 <TabItem value="windows">
+
+#### Windows
 
 :::important
 On Windows, you must explicitly declare esptool as a .py script. Use `esptool.py chip_id`.
@@ -202,13 +214,15 @@ values={[
 ]}>
 <TabItem value="linux">
 
-#### Install
+#### Linux
+
+##### Install
 
 ```shell title="Command"
 ./device-install.sh -f firmware-BOARD-VERSION.bin
 ```
 
-#### Update
+##### Update
 
 ```shell title="Command"
 ./device-update.sh -f firmware-BOARD-VERSION.bin
@@ -217,13 +231,15 @@ values={[
   </TabItem>
   <TabItem value="macos">
 
-#### Install
+#### macOS
+
+##### Install
 
 ```shell title="Command"
 ./device-install.sh -f firmware-BOARD-VERSION.bin
 ```
 
-#### Update
+##### Update
 
 ```shell title="Command"
 ./device-update.sh -f firmware-BOARD-VERSION.bin
@@ -232,13 +248,15 @@ values={[
   </TabItem>
   <TabItem value="windows">
 
-#### Install
+#### Windows
+
+##### Install
 
 ```shell title="Command"
 device-install.bat -f firmware-BOARD-VERSION.bin
 ```
 
-#### Update
+##### Update
 
 ```shell title="Command"
 device-update.bat -f firmware-BOARD-VERSION.bin

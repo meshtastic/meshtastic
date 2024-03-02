@@ -229,3 +229,13 @@ td {
   padding-left: 10px !important;
   padding-right: 10px !important;
 }
+
+/* Need all tab content to show for PDF generation */
+@media print {
+  ul.tabs {
+    display: none;
+  }
+  .tabs-container div > div {
+    display: block;
+  }
+}
