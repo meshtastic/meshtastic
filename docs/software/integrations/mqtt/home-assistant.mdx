@@ -52,7 +52,7 @@ sensor:
             value_json.payload.temperature is not defined %}
         {{ (value_json.payload.voltage | float) | round(2) }}
       {% else %}
-        {{ states('sensor.node_1_battery_voltage') }}
+        {{ this.state }}
       {% endif %}
     unit_of_measurement: "Volts"
     # Telemetry packets come in two flavors: The default node telemetry, and the I2C sensor data.
@@ -66,8 +66,9 @@ sensor:
       {% if value_json.from == 4038675309 and value_json.payload.battery_level is defined %}
         {{ (value_json.payload.battery_level | float) | round(2) }}
       {% else %}
-        {{ states('sensor.node_1_battery_percent') }}
+        {{ this.state }}
       {% endif %}
+    device_class: "battery"
     unit_of_measurement: "%"
 
   - name: "Node 1 ChUtil"
@@ -78,7 +79,7 @@ sensor:
       {% if value_json.from == 4038675309 and value_json.payload.channel_utilization is defined %}
         {{ (value_json.payload.channel_utilization | float) | round(2) }}
       {% else %}
-        {{ states('sensor.node_1_chutil') }}
+        {{ this.state }}
       {% endif %}
     unit_of_measurement: "%"
 
@@ -90,7 +91,7 @@ sensor:
       {% if value_json.from == 4038675309 and value_json.payload.air_util_tx is defined %}
         {{ (value_json.payload.air_util_tx | float) | round(2) }}
       {% else %}
-        {{ states('sensor.node_1_airutiltx') }}
+        {{ this.state }}
       {% endif %}
     unit_of_measurement: "%"
 
@@ -109,9 +110,12 @@ sensor:
       {% if value_json.from == 4038675309 and value_json.payload.temperature is defined %}
         {{ (((value_json.payload.temperature | float) * 1.8) +32) | round(2) }}
       {% else %}
-        {{ states('sensor.node_1_temperature') }}
+        {{ this.state }}
       {% endif %}
+    device_class: "temperature"
     unit_of_measurement: "F"
+# With device_class: "temperature" set, make sure to use the configured unit for temperature in your HA instance.
+# If you don't, then non-temperature messages will change the value of this sensor by reinterpreting the current state with the wrong unit, unless you account for it.
 # For Celsius use:    {{ (value_json.payload.temperature | float) | round(1) }} 
 # For Fahrenheit use: {{ (((value_json.payload.temperature | float) * 1.8) +32) | round(2) }}
 
@@ -123,8 +127,9 @@ sensor:
       {% if value_json.from == 4038675309 and value_json.payload.relative_humidity is defined %}
         {{ (value_json.payload.relative_humidity | float) | round(2) }}
       {% else %}
-        {{ states('sensor.node_1_humidity') }}
+        {{ this.state }}
       {% endif %}
+    device_class: "humidity"
     unit_of_measurement: "%"
 
   - name: "Node 1 Pressure"
@@ -135,9 +140,12 @@ sensor:
       {% if value_json.from == 4038675309 and value_json.payload.barometric_pressure is defined %}
         {{ (value_json.payload.barometric_pressure | float) | round(2) }}
       {% else %}
-        {{ states('sensor.node_1_pressure') }}
+        {{ this.state }}
       {% endif %}
+    device_class: "pressure"
     unit_of_measurement: "hPa"
+# With device_class: "pressure" set, make sure to use the configured unit for pressure in your HA instance.
+# For psi use:    {{ ((value_json.payload.barometric_pressure | float) / 68.9475729) | round(2) }} 
 
   - name: "Node 1 Gas Resistance"
     unique_id: "node_1_gas_resistance"
@@ -147,7 +155,7 @@ sensor:
       {% if value_json.from == 4038675309 and value_json.payload.gas_resistance is defined %}
         {{ (value_json.payload.gas_resistance | float) | round(2) }}
       {% else %}
-        {{ states('sensor.node_1_gas_resistance') }}
+        {{ this.state }}
       {% endif %}
     unit_of_measurement: "MOhms"
 ```
@@ -164,7 +172,7 @@ sensor:
       {% if value_json.from == 4038675309 and value_json.payload.text is defined %}
         {{ value_json.payload.text }}
       {% else %}
-        {{ states('sensor.node_1_messages') }}
+        {{ this.state }}
       {% endif %}
 ```
 
@@ -190,7 +198,7 @@ Copy and paste these entities then change `name`, `unique_id`, `from`, and `stat
       {% if value_json.from == 695318008 and value_json.payload.text is defined %}
         {{ value_json.payload.text }}
       {% else %}
-        {{ states('sensor.node_2_messages') }}
+        {{ this.state }}
       {% endif %}
 ```
 
