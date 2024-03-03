@@ -20,6 +20,12 @@ export const Faq = {
       content: "Everyone contributes in a different way. Join the [Meshtastic Discord](https://discord.gg/ktMAKGBnBs) and introduce yourself. We're all very friendly. If you'd like to pitch in some code, check out the [Development](/docs/developers) menu on the left. If you'd like to contribute financially, please visit our page on [Open Collective](https://opencollective.com/meshtastic) or you may choose to [sponsor a developer](https://github.com/sponsors/meshtastic). Check out [Contributing](/docs/contributing/) for more details.",
     },
   ],
+  "firmware": [
+    {
+      title: "Can I update my node's firmware over the mesh?",
+      content: `No, Meshtastic does not support OTA updates over LoRa.  Please visit [Flash Firmware](/docs/getting-started/flashing-firmware/) for update options.`,
+    },
+  ],
   "android": [
     {
       title: "What versions of Android does the Meshtastic Android App require?",
@@ -191,6 +197,10 @@ If you use your ham radio license with Meshtastic, consider both the privileges 
 ## Overview
 
 <FaqAccordion rows={Faq.general} />
+
+## Firmware
+
+<FaqAccordion rows={Faq.firmware} />
 
 ## Android Client
 
