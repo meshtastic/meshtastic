@@ -15,11 +15,37 @@ To utilize this script you need to have an Adafruit IO account, a working mqtt b
 
 :::
 
-You will need to modify the script with your Adafruit IO and mqtt credentials and mqtt publisher node id
+You will need to modify the ini sample file with your Adafruit IO and mqtt credentials
+Code repository is here [https://bitbucket.org/tavdog/mesh_aio_logger/src/main/]
+
+```ini
+[GENERAL]
+PRINT_CONFIG = false
+; https://pynative.com/list-all-timezones-in-python/
+TIMEZONE = US/Hawaii
+CHANNEL_LIST = LongFast,Private
+
+[MQTT]
+SERVER = mqtt.server.net
+PORT = 1883
+USERNAME = a
+PASSWORD = a
+
+[AIO]
+USER = a
+KEY = a
+;leave FEED_GROUP as Default is you don't want a separate group.
+FEED_GROUP = Default 
+[LOG]
+VOLTAGE = true
+MESSAGE = true
+POSITION = false
+SNR = false
+RSSI = false
+```
 
 ```python
-# Persistent mqtt client, watch for voltage, teleme, message packets and publish them to io
-# feeds will be created.  free tier maxes out at 10
+# Persistent mqtt client, watch for voltage, telemetry, message packets and publish them to io
 
 # Import Adafruit IO REST client.
 from Adafruit_IO import Client, Feed, Data, RequestError
@@ -29,107 +55,129 @@ import os
 import sys
 import json
 import time
-import random
-
 import pytz
+import configparser
+
+config = configparser.ConfigParser()
+# Read the configuration file
+config.read('config.ini')
+
+if config.getboolean('GENERAL','PRINT_CONFIG'):
+    # Iterate through sections and options to print all config values
+    for section in config.sections():
+        print(f"[{section}]")
+        for key, value in config.items(section):
+            print(f"{key} = {value}")
+        print()  # Add an empty line between sections for better readability
+
 # set your timezone here
-timezone = pytz.timezone("US/Hawaii")
+TIMEZONE = config['GENERAL']['TIMEZONE']
+CHANNEL_LIST = config['GENERAL']['CHANNEL_LIST']
+MQTT_SERVER = config['MQTT']['SERVER']
+MQTT_PORT = int(config['MQTT']['PORT'])
+MQTT_USERNAME = config['MQTT']['USERNAME']
+MQTT_PASSWORD = config['MQTT']['PASSWORD']
+AIO_USER = config['AIO']['USER']
+AIO_KEY = config['AIO']['KEY']
+AIO_FEED_GROUP = config['AIO']['FEED_GROUP'] # leave as Default is you don't want a separate group.
+LOG_SNR = config.getboolean('LOG','SNR')
+LOG_VOLTAGE = config.getboolean('LOG','VOLTAGE')
+LOG_RSSI = config.getboolean('LOG','RSSI')
+LOG_MESSAGE = config.getboolean('LOG','MESSAGE')
+LOG_POSITION = config.getboolean('LOG','POSITION')
 
-# set your Adafruit IO creds here
-AIO_USER = "tavdog"
-AIO_KEY = "XXXXXXXXXXXXX"
+###### END SETTINGS ######
 
-# set your MQTT broker information
-MQTT_SERVER = "XXXXXXXXXX"
-MQTT_PORT = 1883 # default
-MQTT_TOPIC_PREFIX = "mesh" # specified when you setup your node to publish mqtt
-MQTT_USERNAME = "xxxxxxxxx"
-MQTT_PASSWORD = "xxxxxxxxx"
-
-# your node ID that is publishingn to the MQTT broker
-MQTT_NODE_ID = "!387e0248"
-# your channel (node must be set to json output)
-MQTT_CHANNEL = "LongFast"
-
-print("\n\n")
-client_id = str(random.randint(0, 100))
-mqttClient = mqtt.Client("python_mesh_client_%s" % client_id) # this needs to be kind of unique. mqtt broker will not allow duplicate connections.
+my_timezone = pytz.timezone(TIMEZONE)
+channel_array = CHANNEL_LIST.split(',')
+print("\n")
+mqttClient = mqtt.Client("mesh_client_rssi")
 mqttClient.username_pw_set(MQTT_USERNAME, MQTT_PASSWORD)
-mqttClient.connect(MQTT_SERVER, MQTT_PORT)
-mqttClient.loop_start()
-print("Subscribing to %s/2/json/%s/%s" % (MQTT_TOPIC_PREFIX, MQTT_CHANNEL,MQTT_NODE_ID))
-mqttClient.subscribe("%s/2/json/%s/%s" % (MQTT_TOPIC_PREFIX, MQTT_CHANNEL,MQTT_NODE_ID))
-time.sleep(1)
 
-# you can add more channels here
-#mqttClient.subscribe("%s/2/json/MauiMesh/%s" % (MQTT_TOPIC_PREFIX, MQTT_NODE_ID))
+aio = Client(AIO_USER,AIO_KEY)
 
+# bootstrap your node_db here if you want
+#node_db = dict()
+node_db = { 947782216: 'G1 Kula',
+            1839130823: 'HR-Haleakala Repeater',
+            1969840052: 'MR8-Magnet Rak 8dbi',
+}
 
-aio = Client(AIO_USER, AIO_KEY)
-
-node_db = dict()
-# bootstrap your node_db here if you want. otherwise it will populate eventually but die on restart.
-# node_db = { 634792740: 'Tavis Blue', 
-#             947782216: 'G1 Wailuku', 
-#             1839130823: 'Giggle Hill', 
-#             2330585902: 'Ayla Kekona', 
-#             634717328: 'Nani Hoku', 
-#             3667835576: 'Rachael'}
-
+# get feed object or create it if it doesn't exist yet.
 def get_feed(full_name,kind):
     name = full_name.split('-')[0]
+    #print("getting feed: " + name)
+    if "\\x00" in name or "\\u0000" in name or "\x00" in name:  # json don't like emojis
+        name = full_name.split('-')[1].replace(' ','-').replace('.','-')
     try:
-        feed = aio.feeds(f"mesh.{name.lower()}-{kind}")
+        feed = aio.feeds(f"{AIO_FEED_GROUP}.{name.lower()}-{kind}")
     except:
-        print("creating feed:" + kind)
+        print("creating feed:" + f"{AIO_FEED_GROUP}.{name.lower()}-{kind}")
         # Create Feed 
         new_feed = Feed(name=f"{name}_{kind}")
-        feed = aio.create_feed(feed=new_feed,group_key="mesh")
+        feed = aio.create_feed(feed=new_feed,group_key=AIO_FEED_GROUP)
         
     return feed
 
 def publish_rssi(data,metadata):
     name = node_db[data['from']]
     feed = get_feed(name,"rssi") # use a function here because we will create the feed if it doens't exist already.
-    print(feed.key + " \t\t: " + str(data['rssi']))
+    #print(feed.key + " \t\t: " + str(data['rssi']))
     aio.send_data(feed.key, data['rssi'],metadata)
 
 def publish_snr(data,metadata):
     name = node_db[data['from']]
     feed = get_feed(name,"snr") # use a function here because we will create the feed if it doens't exist already.
-    print(feed.key + " \t\t: " + str(data['snr']))
+    #print(feed.key + " \t\t: " + str(data['snr']))
     aio.send_data(feed.key, data['snr'],metadata)
 
 def publish_voltage(data,metadata):
     name = node_db[data['from']]
     feed = get_feed(name,"voltage") # use a function here because we will create the feed if it doens't exist already.    print(feed.key + " \t: " + str(data['payload'].get('voltage',"none")))
-    print(feed.key + " \t: " + str(data['payload']['voltage']))
+    #print(feed.key + " \t: " + str(data['payload']['voltage']))
     aio.send_data(feed.key, data['payload'].get('voltage',0),metadata)
 
 def publish_packet(data):
 
-    feed = aio.feeds("mesh.messages")
+    feed = aio.feeds(AIO_FEED_GROUP+".messages")
     if (data['from'] in node_db):
         data['fname'] = node_db[data['from']]
+    if (data['to'] in node_db):
+        data['tname'] = node_db[data['to']]
     # trim down the data. we really only want to see the message content
+    if 'stamp' in data:
+        stamp = datetime.fromtimestamp(data['timestamp'],my_timezone).strftime('%Y-%m-%d %H:%M:%S')
+    else:
+        current_time = datetime.now()  # Assuming UTC time
+        # Convert to the desired timezone (e.g., 'America/Los_Angeles' or your preferred timezone)
+        current_time = current_time.astimezone(my_timezone)
+        stamp = current_time.strftime('%Y-%m-%d %H:%M:%S')
+
     trimmed = { 
         'from' : data.get('fname',None) or data.get('from'),
-        'message' : data['payload']['text'],
-        'stamp' : datetime.fromtimestamp(data['timestamp'],timezone).strftime('%Y-%m-%d %H:%M:%S'),
+        'to'    : data.get('tname',None) or data.get('to'),
+        'channel' : data['channel'],
+        'message' : data['payload'],
+        'stamp' : stamp,
         }
     aio.send_data(feed.key, json.dumps(trimmed, indent=4))
-
+    print(trimmed)
 
 def on_message(client, userdata, message):
-    print("\n")
-    print("message received " ,str(message.payload.decode("utf-8")))
-    print("\n")
-    data = json.loads(str(message.payload.decode("utf-8")))
+    try:
+        data = json.loads(str(message.payload.decode("utf-8")))
+    except Exception as e:
+        print(e)
+        return
     
     # check the topic of the message
-    if data['type'] == "text":
-        # publish all message packets to the packet log
-        publish_packet(data)
+    if data['type'] == "text" and LOG_MESSAGE:
+        # publish all message packets to the message log
+        print(data)
+        try:
+            publish_packet(data)
+        except Exception as e:
+            print("error in publish:",e)
     
     # update node_db if needed
     if data['type'] == 'nodeinfo':
@@ -141,34 +189,49 @@ def on_message(client, userdata, message):
 
     # "payload":{"altitude":113,"latitude_i":208759687,"longitude_i":-1565037665
     metadata = None        
-    if data['type'] == 'position':
+    if data['type'] == 'position' and LOG_POSITION:
         metadata = {
             'lat': data['payload']['latitude_i'] / 10000000, #40.726190,
             'lon': data['payload']['longitude_i'] / 10000000, #-74.005334,
             'ele': data['payload'].get('altitude',None),
-            'created_at': datetime.now(timezone),
+            'created_at': str(datetime.now(my_timezone)),
         }
         # add to the node_db if we know who they are already
 
-
+#    if metadata:
+#        print(metadata)
+        
     if data['from'] in node_db:
         try:
-            if 'rssi' in data and data['rssi'] != 0:
-                # do the doings
+            if LOG_RSSI and 'rssi' in data and data['rssi'] != 0:
                 publish_rssi( data, metadata )
-            if 'snr' in data and data['snr'] != 0:
+            if LOG_SNR and 'snr' in data and data['snr'] != 0:
                 publish_snr( data, metadata )
-            if 'payload' in data and data['payload'].get('voltage',0) != 0:
+            if LOG_VOLTAGE and 'payload' in data and 'voltage' in data['payload'] and data['payload'].get('voltage',0) != 0:
                 publish_voltage( data, metadata )
+            pass
         except Exception as e:
             print("Error sending to IO:", str(e))
 
 
 mqttClient.on_message = on_message
 
-# loop forever
+#def on_log(client, userdata, level, buf):
+    #print("log: ",buf)
+
+#mqttClient.on_log=on_log
+
 while(True):
-    pass
+    if (not mqttClient.is_connected()) :
+        print("Connecting to mqtt server")
+        mqttClient.connect(MQTT_SERVER, MQTT_PORT)
+        mqttClient.loop_start()
+        for channel in channel_array:
+            print("Subscribing to %s" % channel)
+            mqttClient.subscribe("mesh/2/json/%s/#" % (channel))
+            time.sleep(1)
+
+    time.sleep(.01)
 
 ```
 
