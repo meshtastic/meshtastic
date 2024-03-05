@@ -12,6 +12,23 @@ This section covers using the "meshtastic" command line executable, which displa
 The `meshtastic` command is not run within python but is a script run from your operating system shell prompt. When you type "meshtastic" and the prompt is unable to find the command in Windows, check that the python "scripts" directory [is in your path](https://datatofish.com/add-python-to-windows-path).
 :::
 
+## Viewing Serial Output
+
+The `--noproto` command in the Meshtastic Python CLI is used to disable the API and function merely as a "dumb serial terminal."  This mode of operation allows both the API and device functionalities to remain accessible for regular use, while simultaneously providing a window into the raw serial output. This feature can be particularly useful for debugging, development, or understanding the low-level communication between devices.
+
+```shellsession title="Example Usage"
+user@host % meshtastic --noproto
+# You should see results similar to this:
+WARNING file:mesh_interface.py _sendToRadio line:681 Not sending packet because protocol use is disabled by noProto
+Connected to radio
+WARNING file:mesh_interface.py _sendPacket line:531 Not sending packet because protocol use is disabled by noProto
+INFO  | 18:38:04 711 [DeviceTelemetryModule] (Sending): air_util_tx=0.116361, channel_utilization=1.916667, battery_level=101, voltage=4.171000
+DEBUG | 18:38:04 711 [DeviceTelemetryModule] updateTelemetry LOCAL
+DEBUG | 18:38:04 711 [DeviceTelemetryModule] Node status update: 2 online, 4 total
+INFO  | 18:38:04 711 [DeviceTelemetryModule] Sending packet to phone
+INFO  | 18:38:04 711 Telling client we have new packets 28
+```
+
 ## Getting a list of User Preferences
 
 You can get a list of user preferences by running '--get' with an invalid attribute such as 'all'.
