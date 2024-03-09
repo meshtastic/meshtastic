@@ -6,8 +6,8 @@ import {
   BoltIcon,
   ComputerDesktopIcon,
   CpuChipIcon,
+  DocumentIcon,
   GlobeAltIcon,
-  DocumentIcon
 } from "@heroicons/react/24/solid";
 import Layout from "@theme/Layout";
 
