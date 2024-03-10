@@ -4,7 +4,7 @@ title: Power Configuration
 sidebar_label: Power
 ---
 
-import Admonition from '@theme/Admonition';
+import Admonition from "@theme/Admonition";
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 import calculateADC from "/src/utils/calculateADC";
@@ -19,7 +19,7 @@ The power config options are: Power Saving, Shutdown after losing power, ADC Mul
 
 ### Power Saving
 
-:::warning 
+:::warning
 If enabled, modifications to settings can be made by waking the device through pressing the user button, resetting, or through the [admin channel](/docs/configuration/remote-admin/) for remote administration.
 :::
 
@@ -91,6 +91,29 @@ Should be set to floating point value between 2 and 6
         </td>
       </tr>
     </table>
+    Default values for ADC Multipliers are:
+
+    |  Device   | Default ADC Multiplier |
+    | :-------: | :--------------------: |
+    | hatter2 | 5.0 |
+    | diy | 1.85 |
+    | esp32-s3-pico | 3.1 |
+    | heltec_v1 & heltec_v2 | 3.2 |
+    | heltec_v3 & heltec_wsl_v3 | 4.9 |
+    | heltec_wireless_paper | 2 |
+    | heltec_wireless_tracker | 4.9 |
+    | lora_isp4520 | 1.436 |
+    | m5stack_coreink | 5 |
+    | nano-g1-explorer | 2 |
+    | picomputer-s3 | 3.1 |
+    | station-g1 | 6.45 |
+    | station-g2 | 4 |
+    | tlora_v2_1_16 | 2 |
+    | tlora_v2_1_18 | 2.11 |
+    | tlora_t3s3_v1 | 2.11 |
+    | t-deck | 2.11 |
+    | trackerd | 2 |
+
   </div>
 </details>
 
@@ -170,15 +193,15 @@ All Power config options are available in the python CLI.
 
 :::
 
-|               Setting                |      Acceptable Values       |               Default               |
-| :----------------------------------: | :--------------------------: | :---------------------------------: |
-|        power.is_power_saving         |       `true`, `false`        |               `false`               |
-| power.on_battery_shutdown_after_secs |     `integer` (seconds)      |        Default of `0` is off        |
-|    power.adc_multiplier_override     | `2-4` (floating point value) | Default of `0` uses firmware values |
-|      power.wait_bluetooth_secs       |     `integer` (seconds)      |     Default of `0` is 1 minute      |
-|            power.ls_secs             |     `integer` (seconds)      |      Default of `0` is 5 minutes    |
-|         power.min_wake_secs          |     `integer` (seconds)      |    Default of `0` is 10 seconds     |
-| power.device_battery_ina_address     | `integer` (I2C address as decimal)     |  Default of `0` is no address set   |
+|               Setting                |         Acceptable Values          |               Default               |
+| :----------------------------------: | :--------------------------------: | :---------------------------------: |
+|        power.is_power_saving         |          `true`, `false`           |               `false`               |
+| power.on_battery_shutdown_after_secs |        `integer` (seconds)         |        Default of `0` is off        |
+|    power.adc_multiplier_override     |    `2-4` (floating point value)    | Default of `0` uses firmware values |
+|      power.wait_bluetooth_secs       |        `integer` (seconds)         |     Default of `0` is 1 minute      |
+|            power.ls_secs             |        `integer` (seconds)         |     Default of `0` is 5 minutes     |
+|         power.min_wake_secs          |        `integer` (seconds)         |    Default of `0` is 10 seconds     |
+|   power.device_battery_ina_address   | `integer` (I2C address as decimal) |  Default of `0` is no address set   |
 
 :::tip
 
