@@ -2,33 +2,65 @@
 id: github
 title: GitHub
 sidebar_label: GitHub
+sidebar_position: 3
 ---
 
 ## Overview
 
-All of Meshtastic's code and documentation is hosted on GitHub. If you would like to contribute to the project, having a GitHub account is an important step to doing so.
+The Meshtastic project is hosted on GitHub, a popular web-based platform for version control and collaborative software development. GitHub allows developers to manage and track changes to their code, collaborate with others, and distribute their work.
 
-## Set up GitHub account
+If you want to contribute to the Meshtastic project or simply stay up-to-date with the latest developments, you'll need a GitHub account.
 
-- Go to [github.com](https://github.com)
-- Click `Sign Up`
+## Setting up a GitHub Account
+
+1. Go to [github.com](https://github.com)
+2. Click on the "Sign up" button in the top right corner.
+3. Follow the on-screen instructions to create your account.
+
+With a GitHub account, you can:
+
+- Access and view the Meshtastic project repositories.
+- Report issues or bugs you encounter.
+- Propose changes or new features through pull requests.
+- Discuss and collaborate with other contributors.
+
+## Meshtastic on GitHub
+
+The Meshtastic project is organized under the [meshtastic GitHub organization](https://github.com/meshtastic). Here are some of the main repositories:
+
+- [firmware](https://github.com/meshtastic/firmware): The firmware code for Meshtastic devices.
+- [Meshtastic-Android](https://github.com/meshtastic/Meshtastic-Android): The Android application for Meshtastic.
+- [web](https://github.com/meshtastic/web): The Meshtastic Web Client.
+- [protobufs](https://github.com/meshtastic/protobufs): The Protocol Buffer definitions used by Meshtastic.
+- [Meshtastic-Apple](https://github.com/meshtastic/Meshtastic-Apple): Apple iOS, iPadOS & macOS Clients For Meshtastic.
+- [meshtastic](https://github.com/meshtastic/meshtastic): The Meshtastic project website and documentation.
+- [python](https://github.com/meshtastic/python): The Python CLI and API for communicating with Meshtastic devices.
+
+## Contributing to Meshtastic
+
+If you're interested in contributing to the Meshtastic project, you'll need to follow the contribution guidelines outlined in the project's repositories. These guidelines typically include instructions for setting up your development environment, coding conventions, and the process for submitting pull requests.
+
+Additionally, many Meshtastic repositories include a `README.md` file that provides an overview of the project, installation instructions, and other relevant information.
 
 ## README Template
 
-All Meshtastic developers should follow this convention when writing a README for a repository.
-
-Repobeats images can be generated at [repobeats.axiom.co](https://repobeats.axiom.co/)
+Meshtastic developers are encouraged to follow a consistent README format for new repositories. The template includes sections for an overview, getting started guide, documentation/API references, installation instructions, and compatibility information.
 
 ```markdown
-# Repo name
+# Repository Name
 
 <!--Project specific badges here-->
+
 <!--Crowdin Badge can be generated from https://crowdin.meshtastic.org/u/projects/<project_id>/crowdsource -->
 
 [![Crowdin](https://badges.crowdin.net/e/<badge_id>/localized.svg)](https://crowdin.meshtastic.org/<project>)
+
 [![CI](https://img.shields.io/github/actions/workflow/status/meshtastic/<repo>/ci.yml?branch=master&label=actions&logo=github&color=yellow)](https://github.com/meshtastic/<repo>/actions/workflows/ci.yml)
+
 [![CLA assistant](https://cla-assistant.io/readme/badge/meshtastic/<repo>)](https://cla-assistant.io/meshtastic/<repo>)
+
 [![Fiscal Contributors](https://opencollective.com/meshtastic/tiers/badge.svg?label=Fiscal%20Contributors&color=deeppink)](https://opencollective.com/meshtastic/)
+
 [![Vercel](https://img.shields.io/static/v1?label=Powered%20by&message=Vercel&style=flat&logo=vercel&color=000000)](https://vercel.com?utm_source=meshtastic&utm_campaign=oss)
 
 ## Overview
@@ -52,4 +84,3 @@ A description about the project
 <!--Any other pertinent sections-->
 
 ### Compatibility
-```
