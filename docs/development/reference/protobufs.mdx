@@ -1,8 +1,21 @@
 ---
 id: protobufs
 title: Protobufs
+sidebar_label: Protobufs
+sidebar_position: 1
 ---
+## Overview
 
-Protobufs are used by Meshtastic software to send and receive data between App and Device and Device to Device.
+Protocol Buffers, commonly referred to as Protobufs, are a language-neutral, platform-neutral, extensible mechanism for serializing structured data. They are used by Meshtastic software for encoding and transmitting data between the App and Device, as well as for Device-to-Device communication.
 
-Documentation on the Meshtastic Protobuf messages can be found on the [BSR(Buf Schema Registry)](https://buf.build/meshtastic/protobufs).
+Protobufs provide a efficient and lightweight way of exchanging data, making them well-suited for use in resource-constrained environments like the Meshtastic network. They offer several advantages over traditional data formats like XML or JSON, including:
+
+- Smaller serialized size: Protobuf serialized data is typically much smaller than XML or JSON representations of the same data.
+- Faster serialization and deserialization: Protobufs are designed to be serialized and deserialized quickly, which is important for applications that need to process large amounts of data.
+- Type-safe and self-describing: Protobuf messages are type-safe, and the message formats are self-describing, making it easier to work with and maintain the data over time.
+
+## Meshtastic Protobufs
+
+The Meshtastic project defines its own set of Protobuf messages for various types of data exchanged between app-device and device-device. These messages are organized into different modules.
+
+The official documentation for the Meshtastic Protobuf messages can be found on the [Buf Schema Registry (BSR)](https://buf.build/meshtastic/protobufs). The BSR provides a centralized location for managing and documenting the Protobuf schemas used by the project.
