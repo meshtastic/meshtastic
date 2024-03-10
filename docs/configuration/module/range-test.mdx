@@ -7,9 +7,14 @@ sidebar_label: Range Test
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 
-This module allows you to test the range of your Meshtastic nodes. It requires at least two nodes, a sender and a receiver. The receiving node saves the messages along with the GPS coordinates at which they were received into a .csv file. This .csv file can then be integrated into [Google Earth](https://earth.google.com), [Google Maps - My Maps](https://mymaps.google.com), or any other program capable of processing .csv files. This can enable you to visualize your mesh.
+This module allows you to test the range of your Meshtastic nodes. It requires two nodes:
 
-While a minimum of two radios is required, more can be used. You can have any number of receivers and senders that your mesh is able to handle. You can test having a single sender with multiple receivers or a single receiver with multiple senders. Let us know on the [forum thread](https://meshtastic.discourse.group/t/new-plugin-rangetestplugin/2591) the results of your configuration.
+- Sender: fixed node that sends sequential packets ("Sender message interval" between 30-60s);
+- Receiver: mobile node (typically you) with onboard or phone GPS.
+
+Nodes are in range as long as the sequential packets can be received.
+
+The receiving node can be used to save the messages along with the GPS coordinates at which they were received into a .csv file. This .csv file can then be integrated into [Google Earth](https://earth.google.com), [Google Maps - My Maps](https://mymaps.google.com), or any other program capable of processing .csv files. This can enable you to visualize your mesh.
 
 :::info
 
@@ -17,28 +22,13 @@ Be sure to turn off the module or disable sending when not in use. This will use
 
 :::
 
-
-The range test module config options are: Enabled, Save, and Sender. Range Test Module config uses an admin message sending a `ConfigModule.RangeTest` protobuf.
+The range test module config options are: Enabled, Sender, and Save. Range Test Module config uses an admin message sending a `ModuleConfig.RangeTestConfig` protobuf.
 
 ## Range Test Module Config Values
 
 ### Enabled
 
-Enables the range test module.
-
-### Save CSV File
-
-:::info
-
-Saving files is only available on ESP32-based devises
-
-:::
-
-If enabled, a log of all received messages will be saved to a file named rangetest.csv.
-
-To access this file, first turn on the WiFi on your device and connect to your network. Once you can connect to your device, navigate to `meshtastic.local/rangetest.csv` (or your_device_ip/rangetest.csv) and the file will be downloaded automatically. This file will only be created after receiving initial messages.
-
-To prevent filling up the storage, the device will abort writing if there is less than 50kb of space on the filesystem.
+Enables the range test module. **Both Sender and Receiver must have the module enabled.**
 
 ### Sender Interval
 
@@ -49,16 +39,29 @@ How long to wait between sending sequential test packets. 0 is default which dis
 | Radio Setting | `range_test.sender` |
 | :-----------: | :-----------------: |
 |   Long Slow   |         60          |
-|   Long Alt    |         30          |
+|   Long Fast   |         30          |
 |    Medium     |         15          |
 |  Short Fast   |         15          |
 
+### Save CSV File
+
+:::info
+
+**Leave disabled when using the Android or Apple apps.** Saves directly to the device's flash memory (without the need for a smartphone), and is only available on ESP32-based devices.
+
+:::
+
+If enabled, all received messages are saved to the device's flash memory in a file named `rangetest.csv`.
+
+To access this file, first turn on the WiFi on your device and connect to your network. Once you can connect to your device, navigate to `meshtastic.local/rangetest.csv` (or your_device_ip/rangetest.csv) and the file will be downloaded automatically. This file will only be created after receiving initial messages.
+
+To prevent filling up the storage, the device will abort writing if there is less than 50kb of space on the filesystem.
 
 ## Range Test Module Config Client Availability
 
 <Tabs
 groupId="settings"
-defaultValue="apple"
+defaultValue="android"
 values={[
 {label: 'Android', value: 'android'},
 {label: 'Apple', value: 'apple'},
@@ -78,7 +81,7 @@ Range Test Config options are available for Android.
 
 :::
 
-Android also had the option to download a rangetest.csv file which is stored on your phone.  This file does not require the Range Test module to be active and will log all incoming Nodeinfo, Position, Telemetry and Messages.
+Android exports a rangetest.csv file from packets in the Debug Log. To clear old packet history data: `Debug Panel > Clear`
 
 </TabItem>
 <TabItem value="apple">
@@ -186,33 +189,3 @@ Visit [uMap](https://umap.openstreetmap.de/en/) in your preffered language.
 1. Click on "Create a map"
 2. Click on the "Import data"-Icon or press CRTL + I.
 3. Choose your rangetest.csv and click "Import". The dataformat is recognized and the locations are imported onto the map.
-
-## FAQ
-
-Q: Do I need to have WiFi turned on for the file to be saved?
-
-- Nope, it'll just work.
-
-Q: Do I need a phone for this module?
-
-- There's no need for a phone.
-
-Q: Can I use this as a message logger?
-
-- While it's not the intended purpose, sure, why not. Do it!
-
-Q: What will happen if I run out of space on my device?
-
-- We have a protection in place to keep you from completely filling up your device. This will make sure that other device critical functions will continue to work. We will reserve at least 50k of free space.
-
-Q: What do I do with the rangetest.csv file when I'm done?
-
-- Currently the only way to erase the file is to perform a factory reset.
-
-Q: Can I use this as a sender while on battery power?
-
-- Yes, but your battery will run down quicker than normal. While sending, we tell the device not to go into low-power mode since it needs to keep to a fairly strict timer.
-
-Q: Why is this operating on incoming messages instead of the existing location discovery protocol?
-
-- This module is still young and currently supports monitoring just one port at a time. I decided to use the existing message port because that is easy to test with. A future version will listen to multiple ports to be more promiscuous.
