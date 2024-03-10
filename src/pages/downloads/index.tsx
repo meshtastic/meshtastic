@@ -6,6 +6,7 @@ import {
   BoltIcon,
   ComputerDesktopIcon,
   CpuChipIcon,
+  DocumentIcon,
   GlobeAltIcon,
 } from "@heroicons/react/24/solid";
 import Layout from "@theme/Layout";
@@ -213,6 +214,39 @@ const Firmware = (): JSX.Element => {
                 <PlaceholderFirmwareCard />
               </>
             )}
+          </div>
+        </div>
+        {/*  */}
+        <h1 className="m-2">Documentation</h1>
+        <div className="flex w-full overflow-hidden rounded-xl">
+          <div className="flex w-1/5 bg-gradient-to-r from-blue-500 to-primary">
+            <DocumentIcon className="m-auto h-20" />
+          </div>
+          <div className="flex w-full flex-col bg-primary lg:flex-row">
+            <div className="card m-4 border-2 border-secondary">
+              <div className="card__header">
+                <h3>PDF</h3>
+              </div>
+              <div className="card__body flex items-center">
+                <div className="m-auto">
+                  <GlobeAltIcon className="h-20 w-20" />
+                </div>
+              </div>
+              <div className="card__body">
+                Current Meshtastic.org documentation compiled for offline use
+              </div>
+              <div className="card__footer mt-auto">
+                <a
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  href="https://github.com/meshtastic/artifacts/tree/docs"
+                  className="m-auto flex rounded-lg border-4 border-transparent bg-gray-100 p-1 font-semibold text-black shadow-md hover:text-black hover:brightness-110 active:border-green-200"
+                >
+                  GitHub
+                  <ArrowTopRightOnSquareIcon className="m-auto ml-2 h-4" />
+                </a>
+              </div>
+            </div>
           </div>
         </div>
       </div>
