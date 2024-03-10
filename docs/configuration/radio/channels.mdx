@@ -7,7 +7,7 @@ sidebar_label: Channels
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 
-The Channels config options are: Index, Roles, and Settings. Channel config uses an admin message sending a `Channel` protobuf which also consists of a `ChannelSettings` protobuf.
+The Channels config options are: Index, Roles, and Settings. Channel config uses an admin message sending a `Channel` protobuf which also consists of a `ChannelSettings` or `ModuleSettings` protobuf.
 
 :::info
 **Channel Settings** (as described on this page) should not be confused with [Modem Preset Settings](/docs/configuration/radio/lora#modem-preset)
@@ -103,6 +103,28 @@ Set to `false` by default for all channels.
 If enabled, messages from the mesh will be sent to the **public** internet through any node's configured gateway.
 
 Set to `false` by default for all channels.
+
+## Channel Module Settings
+
+The channel module settings options are: position precision. Channel module settings are embedded in the Channel protobuf as a ModuleSettings protobuf and sent as an admin message.
+
+### Position Precision
+
+The `position_precision` setting allows control of the level of precision for location data that is sent over a particular channel. This can be useful for privacy reasons, where obfuscating the exact location may be desired when sending position data over certain channels.
+
+The `position_precision` value is an integer between 0 and 32:
+
+- A value of 0 means that location data is never sent over the given channel.
+- A value of 32 means that location data is sent with full precision.
+- Values in between indicate the number of bits of precision to be sent.
+
+Some useful values and their approximate precisions:
+
+- 11: Large region, around ±11 kilometers
+- 13: City-sized region, around ±3 kilometers
+- 16: Neighborhood-level precision, around ±350 meters
+
+The client applications have implemented different levels of precision giving the user a practical range to choose from. Setting across the full range of integers can be done via the Python CLI. See [Setting Position Precision](/docs/configuration/radio/channels/#setting-position-precision) for examples on setting different levels of precision using CLI.
 
 ## Channel Config Client Availability
 
@@ -233,6 +255,22 @@ meshtastic --ch-set uplink_enabled false --ch-index 0
 ```shell title="Enable/Disable Downlink on SECONDARY channel"
 meshtastic --ch-set downlink_enabled true --ch-index 1
 meshtastic --ch-set downlink_enabled false --ch-index 5
+```
+
+#### Setting Position Precision
+
+:::info
+
+This is a per-channel setting. The `--ch-index` parameter must be specified to set the position precision for a specific channel, e.g., `--ch-index 0` for the primary channel or `--ch-index 1` for the secondary channel 1.
+
+:::
+
+```shell title="Set position precision to 13 bits (approx ±3 km)"
+meshtastic --ch-set module_settings.position_precision 13 --ch-index 0
+```
+
+```shell title="Set position precision to full precision (32 bits)"
+meshtastic --ch-set module_settings.position_precision 32 --ch-index 1
 ```
 
 </TabItem>
