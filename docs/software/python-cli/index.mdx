@@ -446,6 +446,14 @@ Connect to a Meshtastic device using its BLE address or name. This option allows
 meshtastic --ble "device_name_or_address" --info
 ```
 
+### --ble-scan
+
+Scan for available Meshtastic devices using BLE. This command lists discoverable devices, providing a convenient method to identify devices for connection via BLE.
+
+```shell title="Usage"
+meshtastic --ble-scan
+```
+
 ### --noproto
 
 Don't start the API, just function as a dumb serial terminal. Probably not very helpful from the command line. Used more for testing/internal needs.
