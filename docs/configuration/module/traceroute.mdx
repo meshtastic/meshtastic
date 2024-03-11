@@ -7,6 +7,8 @@ sidebar_label: Traceroute
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 
+## Overview 
+
 Due to the limited bandwidth of LoRa, Meshtastic does not keep track of the nodes a message used to hop to the destination. However, from firmware 2.0.8 on, there is a Traceroute Module that can show you this.
 
 Only nodes that know the encryption key of the channel you use can be tracked. Also note that a message may arrive via multiple routes due to duplication because of rebroadcasting. This module will only track the hops of the first packet containing the traceroute request that arrived at the destination.
@@ -14,6 +16,10 @@ Only nodes that know the encryption key of the channel you use can be tracked. A
 In order to use it, make sure your devices use firmware version 2.0.8 or higher.
 
 <object data="https://www.youtube.com/embed/PKUmaELKaUo?autohide=1&autoplay=0" width="100%" height="400"></object>
+
+## Repeater Behavior
+
+Repeater nodes will appear in the traceroute log if they have the encryption key, but if they are not in the node list they might appear as "Unknown" depending on the app. 
 
 ## Traceroute Module Client Availability
 
@@ -29,8 +35,6 @@ values={[
 <TabItem value="android">
 
 #### Android
-
-Make sure the app is at least version 2.1.10.
   
 Within the node list, long hold a destination node and select 'Traceroute' to send the request. Depending on the amount of hops that is needed, this might take a while. The result will be shown using a pop-up.
 
@@ -39,9 +43,7 @@ Within the node list, long hold a destination node and select 'Traceroute' to se
 
 #### Apple
 
-Make sure the app is at least version 2.0.9.
-
-Within the node list, long hold a destination node and select 'Trace Route' to send the request. Depending on the amount of hops that is needed, this might take a while. The result will be shown in the node's Trace route Log.
+Within the node list, long hold a destination node and select 'Trace Route' to send the request. Depending on the amount of hops, this might take a while. On iOS/iPadOS 17 and macOS 14+, the results will be shown in the node's Trace Route Log in the node details. For earlier versions, check Settings > Logging > Mesh Log.
 
 </TabItem>
 <TabItem value="cli">
