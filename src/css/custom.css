@@ -230,12 +230,14 @@ td {
   padding-right: 10px !important;
 }
 
-/* Need all tab content to show for PDF generation */
+/* Print styles for manual printing and PDF generation */
 @media print {
-  ul.tabs {
+  ul.tabs,
+  .no-print {
     display: none;
   }
-  .tabs-container div > div {
-    display: block;
+  .tabs-container div > div,
+  .accordion__panel {
+    display: block !important;
   }
 }

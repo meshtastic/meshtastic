@@ -7,15 +7,15 @@ sidebar_position: 2
 
 ### Sending/receiving messages on mosquitto server using python
 
-Here is an example publish message in python:
+Here is an example publish message in python (run `pip install paho-mqtt` first):
 
 ```python
 #!/usr/bin/env python3
 import paho.mqtt.client as mqtt
-from random import randrange, uniform
+from random import uniform
 import time
 
-client = mqtt.Client("some_client_id")
+client = mqtt.Client(mqtt.CallbackAPIVersion.VERSION2)
 client.connect('localhost')
 
 while True:
@@ -36,11 +36,11 @@ def on_message(mosq, obj, msg):
     print("%-20s %d %s" % (msg.topic, msg.qos, msg.payload))
     mosq.publish('pong', 'ack', 0)
 
-def on_publish(mosq, obj, mid):
+def on_publish(mosq, obj, mid, reason_codes, properties):
     pass
 
 if __name__ == '__main__':
-    client = paho.Client()
+    client = paho.Client(paho.CallbackAPIVersion.VERSION2)
     client.on_message = on_message
     client.on_publish = on_publish
 

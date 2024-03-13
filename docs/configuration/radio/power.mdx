@@ -2,6 +2,7 @@
 id: power
 title: Power Configuration
 sidebar_label: Power
+description: Settings for advanced users who want to adjust the power configuration on their Meshtastic device.
 ---
 
 import Admonition from "@theme/Admonition";
@@ -49,73 +50,75 @@ Should be set to floating point value between 2 and 6
 4. If "Battery Charge Percent" (e.g., B 3.82V 60%) is not displayed on the screen, it means that the default value of "Operative Adc Multiplier" is too high. Lower the "Operative Adc Multiplier" to a smaller number (it is recommended to decrease by 0.1) until the screen displays "Battery Charge Percent". Enter the current "Operative Adc Multiplier" in use into the "Operative Adc Multiplier" field in the calculator. Also, input the "Battery Charge Percent" displayed on the screen into the calculator.
 5. Click the "Calculate" button to compute the "Calculated New Operative Adc Multiplier", and set it as the new "Operative Adc Multiplier" for the device.
 
-<details>
-  <summary>ADC Calculator</summary>
-  <div>
-    <Admonition type="info">
-      <p>This calibration method only maps 4.2V to Battery Charge Percent 100%, and does not address the potential non-linearities of the ADC.</p>
-    </Admonition>
-    <table>
-      <tr>
-        <td> Battery Charge Percent: </td>
-        <td>
-          <input type="text" id="batteryChargePercent" defaultValue="65" />
-        </td>
-      </tr>
-      <tr>
-        <td>Current Adc Multiplier: </td>
-        <td>
-          <input type="text" id="operativeAdcMultiplier" defaultValue="2" />
-        </td>
-      </tr>
-      <tr>
-        <td>Calculated New Operative Adc Multiplier: </td>
-        <td>
-          <input
-            type="text"
-            id="newOperativeAdcMultiplier"
-            value="2"
-            disabled="disabled"
-          />
-        </td>
-      </tr>
-      <tr>
-        <td></td>
-        <td>
-          <button
-            className="button button--outline  button--lg cta--button"
-            onClick={calculateADC}
-          >
-            Calculate
-          </button>
-        </td>
-      </tr>
-    </table>
-    Default values for ADC Multipliers are:
+<div class="no-print">
+  <details>
+    <summary>ADC Calculator</summary>
+    <div>
+      <Admonition type="info">
+        <p>This calibration method only maps 4.2V to Battery Charge Percent 100%, and does not address the potential non-linearities of the ADC.</p>
+      </Admonition>
+      <table>
+        <tr>
+          <td> Battery Charge Percent: </td>
+          <td>
+            <input type="text" id="batteryChargePercent" defaultValue="65" />
+          </td>
+        </tr>
+        <tr>
+          <td>Current Adc Multiplier: </td>
+          <td>
+            <input type="text" id="operativeAdcMultiplier" defaultValue="2" />
+          </td>
+        </tr>
+        <tr>
+          <td>Calculated New Operative Adc Multiplier: </td>
+          <td>
+            <input
+              type="text"
+              id="newOperativeAdcMultiplier"
+              value="2"
+              disabled="disabled"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>
+            <button
+              className="button button--outline  button--lg cta--button"
+              onClick={calculateADC}
+            >
+              Calculate
+            </button>
+          </td>
+        </tr>
+      </table>
+      Default values for ADC Multipliers are:
 
-    |  Device   | Default ADC Multiplier |
-    | :-------: | :--------------------: |
-    | hatter2 | 5.0 |
-    | diy | 1.85 |
-    | esp32-s3-pico | 3.1 |
-    | heltec_v1 & heltec_v2 | 3.2 |
-    | heltec_v3 & heltec_wsl_v3 | 4.9 |
-    | heltec_wireless_paper | 2 |
-    | heltec_wireless_tracker | 4.9 |
-    | lora_isp4520 | 1.436 |
-    | m5stack_coreink | 5 |
-    | nano-g1-explorer | 2 |
-    | picomputer-s3 | 3.1 |
-    | station-g1 | 6.45 |
-    | station-g2 | 4 |
-    | tlora_v2_1_16 | 2 |
-    | tlora_v2_1_18 | 2.11 |
-    | tlora_t3s3_v1 | 2.11 |
-    | t-deck | 2.11 |
-    | trackerd | 2 |
+      |  Device   | Default ADC Multiplier |
+      | :-------: | :--------------------: |
+      | hatter2 | 5.0 |
+      | diy | 1.85 |
+      | esp32-s3-pico | 3.1 |
+      | heltec_v1 & heltec_v2 | 3.2 |
+      | heltec_v3 & heltec_wsl_v3 | 4.9 |
+      | heltec_wireless_paper | 2 |
+      | heltec_wireless_tracker | 4.9 |
+      | lora_isp4520 | 1.436 |
+      | m5stack_coreink | 5 |
+      | nano-g1-explorer | 2 |
+      | picomputer-s3 | 3.1 |
+      | station-g1 | 6.45 |
+      | station-g2 | 4 |
+      | tlora_v2_1_16 | 2 |
+      | tlora_v2_1_18 | 2.11 |
+      | tlora_t3s3_v1 | 2.11 |
+      | t-deck | 2.11 |
+      | trackerd | 2 |
 
-  </div>
-</details>
+    </div>
+  </details>
+</div>
 
 ### Wait Bluetooth Interval
 
