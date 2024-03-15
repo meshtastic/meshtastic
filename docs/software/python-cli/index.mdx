@@ -440,10 +440,18 @@ meshtastic --test
 
 ### --ble BLE
 
-BLE mac address to connect to (BLE is not yet supported for this tool).
+Connect to a Meshtastic device using its BLE address or name. This option allows for wireless communication with the device, similar to how the `--host` option is used for TCP connections.
 
 ```shell title="Usage"
-meshtastic --ble "83:38:92:32:37:48"
+meshtastic --ble "device_name_or_address" --info
+```
+
+### --ble-scan
+
+Scan for available Meshtastic devices using BLE. This command lists discoverable devices, providing a convenient method to identify devices for connection via BLE.
+
+```shell title="Usage"
+meshtastic --ble-scan
 ```
 
 ### --noproto

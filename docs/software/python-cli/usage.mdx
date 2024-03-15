@@ -133,6 +133,79 @@ Use "--ch-set psk default" to restore the standard 'default' (minimally secure, 
 
 All "ch-set" commands will default to the primary channel at index 0, but can be applied to other channels with the "ch-index" parameter.
 
+## Utilizing BLE via the Python CLI
+
+The Python CLI supports communicating with Meshtastic devices via Bluetooth Low Energy (BLE), in addition to the standard serial and TCP/IP connections. To use BLE, you will need a Bluetooth adapter on your computer.
+
+### Scan for BLE Devices
+
+First, you can scan for available Meshtastic devices using:
+
+```shell
+meshtastic --ble-scan
+```
+
+This will list all Meshtastic devices discoverable over BLE along with their addresses and names in the following format:
+
+```shell
+Found: name='Meshtastic_1234' address='AA11BB22-CC33-DD44-EE55-FF6677889900'
+BLE scan finished
+```
+
+### Available Commands
+
+Once you have the device address or name, you can utilize it alongside your normal Python CLI commands like `--info`, `--nodes`, `--export-config`, etc. but with the `--ble` option to communicate via BLE rather than serial.
+
+You can use **either** the name or address to issue your commands.
+
+```shell
+meshtastic --ble <name> --info
+meshtastic --ble <address> --nodes
+```
+
+The initial time you use the `--ble` option for a specific device, you will be prompted to enter the BLE PIN code (as is normal with a client). Once paired, this step won't be required unless you forget the device.
+
+:::note
+On Linux, you may need to pair the BLE device using `bluetoothctl` before connecting. This allows entering the required PIN for pairing.
+:::
+
+### Additional BLE Examples
+
+#### Scan for devices and get info from the first one:
+
+```bash
+meshtastic --ble-scan
+# Sample output:
+# Found: name='Meshtastic_1234' address='AA11BB22-CC33-DD44-EE55-FF6677889900'
+# Found: name='Meshtastic_5678' address='FF00DD00-AA11-BB22-CC33-DD44EE5566FF'
+BLE scan finished
+
+meshtastic --ble AA11BB22-CC33-DD44-EE55-FF6677889900 --info
+```
+
+#### Connect to a named device and read the node list:
+
+```shell
+meshtastic --ble Meshtastic_1234 --nodes
+```
+#### Export device config with --export-config
+
+```shell
+meshtastic --ble Meshtastic_1234 --export-config > config.yaml
+```
+
+#### Send a command to a remote device using the --dest option:
+
+```shell
+meshtastic --dest '!fe1932db4' --set device.is_managed false --ble Meshtastic_9abc
+```
+
+#### For debugging, you can enable verbose BLE logging by adding the `--debug` flag:
+
+```shell
+meshtastic --ble AA11BB22-CC33-DD44-EE55-FF6677889900 --debug --info
+```
+
 ## FAQ/common problems
 
 This is a collection of common questions and answers from our friendly forum.

@@ -2,6 +2,7 @@
 id: channels
 title: Channel Configuration
 sidebar_label: Channels
+description: Understand how to configure channels on your Meshtastic device, including private channels, encryption, MQTT, and location precision.
 ---
 
 import Tabs from "@theme/Tabs";
@@ -55,8 +56,8 @@ Each channel is assigned one of 3 roles:
    - The channel settings are set to default.
 
 :::note
-While you can have a different PRIMARY channel and communicate over SECONDARY channels with the same Name & PSK, a hash of the PRIMARY channel's name sets the LoRa channel number, which determines the actual frequency you are transmitting on in the band.
-To ensure devices with different PRIMARY channel name transmit on the same frequency, you must explicitly set the LoRa channel number.
+While you can have a different PRIMARY channel and communicate over SECONDARY channels with the same Name & PSK, a hash of the PRIMARY channel's name sets the LoRa frequency slot, which determines the actual frequency you are transmitting on in the band.
+To ensure devices with different PRIMARY channel name transmit on the same frequency, you must explicitly set the LoRa frequency slot.
 :::
 
 ## Channel Settings Values

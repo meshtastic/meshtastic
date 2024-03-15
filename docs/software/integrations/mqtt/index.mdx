@@ -40,9 +40,9 @@ For each channel where uplink and/or downlink is enabled, two other topics might
 #### Protobufs topic
 A gateway node will uplink and/or downlink raw ([protobuf](https://developers.google.com/protocol-buffers)) MeshPackets to the topic:
 
-`msh/2/c/CHANNELNAME/USERID`, where `CHANNELNAME` is the name of the channel.
+`msh/2/e/CHANNELNAME/USERID`, where `CHANNELNAME` is the name of the channel (firmware versions prior to 2.3.0 will publish to a topic with `/c/` in the place of `/e/`).
 
-For example: `msh/2/c/LongFast/!abcd1234`
+For example: `msh/2/e/LongFast/!abcd1234`
 
 The payload is a raw protobuf, whose definitions for Meshtastic can be found [here](https://github.com/meshtastic/protobufs/blob/master/meshtastic). Reference guides for working with protobufs in several popular programming languages can be found [here](https://protobuf.dev/reference/). Looking at the MQTT traffic with a program like `mosquitto_sub` will tell you it's working, but you won't get much useful information out of it. For example:
 
