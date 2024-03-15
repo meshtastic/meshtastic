@@ -69,6 +69,17 @@ dtparam=i2c_arm=on
 
 - The meshtasticd configuration is at `/etc/meshtasticd/config.yaml` by default. If a `config.yaml` is found in the current directory, that takes precedence. And a config file specified with the `-c/--config` option has the highest precedence.
 
+To enable a LoRa radio connected to your device, uncomment the appropriate lines in the config file, including the Module line. As an example, the Waveshare SX126X module would have a Lora section that looks like this:
+
+```yaml
+Lora:
+Module: sx1262 # Waveshare SX126X XXXM
+DIO2_AS_RF_SWITCH: true
+CS: 21
+IRQ: 16
+Busy: 20
+Reset: 18
+```
 ### Web Server
 
 - Meshtasticd has web server support starting with release 2.3.0 To enable this:
