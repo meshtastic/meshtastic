@@ -9,30 +9,34 @@ sidebar_position: 1
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 
-This library provides a command line interface (CLI) for managing the user settings of Meshtastic nodes and provides an easy API for sending and receiving messages over mesh radios. Events are delivered using a publish-subscribe model, and you can subscribe to only the message types you are interested in.
+## Meshtastic Python Library
 
-The [Meshtastic-python repo](https://github.com/meshtastic/Meshtastic-python) and [API documentation](https://python.meshtastic.org) are excellent sources of information.
+This library provides a command-line interface (CLI) for managing the user settings of Meshtastic nodes and provides an easy API for sending and receiving messages over mesh radios. Events are delivered using a publish-subscribe model, and you can subscribe to only the message types you are interested in.
 
-If you wish to view the code or contribute to development of the python library or the command line interface, please visit the Meshtastic python [GitHub page](https://github.com/meshtastic/Meshtastic-python).
+The [Meshtastic-python repo](https://github.com/meshtastic/Meshtastic-python) and [API documentation](https://python.meshtastic.org) are excellent sources of information. If you wish to view the code or contribute to the development of the Python library or the command-line interface, please visit the Meshtastic Python [GitHub page](https://github.com/meshtastic/Meshtastic-python).
 
-There are standalone executables for Windows and Ubuntu if you do not want to install python and/or the python libraries required to run the meshtastic CLI tool. See [Standalone](#standalone) for more information.
+### Installation Methods
 
-Installation can also be easily done through the [Python package installer pip](https://pypi.org/project/meshtastic):
-:::note
-You must use pip version 20 or later. To upgrade to the latest pip, do: `pip install --upgrade pip`
-:::
-:::info
-Make sure that the `PATH variable` also gets installed by checking the box while installing python. If you don't, python may not be available and you may not be able to call `meshtastic` from your CLI. If you do forget to check that box, you will need to install the path environment variable for python on your operating system.
-:::
-:::important
-You may need to install a driver from Silicon Labs for the [CP210X USB to UART bridge](https://www.silabs.com/products/development-tools/software/usb-to-uart-bridge-vcp-drivers)
+You can install the Meshtastic CLI using one of the following methods:
 
-Some newer boards may require the drivers for the [CH9102](http://www.wch.cn/downloads/CH343SER_ZIP.html) or [Direct Download](https://github.com/Xinyuan-LilyGO/CH9102_Driver) for Windows 7.
-:::
+1. **Python Package Installer (pip)**: Installation can be easily done through the [Python package installer pip](https://pypi.org/project/meshtastic). Make sure to use pip version 20 or later by running `pip install --upgrade pip` if necessary.
+2. **Standalone Executable (Ubuntu only)**: A single executable file for Ubuntu is available on the [Releases](https://github.com/meshtastic/Meshtastic-python/releases) page. See [Standalone](#standalone-installation-ubuntu-only) below for instructions.
+
+### Prerequisites
+
+Before installing, ensure that your system meets the following requirements:
+
+- **Serial Drivers**: Your computer should have the required serial drivers installed for the [CP210X USB to UART bridge](https://www.silabs.com/products/development-tools/software/usb-to-uart-bridge-vcp-drivers) or the [CH9102](http://www.wch.cn/downloads/CH343SER_ZIP.html) (for some newer boards).
+- **Python**: Python 3 should be installed on your system. Check with `python3 -V` and install it if necessary.
+- **pip**: The Python package installer pip should be installed. Check with `pip3 -V` and install it if necessary.
+
+After ensuring the requirements are met, follow the installation instructions for your operating system in the tabbed section below.
+
 
 <Tabs
 groupId="operating-system"
-defaultValue="linux"
+queryString="install-python-cli"
+defaultValue="windows"
 values={[
 {label: 'Linux', value: 'linux'},
 {label: 'macOS', value: 'macos'},
@@ -212,32 +216,15 @@ Be aware that the Meshtastic CLI is not able to control the nodes over USB throu
 You may need to close and re-open the CLI. The path variables may or may not update for the current session when installing.
 :::
 
-## Standalone
+### Standalone Installation (Ubuntu only)
 
-There are standalone executable files for Windows and Ubuntu. A single file is all you need to run the command line interface (CLI) Meshtastic tool. There is a zip file per operating system. To use, see the operating system specific notes below:
-
-They can be found on the [Releases](https://github.com/meshtastic/Meshtastic-python/releases) page.
-
-<Tabs
-groupId="operating-system"
-defaultValue="windows"
-values={[
-{label: 'Ubuntu', value: 'ubuntu'},
-{label: 'Windows', value: 'windows'},
-]}>
-<TabItem value="ubuntu">
-
-#### Ubuntu
-
-- Download meshtastic_ubuntu
-
-- Run the following command to make the file executable and rename it 'meshtastic':
+1. Download the `meshtastic_ubuntu` executable from the [Releases](https://github.com/meshtastic/Meshtastic-python/releases) page.
+2. Run the following command to make the file executable and rename it `meshtastic`:
 
 ```shell
 chmod +x meshtastic_ubuntu && mv meshtastic_ubuntu meshtastic
 ```
-
-- To run the cli:
+3. To run the CLI:
 
 ```shell
 ./meshtastic
@@ -246,21 +233,3 @@ chmod +x meshtastic_ubuntu && mv meshtastic_ubuntu meshtastic
 :::tip
 Copy (or move) this binary somewhere in your path.
 :::
-
-</TabItem>
-<TabItem value="windows">
-
-#### Windows
-
-- Download meshtastic_windows
-
-- Rename to meshtastic.exe
-
-- To run, open a windows command prompt, navigate to the location of the executable and run:
-
-```shell
-meshtastic.exe
-```
-
-</TabItem>
-</Tabs>
