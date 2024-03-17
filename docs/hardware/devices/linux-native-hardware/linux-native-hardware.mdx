@@ -12,11 +12,12 @@ This guide outlines the setup of Meshtastic on Linux-native devices, utilizing p
 Before proceeding with the setup, ensure the device meets the following requirements:
 
 ### Tested Devices
-- Raspberry Pi zero, zero 2 , 3,4, Pi 400, and Pi 5.
-- Ubuntu 22.04 X86_64 with a CH341-SX1262 DIY dongle.[^1]
+- Raspberry Pi zero, zero 2 , 3,4, Pi 400, and Pi 5.[^1]
+- Ubuntu 22.04 X86_64 with a CH341-SX1262 DIY dongle.[^2]
 - Debian GNU/Linux trixie/sid riscv64 on Cvitek CV180X ASIC, C906 (Milk-V Duo), on the SPI bus.
 
-[^1]: **Limited Functionality with CH341-SX1262 Device:** Please be aware that the CH341-SX1262 device is currently experiencing partial functionality issues. For reasons yet to be determined, this device struggles with sending packets larger than a few bytes.
+[^1]: While the Raspberry Pi Zero has been tested with meshtasticd, building as a native ARM32 binary has proven challenging. As a workaround, consider building on a Raspberry Pi 4 or 5 with a 32-bit OS and copying the output file to the Pi Zero.
+[^2]: **Limited Functionality with CH341-SX1262 Device:** Please be aware that the CH341-SX1262 device is currently experiencing partial functionality issues. For reasons yet to be determined, this device struggles with sending packets larger than a few bytes.
 
 ### Hardware Compatibility
 - Tested radios include Waveshare SX126X, Adafruit RFM9x, and Elecrow Lora RFM95 IOT.
