@@ -32,10 +32,6 @@ Automatically shut down a device after a defined time period if power is lost.
 
 ### ADC Multiplier Override
 
-:::info ESP32 Only
-This setting only applies to ESP32-based boards, it will have no effect on nRF52/RP2040 boards.
-:::
-
 Ratio of voltage divider for battery pin e.g. 3.20 (R1=100k, R2=220k)
 
 Overrides the ADC_MULTIPLIER defined in the firmware device variant file for battery voltage calculation.
@@ -108,6 +104,8 @@ Should be set to floating point value between 2 and 6
       | m5stack_coreink | 5 |
       | nano-g1-explorer | 2 |
       | picomputer-s3 | 3.1 |
+      | rpipico | 3.1 |
+      | rpipicow | 3.1 |
       | station-g1 | 6.45 |
       | station-g2 | 4 |
       | tlora_v2_1_16 | 2 |

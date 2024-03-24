@@ -10,7 +10,12 @@ import TabItem from "@theme/TabItem";
 
 The audio module config options are: Codec2 Enabled, PTT GPIO, Audio Bitrate/Codec Mode, I2S Word Select, I2S Data IN, I2S Data OUT and I2S Clock. Audio Module config uses an admin message sending a `ConfigModule.Audio` protobuf.
 
-With this **experimental** module, you can add a digital I2S microphone and speaker to any ESP32 device that has a SX128x radio and operates on the 2.4 GHz ISM Band. The Sub-1GHz bands are not wide enough to support continuous audio packets on the mesh, even in the Short and Fast modes. Right now, the only devices supported are the LilyGo TLora 2.1-1.8 and TLora T3S3 boards.
+With this **experimental** module, you can add a digital I2S microphone and speaker to any ESP32 device that has a SX128x radio and operates on the 2.4 GHz ISM Band. The Sub-1GHz bands are not wide enough to support continuous audio packets on the mesh, even in the Short and Fast modes. Right now, the only devices supported are the LilyGo TLora 2.1-1.8 and TLora T3S3 boards. The module has been designed for channels with 2kbit / sec of bandwidth or greater. 
+
+Required additional hardware:
+
+* Max98357 - I2S 3W Class D Amplifier
+* MSM261S4030H0 - I2S MEMS Low Noise Single Microphone
 
 ## Audio Module Config Values
 
