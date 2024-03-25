@@ -1,0 +1,136 @@
+---
+id: linux-native-hardware
+title: Meshtastic on Linux-Native Devices
+sidebar_label: Linux Native Devices
+sidebar_position: 11
+---
+
+This guide outlines the setup of Meshtastic on Linux-native devices, utilizing portduino to run the Meshtastic firmware under Linux.
+
+## Prerequisites and Hardware Compatibility
+
+Before proceeding with the setup, ensure the device meets the following requirements:
+
+### Tested Devices
+- Raspberry Pi zero, zero 2 , 3,4, Pi 400, and Pi 5.[^1]
+- Ubuntu 22.04 X86_64 with a CH341-SX1262 DIY dongle.[^2]
+- Debian GNU/Linux trixie/sid riscv64 on Cvitek CV180X ASIC, C906 (Milk-V Duo), on the SPI bus.
+
+[^1]: While the Raspberry Pi Zero has been tested with meshtasticd, building as a native ARM32 binary has proven challenging. As a workaround, consider building on a Raspberry Pi 4 or 5 with a 32-bit OS and copying the output file to the Pi Zero.
+[^2]: **Limited Functionality with CH341-SX1262 Device:** Please be aware that the CH341-SX1262 device is currently experiencing partial functionality issues. For reasons yet to be determined, this device struggles with sending packets larger than a few bytes.
+
+### Hardware Compatibility
+- Tested radios include Waveshare SX126X, Adafruit RFM9x, and Elecrow Lora RFM95 IOT.
+- Support for I2C displays, SPI displays, and keyboard input has been confirmed. It is necessary to be aware of potential pin conflicts when stacking hats.
+- UART HATs and SX1302/SX1303 chip-based HATs are not supported.
+
+### System Requirements
+- The Meshtastic binary, `meshtasticd`, necessitates root access or a user with permissions to access GPIO, SPI, and other interfaces.
+- A Linux distribution compatible with the Meshtastic installation package, which is compiled for Debian Bookworm and not compatible with Bullseye.
+
+## Installation
+
+### Installing Meshtasticd
+
+- Necessary system libraries should be installed before building or installing Meshtastic.
+
+```shell
+sudo apt install libgpiod-dev libyaml-cpp-dev libbluetooth-dev
+```
+- And optionally for web server support
+```shell
+sudo apt install openssl libssl-dev libulfius-dev liborcania-dev
+```
+
+- The .deb Package is available as part of the release, installing the binary, a systemd service, and a config file. It is compiled for Debian Bookworm and incompatible with Bullseye.
+```shell
+sudo apt install ./meshtasticd_{version}arm64.deb
+```
+
+## Configuration
+
+### Hardware Interfaces
+
+For devices requiring SPI or I2C:
+
+- SPI support can be enabled in `/boot/config.txt` or `/boot/firmware/config.txt`:
+
+```plaintext
+dtparam=spi=on
+dtoverlay=spi0-0cs
+```
+
+- I2C support is enabled with:
+
+```plaintext
+dtparam=i2c_arm=on
+```
+
+### Meshtasticd Configuration
+
+- The meshtasticd configuration is at `/etc/meshtasticd/config.yaml` by default. If a `config.yaml` is found in the current directory, that takes precedence. And a config file specified with the `-c/--config` option has the highest precedence.
+
+To enable a LoRa radio connected to your device, uncomment the appropriate lines in the config file, including the Module line. As an example, the Waveshare SX126X module would have a Lora section that looks like this:
+
+```yaml
+Lora:
+Module: sx1262 # Waveshare SX126X XXXM
+DIO2_AS_RF_SWITCH: true
+CS: 21
+IRQ: 16
+Busy: 20
+Reset: 18
+```
+
+### Web Server
+
+- Meshtasticd has web server support starting with release 2.3.0 To enable this:
+
+```plaintext
+Webserver:
+  Port: 443 # Port for Webserver & Webservices
+  RootPath: /usr/share/doc/meshtasticd/web # Root Dir of WebServer
+```
+
+### GPS Support
+
+Enabling UART for GPS hats requires modifications in `/boot/firmware/config.txt`:
+
+```plaintext
+# Needed for all Pi device.
+enable_uart=1
+
+# Needed for the Pi 5 only.
+dtoverlay=uart0
+```
+
+- The correct port for UART GPS on the Pi 5 after a reboot is `/dev/ttyAMA0`.
+- The correct port for UART GPS on earlier Pi versions after a reboot is `/dev/ttyS0`.
+
+### Persistence
+
+- The persistent .proto db files of the portduino version of meshtasticd are stored under: `/root/.portduino/default/prefs/`.
+
+### Advanced Setup and Troubleshooting
+
+- Installation of drivers for CH341 is required for Ubuntu 22.04 and other systems for SPI/I2C/GPIO support.
+
+```shell
+git clone https://github.com/frank-zago/ch341-i2c-spi-gpio.git
+cd ch341-i2c-spi-gpio
+make
+sudo insmod ch341-core.ko
+sudo insmod gpio-ch341.ko
+sudo insmod i2c-ch341.ko
+sudo insmod spi-ch341.ko
+```
+
+- Devices with kernels older than 5.16 may need to blacklist ch341, while kernels 6.0 and newer are observed to work more reliably.
+
+## CLI Configuration
+
+Interaction with Meshtastic can be conducted via the command line:
+
+```shell
+meshtastic --host localhost ...
+```
