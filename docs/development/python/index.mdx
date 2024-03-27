@@ -94,14 +94,6 @@ pytest --durations=0
 make slow
 ```
 
-### Generate the Python API documentation
-
-Pre-generated: [API documentation](https://python.meshtastic.org)
-
-```shell
-bin/regen-docs.sh
-```
-
 ## Wire encoding
 
 When sending protobuf packets over serial or TCP each packet is preceded by uint32 sent in network byte order (big endian).
