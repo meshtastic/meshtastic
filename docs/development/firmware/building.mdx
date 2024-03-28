@@ -55,7 +55,8 @@ The build system is modular. Adding a new board variant for an already supported
       ${esp32_base.lib_deps}
    ```
 3. Edit the `variant.h` file _in this subdirectory_ to reflect the defines and configurations for your board. The example is very well commented.
-4. Build, run and debug until you are satisfied with the result.
+4. Add your custom build to the list at the top of firmware/platform.ini
+5. Build, run and debug until you are satisfied with the result.
 
 ### Distribute / Publish Custom Builds
 
