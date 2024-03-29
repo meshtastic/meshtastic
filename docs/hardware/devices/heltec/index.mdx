@@ -17,11 +17,12 @@ values={[
 {label: 'LoRa32 V3/V3.1', value:'v3'},
 {label: 'Wireless Stick Lite V3', value:'Wireless Stick Lite V3'},
 {label: 'Wireless Tracker', value: 'tracker'},
-{label: 'Wireless Paper', value: 'paper'}
+{label: 'Wireless Paper v1.0', value: 'paper-v1.0'},
+{label: 'Wireless Paper v1.1', value: 'paper-v1.1'}
 ]}>
 <TabItem value="v2.1">
 
-## HELTEC v2.1
+## V2.1
 
 :::warning
 Not recommended because of design issues! Support is being phased out. Use V3 in new projects.
@@ -54,7 +55,7 @@ Not recommended because of design issues! Support is being phased out. Use V3 in
 
 <TabItem value="v3">
 
-## HELTEC v3/v3.1
+## V3/V3.1
 
 :::info
 This device may have issues charging a connected battery if utilizing a USB-C to USB-C cable. It's recommended to use a USB-A to USB-C cable.
@@ -110,7 +111,7 @@ Image Source: [Heltec](<https://resource.heltec.cn/download/WiFi_LoRa32_V3/HTIT-
 
 <TabItem value="Wireless Stick Lite V3">
 
-## HELTEC Wireless Stick Lite V3
+## Wireless Stick Lite V3
 
 :::info
 This device may have issues charging a connected battery if utilizing a USB-C to USB-C cable. It's recommended to use a USB-A to USB-C cable.
@@ -161,7 +162,7 @@ Image Source: [Heltec](https://resource.heltec.cn/download/Wireless_Stick_Lite_V
 
 <TabItem value="tracker">
 
-## HELTEC Tracker
+## Wireless Tracker
 
 :::info
 This device may have issues charging a connected battery if utilizing a USB-C to USB-C cable. It's recommended to use a USB-A to USB-C cable.
@@ -221,16 +222,55 @@ Image Source: [Heltec](https://heltec.org/project/wireless-tracker/)
 
 </TabItem>
 
-<TabItem value="paper">
+<TabItem value="paper-v1.0">
 
-## HELTEC Paper
+## Wireless Paper V1.0
 
-:::caution
-
-Currently the display is only supported in devices labeled v1.1.
+:::info
+**The Wireless Paper V1.0 is listed as "Wireless Paper V1.0" in the firmware files and on the web flasher.**
 
 This device may have issues charging a connected battery if utilizing a USB-C to USB-C cable. It's recommended to use a USB-A to USB-C cable.
+:::
 
+
+
+- **MCU:**
+  - ESP32-S3FN8 (WiFi & Bluetooth)
+- **LoRa Transceiver:**
+  - Semtech SX1262
+- **Frequency Options:**
+  - 470 - 510 MHz
+  - 863 - 870 MHz
+  - 902 - 928 MHz
+- **Connectors:**
+  - USB-C
+  - Antenna:
+    - U.FL/IPEX antenna connector for LoRa
+    - Integrated 2.4 GHz PCB antenna
+
+### Features
+
+- Onboard 2.13-inch black and white E-Ink display screen
+- User and Reset switches
+- No GPS
+
+### Resources
+
+- Firmware file: `firmware-heltec-wireless-paper-v1_0-X.X.X.xxxxxxx.bin`
+- Purchase Links:
+  - International
+    - [Heltec](https://heltec.org/project/wireless-paper/)
+    - [AliExpress](https://www.aliexpress.us/item/3256805461611876.html)
+
+</TabItem>
+<TabItem value="paper-v1.1">
+
+## Wireless Paper V1.1
+
+:::info
+**The Wireless Paper V1.1 is listed as "Wireless Paper" in the firmware files and on the web flasher.**
+
+This device may have issues charging a connected battery if utilizing a USB-C to USB-C cable. It's recommended to use a USB-A to USB-C cable.
 :::
 
 
