@@ -3,9 +3,10 @@ id: linux-native-hardware
 title: Meshtastic on Linux-Native Devices
 sidebar_label: Linux Native Devices
 sidebar_position: 11
+description: Set up and configure Meshtastic on Linux-native devices using the meshtasticd binary.
 ---
 
-This guide outlines the setup of Meshtastic on Linux-native devices, utilizing portduino to run the Meshtastic firmware under Linux.
+This page outlines the setup of Meshtastic on Linux-native devices, utilizing portduino to run the Meshtastic firmware under Linux.
 
 ## Prerequisites and Hardware Compatibility
 
@@ -74,13 +75,16 @@ To enable a LoRa radio connected to your device, uncomment the appropriate lines
 
 ```yaml
 Lora:
-Module: sx1262 # Waveshare SX126X XXXM
-DIO2_AS_RF_SWITCH: true
-CS: 21
-IRQ: 16
-Busy: 20
-Reset: 18
+  Module: sx1262 # Waveshare SX126X XXXM
+  DIO2_AS_RF_SWITCH: true
+  CS: 21
+  IRQ: 16
+  Busy: 20
+  Reset: 18
 ```
+:::info
+The config.yaml file is sensitive to spacing, so ensure that the indentation and spacing are correct.
+:::
 
 ### Web Server
 
