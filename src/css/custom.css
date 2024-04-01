@@ -241,3 +241,24 @@ td {
     display: block !important;
   }
 }
+
+.tabs {
+  padding-left: 0;
+}
+
+.tabs__item {
+  border-bottom-color: var(--ifm-tabs-color-inactive-border);
+  border-radius: 0;
+  margin-right: 4px;
+  padding-left: 12px;
+  padding-right: 12px;
+}
+
+.tabs__item--active {
+  border-bottom-color: var(--ifm-tabs-color-active-border);
+}
+
+.tabs__item:hover {
+  background-color: var(--ifm-hover-overlay);
+  border-radius: 0;
+}
