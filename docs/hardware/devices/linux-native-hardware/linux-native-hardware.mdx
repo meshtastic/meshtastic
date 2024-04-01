@@ -21,9 +21,13 @@ Before proceeding with the setup, ensure the device meets the following requirem
 [^2]: **Limited Functionality with CH341-SX1262 Device:** Please be aware that the CH341-SX1262 device is currently experiencing partial functionality issues. For reasons yet to be determined, this device struggles with sending packets larger than a few bytes.
 
 ### Hardware Compatibility
-- Tested radios include Waveshare SX126X, Adafruit RFM9x, and Elecrow Lora RFM95 IOT.
+
+:::caution Warning
+UART HATs and SX1302/SX1303 chip-based HATs are not supported. Only hats that use a SPI radio can work with Meshtastic.
+:::
+
+- Tested radios include the Waveshare SX126X (SPI version), Adafruit RFM9x, and Elecrow Lora RFM95 IOT.
 - Support for I2C displays, SPI displays, and keyboard input has been confirmed. It is necessary to be aware of potential pin conflicts when stacking hats.
-- UART HATs and SX1302/SX1303 chip-based HATs are not supported.
 
 ### System Requirements
 - The Meshtastic binary, `meshtasticd`, necessitates root access or a user with permissions to access GPIO, SPI, and other interfaces.
