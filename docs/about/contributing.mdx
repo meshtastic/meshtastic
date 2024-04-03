@@ -80,53 +80,43 @@ If direct development contribution is not feasible for you, financial support is
 
 We're deeply thankful for the backing from the Open Collective, Open Source Collective, DigitalOcean, and Vercel, which has been instrumental in our project's sustainability and growth:
 
-  <div style={{ display: 'flex', alignItems: 'flex-start', marginTop: '0.5rem' }}>
-    <img
-      src="/img/Open_Collective_logo_2021.svg"
-      alt="Open Collective"
-      width={150}
-      style={{
-        marginRight: '1rem',
-        padding: '0.25rem',
-      }}
-    />
-    <span>
+  <div className="flex flex-wrap items-start gap-y-2 gap-x-4">
+    <div className="sm:w-3/12 xs:w-full">
+      <img
+        src="/img/Open_Collective_logo_2021.svg"
+        alt="Open Collective"
+      />
+    </div>
+    <div className="md:w-9/12 sm:w-full">
       Our collaboration with Open Collective and Open Source Collective offers a robust fiscal management framework and banking solutions, supporting our project alongside over three thousand other open source initiatives. Open Collective's transparent framework lets everyone see our finances, including income, expenditures, and contributions on [Meshtastic's Open Collective page](https://opencollective.com/meshtastic). This transparency and support affirm that we're in excellent company.
-    </span>
+    </div>
   </div>
 
-<div style={{ display: 'flex', alignItems: 'flex-start', marginTop: '0.5rem' }}>
-  <ThemedImage
-    alt="This project is supported by DigitalOcean"
-    sources={{
-      light: useBaseUrl('https://opensource.nyc3.cdn.digitaloceanspaces.com/attribution/assets/PoweredByDO/DO_Powered_by_Badge_blue.svg'),
-      dark: useBaseUrl('https://opensource.nyc3.cdn.digitaloceanspaces.com/attribution/assets/PoweredByDO/DO_Powered_by_Badge_blue.svg'),
-    }}
-    width={150}
-    style={{
-      marginRight: '1rem',
-      padding: '0.25rem',
-    }}
-  />
-  <span>
+<div className="flex flex-wrap items-start gap-y-2 gap-x-4">
+  <div className="sm:w-3/12 xs:w-full">
+    <ThemedImage
+      alt="This project is supported by DigitalOcean"
+      sources={{
+        light: useBaseUrl('https://opensource.nyc3.cdn.digitaloceanspaces.com/attribution/assets/PoweredByDO/DO_Powered_by_Badge_blue.svg'),
+        dark: useBaseUrl('https://opensource.nyc3.cdn.digitaloceanspaces.com/attribution/assets/PoweredByDO/DO_Powered_by_Badge_blue.svg'),
+      }}
+    />
+  </div>
+  <div className="md:w-9/12 sm:w-full">
     Champions of open source, DigitalOcean supports Meshtastic through credits, which significantly aid our development, infrastructure, and testing efforts. This contribution is part of their commitment to fostering innovation and collaboration within the open source ecosystem.
-  </span>
+  </div>
 </div>
-
-<div style={{ display: 'flex', alignItems: 'flex-start', marginTop: '0.5rem' }}>
-  <ThemedImage
-    alt="Vercel"
-    sources={{
-      light: useBaseUrl('/img/vercel-logotype-dark.svg'),
-      dark: useBaseUrl('/img/vercel-logotype-light.svg'),
-    }}
-    width={150}
-    style={{
-      marginRight: '1rem',
-      padding: '0.25rem',
-    }}
-  />
-  <span>
+<div className="flex flex-wrap items-start gap-y-2 gap-x-4">
+  <div className="sm:w-3/12 xs:w-full">
+    <ThemedImage
+      alt="Vercel"
+      sources={{
+        light: useBaseUrl('/img/vercel-logotype-dark.svg'),
+        dark: useBaseUrl('/img/vercel-logotype-light.svg'),
+      }}
+    />
+  </div>
+  <div className="md:w-9/12 sm:w-full">
     By covering our hosting costs, Vercel directly contributes to Meshtastic's growth, enhancing our web scalability and presence. Their sponsorship is crucial for our continued development and focus on creating a robust platform for decentralized communication.
-  </span>
+  </div>
 </div>
