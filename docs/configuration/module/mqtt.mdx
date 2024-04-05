@@ -37,6 +37,8 @@ MQTT password to use (most useful for a custom MQTT server). If using a custom s
 
 Whether to send encrypted or unencrypted packets to MQTT. This parameter is only honored if you also set server (the default official mqtt.meshtastic.org server can handle encrypted packets). Unencrypted packets may be useful for external systems that want to consume meshtastic packets.
 
+Note: All messages are sent unencrypted to MQTT if this option is not enabled, even when the channels have encryption key set.
+
 ### JSON Enabled
 
 :::note
