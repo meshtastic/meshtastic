@@ -1,4 +1,4 @@
----
+    263452---
 id: buttons
 title: T-Echo Hardware Buttons
 sidebar_label: Buttons
@@ -7,14 +7,22 @@ sidebar_position: 1
 
 ## Functionality
 
-- **Capacitive Touch Button (Top):**
-  - **Short press:** Updates the e-ink display.
+- **Capacitive Touch Button (Top):**<br />
+  *If "Wake on Tap or Motion" setting enabled:*
+  - **Touch:** 
+    - Update the display
+    - *(at screensaver)* Wake the display.
 - **Reset Button (Button 1):**
-  - **Single press:** Resets the device.
-  - **Double press:** Puts the device into bootloader mode which allows you to update the firmware.
-- **Program/Power Button (Button 2):**
-  - **Single press:** Changes the information page displayed on the device's screen.
-  - **Double press:** Turns the screen backlight on/off and sends an adhoc ping of the device's position to the network.
-  - **Long press:** Signals the device to shutdown after 5 seconds.
+  - **Single press:** Power-on / reboot.
+  - **Double press:** Enter bootloader mode, for firmware update.
+- **Program Button (Button 2):**
+  - **Single press:** 
+    - Display next page of information.
+    - *(at screensaver)* Wake the display.
+    - *(when off)* Enter bootloader mode, for firmware update.
+  - **Double press:** Send an "adhoc ping": announce device to network.
+  - ** 3x press:** Enable / disable GPS.
+  - ** 4x press:** Enable / disable display's backlight.
+  - **Hold:** Shutdown.
 
 ![TechoButtons](/img/hardware/t-echo-lilygo.webp)
