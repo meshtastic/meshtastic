@@ -7,6 +7,19 @@ sidebar_position: 3
 description: "Understand Meshtastic's encryption: optional network-wide AES256 security for off-grid communication, ensuring confidentiality against passive eavesdropping."
 ---
 
+## Explanation 
+
+Meshtastic provides AES256 encryption for the payload of each packet when sending via LoRa, with a different key for each [channel](/docs/configuration/radio/channels/). The [packet header](/docs/overview/mesh-algo/#layer-1-unreliable-zero-hop-messaging) is always sent unencrypted, which allows nodes to relay packets they can't decrypt as well. One can disable this by setting a different [rebroadcast mode](/docs/configuration/radio/device#rebroadcast-mode).
+
+By default you have one primary channel which is encrypted with a simple known key ("AQ=="), so to use proper encryption you **must change** this key first, or create a new channel and share it with the ones you want to communicate with. However, if you don't have the default key, it means you will not be able to communicate with devices that don't have your key. 
+
+Direct messages to a specific node (e.g. text, traceroute or position requests) may use any channel you share with the recipient. Namely, the device will use the one where it most recently heard a NodeInfo packet from the recipient on. Client apps will not show messages directed to other nodes, but in principle they could be read by **anyone** who knows the used channel key. This means that if it uses the default key, you have to assume anyone could read your direct messages.
+
+All periodic broadcasts (position, telemetry, etc.) the device sends out itself are sent over the primary channel and thus encrypted with that key.
+
+The device will decrypt the payload before sending it to a client app via BLE, serial, Wi-Fi/Ethernet. For MQTT you can [specify](/docs/configuration/module/mqtt#encryption-enabled) whether you want to send an encrypted or unencrypted payload.
+
+## Comments
 
 Cryptography is tricky, so we've tried to 'simply' apply standard crypto solutions to our implementation. However, the project developers are not cryptography experts.
 
@@ -33,7 +46,7 @@ Always keep in mind [xkcd's note on encryption](https://xkcd.com/538).
 - Consider our existing solution 'alpha' and probably fairly secure against a not particularly aggressive adversary (but we can't yet make a more confident statement).
 
 
-## Notes for reviewers
+### Notes for reviewers
 
 If you are reviewing our implementation, this is a brief statement of our method.
 
@@ -46,7 +59,7 @@ If you are reviewing our implementation, this is a brief statement of our method
 - Each 16 byte BLOCK for a packet has an incrementing COUNTER. COUNTER starts at zero for the first block of each packet.
 - The IV for each block is constructed by concatenating the NONCE as the upper 96 bits of the IV and the COUNTER as the bottom 32 bits. Since our packets are small counter portion will really never be higher than 32 (five bits).
 
-## Comments from reviewer #1
+### Comments from reviewer #1
 
 This reviewer is a cryptography professional, but would like to remain anonymous. We thank them for their comments ;-):
 
