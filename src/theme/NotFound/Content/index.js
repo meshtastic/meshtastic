@@ -31,7 +31,7 @@ export default function NotFoundContent({ className }) {
               original URL and let them know their link is broken.
             </Translate>
           </p>
-          <img src="/design/chirpy.png" alt="Chirpy" />
+          <img src="/design/chirpy/chirpy.png" alt="Chirpy" />
         </div>
       </div>
     </main>
