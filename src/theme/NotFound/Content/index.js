@@ -31,7 +31,12 @@ export default function NotFoundContent({ className }) {
               original URL and let them know their link is broken.
             </Translate>
           </p>
-          <img src="/design/chirpy/chirpy.png" alt="Chirpy" />
+          <img
+            src="/design/chirpy/chirpy.png"
+            alt="Chirpy"
+            className={clsx("col col--6 col--offset-3")}
+            style={{ maxWidth: "300px" }}
+          />
         </div>
       </div>
     </main>
