@@ -96,21 +96,29 @@ The result of reading a GPIO or notifications of GPIO changes will also be sent 
 
 You can get the latest python tool/library with `pip3 install --upgrade meshtastic` on Windows/Linux/OS-X. See the [python section](/docs/software/python/cli/installation) for more details.
 
-To prevent access from untrusted users, you must first make a `gpio` channel that is used for authenticated access to this feature. You'll need to install this channel on both the local and remote node.
+To prevent access from untrusted users, you must first make a `gpio` channel that is used for authenticated access to this feature. You'll need to install this channel on both the local and remote node. Furthermore, you need to enable the module on both units.
 
 The procedure using the python command line tool is:
 
 1. Connect local device via USB
-2. Create a GPIO channel:
+2. Enable the Remote Hardware module:
+   ```shell
+   meshtastic --set remote_hardware.enabled true
+   ```
+3. Create a GPIO channel:
    ```shell
    meshtastic --ch-add gpio
    ```
-3. Check the channel has been created and copy the long "Complete URL" that contains all the channels on that device:
+4. Check the channel has been created and copy the long "Complete URL" that contains all the channels on that device:
    ```shell
    meshtastic --info
    ```
-4. Connect the remote device via USB (or use the [remote admin](/docs/configuration/remote-admin) feature to reach it through the mesh)
-5. Set it to join the gpio channel you created:
+5. Connect the remote device via USB (or use the [remote admin](/docs/configuration/remote-admin) feature to reach it through the mesh)
+6. Enable the Remote Hardware module:
+   ```shell
+   meshtastic --set remote_hardware.enabled true
+   ```
+7. Set it to join the gpio channel you created:
    ```shell
    meshtastic --seturl theurlyoucopiedinstep3
    ```
