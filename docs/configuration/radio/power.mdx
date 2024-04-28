@@ -30,6 +30,9 @@ When activated, this feature disables Bluetooth, Serial, WiFi, and the device's 
 
 Automatically shut down a device after a defined time period if power is lost.
 
+Before setting this, ensure your board correctly detects when it is connected to external power (the "🔌" icon in the app). Otherwise, your device could shut down even when power is present.
+Many devices detect power status correctly, however for some devices, you will need to modify the ADC Multiplier (below).
+
 ### ADC Multiplier Override
 
 Ratio of voltage divider for battery pin e.g. 3.20 (R1=100k, R2=220k)
