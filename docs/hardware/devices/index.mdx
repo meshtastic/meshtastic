@@ -25,13 +25,6 @@ Please do your research and choose the board that meets your needs (or maybe alr
 - ESP32-based devices require more power to operate but are typically lower-cost alternatives that do perform well when using house power, or for handsets that only require a day or two of runtime, and for applications that require WiFi connectivity.
 :::
 
-### [CanaryOne](./canary)
-Complete solution with battery, screen, case, and antenna.  Ships pre-flashed with latest Meshtastic firmware.
-
-| Name                                           | MCU      | Radio  |     WiFi     | BT  |  GPS   |
-|:-----------------------------------------------|:---------|:-------|:------------:|:---:|:------:|
-| [CanaryOne](./canary)               | nRF52840 | SX1262 |      NO      | 5.0 | YES    |
-
 ### [RAK Wisblock](./rak/)
 Modular hardware system with Base, Core and Peripheral modules including the low-power and solar ready nRF52840-based Meshtastic Starter Kit (19007 & 4631).
 
@@ -58,7 +51,7 @@ Modular hardware system with Base, Core and Peripheral modules including the low
 [RAK18001](./rak/peripherals?rakmodules=Buzzer) Buzzer<br/>
 [RAK13002](./rak/peripherals?rakmodules=IO) IO<br/>
 RAK14001 RGB LED<br/>
-RAK12002 RTC<br/>
+[RAK12002](./rak/peripherals?rakmodules=RTC) RTC<br/>
 [RAK1901](./rak/peripherals?rakmodules=Sensors&sensors=RAK1901) Temperature and Humidity Sensor<br/>
 [RAK1902](./rak/peripherals?rakmodules=Sensors&sensors=RAK1902) Barometric Pressure Sensor<br/>
 [RAK1906](./rak/peripherals?rakmodules=Sensors&sensors=RAK1906) Environment Sensor<br/>
@@ -114,7 +107,7 @@ Inexpensive basic ESP32-based boards.
 | Name                                                              | MCU         | Radio  |     WiFi     | BT  | GPS |
 |:------------------------------------------------------------------|:------------|:-------|:------------:|:---:|:---:|
 | [LoRa32 V2.1](./heltec/?heltec=v2.1)                              | ESP32       | SX127x | 2.4GHz b/g/n | 4.2 | NO  |
-| [LoRa32 V3/3.1](./heltec/?heltec=v23)                                 | ESP32-S3FN8       | SX1262 | 2.4GHz b/g/n | 5.0 | NO  |
+| [LoRa32 V3/3.1](./heltec/?heltec=v23)                             | ESP32-S3FN8 | SX1262 | 2.4GHz b/g/n | 5.0 | NO  |
 | [Wireless Stick Lite V3](./heltec/?heltec=Wireless+Stick+Lite+V3) | ESP32-S3FN8 | SX1262 | 2.4GHz b/g/n | 5.0 | NO  |
 | [Wireless Tracker](./heltec/?heltec=tracker)                      | ESP32-S3FN8 | SX1262 | 2.4GHz b/g/n | 5.0 | YES |
 | [Wireless Paper](./heltec/?heltec=paper)                          | ESP32-S3FN8 | SX1262 | 2.4GHz b/g/n | 5.0 | NO  |
@@ -146,3 +139,10 @@ Fast versatile boards using the RP2040.
 SSD1306 OLED Display<br/>
 SH1106 OLED Display<br/>
 CardKB Keyboard<br/>
+
+### [CanaryOne](./canary)
+Complete solution with battery, screen, case, and antenna.  Ships pre-flashed with latest Meshtastic firmware.
+
+| Name                  | MCU      | Radio  | WiFi | BT  | GPS |
+|:----------------------|:---------|:-------|:----:|:---:|:---:|
+| [CanaryOne](./canary) | nRF52840 | SX1262 |  NO  | 5.0 | YES |
