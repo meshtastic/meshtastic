@@ -80,7 +80,7 @@ This is the GPIO pin number that will be used for the PWM buzzer, if your device
 
 ### Node Info Broadcast Seconds
 
-This is the number of seconds between NodeInfo message (containing i.a. long and short name) broadcasts from the device. The device will still respond ad-hoc to NodeInfo messages when a response is wanted. When the device hears any packet from a node it doesn't know yet, it will send its NodeInfo and ask for a response automatically.
+This is the number of seconds between NodeInfo message (containing i.a. long and short name) broadcasts from the device. The device will still respond ad-hoc to NodeInfo messages when a response is wanted. When the device hears any packet from a node it doesn't know yet, it will send its NodeInfo and ask for a response automatically. NodeInfo will never broadcast more than once every five minutes.
 
 ### Double Tap as Button Press
 
