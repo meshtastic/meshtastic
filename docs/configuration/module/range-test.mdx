@@ -15,7 +15,7 @@ This module allows you to test the range of your Meshtastic nodes. It requires t
 
 Nodes are in range as long as the sequential packets can be received.
 
-The receiving node can be used to save the messages along with the GPS coordinates at which they were received into a .csv file. This .csv file can then be integrated into [Google Earth](https://earth.google.com), [Google Maps - My Maps](https://mymaps.google.com), or any other program capable of processing .csv files. This can enable you to visualize your mesh.
+The receiving node can be used to save the messages along with the GPS coordinates at which they were received into a .csv file. This .csv file can then be integrated into [Google Earth](https://earth.google.com), [Google Maps - My Maps](https://mymaps.google.com), or any other program capable of processing .csv files. This can enable you to visualize your mesh. Ensure you have [position precision](https://meshtastic.org/docs/configuration/radio/channels/#position-precision) in the default channel set to high, otherwise the collected data will not record your true location.
 
 :::info
 
@@ -29,7 +29,7 @@ The range test module config options are: Enabled, Sender, and Save. Range Test 
 
 ### Enabled
 
-Enables the range test module. **Both Sender and Receiver must have the module enabled.**
+Enables the range test module. **Both Sender and Receiver must have the module enabled.** On the Apple and Android apps to receive any range test messages the module must be enabled. The device screen may continue to show range test packets from older firmware versions even if the module is disabled.
 
 ### Sender Interval
 
