@@ -37,7 +37,7 @@ This layer is conventional non-reliable LoRa packet transmission. A packet gener
 |  0x08  |                 4 bytes                  | Integer | Packet Header: The sending node's unique packet ID for this packet.                      |
 |  0x0C  |                  1 byte                  |  Bits   | Packet Header: Flags. See the [header flags](#packet-header-flags) for usage.            |
 |  0x0D  |                  1 byte                  |  Bits   | Packet Header: Channel hash. Used as hint for decryption for the receiver.               |
-|  0x0E  |                 2 bytes                  |  Bytes  | Packet Header: Padding for memory alignment.                                             |
+|  0x0E  |                 2 bytes                  |  Bytes  | Packet Header: Reserved for future use.                                             |
 |  0x10  | Max. 237 bytes (excl. protobuf overhead) |  Bytes  | Actual packet data. Unused bytes are not transmitted.                                    |
 
 #### Packet Header Flags
@@ -47,7 +47,7 @@ This layer is conventional non-reliable LoRa packet transmission. A packet gener
 |   0    |     3     | HopLimit (see note in Layer 3) |
 |   3    |     1     | WantAck                        |
 |   4    |     1     | ViaMQTT (packet came via MQTT) |
-| 5 .. 7 |     3     | Currently unused               |
+|   5    |     3     | HopStart (original HopLimit)   |
 
 #### Usage Details
 

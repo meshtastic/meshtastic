@@ -63,17 +63,9 @@ First, some environment variables need to be set up with command:
 
 `. ~/.platformio/penv/bin/activate`
 
-You also want to make some adjustments in the bin/build-all.sh to conform the amd64 build:
-
-```shell
-  sed -i 's/^BOARDS_ESP32.*/BOARDS_ESP32=""/' bin/build-all.sh
-  sed -i 's/^BOARDS_NRF52.*/BOARDS_NRF52=""/' bin/build-all.sh
-  sed -i 's/echo "Building SPIFFS.*/exit/' bin/build-all.sh
-```
-
 You can build amd64 image with command
 
-`bin/build-all.sh`
+`./bin/build-native.sh`
 
 ### Executing the application interactively
 
