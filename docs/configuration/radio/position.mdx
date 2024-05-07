@@ -8,25 +8,23 @@ description: GPS position configuration settings for your Meshtastic device incl
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 
-The position config options are: GPS Enabled, GPS Update Interval, GPS Attempt Time, Fixed Position, Smart Broadcast, Smart Broadcast Minimum Distance, Smart Broadcast Minimum Interval, Broadcast Interval, Position Packet Flags, and GPS RX/TX Pins. Position config uses an admin message sending a `Config.Position` protobuf.
+Position data from GPS is provided by either the radio or your paired phone. It is not required to use Meshtastic, but time calculations require at least one device on the mesh to have either a GPS, RTC, or internet connection for NTP.
 
-Position data from GPS is provided by either the radio or your paired phone. Position data is not required to use Meshtastic but time calculations require at least one device on the mesh have either a GPS or internet connection for time.
+The position config uses an admin message to send a `Config.Position` protobuf. The position config options are: GPS Mode, GPS Update Interval, Fixed Position, Smart Broadcast, Smart Broadcast Minimum Distance, Smart Broadcast Minimum Interval, Broadcast Interval, Position Packet Flags, and GPS RX/TX Pins.
 
 ## Position Config Values
 
-### GPS Enabled
+### GPS Mode
 
-Acceptable values: `true` or `false`
+Configures whether the GPS functionality is enabled, disabled, or not present on the node.
 
-Defaults to true. Enables GPS on the node.
+Acceptable values: `Disabled`, `Enabled`, and `Not_Present`.
+
+Generally, depending on the device and its configuration, this value will default to either `Enabled` or `Not Present`.
 
 ### GPS Update Interval
 
 How often we should try to get GPS position (in seconds), or zero for the default of once every 2 minutes, or a very large value (maxint) to update only once at boot.
-
-### GPS Attempt Time
-
-How long should we try to get our position during each GPS update interval attempt? (in seconds) Or if zero, use the default of 15 minutes.
 
 ### Fixed Position
 
@@ -64,9 +62,9 @@ The minimum number of seconds (since the last send) before we can send a positio
 
 Default of `0` is 15 minutes
 
-If smart broadcast is off we should send our position this often (but only if it has changed significantly)
+If smart broadcast is off we should send our position this often.
 
-The GPS updates will be sent out every Broadcast Interval, with either the actual GPS location, or an empty location if no GPS fix was achieved.
+The GPS updates will be sent out every broadcast interval, either with the actual GPS location or an empty location if no GPS fix was achieved.
 
 ### Position Flags
 
@@ -136,9 +134,8 @@ All Position config commands are available in the python CLI. Example commands a
 
 |                  Setting                     |                                                             Acceptable Values                                                             |           Default            |
 | :------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------: | :--------------------------: |
-|             position.gps_enabled             |                                                              `true`, `false`                                                              |            `true`            |
+|             position.gps_mode             |                                                              `enabled`, `disabled`, `not_present`                                                              |            `true`            |
 |         position.gps_update_interval         |                                                            `integer` (seconds)                                                            |  Default `0` is 2 Minutes    |
-|           position.gps_attempt_time          |                                                            `integer` (seconds)                                                            | Default of `0` is 15 Minutes |
 |            position.fixed_position           |                                                              `true`, `false`                                                              |           `false`            |
 |  position.position_broadcast_smart_enabled   |                                                              `true`, `false`                                                              |            `true`            |
 |  position.broadcast_smart_minimum_distance   |                                                             `integer` (meters)                                                            | Default of `0` is 100 Meters |
@@ -161,11 +158,6 @@ meshtastic --set position.fixed_position true --setlat 37.8651 --setlon -119.538
 ```shell title="Set GPS update interval (Default of 0 is 30 seconds)"
 meshtastic --set position.gps_update_interval 0
 meshtastic --set position.gps_update_interval 45
-```
-
-```shell title="Set GPS attempt time (Default of 0 is 30 seconds)"
-meshtastic --set position.gps_attempt_time 0
-meshtastic --set position.gps_attempt_time 45
 ```
 
 ```shell title="Set Fixed Position - Current Location"
@@ -214,7 +206,3 @@ All position config options are available in the Web UI.
 
 </TabItem>
 </Tabs>
-
-:::caution
-Altering/disabling the GPS functionality does not mean that you will be unable to be found. Via triangulation of your radio, location may be given up to someone if they are determined enough.
-:::
