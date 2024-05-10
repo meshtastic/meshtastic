@@ -87,6 +87,17 @@ const SocialCards: SocialCardProps[] = [
       />
     ),
   },
+  {
+    color: "bg-[#24A1DE]",
+    link: "https://t.me/+hmKN0xOR73ExOTU6",
+    children: (
+      <img
+        alt="telegram"
+        className="m-auto h-14"
+        src="/img/homepage/telegram-single-path-240px.svg"
+      />
+    ),
+  },
 ];
 
 function Home() {
