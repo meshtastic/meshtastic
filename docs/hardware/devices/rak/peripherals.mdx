@@ -13,12 +13,29 @@ groupId="rakmodules"
 queryString="rakmodules"
 defaultValue="GPS"
 values={[
+{label: 'User Button', value: 'User Button'},
 {label: 'GPS Module', value: 'GPS'},
 {label: 'Buzzer', value: 'Buzzer'},
 {label: 'I/O Module', value: 'IO'},
 {label: 'Environmental Sensors', value:'Sensors'},
 {label: 'RTC Module', value:'RTC'}
 ]}>
+<TabItem value="User Button">
+
+## User Button
+
+Any tactile momemtary push button is compatible as long as wired to the correct pins here's a sample of a [Push Button](https://a.co/d/bPhhTxm) 
+
+
+The button is recommended to be used on the following base board's exposed pins or slots :
+
+- RAK19007 on AIN1 (Pin 31) - See supporting instructions [Here](https://store.rokland.com/pages/adding-a-user-button-rak19007)
+- RAK19001 on IO5 (Pin 37)
+
+</TabItem>
+
+
+
 <TabItem value="GPS">
 
 ## GPS Modules
