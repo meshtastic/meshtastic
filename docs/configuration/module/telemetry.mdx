@@ -18,13 +18,16 @@ Supported sensors connected to the I2C bus of the device will be automatically d
 
 | Sensor  | I<sup>2</sup>C Address |                          Data Points                          |
 | :-----: | :--------------------: | :-----------------------------------------------------------: |
+| BMP085  |       0x76, 0x77       |              Temperature and barometric pressure              |
+| BMP180  |       0x76, 0x77       |              Temperature and barometric pressure              |
 | BMP280  |       0x76, 0x77       |              Temperature and barometric pressure              |
 | BME280  |       0x76, 0x77       |         Temperature, barometric pressure and humidity         |
 | BME680  |       0x76, 0x77       | Temperature, barometric pressure, humidity and air resistance |
 | MCP9808 |          0x18          |                          Temperature                          |
-| INA260  |       0x40, 0x41       |                      Current and Voltage                      |
-| INA219  |       0x40, 0x41       |                      Current and Voltage                      |
-|  LPS22  |       0x5D, 0x5c       |                      Barometric pressure                      |
+| INA260  |    0x40, 0x41, 0x43    |                      Current and Voltage                      |
+| INA219  |    0x40, 0x41, 0x43    |                      Current and Voltage                      |
+| INA3221 |          0x42          |                 3-channel Current and Voltage                 | 
+|  LPS22  |       0x5D, 0x5C       |                      Barometric pressure                      |
 |  SHTC3  |          0x70          |                   Temperature and humidity                    |
 |  SHT31  |          0x44          |                   Temperature and humidity                    |
 | PMSA003I|          0x12          |     Concentration units by size and particle counts by size   |
