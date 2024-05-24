@@ -190,7 +190,7 @@ trigger:
     topic: msh/2/json/LongFast/!67ea9400
     payload: "on"
     value_template: |-
-      {% if value_json.from == ("f0b94b6d" | int(base=16)) and
+      {% if value_json.from == 4038675309 and
             value_json.payload.latitude_i is defined and 
             value_json.payload.longitude_i is defined %}on{% endif %}
 condition: []
