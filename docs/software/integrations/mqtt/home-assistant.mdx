@@ -176,6 +176,40 @@ sensor:
       {% endif %}
 ```
 
+### Maps & Device Tracker
+
+To make it possible for your nodes to appear in maps within Home Assistant, you will need to set up a [device_tracker](https://www.home-assistant.io/integrations/device_tracker/) entity. Luckily, Home Assistant allows them to be created ad-hoc, simply by calling the `device_tracker.see` service from a script or automation.
+
+To do this, create a new automation and use the three-dots menu to change to the "Edit in YAML" mode, and set it up like the following:
+
+```yaml
+alias: Update Node 1 location
+description: Update Meshtastic node when corresponding MQTT messages are seen.
+trigger:
+  - platform: mqtt
+    topic: msh/2/json/LongFast/!67ea9400
+    payload: "on"
+    value_template: |-
+      {% if value_json.from == ("f0b94b6d" | int(base=16)) and
+            value_json.payload.latitude_i is defined and 
+            value_json.payload.longitude_i is defined %}on{% endif %}
+condition: []
+action:
+  - service: device_tracker.see
+    metadata: {}
+    data:
+      dev_id: node_1
+      gps:
+        - "{{ (trigger.payload | from_json).payload.latitude_i | int * 1e-7 }}"
+        - "{{ (trigger.payload | from_json).payload.longitude_i | int * 1e-7 }}"
+      battery: "{{ states('sensor.node_1_battery_percent')|float(0) }}"
+mode: single
+```
+
+The `dev_id` within the service call determines what the `device_tracker` entity will be called, for example `device_tracker.node_1` for the above. Make sure that you have different names in this field for your different nodes, or they will all show up under the same tracker! Meshtastic represents latitude and longitude in integers, which is why they must be multiplied by `1e-7` to produce the real location.
+
+Device trackers can also support a few different additional fields, but the one most relevant to Meshtastic usage is the battery level, which can be pulled in from the previously-created sensors as shown.
+
 ### Additional Entities
 
 Home Assistant entities can be created for any data type that is published to MQTT.  For example: altitude, latitude_i, longitude_i, time, current, and neighbors.  Use the templates above as a guide to create additional entities if desired.
