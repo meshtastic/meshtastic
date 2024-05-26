@@ -169,7 +169,6 @@ ExecStart=/usr/sbin/meshtasticd
 Restart=always
 User=root
 Group=root
-StandardOutput=file:/var/log/meshtasticd.log
 StandardError=file:/var/log/meshtasticd.log
 Type=simple
 
@@ -208,45 +207,12 @@ This will give you a detailed view of the service status and any potential error
 
 By following these steps, you set up a systemd service for meshtasticd that will start automatically at boot and restart if it crashes. You can manage it using the standard systemctl commands (start, stop, restart, status, etc.).
 
-#### Setup Log Rotation
-To setup log rotation within the Linux Native Device and do a daily restart of the Meshtastic Daemon you can implement the below.
+#### View Logs of Mesthastic
+To view the log output of the meshtasticd service, use the below command to read them out of the system journal.
 
-Create a logrotate configuration file for the meshtasticd log. Create a file named /etc/logrotate.d/meshtasticd:
 ```shell
-sudo nano /etc/logrotate.d/meshtasticd
+journalctl -u meshtasticd -b
 ```
-
-Add the following content to the file:
-```plaintext
-/var/log/meshtasticd.log {
-    daily
-    missingok
-    rotate 7
-    compress
-    delaycompress
-    notifempty
-    create 0640 root root
-    sharedscripts
-    postrotate
-        systemctl restart meshtasticd > /dev/null 2>&1 || true
-    endscript
-}
-```
-
-##### Test log rotation:
-
-Test the logrotate configuration to ensure it works as expected:
-```shell
-sudo logrotate -d /etc/logrotate.d/meshtasticd
-```
-
-If everything looks good, force a rotation to see it in action:
-```shell
-sudo logrotate -f /etc/logrotate.d/meshtasticd
-```
-
-By following these steps, you will have meshtasticd output directed to a log file with automatic log rotation configured, ensuring that your logs are managed and disk space is conserved.
-
 
 #### Installation of drivers
 
