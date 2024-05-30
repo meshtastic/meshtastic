@@ -74,16 +74,16 @@ Various data-rate options are available when configuring a frequency slot and ar
 
 We have eight LoRa radio presets. These are the most common settings and have been proven to work well:
 
-|    Channel setting     | Alt Channel Name |      Data-Rate      | SF / Symbols | Coding Rate | Bandwidth | Link Budget |
-| :--------------------: | :--------------: | :-----------------: | :----------: | :---------: | :-------: | :---------: |
-|      Short Range / Fast|        Short Fast|           10.94 kbps|       7 / 128|          4/5|      250|          143dB|
-|      Short Range / Slow|        Short Slow|            6.25 kbps|       8 / 256|          4/5|      250|        145.5dB|
-|     Medium Range / Fast|       Medium Fast|            3.52 kbps|       9 / 512|          4/5|      250|          148dB|
-|     Medium Range / Slow|       Medium Slow|            1.95 kbps|     10 / 1024|          4/5|      250|        150.5dB|
-|       Long Range / Fast|         Long Fast|            1.07 kbps|     11 / 2048|          4/5|      250|          153dB|
-|   Long Range / Moderate|     Long Moderate|            0.34 kbps|     11 / 2048|          4/8|      125|          156dB|
-|       Long Range / Slow|         Long Slow|            0.18 kbps|     12 / 4096|          4/8|      125|        158.5dB|
-|  Very Long Range / Slow|    Very Long Slow|            0.09 kbps|     12 / 4096|          4/8|     62.5|        161.5dB|
+|    Channel setting     | Alt Channel Name |      Data-Rate      | SF / Symbols | Coding Rate | Bandwidth | Link Budget | Default Freq |
+| :--------------------: | :--------------: | :-----------------: | :----------: | :---------: | :-------: | :---------: | :----------: |
+|      Short Range / Fast|        Short Fast|           10.94 kbps|       7 / 128|          4/5|      250|          143dB|    906.875MHz|
+|      Short Range / Slow|        Short Slow|            6.25 kbps|       8 / 256|          4/5|      250|        145.5dB|    906.875MHz|
+|     Medium Range / Fast|       Medium Fast|            3.52 kbps|       9 / 512|          4/5|      250|          148dB|    906.875MHz|
+|     Medium Range / Slow|       Medium Slow|            1.95 kbps|     10 / 1024|          4/5|      250|        150.5dB|    906.875MHz|
+|       Long Range / Fast|         Long Fast|            1.07 kbps|     11 / 2048|          4/5|      250|          153dB|    906.875MHz|
+|   Long Range / Moderate|     Long Moderate|            0.34 kbps|     11 / 2048|          4/8|      125|          156dB|   904.4375MHz|
+|       Long Range / Slow|         Long Slow|            0.18 kbps|     12 / 4096|          4/8|      125|        158.5dB|   904.4375MHz|
+|  Very Long Range / Slow|    Very Long Slow|            0.09 kbps|     12 / 4096|          4/8|     62.5|        161.5dB|  916.21875MHz|
 
 :::note
 The link budget used by these calculations assumes a transmit power of 22dBm and an antenna with 0dB gain. Adjust your link budget assumptions based on your actual devices. Data-rate in this table is the theoretical max but doesn't account for packet headers, hops and re-transmissions. Calculations based on data from the official [Semtech LoRa calculator](https://www.semtech.com/design-support/lora-calculator).
