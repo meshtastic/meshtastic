@@ -168,12 +168,12 @@ meshtastic --set position.fixed_position true
 The device will continue to acquire GPS coordinates according to the `gps_update_interval`, but will use the last saved coordinates as its fixed point.
 :::
 
-```shell title="Set Fixed Position - User Defined"
+```shell title="Set and Enable Fixed Position - User Defined"
 meshtastic --setlat 37.8651 --setlon -119.5383
 ```
 
-```shell title="Unset Fixed Position"
-meshtastic --set position.fixed_position false
+```shell title="Remove and Unset Fixed Position"
+meshtastic --remove-position
 ```
 
 ```shell title="Enable / Disable Smart position broadcast (Enabled by default)"
