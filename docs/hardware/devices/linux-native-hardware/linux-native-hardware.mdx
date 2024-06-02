@@ -58,7 +58,22 @@ sudo apt install ./meshtasticd_{version}arm64.deb
 
 For devices requiring SPI or I2C:
 
-- SPI support can be enabled in `/boot/config.txt` or `/boot/firmware/config.txt`:
+- This can be done by running the below commands on a Raspberry Pi (2-5)
+
+```shell
+sudo raspi-config nonint set_config_var dtparam=spi on /boot/firmware/config.txt # Enable SPI
+sudo raspi-config nonint set_config_var dtparam=i2c_arm on /boot/firmware/config.txt # Enable i2c_arm
+
+# Ensure dtoverlay=spi0-0cs is set in /boot/firmware/config.txt without altering dtoverlay=vc4-kms-v3d or dtparam=uart0
+sudo sed -i -e '/^\s*#\?\s*dtoverlay\s*=\s*vc4-kms-v3d/! s/^\s*#\?\s*(dtoverlay|dtparam\s*=\s*uart0)\s*=.*/dtoverlay=spi0-0cs/' /boot/firmware/config.txt
+
+# Insert dtoverlay=spi0-0cs after dtparam=spi=on if not already present
+if ! sudo grep -q '^\s*dtoverlay=spi0-0cs' /boot/firmware/config.txt; then
+    sudo sed -i '/^\s*dtparam=spi=on/a dtoverlay=spi0-0cs' /boot/firmware/config.txt
+fi
+```
+
+- Or this can be accomplished by manually enabling SPI support in `/boot/firmware/config.txt`:
 
 ```plaintext
 dtparam=spi=on
@@ -102,7 +117,14 @@ Webserver:
 
 ### GPS Support
 
-Enabling UART for GPS hats requires modifications in `/boot/firmware/config.txt`:
+- You can enable UART by running the below commands (which additionally will disable serial console tty)
+
+```shell
+sudo raspi-config nonint do_serial_hw 0 # Enable Serial Port (enable_uart=1)
+sudo raspi-config nonint do_serial_cons 1 # Disable Serial Console
+```
+
+- Or you can manually enable UART for GPS hats by making modifications in `/boot/firmware/config.txt`:
 
 ```plaintext
 # Needed for all Pi device.
@@ -114,12 +136,84 @@ dtoverlay=uart0
 
 - The correct port for UART GPS on the Pi 5 after a reboot is `/dev/ttyAMA0`.
 - The correct port for UART GPS on earlier Pi versions after a reboot is `/dev/ttyS0`.
+- You may need to disable the serial console on a Pi and then reboot
+```shell
+sudo raspi-config nonint do_serial_cons 1 # Disable Serial Console
+```
 
 ### Persistence
 
 - The persistent .proto db files of the portduino version of meshtasticd are stored under: `/root/.portduino/default/prefs/`.
 
 ### Advanced Setup and Troubleshooting
+
+#### Creating and Enabling a Systemctl Script (non .deb installs)
+
+To configure the device to start and stop meshtasticd as as service using systemctl you can setup the service unit using the instructions below.
+
+Create the service unit file:
+
+Create a new file in the /etc/systemd/system/ directory with a name like meshtasticd.service.
+```shell
+sudo nano /etc/systemd/system/meshtasticd.service
+```
+Add the following content to the file:
+
+```plaintext
+[Unit]
+Description=Meshtastic Daemon
+After=network.target
+
+[Service]
+ExecStart=/usr/sbin/meshtasticd
+Restart=always
+User=root
+Group=root
+Type=simple
+
+[Install]
+WantedBy=multi-user.target
+```
+
+Reload systemd to recognize the new service:
+```shell
+sudo systemctl daemon-reload
+```
+
+Enable the service to start on boot:
+```shell
+sudo systemctl enable meshtasticd
+```
+
+##### Starting and Stopping the Service
+
+Start the service:
+```shell
+sudo systemctl start meshtasticd
+```
+
+Check the status of the service:
+```shell
+sudo systemctl status meshtasticd
+```
+
+Stop the service:
+```shell
+sudo systemctl stop meshtasticd
+```
+
+This will give you a detailed view of the service status and any potential errors.
+
+By following these steps, you set up a systemd service for meshtasticd that will start automatically at boot and restart if it crashes. You can manage it using the standard systemctl commands (start, stop, restart, status, etc.).
+
+#### View Logs of Mesthastic
+To view the log output of the meshtasticd service, use the below command to read them out of the system journal.
+
+```shell
+journalctl -u meshtasticd -b
+```
+
+#### Installation of drivers
 
 - Installation of drivers for CH341 is required for Ubuntu 22.04 and other systems for SPI/I2C/GPIO support.
 
