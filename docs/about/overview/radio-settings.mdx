@@ -25,7 +25,7 @@ Power limits will generally be lifted in the software if `is_licensed` is set to
 
 ## Europe Frequency Bands
 
-EU countries will generally be covered by the Radio Equipment Directive ([2014/53/EU](http://data.europa.eu/eli/dir/2014/53/2023-10-01))) and subsequent amendments, which is then enacted in local laws. Useful information on this is located [here](https://single-market-economy.ec.europa.eu/single-market/european-standards/harmonised-standards/radio-equipment_en).
+EU countries will generally be covered by the Radio Equipment Directive ([2014/53/EU](http://data.europa.eu/eli/dir/2014/53/2023-10-01)) and subsequent amendments, which is then enacted in local laws. Useful information on this is located [here](https://single-market-economy.ec.europa.eu/single-market/european-standards/harmonised-standards/radio-equipment_en).
 The bands below were selected based on the maximum power and the duty cycle available. It may be possible to use other frequency bands for specific applications, but these are not currently supported "out of the box".
 
 ### 433 MHz
@@ -37,6 +37,10 @@ The band range is from 433 to 434 MHz.
 There are four frequency slots defined with the standard radio preset `LongFast`. After factory reset the radio will be set to frequency slot 4 with a center frequency of 433.875 MHz.
 
 ### 868 MHz
+
+:::info
+868 MHz is generally the most popular band for Meshtastic in the EU.
+:::
 
 The maximum power allowed for Europe is +27 dBm ERP ([Effective Radiated Power](https://en.wikipedia.org/wiki/Effective_radiated_power)).
 
