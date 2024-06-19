@@ -1,0 +1,69 @@
+---
+id: unphone
+title: unPhone
+sidebar_label: unPhone
+sidebar_position: 13
+---
+
+The unPhone is a versatile open hardware and open-source software development device designed to provide seamless connectivity and expandability. Developed by the University of Sheffield, in partnership with Pimoroni and Gareth Coleman, it features a touchscreen, battery, case, and antenna, and more, making it ideal for various projects.
+
+For more comprehensive information on the unPhone, please visit the project's website at [https://unphone.net](https://unphone.net).
+## Specifications
+
+- **MCU**
+  - ESP32-S3-WROOM-1
+    - Bluetooth 5.0
+    - WiFi support
+- **LoRa Transceiver**
+  - HopeRF RF950W
+- **Frequency options**
+  - 868 MHz
+- **Navigation Module**
+  - Not included
+- **Antenna**
+  - Integrated
+- **Connectors**
+  - USB-C
+
+## Features
+
+- 8MB flash and 8MB PSRAM
+- 3.5" (320x480) LCD capacitive touchscreen
+- IR LEDs
+- 1200mAh LiPo battery with USB-C charging
+- Vibration motor
+- Compass/Accelerometer (both 3-axis)
+- SD card slot
+- Expander board that supports two Featherwing sockets and a prototyping area
+
+## Flashing
+
+To flash ESP32-S3 devices like the unPhone, you typically need to place them in Espressif's firmware download mode. Use the "1200bps reset" button in the web flasher to do this. If this method does not work for any reason, you can follow the manual process below.
+
+:::warning
+
+Do not proceed unless an antenna is connected to avoid possible damage to the device's radio.
+
+:::
+
+The following process will manually place the device into the Espressif Firmware Download mode:
+
+1. Ensure the device is plugged in and powered on by switching the battery switch to `ON`.
+2. Press and hold the center (circle) button.
+3. While holding the center (circle) button, press the reset button on the side. *See [image](#images).*
+4. After 2-3 seconds, release center (circle) button.
+
+With the device now in the Espressif Firmware Download mode, you can proceed with flashing using one of the supported flashing methods. It's generally recommended to use the [Web Flasher](https://flasher.meshtastic.org/). You can select "unPhone" from the device drop-down.
+
+
+## Resources
+
+- Firmware file: `firmware-unphone-X.X.X.xxxxxxx.bin`
+- Purchase Link:
+  - [Pimoroni](https://shop.pimoroni.com/products/unphone?variant=40829810311251)
+
+  #### Images
+
+![unPhone-side](/img/hardware/unPhone/unphone-side.webp)
+![unphone-front](/img/hardware/unPhone/unphone-front-with-exander.webp)
+
