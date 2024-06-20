@@ -38,16 +38,16 @@ values={[
 
 :::info
 Capsule Sensor V3 uses WirelessBoot mode to upload firmware, exchange information, and print logs through WiFi.
-That is, whether you update the firmware locally or via the Web. You need to get the device into WirelssBoot state first. See this link for instructions on how to use it: 
+That is, whether you update the firmware locally or via the Web, You need to get the device into WirelssBoot state first. 
 :::
-- [**Wireless Boot**](https://docs.heltec.org/en/node/esp32/capsule_sensor_v3/wireless_boot.html#).
+Refer to this link for how to upload firmware for Capsule Sensor V3: [**Wireless Boot**](https://docs.heltec.org/en/node/esp32/capsule_sensor_v3/wireless_boot.html#).
 ### Touch button/Physical button differences
 
 :::warning
-Because the touch button version is easy to accidentally action while close to metal or put it in the pocket, Heltec has abandoned the production of this version, but still a small number of samples have entered the market.
+Because the touch button is easy to accidentally activate while close to metal or in your pocket, Heltec has discontinued production of this version. However, a small number of samples have entered the market.
 :::
 - Button differences
-![Capsule Sensor V3 Button](</img/hardware/heltec/capsule-sensor-v3-button.jpg>)
+![Capsule Sensor V3 Button](</img/hardware/heltec/capsule-sensor-v3-button.png>)
 - Other hardware differences
   1. Removal of [FDG6322C](https://www.mouser.com/datasheet/2/308/1/FDG6322C_D-2312203.pdf) (a dual N & P channel FET) from the physical-button version.
   2. Antenna filter values physical-button version (L11 = 1.8pF, C15 = 2.7nH, C24 = 1.8pF) align more closely with ESP32-S3 reference design than touch-button version (L11 = 1.6nH, C15 = 6.9pF, C24 = 2.4pF).
