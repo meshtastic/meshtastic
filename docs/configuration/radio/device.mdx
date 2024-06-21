@@ -36,9 +36,9 @@ This table shows the **default** values after selecting a preset. As always, ind
 | CLIENT         | Yes             | Yes            | Regular           | Yes        | No                  | Yes                   |
 | CLIENT_MUTE    | Yes             | Yes            | Lowest            | No         | No                  | Yes                   |
 | CLIENT_HIDDEN  | Yes             | Yes            | Lowest            | Local only | No                  | No                    |
-| TRACKER        | Yes             | No             | Regular           | No         | No                  | Yes                   |
-| LOST_AND_FOUND | Yes             | No             | Regular           | No         | No                  | Yes                   |
-| SENSOR         | Yes             | No             | High              | No         | No                  | Yes                   |
+| TRACKER        | Yes             | No             | Regular / Low     | When awake | No                  | Yes                   |
+| LOST_AND_FOUND | Yes             | No             | Regular           | Yes        | No                  | Yes                   |
+| SENSOR         | Yes             | No             | Regular / Low     | When awake | No                  | Yes                   |
 | TAK            | Yes             | Optional       | Regular           | Yes        | No                  | Yes                   |
 | TAK_TRACKER    | Yes             | Optional       | Regular           | Yes        | No                  | Yes                   |
 | ROUTER         | No[^1]          | No             | High              | Yes        | Yes                 | Yes                   |
@@ -46,6 +46,26 @@ This table shows the **default** values after selecting a preset. As always, ind
 | REPEATER       | Yes             | No             | High              | Yes        | Yes                 | No                    |
 
 [^1]: The Router role enables [Power Saving](/docs/configuration/radio/power/#power-saving) by default. Consider ROUTER_CLIENT if BLE/WiFi/Serial are still needed.
+
+:::info
+
+Retransmit: *When awake* indicates retransmissions will occur normally but not while asleep between transmission intervals. 
+
+:::
+
+## Notes about Power Saving + Role behavior
+
+For the ESP32 platform:
+
+Every role except for the `TRACKER` and `SENSOR` roles are capable of traditional _sleep_ behavior using the `power.is_power_saving` setting. When a node goes to sleep, in general, the serial console, peripherals, GPS, and WiFi/Bluetooth radio are all shut down to conserve power. The CPU will enter a low power state (light sleep or deep sleep on the ESP32). The LoRA radio will be left on stand-by for receiving any packets which will _wake up_ the device to resume services and respond.
+
+Timeout configurations of `display.screen_on_secs` (Screen timeout), `power.min_wake_secs` (Minimum time till sleep), and `power.wait_bluetooth_secs` (Bluetooth timeout) will delay a node's transition to a sleep state. The timeouts and subsequent transition to sleep states may also be _reset_ by external events or actions such as receiving a packet, pressing a button, or connecting via client through serial or other means. 
+
+For the `ROUTER` role, the `power.is_power_saving` behavior of sleep is enabled automatically and cannot be turned off.
+
+For the ESP32 and NRF52 platforms:
+
+In the `TRACKER` and `SENSOR` roles, there are special sleep behaviors when combined with `power.is_power_saving`. For `TRACKER`, the device will go to sleep for `position.position_broadcast_secs` and upon waking will send a position packet when the GPS provides a valid location and repeat the cycle. For `SENSOR`, the device will go to sleep for `telemetry.environment_update_interval` and upon waking will gather environment data and send a telemetry packet and repeat the cycle. For both of these roles, the LoRA radio does not remain in standby mode to accept packets and wake up the device. Sleep remains constrained to their respective transmission intervals.
 
 ### Rebroadcast Mode
 
