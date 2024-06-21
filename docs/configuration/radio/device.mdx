@@ -36,9 +36,9 @@ This table shows the **default** values after selecting a preset. As always, ind
 | CLIENT         | Yes             | Yes            | Regular           | Yes        | No                  | Yes                   |
 | CLIENT_MUTE    | Yes             | Yes            | Lowest            | No         | No                  | Yes                   |
 | CLIENT_HIDDEN  | Yes             | Yes            | Lowest            | Local only | No                  | No                    |
-| TRACKER        | Yes             | No             | Regular           | Yes*        | No                  | Yes                   |
+| TRACKER        | Yes             | No             | Regular / Low     | When awake | No                  | Yes                   |
 | LOST_AND_FOUND | Yes             | No             | Regular           | Yes        | No                  | Yes                   |
-| SENSOR         | Yes             | No             | High              | Yes*       | No                  | Yes                   |
+| SENSOR         | Yes             | No             | Regular / Low     | When awake | No                  | Yes                   |
 | TAK            | Yes             | Optional       | Regular           | Yes        | No                  | Yes                   |
 | TAK_TRACKER    | Yes             | Optional       | Regular           | Yes        | No                  | Yes                   |
 | ROUTER         | No[^1]          | No             | High              | Yes        | Yes                 | Yes                   |
@@ -49,7 +49,7 @@ This table shows the **default** values after selecting a preset. As always, ind
 
 :::info
 
-Retransmit: Yes* indicates retransmissions will occur normally but while asleep between transmission intervals. 
+Retransmit: *When awake* indicates retransmissions will occur normally but not while asleep between transmission intervals. 
 
 :::
 
