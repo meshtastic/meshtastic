@@ -16,6 +16,7 @@ values={[
 {label: 'User Button', value: 'User Button'},
 {label: 'GPS Module', value: 'GPS'},
 {label: 'Buzzer', value: 'Buzzer'},
+{label: 'Vibramotor', value: 'Vibramotor'},
 {label: 'I/O Module', value: 'IO'},
 {label: 'Environmental Sensors', value:'Sensors'},
 {label: 'RTC Module', value:'RTC'}
@@ -89,15 +90,38 @@ The RAK1910 is supported on the following base boards & slots:
 </TabItem>
 <TabItem value="Buzzer">
 
-## Buzzer
+## RAK Buzzer
 
-The [RAK18001 Buzzer Module](https://store.rakwireless.com/products/wisblock-buzzer-module-rak18001) is currently being tested for integration with the External Notifications plugin. There is currently a known conflict with buzzer if the module is placed in Slot D, although other slots should work.
+The [RAK18001 Buzzer Module](https://store.rakwireless.com/products/wisblock-buzzer-module-rak18001) is currently being tested for integration with the External Notifications plugin. There is currently a known conflict with buzzer if the module is placed in Slot D, although other slots should work. NOTE: Many users have complained of the RAK buzzer being very quiet as currently implemented. As of yet, there is no fix for this issue.
 
 ### Resources
 - [RAK Documentation Center RAK18001](https://docs.rakwireless.com/Product-Categories/WisBlock/RAK18001/Overview/#product-description)
 - Purchase Links:
   - International
     - [RAK Wireless](https://store.rakwireless.com/products/wisblock-buzzer-module-rak18001)
+
+## Third Party Buzzer
+
+Another option is to use a standard "passive buzzer" and a transistor (such as a 2N2222 transistor). This can be done by wiring the VCC pin to leg 1 of the transistor and the positive terminal of the buzzer to leg 3. To the central pin (2) of the transistor, connect pin RX1 on the Wisblock board. Connect the negative terminal of the buzzer to the GND pin on the Wisblock board. In settings, go to Device and set Redefine PIN_BUZZER (Buzzer GPIO) to 15. Then go to External Notification and set the module to Enabled, PWM buzzer to enabled, Alert Message Buzzer to enabled and Output Buzzer GPIO to 15. Save your settings and your buzzer should activate whenever you get an incoming message.
+
+### Resources
+- Purchase Links:
+  - International
+    - Amazon: [Buzzer](https://www.amazon.com/dp/B018I1WBNQ)
+    - Amazon: [Transistor](https://www.amazon.com/dp/B07YN7KQQB)
+
+</TabItem>
+<TabItem value="Vibration">
+
+## Third Party Buzzer
+
+To add vibration to your Wisblock device you'll need a standard 3V DC vibramotor and a transistor (such as a 2N2222 transistor). This can be done by wiring the VCC pin to leg 1 of the transistor and the positive (red) wire of the vibramotor to leg 3. To the central pin (2) of the transistor, connect pin AIN1 on the Wisblock board. Connect the negative wire (black) of the vibramotor to the GND pin on the Wisblock board. In settings, go to External Notification and set the module to Enabled, Alert Message Vibra to enabled and Output Vibra GPIO to 31. Save your settings and vibration should activate whenever you get an incoming message.
+
+### Resources
+- Purchase Links:
+  - International
+    - Amazon: [Vibrator](https://www.amazon.com/dp/B07Q1ZV4MJ)
+    - Amazon: [Transistor](https://www.amazon.com/dp/B07YN7KQQB)
 
 </TabItem>
 <TabItem value="IO">
