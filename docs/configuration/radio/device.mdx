@@ -81,6 +81,12 @@ Acceptable values: `true` or `false`
 
 Disabling this will disable the SerialConsole by not initializing the StreamAPI.
 
+## TZDEF (Timezone Definition)
+
+The `tzdef` setting allows the local offset to be defined for the device. It uses the TZ Database format to display the correct local time on the device display and in its logs.
+
+To set the timezone, use the POSIX TZ Database string for the relevant region. Here is a list of [supported timezones](https://github.com/nayarsystems/posix_tz_db/blob/master/zones.csv).
+
 ## Debug Log
 
 Acceptable values: `true` or `false`
@@ -179,6 +185,10 @@ meshtastic --set device.role CLIENT
 
 ```shell title="Disable serial console"
 meshtastic --set device.serial_enabled false
+```
+
+```shell title="Set `tzdef`"
+meshtastic --set device.tzdef UTC0
 ```
 
 ```shell title="Enable debug logging"
