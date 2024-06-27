@@ -7,11 +7,13 @@ sidebar_position: 1
 ---
 
 ## Supported Devices
+
 Meshtastic firmware can be installed on a wide range of development boards. The list below provides a brief comparison of currently supported hardware.
 
 ### Which board should I choose?
 
 While all the boards listed on this page will run Meshtastic and mesh with each other, some current community favorites are:
+
 - RAK Meshtastic Start Kit
 - Station G1
 - LILYGO LoRa T3-S3
@@ -20,20 +22,22 @@ While all the boards listed on this page will run Meshtastic and mesh with each 
 Please do your research and choose the board that meets your needs (or maybe already have in a bin somewhere).
 
 :::info
+
 - The Semtech SX1262 transceiver is newer than the SX1276 and provides increased receive and transmit performance.
 - nRF52-based devices use a fraction of the power compared to ESP32-based devices and are therefore generally preferred for solar and handset applications.
 - ESP32-based devices require more power to operate but are typically lower-cost alternatives that do perform well when using house power, or for handsets that only require a day or two of runtime, and for applications that require WiFi connectivity.
-:::
+  :::
 
 ### [RAK Wisblock](./rak/)
+
 Modular hardware system with Base, Core and Peripheral modules including the low-power and solar ready nRF52840-based Meshtastic Starter Kit (19007 & 4631).
 
 [**WisBlock Core Modules**](./rak/core-module/)<br/>
-| Name                                           | MCU      | Radio  |     WiFi     | BT  |  GPS   |
+| Name | MCU | Radio | WiFi | BT | GPS |
 |:-----------------------------------------------|:---------|:-------|:------------:|:---:|:------:|
-| [RAK4631](./rak/core-module?rakcore=RAK4631)   | nRF52840 | SX1262 |      NO      | 5.0 | add-on |
-| [RAK11200](./rak/core-module?rakcore=RAK11200) | ESP32    | add-on | 2.4GHz b/g/n | 4.2 | add-on |
-| [RAK11310](./rak/core-module?rakcore=RAK11310) | RP2040   | SX1262 |      NO      | NO  | add-on |
+| [RAK4631](./rak/core-module?rakcore=RAK4631) | nRF52840 | SX1262 | NO | 5.0 | add-on |
+| [RAK11200](./rak/core-module?rakcore=RAK11200) | ESP32 | add-on | 2.4GHz b/g/n | 4.2 | add-on |
+| [RAK11310](./rak/core-module?rakcore=RAK11310) | RP2040 | SX1262 | NO | NO | add-on |
 
 [**Base Boards**](./rak/base-board/)<br/>
 [RAK5005-O](./rak/base-board?rakbase=RAK5005-O)<br/>
@@ -59,10 +63,11 @@ RAK12013 Radar Sensor<br/>
 RAK13800 Ethernet Module<br/>
 
 ### [LILYGO® T-Beam](./tbeam/)
+
 Boards complete with GPS, 18650 battery holder, and optional screen.
 
 | Name                                     | MCU      | Radio             |     WiFi     | BT  | GPS |
-|:-----------------------------------------|:---------|:------------------|:------------:|:---:|:---:|
+| :--------------------------------------- | :------- | :---------------- | :----------: | :-: | :-: |
 | [T-Beam v0.7](./tbeam/?t-beam=0.7)       | ESP32    | SX1276            | 2.4GHz b/g/n | 4.2 | YES |
 | [T-Beam v1.1](./tbeam/?t-beam=1.1)       | ESP32    | SX1276            | 2.4GHz b/g/n | 4.2 | YES |
 | [T-Beam with M8N](./tbeam/?t-beam=m8n)   | ESP32    | SX1276<br/>SX1262 | 2.4GHz b/g/n | 4.2 | YES |
@@ -70,17 +75,19 @@ Boards complete with GPS, 18650 battery holder, and optional screen.
 | [T-BeamSUPREME](./tbeam/?t-beam=supreme) | ESP32-S3 | SX1262            | 2.4GHz b/g/n | 5.0 | YES |
 
 ### [LILYGO® T-Echo](./techo/)
-All-in-one unit with E-Ink screen, GPS and battery in injection-molded case.  Features the low-power nRF52840 for long battery life.
+
+All-in-one unit with E-Ink screen, GPS and battery in injection-molded case. Features the low-power nRF52840 for long battery life.
 
 | Name               | MCU      | Radio  | WiFi | BT  | GPS |
-|:-------------------|:---------|:-------|:----:|:---:|:---:|
+| :----------------- | :------- | :----- | :--: | :-: | :-: |
 | [T-Echo](./techo/) | nRF52840 | SX1262 |  NO  | 5.0 | YES |
 
 ### [LILYGO® LoRa](./lora/)
+
 Inexpensive basic ESP32-based boards.
 
 | Name                                       | MCU      | Radio                        |     WiFi     | BT  | GPS |
-|:-------------------------------------------|:---------|:-----------------------------|:------------:|:---:|:---:|
+| :----------------------------------------- | :------- | :--------------------------- | :----------: | :-: | :-: |
 | [LoRa32 V1](./lora/?t-lora=v1)             | ESP32    | SX127x                       | 2.4GHz b/g/n | 4.2 | NO  |
 | [LoRa32 V1.3](./lora/?t-lora=v1.3)         | ESP32    | SX127x                       | 2.4GHz b/g/n | 4.2 | NO  |
 | [LoRa32 V2.0](./lora/?t-lora=v2.0)         | ESP32    | SX127x                       | 2.4GHz b/g/n | 4.2 | NO  |
@@ -89,23 +96,25 @@ Inexpensive basic ESP32-based boards.
 | [LoRa32 T3-S3 V1.0](./lora/?t-lora=S3-v1)  | ESP32-S3 | SX1262<br/>SX1276<br/>SX1280 | 2.4GHz b/g/n | 5.0 | NO  |
 
 ### [LILYGO® T-Deck](./tdeck/)
+
 Standalone device with screen and keyboard
 
 | Name               | MCU         | Radio  | WiFi | BT  | GPS |
-|:-------------------|:------------|:-------|:----:|:---:|:---:|
+| :----------------- | :---------- | :----- | :--: | :-: | :-: |
 | [T-Deck](./tdeck/) | ESP32-S3FN8 | SX1262 | YES  | 5.0 | NO  |
 
 ### [LILYGO® T-Watch S3](./twatch/)
 
 | Name                    | MCU      | Radio  | WiFi | BT  | GPS |
-|:------------------------|:---------|:-------|:----:|:---:|:---:|
+| :---------------------- | :------- | :----- | :--: | :-: | :-: |
 | [T-Watch S3](./twatch/) | ESP32-S3 | SX1262 | YES  | 5.0 | NO  |
 
 ### [HELTEC® LoRa 32](./heltec/)
+
 Inexpensive basic ESP32-based boards.
 
 | Name                                                              | MCU         | Radio  |     WiFi     | BT  | GPS |
-|:------------------------------------------------------------------|:------------|:-------|:------------:|:---:|:---:|
+| :---------------------------------------------------------------- | :---------- | :----- | :----------: | :-: | :-: |
 | [LoRa32 V2.1](./heltec/?heltec=v2.1)                              | ESP32       | SX127x | 2.4GHz b/g/n | 4.2 | NO  |
 | [LoRa32 V3/3.1](./heltec/?heltec=v23)                             | ESP32-S3FN8 | SX1262 | 2.4GHz b/g/n | 5.0 | NO  |
 | [Wireless Stick Lite V3](./heltec/?heltec=Wireless+Stick+Lite+V3) | ESP32-S3FN8 | SX1262 | 2.4GHz b/g/n | 5.0 | NO  |
@@ -113,26 +122,29 @@ Inexpensive basic ESP32-based boards.
 | [Wireless Paper](./heltec/?heltec=paper)                          | ESP32-S3FN8 | SX1262 | 2.4GHz b/g/n | 5.0 | NO  |
 
 ### [Nano Series](./nano/)
+
 Portable and durable devices designed for Meshtastic.
 
 | Name                                         | MCU         | Radio  |     WiFi     | BT  | GPS |
-|:---------------------------------------------|:------------|:-------|:------------:|:---:|:---:|
+| :------------------------------------------- | :---------- | :----- | :----------: | :-: | :-: |
 | [Nano G2 Ultra](./nano/?nano-series=g2)      | NRF52840    | SX1262 | 2.4GHz b/g/n | 5.0 | YES |
 | [Nano G1 Explorer](./nano/?nano-series=g1-e) | ESP32 WROOM | SX1262 | 2.4GHz b/g/n | 4.2 | YES |
 | [Nano G1](./nano/?nano-series=g1)            | ESP32 WROOM | SX1276 | 2.4GHz b/g/n | 4.2 | YES |
 
 ### [Station G1](./station-g1/)
+
 High power LoRa transceiver designed for Meshtastic Licensed HAM operation.
 
 | Name                        | MCU         | Radio  |     WiFi     | BT  | GPS |
-|:----------------------------|:------------|:-------|:------------:|:---:|:---:|
+| :-------------------------- | :---------- | :----- | :----------: | :-: | :-: |
 | [Station G1](./station-g1/) | ESP32 WROOM | SX1262 | 2.4GHz b/g/n | 4.2 | YES |
 
 ### [Raspberry Pi Pico](./raspberry-pi/)
+
 Fast versatile boards using the RP2040.
 
 | Name                                 | MCU    | Radio  |     WiFi     |      BT       | GPS |
-|:-------------------------------------|:-------|:-------|:------------:|:-------------:|:---:|
+| :----------------------------------- | :----- | :----- | :----------: | :-----------: | :-: |
 | [Raspberry Pi Pico](./raspberry-pi/) | RP2040 | SX1262 | 2.4GHz b/g/n | not supported | NO  |
 
 [**Pico Peripherals**](./raspberry-pi/peripherals/)<br/>
@@ -141,8 +153,17 @@ SH1106 OLED Display<br/>
 CardKB Keyboard<br/>
 
 ### [CanaryOne](./canary)
-Complete solution with battery, screen, case, and antenna.  Ships pre-flashed with latest Meshtastic firmware.
+
+Complete solution with battery, screen, case, and antenna. Ships pre-flashed with latest Meshtastic firmware.
 
 | Name                  | MCU      | Radio  | WiFi | BT  | GPS |
-|:----------------------|:---------|:-------|:----:|:---:|:---:|
+| :-------------------- | :------- | :----- | :--: | :-: | :-: |
 | [CanaryOne](./canary) | nRF52840 | SX1262 |  NO  | 5.0 | YES |
+
+### [unPhone](./unPhone)
+
+All-in-one development device with LoRa, WiFi, BT, touchscreen, accelerometer, gyroscop, vibration motor, LiPo battery and more!
+
+| Name                  | MCU              | Radio  | WiFi | BT  | GPS |
+| :-------------------- | :--------------- | :----- | :--: | :-: | :-: |
+| [unPhone](./unPhone) | ESP32-S3-WROOM-1 | RF950W | YES  | 5.0 | NO  |
