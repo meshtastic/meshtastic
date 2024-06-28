@@ -2,6 +2,7 @@
 id: build
 title: Building Meshtastic Firmware
 sidebar_label: Building Firmware
+sidebar_position: 2
 ---
 
 Meshtastic uses [PlatformIO](https://platformio.org), a development environment that enables easy multi-platform development and centralized tooling.
@@ -17,9 +18,9 @@ Meshtastic uses [PlatformIO](https://platformio.org), a development environment 
    ```shell
    cd firmware && git submodule update --init
    ```
-:::info
-If you want to build the RP2040 targets and get a 'Filename too long' error on Windows, please refer to [the Platformio documentation for this toolchain](https://arduino-pico.readthedocs.io/en/latest/platformio.html#important-steps-for-windows-users-before-installing)
-:::
+   :::info
+   If you want to build the RP2040 targets and get a 'Filename too long' error on Windows, please refer to [the Platformio documentation for this toolchain](https://arduino-pico.readthedocs.io/en/latest/platformio.html#important-steps-for-windows-users-before-installing)
+   :::
 
 ## Build
 

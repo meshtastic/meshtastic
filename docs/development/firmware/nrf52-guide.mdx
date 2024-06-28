@@ -1,0 +1,55 @@
+---
+id: nrf52-guide
+title: Development Guide for nRF52
+sidebar_label: NRF52 Guide
+sidebar_position: 6
+---
+
+This document is a collection of tips and best practices for developing on the nRF52 platform. It is designed to evolve continuously with the latest information, and contributions are welcome through pull requests on GitHub.
+
+## Using the NanoDAP USB debugging probe
+
+This is a mini-HOWTO on installing the appropriate firmware and adapter software, it is loosely based on [this tutorial by RAK](https://docs.rakwireless.com/Product-Categories/Accessories/RAKDAP1-Flash-and-Debug-Tool/Quickstart/#rak4600-evaluation-board).
+
+### Required hardware
+
+The [RAKDAP1/NanoDAP](https://store.rakwireless.com/products/daplink-tool) is a very reasonably priced ($10) USB-based debugging probe. It can be used on many ARM targets but is particularly suited for the nRF52 CPUs. It seems to be based on the ARM [daplink](https://daplink.io/) [project](https://github.com/ARMmbed/DAPLink). The fork of this project is located here: [nanoDAP](https://github.com/wuxx/nanoDAP). The fork is fairly old with respect to the latest daplink goodness, but it seems fine.
+
+If you are looking to buy a probe, there are many other daplink-based devices available. They are suspected to be mostly identical. If you find one that works well, please add a note to this document.
+
+### Required software
+
+You'll need to install the [pyocd](https://pyocd.io/) application to allow VSCode to talk to the NanoDAP. You first install the tool itself but then must add the support files for the nrf52840:
+
+```bash
+pip3 install pyocd
+pyocd pack --i nrf52840
+pyocd pack -s
+```
+
+If you are developing on a linux system, you will need to install the udev rules for the NanoDAP.
+
+This is done by copying the rules file from the pyocd distribution to the udev rules directory [per these instructions](https://github.com/pyocd/pyOCD/tree/main/udev).
+
+### Connecting the NanoDAP to your nRF52 target
+
+The NanoDAP has a 10-pin connector, but only three of these pins need to be connected:
+
+- **Ground**: Connects to the ground on the target.
+- **TMS-IO**: Connects to SWDIO on the target.
+- **TCK-CK**: Connects to SWCLK on the target.
+
+Some web instructions recommend connecting the RESET and 3V3 pins, but this is usually not necessary.
+
+#### Wiring Guide
+
+This image shows an example connection to a RAK4630 board:
+![RAK4630 DAP connection](/img/RAKDAP1_New_1.webp)
+Photo Courtesy of [RAK Wireless](https://docs.rakwireless.com/assets/images/accessories/rakdap1-flash-and-debug-tool/RAKDAP1_New_1.png).
+
+### Using the NanoDAP with VSCode
+
+The Meshtastic project has a special build environment/target which has been configured to work with the NanoDAP. To use it select the "env:rak3631_dap" target via the command palette or in the bottom left of your VSCode/PlatformIO window. Once that target is selected it changes two things:
+
+- Device programming is no longer performed via the USB bootloader. Instead you you select "Upload" it will use the NanoDAP to program the device.
+- The "Debug" button in VSCode will be enabled. If you click that button it will launch the ICE assisted debugger and you can set breakpoints etc...
