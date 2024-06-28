@@ -1,0 +1,49 @@
+---
+id: chatter
+title: Chatter device
+sidebar_label: Chatter
+sidebar_position: 13
+---
+
+The Chatter is a DIY kit sold by CircuitMess. It is intended as a STEM toy and comes with a nice firmware allowing to connect to other Chatter and exchange messages.
+However, it's HW is similar to most Meshtastic nodes, with an ESP32, a LoRa chip, a screen and few buttons.
+
+![Chatter V1.0](/img/hardware/chatter.webp)
+
+There's two versions of the Chatter available with very few actual differences.
+Chatter V2.0 sports:
+ - one button (Button 15) wired directly to the ESP32 (pin 36)
+ - an i2c port to easily connect a GPS
+ - a different routing
+ 
+Both versions are fully supported by Meshastic with the same firmware. 
+
+The Meshtastic firmware works with the stock hardware, however, the LLCC68 LoRa chip cripples the RF capability of the device. As is, the Chatter can only communicate on the Medium-Slow channel. 
+Switching the chip with the pin-compatible and more capable Heltec RA62 (as mentioned in this Github issue https://github.com/meshtastic/firmware/issues/2896) unlock the full potential of the device.
+
+
+## Specifications
+
+- **MCU**
+  - ESP32 WROOM (WiFi & Bluetooth)
+    - Bluetooth 4.2
+- **LoRa Transceiver**
+  - LLCC68
+- **Frequency options**
+  - EU-868 MHz
+- **Keypad**
+  - 74HC165 based serial keypad
+- **Connectors**
+  - USB-C
+
+## Features
+
+- Integrated Keypad for on device message input
+- 1.3 inch OLED screen
+- Optional I2C GPS Module
+
+## Resources
+
+- Firmware file: `firmware-chatter2-X.X.X.xxxxxxx.bin`
+- [Official build guide](https://circuitmess.com/blogs/resources/chatter-build-guide)
+
