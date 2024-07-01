@@ -547,3 +547,15 @@ Start watching a GPIO mask for changes.
 ```shell title="Usage"
 meshtastic --port /dev/ttyUSB0 --gpio-watch 0x10 --dest '!28979058'
 ```
+
+## Tunnel arguments
+
+### --tunnel
+
+Linux only, very experimental. Low bandwidth and low reliability.
+
+Create a TUN tunnel device for forwarding IP packets over the mesh.
+
+## --subnet TUNNEL_NET
+
+Set the subnet for the local end of the tunnel established using `--tunnel`.
