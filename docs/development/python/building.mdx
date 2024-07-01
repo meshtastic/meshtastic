@@ -6,18 +6,24 @@ sidebar_label: Building
 
 A python release consists of publishing the release to PyPi https://pypi.org/project/meshtastic/ as well as producing single-executable files that are downloadable from Github https://github.com/meshtastic/Meshtastic-python/releases.
 
-#### Pre-requisites
+### Pre-requisites
 
 No pre-requisites are needed locally to make a release. All builds are done via Github Actions currently.
 
 To test/validate, you will need to run:
 
 ```shell
-pip3 install -r requirements.txt
-pip install .
+pip3 install poetry
+poetry install
 ```
 
-#### Instructions
+Note: we now use the [poetry](https://python-poetry.org/) package manager for building meshtastic.  If you were familar with our
+older 'venv' base instructions you can still access that mechanism by running "poetry shell" to open a shell with the (automatically
+maintained) virtual environment activated.
+
+This can be handy if you want to run the "meshtastic" command without installing the package globally.
+
+### Instructions
 
 - Update protobufs by running the "Update protobufs" workflow in Actions: https://github.com/meshtastic/Meshtastic-python/actions/workflows/update_protobufs.yml
 
@@ -26,10 +32,10 @@ pip install .
 connect one device to the serial port and run:
 
 ```shell
-pytest -m smoke1
+poetry run pytest -m smoke1
 ```
 
-- run unit tests: `pytest` (optional)
+- run unit tests: `poetry run pytest` (optional)
 
 - run bin/test-release.sh (optional)
 
@@ -41,7 +47,7 @@ pytest -m smoke1
 You need permissions in the GitHub project to make a build
 :::
 
-#### Instructions - automated
+### Instructions - automated
 
 - Go to Actions / Make Release / Run Workflow https://github.com/meshtastic/Meshtastic-gui-installer/actions/workflows/release.yml
 - Draft & Publish release https://github.com/meshtastic/Meshtastic-gui-installer/releases
