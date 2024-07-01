@@ -8,7 +8,43 @@ sidebar_position: 4
 
 The python pip package installs a "meshtastic" command line executable, which displays packets sent over the network as JSON and lets you see serial debugging information from the meshtastic devices. This command is not run inside of python, you run it from your operating system shell prompt directly. If when you type "meshtastic" it doesn't find the command and you are using Windows: Check that the python "scripts" directory is in your path.
 
-## Optional Arguments
+## Connection Arguments
+
+### --port PORT
+
+The port the Meshtastic device is connected to, i.e. `/dev/ttyUSB0`, `/dev/cu.wchusbserial`, `COM4` etc. if unspecified, meshtastic will try to find it. Important to use when multiple devices are connected to ensure you call the command for the correct device.
+
+This argument can also be specified as `--serial` or `-s`.
+
+```shell title="Usage"
+meshtastic --port /dev/ttyUSB0 --info
+meshtastic --port COM4 --info
+meshtastic -s --info
+```
+
+### --host HOST
+
+The hostname/ipaddr of the device to connect to (over TCP). If a host is not provided, the CLI will try to connect to `localhost`.
+
+This argument can also be specified as `--tcp` or `-t`.
+
+```shell title="Usage"
+meshtastic --host HOST --info
+meshtastic --host --info
+```
+
+### --ble BLE
+
+Connect to a Meshtastic device using its BLE address or name. This option allows for wireless communication with the device, similar to how the `--host` option is used for TCP connections. If an address is not provided, meshtastic will try to find a compatible device that's paired.
+
+This argument can also be specified as `-b`.
+
+```shell title="Usage"
+meshtastic --ble "device_name_or_address" --info
+meshtastic -b --info
+```
+
+## Help & Support Arguments
 
 ### -h or --help
 
@@ -17,6 +53,25 @@ Shows a help message that describes the arguments.
 ```shell title="Usage"
 meshtastic -h
 ```
+
+### --version
+
+Show program's version number and exit.
+
+```shell title="Usage"
+meshtastic --version
+```
+
+### --support
+
+Print out info that would be helpful supporting any issues.
+
+```shell title="Usage"
+meshtastic --support
+```
+
+## Optional Arguments
+
 ### --export-config
 
 Export the configuration of the device. (to be consumed by the '--configure' command).
@@ -27,33 +82,12 @@ To create to a file with the connected device's configuration, this command's ou
 meshtastic --export-config > example_config.yaml
 ```
 
-```title="Usage"shell
-meshtastic --export-config
-```
-
 ### --configure
 
 Configure radio using a yaml file.
 
 ```shell title="Usage"
 meshtastic --configure example_config.yaml
-```
-
-### --port PORT
-
-The port the Meshtastic device is connected to, i.e. `/dev/ttyUSB0`, `/dev/cu.wchusbserial`, `COM4` etc. if unspecified, meshtastic will try to find it. Important to use when multiple devices are connected to ensure you call the command for the correct device.
-
-```shell title="Usage"
-meshtastic --port /dev/ttyUSB0 --info
-meshtastic --port COM4 --info
-```
-
-### --host HOST
-
-The hostname/ipaddr of the device to connect to (over TCP).
-
-```shell title="Usage"
-meshtastic --host HOST
 ```
 
 ### --seriallog SERIALLOG
@@ -430,14 +464,6 @@ Run stress test against all connected Meshtastic devices.
 meshtastic --test
 ```
 
-### --ble BLE
-
-Connect to a Meshtastic device using its BLE address or name. This option allows for wireless communication with the device, similar to how the `--host` option is used for TCP connections.
-
-```shell title="Usage"
-meshtastic --ble "device_name_or_address" --info
-```
-
 ### --ble-scan
 
 Scan for available Meshtastic devices using BLE. This command lists discoverable devices, providing a convenient method to identify devices for connection via BLE.
@@ -454,18 +480,3 @@ Don't start the API, just function as a dumb serial terminal. Probably not very 
 meshtastic --noproto
 ```
 
-### --version
-
-Show program's version number and exit.
-
-```shell title="Usage"
-meshtastic --version
-```
-
-### --support
-
-Print out info that would be helpful supporting any issues.
-
-```shell title="Usage"
-meshtastic --support
-```
