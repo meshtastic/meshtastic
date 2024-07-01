@@ -370,6 +370,14 @@ meshtastic --request-telemetry --dest '!ba4bf9d0'
 meshtastic --request-telemetry --dest 1828779180
 ```
 
+### --request-position
+
+Request position from a node. You need to pass the destination ID as an argument with `--dest`.
+
+```shell title="Usage"
+meshtastic --request-position --dest '!ba4bf9d0' --ch-index 1
+```
+
 ### --ack
 
 Used in combination with `--sendtext` and other commands to wait for an acknowledgment. Not all commands will be able to return an acknowledgment. Best used for commands that specify a single destination node.
@@ -408,6 +416,14 @@ Tell the node to clear its list of nodes.
 
 ```shell title="Usage"
 meshtastic --reset-nodedb
+```
+
+### --remove-node NODE
+
+Tell the node to remove the specified node from the NodeDB.
+
+```shell title="Usage"
+meshtastic --remove-node '!48759737'
 ```
 
 ### --reply
