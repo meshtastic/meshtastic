@@ -198,6 +198,15 @@ Set the channel URL, which contains LoRa configuration plus the configuration of
 meshtastic --seturl https://www.meshtastic.org/c/GAMiIE67C6zsNmlWQ-KE1tKt0fRKFciHka-DShI6G7ElvGOiKgZzaGFyZWQ=
 ```
 
+### --pos-fields POS_FIELDS
+
+Configure position fields to send with positions; can pass multiple values. With 0 values, list current settings.
+
+```shell title="Usage"
+meshtastic --pos-fields
+meshtastic --pos-fields ALTITUDE HEADING SPEED
+```
+
 ### --ch-index CH_INDEX
 
 Act on the specified channel index. Applies to options that configure channels (such as `--ch-set` and `--ch-del`) as well as options that send messages to the mesh (such as `--sendtext` and `--traceroute`).
