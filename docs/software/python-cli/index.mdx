@@ -8,7 +8,43 @@ sidebar_position: 4
 
 The python pip package installs a "meshtastic" command line executable, which displays packets sent over the network as JSON and lets you see serial debugging information from the meshtastic devices. This command is not run inside of python, you run it from your operating system shell prompt directly. If when you type "meshtastic" it doesn't find the command and you are using Windows: Check that the python "scripts" directory is in your path.
 
-## Optional Arguments
+## Connection Arguments
+
+### --port PORT
+
+The port the Meshtastic device is connected to, i.e. `/dev/ttyUSB0`, `/dev/cu.wchusbserial`, `COM4` etc. if unspecified, meshtastic will try to find it. Important to use when multiple devices are connected to ensure you call the command for the correct device.
+
+This argument can also be specified as `--serial` or `-s`.
+
+```shell title="Usage"
+meshtastic --port /dev/ttyUSB0 --info
+meshtastic --port COM4 --info
+meshtastic -s --info
+```
+
+### --host HOST
+
+The hostname/ipaddr of the device to connect to (over TCP). If a host is not provided, the CLI will try to connect to `localhost`.
+
+This argument can also be specified as `--tcp` or `-t`.
+
+```shell title="Usage"
+meshtastic --host meshtastic.local --info
+meshtastic --host --info
+```
+
+### --ble BLE
+
+Connect to a Meshtastic device using its BLE address or name. This option allows for wireless communication with the device, similar to how the `--host` option is used for TCP connections. If an address is not provided, meshtastic will try to find a compatible device that's paired.
+
+This argument can also be specified as `-b`.
+
+```shell title="Usage"
+meshtastic --ble "device_name_or_address" --info
+meshtastic -b --info
+```
+
+## Help & Support Arguments
 
 ### -h or --help
 
@@ -17,6 +53,25 @@ Shows a help message that describes the arguments.
 ```shell title="Usage"
 meshtastic -h
 ```
+
+### --version
+
+Show program's version number and exit.
+
+```shell title="Usage"
+meshtastic --version
+```
+
+### --support
+
+Print out info that would be helpful supporting any issues.
+
+```shell title="Usage"
+meshtastic --support
+```
+
+## Optional Arguments
+
 ### --export-config
 
 Export the configuration of the device. (to be consumed by the '--configure' command).
@@ -27,10 +82,6 @@ To create to a file with the connected device's configuration, this command's ou
 meshtastic --export-config > example_config.yaml
 ```
 
-```title="Usage"shell
-meshtastic --export-config
-```
-
 ### --configure
 
 Configure radio using a yaml file.
@@ -39,29 +90,13 @@ Configure radio using a yaml file.
 meshtastic --configure example_config.yaml
 ```
 
-### --port PORT
-
-The port the Meshtastic device is connected to, i.e. `/dev/ttyUSB0`, `/dev/cu.wchusbserial`, `COM4` etc. if unspecified, meshtastic will try to find it. Important to use when multiple devices are connected to ensure you call the command for the correct device.
-
-```shell title="Usage"
-meshtastic --port /dev/ttyUSB0 --info
-meshtastic --port COM4 --info
-```
-
-### --host HOST
-
-The hostname/ipaddr of the device to connect to (over TCP).
-
-```shell title="Usage"
-meshtastic --host HOST
-```
-
 ### --seriallog SERIALLOG
 
-Logs device serial output to either 'stdout', 'none' or a filename to append to.
+Logs device serial output to either 'stdout', 'none' or a filename to append to. Defaults to 'stdout' if no filename is specified.
 
 ```shell title="Usage"
 meshtastic --port /dev/ttyUSB0 --seriallog
+meshtastic -t meshtastic.local --seriallog log.txt
 ```
 
 ### --info
@@ -114,10 +149,18 @@ meshtastic --nodes
 
 ### --qr
 
-Displays the QR code that corresponds to the current channel.
+Displays the URL and QR code that corresponds to the current primary channel.
 
 ```shell title="Usage"
 meshtastic --qr
+```
+
+### --qr-all
+
+Displays the URL and QR code that corresponds to all configured channels on the node.
+
+```shell title="Usage"
+meshtastic --qr-all
 ```
 
 ### --get [config_section]
@@ -129,6 +172,12 @@ Configuration values are described in: [Configuration](https://meshtastic.org/do
 ```shell title="Usage"
 meshtastic --get lora
 meshtastic --get lora.region
+```
+
+To see all valid values, pass an invalid value, such as `0`:
+
+```shell title="Usage"
+meshtastic --get 0
 ```
 
 ### --set [config_section].[option]&nbsp; [value]
@@ -143,15 +192,24 @@ meshtastic --set lora.region Unset
 
 ### --seturl SETURL
 
-Set a channel URL.
+Set the channel URL, which contains LoRa configuration plus the configuration of channels. Replaces your current configuration and channels completely.
 
 ```shell title="Usage"
 meshtastic --seturl https://www.meshtastic.org/c/GAMiIE67C6zsNmlWQ-KE1tKt0fRKFciHka-DShI6G7ElvGOiKgZzaGFyZWQ=
 ```
 
+### --pos-fields POS_FIELDS
+
+Configure position fields to send with positions; can pass multiple values. With 0 values, list current settings.
+
+```shell title="Usage"
+meshtastic --pos-fields
+meshtastic --pos-fields ALTITUDE HEADING SPEED
+```
+
 ### --ch-index CH_INDEX
 
-Set the specified channel index.
+Act on the specified channel index. Applies to options that configure channels (such as `--ch-set` and `--ch-del`) as well as options that send messages to the mesh (such as `--sendtext` and `--traceroute`).
 
 ```shell title="Usage"
 meshtastic --ch-index 1 --ch-disable
@@ -161,29 +219,35 @@ meshtastic --ch-index 1 --ch-disable
 
 Add a secondary channel, you must specify a channel name.
 
+Incompatible with `--ch-index`. If you pass `--ch-add`, any subsequent `--ch-set` and other commands that use a channel will use the index of the newly-added channel.
+
 ```shell title="Usage"
 meshtastic --ch-add testing-channel
 ```
 
 ### --ch-del
 
-Delete the ch-index channel.
+Delete the channel specified by `--ch-index`.
 
 ```shell title="Usage"
 meshtastic --ch-index 1 --ch-del
 ```
 
-### --ch-enable
+### --ch-enable (deprecated)
 
-Enable the specified channel.
+This option is deprecated. Using `--ch-add` is preferred in order to ensure there are no gaps in the channel list.
+
+Enable the channel specified by `--ch-index`.
 
 ```shell title="Usage"
 meshtastic --ch-index 1 --ch-enable
 ```
 
-### --ch-disable
+### --ch-disable (deprecated)
 
-Disable the specified channel.
+This option is deprecated. Using `--ch-del` is preferred in order to ensure there are no gaps in the channel list.
+
+Disable the channel specified by `--ch-index`.
 
 ```shell title="Usage"
 meshtastic --ch-index 1 --ch-disable
@@ -191,7 +255,7 @@ meshtastic --ch-index 1 --ch-disable
 
 ### --ch-set CH_SET CH_SET
 
-Set a channel parameter.
+Set a channel parameter on the channel specified by `--ch-index`.
 
 ```shell title="Usage"
 meshtastic --ch-set id 1234 --ch-index 0
@@ -255,7 +319,7 @@ meshtastic --ch-shortfast
 
 ### --set-owner SET_OWNER
 
-Set device owner name.
+Set device owner name, sometimes called the long name.
 
 ```shell title="Usage"
 meshtastic --set-owner "MeshyJohn"
@@ -271,7 +335,9 @@ meshtastic --set-owner-short "MJ"
 
 ### --set-ham SET_HAM
 
-Set licensed Ham ID and turn off encryption.
+Set licensed Ham ID (by setting the owner name) and turn off encryption on the primary channel.
+
+To disable Ham mode, use `--set-owner` and `--set-owner-short` to reset the owner names, and use `--seturl` or `--ch-set` commands to configure channels with the name and encryption you wish them to have. Or, use `--factory-reset` to reset to default settings.
 
 ```shell title="Usage"
 meshtastic --set-ham KI1345
@@ -279,7 +345,9 @@ meshtastic --set-ham KI1345
 
 ### --dest DEST
 
-The destination node id for any sent commands.  Used for [Remote Node Administration](/docs/configuration/remote-admin)
+The destination node id for any sent commands, if not passed to a command another way.  Used for [Remote Node Administration](/docs/configuration/remote-admin).
+
+On many shells, exclamation points trigger special behavior unless enclosed in single quotes.
 
 ```shell title="Usage"
 meshtastic --dest '!28979058' --set-owner "MeshyJohn"
@@ -287,23 +355,16 @@ meshtastic --dest '!28979058' --set-owner "MeshyJohn"
 
 ### --sendtext SENDTEXT
 
-Send a text message. Can specify a channel index ('--ch-index') or a destination ('--dest').
+Send a text message. Can specify a channel index (`--ch-index`) and/or a destination (`--dest`).
 
 ```shell title="Usage"
-meshtastic --sendtext "Hello Mesh!"
-```
-
-### --sendping
-
-Send a ping message (which requests a reply).
-
-```shell title="Usage"
-meshtastic --sendping
+meshtastic --sendtext 'Hello Mesh!'
+meshtastic --ch-index 1 --sendtext 'Hello secondary channel!'
 ```
 
 ### --traceroute TRACEROUTE
 
-Traceroute from connected node to a destination. You need pass the destination ID as an argument. Only nodes that have the encryption key can be traced.
+Traceroute from connected node to a destination. You need pass the destination ID as an argument, and may pass `--ch-index` to specify a channel. The node you are tracing must have the same channel configured, and only nodes that share the channel will identify themselves within the response. With recent enough firmware, other nodes may be included as `!ffffffff` but not with their actual ID.
 
 ```shell title="Usage"
 meshtastic --traceroute '!ba4bf9d0'
@@ -311,19 +372,27 @@ meshtastic --traceroute '!ba4bf9d0'
 
 ### --request-telemetry
 
-Request telemetry from a node. You need to pass the destination ID as an argument with '--dest'. For repeaters, the nodeNum is required.
+Request telemetry from a node. You need to pass the destination ID as an argument with `--dest`. For repeaters, using the node's decimal ID may be more effective, but a hexadecimal ID should work as well.
 
 ```shell title="Usage"
 meshtastic --request-telemetry --dest '!ba4bf9d0'
 meshtastic --request-telemetry --dest 1828779180
 ```
 
-### --ack
+### --request-position
 
-Used in combination with --sendtext to wait for an acknowledgment.
+Request position from a node. You need to pass the destination ID as an argument with `--dest`.
 
 ```shell title="Usage"
-meshtastic --sendtext "Hello Mesh!" --ack
+meshtastic --request-position --dest '!ba4bf9d0' --ch-index 1
+```
+
+### --ack
+
+Used in combination with `--sendtext` and other commands to wait for an acknowledgment. Not all commands will be able to return an acknowledgment. Best used for commands that specify a single destination node.
+
+```shell title="Usage"
+meshtastic --sendtext 'Hello Mesh!' --dest '!28979058' --ack
 ```
 
 ### --reboot
@@ -358,13 +427,127 @@ Tell the node to clear its list of nodes.
 meshtastic --reset-nodedb
 ```
 
+### --remove-node NODE
+
+Tell the node to remove the specified node from the NodeDB.
+
+```shell title="Usage"
+meshtastic --remove-node '!48759737'
+```
+
 ### --reply
 
-Reply to received messages.
+Listen for messages. When one is received, send a message to the primary channel repeating the message along with some information.
 
 ```shell title="Usage"
 meshtastic --reply
 ```
+
+### --no-time
+
+Suppress sending the current time to the mesh on startup. May improve reliability and startup time.
+
+```shell title="Usage"
+meshtastic --port /dev/ttyUSB0 --no-time
+```
+
+### --no-nodes
+
+Instruct the node to not send nodeinfo from the NodeDB on startup. Requires firmware of sufficient version. Commands that use node information may behave unpredictably, since that information will not be populated, but this can improve efficiency for commands that don't.
+
+```shell title="Usage"
+meshtastic --no-nodes --no-time --sendtext "Firing off a quick message"
+```
+
+### --wait-to-disconnect WAIT_TO_DISCONNECT
+
+After performing whatever actions are specified by other options, wait before disconnecting from the device. Some devices will reboot when the serial connection disconnects, so adding a wait time may improve reliability. Defaults to 5 seconds if not provided.
+
+```shell title="Usage"
+meshtastic --set lora.channel_num 20 --wait-to-disconnect 10
+```
+
+### --setalt SETALT
+
+Set device altitude (allows use without GPS), and enables fixed position mode.
+
+Can only be used on locally-connected nodes and not along with `--dest`.
+
+```shell title="Usage"
+meshtastic --setalt 120
+```
+
+### --setlat SETLAT
+
+Set device latitude (allows use without GPS), and enables fixed position mode.
+
+Can only be used on locally-connected nodes and not along with `--dest`.
+
+```shell title="Usage"
+meshtastic --setlat 25.2
+```
+
+### --setlon SETLON
+
+Set device longitude (allows use without GPS), and enables fixed position mode.
+
+Can only be used on locally-connected nodes and not along with `--dest`.
+
+```shell title="Usage"
+meshtastic --setlon -16.8
+```
+
+### --remove-position
+
+Clear the node's currently set fixed position and disable fixed position mode.
+
+Can only be used on locally-connected nodes and not along with `--dest`.
+
+```shell title="Usage"
+meshtastic --remove-position
+```
+
+### --debug
+
+Show API library debug log messages.
+
+```shell title="Usage"
+meshtastic --debug --info
+```
+
+### --listen
+
+Stay open and listen to the stream of protocol buffer messages. This option enables `--debug` even if it is not provided alongside this argument.
+
+```shell title="Usage"
+meshtastic --listen
+```
+
+### --test
+
+Run stress test against all connected Meshtastic devices.
+
+```shell title="Usage"
+meshtastic --test
+```
+
+### --ble-scan
+
+Scan for available Meshtastic devices using BLE. This command lists discoverable devices, providing a convenient method to identify devices for connection via BLE.
+
+```shell title="Usage"
+meshtastic --ble-scan
+```
+
+### --noproto
+
+Don't start the API, just function as a dumb serial terminal. Probably not very helpful from the command line. Used more for testing/internal needs.
+
+```shell title="Usage"
+meshtastic --noproto
+```
+
+## Remote Hardware arguments
 
 ### --gpio-wrb GPIO_WRB GPIO_WRB
 
@@ -390,90 +573,14 @@ Start watching a GPIO mask for changes.
 meshtastic --port /dev/ttyUSB0 --gpio-watch 0x10 --dest '!28979058'
 ```
 
-### --no-time
+## Tunnel arguments
 
-Suppress sending the current time to the mesh.
+### --tunnel
 
-```shell title="Usage"
-meshtastic --port /dev/ttyUSB0 --no-time
-```
+Linux only, very experimental. Low bandwidth and low reliability.
 
-### --setalt SETALT
+Create a TUN tunnel device for forwarding IP packets over the mesh.
 
-Set device altitude (allows use without GPS).
+## --subnet TUNNEL_NET
 
-```shell title="Usage"
-meshtastic --setalt 120
-```
-
-### --setlat SETLAT
-
-Set device latitude (allows use without GPS).
-
-```shell title="Usage"
-meshtastic --setlat 25.2
-```
-
-### --setlon SETLON
-
-Set device longitude (allows use without GPS).
-
-```shell title="Usage"
-meshtastic --setlon -16.8
-```
-
-### --debug
-
-Show API library debug log messages.
-
-```shell title="Usage"
-meshtastic --debug --info
-```
-
-### --test
-
-Run stress test against all connected Meshtastic devices.
-
-```shell title="Usage"
-meshtastic --test
-```
-
-### --ble BLE
-
-Connect to a Meshtastic device using its BLE address or name. This option allows for wireless communication with the device, similar to how the `--host` option is used for TCP connections.
-
-```shell title="Usage"
-meshtastic --ble "device_name_or_address" --info
-```
-
-### --ble-scan
-
-Scan for available Meshtastic devices using BLE. This command lists discoverable devices, providing a convenient method to identify devices for connection via BLE.
-
-```shell title="Usage"
-meshtastic --ble-scan
-```
-
-### --noproto
-
-Don't start the API, just function as a dumb serial terminal. Probably not very helpful from the command line. Used more for testing/internal needs.
-
-```shell title="Usage"
-meshtastic --noproto
-```
-
-### --version
-
-Show program's version number and exit.
-
-```shell title="Usage"
-meshtastic --version
-```
-
-### --support
-
-Print out info that would be helpful supporting any issues.
-
-```shell title="Usage"
-meshtastic --support
-```
+Set the subnet for the local end of the tunnel established using `--tunnel`.
