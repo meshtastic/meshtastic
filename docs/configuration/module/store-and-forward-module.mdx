@@ -13,7 +13,7 @@ import TabItem from "@theme/TabItem";
 Using this module, a client device can ask a special Store & Forward Router to resend text messages after the client has been temporarily not in LoRa range of the mesh.
 
 :::info
-Only ESP32 based devices with onboard PSRAM like the T-Beam and T3S3 can be a Store & Forward Router. Requires the device to use at least firmware version 2.2.23 and to be set as a `ROUTER` or `ROUTER_CLIENT`.
+Only ESP32 based devices with onboard PSRAM like the T-Beam and T3S3 can be a Store & Forward Router. Requires the device to use at least firmware version 2.2.23 and to be set as a `ROUTER.
 :::
 
 When a client device requests the history from the Store & Forward Router, the router will resend the text messages over LoRa that it has received. The router will only return messages that are within the time window the client has requested up to the maximum number of messages configured for the router. 
@@ -33,7 +33,7 @@ Be mindful when requesting the history, as the router might send a lot of messag
 
 Initial requirements for the Store and Forward Router:
 
-- Must be installed on a `ROUTER` or `ROUTER_CLIENT` node.
+- Must be installed on a `ROUTER` node.
   - This is an artificial limitation, but is in place to enforce best practices.
   - Router nodes are intended to be always online. If this module misses any messages, the reliability of the stored messages will be reduced.
 - ESP32 Processor based device with onboard PSRAM (T-Beam > v1.0, T3S3, and maybe others).
@@ -41,12 +41,12 @@ Initial requirements for the Store and Forward Router:
 ### Usage Overview
 
 - To use / test this you will want at least 3 devices
-  - One ESP32 device with PSRAM configured as `ROUTER` or `ROUTER_CLIENT`.
+  - One ESP32 device with PSRAM configured as `ROUTER`.
   - Two others will be regular clients. If one client sends a text message when the other is not in range, the other can request the history from the router to receive the missed message when it is back in range.
 
 ### Router setup
 
-- Configure your device as a `ROUTER` or `ROUTER_CLIENT`.
+- Configure your device as a `ROUTER`.
 - Name your router node something that makes it easily identifiable, aka "Router".
 - Configure the Store and Forward module
 
