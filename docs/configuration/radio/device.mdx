@@ -46,7 +46,7 @@ This table shows the **default** values after selecting a preset. As always, ind
 
 [^1]: **Awake Only** indicates retransmissions will occur normally but not while asleep between transmission intervals.
 
-[^2]: The Router role enables [Power Saving](/docs/configuration/radio/power/#power-saving) by default. Consider maxing out `power.min_wake_secs`, `power.wait_bluetooth_secs` and `display.screen_on_secs` if BLE/WiFi/Serial are still needed.
+[^2]: The `ROUTER` role enables [Power Saving](/docs/configuration/radio/power/#power-saving) by default (ESP32 only). When needing to update a `ROUTER` via BLE, it's recommended you utilize an admin channel to temporarily change the role in order to update and then revert when done.
 
 ## Notes about Power Saving + Role behavior
 
