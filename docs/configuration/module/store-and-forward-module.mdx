@@ -13,7 +13,7 @@ import TabItem from "@theme/TabItem";
 Using this module, a client device can ask a special Store & Forward Router to resend text messages after the client has been temporarily not in LoRa range of the mesh.
 
 :::info
-Only ESP32 based devices with onboard PSRAM like the T-Beam and T3S3 can be a Store & Forward Router. Requires the device to use at least firmware version 2.2.23 and to be set as a `ROUTER.
+Only ESP32 based devices with onboard PSRAM like the T-Beam and T3S3 can be a Store & Forward Router. Requires the device to use at least firmware version 2.2.23 and to be set as a `ROUTER`.
 :::
 
 When a client device requests the history from the Store & Forward Router, the router will resend the text messages over LoRa that it has received. The router will only return messages that are within the time window the client has requested up to the maximum number of messages configured for the router. 
