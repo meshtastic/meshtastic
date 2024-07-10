@@ -47,8 +47,9 @@ sudo apt install libgpiod-dev libyaml-cpp-dev libbluetooth-dev
 sudo apt install openssl libssl-dev libulfius-dev liborcania-dev
 ```
 
-- The .deb Package is available as part of the release, installing the binary, a systemd service, and a config file. It is compiled for Debian Bookworm and incompatible with Bullseye.
+- The .deb Package is available as [part of the release](https://github.com/meshtastic/firmware/releases/latest), installing the binary, a systemd service, and a config file. It is compiled for Debian Bookworm and incompatible with Bullseye.
 ```shell
+wget https://github.com/meshtastic/firmware/releases/download/v{version}/meshtasticd_{version}_arm64.deb
 sudo apt install ./meshtasticd_{version}arm64.deb
 ```
 
