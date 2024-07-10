@@ -90,11 +90,11 @@ The RAK1910 is supported on the following base boards & slots:
 </TabItem>
 <TabItem value="Buzzer">
 
-## RAK Buzzer
+### RAK Buzzer
 
 The [RAK18001 Buzzer Module](https://store.rakwireless.com/products/wisblock-buzzer-module-rak18001) is currently being tested for integration with the External Notifications plugin. There is currently a known conflict with buzzer if the module is placed in Slot D, although other slots should work. NOTE: Many users have complained of the RAK buzzer being very quiet as currently implemented. As of yet, there is no fix for this issue.
 
-### Resources
+#### Resources
 - [RAK Documentation Center RAK18001](https://docs.rakwireless.com/Product-Categories/WisBlock/RAK18001/Overview/#product-description)
 - Purchase Links:
   - International
@@ -104,7 +104,7 @@ The [RAK18001 Buzzer Module](https://store.rakwireless.com/products/wisblock-buz
 
 Another option is to use a standard "passive buzzer" and a transistor (such as a 2N2222 transistor). This can be done by wiring the VCC pin to leg 1 of the transistor and the positive terminal of the buzzer to leg 3. To the central pin (2) of the transistor, connect pin RX1 on the Wisblock board. Connect the negative terminal of the buzzer to the GND pin on the Wisblock board. In settings, go to Device and set Redefine PIN_BUZZER (Buzzer GPIO) to 15. Then go to External Notification and set the module to Enabled, PWM buzzer to enabled, Alert Message Buzzer to enabled and Output Buzzer GPIO to 15. Save your settings and your buzzer should activate whenever you get an incoming message.
 
-### Resources
+#### Resources
 - Purchase Links:
   - International
     - Amazon: [Buzzer](https://www.amazon.com/dp/B018I1WBNQ)
