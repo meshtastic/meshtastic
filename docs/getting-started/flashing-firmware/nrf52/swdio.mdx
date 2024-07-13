@@ -7,7 +7,7 @@ description: Instructions for uploading firmware through SWDIO by using a Raspbe
 ---
 
 Most Meshtastic devices can be flashed simply using USB.
-However, some (eg Seeed WM1110) require the use of an external device that can connect via "SWDIO".
+However, some (eg Seeed WM1110 Dev Kit) require the use of an external device that can connect via "SWDIO".
 There are dedicated devices such as the [RAKDAP1](https://store.rakwireless.com/products/daplink-tool)
 that can do this work. However, for many people a Raspberry Pi is more convenient.
 
@@ -76,6 +76,7 @@ If you see “Error connecting DP: cannot read IDR”, then you've probably conn
  
 ## Obtaining Firmware
 Check the instructions for your [hardware](/docs/hardware/devices) to find the correct firmware for your device.
+For most devices following this guide, a .hex file is required.
 Then, copy the firmware file to your Raspberry Pi.
  
 
@@ -93,7 +94,7 @@ Open On-Chip Debugger
 > reset init
 > halt
 > nrf5 mass_erase
-> program new2.uf2 verify
+> program firmware.hex verify
 > reset
 > exit 0
 ```
