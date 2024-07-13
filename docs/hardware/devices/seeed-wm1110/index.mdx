@@ -12,19 +12,20 @@ import TabItem from "@theme/TabItem";
 <Tabs
 groupId="wm1110"
 queryString="wm1110"
-defaultValue="wio-sdk-wm1110"
+defaultValue="wio-tracker-wm1110"
 values={[
 {label: 'WM110 Dev Kit', value:'wio-sdk-wm1110'},
-{label: 'WM110 Tracker', value: 'wio-tracker-wm1110'},
+{label: 'Wio Tracker 1110', value: 'wio-tracker-wm1110'},
 ]}>
 
 <TabItem value="wio-sdk-wm1110">
 
 ## Seeed Wio-WM1110 Dev Kit
 
-:::caution Firmware Version Notice
-Basic support for this device has only just been added, and not all features work
+:::note External GPS Required
+The LR1110 GNSS functionality does not yet work. Seeed recommends at Grove - GPS (Air530).
 :::
+
 
 - **MCU**
   - Nordic nRF52840 (WiFi & Bluetooth)
@@ -67,11 +68,7 @@ Basic support for this device has only just been added, and not all features wor
 
 <TabItem value="wio-tracker-wm1110">
 
-## Seeed Wio Tracker 1110
-
-:::caution Firmware Version Notice
-Basic support for this device has only just been added, and not all features work
-:::
+## Wio Tracker 1110 Dev Kit for Meshtastic
 
 - **MCU**
   - Nordic nRF52840 (WiFi & Bluetooth)
@@ -102,7 +99,7 @@ Basic support for this device has only just been added, and not all features wor
 - Firmware file: `firmware-wio-tracker-wm1110-X.X.X.xxxxxxx.bin`
 - Purchase Links:
   - International
-    - [Seeed Studio](https://www.seeedstudio.com/Wio-Tracker-1110-Dev-Board-p-5799.html)
+    - [Seeed Studio](https://www.seeedstudio.com/Wio-Tracker-1110-Dev-Kit-for-Meshtastic.html)
 
 </TabItem>
 </Tabs>
