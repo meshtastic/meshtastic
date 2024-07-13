@@ -12,7 +12,8 @@ The device config options are: Role, Serial Output, and Debug Log. Device config
 
 ## Device Config Values
 
-### Roles
+## Roles
+
 | Device Role    | Description                                                                                                               | Best Uses                                                                                                                              |
 | -------------- | ------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
 | CLIENT         | App connected or stand alone messaging device.                                                                            | General use for individuals needing to communicate over the Meshtastic network with support for client applications.                   |
@@ -25,88 +26,94 @@ The device config options are: Role, Serial Output, and Debug Log. Device config
 | TAK_TRACKER    | Enables automatic TAK PLI broadcasts and reduces routine broadcasts.                                                      | Standalone PLI integration with ATAK systems for communication in tactical or coordinated operations.                                  |
 | REPEATER       | Infrastructure node for extending network coverage by relaying messages with minimal overhead. Not visible in Nodes list. | Best positioned in strategic locations to maximize the network's overall coverage. Device is not shown in topology.                    |
 | ROUTER         | Infrastructure node for extending network coverage by relaying messages. Visible in Nodes list.                           | Best positioned in strategic locations to maximize the network's overall coverage. Device is shown in topology.                        |
-| ROUTER_CLIENT  | Combination of both ROUTER and CLIENT. Not for mobile devices.                                                            | Devices in a strategic position for priority routing that need to also serve as a standard CLIENT.                                     |
 
-#### Role Comparison
+:::tip
+Still not sure which role to use? Check out the [role configuration tips](/docs/configuration/tips/#roles)
+:::
+
+Looking for ROUTER_CLIENT? This role was deprecated in firmware 2.3.15. Learn more in the [2.3.15 release notes](https://github.com/meshtastic/firmware/releases/tag/v2.3.15.deb7c27)
+
+### Role Comparison
 
 This table shows the **default** values after selecting a preset. As always, individual settings can be adjusted after choosing a preset.
 
-| Device Role    | BLE/WiFi/Serial | Screen Enabled | Power Consumption | Retransmit | Prioritized Routing | Visible in Nodes List |
-| -------------- | --------------- | -------------- | ----------------- | ---------- | ------------------- | --------------------- |
-| CLIENT         | Yes             | Yes            | Regular           | Yes        | No                  | Yes                   |
-| CLIENT_MUTE    | Yes             | Yes            | Lowest            | No         | No                  | Yes                   |
-| CLIENT_HIDDEN  | Yes             | Yes            | Lowest            | Local only | No                  | No                    |
-| TRACKER        | Yes             | No             | Regular / Low     | When awake | No                  | Yes                   |
-| LOST_AND_FOUND | Yes             | No             | Regular           | Yes        | No                  | Yes                   |
-| SENSOR         | Yes             | No             | Regular / Low     | When awake | No                  | Yes                   |
-| TAK            | Yes             | Optional       | Regular           | Yes        | No                  | Yes                   |
-| TAK_TRACKER    | Yes             | Optional       | Regular           | Yes        | No                  | Yes                   |
-| ROUTER         | No[^1]          | No             | High              | Yes        | Yes                 | Yes                   |
-| ROUTER_CLIENT  | Yes             | Yes            | Highest           | Yes        | Yes                 | Yes                   |
-| REPEATER       | Yes             | No             | High              | Yes        | Yes                 | No                    |
+| Device Role    | BLE/WiFi/Serial | Screen Enabled | Power Consumption | Retransmit     | Prioritized Routing | Visible in Nodes List |
+| -------------- | --------------- | -------------- | ----------------- | -------------- | ------------------- | --------------------- |
+| CLIENT         | Yes             | Yes            | Regular           | Yes            | No                  | Yes                   |
+| CLIENT_MUTE    | Yes             | Yes            | Lowest            | No             | No                  | Yes                   |
+| CLIENT_HIDDEN  | Yes             | Yes            | Lowest            | Local Only     | No                  | No                    |
+| TRACKER        | Yes             | No             | Regular / Low     | Awake Only[^1] | No                  | Yes                   |
+| LOST_AND_FOUND | Yes             | No             | Regular           | Yes            | No                  | Yes                   |
+| SENSOR         | Yes             | No             | Regular / Low     | Awake Only[^1] | No                  | Yes                   |
+| TAK            | Yes             | Optional       | Regular           | Yes            | No                  | Yes                   |
+| TAK_TRACKER    | Yes             | Optional       | Regular           | Yes            | No                  | Yes                   |
+| ROUTER         | No[^2]          | No             | High              | Yes            | Yes                 | Yes                   |
+| REPEATER       | Yes             | No             | High              | Yes            | Yes                 | No                    |
 
-[^1]: The Router role enables [Power Saving](/docs/configuration/radio/power/#power-saving) by default. Consider ROUTER_CLIENT if BLE/WiFi/Serial are still needed.
+[^1]: **Awake Only** indicates retransmissions will occur normally but not while asleep between transmission intervals.
 
-:::info
-
-Retransmit: *When awake* indicates retransmissions will occur normally but not while asleep between transmission intervals. 
-
-:::
+[^2]: The `ROUTER` role enables [Power Saving](/docs/configuration/radio/power/#power-saving) by default (ESP32 only). When needing to update a `ROUTER` via BLE, it's recommended you utilize an admin channel to temporarily change the role in order to update and then revert when done.
 
 ## Notes about Power Saving + Role behavior
 
-For the ESP32 platform:
+### ESP32 Platform Only
 
 Every role except for the `TRACKER` and `SENSOR` roles are capable of traditional _sleep_ behavior using the `power.is_power_saving` setting. When a node goes to sleep, in general, the serial console, peripherals, GPS, and WiFi/Bluetooth radio are all shut down to conserve power. The CPU will enter a low power state (light sleep or deep sleep on the ESP32). The LoRA radio will be left on stand-by for receiving any packets which will _wake up_ the device to resume services and respond.
 
-Timeout configurations of `display.screen_on_secs` (Screen timeout), `power.min_wake_secs` (Minimum time till sleep), and `power.wait_bluetooth_secs` (Bluetooth timeout) will delay a node's transition to a sleep state. The timeouts and subsequent transition to sleep states may also be _reset_ by external events or actions such as receiving a packet, pressing a button, or connecting via client through serial or other means. 
+Timeout configurations of `display.screen_on_secs` (Screen timeout), `power.min_wake_secs` (Minimum time till sleep), and `power.wait_bluetooth_secs` (Bluetooth timeout) will delay a node's transition to a sleep state. The timeouts and subsequent transition to sleep states may also be _reset_ by external events or actions such as receiving a packet, pressing a button, or connecting via client through serial or other means.
 
 For the `ROUTER` role, the `power.is_power_saving` behavior of sleep is enabled automatically and cannot be turned off.
 
-For the ESP32 and NRF52 platforms:
+### ESP32 and NRF52 Platforms
 
 In the `TRACKER` and `SENSOR` roles, there are special sleep behaviors when combined with `power.is_power_saving`. For `TRACKER`, the device will go to sleep for `position.position_broadcast_secs` and upon waking will send a position packet when the GPS provides a valid location and repeat the cycle. For `SENSOR`, the device will go to sleep for `telemetry.environment_update_interval` and upon waking will gather environment data and send a telemetry packet and repeat the cycle. For both of these roles, the LoRA radio does not remain in standby mode to accept packets and wake up the device. Sleep remains constrained to their respective transmission intervals.
 
-### Rebroadcast Mode
+## Rebroadcast Mode
 
 This setting defines the device's behavior for how messages are rebroadcasted.
 
 |        Value        |                                                                                      Description                                                                                       |
-|:-------------------:|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|
+| :-----------------: | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
 |        `ALL`        |   ALL (Default) - This setting will rebroadcast ALL messages from its primary mesh as well as other meshes with the same modem settings, including when encryption settings differ.    |
 | `ALL_SKIP_DECODING` |                      ALL_SKIP_DECODING - Same as behavior as ALL, but skips packet decoding and simply rebroadcasts them. **Only available with Repeater role.**                       |
 |    `LOCAL_ONLY`     | LOCAL_ONLY - Ignores observed messages from foreign meshes that are open or those which it cannot decrypt. Only rebroadcasts message on the nodes local primary / secondary channels.  |
 |    `KNOWN_ONLY`     | KNOWN_ONLY - Ignores observed messages from foreign meshes like LOCAL_ONLY, but takes it a step further by also ignoring messages from nodenums not in the node's known list (NodeDB). |
 
-### Serial Console
+## Serial Console
 
 Acceptable values: `true` or `false`
 
 Disabling this will disable the SerialConsole by not initializing the StreamAPI.
 
-### Debug Log
+## TZDEF (Timezone Definition)
+
+The `tzdef` setting allows the local offset to be defined for the device. It uses the TZ Database format to display the correct local time on the device display and in its logs.
+
+To set the timezone, use the POSIX TZ Database string for the relevant region. Here is a list of [supported timezones](https://github.com/nayarsystems/posix_tz_db/blob/master/zones.csv).
+
+## Debug Log
 
 Acceptable values: `true` or `false`
 
 By default we turn off logging as soon as an API client connects. Set this to true to leave the debug log outputting even when API is active.
 
-### GPIO for user button
+## GPIO for user button
 
 This is the GPIO pin number that will be used for the user button, if your device does not come with a predefined user button.
 
-### GPIO for PWM Buzzer
+## GPIO for PWM Buzzer
 
 This is the GPIO pin number that will be used for the PWM buzzer, if your device does not come with a predefined buzzer.
 
-### Node Info Broadcast Seconds
+## Node Info Broadcast Seconds
 
 This is the number of seconds between NodeInfo message (containing i.a. long and short name) broadcasts from the device. The device will still respond ad-hoc to NodeInfo messages when a response is wanted. When the device hears any packet from a node it doesn't know yet, it will send its NodeInfo and ask for a response automatically.
 
-### Double Tap as Button Press
+## Double Tap as Button Press
 
 This option will enable a double tap, when a supported accelerometer is attached to the device, to be treated as a button press.
 
-### Managed Mode
+## Managed Mode
 
 Enabling Managed mode will restrict access to all radio configurations via client applications. Radio configurations will only be accessible through the Admin channel. To avoid being locked out, make sure the Admin channel is working properly before enabling it.
 
@@ -157,14 +164,14 @@ All device config options are available in the python CLI. Example commands are 
 | Setting                           | Acceptable Values                                                                   | Default           |
 | --------------------------------- | ----------------------------------------------------------------------------------- | ----------------- |
 | device.debug_log_enabled          | `true`, `false`                                                                     | `false`           |
-| device.role                       | `CLIENT`, `CLIENT_MUTE`, `ROUTER`, `ROUTER_CLIENT`, `REPEATER`, `TRACKER`, `SENSOR` | `CLIENT`          |
+| device.role                       | `CLIENT`, `CLIENT_MUTE`, `ROUTER`, `REPEATER`, `TRACKER`, `SENSOR` | `CLIENT`          |
 | device.rebroadcast_mode           | `ALL`, `ALL_SKIP_DECODING`, `LOCAL_ONLY`                                            | `ALL`             |
 | device.serial_enabled             | `true`, `false`                                                                     | `true`            |
 | device.button_gpio                | `0` - `34`                                                                          | `0`               |
 | device.buzzer_gpio                | `0` - `34`                                                                          | `0`               |
 | device.node_info_broadcast_secs   | `0` - `UINT MAX`                                                                    | `10800` (3 hours) |
 | device.double_tap_as_button_press | `false`, `true`                                                                     | `false`           |
-|   device.is_managed | `false`, `true`                                                                     | `false`           |
+| device.is_managed                 | `false`, `true`                                                                     | `false`           |
 
 :::tip
 
@@ -182,6 +189,10 @@ meshtastic --set device.role CLIENT
 
 ```shell title="Disable serial console"
 meshtastic --set device.serial_enabled false
+```
+
+```shell title="Set `tzdef`"
+meshtastic --set device.tzdef UTC0
 ```
 
 ```shell title="Enable debug logging"
