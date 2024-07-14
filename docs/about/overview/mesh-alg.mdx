@@ -100,7 +100,7 @@ Without additional modules configured, nodes will produce 3 different types of r
 - Position (`position.position_broadcast_secs` default 15 minutes* with [smart broadcast](https://meshtastic.org/docs/configuration/radio/position/#smart-broadcast))
 - NodeInfo user (`device.node_info_broadcast_secs` default 3 hours).
 
-As meshes grow larger and more contentious with traffic, the firmware will back off of these intervals, in addition to duty cycle, channel and air-time utilization throttling. Starting with version 2.4.0, the firmware will back off of Telemetry, Position, and other anciliary port traffic for a mesh larger than 40 online (seen in past 2 hours) nodes using the following algorithm:
+As meshes grow larger and more contentious with traffic, the firmware will back off of these intervals, in addition to duty cycle, channel and air-time utilization throttling. Starting with version 2.4.0, the firmware will back off of Telemetry, Position, and other anciliary port traffic for a mesh larger than 40 nodes online (seen in past 2 hours) nodes using the following algorithm:
 
 `ScaledInterval = Interval * (1.0 + ((NumberOfOnlineNodes - 40) * 0.075)))`
 
