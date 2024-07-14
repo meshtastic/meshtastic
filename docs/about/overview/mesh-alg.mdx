@@ -91,6 +91,7 @@ After node 0 received this rebroadcast, its message is acknowledged. Note that a
 Since node 1 heard the rebroadcast by 2, it will not rebroadcast again. Node 3 heard the message for the first time and the HopLimit is not yet zero, so it starts a rebroadcast for potential other receivers.
 
 ![Mesh algorithm example](/img/SNR_based_flooding.webp)
+
 ### Regular Broadcast Intervals
 
 Without additional modules configured, nodes will produce three different types of regularly intervaled traffic as part of the mesh:
@@ -108,16 +109,6 @@ Without additional modules configured, nodes will produce three different types 
 As meshes grow larger and traffic becomes more contentious, the firmware will increase these intervals. This is in addition to duty cycle, channel, and air-time utilization throttling.
 
 Starting with version 2.4.0, the firmware will scale back Telemetry, Position, and other ancillary port traffic for meshes larger than 40 nodes (nodes seen in the past 2 hours) using the following algorithm:
-
-### Regular Broadcast Intervals
-
-Without additional modules configured, nodes will produce 3 different types of regularly intervaled traffic as a part of the mesh: 
-
-- Device Telemetry (`telemetry.device_update_interval` default 30 minutes)
-- Position (`position.position_broadcast_secs` default 15 minutes* with [smart broadcast](https://meshtastic.org/docs/configuration/radio/position/#smart-broadcast))
-- NodeInfo user (`device.node_info_broadcast_secs` default 3 hours).
-
-As meshes grow larger and more contentious with traffic, the firmware will back off of these intervals, in addition to duty cycle, channel and air-time utilization throttling. Starting with version 2.4.0, the firmware will back off of Telemetry, Position, and other anciliary port traffic for a mesh larger than 40 nodes online (seen in past 2 hours) nodes using the following algorithm:
 
 `ScaledInterval = Interval * (1.0 + ((NumberOfOnlineNodes - 40) * 0.075)))`
 
