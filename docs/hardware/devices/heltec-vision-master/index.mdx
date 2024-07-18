@@ -1,0 +1,180 @@
+---
+id: heltec-vision-master
+title: HELTEC® Vision Master
+sidebar_label: HELTEC® Vision Master
+sidebar_position: 7
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+<Tabs
+groupId="heltec"
+queryString="heltec"
+defaultValue="vision_master_e213"
+values={[
+{label: 'Vision Master E213', value: 'vision_master_e213'},
+{label: 'Vision Mater E290', value:'vision_master_e290'},
+{label: 'Vision Master T190', value:'vision_master_t190'}
+]}>
+<TabItem value="vision_master_e213">
+
+## Vision Master E213
+:::info
+If the device serial port cannot be found, follow these steps to put the Esp32 into firmware Download mode:
+
+  1. Unplug the device.
+  2. Press and hold the BOOT button.
+  3. Plug device in.
+  4. After 2-3 seconds, release the BOOT button.
+:::
+
+- **MCU:**
+  - ESP32-S3R8 (WiFi & Bluetooth)
+- **LoRa Transceiver:**
+  - HT-RA62(Semtech SX1262)
+- **Frequency Options:**
+  - 433 MHz
+  - 470 - 510 MHz
+  - 863 - 870 MHz
+  - 902 - 928 MHz
+- **Connectors:**
+  - USB-C
+  - 2x1.25 lithium battery interface
+  - 2 x SH1.0-4P sensor interface
+  - Antenna:
+    - U.FL/IPEX antenna connector for LoRa
+    - Integrated 2.4 GHz PCB antenna, U.FL/IPEX antenna connector for 2.4 GHz.
+
+:::warning
+There is an additional interface on the board for 2.4GHz wireless signals. When connecting an external antenna, the resistor needs to be rotated 90 degrees to the left. For more details, please check the [FAQ on Heltec's official website](https://heltec.org/project/vision-master-e213/).
+:::
+
+### Features
+
+- Onboard 2.13-inch black and white E-Ink display screen
+- Boot, Reset, and Custom(GPIO 21) switches
+- No GPS
+
+### Pin Map
+
+![HT-VME213_PIN_MAP](</img/hardware/heltec/HT-VME213_PIN_MAP.webp>)
+
+Image Source: [Heltec](<https://resource.heltec.cn/download/HT-VME213/HT-VME213.png>)
+
+### Resources
+
+- Firmware file: `firmware-heltec-vision-master-e213-X.X.X.xxxxxxx.bin`
+- Purchase Links: 
+    - [Heltec](https://heltec.org/project/vision-master-e213/)
+    - [AliExpress](https://www.aliexpress.com/item/1005007209756502.html)
+
+</TabItem>
+<TabItem value="vision_master_e290">
+
+## Vision Master E290
+
+:::info
+If the device serial port cannot be found, follow these steps to put the Esp32 into firmware Download mode:
+
+  1. Unplug the device.
+  2. Press and hold the BOOT button.
+  3. Plug device in.
+  4. After 2-3 seconds, release the BOOT button.
+:::
+
+- **MCU:**
+  - ESP32-S3R8 (WiFi & Bluetooth)
+- **LoRa Transceiver:**
+  - HT-RA62(Semtech SX1262)
+- **Frequency Options:**
+  - 433 MHz
+  - 470 - 510 MHz
+  - 863 - 870 MHz
+  - 902 - 928 MHz
+- **Connectors:**
+  - USB-C
+  - 2x1.25 lithium battery interface
+  - SH1.0-4P sensor interface
+  - Antenna:
+    - U.FL/IPEX antenna connector for LoRa
+    - Integrated 2.4 GHz PCB antenna, U.FL/IPEX antenna connector for 2.4 GHz.
+
+:::warning
+There is an additional interface on the board for 2.4GHz wireless signals. When connecting an external antenna, the resistor needs to be rotated 90 degrees to the left. For more details, please check the [FAQ on Heltec's official website](https://heltec.org/project/vision-master-e290/).
+:::
+
+### Features
+
+- Onboard 2.90-inch black and white E-Ink display screen
+- Boot, Reset, and Custom(GPIO 21) switches
+- Raspberry Pi GPIO famale header - 2x20
+- No GPS
+
+### Pin Map
+
+![HT-VME290_PIN_MAP](</img/hardware/heltec/HT-VME290_PIN_MAP.webp>)
+
+Image Source: [Heltec](<https://resource.heltec.cn/download/HT-VME290/HT-VME290%20Pin%20map.png>)
+
+### Resources
+
+- Firmware file: `firmware-vision-master-e290-X.X.X.xxxxxxx.bin`
+- Purchase Links: 
+    - [Heltec](https://heltec.org/project/vision-master-e290/)
+    - [AliExpress](https://www.aliexpress.com/item/1005007234361986.html)
+
+</TabItem>
+<TabItem value="vision_master_t190">
+
+## Vision Master T190
+
+:::info
+If the device serial port cannot be found, follow these steps to put the Esp32 into firmware Download mode:
+
+  1. Unplug the device.
+  2. Press and hold the BOOT button.
+  3. Plug device in.
+  4. After 2-3 seconds, release the BOOT button.
+:::
+
+- **MCU:**
+  - ESP32-S3R8 (WiFi & Bluetooth)
+- **LoRa Transceiver:**
+  - HT-RA62(Semtech SX1262)
+- **Frequency Options:**
+  - 433 MHz
+  - 470 - 510 MHz
+  - 863 - 870 MHz
+  - 902 - 928 MHz
+- **Connectors:**
+  - USB-C
+  - 2x1.25 lithium battery interface
+  - SH1.0-4P sensor interface
+  - Antenna:
+    - U.FL/IPEX antenna connector for LoRa
+    - Integrated 2.4 GHz PCB antenna, U.FL/IPEX antenna connector for 2.4 GHz.
+
+:::warning
+There is an additional interface on the board for 2.4GHz wireless signals. When connecting an external antenna, the resistor needs to be rotated 90 degrees to the left. For more details, please check the [FAQ on Heltec's official website](https://heltec.org/project/vision-master-t190/).
+:::
+
+### Features
+
+- Onboard 1.90-inch TFT-LCD color screen
+- Boot, Reset, and USER switches
+- No GPS
+
+### Pin Map
+![HT-VMT190_PIN_MAP](</img/hardware/heltec/HT-VMT190_PIN_MAP.webp>)
+
+Image Source: [Heltec](<https://resource.heltec.cn/download/HT-VMT190/HT-VMT190%20pin%20map.png>)
+
+### Resources
+
+- Firmware file: `firmware-vision-master-t190-X.X.X.xxxxxxx.bin`
+- Purchase Links: 
+    - [Heltec](https://heltec.org/project/vision-master-t190/)
+
+</TabItem>
+</Tabs>
