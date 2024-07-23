@@ -44,13 +44,13 @@ Enable the Environment Telemetry (Sensors).
 
 How often we should send Environment(Sensor) Metrics over the mesh.
 
-Default is `900` seconds (15 minutes).
+Default is `1800` seconds (30 minutes).
 
 ### Device Metrics Update Interval
 
 How often we should send Device Metrics over the mesh.
 
-Default is `900` seconds (15 minutes). 
+Default is `1800` seconds (30 minutes). 
 
 Device Metrics to a connected client app will always be sent once per minute, regardless of this setting.
 
@@ -76,7 +76,7 @@ Default is `false`.
 
 This option is used to configure the interval (in seconds) that should be used to send air quality metrics from an attached supported sensor over the mesh network.
 
-Default is `900` seconds (15 minutes).
+Default is `1800` seconds (30 minutes).
 
 ## Telemetry Config Client Availability
 
@@ -127,13 +127,13 @@ All telemetry module config options are available in the python CLI. Example com
 
 |                  Setting                  |  Acceptable Values  |                  Default                  |
 | :---------------------------------------: | :-----------------: | :---------------------------------------: |
-|     telemetry.device_update_interval      | `integer` (seconds) | Default `0` is 15 minutes(`900` seconds). |
+|     telemetry.device_update_interval      | `integer` (seconds) | Default `0` is 30 minutes(`1800` seconds). |
 | telemetry.environment_display_fahrenheit  |   `true`, `false`   |                `false`                    |
 | telemetry.environment_measurement_enabled |   `true`, `false`   |                `false`                    |
 |   telemetry.environment_screen_enabled    |   `true`, `false`   |                `false`                    |
-|   telemetry.environment_update_interval   | `integer` (seconds) | Default `0` is 15 minutes(`900` seconds). |
+|   telemetry.environment_update_interval   | `integer` (seconds) | Default `0` is 30 minutes(`1800` seconds). |
 |   telemetry.air_quality_enabled           |   `true`, `false`   |                `false`                    |
-|   telemetry.air_quality_interval          | `integer` (seconds) | Default `0` is 15 minutes(`900` seconds). |
+|   telemetry.air_quality_interval          | `integer` (seconds) | Default `0` is 30 minutes(`1800` seconds). |
 
 :::tip
 
