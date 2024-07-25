@@ -10,17 +10,19 @@ import TabItem from "@theme/TabItem";
 
 ## Overview
 
-Using this module, a client device can ask a special Store & Forward Router to resend text messages after the client has been temporarily not in LoRa range of the mesh.
+Using this module, a client device can ask a special Store & Forward Server to resend text messages after the client has been temporarily not in LoRa range of the mesh. 
+Since firmware version 2.4, when you connect to the Store & Forward Server with a client app, you get the history automatically, which will be much larger than the default cache of around 30 packets on a device.
 
 :::info
-Only ESP32 based devices with onboard PSRAM like the T-Beam and T3S3 can be a Store & Forward Router. Requires the device to use at least firmware version 2.2.23 and to be set as a `ROUTER`.
+Only ESP32 based devices with onboard PSRAM like the T-Beam and T3S3 can be a Store & Forward Server.
 :::
 
-When a client device requests the history from the Store & Forward Router, the router will resend the text messages over LoRa that it has received. The router will only return messages that are within the time window the client has requested up to the maximum number of messages configured for the router. 
-The router does not know which messages the client device actually missed, so it is possible that you receive duplicates. 
+When a client device requests the history from the Store & Forward Server, it will resend the text messages over LoRa that it has received. The server will only return messages that are within the time window the client has requested up to the maximum number of messages configured for the server. 
+The server does not know which messages the client device actually missed, so it is possible that you receive duplicates. 
 
 :::important
-Be mindful when requesting the history, as the router might send a lot of messages which will burden your mesh for a short period of time.
+Be mindful when requesting the history, as the server might send a lot of messages which will burden your mesh for a short period of time.
+Requesting history over LoRa is not available on the default public channel.
 :::
 
 ## Details
@@ -31,23 +33,25 @@ Be mindful when requesting the history, as the router might send a lot of messag
 
 ### Requirements
 
-Initial requirements for the Store and Forward Router:
+Initial requirements for the Store and Forward Server:
 
-- Must be installed on a `ROUTER` node.
-  - This is an artificial limitation, but is in place to enforce best practices.
-  - Router nodes are intended to be always online. If this module misses any messages, the reliability of the stored messages will be reduced.
+- Store & Forward Servers are intended to be always online. If this module misses any messages, the reliability of the stored messages will be reduced.
 - ESP32 Processor based device with onboard PSRAM (T-Beam > v1.0, T3S3, and maybe others).
 
 ### Usage Overview
 
-- To use / test this you will want at least 3 devices
-  - One ESP32 device with PSRAM configured as `ROUTER`.
-  - Two others will be regular clients. If one client sends a text message when the other is not in range, the other can request the history from the router to receive the missed message when it is back in range.
+- To use / test this over LoRa you will want at least 3 devices:
+  - One ESP32 device with PSRAM configured as `ROUTER` or `store_forward.is_server` set.
+  - Two others will be regular clients. If one client sends a text message when the other is not in range, the other can request the history from the server to receive the missed message when it is back in range.
 
-### Router setup
+- To use / test this with a client app you will want at least 2 devices:
+  - One ESP32 device with PSRAM configured as `ROUTER` or `store_forward.is_server` set.
+  - One other device that sends text messages when no app is connected to the Store & Forward Server. When you connect an app to the server, it will automatically retrieve the history.
 
-- Configure your device as a `ROUTER`.
-- Name your router node something that makes it easily identifiable, aka "Router".
+### Server setup
+
+- Configure your device as a `ROUTER` or set `store_forward.is_server true`.
+- Name your server node something that makes it easily identifiable, e.g. "Base Node (S&F)".
 - Configure the Store and Forward module
 
   ```shell title="Required - Enable the module"
@@ -59,13 +63,15 @@ Initial requirements for the Store and Forward Router:
   ```
 
   :::tip
-  Best to disable the heartbeat (which is sent every 15 minutes) when all client devices have identified the router to reduce network traffic.
+  Best to disable the heartbeat (which is sent every 15 minutes) to reduce network traffic if you only want to retrieve it by connecting with an app to the server, or when all client devices have identified the server.
   :::
 
 ### Client Usage
 
-Currently implemented in the Android and Apple apps version 2.2.23 and higher. To request the history from the Store & Forward Router, for Android it is required to send it a direct message containing the text "SF" (without quotes). The router will then respond with the requested messages.
-The Apple apps will also show whether a node is a Store & Forward Router in the node list after it heard the heartbeat. You can then long press the node and select "Client History" to request the history from the router.
+Currently implemented in the Android and Apple apps version 2.2.23 and higher. To request the history from the Store & Forward Server, for Android it is required to send it a direct message containing the text "SF" (without quotes). The server will then respond with the requested messages.
+The Apple apps will also show whether a node is a Store & Forward Server in the node list after it heard the heartbeat. You can then long press the node and select "Client History" to request the history from the server.
+
+Since 2.4, when connecting to the Store & Forward Server itself, the text message history will be automatically retrieved and displayed in the app.
 
 ## Settings
 
@@ -75,7 +81,7 @@ Enables the module.
 
 ### Heartbeat
 
-The Store & Forward Router sends a periodic message onto the network. This allows connected devices to know that a router is in range and listening to received messages. A client like Android, iOS, or Web can (if supported) indicate to the user whether a store and forward router is available.
+The Store & Forward Server sends a periodic message onto the network. This allows connected devices to know that a server is in range and listening to received messages. A client like Android, iOS, or Web can (if supported) indicate to the user whether a Store & Forward Server is available.
 
 ### History Return Max
 
@@ -87,7 +93,11 @@ Limits the time period (in minutes) a client device can request.
 
 ### Records
 
-Set this to the maximum number of records the router will save. Best to leave this at the default (`0`) where the module will use 2/3 of your device's available PSRAM. This is about 11,000 records.
+Set this to the maximum number of records the server will save. Best to leave this at the default (`0`) where the module will use 2/3 of your device's available PSRAM. This is about 11,000 records.
+
+### Is server
+
+Set to true to configure your node with PSRAM as a Store & Forward Server for storing and forwarding messages. This is an alternative to setting the node as a `ROUTER` and only available since 2.4.
 
 ## Store & Forward Module Config Client Availability
 
@@ -135,6 +145,7 @@ All Store & Forward module config options are available on iOS, iPadOS and macOS
 |  store_forward.history_return_max   |     `integer`     |   `0` (25 messages)  |
 | store_forward.history_return_window |     `integer`     |   `0` (240 minutes)  |
 |        store_forward.records        |     `integer`     |   `0` (≈11,000 records) |
+|        store_forward.is_server      |  `true`, `false`  | `false` |
 
 :::tip
 
@@ -154,6 +165,10 @@ meshtastic --set store_forward.enabled true
 
 ```shell title="Disable the module"
 meshtastic --set store_forward.enabled false
+```
+
+```shell title="Set node as server"
+meshtastic --set store_forward.is_server true
 ```
 
 ```shell title="Set store_forward.heartbeat to default"
