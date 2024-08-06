@@ -110,6 +110,6 @@ As meshes grow larger and traffic becomes more contentious, the firmware will in
 
 Starting with version 2.4.0, the firmware will scale back Telemetry, Position, and other ancillary port traffic for meshes larger than 40 nodes (nodes seen in the past 2 hours) using the following algorithm:
 
-`ScaledInterval = Interval * (1.0 + ((NumberOfOnlineNodes - 40) * 0.075)))`
+`ScaledInterval = Interval * (1.0 + ((NumberOfOnlineNodes - 40) * 0.075))`
 
 For example an active mesh of 62 nodes would scale back `telemetry.device_update_interval` to 79.5 minutes instead of the 30 minute default.
