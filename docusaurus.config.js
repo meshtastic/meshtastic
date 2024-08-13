@@ -33,9 +33,6 @@ const config = {
         {
           label: "Blog",
           to: "blog",
-          blogTitle: "Meshtastic Blog",
-          blogDescription:
-            "Discover in-depth insights from developers and maintainers, including project updates and changes. Hear from the community about their projects and ideas.",
         },
         {
           label: "Docs",
