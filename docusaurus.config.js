@@ -31,16 +31,18 @@ const config = {
       },
       items: [
         {
+          label: "Blog",
+          to: "blog",
+          blogTitle: "Meshtastic Blog!",
+          blogDescription: "Placeholder",
+        },
+        {
           label: "Docs",
           to: "docs/introduction",
         },
         {
           label: "Downloads",
           to: "downloads",
-        },
-        {
-          label: "Donate",
-          to: "docs/contributing/#supporting-and-contributing-to-meshtastic",
         },
         {
           label: "About",
