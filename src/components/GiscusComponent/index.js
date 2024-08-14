@@ -2,6 +2,7 @@ import React from "react";
 import Giscus from "@giscus/react";
 import { useColorMode } from "@docusaurus/theme-common";
 
+/* trunk-ignore(biome/lint/style/noDefaultExport) */
 export default function GiscusComponent() {
   const { colorMode } = useColorMode();
 
