@@ -1,5 +1,3 @@
-import React from "react";
-import clsx from "clsx";
 import {
   HtmlClassNameProvider,
   ThemeClassNames,
@@ -8,13 +6,15 @@ import {
   BlogPostProvider,
   useBlogPost,
 } from "@docusaurus/theme-common/internal";
+import GiscusComponent from "@site/src/components/GiscusComponent";
 import BlogLayout from "@theme/BlogLayout";
 import BlogPostItem from "@theme/BlogPostItem";
 import BlogPostPaginator from "@theme/BlogPostPaginator";
 import BlogPostPageMetadata from "@theme/BlogPostPage/Metadata";
 import TOC from "@theme/TOC";
 import Unlisted from "@theme/Unlisted";
-import GiscusComponent from "@site/src/components/GiscusComponent";
+import React from "react";
+import clsx from "clsx";
 function BlogPostPageContent({ sidebar, children }) {
   const { metadata, toc } = useBlogPost();
   const { nextItem, prevItem, frontMatter, unlisted } = metadata;

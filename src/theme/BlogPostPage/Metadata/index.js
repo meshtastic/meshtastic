@@ -1,7 +1,7 @@
-import React from "react";
 import { PageMetadata } from "@docusaurus/theme-common";
 import { useBlogPost } from "@docusaurus/theme-common/internal";
-/* trunk-ignore(biome/lint/style/noDefaultExport) */
+import React from "react";
+
 export default function BlogPostPageMetadata() {
   const { assets, metadata } = useBlogPost();
   const { title, description, date, tags, authors, frontMatter } = metadata;
