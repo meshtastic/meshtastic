@@ -46,7 +46,7 @@ function BlogPostPageContent({ sidebar, children }) {
     </BlogLayout>
   );
 }
-/* trunk-ignore(biome/lint/style/noDefaultExport) */
+
 export default function BlogPostPage(props) {
   const BlogPostContent = props.content;
   return (
