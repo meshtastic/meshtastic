@@ -9,12 +9,12 @@ import {
 import GiscusComponent from "@site/src/components/GiscusComponent";
 import BlogLayout from "@theme/BlogLayout";
 import BlogPostItem from "@theme/BlogPostItem";
-import BlogPostPaginator from "@theme/BlogPostPaginator";
 import BlogPostPageMetadata from "@theme/BlogPostPage/Metadata";
+import BlogPostPaginator from "@theme/BlogPostPaginator";
 import TOC from "@theme/TOC";
 import Unlisted from "@theme/Unlisted";
-import React from "react";
 import clsx from "clsx";
+import React from "react";
 function BlogPostPageContent({ sidebar, children }) {
   const { metadata, toc } = useBlogPost();
   const { nextItem, prevItem, frontMatter, unlisted } = metadata;
