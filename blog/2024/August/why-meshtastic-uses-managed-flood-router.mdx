@@ -1,0 +1,38 @@
+---
+title: Why Meshtastic Uses Managed Flood Routing
+description: "Why Meshtastic Uses Managed Flood Routing"
+slug: meshtastic-opposition-to-nextnav-proposed-changes
+authors: thebentern, GUVWAF
+tags: [meshtastic]
+date: 2024-08-17T12:00
+hide_table_of_contents: false
+image: "/design/web/social-preview-1200x630.png"
+---
+
+
+Designing a low-bandwidth wireless mesh network to run on low-power microprocessors with limited memory is challenging. Arguably the simplest mesh routing protocol is Flood Routing: each radio receiving a packet will rebroadcast this again, up to a certain hop limit. Although Meshtastic is based on this, there are a few subtle, but significant enhancements. Most importantly, before a node rebroadcasts, it waits a short while and listens if anyone else is rebroadcasting already. If so, it won’t rebroadcast again. Therefore, “Managed Flood Routing” would be a better name. For more details on the enhancements, please review our [documentation](https://meshtastic.org/docs/overview/mesh-algo/).
+
+
+## Many of our decisions are based empirical data from *Meshtasticator* simulations
+![https://github.com/GUVWAF/Meshtasticator](/img/blog/route_plot.png)
+
+{/* truncate */}
+
+Since Flood Routing is not very efficient, we realize that this approach is not perfect. The firmware has a number of measures in place to limit traffic in order not to overwhelm your mesh, but there will be a limit to what the mesh can withstand. In attempts to enhance the efficiency, we have evaluated “smarter” routing protocols at times in the past. However, we have yet to find anything that would consistently outperform the current approach in the use-cases and scenarios Meshtastic is currently being utilized. We’ll go over several reasons for why we believe Managed Flood Routing remains a superior approach for Meshtastic.
+
+## Avoids Route Discovery 
+First and foremost, Flood Routing eliminates the need for route discovery or centralized control. In traditional routing algorithms, devices rely on predefined or dynamic routes to forward messages to their destinations. With Flood Routing, you can start messaging immediately after booting your device. Furthermore, route discovery and maintenance leads to overhead, which easily becomes very significant with a low-bandwidth technique like LoRA. In order to maintain routes, either additional control packets are needed, or metadata has to be added to normal traffic, increasing utilization of precious airtime. In static scenarios, this is not a signifcant issue, but when the topology changes often -as we discuss in the next section- the overhead quickly outweighs the benefit of a smarter routing protocol.
+
+## Seamlessly Adapts to Network Topology Changes
+Another significant advantage of Flood Routing is its ability to adapt to network topology changes. In mesh networks, devices can join or leave the network at any time, and in the case of Meshtastic, nodes are often mobile causing the network topology to change frequently. Even environmental changes such as the weather or the time of day may influence routes. Traditional routing algorithms struggle to keep up with these changes, often leading to message loss or delays. Flood Routing, however, excels in such scenarios. As each device will participate in the routing when called upon, the network quickly adapts to the changes, ensuring that messages find their way to the destination even in the face of frequent topology changes.
+
+## Inefficiency is Limited
+A routing protocol aims to deliver packets at the destination in the most efficient way possible. Indeed for packets with a single destination, a lot can be gained by choosing only one efficient route. However, for broadcasts the potential gain is limited, as it needs to arrive at every node in the mesh. Since the majority of packets in Meshtastic are still broadcasts rather than messages targeting a specific node, a smarter protocol would have limited influence. Additionally, in a wireless medium, even if a packet is directed to a certain node, all nodes in range will witness it and during that time they cannot transmit or receive another packet, meaning that even with a _perfect_ routing protocol, nodes that may not be interested in a packet will still receive it, especially if they have good receiver sensitivity, which is frequently the case for LoRa.
+
+## Provides Scalability on low-bandwidth LoRa transport
+Furthermore, Managed Flood Routing is certainly scalable, because nodes that are unlikely to contribute to routing won’t participate. In large-scale mesh networks, where hundreds of devices are meshing, scalability becomes a critical factor and minimizing airtime is king. Traditional routing algorithms often struggle to handle the increasing number of devices and the associated routing overhead, due to the additional control messages required to maintain routes with constantly changing topology. On the other hand, with Managed Flood Routing, new devices joining the network integrate into the flood routing process without any additional ceremony, contributing to the overall network resilience and message delivery efficiency. 
+
+## Functions on Resource Constrained Devices
+Finally, Flood Routing in LoRa minimizes footprint on very resource-constrained low power IoT devices. Traditional routing algorithms often require devices to maintain routing tables or perform complex calculations, consuming additional RAM, flash, and valuable computational resources. Flood Routing, with its simplicity and distributed nature, significantly reduces the resource overhead. Devices only need to forward messages they receive, without the need for complex computations, resulting in more device resource availability for other features and improved device autonomy.
+
+To conclude, while the current Managed Flood Routing is not perfect and success is not guaranteed, it has been proven to be effective even in large meshes of more than 100 nodes with proper traffic control. Any “smarter” protocol will lead to overhead in several ways which, in our view, can quickly diminish its benefits.
