@@ -9,13 +9,10 @@ hide_table_of_contents: false
 image: "/design/web/social-preview-1200x630.png"
 ---
 
-Designing a low-bandwidth wireless mesh network to run on low-power microprocessors with limited memory is challenging. Arguably the simplest mesh routing protocol is Flood Routing: each radio receiving a packet will rebroadcast this again, up to a certain hop limit. Although Meshtastic is based on this, there are a few subtle, but significant enhancements. Most importantly, before a node rebroadcasts, it waits a short while and listens if anyone else is rebroadcasting already. If so, it won’t rebroadcast again. Therefore, “Managed Flood Routing” would be a better name. For more details on the enhancements, please review our [documentation](https://meshtastic.org/docs/overview/mesh-algo/).
+Designing a low-bandwidth wireless mesh network to run on low-power microprocessors with limited memory is challenging. Arguably the simplest mesh routing protocol is Flood Routing: each radio receiving a packet will rebroadcast this again, up to a certain hop limit. Although Meshtastic is based on this strategy, there are a few subtle, but significant enhancements. Most importantly, before a node rebroadcasts, it waits a short while and listens if anyone else is rebroadcasting already. If so, it won’t rebroadcast again. Therefore, “Managed Flood Routing” would be a better name. For more details on the enhancements, please review our [documentation](https://meshtastic.org/docs/overview/mesh-algo/).
 
 
 {/* truncate */}
-
-> ### Many decisions are based on empirical data from [Meshtasticator](https://github.com/GUVWAF/Meshtasticator) simulations
-> ![Route Plot](/img/blog/route_plot.png)
 
 
 Since Flood Routing is not very efficient, we realize that this approach is not perfect. The firmware has a number of measures in place to limit traffic in order not to overwhelm your mesh, but there will be a limit to what the mesh can withstand. In attempts to enhance the efficiency, we have evaluated “smarter” routing protocols at times in the past. However, we have yet to find anything that would consistently outperform the current approach in the use-cases and scenarios Meshtastic is currently being utilized. We’ll go over several reasons for why we believe Managed Flood Routing remains a superior approach for Meshtastic.
@@ -34,5 +31,8 @@ Furthermore, Managed Flood Routing is certainly scalable, because nodes that are
 
 ## Functions on Resource Constrained Devices
 Finally, Flood Routing in LoRa minimizes footprint on very resource-constrained low power IoT devices. Traditional routing algorithms often require devices to maintain routing tables or perform complex calculations, consuming additional RAM, flash, and valuable computational resources. Flood Routing, with its simplicity and distributed nature, significantly reduces the resource overhead. Devices only need to forward messages they receive, without the need for complex computations, resulting in more device resource availability for other features and improved device autonomy.
+
+> Many decisions are based on empirical data from [Meshtasticator](https://github.com/GUVWAF/Meshtasticator) simulations
+> ![Route Plot](/img/blog/route_plot.png)
 
 To conclude, while the current Managed Flood Routing is not perfect and success is not guaranteed, it has been proven to be effective even in large meshes of more than 100 nodes with proper traffic control. Any “smarter” protocol will lead to overhead in several ways which, in our view, can quickly diminish its benefits.
