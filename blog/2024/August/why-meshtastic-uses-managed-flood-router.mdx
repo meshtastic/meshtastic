@@ -14,6 +14,15 @@ Designing a low-bandwidth wireless mesh network to run on low-power microprocess
 
 {/* truncate */}
 
+## Key Advantages to Managed Flood Routing
+
+1. Eliminates route discovery overhead
+2. Provides superior adaptation to dynamic network topologies
+3. Optimized for broadcast-heavy traffic patterns common in Meshtastic
+4. Demonstrates excellent scalability in low-bandwidth environments
+5. Minimizes resource utilization on constrained IoT devices
+6. Empirically validated through extensive network simulations
+
 Since Flood Routing is not very efficient, we realize that this approach is not perfect. The firmware has a number of measures in place to limit traffic in order not to overwhelm your mesh, but there will be a limit to what the mesh can withstand. In attempts to enhance the efficiency, we have evaluated “smarter” routing protocols at times in the past. However, we have yet to find anything that would consistently outperform the current approach in the use-cases and scenarios Meshtastic is currently being utilized. We’ll go over several reasons for why we believe Managed Flood Routing remains a superior approach for Meshtastic.
 
 ## Avoids Route Discovery 
@@ -34,15 +43,6 @@ Finally, Managed Flood Routing minimizes footprint on very resource-constrained 
 :::info Many decisions are based on empirical data from [Meshtasticator](https://github.com/GUVWAF/Meshtasticator) simulations
 ![Route Plot](/img/blog/route_plot.png)
 :::
-
-## Key Advantages to Managed Flood Routing
-
-1. Eliminates route discovery overhead
-2. Provides superior adaptation to dynamic network topologies
-3. Optimized for broadcast-heavy traffic patterns common in Meshtastic
-4. Demonstrates excellent scalability in low-bandwidth environments
-5. Minimizes resource utilization on constrained IoT devices
-6. Empirically validated through extensive network simulations
 
 ## Considerations and Future Directions
 
