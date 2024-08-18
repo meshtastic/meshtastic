@@ -31,7 +31,7 @@ Remember: A network of `CLIENT` nodes with a small number of well-placed `ROUTER
 
 Telemetry is shared over your [PRIMARY channel](/docs/configuration/radio/channels#role). This means that if your node has acquired GPS coordinates from an integrated GPS chip, or from your mobile device, your coordinates will be sent to the mesh over this channel, using it's defined encryption (if any).
 
-By default the PRIMARY channel's name is LongFast with the encryption key "AQ==" (Base64 equivalent of Hex 0x01). If this is left unchanged, your location will be shared with all nodes in range that are also using the default channel.
+By default the PRIMARY channel's name is empty, with the encryption key "AQ==" (Base64 equivalent of Hex 0x01). If this is left unchanged, your location will be shared with all nodes in range that are also using the default channel.
 
 ### Using Position Precision
 
@@ -47,7 +47,7 @@ Alternatively, if you wish to only share your location with trusted parties, you
 
 1. Ensure you have not changed the LoRa [Modem Preset](/docs/configuration/radio/lora#modem-preset) from the default `unset` / `LONG_FAST`.
 2. On your PRIMARY channel, set anything you'd like for the channel's name and choose a random PSK.
-3. Enable a SECONDARY channel named "LongFast" with PSK "AQ==".
+3. Enable a SECONDARY channel with an empty name and PSK "AQ==".
 4. If your LoRa frequency slot is set to the default (`0`), the radio's transmit frequency will be automatically changed based on your PRIMARY channel's name. In this case, you will have to manually set it back to your region's default (in LoRa settings) in order to interface with users on the default slot:
 
 ### Default Primary Frequency Slots by Region
