@@ -1,6 +1,6 @@
 ---
 title: Why Meshtastic Uses Managed Flood Routing
-description: "Why Meshtastic Uses Managed Flood Routing"
+description: "Why one of the simplest solutions is best for Meshtastic"
 slug: why-meshtastic-uses-managed-flood-routing
 authors: [thebentern, GUVWAF]
 tags: [meshtastic, technical]
@@ -35,4 +35,21 @@ Finally, Managed Flood Routing minimizes footprint on very resource-constrained 
 ![Route Plot](/img/blog/route_plot.png)
 :::
 
-To conclude, while the current Managed Flood Routing is not perfect and success is not guaranteed, it has been proven to be effective even in large meshes of more than 100 nodes with proper traffic control. Any “smarter” protocol will lead to overhead in several ways which, in our view, can quickly diminish its benefits.
+## Key Advantages to Managed Flood Routing
+
+1. Eliminates route discovery overhead
+2. Provides superior adaptation to dynamic network topologies
+3. Optimized for broadcast-heavy traffic patterns common in Meshtastic
+4. Demonstrates excellent scalability in low-bandwidth environments
+5. Minimizes resource utilization on constrained IoT devices
+6. Empirically validated through extensive network simulations
+
+## Considerations and Future Directions
+
+While Managed Flood Routing has proven highly effective for Meshtastic, we acknowledge its limitations:
+- Not optimal for all network configurations
+- Potential for improvement in specific unicast scenarios
+- Ongoing research into hybrid approaches for future implementations
+
+The current Managed Flood Routing is not perfect and success is not guaranteed, but it has been proven to be effective even in large meshes of more than 100 nodes with proper traffic control. There are trade-offs associated with any approach, and utilizing any “smarter” protocol will inevitably lead to overhead in several ways which, in our view, can quickly diminish its benefits.
+
