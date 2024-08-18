@@ -264,3 +264,11 @@ td {
   background-color: var(--ifm-hover-overlay);
   border-radius: 0;
 }
+
+blockquote p::before,
+blockquote p::after,
+.markdown blockquote p::before,
+.markdown blockquote p::after {
+  content: none !important;
+  display: none !important;
+}
