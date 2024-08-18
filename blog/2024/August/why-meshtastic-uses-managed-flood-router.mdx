@@ -6,7 +6,7 @@ authors: [thebentern, GUVWAF]
 tags: [meshtastic, technical]
 date: 2024-08-18T12:00
 hide_table_of_contents: false
-image: "/static/img/blog/route_plot.png"
+image: "/img/blog/route_plot.png"
 ---
 
 Designing a low-bandwidth wireless mesh network to run on low-power microprocessors with limited memory is challenging. Arguably the simplest mesh routing protocol is Flood Routing: each radio receiving a packet will rebroadcast this again, up to a defined hop limit. Although Meshtastic is based on this strategy, there are a few subtle, but significant enhancements. Most importantly, before a node rebroadcasts, it waits a short while and listens if anyone else is already rebroadcasting. If so, it will not rebroadcast again. Therefore, “Managed Flood Routing” would be a better name. For more details on the enhancements, please review our [documentation](https://meshtastic.org/docs/overview/mesh-algo/).
