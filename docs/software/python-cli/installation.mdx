@@ -98,6 +98,14 @@ values={[
   ```shell
   pip3 install --upgrade meshtastic
   ```
+  - Using pipx as an alternative to pip3 if `externally-managed-environment` error is encountered
+    ```shell
+    sudo apt install pipx && pipx install meshtastic
+    ```
+      - If using `pipx` it may be necessary to update `$PATH` by running:
+        ```shell
+        pipx ensurepath
+        ```
 
 </TabItem>
 <TabItem value="macos">
