@@ -46,6 +46,7 @@ Meshtastic's encryption is not threatened by Quantum-Computers\*, so realistic a
 - **Do not configure private channels on unattended nodes**. Nodes will relay Meshtastic traffic even if they are not able to decrypt it. Your unattended routers should not have the private PSK configured as it is easy to gain physical access and extract the channel key.
 - Keep in mind that everything sent on a channel can be stored and decrypted later by anyone who gains access to the key, even if you locally delete the messages.
 - Change your Channel Keys from time to time.
+
 **Changes since 2.5 Firmware release**
 - Direct Messages are now protected when messaging between devices on 2.5 or newer, messaging to legacy 2.4 or older are not protected.
 - Admin Messages between two 2.5 or newer nodes are now protected and additonal relay attack protection.
@@ -69,6 +70,7 @@ Some other networks like [Yggdrasil](https://yggdrasil-network.github.io/), [cjd
 
 **Recommendations**:
 - Keep in mind that the sender field is indicative, and anyone with access to the channel key can trivially lie.
+
 **Changes since 2.5 Firmware release**
 - The above now only relates to group chats/channels as DM's are protected when messaging between devices on 2.5 or newer, messaging to legacy 2.4 or older devices are not afforded this addition authentication.
 
@@ -79,6 +81,8 @@ Direct Messages (DMs) are now implemented using Public Key Infrastructure (PKI).
 
 - **Message Encryption:** Each DM is encrypted using the recipient's public key, ensuring that only the recipient can decrypt the message with their private key.
 - **Digital Signatures:** Messages are signed with the sender's private key, allowing the recipient to verify the sender's identity and ensuring the integrity of the message.
+
+**Prior to 2.5 Firmware Release**
 
 Previously, DMs were implemented as channel messages with a `to` protobuf field set. This meant anyone in the channel could read all your direct messages. With PKI, this issue is resolved, as only the intended recipient can decrypt and read the message.
 
@@ -91,6 +95,8 @@ Admin Messages/Control are now protected by enhanced security features, making s
 
 - **Stronger Encryption:** Admin Messages now use advanced encryption methods to ensure that only the intended recipients can access and read them.
 - **Session IDs:** Each administrative session is assigned a unique Session ID, which helps prevent unauthorized access and ensures that messages are not tampered with or replayed.
+
+**Prior to 2.5 Firmware Release**
 
 Previously, admin messages were not as secure, but with these updates, they are now much better protected against potential attacks and replay attacks.
 
