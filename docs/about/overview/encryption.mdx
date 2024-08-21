@@ -46,7 +46,9 @@ Meshtastic's encryption is not threatened by Quantum-Computers\*, so realistic a
 - **Do not configure private channels on unattended nodes**. Nodes will relay Meshtastic traffic even if they are not able to decrypt it. Your unattended routers should not have the private PSK configured as it is easy to gain physical access and extract the channel key.
 - Keep in mind that everything sent on a channel can be stored and decrypted later by anyone who gains access to the key, even if you locally delete the messages.
 - Change your Channel Keys from time to time.
-
+**Changes since 2.5 Firmware release**
+- Direct Messages are now protected when messaging between devices on 2.5 or newer, messaging to legacy 2.4 or older are not protected.
+- Admin Messages between two 2.5 or newer nodes are now protected and additonal relay attack protection.
 ### Integrity
 
 Integrity means ensuring messages cannot be modified without the key.
@@ -59,7 +61,7 @@ Meshtastic does not check messages have not been tampered with, see [`#4030`](ht
 
 ### Authentication
 
-Authentication means nodes say who they are on the network. Meshtastic does not implement this, so it is trivial to impersonate anyone else if you have access to the channel key.
+Authentication means nodes say who they are on the network. Meshtastic does not implement this, so it is trivial to impersonate anyone else if you have access to the channel key
 
 This is because node IDs are based on hardware [MAC address](https://en.wikipedia.org/wiki/MAC_address), which are hardcoded by the manufacturer.
 
@@ -67,6 +69,9 @@ Some other networks like [Yggdrasil](https://yggdrasil-network.github.io/), [cjd
 
 **Recommendations**:
 - Keep in mind that the sender field is indicative, and anyone with access to the channel key can trivially lie.
+**Changes since 2.5 Firmware release**
+- The above now only relates to group chats/channels as DM's are protected when messaging between devices on 2.5 or newer, messaging to legacy 2.4 or older devices are not afforded this addition authentication.
+
 
 ## Direct Messages
 
