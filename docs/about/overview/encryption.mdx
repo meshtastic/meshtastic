@@ -7,103 +7,112 @@ sidebar_position: 3
 description: "Understand Meshtastic's encryption: optional network-wide AES256 security for off-grid communication, ensuring confidentiality against passive eavesdropping."
 ---
 
-## Explanation 
+## Explanation
 
 Meshtastic provides AES256-CTR encryption for the payload of each packet when sending via LoRa, with a different key for each [channel](/docs/configuration/radio/channels/). The [packet header](/docs/overview/mesh-algo/#layer-1-unreliable-zero-hop-messaging) is always sent unencrypted, which allows nodes to relay packets they can't decrypt as well. One can disable this by setting a different [rebroadcast mode](/docs/configuration/radio/device#rebroadcast-mode).
 
-By default you have one primary channel which is encrypted with a simple known key ("AQ=="), so to use proper encryption you **must change** this key first, or create a new channel and share it with the ones you want to communicate with. However, if you don't have the default key, it means you will not be able to communicate with devices that don't have your key. 
+By default, you have one primary channel, which is encrypted with a simple known key ("AQ=="), so to use proper encryption, you **must change** this key first, or create a new channel and share it with the ones you want to communicate with. However, if you don't have the default key, it means you will not be able to communicate with devices that don't have your key.
 
-Direct messages to a specific node (e.g. text, traceroute or position requests) may use any channel you share with the recipient. Namely, the device will use the one where it most recently heard a NodeInfo packet from the recipient on. Client apps will not show messages directed to other nodes, but in principle they could be read by **anyone** who knows the used channel key. This means that if it uses the default key, you have to assume anyone could read your direct messages.
+Direct messages to a specific node are now encrypted using Public Key Infrastructure (PKI). Each node is equipped with a unique public/private key pair, and direct messages are encrypted with the recipient’s public key. This ensures that only the recipient can decrypt the message using their private key. Additionally, messages are signed with the sender’s private key, allowing the recipient to verify the sender’s identity and ensuring the message's integrity.
 
-All periodic broadcasts (position, telemetry, etc.) the device sends out itself are sent over the primary channel and thus encrypted with that key.
+All periodic broadcasts (position, telemetry, traceroutes, etc.) the device sends out itself are sent over the primary channel and thus encrypted with that key.
 
-The device will decrypt the payload before sending it to a client app via BLE, serial, Wi-Fi/Ethernet. For MQTT you can [specify](/docs/configuration/module/mqtt#encryption-enabled) whether you want to send an encrypted or unencrypted payload.
+The device will decrypt the payload before sending it to a client app via BLE, serial, Wi-Fi/Ethernet. For MQTT, you can [specify](/docs/configuration/module/mqtt#encryption-enabled) whether you want to send an encrypted or unencrypted payload.
 
-## Is it as secure as Wi-Fi WPA3, HTTPS TLS1.3 or Signal ?
+## Is it as secure as Wi-Fi WPA3, HTTPS TLS1.3, or Signal?
 
 **No**.
 
-[WPA3](https://en.wikipedia.org/wiki/WPA3), [TLS1.3](https://en.wikipedia.org/wiki/TLS1.3), [Signal](https://en.wikipedia.org/wiki/Signal_Protocol) and Meshtastic can all use AES256, yet AES is one of the many cogs required in a modern encryption system, see below the main features "missing" in Meshtastic.
+[WPA3](https://en.wikipedia.org/wiki/WPA3), [TLS1.3](https://en.wikipedia.org/wiki/TLS1.3), [Signal](https://en.wikipedia.org/wiki/Signal_Protocol), and Meshtastic can all use AES256. Yet AES is one of the many cogs required in a modern encryption system. Below are the main features "missing" in Meshtastic.
 
 ### Perfect-Forward-Secrecy
 
-[**P**erfect-**F**orward-**S**ecrecy also known as **PFS**](https://en.wikipedia.org/wiki/Forward_secrecy) means *previous* communications and more generally anything *passively captured* cannot be decrypted ***even when the key is compromised***.
+[**P**erfect-**F**orward-**S**ecrecy, also known as **PFS**](https://en.wikipedia.org/wiki/Forward_secrecy), means *previous* communications and more generally anything *passively captured* cannot be decrypted ***even when the key is compromised***.
 
-This means Meshtastic is vulnerable to [**« Harvest now, Decrypt later »**](https://en.wikipedia.org/wiki/Harvest_now,_decrypt_later) attacks, **this attack itself is not enough to decrypt messages** it relies on an other failure leaking the channel key such as:
-- Accidently sharing the channel key with the wrong person.
+This means Meshtastic is vulnerable to [**« Harvest now, Decrypt later »**](https://en.wikipedia.org/wiki/Harvest_now,_decrypt_later) attacks. **This attack itself is not enough to decrypt messages**; it relies on another failure leaking the channel key, such as:
+- Accidentally sharing the channel key with the wrong person.
 - One of your nodes being stolen.
 - Any unknown bug revealing the channel key to an attacker.
 
-Other protocols such as *misconfigured TLS1.2* are far more impacted by Harvest now, Decrypt later attacks because their keys will be broken by near future Quantum-Computers yet they do not provide PFS.
+Other protocols, such as *misconfigured TLS1.2*, are far more impacted by Harvest now, Decrypt later attacks because their keys will be broken by near-future Quantum-Computers, yet they do not provide PFS.
 
-Meshtastic's encryption is not threatened by Quantum-Computers\* so realistic attack vectors are accidental miss-handling of channel keys and nodes being lost.
+Meshtastic's encryption is not threatened by Quantum-Computers\*, so realistic attack vectors are accidental mishandling of channel keys and nodes being lost.
 
-\*on the Quantum-Resistance of AES256 see:
-- [this stackoverflow question, contain a bit of debates and two good answers](https://crypto.stackexchange.com/q/6712)
+\*On the Quantum-Resistance of AES256, see:
+- [this stackoverflow question, containing a bit of debate and two good answers](https://crypto.stackexchange.com/q/6712)
 - [NIST's Post-Quantum FAQ](https://csrc.nist.gov/projects/post-quantum-cryptography/faqs) section « To protect against the threat of quantum computers, should we double the key length for AES now? (added 11/18/18) »
 
 **Recommendations** for users using *private channels*:
-- **Do not configure private channels on unattended nodes**, nodes will relay meshtastic traffic even if they are not able to decrypt it.
-  Your unattended routers should not have the private PSK configured as it is easy to gain physical access and extract the channel key.
-- Keep in mind, everything sent on a channel can be stored and decrypted later by anyone who gain access to the key even if you locally delete the messages.
+- **Do not configure private channels on unattended nodes**. Nodes will relay Meshtastic traffic even if they are not able to decrypt it. Your unattended routers should not have the private PSK configured as it is easy to gain physical access and extract the channel key.
+- Keep in mind that everything sent on a channel can be stored and decrypted later by anyone who gains access to the key, even if you locally delete the messages.
 - Change your Channel Keys from time to time.
 
 ### Integrity
 
 Integrity means ensuring messages cannot be modified without the key.
 
-Meshtastic does not check messages have not been tempered with, see [`#4030`](https://github.com/meshtastic/firmware/issues/4030) for details.
+Meshtastic does not check messages have not been tampered with, see [`#4030`](https://github.com/meshtastic/firmware/issues/4030) for details.
 
 **Recommendations**:
-- Keep in mind, by applying a known plaintext attack anyone *could* send messages on a channel even with the channel key is private and secure.
-- For developers of third party applications integrating meshtastic, include a cryptographic MAC over the message content and PSK,
-  we are also considering an [AEAD secured channel mode which would provide this natively](https://github.com/meshtastic/firmware/issues/4030).
+- Keep in mind that by applying a known plaintext attack, anyone *could* send messages on a channel even if the channel key is private and secure.
+- For developers of third-party applications integrating Meshtastic, include a cryptographic MAC over the message content and PSK. We are also considering an [AEAD secured channel mode which would provide this natively](https://github.com/meshtastic/firmware/issues/4030).
 
 ### Authentication
 
-Authentication means nodes say who they are on the network, meshtastic does not implement this so it is trivial to impersonate anyone else if you have access to the channel key.
+Authentication means nodes say who they are on the network. Meshtastic does not implement this, so it is trivial to impersonate anyone else if you have access to the channel key.
 
-This is because node ids are based on hardware [MAC address](https://en.wikipedia.org/wiki/MAC_address), theses are hardcoded by the manufacturer.
+This is because node IDs are based on hardware [MAC address](https://en.wikipedia.org/wiki/MAC_address), which are hardcoded by the manufacturer.
 
-Some other networks like [Yggdrasil](https://yggdrasil-network.github.io/), [cjdns](https://github.com/cjdelisle/cjdns) or [libp2p](https://libp2p.io/) use [public / private key pairs](https://en.wikipedia.org/wiki/Public-key_cryptography) and the Public Key becomes the Node Identity, this make all messages bigger and or require an interactive handshake process.
-
-**Recommendations**:
-- Keep in mind, the sender field is indicative and anyone with access to the channel key can trivially lie.
-
-## Direct-Messages
-
-Direct-Messages are implemented as channel messages which have a `to` protobuf field set.
-
-This means anyone in the channel can read all your direct-messages.
-
-Also the node needs to know the right channel to use, this is done by using the latest one a NodeInfo was received, due to the lack of `Authentication` this means anyone you share a channel with can send a spoofed NodeInfo and make you send direct-messages on an incorrect public channel.
+Some other networks like [Yggdrasil](https://yggdrasil-network.github.io/), [cjdns](https://github.com/cjdelisle/cjdns), or [libp2p](https://libp2p.io/) use [public/private key pairs](https://en.wikipedia.org/wiki/Public-key_cryptography), and the Public Key becomes the Node Identity. This makes all messages bigger and/or requires an interactive handshake process.
 
 **Recommendations**:
-- Keep in mind, due to NodeInfo spoof issue Direct-Messages are **very significantly less secure than a private channel** with a secure PSK.
-- Do not use Direct-Messages for anything private, instead ahead of time create a new private channel and share it with the person you want to message with.
-  - Nodes will relay encrypted packets even if they can't decrypt it, so you only loose on some [small DM optimizations](https://github.com/meshtastic/firmware/pull/3753).
-  - Do not send the private channel key in direct messages or a public channel, because then anyone listening gain access.
-  - Use a different private channel for each person you want to have private conversations with.
+- Keep in mind that the sender field is indicative, and anyone with access to the channel key can trivially lie.
+
+## Direct Messages
+
+Direct Messages (DMs) are now implemented using Public Key Infrastructure (PKI). This provides a significant upgrade in security compared to the previous channel-based encryption:
+
+- **Message Encryption:** Each DM is encrypted using the recipient's public key, ensuring that only the recipient can decrypt the message with their private key.
+- **Digital Signatures:** Messages are signed with the sender's private key, allowing the recipient to verify the sender's identity and ensuring the integrity of the message.
+
+Previously, DMs were implemented as channel messages with a `to` protobuf field set. This meant anyone in the channel could read all your direct messages. With PKI, this issue is resolved, as only the intended recipient can decrypt and read the message.
+
+**Recommendations**:
+- While PKI significantly enhances the security of DMs, it's still advisable to avoid sharing sensitive information in direct messages without proper verification of the recipient's public key.
+
+## Admin Messages
+
+Admin Messages/Control are now protected by enhanced security features, making sure that critical operations within the network are more secure than ever before.
+
+- **Stronger Encryption:** Admin Messages now use advanced encryption methods to ensure that only the intended recipients can access and read them.
+- **Session IDs:** Each administrative session is assigned a unique Session ID, which helps prevent unauthorized access and ensures that messages are not tampered with or replayed.
+
+Previously, admin messages were not as secure, but with these updates, they are now much better protected against potential attacks and replay attacks.
+
+**Recommendations**:
+- Always ensure that your devices are using the latest firmware to benefit from these improved security features.
+- Regularly monitor your network for any unusual activity to maintain a high level of security.
 
 ## Comments
 
 Cryptography is tricky, so we've tried to 'simply' apply standard crypto solutions to our implementation. However, the project developers are not cryptography experts.
 
-Based on comments from reviewers (see below), here are some tips for usage of these radios, so that you may know the level of protection offered:
+Based on comments from reviewers (see below), here are some tips for using these radios, so that you may know the level of protection offered:
 
-- It is pretty likely that the AES256 security is implemented 'correctly' and an observer will not be able to decode your messages.
-- Warning: If an attacker is able to get one of the radios in their possession, they could either a) extract the channel key from that device or b) use that radio to listen to new communications.
-- Warning: If an attacker is able to get the "Channel QR code/URL" that you share with others - that attacker could then be able to read any messages sent on the channel (either tomorrow or in the past - if they kept a raw copy of those broadcast packets)
+- It is likely that the AES256 security is implemented 'correctly' and an observer will not be able to decode your messages.
+- **Warning:** If an attacker is able to get one of the radios in their possession, they could either a) extract the channel key from that device, or b) use that radio to listen to new communications.
+- **Warning:** If an attacker is able to get the "Channel QR code/URL" that you share with others, that attacker could then be able to read any messages sent on the channel (either tomorrow or in the past - if they kept a raw copy of those broadcast packets).
 
 The current implementation provides optional confidentiality to members of a configured network:
 
 - Encryption is implemented in devices/nodes with network-wide encryption keys.
 - Encryption is optional and is turned off when devices are in 'Ham mode'.
-- There is no encryption supported in the clients (iOS, Android) to facilitate distribution as mass market software.
+- There is no encryption supported in the clients (iOS, Android) to facilitate distribution as mass-market software.
 - Pairing from client-to-device is by:
-  - direct USB cable
+  - Direct USB cable
   - BT pairing
-- Devices are 'promiscuous' and will pair with any near-by client. Network confidentiality requires physical protection of all nodes.
+- Devices are 'promiscuous' and will pair with any nearby client. Network confidentiality requires physical protection of all nodes.
+
 
 Always keep in mind [xkcd's note on encryption](https://xkcd.com/538).
 
