@@ -55,11 +55,14 @@ Meshtastic's encryption is not threatened by Quantum-Computers\*, so realistic a
 
 Integrity means ensuring messages cannot be modified without the key.
 
-Meshtastic does not check messages have not been tampered with, see [`#4030`](https://github.com/meshtastic/firmware/issues/4030) for details.
+Meshtastic does not check channel messages have not been tampered with, see [`#4030`](https://github.com/meshtastic/firmware/issues/4030) for details.
 
 **Recommendations**:
 - Keep in mind that by applying a known plaintext attack, anyone *could* send messages on a channel even if the channel key is private and secure.
 - For developers of third-party applications integrating Meshtastic, include a cryptographic MAC over the message content and PSK. We are also considering an [AEAD secured channel mode which would provide this natively](https://github.com/meshtastic/firmware/issues/4030).
+
+**Changes since 2.5.0 Firmware release**
+- Message integrity is checked for Direct Messages or Admin Control when communication is between v2.5.0 or newer firmware.
 
 ### Authentication
 
