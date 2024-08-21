@@ -38,7 +38,7 @@ Available Values:
 - `TEXTMSG` will allow you to send a string over the serial port to the device, which will be broadcasted as a text message to the default channel. Any text message received from the mesh will be sent to the serial port as follows: `<Short Name>: <text>`.
 - `NMEA` will output a NMEA 0183 Data stream containing the internal GPS or fixed position and other node locations as Waypoints (WPL).
 - `CALTOPO` will output NMEA 0183 Waypoints (WPL) every 10 seconds for all valid node locations, to be consumed by [CalTopo / SARTopo](/docs/software/integrations/caltopo.mdx).
-
+- `WS85` will parse and compute wind speed data received over serial from the Ecowitt WS85. Transmits valuess via telemetry packet every 5 minutes.  Modification of the WS85 weather sensor is required (https://hackaday.io/project/196990-meshtastic-ultrasonic-anemometer-wx-station).  If option is not available in app then enable with cli command "meshtastic --set serial.mode 6"
 ### Receive GPIO Pin
 
 Set the GPIO pin to the RXD pin you have set up.

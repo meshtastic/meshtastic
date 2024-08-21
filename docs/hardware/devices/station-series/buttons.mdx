@@ -1,0 +1,47 @@
+---
+id: buttons
+title: Station Series Hardware Buttons
+sidebar_label: Buttons
+sidebar_position: 1
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+<Tabs
+groupId="station-buttons"
+queryString="station-buttons"
+defaultValue="g2"
+values={[
+{label: 'Station G1', value:'g1'},
+{label: 'Station G2', value: 'g2'}
+]}>
+
+<TabItem value="g1">
+
+## Functionality
+
+- **User/Program Button:**
+  - **Single press:** Changes the information page displayed on the device's screen.
+  - **Double press:** Sends an adhoc ping of the device's position to the network.
+
+</TabItem>
+
+<TabItem value="g2">
+
+## Functionality
+
+- **User/Program Button:**
+  - **Single press:** Changes the information page displayed on the device's screen.
+  - **Double press:** Sends an adhoc ping of the device's position to the network.
+  - **Long press:** Will signal the device to shutdown after 5 seconds.
+- **Firmware Download Button:** Places device into Firmware Download Mode.
+  1. Press and hold Firmware Download Button.
+  2. Then single press Reset Button.
+  3. Finally release the Firmware Download Button.
+- **Reset Button:**
+  - **Single press:** Resets the device.
+
+</TabItem>
+
+</Tabs>

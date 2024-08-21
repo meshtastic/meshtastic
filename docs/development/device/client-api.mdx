@@ -78,6 +78,15 @@ read,notify,write
 fromnum - the current packet # in the message waiting inside fromradio, if the phone sees this notify it should read messages
 until it catches up with this number.
 
+6c6fd238-78fa-436b-aacf-15c5be1ef2e3
+notify
+A log message as LogRecord protobuf.  Clients are encouraged to listen for this notification and give the option of logging these
+debug messages.
+
+6c6fd238-78fa-436b-aacf-15c5be1ef2e2
+notify
+A raw log message as a string (with a newline).  This characteristic is DEPRECATED and shouldn't be used on new client code.
+
 The phone can write to this register to go backwards up to FIXME packets, to handle the rare case of a fromradio packet was dropped after the ESP32 callback was called, but before it arrives at the phone. If the phone writes to this register the ESP32 will discard older packets and put the next packet >= fromnum in fromradio.
 When the ESP32 advances fromnum, it will delay doing the notify by 100ms, in the hopes that the notify will never actually need to be sent if the phone is already pulling from fromradio.
 
