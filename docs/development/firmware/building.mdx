@@ -67,3 +67,14 @@ The build system is modular. Adding a new board variant for an already supported
 5. Add your board identifier to `architecture.h` on the firmware repo in the folder of the platform you are using, and send in that Pull Request too.
 6. Wait for the Pulls to be merged back into Master.
 7. Profit :-)
+
+## Alternative route: Gitpod
+
+You may wish to compile the firmware without installing VSCode. Gitpod is a web browser based online IDE, and can be used with a Github account. It offers a free tier which is suitable for light use, such as compiling a custom firmware.
+
+1. Go to (https://gitpod.io#https://github.com/meshtastic/firmware)[https://gitpod.io#https://github.com/meshtastic/firmware].
+2. In the terminal, run `pip install platformio`
+3. Make the changes that you want to make to the variant of your choice.
+4. Build the firmware by typing `pio run -e` followed by the variant name.
+5. When done, download `<variant name>.bin` or `<variant name.uf2` from `/workspace/firmware/.pio/build/<variant name>`
+6. Flashing directly to your device isn't possible using Gitpod, so upload using either (Drag & Drop)[https://meshtastic.org/docs/getting-started/flashing-firmware/nrf52/#drag--drop] (NRF52/RP2040) or uploading your own firware via the (web flasher)[https://flasher.meshtastic.org/] (ESP32)
