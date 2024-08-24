@@ -9,13 +9,13 @@ hide_table_of_contents: false
 image: "/design/web/social-preview-1200x630.png"
 ---
 
-The Meshtastic project-hosted MQTT server has recently made an important change that impacts many users: the ability to subscribe to all topics has been removed. However, users can still subscribe to regional topics, such as `msh/US`, to view nodes in their specific area. The MQTT functionality remains intact, public maps are still accessible, and users can continue to see nodes within their designated regions with some new changes.
+The Meshtastic project-hosted [MQTT](/docs/software/integrations/mqtt/) server, which allows sharing mesh traffic over the Internet, has recently made an important change that impacts the way information is shared via MQTT: the ability to subscribe to all topics has been removed. However, users can still subscribe to regional topics, such as `msh/US/#`, to view nodes in their specific area. The MQTT functionality remains intact, public maps are still accessible, and users can continue to see nodes within their specified regions with some new changes.
 
 {/* truncate */}
 
 ## Understanding the Change
 
-On **August 21, 2024**, the Meshtastic development team made the decision to remove the ability for users to subscribe to all topics. Instead, users can now subscribe to regional topics, such as `msh/US`, which allows them to see nodes in their specific area. 
+On **August 21, 2024**, the Meshtastic development team made the decision to remove the ability for users to subscribe to all topics.
 
 ### Why This Change Was Necessary
 
@@ -33,12 +33,13 @@ We believe that while users have a responsibility to protect their information, 
    - **Stability**
    - **Reliability**
 3. **Cost Efficiency**: Hosting a free service comes with its own set of challenges. The reduction in traffic has led to lower hosting costs, making the service more sustainable in the long run.
+4. **Continued Success**: Like the success we experienced at Def Con 32, where we implemented previous traffic management policies, we believe this change will further contribute to a successful MQTT server for the community.
 
 ### New Features Implemented
 
 In response to community feedback, we have already enacted one of the solutions to enhance user experience. While subscribing to all topics remains disabled, we have introduced precise location filtering. This means:
 
-- **Server-Level Filtering**: Only position packets with imprecise location information will be passed to the topic, ensuring that sensitive data is not exposed.
+- **Server-Level Filtering**: Only position packets with imprecise location information will be passed to the topic, ensuring that sensitive data is not exposed. **Note: This filtering is only applied to the default key.**
 
 ## Key Takeaways
 
