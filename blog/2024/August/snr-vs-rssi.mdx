@@ -1,0 +1,73 @@
+---
+title: Why SNR is a Better Measure than RSSI for Meshtastic
+description: "Why SNR is a Better Measure than RSSI for Meshtastic"
+slug: snr-vs-rssi
+authors: [MCHamster]
+tags: [meshtastic]
+date: 2024-08-25T12:00
+hide_table_of_contents: false
+image: "/img/blog/route_plot.png"
+---
+
+When working with Meshtastic, understanding the quality of your communication link is crucial. Meshtastic, built on top of LoRa (Long Range) technology, relies on efficient and reliable metrics to assess link performance. Two primary metrics often used are Signal-to-Noise Ratio (SNR) and Received Signal Strength Indicator (RSSI). While both provide insights into the link quality, SNR emerges as the superior measure for Meshtastic applications. Here’s an in-depth look at why.
+
+{/* truncate */}
+
+## Understanding RSSI and SNR
+
+**RSSI (Received Signal Strength Indicator):** RSSI measures the power level that a receiver detects from a transmitter. It quantifies the strength of the received signal but does not differentiate between the actual signal and any background noise. Essentially, RSSI tells you how strong the signal is, but not how clean or usable it is. RSSI is widely used in traditional RF technologies like WiFi, where signal strength is a crucial indicator of link quality.
+
+**SNR (Signal-to-Noise Ratio):** SNR is a more sophisticated metric that measures the ratio of the received signal power to the noise power. It combines both signal strength and noise level into a single value, providing a clearer picture of the communication link’s quality. The formula for SNR is:
+
+
+```latex
+\text{SNR} = \frac{P_{\text{signal}}}{P_{\text{noise}}}
+
+
+Where  P_{\text{signal}}  is the power of the desired signal and  P_{\text{noise}}  is the power of the background noise. SNR is typically expressed in decibels (dB):
+
+```latex
+\text{SNR (dB)} = 10 \cdot \log_{10} \left( \frac{P_{\text{signal}}}{P_{\text{noise}}} \right)
+
+A higher SNR indicates a clearer signal with less interference from noise, which is crucial for effective communication, especially in environments with substantial interference.
+
+## Why SNR is Superior for Meshtastic
+
+1.	**Comprehensive Signal Quality:** Since SNR includes both the signal strength and the noise level, it provides a more comprehensive measure of link quality than RSSI, which only indicates signal strength. This dual consideration is particularly important in noisy environments where a strong signal might still be difficult to decode if the noise level is high.
+2.	**Interference Resilience:** Meshtastic, operating on top of LoRa, utilizes unlicensed ISM bands, which are often crowded with various devices emitting signals. In such environments, noise is inevitable. SNR directly measures the clarity of the signal in the presence of this noise. A high SNR indicates that the signal is distinguishable from noise, making SNR a better indicator of link quality in noisy environments compared to RSSI, which can be misleading.
+3.	**Dynamic Adaptation:** The noise floor of an environment can change over time due to varying interference and signal sources. SNR is designed to change accordingly, reflecting real-time variations in the noise level. This dynamic nature makes SNR a more reliable measure for assessing link quality over time, as it adapts to changing environmental conditions.
+4.	**Effective Range Assessment:** Meshtastic, leveraging LoRa’s capabilities, is designed for long-range, low-power communications. While RSSI can tell you if the signal is strong enough to be received, it does not account for noise that could corrupt the signal over long distances. SNR provides a more accurate assessment of whether the signal can be effectively demodulated and decoded, which is critical for reliable long-range communication.
+5.	**Receiving Below the Noise Floor:** Unlike traditional RF technologies like WiFi, Meshtastic devices can receive signals that are below the noise floor. This means that even when the RSSI indicates a weak signal, Meshtastic technology can still successfully decode the signal if the SNR is favorable. This unique capability makes SNR an even more critical metric for evaluating the link quality in Meshtastic networks.
+6.	**Improved Data Integrity:** Higher SNR values generally translate to lower bit error rates (BER). This means that data transmitted with a high SNR is more likely to be received correctly without errors. For applications where data integrity is crucial, relying on SNR ensures better performance and reliability.
+7.	**Practical Applications and Real-World Performance:** In practical scenarios, devices operating in environments with significant noise and interference will benefit more from SNR monitoring. For instance, urban areas with numerous electronic devices and RF interference will have varying noise levels. SNR provides a reliable measure of link quality in such dynamic conditions, unlike RSSI, which might show strong signal strength but does not reflect the interference impact.
+
+## Examples of SNR and Spreading Factors
+
+LoRa technology supports various spreading factors (SF) which influence the SNR needed for successful communication. Each spreading factor represents a trade-off between data rate and range, with higher SF values allowing for longer range and better noise resistance at the cost of lower data rates. Here are typical SNR limits for different spreading factors:
+
+* SF7: Minimum SNR of -7.5 dB
+* SF8: Minimum SNR of -10 dB
+* SF9: Minimum SNR of -12.5 dB
+* SF10: Minimum SNR of -15 dB
+* SF11: Minimum SNR of -17.5 dB
+* SF12: Minimum SNR of -20 dB
+
+For context, an SNR of 0 dB means that the signal power is equal to the noise power. This level is generally the threshold where the signal starts to be distinguishable from the noise. For Meshtastic devices, which leverage LoRa’s ability to operate below the noise floor, even signals with negative SNR can be decoded. For example, an SNR of -10 dB at SF8 indicates that the signal is 10 dB below the noise floor, yet it can still be demodulated due to the robustness of LoRa modulation techniques.
+
+## When RSSI is Useful
+
+While SNR is generally superior for Meshtastic applications, there are scenarios where RSSI is beneficial:
+
+* Testing Different Configurations: RSSI is particularly useful for testing different configurations of amplifiers and/or antennas. By measuring the signal strength, users can quickly determine the effectiveness of different hardware setups and optimize their configurations for better performance.
+* Cable/Connector Loss: RSSI can help in identifying losses due to cables or connectors in the communication setup. By comparing RSSI readings before and after changing cables or connectors, users can assess the impact of these components on signal strength and ensure optimal performance.
+
+
+## Conclusion
+
+While RSSI is a useful metric for understanding signal strength, it falls short in environments where noise and interference play significant roles. SNR, by providing a ratio of signal strength to noise level, offers a clearer and more accurate measure of link quality. For Meshtastic applications, where reliability, range, and data integrity are paramount, SNR is the superior metric, enabling better performance assessment and optimization of communication links.
+
+By prioritizing SNR over RSSI, developers and users of Meshtastic technology can ensure more robust and reliable communication, ultimately enhancing the efficacy and efficiency of their IoT networks.
+
+Stay tuned for more insights on optimizing your Meshtastic networks and making the most out of Meshtastic’s powerful capabilities!
+
+For further reading and community discussions, visit the Meshtastic forums and check out our GitHub repositories for the latest updates and contributions from the Meshtastic community.
