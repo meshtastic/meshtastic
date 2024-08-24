@@ -134,6 +134,25 @@ const config = {
           blogTitle: "Meshtastic Blog",
           blogDescription:
             "Discover in-depth insights from developers and maintainers, including project updates and changes. Hear from the community about their projects and ideas.",
+          feedOptions: {
+            type: "rss",
+            createFeedItems: async ({ blogPosts, siteConfig, ...params }) => {
+              const feedItems = await params.defaultCreateFeedItems({
+                blogPosts,
+                siteConfig,
+                ...params,
+              });
+              feedItems.forEach((feedItem, index) => {
+                const blogPost = blogPosts[index];
+                const imageUrl = blogPost.metadata.frontMatter.image
+                  ? new URL(blogPost.metadata.frontMatter.image, siteConfig.url)
+                      .href
+                  : null;
+                feedItem.image = imageUrl;
+              });
+              return feedItems;
+            },
+          },
         },
         theme: {
           customCss: require.resolve("./src/css/custom.css"),
