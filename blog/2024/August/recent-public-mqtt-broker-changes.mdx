@@ -1,0 +1,54 @@
+---
+title: Important Changes to the Meshtastic Project-Hosted MQTT Server
+description: "Recent changes to the Meshtastic project-hosted MQTT server enhance user privacy and data protection."
+slug: recent-public-mqtt-broker-changes
+authors: crichton
+tags: [meshtastic]
+date: 2024-08-24T12:00
+hide_table_of_contents: false
+image: "/design/web/social-preview-1200x630.png"
+---
+
+The Meshtastic project-hosted MQTT server has recently made an important change that impacts many users: the ability to subscribe to all topics has been removed. However, users can still subscribe to regional topics, such as `msh/US`, to view nodes in their specific area. The MQTT functionality remains intact, public maps are still accessible, and users can continue to see nodes within their designated regions with some new changes.
+
+{/* truncate */}
+
+## Understanding the Change
+
+On **August 21, 2024**, the Meshtastic development team made the decision to remove the ability for users to subscribe to all topics. Instead, users can now subscribe to regional topics, such as `msh/US`, which allows them to see nodes in their specific area. 
+
+### Why This Change Was Necessary
+
+The decision to restrict topic subscriptions was not made lightly. It stemmed from our observations that public mesh maps were now storing and, in some cases, tracking node positions over time. While users may have shared their position with their regional mesh, many might not have been aware that this information was being shared publicly online.
+
+This data, being shared by third parties, raised significant concerns regarding personally identifiable information (PII). We recognized that users were not adequately informed about how their location data could be used, which prompted us to act swiftly. 
+
+We believe that while users have a responsibility to protect their information, the project also has a duty to the community to ensure that the services we provide do not contribute to potential privacy issues. This commitment is essential not only for the well-being of our community but also to protect the integrity of the Meshtastic project.
+
+### The Benefits of the Change
+
+1. **Regional Information Control**: By limiting topic subscriptions, we ensure that information stays within its relevant region, preventing groups from sharing data outside users' designated areas.
+2. **Improved Server Performance**: With over 50% of MQTT traffic previously related to position data reporting, this change has significantly reduced server resource requirements. As a result, we have seen improvements in:
+   - **Availability**
+   - **Stability**
+   - **Reliability**
+3. **Cost Efficiency**: Hosting a free service comes with its own set of challenges. The reduction in traffic has led to lower hosting costs, making the service more sustainable in the long run.
+
+### New Features Implemented
+
+In response to community feedback, we have already enacted one of the solutions to enhance user experience. While subscribing to all topics remains disabled, we have introduced precise location filtering. This means:
+
+- **Server-Level Filtering**: Only position packets with imprecise location information will be passed to the topic, ensuring that sensitive data is not exposed.
+
+## Key Takeaways
+
+- The Meshtastic project has removed the ability to subscribe to all topics to ensure that information remains within relevant regions.
+- Users can still subscribe to regional topics to receive localized updates.
+- This change has improved server performance and reduced hosting costs.
+- Precise location filtering has been implemented to prevent sensitive data exposure.
+
+## Conclusion
+
+The Meshtastic project is committed to protecting user privacy while providing a reliable and efficient service. We understand that changes can be challenging, but we believe that these adjustments will ultimately benefit our community. We appreciate your understanding and support as we navigate these important changes together.
+
+*Thank you for being a part of the Meshtastic community! Your feedback is invaluable as we continue to improve our services. Feel free to use the comment section below.*
