@@ -62,7 +62,7 @@ The build system is modular. Adding a new board variant for an already supported
 
 1. Perform all of the steps [building with custom hardware](#build-with-custom-hardware) until your hardware runs fine.
 2. [Send a proposal](https://github.com/meshtastic/firmware/issues/new?assignees=&labels=enhancement%2Ctriage&template=New+Board.yml&title=%5BBoard%5D%3A+) to add a new board.
-3. If approved, go to (https://github.com/meshtastic/protobufs) and send a Pull Request for the `mesh.proto` file, adding your board to the `HardwareModel` Enum.
+3. If approved, go to [https://github.com/meshtastic/protobufs](https://github.com/meshtastic/protobufs) and send a Pull Request for the `mesh.proto` file, adding your board to the `HardwareModel` Enum.
 4. Change your define in `platformio.ini` from `PRIVATE_HW` to `YOUR_BOARD`. Adjust any macro guards in the code you need to support your board.
 5. Add your board identifier to `architecture.h` on the firmware repo in the folder of the platform you are using, and send in that Pull Request too.
 6. Wait for the Pulls to be merged back into Master.
@@ -72,7 +72,7 @@ The build system is modular. Adding a new board variant for an already supported
 
 Gitpod offers an alternative method for compiling the firmware without installing Visual Studio Code. It is a web browser-based online IDE that can be used with a GitHub account. Gitpod provides a free tier suitable for light use, such as compiling custom firmware.
 
-1. Go to (https://gitpod.io#https://github.com/meshtastic/firmware)[https://gitpod.io#https://github.com/meshtastic/firmware].
+1. Go to [https://gitpod.io#https://github.com/meshtastic/firmware](https://gitpod.io#https://github.com/meshtastic/firmware).
 2. Make the desired changes to the chosen variant.
 3. Build the firmware by running: `pio run -e <variant_name>`
 4. Once complete, download `<variant_name>.bin` or `<variant_name>.uf2` from `/workspace/firmware/.pio/build/<variant_name>.`
