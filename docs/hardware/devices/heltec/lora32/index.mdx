@@ -1,0 +1,314 @@
+---
+id: heltec-lora32
+title: HELTEC® LoRa 32
+sidebar_label: LoRa 32
+sidebar_position: 1
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+<Tabs
+groupId="heltec"
+queryString="heltec"
+defaultValue="v3"
+values={[
+{label: 'LoRa32 V2.1', value: 'v2.1'},
+{label: 'LoRa32 V3/V3.1', value:'v3'},
+{label: 'Wireless Stick Lite V3', value:'Wireless Stick Lite V3'},
+{label: 'Wireless Tracker', value: 'tracker'},
+{label: 'Wireless Paper v1.0', value: 'paper-v1.0'},
+{label: 'Wireless Paper v1.1', value: 'paper-v1.1'}
+]}>
+<TabItem value="v2.1">
+
+## V2.1
+
+:::warning
+Not recommended because of design issues! Support is being phased out. Use V3 in new projects.
+:::
+
+- **MCU:**
+  - ESP32 (WiFi & Bluetooth)
+- **LoRa Transceiver:**
+  - Semtech SX127x
+- **Frequency Options:**
+  - 433 MHz
+  - 868 MHz
+  - 915 MHz
+- **Connectors:**
+  - Micro USB
+  - Antenna:
+    - U.FL/IPEX antenna connector for LoRa
+
+### Features
+
+- Built in 0.96 inch OLED display
+- User and Reset Buttons
+- No GPS
+
+### Resources
+
+- Firmware file: `firmware-heltec-v2.1-X.X.X.xxxxxxx.bin`
+
+</TabItem>
+
+<TabItem value="v3">
+
+## V3/V3.1
+
+:::info
+This device may have issues charging a connected battery if utilizing a USB-C to USB-C cable. It's recommended to use a USB-A to USB-C cable.
+:::
+
+- **MCU:**
+  - ESP32-S3FN8 (WiFi & Bluetooth)
+- **LoRa Transceiver:**
+  - Semtech SX1262
+- **Frequency Options:**
+  - 433 MHz
+  - 470 - 510 MHz
+  - 863 - 870 MHz
+  - 902 - 928 MHz
+- **Connectors:**
+  - USB-C
+  - Antenna:
+    - Dedicated 2.4 GHz metal spring antenna for WiFi/Bluetooth
+    - U.FL/IPEX antenna connector for LoRa
+
+### V3.1 differences
+
+Firmware remains the same as V3 below. Compare schematics: [V3.0](<https://web.archive.org/web/20221127054612/https://resource.heltec.cn/download/WiFi_LoRa32_V3/HTIT-WB32LA(F)_V3_Schematic_Diagram.pdf>) and [V3.1](<https://resource.heltec.cn/download/WiFi_LoRa_32_V3/HTIT-WB32LA(F)_V3.1_Schematic_Diagram.pdf>). Key differences:
+
+- Removal of [FDG6322C](https://www.mouser.com/datasheet/2/308/1/FDG6322C_D-2312203.pdf) (a dual N & P channel FET) from the V3.1 power supply.
+- Antenna filter values in V3.1 (L11 = 1.8pF, C15 = 2.7nH, C24 = 1.8pF) align more closely with ESP32-S3 reference design than V3.0 (L11 = 1.6nH, C15 = 6.9pF, C24 = 2.4pF).
+
+### Features
+
+- Built in 0.96 inch OLED display
+- User and Reset Buttons
+- No GPS
+
+### Meshtastic I2C Definitions
+
+- SDA: GPIO41
+- SCL: GPIO42
+
+### Pin Map
+
+![HTIT-V3_PIN_MAP](</img/hardware/HTIT-WB32LA(F)_V3.webp>)
+
+Image Source: [Heltec](<https://resource.heltec.cn/download/WiFi_LoRa32_V3/HTIT-WB32LA(F)_V3.png>)
+
+### Resources
+
+- Firmware file: `firmware-heltec-v3-X.X.X.xxxxxxx.bin`
+- Purchase links
+  - US
+    - [Rokland](https://store.rokland.com/collections/heltec-products/products/heltec-wifi-lora-32v3)
+  - International
+    - [Heltec](https://heltec.org/project/wifi-lora-32-v3/)
+    - [AliExpress](https://www.aliexpress.us/item/3256805256690400.html)
+
+</TabItem>
+
+<TabItem value="Wireless Stick Lite V3">
+
+## Wireless Stick Lite V3
+
+:::info
+This device may have issues charging a connected battery if utilizing a USB-C to USB-C cable. It's recommended to use a USB-A to USB-C cable.
+:::
+
+- **MCU:**
+  - ESP32-S3FN8 (WiFi & Bluetooth)
+- **LoRa Transceiver:**
+  - Semtech SX1262
+- **Frequency Options:**
+  - 433 - 510 MHz
+  - 470 - 510 MHz
+  - 863 - 870 MHz
+  - 902 - 928 MHz
+- **Connectors:**
+  - USB-C
+  - Antenna:
+    - Dedicated 2.4 GHz stamped metal antenna for WiFi/Bluetooth
+    - U.FL/IPEX antenna connector for LoRa (next to the V3 icon)
+
+### Features
+
+- No display.
+- User and Reset Buttons
+- Additional GPIO availability
+- No GPS
+
+### Meshtastic I2C Definitions
+
+- SDA: GPIO41
+- SCL: GPIO42
+
+### Pin Map
+
+![HTIT-WSL_V3_PIN_MAP](/img/hardware/heltek-wsl-v3.svg)
+
+Image Source: [Heltec](https://resource.heltec.cn/download/Wireless_Stick_Lite_V3/HTIT-WSL_V3.png)
+
+### Resources
+
+- Firmware file: `firmware-heltec-wsl-v3-X.X.X.xxxxxxx.bin`
+- Purchase Links:
+  - US
+    - [Rokland](https://store.rokland.com/collections/heltec-products/products/heltec-wireless-stick-litev3-902-928-mhz)
+  - International
+    - [Heltec](https://heltec.org/project/wireless-stick-lite-v2/)
+    - [AliExpress](https://www.aliexpress.us/item/3256805256996507.html)
+
+</TabItem>
+
+<TabItem value="tracker">
+
+## Wireless Tracker
+
+:::info
+This device may have issues charging a connected battery if utilizing a USB-C to USB-C cable. It's recommended to use a USB-A to USB-C cable.
+:::
+
+- **MCU:**
+  - ESP32-S3FN8 (WiFi & Bluetooth)
+- **LoRa Transceiver:**
+  - Semtech SX1262
+- **Frequency Options:**
+  - 470 - 510 MHz
+  - 863 - 870 MHz
+  - 902 - 928 MHz
+- **Connectors:**
+  - USB-C
+  - Antenna:
+    - Dedicated 2.4 GHz metal spring antenna for WiFi/Bluetooth
+    - U.FL/IPEX antenna connector for LoRa and GNSS
+
+### Features
+
+- Onboard 0.96-inch LCD display
+- User and Reset Buttons
+
+### Flashing
+
+To flash ESP32-S3 devices like the Wireless Tracker, you typically need to place them in Espressif's firmware download mode. Use the "1200bps reset" button in the web flasher to do this. If this method does not work for any reason, you can follow the manual process below.
+
+:::warning
+
+Do not proceed unless an antenna is connected to avoid possible damage to the device's radio.
+
+:::
+
+The following process will manually place the device into the Espressif Firmware Download mode:
+
+1. Unplug the device.
+2. Press and hold the USER button.
+3. Plug device in.
+4. After 2-3 seconds, release the USER button.
+
+With the device now in the Espressif Firmware Download mode, you can proceed with flashing using one of the supported flashing methods. It's generally recommended to use the [Web Flasher](https://flasher.meshtastic.org/). You can select "Heltec Wireless Tracker" from the device drop-down.
+
+### Pin Map
+
+![HT-Tracker_V1 Pin Map](/img/hardware/HT-Tracker_V1_Pin_Map.webp)
+
+Image Source: [Heltec](https://heltec.org/project/wireless-tracker/)
+
+### Resources
+
+- Firmware file: `firmware-heltec-wireless-tracker-X.X.X.xxxxxxx.bin`
+- Purchase Links:
+  - US
+    - [Rokland](https://store.rokland.com/collections/heltec-products/products/heltec-wireless-tracker-v1-1-wi-fi-lora-bt-gnss)
+  - International
+    - [Heltec](https://heltec.org/project/wireless-tracker/)
+    - [AliExpress](https://www.aliexpress.us/item/3256805495189423.html)
+
+</TabItem>
+
+<TabItem value="paper-v1.0">
+
+## Wireless Paper V1.0
+
+:::info
+**The Wireless Paper V1.0 is listed as "Wireless Paper V1.0" in the firmware files and on the web flasher.**
+
+This device may have issues charging a connected battery if utilizing a USB-C to USB-C cable. It's recommended to use a USB-A to USB-C cable.
+:::
+
+- **MCU:**
+  - ESP32-S3FN8 (WiFi & Bluetooth)
+- **LoRa Transceiver:**
+  - Semtech SX1262
+- **Frequency Options:**
+  - 433 MHz
+  - 470 - 510 MHz
+  - 863 - 870 MHz
+  - 902 - 928 MHz
+- **Connectors:**
+  - USB-C
+  - Antenna:
+    - U.FL/IPEX antenna connector for LoRa
+    - Integrated 2.4 GHz PCB antenna
+
+### Features
+
+- Onboard 2.13-inch black and white E-Ink display screen
+- User and Reset switches
+- No GPS
+
+### Resources
+
+- Firmware file: `firmware-heltec-wireless-paper-v1_0-X.X.X.xxxxxxx.bin`
+- Purchase Links:
+  - International
+    - [Heltec](https://heltec.org/project/wireless-paper/)
+    - [AliExpress](https://www.aliexpress.us/item/3256805461611876.html)
+
+</TabItem>
+<TabItem value="paper-v1.1">
+
+## Wireless Paper V1.1
+
+:::info
+**The Wireless Paper V1.1 is listed as "Wireless Paper" in the firmware files and on the web flasher.**
+
+This device may have issues charging a connected battery if utilizing a USB-C to USB-C cable. It's recommended to use a USB-A to USB-C cable.
+:::
+
+- **MCU:**
+  - ESP32-S3FN8 (WiFi & Bluetooth)
+- **LoRa Transceiver:**
+  - Semtech SX1262
+- **Frequency Options:**
+  - 433 MHz
+  - 470 - 510 MHz
+  - 863 - 870 MHz
+  - 902 - 928 MHz
+- **Connectors:**
+  - USB-C
+  - Antenna:
+    - U.FL/IPEX antenna connector for LoRa
+    - Integrated 2.4 GHz PCB antenna
+
+### Features
+
+- Onboard 2.13-inch black and white E-Ink display screen
+- User and Reset switches
+- No GPS
+
+### Resources
+
+- Firmware file: `firmware-heltec-wireless-paper-X.X.X.xxxxxxx.bin`
+- Purchase Links:
+  - US
+    - [Rokland](https://store.rokland.com/collections/heltec-products/products/heltec-wireless-paper-wi-fi-lora-bt)
+  - International
+    - [Heltec](https://heltec.org/project/wireless-paper/)
+    - [AliExpress](https://www.aliexpress.us/item/3256805461611876.html)
+
+</TabItem>
+</Tabs>

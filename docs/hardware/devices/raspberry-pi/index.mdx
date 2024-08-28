@@ -1,53 +1,18 @@
 ---
 id: raspberry-pi
-title: Raspberry Pi Pico
-sidebar_label: Raspberry Pi Pico
-sidebar_position: 10
+title: Raspberry Pi
+sidebar_label: Raspberry Pi
+sidebar_position: 5
 ---
 
-import Tabs from "@theme/Tabs";
-import TabItem from "@theme/TabItem";
+### [Raspberry Pi Pico](./pico/)
 
-The Raspberry Pi Pico series is a range of tiny, fast, and versatile boards built using RP2040, the flagship microcontroller chip designed by Raspberry Pi in the UK.
+Fast versatile boards using the RP2040.
 
-:::info
+| Name                         | MCU    | Radio  |     WiFi     |      BT       | GPS |
+| :--------------------------- | :----- | :----- | :----------: | :-----------: | :-: |
+| [Raspberry Pi Pico](./pico/) | RP2040 | SX1262 | 2.4GHz b/g/n | not supported | NO  |
 
-Only the Pico W has WiFi/BLE capabilities. Meshtastic supports WiFi on the Pico W (although no web server and HTTP API), but does not currently support BLE.
-:::
+### [Raspberry Pi Zero/Zero2/3/4/400/5](/docs/hardware/devices/linux-native-hardware/)
 
-## Specifications
-
-- **MCU:**
-  - Raspberry Pi RP2040
-    - Dual M0+ Core
-    - 133MHz CPU Clock
-- **Connectors (On Pico):**
-  - Micro-USB on Pico
-
-:::note
-
-Please be aware that the Raspberry Pi Pico must be used in combination with a [Waveshare LoRa Module](https://www.waveshare.com/product/raspberry-pi/boards-kits/raspberry-pi-pico-cat/pico-lora-sx1262-868m.htm), which provides the necessary SX1262 LoRa radio. Please ensure to select the correct frequency for your region.
-
-:::
-
-- **LoRa Transceiver (On LoRa Module):**
-  - SX1262
-- **Frequency Options:**
-  - 410 - 525 MHz
-  - 863 - 870 MHz
-  - 902 - 930 MHz
-- **Connectors (On LoRa Module):**
-  - U.FL/IPEX antenna connector for LoRa
-  - 1.25mm 2-Pin JST for battery
-
-:::note
-
-LoRa transmissions may interfere with the USB connection. It is recommended to place the antenna as far away from the USB port as possible. 
-
-:::
-
-### Resources
-
-- Firmware file:`firmware-pico-X.X.X.xxxxxxx.uf2`
-  - for Pico W use: `firmware-picow-X.X.X.xxxxxxx.uf2`
-- [Offical Website for the Raspberry Pi Pico](https://www.raspberrypi.com/products/raspberry-pi-pico/), including official reseller links.
+Meshtastic offers support for Raspberry Pi devices through our Linux native platform, meshtasticd. For full information, please see our [Linux Native Hardware](/docs/hardware/devices/linux-native-hardware/) documentation.
