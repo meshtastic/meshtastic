@@ -90,6 +90,8 @@ Use `--ch-set psk random --ch-index 0` to assign a new (high quality) random AES
 
 Use `--ch-set psk default --ch-index 0` to restore the standard 'default' (minimally secure, because it is in the source code for anyone to read) AES128 key.
 
+Use `--ch-set psk base64:{key} --ch-index {index}` to set the PSK of a channel to a known entity
+
 All `ch-set` commands need to have the `ch-index` parameter specified:
 
 ```shell
