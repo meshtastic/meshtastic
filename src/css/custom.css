@@ -14,6 +14,7 @@
   --ifm-list-item-margin: 0;
   --ifm-code-font-size: 95%;
   --ifm-z-index-fixed: 1;
+  --ifm-leading: .8rem;
   --accent: #67ea94;
   --base: #f3f4f6;
   --primary: #ffffff;
@@ -185,6 +186,7 @@ a + .navbar__link > svg {
 .markdown :where(li):not(:where([class~="not-prose"] *)) {
   margin-bottom: 0;
   margin-top: 0;
+  line-height: 1.6;
 }
 
 .markdown
@@ -271,4 +273,11 @@ blockquote p::after,
 .markdown blockquote p::after {
   content: none !important;
   display: none !important;
+}
+
+p{
+  line-height: 1.5;
+}
+.markdown img {
+  margin-bottom: 0; /* Adjust this value as needed */
 }
