@@ -26,10 +26,9 @@ To reset the flash storage on your nRF52 board:
 4. Notice a new drive will be mounted on your computer (Windows, Mac, or Linux)
 5. Open this drive and you should see three files: `CURRENT.UF2`, `INDEX.HTM`, and `INFO_UF2.TXT`
 6. Open the `INFO_UF2.TXT` file with a text editor and note the `SoftDevice` value.
-7. If your Softdevice version number is above 7.x.x (e.g. S140 7.3.0) find the file included in the downloaded firmware named `Meshtastic_nRF52_factory_erase_v3_S140_7.3.0.uf2` and copy it onto the new drive. The device should reboot. _Steps 8 to 10 are not neccessary in this case._
-8. For older Softdevices below 7.x.x (e.g. S140 6.1.1) find the file included in the downloaded firmware named `Meshtastic_nRF52_factory_erase_v2.uf2` and copy it onto the new drive. The device should reboot.
-9. With the [Meshtastic CLI](/docs/software/python/cli/) installed, open your Terminal/Console and enter the command: `meshtastic --noproto`.
-10. Press any key, you should see the message: `Formatting... Done`.
+7. Find the file included in the downloaded firmware matching your softdevice major version number (7.x.x or 6.x.x). Either use `Meshtastic_nRF52_factory_erase_v3_S140_7.3.0.uf2` or `Meshtastic_nRF52_factory_erase_v3_S140_6.3.0.uf2` and copy it onto the new drive. The device should reboot.
+8. With the [Meshtastic CLI](/docs/software/python/cli/) installed, open your Terminal/Console and enter the command: `meshtastic --noproto`.
+9. You should see the message: `Formatting... Done`.
 
 Once the device has been erased, you can proceed to install the latest Meshtastic firmware on a clean storage filesystem by clicking the link below.
 
