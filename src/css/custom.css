@@ -82,7 +82,6 @@ html[data-theme="dark"] .header-github-link:before {
   color: var(--ifm-link-color);
 }
 
-
 .split-container {
   display: flex;
   justify-content: space-between;
@@ -104,7 +103,6 @@ html[data-theme="dark"] .header-github-link:before {
     padding: 10px 0;
   }
 }
-
 
 .indexCtasBody {
   --ifm-button-size-multiplier: 1.6;
@@ -138,8 +136,12 @@ html[data-theme="dark"] .header-github-link:before {
   --ifm-button-border-color: rgb(77, 77, 77);
 }
 
+.indexCtas a:first-of-type {
+  margin-right: 20px;
+}
+
 .indexCtas a:last-of-type {
-  margin: 20px 36px;
+  margin: 20px;
 }
 
 .theme-doc-markdown {
@@ -183,6 +185,7 @@ a + .navbar__link > svg {
 .markdown :where(li):not(:where([class~="not-prose"] *)) {
   margin-bottom: 0;
   margin-top: 0;
+  line-height: 1.6;
 }
 
 .markdown
@@ -261,4 +264,20 @@ td {
 .tabs__item:hover {
   background-color: var(--ifm-hover-overlay);
   border-radius: 0;
+}
+
+blockquote p::before,
+blockquote p::after,
+.markdown blockquote p::before,
+.markdown blockquote p::after {
+  content: none !important;
+  display: none !important;
+}
+
+p {
+  line-height: 1.6;
+}
+
+.markdown img {
+  margin-bottom: 0;
 }

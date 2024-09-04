@@ -77,15 +77,15 @@ The default messaging provided by Layer 1 is extended by setting the `WantAck` f
 If a transmitting node does not receive an ACK (or NAK) packet after a certain expiration time, it will use Layer 1 to attempt a re-transmission of the sent packet. A reliable packet (at this 'zero hop' level) will be resent a maximum of three times. If no ACK or NAK has been received by then the local node will internally generate a NAK (either for local consumption or use by higher layers of the protocol). The re-transmission expiration time is based on the maximum time it would take to receive an (implicit) ACK, taking the airtime of the sent packet and any processing delay into account.
 For direct messages, the intended recipient will also send a real ACK all the way back to the original sender, but the device will only retransmit when it received no ACK at all.
 
-### Layer 3: (Naive) Flooding for Multi-Hop Messaging
+### Layer 3: Managed Flooding for Multi-Hop Messaging
 
-Given our use-case for the initial release, most of our protocol is built around [flooding](<https://en.wikipedia.org/wiki/Flooding_(computer_networking)>). The implementation is currently 'naive' and doesn't try to optimize flooding, except by abandoning re-transmission once a node has seen a nearby receiver ACK the packet it's trying to flood. This means that up to N re-transmissions of a packet could occur in an N node mesh.
+Given the various use-cases and scenarios Meshtastic supports, most of our protocol is built around [flooding](<https://en.wikipedia.org/wiki/Flooding_(computer_networking)>), meaning that every node rebroadcasts a packet it receives, up till a certain hop limit. However, an important difference in Meshtastic is that before rebroadcasting, a node listens a short while to see if no other node already rebroadcasted it. If so, it will not rebroadcast. "Managed Flooding" is therefore a better term.
 
-If any mesh node sees a packet with a HopLimit other than zero, it will decrement that HopLimit and attempt re-transmission on behalf of the original sending node. In order to promote letting nodes that are further away flood the message, such that the message eventually reaches farther, the contention window (see Layer 1) for a flooding message depends on the Signal-to-Noise Ratio (SNR) of the received packet. The CW size is small for a low SNR, such that nodes that are further away are more likely to flood first and closer nodes that hear this will refrain from flooding.
+The principle is as follows. If any mesh node sees a packet with a HopLimit other than zero, it will decrement that HopLimit and attempt to rebroadcast on behalf of the original sending node. In order to promote letting nodes that are further away flood the message, such that the message eventually reaches farther, the contention window (see Layer 1) for a flooding message depends on the Signal-to-Noise Ratio (SNR) of the received packet. The CW size is small for a low SNR, such that nodes that are further away are more likely to flood first and closer nodes that hear this will refrain from flooding. An exception to this rule is for the `ROUTER` and `REPEATER` roles, that have a higher priority to rebroadcast and will do so even if they hear another node rebroadcasting.
 
 ### Example
 
-Below you see an example topology consisting of four nodes, where at a certain point node 0 wants to send a broadcast message.
+Below you see an example topology consisting of four nodes in `CLIENT` mode, where at a certain point node 0 wants to send a broadcast message.
 Due to limited coverage, it only reaches nodes 1 and 2. Since node 2 is farther away, its SNR is lower and therefore starts rebroadcasting earlier than 1.
 After node 0 received this rebroadcast, its message is acknowledged. Note that a message is already acknowledged once a rebroadcast from any Meshtastic node (whether or not it has the same encryption key) is received.
 Since node 1 heard the rebroadcast by 2, it will not rebroadcast again. Node 3 heard the message for the first time and the HopLimit is not yet zero, so it starts a rebroadcast for potential other receivers.
@@ -110,6 +110,6 @@ As meshes grow larger and traffic becomes more contentious, the firmware will in
 
 Starting with version 2.4.0, the firmware will scale back Telemetry, Position, and other ancillary port traffic for meshes larger than 40 nodes (nodes seen in the past 2 hours) using the following algorithm:
 
-`ScaledInterval = Interval * (1.0 + ((NumberOfOnlineNodes - 40) * 0.075)))`
+`ScaledInterval = Interval * (1.0 + ((NumberOfOnlineNodes - 40) * 0.075))`
 
 For example an active mesh of 62 nodes would scale back `telemetry.device_update_interval` to 79.5 minutes instead of the 30 minute default.

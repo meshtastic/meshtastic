@@ -1,0 +1,117 @@
+---
+id: station-series
+title: Station Series
+sidebar_label: Station Series
+sidebar_position: 2
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+The Station series of devices, designed by Neil Hao from B&Q Consulting and powered by Meshtastic, are compact and durable LoRa devices designed for high-performance radio frequency communication. They feature a powerful PA for LoRa communication, a rugged SMA antenna socket, and a variety of external IO interfaces.
+
+For more comprehensive information on the Station Series of devices, be sure to visit the B&Q Consulting Station Series [Wiki page.](https://wiki.uniteng.com/en/meshtastic/station-g2)
+
+<Tabs
+groupId="station-series"
+queryString="station-series"
+defaultValue="g2"
+values={[
+{label: 'Station G1', value:'g1'},
+{label: 'Station G2', value: 'g2'}
+]}>
+
+<TabItem value="g1">
+
+:::info
+
+The Station G1 has been discontinued and replaced by the upgraded Station G2. The Station G1 remains a supported device.
+
+:::
+
+## Specifications
+
+- **MCU**
+  - ESP32 WROOM
+    - WiFi
+    - Bluetooth 4.2
+- **LoRa Transceiver**
+  - Semtech SX1262
+  - Additional 35dBm LoRa Power Amplifier
+- **Frequency options**
+  - US-915 MHz
+  - EU-868 MHz
+- **Navigation Module**
+  - Optional
+- **Antenna**
+  - SMA Socket
+- **Connectors**
+  - USB-C (PD Protocol)
+
+## Features
+
+- Meshtastic pre-installed
+- User button
+- 1.3 inch OLED screen
+- Optional GPS Module and IO Extension Socket
+- Optional [12V Battery Docker](https://shop.uniteng.com/product/12v-battery-docker-for-station-edition-g1/) which can be used as Backup Power, or in scenarios that require mobility
+
+## Resources
+
+- Firmware file: `firmware-station-g1-X.X.X.xxxxxxx.bin`
+- [Unit Engineering's Official Wiki](https://uniteng.com/wiki/doku.php?id=meshtastic:station)
+- Purchase Links:
+  - International
+    - [Official Store](https://shop.uniteng.com/product/meshtastic-mesh-device-station-edition/)
+    - [Official Tindie Store](https://www.tindie.com/products/neilhao/meshtastic-mesh-device-station-edition/)
+
+![Station G1](/img/hardware/station-series/station-g1.webp)
+
+</TabItem>
+
+<TabItem value="g2">
+
+## Specifications
+
+- **MCU**
+  - ESP32-S3 WROOM-1
+    - WiFi
+    - Bluetooth 5.0
+- **LoRa Transceiver**
+  - Semtech SX1262
+  - Additional 35dBm LoRa Power Amplifier
+  - Dedicated Ultra-Low Noise Figure LNA
+- **Frequency options**
+  - 864 - 928 MHz
+- **Navigation Module**
+  - Optional (1x GROVE GPS Socket)
+- **Antenna**
+  - SMA Socket
+- **Connectors**
+  - USB-C (PD Protocol)
+
+## Features
+
+- Meshtastic pre-installed
+- User button
+- 1.3 inch OLED screen
+- 1x5P Pitch=1.5mm Socket (9V-19V External Power Supply)
+- GROVE I2C Socket( 1x4P Pitch=2mm )
+- SparkFun QWIIC I2C Socket ( 1x4P Pitch=1mm )
+- GROVE GPS Socket ( 1x4P Pitch=2mm )
+- IO Extension Socket ( 1x10P Pitch=1.5mm )
+
+## Resources
+
+- Firmware file: `firmware-station-g2-X.X.X.xxxxxxx.bin`
+- [Unit Engineering's Official Wiki](https://uniteng.com/wiki/doku.php?id=meshtastic:station)
+- Purchase Links:
+  - International
+    - [Official Store](https://shop.uniteng.com/product/meshtastic-mesh-device-station-edition/)
+    - [Official Tindie Store](https://www.tindie.com/products/neilhao/meshtastic-mesh-device-station-edition/)
+
+![Station G2 Front](/img/hardware/station-series/station-g2-front.webp)
+![Station G2 Back](/img/hardware/station-series/station-g2-back.webp)
+
+</TabItem>
+</Tabs>
