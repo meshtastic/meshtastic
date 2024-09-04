@@ -167,6 +167,16 @@ const RegionData = new Map<Protobuf.Config_LoRaConfig_RegionCode, Region>([
     },
   ],
   [
+    Protobuf.Config_LoRaConfig_RegionCode.NPL,
+    {
+      freq_start: 865,
+      freq_end: 868,
+      duty_cycle: 100,
+      spacing: 0,
+      power_limit: 30,
+    },
+  ],
+  [
     Protobuf.Config_LoRaConfig_RegionCode.UNSET,
     {
       freq_start: 902.0,
