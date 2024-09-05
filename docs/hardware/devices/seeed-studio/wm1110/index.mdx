@@ -1,0 +1,105 @@
+---
+id: seeed-wm1110
+title: Seeed Wio-WM1100
+sidebar_label: Wio-WM1100
+sidebar_position: 1
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+<Tabs
+groupId="wm1110"
+queryString="wm1110"
+defaultValue="wio-tracker-wm1110"
+values={[
+{label: 'WM110 Dev Kit', value:'wio-sdk-wm1110'},
+{label: 'Wio Tracker 1110', value: 'wio-tracker-wm1110'},
+]}>
+
+<TabItem value="wio-sdk-wm1110">
+
+## Seeed Wio-WM1110 Dev Kit
+
+:::note External GPS Required
+The LR1110 GNSS functionality does not yet work. Seeed recommends at Grove - GPS (Air530).
+:::
+
+- **MCU**
+  - Nordic nRF52840
+- **LoRa Transceiver**
+  - Semtech LR1110
+- **Frequency options**
+  - 868 MHz
+  - 915 MHz
+  - 923 MHz
+- **Navigation Module**
+  - Grove GPS Air530 (Supports GPS, Beidou, Glonass, Galileo, QZSS, SBAS)
+- **Connectors**
+  - USB-C
+  - LoRa Antenna: SMA antenna connector and U.FL/IPEX
+  - GNSS Antenna: RP-SMA antenna connector U.FL/IPEX
+  - NFC Antenna: U.FL/IPEX
+  - GPIO
+  - I2C x1
+  - UART x1
+  - Solar Panel
+  - SWDIO
+
+### Features
+
+- Temperature and Humidity Sensor (SHT41)
+- 3-Axis Accelerometer(LIS3DHTR)
+- Reset switch, power jumpers, 2 configurable buttons
+- AAA Battery x3
+- Screen sold separately
+
+### Resources
+
+- Firmware file: `firmware-wio-sdk-wm1110-X.X.X.xxxxxxx.bin`
+- Purchase Links:
+  - International
+    - [Seeed Studio](https://www.seeedstudio.com/Wio-WM1110-Dev-Kit-p-5677.html)
+
+![wio-wm1110-dev-kit](/img/hardware/seeed/wio-wm1110-dev-kit-font.webp)
+
+</TabItem>
+
+<TabItem value="wio-tracker-wm1110">
+
+## Wio Tracker 1110 Dev Kit for Meshtastic
+
+- **MCU**
+  - Nordic nRF52840 (WiFi & Bluetooth)
+- **LoRa Transceiver**
+  - Semtech LR1110
+- **Frequency options**
+  - 868 MHz
+  - 915 MHz
+  - 923 MHz
+- **Navigation Module**
+  - Semtech LR1110
+- **Connectors**
+  - USB-C
+  - LoRa Antenna: on-board and U.FL/IPEX
+  - GNSS Antenna: on-board and U.FL/IPEX
+  - Grove connectors: ADC x1, I2C x1, UART x1, Digital x3
+
+### Features
+
+- Temperature and Humidity Sensor (SHT41)
+- 3-Axis Accelerometer(LIS3DHTR)
+- Reset switch, power jumpers
+- Screen sold separately
+
+### Resources
+
+- Firmware file: `firmware-wio-tracker-wm1110-X.X.X.xxxxxxx.bin`
+- Purchase Links:
+  - International
+    - [Seeed Studio](https://www.seeedstudio.com/Wio-Tracker-1110-Dev-Kit-for-Meshtastic.html)
+
+![wio-tracker-1110-dev-kit](/img/hardware/seeed/wio-tracker-1110-dev-kit.webp)
+
+</TabItem>
+</Tabs>
