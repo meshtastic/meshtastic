@@ -48,18 +48,28 @@ The GT-U7 module is known for its high power consumption, which can potentially 
 - Wires and soldering equipment
 - (Optional) Switch for manual power control
 
-### Instructions
+### Instructions with NPN 2N2222 transistor
 
-1.  Solder a cable from the TXD slot on the GPS module to GPIO 48 on Heltec board. (You may choose your own GPIO pin)
-2.  Solder a cable from the RXD slot on the GPS module to GPIO 47 on Heltec board. (You may choose your own GPIO pin)
+1.  Solder a cable from the TXD slot on the GPS module to **GPIO 48** on Heltec board. (You may choose your own GPIO pin)
+2.  Solder a cable from the RXD slot on the GPS module to **GPIO 47** on Heltec board. (You may choose your own GPIO pin)
 3.  Solder a cable from the GND slot on the GPS module to GND pin on Heltec board.
 4.  Solder a cable from left leg of NPN 2N2222 Transistor to VCC skit on GPS module.
 5.  Solder a cable from Right leg of NPN 2N2222 Transistor to 3V/5V pin on Heltec board.
-6.  Solder a cable from Middle leg of NPN 2N2222 Transistor to GPIO 48 of Heltec board. (You may choose your own GPIO pin)
+6.  Solder a cable from Middle leg of NPN 2N2222 Transistor to **GPIO 46** of Heltec board. (You may choose your own GPIO pin)
 7.  Go to Meshtastic app > Radio Configurations > Position
-8.  Set GPS_RX_PIN to 48 (This will communicate to the TXD slot on the GPS)
-9.  Set GPS_TX_PIN to 47 (This will communicate to the RXD slot on the GPS)
-10. Set PIN_GPS_EN to 46 (This will allow the meshtastic firmware to turn off the power on the GPS board with the user button of the Heltec Board by pressing it 3 times)
+8.  Set GPS_RX_PIN to **48** (_This will communicate to the **TXD** slot on the GPS_)
+9.  Set GPS_TX_PIN to **47** (_This will communicate to the **RXD** slot on the GPS_)
+10. Set PIN_GPS_EN to **46** (This will allow the meshtastic firmware to turn off the power on the GPS board with the user button of the Heltec Board by pressing it 3 times)
+
+### Instructions with manual switch
+
+1.  Solder a cable from the TXD slot on the GPS module to **GPIO 48** on Heltec board. (You may choose your own GPIO pin)
+2.  Solder a cable from the RXD slot on the GPS module to **GPIO 47** on Heltec board. (You may choose your own GPIO pin)
+3.  Solder a cable from the 3V to the manual switch, and another from the manual switch to the VCC slot.
+4.  Solder a cable from the GND slot on the GPS module to GND pin on Heltec board.
+5.  Go to Meshtastic app > Radio Configurations > Position
+6.  Set GPS_RX_PIN to **48** (_This will communicate to the **TXD** slot on the GPS_)
+7.  Set GPS_TX_PIN to **47** (_This will communicate to the **RXD** slot on the GPS_)
 
 ### Wiring Diagram
 
@@ -69,7 +79,7 @@ The GT-U7 module is known for its high power consumption, which can potentially 
 
 If the GPS module does not power on, check the connections to the transistor and ensure that the middle pin is properly configured in the firmware settings.
 If the message "GPS is Disabled" appears, press the user button on the Heltec board three times to enable it.
-If the message "No GPS Present" appears, check that the TXD and RXD are correctly configured.
+If the message "No GPS Present" appears, check that the TXD and RXD are correctly configured and make sure that GPS_RX_PIN is configured to TXD and vice-versa.
 If the message "No GPS Lock" appears, move the node to another location with access to the sky for a bit to lock on properly.
 If the location is not accurate, walk around to allow the GPS to properly lock on.
 
