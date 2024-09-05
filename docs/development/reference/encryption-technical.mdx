@@ -5,18 +5,21 @@ sidebar_label: Encryption Technical
 sidebar_position: 5
 description: Technical Overview of Encryption Employed with Meshtastic from Firmware 2.5.0 Onwards
 ---
-# Updated Security Implementation: 
+
+# Updated Security Implementation:
+
 ## PSK for Channels, PKI for Direct Messages (DMs) and Admin Messages
 
-With the latest firmware release (2.5.0 and newer), which introduces Public Key Infrastructure (PKI) for Direct Messages (DMs) and additionally incorporating the use of Session IDs for Admin Messages, the security architecture of Meshtastic has reached a new level of robustness. 
+With the latest firmware release (2.5.0 and newer), which introduces Public Key Infrastructure (PKI) for Direct Messages (DMs) and additionally incorporating the use of Session IDs for Admin Messages, the security architecture of Meshtastic has reached a new level of robustness.
 
 Below is a detailed overview of how PSK, PKI, and Session IDs are integrated into your system to secure Channels, Direct Messages, and Admin Messages.
 
 ## 1. Chat Channels Using Pre-Shared Key (PSK):
 
 - **PSK Overview:**
-    - Chat Channels continue to utilize a Pre-Shared Key (PSK) for encrypting communications. 
-    - All participants share the same PSK for their Channels, which is used for both encryption and decryption within the channel.
+
+  - Chat Channels continue to utilize a Pre-Shared Key (PSK) for encrypting communications.
+  - All participants share the same PSK for their Channels, which is used for both encryption and decryption within the channel.
 
 - **Security Considerations:**
   - **Confidentiality:** Only participants with the correct PSK can access messages within the Chat Channel.
@@ -25,6 +28,7 @@ Below is a detailed overview of how PSK, PKI, and Session IDs are integrated int
 ## 2. Direct Messages (DMs) Now Using PKI:
 
 - **PKI Implementation for DMs:**
+
   - **Public/Private Key Pairs:** Each node is equipped with a unique public/private key pair. The private key is securely stored on the node, and the public key is shared with other nodes, allowing for secure, authenticated communication.
   - **Encryption and Signature:**
     - **Encryption:** DMs are encrypted using the recipient’s public key, ensuring only the recipient with the corresponding private key can decrypt the message.
@@ -36,7 +40,9 @@ Below is a detailed overview of how PSK, PKI, and Session IDs are integrated int
 ## 3. Admin Messages: Enhanced Security with PKI and Session IDs:
 
 - **Key Exchange with DH Curve25519:**
+
   - **Initial Key Exchange Setup:**
+
     - **Key Generation:** A Diffie-Hellman (DH) key exchange occurs using Curve25519 upon first communication between nodes. This generates a shared secret for establishing a symmetric encryption key.
     - **Hardware Support:** Curve25519 is supported in hardware, ensuring efficient and secure key exchanges.
     - **Shared Secret:** The derived shared secret is used for all subsequent communications between the nodes.
@@ -46,6 +52,7 @@ Below is a detailed overview of how PSK, PKI, and Session IDs are integrated int
     - **Efficiency:** Symmetric encryption, especially when based on a secure DH exchange, balances security and performance, making it ideal for real-time applications.
 
 - **Session ID for Admin Messages:**
+
   - **Session ID Usage:** Session IDs are generated for each admin session and used as an additional value inside the encrypted packet. This ensures that each session is secure and unique.
   - **Session Duration:** The session ID is valid only for a short duration (e.g., 120 seconds) and is discarded once the session ends or after the next control message is sent.
 
@@ -56,10 +63,12 @@ Below is a detailed overview of how PSK, PKI, and Session IDs are integrated int
 ## 4. Overall Security Architecture:
 
 - **Integration of PKI with Existing Systems:**
+
   - **Direct Messages:** PKI enhances the security of DMs by providing encryption, authentication, and integrity through the use of asymmetric encryption and digital signatures.
   - **Admin Messages:** The combination of PKI and session IDs secures admin-related operations, providing an additional layer of protection for critical functions.
 
 - **Use of PSK with Existing Systems:**
+
   - **Channels:** PSKs continue to be used for group communication, ensuring secure message exchanges within the channel.
 
 - **Scalability and Performance:**
