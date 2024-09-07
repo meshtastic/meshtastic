@@ -216,6 +216,14 @@ const modemPresets = new Map<
   Modem
 >([
   [
+    Protobuf.Config.Config_LoRaConfig_ModemPreset.SHORT_TURBO,
+    {
+      bw: 500,
+      cr: 8,
+      sf: 7,
+    },
+  ],
+  [
     Protobuf.Config.Config_LoRaConfig_ModemPreset.SHORT_FAST,
     {
       bw: 250,
