@@ -13,7 +13,7 @@ Meshtastic provides AES256-CTR encryption for the payload of each packet when se
 
 By default, you have one primary channel, which is encrypted with a simple known key ("AQ=="), so to use proper encryption, you **must change** this key first, or create a new channel and share it with the ones you want to communicate with. However, if you don't have the default key, it means you will not be able to communicate with devices that don't have your key.
 
-Direct messages to a specific node are now encrypted using Public Key Infrastructure (PKI). Each node is equipped with a unique public/private key pair, and direct messages are encrypted with the recipient’s public key. This ensures that only the recipient can decrypt the message using their private key. Additionally, messages are signed with the sender’s private key, allowing the recipient to verify the sender’s identity and ensuring the message's integrity.
+Direct messages to a specific node are now encrypted using Public Key Cryptography (PKC). Each node is equipped with a unique public/private key pair, and direct messages are encrypted with the recipient's public key. This ensures that only the recipient can decrypt the message using their private key. Additionally, messages are signed with the sender's private key, allowing the recipient to verify the sender's identity and ensuring the message's integrity.
 
 All periodic broadcasts (position, telemetry, traceroutes, etc.) the device sends out itself are sent over the primary channel and thus encrypted with that key.
 
@@ -37,36 +37,33 @@ This means Meshtastic is vulnerable to [**« Harvest now, Decrypt later »**](ht
 
 Other protocols, such as _misconfigured TLS1.2_, are far more impacted by Harvest now, Decrypt later attacks because their keys will be broken by near-future Quantum-Computers, yet they do not provide PFS.
 
-Meshtastic's encryption is not threatened by Quantum-Computers\*, so realistic attack vectors are accidental mishandling of channel keys and nodes being lost.
+Meshtastic's AES256 encryption is considered quantum-resistant[^1], but the public/private key exchange for DMs is not, as current quantum-resistant cryptography schemes don't fit in LoRa packets or our IoT hardware; realistic attack vectors include accidental mishandling of channel keys, nodes being lost, and potential future quantum attacks on DM key exchanges.
 
-\*On the Quantum-Resistance of AES256, see:
+[^1]: On the Quantum-Resistance of AES256, see [this stackoverflow question, containing a bit of debate and two good answers](https://crypto.stackexchange.com/q/6712) and the [NIST's Post-Quantum FAQ](https://csrc.nist.gov/projects/post-quantum-cryptography/faqs) section "To protect against the threat of quantum computers, should we double the key length for AES now? (added 11/18/18)"
 
-- [this stackoverflow question, containing a bit of debate and two good answers](https://crypto.stackexchange.com/q/6712)
-- [NIST's Post-Quantum FAQ](https://csrc.nist.gov/projects/post-quantum-cryptography/faqs) section « To protect against the threat of quantum computers, should we double the key length for AES now? (added 11/18/18) »
-
-**Recommendations** for users using _private channels_:
+#### Recommendations for users using private channels
 
 - **Do not configure private channels on unattended nodes**. Nodes will relay Meshtastic traffic even if they are not able to decrypt it. Your unattended routers should not have the private PSK configured as it is easy to gain physical access and extract the channel key.
 - Keep in mind that everything sent on a channel can be stored and decrypted later by anyone who gains access to the key, even if you locally delete the messages.
 - Change your Channel Keys from time to time.
 
-**Changes since 2.5.0 Firmware release**
+#### Changes since 2.5.0 Firmware release
 
-- Direct Messages are now protected with PKI when messaging between devices on v2.5.0 or newer and key exchange has taken place, messaging to legacy 2.4.3 or older firmware versions are not protected.
+- Direct Messages are now protected with PKC when messaging between devices on v2.5.0 or newer and key exchange has taken place, messaging to legacy 2.4.3 or older firmware versions are not protected.
 - Admin Messages between two v2.5.0 or newer nodes are now protected and additonal relay attack protection in place.
 
 ### Integrity
 
 Integrity means ensuring messages cannot be modified without the key.
 
-Meshtastic does not check channel messages have not been tampered with, see [`#4030`](https://github.com/meshtastic/firmware/issues/4030) for details.
+Meshtastic does not verify the integrity of channel messages to check if they have been tampered with (see [issue #4030](https://github.com/meshtastic/firmware/issues/4030) for details).
 
-**Recommendations**:
+#### Recommendations
 
 - Keep in mind that by applying a known plaintext attack, anyone _could_ send messages on a channel even if the channel key is private and secure.
 - For developers of third-party applications integrating Meshtastic, include a cryptographic MAC over the message content and PSK. We are also considering an [AEAD secured channel mode which would provide this natively](https://github.com/meshtastic/firmware/issues/4030).
 
-**Changes since 2.5.0 Firmware release**
+#### Changes since 2.5.0 Firmware release
 
 - Message integrity is checked for Direct Messages or Admin Control when communication is between v2.5.0 or newer firmware.
 
@@ -78,28 +75,28 @@ This is because node IDs are based on hardware [MAC address](https://en.wikipedi
 
 Some other networks like [Yggdrasil](https://yggdrasil-network.github.io/), [cjdns](https://github.com/cjdelisle/cjdns), or [libp2p](https://libp2p.io/) use [public/private key pairs](https://en.wikipedia.org/wiki/Public-key_cryptography), and the Public Key becomes the Node Identity. This makes all messages bigger and/or requires an interactive handshake process.
 
-**Recommendations**:
+#### Recommendations
 
 - Keep in mind that the sender field is indicative, and anyone with access to the channel key can trivially lie.
 
-**Changes since 2.5.0 Firmware release**
+#### Changes since 2.5.0 Firmware release
 
 - The above now only relates to group chats/channels as DM's are protected when messaging between devices on 2.5 or newer, messaging to legacy 2.4 or older devices are not afforded this addition authentication.
 
 ## Direct Messages
 
-Direct Messages (DMs) are now implemented using Public Key Infrastructure (PKI). This provides a significant upgrade in security compared to the previous channel-based encryption:
+Direct Messages (DMs) are now implemented using Public Key Cryptography (PKC). This provides a significant upgrade in security compared to the previous channel-based encryption:
 
 - **Message Encryption:** Each DM is encrypted using the recipient's public key, ensuring that only the recipient can decrypt the message with their private key.
 - **Digital Signatures:** Messages are signed with the sender's private key, allowing the recipient to verify the sender's identity and ensuring the integrity of the message.
 
-**Prior to 2.5.0 Firmware Release**
+### Prior to 2.5.0 Firmware Release
 
-Previously, DMs were implemented as channel messages with a `to` protobuf field set. This meant anyone in the channel could read all your direct messages. With PKI, this issue is resolved, as only the intended recipient can decrypt and read the message.
+Previously, DMs were implemented as channel messages with a `to` protobuf field set. This meant anyone in the channel could read all your direct messages. With PKC, this issue is resolved, as only the intended recipient can decrypt and read the message.
 
-**Recommendations**:
+### Recommendations
 
-- While PKI significantly enhances the security of DMs, it's still advisable to avoid sharing sensitive information in direct messages without proper verification of the recipient's public key.
+- While PKC significantly enhances the security of DMs, it's still advisable to avoid sharing sensitive information in direct messages without proper verification of the recipient's public key.
 
 ## Admin Messages
 
@@ -108,11 +105,11 @@ Admin Messages/Control are now protected by enhanced security features, making s
 - **Stronger Encryption:** Admin Messages now use advanced encryption methods to ensure that only the intended recipients can access and read them.
 - **Session IDs:** Each administrative session is assigned a unique Session ID, which helps prevent unauthorized access and ensures that messages are not tampered with or replayed.
 
-**Prior to 2.5.0 Firmware Release**
+### Prior to 2.5.0 Firmware Release
 
 Previously, admin messages were not as secure, but with these updates, they are now much better protected against potential attacks and replay attacks.
 
-**Recommendations**:
+### Recommendations
 
 - Always ensure that your devices are using the latest firmware to benefit from these improved security features.
 - Regularly monitor your network for any unusual activity to maintain a high level of security.

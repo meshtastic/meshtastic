@@ -52,7 +52,7 @@ Below is a detailed overview of how PSK, PKC, and Session IDs are integrated int
 - **Session ID for Admin Messages:**
 
   - **Session ID Usage:** Session IDs are generated for each admin session and used as an additional value inside the encrypted packet. This ensures that each session is secure and unique.
-  - **Session Duration:** The session ID is valid only for a short duration (e.g., 120 seconds) and is discarded once the session ends or after the next control message is sent.
+  - **Session Duration:** The session ID is valid only for a short duration (e.g., 300 seconds) and is discarded once the session ends or after the next control message is sent.
 
   - **Security Enhancements with PKC and Session ID:**
     - **Replay Attack Mitigation:** By utilizing session IDs, replay attacks are effectively mitigated. Old session IDs cannot be reused, ensuring that intercepted packets are invalidated.
