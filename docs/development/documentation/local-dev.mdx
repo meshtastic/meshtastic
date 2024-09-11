@@ -4,10 +4,6 @@ title: Serving Docs Locally for Development
 sidebar_label: Local Development
 ---
 
-:::note
-Some things won't display properly like logos or protobufs page, this is not cause for concern.
-:::
-
 ## Prerequisites
 
 In order to set up your local environment, you will need to install:
@@ -24,17 +20,23 @@ Log into GitHub and create a fork of the [meshtastic/meshtastic](https://github.
 ### Clone your Meshtastic Repository fork
 
 :::note
-Replace `username` with your GitHub username.
+Replace `YOUR_GITHUB_USERNAME` with your GitHub username.
 :::
 
-```shell title="Clone username/Meshtastic Repo"
-git clone https://github.com/username/meshtastic.git
+```shell title="Clone your Fork of the Documentation Repository"
+git clone https://github.com/YOUR_GITHUB_USERNAME/meshtastic.git
 ```
 
-### Change directory to Local copy
+### Change directory into your Local Copy
 
 ```shell title="Change Directory"
-cd ~/meshtastic
+cd ./meshtastic
+```
+
+### Install Submodules
+
+```shell title="Install Submodules"
+git submodule update --init --recursive
 ```
 
 ### Install Dependencies
