@@ -37,7 +37,7 @@ With this new PKC scheme, Meshtastic offers enhanced encryption for DMs and secu
 
 At the heart of Meshtastic's new encryption system lies the X25519 elliptic curve Diffie-Hellman key exchange. This process unfolds in two key steps:
 
-1. Key Generation: Upon booting, each device generates a random private key and derives a corresponding public key using the X25519 algorithm. This public key is then broadcast to the mesh as part of the node's regular announcements.
+1. Key Generation: Upon first boot, each device generates a random private key and derives a corresponding public key using the X25519 algorithm. This public key is then broadcast to the mesh as part of the node's regular announcements.
 
 2. Secure Communication: When a node initiates a Direct Message (DM), it completes the X25519 key exchange by combining its private key with the recipient's public key. This process generates a unique shared secret, which is then used to encrypt the DM. The receiving node can independently derive the same shared secret using its private key and the sender's public key, enabling secure decryption.
 
