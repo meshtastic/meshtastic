@@ -1,46 +1,46 @@
 .accordion {
-    border-radius: 2px;
-    border: 1px solid var(--ifm-color-emphasis-200);
+  border-radius: 2px;
+  border: 1px solid var(--ifm-color-emphasis-200);
 }
 
 .accordion__item + .accordion__item {
-    border-top: 1px solid var(--ifm-color-emphasis-200);
+  border-top: 1px solid var(--ifm-color-emphasis-200);
 }
 
 .accordion__button {
-    background-color: var(--ifm-footer-background-color);
-    border: none;
-    cursor: pointer;
-    padding: calc(var(--ifm-pre-padding)/1.5);
-    text-align: left;
-    width: 100%;
+  background-color: var(--ifm-footer-background-color);
+  border: none;
+  cursor: pointer;
+  padding: calc(var(--ifm-pre-padding) / 1.5);
+  text-align: left;
+  width: 100%;
 }
 
 .accordion__button:hover {
-    background-color: var(--ifm-background-surface-color);
+  background-color: var(--ifm-background-surface-color);
 }
 
 .accordion__button:before {
-    border-bottom: 2px solid currentColor;
-    border-right: 2px solid currentColor;
-    content: '';
-    display: inline-block;
-    height: 10px;
-    margin-right: 12px;
-    transform: rotate(-45deg);
-    width: 10px;
+  border-bottom: 2px solid currentColor;
+  border-right: 2px solid currentColor;
+  content: "";
+  display: inline-block;
+  height: 10px;
+  margin-right: 12px;
+  transform: rotate(-45deg);
+  width: 10px;
 }
 
-.accordion__button[aria-expanded='true']::before,
-.accordion__button[aria-selected='true']::before {
-    transform: rotate(45deg);
+.accordion__button[aria-expanded="true"]::before,
+.accordion__button[aria-selected="true"]::before {
+  transform: rotate(45deg);
 }
 
 [hidden] {
-    display: none;
+  display: none;
 }
 
 .accordion__panel {
-    background: var(--ifm-background-color);
-    padding: var(--ifm-pre-padding);
+  background: var(--ifm-background-color);
+  padding: var(--ifm-pre-padding);
 }
