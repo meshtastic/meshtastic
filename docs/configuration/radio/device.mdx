@@ -79,23 +79,11 @@ This setting defines the device's behavior for how messages are rebroadcasted.
 |    `LOCAL_ONLY`     | LOCAL_ONLY - Ignores observed messages from foreign meshes that are open or those which it cannot decrypt. Only rebroadcasts message on the nodes local primary / secondary channels.  |
 |    `KNOWN_ONLY`     | KNOWN_ONLY - Ignores observed messages from foreign meshes like LOCAL_ONLY, but takes it a step further by also ignoring messages from nodenums not in the node's known list (NodeDB). |
 
-## Serial Console
-
-Acceptable values: `true` or `false`
-
-Disabling this will disable the SerialConsole by not initializing the StreamAPI.
-
 ## TZDEF (Timezone Definition)
 
 The `tzdef` setting allows the local offset to be defined for the device. It uses the TZ Database format to display the correct local time on the device display and in its logs.
 
 To set the timezone, use the POSIX TZ Database string for the relevant region. Here is a list of [supported timezones](https://github.com/nayarsystems/posix_tz_db/blob/master/zones.csv). For example, if your region is `America/Los_Angeles`, you would input `PST8PDT,M3.2.0,M11.1.0` as the timezone.
-
-## Debug Log
-
-Acceptable values: `true` or `false`
-
-By default we turn off logging as soon as an API client connects. Set this to true to leave the debug log outputting even when API is active.
 
 ## GPIO for user button
 
@@ -112,10 +100,6 @@ This is the number of seconds between NodeInfo message (containing i.a. long and
 ## Double Tap as Button Press
 
 This option will enable a double tap, when a supported accelerometer is attached to the device, to be treated as a button press.
-
-## Managed Mode
-
-Enabling Managed mode will restrict access to all radio configurations via client applications. Radio configurations will only be accessible through the Admin channel. To avoid being locked out, make sure the Admin channel is working properly before enabling it.
 
 ## Device Config Client Availability
 
@@ -161,24 +145,21 @@ All device config options are available in the python CLI. Example commands are 
 
 :::
 
-| Setting                           | Acceptable Values                                                                   | Default           |
-| --------------------------------- | ----------------------------------------------------------------------------------- | ----------------- |
-| device.debug_log_enabled          | `true`, `false`                                                                     | `false`           |
+| Setting                           | Acceptable Values                                                  | Default           |
+| --------------------------------- | ------------------------------------------------------------------ | ----------------- |
 | device.role                       | `CLIENT`, `CLIENT_MUTE`, `ROUTER`, `REPEATER`, `TRACKER`, `SENSOR` | `CLIENT`          |
-| device.rebroadcast_mode           | `ALL`, `ALL_SKIP_DECODING`, `LOCAL_ONLY`                                            | `ALL`             |
-| device.serial_enabled             | `true`, `false`                                                                     | `true`            |
-| device.button_gpio                | `0` - `34`                                                                          | `0`               |
-| device.buzzer_gpio                | `0` - `34`                                                                          | `0`               |
-| device.node_info_broadcast_secs   | `3600` - `UINT MAX`                                                                    | `10800` (3 hours) |
-| device.double_tap_as_button_press | `false`, `true`                                                                     | `false`           |
-| device.is_managed                 | `false`, `true`                                                                     | `false`           |
+| device.rebroadcast_mode           | `ALL`, `ALL_SKIP_DECODING`, `LOCAL_ONLY`                           | `ALL`             |
+| device.button_gpio                | `0` - `34`                                                         | `0`               |
+| device.buzzer_gpio                | `0` - `34`                                                         | `0`               |
+| device.node_info_broadcast_secs   | `3600` - `UINT MAX`                                                | `10800` (3 hours) |
+| device.double_tap_as_button_press | `false`, `true`                                                    | `false`           |
 
 :::tip
 
 Because the device will reboot after each command is sent via CLI, it is recommended when setting multiple values in a config section that commands be chained together as one.
 
 ```shell title="Example:"
-meshtastic --set device.role CLIENT --set device.debug_log_enabled true
+meshtastic --set device.role CLIENT --set device.tzdef UTC0
 ```
 
 :::
@@ -187,16 +168,8 @@ meshtastic --set device.role CLIENT --set device.debug_log_enabled true
 meshtastic --set device.role CLIENT
 ```
 
-```shell title="Disable serial console"
-meshtastic --set device.serial_enabled false
-```
-
 ```shell title="Set tzdef"
 meshtastic --set device.tzdef UTC0
-```
-
-```shell title="Enable debug logging"
-meshtastic --set device.debug_log_enabled true
 ```
 
 </TabItem>
