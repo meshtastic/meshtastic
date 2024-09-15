@@ -79,15 +79,15 @@ Note: these instructions assume an SI2312 MOSFET is used. For other parts, alway
 
  1. Solder a wire from the TXD pin on the GPS module to GPIO 48 on Heltec board. (You may choose your own GPIO pin)
  2. Solder a wire from the RXD pin on the GPS module to GPIO 47 on Heltec board. (You may choose your own GPIO pin)
- 3. Solder a wire from the GND pin on the GPS module to middle pin of the SI 2312 Mosfet
+ 3. Solder a wire from the GND pin on the GPS module to middle pin of the SI 2312 MOSFET
  4. Solder a wire from the VCC pin of the GPS module to o 3V/5V pin on Heltec board.
- 5. Solder a wire from Left leg of SI2312  Mosfet to GPIO 46 on the Heltec board.         
- 6. Solder a wire from Right leg of SI2312 Mosfet to the empty solder spot  on the heltec board (see pictures).
+ 5. Solder a wire from Left leg of SI2312  MOSFET to GPIO 46 on the Heltec board.         
+ 6. Solder a wire from Right leg of SI2312 MOSFET to the empty solder spot  on the heltec board (see pictures).
  7. Go to Meshtastic app > Radio Configurations > Position
  8. Set GPS_RX_PIN to 48 (This will communicate to the TXD pin on the GPS)
  9. Set GPS_TX_PIN to 47 (This will communicate to the RXD pin on the GPS)
  10. Set PIN_GPS_EN to 46 (This will allow the meshtastic firmware to turn off the power on the GPS board with the user button of the Heltec Board by pressing it 3 times)
- 11. Ensure that the ground on the GPS module does not contact the ground of the Heltec board, or any other component linked to the Heltec ground. This includes antenna covers, battery connectors, etc. Failure to ensure they are separated may lead to the Mosfet being bypassed.
+ 11. Ensure that the ground on the GPS module does not contact the ground of the Heltec board, or any other component linked to the Heltec ground. This includes antenna covers, battery connectors, etc. Failure to ensure they are separated may lead to the MOSFET being bypassed.
 
 ### Photographs and Diagrams - SMD
 
