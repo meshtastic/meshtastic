@@ -35,7 +35,7 @@ Remember: A network of `CLIENT` nodes with a small number of well-placed `ROUTER
 
 ## (Not) Sharing Your Location
 
-Telemetry is shared over your [PRIMARY channel](/docs/configuration/radio/channels#role). This means that if your node has acquired GPS coordinates from an integrated GPS chip, or from your mobile device, your coordinates will be sent to the mesh over this channel, using it's defined encryption (if any).
+Telemetry is shared over your [PRIMARY channel](/docs/configuration/radio/channels#role). This means that if your node has acquired GPS coordinates from an integrated GPS chip, or from your mobile device, your coordinates will be sent to the mesh over this channel, using its defined encryption (if any).
 
 By default the PRIMARY channel's name is LongFast with the encryption key "AQ==" (Base64 equivalent of Hex 0x01). If this is left unchanged, your location will be shared with all nodes in range that are also using the default channel.
 
