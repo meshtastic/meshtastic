@@ -216,6 +216,14 @@ const modemPresets = new Map<
   Modem
 >([
   [
+    Protobuf.Config.Config_LoRaConfig_ModemPreset.SHORT_TURBO,
+    {
+      bw: 500,
+      cr: 5,
+      sf: 7,
+    },
+  ],
+  [
     Protobuf.Config.Config_LoRaConfig_ModemPreset.SHORT_FAST,
     {
       bw: 250,
@@ -323,8 +331,9 @@ export const FrequencyCalculator = (): JSX.Element => {
   return (
     <div className="flex flex-col border-l-[5px] shadow-md my-4 border-accent rounded-lg p-4 bg-secondary gap-2">
       <div className="flex gap-2">
-        <label>Modem Preset:</label>
+        <label htmlFor="modemPreset">Modem Preset:</label>
         <select
+          id="modemPreset"
           value={modemPreset}
           onChange={(e) =>
             setModemPreset(
@@ -342,8 +351,9 @@ export const FrequencyCalculator = (): JSX.Element => {
         </select>
       </div>
       <div className="flex gap-2">
-        <label>Region:</label>
+        <label htmlFor="region">Region:</label>
         <select
+          id="region"
           value={region}
           onChange={(e) => setRegion(Number.parseInt(e.target.value))}
         >
@@ -354,15 +364,21 @@ export const FrequencyCalculator = (): JSX.Element => {
           ))}
         </select>
       </div>
-
       <div className="flex gap-2 mb-4">
-        <label className="font-semibold">Number of slots:</label>
-        <input type="number" disabled={true} value={numChannels} />
+        <label htmlFor="numSlots" className="font-semibold">
+          Number of slots:
+        </label>
+        <input
+          id="numSlots"
+          type="number"
+          disabled={true}
+          value={numChannels}
+        />
       </div>
-
       <div className="flex gap-2">
-        <label>Frequency Slot:</label>
+        <label htmlFor="frequencySlot">Frequency Slot:</label>
         <select
+          id="frequencySlot"
           value={channel}
           onChange={(e) => setChannel(Number.parseInt(e.target.value))}
         >
@@ -373,10 +389,16 @@ export const FrequencyCalculator = (): JSX.Element => {
           ))}
         </select>
       </div>
-
       <div className="flex gap-2">
-        <label className="font-semibold">Frequency of slot:</label>
-        <input type="number" disabled={true} value={channelFrequency} />
+        <label htmlFor="slotFrequency" className="font-semibold">
+          Frequency of slot:
+        </label>
+        <input
+          id="slotFrequency"
+          type="number"
+          disabled={true}
+          value={channelFrequency}
+        />
       </div>
     </div>
   );

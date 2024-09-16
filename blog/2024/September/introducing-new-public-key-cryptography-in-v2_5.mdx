@@ -1,0 +1,56 @@
+---
+title: "Meshtastic Encryption: Evolving from Simple Messaging to a Versatile Solution"
+description: "Meshtastic's encryption has evolved, introducing our new Public Key Cryptography in v2.5.0 to enhance security in off-grid communication."
+slug: introducing-new-public-key-cryptography-in-v2_5
+authors: [Jonathan, crichton]
+tags: [meshtastic, technical]
+date: 2024-09-12T21:00
+hide_table_of_contents: false
+image: "/img/blog/Meshtastic_PKC_ECDH.png"
+---
+
+Meshtastic began with a straightforward goal: to keep hiking buddies connected in the outdoors when cell service was unavailable. What started as a simple project has grown, thanks to a passionate community pushing the boundaries of what's possible. Today, Meshtastic is used in Search and Rescue operations, off-grid communication, disaster recovery, and even grid-down scenarios. Whether it's preparing for the next flood or tornado, extending communication over the Internet with MQTT, or simply enjoying an off-grid adventure, Meshtastic has become an essential tool for many.
+
+{/* truncate */}
+
+### Balancing Encryption with Practical Use
+
+For many, Meshtastic's encryption is a key part of the appeal. Over the years, the challenge has been finding a balance: implementing strong encryption without excluding low-power IoT platforms or overwhelming LoRa's limited bandwidth. Before version 2.5, encryption relied on a static pre-shared key per channel, which was quite robust. However, it had one notable limitation: Direct Messages (DMs).
+
+DMs were sent using the same shared channel key, which meant that while DMs were theoretically private, they were accessible to anyone on the same channel. The honor system was the only safeguard, particularly since the default Meshtastic setup uses a publicly known encryption key, leaving DMs effectively unencrypted out of the box.
+
+### Challenges with Remote Administration
+
+Remote administration also presented hurdles. The conventional method involved creating an "admin" channel, allowing any node on that channel to be controlled remotely. This approach had drawbacks, notably that nodes open to administering others were also vulnerable to being administered themselves.
+
+## Introducing Public Key Cryptography (PKC) to Meshtastic
+
+In 2022, a user named edinnen proposed a solution with a pull request that introduced a public/private key scheme for DMs. Although the initial feedback was promising, the patch became outdated as time passed. Recently, everything aligned, and we revisited and reworked this patch, making it the foundation of Meshtastic's version 2.5 development.
+
+Our new PKC implementation is now a core feature, providing each node with a unique public key generated at first boot. This key enables secure, encrypted connections between nodes and serves as a unique identifier within the mesh. It also solves the remote administration challenge—nodes can now be identified and authorized as remote administrators through their public keys.
+
+### A Major Step Forward in Security
+
+With this new PKC scheme, Meshtastic offers enhanced encryption for DMs and secure remote administration for difficult-to-reach nodes. While we still caution against relying solely on Meshtastic encryption for life-or-death situations, this update marks a significant advancement in privacy and security for the mesh network.
+
+### Technical Deep Dive: The Mechanics of Meshtastic's New Encryption
+
+At the heart of Meshtastic's new encryption system lies the X25519 elliptic curve Diffie-Hellman key exchange. This process unfolds in two key steps:
+
+1. Key Generation: Upon first boot, each device generates a random private key and derives a corresponding public key using the X25519 algorithm. This public key is then broadcast to the mesh as part of the node's regular announcements.
+
+2. Secure Communication: When a node initiates a Direct Message (DM), it completes the X25519 key exchange by combining its private key with the recipient's public key. This process generates a unique shared secret, which is then used to encrypt the DM. The receiving node can independently derive the same shared secret using its private key and the sender's public key, enabling secure decryption.
+
+> ![Meshtastic's X25519 Key Exchange Process](/img/blog/Meshtastic_PKC_ECDH.png) Figure 1: Visual representation of Meshtastic's X25519 key exchange process
+
+The encryption scheme employs AES-CCM (Counter with CBC-MAC), which provides both confidentiality and authenticity. A notable feature is the inclusion of a short Message Authentication Code, verifying the sender's identity and ensuring message integrity. To further enhance security, DM messages incorporate an additional 4 bytes of random nonce, effectively preventing potential compromises due to nonce reuse.
+
+Remote administration has also seen significant improvements. Administration messages now include an 8-byte session key, set by the node being administered. This key is included in responses and must be present in any packet attempting to make changes. With a 300-second timeout, this mechanism provides robust protection against replay attacks of captured administration traffic.
+
+## Conclusion
+
+Meshtastic's journey from a simple hiking communication tool to a versatile, secure mesh networking solution showcases the power of community-driven development. The introduction of our new Public Key Cryptography scheme in version 2.5 represents a significant advancement in the platform's security capabilities, addressing long-standing challenges in direct messaging and remote administration.
+
+As we continue to refine and expand Meshtastic's features, we remain committed to balancing robust security with practical usability. While this update significantly enhances the platform's privacy and security, we encourage users to approach encryption with a clear understanding of its strengths and limitations, especially in critical scenarios.
+
+Looking ahead, we're excited about the possibilities this new encryption framework opens up. We invite our community to explore these new features, provide feedback, and continue pushing the boundaries of what's possible with Meshtastic. Together, we're building a more secure and connected future for off-grid communication.
