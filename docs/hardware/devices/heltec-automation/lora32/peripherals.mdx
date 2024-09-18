@@ -25,7 +25,7 @@ values={[
 
 This guide outlines the process of enhancing the Heltec ESP32 V3 board by integrating a GT-U7 GPS Module, although almost any supported GNSS module can be integrated in the same way. The addition of this module provides precise GPS capabilities and a real-time clock (RTC), eliminating the need for WiFi or a smartphone for time tracking. This enhancement is particularly beneficial for the mesh, where tracking the duration since the last seen device is crucial.
 
-However, it's important to note that the GPS module increases the power demand of your node. We'll address this by detailing how to incorporate a switch or an N-channel MOSFET into your setup. This enables firmware-controlled power management, conserving battery life without sacrificing functionality.
+However, it's important to note that the GPS module increases the power demand of the node. This guide helps to address this by detailing how to incorporate a switch or an N-channel MOSFET into the setup. This enables additional firmware-controlled power management, conserving more battery life than the soft-sleep option without sacrificing functionality.
 
 ### Benefits
 
@@ -58,12 +58,12 @@ The current version of the guide now instructs using either a surface mount or t
 
 Note: these instructions assume a 2N7000 MOSFET is used. For other parts, always check the data sheet!
 
-1.  Solder a wire from the TXD pin on the GPS module to GPIO 48 on Heltec board. (You may choose your own GPIO pin)
-2.  Solder a wire from the RXD pin on the GPS module to GPIO 47 on Heltec board. (You may choose your own GPIO pin)
+1.  Solder a wire from the TXD pin on the GPS module to GPIO 48 on Heltec board. (Another GPIO pin may be chosen)
+2.  Solder a wire from the RXD pin on the GPS module to GPIO 47 on Heltec board. (Another GPIO pin may be chosen)
 3.  Solder a wire from the VCC pin on the GPS module to 3V/5V pin pin on Heltec board.
 4.  Solder a wire from Right leg (lead 3, Drain) of NPN MOSFET to GND on GPS module.
 5.  Solder a wire from Left leg (lead 1, Source) of NPN MOSFET to GND on Heltec board.
-6.  Solder a wire from Middle leg (lead 2, Gate) of NPN MOSFET to GPIO 48 of Heltec board. (You may choose your own GPIO pin)
+6.  Solder a wire from Middle leg (lead 2, Gate) of NPN MOSFET to GPIO 48 of Heltec board. (Another GPIO pin may be chosen)
 7.  Go to Meshtastic app > Radio Configurations > Position
 8.  Set GPS_RX_PIN to 48 (This will communicate to the TXD pin on the GPS)
 9.  Set GPS_TX_PIN to 47 (This will communicate to the RXD pin on the GPS)
@@ -71,14 +71,14 @@ Note: these instructions assume a 2N7000 MOSFET is used. For other parts, always
 
 ### Wiring Diagram - Through-Hole
 
-![HeltecESP32V3-gps-module](/img/hardware/Heltec_ESP32V3_GPS_module_low-side.png)
+![HeltecESP32V3-gps-module](/img/hardware/heltec/Heltec_ESP32V3_GPS_module_low-side.webp)
 
 ### Instructions (Surface Mount MOSFET)
 
 Note: these instructions assume an SI2312 MOSFET is used. For other parts, always check the data sheet!
 
- 1. Solder a wire from the TXD pin on the GPS module to GPIO 48 on Heltec board. (You may choose your own GPIO pin)
- 2. Solder a wire from the RXD pin on the GPS module to GPIO 47 on Heltec board. (You may choose your own GPIO pin)
+ 1. Solder a wire from the TXD pin on the GPS module to GPIO 48 on Heltec board. (Another GPIO pin may be chosen)
+ 2. Solder a wire from the RXD pin on the GPS module to GPIO 47 on Heltec board. (Another GPIO pin may be chosen)
  3. Solder a wire from the GND pin on the GPS module to middle pin of the SI 2312 MOSFET
  4. Solder a wire from the VCC pin of the GPS module to o 3V/5V pin on Heltec board.
  5. Solder a wire from Left leg of SI2312  MOSFET to GPIO 46 on the Heltec board.         
@@ -91,11 +91,11 @@ Note: these instructions assume an SI2312 MOSFET is used. For other parts, alway
 
 ### Photographs and Diagrams - SMD
 
-![HeltecESP32V3-gps-module](/img/hardware/Heltec_ESP32V3_SMDMosfetDiagram.png)
+![HeltecESP32V3-gps-module](/img/hardware/heltec/Heltec_ESP32V3_SMDMosfetDiagram.webp)
 
-![HeltecESP32V3-gps-module](/img/hardware/Heltec_ESP32V3_SMDMosfetInPlace.jpg)
+![HeltecESP32V3-gps-module](/img/hardware/heltec/Heltec_ESP32V3_SMDMosfetInPlace.webp)
 
-![HeltecESP32V3-gps-module](/img/hardware/Heltec_ESP32V3_SMDMOSFET_GPSInPlace.png)
+![HeltecESP32V3-gps-module](/img/hardware/heltec/Heltec_ESP32V3_SMDMOSFET_GPSInPlace.webp)
 
 ### Troubleshooting Tips
 
@@ -107,21 +107,7 @@ If the location is not accurate, walk around to allow the GPS to properly lock o
 
 ### Conclusion
 
-By following this guide, you can enhance your Heltec ESP32 V3 board with valuable GPS capabilities and an RTC, while effectively managing power consumption. Whether for a hobby project or a more serious application, these additions significantly expand the potential of your device.
+By following this guide, the Heltec ESP32 V3 board can be enhanced with valuable GPS capabilities and an RTC, while effectively managing power consumption. Whether for a hobby project or a more serious application, these additions significantly expand the potential of the device.
 
 </TabItem>
-<TabItem value="Keyboard">
 
-## Keyboard
-
-Coming Soon
-
-</TabItem>
-<TabItem value="Buzzer">
-
-## Buzzer
-
-Coming Soon
-
-</TabItem>
-</Tabs>
