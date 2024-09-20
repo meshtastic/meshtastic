@@ -30,12 +30,9 @@ When MQTT is enabled, the Meshtastic device simply uplinks and/or downlinks ever
 
 ### MQTT [Topics](https://www.hivemq.com/blog/mqtt-essentials-part-5-mqtt-topics-best-practices)
 
-If no specific [root topic](/docs/configuration/module/mqtt#root-topic) is configured, the default root topic will be `msh/`.
-Each device that is connected to MQTT will publish its MQTT state (`online`/`offline`) to:
+If no specific [root topic](/docs/configuration/module/mqtt#root-topic) is configured, the default root topic will be `msh/[REGION]`.
 
-`msh/US/2/stat/USERID`, where `USERID` is the node ID of the gateway device (the one connected to MQTT).
-
-For each channel where uplink and/or downlink is enabled, two other topics might be used:
+For each channel where uplink and/or downlink is enabled, two topics might be used:
 
 #### Protobufs topic
 A gateway node will uplink and/or downlink raw ([protobuf](https://developers.google.com/protocol-buffers)) MeshPackets to the topic:
