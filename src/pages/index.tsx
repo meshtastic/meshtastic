@@ -135,6 +135,12 @@ function Home() {
             <Link className="button button--lg" to="/docs/getting-started">
               Get Started
             </Link>
+            <Link
+              className="button button--lg"
+              to="/docs/contributing/#supporting-and-contributing-to-meshtastic"
+            >
+              Donate
+            </Link>
           </div>
         </div>
       </header>
