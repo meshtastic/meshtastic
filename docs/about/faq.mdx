@@ -44,8 +44,8 @@ export const Faq = {
       content: `
   - Cloud with an up arrow - Queued on the app to be sent to your device.
   - Cloud only - Queued on the device to be sent over the mesh.
-  - Cloud with a check mark - At least one other node on the mesh acknowledged the message.
-  - Person with a check mark - The intended recipient of your direct message acknowledged the message.
+  - Cloud with a check mark - At least one other node on the mesh acknowledged the message and retransmitted it. Note that you should only consider the message delivered if it was acknowledged by the recipient.
+  - Person with a check mark - The intended recipient of your direct message acknowledged the message (whether or not the mesh was used).
   - Cloud crossed out - Not acknowledged or message error.`,
     },
     {
