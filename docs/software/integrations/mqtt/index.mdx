@@ -30,19 +30,16 @@ When MQTT is enabled, the Meshtastic device simply uplinks and/or downlinks ever
 
 ### MQTT [Topics](https://www.hivemq.com/blog/mqtt-essentials-part-5-mqtt-topics-best-practices)
 
-If no specific [root topic](/docs/configuration/module/mqtt#root-topic) is configured, the default root topic will be `msh/`.
-Each device that is connected to MQTT will publish its MQTT state (`online`/`offline`) to:
+If no specific [root topic](/docs/configuration/module/mqtt#root-topic) is configured, the default root topic will be `msh/REGION`.
 
-`msh/2/stat/USERID`, where `USERID` is the node ID of the gateway device (the one connected to MQTT).
-
-For each channel where uplink and/or downlink is enabled, two other topics might be used:
+For each channel where uplink and/or downlink is enabled, two topics might be used:
 
 #### Protobufs topic
 A gateway node will uplink and/or downlink raw ([protobuf](https://developers.google.com/protocol-buffers)) MeshPackets to the topic:
 
-`msh/2/e/CHANNELNAME/USERID`, where `CHANNELNAME` is the name of the channel (firmware versions prior to 2.3.0 will publish to a topic with `/c/` in the place of `/e/`).
+`msh/REGION/2/e/CHANNELNAME/USERID`, where `CHANNELNAME` is the name of the channel (firmware versions prior to 2.3.0 will publish to a topic with `/c/` in the place of `/e/`).
 
-For example: `msh/2/e/LongFast/!abcd1234`
+For example: `msh/US/2/e/LongFast/!abcd1234`
 
 The payload is a raw protobuf, whose definitions for Meshtastic can be found [here](https://github.com/meshtastic/protobufs/blob/master/meshtastic). Reference guides for working with protobufs in several popular programming languages can be found [here](https://protobuf.dev/reference/). Looking at the MQTT traffic with a program like `mosquitto_sub` will tell you it's working, but you won't get much useful information out of it. For example:
 
@@ -61,7 +58,7 @@ JSON is not supported on the nRF52 platform.
 
 If [JSON is enabled](/docs/configuration/module/mqtt#json-enabled), packets from the following [port numbers](/docs/development/firmware/portnum) are serialized to JSON: `TEXT_MESSAGE_APP`, `TELEMETRY_APP`, `NODEINFO_APP`, `POSITION_APP`, `WAYPOINT_APP`, `NEIGHBORINFO_APP`, `TRACEROUTE_APP`, `DETECTION_SENSOR_APP`, `PAXCOUNTER_APP` and `REMOTE_HARDWARE_APP`. These are then forwarded to the topic:
 
-`msh/2/json/CHANNELNAME/USERID`.
+`msh/US/2/json/CHANNELNAME/USERID`.
 
 An example of a received `NODEINFO_APP` message:
 
@@ -103,9 +100,9 @@ If the message received contains valid JSON in the payload, the JSON is deserial
 
 
 #### JSON downlink to instruct a node to send a message
-You can also send a JSON message to the topic `msh/2/json/mqtt/` to instruct a gateway node to send a message to the mesh.
+You can also send a JSON message to the topic `msh/US/2/json/mqtt/` to instruct a gateway node to send a message to the mesh.
 
-To make this work, ensure that your node has a Meshtastic channel configured called "mqtt". Enable Downlink. The PSK can be random and doesn't matter. This channel allows the node to listen to messages on the `msh/2/json/mqtt/` topic.
+To make this work, ensure that your node has a Meshtastic channel configured called "mqtt". Enable Downlink. The PSK can be random and doesn't matter. This channel allows the node to listen to messages on the `msh/US/2/json/mqtt/` topic.
 
 Reboot your device after creating this channel.
 

@@ -1,0 +1,127 @@
+---
+id: security
+title: Security Configuration
+sidebar_label: Security
+description: This section covers security options for the device such public key, privaate key, and admin key
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+The security config options are: Public Key, Private Key, Admin Key, Is Managed, Serial Console, Debug Logs, and Admin Channel.
+
+## Security Config Values
+
+### Public Key
+
+Acceptable values: `bytes`
+
+The public key of the device, shared with other nodes on the mesh to allow them to compute a shared secret key for secure communication.
+
+### Private Key
+
+Acceptable values: `bytes`
+
+The private key of the device, used to create a shared key with a remote device for secure communication.**This key should be kept confidential.**
+
+### Admin Key
+
+Acceptable values: `repeated bytes`
+
+The public key(s) authorized to send administrative messages to this node. Only messages signed by these keys will be accepted for administrative control.
+
+### Managed Mode
+
+Acceptable values: `true` or `false`
+
+Enabling Managed Mode restricts access to all radio configurations via client applications. Radio configurations will only be accessible through the Admin channel. Ensure the Admin channel is functioning properly before enabling this mode to avoid being locked out.
+
+### Serial Console
+
+Acceptable values: `true` or `false`
+
+Disabling this will prevent the Serial Console from initializing the Stream API.
+
+### Debug Log
+
+Acceptable values: `true` or `false`
+
+By default, logging is disabled when an API client connects to keep the shared serial link quiet. Set this to true to continue outputting live debug logs over serial or Bluetooth when the API is active.
+
+### Admin Channel Enabled
+
+Acceptable values: `true` or `false`
+
+Allows incoming device control over the insecure legacy admin channel. Enabling this option permits control messages to be received through the older, less secure admin channel.
+
+## Device Config Client Availability
+
+<Tabs
+groupId="settings"
+defaultValue="apple"
+values={[
+{label: 'Android', value: 'android'},
+{label: 'Apple', value: 'apple'},
+{label: 'CLI', value: 'cli'},
+{label: 'Web', value: 'web'},
+]}>
+<TabItem value="android">
+
+#### Android
+
+All Security config options are available for Android.
+
+1. Open the Meshtastic App
+2. Navigate to: **Vertical Ellipsis (3 dots top right) > Radio Configuration > Security**
+
+</TabItem>
+<TabItem value="apple">
+
+#### Apple
+
+All Security config options are available on iOS, iPadOS and macOS at Settings > Radio Configuration > Security.
+
+</TabItem>
+<TabItem value="cli">
+
+#### CLI
+
+All Security config options are available in the python CLI. Example commands are below:
+
+| Setting                        | Acceptable Values | Default |
+| ------------------------------ | ----------------- | ------- |
+| security.public_key            | `bytes`           | `None`  |
+| security.private_key           | `bytes`           | `None`  |
+| security.admin_key             | `repeated bytes`  | `None`  |
+| security.is_managed            | `true`, `false`   | `false` |
+| security.serial_enabled        | `true`, `false`   | `true`  |
+| security.debug_log_api_enabled | `true`, `false`   | `false` |
+| security.admin_channel_enabled | `true`, `false`   | `false` |
+
+:::tip
+
+Because the device may reboot after each command is sent via CLI, it is recommended when setting multiple values in a config section that commands be chained together as one.
+
+```shell title="Example:"
+meshtastic --set security.is_managed false --set device.debug_log_api_enabled true
+```
+
+:::
+
+```shell title="Disable serial console"
+meshtastic --set security.serial_enabled false
+```
+
+```shell title="Enable debug logging"
+meshtastic --set security.debug_log_api_enabled true
+```
+
+</TabItem>
+<TabItem value="web">
+
+#### Web
+
+All Security config options are available in the Web client.
+
+</TabItem>
+</Tabs>

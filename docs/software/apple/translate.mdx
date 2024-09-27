@@ -7,12 +7,14 @@ sidebar_position: 3
 
 ## How to Contribute
 
-Contributing translations to the Meshtastic Apple app helps make the project accessible to a wider audience. Follow these steps to add translations for a new language:
+Contributing translations to the Meshtastic Apple app helps make the project accessible to a wider audience. The Meshtastic Apple app uses [string catalogs](https://developer.apple.com/documentation/xcode/localizing-and-varying-text-with-a-string-catalog) in Xcode to manage translations. 
 
-1. **Fork the Repository**: Start by forking the [Meshtastic-Apple repository](<https://github.com/meshtastic/Meshtastic-Apple/tree/main>) to your GitHub account.
-2. **Create a Language Folder**: In your forked repository, create a new folder for your language using the language code followed by `.lproj`. For example, for German, create a folder named `de.lproj`.
-3. **Copy the Localizable.strings File**: Navigate to the [English strings folder](<https://github.com/meshtastic/Meshtastic-Apple/blob/main/en.lproj/Localizable.strings>) and copy the `Localizable.strings` file. Paste this file into the folder you created in the previous step.
-4. **Translate the Strings**: Open the `Localizable.strings` file in your language folder and translate the English strings into your language. Be sure to maintain the format of the file.
-5. **Create a Pull Request**: Once you've completed the translation, create a new pull request from your forked repository to the main Meshtastic-Apple repository. Title the pull request appropriately (e.g., "Add German Translation") and describe the changes you've made.
+If you would like to update the translations for a locale or add a new language, follow these steps.
+
+1. Start by forking the [Meshtastic-Apple repository](<https://github.com/meshtastic/Meshtastic-Apple/tree/main>) to your GitHub account.
+2. Clone the project and open the `Meshtastic.xcworkspace`
+3. Select the `Localizable.xcstrings` file in the project navigator.
+4. Follow the steps outlined [here](https://developer.apple.com/documentation/xcode/localizing-and-varying-text-with-a-string-catalog) for adding or updating translations.
+5. Create a PR on the project with your changes.
 
 Your contribution will be reviewed, and upon approval, your translation will be included in the next release of the Meshtastic Apple app. Thank you for helping expand the reach of Meshtastic!
