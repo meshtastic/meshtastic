@@ -12,7 +12,8 @@ The Remote Hardware Module allows to read, write and watch GPIO pins on a remote
 
 :::info
 
-While configuring this module may be available in clients, setting and reading GPIO's is currently only possible using the [Meshtastic Python CLI](/docs/software/python/cli)
+For firmware versions > 2.5.3, this module requires you to compile your own firmware and remove the `-DMESHTASTIC_EXCLUDE_REMOTEHARDWARE=1` build flag in `platformio.ini`.
+Additionally, while configuring this module may be available in clients, setting and reading GPIO's is currently only possible using the [Meshtastic Python CLI](/docs/software/python/cli)
 
 :::
 
