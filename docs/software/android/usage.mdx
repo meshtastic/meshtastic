@@ -106,14 +106,24 @@ You can test changing channels with the QR code shown below.
 You can change the following settings by tapping on the name of an existing channel:
 1. MQTT Uplink
 2. MQTT Downlink
-3. Position precision value
+3. Position enabled 
+4. Precise location (if position is enabled)
+5. Position precision (if precise location is disabled)
 
 #### Position Precision
 The precision levels currently used in the app correspond to the following values:
-- HIGH_PRECISION (32), full precision
-- MED_PRECISION (16), around ±350 meters
-- LOW_PRECISION (11), around ±11 kilometers
-- DISABLED (0), location data is never sent over the given channel
+| Precision bits | Approx. Uncertainty (±) |
+| :------------: | :---------------------: |
+|       10       |  23.3 km / 14.5 miles   |
+|       11       |   11.7 km / 7.3 miles   |
+|       12       |   5.8 km / 3.6 miles    |
+|       13       |   2.9 km / 1.8 miles    |
+|       14       |   1.5 km / 4787 feet    |
+|       15       |    729 m / 2392 feet    |
+|       16       |    364 m / 1194 feet    |
+|       17       |    182 m / 597 feet     |
+|       18       |     91 m / 299 feet     |
+|       19       |     45 m / 148 feet     |
 
 ### Send a message
 
