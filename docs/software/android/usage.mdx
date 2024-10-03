@@ -126,7 +126,23 @@ The message window operates like most messaging apps. Note that your primary cha
 
 With LoRa (or any radio) there is some uncertainty that the message has been received, so there is a confirmation built-in to the protocol. There are small icons shown to the right of the messages you send:
 
-- Cloud with an up arrow: the message is queued in the app, waiting to be handed to the device.
+[![Accept new channel](/img/android/android-accept-channel-c.webp)](/img/android/android-accept-channel.webp)
+
+<picture>
+  <source
+    srcset="/img/android/android-waiting-dk.webp"
+    media="(prefers-color-scheme: dark)"
+  />
+  <img
+    src="/img/android/android-waiting-lt.webp"
+    alt="Cloud with an up arrow"
+  />
+</picture>
+
+[![Cloud with an up arrow](/img/android/android-waiting-lt.webp).hideDark]
+[![Cloud with an up arrow](/img/android/android-waiting-dk.webp).hideLight]
+
+Cloud with an up arrow: the message is queued in the app, waiting to be handed to the device.
 - Cloud only: the device received the message from the app, and it has been sent and transmitted via LoRa.
 - Cloud with a check mark: received at least one node's acknowledgement response. Confirmations could be from any one device.
 - Person with a check mark - The intended recipient node of your direct message acknowledged the message.
