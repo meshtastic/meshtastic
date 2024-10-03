@@ -139,10 +139,21 @@ With LoRa (or any radio) there is some uncertainty that the message has been rec
   />
 </picture>
 
-[![Cloud with an up arrow](/img/android/android-waiting-lt.webp).hideDark]
-[![Cloud with an up arrow](/img/android/android-waiting-dk.webp).hideLight]
+![Cloud with an up arrow](/img/android/android-waiting-lt.webp#hideDark)![Cloud with an up arrow](/img/android/android-waiting-dk.webp#hideLight)
+
+<ThemedImage
+      alt="cloud up"
+      className="max-h-8"
+      sources={{
+        light: useBaseUrl('/img/android/android-waiting-lt.webp'),
+        dark: useBaseUrl('/img/android/android-waiting-dk.webp'),}}/>
 
 Cloud with an up arrow: the message is queued in the app, waiting to be handed to the device.
+
+![Cloud only](./img/android/android-sent-lt.webp.hideDark)![Cloud only](./img/android/android-sent-dk.webp.hideLight)
+
+(/img/android/android-sent-lt.webp)
+
 - Cloud only: the device received the message from the app, and it has been sent and transmitted via LoRa.
 - Cloud with a check mark: received at least one node's acknowledgement response. Confirmations could be from any one device.
 - Person with a check mark - The intended recipient node of your direct message acknowledged the message.
