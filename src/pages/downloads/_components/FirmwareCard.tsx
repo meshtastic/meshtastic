@@ -29,7 +29,7 @@ export const FirmwareCard = ({
             {release.slice(1, 6).map((release) => {
               return (
                 <div key={release.id}>
-                  <a href={release.zip_url}>{release.title}</a>
+                  <a href={release.page_url}>{release.title}</a>
                 </div>
               );
             })}
@@ -38,7 +38,7 @@ export const FirmwareCard = ({
         {release?.length ? (
           <>
             <a
-              href={release[0].zip_url}
+              href={release[0].page_url}
               className="button button--secondary button--block margin-top--sm"
             >
               Download {variant}
