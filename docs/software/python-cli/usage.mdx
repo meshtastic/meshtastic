@@ -16,6 +16,10 @@ The `meshtastic` command is not run within python but is a script run from your 
 
 The `--noproto` command in the Meshtastic Python CLI is used to disable the API and function merely as a "dumb serial terminal."  This mode of operation allows both the API and device functionalities to remain accessible for regular use, while simultaneously providing a window into the raw serial output. This feature can be particularly useful for debugging, development, or understanding the low-level communication between devices.
 
+:::note
+The `--noproto` command depends on a physically cabled serial connection. It will connect but not display information over a network (`--host`) or Bluetooth (`--ble`) connection.
+:::
+
 ```shellsession title="Example Usage"
 user@host % meshtastic --noproto
 # You should see results similar to this:
