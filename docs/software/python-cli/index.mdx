@@ -541,7 +541,7 @@ meshtastic --ble-scan
 
 ### --noproto
 
-Don't start the API, just function as a dumb serial terminal. Probably not very helpful from the command line. Used more for testing/internal needs.
+Don't start the API, just function as a dumb serial terminal. Useful for debugging because it doesn't count as a client. Depends on a physically cabled serial connection. It will connect but not display information over a network (--host) or Bluetooth (--ble) connection.
 
 ```shell title="Usage"
 meshtastic --noproto
