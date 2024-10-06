@@ -95,7 +95,7 @@ const SocialCards: SocialCardProps[] = [
       <img
         alt="mastodon"
         className="m-auto h-10"
-        src="/img/homepage/logo-white.svg"
+        src="/img/homepage/mastodon-logo-white.svg"
       />
     ),
   },
