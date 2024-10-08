@@ -4,6 +4,8 @@ title: Android Application Usage
 sidebar_label: Usage
 sidebar_position: 2
 ---
+import PositionPrecision from "@site/docs/blocks/_position-precision.mdx";
+
 
 ## Introduction
 
@@ -106,14 +108,14 @@ You can test changing channels with the QR code shown below.
 You can change the following settings by tapping on the name of an existing channel:
 1. MQTT Uplink
 2. MQTT Downlink
-3. Position precision value
+3. Position enabled 
+4. Precise location (if position is enabled)
+5. Position precision (if precise location is disabled)
 
 #### Position Precision
 The precision levels currently used in the app correspond to the following values:
-- HIGH_PRECISION (32), full precision
-- MED_PRECISION (16), around ±350 meters
-- LOW_PRECISION (11), around ±11 kilometers
-- DISABLED (0), location data is never sent over the given channel
+
+<PositionPrecision />
 
 ### Send a message
 
