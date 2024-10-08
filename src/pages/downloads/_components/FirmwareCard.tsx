@@ -16,7 +16,9 @@ export const FirmwareCard = ({
       <div className="card__header flex justify-between">
         <h3>{variant}</h3>
         {release?.length && (
-          <a href={release[0].page_url}>{release[0].title}</a>
+          <a href={release[0].page_url}>
+            {release[0].title.replace("Meshtastic Firmware ", "")}
+          </a>
         )}
       </div>
       <div className="card__body">
@@ -29,7 +31,9 @@ export const FirmwareCard = ({
             {release.slice(1, 6).map((release) => {
               return (
                 <div key={release.id}>
-                  <a href={release.zip_url}>{release.title}</a>
+                  <a href={release.page_url}>
+                    {release.title.replace("Meshtastic Firmware ", "")}
+                  </a>
                 </div>
               );
             })}
@@ -38,7 +42,7 @@ export const FirmwareCard = ({
         {release?.length ? (
           <>
             <a
-              href={release[0].zip_url}
+              href={release[0].page_url}
               className="button button--secondary button--block margin-top--sm"
             >
               Download {variant}
