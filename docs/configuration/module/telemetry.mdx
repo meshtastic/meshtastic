@@ -77,6 +77,18 @@ This option is used to configure the interval (in seconds) that should be used t
 
 Default is `1800` seconds (30 minutes).
 
+### Power Metrics Enabled
+
+This option is used to enable/disable the sending of power telemetry as gathered by an attached supported voltage/current sensor. Note that this does not need to be enabled to monitor the voltage of the battery.
+
+Default is `false`.
+
+### Power Metrics Interval
+
+This option is used to configure the interval (in seconds) that should be used to send power metrics from an attached supported sensor over the mesh network.
+
+Default is `1800` seconds (30 minutes).
+
 ## Telemetry Config Client Availability
 
 <Tabs
@@ -133,6 +145,8 @@ All telemetry module config options are available in the python CLI. Example com
 |   telemetry.environment_update_interval   | `integer` (seconds) | Default `0` is 30 minutes(`1800` seconds). |
 |   telemetry.air_quality_enabled           |   `true`, `false`   |                `false`                    |
 |   telemetry.air_quality_interval          | `integer` (seconds) | Default `0` is 30 minutes(`1800` seconds). |
+|    telemetry.power_measurement_enabled    |   `true`, `false`   |                `false`                    |
+|      telemetry.power_update_interval      | `integer` (seconds) | Default `0` is 30 minutes(`1800` seconds). |
 
 :::tip
 
