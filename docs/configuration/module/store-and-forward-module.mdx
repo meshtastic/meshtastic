@@ -53,6 +53,8 @@ Initial requirements for the Store and Forward Server:
 - Configure your device as a `ROUTER` or set `store_forward.is_server true`.
 - Name your server node something that makes it easily identifiable, e.g. "Base Node (S&F)".
 - Configure the Store and Forward module
+- S&F Routers will store messages for all channels it can decode
+  - It is best that the S&F Router to have a non-default Primary Channel to ensure messages are retrievable by the Android/iOS clients
 
   ```shell title="Required - Enable the module"
   meshtastic --set store_forward.enabled true
@@ -72,6 +74,9 @@ Currently implemented in the Android and Apple apps version 2.2.23 and higher. T
 The Apple apps will also show whether a node is a Store & Forward Server in the node list after it heard the heartbeat. You can then long press the node and select "Client History" to request the history from the server.
 
 Since 2.4, when connecting to the Store & Forward Server itself, the text message history will be automatically retrieved and displayed in the app.
+
+- Android and iOS Clients:  
+  - These clients request S&F message replays through the channel in which they receive NodeInfo.
 
 ## Settings
 
