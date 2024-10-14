@@ -5,28 +5,26 @@ sidebar_label: Buttons
 sidebar_position: 1
 ---
 
-## Layout
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
 
-Be aware that the button layout differs on the T-Beam Supreme model.
-If you are in doubt as to which button is which, check the PCB for their labels.
-
-- T-Beam (v0.7, v1,1, M8N varieties)
-  - **Left:** Power button (labelled "PWR")
-  - **Middle:** User button (labelled "IO38")
-  - **Right:** Reset button (labelled "RST")
-- T-Beam Supreme
-  - **Left:** User button
-  - **Middle:** Power button (labelled "PWR")
-  - **Right:** Reset button (labelled "RST")
-
+<Tabs
+groupId="t-beam buttons"
+queryString="t-beam"
+defaultValue="t-beam"
+values={[
+{label: 'T-Beam', value: 't-beam'},
+{label: 'T-Beam Supreme', value:'t-beam-supreme'},
+]}>
+<TabItem value="t-beam">
 
 ## Functionality
 
-- **Power Button:**
+- **Power Button (left):**
   - **Long press:** Powers the device on or off.
-- **Reset Button:**
+- **Reset Button (right):**
   - **Single press:** Resets the device.
-- **User/Program Button:**
+- **User/Program Button (middle):**
   - **Long press:** Will signal the device to shutdown after 5 seconds.
   - **Single press:** Changes the information page displayed on the device's screen.
   - **Double press:** Sends an adhoc ping of the device's position to the network.
@@ -38,3 +36,32 @@ If you are in doubt as to which button is which, check the PCB for their labels.
   width="200"
   align="center-right"
 />
+
+</TabItem>
+<TabItem value = "t-beam-supreme">
+
+:::info
+Be aware that the button layout differs on the T-Beam Supreme model.
+:::
+
+## Functionality
+
+- **Power Button (middle):**
+  - **Long press:** Powers the device on or off.
+- **Reset Button (right):**
+  - **Single press:** Resets the device.
+- **User/Program Button (left):**
+  - **Long press:** Will signal the device to shutdown after 5 seconds.
+  - **Single press:** Changes the information page displayed on the device's screen.
+  - **Double press:** Sends an adhoc ping of the device's position to the network.
+  - **Triple press:** Disables the device's GPS. Repeat to re-enable. (_This will be indicated on both information screen pages on the device's display as shown below_)
+
+<img src="/img/hardware/GPS-disabled.webp" width="200" align="center-left" />
+<img
+  src="/img/hardware/GPS-disabled-by-button.webp"
+  width="200"
+  align="center-right"
+/>
+
+</TabItem>
+</Tabs>
