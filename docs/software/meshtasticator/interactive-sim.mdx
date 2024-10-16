@@ -22,7 +22,7 @@ The simulator runs the Linux native application of Meshtastic firmware. You can 
 
 ### Using PlatformIO
 
-Select 'native' and click 'build.' Locate the generated binary file, likely in `_Meshtastic-device/.pio/build/native/_`.
+Select 'native' and click 'build.' Locate the generated binary file, likely in _`firmware/.pio/build/native/`_.
 
 Copy the `program` file to the directory where you'll run the Python script, or provide the path as an argument with `-p`:
 
@@ -96,7 +96,7 @@ python3 interactiveSim.py 3 -s
 ## Tips and Tricks
 
 1. **Speeding Up NodeInfo Exchange:**  
-   Disable certain modules by removing `new NodeInfoModule()` from `_src/modules/Modules.cpp_` in the firmware.
+   Disable certain modules by removing `new NodeInfoModule()` from _`src/modules/Modules.cpp`_ in the firmware.
 
 2. **Saving and Reloading Configurations:**  
    After a simulation, node configurations are saved. You can rerun the same scenario with:
@@ -105,7 +105,7 @@ python3 interactiveSim.py 3 -s
    python3 interactiveSim.py --from-file
    ```
 
-   Modify the `_out/nodeConfig.yaml_` file to adjust configurations before reloading.
+   Modify the _`out/nodeConfig.yaml`_ file to adjust configurations before reloading.
 
 3. **Using the Python CLI:**  
    You can call functions from the Node class via `sim.getNodeById(<id>)` in _`interactiveSim.py`_. Example:
@@ -126,4 +126,4 @@ The simulator estimates signal propagation using a pathloss model. This is an ap
 - **5**: 3GPP model (suburban macro-cell)
 - **6**: 3GPP model (metropolitan macro-cell)
 
-You can modify the pathloss model and area configuration in `_lib/config.py_`. LoRa settings remain at their Meshtastic defaults unless customized during node placement.
+You can modify the pathloss model and area configuration in _`lib/config.py`_. LoRa settings remain at their Meshtastic defaults unless customized during node placement.
