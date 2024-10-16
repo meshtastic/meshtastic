@@ -29,24 +29,39 @@ The RAK5005-O is no longer in production. It is recommended to use the RAK19007 
 :::
 
 - [RAK5005-O](https://store.rakwireless.com/products/rak5005-o-base-board) - The original WisBlock Base Board.
-- **Slots**
-  - (x1) Core Module slot
-  - (x1) WisBlock IO Module slot
-  - (x4) WisBlock Sensor Module slots
-- **Buttons**
-  - (x1) Reset Button
-  - It may be possible to add a user button using the [13002 IO module](https://store.rakwireless.com/collections/wisblock-interface/products/adapter-module-rak13002).
-- **Connectors**
-- Connector for 3.7v LiPo battery (with charge controller)
-- Connector for 5v solar panel (max 5.5v)
-- I<sup>2</sup>C, UART, GPIOs and analog input accessible with solder contacts
-- Micro USB port for debugging and power
-- **Screen Support**
-- OLED screen support (OLED screen sold separately)
+  - **Slots**
+    - (x1) Core Module slot
+    - (x1) WisBlock IO Module slot
+    - (x4) WisBlock Sensor Module slots
+  - **Buttons**
+    - (x1) Reset Button
+    - It may be possible to add a user button using the [13002 IO module](https://store.rakwireless.com/collections/wisblock-interface/products/adapter-module-rak13002).
+  - **Connectors**
+    - JST PHR-2 connector for 3.7v LiPo battery (with charge controller)
+    - JST-ZHR-2 connector for 5v solar panel (max 5.5v)
+    - I<sup>2</sup>C, UART, GPIOs and analog input accessible with solder contacts
+    - Micro USB port for debugging and power
+  - **Screen Support**
+    - OLED screen support (OLED screen sold separately)
 
 :::note
 The RAK5005 (without the -O) is not compatible.
 :::
+
+### Connectors Diagram
+
+<img
+  alt="RAK19001-O Connectors"
+  src="/img/hardware/rak5005-0_connectors.png"
+  style={{ zoom: "50%" }}
+/>
+
+### Voltages
+- JST PHR-2 connector for 3.7v LiPo battery.
+  - Charge controller max charge rate is 500mAh.
+  - Minimum input voltage for charging is 3.3v, maximum 4.3v.
+- JST ZHR-2 connector for 5v solar panel.
+  - Minimum input voltage to charge is 4.4v, maximum 5.5v.
 
 Further information on the RAK5005-O can be found on the [RAK Documentation Center](https://docs.rakwireless.com/Product-Categories/WisBlock/RAK5005-O/Overview/#product-description).
 
@@ -71,14 +86,29 @@ Further information on the RAK5005-O can be found on the [RAK Documentation Cent
     - (x1) Reset Button
     - To add a user button, you can utilize the AIN1 pin, which is exposed as pin 31 in the firmware.
   - **Connectors**
-    - Connector for 3.7v LiPo battery (with charge controller)
-    - Connector for 5v solar panel (max 5.5v)
+    - JST PHR-2 connector for 3.7v LiPo battery.
+    - JST ZHR-2 connector for 5v solar panel.
     - I<sup>2</sup>C, UART, BOOT and GPIOs accessible with solder contacts
     - USB-C port for debugging and power
   - **Screen Support**
     - OLED screen support (OLED screen sold separately)
 
 Further information on the RAK19007 can be found on the [RAK Documentation Center](https://docs.rakwireless.com/Product-Categories/WisBlock/RAK19007/Overview/#product-description).
+
+### Connectors Diagram
+
+<img
+  alt="RAK19007 Connectors"
+  src="/img/hardware/rak19007_connectors.png"
+  style={{ zoom: "50%" }}
+/>
+
+### Voltages
+- JST PHR-2 connector for 3.7v LiPo battery.
+  - Charge controller max charge rate is 350mAh.
+  - Minimum input voltage for charging is 3.3v, maximum 4.3v.
+- JST ZHR-2 connector for 5v solar panel.
+  - Minimum input voltage to charge is 4.4v, maximum 5.5v.
 
 ### Resources
 
@@ -103,14 +133,29 @@ Further information on the RAK19007 can be found on the [RAK Documentation Cente
     - (x1) Reset Button
     - There is a 3rd party sensor module that breaks out the user button, available [here](https://www.etsy.com/de/listing/1254963521/mini-io-expansion-board-for-rak-wireless).
   - **Connectors**
-    - Connector for 3.7v LiPo battery (with charge controller)
-    - Connector for 5v solar panel (max 5.5v)
+    - JST PHR-2 connector for 3.7v LiPo battery.
+    - JST ZHR-2 connector for 5v solar panel.
     - I<sup>2</sup>C, UART and BOOT headers accessible with solder contacts
     - USB-C port for debugging and power
   - **Screen Support**
     - OLED screen support (OLED screen sold separately)
 
 Further information on the RAK19003 can be found on the [RAK Documentation Center](https://docs.rakwireless.com/Product-Categories/WisBlock/RAK19003/Overview/#product-description)
+
+### Connectors Diagram
+
+<img
+  alt="RAK19003 Connectors"
+  src="/img/hardware/rak19003_connectors.png"
+  style={{ zoom: "50%" }}
+/>
+
+### Voltages
+- JST PHR-2 connector for 3.7v LiPo battery.
+  - Charge controller max charge rate is 350mAh.
+  - Minimum input voltage for charging is 3.3v, maximum 4.3v.
+- JST ZHR-2 connector for 5v solar panel.
+  - Minimum input voltage to charge is 4.4v, maximum 5.5v.
 
 ### Resources
 
@@ -142,15 +187,33 @@ Further information on the RAK19003 can be found on the [RAK Documentation Cente
     - (x1) Battery selector switch
     - On this board the PIN for user button (IO5) is available as a solder contact on the upper header row.
   - **Connectors**
-    - Connector for 3.7v LiPo battery (with charge controller)
-    - Connector for 5v solar panel (max 5.5v)
-    - Separate connector for non-rechargeable batteries
+    - JST PHR-2 connector for 3.7v LiPo battery (with charge controller)
+    - JST ZHR-2 connector for 5v solar panel (max 5.5v)
+    - Separate FGH20005-S02M2W1B connector for non-rechargeable batteries
     - I<sup>2</sup>C, SPI, UART, BOOT and GPIOs accessible with solder contacts
     - USB-C port for debugging and power
   - **Screen Support**
     - OLED screen support (OLED screen sold separately)
 
 Further information on the RAK19001 can be found on the [RAK Documentation Center](https://docs.rakwireless.com/Product-Categories/WisBlock/RAK19001/Overview/#product-description).
+
+### Connectors Diagram
+
+<img
+  alt="RAK19001 Connectors"
+  src="/img/hardware/rak19001_connectors.png"
+  style={{ zoom: "50%" }}
+/>
+
+### Voltages
+- JST PHR-2 connector for 3.7v LiPo battery.
+  - Charge controller max charge rate is 500mAh.
+  - Minimum input voltage for charging is 3.3v, maximum 4.3v.
+- JST ZHR-2 connector for 5v solar panel.
+  - Minimum input voltage to charge is 4.4v, maximum 5.5v.
+- FGH20005-S02M2W1B connector for non-rechargable battery.
+  - Minimum required is 3.3v, typical 3.7v, maximum 5.5v.
+  - Active battery is selected with the battery selector switch.
 
 ### Resources
 
