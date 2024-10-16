@@ -4,6 +4,9 @@ title: Android Application Usage
 sidebar_label: Usage
 sidebar_position: 2
 ---
+import Link from "@docusaurus/Link"
+import ThemedImage from '@theme/ThemedImage';
+import useBaseUrl from '@docusaurus/useBaseUrl';
 
 ## Introduction
 
@@ -35,11 +38,35 @@ To find devices to connect via Bluetooth click the "+" button on the bottom righ
 
 The cloud icon at the top right corner indicates if you are connected to a device. This currently has three states:
 
-![Not connected](/img/android/android-cloud-cross.webp) Cloud with a slash through it: No device connected to the application.
+<center>
+<ThemedImage
+      alt="Not connected"
+      className="max-h-14"
+      sources={{
+        light: useBaseUrl('/img/android/android-no-ack_lt.webp'),
+        dark: useBaseUrl('/img/android/android-no-ack_dk.webp'),}}/>
+</center>
+Cloud with a slash through it: No device connected to the application.
 
-![Connected](/img/android/android-cloud-tick.webp) Cloud with a tick in it: Device connected to the application.
+<center>
+<ThemedImage
+      alt="Connected"
+      className="max-h-14"
+      sources={{
+        light: useBaseUrl('/img/android/android-imp-ack_lt.webp'),
+        dark: useBaseUrl('/img/android/android-imp-ack_dk.webp'),}}/>
+</center>
+Cloud with a check in it: Device connected to the application.
 
-![Sleeping](/img/android/android-cloud-up.webp) Cloud with an up arrow in it: Device is connected, but currently sleeping or out of range.
+<center>
+<ThemedImage
+      alt="Sleeping"
+      className="max-h-14"
+      sources={{
+        light: useBaseUrl('/img/android/android-waiting_lt.webp'),
+        dark: useBaseUrl('/img/android/android-waiting_dk.webp'),}}/>
+</center>
+Cloud with an up arrow in it: Device is connected, but currently sleeping or out of range.
 
 ## Common tasks
 
@@ -126,17 +153,61 @@ The message window operates like most messaging apps. Note that your primary cha
 
 With LoRa (or any radio) there is some uncertainty that the message has been received, so there is a confirmation built-in to the protocol. There are small icons shown to the right of the messages you send:
 
-- Cloud with an up arrow: the message is queued in the app, waiting to be handed to the device.
+<center>
+<ThemedImage
+      alt="cloud up"
+      className="max-h-18"
+      sources={{
+        light: useBaseUrl('/img/android/android-waiting_lt.webp'),
+        dark: useBaseUrl('/img/android/android-waiting_dk.webp'),}}/>
+</center>
+Cloud with an up arrow: the message is queued in the app, waiting to be handed to the device.
+
+<center>
+<ThemedImage
+      alt="cloud only"
+      className="max-h-18"
+      sources={{
+        light: useBaseUrl('/img/android/android-sent_lt.webp'),
+        dark: useBaseUrl('/img/android/android-sent_dk.webp'),}}/>
+</center>
 - Cloud only: the device received the message from the app, and it has been sent and transmitted via LoRa.
+
+<center>
+<ThemedImage
+      alt="Cloud with a check mark"
+      className="max-h-18"
+      sources={{
+        light: useBaseUrl('/img/android/android-imp-ack_lt.webp'),
+        dark: useBaseUrl('/img/android/android-imp-ack_dk.webp'),}}/>
+</center>
 - Cloud with a check mark: received at least one node's acknowledgement response. Confirmations could be from any one device.
+
+<center>
+<ThemedImage
+      alt="Person with a check mark"
+      className="max-h-18"
+      sources={{
+        light: useBaseUrl('/img/android/android-DM-ack_lt.webp'),
+        dark: useBaseUrl('/img/android/android-DM-ack_dk.webp'),}}/>
+</center>
 - Person with a check mark - The intended recipient node of your direct message acknowledged the message.
+
+<center>
+<ThemedImage
+      alt="Cloud crossed out"
+      className="max-h-18"
+      sources={{
+        light: useBaseUrl('/img/android/android-no-ack_lt.webp'),
+        dark: useBaseUrl('/img/android/android-no-ack_dk.webp'),}}/>
+</center>
 - Cloud crossed out: the initial sender did not receive any confirmation within a certain timeout.
 
 By default there is no long-term store-and-forward of messages, so messages not received during transmission are lost.
 
 ### View your network
 
-[![Local Meshtastic network](/img/android/android-nodes-sm.webp)](/img/android/android-nodes.webp)
+![[Local Meshtastic network](/img/android/android-nodes-sm.webp)](/img/android/android-nodes.webp)
 
 The network list shows all the users (devices) that have connected to the same Channel. For each entry, it shows the last time they were active, their location and distance (when available), and their last known power status. In the example above, Monkey is the local user, Rabbit was last heard from 10 minutes ago and is 50m away, and Panda was last heard 11 minutes ago and 5m away.
 
