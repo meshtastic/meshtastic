@@ -6,9 +6,7 @@ sidebar_position: 2
 description: Interactive Simulator usage guide for simulating multiple Meshtastic instances with TCP-based communication and configurable pathloss models.
 ---
 
-import ReactPlayer from "react-player";
-
-The Python script `_interactiveSim.py_` uses the [Linux native application of Meshtastic](https://meshtastic.org/docs/software/linux-native) to simulate multiple instances of the device software. These instances communicate using TCP via the script, simulating the LoRa chip. The simulator forwards messages from the sender to all nodes within range, based on their simulated positions and the selected pathloss model (see [Pathloss Model](#pathloss-model)). **Note:** Packet collisions are not yet simulated.
+The Python script _`interactiveSim.py`_ uses the [Linux native application of Meshtastic](https://meshtastic.org/docs/software/linux-native) to simulate multiple instances of the device software. These instances communicate using TCP via the script, simulating the LoRa chip. The simulator forwards messages from the sender to all nodes within range, based on their simulated positions and the selected pathloss model (see [Pathloss Model](#pathloss-model)). **Note:** Packet collisions are not yet simulated.
 
 ## Usage
 
@@ -82,7 +80,7 @@ Once the simulation starts, you can issue commands (or use a predefined [script]
 
 ## Usage with Script
 
-Modify the `try` clause in `_interactiveSim.py_` to predefine messages. Run the simulator with the `-s` argument:
+Modify the `try` clause in _`interactiveSim.py`_ to predefine messages. Run the simulator with the `-s` argument:
 
 ```bash
 python3 interactiveSim.py 3 -s
@@ -106,7 +104,7 @@ python3 interactiveSim.py 3 -s
    Modify the `_out/nodeConfig.yaml_` file to adjust configurations before reloading.
 
 3. **Using the Python CLI:**  
-   You can call functions from the Node class via `sim.getNodeById(<id>)` in `_interactiveSim.py_`. Example:
+   You can call functions from the Node class via `sim.getNodeById(<id>)` in _`interactiveSim.py`_. Example:
 
    ```python
    node.setURL('<YOUR_URL>')
