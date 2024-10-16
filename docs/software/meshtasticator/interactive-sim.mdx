@@ -3,7 +3,7 @@ id: interactive-sim
 title: Interactive Simulator Usage Guide
 sidebar_label: Interactive Event Simulator
 sidebar_position: 2
-description: Interactive Simulator usage guide for simulating multiple Meshtastic instances with TCP-based communication and configurable pathloss models.
+description: A usage guide for simulating multiple Meshtastic instances with TCP-based communication and configurable pathloss models.
 ---
 
 The Python script _`interactiveSim.py`_ uses the [Linux native application of Meshtastic](https://meshtastic.org/docs/software/linux-native) to simulate multiple instances of the device software. These instances communicate using TCP via the script, simulating the LoRa chip. The simulator forwards messages from the sender to all nodes within range, based on their simulated positions and the selected pathloss model (see [Pathloss Model](#pathloss-model)). **Note:** Packet collisions are not yet simulated.
@@ -20,27 +20,31 @@ The Python script _`interactiveSim.py`_ uses the [Linux native application of Me
 
 The simulator runs the Linux native application of Meshtastic firmware. You can use either [PlatformIO](https://meshtastic.org/docs/development/firmware/build) or [Docker](https://meshtastic.org/docs/software/linux-native#usage-with-docker) to run the firmware:
 
-- **Using PlatformIO:**  
-  Select 'native' and click 'build.' Locate the generated binary file, likely in `_Meshtastic-device/.pio/build/native/_`.  
-  Copy the `program` file to the directory where you'll run the Python script, or provide the path as an argument with `-p`:
+### Using PlatformIO
 
-  ```bash
-  python3 interactiveSim.py 3 -p /home/User/Meshtastic-device/.pio/build/native/program
-  ```
+Select 'native' and click 'build.' Locate the generated binary file, likely in `_Meshtastic-device/.pio/build/native/_`.
 
-- **Using Docker:**  
-  The simulator pulls a Docker image that builds the latest Meshtastic firmware.  
-  Ensure the Docker SDK for Python is installed:
+Copy the `program` file to the directory where you'll run the Python script, or provide the path as an argument with `-p`:
 
-  ```bash
-  pip3 install docker
-  ```
+```bash
+python3 interactiveSim.py 3 -p /home/User/Meshtastic-device/.pio/build/native/program
+```
 
-  Make sure the Docker daemon or Desktop app is running. Use the `-d` argument to launch the simulator:
+### Using Docker
 
-  ```bash
-  python3 interactiveSim.py 3 -d
-  ```
+The simulator pulls a Docker image that builds the latest Meshtastic firmware.
+
+Ensure the Docker SDK for Python is installed:
+
+```bash
+pip3 install docker
+```
+
+Make sure the Docker daemon or Desktop app is running. Use the `-d` argument to launch the simulator:
+
+```bash
+python3 interactiveSim.py 3 -d
+```
 
 ## Running the Simulator
 
