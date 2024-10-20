@@ -97,7 +97,8 @@ const Firmware = (): JSX.Element => {
                 </div>
               </div>
               <div className="card__body">
-                Available on iOS, iPadOS and macOS. The last two major OS versions are supported.
+                Available on iOS, iPadOS and macOS. The last two major OS
+                versions are supported.
               </div>
               <div className="card__footer mt-auto">
                 <a
