@@ -23,14 +23,14 @@ Below is a detailed overview of how PSK, PKC, and Session IDs are integrated int
   - **Confidentiality:** Only participants with the correct PSK can access messages within the Chat Channel.
   - **Key Management:** Secure distribution and regular rotation of the PSK are essential to maintaining the channel's security.
 
-### 2. Direct Messages (DMs) Now Using PKC
+### 2. Direct Messages (DMs) Now Using Public Key Cryptography (PKC)
 
 - **PKC Implementation for DMs:**
 
   - **Public/Private Key Pairs:** Each node is equipped with a unique public/private key pair. The private key is securely stored on the node, and the public key is shared with other nodes, allowing for secure, authenticated communication.
   - **Encryption and Signature:**
     - **Encryption:** DMs are encrypted using the recipient’s public key, ensuring only the recipient with the corresponding private key can decrypt the message.
-    - **Digital Signatures:** Messages are signed with the sender’s private key before encryption, allowing the recipient to verify the sender’s identity and the message’s integrity using the sender’s public key.
+    - **Digital Signatures:** DMs are signed with the sender’s private key before encryption, allowing the recipient to verify the sender’s identity and the message’s integrity using the sender’s public key.
 
 - **Security Enhancements with PKC:**
   - **Message Confidentiality and Integrity:** With PKC, each DM is encrypted and signed, ensuring that only the intended recipient can read the message, and verifying that it has not been tampered with.
