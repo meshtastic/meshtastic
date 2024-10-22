@@ -189,20 +189,33 @@ MAC: 24:6f:28:b5:36:71
 Hard resetting via RTS pin...
 ```
 
-### Navigate to Firmware
+### Download Firmware
 
-`cd` into the directory where you unzipped the latest release. For example:
+1. Head to the [Meshtastic Downloads Page](/downloads) to download the latest firmware.
+2. Scroll down to the **Firmware** section and select one of the following, depending on your preferences:
+- **Download Stable**: For stable, well-tested releases.
+- **Download Alpha**: For newer, experimental releases with the latest features.
+3. Once redirected to the GitHub release page, scroll down to the "Assets" section and expand it. Identify the correct firmware for your device by its architecture (e.g., `firmware-esp32s3` for ESP32-S3-based devices like the Heltec V3).
+4. Download the file and take note of the download location on your system (usually in your `~/Downloads` folder).
+
+### Navigate to Firmware Directory
+
+1. Open a terminal and navigate (`cd`) to the directory where your firmware was downloaded. The folder name typically matches the architecture and firmware version from the zip file. For example:
 
 ```shell title="Example"
-cd ~/Downloads/firmware/
+cd ~/Downloads/firmware-esp32s3-X.X.X.xxxxxxx/
 ```
+
+:::note
+Make sure to replace `esp32s3` and the version number with those corresponding to the file you downloaded.
+:::
 
 ### Install/Update Firmware
 
-Install or Update the device that you have by using the following commands according to your operating system:
+Now, proceed with the instructions below for your operating system to install or update the firmware for your specific board:
 
 :::caution
-Be very careful to install the correct firmware file for your board. In particular, the popular 'T-BEAM' radio from TTGO is not called 'TTGO-Lora' (that is a different board). So don't install the 'TTGO-Lora' build on a TBEAM, it won't work correctly. If you flash the incorrect device firmware, it may appear to successfully complete, yet the device will usually become unresponsive, displaying a blank screen (if equipped). Attempt to flash the correct version. Please note, while these devices are quite resilient and damage is not always likely, there is a possibility of onboard radio and peripheral damage due to incorrect GPIO pin direction.
+Be very careful to install the correct firmware file for your board. In particular, the popular 'T-BEAM' radio from TTGO is not called 'TTGO-Lora' (that is a different board). So don't install the 'TTGO-Lora' build on a TBEAM, it won't work correctly. If you flash the incorrect device firmware, it may appear to successfully complete, yet the device will usually become unresponsive, displaying a blank screen (if equipped). Attempt to flash the correct version. Please note, while these devices are quite resilient and damage is not always likely, there is a possibility of onboard radio and peripheral damage due to incorrect GPIO pin direction
 :::
 
 <Tabs
