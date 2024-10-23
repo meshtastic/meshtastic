@@ -39,9 +39,18 @@ Available Values:
 - `NMEA` will output a NMEA 0183 Data stream containing the internal GPS or fixed position and other node locations as Waypoints (WPL).
 - `CALTOPO` will output NMEA 0183 Waypoints (WPL) every 10 seconds for all valid node locations, to be consumed by [CalTopo / SARTopo](/docs/software/integrations/caltopo.mdx).
 - `WS85` will parse and compute wind speed data received over serial from the Ecowitt WS85. Transmits valuess via telemetry packet every 5 minutes.  Modification of the WS85 weather sensor is required (https://hackaday.io/project/196990-meshtastic-ultrasonic-anemometer-wx-station).  If option is not available in app then enable with cli command "meshtastic --set serial.mode 6"
+
+:::tip
+`PROTO` mode will show no obvious output when passively observed by a serial monitor. When testing, consider using the [Python CLI](https://github.com/meshtastic/python) with the `--listen` option, to view the stream of protobufs. 
+:::
+
 ### Receive GPIO Pin
 
 Set the GPIO pin to the RXD pin you have set up.
+
+:::tip
+With RAK4631, the default pins are TXD1 and RXD1 on the baseboard. For this device, setting [GPS Mode](/docs/configuration/radio/position/#gps-mode) to `Not_Present` will prevent a pin conflict.
+:::
 
 ### Transmit GPIO Pin
 
