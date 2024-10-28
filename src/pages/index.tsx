@@ -66,17 +66,6 @@ const SocialCards: SocialCardProps[] = [
     ),
   },
   {
-    color: "bg-[#ffffff]",
-    link: "https://meshtastic.discourse.group",
-    children: (
-      <img
-        alt="discourse"
-        className="m-auto h-10"
-        src="/img/homepage/Discourse-Logo-White.svg"
-      />
-    ),
-  },
-  {
     color: "bg-[#FF4500]",
     link: "https://reddit.com/r/meshtastic",
     children: (
