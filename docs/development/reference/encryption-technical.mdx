@@ -30,7 +30,7 @@ Below is a detailed overview of how PSK, PKC, and Session IDs are integrated int
   - **Public/Private Key Pairs:** Each node is equipped with a unique public/private key pair. The private key is securely stored on the node, and the public key is shared with other nodes, allowing for secure, authenticated communication.
   - **Encryption and Signature:**
     - **Encryption:** DMs are encrypted using the recipient’s public key, ensuring only the recipient with the corresponding private key can decrypt the message.
-    - **Digital Signatures:** Messages are signed with the sender’s private key before encryption, allowing the recipient to verify the sender’s identity and the message’s integrity using the sender’s public key.
+    - **Digital Signatures:** DMs are signed with the sender’s private key before encryption, allowing the recipient to verify the sender’s identity and the message’s integrity using the sender’s public key.
 
 - **Security Enhancements with PKC:**
   - **Message Confidentiality and Integrity:** With PKC, each DM is encrypted and signed, ensuring that only the intended recipient can read the message, and verifying that it has not been tampered with.
