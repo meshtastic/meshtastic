@@ -79,14 +79,6 @@ The precision to use for the position in the map report. Defaults to a maximum d
 
 How often we should publish the map report to the MQTT server in seconds. Defaults to 900 seconds (15 minutes).
 
-### OK to MQTT
-
-Acceptable values: `true`, `false`
-
-Default is `false`. When set to `true`, this configuration indicates that the user approves the packet to be uploaded to MQTT. If set to `false`, remote nodes are requested not to forward packets to MQTT.
-
-**Important:** This is not a cryptographic solution but a polite request that is enforced in the official firmware.
-
 ## MQTT Module Config Client Availability
 
 <Tabs
@@ -145,7 +137,6 @@ The following configuration options are available in the Python CLI:
 |          mqtt.root           |     `string`      |                       |
 | mqtt.proxy_to_client_enabled |  `true`, `false`  |        `false`        |
 |  mqtt.map_reporting_enabled  |  `true`, `false`  |        `false`        |
-|    mqtt.config_ok_to_mqtt    |  `true`, `false`  |        `false`        |
 
 :::tip
 

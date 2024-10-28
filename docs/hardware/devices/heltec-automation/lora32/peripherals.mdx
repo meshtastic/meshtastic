@@ -14,8 +14,6 @@ queryString="heltecESP32V3"
 defaultValue="GPS"
 values={[
 {label: 'GPS Module', value: 'GPS'},
-{label: 'Keyboard', value: 'Keyboard'},
-{label: 'Buzzer', value: 'Buzzer'},
 ]}>
 <TabItem value="GPS">
 
@@ -23,10 +21,9 @@ values={[
 
 ### Introduction
 
-This informational guide outlines the process of enhancing the Heltec ESP32 V3 board by integrating the GT-U7 GPS Module. The addition of this module provides precise GPS capabilities and a real-time clock (RTC), eliminating the need for WiFi or a smartphone for time tracking. This enhancement is particularly beneficial for the mesh, where tracking the duration since the last seen device is crucial.
-However, it's important to note that the GPS module increases the power demand of your node. We'll address this by detailing how to incorporate a switch or an NPN 2N2222 transistor into your setup. This enables firmware-controlled power management, conserving battery life without sacrificing functionality.
+This guide outlines the process of enhancing the Heltec ESP32 V3 board by integrating a GT-U7 GPS Module, although almost any supported GNSS module can be integrated in the same way. The addition of this module provides precise GPS capabilities and a real-time clock (RTC), eliminating the need for WiFi or a smartphone for time tracking. This enhancement is particularly beneficial for the mesh, where tracking the duration since the last seen device is crucial.
 
-It is important to note that the GPS module increases the power demand of the node. This guide details the incorporation of a switch or an NPN 2N2222 transistor to enable firmware-controlled power management, conserving battery life without compromising functionality.
+However, it's important to note that the GPS module increases the power demand of the node. This guide helps to address this by detailing how to incorporate a switch or an N-channel MOSFET into the setup. This enables additional firmware-controlled power management, conserving more battery life than the soft-sleep option without sacrificing functionality.
 
 ### Benefits
 
@@ -35,35 +32,72 @@ It is important to note that the GPS module increases the power demand of the no
 
 ### Power Consumption Considerations
 
-The GT-U7 module is known for its high power consumption, which can potentially shorten the battery lifespan of the node. To mitigate this, two approaches are recommended:
+The GT-U7 module is known for its high power consumption, which can potentially shorten the battery lifespan of the node. To mitigate this, three approaches are recommended:
 
 - **Manual Switch**: A simple on/off switch for the GPS module, allowing for manual power management.
-- **NPN 2N2222 Transistor**: Facilitates automatic power control through the firmware, enabling the device to turn off the GPS module based on specific conditions or after a set period.
+- **Through-hole MOSFET**: Facilitates automatic power control through the firmware, enabling the device to turn off the GPS module based on specific conditions or after a set period.
+- **SMD MOSFET**: As above, but in a smaller volume and space envelope and with a marginally lower power consumption when in use.
+
+### Notes on previous versions of these instructions
+Previous versions of these instructions specified using a 2N2222a power transistor to control the power. In addition, it showed the transistor being used to control the power from the "high side" (i.e. between the Heltec Vcc and the GPS Vin). While this method will work for some boards, it is not ideal to use an NPN transistor to switch the "high side" of the load like this.
+
+The current version of the guide now instructs using either a surface mount or through-hole MOSFET to switch the ground ("low side") of the GPS module. This allows the MOSFET to operate in the fully saturated condition, and MOSFETs will have a lower power consumption themselves than a power transistor. As the ground for the two parts will now be isolated, it is important that no parts of the GPS module, the antenna or any shielding shell are able to contact the ground for the Heltec board.
+
+The essential connections for the NPN MOSFET are shown in the schematic below.
+
+![Heltec_ESP32V3_N-Mosfet_Schematic](/img/hardware/heltec/Heltec_ESP32V3_N-Mosfet_Schematic.webp)
 
 ### Materials Needed
 
 - Heltec ESP32 V3 board
 - GT-U7 GPS Module
-- NPN 2N2222 Transistor
+- (Optional) Through-hole MOSFET (note: these are harder to find in small packages than SMD MOSFETS, but any that can operate on 3.3V will be suitable, e.g. 2N7000, BS170)
+- (Optional) Surface Mount MOSFET (note: any suitable N-channel MOSFET can be used, e.g. SI2312, AO3400a, 2N7002)
 - Wires and soldering equipment
 - (Optional) Switch for manual power control
 
-### Instructions
+### Instructions (Through-Hole MOSFET)
 
-1.  Solder a cable from the TXD slot on the GPS module to GPIO 48 on Heltec board. (You may choose your own GPIO pin)
-2.  Solder a cable from the RXD slot on the GPS module to GPIO 47 on Heltec board. (You may choose your own GPIO pin)
-3.  Solder a cable from the GND slot on the GPS module to GND pin on Heltec board.
-4.  Solder a cable from left leg of NPN 2N2222 Transistor to VCC skit on GPS module.
-5.  Solder a cable from Right leg of NPN 2N2222 Transistor to 3V/5V pin on Heltec board.
-6.  Solder a cable from Middle leg of NPN 2N2222 Transistor to GPIO 48 of Heltec board. (You may choose your own GPIO pin)
+Note: these instructions assume a 2N7000 MOSFET is used. For other parts, always check the data sheet!
+
+1.  Solder a wire from the TXD pin on the GPS module to GPIO 48 on Heltec board. (Another GPIO pin may be chosen)
+2.  Solder a wire from the RXD pin on the GPS module to GPIO 47 on Heltec board. (Another GPIO pin may be chosen)
+3.  Solder a wire from the VCC pin on the GPS module to 3V/5V pin pin on Heltec board.
+4.  Solder a wire from Right leg (lead 3, Drain) of NPN MOSFET to GND on GPS module.
+5.  Solder a wire from Left leg (lead 1, Source) of NPN MOSFET to GND on Heltec board.
+6.  Solder a wire from Middle leg (lead 2, Gate) of NPN MOSFET to GPIO 48 of Heltec board. (Another GPIO pin may be chosen)
 7.  Go to Meshtastic app > Radio Configurations > Position
-8.  Set GPS_RX_PIN to 48 (This will communicate to the TXD slot on the GPS)
-9.  Set GPS_TX_PIN to 47 (This will communicate to the RXD slot on the GPS)
+8.  Set GPS_RX_PIN to 48 (This will communicate to the TXD pin on the GPS)
+9.  Set GPS_TX_PIN to 47 (This will communicate to the RXD pin on the GPS)
 10. Set PIN_GPS_EN to 46 (This will allow the meshtastic firmware to turn off the power on the GPS board with the user button of the Heltec Board by pressing it 3 times)
 
-### Wiring Diagram
+### Wiring Diagram - Through-Hole
 
-![HeltecESP32V3-gps-module](/img/hardware/HeltecESP32V3-gps-module.webp)
+![HeltecESP32V3-gps-module](/img/hardware/heltec/Heltec_ESP32V3_GPS_module_low-side.webp)
+
+### Instructions (Surface Mount MOSFET)
+
+Note: these instructions assume an SI2312 MOSFET is used. For other parts, always check the data sheet!
+
+ 1. Solder a wire from the TXD pin on the GPS module to GPIO 48 on Heltec board. (Another GPIO pin may be chosen)
+ 2. Solder a wire from the RXD pin on the GPS module to GPIO 47 on Heltec board. (Another GPIO pin may be chosen)
+ 3. Solder a wire from the GND pin on the GPS module to middle pin of the SI 2312 MOSFET
+ 4. Solder a wire from the VCC pin of the GPS module to o 3V/5V pin on Heltec board.
+ 5. Solder a wire from Left leg of SI2312  MOSFET to GPIO 46 on the Heltec board.         
+ 6. Solder a wire from Right leg of SI2312 MOSFET to the empty solder spot  on the heltec board (see pictures).
+ 7. Go to Meshtastic app > Radio Configurations > Position
+ 8. Set GPS_RX_PIN to 48 (This will communicate to the TXD pin on the GPS)
+ 9. Set GPS_TX_PIN to 47 (This will communicate to the RXD pin on the GPS)
+ 10. Set PIN_GPS_EN to 46 (This will allow the meshtastic firmware to turn off the power on the GPS board with the user button of the Heltec Board by pressing it 3 times)
+ 11. Ensure that the ground on the GPS module does not contact the ground of the Heltec board, or any other component linked to the Heltec ground. This includes antenna covers, battery connectors, etc. Failure to ensure they are separated may lead to the MOSFET being bypassed.
+
+### Photographs and Diagrams - SMD
+
+![HeltecESP32V3-gps-module](/img/hardware/heltec/Heltec_ESP32V3_SMDMosfetDiagram.webp)
+
+![HeltecESP32V3-gps-module](/img/hardware/heltec/Heltec_ESP32V3_SMDMosfetInPlace.webp)
+
+![HeltecESP32V3-gps-module](/img/hardware/heltec/Heltec_ESP32V3_SMDMOSFET_GPSInPlace.webp)
 
 ### Troubleshooting Tips
 
@@ -75,21 +109,7 @@ If the location is not accurate, walk around to allow the GPS to properly lock o
 
 ### Conclusion
 
-By following this guide, you can enhance your Heltec ESP32 V3 board with valuable GPS capabilities and an RTC, while effectively managing power consumption. Whether for a hobby project or a more serious application, these additions significantly expand the potential of your device.
-
-</TabItem>
-<TabItem value="Keyboard">
-
-## Keyboard
-
-Coming Soon
-
-</TabItem>
-<TabItem value="Buzzer">
-
-## Buzzer
-
-Coming Soon
+By following this guide, the Heltec ESP32 V3 board can be enhanced with valuable GPS capabilities and an RTC, while effectively managing power consumption. Whether for a hobby project or a more serious application, these additions significantly expand the potential of the device.
 
 </TabItem>
 </Tabs>

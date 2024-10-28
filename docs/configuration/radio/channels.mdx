@@ -7,6 +7,7 @@ description: Understand how to configure channels on your Meshtastic device, inc
 
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
+import PositionPrecisionBits from "@site/docs/blocks/_position-precision-bits.mdx";
 
 The Channels config options are: Index, Roles, and Settings. Channel config uses an admin message sending a `Channel` protobuf which also consists of a `ChannelSettings` or `ModuleSettings` protobuf.
 
@@ -117,13 +118,9 @@ The `position_precision` value is an integer between 0 and 32:
 
 - A value of 0 means that location data is never sent over the given channel.
 - A value of 32 means that location data is sent with full precision.
-- Values in between indicate the number of bits of precision to be sent.
+- Values in between indicate the number of bits of precision to be sent, which correspond to a position precision from the table below.
 
-Some useful values and their approximate precisions:
-
-- 11: Large region, around ±11 kilometers
-- 13: City-sized region, around ±3 kilometers
-- 16: Neighborhood-level precision, around ±350 meters
+<PositionPrecisionBits />
 
 The client applications have implemented different levels of precision giving the user a practical range to choose from. Setting across the full range of integers can be done via the Python CLI. See [Setting Position Precision](/docs/configuration/radio/channels/#setting-position-precision) for examples on setting different levels of precision using CLI.
 
@@ -158,14 +155,14 @@ See [Android App Usage](/docs/software/android/usage#setup-a-channel) for more f
 
 [![Channel Editor](/img/android/android-channel-edit-sm.webp)](/img/android/android-channel-edit.webp)
 
-Tap the Channel Name (or the pen icon) to access the Channel Menu:
+Tap "Edit" to access the Channel Menu:
 
 1. Add, remove, or modify secondary channels
 2. Create or modify encryption keys
 3. Enable uplink and downlink for individual channels
-4. Set the position precision value
-
-
+4. Position enabled
+5. Precise location (if position is enabled)
+6. Position precision (if precise location is disabled)
 
 </TabItem>
 
