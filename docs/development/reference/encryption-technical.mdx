@@ -8,15 +8,15 @@ description: Technical Overview of Encryption Employed with Meshtastic from Firm
 
 ## PSK for Channels, PKC for Direct Messages (DMs) and Admin Messages
 
-Starting with firmware version 2.5.0, which introduces Public Key Cryptography (PKC) for Direct Messages (DMs) and additionally incorporating the use of Session IDs for Admin Messages, the security architecture of Meshtastic has reached a new level of robustness.
+Starting with firmware version 2.5.0, which introduces Public Key Cryptography (PKC) for Direct Messages (DMs) and also incorporates the use of Session IDs for Admin Messages, the security architecture of Meshtastic has reached a new level of robustness.
 
-Below is a detailed overview of how PSK, PKC, and Session IDs are integrated into your system to secure Channels, Direct Messages, and Admin Messages.
+Below is a detailed overview of how Pre-Shared Key (PSK), PKC, and Session IDs are integrated into your system to secure Channels, DMs, and Admin Messages.
 
-### 1. Chat Channels Using Pre-Shared Key (PSK)
+### 1. Chat Channels Using PSK
 
 - **PSK Overview:**
 
-  - Chat Channels continue to utilize a Pre-Shared Key (PSK) for encrypting communications.
+  - Chat Channels continue to utilize a PSK for encrypting communications.
   - All participants share the same PSK for their Channels, which is used for both encryption and decryption within the channel.
 
 - **Security Considerations:**
