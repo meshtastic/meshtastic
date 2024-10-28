@@ -1,0 +1,129 @@
+---
+id: interactive-sim
+title: Interactive Simulator Usage Guide
+sidebar_label: Interactive Event Simulator
+sidebar_position: 2
+description: A usage guide for simulating multiple Meshtastic instances with TCP-based communication and configurable pathloss models.
+---
+
+The Python script _`interactiveSim.py`_ uses the [Linux native application of Meshtastic](https://meshtastic.org/docs/software/linux-native) to simulate multiple instances of the device software. These instances communicate using TCP via the script, simulating the LoRa chip. The simulator forwards messages from the sender to all nodes within range, based on their simulated positions and the selected pathloss model (see [Pathloss Model](#pathloss-model)). **Note:** Packet collisions are not yet simulated.
+
+## Usage
+
+1. Clone or download the repository and navigate to the Meshtasticator folder.
+2. (Optional) Create a virtual environment.
+3. Install dependencies:
+
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+The simulator runs the Linux native application of Meshtastic firmware. You can use either [PlatformIO](https://meshtastic.org/docs/development/firmware/build) or [Docker](https://meshtastic.org/docs/software/linux-native#usage-with-docker) to run the firmware:
+
+### Using PlatformIO
+
+Select 'native' and click 'build.' Locate the generated binary file, likely in _`firmware/.pio/build/native/`_.
+
+Copy the `program` file to the directory where you'll run the Python script, or provide the path as an argument with `-p`:
+
+```bash
+python3 interactiveSim.py 3 -p /home/User/Meshtastic-device/.pio/build/native/program
+```
+
+### Using Docker
+
+The simulator pulls a Docker image that builds the latest Meshtastic firmware.
+
+Ensure the Docker SDK for Python is installed:
+
+```bash
+pip3 install docker
+```
+
+Make sure the Docker daemon or Desktop app is running. Use the `-d` argument to launch the simulator:
+
+```bash
+python3 interactiveSim.py 3 -d
+```
+
+## Running the Simulator
+
+To run the interactive simulator:
+
+```bash
+python3 interactiveSim.py [nrNodes] [-p <full-path-to-program>]
+```
+
+- **`nrNodes`** (optional): Number of instances to launch. Each instance opens a terminal and a TCP port (starting at 4403).
+- If you provide the number of nodes, they will be randomly placed; otherwise, you can manually place nodes on a plot.
+- After placing nodes, you can configure their [role](https://meshtastic.org/docs/settings/config/device#role), `hopLimit`, height (elevation), and antenna gain. Configurations are saved automatically.
+
+![Config Note](/img/software/meshtasticator/configNode.webp)
+
+## Commands During Simulation
+
+Once the simulation starts, you can issue commands (or use a predefined [script](#usage-with-script)) to send messages between nodes. Use `plot` to visualize message routes and airtime statistics:
+
+- Enter a message ID to see its route.
+- Hover over arcs for information and click to remove the overlay.
+- Two graphs display channel utilization (one-minute window) and airtime usage (hourly window) for each node.
+
+![Route Plot 2](/img/software/meshtasticator/route_plot-2.webp)
+
+## List of Commands
+
+- **`broadcast <fromNode> <txt>`**: Send a broadcast from node _fromNode_ with text _txt_.
+- **`DM <fromNode> <toNode> <txt>`**: Send a Direct Message from node _fromNode_ to node _toNode_ with text _txt_.
+- **`traceroute <fromNode> <toNode>`**: Send a traceroute request from node _fromNode_ to node _toNode_.
+- **`reqPos <fromNode> <toNode>`**: Send a position request from node _fromNode_ to node _toNode_.
+- **`ping <fromNode> <toNode>`**: Send ping from node _fromNode_ to node _toNode_.
+- **`remove <id>`**: Remove node _id_ from the current simulation.
+- **`nodes <id0> [id1, etc.]`**: Show the node list as seen by node(s) _id0_, _id1_, etc.
+- **`plot`**: Plot the routes of messages sent and airtime statistics.
+- **`exit`**: Exit the simulator without plotting routes.
+
+## Usage with Script
+
+Modify the `try` clause in _`interactiveSim.py`_ to predefine messages. Run the simulator with the `-s` argument:
+
+```bash
+python3 interactiveSim.py 3 -s
+```
+
+- After nodes exchange NodeInfo, they will begin sending messages.
+- Close the simulation manually with `Ctrl+C` or wait for the timeout.
+
+## Tips and Tricks
+
+1. **Speeding Up NodeInfo Exchange:**  
+   Disable certain modules by removing `new NodeInfoModule()` from _`src/modules/Modules.cpp`_ in the firmware.
+
+2. **Saving and Reloading Configurations:**  
+   After a simulation, node configurations are saved. You can rerun the same scenario with:
+
+   ```bash
+   python3 interactiveSim.py --from-file
+   ```
+
+   Modify the _`out/nodeConfig.yaml`_ file to adjust configurations before reloading.
+
+3. **Using the Python CLI:**  
+   You can call functions from the Node class via `sim.getNodeById(<id>)` in _`interactiveSim.py`_. Example:
+
+   ```python
+   node.setURL('<YOUR_URL>')
+   ```
+
+## Pathloss Model
+
+The simulator estimates signal propagation using a pathloss model. This is an approximation of the physical environment, so it may not be 100% accurate. The available models are:
+
+- **0**: Log-distance model
+- **1**: Okumura-Hata model (small/medium cities)
+- **2**: Okumura-Hata model (metropolitan areas)
+- **3**: Okumura-Hata model (suburban environments)
+- **4**: Okumura-Hata model (rural areas)
+- **5**: 3GPP model (suburban macro-cell)
+- **6**: 3GPP model (metropolitan macro-cell)
+
+You can modify the pathloss model and area configuration in _`lib/config.py`_. LoRa settings remain at their Meshtastic defaults unless customized during node placement.

@@ -5,6 +5,11 @@ sidebar_label: Usage
 sidebar_position: 2
 ---
 
+import PositionPrecision from "@site/docs/blocks/_position-precision.mdx";
+import Link from "@docusaurus/Link";
+import ThemedImage from "@theme/ThemedImage";
+import useBaseUrl from "@docusaurus/useBaseUrl";
+
 ## Introduction
 
 The Meshtastic Android app handles the communication and can show the location of everyone in your private group. Each member of your private mesh can see the location and distance of members and text messages sent to your group chat.
@@ -35,22 +40,54 @@ To find devices to connect via Bluetooth click the "+" button on the bottom righ
 
 The cloud icon at the top right corner indicates if you are connected to a device. This currently has three states:
 
-![Not connected](/img/android/android-cloud-cross.webp) Cloud with a slash through it: No device connected to the application.
+<center>
+  <ThemedImage
+    alt="Not connected"
+    className="max-h-14"
+    sources={{
+      light: useBaseUrl("/img/android/android-no-ack_lt.webp"),
+      dark: useBaseUrl("/img/android/android-no-ack_dk.webp"),
+    }}
+  />
+</center>
+Cloud with a slash through it: No device connected to the application.
 
-![Connected](/img/android/android-cloud-tick.webp) Cloud with a tick in it: Device connected to the application.
+<center>
+  <ThemedImage
+    alt="Connected"
+    className="max-h-14"
+    sources={{
+      light: useBaseUrl("/img/android/android-imp-ack_lt.webp"),
+      dark: useBaseUrl("/img/android/android-imp-ack_dk.webp"),
+    }}
+  />
+</center>
+Cloud with a check in it: Device connected to the application.
 
-![Sleeping](/img/android/android-cloud-up.webp) Cloud with an up arrow in it: Device is connected, but currently sleeping or out of range.
+<center>
+  <ThemedImage
+    alt="Sleeping"
+    className="max-h-14"
+    sources={{
+      light: useBaseUrl("/img/android/android-waiting_lt.webp"),
+      dark: useBaseUrl("/img/android/android-waiting_dk.webp"),
+    }}
+  />
+</center>
+Cloud with an up arrow in it: Device is connected, but currently sleeping or out
+of range.
 
 ## Common tasks
 
 ### Set your region
 
 In order to start communicating with your mesh, you must select a region. This setting controls which frequency range your device uses and should be set according to your location. See [Region Settings](https://meshtastic.org/docs/getting-started/initial-config#set-regional-settings) for a list of region codes and their meanings.
+
 - Tap on the "Region" dropdown in the top-right corner and make the appropriate selection.
 
 ### Change your name
 
-Edit the "Your name", e.g. to be "Mike Bird". This is the name that other people will see, so make it unique within your group. The initials e.g. "MB" should also be unique and will be used to identify you in the message history and on the device screens.  Initials, or "short name", can be customized in the Radio configuration - User settings.  The four characters displayed after your initials cannot be changed. These are the last four hex digits of the device MAC address.  Devices with unset names will display these four characters as the device short name.
+Edit the "Your name", e.g. to be "Mike Bird". This is the name that other people will see, so make it unique within your group. The initials e.g. "MB" should also be unique and will be used to identify you in the message history and on the device screens. Initials, or "short name", can be customized in the Radio configuration - User settings. The four characters displayed after your initials cannot be changed. These are the last four hex digits of the device MAC address. Devices with unset names will display these four characters as the device short name.
 
 [![Changing device name](/img/android/android-settings-mike-sm.webp)](/img/android/android-settings-mike.webp)
 
@@ -72,7 +109,7 @@ You will see a warning because changing the Channel will break communications wi
 
 [![Do you want to change the channel?](/img/android/android-new-channel-sm.webp)](/img/android/android-new-channel.webp)
 
-The app will generate a new QR code on the screen.  This encodes the channel details and a random 256-bit key for sharing with the new group. You can share the QR code with other Meshtastic users, or use the Share button and share the link via chat message, SMS, or email. The link is a very long code, for example: https://www.meshtastic.org/d/#CgUYAyIBAQ
+The app will generate a new QR code on the screen. This encodes the channel details and a random 256-bit key for sharing with the new group. You can share the QR code with other Meshtastic users, or use the Share button and share the link via chat message, SMS, or email. The link is a very long code, for example: https://www.meshtastic.org/d/#CgUYAyIBAQ
 
 ### Join a channel
 
@@ -83,10 +120,11 @@ The app will generate a new QR code on the screen.  This encodes the channel det
 2. If the channel is shared from a file or link using the `Share` button, you can click on the file or link and you need to choose "Open with Meshtastic".
 
 :::info If a QR or URL opens a webpage instead of the APP or "Open with Meshtastic" is not an option:
+
 1. Go to Android Settings > Apps > Default apps > Meshtastic > Opening links
 2. Make sure you have in "links/web address": www.meshtastic.org
 3. If you see the option "Open the supported links", make sure it is enabled.
-:::
+   :::
 
 [![Accept new channel](/img/android/android-accept-channel-c.webp)](/img/android/android-accept-channel.webp)
 
@@ -104,16 +142,18 @@ You can test changing channels with the QR code shown below.
 ### Adjust a channel
 
 You can change the following settings by tapping on the name of an existing channel:
+
 1. MQTT Uplink
 2. MQTT Downlink
-3. Position precision value
+3. Position enabled
+4. Precise location (if position is enabled)
+5. Position precision (if precise location is disabled)
 
 #### Position Precision
-The precision levels currently used in the app correspond to the following values:
-- HIGH_PRECISION (32), full precision
-- MED_PRECISION (16), around ±350 meters
-- LOW_PRECISION (11), around ±11 kilometers
-- DISABLED (0), location data is never sent over the given channel
+
+The precision levels currently used in the app correspond the values in the table below. These can be thought of as the radius of a circle around a point (not your current location) which you are within.
+
+<PositionPrecision />
 
 ### Send a message
 
@@ -126,17 +166,76 @@ The message window operates like most messaging apps. Note that your primary cha
 
 With LoRa (or any radio) there is some uncertainty that the message has been received, so there is a confirmation built-in to the protocol. There are small icons shown to the right of the messages you send:
 
-- Cloud with an up arrow: the message is queued in the app, waiting to be handed to the device.
-- Cloud only: the device received the message from the app, and it has been sent and transmitted via LoRa.
-- Cloud with a check mark: received at least one node's acknowledgement response. Confirmations could be from any one device.
-- Person with a check mark - The intended recipient node of your direct message acknowledged the message.
-- Cloud crossed out: the initial sender did not receive any confirmation within a certain timeout.
+<center>
+  <ThemedImage
+    alt="cloud up"
+    className="max-h-18"
+    sources={{
+      light: useBaseUrl("/img/android/android-waiting_lt.webp"),
+      dark: useBaseUrl("/img/android/android-waiting_dk.webp"),
+    }}
+  />
+</center>
+Cloud with an up arrow: the message is queued in the app, waiting to be handed
+to the device.
+
+<center>
+  <ThemedImage
+    alt="cloud only"
+    className="max-h-18"
+    sources={{
+      light: useBaseUrl("/img/android/android-sent_lt.webp"),
+      dark: useBaseUrl("/img/android/android-sent_dk.webp"),
+    }}
+  />
+</center>
+- Cloud only: the device received the message from the app, and it has been sent
+and transmitted via LoRa.
+
+<center>
+  <ThemedImage
+    alt="Cloud with a check mark"
+    className="max-h-18"
+    sources={{
+      light: useBaseUrl("/img/android/android-imp-ack_lt.webp"),
+      dark: useBaseUrl("/img/android/android-imp-ack_dk.webp"),
+    }}
+  />
+</center>
+- Cloud with a check mark: received at least one node's acknowledgement
+response. Confirmations could be from any one device.
+
+<center>
+  <ThemedImage
+    alt="Person with a check mark"
+    className="max-h-18"
+    sources={{
+      light: useBaseUrl("/img/android/android-DM-ack_lt.webp"),
+      dark: useBaseUrl("/img/android/android-DM-ack_dk.webp"),
+    }}
+  />
+</center>
+- Person with a check mark - The intended recipient node of your direct message
+acknowledged the message.
+
+<center>
+  <ThemedImage
+    alt="Cloud crossed out"
+    className="max-h-18"
+    sources={{
+      light: useBaseUrl("/img/android/android-no-ack_lt.webp"),
+      dark: useBaseUrl("/img/android/android-no-ack_dk.webp"),
+    }}
+  />
+</center>
+- Cloud crossed out: the initial sender did not receive any confirmation within
+a certain timeout.
 
 By default there is no long-term store-and-forward of messages, so messages not received during transmission are lost.
 
 ### View your network
 
-[![Local Meshtastic network](/img/android/android-nodes-sm.webp)](/img/android/android-nodes.webp)
+![[Local Meshtastic network](/img/android/android-nodes-sm.webp)](/img/android/android-nodes.webp)
 
 The network list shows all the users (devices) that have connected to the same Channel. For each entry, it shows the last time they were active, their location and distance (when available), and their last known power status. In the example above, Monkey is the local user, Rabbit was last heard from 10 minutes ago and is 50m away, and Panda was last heard 11 minutes ago and 5m away.
 
@@ -151,7 +250,6 @@ The network list shows all the users (devices) that have connected to the same C
 
 The Map tab will show a local map with an icon for each active mesh node that has a known position. The users names are shown above the icon.
 
-
 [![Map Layers](/img/android/android-map-layers-c.webp)](/img/android/android-map-layers.webp)
 
 - Clicking the layers icon in the top-right will allow you to select the map type.
@@ -160,7 +258,7 @@ The Map tab will show a local map with an icon for each active mesh node that ha
 
 [![Download offline maps](/img/android/android-map-download-c.webp)](/img/android/android-map-download.webp)
 
-- Some map types allow downloading for offline use.  If offline maps are available for your selected map type, a download icon will appear in the bottom-right corner of the map.  Tap this icon and choose the option to Download Region, then select the area you wish to download.
+- Some map types allow downloading for offline use. If offline maps are available for your selected map type, a download icon will appear in the bottom-right corner of the map. Tap this icon and choose the option to Download Region, then select the area you wish to download.
 
 ## Configuration options
 
@@ -179,6 +277,7 @@ The debug panel allows you to see all packets sent between the application and t
 [![Meshtastic configuration options](/img/android/android-radio-configuration-c.webp)](/img/android/android-radio-configuration.webp)
 
 Radio Configuration opens a list of all radio and module configuration settings.
+
 - See [Radio Config](/docs/configuration/radio) for radio settings.
 - See [Module Config](/docs/configuration/module) for module settings.
 - At the end of this list are buttons for Reboot, Shutdown, Factory reset, and NodeDB reset.
@@ -207,7 +306,7 @@ Opens the introduction slideshow.
 
 [![Quick Chat](/img/android/android-quick-chat-sm.webp)](/img/android/android-quick-chat.webp)
 
-Brings up an editor to create and edit quick response messages. These will appear as buttons in the chat window.  Messages have the option to send instantly, or be appended to your message and sent manually.
+Brings up an editor to create and edit quick response messages. These will appear as buttons in the chat window. Messages have the option to send instantly, or be appended to your message and sent manually.
 
 ### About
 
