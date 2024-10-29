@@ -7,10 +7,10 @@ export default function GiscusComponent() {
 
   return (
     <Giscus
-      repo="meshtastic/meshtastic"
-      repoId="MDEwOlJlcG9zaXRvcnkzMzkzMDEyMjI="
+      repo="meshtastic/discussions"
+      repoId="R_kgDONDs6gA"
       category="Blog Post Comments"
-      categoryId="DIC_kwDOFDlTZs4Choq7"
+      categoryId="DIC_kwDONDs6gM4Cjy3h"
       mapping="pathname"
       term="specific-term" //If you didn't select "Discussion title contains a specific term", omit.
       strict="1"
