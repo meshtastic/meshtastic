@@ -22,11 +22,11 @@ By default, nodes will **only** respond to administrative commands via the local
 
 In order to send the Admin Messages over the mesh, a secure method of communication must be established.
 
-For firmware versions 2.5 and later, this is achieved by storing the public key of the controlling node in the remote node's Security Config. Up to three separate public keys can be stored in any node's settings, allowing some flexibility around remote node administration.
+For firmware versions 2.5 and later, this is achieved by storing the public key of the controlling node in one of the remote node's Security Config Admin Key fields. A node has up to three separate Admin Key fields, allowing some flexibility around remote node administration.
 
-For firmware versions 2.4.x and earlier, this was achieved by setting up a channel with the name `admin` and a shared PSK. Commands were issued in various ways depending on the Client App, with the Admin Messages passed between nodes over this channel similar to the legacy DMs. Any node in the channel can manage any other node.
+For firmware versions 2.4.x and earlier, this was achieved by setting up a channel with the name `admin` and a shared PSK. Admin Messages passed between nodes over this channel similar to the legacy DMs, encrypted only with the channel's PSK. Any node in the channel could manage any other node.
 
-This `admin` channel method is still supported in firmware versions 2.5 and later, but must be specifically enabled via the "Legacy Admin channel" setting.
+This `admin` channel method is still supported in firmware versions 2.5 and later, but must be specifically enabled via the "Legacy Admin channel" setting and is only for managing pre-2.5 nodes. A firmware version 2.5 and later node cannot be managed in this way.
 
 :::info
 Remote Admin is complemented by setting [Managed Mode](/docs/configuration/radio/security/#managed-mode) on the remote node, which restricts radio configurations on that node. It is not necessary to set Managed Mode for Remote Admin to function.
@@ -56,10 +56,10 @@ All current and Legacy Remote Admin config options are available for Android.
 
 1. Connect to the node that will be used as the local controlling node.
 2. The public key of a node is found in [Security Config](/docs/configuration/radio/security/#public-key).
-3. Copy the public key of the controlling node to a note taking app.
+3. Copy the public key of the controlling node to a note taking app, or manually send it to the remote node as a DM.
 4. Connect to the node that will be used as the remote administered node.
-5. The public key of the controlling node is added as Admin Key in [Security Config](/docs/configuration/radio/security/#admin-key).
-6. Up to 3 Admin Keys may be supplied, allowing up to 3 controlling nodes.
+5. The public key of the controlling node is added as an Admin Key in one of the fields in [Security Config](/docs/configuration/radio/security/#admin-key).
+6. Up to 3 Admin Keys may be supplied, one per field, allowing up to 3 controlling nodes.
 
 #### Setting up Remote Admin using the Legacy method
 
@@ -87,10 +87,12 @@ All current and Legacy Remote Admin config options are available iOS, iPadOS and
 
 1. Connect to the node that will be used as the local controlling node.
 2. The public key of a node is found in [Security Config](/docs/configuration/radio/security/#public-key).
-3. Copy the public key of the controlling node to a note taking app.
-4. Connect to the node that will be used as the remote administered node.
-5. The public key of the controlling node is added as Admin Key in [Security Config](/docs/configuration/radio/security/#admin-key).
-6. Up to 3 Admin Keys may be supplied, allowing up to 3 controlling nodes.
+3. Copy the public key of the controlling node to a note taking app, or manually send it to the remote node as a DM.
+4. Still in the local node, in Settings -> App Settings -> Turn on Administration.
+5. Connect to the node that will be used as the remote administered node.
+6. The public key of the controlling node is added as Admin Key in [Security Config](/docs/configuration/radio/security/#admin-key).
+7. Up to 3 Admin Keys may be supplied, allowing up to 3 controlling nodes.
+8. Still in the remote node, in Settings -> App Settings -> Turn on Administration.
 
 #### Setting up Remote Admin using the Legacy method
 
@@ -101,9 +103,10 @@ Legacy admin is enabled using the Legacy Admin channel option in [Security Confi
 #### Carrying out Remote Admin tasks
 
 1. Open the Meshtastic App, connect to the local controlling node.
-2. ???
-3. ???
-4. From the Remote Administration screen, all Radio and Module configuration options are available.
+2. In Settings -> App Settings -> Turn on Administration
+3. Choose a node under Settings -> Configure Node
+4. From the Settings screen, all Radio and Module configuration options are available for the remote node.
+5. When finished, select your own node in Settings -> Configure Node, or disable Remote Admin under Settings -> App Settings -> Turn off Administration
 
 </TabItem>
 <TabItem value="cli">
