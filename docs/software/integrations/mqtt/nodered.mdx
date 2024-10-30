@@ -7,31 +7,30 @@ sidebar_position: 3
 
 ## Using MQTT with Node-RED
 
-Node-RED is a free cross-platform programming tool for wiring together hardware, APIs, and online services developed originally by IBM for IOT. It is widely used for home automation by many non-professional programmers and runs well on Pi's. Node-RED has many plug-in modules written by the community. 
+Node-RED is a free cross-platform programming tool for wiring together hardware, APIs, and online services developed originally by IBM for IOT. It is widely used for home automation by many non-professional programmers and runs well on Pi's. Node-RED has many plug-in modules written by the community.
 
 I will use this platform as a practical example on how to interface with the MQTT features of Meshtastic. Everything can be done from GUI's without using command line.
-
 
 ### Enabling MQTT
 
 Use http://client.meshtastic.org/ , the python CLI, or an Apple or Android app to connect to your device and adjust these settings.
 
+1. Settings--> Radio Config--> Network
 
-1. Settings--> Radio Config--> Network 
-    - On the node that will act as the gateway between the mesh and MQTT enable a network connection (i.e. Wifi, Ethernet).
-    - Save
+   - On the node that will act as the gateway between the mesh and MQTT enable a network connection (i.e. Wifi, Ethernet).
+   - Save
 
-2. Settings--> Module Config--> MQTT config 
+2. Settings--> Module Config--> MQTT config
    - Configure the MQTT gateway's network configuration.
    - Verify Encryption Enabled is OFF.
    - (optional) Turn JSON Output Enabled ON.
    - Save
 3. Channel Editor
    - Go to Channel Editor and enable Uplink and Downlink on the channels you wish to publish to MQTT.
-   - Save 
-
+   - Save
 
 ### Using Node-RED with Meshtastic
+
 There are three common approaches:
 
 1. Using JSON-encoded messages
@@ -39,6 +38,7 @@ There are three common approaches:
 3. Using protobuf-encoded messages with a protobuf decode node and the Meshtastic protobuf definitions
 
 The JSON output only publishes the following subset of the messages on a Meshtastic network:
+
 - Text Message
 - Telemetry
   - Device Metrics
@@ -54,11 +54,12 @@ The JSON output only publishes the following subset of the messages on a Meshtas
 > Protobufs are mesh native.
 
 #### 1. Using JSON-encoded messages
-:::note 
+
+:::note
 JSON is not supported on the nRF52 platform.
 :::
 
-Make sure that option *JSON Output Enabled* is set in MQTT module options and you have a channel called "mqtt".
+Make sure that option _JSON Output Enabled_ is set in MQTT module options and you have a channel called "mqtt".
 
 Below is a valid JSON envelope for information sent by MQTT to a device for broadcast onto the mesh. The `to` field is optional and can be omitted for broadcast. The `channel` field is also optional and can be omitted to send to the primary channel.
 
@@ -71,7 +72,9 @@ Below is a valid JSON envelope for information sent by MQTT to a device for broa
   "payload": text or a json object go here
 }
 ```
+
 #### 2. Using protobuf-encoded messages with the Meshtastic decode node
+
 Install Node-Red plug-in:
 https://flows.nodered.org/node/@meshtastic/node-red-contrib-meshtastic
 
@@ -80,10 +83,9 @@ More info is in the plug-in source repository.
 There is an example flow using this mechanism available
 https://github.com/scruplelesswizard/meshtastic-node-red
 
-
 #### 3. Using protobuf-encoded messages with a protobuf decode node and the Meshtastic protobuf definitions
 
- If you don't want to depend on JSON decoding on the device, you can decode the protobuf messages off-device. To do that you will need to get the .proto files from https://github.com/meshtastic/protobufs. They function as a schema and are required for decoding in Node-RED. Save the files where the node-RED application can access them and note the file path of the "mqtt.proto" file.
+If you don't want to depend on JSON decoding on the device, you can decode the protobuf messages off-device. To do that you will need to get the .proto files from https://github.com/meshtastic/protobufs. They function as a schema and are required for decoding in Node-RED. Save the files where the node-RED application can access them and note the file path of the "mqtt.proto" file.
 
 Install Node-RED plug-ins to your Node-RED application for an embedded MQTT server and a protobuf decoder.
 https://flows.nodered.org/node/node-red-contrib-aedes
@@ -91,20 +93,20 @@ https://flows.nodered.org/node/node-red-contrib-protobuf
 
 Drag, drop, and wire the nodes like this. For this example, I ran Node-RED on a Windows machine. Note that file paths might be specified differently on different platforms. MQTT server wild cards are usually the same. A "+" is a single level wildcard for a specific topic level. A "#" is a multiple level wildcard that can be used at the end of a topic filter. The debug messages shown are what happens when the inject button sends a JSON message with a topic designed to be picked up by the specified Meshtastic device and then having it rebroadcast the message.
 
-[<img src="/documents/mqtt/NodeRedTwo.jpg" style={{zoom:'50%'}} />](/documents/mqtt/NodeRedTwo.jpg)
-[<img src="/documents/mqtt/NodeRedThree.jpg" style={{zoom:'50%'}} />](/documents/mqtt/NodeRedThree.jpg)
-[<img src="/documents/mqtt/NR_nodes.jpg" style={{zoom:'50%'}} />](/documents/mqtt/NR_nodes.jpg)
+[<img src="/documents/mqtt/NodeRedTwo.webp" style={{zoom:'50%'}} />](/documents/mqtt/NodeRedTwo.webp)
+[<img src="/documents/mqtt/NodeRedThree.webp" style={{zoom:'50%'}} />](/documents/mqtt/NodeRedThree.webp)
+[<img src="/documents/mqtt/NR_nodes.webp" style={{zoom:'50%'}} />](/documents/mqtt/NR_nodes.webp)
 
 The aedes broker must be set up on the same flow as the other nodes. By activating the Publish debug node, you can see all the published messages.
-[<img src="/documents/mqtt/Broker1.jpg" style={{zoom:'50%'}} />](/documents/mqtt/Broker1.jpg)
+[<img src="/documents/mqtt/Broker1.webp" style={{zoom:'50%'}} />](/documents/mqtt/Broker1.webp)
 Receiving a json mqtt message is very simple.
-[<img src="/documents/mqtt/Consume.jpg" style={{zoom:'50%'}} />](/documents/mqtt/Consume.jpg)
+[<img src="/documents/mqtt/Consume.webp" style={{zoom:'50%'}} />](/documents/mqtt/Consume.webp)
 Injecting a json message to be sent by a device is also very simple. You do need the correct envelope.
-[<img src="/documents/mqtt/Inject.jpg" style={{zoom:'50%'}} />](/documents/mqtt/Inject.jpg)
+[<img src="/documents/mqtt/Inject.webp" style={{zoom:'50%'}} />](/documents/mqtt/Inject.webp)
 Forwarding a text message from one device, through a broker, to another broker/device/channel would look like this.
-[<img src="/documents/mqtt/Forward.jpg" style={{zoom:'50%'}} />](/documents/mqtt/Forward.jpg)
+[<img src="/documents/mqtt/Forward.webp" style={{zoom:'50%'}} />](/documents/mqtt/Forward.webp)
 If you want to decode text and position messages without json, it gets complicated:
-[<img src="/documents/mqtt/DecodeNewest.jpg" style={{zoom:'50%'}} />](/documents/mqtt/DecodeNewest.jpg)
+[<img src="/documents/mqtt/DecodeNewest.webp" style={{zoom:'50%'}} />](/documents/mqtt/DecodeNewest.webp)
 If you are interested in my flow for this it is here:
 
 ```json
@@ -669,10 +671,10 @@ If you are interested in my flow for this it is here:
 (documents/mqtt/Flow.txt)
 
 Node-red can rapidly (minutes vs days) put together some pretty impressive output when paired with meshtastic. Here is the output of that flow geofencing and mapping via mqtt data.
-[<img src="/documents/mqtt/Mapping.jpg" style={{zoom:'50%'}} />](/documents/mqtt/Mapping.jpg)
+[<img src="/documents/mqtt/Mapping.webp" style={{zoom:'50%'}} />](/documents/mqtt/Mapping.webp)
 
 Advanced use, such as encoding Position and sending it to a device via MQTT without using JSON can get a little complicated. An example of how it can be done is below.
-[<img src="/documents/mqtt/EncodingPosition.jpg" style={{zoom:'50%'}} />](/documents/mqtt/EncodingPosition.jpg)
+[<img src="/documents/mqtt/EncodingPosition.webp" style={{zoom:'50%'}} />](/documents/mqtt/EncodingPosition.webp)
 The flow is:
 
 ```json
@@ -1001,4 +1003,4 @@ Sending a position to a device for broadcast to the mesh is much easier with JSO
 ```
 
 An example of doing this in node-red:
-[<img src="/documents/mqtt/PosJSON.jpg" style={{zoom:'50%'}} />](/documents/mqtt/PosJSON.jpg)
+[<img src="/documents/mqtt/PosJSON.webp" style={{zoom:'50%'}} />](/documents/mqtt/PosJSON.webp)

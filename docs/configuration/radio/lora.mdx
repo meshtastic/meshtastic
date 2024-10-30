@@ -119,7 +119,7 @@ Setting this to option to 'true' means the device will ignore any messages it re
 
 Acceptable values: `true`, `false`
 
-Default is `false`. When set to `true`, this configuration indicates that the user approves their packets to be uploaded to MQTT. If set to `false`, nodes receiving your packets are requested not to forward packets to MQTT.
+Default is `false`. When set to `true`, this configuration indicates that the user approves their packets to be uploaded to MQTT. If set to `false`, nodes receiving your packets are requested not to forward packets to MQTT. This configuration only applies to Channels configured with the `defaultpsk` and `eventpsk` keys set in the Meshtastic Firmware; Channels with custom keys ignore this setting.
 
 **Important:** This is not a cryptographic solution but a polite request that is enforced in the official firmware.
 
