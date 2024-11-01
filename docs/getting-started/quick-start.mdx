@@ -1,0 +1,61 @@
+---
+id: quick-start
+title: Quick Start Guide
+sidebar_label: Quick Start Guide
+sidebar_position: 1
+description: The official Meshtastic guide to get you started fast.
+---
+
+import Link from "@docusaurus/Link";
+
+## 1. Select hardware
+
+If you haven't already purchased hardware, [find supported hardware](/docs/hardware/devices/index.mdx)
+
+## 2. Connect Device
+
+:::danger STOP! Put The Power Cable Down!
+Never power on the radio without attaching an antenna as doing so may damage the radio chip!
+:::
+
+### Verify Data Cable
+
+Some cables only support _charging_. Verify that your cable is also capable of _transferring data_ before proceeding. To verify, try connecting it to another device (like a phone) to see if you can copy a file to or from it.
+
+## 3. Flash Firmware
+
+Now that your device is connected, you can flash the latest firmware to your device.
+
+<div className="indexCtasBody">
+  <div className="split-container">
+    <div className="split-item">
+      <Link
+        className={"button button--outline button--lg cta--button"}
+        to={"/docs/support-troubleshooting/flashing-firmware/esp32/"}
+      >
+        Flash ESP32 Firmware
+      </Link>
+    </div>
+
+  <div className="split-item">
+      <Link
+        className={"button button--outline button--lg cta--button"}
+        to={"/docs/support-troubleshooting/flashing-firmware/nrf52/"}
+      >
+        Flash nRF52/RP2040 Firmware
+      </Link>
+    </div>
+  </div>
+</div>
+
+## 4. Configure your region
+
+To start communicating over the mesh, you must [configure your region](/docs/configuration/).
+
+## 5. Start meshing!
+
+Check out our [tips and best practices](/docs/getting-started/tips/) for the best experience.
+
+With the antenna attached, the latest firmware, and your region configured, you can now start sending messages over the mesh!
+
+For advanced configuration, check out the full [configuration documentation](/docs/configuration/).
