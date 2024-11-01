@@ -3,28 +3,27 @@ id: remote-admin
 title: Remote Node Administration
 sidebar_label: Remote Nodes
 sidebar_position: 3
-description: An advanced feature which allows remote administration of a device through secure messages on the Mesh instead of via Bluetooth, Serial, or IPv4.
+description: An advanced feature for securely administering remote devices over the mesh network instead of via Bluetooth, Serial, or IPv4.
 ---
 
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 
 :::caution Disclaimer
-This is an advanced feature that few users should need. Keep in mind that it is possible (if you are not careful) to assign settings to a remote node that cause it to completely drop off of your mesh. We advise network admins have a test node to test settings with before applying changes to a remote node to prevent this.
+This is an advanced feature intended for experienced users. It’s possible (if not done carefully) to apply settings to a remote node that could cause it to disconnect from the mesh. Network admins are advised to use a test node to trial settings before applying changes to a remote node to prevent this.
 :::
 
 
-This feature allows you to remotely administer Meshtastic nodes through the mesh.
+This feature allows secure remote administration of Meshtastic nodes over the mesh network.
 
-By default, nodes will **only** respond to administrative commands via the local USB/Bluetooth/TCP interface. This is to provide basic security to prevent unauthorized access and is how normal administration and settings changes work. The only difference for the remote case is that we are sending those commands as Admin Messages over the mesh.
+By default, nodes will only respond to administrative commands via the local USB, Bluetooth, or TCP interfaces. This basic security measure prevents unauthorized access and defines how standard administration and settings changes are managed. The only difference with remote administration is that commands are sent securely as Admin Messages over the mesh.
 
 ## Prerequisites
 
-In order to send the Admin Messages over the mesh, a secure method of communication must be established.
 
-For firmware versions 2.5 and later, this is achieved by storing the public key of the controlling node in one of the remote node's Security Config Admin Key fields. A node has up to three separate Admin Key fields, allowing some flexibility around remote node administration.
+For firmware versions 2.5 and later, remote administration is achieved by storing the public key of the local node in one of the Admin Key fields within the remote node’s Security Config. Each remote node can store up to three unique Admin Keys, providing flexibility for managing nodes across the network.
 
-For firmware versions 2.4.x and earlier, this was achieved by setting up a channel with the name `admin` and a shared PSK. Admin Messages passed between nodes over this channel similar to the legacy DMs, encrypted only with the channel's PSK. Any node in the channel could manage any other node.
+For firmware versions 2.4.x and earlier, this is achieved by creating a secondary channel named `admin` with a shared PSK. In this setup, messages exchanged on this channel are encrypted only with the channel’s PSK, allowing any node in the channel to administer others.
 
 This `admin` channel method is still supported in firmware versions 2.5 and later, but must be specifically enabled via the "Legacy Admin channel" setting and is only for managing pre-2.5 nodes. A firmware version 2.5 and later node cannot be managed in this way.
 
@@ -48,17 +47,14 @@ values={[
 
 #### Android
 
-:::info
-All current and Legacy Remote Admin config options are available for Android.
-:::
 
-#### Setting up Remote Admin using the current method 
+#### Setting up Remote Admin Using the PKC Method
 
-1. Connect to the node that will be used as the local controlling node.
-2. The public key of a node is found in [Security Config](/docs/configuration/radio/security/#public-key).
-3. Copy the public key of the controlling node to a note taking app, or manually send it to the remote node as a DM.
-4. Connect to the node that will be used as the remote administered node.
-5. The public key of the controlling node is added as an Admin Key in one of the fields in [Security Config](/docs/configuration/radio/security/#admin-key).
+1. Connect to the local node that will be administering the remote node.
+2. Go to **⋮ > Radio Configuration > [Security](/docs/configuration/radio/security/#public-key)** to find its public key.
+3. Copy the public key to use for configuring the remote node.
+4. Connect to the node that will be the remotely administered node.
+5. Go to the same **Security** menu as in Step 2, and press **"Add"** to paste the public key of the local node into an Admin Key field.
 6. Up to 3 Admin Keys may be supplied, one per field, allowing up to 3 controlling nodes.
 
 #### Setting up Remote Admin using the Legacy method
@@ -79,20 +75,18 @@ Legacy admin is enabled using the Legacy Admin channel option in [Security Confi
 
 #### Apple
 
-:::info
-All current and Legacy Remote Admin config options are available iOS, iPadOS and macOS
 :::
 
-#### Setting up Remote Admin using the current method 
+#### Setting up Remote Admin Using the PKC Method
 
-1. Connect to the node that will be used as the local controlling node.
-2. The public key of a node is found in [Security Config](/docs/configuration/radio/security/#public-key).
-3. Copy the public key of the controlling node to a note taking app, or manually send it to the remote node as a DM.
-4. Still in the local node, in Settings -> App Settings -> Turn on Administration.
-5. Connect to the node that will be used as the remote administered node.
-6. The public key of the controlling node is added as Admin Key in [Security Config](/docs/configuration/radio/security/#admin-key).
+1. Connect to the node that will be used to administer the remote node.
+2. Go to Settings > App Settings on this node and enable **Administration**.
+3. Navigate to **Settings > Radio Configuration > [Security](/docs/configuration/radio/security/#public-key)** to find its public key.
+4. Copy the public key to use for configuring the remote node.
+5. Connect to the remote node.
+6. In **Settings > Radio Configuration > Security**, add the public key of the local node as an Admin Key.
 7. Up to 3 Admin Keys may be supplied, allowing up to 3 controlling nodes.
-8. Still in the remote node, in Settings -> App Settings -> Turn on Administration.
+8. On the remote node, go to **Settings > App Settings** and enable **Administration**.
 
 #### Setting up Remote Admin using the Legacy method
 
@@ -102,25 +96,22 @@ Legacy admin is enabled using the Legacy Admin channel option in [Security Confi
 
 #### Carrying out Remote Admin tasks
 
-1. Open the Meshtastic App, connect to the local controlling node.
-2. In Settings -> App Settings -> Turn on Administration
-3. Choose a node under Settings -> Configure Node
-4. From the Settings screen, all Radio and Module configuration options are available for the remote node.
-5. When finished, select your own node in Settings -> Configure Node, or disable Remote Admin under Settings -> App Settings -> Turn off Administration
+1. Open the Meshtastic App and connect to the local node you’re using to administer the remote node.
+2. Go to **Settings**.
+3. Select the node you want to manage under **Settings > Configure Node**.
+4. Suported Radio and Module settings for the remote node will be accessible from the **Settings** screen.
+5. When finished administering the remote node, select your own node again in Settings > Configure Node.
 
 </TabItem>
 <TabItem value="cli">
 
 #### CLI
 
-:::info
-All current and Legacy Remote Admin config options are available in the python CLI.
-:::
 
-Commands are issued using a `--dest '!28979058'` argument and node ID to identify the remote node.
+Commands are issued using the `--dest` argument along with the `'!nodeid'` to specify the remote node. For example, `--dest '!28979058'`.
 
 :::info
-The --dest argument value must be in single quotes for linux/mac: '!28979058', no quotes for Windows: !28979058.
+For Linux/Mac, enclose the `--nodeid` value in single quotes: `--dest '!28979058'`; for Windows, no quotes are needed: `--dest !28979058`.
 :::
 
 </TabItem>
@@ -128,9 +119,6 @@ The --dest argument value must be in single quotes for linux/mac: '!28979058', n
 
 #### Web
 
-:::info
-All current and Legacy Remote Admin config options are available in the Web UI.
-:::
 
 </TabItem>
 </Tabs>
