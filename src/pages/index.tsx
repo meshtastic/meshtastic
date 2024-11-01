@@ -194,7 +194,7 @@ function Home() {
               </div>
               <div className="card__body flex justify-center">
                 <p>
-                  The Meshtastic Web-Based Flasher & Clients can assist you in
+                  The Meshtastic Web Flasher & Clients can assist you in
                   flashing the firmware and configuring settings.
                 </p>
               </div>
