@@ -13,13 +13,11 @@ import TabItem from "@theme/TabItem";
 This is an advanced feature intended for experienced users. It’s possible (if not done carefully) to apply settings to a remote node that could cause it to disconnect from the mesh. Network admins are advised to use a test node to trial settings before applying changes to a remote node to prevent this.
 :::
 
-
 This feature allows secure remote administration of Meshtastic nodes over the mesh network.
 
 By default, nodes will only respond to administrative commands via the local USB, Bluetooth, or TCP interfaces. This basic security measure prevents unauthorized access and defines how standard administration and settings changes are managed. The only difference with remote administration is that commands are sent securely as Admin Messages over the mesh.
 
 ## Prerequisites
-
 
 For firmware versions 2.5 and later, remote administration is achieved by storing the public key of the local node in one of the Admin Key fields within the remote node’s Security Config. Each remote node can store up to three unique Admin Keys, providing flexibility for managing nodes across the network.
 
@@ -30,7 +28,6 @@ This `admin` channel method is still supported in firmware versions 2.5 and late
 :::info
 Remote Admin is complemented by setting [Managed Mode](/docs/configuration/radio/security/#managed-mode) on the remote node, which restricts radio configurations on that node. It is not necessary to set Managed Mode for Remote Admin to function.
 :::
-
 
 ## Remote Admin Config Client Availability
 
@@ -46,7 +43,6 @@ values={[
 <TabItem value="android">
 
 #### Android
-
 
 #### Setting up Remote Admin Using the PKC Method
 
@@ -105,28 +101,47 @@ Legacy admin is enabled using the Legacy Admin channel option in [Security Confi
 
 #### CLI
 
-:::info
-For Linux/Mac, enclose the `--nodeid` value in single quotes: `--dest '!28979058'`; for Windows, no quotes are needed: `--dest !28979058`.
-:::
-
 #### Setting up Remote Admin Using the PKC Method
 
-1. Connect to the local node that will be administering the remote node.
-2. Use `meshtastic --get security.public_key` to get the public key.
-3. Copy the public key to use for configuring the remote node.
-4. Connect to the node that will be the remotely administered node.
-5. ???
-6. Up to 3 Admin Keys may be supplied, one per field, allowing up to 3 controlling nodes.
+1. Connect via USB to the node that will be administering the remote node.
+2. Retrieve its Public Key by running:
+   ```bash
+   meshtastic --get security.public_key
+   ```
+3. Copy the public key to use when configuring the remote node.
+4. Connect to the remote node via USB.
+5. Set the Admin Key on the remote node by running:
+   ```bash
+   meshtastic --set security.admin_key "PASTEPUBLICKEYHERE"
+   ```
+6. You may add up to 3 Admin Keys, enabling control from up to 3 different nodes.
 
-#### Carrying out Remote Admin tasks
+#### Setting up Remote Admin Using the Legacy Method
 
-Commands are issued using the `--dest` argument along with the `'!nodeid'` to specify the remote node. For example, `--dest '!28979058'`.
+To use the legacy method, set up an Admin channel as a secondary channel with the name `admin` by following the instructions in the [Channels](/docs/configuration/radio/channels/) section.
+
+Enable Legacy Admin in the [Security Config](/docs/configuration/radio/security/#admin-channel-enabled) by running the following CLI command:
+
+```bash
+meshtastic --set security.admin_channel_enabled
+```
+
+#### Carrying Out Remote Admin Tasks
+
+Remote admin commands are issued using the `--dest` argument with the `!nodeid` of the target node. For example:
+
+```bash
+meshtastic --dest '!28979058'
+```
+
+:::info
+For Linux/Mac, enclose the `nodeid` value in single quotes: `--dest '!28979058'`. For Windows, quotes are not required: `--dest !28979058`.
+:::
 
 </TabItem>
 <TabItem value="web">
 
 #### Web
-
 
 </TabItem>
 </Tabs>
