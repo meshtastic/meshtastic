@@ -131,7 +131,7 @@ meshtastic --set security.admin_channel_enabled
 Remote admin commands are issued using the `--dest` argument with the `!nodeid` of the target node. For example:
 
 ```bash
-meshtastic --dest '!28979058'
+meshtastic --set security.admin_key "PASTEPUBLICKEYHERE" --dest '!28979058'
 ```
 
 :::info
