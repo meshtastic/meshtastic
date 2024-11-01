@@ -75,8 +75,6 @@ Legacy admin is enabled using the Legacy Admin channel option in [Security Confi
 
 #### Apple
 
-:::
-
 #### Setting up Remote Admin Using the PKC Method
 
 1. Connect to the node that will be used to administer the remote node.
@@ -107,12 +105,22 @@ Legacy admin is enabled using the Legacy Admin channel option in [Security Confi
 
 #### CLI
 
-
-Commands are issued using the `--dest` argument along with the `'!nodeid'` to specify the remote node. For example, `--dest '!28979058'`.
-
 :::info
 For Linux/Mac, enclose the `--nodeid` value in single quotes: `--dest '!28979058'`; for Windows, no quotes are needed: `--dest !28979058`.
 :::
+
+#### Setting up Remote Admin Using the PKC Method
+
+1. Connect to the local node that will be administering the remote node.
+2. Use `meshtastic --get security.public_key` to get the public key.
+3. Copy the public key to use for configuring the remote node.
+4. Connect to the node that will be the remotely administered node.
+5. ???
+6. Up to 3 Admin Keys may be supplied, one per field, allowing up to 3 controlling nodes.
+
+#### Carrying out Remote Admin tasks
+
+Commands are issued using the `--dest` argument along with the `'!nodeid'` to specify the remote node. For example, `--dest '!28979058'`.
 
 </TabItem>
 <TabItem value="web">
