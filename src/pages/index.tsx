@@ -183,11 +183,7 @@ function Home() {
                     <li>Radio</li>
                     <li>Battery</li>
                     <li>Case</li>
-                    <li>
-                      Antenna (most devices include an antenna, but the quality
-                      can be a bit of a mixed bag from some suppliers on stock
-                      antennas)
-                    </li>
+                    <li>Antenna</li>
                   </ul>
                 </p>
               </div>
