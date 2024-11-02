@@ -183,11 +183,7 @@ function Home() {
                     <li>Radio</li>
                     <li>Battery</li>
                     <li>Case</li>
-                    <li>
-                      Antenna (most devices include an antenna, but the quality
-                      can be a bit of a mixed bag from some suppliers on stock
-                      antennas)
-                    </li>
+                    <li>Antenna</li>
                   </ul>
                 </p>
               </div>
@@ -198,7 +194,7 @@ function Home() {
               </div>
               <div className="card__body flex justify-center">
                 <p>
-                  The Meshtastic Web-Based Flasher & Clients can assist you in
+                  The Meshtastic Web Flasher & Clients can assist you in
                   flashing the firmware and configuring settings.
                 </p>
               </div>
