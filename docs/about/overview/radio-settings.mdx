@@ -7,7 +7,7 @@ sidebar_position: 1
 description: "Maximize your Meshtastic device's potential with detailed radio settings instructions, including frequency bands, data rates, and encryption options."
 ---
 
-import {FrequencyCalculator} from "/src/components/tools/FrequencyCalculator";
+import { FrequencyCalculator } from "/src/components/tools/FrequencyCalculator";
 
 :::info
 Meshtastic is **not** LoRaWAN, Helium or TTN (TheThingsNetwork). Meshtastic uses the full spectrum frequency range designated to LoRa technology per region. This allows for several hundred possible frequency channels in the US region alone.
@@ -80,7 +80,7 @@ Various data-rate options are available when configuring a frequency slot and ar
 We have eight LoRa radio presets. These are the most common settings and have been proven to work well:
 
 |    Channel setting     | Alt Channel Name | Data-Rate  | SF / Symbols | Coding Rate | Bandwidth | Link Budget |
-|:----------------------:|:----------------:|:----------:|:------------:|:-----------:|:---------:|:-----------:|
+| :--------------------: | :--------------: | :--------: | :----------: | :---------: | :-------: | :---------: |
 |  Short Range / Turbo   |   Short Turbo    | 21.88 kbps |   7 / 128    |     4/5     |  500[^1]  |    140dB    |
 |   Short Range / Fast   |    Short Fast    | 10.94 kbps |   7 / 128    |     4/5     |    250    |    143dB    |
 |   Short Range / Slow   |    Short Slow    | 6.25 kbps  |   8 / 256    |     4/5     |    250    |   145.5dB   |
@@ -96,7 +96,6 @@ The link budget used by these calculations assumes a transmit power of 22dBm and
 :::
 
 ![link budget vs data rate plot](/img/about/link-budget-vs-data-rate.webp)
-
 
 ### Custom Settings
 
@@ -121,10 +120,10 @@ Some example settings:
 
 The link budget used by these calculations assumes a transmit power of 17dBm and an antenna with 0dB gain. Adjust your link budget assumptions based on your actual devices.
 
-These frequency slot settings may not have been tested. Use at your own discretion. Share on https://meshtastic.discourse.group with your successes or failure.
+These frequency slot settings may not have been tested. Use at your own discretion. Share on the [Meshtastic Discussions page](https://github.com/orgs/meshtastic/discussions) with your successes or failure.
 
 ## Cryptography
 
-The pre-shared key (PSK) used by the devices can be an AES128 or AES256 sequence.  Alternatively, encryption can be turned off, which may be useful if you are operating under a Ham Radio license.
+The pre-shared key (PSK) used by the devices can be an AES128 or AES256 sequence. Alternatively, encryption can be turned off, which may be useful if you are operating under a Ham Radio license.
 
-[^1]:  Short Turbo is the fastest preset and the only one with 500kHz bandwidth. It is not legal to use in all regions due to this wider bandwidth.
+[^1]: Short Turbo is the fastest preset and the only one with 500kHz bandwidth. It is not legal to use in all regions due to this wider bandwidth.
