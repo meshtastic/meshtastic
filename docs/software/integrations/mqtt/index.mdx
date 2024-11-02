@@ -34,6 +34,10 @@ Only specific portnums are prioritized for transmission over the public MQTT ser
 - MapReportApp
 - RoutingApp
 
+#### Location Precision Filtering
+
+On the default PSK, the public server also limits the precision of location data to help protect user privacy. Only position packets containing imprecise location data (10-16 bits) are shared on the topic, ensuring that precise location details are not exposed. For more information on how location precision works, see the [Position Precision](https://meshtastic.org/docs/configuration/radio/channels/#position-precision) section.
+
 This filtering focuses network resources on critical traffic, improving overall performance and reducing unnecessary data flow. Since these restrictions are applied at the network level, no firmware updates are required. As Meshtastic networks continue to grow, further traffic reduction measures may become necessary to manage network load and maintain reliable performance across all channels.
 
 ### Using Private Brokers
