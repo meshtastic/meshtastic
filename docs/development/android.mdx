@@ -18,14 +18,7 @@ If you would like to develop this application we'd love your help! These build i
    ```shell
    git submodule update --init --recursive
    ```
-4. There are a few config files which you'll need to copy from templates included in the project. Run the following commands to do so:
-   ```shell
-   rm ./app/google-services.json
-   cp ./app/google-services-example.json ./app/google-services.json
-   rm ./app/src/main/res/values/curfirmwareversion.xml
-   cp ./app/special/curfirmwareversion.xml ./app/src/main/res/values/
-   ```
-5. Now you should be able to select "Run / Run" in the IDE and it will happily start running on your phone or the emulator.
+4. Now you should be able to select "Run / Run" in the IDE and it will happily start running on your phone or the emulator.
 
 :::note
 The emulators don't support Bluetooth, so some features can not be used in that environment.
