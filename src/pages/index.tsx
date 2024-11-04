@@ -27,7 +27,7 @@ const SocialCards: SocialCardProps[] = [
     children: (
       <img
         alt="twitter"
-        className="m-auto h-14"
+        className="m-auto h-10"
         src="/img/homepage/Twitter-Logo-White.svg"
       />
     ),
@@ -38,7 +38,7 @@ const SocialCards: SocialCardProps[] = [
     children: (
       <img
         alt="facebook"
-        className="m-auto h-14"
+        className="m-auto h-10"
         src="/img/homepage/f_logo_RGB-White_1024.webp"
       />
     ),
@@ -49,7 +49,7 @@ const SocialCards: SocialCardProps[] = [
     children: (
       <img
         alt="instagram"
-        className="m-auto h-14"
+        className="m-auto h-10"
         src="/img/homepage/Instagram_Glyph_Gradient.svg"
       />
     ),
@@ -60,19 +60,8 @@ const SocialCards: SocialCardProps[] = [
     children: (
       <img
         alt="youtube"
-        className="m-auto h-16"
-        src="/img/homepage/YouTube-Logo-White.svg"
-      />
-    ),
-  },
-  {
-    color: "bg-[#ffffff]",
-    link: "https://meshtastic.discourse.group",
-    children: (
-      <img
-        alt="discourse"
         className="m-auto h-12"
-        src="/img/homepage/Discourse-Logo-White.svg"
+        src="/img/homepage/YouTube-Logo-White.svg"
       />
     ),
   },
@@ -82,8 +71,20 @@ const SocialCards: SocialCardProps[] = [
     children: (
       <img
         alt="reddit"
-        className="m-auto h-20"
+        className="m-auto h-14"
         src="/img/homepage/Reddit-Logo-White.svg"
+      />
+    ),
+  },
+  {
+    color: "bg-[#563ACC]",
+    link: "https://mastodon.social/@meshtastic",
+    isMeLink: true,
+    children: (
+      <img
+        alt="mastodon"
+        className="m-auto h-10"
+        src="/img/homepage/mastodon-logo-white.svg"
       />
     ),
   },
@@ -93,7 +94,7 @@ const SocialCards: SocialCardProps[] = [
     children: (
       <img
         alt="telegram"
-        className="m-auto h-14"
+        className="m-auto h-10"
         src="/img/homepage/telegram-single-path-240px.svg"
       />
     ),
@@ -147,9 +148,14 @@ function Home() {
       <main className="flex flex-col gap-4">
         <div className="bg-primaryDark mx-auto flex w-full lg:w-auto flex-col gap-4 p-4 shadow-inner">
           <h3 className="text-xl font-bold">Connect with us.</h3>
-          <div className="flex w-full overflow-x-auto">
+          <div className="flex w-full overflow-x-auto gap-2 flex-wrap justify-center">
             {SocialCards.map((card) => (
-              <SocialCard key={card.link} color={card.color} link={card.link}>
+              <SocialCard
+                key={card.link}
+                color={card.color}
+                link={card.link}
+                isMeLink={card.isMeLink}
+              >
                 {card.children}
               </SocialCard>
             ))}
@@ -177,11 +183,7 @@ function Home() {
                     <li>Radio</li>
                     <li>Battery</li>
                     <li>Case</li>
-                    <li>
-                      Antenna (most devices include an antenna, but the quality
-                      can be a bit of a mixed bag from some suppliers on stock
-                      antennas)
-                    </li>
+                    <li>Antenna</li>
                   </ul>
                 </p>
               </div>
@@ -192,7 +194,7 @@ function Home() {
               </div>
               <div className="card__body flex justify-center">
                 <p>
-                  The Meshtastic Web-Based Flasher & Clients can assist you in
+                  The Meshtastic Web Flasher & Clients can assist you in
                   flashing the firmware and configuring settings.
                 </p>
               </div>
