@@ -1,0 +1,81 @@
+---
+id: encryption_backup_and_restore
+title: Backup and Restore Security Keys
+sidebar_label: Backup and Restore
+slug: /overview/encryption_backup_and_restore
+sidebar_position: 2
+description: "Meshtastic encryption offers a set of private and public keys that should be backed up in case a restore is needed."
+---
+
+## Security Keys - Backup and Restore
+
+### Backup
+
+Backing up your security keys (private and public) are vital to the long term sustainability of your node in the mesh. Once your node is on the mesh with a set of security keys, it is your responsibility to ensure these keys are maintained.
+
+These keys can be saved in a multitude of different ways and should be stored securely.
+
+Available ways to save these keys
+
+1. `meshtastic --export-config > config_backup.yaml` - this is the perferred way to backup configuration, it ensures the keys are saved intact
+2. Copy the keys to a secure location, like a password protected note - this is a nice persistent way to save them 
+3. Take a screenshot - the most basic way, you must ensure you saved the entire key
+
+### Restore
+
+If you've backed up your keys and performed an action that necessitates a key wipe, a new set of keys will be created. This is most common through the Web Flasher > Full Erase and Install.
+
+After booting your node, you will want to leverage one of these methods to restore your keys.
+
+1. `meshtastic --config config_backup.yaml` - This is the fastest way to get your entire node back to where you left it!
+2. Manually retype the keys into the iOS / Android app from your saved locations
+
+<Tabs
+groupId="settings"
+defaultValue="apple"
+values={[
+{label: 'Android', value: 'android'},
+{label: 'Apple', value: 'apple'},
+{label: 'CLI', value: 'cli'},
+{label: 'Web', value: 'web'},
+]}>
+<TabItem value="android">
+
+#### Android
+
+All Security config options are available for Android.
+
+1. Open the Meshtastic App
+2. Navigate to: **Vertical Ellipsis (3 dots top right) > Radio Configuration > Security**
+
+</TabItem>
+<TabItem value="apple">
+
+#### Apple
+
+All Security config options are available on iOS, iPadOS and macOS at Settings > Radio Configuration > Security.
+
+</TabItem>
+<TabItem value="cli">
+
+#### CLI
+
+All Security config options are available in the python CLI. Example commands are below:
+
+```shell title="Backup Configuration"
+meshtastic --export-config > config_backup.yaml
+```
+
+```shell title="Restore Configuration"
+meshtastic --config config_backup.yaml
+```
+
+</TabItem>
+<TabItem value="web">
+
+#### Web
+
+All Security config options are available in the Web client.
+
+</TabItem>
+</Tabs>
