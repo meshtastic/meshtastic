@@ -69,10 +69,10 @@ The Channel Settings options are: Name, PSK, Downlink Enabled, and Uplink Enable
 
 A short identifier for the channel. _(< 12 bytes)_
 
-| Reserved Name  |                                                            Purpose                                                             |
-| :------------: | :----------------------------------------------------------------------------------------------------------------------------: |
-| `""` (default) |                          If left empty on the Primary channel, this designates the `default` channel.                          |
-|    `admin`     | On Secondary channels, the name `admin` (case sensitive) designates the `admin` channel used to administer nodes over the mesh |
+| Reserved Name  |                                                                                                                 Purpose                                                                                                                  |
+| :------------: | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
+| `""` (default) |                                                                               If left empty on the Primary channel, this designates the `default` channel.                                                                               |
+|    `admin`     | On Secondary channels, the name `admin` (case sensitive) designates the `admin` channel used to administer nodes over the mesh. Note that this is a Legacy feature, see [Remote Admin](docs/configuration/remote-admin.mdx) for details. |
 
 :::note
 
@@ -160,10 +160,9 @@ Tap "Edit" to access the Channel Menu:
 1. Add, remove, or modify secondary channels
 2. Create or modify encryption keys
 3. Enable uplink and downlink for individual channels
-4. Position enabled 
+4. Position enabled
 5. Precise location (if position is enabled)
 6. Position precision (if precise location is disabled)
-
 
 </TabItem>
 

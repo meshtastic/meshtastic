@@ -6,7 +6,7 @@ labels: ""
 assignees: ""
 ---
 
-Please - if you just have a question, post in our [forum](https://meshtastic.discourse.group) instead. Please reserve this system for requesting changes to the Meshtastic documentation.
+If you have a question, please post it on our [Meshtastic Discussions page](https://github.com/orgs/meshtastic/discussions) instead. This system is reserved specifically for requesting changes to the Meshtastic documentation.
 
 **Describe what section of the docs is outdated or otherwise in need of change**
 Be as clear and concise as possible. Provide a URL or GitHub path to the doc you are referencing.

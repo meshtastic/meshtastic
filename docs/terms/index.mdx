@@ -29,7 +29,7 @@ DFU
 : Device Firmware Update, a state which a device is placed into for it to receive a firmware update
 
 ESP32 | [Drivers](/docs/getting-started/serial-drivers/esp32/) | [Firmware](/docs/getting-started/flashing-firmware/esp32/)
-: A chipset of microcontroller made/designed by Espressif, used by a number of devices. Higher power usage than NRF52, but often cheaper and supports WiFi if desired. 
+: A chipset of microcontroller made/designed by Espressif, used by a number of devices. Higher power usage than NRF52, but often cheaper and supports WiFi if desired.
 
 Firmware | [Guide](https://meshtastic.org/docs/getting-started/flashing-firmware/)
 : The low-level software programmed onto a Meshtastic device, controlling its hardware functions and enabling it to communicate within the mesh network using LoRa technology. Firmware
@@ -73,8 +73,11 @@ Packet
 Protobuf | [Reference](/docs/development/reference/protobufs/)
 : Protocol Buffers, a method developed by Google for serializing structured data, used in Meshtastic for efficient communication protocol between devices.
 
-PSK | [Encryption](/docs/overview/encryption/)
+Pre-Shared Key (PSK) | [Encryption](/docs/overview/encryption/)
 : Pre-Shared Key, a secret code or passphrase used in Meshtastic channels for encryption, ensuring that only devices with the matching PSK can communicate within that specific channel.
+
+Public Key Cryptography (PKC) | [Encryption](/docs/overview/encryption/)
+: A cryptographic method introduced in Meshtastic v2.5 for Direct Messages and Admin Messages, where each device uses a unique public and private key pair. The public key, shared with other devices, enables secure message encryption, while the private key allows only the intended recipient to decrypt and authenticate the message. This approach enhances privacy and integrity for both direct device-to-device communication and sensitive admin functions.
 
 Repeater | [Role Definitions](/docs/configuration/radio/device/#roles)
 : Infrastructure node for extending network coverage by relaying messages with minimal overhead. Not visible in Nodes list.
