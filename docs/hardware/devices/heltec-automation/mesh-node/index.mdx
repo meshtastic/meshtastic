@@ -1,0 +1,65 @@
+---
+id: mesh-node
+title: HELTEC® Mesh Node
+sidebar_label: Mesh Node
+sidebar_position: 4
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+<Tabs
+groupId="heltec"
+queryString="heltec"
+defaultValue="mesh_node_t114"
+values={[
+{label: 'Mesh Node T114', value: 'mesh_node_t114'}
+]}>
+<TabItem value="mesh_node_t114">
+
+## Mesh Node T114
+
+- **MCU:**
+  - nRF52840 (Bluetooth)
+- **LoRa Transceiver:**
+  - Semtech SX1262
+- **Frequency Options:**
+  - 433 MHz
+  - 470 - 510 MHz
+  - 863 - 870 MHz
+  - 902 - 928 MHz
+- **Connectors:**
+  - USB-C
+  - 2x1.25 lithium battery interface
+  - 2x1.25 solar panel interface
+  - 8x1.25 GNSS interface
+  - Antenna:
+    - U.FL/IPEX antenna connector for LoRa.
+    - Integrated 2.4 GHz patch antenna.
+
+### Features
+
+- Onboard 1.14 inch TFT-LCD display is optional.
+- GPS module is optional.
+- Excellent low power characteristics.
+
+### Flashing
+
+1. Trigger DFU mode manually by double-clicking RST button.
+
+2. Send or paste the prepared firmware UF2 file into the device.
+
+### Pin Map
+
+![Mesh_Node_T114_PIN_MAP](/img/hardware/heltec/Mesh_Node_T114_PIN_MAP.webp)
+
+### Resources
+
+- Firmware file: `firmware-heltec-mesh-node-t114-X.X.X.xxxx.uf2`
+- Purchase links
+  - International
+    - [Heltec](https://heltec.org/project/mesh-node-t114/)
+    - [AliExpress](https://www.aliexpress.com/item/1005007460963705.html)
+
+</TabItem>
+</Tabs>
