@@ -38,13 +38,12 @@ const Firmware = (): JSX.Element => {
           <div className="flex w-full flex-col bg-primary xl:flex-row">
             <div className="card m-4 border-2 border-secondary">
               <div className="card__header">
-                <h3>ESP32 Web Flasher</h3>
+                <h3>Web Flasher</h3>
               </div>
               <div className="card__body">
                 <p>
-                  Web based installer for easy flashing with Chrome and Edge
-                  Browser. Works with T-Beam, T-Lora, Nano-G1 and similar
-                  boards.
+                  Web based flasher for easy device flashing with Chrome and
+                  Edge Browser. Works with all major device architectures.
                 </p>
               </div>
               <div className="card__footer mt-auto">
@@ -52,7 +51,7 @@ const Firmware = (): JSX.Element => {
                   href="https://flasher.meshtastic.org/"
                   className="m-auto flex rounded-lg border-4 border-transparent bg-accent p-1 font-semibold text-black shadow-md hover:text-black hover:brightness-110 active:border-green-200"
                 >
-                  Go to Flasher
+                  Go to Web Flasher
                   <ArrowTopRightOnSquareIcon className="m-auto ml-2 h-4" />
                 </a>
               </div>
@@ -97,7 +96,8 @@ const Firmware = (): JSX.Element => {
                 </div>
               </div>
               <div className="card__body">
-                Available on MacOS & iOS. Requires MacOS Ventura or iOS 16+.
+                Available on iOS, iPadOS and macOS. The last two major OS
+                versions are supported.
               </div>
               <div className="card__footer mt-auto">
                 <a

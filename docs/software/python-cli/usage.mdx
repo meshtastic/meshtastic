@@ -14,7 +14,7 @@ The `meshtastic` command is not run within python but is a script run from your 
 
 ## Viewing Serial Output
 
-The `--noproto` command in the Meshtastic Python CLI is used to disable the API and function merely as a "dumb serial terminal."  This mode of operation allows both the API and device functionalities to remain accessible for regular use, while simultaneously providing a window into the raw serial output. This feature can be particularly useful for debugging, development, or understanding the low-level communication between devices.
+The `--noproto` command in the Meshtastic Python CLI is used to disable the API and function merely as a "dumb serial terminal." This mode of operation allows both the API and device functionalities to remain accessible for regular use, while simultaneously providing a window into the raw serial output. This feature can be particularly useful for debugging, development, or understanding the low-level communication between devices. Depends on a physically cabled serial connection. It will connect but not display information over a network (--host) or Bluetooth (--ble) connection.
 
 ```shellsession title="Example Usage"
 user@host % meshtastic --noproto
@@ -112,12 +112,12 @@ Writing modified channels to device
 
 Toggling `set-ham` changes your device settings in the following ways.
 
-|   Setting    | `set-ham` Default |                               Normal Default                               |
-| :----------: | :---------------: | :------------------------------------------------------------------------: |
+|   Setting    | `set-ham` Default |                                 Normal Default                                 |
+| :----------: | :---------------: | :----------------------------------------------------------------------------: |
 | `IsLicensed` |      `true`       | See [User Config - IsLicensed](/docs/configuration/radio/user#is-licensed-ham) |
 |  `LongName`  |  _Your CallSign_  |     See [User Config - LongName](/docs/configuration/radio/user#long-name)     |
 | `ShortName`  |  _Abrv CallSign_  |    See [User Config - ShortName](/docs/configuration/radio/user#short-name)    |
-|    `PSK`     |       `""`        |         See [Channel Settings - PSK](#changing-the-preshared-key)          |
+|    `PSK`     |       `""`        |           See [Channel Settings - PSK](#changing-the-preshared-key)            |
 
 ## Changing the preshared key
 
@@ -190,6 +190,7 @@ meshtastic --ble AA11BB22-CC33-DD44-EE55-FF6677889900 --info
 ```shell
 meshtastic --ble Meshtastic_1234 --nodes
 ```
+
 #### Export device config with --export-config
 
 ```shell
@@ -213,8 +214,6 @@ meshtastic --ble AA11BB22-CC33-DD44-EE55-FF6677889900 --debug --info
 This is a collection of common questions and answers from our friendly forum.
 
 ### Permission denied: ‘/dev/ttyUSB0’
-
-As previously discussed on the [forum](https://meshtastic.discourse.group/t/question-on-permission-denied-dev-ttyusb0/590/3?u=geeksville)
 
 This indicates an OS permission problem for access by your user to the USB serial port. Typically this is fixed by the following.
 

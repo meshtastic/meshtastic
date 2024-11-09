@@ -43,6 +43,10 @@ Previous versions of these instructions specified using a 2N2222a power transist
 
 The current version of the guide now instructs using either a surface mount or through-hole MOSFET to switch the ground ("low side") of the GPS module. This allows the MOSFET to operate in the fully saturated condition, and MOSFETs will have a lower power consumption themselves than a power transistor. As the ground for the two parts will now be isolated, it is important that no parts of the GPS module, the antenna or any shielding shell are able to contact the ground for the Heltec board.
 
+The essential connections for the NPN MOSFET are shown in the schematic below.
+
+![Heltec_ESP32V3_N-Mosfet_Schematic](/img/hardware/heltec/Heltec_ESP32V3_N-Mosfet_Schematic.webp)
+
 ### Materials Needed
 
 - Heltec ESP32 V3 board
