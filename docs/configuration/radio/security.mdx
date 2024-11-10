@@ -10,10 +10,6 @@ import TabItem from "@theme/TabItem";
 
 The security config options are: Public Key, Private Key, Admin Key, Is Managed, Serial Console, Debug Logs, and Admin Channel.
 
-:::warning
-Please refer to the [Backup and Restore](/docs/overview/encryption/backup_and_restore) before making changes to keys in case a restore is necessary
-:::
-
 ## Security Config Values
 
 ### Public Key
@@ -129,3 +125,26 @@ All Security config options are available in the Web client.
 
 </TabItem>
 </Tabs>
+
+## Security Keys - Backup and Restore
+
+ ### Backup
+
+ Backing up your security keys (private and public) are vital to the long term sustainability of your node on the mesh. Once your node is on the mesh with a set of security keys, it is your responsibility to ensure these keys are maintained.
+
+ These keys can be saved in a multitude of different ways and should be stored securely.
+
+ Available ways to save these keys
+
+ 1. `meshtastic --export-config > config_backup.yaml` - this is the perferred way to backup configuration, it ensures the keys are saved intact
+ 2. Copy the keys to a secure location, like a password protected note - this is a nice persistent way to save them 
+ 3. Take a screenshot - the most basic way, you must ensure you saved the entire key
+
+ ### Restore
+
+ If you've backed up your keys and performed an action that necessitates a key wipe, a new set of keys will be created. This is most common through the Web Flasher > Full Erase and Install.
+
+ After booting your node, you will want to leverage one of these methods to restore your keys.
+
+ 1. `meshtastic --config config_backup.yaml` - This is the fastest way to get your entire node back to where you left it!
+ 2. Manually retype the keys into the iOS / Android app from your saved locations
