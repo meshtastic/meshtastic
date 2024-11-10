@@ -72,4 +72,4 @@ By using the `TRACKER` role in combination with `power.is_power_saving`, the dev
 
 ### Conclusion
 
-Choosing the right device role is crucial for the performance and reliability of your Meshtastic network. By understanding the differences between the common roles, you can optimize your network setup to meet your specific needs and ensure efficient communication across all devices.
+Choosing the right device role is crucial for the performance and reliability of your Meshtastic network. By understanding the differences between the common roles, you can optimize your network setup to meet your specific needs and ensure efficient communication across all devices. For more technical information about each role, visit the [device configuration](/docs/configuration/radio/device/#roles) docs.
