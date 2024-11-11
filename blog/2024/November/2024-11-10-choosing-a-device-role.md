@@ -37,7 +37,7 @@ The `REPEATER` role behaves very similar to `ROUTER` in terms of becoming a pref
 
 #### What is a strategic location anyway?
 
-When considering strategic locations for these two roles, consider a tower on mountain peak rather than a tall building. By electing a device to become a Router or Repeater, you are making an implicit choice for the entire mesh to prefer that node for rebroadcasts for any direct neighbors. This strategic placement becomes crucial for ensuring that packets can be delivered to the widest possible audience. Using line of sight viewshed survey tools to determine the optimal location is recommended, but selection can best be determined by collecting some real world data on the mesh first.
+When evaluating strategic locations for these two roles, consider a tower on mountain peak rather than a tall building. By electing a device to become a Router or Repeater, you are making an implicit choice for the entire mesh to prefer that node for rebroadcasts for any direct neighbors. This strategic placement becomes crucial for ensuring that packets can be delivered to the widest possible audience. Using line of sight viewshed survey tools to determine the optimal location is recommended, but selection can best be determined by collecting some real world data on the mesh first.
 
 ![Router](/img/blog/router_not_router.png)
 
