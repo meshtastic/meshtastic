@@ -32,7 +32,6 @@ Still not sure which role to use? Check out the [role configuration tips](/docs/
 :::
 
 Looking for ROUTER_CLIENT? This role was deprecated in firmware 2.3.15. Learn more in the [2.3.15 release notes](https://github.com/meshtastic/firmware/releases/tag/v2.3.15.deb7c27)
-
 ### Role Comparison
 
 This table shows the **default** values after selecting a preset. As always, individual settings can be adjusted after choosing a preset.
@@ -72,12 +71,14 @@ In the `TRACKER` and `SENSOR` roles, there are special sleep behaviors when comb
 
 This setting defines the device's behavior for how messages are rebroadcasted.
 
-|        Value        |                                                                                      Description                                                                                       |
-| :-----------------: | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
-|        `ALL`        |   ALL (Default) - This setting will rebroadcast ALL messages from its primary mesh as well as other meshes with the same modem settings, including when encryption settings differ.    |
-| `ALL_SKIP_DECODING` |                      ALL_SKIP_DECODING - Same as behavior as ALL, but skips packet decoding and simply rebroadcasts them. **Only available with Repeater role.**                       |
-|    `LOCAL_ONLY`     | LOCAL_ONLY - Ignores observed messages from foreign meshes that are open or those which it cannot decrypt. Only rebroadcasts message on the nodes local primary / secondary channels.  |
-|    `KNOWN_ONLY`     | KNOWN_ONLY - Ignores observed messages from foreign meshes like LOCAL_ONLY, but takes it a step further by also ignoring messages from nodenums not in the node's known list (NodeDB). |
+|        Value         |                                                                                                  Description                                                                                                  |
+|:--------------------:|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|
+|        `ALL`         |               ALL (Default) - This setting will rebroadcast ALL messages from its primary mesh as well as other meshes with the same modem settings, including when encryption settings differ.               |
+| `ALL_SKIP_DECODING`  |                                  ALL_SKIP_DECODING - Same as behavior as ALL, but skips packet decoding and simply rebroadcasts them. **Only available with Repeater role.**                                  |
+|     `LOCAL_ONLY`     |             LOCAL_ONLY - Ignores observed messages from foreign meshes that are open or those which it cannot decrypt. Only rebroadcasts message on the nodes local primary / secondary channels.             |
+|     `KNOWN_ONLY`     |            KNOWN_ONLY - Ignores observed messages from foreign meshes like LOCAL_ONLY, but takes it a step further by also ignoring messages from nodenums not in the node's known list (NodeDB).             |
+|        `NONE`        |                                       NONE - Only permitted for SENSOR, TRACKER and TAK_TRACKER roles, this will inhibit all rebroadcasts, not unlike CLIENT_MUTE role.                                       |
+| `CORE_PORTNUMS_ONLY` | CORE_PORTNUMS_ONLY - Ignores packets from non-standard portnums such as: TAK, RangeTest, PaxCounter, etc. Only rebroadcasts packets with standard portnums: NodeInfo, Text, Position, Telemetry, and Routing. |
 
 ## TZDEF (Timezone Definition)
 
