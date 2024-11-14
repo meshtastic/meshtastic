@@ -1,6 +1,7 @@
 ---
 title: "Choosing The Right Device Role"
-authors: [thebentern]
+description: "Learn how roles like Client, Router, Sensor, and Tracker affect mesh performance, and avoid common pitfalls for reliable and efficient mesh communication."
+authors: thebentern
 tags: [meshtastic, devices, roles, guide]
 slug: choosing-the-right-device-role
 date: 2024-11-10T12:00
