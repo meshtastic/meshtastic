@@ -1,5 +1,5 @@
 ---
-title: Choosing The Right Device Role
+title: "Choosing The Right Device Role"
 authors: [thebentern]
 tags: [meshtastic, devices, roles, guide]
 slug: choosing-the-right-device-role
