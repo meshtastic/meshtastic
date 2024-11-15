@@ -34,14 +34,15 @@ The list of pre-set messages as configured by the user. Messages should be separ
 ### Input Source
 
 Input event sources accepted by the canned message module.
-
-|    Value     |                             Description                              |
-| :----------: | :------------------------------------------------------------------: |
-|    `_any`    | Default. Allows any peripheral input device connected to the device. |
-|  `rotEnc1`   |                         Basic Rotary Encoder                         |
-| `upDownEnc1` |     Up Down Encoder (use this also for RAK14006 Rotary Encoder)      |
-|   `cardkb`   |           M5 Stack CardKB (this covers RAK14004 Keymatrix)           |
-|  `serialkb`  |                        Chatter serial keypad                         |
+                
+|      Value      |                             Description                              |
+| :-------------: | :------------------------------------------------------------------: |
+|     `_any`      | Default. Allows any peripheral input device connected to the device. |
+|    `rotEnc1`    |                         Basic Rotary Encoder                         |
+|  `upDownEnc1`   |     Up Down Encoder (use this also for RAK14006 Rotary Encoder)      |
+| `scanAndSelect` |               Single push-button (short and long press)              |
+|    `cardkb`     |           M5 Stack CardKB (this covers RAK14004 Keymatrix)           |
+|   `serialkb`    |                        Chatter serial keypad                         |
 
 ### Rotary Encoder Enabled
 
@@ -235,6 +236,21 @@ If you don't want to broadcast your freetext message, you can use the CardKB to 
 ### 3 Button up/down and RAK rotary encoder
 
 Just use UP/DOWN/ENTER to select a predefined message and send it.
+
+### Scan and Select
+
+Use a single push-button to select and send predefined messages.
+
+#### Setup
+* Connect a normally-open push-button between ground and a GPIO pin of your choice
+* Configure the canned messages module
+    - Set [Input Source](#input-source) to `scanAndSelect`
+    - Set [Input Broker Pin Press](#input-broker-pin-press) to your chosen GPIO
+    - Define a [list of pre-set messages](#messages)
+
+#### Usage
+* Short press: scroll through messages
+* Long press: send the currently highlighted message to your primary channel
 
 ### Rotary encoder
 

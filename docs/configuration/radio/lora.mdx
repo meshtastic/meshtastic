@@ -38,7 +38,9 @@ The presets are designed to provide further options for optimizing either speed 
 
 The Presets available are as follows, and follow a linear pattern of Fastest \<\-\-\> Slowest, and Shortest \<\-\-\> Longest range:
 
-1. `SHORT_FAST` (Fastest, highest bandwidth, lowest airtime, shortest range)
+1. `SHORT_TURBO` (Fastest, highest bandwidth, lowest airtime, shortest range. It is not legal to use in all regions due to it's 500kHz bandwidth.)
+
+1. `SHORT_FAST` 
 
 2. `SHORT_SLOW`
 
@@ -113,6 +115,14 @@ For testing it is useful sometimes to force a node to never listen to particular
 
 Setting this to option to 'true' means the device will ignore any messages it receives via LoRa that came via MQTT somewhere along the path towards the device. Note this only works when your device and the MQTT node are running at least firmware version 2.2.19.
 
+### OK to MQTT
+
+Acceptable values: `true`, `false`
+
+Default is `false`. When set to `true`, this configuration indicates that the user approves their packets to be uploaded to MQTT. If set to `false`, nodes receiving your packets are requested not to forward packets to MQTT. This configuration only applies to Channels configured with the `defaultpsk` and `eventpsk` keys set in the Meshtastic Firmware; Channels with custom keys ignore this setting.
+
+**Important:** This is not a cryptographic solution but a polite request that is enforced in the official firmware.
+
 ### Override Duty Cycle Limit
 
 Setting this option to 'true' means the device will ignore the hourly duty cycle limit in Europe. This means that you might violate regulations if the device transmits too much. By default, this option is set to 'false,' which means the device will stop sending data when it reaches the hourly limit and will start again when it is allowed to do so.
@@ -169,23 +179,24 @@ LoRa config commands are available in the python CLI. Example commands are below
 
 :::
 
-|           Setting           |                                                                     Acceptable Values                                                                     |           Default            |
-|:---------------------------:|:---------------------------------------------------------------------------------------------------------------------------------------------------------:|:----------------------------:|
-|      lora.modem_preset      |                           `LONG_FAST`,  `LONG_SLOW`, `VERY_LONG_SLOW`, `MEDIUM_SLOW`, `MEDIUM_FAST`, `SHORT_SLOW`, `SHORT_FAST`                           | `LONG_FAST`, `LONG_MODERATE` |
-|       lora.use_preset       |                                                                      `false`, `true`                                                                      |           `false`            |
-|         lora.region         | `UNSET`, `US`, `EU_433`, `EU_868`, `CN`, `JP`, `ANZ`, `KR`, `TW`, `RU` ,`IN`, `NZ_865`, `TH`, `LORA_24`, `UA_433`, `UA_868`, `MY_433`, `MY_919`, `SG_923` |           `UNSET`            |
-|       lora.bandwidth        |                                                              `31`, `62`, `125`, `250`, `500`                                                              |            `250`             |
-|     lora.spread_factor      |                                                              `7`, `8`, `9`, `10`, `11`, `12`                                                              |             `12`             |
-|      lora.coding_rate       |                                                                    `5`, `6`, `7`, `8`                                                                     |             `8`              |
-|    lora.frequency_offset    |                                                                     `0` to `1000000`                                                                      |             `0`              |
-|       lora.hop_limit        |                                                                `1`,`2`,`3`,`4`,`5`,`6`,`7`                                                                |             `3`              |
-|        lora.tx_power        |                                                                        `0` to `30`                                                                        |             `0`              |
-|       lora.tx_enabled       |                                                                      `false`, `true`                                                                      |            `true`            |
-|      lora.channel_num       |                                                                `0`, `1` to `NUM_CHANNELS`                                                                 |             `0`              |
-|      lora.ignore_mqtt       |                                                                      `false`, `true`                                                                      |           `false`            |
-|  lora.override_duty_cycle   |                                                                      `false`, `true`                                                                      |           `false`            |
-| lora.sx126x_rx_boosted_gain |                                                                      `false`, `true`                                                                      |           `false`            |
-|   lora.override_frequency   |                             Any supported frequency the LoRA radio is capable of. Please respect local rules and regulations                              |             `0`              |
+|           Setting           |                                                                     Acceptable Values                                                                     |   Default   |
+|:---------------------------:|:---------------------------------------------------------------------------------------------------------------------------------------------------------:|:-----------:|
+|      lora.modem_preset      |                    `LONG_FAST`,  `LONG_SLOW`, `VERY_LONG_SLOW`, `MEDIUM_SLOW`, `MEDIUM_FAST`, `SHORT_SLOW`, `SHORT_FAST`, `SHORT_TURBO`                    | `LONG_FAST` |
+|       lora.use_preset       |                                                                      `false`, `true`                                                                      |   `false`   |
+|         lora.region         | `UNSET`, `US`, `EU_433`, `EU_868`, `CN`, `JP`, `ANZ`, `KR`, `TW`, `RU` ,`IN`, `NZ_865`, `TH`, `LORA_24`, `UA_433`, `UA_868`, `MY_433`, `MY_919`, `SG_923` |   `UNSET`   |
+|       lora.bandwidth        |                                                              `31`, `62`, `125`, `250`, `500`                                                              |    `250`    |
+|     lora.spread_factor      |                                                              `7`, `8`, `9`, `10`, `11`, `12`                                                              |    `12`     |
+|      lora.coding_rate       |                                                                    `5`, `6`, `7`, `8`                                                                     |     `8`     |
+|    lora.frequency_offset    |                                                                     `0` to `1000000`                                                                      |     `0`     |
+|       lora.hop_limit        |                                                                `1`,`2`,`3`,`4`,`5`,`6`,`7`                                                                |     `3`     |
+|        lora.tx_power        |                                                                        `0` to `30`                                                                        |     `0`     |
+|       lora.tx_enabled       |                                                                      `false`, `true`                                                                      |   `true`    |
+|      lora.channel_num       |                                                                `0`, `1` to `NUM_CHANNELS`                                                                 |     `0`     |
+|      lora.ignore_mqtt       |                                                                      `false`, `true`                                                                      |   `false`   |
+|    lora.config_ok_to_mqtt   |                                                                      `true`, `false`                                                                      |   `false`   |
+|  lora.override_duty_cycle   |                                                                      `false`, `true`                                                                      |   `false`   |
+| lora.sx126x_rx_boosted_gain |                                                                      `false`, `true`                                                                      |   `false`   |
+|   lora.override_frequency   |                             Any supported frequency the LoRA radio is capable of. Please respect local rules and regulations                              |     `0`     |
 
 :::tip
 

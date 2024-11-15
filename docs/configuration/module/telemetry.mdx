@@ -2,17 +2,21 @@
 id: telemetry
 title: Telemetry Module Configuration
 sidebar_label: Telemetry
-description: This module allows sharing of Device, Environment, and Air Quality metrics from your Meshtastic device.
+description: This module allows sharing of Device, Environment, Health, and Air Quality metrics from your Meshtastic device.
 ---
 
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 
-The Telemetry Module provides three types of data over the mesh: Device metrics (Battery Level, Voltage, Channel Utilization and Airtime) from your Meshtastic device, Environment Metrics from attached I2C sensors, and Air Quality Metrics from attached I2C particle sensors.
+The Telemetry Module provides four types of data over the mesh: Device metrics (Battery Level, Voltage, Channel Utilization and Airtime) from your Meshtastic device, Environment Metrics, Air Quality Metrics, and Health metrics (Heart rate, Oxygen Saturation and body temperature).
 
-Supported sensors connected to the I2C bus of the device will be automatically detected at startup. Environment Telemetry and Air Quality must be enabled for them to be instrumented and their readings sent over the mesh.
+Supported sensors connected to the I2C bus of the device will be automatically detected at startup. The Environment Telemetry, Air Quality, and Health Telemetry modules must be enabled for them to be instrumented and their readings sent over the mesh.
 
-<object data="https://www.youtube.com/embed/6jj1s-fsPlc?autohide=1&autoplay=0" width="100%" height="400"></object>
+<object
+  data="https://www.youtube.com/embed/6jj1s-fsPlc?autohide=1&autoplay=0"
+  width="100%"
+  height="400"
+></object>
 
 ### Currently Supported Sensor Types
 
@@ -22,7 +26,7 @@ Supported sensors connected to the I2C bus of the device will be automatically d
 | BMP180  |       0x76, 0x77       |              Temperature and barometric pressure              |
 | BMP280  |       0x76, 0x77       |              Temperature and barometric pressure              |
 | BME280  |       0x76, 0x77       |         Temperature, barometric pressure and humidity         |
-| BME680  |       0x76, 0x77       | Temperature, barometric pressure, humidity and air resistance |
+| BME68x  |       0x76, 0x77       | Temperature, barometric pressure, humidity and air resistance |
 | MCP9808 |          0x18          |                          Temperature                          |
 | INA260  |    0x40, 0x41, 0x43    |                      Current and Voltage                      |
 | INA219  |    0x40, 0x41, 0x43    |                      Current and Voltage                      |
@@ -31,8 +35,9 @@ Supported sensors connected to the I2C bus of the device will be automatically d
 |  SHTC3  |          0x70          |                   Temperature and humidity                    |
 |  SHT31  |          0x44          |                   Temperature and humidity                    |
 | PMSA003I|          0x12          |     Concentration units by size and particle counts by size   |
-| PMSA003I|          0x12          |     Concentration units by size and particle counts by size   |
 | DFROBOT_LARK |    0x42           | Temperature, barometric pressure, humidity, wind direction, wind speed |
+| MAX30102 |        0x57           | Heart Rate, Oxygen Saturation, and body temperature           |
+| MLX90614 |        0x5A           | Body temperature                                              |
 
 ## Module Config Values
 
@@ -50,7 +55,7 @@ Default is `1800` seconds (30 minutes).
 
 How often we should send Device Metrics over the mesh.
 
-Default is `1800` seconds (30 minutes). 
+Default is `1800` seconds (30 minutes).
 
 Device Metrics to a connected client app will always be sent once per minute, regardless of this setting.
 
@@ -75,6 +80,28 @@ Default is `false`.
 ### Air Quality Interval
 
 This option is used to configure the interval (in seconds) that should be used to send air quality metrics from an attached supported sensor over the mesh network.
+
+Default is `1800` seconds (30 minutes).
+
+### Power Metrics Enabled
+
+This option is used to enable/disable the sending of power telemetry as gathered by an attached supported voltage/current sensor. Note that this does not need to be enabled to monitor the voltage of the battery.
+
+Default is `false`.
+
+### Power Metrics Interval
+
+This option is used to configure the interval (in seconds) that should be used to send power metrics from an attached supported sensor over the mesh network.
+
+### Health Telemetry Enabled
+
+This option is used to enable/disable the sending of health data from an attached supported sensor over the mesh network.
+
+Default is `false`.
+
+### Health Telemetry Interval
+
+This option is used to configure the interval (in seconds) that should be used to send health data from an attached supported sensor over the mesh network.
 
 Default is `1800` seconds (30 minutes).
 
@@ -125,15 +152,21 @@ All telemetry module config options are available in the python CLI. Example com
 
 ## Settings
 
-|                  Setting                  |  Acceptable Values  |                  Default                  |
-| :---------------------------------------: | :-----------------: | :---------------------------------------: |
+|                  Setting                  |  Acceptable Values  |                  Default                   |
+| :---------------------------------------: | :-----------------: | :----------------------------------------: |
 |     telemetry.device_update_interval      | `integer` (seconds) | Default `0` is 30 minutes(`1800` seconds). |
-| telemetry.environment_display_fahrenheit  |   `true`, `false`   |                `false`                    |
-| telemetry.environment_measurement_enabled |   `true`, `false`   |                `false`                    |
-|   telemetry.environment_screen_enabled    |   `true`, `false`   |                `false`                    |
+| telemetry.environment_display_fahrenheit  |   `true`, `false`   |                  `false`                   |
+| telemetry.environment_measurement_enabled |   `true`, `false`   |                  `false`                   |
+|   telemetry.environment_screen_enabled    |   `true`, `false`   |                  `false`                   |
 |   telemetry.environment_update_interval   | `integer` (seconds) | Default `0` is 30 minutes(`1800` seconds). |
-|   telemetry.air_quality_enabled           |   `true`, `false`   |                `false`                    |
-|   telemetry.air_quality_interval          | `integer` (seconds) | Default `0` is 30 minutes(`1800` seconds). |
+|       telemetry.air_quality_enabled       |   `true`, `false`   |                  `false`                   |
+|      telemetry.air_quality_interval       | `integer` (seconds) | Default `0` is 30 minutes(`1800` seconds). |
+|    telemetry.power_measurement_enabled    |   `true`, `false`   |                  `false`                   |
+|      telemetry.power_update_interval      | `integer` (seconds) | Default `0` is 30 minutes(`1800` seconds). |
+|   telemetry.health_measurement_enabled    |   `true`, `false`   |                `false`                    |
+|   telemetry.health_update_interval           | `integer` (seconds) | Default `0` is 30 minutes(`1800` seconds). |
+|   telemetry.health_screen_enabled         |   `true`, `false`   |                `false`                    |
+
 
 :::tip
 

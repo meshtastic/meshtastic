@@ -34,7 +34,7 @@ Key components include:
 - **Protocol Buffers**: The backbone of communication and interactions, with changes and definitions managed in the [Meshtastic Protobuf Definitions repository](https://github.com/meshtastic/protobufs). For detailed information, see the [Protobuf API Reference](https://buf.build/meshtastic/protobufs/).
 - **Device Firmware**: Development for ESP32, nRF52, and RP2040 based devices occurs in the [firmware repository](https://github.com/meshtastic/firmware), focusing on C and C++ code for hardware interaction and communication.
 - **Firmware Modules**: Extend the core functionalities of devices and mesh networks, implemented mainly within the firmware repository. Modules are essential for adding new features and integrating devices within the ecosystem.
-- **CLI Apps (Device Interface)**: The [Meshtastic Python CLI](https://github.com/meshtastic/Meshtastic-python) enables interaction with device settings and functionalities, serving both as a utility and a library for application development.
+- **CLI Apps (Device Interface)**: The [Meshtastic Python CLI](https://github.com/meshtastic/python) enables interaction with device settings and functionalities, serving both as a utility and a library for application development.
 - **Web and JavaScript Apps**: Development for the hosted web server on ESP32 devices is done in [Meshtastic Web](https://github.com/meshtastic/web), with a JavaScript library for device interfaces available in [Meshtastic JS](https://github.com/meshtastic/meshtastic.js).
 - **Mobile and Desktop Apps**: Android, iOS, iPadOS, and macOS applications provide user interfaces for interacting with Meshtastic devices. Development for Android is detailed in the [Meshtastic-Android repository](https://github.com/meshtastic/Meshtastic-Android), while Apple platforms are supported by the [Meshtastic-Apple repository](https://github.com/meshtastic/Meshtastic-Apple).
 - **Documentation**: The source for the Meshtastic website and documentation resides in the [meshtastic/meshtastic repository](https://github.com/meshtastic/meshtastic). For guidelines on maintaining documentation, visit the [Maintaining Documentation](/docs/development/docs) page.
@@ -76,9 +76,9 @@ If direct development contribution is not feasible for you, financial support is
   </div>
 </div>
 
-### Fiscal Sponsorships
+### Sponsors
 
-We're deeply thankful for the backing from the Open Collective, Open Source Collective, DigitalOcean, and Vercel, which has been instrumental in our project's sustainability and growth:
+We're deeply thankful for the backing from our sponsors, listed below, which has been instrumental in our project's sustainability and growth. Their support enables us to continue serving and expanding our community.
 
   <div className="flex flex-wrap items-start">
     <div className="w-full sm:w-3/12 p-3">
@@ -86,8 +86,8 @@ We're deeply thankful for the backing from the Open Collective, Open Source Coll
         alt="Open Collective"
         className="max-h-8"
         sources={{
-          light: useBaseUrl("/img/Open_Collective_logo_2021.svg"),
-          dark: useBaseUrl("/img/Open_Collective_logo_2021.svg"),
+          light: useBaseUrl("/img/contributing/Open_Collective_logo_2021.svg"),
+          dark: useBaseUrl("/img/contributing/Open_Collective_logo_2021.svg"),
         }}
       />
     </div>
@@ -117,12 +117,27 @@ We're deeply thankful for the backing from the Open Collective, Open Source Coll
       alt="Vercel"
       className="max-h-8"
       sources={{
-        light: useBaseUrl('/img/vercel-logotype-dark.svg'),
-        dark: useBaseUrl('/img/vercel-logotype-light.svg'),
+        light: useBaseUrl('/img/contributing/vercel-logotype-dark.svg'),
+        dark: useBaseUrl('/img/contributing/vercel-logotype-light.svg'),
       }}
     />
   </div>
   <div className="w-full sm:w-9/12 p-3">
     By covering our hosting costs, Vercel directly contributes to Meshtastic's growth, enhancing our web scalability and presence. Their sponsorship is crucial for our continued development and focus on creating a robust platform for decentralized communication.
+  </div>
+</div>
+<div className="flex flex-wrap items-start">
+  <div className="w-full sm:w-3/12 p-3">
+    <ThemedImage
+      alt="Datadog"
+      className="max-h-8"
+      sources={{
+        light: useBaseUrl("/img/contributing/dd_logo_h_rgb.svg"),
+        dark: useBaseUrl("/img/contributing/dd_logo_h_white.svg"),
+      }}
+    />
+  </div>
+  <div className="w-full sm:w-9/12 p-3">
+    Datadog is an observability and security platform for cloud applications, providing infrastructure monitoring, application performance monitoring, and log management. They sponsor us by granting free infrastructure monitoring and logging, aiding our development and operational efforts.
   </div>
 </div>

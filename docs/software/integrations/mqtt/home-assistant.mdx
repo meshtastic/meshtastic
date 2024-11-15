@@ -44,7 +44,7 @@ sensor:
 
   - name: "Node 1 Battery Voltage"
     unique_id: "node_1__battery_voltage"
-    state_topic: "msh/2/json/LongFast/!67ea9400"
+    state_topic: "msh/US/2/json/LongFast/!67ea9400"
     state_class: measurement
     value_template: >-
       {% if value_json.from == 4038675309 and
@@ -60,7 +60,7 @@ sensor:
 
   - name: "Node 1 Battery Percent"
     unique_id: "node_1_battery_percent"
-    state_topic: "msh/2/json/LongFast/!67ea9400"
+    state_topic: "msh/US/2/json/LongFast/!67ea9400"
     state_class: measurement
     value_template: >-
       {% if value_json.from == 4038675309 and value_json.payload.battery_level is defined %}
@@ -73,7 +73,7 @@ sensor:
 
   - name: "Node 1 ChUtil"
     unique_id: "node_1_chutil"
-    state_topic: "msh/2/json/LongFast/!67ea9400"
+    state_topic: "msh/US/2/json/LongFast/!67ea9400"
     state_class: measurement
     value_template: >-
       {% if value_json.from == 4038675309 and value_json.payload.channel_utilization is defined %}
@@ -85,7 +85,7 @@ sensor:
 
   - name: "Node 1 AirUtilTX"
     unique_id: "node_1_airutiltx"
-    state_topic: "msh/2/json/LongFast/!67ea9400"
+    state_topic: "msh/US/2/json/LongFast/!67ea9400"
     state_class: measurement
     value_template: >-
       {% if value_json.from == 4038675309 and value_json.payload.air_util_tx is defined %}
@@ -104,7 +104,7 @@ sensor:
 
   - name: "Node 1 Temperature"
     unique_id: "node_1_temperature"
-    state_topic: "msh/2/json/LongFast/!67ea9400"
+    state_topic: "msh/US/2/json/LongFast/!67ea9400"
     state_class: measurement
     value_template: >-
       {% if value_json.from == 4038675309 and value_json.payload.temperature is defined %}
@@ -113,7 +113,7 @@ sensor:
         {{ this.state }}
       {% endif %}
     device_class: "temperature"
-    unit_of_measurement: "F"
+    unit_of_measurement: "°F"
 # With device_class: "temperature" set, make sure to use the configured unit for temperature in your HA instance.
 # If you don't, then non-temperature messages will change the value of this sensor by reinterpreting the current state with the wrong unit, unless you account for it.
 # For Celsius use:    {{ (value_json.payload.temperature | float) | round(1) }} 
@@ -121,7 +121,7 @@ sensor:
 
   - name: "Node 1 Humidity"
     unique_id: "node_1_humidity"
-    state_topic: "msh/2/json/LongFast/!67ea9400"
+    state_topic: "msh/US/2/json/LongFast/!67ea9400"
     state_class: measurement
     value_template: >-
       {% if value_json.from == 4038675309 and value_json.payload.relative_humidity is defined %}
@@ -134,7 +134,7 @@ sensor:
 
   - name: "Node 1 Pressure"
     unique_id: "node_1_pressure"
-    state_topic: "msh/2/json/LongFast/!67ea9400"
+    state_topic: "msh/US/2/json/LongFast/!67ea9400"
     state_class: measurement
     value_template: >-
       {% if value_json.from == 4038675309 and value_json.payload.barometric_pressure is defined %}
@@ -149,7 +149,7 @@ sensor:
 
   - name: "Node 1 Gas Resistance"
     unique_id: "node_1_gas_resistance"
-    state_topic: "msh/2/json/LongFast/!67ea9400"
+    state_topic: "msh/US/2/json/LongFast/!67ea9400"
     state_class: measurement
     value_template: >-
       {% if value_json.from == 4038675309 and value_json.payload.gas_resistance is defined %}
@@ -167,7 +167,7 @@ sensor:
 ```yaml
   - name: "Node 1 Messages"
     unique_id: "node_1_messages"
-    state_topic: "msh/2/json/LongFast/!67ea9400"
+    state_topic: "msh/US/2/json/LongFast/!67ea9400"
     value_template: >-
       {% if value_json.from == 4038675309 and value_json.payload.text is defined %}
         {{ value_json.payload.text }}
@@ -187,7 +187,7 @@ alias: Update Node 1 location
 description: Update Meshtastic node when corresponding MQTT messages are seen.
 trigger:
   - platform: mqtt
-    topic: msh/2/json/LongFast/!67ea9400
+    topic: msh/US/2/json/LongFast/!67ea9400
     payload: "on"
     value_template: |-
       {% if value_json.from == 4038675309 and
@@ -216,7 +216,7 @@ Home Assistant entities can be created for any data type that is published to MQ
 
 ### Configure With Your Topic & Node ID's
 
-- In every entity, replace `msh/2/json/LongFast/!67ea9400` with the topic your node publishes to. In this example, `!67ea9400`  refers to the node that has mqtt enabled on the mesh and is publishing to the broker.
+- In every entity, replace `msh/US/2/json/LongFast/!67ea9400` with the topic your node publishes to. In this example, `!67ea9400`  refers to the node that has mqtt enabled on the mesh and is publishing to the broker.
 
 - In every entity replace `4038675309` with the node number of the radio you wish to monitor.  In this example `4038675309` is the node on the mesh with environment sensors and telemetry that I wish to observe. Node numbers can be found by monitoring the output in MQTT Explorer, listening with the MQTT addon or by using the Python CLI with `meshtastic --info`.
 
@@ -227,7 +227,7 @@ Copy and paste these entities then change `name`, `unique_id`, `from`, and `stat
 ```yaml
   - name: "Node 2 Messages"
     unique_id: "node_2_messages"
-    state_topic: "msh/2/json/LongFast/!67ea9400"
+    state_topic: "msh/US/2/json/LongFast/!67ea9400"
     value_template: >-
       {% if value_json.from == 695318008 and value_json.payload.text is defined %}
         {{ value_json.payload.text }}
@@ -279,7 +279,7 @@ Add the following code to your automations.yaml file.  Be sure to modify the `to
   description: any message with an @Tropho will send to mobile device
   trigger:
     - platform: mqtt
-      topic: msh/2/json/LongFast/!67ea9400
+      topic: msh/US/2/json/LongFast/!67ea9400
   condition:
     - condition: template
       value_template: "{{ trigger.payload_json.payload.text | regex_search('@Tropho') }}"
@@ -336,7 +336,7 @@ This automation will check the send box for changes.  After typing a message, ei
       data:
         qos: 0
         retain: false
-        topic: msh/2/json/mqtt/!67ea9400
+        topic: msh/US/2/json/mqtt/!67ea9400
         payload: >-
           {"from":1743426560,"type":"sendtext","payload":"{{    
           states('input_text.meshtastic_send_box') }}"}

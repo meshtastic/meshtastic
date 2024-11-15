@@ -6,21 +6,43 @@ sidebar_position: 6
 description: Bridging mesh networks over the internet and integrating Meshtastic protocols with popular technologies such as Home Assistant, Node Red, and Adafruit IO.
 ---
 
-## Bridging networks
+## Public MQTT Server
 
 ![Common MQTT Layout](/img/software/mqtt/mqtt.webp)
 
-Meshtastic networks in different locations beyond the reach of LoRa can be easily bridged together using MQTT. The simplest option is to connect your mesh to the official Meshtastic MQTT broker. This makes your devices appear on the world map, and provides a copy of your mesh traffic, translated into JSON. All you have to do to join the public MQTT server is to Enable MQTT and set Uplink and Downlink on the channels that you want to share over MQTT. The default device configuration using the public MQTT Server is encrypted.
+The Meshtastic project provides a public MQTT service that users can connect to, with certain restrictions in place to ensure network stability. This service allows Meshtastic devices to bridge over the internet, providing global connectivity for remote networks.
 
-You can also specify your own private MQTT broker to bridge mesh networks together, via the internet (or just a local IP network).
+For instructions on connecting to the public MQTT server, please refer to [Connect to the Default Public Server](/docs/configuration/module/mqtt/#connect-to-the-default-public-server).
 
-You can find the settings available for MQTT [here](/docs/configuration/module/mqtt).
+### Restrictions on the Public MQTT Server
 
-:::important
-When MQTT is turned on, you are potentially broadcasting your entire mesh's traffic onto the public internet. This includes messages and position information.
+To maintain optimal performance and protect LoRa meshes, traffic restrictions are currently applied to the public MQTT server.
 
-The default channel (LongFast) on the public MQTT server usually has a lot of traffic. Your device may get overloaded and may no longer function properly anymore. It is recommended to use a different channel or to use your own MQTT server if you experience issues.
-:::
+#### Zero-Hop Policy
+
+Traffic from the public MQTT server does not fully propagate through local mesh networks. Directly connected nodes will receive the data, but due to the zero-hop policy, it will not spread further to other nodes within the local mesh network.
+
+#### Optimized Traffic Filtering
+
+Only specific portnums are prioritized for transmission over the public MQTT server when using the default PSK:
+
+- NodeinfoApp
+- TextMessageCompressedApp
+- TextMessageApp
+- PositionApp
+- TelemetryApp
+- MapReportApp
+- RoutingApp
+
+#### Location Precision Filtering
+
+On the default PSK, the public server also limits the precision of location data to help protect user privacy. Only position packets containing imprecise location data (10-16 bits) are shared on the topic, ensuring that precise location details are not exposed. For more information on how location precision works, see the [Position Precision](https://meshtastic.org/docs/configuration/radio/channels/#position-precision) section.
+
+This filtering focuses network resources on critical traffic, improving overall performance and reducing unnecessary data flow. Since these restrictions are applied at the network level, no firmware updates are required. As Meshtastic networks continue to grow, further traffic reduction measures may become necessary to manage network load and maintain reliable performance across all channels.
+
+### Using Private Brokers
+
+It is not recommended to use the default key (PSK) on a private broker. Doing so potentially allows security vulnerabilities and can flood the mesh with traffic, as private brokers do not enforce the zero-hop policy needed for public channels. Private brokers are intended for use with private channels, where custom PSKs provide secure, isolated communication.
 
 ## Software Integrations
 
@@ -30,19 +52,17 @@ When MQTT is enabled, the Meshtastic device simply uplinks and/or downlinks ever
 
 ### MQTT [Topics](https://www.hivemq.com/blog/mqtt-essentials-part-5-mqtt-topics-best-practices)
 
-If no specific [root topic](/docs/configuration/module/mqtt#root-topic) is configured, the default root topic will be `msh/`.
-Each device that is connected to MQTT will publish its MQTT state (`online`/`offline`) to:
+If no specific [root topic](/docs/configuration/module/mqtt#root-topic) is configured, the default root topic will be `msh/REGION`.
 
-`msh/2/stat/USERID`, where `USERID` is the node ID of the gateway device (the one connected to MQTT).
-
-For each channel where uplink and/or downlink is enabled, two other topics might be used:
+For each channel where uplink and/or downlink is enabled, two topics might be used:
 
 #### Protobufs topic
+
 A gateway node will uplink and/or downlink raw ([protobuf](https://developers.google.com/protocol-buffers)) MeshPackets to the topic:
 
-`msh/2/e/CHANNELNAME/USERID`, where `CHANNELNAME` is the name of the channel (firmware versions prior to 2.3.0 will publish to a topic with `/c/` in the place of `/e/`).
+`msh/REGION/2/e/CHANNELNAME/USERID`, where `CHANNELNAME` is the name of the channel (firmware versions prior to 2.3.0 will publish to a topic with `/c/` in the place of `/e/`).
 
-For example: `msh/2/e/LongFast/!abcd1234`
+For example: `msh/US/2/e/LongFast/!abcd1234`
 
 The payload is a raw protobuf, whose definitions for Meshtastic can be found [here](https://github.com/meshtastic/protobufs/blob/master/meshtastic). Reference guides for working with protobufs in several popular programming languages can be found [here](https://protobuf.dev/reference/). Looking at the MQTT traffic with a program like `mosquitto_sub` will tell you it's working, but you won't get much useful information out of it. For example:
 
@@ -55,13 +75,14 @@ The payload is a raw protobuf, whose definitions for Meshtastic can be found [he
 If [encryption_enabled](/docs/configuration/module/mqtt#encryption-enabled) is set to true, the payload of the MeshPacket will remain encrypted with the key for the specified channel.
 
 #### JSON topic
+
 :::note
 JSON is not supported on the nRF52 platform.
 :::
 
 If [JSON is enabled](/docs/configuration/module/mqtt#json-enabled), packets from the following [port numbers](/docs/development/firmware/portnum) are serialized to JSON: `TEXT_MESSAGE_APP`, `TELEMETRY_APP`, `NODEINFO_APP`, `POSITION_APP`, `WAYPOINT_APP`, `NEIGHBORINFO_APP`, `TRACEROUTE_APP`, `DETECTION_SENSOR_APP`, `PAXCOUNTER_APP` and `REMOTE_HARDWARE_APP`. These are then forwarded to the topic:
 
-`msh/2/json/CHANNELNAME/USERID`.
+`msh/US/2/json/CHANNELNAME/USERID`.
 
 An example of a received `NODEINFO_APP` message:
 
@@ -85,7 +106,7 @@ An example of a received `NODEINFO_APP` message:
 
 The meaning of these fields is as follows:
 
-- "`id`" is the unique ID for this message. 
+- "`id`" is the unique ID for this message.
 - "`channel`" is the channel index this message was received on.
 - "`from`" is the unique decimal-equivalent Node ID of the node on the mesh that sent this message. (The hexadecimal value `7efeee00` represented by an integer in decimal is `2130636288`).
 - "`id`" inside the payload of a `NODEINFO_APP` message is the hexadecimal Node ID (sometimes called User ID) of the node that sent it.
@@ -94,18 +115,18 @@ The meaning of these fields is as follows:
 - "`shortname`" is the short name of the device that sent the `NODEINFO_APP` message.
 - "`sender`" is the hexadecimal Node ID of the gateway device, which is in this case the same node that sent the `NODEINFO_APP` message.
 - "`timestamp`" is the Unix Epoch when the message was received, represented as an integer in decimal.
-- "`to`" is the decimal-equivalent Node ID of the destination of the message. In this case, "-1" means it was a broadcast message (this is the decimal integer representation of `0xFFFFFFFF`). 
+- "`to`" is the decimal-equivalent Node ID of the destination of the message. In this case, "-1" means it was a broadcast message (this is the decimal integer representation of `0xFFFFFFFF`).
 - "`type`" is the type of the message, in this case it was a `NODEINFO_APP` message.
 
-The `from` field can thus be used as a stable identifier for a specific node.  Note that in firmware prior to 2.2.0, this is a signed value in JSON, while in firmware 2.2.0 and higher, the JSON values are unsigned.
+The `from` field can thus be used as a stable identifier for a specific node. Note that in firmware prior to 2.2.0, this is a signed value in JSON, while in firmware 2.2.0 and higher, the JSON values are unsigned.
 
 If the message received contains valid JSON in the payload, the JSON is deserialized and added as a JSON object rather than a string containing the serialized JSON.
 
-
 #### JSON downlink to instruct a node to send a message
-You can also send a JSON message to the topic `msh/2/json/mqtt/` to instruct a gateway node to send a message to the mesh.
 
-To make this work, ensure that your node has a Meshtastic channel configured called "mqtt". Enable Downlink. The PSK can be random and doesn't matter. This channel allows the node to listen to messages on the `msh/2/json/mqtt/` topic.
+You can also send a JSON message to the topic `msh/US/2/json/mqtt/` to instruct a gateway node to send a message to the mesh.
+
+To make this work, ensure that your node has a Meshtastic channel configured called "mqtt". Enable Downlink. The PSK can be random and doesn't matter. This channel allows the node to listen to messages on the `msh/US/2/json/mqtt/` topic.
 
 Reboot your device after creating this channel.
 
@@ -149,12 +170,6 @@ Gateway nodes (via code running in the phone) will contain two tables to whiteli
 
 Since multiple gateway nodes might be connected to a single mesh, it is possible that duplicate messages will be published on any particular topic. Therefore, subscribers to these topics should
 deduplicate if needed by using the packet ID of each message.
-
-### Optional web services
-
-#### Public MQTT broker service
-
-An existing public [MQTT broker](https://mosquitto.org) will be the default for this service, but clients can use any MQTT broker they choose.
 
 ## Examples
 
