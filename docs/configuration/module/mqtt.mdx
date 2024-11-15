@@ -8,7 +8,7 @@ description: Learn to manage MQTT servers, encryption, and more for your Meshtas
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 
-If your device is connected to Internet via wifi or ethernet, you can enable it to forward packets along to an MQTT server. This allows users on the local mesh to communicate with users on the internet. One or more channels must also be enabled as uplink and/or downlink for packets to be transmitted from and/or to your mesh (See [channels](/docs/configuration/radio/channels#downlink-enabled)). Without these settings enabled, the node will still connect to the MQTT server but only send status messages.
+If your device is connected to Internet via wifi or ethernet, you can enable it to forward packets along to an MQTT server. This allows users on the local mesh to communicate with users on the internet. One or more channels must also be enabled as uplink and/or downlink for packets to be transmitted from and/or to your mesh (See [channels](/docs/configuration/radio/channels#downlink-enabled)).
 
 The MQTT module config options are: Enabled, Server Address, Username, Password, Encryption Enabled, JSON Enabled, TLS Enabled, Root Topic, Client Proxy Enabled, Map Reporting Enabled (with Position Precision and Publish Interval), and Okay to MQTT. MQTT Module config uses an admin message sending a `ConfigModule.MQTT` protobuf.
 
