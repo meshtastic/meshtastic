@@ -254,7 +254,10 @@ function Home() {
               </p>
             </div>
             <div className="card__footer flex justify-center mt-4">
-              <Link to="/docs/software/apple/installation/">
+              <Link
+                to="/docs/software/apple/installation/"
+                className="mt-1 underline hover:no-underline font-semibold"
+              >
                 Try it out &rarr;
               </Link>
             </div>
@@ -274,7 +277,10 @@ function Home() {
               </p>
             </div>
             <div className="card__footer flex justify-center mt-4">
-              <Link to="/docs/software/android/installation/">
+              <Link
+                to="/docs/software/android/installation/"
+                className="mt-1 underline hover:no-underline font-semibold"
+              >
                 Try it out &rarr;
               </Link>
             </div>
@@ -294,7 +300,12 @@ function Home() {
               </p>
             </div>
             <div className="card__footer flex justify-center mt-4">
-              <Link to="https://client.meshtastic.org">Try it out &rarr;</Link>
+              <Link
+                to="https://client.meshtastic.org"
+                className="mt-1 underline hover:no-underline font-semibold"
+              >
+                Try it out &rarr;
+              </Link>
             </div>
           </div>
           <div className="card w-[calc(100%-1rem)] sm:w-1/3 md:w-1/4 lg:w-1/4">
@@ -312,7 +323,10 @@ function Home() {
               </p>
             </div>
             <div className="card__footer flex justify-center mt-4">
-              <Link to="/docs/software/python/cli/installation/">
+              <Link
+                to="/docs/software/python/cli/installation/"
+                className="mt-1 underline hover:no-underline font-semibold"
+              >
                 Try it out &rarr;
               </Link>
             </div>
