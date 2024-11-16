@@ -179,7 +179,9 @@ function Home() {
                 />
                 <h4 className="text-lg font-bold">Step 1</h4>
               </div>
-              <h5 className="font-semibold mt-1">Choose a Device</h5>
+              <Link to="/docs/hardware/devices/">
+                <h5 className="font-semibold mt-1">Choose a Device &rarr;</h5>
+              </Link>
               <p className="text-center max-w-xs">
                 Meshtastic devices are available in a variety of configurations
                 to suit your needs.
@@ -193,9 +195,11 @@ function Home() {
                 />
                 <h4 className="text-lg font-bold">Step 2</h4>
               </div>
-              <h5 className="font-semibold mt-1">
-                Flash and Configure your Device
-              </h5>
+              <Link to="/docs/getting-started/">
+                <h5 className="font-semibold mt-1">
+                  Flash and Configure your Device &rarr;
+                </h5>
+              </Link>
               <p className="text-center max-w-xs">
                 Flash your device with the latest version of Meshtastic and
                 configure it to your liking.
@@ -209,7 +213,11 @@ function Home() {
                 />
                 <h4 className="text-lg font-bold">Step 3</h4>
               </div>
-              <h5 className="font-semibold mt-1">Connect to your Device</h5>
+              <Link to="/docs/getting-started/initial-config/">
+                <h5 className="font-semibold mt-1">
+                  Connect to your Device &rarr;
+                </h5>
+              </Link>
               <p className="text-center max-w-xs">
                 Connect to your device via any of our clients to start sending
                 and receiving messages!
