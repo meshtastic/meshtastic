@@ -2,13 +2,13 @@ import Head from "@docusaurus/Head";
 import Link from "@docusaurus/Link";
 import useBaseUrl from "@docusaurus/useBaseUrl";
 import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
-import Layout from "@theme/Layout";
 import {
   CheckCircleIcon,
   CommandLineIcon,
   DevicePhoneMobileIcon,
   GlobeAltIcon,
 } from "@heroicons/react/24/outline";
+import Layout from "@theme/Layout";
 
 import {
   SocialCard,
