@@ -8,7 +8,7 @@ sidebar_label: Local Development
 
 In order to set up your local environment, you will need to install:
 
-- [Node.js Runtime](https://nodejs.org)
+- [Node Version Manager](https://github.com/nvm-sh/nvm)
 - [PNPM Package Manager](https://pnpm.io)
 
 ## Getting Started
@@ -40,6 +40,10 @@ git submodule update --init --recursive
 ```
 
 ### Install Dependencies
+
+```shell title="Install Node.js using NVM"
+nvm install && nvm use
+```
 
 ```shell title="Install dependencies using pnpm"
 pnpm i
