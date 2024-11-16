@@ -179,8 +179,11 @@ function Home() {
                 />
                 <h4 className="text-lg font-bold">Step 1</h4>
               </div>
-              <Link to="/docs/hardware/devices/">
-                <h5 className="font-semibold mt-1">Choose a Device &rarr;</h5>
+              <Link
+                to="/docs/hardware/devices/"
+                className="mt-1 underline hover:no-underline font-semibold"
+              >
+                Choose a Device &rarr;
               </Link>
               <p className="text-center max-w-xs">
                 Meshtastic devices are available in a variety of configurations
@@ -195,10 +198,11 @@ function Home() {
                 />
                 <h4 className="text-lg font-bold">Step 2</h4>
               </div>
-              <Link to="/docs/getting-started/">
-                <h5 className="font-semibold mt-1">
-                  Flash and Configure your Device &rarr;
-                </h5>
+              <Link
+                to="/docs/getting-started/"
+                className="mt-1 underline hover:no-underline font-semibold"
+              >
+                Flash and Configure your Device &rarr;
               </Link>
               <p className="text-center max-w-xs">
                 Flash your device with the latest version of Meshtastic and
@@ -213,10 +217,11 @@ function Home() {
                 />
                 <h4 className="text-lg font-bold">Step 3</h4>
               </div>
-              <Link to="/docs/getting-started/initial-config/">
-                <h5 className="font-semibold mt-1">
-                  Connect to your Device &rarr;
-                </h5>
+              <Link
+                to="/docs/getting-started/initial-config/"
+                className="mt-1 underline hover:no-underline font-semibold"
+              >
+                Connect to your Device &rarr;
               </Link>
               <p className="text-center max-w-xs">
                 Connect to your device via any of our clients to start sending
