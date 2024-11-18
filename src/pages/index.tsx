@@ -125,7 +125,7 @@ function Home() {
         <meta property="og:url" content="https://meshtastic.org/" />
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
-      <header className="hero hero--primary text-center">
+      <header className="hero hero--primary text-center p-2">
         <div className="container">
           <h1 className="hero__title">
             <img
@@ -154,7 +154,6 @@ function Home() {
 
       <main className="flex flex-col gap-8">
         <div className="bg-primaryDark mx-auto flex w-full lg:w-auto flex-col gap-4 p-4 shadow-inner">
-          <h3 className="text-xl font-bold">Join the Conversation</h3>
           <div className="flex w-full overflow-x-auto gap-2 flex-wrap justify-center">
             {SocialCards.map((card) => (
               <SocialCard
