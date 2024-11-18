@@ -17,6 +17,26 @@ export default {
         secondaryInv: "var(--secondaryInv)",
         tertiaryInv: "var(--tertiaryInv)",
       },
+      typography: {
+        DEFAULT: {
+          css: {
+            "code::before": {
+              content: '""',
+            },
+            "code::after": {
+              content: '""',
+            },
+            blockquote: {
+              "p::before": {
+                content: "none",
+              },
+              "p::after": {
+                content: "none",
+              },
+            },
+          },
+        },
+      },
     },
   },
   plugins: [typography()],
