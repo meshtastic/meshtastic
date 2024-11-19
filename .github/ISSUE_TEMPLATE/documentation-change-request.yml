@@ -1,0 +1,26 @@
+name: "Documentation Change Request"
+about: :Create a report about our documentation to help us improve"
+title: "Documentation Change Request"
+labels: ""
+assignees: ""
+  - type: markdown
+    attributes:
+      value: |
+        If you have a question, please post it on our [Meshtastic Discussions page](https://github.com/orgs/meshtastic/discussions) instead. This system is reserved specifically for requesting changes to the Meshtastic documentation.
+
+  - type: textarea
+    id: request_details
+    attributes:
+      label: Request Details
+      description: Provide details about your documentation change request here.
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Code of Conduct
+      description: By submitting this issue, you agree to follow our [Code of Conduct](https://meshtastic.org/docs/legal/conduct/).
+      options:
+        - label: I agree to follow this project's Code of Conduct
+          required: true
