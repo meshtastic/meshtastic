@@ -167,7 +167,7 @@ function Home() {
             ))}
           </div>
         </div>
-        <div className="container mx-auto flex w-auto flex-col gap-8">
+        <div className="container mx-auto flex w-auto flex-col gap-4">
           <h3 className="text-xl font-bold">Getting Started</h3>
           <div className="flex flex-wrap justify-center gap-6">
             <div className="flex flex-col items-center">
