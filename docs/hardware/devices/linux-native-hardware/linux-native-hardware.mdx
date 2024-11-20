@@ -247,11 +247,11 @@ sudo apt install avahi-daemon
 echo '<?xml version="1.0" standalone='no'?><!--*-nxml-*-->
 <!DOCTYPE service-group SYSTEM "avahi-service.dtd">
 <service-group>
-<name>Meshtastic</name>
-<service>
-<type>_http._tcp</type>
-<port>80</port>
-</service>
+    <name>Meshtastic</name>
+    <service protocol="ipv4">
+        <type>_http._tcp</type>
+        <port>80</port>
+    </service>
 </service-group>' | sudo tee /etc/avahi/services/meshtastic.service
 ```
 
