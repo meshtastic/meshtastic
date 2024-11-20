@@ -217,7 +217,7 @@ function Home() {
                 <h4 className="text-lg font-bold">Step 3</h4>
               </div>
               <Link
-                to="/docs/getting-started/initial-config/"
+                to="#get-connected"
                 className="mt-1 underline hover:no-underline font-semibold"
               >
                 Connect to your Device &rarr;
@@ -230,7 +230,9 @@ function Home() {
           </div>
         </div>
         <div className="container mx-auto flex w-auto flex-col gap-4">
-          <h3 className="text-xl font-bold">Get Connected</h3>
+          <h3 id="get-connected" className="text-xl font-bold">
+            Get Connected
+          </h3>
           <p>
             Connect and control your Meshtastic devices through various
             platforms. Choose the client that best fits your needs and device

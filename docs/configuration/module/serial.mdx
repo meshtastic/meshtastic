@@ -7,6 +7,7 @@ description: This module is an interface to talk to and control your Meshtastic 
 
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
+import ReactPlayer from "react-player";
 
 The serial module config options are: Enabled, Echo, Mode, Receive GPIO, Transmit GPIO, Baud Rate, Timeout, and Override Console Serial Port. Serial Module config uses an admin message sending a `ConfigModule.Serial` protobuf.
 
@@ -14,11 +15,14 @@ This is an interface to talk to and control your Meshtastic device over a serial
 
 ![image](/img/modules/Serial/jet.webp)
 
-<object
-  data="https://www.youtube.com/embed/HdOiGKBtapw?autohide=1&autoplay=0"
-  width="100%"
-  height="400"
-></object>
+<div style={{ maxWidth: "800px", margin: "auto" }}>
+  <ReactPlayer
+    url="https://youtu.be/HdOiGKBtapw"
+    controls
+    width="100%"
+    height="400px"
+  />
+</div>
 
 ## Serial Module Config Values
 
