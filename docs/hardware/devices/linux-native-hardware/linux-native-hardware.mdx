@@ -232,6 +232,29 @@ sudo insmod spi-ch341.ko
 
 - Devices with kernels older than 5.16 may need to blacklist ch341, while kernels 6.0 and newer are observed to work more reliably.
 
+#### Avahi setup
+This will allow the Android client to auto-discover your Linux Native device.
+
+- Install avahi-daemon (debian/ubuntu)
+
+```shell
+sudo apt install avahi-daemon
+```
+
+- Configure Avahi to advertise the node
+
+```shell
+echo '<?xml version="1.0" standalone='no'?><!--*-nxml-*-->
+<!DOCTYPE service-group SYSTEM "avahi-service.dtd">
+<service-group>
+    <name>Meshtastic</name>
+    <service protocol="ipv4">
+        <type>_http._tcp</type>
+        <port>80</port>
+    </service>
+</service-group>' | sudo tee /etc/avahi/services/meshtastic.service
+```
+
 ## CLI Configuration
 
 Interaction with Meshtastic can be conducted via the command line:
