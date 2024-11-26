@@ -319,43 +319,42 @@ First, create an input text helper entity. The preferred way to configure an inp
 This automation will check the send box for changes.  After typing a message, either hit enter or click off the box and the automation will send a text string in JSON to the mqtt broker. Make sure to publish to a channel called "mqtt" and to update the device ID and `from` field in the example below. A field `channel` can be added to transmit on a different channel index than the primary, or a `to` field can be added with a node number to send a DM.
 
 ```yaml
-- alias: Meshtastic - Send Automation
-  description: ""
-  trigger:
-    - platform: state
-      entity_id:
-        - input_text.meshtastic_send_box
-  condition: []
-  action:
-    - delay:
-        hours: 0
-        minutes: 0
-        seconds: 1
-        milliseconds: 0
-    - service: mqtt.publish
-      data:
-        qos: 0
-        retain: false
-        topic: msh/US/2/json/mqtt/!67ea9400
-        payload: >-
-          {"from":1743426560,"type":"sendtext","payload":"{{    
-          states('input_text.meshtastic_send_box') }}"}
-    - delay:
-        hours: 0
-        minutes: 0
-        seconds: 1
-        milliseconds: 0
-    - service: input_text.set_value
-      data:
-        value: " "
-      target:
-        entity_id: input_text.meshtastic_send_box
-    - delay:
-        hours: 0
-        minutes: 0
-        seconds: 2
-        milliseconds: 0
-  mode: single
+alias: Mesh - Send message via send box
+description: ""
+triggers:
+  - entity_id:
+      - input_text.meshtastic_send_box
+    trigger: state
+conditions: []
+actions:
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 1
+      milliseconds: 0
+  - data:
+      topic: msh/US/2/json/mqtt/!67ea9400
+      payload: >-
+        {"channel":0,"from":1743426560,"type":"sendtext","payload":"{{
+        states('input_text.meshtastic_send_box') }}"}
+    action: mqtt.publish
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 1
+      milliseconds: 0
+  - target:
+      entity_id: input_text.meshtastic_send_box
+    data:
+      value: " "
+    action: input_text.set_value
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 2
+      milliseconds: 0
+mode: single
+
   ```
 
   Add this card to your dashboard by going to Edit Dashboard -> + ADD CARD.  Then search BY ENTITY for Meshtastic Send Box and check the box next to the entry.  Click CONTINUE, then ADD TO DASHBOARD.
