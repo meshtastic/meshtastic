@@ -45,6 +45,16 @@ OTA firmware updates are available for Android using an older release of the mor
 
 OTA firmware updates are available on iOS & iPadOS using the nRF Device Firmware Update App available through the [Apple App Store](https://apps.apple.com/us/app/nrf-device-firmware-update/id1624454660)
 
+:::caution
+
+To ensure successful OTA DFU firmware flashing on iOS, change the following settings in the nRF DFU App:
+- Packet receipt notification: On
+- Number of Packets: 10
+
+Failure to change these settings may cause the OTA firmware update to fail. Failure will result in the the Meshtastic firmware not booting and will require the firmware to be re-flashed via USB.
+
+:::
+
 1. Download the firmware release you wish to install from the [Meshtastic Download Page](/downloads), [Meshtastic GitHub](https://github.com/meshtastic/firmware/releases), or via the iOS or iPadOS app.
 2. Unzip the firmware folder
 3. Open the nRF DFU App and select the correct device firmware file (will end with -ota.zip)
