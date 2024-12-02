@@ -51,5 +51,16 @@ OTA firmware updates are available on iOS & iPadOS using the nRF Device Firmware
 4. Connect to your device
 5. Upload the firmware
 
+If the upload fails, here are some tips based on common issues:
+
+1. **Ensure the correct app is used:** Double-check that you’ve downloaded the **nRF Device Firmware Update (nrF DFU)** app, not the nRF Connect app.
+2. **Adjust packet settings:** In the app’s settings, the default number of packets is often set to 23. If you experience upload failures, follow these steps to adjust the packet size:
+    1. Enable "**Packets Receipt Notification**" in the app settings. 
+    2. After enabling this, the "**Number of Packets**" setting will become active, allowing you to reduce it. Try changing the number of packets to **5**. 
+    3. Upload the firmware. Wait patiently. The upload speed is reported to be around 1 kB/s, so the process may take approximately 10 minutes to complete.
+    4. If it still fails, reduce the value by one and retry the upload.
+
+*Note: Enabling "Packets Receipt Notification" is critical, as it unlocks the ability to modify the packet count. Reducing the packet size can significantly improve the upload stability and reduce the likelihood of failure.*
+
 </TabItem>
 </Tabs>
