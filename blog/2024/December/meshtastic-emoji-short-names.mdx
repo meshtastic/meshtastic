@@ -1,0 +1,58 @@
+---
+title: "Personalize Your Meshtastic Device with Emoji Short Names"
+description: "Learn how to make your Meshtastic device stand out with custom emoji short names."
+slug: meshtastic-emoji-short-names
+authors: crichton
+tags: ["meshtastic", "customization", "emoji"]
+date: "2024-12-04T17:00"
+hide_table_of_contents: false
+image: "/img/blog/image-8.webp"
+---
+
+Did you know you can personalize your Meshtastic devices with emojis, making them stand out in a unique and fun way! By default, the `Short Name` for your device is auto-generated using the last four characters of its MAC address. However, you can customize this `Short Name` to make it truly yours. Even better, using **emojis** adds a visually distinctive touch, making it easier to identify your node at a glance!
+
+{/* truncate */}
+
+## How It Works 🛠️
+
+Your Meshtastic device’s `Short Name` is limited to **4 bytes**. Many emojis are a great fit because they use only 1–4 bytes; however, some—such as certain flags or more intricate emojis—exceed the 4-byte limit and won’t work.
+
+Thankfully, most Meshtastic client apps include validation to ensure you don’t accidentally use an emoji that exceeds the 4-byte limit. However, not all clients enforce this restriction directly. Regardless, the protocol enforces a strict 5-byte limit (1 byte for overhead, leaving 4 bytes for the emoji itself). If you attempt to set a larger emoji, either the client app or the firmware will prevent it from being saved.
+
+To customize the `Short Name`, refer to the [User Config documentation](/docs/configuration/radio/user/#user-config-client-availability) for instructions on where to make the change for your preferred client.
+
+Once you’ve saved the changes, your device will appear with your custom emoji `Short Name` in the client applications.
+
+> ![Father_Nodes_Best Example](/img/blog/image-7.webp)
+
+## Why Use Emojis as Your `Short Name`? ✨
+
+Customizing your `Short Name` with emojis isn’t just a quirky feature—it’s a creative way to express the purpose or personality of your device. For instance:
+
+- If your node’s Long Name is **“Crichton’s Car”**, you could set the `Short Name` to 🚗.
+- Deploying a node near your campsite? 🏕️ would be perfect.
+- Setting up a device for a hiking trip? Try 🥾 or 🌲.
+
+This adds both customization and a unique identity, making it easier for others to recognize your device in the network. For example, each emoji can convey the purpose or personality of the node, adding a touch of creativity to your setup.
+
+> ![Nodesferatu Example](/img/blog/image-8.webp)
+
+## Get Creative! 🎨
+
+The possibilities are endless. You can pick emojis based on:
+
+- **Location**: A 🌊 for coastal areas, 🏜️ for deserts, or 🏔️ for mountain regions.
+- **Purpose**: 📡 for a relay node, 🏠 for a home base station, or 🛶 for boating adventures.
+- **Personality**: 😎 for a cool vibe, 💡 for an innovative setup, or 🧙‍♂️ for something magical.
+
+The nodes list becomes much more visually engaging and easier to navigate when each node is represented by a unique emoji. It’s a fun and functional way to distinguish between devices at a glance.
+
+> <img
+>   src="/img/blog/image-10.webp"
+>   alt="Nodes List"
+>   style={{ maxHeight: "400px", width: "auto" }}
+> />
+
+## Share Your Emoji Creations! 💬
+
+We’d love to see how you’ve personalized your Meshtastic devices! Share your most creative and functional emoji `Short Names` in the comments below. Whether it’s 🐕 for a dog-tracking node, 🎸 for a festival setup, or 🤖 for a robotics project, show off your unique style!
