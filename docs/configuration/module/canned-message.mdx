@@ -192,17 +192,17 @@ meshtastic --set canned_message.inputbroker_pin_press 0
 ```
 
 ```shell title="Set/Unset Input Broker CW Event"
-meshtastic --set canned_message.inputbroker_event_cw KEY_UP
+meshtastic --set canned_message.inputbroker_event_cw UP
 meshtastic --set canned_message.inputbroker_event_cw ""
 ```
 
 ```shell title="Set/Unset Input Broker CCW Event"
-meshtastic --set canned_message.inputbroker_event_ccw KEY_DOWN
+meshtastic --set canned_message.inputbroker_event_ccw DOWN
 meshtastic --set canned_message.inputbroker_event_ccw ""
 ```
 
 ```shell title="Set/Unset Input Broker Press Event"
-meshtastic --set canned_message.inputbroker_event_press KEY_SELECT
+meshtastic --set canned_message.inputbroker_event_press SELECT
 meshtastic --set canned_message.inputbroker_event_press ""
 ```
 
@@ -316,9 +316,9 @@ Replace each `GPIO` (x3) below with the GPIO numbers from your hardware setup.
 meshtastic --set canned_message.inputbroker_pin_a GPIO
 meshtastic --set canned_message.inputbroker_pin_b GPIO
 meshtastic --set canned_message.inputbroker_pin_press GPIO
-meshtastic --set canned_message.inputbroker_event_cw KEY_UP
-meshtastic --set canned_message.inputbroker_event_ccw KEY_DOWN
-meshtastic --set canned_message.inputbroker_event_press KEY_SELECT
+meshtastic --set canned_message.inputbroker_event_cw UP
+meshtastic --set canned_message.inputbroker_event_ccw DOWN
+meshtastic --set canned_message.inputbroker_event_press SELECT
 meshtastic --set canned_message.rotary1_enabled True
 ```
 
