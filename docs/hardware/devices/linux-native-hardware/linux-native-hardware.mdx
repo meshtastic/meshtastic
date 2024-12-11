@@ -243,8 +243,14 @@ sudo apt install avahi-daemon
 
 - Configure Avahi to advertise the node
 
+Create the service file:
 ```shell
-echo '<?xml version="1.0" standalone='no'?><!--*-nxml-*-->
+sudo nano etc/avahi/services/meshtastic.service
+```
+
+And paste the following:
+```xml
+<?xml version="1.0" standalone="no"?><!--*-nxml-*-->
 <!DOCTYPE service-group SYSTEM "avahi-service.dtd">
 <service-group>
     <name>Meshtastic</name>
@@ -252,8 +258,9 @@ echo '<?xml version="1.0" standalone='no'?><!--*-nxml-*-->
         <type>_http._tcp</type>
         <port>80</port>
     </service>
-</service-group>' | sudo tee /etc/avahi/services/meshtastic.service
+</service-group>
 ```
+Then save and exit.
 
 ## CLI Configuration
 
