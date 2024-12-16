@@ -79,10 +79,10 @@ sidebar_position: 1
    ```
 
 5. For Meshtastic to be able to access that server, two settings need to be changed in the
-   `/etc/mosquitto/conf.d/mosquitto.conf` file:
+   `/etc/mosquitto/mosquitto.conf` file:
 
    ```shell
-   sudo sh -c "echo 'listener 1883 0.0.0.0\nallow_anonymous true' >> /etc/mosquitto/conf.d/mosquitto.conf"
+   sudo sh -c "echo 'listener 1883 0.0.0.0\nallow_anonymous true' >> /etc/mosquitto/mosquitto.conf"
    ```
 
 6. Restart the service:
