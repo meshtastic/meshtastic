@@ -61,7 +61,7 @@ sidebar_position: 1
 2. start the mqtt server
 
    ```sh
-   sudo service mosquitto start
+   sudo systemctl start mosquitto
    ```
 
 3. Do a quick test of server, start a subscriber on a topic:
@@ -88,7 +88,7 @@ sidebar_position: 1
 6. Restart the service:
 
    ```shell
-   sudo service mosquitto restart
+   sudo systemctl restart mosquitto
    ```
 
 Optionally pull a copy of [pdxlocations/MQTT-Connect-for-Meshtastic](https://github.com/pdxlocations/MQTT-Connect-for-Meshtastic)
