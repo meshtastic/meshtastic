@@ -285,7 +285,6 @@ Add the following code to your automations.yaml file.  Be sure to modify the `to
       payload: "on"
       id: text
       trigger: mqtt
-
   condition:
     - condition: template
       value_template: "{{ trigger.payload_json.payload.text | regex_search('@Tropho') }}"
