@@ -4,7 +4,8 @@ title: Mosquitto
 sidebar_label: Mosquitto
 sidebar_position: 1
 ---
-
+<Tabs>
+<TabItem value="mac" label="Mac">
 ### Using mosquitto on a mac
 
 1. install mqtt server
@@ -48,8 +49,8 @@ sidebar_position: 1
    ```
 
 7. If you are using the mac firewall, you will need to go into: System Preferences > Security & Privacy > Firewall > Firewall Options and add it.
-
-
+</TabItem>
+<TabItem value="raspberrypi" label="Raspberry Pi">
 ### Using mosquitto on raspberry pi bookworm
 
 1. install mqtt server
@@ -90,3 +91,5 @@ sidebar_position: 1
    ```shell
    sudo systemctl restart mosquitto
    ```
+</TabItem>
+</Tabs>
