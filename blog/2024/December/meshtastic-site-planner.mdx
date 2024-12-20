@@ -1,0 +1,23 @@
+---
+title: "Meshtastic Site Planner, an Open Source Tool to Optimize your Mesh Deployments"
+description: "Learn to use the new Meshtastic Site Planner, a free and open source utility which lets you run advanced physics models to quickly plan the best placements for your Meshtastic nodes."
+slug: meshtastic-site-planner-introduction
+authors: Dr. Matthew Patrick (Starwatcher)
+tags: ["meshtastic", "site planner", "deployments"]
+date: 2024-12-19T12:00
+hide_table_of_contents: false
+image: "/img/blog/meshplanner-demo.png"
+---
+
+A well placed meshtastic device can have incredible range, but planning the best deployment can require software which is proprietary, expensive, and difficult to use. The Meshtastic Site Planner is a new, open-source tool
+which allows you to quickly run accurate predictions of your radios range in different locations. This tool builds on sophisticated and proven radio propagation models, and a modern, intuitive UI for everybody to freely use.
+
+## Predicting Range ⛰️📡
+
+Terrain is the number one limitation for meshtastic signals. Whether you're trying to chat with friends, plan radio deployments for disaster recovery, or even break records set from the edge of space (https://meshtastic.org/docs/overview/range-tests/) 
+it's ultimately the terrain that limits your range. The best way to increase it is to move your antenna higher, which can mean using the local terrain, or placing nodes on towers. Some of the most impressive mesh networks use both approaches to transmit far distances, but 
+predicting the expected coverage can still be hard. The key is having software which knows both the elevation of the terrain around your location, and can also simulate effects like the decrease in signal strength through air and scattering by obstacles.
+Before now, these calculations relied on software which is either expensive and proprietary, or harder to use. The terrain datasets are also gigantic (terabytes of images), and not simple to interpret.
+
+The Meshtastic Site Planner solves all of these problems by building on SPLAT!, a program written by amateur radio operator John Magliacane (KD2BD). Terrain data is automatically streamed as needed, so you don't need to find and store the datasets on your computer. The 
+physics models, optional settings, and processing are handled behind a modern web UI which creates beautiful simulation maps which anyone can read. 
