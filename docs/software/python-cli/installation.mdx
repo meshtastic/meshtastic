@@ -96,11 +96,12 @@ values={[
   ```
 - Install meshtastic:
   ```shell
-  pip3 install --upgrade meshtastic
+  pip3 install --upgrade "meshtastic[cli]"
   ```
+  (the `[cli]` suffix installs a few optional dependencies that match older versions of the CLI)
   - Using pipx as an alternative to pip3 if `externally-managed-environment` error is encountered
     ```shell
-    sudo apt install pipx && pipx install meshtastic
+    sudo apt install pipx && pipx install "meshtastic[cli]"
     ```
     - If using `pipx` it may be necessary to update `$PATH` by running:
       ```shell
@@ -147,8 +148,9 @@ values={[
   ```
 - Install meshtastic:
   ```shell
-  sudo pip3 install --upgrade meshtastic
+  sudo pip3 install --upgrade "meshtastic[cli]"
   ```
+  (the `[cli]` suffix installs a few optional dependencies that match older versions of the CLI)
 
 </TabItem>
 <TabItem value="windows">
@@ -183,8 +185,9 @@ When installing Python, make sure to select the option to "Add Python to PATH" o
   ```
 - Install meshtastic:
   ```powershell
-  pip3 install --upgrade meshtastic
+  pip3 install --upgrade "meshtastic[cli]"
   ```
+  (the `[cli]` suffix installs a few optional dependencies that match older versions of the CLI)
 
 </TabItem>
 <TabItem value="termux">
@@ -206,8 +209,9 @@ When installing Python, make sure to select the option to "Add Python to PATH" o
   ```
 - Upgrade pip and installed meshtastic and some of its dependencies
   ```shell
-  pip install --upgrade pip pygatt pytap2 wheel meshtastic
+  pip install --upgrade pip pygatt pytap2 wheel "meshtastic[cli]"
   ```
+  (the `[cli]` suffix installs a few optional dependencies that match older versions of the CLI)
 
 :::note
 Be aware that the Meshtastic CLI is not able to control the nodes over USB through termux, but you can control devices over Wifi using the `--host x.x.x.x` option with the device IP address (ESP32 or Pico W only). Wifi connection is currently under development and may not be working properly just yet. If you would like to provide feedback or test this feature, please join our [Discord server](https://discord.gg/ktMAKGBnBs) for more information.
