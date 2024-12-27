@@ -10,9 +10,13 @@
     "swizzle": "docusaurus swizzle",
     "serve": "docusaurus serve",
     "clear": "docusaurus clear",
-    "pdf": "npx docusaurus-prince-pdf -u http://localhost:3000/docs/about/ --dest ./static/documents/pdf --output ./static/documents/pdf/Meshtastic-Documentation.pdf"
+    "pdf": "npx docusaurus-prince-pdf -u http://localhost:3000/docs/about/ --dest ./static/documents/pdf --output ./static/documents/pdf/Meshtastic-Documentation.pdf",
+    "write-translations": "docusaurus write-translations",
+    "crowdin": "crowdin",
+    "crowdin:sync": "docusaurus write-translations && crowdin upload && crowdin download"
   },
   "dependencies": {
+    "@crowdin/cli": "^4.5.0",
     "@algolia/client-search": "^4.22.1",
     "@docusaurus/core": "3.6.1",
     "@docusaurus/plugin-content-blog": "^3.6.1",
