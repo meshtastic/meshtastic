@@ -14,24 +14,26 @@ The device config options are: Role, Serial Output, and Debug Log. Device config
 
 ## Roles
 
-| Device Role    | Description                                                                                                               | Best Uses                                                                                                                              |
-| -------------- | ------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
-| CLIENT         | App connected or stand alone messaging device.                                                                            | General use for individuals needing to communicate over the Meshtastic network with support for client applications.                   |
-| CLIENT_MUTE    | Device that does not forward packets from other devices.                                                                  | Situations where a device needs to participate in the network without assisting in packet routing, reducing network load.              |
-| CLIENT_HIDDEN  | Device that only broadcasts as needed for stealth or power savings.                                                       | Use in stealth/hidden deployments or to reduce airtime/power consumption while still participating in the network.                     |
-| TRACKER        | Broadcasts GPS position packets as priority.                                                                              | Tracking the location of individuals or assets, especially in scenarios where timely and efficient location updates are critical.      |
-| LOST_AND_FOUND | Broadcasts location as message to default channel regularly for to assist with device recovery.                           | Used for recovery efforts of a lost device.                                                                                            |
-| SENSOR         | Broadcasts telemetry packets as priority.                                                                                 | Deploying in scenarios where gathering environmental or other sensor data is crucial, with efficient power usage and frequent updates. |
-| TAK            | Optimized for ATAK system communication, reduces routine broadcasts.                                                      | Integration with ATAK systems (via the Meshtastic ATAK Plugin) for communication in tactical or coordinated operations.                |
-| TAK_TRACKER    | Enables automatic TAK PLI broadcasts and reduces routine broadcasts.                                                      | Standalone PLI integration with ATAK systems for communication in tactical or coordinated operations.                                  |
-| REPEATER       | Infrastructure node for extending network coverage by relaying messages with minimal overhead. Not visible in Nodes list. | Best positioned in strategic locations to maximize the network's overall coverage. Device is not shown in topology.                    |
-| ROUTER         | Infrastructure node for extending network coverage by relaying messages. Visible in Nodes list.                           | Best positioned in strategic locations to maximize the network's overall coverage. Device is shown in topology.                        |
+| Device Role    | Description                                                                                                                                                      | Best Uses                                                                                                                                                   |
+| -------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| CLIENT         | App connected or stand alone messaging device. Rebroadcasts packets when no other node has done so.                                                              | General use for individuals needing to communicate over the Meshtastic network with support for client applications.                                        |
+| CLIENT_MUTE    | Device that does not forward packets from other devices.                                                                                                         | Situations where a device needs to participate in the network without assisting in packet routing, reducing network load.                                   |
+| CLIENT_HIDDEN  | Device that only broadcasts as needed for stealth or power savings.                                                                                              | Use in stealth/hidden deployments or to reduce airtime/power consumption while still participating in the network.                                          |
+| TRACKER        | Broadcasts GPS position packets as priority.                                                                                                                     | Tracking the location of individuals or assets, especially in scenarios where timely and efficient location updates are critical.                           |
+| LOST_AND_FOUND | Broadcasts location as message to default channel regularly for to assist with device recovery.                                                                  | Used for recovery efforts of a lost device.                                                                                                                 |
+| SENSOR         | Broadcasts telemetry packets as priority.                                                                                                                        | Deploying in scenarios where gathering environmental or other sensor data is crucial, with efficient power usage and frequent updates.                      |
+| TAK            | Optimized for ATAK system communication, reduces routine broadcasts.                                                                                             | Integration with ATAK systems (via the Meshtastic ATAK Plugin) for communication in tactical or coordinated operations.                                     |
+| TAK_TRACKER    | Enables automatic TAK PLI broadcasts and reduces routine broadcasts.                                                                                             | Standalone PLI integration with ATAK systems for communication in tactical or coordinated operations.                                                       |
+| REPEATER       | Infrastructure node for extending network coverage by always rebroadcasting packets once with minimal overhead. Not visible in Nodes list.                       | Best positioned in strategic locations to maximize the network's overall coverage. Device is not shown in topology.                                         |
+| ROUTER         | Infrastructure node for extending network coverage by always rebroadcasting packets once. Visible in Nodes list.                                                 | Best positioned in strategic locations to maximize the network's overall coverage. Device is shown in topology.                                             |
+| ROUTER_LATE    | Infrastructure node that always rebroadcasts packets once but only after all other modes, ensuring additional coverage for local clusters. Visble in Nodes list. | Ideal for covering dead spots or ensuring reliability for a cluster of nodes where placement doesn’t benefit the broader mesh. Device is shown in topology. |
 
 :::tip
-Still not sure which role to use? Check out the [role configuration tips](/docs/configuration/tips/#roles)
+Still not sure which role to use? Check out our blog post: [Choosing the Right Device Role](/blog/choosing-the-right-device-role/)
 :::
 
 Looking for ROUTER_CLIENT? This role was deprecated in firmware 2.3.15. Learn more in the [2.3.15 release notes](https://github.com/meshtastic/firmware/releases/tag/v2.3.15.deb7c27)
+
 ### Role Comparison
 
 This table shows the **default** values after selecting a preset. As always, individual settings can be adjusted after choosing a preset.
@@ -47,6 +49,7 @@ This table shows the **default** values after selecting a preset. As always, ind
 | TAK            | Yes             | Optional       | Regular           | Yes            | No                  | Yes                   |
 | TAK_TRACKER    | Yes             | Optional       | Regular           | Yes            | No                  | Yes                   |
 | ROUTER         | No[^2]          | No             | High              | Yes            | Yes                 | Yes                   |
+| ROUTER_LATE    | Yes             | Yes            | High           | Yes            | No                  | Yes                   |
 | REPEATER       | Yes             | No             | High              | Yes            | Yes                 | No                    |
 
 [^1]: **Awake Only** indicates retransmissions will occur normally but not while asleep between transmission intervals.
@@ -72,7 +75,7 @@ In the `TRACKER` and `SENSOR` roles, there are special sleep behaviors when comb
 This setting defines the device's behavior for how messages are rebroadcasted.
 
 |        Value         |                                                                                                  Description                                                                                                  |
-|:--------------------:|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|
+| :------------------: | :-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
 |        `ALL`         |               ALL (Default) - This setting will rebroadcast ALL messages from its primary mesh as well as other meshes with the same modem settings, including when encryption settings differ.               |
 | `ALL_SKIP_DECODING`  |                                  ALL_SKIP_DECODING - Same as behavior as ALL, but skips packet decoding and simply rebroadcasts them. **Only available with Repeater role.**                                  |
 |     `LOCAL_ONLY`     |             LOCAL_ONLY - Ignores observed messages from foreign meshes that are open or those which it cannot decrypt. Only rebroadcasts message on the nodes local primary / secondary channels.             |
