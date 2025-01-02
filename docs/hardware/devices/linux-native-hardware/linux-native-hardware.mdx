@@ -6,6 +6,8 @@ sidebar_position: 11
 description: Set up and configure Meshtastic on Linux-native devices using the meshtasticd binary.
 ---
 
+import NativeLibraries from "@site/docs/blocks/_native-libraries.mdx";
+
 This page outlines the setup of Meshtastic on Linux-native devices, utilizing portduino to run the Meshtastic firmware under Linux.
 
 ## Prerequisites and Hardware Compatibility
@@ -37,15 +39,7 @@ UART HATs and SX1302/SX1303 chip-based HATs are not supported. Only hats that us
 
 ### Installing Meshtasticd
 
-- Necessary system libraries should be installed before building or installing Meshtastic.
-
-```shell
-sudo apt install libgpiod-dev libyaml-cpp-dev libbluetooth-dev
-```
-- And optionally for web server support
-```shell
-sudo apt install openssl libssl-dev libulfius-dev liborcania-dev
-```
+<NativeLibraries />
 
 - The .deb Package is available as [part of the release](https://github.com/meshtastic/firmware/releases/latest), installing the binary, a systemd service, and a config file. It is compiled for Debian Bookworm and incompatible with Bullseye.
 ```shell
@@ -231,6 +225,36 @@ sudo insmod spi-ch341.ko
 ```
 
 - Devices with kernels older than 5.16 may need to blacklist ch341, while kernels 6.0 and newer are observed to work more reliably.
+
+#### Avahi setup
+This will allow the Android client to auto-discover your Linux Native device.
+
+- Install avahi-daemon (debian/ubuntu)
+
+```shell
+sudo apt install avahi-daemon
+```
+
+- Configure Avahi to advertise the node
+
+Create the service file:
+```shell
+sudo nano /etc/avahi/services/meshtastic.service
+```
+
+And paste the following:
+```xml
+<?xml version="1.0" standalone="no"?><!--*-nxml-*-->
+<!DOCTYPE service-group SYSTEM "avahi-service.dtd">
+<service-group>
+    <name>Meshtastic</name>
+    <service protocol="ipv4">
+        <type>_http._tcp</type>
+        <port>80</port>
+    </service>
+</service-group>
+```
+Then save and exit.
 
 ## CLI Configuration
 

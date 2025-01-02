@@ -7,37 +7,41 @@ description: This module allows sharing of Device, Environment, Health, and Air 
 
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
+import ReactPlayer from "react-player";
 
 The Telemetry Module provides four types of data over the mesh: Device metrics (Battery Level, Voltage, Channel Utilization and Airtime) from your Meshtastic device, Environment Metrics, Air Quality Metrics, and Health metrics (Heart rate, Oxygen Saturation and body temperature).
 
 Supported sensors connected to the I2C bus of the device will be automatically detected at startup. The Environment Telemetry, Air Quality, and Health Telemetry modules must be enabled for them to be instrumented and their readings sent over the mesh.
 
-<object
-  data="https://www.youtube.com/embed/6jj1s-fsPlc?autohide=1&autoplay=0"
-  width="100%"
-  height="400"
-></object>
+<div style={{ maxWidth: "800px", margin: "auto" }}>
+  <ReactPlayer
+    url="https://youtu.be/6jj1s-fsPlc"
+    controls
+    width="100%"
+    height="400px"
+  />
+</div>
 
 ### Currently Supported Sensor Types
 
-| Sensor  | I<sup>2</sup>C Address |                          Data Points                          |
-| :-----: | :--------------------: | :-----------------------------------------------------------: |
-| BMP085  |       0x76, 0x77       |              Temperature and barometric pressure              |
-| BMP180  |       0x76, 0x77       |              Temperature and barometric pressure              |
-| BMP280  |       0x76, 0x77       |              Temperature and barometric pressure              |
-| BME280  |       0x76, 0x77       |         Temperature, barometric pressure and humidity         |
-| BME68x  |       0x76, 0x77       | Temperature, barometric pressure, humidity and air resistance |
-| MCP9808 |          0x18          |                          Temperature                          |
-| INA260  |    0x40, 0x41, 0x43    |                      Current and Voltage                      |
-| INA219  |    0x40, 0x41, 0x43    |                      Current and Voltage                      |
-| INA3221 |          0x42          |                 3-channel Current and Voltage                 | 
-|  LPS22  |       0x5D, 0x5C       |                      Barometric pressure                      |
-|  SHTC3  |          0x70          |                   Temperature and humidity                    |
-|  SHT31  |          0x44          |                   Temperature and humidity                    |
-| PMSA003I|          0x12          |     Concentration units by size and particle counts by size   |
-| DFROBOT_LARK |    0x42           | Temperature, barometric pressure, humidity, wind direction, wind speed |
-| MAX30102 |        0x57           | Heart Rate, Oxygen Saturation, and body temperature           |
-| MLX90614 |        0x5A           | Body temperature                                              |
+|    Sensor    | I<sup>2</sup>C Address |                              Data Points                               |
+| :----------: | :--------------------: | :--------------------------------------------------------------------: |
+|    BMP085    |       0x76, 0x77       |                  Temperature and barometric pressure                   |
+|    BMP180    |       0x76, 0x77       |                  Temperature and barometric pressure                   |
+|    BMP280    |       0x76, 0x77       |                  Temperature and barometric pressure                   |
+|    BME280    |       0x76, 0x77       |             Temperature, barometric pressure and humidity              |
+|    BME68x    |       0x76, 0x77       |     Temperature, barometric pressure, humidity and air resistance      |
+|   MCP9808    |          0x18          |                              Temperature                               |
+|    INA260    |    0x40, 0x41, 0x43    |                          Current and Voltage                           |
+|    INA219    |    0x40, 0x41, 0x43    |                          Current and Voltage                           |
+|   INA3221    |          0x42          |                     3-channel Current and Voltage                      |
+|    LPS22     |       0x5D, 0x5C       |                          Barometric pressure                           |
+|    SHTC3     |          0x70          |                        Temperature and humidity                        |
+|    SHT31     |          0x44          |                        Temperature and humidity                        |
+|   PMSA003I   |          0x12          |        Concentration units by size and particle counts by size         |
+| DFROBOT_LARK |          0x42          | Temperature, barometric pressure, humidity, wind direction, wind speed |
+|   MAX30102   |          0x57          |          Heart Rate, Oxygen Saturation, and body temperature           |
+|   MLX90614   |          0x5A          |                            Body temperature                            |
 
 ## Module Config Values
 
@@ -163,10 +167,9 @@ All telemetry module config options are available in the python CLI. Example com
 |      telemetry.air_quality_interval       | `integer` (seconds) | Default `0` is 30 minutes(`1800` seconds). |
 |    telemetry.power_measurement_enabled    |   `true`, `false`   |                  `false`                   |
 |      telemetry.power_update_interval      | `integer` (seconds) | Default `0` is 30 minutes(`1800` seconds). |
-|   telemetry.health_measurement_enabled    |   `true`, `false`   |                `false`                    |
-|   telemetry.health_update_interval           | `integer` (seconds) | Default `0` is 30 minutes(`1800` seconds). |
-|   telemetry.health_screen_enabled         |   `true`, `false`   |                `false`                    |
-
+|   telemetry.health_measurement_enabled    |   `true`, `false`   |                  `false`                   |
+|     telemetry.health_update_interval      | `integer` (seconds) | Default `0` is 30 minutes(`1800` seconds). |
+|      telemetry.health_screen_enabled      |   `true`, `false`   |                  `false`                   |
 
 :::tip
 
