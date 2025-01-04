@@ -25,8 +25,38 @@ Here are two ways to flash the bootloader:
    ```shell
    adafruit-nrfutil --verbose dfu serial --package ./WisCore_RAK4631_Board_Bootloader.zip  -p /dev/ttyACM0 -b 115200 --singlebank --touch 1200
    ```
-   Note: The serial port name (`/dev/ttyACM0`) may differ depending on your operating system. Make sure to identify the correct port name for your setup.
+   Note: The serial port name (`/dev/ttyACM0`) may differ depending on your operating system. Make sure to identify the correct port name for your setup. For instance on Windows this will be `COM#` with `#` being a random number, check your device manager.
 6. Continue with the normal [flashing instructions](/docs/getting-started/flashing-firmware/nrf52/drag-n-drop)
+
+### Extra RUI3 Steps
+If the above steps fail with errors like:
+
+```
+Touched serial port COM11
+Opened serial port COM11
+Starting DFU upgrade of type 2, SoftDevice size: 0, bootloader size: 39000, application size: 0
+Sending DFU start packet
+Timed out waiting for acknowledgement from device.
+
+Failed to upgrade target. Error is: No data received on serial port. Not able to proceed.
+```
+
+You will need to follow the first part of the [Converting RAK4631-R to RAK4631](https://docs.rakwireless.com/product-categories/wisblock/rak4631-r/dfu/#converting-rak4631-r-to-rak4631) instructions.
+
+1. Download the [rak4631_factory_bootloader.zip](https://downloads.rakwireless.com/RUI/RUI3/Bootloader%20Upgrade/rak4631_factory_bootloader.zip) and [nrfutil.ext](https://github.com/NordicSemiconductor/pc-nrfutil/releases/download/v6.1.7/nrfutil.exe) (yes, you will need that specific util to work with the factory installed bootloader).
+2. Connect the RAK4631-R via USB and check if port has been detected via device manager. In this guide it is detected as COM32. The COM port number is not fixed and can be different depending on the PC. If no port is shown in device manager, you can try to double click reset button on the WisBlock Base and check again.
+![device manager](https://images.docs.rakwireless.com/wisblock/rak4631-r/dfu/2_device_manager_port_update.png)
+3. After that, you need to send `AT+BOOT` command to the device via serial. You can follow the guide on using [Tera Term](https://docs.rakwireless.com/product-categories/wisblock/rak4631-r/dfu/#how-to-check-firmware-version-using-tera-term) (or use putty, minicom, etc.) but instead of checking the firmware version, you have to input `AT+BOOT` and hit enter. You will see no reply since the module will restart then will be disconnected momentarily before re-establishing again the connection to Tera Term.
+
+> [!WARNING]
+> You have to disconnect the device connection to Tera Term or close it so that the COM port will be free when you do the firmware update on the next step. Else, you will have error during FW update.
+
+4. Next to initiating Boot mode, you can now execute the firmware conversion. Open the command prompt and change directory to wherever you downloaded the zip & nrfutil.exe
+5. Execute the bootloader conversion using the command `nrfutil.exe dfu serial -pkg rak4631_factory_bootloader.zip -p COM32`. Make sure that you have the right .zip file name and COM port number to avoid errors.
+
+![success_nrfutil](https://images.docs.rakwireless.com/wisblock/rak4631-r/dfu/13_success_nrfutil.png)
+
+If that step finishes successfully you can now run the previous steps for loading the `WisCore_RAK4631_Board_Bootloader.zip`.
 
 ## Debugger
 
