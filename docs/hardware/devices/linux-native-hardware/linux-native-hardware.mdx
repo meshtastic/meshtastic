@@ -6,6 +6,8 @@ sidebar_position: 11
 description: Set up and configure Meshtastic on Linux-native devices using the meshtasticd binary.
 ---
 
+import NativeLibraries from "@site/docs/blocks/_native-libraries.mdx";
+
 This page outlines the setup of Meshtastic on Linux-native devices, utilizing portduino to run the Meshtastic firmware under Linux.
 
 ## Prerequisites and Hardware Compatibility
@@ -38,15 +40,7 @@ Before proceeding with the setup, ensure the device meets the following requirem
 
 ### Installing Meshtasticd
 
-- Necessary system libraries should be installed before building or installing Meshtastic.
-
-```shell
-sudo apt install libgpiod-dev libyaml-cpp-dev libbluetooth-dev
-```
-- And optionally for web server support
-```shell
-sudo apt install openssl libssl-dev libulfius-dev liborcania-dev
-```
+<NativeLibraries />
 
 - The .deb Package is available as [part of the release](https://github.com/meshtastic/firmware/releases/latest), installing the binary, a systemd service, and a config file. It is compiled for Debian Bookworm and incompatible with Bullseye.
 ```shell
