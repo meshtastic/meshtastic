@@ -29,7 +29,9 @@ Sets the region for your node. Default is `unset`. As long as this is not set, t
 
 ### Modem Preset
 
-Default is `unset` which equates to `LONG_FAST`. Presets are pre-defined modem settings (Bandwidth, Spread Factor, and Coding Rate) which influence both message speed and range. The default will provide a strong mixture of speed and range, for most users.
+Default is `unset` which equates to `LONG_FAST`. Presets are pre-defined modem settings (Bandwidth, Spread Factor and Coding Rate) which influence both message speed and range. The default will provide a strong mixture of speed and range, for most users. 
+
+It is important to understand that a device/node will ONLY be able to communicate with a device(s)/node(s) which has/have the same preset (hence the same lora radio parameters like Bandwidth, Spread Factor and Coding Rate) configured. So if you change to a "non-standard" `Modem Preset` i.e. `LONG_MODERATE` your would only "see" and be able to communicate with devices/nodes which are also set to this default meshtastic `Modem Preset`. In conclusion: it be beneficial to keep the `LONG_FAST` (Default), to have a better chance to communicate with other devices/nodes.
 
 The presets are designed to provide further options for optimizing either speed (and reduced network congestion) or range, which can be useful for two real world scenarios:
 
