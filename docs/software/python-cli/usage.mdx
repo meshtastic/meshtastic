@@ -12,9 +12,50 @@ This section covers using the "meshtastic" command line executable, which displa
 The `meshtastic` command is not run within python but is a script run from your operating system shell prompt. When you type "meshtastic" and the prompt is unable to find the command in Windows, check that the python "scripts" directory [is in your path](https://datatofish.com/add-python-to-windows-path).
 :::
 
+## Viewing the build-in meshtastic help
+
+By using the below command you get further help directly in the terminal/on the command line.
+
+```shell
+meshtastic --help
+```
+```shell title="A snippet of what you would see in the Resulting Output"
+# A snippet of what you would see in the Resulting Output:
+
+usage: meshtastic [-h | --version | --support] [--port [PORT] | --host [HOST] | --ble [BLE]] [--ble-scan] [--dest !xxxxxxxx] [--ch-index INDEX]
+                  [--configure CONFIGURE] [--export-config] [--get FIELD] [--set FIELD VALUE] [--begin-edit] [--commit-edit] [--get-canned-message]
+                  [--set-canned-message SET_CANNED_MESSAGE] [--get-ringtone] [--set-ringtone RINGTONE] [--ch-vlongslow] [--ch-longslow] [--ch-longfast]
+                  [--ch-medslow] [--ch-medfast] [--ch-shortslow] [--ch-shortfast] [--set-owner SET_OWNER] [--set-owner-short SET_OWNER_SHORT] [--set-ham SET_HAM]
+                  [--seturl SETURL] [--setalt SETALT] [--setlat SETLAT] [--setlon SETLON] [--remove-position] [--pos-fields [POS_FIELDS ...]] [--ch-add CH_ADD]
+                  [--ch-del] [--ch-set FIELD VALUE] [--channel-fetch-attempts ATTEMPTS] [--qr] [--qr-all] [--ch-enable] [--ch-disable] [--info] [--nodes]
+                  [--sendtext TEXT] [--traceroute !xxxxxxxx] [--request-telemetry [TYPE]] [--request-position] [--reply] [--reboot | --reboot-ota | --enter-dfu |
+                  --shutdown | --device-metadata | --factory-reset | --factory-reset-device | --remove-node !xxxxxxxx | --set-favorite-node !xxxxxxxx |
+                  --remove-favorite-node !xxxxxxxx | --set-ignored-node !xxxxxxxx | --remove-ignored-node !xxxxxxxx | --reset-nodedb | --set-time [TIMESTAMP]]
+                  [--seriallog [LOG_DESTINATION]] [--ack] [--timeout SECONDS] [--no-nodes] [--debug] [--test] [--wait-to-disconnect [SECONDS]] [--noproto] [--listen]
+                  [--no-time] [--power-riden POWER_RIDEN | --power-ppk2-meter | --power-ppk2-supply | --power-sim] [--power-voltage POWER_VOLTAGE] [--power-stress]
+                  [--power-wait] [--slog [SLOG]] [--gpio-wrb GPIO_WRB GPIO_WRB] [--gpio-rd GPIO_RD] [--gpio-watch GPIO_WATCH]
+
+Help:
+  -h, --help            show this help message and exit
+  --version             show program's version number and exit
+  --support             Show support info (useful when troubleshooting an issue)
+
+Connection:
+  Optional arguments that specify how to connect to a Meshtastic device.
+
+  --port, --serial, -s [PORT]
+                        The port of the device to connect to using serial, e.g. /dev/ttyUSB0. (defaults to trying to detect a port)
+  --host, --tcp, -t [HOST]
+                        Connect to a device using TCP, optionally passing hostname or IP address to use. (defaults to 'localhost')
+  --ble, -b [BLE]       Connect to a BLE device, optionally specifying a device name (defaults to 'any')
+  --ble-scan            Scan for Meshtastic BLE devices that may be available to connect to
+...
+```
+
 ## Viewing Serial Output
 
-The `--noproto` command in the Meshtastic Python CLI is used to disable the API and function merely as a "dumb serial terminal." This mode of operation allows both the API and device functionalities to remain accessible for regular use, while simultaneously providing a window into the raw serial output. This feature can be particularly useful for debugging, development, or understanding the low-level communication between devices. Depends on a physically cabled serial connection. It will connect but not display information over a network (--host) or Bluetooth (--ble) connection.
+The `--noproto` command in the Meshtastic Python CLI is used to disable the API and function merely as a "dumb serial terminal." This mode of operation allows both the API and device functionalities to remain accessible for regular use, while simultaneously providing a window into the raw serial output. 
+This feature can be particularly useful for debugging, development, or understanding the low-level communication between devices. Depends on a physically cabled serial connection. It will connect but not display information over a network (--host) or Bluetooth (--ble) connection.
 
 ```shellsession title="Example Usage"
 user@host % meshtastic --noproto
@@ -29,19 +70,141 @@ INFO  | 18:38:04 711 [DeviceTelemetryModule] Sending packet to phone
 INFO  | 18:38:04 711 Telling client we have new packets 28
 ```
 
+It is worth noting that as long as the `meshtastic --noproto` is running in a terminal, you you might not be able to successfully "get" or "set" any device parameters as described in the following chapters.
+
 ## Getting a list of User Preferences
 
-You can get a list of user preferences by running '--get' with an invalid attribute such as 'all'.
+You can get a list of user preferences by running `--get` with an invalid (not known to meshtastic) attribute such as `all`.
 
 ```shell
 meshtastic --get all
 ```
 
-## Changing settings
+```shell title="A snippet of what you would see in the Resulting Output"
+# A snippet of what you would see in the Resulting Output:
+...
 
-You can also use this tool to set any of the device parameters which are stored in persistent storage. For instance, here's how to set the device
+power:
+    power.adc_multiplier_override
+    power.device_battery_ina_address
+    power.is_power_saving
+    power.ls_secs
+    power.min_wake_secs
+    power.on_battery_shutdown_after_secs
+    power.powermon_enables
+    power.sds_secs
+    power.wait_bluetooth_secs
+network:
+    network.address_mode
+    network.eth_enabled
+    network.ipv4_config
+    network.ntp_server
+    network.rsyslog_server
+    network.wifi_enabled
+    network.wifi_psk
+    network.wifi_ssid
+display:
+    display.auto_screen_carousel_secs
+    display.compass_north_top
+    display.compass_orientation
+    display.displaymode
+    display.flip_screen
+    display.gps_format
+    display.heading_bold
+    display.oled
+    display.screen_on_secs
+    display.units
+    display.wake_on_tap_or_motion
+
+...
+```
+
+## Getting a list of User Preferences including the Values they are currently set to
+
+You can get this by running `--info` which reads and displays the radio config information. Which will also include a list of all "Nodes in mesh" known to the device. 
+
+```shell
+meshtastic --info
+```
+
+```shell title="A snippet of what you would see in the Resulting Output"
+# A snippet of what you would see in the Resulting Output:
+...
+
+ "power": {
+    "waitBluetoothSecs": 60,
+    "sdsSecs": 4294967295,
+    "lsSecs": 300,
+    "minWakeSecs": 10,
+    "isPowerSaving": false,
+    "onBatteryShutdownAfterSecs": 0,
+    "adcMultiplierOverride": 0.0,
+    "deviceBatteryInaAddress": 0,
+    "powermonEnables": "0"
+  },
+  "network": {
+    "ntpServer": "0.pool.ntp.org",
+    "wifiEnabled": false,
+    "wifiSsid": "",
+    "wifiPsk": "",
+    "ethEnabled": false,
+    "addressMode": "DHCP",
+    "rsyslogServer": ""
+  },
+  "display": {
+    "screenOnSecs": 1,
+    "compassNorthTop": true,
+    "headingBold": true,
+    "gpsFormat": "DEC",
+    "autoScreenCarouselSecs": 0,
+    "flipScreen": false,
+    "units": "METRIC",
+    "oled": "OLED_AUTO",
+    "displaymode": "DEFAULT",
+    "wakeOnTapOrMotion": false,
+    "compassOrientation": "DEGREES_0"
+  },
+
+...
+```
+
+## Changing Device Settings
+
+You can also use this tool to set any of the device parameters which are stored in persistent storage. 
+
+### How to set a specific preference
+
+Lets assume your device/node has a display and you want it to automatically cycle through the different screens.
+As we can see in the above "Resulting Output" snippet the `autoScreenCarouselSecs` (which is under `"display":`) is currently set to `0`. (Which means, "cycling" is currently disabled.)
+
+How to change that to, let´s say 20 seconds?
+We will use the `--set` attribute to change `autoScreenCarouselSecs`. But simply trying to use:
+
+```shell
+meshtastic --set autoScreenCarouselSecs 20
+```
+will result in the message:
+
+```shell title="Error Message"
+...
+LocalConfig and LocalModuleConfig do not have attribute autoScreenCarouselSecs.
+...
+```
+We will need to add the `display` part to our command by adding it before the `autoScreenCarouselSecs`. And we will use a `.` as seperator between them.
+So the command would be: 
+```shell
+meshtastic --set display.autoScreenCarouselSecs 20
+```
+```shell title="Expected Result"
+Connected to radio
+Set display.auto_screen_carousel_secs to 20
+Writing modified preferences to device
+```
+
+### More Examples
+
+For instance, here's how to set the device
 to keep the Bluetooth link alive for eight hours (any usage of the Bluetooth protocol from your phone will reset this timer)
-
 ```shell title="Expected Output"
 # You should see a result similar to this:
 mydir$ meshtastic --set power.wait_bluetooth_secs 28800
