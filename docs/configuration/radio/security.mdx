@@ -34,7 +34,7 @@ The public key(s) authorized to send administrative messages to this node. Only 
 
 Acceptable values: `true` or `false`
 
-Enabling Managed Mode blocks client applications from accessing all radio configurations. Once enabled, radio configurations can only be accessed through PKC Remote Admin messages with firmware version 2.5+ or the legacy Admin channel with firmware prior to version 2.5. However, this setting is not required for remote node administration.
+Enabling Managed Mode blocks client applications from writing configurations to a radio(they may be read). Once enabled, radio configurations can only be changed through PKC Remote Admin messages with firmware version 2.5+ or the legacy Admin channel with firmware prior to version 2.5. This setting is **not** required for remote node administration.
 
 Before enabling Managed Mode, verify that the node can be controlled via Remote Admin or legacy Admin channel, and that all functions are working properly to prevent being locked out.
 
