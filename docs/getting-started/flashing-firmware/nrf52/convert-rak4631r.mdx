@@ -28,6 +28,21 @@ Here are two ways to flash the bootloader:
    Note: The serial port name (`/dev/ttyACM0`) may differ depending on your operating system. Make sure to identify the correct port name for your setup.
 6. Continue with the normal [flashing instructions](/docs/getting-started/flashing-firmware/nrf52/drag-n-drop)
 
+### Extra RUI3 Steps
+
+If the above steps fail with errors like:
+
+```bash
+Touched serial port COM11
+Opened serial port COM11
+Starting DFU upgrade of type 2, SoftDevice size: 0, bootloader size: 39000, application size: 0
+Sending DFU start packet
+Timed out waiting for acknowledgement from device.
+Failed to upgrade target. Error is: No data received on serial port. Not able to proceed.
+```
+
+You will need to follow the first part (through the `AT+BOOT` command) of the [Converting RAK4631-R to RAK4631](https://docs.rakwireless.com/product-categories/wisblock/rak4631-r/dfu/#converting-rak4631-r-to-rak4631) instructions.
+
 ## Debugger
 
 This conversion requires the use of either a [DAPLink](https://daplink.io/) or [J-Link](https://www.segger.com/products/debug-probes/j-link/). The most reasonably priced and available is the [RAKDAP1](https://store.rakwireless.com/products/daplink-tool).
