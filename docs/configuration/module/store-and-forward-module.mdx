@@ -7,18 +7,19 @@ description: This module allows you to resend text messages after a device has b
 
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
+import { Icon } from "@iconify/react";
 
 ## Overview
 
-Using this module, a client device can ask a special Store & Forward Server to resend text messages after the client has been temporarily not in LoRa range of the mesh. 
+Using this module, a client device can ask a special Store & Forward Server to resend text messages after the client has been temporarily not in LoRa range of the mesh.
 Since firmware version 2.4, when you connect to the Store & Forward Server with a client app, you get the history automatically, which will be much larger than the default cache of around 30 packets on a device.
 
 :::info
 Only ESP32 based devices with onboard PSRAM like the T-Beam and T3S3 can be a Store & Forward Server.
 :::
 
-When a client device requests the history from the Store & Forward Server, it will resend the text messages over LoRa that it has received. The server will only return messages that are within the time window the client has requested up to the maximum number of messages configured for the server. 
-The server does not know which messages the client device actually missed, so it is possible that you receive duplicates. 
+When a client device requests the history from the Store & Forward Server, it will resend the text messages over LoRa that it has received. The server will only return messages that are within the time window the client has requested up to the maximum number of messages configured for the server.
+The server does not know which messages the client device actually missed, so it is possible that you receive duplicates.
 
 :::important
 Be mindful when requesting the history, as the server might send a lot of messages which will burden your mesh for a short period of time.
@@ -41,6 +42,7 @@ Initial requirements for the Store and Forward Server:
 ### Usage Overview
 
 - To use / test this over LoRa you will want at least 3 devices:
+
   - One ESP32 device with PSRAM configured as `ROUTER` or `store_forward.is_server` set.
   - Two others will be regular clients. If one client sends a text message when the other is not in range, the other can request the history from the server to receive the missed message when it is back in range.
 
@@ -102,14 +104,42 @@ Set to true to configure your node with PSRAM as a Store & Forward Server for st
 ## Store & Forward Module Config Client Availability
 
 <Tabs
-groupId="settings"
-defaultValue="cli"
-values={[
-{label: 'Android', value: 'android'},
-{label: 'Apple', value: 'apple'},
-{label: 'CLI', value: 'cli'},
-{label: 'Web', value: 'web'},
-]}>
+  groupId="settings"
+  defaultValue="apple"
+  values={[
+    {
+      label: (
+        <>
+          <Icon icon="mdi:android" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Android
+        </>
+      ),
+      value: "android",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:apple" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Apple
+        </>
+      ),
+      value: "apple",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:terminal" height="1.5rem" style={{ marginRight: "0.25rem" }} /> CLI
+        </>
+      ),
+      value: "cli",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:internet" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Web
+        </>
+      ),
+      value: "web",
+    },
+  ]}>
 
 <TabItem value="android">
 
@@ -120,7 +150,7 @@ Store and Forward Config options are available for Android.
 
 1. Open the Meshtastic App
 2. Navigate to: **Vertical Ellipsis (3 dots top right) > Radio Configuration > Store & Forward**
-:::
+   :::
 
 </TabItem>
 
@@ -138,14 +168,14 @@ All Store & Forward module config options are available on iOS, iPadOS and macOS
 
 #### CLI
 
-|               Setting               | Acceptable Values | Default |
-| :---------------------------------: | :---------------: | :-----: |
-|        store_forward.enabled        |  `true`, `false`  | `false` |
-|       store_forward.heartbeat       |  `true`, `false`  | `false` |
-|  store_forward.history_return_max   |     `integer`     |   `0` (25 messages)  |
-| store_forward.history_return_window |     `integer`     |   `0` (240 minutes)  |
-|        store_forward.records        |     `integer`     |   `0` (≈11,000 records) |
-|        store_forward.is_server      |  `true`, `false`  | `false` |
+|               Setting               | Acceptable Values |        Default        |
+| :---------------------------------: | :---------------: | :-------------------: |
+|        store_forward.enabled        |  `true`, `false`  |        `false`        |
+|       store_forward.heartbeat       |  `true`, `false`  |        `false`        |
+|  store_forward.history_return_max   |     `integer`     |   `0` (25 messages)   |
+| store_forward.history_return_window |     `integer`     |   `0` (240 minutes)   |
+|        store_forward.records        |     `integer`     | `0` (≈11,000 records) |
+|       store_forward.is_server       |  `true`, `false`  |        `false`        |
 
 :::tip
 
@@ -175,10 +205,10 @@ meshtastic --set store_forward.is_server true
 meshtastic --set store_forward.heartbeat 0
 ```
 
-
 ```shell title="Set store_forward.history_return_max to default (25 messages)"
 meshtastic --set store_forward.history_return_max 0
 ```
+
 ```shell title="Set store_forward.history_return_max to 100 messages"
 meshtastic --set store_forward.history_return_max 100
 ```
@@ -186,6 +216,7 @@ meshtastic --set store_forward.history_return_max 100
 ```shell title="Set store_forward.history_return_window to default (240 minutes)"
 meshtastic --set store_forward.history_return_window 0
 ```
+
 ```shell title="Set store_forward.history_return_window to 1 day (1440 minutes)"
 meshtastic --set store_forward.history_return_window 1440
 ```
@@ -193,11 +224,12 @@ meshtastic --set store_forward.history_return_window 1440
 ```shell title="Set store_forward.records to default (≈11,000 records)"
 meshtastic --set store_forward.records 0
 ```
+
 ```shell title="Set store_forward.records to 100 records"
 meshtastic --set store_forward.records 100
 ```
-</TabItem>
 
+</TabItem>
 
 <TabItem value="web">
 

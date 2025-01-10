@@ -8,24 +8,46 @@ description: Instructions for installing nRF52 and RP2040 USB serial drivers to 
 
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
+import { Icon } from "@iconify/react";
 import Link from "@docusaurus/Link";
 
 ## Install nRF52/RP2040 USB to Serial Drivers
 
 :::caution
 
-nRF52/RP2040 devices typically do not require serial drivers. They use the UF2 bootloader which makes the devices appear as flash drives.  Do _NOT_ download the USB device drivers unless required to install UF2 support.
+nRF52/RP2040 devices typically do not require serial drivers. They use the UF2 bootloader which makes the devices appear as flash drives. Do _NOT_ download the USB device drivers unless required to install UF2 support.
 
 :::
 
 <Tabs
-groupId="operating-system"
-defaultValue="windows"
-values={[
-{label: 'Linux', value: 'linux'},
-{label: 'macOS', value: 'macos'},
-{label: 'Windows', value: 'windows'},
-]}>
+  groupId="operating-system"
+  defaultValue="windows"
+  values={[
+    {
+      label: (
+        <>
+          <Icon icon="mdi:tux" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Linux
+        </>
+      ),
+      value: "linux",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:apple" height="1.5rem" style={{ marginRight: "0.25rem" }} /> macOS
+        </>
+      ),
+      value: "macos",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:microsoft" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Windows
+        </>
+      ),
+      value: "windows",
+    },
+  ]}>
 
 <TabItem value="linux">
 
@@ -56,12 +78,9 @@ Uninstall the kernel extension:
 3. `sudo rm -rf /Library/Extensions/usbserial.kext`
 4. Reboot
 
-
 ##### Install the CH34x Driver
 
 - [CH34x Driver- macOS Download](https://github.com/WCHSoftGroup/ch34xser_macos)
-
-
 
 </TabItem>
 
