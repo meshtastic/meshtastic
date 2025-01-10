@@ -5,11 +5,12 @@ sidebar_label: Linux Native Devices
 sidebar_position: 11
 description: Set up and configure Meshtastic on Linux-native devices using the meshtasticd binary.
 ---
+
 <!-- markdownlint-disable code-block-style -->
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
-import { Icon } from '@iconify/react';
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+import { Icon } from "@iconify/react";
 
 This page outlines the setup of Meshtastic on Linux-native devices, utilizing portduino to run the Meshtastic firmware under Linux.
 
@@ -18,11 +19,14 @@ This page outlines the setup of Meshtastic on Linux-native devices, utilizing po
 Before proceeding with the setup, ensure the device meets the following requirements:
 
 ### Tested Devices
+
 #### SPI
+
 - Raspberry Pi: Zero, Zero 2, 3, 4, Pi 400, and Pi 5 on Raspbian `bookworm`.
 - Luckfox Pico: [femtofox](https://github.com/noon92/femtofox/tree/main) on Ubuntu 22.04 `jammy`.
 
 #### USB (CH341)
+
 - Debian 12 (`bookworm`) with MeshStick.
 - Ubuntu LTS (`24.04`, `22.04`) with MeshStick.
 - Fedora `41` with MeshStick.
@@ -39,13 +43,16 @@ Before proceeding with the setup, ensure the device meets the following requirem
 - Support for I2C displays, SPI displays, and keyboard input has been confirmed. It is necessary to be aware of potential pin conflicts when stacking hats.
 
 ### System Requirements
+
 - The Meshtastic binary, `meshtasticd`, necessitates root access or a user with permissions to access GPIO, SPI, and other interfaces.
 - A Linux distribution compatible with the Meshtastic installation packages.
 
 ## Installation
 
 ### Installing Meshtasticd
+
 <!-- markdownlint-disable no-inline-html -->
+
 <Tabs groupId="operating-systems" queryString="os">
   <TabItem value="debian" label={<><Icon icon="mdi:debian" height="1.5rem" /> Debian</>} default>
     Debian packages are provided via [OpenSUSE Build Service](https://build.opensuse.org/project/show/network:meshtastic).
@@ -71,6 +78,7 @@ Before proceeding with the setup, ensure the device meets the following requirem
       ```shell
       ```
     </details>
+
   </TabItem>
   <TabItem value="raspbian" label={<><Icon icon="cib:raspberry-pi" height="1.5rem" /> Raspbian</>}>
     Raspbian (Raspberry Pi OS) packages are provided via [OpenSUSE Build Service](https://build.opensuse.org/project/show/network:meshtastic).
@@ -107,6 +115,7 @@ Before proceeding with the setup, ensure the device meets the following requirem
       **Install:**
       > Install via the instructions above.
     </details>
+
   </TabItem>
   <TabItem value="fedora" label={<><Icon icon="mdi:fedora" height="1.5rem" /> Fedora</>}>
     Fedora packages are provided via Fedora COPR.
@@ -131,6 +140,7 @@ Before proceeding with the setup, ensure the device meets the following requirem
       **Install - `rawhide`:**
       > Install via the instructions above.
     </details>
+
   </TabItem>
 
   <TabItem value="docker" label={<><Icon icon="mdi:docker" height="1.5rem" /> Docker</>}>
@@ -140,6 +150,7 @@ Before proceeding with the setup, ensure the device meets the following requirem
     ```shell
     docker pull meshtastic/meshtasticd
     ```
+
   </TabItem>
 </Tabs>
 <!-- markdownlint-enable no-inline-html -->
@@ -200,6 +211,7 @@ dtoverlay=uart0
 - The correct port for UART GPS on the Pi 5 after a reboot is `/dev/ttyAMA0`.
 - The correct port for UART GPS on earlier Pi versions after a reboot is `/dev/ttyS0`.
 - You may need to disable the serial console on a Pi and then reboot
+
 ```shell
 sudo raspi-config nonint do_serial_cons 1 # Disable Serial Console
 ```
@@ -219,6 +231,7 @@ Lora:
   Busy: 20
   Reset: 18
 ```
+
 :::info
 The config.yaml file is sensitive to spacing, so ensure that the indentation and spacing are correct.
 :::
@@ -230,12 +243,15 @@ The config.yaml file is sensitive to spacing, so ensure that the indentation and
 [^1]: Fedora packages do not currently include **web server** support.
 
 To enable this:
+
 ```yaml
 Webserver:
   Port: 443 # Port for Webserver & Webservices
   RootPath: /usr/share/meshtasticd/web # Root Dir of WebServer
 ```
+
 ### Bluetooth Support
+
 Bluetooth is currently unsupported and not functional on Linux Native devices. This may change in the future.
 
 ### Persistence
@@ -245,47 +261,54 @@ Bluetooth is currently unsupported and not functional on Linux Native devices. T
 ### Advanced Setup and Troubleshooting
 
 #### Enabling the systemd service
+
 To configure the device to start and stop meshtasticd as as service using systemctl you can setup the service unit using the instructions below.
 
 <!-- markdownlint-disable no-inline-html -->
+
 <details>
   <summary>Create the systemd service (only for manual installs)</summary>
 
-  The `meshtasticd` systemd service is automatically installed when using the official Meshtastic packages.
-  These instructions are only needed when installing manually.
+The `meshtasticd` systemd service is automatically installed when using the official Meshtastic packages.
+These instructions are only needed when installing manually.
 
-  Create the service unit file:
+Create the service unit file:
 
-  Create a new file in the /etc/systemd/system/ directory with a name like meshtasticd.service.
-  ```shell
-  sudo nano /etc/systemd/system/meshtasticd.service
-  ```
-  Add the following content to the file:
+Create a new file in the /etc/systemd/system/ directory with a name like meshtasticd.service.
 
-  ```plaintext
-  [Unit]
-  Description=Meshtastic Daemon
-  After=network.target
+```shell
+sudo nano /etc/systemd/system/meshtasticd.service
+```
 
-  [Service]
-  ExecStart=/usr/sbin/meshtasticd
-  Restart=always
-  User=root
-  Group=root
-  Type=simple
+Add the following content to the file:
 
-  [Install]
-  WantedBy=multi-user.target
-  ```
+```plaintext
+[Unit]
+Description=Meshtastic Daemon
+After=network.target
 
-  Reload systemd to recognize the new service:
-  ```shell
-  sudo systemctl daemon-reload
-  ```
+[Service]
+ExecStart=/usr/sbin/meshtasticd
+Restart=always
+User=root
+Group=root
+Type=simple
+
+[Install]
+WantedBy=multi-user.target
+```
+
+Reload systemd to recognize the new service:
+
+```shell
+sudo systemctl daemon-reload
+```
+
 </details>
 <!-- markdownlint-enable no-inline-html -->
 
 Enable the service to start on boot:
+
 ```shell
 sudo systemctl enable meshtasticd
 ```
@@ -293,17 +316,21 @@ sudo systemctl enable meshtasticd
 ##### Starting and Stopping the Service
 
 Start the service:
+
 ```shell
 sudo systemctl start meshtasticd
 ```
 
 Check the status of the service:
+
 ```shell
 sudo systemctl status meshtasticd
 ```
+
 This will give you a detailed view of the service status and any potential errors.
 
 Stop the service:
+
 ```shell
 sudo systemctl stop meshtasticd
 ```
@@ -311,6 +338,7 @@ sudo systemctl stop meshtasticd
 By following these steps, you set up a systemd service for meshtasticd that will start automatically at boot and restart if it crashes. You can manage it using the standard systemctl commands (start, stop, restart, status, etc.).
 
 #### View Logs of Meshtastic
+
 To view the log output of the meshtasticd service, use the below command to read them out of the system journal.
 
 ```shell
@@ -318,6 +346,7 @@ journalctl -u meshtasticd -b
 ```
 
 #### Avahi setup
+
 This will allow the Android client to auto-discover your Linux Native device.
 
 - Install avahi-daemon (debian/ubuntu)
@@ -329,11 +358,13 @@ sudo apt install avahi-daemon
 - Configure Avahi to advertise the node
 
 Create the service file:
+
 ```shell
 sudo nano /etc/avahi/services/meshtastic.service
 ```
 
 And paste the following:
+
 ```xml
 <?xml version="1.0" standalone="no"?><!--*-nxml-*-->
 <!DOCTYPE service-group SYSTEM "avahi-service.dtd">
@@ -345,6 +376,7 @@ And paste the following:
     </service>
 </service-group>
 ```
+
 Then save and exit.
 
 ## CLI Configuration
@@ -354,6 +386,8 @@ Interaction with Meshtastic can be conducted via the command line:
 ```plaintext
 meshtastic --host localhost ...
 ```
+
 See:
+
 - [CLI Installation](/docs/software/python/cli/installation/)
 - [CLI Usage](/docs/software/python/cli/usage/)
