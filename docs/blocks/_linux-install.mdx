@@ -1,0 +1,130 @@
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+import { Icon } from "@iconify/react";
+
+<Tabs groupId="operating-systems" queryString="os">
+  <TabItem value="debian" label={<><Icon icon="mdi:debian" style={{ marginRight: "0.25rem" }} height="1.5rem" /> Debian</>} default>
+    Debian packages are provided via [OpenSUSE Build Service](https://build.opensuse.org/project/show/network:Meshtastic:beta).
+     [![Debian build status](https://build.opensuse.org/projects/network:Meshtastic:beta/packages/meshtasticd/badge.svg?type=percent)](https://build.opensuse.org/package/show/network:Meshtastic:beta/meshtasticd)
+
+    Supported: `bookworm` (12)
+
+    **Install - Debian 12 (`bookworm`):**
+
+    ```shell
+    echo 'deb http://download.opensuse.org/repositories/network:/Meshtastic:/beta/Debian_12/ /' | sudo tee /etc/apt/sources.list.d/network:Meshtastic:beta.list
+    curl -fsSL https://download.opensuse.org/repositories/network:Meshtastic:beta/Debian_12/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/network_Meshtastic_beta.gpg > /dev/null
+    sudo apt update
+    sudo apt install meshtasticd
+    ```
+
+    <details>
+      <summary>Experimental builds</summary>
+
+      These builds are provided without support, please **do not file issues** relating to Experimental builds.
+
+      Experimental Support: `trixie` (testing), `sid` (unstable)
+
+      **Install - Debian 13 (`trixie`):**
+
+      ```shell
+      echo 'deb http://download.opensuse.org/repositories/network:/Meshtastic:/beta/Debian_Testing/ /' | sudo tee /etc/apt/sources.list.d/network:Meshtastic:beta.list
+      curl -fsSL https://download.opensuse.org/repositories/network:Meshtastic:beta/Debian_Testing/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/network_Meshtastic_beta.gpg > /dev/null
+      sudo apt update
+      sudo apt install meshtasticd
+      ```
+
+      **Install - Debian unstable (`sid`):**
+
+      ```shell
+      echo 'deb http://download.opensuse.org/repositories/network:/Meshtastic:/beta/Debian_Unstable/ /' | sudo tee /etc/apt/sources.list.d/network:Meshtastic:beta.list
+      curl -fsSL https://download.opensuse.org/repositories/network:Meshtastic:beta/Debian_Unstable/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/network_Meshtastic_beta.gpg > /dev/null
+      sudo apt update
+      sudo apt install meshtasticd
+      ```
+    </details>
+
+  </TabItem>
+  <TabItem value="raspbian" label={<><Icon icon="cib:raspberry-pi" style={{ marginRight: "0.25rem" }} height="1.5rem" /> Raspbian</>}>
+    Raspbian (Raspberry Pi OS) packages are provided via [OpenSUSE Build Service](https://build.opensuse.org/project/show/network:Meshtastic:beta).
+     [![Raspbian build status](https://build.opensuse.org/projects/network:Meshtastic:beta/packages/meshtasticd/badge.svg?type=percent)](https://build.opensuse.org/package/show/network:Meshtastic:beta/meshtasticd)
+
+    Supported: `bookworm` (12)
+
+    **Install - Raspbian 12 (`bookworm`):**
+
+    ```shell
+    echo 'deb http://download.opensuse.org/repositories/network:/Meshtastic:/beta/Raspbian_12/ /' | sudo tee /etc/apt/sources.list.d/network:Meshtastic:beta.list
+    curl -fsSL https://download.opensuse.org/repositories/network:Meshtastic:beta/Raspbian_12/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/network_Meshtastic_beta.gpg > /dev/null
+    sudo apt update
+    sudo apt install meshtasticd
+    ```
+
+  </TabItem>
+  <TabItem value="ubuntu" label={<><Icon icon="mdi:ubuntu" style={{ marginRight: "0.25rem" }} height="1.5rem" /> Ubuntu</>}>
+    Ubuntu packages are provided via [Canonical Launchpad](https://launchpad.net/~meshtastic/+archive/ubuntu/beta).
+
+    Supported: `oracular` (24.10), `noble` (24.04 LTS), `jammy` (22.04 LTS)
+
+    **Install:**
+
+    ```shell
+    # Install requirements for add-apt-repository
+    sudo apt install software-properties-common
+    # Add Meshtastic repo
+    sudo add-apt-repository ppa:meshtastic/beta
+    # Install meshtasticd
+    sudo apt install meshtasticd
+    ```
+
+    <details>
+      <summary>Experimental builds</summary>
+
+      These builds are provided without support, please **do not file issues** relating to Experimental builds.
+
+      Experimental Support: `plucky` (25.04)
+
+      **Install:**
+
+      > Install via the instructions above.
+    </details>
+
+  </TabItem>
+  <TabItem value="fedora" label={<><Icon icon="mdi:fedora" style={{ marginRight: "0.25rem" }} height="1.5rem" /> Fedora</>}>
+    Fedora packages are provided via [Fedora COPR](https://copr.fedorainfracloud.org/coprs/g/meshtastic/beta/).
+     [![Copr build status](https://copr.fedorainfracloud.org/coprs/g/meshtastic/beta/package/meshtasticd/status_image/last_build.png)](https://copr.fedorainfracloud.org/coprs/g/meshtastic/beta/package/meshtasticd/)
+
+    Supported: Fedora `41`, Fedora `40`
+
+    **Install:**
+
+    ```shell
+    # Add Meshtastic COPR repo
+    sudo dnf copr enable @meshtastic/beta
+    # Install meshtasticd
+    sudo dnf install meshtasticd
+    ```
+
+  </TabItem>
+
+  <TabItem value="docker" label={<><Icon icon="mdi:docker" style={{ marginRight: "0.25rem" }} height="1.5rem" /> Docker</>}>
+    Docker containers are provided via [DockerHub](https://hub.docker.com/r/meshtastic/meshtasticd).
+
+    Supported platforms: `linux/amd64`, `linux/arm64`, `linux/arm/v7`
+
+    **Pull Debian:**
+
+    ```shell
+    docker pull meshtastic/meshtasticd:beta-debian
+    ```
+
+    **Pull Alpine:**
+
+    ```shell
+    docker pull meshtastic/meshtasticd:beta-alpine
+    ```
+
+    See: [Docker Usage](/docs/software/linux/usage/#usage-with-docker)
+
+  </TabItem>
+</Tabs>
