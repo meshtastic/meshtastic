@@ -89,6 +89,10 @@ The `tzdef` setting allows the local offset to be defined for the device. It use
 
 To set the timezone, use the POSIX TZ Database string for the relevant region. Here is a list of [supported timezones](https://github.com/nayarsystems/posix_tz_db/blob/master/zones.csv). For example, if your region is `America/Los_Angeles`, you would input `PST8PDT,M3.2.0,M11.1.0` as the timezone.
 
+## Disable LED heartbeat
+
+Controls the blinking LED on the device. For most devices this will control one of up to 4 LEDs, the charger and GPS LEDs are not controllable.
+
 ## GPIO for user button
 
 This is the GPIO pin number that will be used for the user button, if your device does not come with a predefined user button.
@@ -104,6 +108,10 @@ This is the number of seconds between NodeInfo message (containing i.a. long and
 ## Double Tap as Button Press
 
 This option will enable a double tap, when a supported accelerometer is attached to the device, to be treated as a button press.
+
+## Disable triple-click
+
+This option will disable the triple press of the user button to enable or disable GPS.
 
 ## Device Config Client Availability
 
@@ -153,10 +161,13 @@ All device config options are available in the python CLI. Example commands are 
 | --------------------------------- | ------------------------------------------------------------------ | ----------------- |
 | device.role                       | `CLIENT`, `CLIENT_MUTE`, `ROUTER`, `REPEATER`, `TRACKER`, `SENSOR` | `CLIENT`          |
 | device.rebroadcast_mode           | `ALL`, `ALL_SKIP_DECODING`, `LOCAL_ONLY`                           | `ALL`             |
+| device.led_heartbeat_disabled     | `false`, `true`                                                    | `false`           |
 | device.button_gpio                | `0` - `34`                                                         | `0`               |
 | device.buzzer_gpio                | `0` - `34`                                                         | `0`               |
 | device.node_info_broadcast_secs   | `3600` - `UINT MAX`                                                | `10800` (3 hours) |
 | device.double_tap_as_button_press | `false`, `true`                                                    | `false`           |
+| device.disable_triple_click       | `false`, `true`                                                    | `false`           |
+| device.tzdef                      | `[POSIX Timezone definition string from URL above.]`               | `GMT0`            |
 
 :::tip
 
@@ -174,6 +185,7 @@ meshtastic --set device.role CLIENT
 
 ```shell title="Set tzdef"
 meshtastic --set device.tzdef UTC0
+meshtastic --set device.tzdef 'CST6CDT,M3.2.0,M11.1.0'
 ```
 
 </TabItem>
@@ -182,7 +194,7 @@ meshtastic --set device.tzdef UTC0
 #### Web
 
 :::info
-All device config options are available in the Web UI.
+All device config options are available in the Web UI except for TZDEF.
 :::
 
 </TabItem>
