@@ -8,7 +8,7 @@ description: Learn about and compare device roles such as Client, Repeater, and 
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 
-The device config options are: Role, Serial Output, and Debug Log. Device config uses an admin message sending a `Config.Device` protobuf.
+The device config options are: Role, Rebroadcast Mode, Timezone, GPIOs, Buttons, and LEDs. Device config uses an admin message sending a `Config.Device` protobuf.
 
 ## Device Config Values
 
@@ -56,9 +56,9 @@ This table shows the **default** values after selecting a preset. As always, ind
 
 [^2]: The `ROUTER` role enables [Power Saving](/docs/configuration/radio/power/#power-saving) by default (ESP32 only). When needing to update a `ROUTER` via BLE, it's recommended you utilize an admin channel to temporarily change the role in order to update and then revert when done.
 
-## Notes about Power Saving + Role behavior
+### Notes about Power Saving + Role behavior
 
-### ESP32 Platform Only
+#### ESP32 Platform Only
 
 Every role except for the `TRACKER` and `SENSOR` roles are capable of traditional _sleep_ behavior using the `power.is_power_saving` setting. When a node goes to sleep, in general, the serial console, peripherals, GPS, and WiFi/Bluetooth radio are all shut down to conserve power. The CPU will enter a low power state (light sleep or deep sleep on the ESP32). The LoRA radio will be left on stand-by for receiving any packets which will _wake up_ the device to resume services and respond.
 
@@ -66,7 +66,7 @@ Timeout configurations of `display.screen_on_secs` (Screen timeout), `power.min_
 
 For the `ROUTER` role, the `power.is_power_saving` behavior of sleep is enabled automatically and cannot be turned off.
 
-### ESP32 and NRF52 Platforms
+#### ESP32 and NRF52 Platforms
 
 In the `TRACKER` and `SENSOR` roles, there are special sleep behaviors when combined with `power.is_power_saving`. For `TRACKER`, the device will go to sleep for `position.position_broadcast_secs` and upon waking will send a position packet when the GPS provides a valid location and repeat the cycle. For `SENSOR`, the device will go to sleep for `telemetry.environment_update_interval` and upon waking will gather environment data and send a telemetry packet and repeat the cycle. For both of these roles, the LoRA radio does not remain in standby mode to accept packets and wake up the device. Sleep remains constrained to their respective transmission intervals.
 
@@ -184,7 +184,6 @@ meshtastic --set device.role CLIENT
 ```
 
 ```shell title="Set tzdef"
-meshtastic --set device.tzdef UTC0
 meshtastic --set device.tzdef 'CST6CDT,M3.2.0,M11.1.0'
 ```
 
