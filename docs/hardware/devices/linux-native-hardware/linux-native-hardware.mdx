@@ -25,7 +25,8 @@ Before proceeding with the setup, ensure the device meets the following requirem
 ### Hardware Compatibility
 
 :::caution Warning
-UART HATs and SX1302/SX1303 chip-based HATs are not supported. Only hats that use a SPI radio can work with Meshtastic.
+- UART HATs and SX1302/SX1303 chip-based HATs are not supported. Only hats that use a SPI radio can work with Meshtastic.
+- Waveshare SX1262 LoRaWAN Node Module Expansion Board for Raspberry Pi, while supported, does have known hardware limitations that may affect longer messages. Users should be mindful of this when composing messages. It is also recommended to use the CLIENT_MUTE role to avoid rebroadcasting larger messages.
 :::
 
 - Tested radios include the Waveshare SX126X (SPI version), Adafruit RFM9x, and Elecrow Lora RFM95 IOT.
