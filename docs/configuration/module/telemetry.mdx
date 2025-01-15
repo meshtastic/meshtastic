@@ -7,6 +7,7 @@ description: This module allows sharing of Device, Environment, Health, and Air 
 
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
+import { Icon } from "@iconify/react";
 import ReactPlayer from "react-player";
 
 The Telemetry Module provides four types of data over the mesh: Device metrics (Battery Level, Voltage, Channel Utilization and Airtime) from your Meshtastic device, Environment Metrics, Air Quality Metrics, and Health metrics (Heart rate, Oxygen Saturation and body temperature).
@@ -112,14 +113,42 @@ Default is `1800` seconds (30 minutes).
 ## Telemetry Config Client Availability
 
 <Tabs
-groupId="settings"
-defaultValue="apple"
-values={[
-{label: 'Android', value: 'android'},
-{label: 'Apple', value: 'apple'},
-{label: 'CLI', value: 'cli'},
-{label: 'Web', value: 'web'},
-]}>
+  groupId="settings"
+  defaultValue="apple"
+  values={[
+    {
+      label: (
+        <>
+          <Icon icon="mdi:android" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Android
+        </>
+      ),
+      value: "android",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:apple" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Apple
+        </>
+      ),
+      value: "apple",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:terminal" height="1.5rem" style={{ marginRight: "0.25rem" }} /> CLI
+        </>
+      ),
+      value: "cli",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:internet" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Web
+        </>
+      ),
+      value: "web",
+    },
+  ]}>
 <TabItem value="android">
 
 #### Android

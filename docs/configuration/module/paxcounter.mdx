@@ -7,6 +7,7 @@ description: This module uses WiFi and BLE to count people or devices passing by
 
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
+import { Icon } from "@iconify/react";
 
 The Paxcounter module counts the number of people passing by a specific area by scanning for WiFi and BLE MAC addresses. It is commonly used in retail stores, museums, and other public spaces to monitor foot traffic and gather valuable data for analysis.
 
@@ -22,21 +23,50 @@ This module can only be used with ESP32 devices. To operate the Paxcounter Modul
 
 Whether the Module is enabled.
 
-### Update Interval 
+### Update Interval
 
 The interval in seconds of how often we can send a message to the mesh when a state change is detected.
 
 ## Paxcounter Module Client Availability
 
 <Tabs
-groupId="settings"
-defaultValue="cli"
-values={[
-{label: 'Android', value: 'android'},
-{label: 'Apple', value: 'apple'},
-{label: 'CLI', value: 'cli'},
-{label: 'Web', value: 'web'},
-]}>
+  groupId="settings"
+  defaultValue="apple"
+  values={[
+    {
+      label: (
+        <>
+          <Icon icon="mdi:android" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Android
+        </>
+      ),
+      value: "android",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:apple" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Apple
+        </>
+      ),
+      value: "apple",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:terminal" height="1.5rem" style={{ marginRight: "0.25rem" }} /> CLI
+        </>
+      ),
+      value: "cli",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:internet" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Web
+        </>
+      ),
+      value: "web",
+    },
+  ]}>
+
 <TabItem value="android">
 
 #### Android
@@ -85,6 +115,7 @@ meshtastic --set paxcounter.paxcounter_update_interval 900
 ```shell title="Get the Paxcounter Module Configuration"
 meshtastic --get paxcounter
 ```
+
 </TabItem>
 <TabItem value="web">
 
@@ -95,5 +126,6 @@ meshtastic --get paxcounter
 All Paxcounter module config options are available in the Web UI.
 
 :::
+
 </TabItem>
 </Tabs>

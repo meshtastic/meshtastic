@@ -216,12 +216,12 @@ function Home() {
                 />
                 <h4 className="text-lg font-bold">Step 3</h4>
               </div>
-              <Link
-                to="#get-connected"
+              <a
+                href="/#get-connected"
                 className="mt-1 underline hover:no-underline font-semibold"
               >
                 Connect to your Device &rarr;
-              </Link>
+              </a>
               <p className="text-center max-w-xs">
                 Connect to your device via any of our clients to start sending
                 and receiving messages!
