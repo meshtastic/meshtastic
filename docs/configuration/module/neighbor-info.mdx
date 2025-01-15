@@ -7,6 +7,7 @@ description: This module allows you to send information about your immediate(0 h
 
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
+import { Icon } from "@iconify/react";
 
 The Neighbor Info Module is for sending information on each node's 0-hop neighbors to the mesh. Config options are: Enabled, Update Interval and Transmit Over LoRa.
 
@@ -30,20 +31,48 @@ How often the neighbor info is sent to the mesh. This cannot be set lower than 4
 
 ### Transmit Over LoRa
 
-Available from firmware 2.5.13 and higher. By default, neighbor info will only be sent to MQTT and a connected app. If enabled, the neighbor info will be sent on the primary channel over LoRa. Only available when the primary channel is not the public channel with default key and name. 
-
+Available from firmware 2.5.13 and higher. By default, neighbor info will only be sent to MQTT and a connected app. If enabled, the neighbor info will be sent on the primary channel over LoRa. Only available when the primary channel is not the public channel with default key and name.
 
 ## Neighbor Info Module Client Availability
 
 <Tabs
-groupId="settings"
-defaultValue="cli"
-values={[
-{label: 'Android', value: 'android'},
-{label: 'Apple', value: 'apple'},
-{label: 'CLI', value: 'cli'},
-{label: 'Web', value: 'web'},
-]}>
+  groupId="settings"
+  defaultValue="apple"
+  values={[
+    {
+      label: (
+        <>
+          <Icon icon="mdi:android" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Android
+        </>
+      ),
+      value: "android",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:apple" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Apple
+        </>
+      ),
+      value: "apple",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:terminal" height="1.5rem" style={{ marginRight: "0.25rem" }} /> CLI
+        </>
+      ),
+      value: "cli",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:internet" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Web
+        </>
+      ),
+      value: "web",
+    },
+  ]}>
+
 <TabItem value="android">
 
 #### Android
@@ -53,7 +82,7 @@ All Neighbor Info Module config options are available for Android in app version
 
 1. Open the Meshtastic App
 2. Navigate to: **Vertical Ellipsis (3 dots top right) > Radio Configuration > Neighbor Info**
-:::
+   :::
 
 </TabItem>
 <TabItem value="apple">
@@ -89,7 +118,6 @@ meshtastic --set neighbor_info.transmit_over_lora true
 ```shell title="Get the Neighbor Info Module Configuration"
 meshtastic --get neighbor_info
 ```
-
 
 </TabItem>
 <TabItem value="web">
