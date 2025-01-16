@@ -9,6 +9,7 @@ description: This page offers comprehensive instructions on methods of installin
 
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
+import { Icon } from "@iconify/react";
 
 ## Meshtastic Python Library
 
@@ -31,15 +32,44 @@ After ensuring the requirements are met, follow the installation instructions fo
 To install the Meshtastic CLI, select the tab for your operating system and follow the step-by-step instructions for installing via `pip`. For Ubuntu only, you can alternatively install the [Standalone version](#standalone-installation-ubuntu-only) if you prefer.
 
 <Tabs
-groupId="operating-system"
-queryString="install-python-cli"
-defaultValue="windows"
-values={[
-{label: 'Linux', value: 'linux'},
-{label: 'macOS', value: 'macos'},
-{label: 'Windows', value: 'windows'},
-{label: 'Termux for Android', value: 'termux'},
-]}>
+  groupId="operating-system"
+  queryString="install-python-cli"
+  defaultValue="windows"
+  values={[
+    {
+      label: (
+        <>
+          <Icon icon="mdi:linux" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Linux
+        </>
+      ),
+      value: "linux",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:apple" height="1.5rem" style={{ marginRight: "0.25rem" }} /> macOS
+        </>
+      ),
+      value: "macos",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:microsoft" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Windows
+        </>
+      ),
+      value: "windows",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:terminal" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Termux for Android
+        </>
+      ),
+      value: "termux",
+    },
+  ]}>
+
 <TabItem value="linux">
 
 #### Linux

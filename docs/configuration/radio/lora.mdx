@@ -7,6 +7,7 @@ description: Understanding the LoRa configuration settings on your Meshtastic de
 
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
+import { Icon } from "@iconify/react";
 import LoRaRegions from "../../blocks/_lora-regions.mdx";
 
 The LoRa config options are: Region, Modem Preset, Max Hops, Transmit Power, Bandwidth, Spread Factor, Coding Rate, Frequency Offset, Transmit Enabled, Frequency Slot, Ignore Incoming Array, Ignore MQTT, Override Duty Cycle Limit, SX126x RX Boosted Gain, and Override Frequency. LoRa config uses an admin message sending a `Config.LoRa` protobuf.
@@ -40,21 +41,21 @@ The Presets available are as follows, and follow a linear pattern of Fastest \<\
 
 1. `SHORT_TURBO` (Fastest, highest bandwidth, lowest airtime, shortest range. It is not legal to use in all regions due to it's 500kHz bandwidth.)
 
-1. `SHORT_FAST` 
+2. `SHORT_FAST`
 
-2. `SHORT_SLOW`
+3. `SHORT_SLOW`
 
-3. `MEDIUM_FAST`
+4. `MEDIUM_FAST`
 
-4. `MEDIUM_SLOW`
+5. `MEDIUM_SLOW`
 
-5. `LONG_FAST` (Default)
+6. `LONG_FAST` (Default)
 
-6. `LONG_MODERATE`
+7. `LONG_MODERATE`
 
-7. `LONG_SLOW`
+8. `LONG_SLOW`
 
-8. `VERY_LONG_SLOW` (Slowest, lowest bandwidth, highest airtime, longest range. Not recommended for regular usage as does not form meshes well and is unreliable)
+9. `VERY_LONG_SLOW` (Slowest, lowest bandwidth, highest airtime, longest range. Not recommended for regular usage as does not form meshes well and is unreliable)
 
 ### Max Hops
 
@@ -138,14 +139,42 @@ This parameter is for advanced users and licensed HAM radio operators. When enab
 ## LoRa Config Client Availability
 
 <Tabs
-groupId="settings"
-defaultValue="apple"
-values={[
-{label: 'Android', value: 'android'},
-{label: 'Apple', value: 'apple'},
-{label: 'CLI', value: 'cli'},
-{label: 'Web', value: 'web'},
-]}>
+  groupId="settings"
+  defaultValue="apple"
+  values={[
+    {
+      label: (
+        <>
+          <Icon icon="mdi:android" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Android
+        </>
+      ),
+      value: "android",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:apple" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Apple
+        </>
+      ),
+      value: "apple",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:terminal" height="1.5rem" style={{ marginRight: "0.25rem" }} /> CLI
+        </>
+      ),
+      value: "cli",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:internet" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Web
+        </>
+      ),
+      value: "web",
+    },
+  ]}>
 <TabItem value="android">
 
 #### Android
@@ -180,8 +209,8 @@ LoRa config commands are available in the python CLI. Example commands are below
 :::
 
 |           Setting           |                                                                     Acceptable Values                                                                     |   Default   |
-|:---------------------------:|:---------------------------------------------------------------------------------------------------------------------------------------------------------:|:-----------:|
-|      lora.modem_preset      |                    `LONG_FAST`,  `LONG_SLOW`, `VERY_LONG_SLOW`, `MEDIUM_SLOW`, `MEDIUM_FAST`, `SHORT_SLOW`, `SHORT_FAST`, `SHORT_TURBO`                    | `LONG_FAST` |
+| :-------------------------: | :-------------------------------------------------------------------------------------------------------------------------------------------------------: | :---------: |
+|      lora.modem_preset      |                    `LONG_FAST`, `LONG_SLOW`, `VERY_LONG_SLOW`, `MEDIUM_SLOW`, `MEDIUM_FAST`, `SHORT_SLOW`, `SHORT_FAST`, `SHORT_TURBO`                    | `LONG_FAST` |
 |       lora.use_preset       |                                                                      `false`, `true`                                                                      |   `false`   |
 |         lora.region         | `UNSET`, `US`, `EU_433`, `EU_868`, `CN`, `JP`, `ANZ`, `KR`, `TW`, `RU` ,`IN`, `NZ_865`, `TH`, `LORA_24`, `UA_433`, `UA_868`, `MY_433`, `MY_919`, `SG_923` |   `UNSET`   |
 |       lora.bandwidth        |                                                              `31`, `62`, `125`, `250`, `500`                                                              |    `250`    |
@@ -193,7 +222,7 @@ LoRa config commands are available in the python CLI. Example commands are below
 |       lora.tx_enabled       |                                                                      `false`, `true`                                                                      |   `true`    |
 |      lora.channel_num       |                                                                `0`, `1` to `NUM_CHANNELS`                                                                 |     `0`     |
 |      lora.ignore_mqtt       |                                                                      `false`, `true`                                                                      |   `false`   |
-|    lora.config_ok_to_mqtt   |                                                                      `true`, `false`                                                                      |   `false`   |
+|   lora.config_ok_to_mqtt    |                                                                      `true`, `false`                                                                      |   `false`   |
 |  lora.override_duty_cycle   |                                                                      `false`, `true`                                                                      |   `false`   |
 | lora.sx126x_rx_boosted_gain |                                                                      `false`, `true`                                                                      |   `false`   |
 |   lora.override_frequency   |                             Any supported frequency the LoRA radio is capable of. Please respect local rules and regulations                              |     `0`     |
