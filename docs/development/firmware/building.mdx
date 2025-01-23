@@ -28,13 +28,9 @@ Meshtastic uses [PlatformIO](https://platformio.org), a development environment 
    ```shell
    cd firmware
    ```
-2. Gather the latest changes to the [Meshtastic Firmware](https://github.com/meshtastic/firmware) repository
+2. Gather the latest changes to the [Meshtastic Firmware](https://github.com/meshtastic/firmware) repository and [submodules](https://github.com/meshtastic/firmware/blob/master/.gitmodules)
    ```shell
-   git pull
-   ```
-3. Update the repository's [submodules](https://github.com/meshtastic/firmware/blob/master/.gitmodules)
-   ```shell
-   git submodule update --init
+   git pull --recurse-submodules
    ```
 
 ## Build
