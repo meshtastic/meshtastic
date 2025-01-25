@@ -8,6 +8,7 @@ description: An advanced feature for securely administering remote devices over 
 
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
+import { Icon } from "@iconify/react";
 
 :::caution Disclaimer
 This is an advanced feature intended for experienced users. It’s possible (if not done carefully) to apply settings to a remote node that could cause it to disconnect from the mesh. Network admins are advised to use a test node to trial settings before applying changes to a remote node to prevent this.
@@ -32,14 +33,43 @@ Remote Admin is complemented by setting [Managed Mode](/docs/configuration/radio
 ## Remote Admin Config Client Availability
 
 <Tabs
-groupId="settings"
-defaultValue="apple"
-values={[
-{label: 'Android', value: 'android'},
-{label: 'Apple', value: 'apple'},
-{label: 'CLI', value: 'cli'},
-{label: 'Web', value: 'web'},
-]}>
+  groupId="settings"
+  defaultValue="apple"
+  values={[
+    {
+      label: (
+        <>
+          <Icon icon="mdi:android" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Android
+        </>
+      ),
+      value: "android",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:apple" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Apple
+        </>
+      ),
+      value: "apple",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:terminal" height="1.5rem" style={{ marginRight: "0.25rem" }} /> CLI
+        </>
+      ),
+      value: "cli",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:internet" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Web
+        </>
+      ),
+      value: "web",
+    },
+  ]}>
+
 <TabItem value="android">
 
 #### Android
@@ -144,11 +174,11 @@ For Linux/Mac, enclose the `nodeid` value in single quotes: `--dest '!28979058'`
 
 1. Connect to the node that will be used to administer the remote node.
 2. Navigate to **⚙ Config > ⚙ Radio Config > [Security](/docs/configuration/radio/security/#public-key)** to find its public key.
-4. Copy the public key to use for configuring the remote node.
-5. Connect to the remote node.
-6. In **⚙ Config > ⚙ Radio Config > Security**, add the public key of the local node as an Admin Key.
-7. Only one Admin Keys may be supplied through the Web interface at present.
-8. Save the configuration.
+3. Copy the public key to use for configuring the remote node.
+4. Connect to the remote node.
+5. In **⚙ Config > ⚙ Radio Config > Security**, add the public key of the local node as an Admin Key.
+6. Only one Admin Keys may be supplied through the Web interface at present.
+7. Save the configuration.
 
 #### Carrying out Remote Admin tasks
 

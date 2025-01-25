@@ -25,7 +25,8 @@ Before proceeding with the setup, ensure the device meets the following requirem
 ### Hardware Compatibility
 
 :::caution Warning
-UART HATs and SX1302/SX1303 chip-based HATs are not supported. Only hats that use a SPI radio can work with Meshtastic.
+- UART HATs and SX1302/SX1303 chip-based HATs are not supported. Only hats that use a SPI radio can work with Meshtastic.
+- Waveshare SX1262 LoRaWAN Node Module Expansion Board for Raspberry Pi, while supported, does have known hardware limitations that may affect longer messages. Users should be mindful of this when composing messages. It is also recommended to use the CLIENT_MUTE role to avoid rebroadcasting larger messages.
 :::
 
 - Tested radios include the Waveshare SX126X (SPI version), Adafruit RFM9x, and Elecrow Lora RFM95 IOT.
@@ -203,7 +204,7 @@ This will give you a detailed view of the service status and any potential error
 
 By following these steps, you set up a systemd service for meshtasticd that will start automatically at boot and restart if it crashes. You can manage it using the standard systemctl commands (start, stop, restart, status, etc.).
 
-#### View Logs of Mesthastic
+#### View Logs of Meshtastic
 To view the log output of the meshtasticd service, use the below command to read them out of the system journal.
 
 ```shell
@@ -249,8 +250,8 @@ And paste the following:
 <service-group>
     <name>Meshtastic</name>
     <service protocol="ipv4">
-        <type>_http._tcp</type>
-        <port>80</port>
+        <type>_meshtastic._tcp</type>
+        <port>4403</port>
     </service>
 </service-group>
 ```

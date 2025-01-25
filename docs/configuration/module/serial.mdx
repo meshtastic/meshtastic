@@ -7,6 +7,7 @@ description: This module is an interface to talk to and control your Meshtastic 
 
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
+import { Icon } from "@iconify/react";
 import ReactPlayer from "react-player";
 
 The serial module config options are: Enabled, Echo, Mode, Receive GPIO, Transmit GPIO, Baud Rate, Timeout, and Override Console Serial Port. Serial Module config uses an admin message sending a `ConfigModule.Serial` protobuf.
@@ -87,14 +88,42 @@ Once module settings are changed, a **reset** is required for them to take effec
 ## Serial Module Config Client Availability
 
 <Tabs
-groupId="settings"
-defaultValue="apple"
-values={[
-{label: 'Android', value: 'android'},
-{label: 'Apple', value: 'apple'},
-{label: 'CLI', value: 'cli'},
-{label: 'Web', value: 'web'},
-]}>
+  groupId="settings"
+  defaultValue="apple"
+  values={[
+    {
+      label: (
+        <>
+          <Icon icon="mdi:android" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Android
+        </>
+      ),
+      value: "android",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:apple" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Apple
+        </>
+      ),
+      value: "apple",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:terminal" height="1.5rem" style={{ marginRight: "0.25rem" }} /> CLI
+        </>
+      ),
+      value: "cli",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:internet" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Web
+        </>
+      ),
+      value: "web",
+    },
+  ]}>
 <TabItem value="android">
 
 #### Android

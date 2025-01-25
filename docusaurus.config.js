@@ -144,6 +144,10 @@ const config = {
   customFields: {
     API_URL: process.env.API_URL,
   },
+  i18n: {
+    defaultLocale: "en",
+    locales: ["en", "cs-CZ", "de", "pl-PL", "sk-SK", "tr-TR", "zh-CN", "zh-TW"],
+  },
   markdown: {
     mermaid: true,
   },

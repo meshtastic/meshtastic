@@ -9,19 +9,42 @@ description: Instructions for testing serial driver installation on Linux, macOS
 import Link from "@docusaurus/Link";
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
+import { Icon } from "@iconify/react";
 
 ### Test Serial Driver Installation
 
 You can verify that you have a proper data cable (rather than a charge-only type cable) and that the appropriate drivers for your system are installed by performing the following test:
 
 <Tabs
-groupId="operating-system"
-defaultValue="linux"
-values={[
-{label: 'Linux', value: 'linux'},
-{label: 'macOS', value: 'macos'},
-{label: 'Windows', value: 'windows'},
-]}>
+  groupId="operating-system"
+  defaultValue="windows"
+  values={[
+    {
+      label: (
+        <>
+          <Icon icon="mdi:tux" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Linux
+        </>
+      ),
+      value: "linux",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:apple" height="1.5rem" style={{ marginRight: "0.25rem" }} /> macOS
+        </>
+      ),
+      value: "macos",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:microsoft" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Windows
+        </>
+      ),
+      value: "windows",
+    },
+  ]}>
+
 <TabItem value="linux">
 
 #### Linux
