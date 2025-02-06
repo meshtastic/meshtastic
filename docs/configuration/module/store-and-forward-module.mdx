@@ -43,21 +43,24 @@ Initial requirements for the Store and Forward Server:
 
 - To use / test this over LoRa you will want at least 3 devices:
 
-  - One ESP32 device with PSRAM configured as `ROUTER` or `store_forward.is_server` set.
+  - One ESP32 device with PSRAM and `store_forward.is_server` set.
   - Two others will be regular clients. If one client sends a text message when the other is not in range, the other can request the history from the server to receive the missed message when it is back in range.
 
 - To use / test this with a client app you will want at least 2 devices:
-  - One ESP32 device with PSRAM configured as `ROUTER` or `store_forward.is_server` set.
+  - One ESP32 device with PSRAM and `store_forward.is_server` set.
   - One other device that sends text messages when no app is connected to the Store & Forward Server. When you connect an app to the server, it will automatically retrieve the history.
 
 ### Server setup
 
-- Configure your device as a `ROUTER` or set `store_forward.is_server true`.
 - Name your server node something that makes it easily identifiable, e.g. "Base Node (S&F)".
 - Configure the Store and Forward module
 
   ```shell title="Required - Enable the module"
   meshtastic --set store_forward.enabled true
+  ```
+
+  ```shell title="Required - Set as Server"
+  meshtastic --set store_forward.is_server true
   ```
 
   ```shell title="Optional - Disable sending heartbeat."
@@ -99,7 +102,7 @@ Set this to the maximum number of records the server will save. Best to leave th
 
 ### Is server
 
-Set to true to configure your node with PSRAM as a Store & Forward Server for storing and forwarding messages. This is an alternative to setting the node as a `ROUTER` and only available since 2.4.
+Set to true to configure your node with PSRAM as a Store & Forward Server for storing and forwarding messages. Since 2.4, this setting must be enabled and the requirement for the server to be a `ROUTER` has been removed.
 
 ## Store & Forward Module Config Client Availability
 
