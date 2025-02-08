@@ -106,6 +106,31 @@ The RAK11200 does not contain a LoRa transceiver, and thus needs to be added sep
       - WiFi 802.11 b/g/n
       - High power consumption (relative to nRF52)
 
+### Flashing the RAK11200
+
+To flash the RAK11200, you need to manually place it into Espressif’s firmware download mode. Unlike other ESP32 boards, the RAK11200 does not support automatic boot mode selection. You must force it into download mode before flashing Meshtastic.
+
+:::warning
+
+Do not proceed unless an antenna is connected to avoid possible damage to the device's radio.
+
+:::
+
+The following process will manually place the device into Espressif Firmware Download mode:
+
+1. Ensure the device is powered on and connected via USB.
+2. Locate the **BOOT0** pin on the J10 header of the WisBlock Base Board ([RAK19007](../../docs/hardware/devices/rak-wireless/wisblock/base-board/?rakbase=RAK19007) / [RAK5005-O](../../docs/hardware/devices/rak-wireless/wisblock/base-board/?rakbase=RAK5005-O)).
+3. Connect **BOOT0** to **GND** (the GND pin is adjacent to BOOT0 on the J10 header).
+4. Briefly tap the reset button.
+
+Once the device is in Espressif Firmware Download mode, you can proceed with flashing using one of the supported flashing methods. It’s generally recommended to use the [Web Flasher](https://flasher.meshtastic.org/), selecting the appropriate RAK11200 firmware.
+
+:::note
+
+If the device does not enter download mode, double-check the BOOT0 to GND connection before attempting again.
+
+:::
+
 ### Resources
 
 - Firmware file: `firmware-rak11200-X.X.X.xxxxxxx.bin`
