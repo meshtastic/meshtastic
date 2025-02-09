@@ -5,13 +5,13 @@ sidebar_label: Adafruit IO
 sidebar_position: 5
 ---
 
-### Adafruit IO for Meshtastic 
+### Adafruit IO for Meshtastic
 
-Adafruit IO can be used to graph telemetry and messages from a Meshtastic network via json/mqtt.  The following example script will listen for node packets and publish voltage, rssi, snr and messages to individual feeds on adafruit IO.  If a feed doesn't exist it will be created.  Be aware, however, that the free Adafruit account is limited to 10 feeds.  Once your feeds are being populated with data you can create dashboards to display graphs and gauges with the data.
+Adafruit IO can be used to graph telemetry and messages from a Meshtastic network via json/mqtt. The following example script will listen for node packets and publish voltage, rssi, snr and messages to individual feeds on adafruit IO. If a feed doesn't exist it will be created. Be aware, however, that the free Adafruit account is limited to 10 feeds. Once your feeds are being populated with data you can create dashboards to display graphs and gauges with the data.
 
 :::info
 
-To utilize this script you need to have an Adafruit IO account, a working mqtt broker setup and a mesh node that is publishing to the mqtt broker. 
+To utilize this script you need to have an Adafruit IO account, a working mqtt broker setup and a mesh node that is publishing to the mqtt broker.
 
 :::
 
@@ -35,7 +35,7 @@ PASSWORD = a
 USER = a
 KEY = a
 ;leave FEED_GROUP as Default is you don't want a separate group.
-FEED_GROUP = Default 
+FEED_GROUP = Default
 [LOG]
 VOLTAGE = true
 MESSAGE = true
@@ -113,10 +113,10 @@ def get_feed(full_name,kind):
         feed = aio.feeds(f"{AIO_FEED_GROUP}.{name.lower()}-{kind}")
     except:
         print("creating feed:" + f"{AIO_FEED_GROUP}.{name.lower()}-{kind}")
-        # Create Feed 
+        # Create Feed
         new_feed = Feed(name=f"{name}_{kind}")
         feed = aio.create_feed(feed=new_feed,group_key=AIO_FEED_GROUP)
-        
+
     return feed
 
 def publish_rssi(data,metadata):
@@ -153,7 +153,7 @@ def publish_packet(data):
         current_time = current_time.astimezone(my_timezone)
         stamp = current_time.strftime('%Y-%m-%d %H:%M:%S')
 
-    trimmed = { 
+    trimmed = {
         'from' : data.get('fname',None) or data.get('from'),
         'to'    : data.get('tname',None) or data.get('to'),
         'channel' : data['channel'],
@@ -169,7 +169,7 @@ def on_message(client, userdata, message):
     except Exception as e:
         print(e)
         return
-    
+
     # check the topic of the message
     if data['type'] == "text" and LOG_MESSAGE:
         # publish all message packets to the message log
@@ -178,7 +178,7 @@ def on_message(client, userdata, message):
             publish_packet(data)
         except Exception as e:
             print("error in publish:",e)
-    
+
     # update node_db if needed
     if data['type'] == 'nodeinfo':
         # add to the node_db if we haven't seen it before
@@ -188,7 +188,7 @@ def on_message(client, userdata, message):
             return # don't publish data from nodedb packets.
 
     # "payload":{"altitude":113,"latitude_i":208759687,"longitude_i":-1565037665
-    metadata = None        
+    metadata = None
     if data['type'] == 'position' and LOG_POSITION:
         metadata = {
             'lat': data['payload']['latitude_i'] / 10000000, #40.726190,
@@ -200,7 +200,7 @@ def on_message(client, userdata, message):
 
 #    if metadata:
 #        print(metadata)
-        
+
     if data['from'] in node_db:
         try:
             if LOG_RSSI and 'rssi' in data and data['rssi'] != 0:
@@ -234,4 +234,3 @@ while(True):
     time.sleep(.01)
 
 ```
-
