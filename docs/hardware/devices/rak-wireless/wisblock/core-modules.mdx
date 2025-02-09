@@ -7,6 +7,7 @@ sidebar_position: 2
 
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
+import Admonition from "@theme/Admonition";
 
 <Tabs
 groupId="rakcore"
@@ -119,15 +120,26 @@ Do not proceed unless an antenna is connected to avoid possible damage to the de
 The following process will manually place the device into Espressif Firmware Download mode:
 
 1. Ensure the device is powered on and connected via USB.
-2. Locate the **BOOT0** pin on the J10 header of the WisBlock Base Board ([RAK19007](/docs/hardware/devices/rak-wireless/wisblock/base-board/?rakbase=RAK19007) / [RAK5005-O](/docs/hardware/devices/rak-wireless/wisblock/base-board/?rakbase=RAK5005-O)).
-3. Connect **BOOT0** to **GND** (the GND pin is adjacent to BOOT0 on the J10 header).
+2. Locate the **BOOT** pin on the J10 header of the WisBlock Base Board ([RAK19007](/docs/hardware/devices/rak-wireless/wisblock/base-board/?rakbase=RAK19007) / [RAK5005-O](/docs/hardware/devices/rak-wireless/wisblock/base-board/?rakbase=RAK5005-O)).
+3. Connect **BOOT** to **GND** (the GND pin is adjacent to BOOT on the J10 header).
+   <div class="no-print">
+     <details>
+       <summary>Diagram</summary>
+       <div>
+         <img
+           src="/img/hardware/rak/rak11200_boot_mode.webp"
+           alt="RAK11200 Boot Mode Connection Diagram"
+         />
+       </div>
+     </details>
+   </div>
 4. Briefly tap the reset button.
 
 Once the device is in Espressif Firmware Download mode, you can proceed with flashing using one of the supported flashing methods. It’s generally recommended to use the [Web Flasher](https://flasher.meshtastic.org/), selecting the appropriate RAK11200 firmware.
 
 :::note
 
-If the device does not enter download mode, double-check the BOOT0 to GND connection before attempting again.
+If the device does not enter download mode, double-check the BOOT to GND connection before attempting again.
 
 :::
 
