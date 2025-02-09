@@ -121,19 +121,19 @@ def get_feed(full_name,kind):
 
 def publish_rssi(data,metadata):
     name = node_db[data['from']]
-    feed = get_feed(name,"rssi") # use a function here because we will create the feed if it doens't exist already.
+    feed = get_feed(name,"rssi") # use a function here because we will create the feed if it doesn't exist already.
     #print(feed.key + " \t\t: " + str(data['rssi']))
     aio.send_data(feed.key, data['rssi'],metadata)
 
 def publish_snr(data,metadata):
     name = node_db[data['from']]
-    feed = get_feed(name,"snr") # use a function here because we will create the feed if it doens't exist already.
+    feed = get_feed(name,"snr") # use a function here because we will create the feed if it doesn't exist already.
     #print(feed.key + " \t\t: " + str(data['snr']))
     aio.send_data(feed.key, data['snr'],metadata)
 
 def publish_voltage(data,metadata):
     name = node_db[data['from']]
-    feed = get_feed(name,"voltage") # use a function here because we will create the feed if it doens't exist already.    print(feed.key + " \t: " + str(data['payload'].get('voltage',"none")))
+    feed = get_feed(name,"voltage") # use a function here because we will create the feed if it doesn't exist already.    print(feed.key + " \t: " + str(data['payload'].get('voltage',"none")))
     #print(feed.key + " \t: " + str(data['payload']['voltage']))
     aio.send_data(feed.key, data['payload'].get('voltage',0),metadata)
 
