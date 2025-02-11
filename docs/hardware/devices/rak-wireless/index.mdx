@@ -11,39 +11,43 @@ RAKwireless offers a variety of Meshtastic-compatible hardware, including modula
 
 Modular hardware system with Base, Core and Peripheral modules including the low-power and solar ready nRF52840-based Meshtastic Starter Kit (19007 & 4631).
 
-### [WisBlock Core Modules](./wisblock/core-module/)
+[**WisBlock Core Modules**](./rak-wireless/wisblock/core-module/)
 
-| Name                                                | MCU      | Radio  |     WiFi     | BT  |  GPS   |
-| :-------------------------------------------------- | :------- | :----- | :----------: | :-: | :----: |
-| [RAK4631](./wisblock/core-module?rakcore=RAK4631)   | nRF52840 | SX1262 |      NO      | 5.0 | ADD-ON |
-| [RAK11200](./wisblock/core-module?rakcore=RAK11200) | ESP32    | ADD-ON | 2.4GHz b/g/n | 4.2 | ADD-ON |
-| [RAK11310](./wisblock/core-module?rakcore=RAK11310) | RP2040   | SX1262 |      NO      | NO  | ADD-ON |
+| Name                                                             | MCU      | Radio  |     WiFi     | BT  |  GPS   |
+| :--------------------------------------------------------------- | :------- | :----- | :----------: | :-: | :----: |
+| [RAK4631](./rak-wireless/wisblock/core-module?rakcore=RAK4631)   | nRF52840 | SX1262 |      NO      | 5.0 | ADD-ON |
+| [RAK11200](./rak-wireless/wisblock/core-module?rakcore=RAK11200) | ESP32    | ADD-ON | 2.4GHz b/g/n | 4.2 | ADD-ON |
+| [RAK11310](./rak-wireless/wisblock/core-module?rakcore=RAK11310) | RP2040   | SX1262 |      NO      | NO  | ADD-ON |
 
-### [Base Boards](./wisblock/base-board/)
+[**Base Boards**](./rak-wireless/wisblock/base-board/)<br/>
+| Name    | type         |
+| ------- | ------------ |
+|[RAK5005-O](./rak-wireless/wisblock/base-board?rakbase=RAK5005-O)<br/>|The original WisBlock Base Board.|
+|[RAK19007](./rak-wireless/wisblock/base-board?rakbase=RAK19007)<br/>|WisBlock Base Board (2nd Generation, an upgrade to the RAK5005-O)|
+|[RAK19003](./rak-wireless/wisblock/base-board?rakbase=RAK19003)<br/>|WisBlock's Mini Base Board.|
+|[RAK19001](./rak-wireless/wisblock/base-board?rakbase=RAK19001)<br/>|WisBlock's Dual IO Base Board.|
 
-[RAK5005-O](./wisblock/base-board?rakbase=RAK5005-O)<br/>
-[RAK19007](./wisblock/base-board?rakbase=RAK19007)<br/>
-[RAK19003](./wisblock/base-board?rakbase=RAK19003)<br/>
-[RAK19001](./wisblock/base-board?rakbase=RAK19001)<br/>
+[**WisBlock Peripherals**](./rak-wireless/wisblock/peripherals/)<br/>
+| Name    | type         |
+| ------- | ------------ |
+| [RAK1910](./rak-wireless/wisblock/peripherals?rakmodules=GPS)    | GPS    | 
+| [RAK12500](./rak-wireless/wisblock/peripherals?rakmodules=GPS)    | GPS        |
+| [RAK18001](./rak-wireless/wisblock/peripherals?rakmodules=Buzzer)   | Buzzer       |
+| [RAK13002](./rak-wireless/wisblock/peripherals?rakmodules=IO)      |   GPIO , SPI, I2c , UART ,GPIO , ADC , 3.3v power      |
+| RAK14001     | RGB LED      |
+| [RAK12002](./rak-wireless/wisblock/peripherals?rakmodules=RTC)     | Real Time Clock        |
+| [RAK1901](./rak-wireless/wisblock/peripherals?rakmodules=Sensors&sensors=RAK1901)  | Temperature and Humidity Sensor     | 
+| [RAK1902](./rak-wireless/wisblock/peripherals?rakmodules=Sensors&sensors=RAK1902)    | Barometric Pressure Sensor        | 
+| [RAK1906](./rak-wireless/wisblock/peripherals?rakmodules=Sensors&sensors=RAK1906)    | Environment Sensor  |
+| RAK12013     | Radar Sensor    |
+| RAK13800   |     Ethernet Module   |
 
-### [WisBlock Displays](./wisblock/screens/)
+### [**WisBlock Displays**](./rak-wireless/wisblock/screens/)<br/>
+| Name    | type         |resolution|
+| ------- | ------------ |------------|
+|[RAK1921](./rak-wireless/wisblock/screens?rakscreens=OLED)<br/>|0.96inch OLED|128x64px|
+|[RAK1400](./rak-wireless/wisblock/screens?rakscreens=E-Ink)<br/>|2.13 inch black and white E-Ink display|212x104px|
 
-[RAK1921](./wisblock/screens?rakscreens=OLED)<br/>
-[RAK1400](./wisblock/screens?rakscreens=E-Ink)<br/>
-
-### [WisBlock Peripherals](./wisblock/peripherals/)
-
-[RAK1910](./wisblock/peripherals?rakmodules=GPS) GPS<br/>
-[RAK12500](./wisblock/peripherals?rakmodules=GPS) GPS<br/>
-[RAK18001](./wisblock/peripherals?rakmodules=Buzzer) Buzzer<br/>
-[RAK13002](./wisblock/peripherals?rakmodules=IO) IO<br/>
-RAK14001 RGB LED<br/>
-[RAK12002](./wisblock/peripherals?rakmodules=RTC) RTC<br/>
-[RAK1901](./wisblock/peripherals?rakmodules=Sensors&sensors=RAK1901) Temperature and Humidity Sensor<br/>
-[RAK1902](./wisblock/peripherals?rakmodules=Sensors&sensors=RAK1902) Barometric Pressure Sensor<br/>
-[RAK1906](./wisblock/peripherals?rakmodules=Sensors&sensors=RAK1906) Environment Sensor<br/>
-RAK12013 Radar Sensor<br/>
-RAK13800 Ethernet Module<br/>
 
 ## [RAK WisMesh](./wismesh/)
 
