@@ -6,6 +6,8 @@ sidebar_label: Tips
 sidebar_position: 4
 ---
 
+import QRCode from "@site/docs/blocks/_qr-code.mdx";
+
 ## Roles
 
 It is strongly recommended to keep your [ROLE](/docs/configuration/radio/device#roles) set to `CLIENT`. Only change this if you have a specific, well-understood reason to do so.
@@ -62,7 +64,9 @@ Alternatively, if you wish to only share your location with trusted parties, you
 | :-: | :----: | :----: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :----: | :-: | :----: | :----: | :----: | :----: | :----: | :-----: |
 | 20  |   4    |   1    | 36  | 20  | 20  | 12  | 16  |  2  |  4  |   4    | 16  |   6    |   2    |   4    |   16   |   4    |    6    |
 
-To quickly test this configuration, find and scan your region's QR from [this repository](https://github.com/meshtastic/meshtastic/tree/master/static/img/configuration/qr-private-primary-example/). Remember to generate a new PSK for your private channel before sharing with your trusted nodes.
+To quickly test this configuration, find and scan your region's QR[^1] from [this repository](https://github.com/meshtastic/meshtastic/tree/master/static/img/configuration/qr-private-primary-example/). Remember to generate a new PSK for your private channel before sharing with your trusted nodes.
+
+[^1]: <QRCode />
 
 ## Rebroadcast "Public" Traffic
 

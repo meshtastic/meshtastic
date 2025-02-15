@@ -6,6 +6,8 @@ sidebar_position: 2
 description: "Explore community insights and expert opinions on Meshtastic's encryption, including AES256 implementation, security tips, and potential vulnerabilities."
 ---
 
+import QRCode from "@site/docs/blocks/_qr-code.mdx";
+
 This page compiles community feedback and expert reviews on Meshtastic's encryption approach. We value these insights and aim to improve our encryption implementation where feasible. Explore key details, practical tips, and understand the strengths and potential limitations of Meshtastic's AES256 encryption.
 
 ## Comments
@@ -16,7 +18,10 @@ Based on comments from reviewers (see below), here are some tips for using these
 
 - It is likely that the AES256 security is implemented 'correctly' and an observer will not be able to decode your messages.
 - **Warning:** If an attacker is able to get one of the radios in their possession, they could either a) extract the channel key from that device, or b) use that radio to listen to new communications.
-- **Warning:** If an attacker is able to get the "Channel QR code/URL" that you share with others, that attacker could then be able to read any messages sent on the channel (either tomorrow or in the past - if they kept a raw copy of those broadcast packets).
+- **Warning:** If an attacker is able to get the "Channel QR[^1] code/URL" that you share with others, that attacker could then be able to read any messages sent on the channel (either tomorrow or in the past - if they kept a raw copy of those broadcast packets).
+
+[^1]:
+    <QRCode />
 
 The current implementation provides optional confidentiality to members of a configured network:
 
