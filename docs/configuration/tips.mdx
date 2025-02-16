@@ -8,12 +8,23 @@ sidebar_position: 4
 
 ## Roles
 
-It is strongly recommended to keep your [ROLE](/docs/configuration/radio/device#roles) set to `CLIENT`. Only change this if you have a specific, well-understood reason to do so.
+It is strongly recommended to keep your [ROLE](/docs/configuration/radio/device#roles) set to `CLIENT` or `CLIENT_MUTE`. Only use other roles if you have a specific, well-understood reason to do so.
 
-### Why `CLIENT` is Recommended
 
-- `CLIENT` nodes efficiently repeat and route packets as needed.
-- They use smart delays for rebroadcasting, improving network stability.
+:::tip
+For details on choosing a role, read [this blog post](/blog/choosing-the-right-device-role/).
+:::
+
+### `CLIENT` and `CLIENT_MUTE` are Recommended
+
+- `CLIENT` nodes efficiently repeat and route packets as needed. 
+  - **Almost always the correct mode.**
+  - They use smart delays for rebroadcasting, improving network stability.
+  - Use for "rooftop" or other nodes that enhance your mesh.
+  - Use during isolated activities such as hiking, skiing, or MTB where you're in an area with few nodes.
+- `CLIENT_MUTE` nodes behave as above but do not repeat packets:
+  - Personal nodes that are in range of a higher-profile node in a dense or congested mesh.
+  - Enthusiasts with multiple nodes (set your "best-placed" node to `CLIENT`)
 
 ![Client Node Example](/img/configuration/client.webp)
 *One example of a 'Client' node.  Photo credit: Cully@KBOXLABS*
@@ -32,6 +43,7 @@ Remember: A network of `CLIENT` nodes with a small number of well-placed `ROUTER
 
 ![Router Node Example](/img/configuration/router.webp)
 *One example of a 'Router' node.  Photo credit: Cully@KBOXLABS*
+
 
 ## (Not) Sharing Your Location
 
