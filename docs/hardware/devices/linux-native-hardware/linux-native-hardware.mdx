@@ -1,12 +1,27 @@
 ---
 id: linux-native-hardware
 title: Meshtastic on Linux-Native Devices
+hide_title: true
 sidebar_label: Linux Native Devices
 sidebar_position: 11
 description: Set up and configure Meshtastic on Linux-native devices using the meshtasticd binary.
 ---
 
 import LinuxInstall from "@site/docs/blocks/_linux-install.mdx";
+import { Dark, Light } from "/src/components/ColorMode";
+
+<Dark>
+  <img
+    src="/img/meshtasticd/Meshtasticd-Terminal-Long_Dark.svg"
+    alt="Meshtasticd Terminal Dark"
+  />
+</Dark>
+<Light>
+  <img
+    src="/img/meshtasticd/Meshtasticd-Terminal-Long_Light.svg"
+    alt="Meshtasticd Terminal Light"
+  />
+</Light>
 
 This page outlines the setup of Meshtastic on Linux-native devices, utilizing portduino to run the Meshtastic firmware under Linux.
 
@@ -31,6 +46,7 @@ Before proceeding with the setup, ensure the device meets the following requirem
 ### Hardware Compatibility
 
 :::caution Warning
+
 - **UART** HATs and SX1302/SX1303 chip-based HATs are not supported. Only hats that use a SPI radio can work with Meshtastic.
 - The Waveshare SX1262 LoRaWAN Hat for Raspberry Pi is not recommended for deployment. It has known hardware limitations that may affect longer messages. If you must use it, please use the **CLIENT_MUTE** role to avoid rebroadcasting.
 - The Pine64 Pinedio is also not recommended for deployment, as it suffers from similar hardware limitations as the Waveshare SX1262 LoRaWAN Hat.
@@ -183,40 +199,41 @@ To configure the device to start and stop meshtasticd as as service using system
 <details>
   <summary>Create the systemd service (only for manual installs)</summary>
 
-  The `meshtasticd` systemd service is automatically installed when using the official Meshtastic packages.
-  These instructions are only needed when installing manually.
+The `meshtasticd` systemd service is automatically installed when using the official Meshtastic packages.
+These instructions are only needed when installing manually.
 
-  Create the service unit file:
+Create the service unit file:
 
-  Create a new file in the /etc/systemd/system/ directory with a name like meshtasticd.service.
+Create a new file in the /etc/systemd/system/ directory with a name like meshtasticd.service.
 
-  ```shell
-  sudo nano /etc/systemd/system/meshtasticd.service
-  ```
+```shell
+sudo nano /etc/systemd/system/meshtasticd.service
+```
 
-  Add the following content to the file:
+Add the following content to the file:
 
-  ```plaintext
-  [Unit]
-  Description=Meshtastic Daemon
-  After=network.target
+```plaintext
+[Unit]
+Description=Meshtastic Daemon
+After=network.target
 
-  [Service]
-  ExecStart=/usr/sbin/meshtasticd
-  Restart=always
-  User=root
-  Group=root
-  Type=simple
+[Service]
+ExecStart=/usr/sbin/meshtasticd
+Restart=always
+User=root
+Group=root
+Type=simple
 
-  [Install]
-  WantedBy=multi-user.target
-  ```
+[Install]
+WantedBy=multi-user.target
+```
 
-  Reload systemd to recognize the new service:
+Reload systemd to recognize the new service:
 
-  ```shell
-  sudo systemctl daemon-reload
-  ```
+```shell
+sudo systemctl daemon-reload
+```
+
 </details>
 
 Enable the service to start on boot:
