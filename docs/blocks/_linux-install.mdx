@@ -92,7 +92,7 @@ import { Icon } from "@iconify/react";
   </TabItem>
   <TabItem value="fedora" label={<><Icon icon="mdi:fedora" style={{ marginRight: "0.25rem" }} height="1.5rem" /> Fedora</>}>
     Fedora packages are provided via [Fedora COPR](https://copr.fedorainfracloud.org/coprs/g/meshtastic/beta/).
-     [![Copr build status](https://copr.fedorainfracloud.org/coprs/g/meshtastic/beta/package/meshtasticd/status_image/last_build.png)](https://copr.fedorainfracloud.org/coprs/g/meshtastic/beta/package/meshtasticd/)
+    [![Copr build status](https://copr.fedorainfracloud.org/coprs/g/meshtastic/beta/package/meshtasticd/status_image/last_build.png)](https://copr.fedorainfracloud.org/coprs/g/meshtastic/beta/package/meshtasticd/)
 
     Supported: Fedora `41`, Fedora `40`
 
@@ -100,6 +100,28 @@ import { Icon } from "@iconify/react";
 
     ```shell
     # Add Meshtastic COPR repo
+    sudo dnf copr enable @meshtastic/beta
+    # Install meshtasticd
+    sudo dnf install meshtasticd
+    ```
+
+  </TabItem>
+
+  <TabItem value="epel" label={<><Icon icon="mdi:redhat" style={{ marginRight: "0.25rem" }} height="1.5rem" /> RedHat (EPEL)</>}>
+    RedHat (EPEL) packages are provided via [Fedora COPR](https://copr.fedorainfracloud.org/coprs/g/meshtastic/beta/).
+    Built with Redhat's [UBI](https://www.redhat.com/en/blog/introducing-red-hat-universal-base-image).
+    [![Copr build status](https://copr.fedorainfracloud.org/coprs/g/meshtastic/beta/package/meshtasticd/status_image/last_build.png)](https://copr.fedorainfracloud.org/coprs/g/meshtastic/beta/package/meshtasticd/)
+
+    Supported: EPEL `9`, EPEL `10`
+
+    CentOS Stream, RedHat Enterprise Linux, AlmaLinux, Rocky Linux, and other [EPEL-supported](https://docs.fedoraproject.org/en-US/epel/getting-started/) distributions.
+
+    **Install:**
+
+    ```shell
+    # Add Meshtastic COPR repos
+    sudo dnf config-manager --set-enabled crb
+    sudo dnf install epel-release
     sudo dnf copr enable @meshtastic/beta
     # Install meshtasticd
     sudo dnf install meshtasticd
