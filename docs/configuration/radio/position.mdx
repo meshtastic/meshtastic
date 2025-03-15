@@ -11,7 +11,7 @@ import { Icon } from "@iconify/react";
 
 Position data from GPS is provided by either the radio or your paired phone. It is not required to use Meshtastic, but time calculations require at least one device on the mesh to have either a GPS, RTC, or internet connection for NTP.
 
-The position config uses an admin message to send a `Config.Position` protobuf. The position config options are: GPS Mode, GPS Update Interval, Fixed Position, Smart Broadcast, Smart Broadcast Minimum Distance, Smart Broadcast Minimum Interval, Broadcast Interval, Position Packet Flags, and GPS RX/TX Pins.
+The position config uses an admin message to send a `Config.Position` protobuf. The position config options are: GPS Mode, GPS Update Interval, Fixed Position, Smart Broadcast, Smart Broadcast Minimum Distance, Smart Broadcast Minimum Interval, Broadcast Interval, Position Packet Flags, and GPS RX/TX/EN Pins.
 
 ## Position Config Values
 
@@ -85,9 +85,9 @@ Defines which options are sent in POSITION messages. Values are stored as a bit 
 |      HEADING       |          Include positional heading (from GPS solution)          |
 |       SPEED        |           Include positional speed (from GPS solution)           |
 
-### GPIO RX/TX for GPS Module
+### GPIO RX/TX/EN for GPS Module
 
-If your device does not have a fixed GPS chip, you can define the GPIO pins for the RX and TX pins of a GPS module.
+If your device does not have a fixed GPS chip, you can define the GPIO pins for the RX, TX, and EN pins of a GPS module.
 
 ## Position Config Client Availability
 
