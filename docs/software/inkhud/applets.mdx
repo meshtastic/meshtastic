@@ -1,0 +1,138 @@
+---
+id: applets
+title: InkHUD Applets
+sidebar_label: List of Applets
+slug: /software/inkhud/applets
+sidebar_position: 1
+description: A description of the various applets available as part of the InkHUD user interface.
+---
+
+This list of applets is expected to grow as InkHUD continues to evolve.
+
+## All Messages
+
+Displays the most recent message. Both in-channel messages and DMs will be shown.
+
+<div align="center">
+  <img
+    src="/img/software/inkhud/applet-allmessages.png"
+    alt="inkhud all messages applet"
+    style={{margin: '0px'}}
+  />
+</div>
+
+1. Time received
+2. Sender's short name
+3. Sender's long name
+
+## DMs
+
+Displays the most recent direct message (DM) only.
+
+<div align="center">
+  <img
+    src="/img/software/inkhud/applet-dm.png"
+    alt="inkhud direct message applet"
+    style={{margin: '0px'}}
+  />
+</div>
+
+1. Time received
+2. Sender's short name
+3. Sender's long name
+
+## Channel 0
+
+Displays several recent messages from channel 0. Older messages should be viewed in a connected [client app](/downloads/).  
+
+<div align="center">
+  <img
+    src="/img/software/inkhud/applet-channel0.png"
+    alt="inkhud channel0 applet"
+    style={{margin: '0px'}}
+  />
+</div>
+
+1. Channel name
+2. Sender's short name
+3. Time received
+4. Outgoing message
+
+## Channel 1
+
+Displays several recent messages from channel 1 (secondary channel). Older messages should be viewed in a connected [client app](/downloads/).  
+
+<div align="center">
+  <img
+    src="/img/software/inkhud/applet-channel1.png"
+    alt="inkhud channel1 applet"
+    style={{margin: '0px'}}
+  />
+</div>
+
+1. Channel name
+2. Sender's short name
+3. Time received
+4. Outgoing message
+
+## Positions
+
+Displays the reported position of all nodes, as a crude map.
+
+North is always aligned with the top of the screen. The size of each cross indicates how many [hops away](/docs/overview#how-it-works) a node is. Nodes marked `!` are beyond your [max hops setting](/docs/configuration/radio/lora#max-hops), making them _unreachable_. 
+
+<div align="center">
+  <img
+    src="/img/software/inkhud/applet-positions.png"
+    alt="inkhud positions applet"
+    style={{margin: '0px'}}
+  />
+</div>
+
+1. Your own node
+2. Node which most recently sent position
+3. Others nodes
+
+_Improvements are planned for this applet._
+
+## Recents List
+
+Displays a list, and count, of nodes which were heard within the past few minutes.
+
+When a node is heard, it is placed at the top of the list. Stale entries are automatically removed. If the list grows long, the oldest entries will scroll off-screen. To change how many minutes of information this applet shows, adjust [Recents Duration](index.mdx#recents-duration) in the on-screen menu.
+
+<div align="center">
+  <img
+    src="/img/software/inkhud/applet-recentslist.png"
+    alt="inkhud recents list applet"
+    style={{margin: '0px'}}
+  />
+</div>
+
+1. Amount of nodes recently heard
+2. Short name
+3. Long name
+4. Signal (if heard directly)
+5. Hops away
+6. Distance from our node (if known)
+
+## Heard
+
+Displays a list of other nodes and their information, sorted by most recently heard. _Information about older nodes is available in your [client app](/downloads/)._
+
+A total count of known nodes is also displayed, unless your node database is full (at least 80 nodes). 
+
+<div align="center">
+  <img
+    src="/img/software/inkhud/applet-heard.png"
+    alt="inkhud heard applet"
+    style={{margin: '0px'}}
+  />
+</div>
+
+1. Total amount of known nodes
+2. Short name
+3. Long name
+4. Signal (if we hear node directly, 0 hops)
+5. Hops away
+6. Distance from our node (if known)
