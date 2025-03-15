@@ -9,7 +9,7 @@ import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 import { Icon } from "@iconify/react";
 
-The Network config options are: NTP Server, WiFi Enabled, WiFi SSID, WiFi PSK, Ethernet Enabled, IPv4 Networking Mode, and Static Address. Network config uses an admin message sending a `Config.Network` protobuf.
+The Network config options are: NTP Server, WiFi Enabled, WiFi SSID, WiFi PSK, Ethernet Enabled, IPv4 Networking Mode, Static Address rsyslog Server, and Protocol Flags. Network config uses an admin message sending a `Config.Network` protobuf.
 
 :::info
 Enabling WiFi will disable Bluetooth. Only one connection method will work at a time.
@@ -55,7 +55,20 @@ Set to `DHCP` by default. Change to `STATIC` to use a static IP address. Applies
 
 ### IPv4 Static Address configuration
 
-contains ip, gateway, subnet and dns server in case you want a static configuration.
+Contains IP, Gateway, Subnet, and DNS server for a static configuration if selected in Networking Mode.
+
+### Rsyslog Server
+
+To configure an rsyslog Server and Port
+
+### Protocol Flags
+
+Defines which auxiliary network protocols are used to send packets. Values are stored as a bit field of boolean configuration options (bitwise OR of ProtocolFlags).
+
+|     Value      |                        Description                         |
+|:--------------:|:----------------------------------------------------------:|
+|  NO_BROADCAST  |     Do not broadcast packets over any network protocol     |
+| UDP_BROADCAST  | Enable broadcasting packets via UDP over the local network |
 
 :::tip
 The first time your device restarts after enabling WiFi or Ethernet, it will take an additional 20-30 seconds to boot. This is to generate self-signed SSL keys. The keys will be saved for future reuse.

@@ -172,13 +172,15 @@ To install the Meshtastic CLI, select the tab for your operating system and foll
     ```
   - If this does not return a version, install [pip](https://pip.pypa.io/en/stable/installing)
 
-- Install pytap2
+- Install pipx
   ```shell
-  sudo pip3 install --upgrade pytap2
+  brew install pipx
+  pipx ensurepath
   ```
+
 - Install meshtastic:
   ```shell
-  sudo pip3 install --upgrade "meshtastic[cli]"
+  pipx install "meshtastic[cli]"
   ```
   (the `[cli]` suffix installs a few optional dependencies that match older versions of the CLI)
 
