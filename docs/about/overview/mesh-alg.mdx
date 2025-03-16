@@ -108,6 +108,7 @@ Since node 1 heard the rebroadcast by 2, it will not rebroadcast again. Node 3 h
 Since version 2.6, Meshtastic uses a different approach for direct messages. Initially, the managed flooding approach as mentioned before is used to reach the destination.
 We'll then keep track of the node(s) that are trying to relay the packet for us. If upon a successful delivery, a response comes back (e.g., a NodeInfo response, acknowledgment or traceroute) and the node that relays this towards you was also (one of) the node(s) that relayed the original packet, it will be denoted as next-hop from now on. This means that instead of letting all nodes try to relay the packet, only the node for which the next-hop byte matches will. Note that this is determined per hop, so if there is an asymmetric link or a node on older firmware in between, managed flooding will be used on this hop. When a node moves, or RF conditions change, it might be the next-hop is not valid anymore. Therefore, a node will always fall back to managed flooding at the last retransmission attempt if it doesn't hear its next-hop relay.
 The procedure is visualized in the following diagram:
+
 ![Next-Hop Routing procedure](/img/NextHopRouting.svg)
 
 ### Regular Broadcast Intervals
