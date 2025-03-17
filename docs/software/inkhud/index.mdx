@@ -12,7 +12,7 @@ import TabItem from "@theme/TabItem";
 
 ## What is InkHUD?
 
-InkHUD is a user interface for Meshtastic devices which have an E-Ink display. It is designed to give a quick "heads-up", showing important information at a glance, complimenting a connected [app](/downloads/). Specifically targeting E-Ink displays, it is offered as an alternative to the original OLED user interface.
+InkHUD is a user interface for Meshtastic devices which have an E-Ink display. It is designed to give a quick "heads-up", showing important information at a glance, complimenting a connected [client app](/downloads/). Specifically targeting E-Ink displays, it is offered as an alternative to the original OLED user interface.
 
 Under active development since late 2024, the list of features and supported devices will continue to grow.
 
@@ -47,13 +47,13 @@ InkHUD is designed to be used with just one button. A mixture of short and long 
 
 ## Applets
 
-InkHUD provides a set of "applets", each one showing a different set of information. You can choose which applets to enable using the on-screen menu. For in-depth descriptions, see the [List of InkHUD Applets](./applets.mdx).
+InkHUD provides a set of applets, each one showing a different set of information. You can choose which applets to enable using the on-screen menu. For in-depth descriptions, see the [List of InkHUD Applets](./applets.mdx).
 
-**Short-press** the user button to switch to the next applet.
+* **Short-press**: switch to the next applet.
 
 <div align="center">
   <img
-    src="/img/software/inkhud/applet-cycle.gif"
+    src="/img/software/inkhud/next-applet.gif"
     alt="animation of cycling though inkhud applets with user button"
     style={{maxHeight: '256px', width:'auto' }}
   />
@@ -67,6 +67,8 @@ To open the on-screen menu, **long-press** the user button.
 * **short-press**: next item
 * **long-press**: select
 
+Only wanted a quick peek at the clock? Long-press a second time to close the menu. 
+
 <div align="center">
   <img
     src="/img/software/inkhud/menu.gif"
@@ -74,10 +76,6 @@ To open the on-screen menu, **long-press** the user button.
     style={{maxHeight: '256px', marginBottom: '20px'}}
   />
 </div>
-
-:::tip
-Only wanted a quick peek at the clock? Long-press a second time to close the menu. 
-:::
 
 ### Options
 
@@ -89,7 +87,7 @@ Choose which applets to enable. Allows you to customize the information shown by
 
 Choose which applets will be automatically shown, when they have new information to display.
 
-*Example: enabling auto-show for the `All Messages` applet will cause InkHUD to swap to `All Messages` when a new text message arrives.*
+Example: enabling auto-show for the All Messages applet will cause InkHUD to swap to All Messages when a new text message arrives.
 
 #### Recents Duration
 
