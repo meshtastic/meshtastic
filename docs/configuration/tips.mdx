@@ -39,6 +39,21 @@ Remember: A network of `CLIENT` nodes with a small number of well-placed `ROUTER
 ![Router Node Example](/img/configuration/router.webp)
 *One example of a 'Router' node.  Photo credit: Cully@KBOXLABS*
 
+## Typical Deployment Examples
+
+### Home Setup
+
+A typical home setup could look like a node in an attic or on the roof as well as a node or nodes in the home. The attic/roof node is used to receive/forward traffic as it is better suited with a higher mounted antenna. In this case, it is recommended to set this node's role type to CLIENT. It is NOT recommended to use ROUTER or REPEATER as these roles are reserved for best positioned in strategic locations to maximize the network's overall coverage. Adding "Not Monitored" to the Long Name of this node can inform others that this node's purpose is to simply receive/forward traffic and isn't monitored.
+
+For the rest of the nodes in the home, it is recommended to use CLIENT_MUTE as these nodes do not need to participate in packet routing.
+
+### Mobile setup
+
+A common mobile setup could look like a single node on your person. In an environment with a high amount of traffic, it is recommended to use CLIENT_MUTE as this node doesn't need to participate in packet routing. In an environment with a low amount of traffic, using CLIENT can be used to aid in network packet routing.
+
+Another mobile setup could look like a node permanently mounted in a vehicle (with an external antenna) as well as a node on your person. The vehicle mounted node can be set to CLIENT while the node on your person can be set to CLIENT_MUTE. This is so the vehicle node can handle the network packet routing as it is better suited with the higher externally mounted antenna.
+
+
 ## (Not) Sharing Your Location
 
 Telemetry is shared over your [PRIMARY channel](/docs/configuration/radio/channels#role). This means that if your node has acquired GPS coordinates from an integrated GPS chip, or from your mobile device, your coordinates will be sent to the mesh over this channel, using its defined encryption (if any).
