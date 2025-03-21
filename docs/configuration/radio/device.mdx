@@ -29,6 +29,20 @@ The device config options are: Role, Rebroadcast Mode, GPIO for User Button, GPI
 | ROUTER         | Infrastructure node for extending network coverage by always rebroadcasting packets once. Visible in Nodes list.                                                 | Best positioned in strategic locations to maximize the network's overall coverage. Device is shown in topology.                                             |
 | ROUTER_LATE    | Infrastructure node that always rebroadcasts packets once but only after all other modes, ensuring additional coverage for local clusters. Visble in Nodes list. | Ideal for covering dead spots or ensuring reliability for a cluster of nodes where placement doesn’t benefit the broader mesh. Device is shown in topology. |
 
+### Roles Best Practices
+
+#### Home Setup
+
+A typical home setup could look like a node in an attic or on the roof as well as a node or nodes in the home. The attic/roof node is used to receive/forward traffic as it is better suited with a higher mounted antenna. In this case, it is recommended to set this node's role type to CLIENT. It is NOT recommended to use ROUTER or REPEATER as these roles are reserved for best positioned in strategic locations to maximize the network's overall coverage. Adding "Not Monitored" to the Long Name of this node can inform others that this node's purpose is to simply receive/forward traffic and isn't monitored.
+
+For the rest of the nodes in the home, it is recommended to use CLIENT_MUTE as these nodes do not need to participate in packet routing.
+
+#### Mobile setup
+
+A common mobile setup could look like a single node on your person. In an environment with a high amount of traffic, it is recommended to use CLIENT_MUTE as this node doesn't need to participate in packet routing. In an environment with a low amount of traffic, using CLIENT can be used to aid in network packet routing.
+
+Another mobile setup could look like a node permanently mounted in a vehicle (with an external antenna) as well as a node on your person. The vehicle mounted node can be set to CLIENT while the node on your person can be set to CLIENT_MUTE. This is so the vehicle node can handle the network packet routing as it is better suited with the higher externally mounted antenna.
+
 :::tip
 Still not sure which role to use? Check out our blog post: [Choosing the Right Device Role](/blog/choosing-the-right-device-role/)
 :::
