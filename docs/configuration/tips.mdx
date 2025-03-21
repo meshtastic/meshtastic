@@ -45,7 +45,7 @@ Remember: A network of `CLIENT` nodes with a small number of well-placed `ROUTER
 
 A home setup is one where you have a single node or multiple nodes including a node in an attic or on the roof as well as a node or nodes in the home.
 
-For a home setup with a single node, use the CLIENT role. This node should be mounted as high as possible in the home.
+For a home setup with a single node, use the CLIENT role. This node should be mounted as high as possible.
 
 For a home setup with a node in the attic or on the roof, use the CLIENT role as the attic/roof node is used to receive/forward traffic due to it being better suited with a higher mounted antenna. It is NOT recommended to use ROUTER or REPEATER as these roles are reserved for best positioned in strategic locations to maximize the network's overall coverage. Adding "Not Monitored" to the Long Name of this node can inform others that this node's purpose is to simply receive/forward traffic and isn't monitored. For the rest of the nodes in the home, use the CLIENT_MUTE role as these nodes do not need to participate in packet routing.
 
@@ -54,6 +54,8 @@ For a home setup with a node in the attic or on the roof, use the CLIENT role as
 A mobile setup is one where you have a single node on your person or one or more in a vehicle. 
 
 For a mobile setup with a single node on your person in an environment with a high amount of traffic, use the CLIENT_MUTE role as this node doesn't need to participate in packet routing. In an environment with a low amount of traffic, using the CLIENT role can be used to aid in network packet routing.
+
+For a mobile setup with a single node in a vehicle, use the CLIENT role. This node should be mounted as high as possible.
 
 For a mobile setup with a node permanently mounted in/on a vehicle (with an external antenna) as well as a node on your person, use the Client role for the vehicle node and CLIENT_MUTE for the node on your person. This is so the vehicle node can solely handle the network packet routing as it is better suited with the higher externally mounted antenna.
 
