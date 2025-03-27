@@ -8,6 +8,7 @@ description: "Find answers to your Meshtastic questions: from getting started, d
 
 import { FaqAccordion } from "/src/components/FaqAccordion";
 import { FaqStructuredData } from "/src/components/FaqStructuredData";
+import QRCode from "@site/docs/blocks/_qr-code.mdx";
 
 export const Faq = {
   general: [
@@ -234,7 +235,9 @@ Amateur radio regulations differ significantly across countries, with many prohi
 
 <FaqAccordion rows={Faq.apple} />
 
-## Channels
+## Channels[^1]
+
+[^1]: <QRCode />
 
 <FaqAccordion rows={Faq.channels} />
 
