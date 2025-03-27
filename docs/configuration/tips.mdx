@@ -10,12 +10,18 @@ import QRCode from "@site/docs/blocks/_qr-code.mdx";
 
 ## Roles
 
-It is strongly recommended to keep your [ROLE](/docs/configuration/radio/device#roles) set to `CLIENT`. Only change this if you have a specific, well-understood reason to do so.
+It is strongly recommended to keep your [ROLE](/docs/configuration/radio/device#roles) set to `CLIENT` or `CLIENT_MUTE`. Only use other roles if you have a specific, well-understood reason to do so. Read our [blog post about choosing the best role](/blog/choosing-the-right-device-role/).
 
-### Why `CLIENT` is Recommended
+### Recommended Roles
 
-- `CLIENT` nodes efficiently repeat and route packets as needed.
-- They use smart delays for rebroadcasting, improving network stability.
+- `CLIENT` nodes efficiently repeat and route packets as needed. 
+  - **Almost always the correct mode.**
+  - Uses smart delays for rebroadcasting, improving network stability.
+  - Use for "rooftop" or other nodes that enhance your mesh.
+  - Use during isolated activities such as hiking, skiing, or MTB where you're in an area with few nodes.
+- `CLIENT_MUTE` nodes behave as above but do not repeat packets.
+  - Use for personal nodes that are in range of a higher-profile node in a dense or congested mesh.
+  - Use when you have multiple nodes in close proximity (set your "best-placed" node to `CLIENT`).
 
 ![Client Node Example](/img/configuration/client.webp)
 *One example of a 'Client' node.  Photo credit: Cully@KBOXLABS*

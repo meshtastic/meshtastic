@@ -9,7 +9,7 @@ import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 import { Icon } from "@iconify/react";
 
-The device config options are: Role, Serial Output, and Debug Log. Device config uses an admin message sending a `Config.Device` protobuf.
+The device config options are: Role, Rebroadcast Mode, GPIO for User Button, GPIO for PWM Buzzer, Node Info Broadcast Seconds, Double Tap as Button Press, Disable Triple Click, Timezone Definition, and LED Heartbeat Disabled. Device config uses an admin message sending a `Config.Device` protobuf.
 
 ## Device Config Values
 
@@ -84,13 +84,7 @@ This setting defines the device's behavior for how messages are rebroadcasted.
 |        `NONE`        |                                       NONE - Only permitted for SENSOR, TRACKER and TAK_TRACKER roles, this will inhibit all rebroadcasts, not unlike CLIENT_MUTE role.                                       |
 | `CORE_PORTNUMS_ONLY` | CORE_PORTNUMS_ONLY - Ignores packets from non-standard portnums such as: TAK, RangeTest, PaxCounter, etc. Only rebroadcasts packets with standard portnums: NodeInfo, Text, Position, Telemetry, and Routing. |
 
-## TZDEF (Timezone Definition)
-
-The `tzdef` setting allows the local offset to be defined for the device. It uses the TZ Database format to display the correct local time on the device display and in its logs.
-
-To set the timezone, use the POSIX TZ Database string for the relevant region. Here is a list of [supported timezones](https://github.com/nayarsystems/posix_tz_db/blob/master/zones.csv). For example, if your region is `America/Los_Angeles`, you would input `PST8PDT,M3.2.0,M11.1.0` as the timezone.
-
-## GPIO for user button
+## GPIO for User Button
 
 This is the GPIO pin number that will be used for the user button, if your device does not come with a predefined user button.
 
@@ -105,6 +99,20 @@ This is the number of seconds between NodeInfo message (containing i.a. long and
 ## Double Tap as Button Press
 
 This option will enable a double tap, when a supported accelerometer is attached to the device, to be treated as a button press.
+
+## Disable Triple Click
+
+Disables the triple-press of user button to enable or disable GPS.
+
+## TZDEF (Timezone Definition)
+
+The `tzdef` setting allows the local offset to be defined for the device. It uses the TZ Database format to display the correct local time on the device display and in its logs.
+
+To set the timezone, use the POSIX TZ Database string for the relevant region. Here is a list of [supported timezones](https://github.com/nayarsystems/posix_tz_db/blob/master/zones.csv). For example, if your region is `America/Los_Angeles`, you would input `PST8PDT,M3.2.0,M11.1.0` as the timezone.
+
+## LED Heartbeat Disabled
+
+If true, disable the default blinking LED (LED_PIN) behavior on the device.
 
 ## Device Config Client Availability
 
@@ -187,6 +195,7 @@ All device config options are available in the python CLI. Example commands are 
 | device.buzzer_gpio                | `0` - `34`                                                         | `0`               |
 | device.node_info_broadcast_secs   | `3600` - `UINT MAX`                                                | `10800` (3 hours) |
 | device.double_tap_as_button_press | `false`, `true`                                                    | `false`           |
+| device.disable_triple_click       | `false`, `true`                                                    | `false`           |
 
 :::tip
 

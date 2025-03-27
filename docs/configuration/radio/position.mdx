@@ -11,7 +11,7 @@ import { Icon } from "@iconify/react";
 
 Position data from GPS is provided by either the radio or your paired phone. It is not required to use Meshtastic, but time calculations require at least one device on the mesh to have either a GPS, RTC, or internet connection for NTP.
 
-The position config uses an admin message to send a `Config.Position` protobuf. The position config options are: GPS Mode, GPS Update Interval, Fixed Position, Smart Broadcast, Smart Broadcast Minimum Distance, Smart Broadcast Minimum Interval, Broadcast Interval, Position Packet Flags, and GPS RX/TX Pins.
+The position config uses an admin message to send a `Config.Position` protobuf. The position config options are: GPS Mode, GPS Update Interval, Fixed Position, Smart Broadcast, Smart Broadcast Minimum Distance, Smart Broadcast Minimum Interval, Broadcast Interval, Position Packet Flags, and GPS RX/TX/EN Pins.
 
 ## Position Config Values
 
@@ -19,9 +19,9 @@ The position config uses an admin message to send a `Config.Position` protobuf. 
 
 Configures whether the GPS functionality is enabled, disabled, or not present on the node.
 
-Acceptable values: `Disabled`, `Enabled`, and `Not_Present`.
+Acceptable values: `DISABLED`, `ENABLED`, and `NOT_PRESENT`.
 
-Generally, depending on the device and its configuration, this value will default to either `Enabled` or `Not Present`.
+Generally, depending on the device and its configuration, this value will default to either `ENABLED` or `NOT_PRESENT`.
 
 ### GPS Update Interval
 
@@ -85,9 +85,9 @@ Defines which options are sent in POSITION messages. Values are stored as a bit 
 |      HEADING       |          Include positional heading (from GPS solution)          |
 |       SPEED        |           Include positional speed (from GPS solution)           |
 
-### GPIO RX/TX for GPS Module
+### GPIO RX/TX/EN for GPS Module
 
-If your device does not have a fixed GPS chip, you can define the GPIO pins for the RX and TX pins of a GPS module.
+If your device does not have a fixed GPS chip, you can define the GPIO pins for the RX, TX, and EN pins of a GPS module.
 
 ## Position Config Client Availability
 
@@ -163,7 +163,7 @@ All Position config commands are available in the python CLI. Example commands a
 
 |                    Setting                     |                                                             Acceptable Values                                                             |           Default            |
 | :--------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------: | :--------------------------: |
-|               position.gps_mode                |                                                   `enabled`, `disabled`, `not_present`                                                    |  `Enabled` or `Not Present`  |
+|               position.gps_mode                |                                                   `ENABLED`, `DISABLED`, `NOT_PRESENT`                                                    |  `ENABLED` or `NOT_PRESENT`  |
 |          position.gps_update_interval          |                                                            `integer` (seconds)                                                            |   Default `0` is 2 Minutes   |
 |            position.fixed_position             |                                                              `true`, `false`                                                              |           `false`            |
 |   position.position_broadcast_smart_enabled    |                                                              `true`, `false`                                                              |            `true`            |
