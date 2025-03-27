@@ -1,0 +1,122 @@
+---
+title: "Why Your Mesh Should Switch from LongFast"
+description: "Improve your local mesh network by moving away from the default LongFast preset to higher bandwidth options"
+slug: why-your-mesh-should-switch-from-longfast
+authors: [thebentern]
+tags: [meshtastic, lora, configuration, optimization]
+date: 2025-03-15T12:00
+hide_table_of_contents: false
+image: "/img/blog/baymesh.png"
+---
+
+If you're running a Meshtastic network with more than a handful of nodes and you are be experiencing issues with message delivery, latency, or network congestion. It could be, that you've outgrown the default LoRA radio preset: **LongFast**.
+
+While LongFast is an excellent general-purpose preset for many users, it may not be the optimal choice for larger or denser meshes. In this post, we will explain why switching to higher bandwidth presets might significantly improve your network's performance.
+
+{/* truncate */}
+
+## Understanding LoRa Presets
+
+Meshtastic devices use LoRa (Long Range) radio to communicate, balancing three key factors: range, speed, and reliability. These factors are controlled through settings like bandwidth, spreading factor, and coding rate, which are conveniently bundled into "presets."
+
+The **default** preset, LongFast, uses a 125 kHz bandwidth and spreading factor 11. This configuration provides excellent range but comes at the cost of relatively slow data transmission (about 1 kbps).
+
+Here's how the presets compare:
+
+| Preset | Bandwidth (kHz) | SF | Data Rate (kbps) | Link Budget | Best For |
+|--------|-----------------|----|-----------------:|-------------|----------|
+| **LongFast** | **125** | **11** | **1.07** | **153dB** | **Default** |
+| MediumSlow | 250 | 10 | 1.95 | 150.5dB | Better speed |
+| MediumFast | 250 | 9 | 3.52 | 148dB | Fast with good range |
+| ShortSlow | 250 | 8 | 6.25 | 145.5dB | Fast with moderate range |
+| ShortFast | 250 | 7 | 10.94 | 143dB | Very fast, shorter range |
+| ShortTurbo | 500 | 7 | 21.88 | 140dB | Maximum speed, minimum range |
+
+## The Problem with LongFast in Large / Dense Networks
+
+While LongFast offers great range, it has drawbacks that become increasingly problematic as your mesh grows:
+
+### 1. Increased Airtime
+
+LongFast messages stay "on the air" longer than some of the faster presets, consuming precious channel time. With slower data rates, each transmission occupies the channel longer, preventing other nodes from transmitting during this window.
+
+### 2. Higher Collision Probability
+
+When multiple nodes try to transmit in a busy network, the chance of packet collisions increases dramatically with slower presets because each transmission blocks the channel for longer.
+
+### 3. Reduced Overall Throughput
+
+The combination of these factors leads to lower effective throughput across your entire mesh, even though LongFast seems like it should deliver messages reliably.
+
+## Benefits of Higher Bandwidth Presets
+
+Switching to higher bandwidth presets like MediumFast, ShortSlow, or even ShortFast offers several advantages:
+
+### 1. Reduced Airtime
+
+Messages are transmitted faster, freeing up the channel for other nodes to communicate.
+
+### 2. Lower Collision Probability
+
+With shorter transmission times, there's less chance that two nodes will try to transmit simultaneously.
+
+### 3. Improved Message Delivery
+
+In dense networks, the improved throughput often more than compensates for the slightly reduced range, resulting in better overall message delivery.
+
+### 4. Lower Latency
+
+Messages travel through the mesh more quickly, reducing delays that can be frustrating for users.
+
+## When Should You Switch?
+
+You should perhaps consider moving away from LongFast if your mesh has:
+
+- **More than 60 nodes** in relatively close proximity
+- **High message volume** from many users or automated systems
+- **Dense Urban / suburban deployment** where maximum range is less important than throughput
+- **Experienced message delays** or inconsistent delivery due to congestion
+
+## Recommended Alternatives
+
+### For Extremely Dense Networks
+
+**ShortFast** or **ShortSlow** - These presets offer the highest data rates, dramatically reducing channel congestion. While the range is shorter, urban deployments typically have nodes close enough together that this might not be a significant problem.
+
+### For Dense Urban / Suburban Networks
+
+**MediumFast** or **MediumSlow** - These presets strike an excellent balance between range and speed, offering 3-4 times the data rate of LongFast while still maintaining respectable range.
+
+## How to Make the Change
+
+Switching presets is straightforward but requires updating all nodes in your mesh:
+
+1. **Web UI**: Navigate to Radio > LoRa and change the "Modem Preset" dropdown
+2. **Meshtastic CLI**: Use the command like `meshtastic --ch-medfast` or similar
+3. **Android/iOS App**: Go to Settings > Radio > LoRa > Modem Preset
+
+Remember: **All nodes in your mesh should use the same preset** in order to remain in the network.
+
+### Real-World Success
+
+Many larger Meshtastic deployments have seen substantial improvements after switching from LongFast:
+
+ - **BayMesh**: A community mesh in the San Francisco Bay Area switched to MediumSlow and reported... 
+
+![BayMesh Community Mesh](../../../static/img/blog/baymesh.png)
+
+### Getting others to switch / Dealing with FOMO
+
+If you're in a community or group where others are still using LongFast, consider sharing your experiences and the benefits you've seen. You can also help them understand the trade-offs involved in switching presets.
+This can be a great opportunity to educate others about the importance of network optimization and how it can lead to a better experience for everyone. 
+For those who are hesitant to switch, remind them that the default LongFast setting is not a one-size-fits-all solution. Encourage them to experiment with different presets and find what works best for their specific deployment.
+
+## So long, LongFast!
+
+While LongFast is an excellent default setting that balances range and speed for small to medium-sized networks, larger or denser deployments often benefit significantly from switching to higher bandwidth presets.
+
+The slightly reduced theoretical range is usually offset by improved reliability, lower latency, and better overall user experience, especially in scenarios where nodes are relatively close together.
+
+If your mesh has grown beyond a handful of nodes or you're experiencing congestion-related issues, it's worth experimenting with alternative presets to find the optimal configuration for your mesh.
+
+**What settings are you using for your mesh? Share your experiences in the comments or on our community forums!**
