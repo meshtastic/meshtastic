@@ -59,7 +59,7 @@ Alternatively, if you wish to only share your location with trusted parties, you
 
 1. Ensure you have not changed the LoRa [Modem Preset](/docs/configuration/radio/lora#modem-preset) from the default `unset` / `LONG_FAST`.
 2. On your PRIMARY channel, set anything you'd like for the channel's name and choose a random PSK.
-3. Enable a SECONDARY channel with an empty name with the Meshtastic default PSK "AQ==".  Note:  Older versions of Meshtastic used the channel name: "LongFast".
+3. Enable a SECONDARY channel named "LongFast" with PSK "AQ==". For Apple devices, leave the channel name  blank.
 4. If your LoRa frequency slot is set to the default (`0`), the radio's transmit frequency will be automatically changed based on your PRIMARY channel's name. In this case, you will have to manually set it back to your region's default (in LoRa settings) in order to interface with users on the default slot:
 
 ### Default Primary Frequency Slots by Region
