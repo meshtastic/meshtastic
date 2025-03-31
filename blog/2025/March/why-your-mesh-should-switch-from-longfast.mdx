@@ -44,13 +44,13 @@ LongFast messages stay "on the air" longer than some of the faster presets, cons
 
 When multiple nodes try to transmit in a busy network, the chance of packet collisions increases dramatically with slower presets because each transmission blocks the channel for longer.
 
-### 3. Reduced Overall Throughput
+### 3. Reduced Throughput
 
-The combination of these factors leads to lower effective throughput across your entire mesh, even though LongFast seems like it should deliver messages reliably.
+The combination of the aforementioned factors leads to lower effective throughput across your entire mesh, even though LongFast seems like it should deliver messages reliably. In a larger or denser network, this can result in service interruption and frustrations for users.
 
 ## Benefits of Higher Bandwidth Presets
 
-Switching to higher bandwidth presets like MediumFast, ShortSlow, or even ShortFast offers several advantages:
+Switching to higher bandwidth presets like MediumSlow, MediumFast, ShortSlow, or even ShortFast offers a number of advantages:
 
 ### 1. Reduced Airtime
 
@@ -60,21 +60,22 @@ Messages are transmitted faster, freeing up the channel for other nodes to commu
 
 With shorter transmission times, there's less chance that two nodes will try to transmit simultaneously.
 
-### 3. Improved Message Delivery
+### 3. Better Scalability
 
-In dense networks, the improved throughput often more than compensates for the slightly reduced range, resulting in better overall message delivery.
+Higher bandwidth presets are designed to handle more nodes and higher message volumes, making them more suitable for larger deployments. In dense networks, the improved throughput often more than compensates for the slightly reduced range, resulting in better overall message delivery.
 
 ### 4. Lower Latency
 
 Messages travel through the mesh more quickly, reducing delays that can be frustrating for users.
 
+
 ## When Should You Switch?
 
 You should perhaps consider moving away from LongFast if your mesh has:
 
-- **More than 60 nodes** in relatively close proximity
+- **More than 60 nodes**, especially if they are in relatively close proximity
 - **High message volume** from many users or automated systems
-- **Dense Urban / suburban deployment** where maximum range is less important than throughput
+- **An Urban / suburban deployments** where maximizing range is less important than throughput
 - **Experienced message delays** or inconsistent delivery due to congestion
 
 ## Recommended Alternatives
@@ -99,7 +100,7 @@ Remember: **All nodes in your mesh should use the same preset** in order to rema
 
 ### Real-World Success
 
-Many larger Meshtastic deployments have seen substantial improvements after switching from LongFast:
+Many larger Meshtastic deployments have seen substantial improvements after switching from LongFast, one of those is BayMesh:
 
  - **BayMesh**: A community mesh in the San Francisco Bay Area switched to MediumSlow and reported... 
 
@@ -110,6 +111,8 @@ Many larger Meshtastic deployments have seen substantial improvements after swit
 If you're in a community or group where others are still using LongFast, consider sharing your experiences and the benefits you've seen. You can also help them understand the trade-offs involved in switching presets.
 This can be a great opportunity to educate others about the importance of network optimization and how it can lead to a better experience for everyone. 
 For those who are hesitant to switch, remind them that the default LongFast setting is not a one-size-fits-all solution. Encourage them to experiment with different presets and find what works best for their specific deployment.
+
+Some groups that have switched to a higher-bandwidth preset have left a bot on the LongFast preset to send messages redirecting those who haven't switched yet to the new channel. This allows for a transition and ensures that no one is left out of the new network while they consider the change.
 
 ## So long, LongFast!
 
