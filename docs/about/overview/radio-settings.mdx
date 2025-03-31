@@ -8,6 +8,7 @@ description: "Maximize your Meshtastic device's potential with detailed radio se
 ---
 
 import { FrequencyCalculator } from "/src/components/tools/FrequencyCalculator";
+import QRCode from "@site/docs/blocks/_qr-code.mdx";
 
 :::info
 Meshtastic is **not** LoRaWAN, Helium or TTN (TheThingsNetwork). Meshtastic uses the full spectrum frequency range designated to LoRa technology per region. This allows for several hundred possible frequency channels in the US region alone.
@@ -100,7 +101,10 @@ The link budget used by these calculations assumes a transmit power of 22dBm and
 
 Custom settings can be applied by using [supported software](/docs/software).
 
-After applying the settings, you will need to restart the device. After your device is restarted, it will generate a new crypto key and you will need to share the newly generated QR Code or URL to all your other devices.
+After applying the settings, you will need to restart the device. After your device is restarted, it will generate a new crypto key and you will need to share the newly generated QR[^2] Code or URL to all your other devices.
+
+[^2]:
+    <QRCode />
 
 Some example settings:
 
