@@ -1,5 +1,5 @@
 import { Protobuf, Types } from "@meshtastic/js";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 interface Region {
   freqStart: number;
@@ -289,6 +289,33 @@ const modemPresets = new Map<
   ],
 ]);
 
+// Helper function to format the channel name (e.g., LONG_FAST -> LongFast)
+const formatChannelName = (name: string): string => {
+  return name
+    .toLowerCase()
+    .split("_")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join("");
+};
+
+// Helper function to calculate hash
+const calculateHash = (str: string): number => {
+  let hash = 5381;
+  for (let i = 0; i < str.length; i++) {
+    hash = (hash << 5) + hash + str.charCodeAt(i); // hash * 33 + c
+  }
+  return hash >>> 0; // Ensure unsigned 32-bit integer
+};
+
+// Helper function to determine the default frequency slot
+const determineFrequencySlot = (
+  channelName: string,
+  numFreqSlots: number,
+): number => {
+  const hashValue = calculateHash(channelName);
+  return hashValue % numFreqSlots;
+};
+
 export const FrequencyCalculator = (): JSX.Element => {
   const [modemPreset, setModemPreset] =
     useState<Protobuf.Config.Config_LoRaConfig_ModemPreset>(
@@ -303,6 +330,7 @@ export const FrequencyCalculator = (): JSX.Element => {
   );
   const [numChannels, setNumChannels] = useState<number>(0);
   const [channelFrequency, setChannelFrequency] = useState<number>(0);
+  const [defaultSlot, setDefaultSlot] = useState<number>(0);
 
   useEffect(() => {
     const selectedRegion = RegionData.get(region);
@@ -326,12 +354,22 @@ export const FrequencyCalculator = (): JSX.Element => {
         selectedModemPreset.bw / 2000 +
         updatedChannel * (selectedModemPreset.bw / 1000),
     );
+
+    // Calculate the default slot
+    const channelName = formatChannelName(
+      Protobuf.Config.Config_LoRaConfig_ModemPreset[modemPreset],
+    ); // Example: LONG_FAST -> LongFast
+    const defaultSlot = determineFrequencySlot(
+      channelName,
+      calculatedNumChannels,
+    );
+    setDefaultSlot(defaultSlot);
   }, [modemPreset, region, channel]);
 
   return (
-    <div className="flex flex-col border-l-[5px] shadow-md my-4 border-accent rounded-lg p-4 bg-secondary gap-2">
-      <div className="flex gap-2">
-        <label htmlFor="modemPreset">Modem Preset:</label>
+    <div class="flex flex-col border-l-[5px] shadow-md my-4 border-accent rounded-lg p-4 bg-secondary gap-2">
+      <div class="flex gap-2">
+        <label for="modemPreset">Modem Preset:</label>
         <select
           id="modemPreset"
           value={modemPreset}
@@ -350,8 +388,8 @@ export const FrequencyCalculator = (): JSX.Element => {
           ))}
         </select>
       </div>
-      <div className="flex gap-2">
-        <label htmlFor="region">Region:</label>
+      <div class="flex gap-2">
+        <label for="region">Region:</label>
         <select
           id="region"
           value={region}
@@ -364,8 +402,19 @@ export const FrequencyCalculator = (): JSX.Element => {
           ))}
         </select>
       </div>
-      <div className="flex gap-2 mb-4">
-        <label htmlFor="numSlots" className="font-semibold">
+      <div class="flex gap-2">
+        <label for="defaultSlot" class="font-semibold">
+          Default Frequency Slot:
+        </label>
+        <input
+          id="defaultSlot"
+          type="number"
+          disabled={true}
+          value={defaultSlot + 1} // Display as 1-based index
+        />
+      </div>
+      <div class="flex gap-2 mb-4">
+        <label for="numSlots" class="font-semibold">
           Number of slots:
         </label>
         <input
@@ -375,8 +424,8 @@ export const FrequencyCalculator = (): JSX.Element => {
           value={numChannels}
         />
       </div>
-      <div className="flex gap-2">
-        <label htmlFor="frequencySlot">Frequency Slot:</label>
+      <div class="flex gap-2">
+        <label for="frequencySlot">Frequency Slot:</label>
         <select
           id="frequencySlot"
           value={channel}
@@ -389,8 +438,8 @@ export const FrequencyCalculator = (): JSX.Element => {
           ))}
         </select>
       </div>
-      <div className="flex gap-2">
-        <label htmlFor="slotFrequency" className="font-semibold">
+      <div class="flex gap-2">
+        <label for="slotFrequency" class="font-semibold">
           Frequency of slot:
         </label>
         <input
