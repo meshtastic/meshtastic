@@ -60,3 +60,24 @@ The source code for the WebUI can be found on our [GitHub](https://github.com/me
 Instructions for building and running the project can be found in the repo's readme.
 
 [^1]: If multiple Meshtastic devices are serving the web client on the same local area network, these devices can be reached by adding a suffix of "-2" (or higher numbers if there are additional devices) to the local URL. Example `meshtastic-2.local` or `meshtastic-3.local`.
+
+## SBC Linux manual update
+
+The WebUI can be manually updated on linux systems using the precompiled build tar.
+
+Download latest Build.tar file, extract to `/usr/shared/meshtasticd/web`. 
+
+```bash
+# Extract Build.tar
+wget https://github.com/meshtastic/web/releases/download/v2.6.0/Build.tar
+mkdir -p web && tar xf Build.tar -C web
+
+# Extract files.
+gunzip web/ -r
+
+# Back up existing web dir for rollback
+mv /usr/shared/meshtasticd/web /usr/shared/meshtasticd/web.org
+
+# Move files to the required directory
+sudo mv web /usr/shared/meshtasticd/
+```
