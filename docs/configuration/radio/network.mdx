@@ -65,10 +65,10 @@ To configure an rsyslog Server and Port
 
 Defines which auxiliary network protocols are used to send packets. Values are stored as a bit field of boolean configuration options (bitwise OR of ProtocolFlags).
 
-|     Value      |                        Description                         |
-|:--------------:|:----------------------------------------------------------:|
-|  NO_BROADCAST  |     Do not broadcast packets over any network protocol     |
-| UDP_BROADCAST  | Enable broadcasting packets via UDP over the local network |
+|     Value     |                        Description                         |
+| :-----------: | :--------------------------------------------------------: |
+| NO_BROADCAST  |     Do not broadcast packets over any network protocol     |
+| UDP_BROADCAST | Enable broadcasting packets via UDP over the local network |
 
 :::tip
 The first time your device restarts after enabling WiFi or Ethernet, it will take an additional 20-30 seconds to boot. This is to generate self-signed SSL keys. The keys will be saved for future reuse.
@@ -151,14 +151,14 @@ All Network config options are available in the python CLI.
 
 :::
 
-|       Setting        | Acceptable Values |     Default      |
-| :------------------: | :---------------: | :--------------: |
-|  network.ntp_server  |      string       | `0.pool.ntp.org` |
-| network.wifi_enabled |  `true`, `false`  |     `false`      |
-|  network.wifi_ssid   |      string       |       `""`       |
-|   network.wifi_psk   |      string       |       `""`       |
-| network.eth_enabled  |  `true`, `false`  |     `false`      |
-| network.address_mode | `DHCP`, `STATIC`  |      `DHCP`      |
+|       Setting        | Acceptable Values |          Default          |
+| :------------------: | :---------------: | :-----------------------: |
+|  network.ntp_server  |      string       | `meshtastic.pool.ntp.org` |
+| network.wifi_enabled |  `true`, `false`  |          `false`          |
+|  network.wifi_ssid   |      string       |           `""`            |
+|   network.wifi_psk   |      string       |           `""`            |
+| network.eth_enabled  |  `true`, `false`  |          `false`          |
+| network.address_mode | `DHCP`, `STATIC`  |          `DHCP`           |
 
 :::tip
 
@@ -171,7 +171,7 @@ meshtastic --set network.wifi_enabled true --set network.wifi_ssid "my network" 
 :::
 
 ```shell title="Set NTP Server"
-meshtastic --set network.ntp_server "0.pool.ntp.org"
+meshtastic --set network.ntp_server "meshtastic.pool.ntp.org"
 ```
 
 ```shell title="Enable / Disable WiFi"

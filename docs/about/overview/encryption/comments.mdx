@@ -64,7 +64,7 @@ I'm guessing that the network behaves somewhat like a store-and-forward network 
 
 - The IV initialization only use 31 random bits per reboot, it then increment messages sequentially. This is not high, it makes duplicate unlikely but probable given the complete scale of the network. Thankfully IV include lower 32 bits of the MAC address which should be unique per node, so each node is it's own birthday paradox, we aren't looking for network wide birthday paradox which would be easy to hack. See [`#4031`](https://github.com/meshtastic/firmware/issues/4031).
   Could be fixed.
-- The lack of [integrity wasn't properly considered](https://github.com/meshtastic/firmware/issues/4030), the remote administration module implements priviliged RPC calls over AES-CTR without any MAC or AEAD.
+- The lack of [integrity wasn't properly considered](https://github.com/meshtastic/firmware/issues/4030), the remote administration module implements privileged RPC calls over AES-CTR without any MAC or AEAD.
   Could be fixed.
 - The AES-CTR implementation looks like it protects Confidentiality assuming IVs are not duplicated.
 - The lack of Forward Secrecy is a bit worrying for a chat messenger when new users lack the paranoid and annoying key management practice that would be required for safe operation.

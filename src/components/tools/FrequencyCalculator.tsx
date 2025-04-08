@@ -1,5 +1,5 @@
-import { Protobuf, Types } from "@meshtastic/js";
-import React, { useEffect, useState } from "react";
+import { Protobuf, type Types } from "@meshtastic/js";
+import { useEffect, useState } from "react";
 
 interface Region {
   freqStart: number;
@@ -279,15 +279,51 @@ const modemPresets = new Map<
       sf: 12,
     },
   ],
-  [
-    Protobuf.Config.Config_LoRaConfig_ModemPreset.VERY_LONG_SLOW,
-    {
-      bw: 62.5,
-      cr: 8,
-      sf: 12,
-    },
-  ],
 ]);
+
+// Helper function to get the formatted channel name based on the modem preset
+const getChannelName = (
+  preset: Protobuf.Config.Config_LoRaConfig_ModemPreset,
+): string => {
+  switch (preset) {
+    case Protobuf.Config.Config_LoRaConfig_ModemPreset.SHORT_TURBO:
+      return "ShortTurbo";
+    case Protobuf.Config.Config_LoRaConfig_ModemPreset.SHORT_SLOW:
+      return "ShortSlow";
+    case Protobuf.Config.Config_LoRaConfig_ModemPreset.SHORT_FAST:
+      return "ShortFast";
+    case Protobuf.Config.Config_LoRaConfig_ModemPreset.MEDIUM_SLOW:
+      return "MediumSlow";
+    case Protobuf.Config.Config_LoRaConfig_ModemPreset.MEDIUM_FAST:
+      return "MediumFast";
+    case Protobuf.Config.Config_LoRaConfig_ModemPreset.LONG_SLOW:
+      return "LongSlow";
+    case Protobuf.Config.Config_LoRaConfig_ModemPreset.LONG_FAST:
+      return "LongFast";
+    case Protobuf.Config.Config_LoRaConfig_ModemPreset.LONG_MODERATE:
+      return "LongMod";
+    default:
+      return "Invalid";
+  }
+};
+
+// Helper function to calculate hash
+const calculateHash = (str: string): number => {
+  let hash = 5381;
+  for (let i = 0; i < str.length; i++) {
+    hash = (hash << 5) + hash + str.charCodeAt(i); // hash * 33 + c
+  }
+  return hash >>> 0; // Ensure unsigned 32-bit integer
+};
+
+// Helper function to determine the default frequency slot
+const determineFrequencySlot = (
+  channelName: string,
+  numFreqSlots: number,
+): number => {
+  const hashValue = calculateHash(channelName);
+  return hashValue % numFreqSlots;
+};
 
 export const FrequencyCalculator = (): JSX.Element => {
   const [modemPreset, setModemPreset] =
@@ -298,40 +334,63 @@ export const FrequencyCalculator = (): JSX.Element => {
     useState<Protobuf.Config.Config_LoRaConfig_RegionCode>(
       Protobuf.Config.Config_LoRaConfig_RegionCode.US,
     );
-  const [channel, setChannel] = useState<Types.ChannelNumber>(
-    Types.ChannelNumber.Primary,
-  );
+  const [channel, setChannel] = useState<Types.ChannelNumber>(0);
   const [numChannels, setNumChannels] = useState<number>(0);
   const [channelFrequency, setChannelFrequency] = useState<number>(0);
+  const [defaultSlot, setDefaultSlot] = useState<number>(0);
 
+  // Recalculate values when modemPreset or region changes
   useEffect(() => {
     const selectedRegion = RegionData.get(region);
     const selectedModemPreset = modemPresets.get(modemPreset);
-    const calculatedNumChannels = Math.floor(
-      (selectedRegion.freqEnd - selectedRegion.freqStart) /
-        (selectedRegion.spacing + selectedModemPreset.bw / 1000),
-    );
 
-    setNumChannels(calculatedNumChannels);
+    if (selectedRegion && selectedModemPreset) {
+      const calculatedNumChannels = Math.floor(
+        (selectedRegion.freqEnd - selectedRegion.freqStart) /
+          (selectedRegion.spacing + selectedModemPreset.bw / 1000),
+      );
 
-    let updatedChannel = channel;
-    if (updatedChannel >= calculatedNumChannels) {
-      updatedChannel = 0;
-    }
+      setNumChannels(calculatedNumChannels);
 
-    setChannel(updatedChannel);
+      // Reset the channel to 0 when modemPreset or region changes
+      const defaultChannel = 0;
+      setChannel(defaultChannel);
 
-    setChannelFrequency(
-      selectedRegion.freqStart +
+      // Recalculate the frequency for the default channel
+      const newChannelFrequency =
+        selectedRegion.freqStart +
         selectedModemPreset.bw / 2000 +
-        updatedChannel * (selectedModemPreset.bw / 1000),
-    );
-  }, [modemPreset, region, channel]);
+        defaultChannel * (selectedModemPreset.bw / 1000);
+      setChannelFrequency(newChannelFrequency);
+
+      // Calculate the default slot using the new channel name logic
+      const channelName = getChannelName(modemPreset); // Use the full name
+      const defaultSlot = determineFrequencySlot(
+        channelName,
+        calculatedNumChannels,
+      );
+      setDefaultSlot(defaultSlot);
+    }
+  }, [modemPreset, region]);
+
+  // Recalculate the frequency of the selected slot when the channel changes
+  useEffect(() => {
+    const selectedRegion = RegionData.get(region);
+    const selectedModemPreset = modemPresets.get(modemPreset);
+
+    if (selectedRegion && selectedModemPreset) {
+      const newChannelFrequency =
+        selectedRegion.freqStart +
+        selectedModemPreset.bw / 2000 +
+        channel * (selectedModemPreset.bw / 1000);
+      setChannelFrequency(newChannelFrequency);
+    }
+  }, [channel, modemPreset, region]);
 
   return (
-    <div className="flex flex-col border-l-[5px] shadow-md my-4 border-accent rounded-lg p-4 bg-secondary gap-2">
-      <div className="flex gap-2">
-        <label htmlFor="modemPreset">Modem Preset:</label>
+    <div class="flex flex-col border-l-[5px] shadow-md my-4 border-accent rounded-lg p-4 bg-secondary gap-2">
+      <div class="flex gap-2">
+        <label for="modemPreset">Modem Preset:</label>
         <select
           id="modemPreset"
           value={modemPreset}
@@ -350,8 +409,8 @@ export const FrequencyCalculator = (): JSX.Element => {
           ))}
         </select>
       </div>
-      <div className="flex gap-2">
-        <label htmlFor="region">Region:</label>
+      <div class="flex gap-2">
+        <label for="region">Region:</label>
         <select
           id="region"
           value={region}
@@ -364,8 +423,19 @@ export const FrequencyCalculator = (): JSX.Element => {
           ))}
         </select>
       </div>
-      <div className="flex gap-2 mb-4">
-        <label htmlFor="numSlots" className="font-semibold">
+      <div class="flex gap-2">
+        <label for="defaultSlot" class="font-semibold">
+          Default Frequency Slot:
+        </label>
+        <input
+          id="defaultSlot"
+          type="number"
+          disabled={true}
+          value={defaultSlot + 1} // Display as 1-based index
+        />
+      </div>
+      <div class="flex gap-2 mb-4">
+        <label for="numSlots" class="font-semibold">
           Number of slots:
         </label>
         <input
@@ -375,8 +445,8 @@ export const FrequencyCalculator = (): JSX.Element => {
           value={numChannels}
         />
       </div>
-      <div className="flex gap-2">
-        <label htmlFor="frequencySlot">Frequency Slot:</label>
+      <div class="flex gap-2">
+        <label for="frequencySlot">Frequency Slot:</label>
         <select
           id="frequencySlot"
           value={channel}
@@ -389,8 +459,8 @@ export const FrequencyCalculator = (): JSX.Element => {
           ))}
         </select>
       </div>
-      <div className="flex gap-2">
-        <label htmlFor="slotFrequency" className="font-semibold">
+      <div class="flex gap-2">
+        <label for="slotFrequency" class="font-semibold">
           Frequency of slot:
         </label>
         <input
