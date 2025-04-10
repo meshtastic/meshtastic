@@ -70,11 +70,10 @@ The easiest way to get started is:
    ```shell
    cp src/modules/ReplyModule.* src/modules/YourModule.*
    ```
-3. Change the port number from `PortNum_REPLY_APP` to `PortNum_PRIVATE_APP`.
+3. Change the port number from `meshtastic_PortNum_REPLY_APP` to the port number you want to use for your data. To test it with text messages, use `meshtastic_PortNum_TEXT_MESSAGE_APP`.
 4. Edit the `setupModules()` function located at `modules/Modules.cpp` to add a call to create an instance of your module (see comment at head of that function).
 5. Rebuild with your new module and install on the device.
-6. Use the [Meshtastic Python CLI tool](https://github.com/meshtastic/Meshtastic-python) to send a packet to your board, for example:
-   - `meshtastic --dest 1234 --sendping` where _1234_ is another mesh node to send the ping to.
+6. Send a packet with your port number to the node to test if your module is being called. If you used the text message port number, you can use any of the client apps to send a text message.
 
 ## Threading
 
