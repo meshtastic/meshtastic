@@ -1,0 +1,26 @@
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+import { Icon } from "@iconify/react";
+
+The following libraries must be installed before building `meshtasticd`:
+<Tabs groupId="operating-systems" queryString="os">
+  <TabItem value="debian" label={<><Icon icon="mdi:debian" style={{ marginRight: "0.25rem" }} height="1.5rem" /> Debian</>} default>
+  ```shell
+  # Base dependencies
+  sudo apt install libgpiod-dev libyaml-cpp-dev libbluetooth-dev libusb-1.0-0-dev libi2c-dev libuv1-dev
+  # Optional dependencies for web server support
+  sudo apt install openssl libssl-dev libulfius-dev liborcania-dev
+  ```
+  </TabItem>
+
+  <TabItem value="fedora" label={<><Icon icon="mdi:fedora" style={{ marginRight: "0.25rem" }} height="1.5rem" /> Fedora</>}>
+  ```shell
+  # Enable the Meshtastic build tools COPR repository
+  sudo dnf copr enable @meshtastic/build-tools
+  # Base dependencies
+  sudo dnf install gcc-c++ pkgconfig(yaml-cpp) pkgconfig(libgpiod) pkgconfig(bluez) pkgconfig(libusb-1.0) libi2c-devel pkgconfig(libuv)
+  # Optional dependencies for web server support
+  sudo dnf install pkgconfig(openssl) pkgconfig(liborcania) pkgconfig(libyder) pkgconfig(libulfius)
+  ```
+  </TabItem>
+</Tabs>

@@ -7,6 +7,7 @@ description: Understand how to configure channels on your Meshtastic device, inc
 
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
+import { Icon } from "@iconify/react";
 import PositionPrecisionBits from "@site/docs/blocks/_position-precision-bits.mdx";
 
 The Channels config options are: Index, Roles, and Settings. Channel config uses an admin message sending a `Channel` protobuf which also consists of a `ChannelSettings` or `ModuleSettings` protobuf.
@@ -119,6 +120,7 @@ The `position_precision` value is an integer between 0 and 32:
 - A value of 0 means that location data is never sent over the given channel.
 - A value of 32 means that location data is sent with full precision.
 - Values in between indicate the number of bits of precision to be sent, which correspond to a position precision from the table below.
+- The public MQTT server filters out precise positions, see [here](https://meshtastic.org/docs/software/integrations/mqtt/#location-precision-filtering) for more information.
 
 <PositionPrecisionBits />
 
@@ -127,14 +129,42 @@ The client applications have implemented different levels of precision giving th
 ## Channel Config Client Availability
 
 <Tabs
-groupId="settings"
-defaultValue="cli"
-values={[
-{label: 'Android', value: 'android'},
-{label: 'Apple', value: 'apple'},
-{label: 'CLI', value: 'cli'},
-{label: 'Web', value: 'web'},
-]}>
+  groupId="settings"
+  defaultValue="apple"
+  values={[
+    {
+      label: (
+        <>
+          <Icon icon="mdi:android" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Android
+        </>
+      ),
+      value: "android",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:apple" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Apple
+        </>
+      ),
+      value: "apple",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:terminal" height="1.5rem" style={{ marginRight: "0.25rem" }} /> CLI
+        </>
+      ),
+      value: "cli",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:internet" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Web
+        </>
+      ),
+      value: "web",
+    },
+  ]}>
 
 <TabItem value="android">
 

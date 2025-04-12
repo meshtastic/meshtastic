@@ -43,7 +43,7 @@ sensor:
 # Node #1 
 
   - name: "Node 1 Battery Voltage"
-    unique_id: "node_1__battery_voltage"
+    unique_id: "node_1_battery_voltage"
     state_topic: "msh/US/2/json/LongFast/!67ea9400"
     state_class: measurement
     value_template: >-
@@ -280,6 +280,11 @@ Add the following code to your automations.yaml file.  Be sure to modify the `to
   trigger:
     - platform: mqtt
       topic: msh/US/2/json/LongFast/!67ea9400
+      value_template: |
+        {% if value_json.type == "text" %}on{% endif %}
+      payload: "on"
+      id: text
+      trigger: mqtt
   condition:
     - condition: template
       value_template: "{{ trigger.payload_json.payload.text | regex_search('@Tropho') }}"
@@ -316,7 +321,11 @@ First, create an input text helper entity. The preferred way to configure an inp
 
 ### Create a Send Message Automation
 
-This automation will check the send box for changes.  After typing a message, either hit enter or click off the box and the automation will send a text string in JSON to the mqtt broker. Make sure to publish to a channel called "mqtt" and to update the device ID and `from` field in the example below. A field `channel` can be added to transmit on a different channel index than the primary, or a `to` field can be added with a node number to send a DM.
+This automation will check the send box for changes.  After typing a message, either hit enter or click off the box and the automation will send a text string in JSON to the mqtt broker.
+
+To make this work, ensure that your node has a Meshtastic channel configured called "mqtt" with downlink enabled. The PSK doesn't matter. This channel allows the node to listen to messages on the msh/US/2/json/mqtt/ topic.
+
+Now make sure to publish to the same "mqtt" topic and to update the device ID and `from` field in the example below. A field `channel` can be added to transmit on a different channel index than the primary, or a `to` field can be added with a node number to send a DM.
 
 ```yaml
 - alias: Meshtastic - Send Automation

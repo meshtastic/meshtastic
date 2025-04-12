@@ -1,0 +1,171 @@
+---
+title: "Meshtastic 2.6 Preview: MUI and Next-Hop Routing are here!"
+description: "Meshtastic version 2.6 preview is here! This has been 1.5 years in the making and includes the first release of our brand new UI for standalone devices, MUI, as well as an all new routing algorithm for Direct Messages. Plus more!"
+slug: meshtastic-2-6-preview
+authors: crichton
+tags: ["meshtastic", "2.6", "preview release", "MUI", "next-hop routing"]
+date: 2025-02-26T12:00
+hide_table_of_contents: false
+image: "/img/blog/2_6_Social_Preview.png"
+---
+
+Meshtastic 2.6 Preview is here! This has been 1.5 years in the making and includes the first release of our brand new UI for standalone devices, Meshtastic UI or MUI for short. We're also rolling out an all new routing algorithm for Direct Messages. Plus more! We're super excited about this preview and it's probably our most feature-packed release since 2.0 back in November 2022. We can't wait to hear what you think!
+
+{/* truncate */}
+
+## What Does Preview Mean?
+
+This is a preview release, which means it's not quite ready for general use. Think of it as pre-alpha. We're making it available to gather feedback from the community, uncover any hidden bugs, and thoroughly test everything before the full release. If you're feeling adventurous and want to help us improve the latest features, give it a try! If you'd rather wait for a more polished version, that's okay too. The full release is coming soon.
+
+## Key Features in 2.6
+
+### Next-Hop Routing for DMs
+
+After almost 1.5 years of preparation, implementation, simulations and real-life testing, we’re happy to announce a more efficient routing protocol for direct messages. Since the approach is backwards compatible, you can safely update only part of your mesh, but the more nodes are updated, the more you will benefit from it.
+
+In a [previous blog post](https://meshtastic.org/blog/why-meshtastic-uses-managed-flood-routing/) we have explained why Meshtastic uses a “managed flooding” approach, but we stated that especially for direct messages, an improvement could be made. We’ve also looked into different approaches for routing broadcast messages (see for example [this proposal](https://github.com/meshtastic/firmware/pull/5697)), but it has been proven hard to beat the current method in various topologies, and there is only little that can be done without breaking changes.
+
+In order to implement the new next-hop router for direct messages, several measures had to be taken in order to make it backwards compatible, limit routing control overhead and memory usage. Furthermore, we need to make sure it still works well in real-life conditions, like with mobile nodes, asymmetric links and packet loss that may happen anywhere on the route, especially when traffic increases.
+
+Since we had two unused bytes left in the unencrypted Meshtastic header, we are now using them to denote the current relayer of the packet and the node we think should relay our packet - the next-hop. Initially, a message directed to a single destination will use the managed flooding approach. We’ll then keep track of the node(s) that are trying to relay the packet for us. If upon a successful delivery, a response comes back (e.g., a NodeInfo response, acknowledgment or traceroute) and the node that relays this towards you was also (one of) the node(s) that relayed the original packet, it will be denoted as next-hop from now on. This means that instead of letting all nodes try to relay the packet, only the node for which the next-hop byte matches will. Note that this is determined per hop, so if there is an asymmetric link or a node on older firmware in between, managed flooding will be used on this hop. When a node moves, or RF conditions change, it might be the next-hop is not valid anymore. Therefore, a node will always fall back to managed flooding at the last retransmission attempt if it doesn’t hear its next-hop relay.
+
+<blockquote>
+  <div align="center">
+    <img src="/img/blog/NextHopRouting.webp" alt="Next-Hop Routing" />
+    Visualization of how next-hop routing for DMs works in Meshtastic.
+  </div>
+</blockquote>
+
+Special thanks to [@GUVWAF](https://github.com/GUVWAF) for their work on this feature.
+
+### Meshtastic UI (MUI): A New Standalone Experience
+
+After a year of development, including a major tooling change along the way, we are excited to introduce the preview release of Meshtastic UI (MUI), a brand-new interface for standalone Meshtastic devices. MUI provides a seamless touchscreen experience, allowing you to interact with your Meshtastic network without needing a phone app.
+
+This release is the result of 12 months of coding, with 12,000 lines of handwritten code and 50,000 lines of generated code, successfully ported to 10 different devices. MUI is also accessible to a global audience, having been translated into 18 languages.
+
+While this is an exciting milestone, MUI is still in development. We're actively working on adding more features, improving performance, and making everything work even better.
+
+#### Supported Devices
+
+MUI is compatible with a range of devices, including:
+
+- **Standalone LoRa Devices with ESP32-S3 and a TFT Display**: LilyGo T-Deck, Seeed SenseCAP Indicator, unPhone, PICOmputer, Elecrow 5"/7" (experimental)
+- **CYD-style Devices with ESP32-S3 Connected via Serial to any LoRa Device**: T-HMI, Mesh-Tab, "Replicator" (ESP-4848S040), Makerfabs 4"
+- **Embedded Linux Devices with SPI/I2C and GPIOs**: Raspberry Pi, Milk-V, or LuckFox with TFT SPI and LoRa hat
+- **Linux Native Setups**: PC with Meshstick or SIMRadio simulation using X11 MUI
+
+#### Features
+
+MUI is packed with powerful tools to make managing your Meshtastic network easier:
+
+- **Dashboard Screen** - Displays device status at a glance, including new messages, the number of detected nodes, date and time, radio settings, GPS, sound, Wi-Fi, and MQTT. Quick functions are accessible through intuitive icons.
+- **Node List** - View, filter, and highlight nodes in your network.
+- **Chat Window** - Send and receive messages with persistent message history.
+- **Dynamic Position Map** - Pan and zoom with customizable map styles for better network visualization. A starter set of map tiles for Earth is available in three different styles [here](https://github.com/meshtastic/device-ui/tree/master/maps). Simply unzip and transfer the folder to your SD card. The included tiles cover zoom levels 1-6, but if you need higher zoom levels, you will need to download additional tiles. We’ll provide more details on how to do that soon.
+- **Basic Device Configuration** - Quickly set up and adjust basic settings without the need for the Meshtastic app.
+- **Handy Tools** - Includes a mesh scanner, signal meter, traceroute, statistics, and packet log.
+- **Bluetooth Programming Mode** - Easily update and configure devices wirelessly using Bluetooth.
+
+<blockquote>
+  <div align="center">
+    <img
+      src="/img/blog/t_deck_mui_map.webp"
+      alt="Meshtastic UI (MUI) with Map View"
+      width="50%"
+      height="auto"
+    />
+    <p>
+      New Meshtastic UI (MUI) interface for standalone devices showing the Map
+      View.
+    </p>
+  </div>
+</blockquote>
+
+MUI represents a major step forward in Meshtastic's on-device UI, providing a more intuitive and user-friendly experience for standalone devices. We're excited to see how the community uses MUI and look forward to your feedback as we continue to improve and expand its capabilities.
+
+Meshtastic UI can be flashed by toggling the "Meshtastic UI" option in the [Meshtastic Web Flasher.](https://flasher.meshtastic.org)
+
+Special thanks to [@mverch67](https://github.com/mverch67) for their work on this feature.
+
+### InkHUD
+
+MUI isn't the only UI we're launching with 2.6! We're also introducing InkHUD, a new heads-up display for Meshtastic e-ink devices. InkHUD is a simple yet powerful interface designed to keep your Meshtastic network at your fingertips. With an always-on, eInk-powered dashboard, it provides real-time network monitoring and useful insights while using minimal power. InkHUD delivers a seamless, at-a-glance experience without the need for a phone app, ensuring you always have the most important information readily available.
+
+<blockquote>
+  <div align="center">
+    <img
+      src="/img/blog/inkHUD.webp"
+      alt="InkHUD in Action!"
+      width="50%"
+      height="auto"
+    />
+    <p>New InkHUD interface for Meshtastic e-ink devices.</p>
+  </div>
+</blockquote>
+
+Special thanks to [@todd-herbert](https://github.com/todd-herbert) for their work on this feature.
+
+Features:
+
+- **One-Button Navigation** - Easily navigate menus and settings with a simple single-button interface.
+- **Real-Time Multi-Node Monitoring** - Keep track of multiple nodes and network activity at a glance.
+- **Threaded Message View** - Follow conversations directly on the device without having to open your phone app.
+- **Non-Intrusive Notifications** - Get alerts and direct messages without interrupting your current screen.
+- **Customizable Displays** - Choose and arrange the information that matters most with configurable applet and split-screen layouts.
+- **Persistent Display** - Keep key data visible at all times without the energy drain of traditional screens.
+
+Currently Supported Devices for InkHUD:
+
+- [Heltec Vision Master E290](/docs/hardware/devices/heltec-automation/vision-master/?heltec=vision_master_e290)
+- [Heltec Vision Master E213](/docs/hardware/devices/heltec-automation/vision-master/?heltec=vision_master_e213)
+- [Heltec Wireless Paper](/docs/hardware/devices/heltec-automation/lora32/?heltec=paper-v1.1)
+- [LilyGo T-Echo](/docs/hardware/devices/lilygo/techo/)
+
+InkHUD can be flashed by toggling the "InkHUD" option in the [Meshtastic Web Flasher.](https://flasher.meshtastic.org)
+
+### Other Notable Features
+
+#### Improved Device State File Management
+
+Meshtastic 2.6 introduces a more reliable way to handle device state and node data by separating them into distinct files. Previously, both were stored together, meaning that a single flash memory issue could result in data loss or system instability.
+
+By keeping device state and the node database separate, Meshtastic ensures that essential system data remains intact even if there’s a problem with the node database. This change improves data integrity, reduces the risk of corruption, and makes recovery easier in the event of a filesystem issue or unexpected power loss.
+
+#### Meshtastic over LAN (UDP) – Now on ESP32
+
+Meshtastic 2.6 adds support for meshing over a local network (LAN) using UDP, currently available for ESP32 devices on WiFi. This feature allows nodes to communicate over a standard network connection, extending your mesh without relying solely on RF signals. This can be especially useful in locations where RF coverage is limited or when you want to bridge multiple Meshtastic networks over existing infrastructure.
+
+Once enabled, nodes automatically discover and connect to each other over the local network with minimal setup. While this feature is still in the experimental phase, we plan to expand support to additional platforms in future releases. Technical documentation is in progress, and we welcome feedback from the community to help refine it.
+
+#### Optimized LoRa Slot-Time Calculation
+
+Meshtastic 2.6 includes improvements to LoRa slot-time calculations, making packet transmission more efficient. By reducing slot time, more slots become available within the same rebroadcast window, lowering the chance of packet collisions and improving overall network performance.
+
+## Flash The Meshtastic 2.6 Preview
+
+🚨 **Flashing the 2.6 Preview Requires a Device Wipe: Back Up Your Config/Keys** 🚨
+
+Now, because we don't want anyone accidentally flashing this preview release to their devices, we've made it just a little harder to flash... in a fun way! It is available to flash via the [Meshtastic Web Flasher](https://flasher.meshtastic.org) but you have to enter the special **code** first. Now, of course we're not going to tell you the code but it shouldn't be too hard to figure out. Here's a hint:
+
+<blockquote>
+  <div align="center">
+    <img
+      src="/img/blog/nes_controller.webp"
+      alt="8-bit NES Controller"
+      width="50%"
+      height="auto"
+    />
+    <p>
+      A new firmware preview, ready to flash—guarded gently by gaming past.
+      Think NES, think <b>Konami's</b> name, enter the legend to unlock your
+      claim.
+    </p>
+  </div>
+</blockquote>
+
+Don't ruin the fun!
+
+## Give Us Your Feedback
+
+We're excited to hear what you think of Meshtastic 2.6 Preview! If you run into any issues, have questions, or just want to share your thoughts, please join us on the [Meshtastic Discord](https://discord.com/invite/ktMAKGBnBs) or the [Meshtastic Subreddit](https://www.reddit.com/r/meshtastic/). Your feedback is invaluable and will help us make the full release even better. Thank you for being a part of the Meshtastic community!

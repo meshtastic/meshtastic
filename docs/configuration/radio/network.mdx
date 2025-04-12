@@ -7,8 +7,9 @@ description: Learn about network configuration for your Meshtastic device includ
 
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
+import { Icon } from "@iconify/react";
 
-The Network config options are: NTP Server, WiFi Enabled, WiFi SSID, WiFi PSK, Ethernet Enabled, IPv4 Networking Mode, and Static Address. Network config uses an admin message sending a `Config.Network` protobuf.
+The Network config options are: NTP Server, WiFi Enabled, WiFi SSID, WiFi PSK, Ethernet Enabled, IPv4 Networking Mode, Static Address rsyslog Server, and Protocol Flags. Network config uses an admin message sending a `Config.Network` protobuf.
 
 :::info
 Enabling WiFi will disable Bluetooth. Only one connection method will work at a time.
@@ -54,7 +55,20 @@ Set to `DHCP` by default. Change to `STATIC` to use a static IP address. Applies
 
 ### IPv4 Static Address configuration
 
-contains ip, gateway, subnet and dns server in case you want a static configuration.
+Contains IP, Gateway, Subnet, and DNS server for a static configuration if selected in Networking Mode.
+
+### Rsyslog Server
+
+To configure an rsyslog Server and Port
+
+### Protocol Flags
+
+Defines which auxiliary network protocols are used to send packets. Values are stored as a bit field of boolean configuration options (bitwise OR of ProtocolFlags).
+
+|     Value     |                        Description                         |
+| :-----------: | :--------------------------------------------------------: |
+| NO_BROADCAST  |     Do not broadcast packets over any network protocol     |
+| UDP_BROADCAST | Enable broadcasting packets via UDP over the local network |
 
 :::tip
 The first time your device restarts after enabling WiFi or Ethernet, it will take an additional 20-30 seconds to boot. This is to generate self-signed SSL keys. The keys will be saved for future reuse.
@@ -63,14 +77,42 @@ The first time your device restarts after enabling WiFi or Ethernet, it will tak
 ## Network Config Client Availability
 
 <Tabs
-groupId="settings"
-defaultValue="cli"
-values={[
-{label: 'Android', value: 'android'},
-{label: 'Apple', value: 'apple'},
-{label: 'CLI', value: 'cli'},
-{label: 'Web', value: 'web'},
-]}>
+  groupId="settings"
+  defaultValue="apple"
+  values={[
+    {
+      label: (
+        <>
+          <Icon icon="mdi:android" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Android
+        </>
+      ),
+      value: "android",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:apple" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Apple
+        </>
+      ),
+      value: "apple",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:terminal" height="1.5rem" style={{ marginRight: "0.25rem" }} /> CLI
+        </>
+      ),
+      value: "cli",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:internet" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Web
+        </>
+      ),
+      value: "web",
+    },
+  ]}>
 
 <TabItem value="android">
 
@@ -109,14 +151,14 @@ All Network config options are available in the python CLI.
 
 :::
 
-|       Setting        | Acceptable Values |     Default      |
-| :------------------: | :---------------: | :--------------: |
-|  network.ntp_server  |      string       | `0.pool.ntp.org` |
-| network.wifi_enabled |  `true`, `false`  |     `false`      |
-|  network.wifi_ssid   |      string       |       `""`       |
-|   network.wifi_psk   |      string       |       `""`       |
-| network.eth_enabled  |  `true`, `false`  |     `false`      |
-| network.address_mode | `DHCP`, `STATIC`  |      `DHCP`      |
+|       Setting        | Acceptable Values |          Default          |
+| :------------------: | :---------------: | :-----------------------: |
+|  network.ntp_server  |      string       | `meshtastic.pool.ntp.org` |
+| network.wifi_enabled |  `true`, `false`  |          `false`          |
+|  network.wifi_ssid   |      string       |           `""`            |
+|   network.wifi_psk   |      string       |           `""`            |
+| network.eth_enabled  |  `true`, `false`  |          `false`          |
+| network.address_mode | `DHCP`, `STATIC`  |          `DHCP`           |
 
 :::tip
 
@@ -129,7 +171,7 @@ meshtastic --set network.wifi_enabled true --set network.wifi_ssid "my network" 
 :::
 
 ```shell title="Set NTP Server"
-meshtastic --set network.ntp_server "0.pool.ntp.org"
+meshtastic --set network.ntp_server "meshtastic.pool.ntp.org"
 ```
 
 ```shell title="Enable / Disable WiFi"

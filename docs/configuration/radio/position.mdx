@@ -7,10 +7,11 @@ description: GPS position configuration settings for your Meshtastic device incl
 
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
+import { Icon } from "@iconify/react";
 
 Position data from GPS is provided by either the radio or your paired phone. It is not required to use Meshtastic, but time calculations require at least one device on the mesh to have either a GPS, RTC, or internet connection for NTP.
 
-The position config uses an admin message to send a `Config.Position` protobuf. The position config options are: GPS Mode, GPS Update Interval, Fixed Position, Smart Broadcast, Smart Broadcast Minimum Distance, Smart Broadcast Minimum Interval, Broadcast Interval, Position Packet Flags, and GPS RX/TX Pins.
+The position config uses an admin message to send a `Config.Position` protobuf. The position config options are: GPS Mode, GPS Update Interval, Fixed Position, Smart Broadcast, Smart Broadcast Minimum Distance, Smart Broadcast Minimum Interval, Broadcast Interval, Position Packet Flags, and GPS RX/TX/EN Pins.
 
 ## Position Config Values
 
@@ -18,9 +19,9 @@ The position config uses an admin message to send a `Config.Position` protobuf. 
 
 Configures whether the GPS functionality is enabled, disabled, or not present on the node.
 
-Acceptable values: `Disabled`, `Enabled`, and `Not_Present`.
+Acceptable values: `DISABLED`, `ENABLED`, and `NOT_PRESENT`.
 
-Generally, depending on the device and its configuration, this value will default to either `Enabled` or `Not Present`.
+Generally, depending on the device and its configuration, this value will default to either `ENABLED` or `NOT_PRESENT`.
 
 ### GPS Update Interval
 
@@ -84,21 +85,49 @@ Defines which options are sent in POSITION messages. Values are stored as a bit 
 |      HEADING       |          Include positional heading (from GPS solution)          |
 |       SPEED        |           Include positional speed (from GPS solution)           |
 
-### GPIO RX/TX for GPS Module
+### GPIO RX/TX/EN for GPS Module
 
-If your device does not have a fixed GPS chip, you can define the GPIO pins for the RX and TX pins of a GPS module.
+If your device does not have a fixed GPS chip, you can define the GPIO pins for the RX, TX, and EN pins of a GPS module.
 
 ## Position Config Client Availability
 
 <Tabs
-groupId="settings"
-defaultValue="apple"
-values={[
-{label: 'Android', value: 'android'},
-{label: 'Apple', value: 'apple'},
-{label: 'CLI', value: 'cli'},
-{label: 'Web', value: 'web'},
-]}>
+  groupId="settings"
+  defaultValue="apple"
+  values={[
+    {
+      label: (
+        <>
+          <Icon icon="mdi:android" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Android
+        </>
+      ),
+      value: "android",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:apple" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Apple
+        </>
+      ),
+      value: "apple",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:terminal" height="1.5rem" style={{ marginRight: "0.25rem" }} /> CLI
+        </>
+      ),
+      value: "cli",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:internet" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Web
+        </>
+      ),
+      value: "web",
+    },
+  ]}>
 <TabItem value="android">
 
 #### Android
@@ -132,18 +161,18 @@ All Position config commands are available in the python CLI. Example commands a
 
 :::
 
-|                  Setting                     |                                                             Acceptable Values                                                             |           Default            |
-| :------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------: | :--------------------------: |
-|             position.gps_mode             |                                                              `enabled`, `disabled`, `not_present`                                                              |            `Enabled` or `Not Present`            |
-|         position.gps_update_interval         |                                                            `integer` (seconds)                                                            |  Default `0` is 2 Minutes    |
-|            position.fixed_position           |                                                              `true`, `false`                                                              |           `false`            |
-|  position.position_broadcast_smart_enabled   |                                                              `true`, `false`                                                              |            `true`            |
-|  position.broadcast_smart_minimum_distance   |                                                             `integer` (meters)                                                            | Default of `0` is 100 Meters |
-|position.broadcast_smart_minimum_interval_secs|                                                            `integer` (seconds)                                                            | Default of `0` is 15 Minutes |
-|       position.position_broadcast_secs       |                                                            `integer` (seconds)                                                            | Default of `0` is 15 minutes |
-|                position.flags                | `UNSET`, `ALTITUDE`, `ALTITUDE_MSL`, `GEOIDAL_SEPARATION`, `DOP`, `HVDOP`, `PDOP`, `SATINVIEW`, `SEQ_NO`, `TIMESTAMP`, `HEADING`, `SPEED` |           `UNSET`            |
-|               position.rx_gpio               |                                                             `integer` (0-39)                                                              |           `UNSET`            |
-|               position.tx_gpio               |                                                             `integer` (0-34)                                                              |           `UNSET`            |
+|                    Setting                     |                                                             Acceptable Values                                                             |           Default            |
+| :--------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------: | :--------------------------: |
+|               position.gps_mode                |                                                   `ENABLED`, `DISABLED`, `NOT_PRESENT`                                                    |  `ENABLED` or `NOT_PRESENT`  |
+|          position.gps_update_interval          |                                                            `integer` (seconds)                                                            |   Default `0` is 2 Minutes   |
+|            position.fixed_position             |                                                              `true`, `false`                                                              |           `false`            |
+|   position.position_broadcast_smart_enabled    |                                                              `true`, `false`                                                              |            `true`            |
+|   position.broadcast_smart_minimum_distance    |                                                            `integer` (meters)                                                             | Default of `0` is 100 Meters |
+| position.broadcast_smart_minimum_interval_secs |                                                            `integer` (seconds)                                                            | Default of `0` is 15 Minutes |
+|        position.position_broadcast_secs        |                                                            `integer` (seconds)                                                            | Default of `0` is 15 minutes |
+|                 position.flags                 | `UNSET`, `ALTITUDE`, `ALTITUDE_MSL`, `GEOIDAL_SEPARATION`, `DOP`, `HVDOP`, `PDOP`, `SATINVIEW`, `SEQ_NO`, `TIMESTAMP`, `HEADING`, `SPEED` |           `UNSET`            |
+|                position.rx_gpio                |                                                             `integer` (0-39)                                                              |           `UNSET`            |
+|                position.tx_gpio                |                                                             `integer` (0-34)                                                              |           `UNSET`            |
 
 :::tip
 

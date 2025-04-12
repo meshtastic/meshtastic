@@ -5,6 +5,17 @@ sidebar_label: Mosquitto
 sidebar_position: 1
 ---
 
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+<Tabs
+groupId="install"
+defaultValue="mac"
+values={[
+{label: 'Mac', value: 'mac'},
+{label: 'Linux', value: 'linux'},
+]}>
+<TabItem value="mac">
 ### Using mosquitto on a mac
 
 1. install mqtt server
@@ -48,3 +59,47 @@ sidebar_position: 1
    ```
 
 7. If you are using the mac firewall, you will need to go into: System Preferences > Security & Privacy > Firewall > Firewall Options and add it.
+</TabItem>
+<TabItem value="linux">
+### Using mosquitto on raspberry pi bookworm
+
+1. install mqtt server
+
+   ```sh
+   sudo apt-get install mosquitto mosquitto-clients
+   ```
+
+2. start the mqtt server
+
+   ```sh
+   sudo systemctl start mosquitto
+   ```
+
+3. Do a quick test of server, start a subscriber on a topic:
+
+   Note: this will wait until you press control-c (publish a message, see below)
+
+   ```sh
+   mosquitto_sub -t test/hello
+   ```
+
+4. In another console, publish a message to that topic:
+
+   ```sh
+   mosquitto_pub -h localhost -q 0 -t test/hello -m 'yo!'
+   ```
+
+5. For Meshtastic to be able to access that server, two settings need to be changed in the
+   `/etc/mosquitto/mosquitto.conf` file:
+
+   ```shell
+   sudo sh -c "echo 'listener 1883 0.0.0.0\nallow_anonymous true' >> /etc/mosquitto/mosquitto.conf"
+   ```
+
+6. Restart the service:
+
+   ```shell
+   sudo systemctl restart mosquitto
+   ```
+</TabItem>
+</Tabs>

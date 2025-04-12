@@ -8,6 +8,7 @@ description: Instructions for using the CLI to flash Meshtastic firmware to an E
 
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
+import { Icon } from "@iconify/react";
 import Link from "@docusaurus/Link";
 
 :::caution
@@ -27,13 +28,35 @@ The [T-Beam 0.7](/docs/hardware/devices/lilygo/tbeam/?t-beam=0.7) board is an ea
 ### Install Prerequisite Software
 
 <Tabs
-groupId="operating-system"
-defaultValue="linux"
-values={[
-{label: 'Linux', value: 'linux'},
-{label: 'macOS', value: 'macos'},
-{label: 'Windows', value: 'windows'},
-]}>
+  groupId="operating-system"
+  defaultValue="windows"
+  values={[
+    {
+      label: (
+        <>
+          <Icon icon="mdi:tux" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Linux
+        </>
+      ),
+      value: "linux",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:apple" height="1.5rem" style={{ marginRight: "0.25rem" }} /> macOS
+        </>
+      ),
+      value: "macos",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:microsoft" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Windows
+        </>
+      ),
+      value: "windows",
+    },
+  ]}>
+
 <TabItem value="linux">
 
 #### Linux
@@ -128,13 +151,35 @@ pip3 install --upgrade esptool
 ### Confirm Communication With Chip
 
 <Tabs
-groupId="operating-system"
-defaultValue="linux"
-values={[
-{label: 'Linux', value: 'linux'},
-{label: 'macOS', value: 'macos'},
-{label: 'Windows', value: 'windows'},
-]}>
+  groupId="operating-system"
+  defaultValue="windows"
+  values={[
+    {
+      label: (
+        <>
+          <Icon icon="mdi:tux" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Linux
+        </>
+      ),
+      value: "linux",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:apple" height="1.5rem" style={{ marginRight: "0.25rem" }} /> macOS
+        </>
+      ),
+      value: "macos",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:microsoft" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Windows
+        </>
+      ),
+      value: "windows",
+    },
+  ]}>
+
 <TabItem value="linux">
 
 #### Linux
@@ -193,8 +238,10 @@ Hard resetting via RTS pin...
 
 1. Head to the [Meshtastic Downloads Page](/downloads) to download the latest firmware.
 2. Scroll down to the **Firmware** section and select one of the following, depending on your preferences:
+
 - **Download Stable**: For stable, well-tested releases.
 - **Download Alpha**: For newer, experimental releases with the latest features.
+
 3. Once redirected to the GitHub release page, scroll down to the "Assets" section and expand it. Identify the correct firmware for your device by its architecture (e.g., `firmware-esp32s3` for ESP32-S3-based devices like the Heltec V3).
 4. Download the file and take note of the download location on your system (usually in your `~/Downloads` folder).
 
@@ -219,13 +266,35 @@ Be very careful to install the correct firmware file for your board. In particul
 :::
 
 <Tabs
-groupId="operating-system"
-defaultValue="linux"
-values={[
-{label: 'Linux', value: 'linux'},
-{label: 'macOS', value: 'macos'},
-{label: 'Windows', value: 'windows'},
-]}>
+  groupId="operating-system"
+  defaultValue="windows"
+  values={[
+    {
+      label: (
+        <>
+          <Icon icon="mdi:tux" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Linux
+        </>
+      ),
+      value: "linux",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:apple" height="1.5rem" style={{ marginRight: "0.25rem" }} /> macOS
+        </>
+      ),
+      value: "macos",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:microsoft" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Windows
+        </>
+      ),
+      value: "windows",
+    },
+  ]}>
+
 <TabItem value="linux">
 
 #### Linux
@@ -278,6 +347,8 @@ device-update.bat -f firmware-BOARD-VERSION-update.bin
 
   </TabItem>
 </Tabs>
+
+Use the `--web` option to include the embedded [Web Client](/docs/software/web-client/) during installation of the firmware.
 
 ## Connect and Configure Device
 
