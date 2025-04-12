@@ -6,7 +6,7 @@ sidebar_position: 2
 description: A usage guide for simulating multiple Meshtastic instances with TCP-based communication and configurable pathloss models.
 ---
 
-The Python script _`interactiveSim.py`_ uses the [Linux native application of Meshtastic](https://meshtastic.org/docs/software/linux-native) to simulate multiple instances of the device software. These instances communicate using TCP via the script, simulating the LoRa chip. The simulator forwards messages from the sender to all nodes within range, based on their simulated positions and the selected pathloss model (see [Pathloss Model](#pathloss-model)). **Note:** Packet collisions are not yet simulated.
+The Python script _`interactiveSim.py`_ uses the [Linux native application of Meshtastic](https://meshtastic.org/docs/hardware/devices/linux-native-hardware/#installation) to simulate multiple instances of the device software. These instances communicate using TCP via the script, simulating the LoRa chip. The simulator forwards messages from the sender to all nodes within range, based on their simulated positions and the selected pathloss model (see [Pathloss Model](#pathloss-model)). **Note:** Packet collisions are not yet simulated.
 
 ## Usage
 
@@ -18,7 +18,7 @@ The Python script _`interactiveSim.py`_ uses the [Linux native application of Me
    pip install -r requirements.txt
    ```
 
-The simulator runs the Linux native application of Meshtastic firmware. You can use either [PlatformIO](https://meshtastic.org/docs/development/firmware/build) or [Docker](https://meshtastic.org/docs/software/linux-native#usage-with-docker) to run the firmware:
+The simulator runs the Linux native application of Meshtastic firmware. You can use either [PlatformIO](https://meshtastic.org/docs/development/firmware/build) or [Docker](https://meshtastic.org/docs/software/linux/usage/#usage-with-docker) to run the firmware:
 
 ### Using PlatformIO
 
