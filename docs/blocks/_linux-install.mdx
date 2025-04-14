@@ -106,7 +106,6 @@ import { Icon } from "@iconify/react";
     </details>
 
   </TabItem>
-
   <TabItem value="epel" label={<><Icon icon="mdi:redhat" style={{ marginRight: "0.25rem" }} height="1.5rem" /> RedHat (EPEL)</>}>
     RedHat (EPEL) packages are provided via [Fedora COPR](https://copr.fedorainfracloud.org/coprs/g/meshtastic/beta/).
     Built with Redhat's [UBI](https://www.redhat.com/en/blog/introducing-red-hat-universal-base-image).
@@ -128,7 +127,6 @@ import { Icon } from "@iconify/react";
     ```
 
   </TabItem>
-
   <TabItem value="docker" label={<><Icon icon="mdi:docker" style={{ marginRight: "0.25rem" }} height="1.5rem" /> Docker</>}>
     Docker containers are provided via [DockerHub](https://hub.docker.com/r/meshtastic/meshtasticd).
 
@@ -147,6 +145,32 @@ import { Icon } from "@iconify/react";
     ```
 
     See: [Docker Usage](/docs/software/linux/usage/#usage-with-docker)
+
+  </TabItem>
+  <TabItem value="flatpak" label={<><Icon icon="simple-icons:flatpak" style={{ marginRight: "0.25rem" }} height="1.5rem" /> Flatpak</>}>
+    Flatpaks are provided via [<Icon icon="simple-icons:flathub" /> FlatHub](https://flathub.org/apps/org.meshtastic.meshtasticd).
+
+    Includes ✨ [Meshtastic UI](/docs/software/meshtastic-ui/).
+
+    Supported platforms: `x86_64`, `aarch64`
+
+    Many distros support Flatpaks, see [FlatHub Setup](https://flathub.org/setup) for help getting started.
+
+    **Install:**
+
+    ```shell
+    flatpak install flathub org.meshtastic.meshtasticd
+    ```
+
+    **Run:**
+
+    ```shell
+    flatpak run org.meshtastic.meshtasticd
+    ```
+
+    Notes:
+    - Flatpak releases currently only support USB radio connections, SPI radio connections are not supported.
+    - Flatpak releases do not currently support the `web` component.
 
   </TabItem>
 </Tabs>
