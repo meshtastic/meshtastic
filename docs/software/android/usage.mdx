@@ -9,6 +9,7 @@ import PositionPrecision from "@site/docs/blocks/_position-precision.mdx";
 import Link from "@docusaurus/Link";
 import ThemedImage from "@theme/ThemedImage";
 import useBaseUrl from "@docusaurus/useBaseUrl";
+import QRCode from "@site/docs/blocks/_qr-code.mdx";
 
 ## Introduction
 
@@ -113,9 +114,12 @@ The app will generate a new QR code on the screen. This encodes the channel deta
 
 ### Join a channel
 
-1. If another user shares a QR code, you will be able to scan it directly with your camera using the `Scan` button.
+1. If another user shares a QR code, you will be able to scan it directly with your camera using the `Scan` button.[^1]
 
    [![Open with Meshtastic](/img/android/android-open-with-c.webp)](/img/android/android-open-with.webp)
+
+[^1]:
+    <QRCode />
 
 2. If the channel is shared from a file or link using the `Share` button, you can click on the file or link and you need to choose "Open with Meshtastic".
 
@@ -135,7 +139,7 @@ Accept this, and the app will change to this new channel. You will lose any curr
 Setting the same Name and Options directly doesn't work as there are other radio settings (like the unique pre-shared key) encoded in the QR code or link.
 :::
 
-You can test changing channels with the QR code shown below.
+You can test changing channels with the QR code shown below.[^1]
 
 ![Meshtastic Default Channel](/img/android/default-channel.webp)
 
