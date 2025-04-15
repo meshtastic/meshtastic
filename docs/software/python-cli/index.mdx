@@ -24,15 +24,16 @@ meshtastic --port COM4 --info
 meshtastic -s --info
 ```
 
-### --host HOST
+### --host HOST[:tcp-port]
 
-The hostname/ipaddr of the device to connect to (over TCP). If a host is not provided, the CLI will try to connect to `localhost`.
+The hostname/ipaddr of the device to connect to (over TCP). If a host is not provided, the CLI will try to connect to `localhost`. The TCP port will default to 4403, the standard for meshtastic devices.
 
 This argument can also be specified as `--tcp` or `-t`.
 
 ```shell title="Usage"
 meshtastic --host meshtastic.local --info
 meshtastic --host --info
+meshtaxtic --host meshtastic-proxy.local:4404 --info
 ```
 
 ### --ble BLE
