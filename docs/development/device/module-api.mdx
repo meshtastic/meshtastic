@@ -57,6 +57,8 @@ A number of [key services](http://github.com/meshtastic/firmware/tree/master/src
 
 - [NodeInfoModule](http://github.com/meshtastic/firmware/tree/master/src/modules/NodeInfoModule.h) - Receives/sends User information to other nodes so that usernames are available in the databases.
 
+- [GenericThreadModule](https://github.com/meshtastic/firmware/blob/master/src/modules/GenericThreadModule.cpp) - An example module that periodically executes, e.g. to send a message to the mesh.
+
 - [RemoteHardwareModule](http://github.com/meshtastic/firmware/tree/master/src/modules/RemoteHardwareModule.h) - A module that provides easy remote access to device hardware (for things like turning GPIOs on or off). Intended to be a more extensive example and provide a useful feature of its own. See [remote-hardware](/docs/configuration/module/remote-hardware) for details.
 
 - [ReplyModule](http://github.com/meshtastic/firmware/tree/master/src/modules/ReplyModule.h) - A simple module that just replies to any packet it receives (provides a 'ping' service).
@@ -70,16 +72,16 @@ The easiest way to get started is:
    ```shell
    cp src/modules/ReplyModule.* src/modules/YourModule.*
    ```
-3. Change the port number from `PortNum_REPLY_APP` to `PortNum_PRIVATE_APP`.
+3. Change the port number from `meshtastic_PortNum_REPLY_APP` to the port number you want to use for your data. To test it with text messages, use `meshtastic_PortNum_TEXT_MESSAGE_APP`.
 4. Edit the `setupModules()` function located at `modules/Modules.cpp` to add a call to create an instance of your module (see comment at head of that function).
 5. Rebuild with your new module and install on the device.
-6. Use the [Meshtastic Python CLI tool](https://github.com/meshtastic/Meshtastic-python) to send a packet to your board, for example:
-   - `meshtastic --dest 1234 --sendping` where _1234_ is another mesh node to send the ping to.
+6. Send a packet with your port number to the node to test if your module is being called. If you used the text message port number, you can use any of the client apps to send a text message.
 
 ## Threading
 
 It is very common that you would like your module to be invoked periodically.
-We use a crude/basic cooperative threading system to allow this on any of our supported platforms. Simply inherit from OSThread and implement `runOnce()`. See the OSThread [documentation](http://github.com/meshtastic/firmware/tree/master/src/concurrency/OSThread.h) for more details.
+We use a crude/basic cooperative threading system to allow this on any of our supported platforms. A simple example module that uses this is the [GenericThreadModule](https://github.com/meshtastic/firmware/blob/master/src/modules/GenericThreadModule.cpp) (note that it needs to be included by removing the `MESHTASTIC_EXCLUDE_GENERIC_THREAD_MODULE` macro). 
+Otherwise, simply inherit your module from OSThread and implement `runOnce()`. See the OSThread [documentation](http://github.com/meshtastic/firmware/tree/master/src/concurrency/OSThread.h) for more details.
 
 ## Sending messages
 
