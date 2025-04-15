@@ -8,13 +8,14 @@ description: "Maximize your Meshtastic device's potential with detailed radio se
 ---
 
 import { FrequencyCalculator } from "/src/components/tools/FrequencyCalculator";
+import QRCode from "@site/docs/blocks/_qr-code.mdx";
 
 :::info
 Meshtastic is **not** LoRaWAN, Helium or TTN (TheThingsNetwork). Meshtastic uses the full spectrum frequency range designated to LoRa technology per region. This allows for several hundred possible frequency channels in the US region alone.
 :::
 
 :::info
-Power limits will generally be lifted in the software if `is_licensed` is set to `true`. See [HAM Mode](/docs/faq#amateur-radio-ham) for more information.
+Power limits will generally be lifted in the software if `is_licensed` is set to `true`. See [Ham Mode](/docs/faq#amateur-radio-ham) for more information.
 :::
 
 <div class="no-print">
@@ -100,7 +101,10 @@ The link budget used by these calculations assumes a transmit power of 22dBm and
 
 Custom settings can be applied by using [supported software](/docs/software).
 
-After applying the settings, you will need to restart the device. After your device is restarted, it will generate a new crypto key and you will need to share the newly generated QR Code or URL to all your other devices.
+After applying the settings, you will need to restart the device. After your device is restarted, it will generate a new crypto key and you will need to share the newly generated QR[^2] Code or URL to all your other devices.
+
+[^2]:
+    <QRCode />
 
 Some example settings:
 
@@ -123,6 +127,6 @@ These frequency slot settings may not have been tested. Use at your own discreti
 
 ## Cryptography
 
-The pre-shared key (PSK) used by the devices can be an AES128 or AES256 sequence. Alternatively, encryption can be turned off, which may be useful if you are operating under a Ham Radio license.
+The pre-shared key (PSK) used by the devices can be an AES128 or AES256 sequence. Alternatively, encryption can be turned off, which may be useful if you are operating under a ham radio license.
 
 [^1]: Short Turbo is the fastest preset and the only one with 500kHz bandwidth. It is not legal to use in all regions due to this wider bandwidth.
