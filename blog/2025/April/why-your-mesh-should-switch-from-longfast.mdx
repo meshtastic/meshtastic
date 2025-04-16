@@ -84,7 +84,25 @@ Please review the [LoRa Config](/docs/configuration/radio/lora/) page for more i
 
 Many larger Meshtastic deployments have seen substantial improvements after switching from LongFast, one of those is the Meshtastic Bay Area Group:
 
-- **Meshtastic Bay Area Group**: A community mesh in the San Francisco Bay Area switched to MediumSlow and reported...
+- **Meshtastic Bay Area Group**: A community mesh in the San Francisco Bay Area switched to MediumSlow.
+
+Our mesh of over 150 nodes is currently thriving on our new mesh on the MediumSlow preset. This shift to a new network has proven to be extremely beneficial. It started as an experiment to escape the saturated default LongFast channel that had a lot of old firmware and misconfigured nodes spamming the mesh.
+
+Here’s what makes it work:
+    1.    Intentional coordination
+Our switch to MediumSlow was carefully planned. Node roles were thoughtfully assigned, timers tuned, and the network structure optimized for coverage and reliability. Regular coordination—on and off the mesh—means issues are quickly identified and resolved. The human layer behind the tech is a key part of our success
+
+    2.    Less background clutter
+MediumSlow isn’t the default preset, so we avoid the legacy traffic clutter from years of LongFast usage. That alone makes a huge difference in network clarity.
+
+    3.    Modern firmware and best practices across all nodes
+Since the migration was recent and deliberate, nearly every device is running up-to-date firmware, reducing bugs and improving consistency. We stick to good practices in settings and attempt to reduce any unnecessary traffic that would not provide a positive impact.
+
+    4.    Strategic node placement
+We reserve router mode for high-elevation nodes, ensuring wide coverage without unnecessary redundancy. Altitude matters—and we use it to our advantage. We sometimes place 2 routers at opposite ends of a given area, to provide high likelihood of line-of-sight.
+
+    5.    Embrace curiosity and experimentation
+We often test limits, run experiments and generally "try things" to learn and test assumptions.   This ensures that the mesh performance and behavior is understood and changes are backed by impact and repeatable science.
 
 ![Meshtastic Bay Are Group Mesh](/img/blog/baymesh.png)
 
