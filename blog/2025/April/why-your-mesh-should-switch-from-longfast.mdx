@@ -9,7 +9,7 @@ hide_table_of_contents: false
 image: "/img/blog/new-preset-blog-preview.png"
 ---
 
-If your local Meshtastic network has grown beyond just a handful of nodes and you're starting to experience issues like delayed messages, network congestion, or inconsistent delivery, the problem might be your LoRa radio preset. Specifically, you may have outgrown the default preset: LongFast.
+If your local Meshtastic network has grown beyond just a handful of nodes and you're starting to experience issues like delayed message delivery, network congestion, or inconsistent results, the problem might be your LoRa radio preset. Specifically, you may have outgrown the default preset: LongFast.
 
 While LongFast is an excellent general-purpose preset for many users, it may not be the optimal choice for larger or denser meshes. In this post, we will explain why switching to higher bandwidth presets might significantly improve your network's performance.
 
@@ -107,6 +107,11 @@ This can be a great opportunity to educate others about the importance of networ
 For those who are hesitant to switch, remind them that the default LongFast setting is not a one-size-fits-all solution. Encourage them to experiment with different presets and find what works best for their specific deployment.
 
 Some groups that have switched to a higher-bandwidth preset have left a bot on the LongFast preset to send messages redirecting those who haven't switched yet to the new channel. This allows for a transition and ensures that no one is left out of the new network while they consider the change.
+
+## Why don't we just change the default preset?
+
+The Meshtastic project initially focused on the original use-case of small private outdoor mesh networks, not the large public meshes that exist today. LongFast remains the default because it offers a good balance of range and speed for many users, particularly beginners and smaller networks. As networks grow larger and denser, however, this preset becomes less optimal for the reasons we've explored above.
+Changing the default preset would also break discovery of existing nodes, as they would be on different channels. This would lead to confusion and frustration for users who are not aware of the change. For Meshtastic 3.0, we are considering a new default preset that is more suitable for increasingly popular larger networks, but this is still in the works.
 
 ## So long, LongFast!
 
