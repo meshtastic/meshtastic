@@ -102,6 +102,22 @@ Here’s what makes it work:
 
 ![Meshtastic Bay Are Group Mesh](/img/blog/baymesh.png)
 
+#### Wellington Region Mesh (New Zealand)
+
+This mesh is a medium sized mesh covering several hundred km² of mixed urban, suburban and rural areas. The population is spread throughout complex terrain that can make providing good coverage difficult. We migrated the entire mesh from LONG_FAST to SHORT_FAST over the course of a week, at the end of August 2024.
+
+By Q3 2024, our mesh had grown to over 150 active nodes, and was experiencing significant problems with congestion. We were operating on the default LONG_FAST preset at this time, in order to help encourage adoption, but the amount of traffic on the network was rendering it unusable, with observed channel utilisation peaks at busy sites hitting over 65%. This was largely composed of nodeinfo, location, and telemetry updates from clients. Most features, including text messaging, were extremely unreliable - and bursts of traffic could cause the whole thing to melt down for a while. Our mesh has thankfully never experienced the problems with rogue routers that have been observed elsewhere, due to good (and early) coordination between our high site operators to ensure comprehensive coverage from the start. However, due to our topography, we do require an above-average number of routers in order to ensure that the populated areas are adequately covered, and these routers were competing with each other for the limited airtime.
+
+We started out by temporarily moving a couple of key high sites to SHORT_FAST for a brief two-hour test, in order to get a quick initial idea of how feasible a move to a faster preset was likely to be. We also investigated MEDIUM_FAST, but ultimately decided that SHORT_FAST would be a better bet as a long term decision, provided it was workable. Migrating the mesh seemed likely to be a big job, and we didn't want to have to do it all over again at a later date if we compromised on something that was still too slow to cope with future growth. This initial test went well.
+
+Once the concept was proven, we organised a test day where we moved all key high sites in the region across to SHORT_FAST for 24 hours, in order to allow region-wide experimentation with a fully contiguous mesh. This was advertised in advance via social media, and on the mesh itself. The test day went well, and proved that SHORT_FAST still had a sufficiently good link budget that all but a few very marginal links would continue to work. This also allowed us to verify that our assumptions on the sequencing of high site changes were correct, to ensure that we could do the whole thing via remote admin - thus allowing the migration to be rapidly implemented, and easily able to be rolled back in case of problems.
+
+At the end of August, we initiated a migration of the entire mesh to SHORT_FAST, using the default frequency for that preset (this means that users only needed to change a single setting away from the defaults in order to connect to our mesh). The move was advertised via social media, and aggressive spamming of the LongFast public chat channel with both explanatory text, and a web link to a page with more detailed information about the move and resources where users could obtain assistance. On August 31st, all key high sites were simultaneously moved to SHORT_FAST, and temporary additional LONG_FAST routers were colocated at critical sites so that we could continue to spam the LONG_FAST public channel in order to ensure all users were aware of the change. By the following weekend, almost all users had updated their node settings, and all but two of the temporary LONG_FAST routers were decommissioned. These two were left in place for another three months in order to notice any stragglers who may need a hand - thankfully there were only a handful of these remaining.
+
+Performance on SHORT_FAST has been extremely good, with very reliable performance, including for our longest permanent link (254km). Packets reliably transit across the entire mesh without issue, rapidly. The reduced latency has also made for a much nicer user experience.
+
+One other significant benefit of the faster mode has been the ability to use some of the additional headroom in the channel to better serve urban blackspot areas (obstructed from our main routers by terrain) which were unfeasible to cover prior to the move. From December 2024 onwards, we deployed several ROUTER_LATE nodes to cover these areas - these nodes guarantee that our former black spots now have a path out to the wider mesh, and have proven to be extremely helpful.
+
 ### Getting others to switch / Dealing with FOMO
 
 If you're in a community or group where others are still using LongFast, consider sharing your experiences and the benefits you've seen. You can also help them understand the trade-offs involved in switching presets.
@@ -109,6 +125,8 @@ This can be a great opportunity to educate others about the importance of networ
 For those who are hesitant to switch, remind them that the default LongFast setting is not a one-size-fits-all solution. Encourage them to experiment with different presets and find what works best for their specific deployment.
 
 Some groups that have switched to a higher-bandwidth preset have left a bot on the LongFast preset to send messages redirecting those who haven't switched yet to the new channel. This allows for a transition and ensures that no one is left out of the new network while they consider the change.
+
+![Wellington Region Mesh (New Zealand)](/img/blog/wellington-region-nz.png)
 
 ## Why don't we just change the default preset?
 
