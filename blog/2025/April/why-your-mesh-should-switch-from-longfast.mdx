@@ -4,7 +4,7 @@ description: "Improve your local mesh network by moving away from the default Lo
 slug: why-your-mesh-should-switch-from-longfast
 authors: [thebentern]
 tags: [meshtastic, lora, configuration, optimization]
-date: 2025-04-02T12:00
+date: 2025-04-22T12:00
 hide_table_of_contents: false
 image: "/img/blog/new-preset-blog-preview.png"
 ---
@@ -49,7 +49,7 @@ Switching to higher bandwidth presets like MediumSlow, MediumFast, ShortSlow, or
 3. **Better Scalability**: Higher bandwidth presets are designed to handle more nodes and higher message volumes, making them more suitable for larger deployments. In dense networks, the improved throughput often more than compensates for the slightly reduced range, resulting in better overall message delivery.
 4. **Lower Latency**: Messages travel through the mesh more quickly, reducing delays that can be frustrating for users.
 
-> SDR Waterfall plot of packets on a few different presets (left to right): LongFast, MediumFast, ShortFast ![Presets](/img/blog/sdr_presets.png)
+> SDR Waterfall plot of packets on a few different presets (left to right): LongFast, MediumFast, ShortFast ![Presets](/img/blog/sdr_presets.webp)
 
 ## When Should You Switch?
 
@@ -70,7 +70,7 @@ You should perhaps consider moving away from LongFast if your mesh has:
 
 **MediumFast** or **MediumSlow** - These presets strike an excellent balance between range and speed, offering 3-4 times the data rate of LongFast while still maintaining respectable range.
 
-## How to Make the Change
+## Making the Change
 
 Switching presets is straightforward but requires updating all nodes in your mesh:
 
@@ -100,7 +100,7 @@ Here’s what makes it work:
 4. **Strategic node placement:** We reserve router mode for high-elevation nodes, ensuring wide coverage without unnecessary redundancy. Altitude matters—and we use it to our advantage. We sometimes place 2 routers at opposite ends of a given area, to provide high likelihood of line-of-sight.
 5. **Embrace curiosity and experimentation:** We often test limits, run experiments and generally "try things" to learn and test assumptions. This ensures that the mesh performance and behavior is understood and changes are backed by impact and repeatable science.
 
-![Meshtastic Bay Are Group Mesh](/img/blog/baymesh.png)
+![Meshtastic Bay Are Group Mesh](/img/blog/baymesh.webp)
 
 #### Wellington Region Mesh (New Zealand)
 
@@ -128,7 +128,7 @@ For those who are hesitant to switch, remind them that the default LongFast sett
 
 Some groups that have switched to a higher-bandwidth preset have left a bot on the LongFast preset to send messages redirecting those who haven't switched yet to the new channel. This allows for a transition and ensures that no one is left out of the new network while they consider the change.
 
-## Why don't we just change the default preset?
+## Why doesn't Meshtastic just change the default preset?
 
 The Meshtastic project initially focused on the original use-case of small private outdoor mesh networks, not the large public meshes that exist today. LongFast remains the default because it offers a good balance of range and speed for many users, particularly beginners and smaller networks. As networks grow larger and denser, however, this preset becomes less optimal for the reasons we've explored above.
 Changing the default preset would also break discovery of existing nodes, as they would be on different channels. This would lead to confusion and frustration for users who are not aware of the change. For Meshtastic 3.0, we are considering a new default preset that is more suitable for increasingly popular larger networks, but this is still in the works.
