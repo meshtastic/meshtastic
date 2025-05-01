@@ -8,6 +8,7 @@ description: "Maximize your Meshtastic device's potential with detailed radio se
 ---
 
 import { FrequencyCalculator } from "/src/components/tools/FrequencyCalculator";
+import QRCode from "@site/docs/blocks/_qr-code.mdx";
 
 :::info
 Meshtastic is **not** LoRaWAN, Helium or TTN (TheThingsNetwork). Meshtastic uses the full spectrum frequency range designated to LoRa technology per region. This allows for several hundred possible frequency channels in the US region alone.
@@ -54,7 +55,7 @@ The maximum output power for North America is +30 dBm ERP ([Effective Radiated P
 
 The band range is from 902 to 928 MHz.
 
-There are 104 frequency slots defined with the standard radio preset `LongFast`. After factory reset the radio will be set to frequency slot 20 with a center frequency of 906.875 MHz.
+In North America, the available Frequency Slots depend on the bandwidth setting, which is included in the selected Radio Preset. The standard Preset, LongFast, provides 104 Frequency Slots. After a factory reset, the radio defaults to LongFast with a Frequency Slot of 0, which translates to Slot 20 (centered at 906.875 MHz) based on the channel hashing algorithm.
 
 ## Data Rates
 
@@ -79,7 +80,7 @@ Various data-rate options are available when configuring a frequency slot and ar
 
 We have eight LoRa radio presets. These are the most common settings and have been proven to work well:
 
-|    Channel setting     | Alt Channel Name | Data-Rate  | SF / Symbols | Coding Rate |  Bandwidth   | Link Budget |
+|    Radio Preset        | Alt Preset Name  | Data-Rate  | SF / Symbols | Coding Rate |  Bandwidth   | Link Budget |
 | :--------------------: | :--------------: | :--------: | :----------: | :---------: | :----------: | :---------: |
 |  Short Range / Turbo   |   Short Turbo    | 21.88 kbps |   7 / 128    |     4/5     |  500 kHz[^1] |    140dB    |
 |   Short Range / Fast   |    Short Fast    | 10.94 kbps |   7 / 128    |     4/5     |    250 kHz   |    143dB    |
@@ -100,7 +101,10 @@ The link budget used by these calculations assumes a transmit power of 22dBm and
 
 Custom settings can be applied by using [supported software](/docs/software).
 
-After applying the settings, you will need to restart the device. After your device is restarted, it will generate a new crypto key and you will need to share the newly generated QR Code or URL to all your other devices.
+After applying the settings, you will need to restart the device. After your device is restarted, it will generate a new crypto key and you will need to share the newly generated QR[^2] Code or URL to all your other devices.
+
+[^2]:
+    <QRCode />
 
 Some example settings:
 
