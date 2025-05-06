@@ -42,14 +42,14 @@ Always keep in mind [xkcd's note on encryption](https://xkcd.com/538).
 
 If you are reviewing our implementation, this is a brief statement of our method.
 
-- We do all crypto at the SubPacket (payload) level only, so that all Meshtastic nodes will route for others - even those channels which are encrypted with a different key.
+- We do all crypto at the SubPacket (payload) level only, so that all Meshtastic nodes will route for others - even those channels which are encrypted with a key the node does not possess.
 - Mostly based on reading [Wikipedia](<https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#Counter_(CTR)>) and using the modes the ESP32 provides support for in hardware.
 - We use AES256-CTR as a stream cypher (with zero padding on the last BLOCK) because it is well supported with hardware acceleration.
 - Our AES key is 128 or 256 bits, shared as part of the 'Channel' specification.
 - The node number concatenated with the packet number is used as the NONCE. This nonce will be stored in flash in the device and should essentially never repeat. If the user makes a new 'Channel' (i.e. picking a new random 256 bit key), the packet number will start at zero.
 - The packet number is sent in cleartext with each packet. The node number can be derived from the "from" field of each packet. (Cleartext is acceptable because it merely provides IV for each encryption run)
 - Each 16 byte BLOCK for a packet has an incrementing COUNTER. COUNTER starts at zero for the first block of each packet.
-- The IV for each block is constructed by concatenating the NONCE as the upper 96 bits of the IV and the COUNTER as the bottom 32 bits. Since our packets are small counter portion will really never be higher than 32 (five bits).
+- The IV for each block is constructed by concatenating the NONCE as the upper 96 bits of the IV and the COUNTER as the bottom 32 bits. Since our packets are small the counter portion will really never be higher than 32 (five bits).
 
 ### Comments from reviewer #1
 
