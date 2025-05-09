@@ -35,7 +35,7 @@ This means Meshtastic is vulnerable to [**« Harvest now, Decrypt later »**](ht
 - One of your nodes being stolen.
 - Any unknown bug revealing the channel key to an attacker.
 
-Other protocols, such as _misconfigured TLS1.2_, are far more impacted by Harvest now, Decrypt later attacks because their keys will be broken by near-future Quantum-Computers, yet they do not provide PFS.
+Other protocols, such as _misconfigured TLS1.2_, are far more impacted by Harvest now, Decrypt later attacks because their keys will be broken by near-future Quantum-Computers, yet they do not provide PFS either.
 
 Meshtastic's AES256 encryption is considered quantum-resistant[^1], but the public/private key exchange for DMs is not, as current quantum-resistant cryptography schemes don't fit in LoRa packets or our IoT hardware; realistic attack vectors include accidental mishandling of channel keys, nodes being lost, and potential future quantum attacks on DM key exchanges.
 
