@@ -4,9 +4,9 @@ description: "Breathe new life into abandoned LoRa crypto mining hardware by con
 slug: a-major-solution-to-a-miner-problem
 authors: [thebentern]
 tags: [meshtastic, hardware, walkthrough, upcycle, repurposing, ewaste, lora]
-date: 2025-05-09T12:00
+date: 2025-05-10T12:00
 hide_table_of_contents: false
-image: "/img/blog/crypto-miner-conversion.jpg"
+image: "/img/blog/peoples_node.png"
 ---
 
 As the network crypto mining landscape has evolved, thousands of LoRa-based mining devices sit unused in closets and drawers around the world. These once-coveted pieces of hardware—designed for LoRa-based cryptocurrency mining networks—represent both wasted resources and untapped potential. What if there was a way to repurpose this hardware for something genuinely useful?
@@ -92,6 +92,7 @@ Many miners use a microSD card, but some may have special MMC storage cards. In 
 - **Install python / pipx and Meshtastic python CLI**: Run `sudo apt install pipx` and `pipx install meshtastic` to install the Meshtastic CLI.
 - **Configure the meshtasticd instance**: Use the Meshtastic CLI to configure the LoRa radio region and set the node name - In this case we ran `meshtastic --set lora.region US --set-owner "The People's Node" --set-owner-short "🎈"`
 - **Test the Node**: Enjoy your success!
+
 ![The People's Node Node](/img/blog/peoples_node.webp)
 
 ### Challenges and Considerations
