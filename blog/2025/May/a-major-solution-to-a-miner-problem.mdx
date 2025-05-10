@@ -16,9 +16,9 @@ These abandoned mining devices can be easily repurposed and transformed into pow
 {/* truncate */}
 
 ## The Rise and Fall of LoRa Crypto Mining
-In 2019-2021, a wave of excitement swept through the cryptocurrency world as some projects promised to create wireless networks using LoRa technology. Thousands of enthusiasts purchased dedicated mining hardware—essentially LoRa gateways with blockchain capabilities—to participate in building these networks.
+In the early 2020s, a wave of excitement swept through the technology world as certain projects promised to create wireless networks using LoRa technology by using cryptocurrency mining to incentivize the crowd-sourced formation of that network. Thousands of enthusiasts purchased dedicated mining hardware (essentially LoRa gateways with blockchain capabilities) to participate in building these networks.
 
-Fast forward to today, and many of these miners sit unused due to diminishing returns on mining rewards and the general volatility of cryptocurrency markets
+Fast forward to today, and many of these miners sit unused due to diminishing returns on mining rewards and the general volatility of cryptocurrency markets or simply loss of interest.
 
 The result? Thousands of perfectly functional devices collecting dust.
 
@@ -82,16 +82,24 @@ Many miners use a microSD card, but some may have special MMC storage cards. In 
 ![Miner with LoRa module](/img/blog/miner_opened.webp)
 
 ### 3. Configuration
-- **Boot the Device**: Power on the device and ensure it boots into the Raspberry Pi OS.
-- **Open an SSH session**: Connect to the device via SSH.
+- **Boot the Device**:
+Power on the device and ensure it boots into the Raspberry Pi OS.
+- **Open an SSH session**:
+Connect to the device via SSH.
 ![Neofetch](/img/blog/neofetch.webp)
-- **Install Meshtasticd**: Follow the [Meshtastic installation guide](https://meshtastic.org/docs/software/linux/installation/?os=debian) to install Meshtasticd.
-- **Configure Meshtasticd and the LoRa radio**: Run `sudo nano /etc/meshtasticd/config.yaml` and set the parameters for your LoRa device, a MAC address or MAC address source, and any other parameters for your setup. 
+- **Install Meshtasticd**:
+Follow the [Meshtastic installation guide](https://meshtastic.org/docs/software/linux/installation/?os=debian) to install Meshtasticd.
+- **Configure Meshtasticd and the LoRa radio**:
+Run `sudo nano /etc/meshtasticd/config.yaml` and set the parameters for your LoRa device, a MAC address or MAC address source, and any other parameters for your setup.
 ![config.yaml](/img/blog/config_yaml.webp)
-- **Start up the meshtasticd service**: Run `sudo systemctl start meshtasticd` to start the Meshtastic daemon.
-- **Install python / pipx and Meshtastic python CLI**: Run `sudo apt install pipx` and `pipx install meshtastic` to install the Meshtastic CLI.
-- **Configure the meshtasticd instance**: Use the Meshtastic CLI to configure the LoRa radio region and set the node name - In this case we ran `meshtastic --set lora.region US --set-owner "The People's Node" --set-owner-short "🎈"`
-- **Test the Node**: Enjoy your success!
+- **Start up the meshtasticd service**:
+Run `sudo systemctl start meshtasticd` to start the Meshtastic daemon.
+- **Install python / pipx and Meshtastic python CLI**:
+Run `sudo apt install pipx` and `pipx install meshtastic` to install the Meshtastic CLI.
+- **Configure the meshtasticd instance**:
+Use the Meshtastic CLI to configure the LoRa radio region and set the node name - In this case we ran `meshtastic --set lora.region US --set-owner "The People's Node" --set-owner-short "🎈"`
+- **Test the Node**:
+Enjoy your success!
 
 ![The People's Node Node](/img/blog/peoples_node.webp)
 
