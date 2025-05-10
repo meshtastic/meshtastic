@@ -69,52 +69,36 @@ Many miners use a microSD card, but some may have special MMC storage cards. In 
 ![MMC](/img/blog/emmc.webp)
 
 ### 1. Software Replacement
-- **Backup**:
-
-Before starting, back up any important data from the miner.
-- **Flash SD/MMC**:
-
-Image the Raspberry Pi OS onto the device's storage option. We used Raspberry Pi Imager for ease of use and pre-configuration of wireless network settings.
+- **Backup**: Before starting, back up any important data from the miner.
+- **Flash SD/MMC**: Image the Raspberry Pi OS onto the device's storage option. We used Raspberry Pi Imager for ease of use and pre-configuration of wireless network settings.
 
 ![Raspberry PI Imager](/img/blog/rpi_imager.webp)
 
 ### 2. Hardware Modifications
 
-- **Remove the LoRa Concentrator**:
-
-If the miner has a dedicated LoRa concentrator module, remove it. This may involve desoldering or disconnecting it from the main board.
-- **Install Compatible LoRa Module**:
-
-Replace it with a compatible module like the Semtech SX1262 or LR11XX series. Depending on the miner hardware, this may be an option as either a Raspberry Pi HAT or a (CH341) USB + LoRa device. In this case, we used an open-source hardware community USB device: The [Mesh Toad](https://oshwlab.com/mtnmesh/meshtoad-v1-2).
+- **Remove the LoRa Concentrator**: If the miner has a dedicated LoRa concentrator module, remove it. This may involve desoldering or disconnecting it from the main board.
+- **Install Compatible LoRa Module**: Replace it with a compatible module like the Semtech SX1262 or LR11XX series. Depending on the miner hardware, this may be an option as either a Raspberry Pi HAT or a (CH341) USB + LoRa device. In this case, we used an open-source hardware community USB device: The [Mesh Toad](https://oshwlab.com/mtnmesh/meshtoad-v1-2).
 
 ![Miner with LoRa module](/img/blog/miner_opened.webp)
 
 ### 3. Configuration
 - **Boot the Device**:
-
 Power on the device and ensure it boots into the Raspberry Pi OS.
 - **Open an SSH session**:
-
 Connect to the device via SSH.
 ![Neofetch](/img/blog/neofetch.webp)
 - **Install Meshtasticd**:
-
 Follow the [Meshtastic installation guide](https://meshtastic.org/docs/software/linux/installation/?os=debian) to install Meshtasticd.
 - **Configure Meshtasticd and the LoRa radio**:
-
 Run `sudo nano /etc/meshtasticd/config.yaml` and set the parameters for your LoRa device, a MAC address or MAC address source, and any other parameters for your setup.
 ![config.yaml](/img/blog/config_yaml.webp)
 - **Start up the meshtasticd service**:
-
 Run `sudo systemctl start meshtasticd` to start the Meshtastic daemon.
 - **Install python / pipx and Meshtastic python CLI**:
-
 Run `sudo apt install pipx` and `pipx install meshtastic` to install the Meshtastic CLI.
 - **Configure the meshtasticd instance**:
-
 Use the Meshtastic CLI to configure the LoRa radio region and set the node name - In this case we ran `meshtastic --set lora.region US --set-owner "The People's Node" --set-owner-short "🎈"`
 - **Test the Node**:
-
 Enjoy your success!
 
 ![The People's Node Node](/img/blog/peoples_node.webp)
