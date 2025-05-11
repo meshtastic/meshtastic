@@ -53,12 +53,9 @@ The primary issue with converting mining hardware into a Meshtastic node is that
 
 The conversion process generally involves:
 
-1. **Software replacement**:
-   Flashing the RaspberryPI OS to replace the mining software and installing Meshtasticd
-2. **Hardware modifications**:
-   Minor adaptations to support the Meshtastic feature set
-3. **Configuration**:
-   Setting up the node for integration onto the mesh
+1. **Software replacement** - Flashing RaspberryPI OS (Lite) to replace the mining software and installing Meshtasticd
+2. **Hardware modifications** - Minor adaptations to support the Meshtastic feature set
+3. **Configuration** - Setting up the node for integration onto the mesh
 
 We'll explore each of these steps in detail.
 
@@ -71,7 +68,7 @@ Many miners use a microSD card, but some may have special MMC storage cards. In 
 ### 1. Software Replacement
 
 - **Backup**: Before starting, back up any important data from the miner.
-- **Flash SD/MMC**: Image the Raspberry Pi OS onto the device's storage option. We used Raspberry Pi Imager for ease of use and pre-configuration of wireless network settings.
+- **Flash SD/MMC**: Image Raspberry Pi OS (Lite) onto the device's storage option. We used Raspberry Pi Imager for ease of use and pre-configuration of network settings.
 
 ![Raspberry PI Imager](/img/blog/rpi_imager.webp)
 
