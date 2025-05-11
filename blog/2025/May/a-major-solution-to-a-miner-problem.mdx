@@ -1,0 +1,113 @@
+---
+title: "A Major Solution to a Miner Problem"
+description: "Breathe new life into abandoned LoRa crypto mining hardware by converting it into a powerful Meshtastic nodes"
+slug: a-major-solution-to-a-miner-problem
+authors: [thebentern]
+tags: [meshtastic, hardware, walkthrough, upcycle, repurposing, ewaste, lora]
+date: 2025-05-10T12:00
+hide_table_of_contents: false
+image: "/img/blog/miner_blog_preview.png"
+---
+
+As the network crypto mining landscape has evolved, thousands of LoRa-based mining devices sit unused in closets and drawers around the world. These once-coveted pieces of hardware—designed for LoRa-based cryptocurrency mining networks—represent both wasted resources and untapped potential. What if there was a way to repurpose this hardware for something genuinely useful?
+
+These abandoned mining devices can be easily repurposed and transformed into powerful Meshtastic nodes, giving them a new life.
+
+{/* truncate */}
+
+## The Rise and Fall of LoRa Crypto Mining
+
+In the early 2020s, a wave of excitement swept through the technology world as certain projects promised to create wireless networks using LoRa technology by using cryptocurrency mining to incentivize the crowd-sourced formation of that network. Thousands of enthusiasts purchased dedicated mining hardware (essentially LoRa gateways with blockchain capabilities) to participate in building these networks.
+
+Fast forward to today, and many of these miners sit unused due to diminishing returns on mining rewards and the general volatility of cryptocurrency markets or simply loss of interest.
+
+The result? Thousands of perfectly functional devices collecting dust.
+
+## The Hardware Gold Mine
+
+Most LoRa-based miners generally share a common architecture that makes them excellent candidates for conversion:
+
+- Linux-based boards with ample processing power (often based on Raspberry Pi or similar SoCs)
+- Adequate power management systems
+- Often include Ethernet and/or Wi-Fi connectivity
+- Robust enclosures already designed for environmental exposure
+
+While they were built for mining cryptocurrency, these devices contain many of the essential components needed for a linux based Meshtastic node.
+
+## Benefits of Conversion
+
+1. **Environmental Impact**:
+   Repurposing existing hardware reduces electronic waste and extends the useful life of these devices.
+2. **Cost Effectiveness**:
+   Converting a miner you already own can be significantly cheaper than purchasing a new dedicated Meshtastic device.
+3. **Robust Hardware**:
+   Many mining devices were built with 24/7 outdoor operation in mind and include features that make them ideal for reliable mesh network nodes.
+
+## The Problem and the Conversion Process
+
+### The Problem
+
+The primary issue with converting mining hardware into a Meshtastic node is that the LoRa concentrator modules used in many miners are not compatible with the Meshtastic firmware per se. They are specifically designed for LoRaWAN applications, with a fixed number of channels and predefined bandwidth allocations. However, this problem can be solved by using a different LoRa module that is compatible with the Meshtastic firmware, such as the Semtech SX1262 or LR11XX series.
+
+### Conversion Overview
+
+The conversion process generally involves:
+
+1. **Software replacement** - Flashing RaspberryPI OS (Lite) to replace the mining software and installing Meshtasticd
+2. **Hardware modifications** - Minor adaptations to support the Meshtastic feature set
+3. **Configuration** - Setting up the node for integration onto the mesh
+
+We'll explore each of these steps in detail.
+
+## Step-by-Step Guide: Converting a Miner
+
+Many miners use a microSD card, but some may have special MMC storage cards. In some cases, the eMMC storage may be preferred due to its robust design.
+
+![MMC](/img/blog/emmc.webp)
+
+### 1. Software Replacement
+
+- **Backup**: Before starting, back up any important data from the miner.
+- **Flash SD/MMC**: Image Raspberry Pi OS (Lite) onto the device's storage option. We used Raspberry Pi Imager for ease of use and pre-configuration of network settings.
+
+![Raspberry PI Imager](/img/blog/rpi_imager.webp)
+
+### 2. Hardware Modifications
+
+- **Remove the LoRa Concentrator**: If the miner has a dedicated LoRa concentrator module, remove it. This may involve desoldering or disconnecting it from the main board.
+- **Install Compatible LoRa Module**: Replace the removed concentrator with a compatible module like the Semtech SX1262 or LR11XX series. Depending on the miner hardware, this may be possible using either a Raspberry Pi HAT or a USB LoRa device (typically using a CH341 chip). In our case, we used an open-source USB device developed by the hardware community: The [Mesh Toad](https://oshwlab.com/mtnmesh/meshtoad-v1-2).
+
+![Miner with LoRa module](/img/blog/miner_opened.webp)
+
+### 3. Configuration
+
+- Power on the device and ensure it boots into the Raspberry Pi OS.
+- Connect to the device via SSH.
+  ![Neofetch](/img/blog/neofetch.webp)
+- Follow the [Meshtastic installation guide](https://meshtastic.org/docs/software/linux/installation/?os=debian) to install Meshtasticd.
+- Once installed, run `sudo nano /etc/meshtasticd/config.yaml` and set the parameters for your LoRa device, a MAC address or MAC address source, and any other parameters for your setup.
+  ![config.yaml](/img/blog/config_yaml.webp)
+- Run `sudo systemctl start meshtasticd` to start the Meshtastic daemon.
+- Run `sudo apt install pipx` and `pipx install meshtastic` to install the Meshtastic CLI.
+- Use the Meshtastic CLI to configure the LoRa radio region and set the node name - In this case we ran `meshtastic --set lora.region US --set-owner "The People's Node" --set-owner-short "🎈"`
+- Enjoy your success!
+
+![The People's Node Node](/img/blog/peoples_node.webp)
+
+![Deployed Node](/img/blog/miner_deployed.webp)
+
+### Challenges and Considerations
+
+While conversion is feasible for many devices, there are some challenges to be aware of:
+
+- Some miners may use proprietary hardware that makes conversion difficult
+- This could void the warranty on the product you purchased
+- Varying levels of technical expertise required
+
+## Summary
+
+As the hardware landscape continues to evolve, repurposing unused mining hardware for Meshtastic represents a sustainable and practical solution that benefits both individual owners and the broader Meshtastic community.
+
+By breathing new life into these devices, we're not just solving a "miner" problem — we're contributing to a major solution for off-grid communication.
+
+**Have you converted a miner to run Meshtastic? Share your experience in the comments!**
