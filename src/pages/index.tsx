@@ -28,14 +28,21 @@ const SocialCards: SocialCardProps[] = [
     ),
   },
   {
-    color: "bg-[#000000]",
+    color: "bg-[#000000] dark:bg-[#ffffff]",
     link: "https://x.com/TheMeshtastic",
     children: (
-      <img
-        alt="x.com"
-        className="m-auto h-10"
-        src="/img/homepage/X.com-White-Logo.svg"
-      />
+      <>
+        <img
+          alt="x.com"
+          className="m-auto h-10 dark:hidden"
+          src="/img/homepage/X.com-White-Logo-light.svg"
+        />
+        <img
+          alt="x.com"
+          className="m-auto h-10 hidden dark:block"
+          src="/img/homepage/X.com-White-Logo-dark.svg"
+        />
+      </>
     ),
   },
   {
