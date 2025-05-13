@@ -70,6 +70,9 @@ Node
 NRF52 | [Drivers](/docs/getting-started/serial-drivers/nrf52/) | [Firmware](/docs/getting-started/flashing-firmware/nrf52/)
 : A microcontroller chipset made by Nordic, used by a number of devices used by several devices such as the RAK Meshtastic Starter Kit and the Lilygo T-Echo. Lower power usage than ESP32.
 
+OTA
+: Abbreviation for "Over the Air". Typically used to reffer to a OTA update which is one that happens over a wireless network (over the air). 
+   
 Packet
 : A formatted unit of data sent over the network. In Meshtastic, packets carry messages, GPS locations, and other information through the LoRa mesh network.
 
@@ -83,7 +86,7 @@ Public Key Cryptography (PKC) | [Encryption](/docs/overview/encryption/)
 : A cryptographic method introduced in Meshtastic v2.5 for Direct Messages and Admin Messages, where each device uses a unique public and private key pair. The public key, shared with other devices, enables secure message encryption, while the private key allows only the intended recipient to decrypt and authenticate the message. This approach enhances privacy and integrity for both direct device-to-device communication and sensitive admin functions.
 
 Repeater | [Role Definitions](/docs/configuration/radio/device/#roles)
-: Infrastructure node for extending network coverage by relaying messages with minimal overhead. Not visible in Nodes list.
+: Infrastructure fonode for extending network coverage by relaying messages with minimal overhead. Not visible in Nodes list.
 
 Router | [Role Definitions](/docs/configuration/radio/device/#roles)
 : Infrastructure node for extending network coverage by relaying messages. Visible in Nodes list.
