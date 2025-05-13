@@ -28,7 +28,7 @@ const SocialCards: SocialCardProps[] = [
     ),
   },
   {
-    color: "bg-[##000000]",
+    color: "bg-[#000000]",
     link: "https://x.com/TheMeshtastic",
     children: (
       <img
