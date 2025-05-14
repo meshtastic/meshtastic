@@ -49,13 +49,13 @@ The build system is modular. Adding a new board variant for an already supported
 
 ### Build with Custom Hardware
 
-1. Go to the `variants` folder in the firmware source code and make a new directory for your hardware, let's call it `m5stack_atom` and copy an existing configuration you wanna modify:
+1. Go to the `variants` folder in the firmware source code and make a new directory for your hardware, let's call it `m5stack_atom` and copy an existing configuration you want to modify:
    ```shell
    cd variants; mkdir m5stack_atom
    cp heltec_v1/* m5stack_atom
    cd m5stack_atom
    ```
-2. Modify the `platformio.ini`_in this subdirectory_ from the canonical define of the hardware variant (`HELTEC_V1` in this case) to `PRIVATE_HW` and make the `-I` on the `build_flags` point to the newly created dir.
+2. Modify the `platformio.ini` _in this subdirectory_ from the canonical define of the hardware variant (`HELTEC_V1` in this case) to `PRIVATE_HW` and make the `-I` on the `build_flags` point to the newly created dir.
    ```shell
    [env:m5stack-atom]
    extends = esp32_base
