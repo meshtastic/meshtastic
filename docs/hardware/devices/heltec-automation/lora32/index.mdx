@@ -14,6 +14,7 @@ queryString="heltec"
 defaultValue="v3"
 values={[
 {label: 'LoRa32 V3/V3.1', value:'v3'},
+{label: 'Wireless Bridge', value:'Wireless Bridge'},
 {label: 'Wireless Stick Lite V3', value:'Wireless Stick Lite V3'},
 {label: 'Wireless Tracker v1.0', value: 'tracker-v1.0'},
 {label: 'Wireless Tracker v1.1', value: 'tracker-v1.1'},
@@ -83,6 +84,65 @@ Image Source: [Heltec](<https://resource.heltec.cn/download/WiFi_LoRa32_V3/HTIT-
   - International
     - [Heltec](https://heltec.org/project/wifi-lora-32-v3/)
     - [AliExpress](https://www.aliexpress.us/item/3256807466584635.html)
+
+</TabItem>
+
+<TabItem value="Wireless Bridge">
+
+## Wireless Bridge
+
+:::info
+This device has a suboptimal ESP32/SX1276 chipset combination, but can be quite affordable for small, stationary setups.
+:::
+
+- **MCU:**
+  - ESP32-D0WDQ6
+  - Wi-Fi: 802.11 b/g/n, up to 150Mbps
+  - Bluetooth: V4.2 BR/EDR and LE
+- **LoRa Transceiver:**
+  - Semtech SX1276
+  - Max. TX Power: 18dB ± 1dB
+  - Max. Receiving Sensitivity: -135dBm
+- **Frequency Options:**
+  - 470 - 510 MHz
+  - 863 - 928 MHz
+- **Memory:**
+  - internal 520KB SRAM,
+  - 8MB (64M-bits) SPI FLASH
+  - 8MB (64M-bits) PSRAM
+- **USB to Serial Chip:**
+  - CP2102
+- **Connectors:**
+  - Micro USB
+  - Antenna:
+    - LoRa Antenna interface (SMA)
+    - 2.4G Antenna interface(SMA)
+  - Battery (optional):
+    - 3.7V Lithium interface (1.25x2)
+- **Other:**
+  - Operating temperature: -20-70°C
+  - Dimensions: 66(+10) x 30 x 15 mm
+  - Low Power: Deep sleep 800μA
+
+### Features
+
+- No display.
+- User and Reset Buttons
+- No GPS
+
+### Meshtastic I2C Definitions
+
+- SDA: GPIO4
+- SCL: GPIO15
+
+### Resources
+
+- Firmware file: `firmware-heltec-wireless-brdige-X.X.X.xxxxxxx.bin`
+- From Heltec
+  - [Product page](https://heltec.org/project/wireless-bridge/)
+  - [Datasheet](https://resource.heltec.cn/download/Wireless_Bridge/bridge.pdf)
+  - [Schematic Diagram (PDF)](https://resource.heltec.cn/download/Wireless_Bridge/Schematic_Diagram_HTIT-WB_V0.2.pdf)
+  - [User Manual](https://docs.heltec.org/en/node/esp32/wireless_bridge/index.html)
 
 </TabItem>
 
