@@ -95,6 +95,12 @@ Image Source: [Heltec](<https://resource.heltec.cn/download/WiFi_LoRa32_V3/HTIT-
 This device has a suboptimal ESP32/SX1276 chipset combination, but can be quite affordable for small, stationary setups.
 :::
 
+:::caution
+Be careful when interacting with the USB-C port. This device does not have ESD protection for the CP2102 USB to UART bridge chip.
+:::
+
+![Board View](</img/hardware/heltec/heltec-wireless-bridge-internal.webp>)
+
 - **MCU:**
   - ESP32-D0WDQ6
   - Wi-Fi: 802.11 b/g/n, up to 150Mbps
