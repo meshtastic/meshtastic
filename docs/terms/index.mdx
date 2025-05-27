@@ -29,13 +29,16 @@ DFU
 : Device Firmware Update, a state which a device is placed into for it to receive a firmware update
 
 ESP32 | [Drivers](/docs/getting-started/serial-drivers/esp32/) | [Firmware](/docs/getting-started/flashing-firmware/esp32/)
-: A chipset of microcontroller made/designed by Espressif, used by a number of devices. Higher power usage than NRF52, but often cheaper and supports WiFi if desired. 
+: A chipset of microcontroller made/designed by Espressif, used by a number of devices. Higher power usage than NRF52, but often cheaper and supports WiFi if desired.
 
 Firmware | [Guide](https://meshtastic.org/docs/getting-started/flashing-firmware/)
 : The low-level software programmed onto a Meshtastic device, controlling its hardware functions and enabling it to communicate within the mesh network using LoRa technology. Firmware
 
 Flash/Flashing | [Guide](https://meshtastic.org/docs/getting-started/flashing-firmware/)
 : The process of updating or installing firmware on a Meshtastic device. This is typically done using a computer to load new firmware versions or custom software to enhance or modify device functionality.
+
+Foreign Mesh
+: A Foreign Mesh is one in which the receiving node does not share any Channels with the transmitting node. When a node receives a message it is unable to decrypt, then the message is said to come from a Foreign Mesh.
 
 GPIO
 : General Purpose Input/Output. An uncommitted digital signal pin on a device
@@ -67,14 +70,20 @@ Node
 NRF52 | [Drivers](/docs/getting-started/serial-drivers/nrf52/) | [Firmware](/docs/getting-started/flashing-firmware/nrf52/)
 : A microcontroller chipset made by Nordic, used by a number of devices used by several devices such as the RAK Meshtastic Starter Kit and the Lilygo T-Echo. Lower power usage than ESP32.
 
+OTA
+: Abbreviation for "Over the Air". Typically used to reffer to a OTA update which is one that happens over a wireless network (over the air). 
+   
 Packet
 : A formatted unit of data sent over the network. In Meshtastic, packets carry messages, GPS locations, and other information through the LoRa mesh network.
 
 Protobuf | [Reference](/docs/development/reference/protobufs/)
 : Protocol Buffers, a method developed by Google for serializing structured data, used in Meshtastic for efficient communication protocol between devices.
 
-PSK | [Encryption](/docs/overview/encryption/)
+Pre-Shared Key (PSK) | [Encryption](/docs/overview/encryption/)
 : Pre-Shared Key, a secret code or passphrase used in Meshtastic channels for encryption, ensuring that only devices with the matching PSK can communicate within that specific channel.
+
+Public Key Cryptography (PKC) | [Encryption](/docs/overview/encryption/)
+: A cryptographic method introduced in Meshtastic v2.5 for Direct Messages and Admin Messages, where each device uses a unique public and private key pair. The public key, shared with other devices, enables secure message encryption, while the private key allows only the intended recipient to decrypt and authenticate the message. This approach enhances privacy and integrity for both direct device-to-device communication and sensitive admin functions.
 
 Repeater | [Role Definitions](/docs/configuration/radio/device/#roles)
 : Infrastructure node for extending network coverage by relaying messages with minimal overhead. Not visible in Nodes list.
@@ -103,7 +112,7 @@ SWR
 Telemetry
 : The sending of sensor data or system metrics over the mesh network.
 
-Tranceiver
+Transceiver
 : A device capable of both transmitting and receiving communications.
 
 Transmit

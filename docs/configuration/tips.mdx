@@ -6,14 +6,22 @@ sidebar_label: Tips
 sidebar_position: 4
 ---
 
+import QRCode from "@site/docs/blocks/_qr-code.mdx";
+
 ## Roles
 
-It is strongly recommended to keep your [ROLE](/docs/configuration/radio/device#roles) set to `CLIENT`. Only change this if you have a specific, well-understood reason to do so.
+It is strongly recommended to keep your [ROLE](/docs/configuration/radio/device#roles) set to `CLIENT` or `CLIENT_MUTE`. Only use other roles if you have a specific, well-understood reason to do so. Read our [blog post about choosing the best role](/blog/choosing-the-right-device-role/).
 
-### Why `CLIENT` is Recommended
+### Recommended Roles
 
-- `CLIENT` nodes efficiently repeat and route packets as needed.
-- They use smart delays for rebroadcasting, improving network stability.
+- `CLIENT` nodes efficiently repeat and route packets as needed. 
+  - **Almost always the correct mode.**
+  - Uses smart delays for rebroadcasting, improving network stability.
+  - Use for "rooftop" or other nodes that enhance your mesh.
+  - Use during isolated activities such as hiking, skiing, or MTB where you're in an area with few nodes.
+- `CLIENT_MUTE` nodes behave as above but do not repeat packets.
+  - Use for personal nodes that are in range of a higher-profile node in a dense or congested mesh.
+  - Use when you have multiple nodes in close proximity (set your "best-placed" node to `CLIENT`).
 
 ![Client Node Example](/img/configuration/client.webp)
 *One example of a 'Client' node.  Photo credit: Cully@KBOXLABS*
@@ -35,7 +43,7 @@ Remember: A network of `CLIENT` nodes with a small number of well-placed `ROUTER
 
 ## (Not) Sharing Your Location
 
-Telemetry is shared over your [PRIMARY channel](/docs/configuration/radio/channels#role). This means that if your node has acquired GPS coordinates from an integrated GPS chip, or from your mobile device, your coordinates will be sent to the mesh over this channel, using it's defined encryption (if any).
+Telemetry is shared over your [PRIMARY channel](/docs/configuration/radio/channels#role). This means that if your node has acquired GPS coordinates from an integrated GPS chip, or from your mobile device, your coordinates will be sent to the mesh over this channel, using its defined encryption (if any).
 
 By default the PRIMARY channel's name is LongFast with the encryption key "AQ==" (Base64 equivalent of Hex 0x01). If this is left unchanged, your location will be shared with all nodes in range that are also using the default channel.
 
@@ -53,7 +61,7 @@ Alternatively, if you wish to only share your location with trusted parties, you
 
 1. Ensure you have not changed the LoRa [Modem Preset](/docs/configuration/radio/lora#modem-preset) from the default `unset` / `LONG_FAST`.
 2. On your PRIMARY channel, set anything you'd like for the channel's name and choose a random PSK.
-3. Enable a SECONDARY channel named "LongFast" with PSK "AQ==".
+3. Enable a SECONDARY channel named "LongFast" with PSK "AQ==". For Apple devices, leave the channel name  blank.
 4. If your LoRa frequency slot is set to the default (`0`), the radio's transmit frequency will be automatically changed based on your PRIMARY channel's name. In this case, you will have to manually set it back to your region's default (in LoRa settings) in order to interface with users on the default slot:
 
 ### Default Primary Frequency Slots by Region
@@ -62,7 +70,9 @@ Alternatively, if you wish to only share your location with trusted parties, you
 | :-: | :----: | :----: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :----: | :-: | :----: | :----: | :----: | :----: | :----: | :-----: |
 | 20  |   4    |   1    | 36  | 20  | 20  | 12  | 16  |  2  |  4  |   4    | 16  |   6    |   2    |   4    |   16   |   4    |    6    |
 
-To quickly test this configuration, find and scan your region's QR from [this repository](https://github.com/meshtastic/meshtastic/tree/master/static/img/configuration/qr-private-primary-example/). Remember to generate a new PSK for your private channel before sharing with your trusted nodes.
+To quickly test this configuration, find and scan your region's QR[^1] from [this repository](https://github.com/meshtastic/meshtastic/tree/master/static/img/configuration/qr-private-primary-example/).  The example QR code will create a private primary channel and default Meshtastic secondary channel as demonstrated above. The private channel name may be updated if desired, but a new PSK should be generated before sharing with trusted nodes.
+
+[^1]: <QRCode />
 
 ## Rebroadcast "Public" Traffic
 
@@ -74,7 +84,7 @@ If you would like your nodes to include/expand the "public" mesh, you must use t
 
 ### Hop Count
 
-It is **strongly** recommended to leave your [MAX HOPS](/docs/configuration/radio/lora#max-hops) set to 3 unless you're sure you need more (or less) to reach your destination node. Unnecessarily high hop counts often lead to network issues.
+It is **strongly** recommended to leave your [MAX HOPS](/docs/configuration/radio/lora#max-hops) set to 3 unless you're sure you need more (or less) to reach your destination node. Unnecessarily high hop counts often lead to network issues. If you need to increase the hop count, apply changes only to nodes at the network’s edges, not those near the middle.
 
 ![Hop Count Image](/img/configuration/max-hops.webp)
 

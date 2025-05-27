@@ -9,7 +9,7 @@ This document is a collection of tips and best practices for developing on the n
 
 ## Using the NanoDAP USB debugging probe
 
-This is a mini-HOWTO on installing the appropriate firmware and adapter software, it is loosely based on [this tutorial by RAK](https://docs.rakwireless.com/Product-Categories/Accessories/RAKDAP1-Flash-and-Debug-Tool/Quickstart/#rak4600-evaluation-board).
+This is a mini-HOWTO on installing the appropriate firmware and adapter software, it is loosely based on [this tutorial by RAK](https://docs.rakwireless.com/product-categories/accessories/rakdap1/quickstart/#rak4600-evaluation-board).
 
 ### Required hardware
 
@@ -45,11 +45,11 @@ Some web instructions recommend connecting the RESET and 3V3 pins, but this is u
 
 This image shows an example connection to a RAK4630 board:
 ![RAK4630 DAP connection](/img/RAKDAP1_New_1.webp)
-Photo Courtesy of [RAK Wireless](https://docs.rakwireless.com/assets/images/accessories/rakdap1-flash-and-debug-tool/RAKDAP1_New_1.png).
+Photo Courtesy of [RAKwireless](https://docs.rakwireless.com/assets/images/accessories/rakdap1-flash-and-debug-tool/RAKDAP1_New_1.png).
 
 ### Using the NanoDAP with VSCode
 
 The Meshtastic project has a special build environment/target which has been configured to work with the NanoDAP. To use it select the "env:rak3631_dap" target via the command palette or in the bottom left of your VSCode/PlatformIO window. Once that target is selected it changes two things:
 
-- Device programming is no longer performed via the USB bootloader. Instead you you select "Upload" it will use the NanoDAP to program the device.
+- Device programming is no longer performed via the USB bootloader. Instead you select "Upload" it will use the NanoDAP to program the device.
 - The "Debug" button in VSCode will be enabled. If you click that button it will launch the ICE assisted debugger and you can set breakpoints etc...

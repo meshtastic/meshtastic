@@ -7,8 +7,9 @@ description: Details on the configuration options for the display on your Meshta
 
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
+import { Icon } from "@iconify/react";
 
-The display config options are: Screen On Duration, Auto Carousel Interval, Always Point North, GPS Format, Preferred Display Units, OLED Definition, Display Mode, Heading Bold, and Wake on Tap or Motion. Display config uses an admin message sending a `Config.Display` protobuf.
+The display config options are: Screen On Duration, Auto Carousel Interval, Always Point North, GPS Format, Preferred Display Units, Flip Screen, OLED Definition, Display Mode, Heading Bold, Wake on Tap or Motion, Compass Orientation, and Use 12-Hour Clock. Display config uses an admin message sending a `Config.Display` protobuf.
 
 ## Display Config Values
 
@@ -72,17 +73,53 @@ The heading can be hard to read when 'INVERTED' or 'TWOCOLOR' display mode is us
 
 This option enables the ability to wake the device screen when motion, such as a tap on the device, is detected via an attached accelerometer, or a capacitive touch button.
 
+### Compass Orientation
+
+Indicates how to rotate or invert the compass orientation on the display.
+
+### Use 12-Hour Clock
+
+If false the device will display the time in 24-hour format on screen.  If true, the device will display the time in 12-hour format on screen.
+
 ## Display Config Client Availability
 
 <Tabs
-groupId="settings"
-defaultValue="apple"
-values={[
-{label: 'Android', value: 'android'},
-{label: 'Apple', value: 'apple'},
-{label: 'CLI', value: 'cli'},
-{label: 'Web', value: 'web'},
-]}>
+  groupId="settings"
+  defaultValue="apple"
+  values={[
+    {
+      label: (
+        <>
+          <Icon icon="mdi:android" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Android
+        </>
+      ),
+      value: "android",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:apple" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Apple
+        </>
+      ),
+      value: "apple",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:terminal" height="1.5rem" style={{ marginRight: "0.25rem" }} /> CLI
+        </>
+      ),
+      value: "cli",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:internet" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Web
+        </>
+      ),
+      value: "web",
+    },
+  ]}>
 <TabItem value="android">
 
 #### Android

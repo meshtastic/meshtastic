@@ -7,14 +7,23 @@ description: This module is an interface to talk to and control your Meshtastic 
 
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
+import { Icon } from "@iconify/react";
+import ReactPlayer from "react-player";
 
 The serial module config options are: Enabled, Echo, Mode, Receive GPIO, Transmit GPIO, Baud Rate, Timeout, and Override Console Serial Port. Serial Module config uses an admin message sending a `ConfigModule.Serial` protobuf.
 
 This is an interface to talk to and control your Meshtastic device over a serial port. The module can be set to different [modes](#mode), each fulfilling a different use-case.
 
-![image](https://user-images.githubusercontent.com/9000580/205529843-962c3187-8411-452c-b729-42c58b1571f5.png)
+![image](/img/modules/Serial/jet.webp)
 
-<object data="https://www.youtube.com/embed/HdOiGKBtapw?autohide=1&autoplay=0" width="100%" height="400"></object>
+<div style={{ maxWidth: "800px", margin: "auto" }}>
+  <ReactPlayer
+    url="https://youtu.be/HdOiGKBtapw"
+    controls
+    width="100%"
+    height="400px"
+  />
+</div>
 
 ## Serial Module Config Values
 
@@ -38,10 +47,19 @@ Available Values:
 - `TEXTMSG` will allow you to send a string over the serial port to the device, which will be broadcasted as a text message to the default channel. Any text message received from the mesh will be sent to the serial port as follows: `<Short Name>: <text>`.
 - `NMEA` will output a NMEA 0183 Data stream containing the internal GPS or fixed position and other node locations as Waypoints (WPL).
 - `CALTOPO` will output NMEA 0183 Waypoints (WPL) every 10 seconds for all valid node locations, to be consumed by [CalTopo / SARTopo](/docs/software/integrations/caltopo.mdx).
-- `WS85` will parse and compute wind speed data received over serial from the Ecowitt WS85. Transmits valuess via telemetry packet every 5 minutes.  Modification of the WS85 weather sensor is required (https://hackaday.io/project/196990-meshtastic-ultrasonic-anemometer-wx-station).  If option is not available in app then enable with cli command "meshtastic --set serial.mode 6"
+- `WS85` will parse and compute wind speed data received over serial from the Ecowitt WS85. Transmits values via telemetry packet every 5 minutes. Modification of the WS85 weather sensor is required (https://hackaday.io/project/196990-meshtastic-ultrasonic-anemometer-wx-station). If option is not available in app then enable with cli command "meshtastic --set serial.mode 6"
+
+:::tip
+`PROTO` mode will show no obvious output when passively observed by a serial monitor. When testing, consider using the [Python CLI](https://github.com/meshtastic/python) with the `--listen` option, to view the stream of protobufs.
+:::
+
 ### Receive GPIO Pin
 
 Set the GPIO pin to the RXD pin you have set up.
+
+:::tip
+With the RAK4631 on the RAK19007 and some versions of the RAK19003 baseboards, the default pins are TXD1 (16) and RXD1 (15). For this device, setting [GPS Mode](/docs/configuration/radio/position/#gps-mode) to `Not_Present` is necessary. For other versions of the RAK19003 baseboard, the pins TXD0 (20) and RXD0 (19) are accessible.
+:::
 
 ### Transmit GPIO Pin
 
@@ -59,7 +77,7 @@ The serial baud rate.
 
 The amount of time to wait before we consider your packet as "done".
 
-### Override Console Serial Port 
+### Override Console Serial Port
 
 If set to true, this will allow Serial Module to control (set baud rate) and use the primary USB serial bus for output. This is only useful for NMEA and CalTopo modes and may behave strangely or not work at all in other modes. Setting TX/RX pins in the Serial Module config will cause this setting to be ignored.
 
@@ -70,14 +88,42 @@ Once module settings are changed, a **reset** is required for them to take effec
 ## Serial Module Config Client Availability
 
 <Tabs
-groupId="settings"
-defaultValue="apple"
-values={[
-{label: 'Android', value: 'android'},
-{label: 'Apple', value: 'apple'},
-{label: 'CLI', value: 'cli'},
-{label: 'Web', value: 'web'},
-]}>
+  groupId="settings"
+  defaultValue="apple"
+  values={[
+    {
+      label: (
+        <>
+          <Icon icon="mdi:android" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Android
+        </>
+      ),
+      value: "android",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:apple" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Apple
+        </>
+      ),
+      value: "apple",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:terminal" height="1.5rem" style={{ marginRight: "0.25rem" }} /> CLI
+        </>
+      ),
+      value: "cli",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:internet" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Web
+        </>
+      ),
+      value: "web",
+    },
+  ]}>
 <TabItem value="android">
 
 #### Android
@@ -111,17 +157,16 @@ All serial module config options are available in the python CLI. Example comman
 
 :::
 
-|    Setting     |                                                                                              Acceptable Values                                                                                               |               Default                |
-| :------------: | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :----------------------------------: |
-| serial.enabled |                                                                                               `true`, `false`                                                                                                |               `false`                |
-|  serial.echo   |                                                                                               `true`, `false`                                                                                                |               `false`                |
-|  serial.mode   |                                                                                 `DEFAULT` `SIMPLE` `PROTO` `TEXTMSG`, `NMEA`, `CALTOPO`                                                                      |              `DEFAULT`               |
-|   serial.rxd   |                                                                                             GPIO Pin Number 1-39                                                                                             |       Default of `0` is Unset        |
-|   serial.txd   |                                                                                             GPIO Pin Number 1-33                                                                                             |       Default of `0` is Unset        |
-|  serial.baud   | `BAUD_DEFAULT` `BAUD_110` `BAUD_300` `BAUD_600` `BAUD_1200` `BAUD_2400` `BAUD_4800` `BAUD_9600` `BAUD_19200` `BAUD_38400` `BAUD_57600` `BAUD_115200` `BAUD_230400` `BAUD_460800` `BAUD_576000` `BAUD_921600` |            `BAUD_DEFAULT` (38400)           |
-| serial.timeout |                                                                                          `integer` (milli seconds)                                                                                           | Default of `0` corresponds to 250 ms |
+|               Setting               |                                                                                              Acceptable Values                                                                                               |               Default                |
+| :---------------------------------: | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :----------------------------------: |
+|           serial.enabled            |                                                                                               `true`, `false`                                                                                                |               `false`                |
+|             serial.echo             |                                                                                               `true`, `false`                                                                                                |               `false`                |
+|             serial.mode             |                                                                           `DEFAULT` `SIMPLE` `PROTO` `TEXTMSG`, `NMEA`, `CALTOPO`                                                                            |              `DEFAULT`               |
+|             serial.rxd              |                                                                                             GPIO Pin Number 1-39                                                                                             |       Default of `0` is Unset        |
+|             serial.txd              |                                                                                             GPIO Pin Number 1-33                                                                                             |       Default of `0` is Unset        |
+|             serial.baud             | `BAUD_DEFAULT` `BAUD_110` `BAUD_300` `BAUD_600` `BAUD_1200` `BAUD_2400` `BAUD_4800` `BAUD_9600` `BAUD_19200` `BAUD_38400` `BAUD_57600` `BAUD_115200` `BAUD_230400` `BAUD_460800` `BAUD_576000` `BAUD_921600` |        `BAUD_DEFAULT` (38400)        |
+|           serial.timeout            |                                                                                          `integer` (milli seconds)                                                                                           | Default of `0` corresponds to 250 ms |
 | serial.override_console_serial_port |                                                                                               `true`, `false`                                                                                                |               `false`                |
-
 
 :::tip
 
@@ -212,7 +257,7 @@ The following are examples of using either a Raspberry Pi Pico or Arduino Mini P
 - GPIO Pins (For T-Beam) RX 13, TX 14
 - 38400 Baud
 
-#### Rasberry Pi Pico BOM
+#### Raspberry Pi Pico BOM
 
 - A Raspberry Pi Pico running [CircuitPython](https://learn.adafruit.com/getting-started-with-raspberry-pi-pico-circuitpython)
 - T-Beam V1.1 running Meshtastic
@@ -255,6 +300,7 @@ while True:
 ```
 
 #### Arduino Mini Pro BOM
+
 - An Arduino Mini Pro with example sketch from below uploaded to it.
 - T-Beam V1.1 running Meshtastic
 - PIR Sensor ([Adafruit Breadboard Model](https://www.adafruit.com/product/4871))

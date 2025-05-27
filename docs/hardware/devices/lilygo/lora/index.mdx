@@ -13,14 +13,15 @@ Further information on the LILYGO® LoRa devices can be found on LILYGO®'s [Git
 <Tabs
 groupId="t-lora"
 queryString="t-lora"
-defaultValue="v1"
+defaultValue="S3-v1"
 values={[
-{label: 'Lora V1', value: 'v1'},
-{label: 'Lora V1.3', value: 'v1.3'},
-{label: 'Lora V2.0', value: 'v2.0'},
+{label: 'Lora T3S3', value:'S3-v1'},
+{label: 'Lora V3.0', value:'v3.0'},
 {label: 'Lora V2.1-1.6', value:'v2.1'},
 {label: 'Lora V2.1-1.8', value:'v2.1-1.8'},
-{label: 'Lora T3S3-V1.0', value:'S3-v1'}
+{label: 'Lora V2.0', value: 'v2.0'},
+{label: 'Lora V1.3', value: 'v1.3'},
+{label: 'Lora V1', value: 'v1'}
 ]}>
 <TabItem value="v1">
 
@@ -31,7 +32,7 @@ Not recommended with a battery! These boards contain the wrong component in the 
 :::
 
 :::caution
-This board is still in production but for various reasons not recommended for new purchases or for unattended installations. Firmware support is phased out. If in doubt, choose the Lora V2.1-1.6 or Lora T3S3 board.
+This board is still in production but for various reasons not recommended for new purchases or for unattended installations. Firmware support is phased out. If in doubt, choose the Lora T3S3 board.
 :::
 
 - **MCU**
@@ -52,11 +53,6 @@ This board is still in production but for various reasons not recommended for ne
 ### Resources
 
 - Firmware file: `firmware-tlora-v1-X.X.X.xxxxxxx.bin`
-- Purchase Links:
-  - US
-    - [Rokland](https://store.rokland.com/products/lilygo-ttgo-lora32-v1-0-wireless-module-esp32-lora-915mhz-oled-0-96-inch-display-wifi-bluetooth-esp-32-antenna-ch9102-q184?ref=8Bb2mUO5i-jKwt)
-  - International
-    - [AliExpress](https://www.aliexpress.com/item/32996759721.html)
 
 ![LILYGO® TTGO Lora V1](/img/hardware/lora-v1.webp)
 
@@ -71,7 +67,7 @@ Not recommended with a battery! These boards contain the wrong component in the 
 :::
 
 :::caution
-This board is still in production but for various reasons not recommended for new purchases or for unattended installations. Firmware support is phased out. If in doubt, choose the Lora V2.1-1.6 or Lora T3S3 board.
+This board is still in production but for various reasons not recommended for new purchases or for unattended installations. Firmware support is phased out. If in doubt, choose the Lora T3S3 board.
 :::
 
 - **MCU**
@@ -109,7 +105,7 @@ Not recommended with a battery! These boards contain the wrong component in the 
 :::
 
 :::caution
-This board is still in production but for various reasons not recommended for new purchases or for unattended installations. Firmware support is phased out. If in doubt, choose the Lora V2.1-1.6 or Lora T3S3 board.
+This board is still in production but for various reasons not recommended for new purchases or for unattended installations. Firmware support is phased out. If in doubt, choose the Lora T3S3 board.
 :::
 
 - **MCU**
@@ -134,9 +130,6 @@ This board is still in production but for various reasons not recommended for ne
 ### Resources
 
 - Firmware file: `firmware-tlora-v2-X.X.X.xxxxxxx.bin`
-- Purchase Links:
-  - International
-    - [AliExpress](https://www.aliexpress.com/item/32846302183.html)
 
 ![LILYGO® TTGO Lora V2](/img/hardware/lora-v2.0.webp)
 
@@ -149,6 +142,10 @@ This board is still in production but for various reasons not recommended for ne
 Early versions of these boards contained the wrong component in the LiPo battery charging circuit allowing the battery to be overcharged. Boards purchased after 2021, unless the version is T3_v1.6 20180606, should not have this issue.
 :::
 
+:::caution
+This board is still in production but for various reasons not recommended for new purchases or for unattended installations. Firmware support is phased out. If in doubt, choose the Lora T3S3 board.
+:::
+
 - **MCU**
   - ESP32 (WiFi & Bluetooth)
 - **LoRa Transceiver**
@@ -157,6 +154,7 @@ Early versions of these boards contained the wrong component in the LiPo battery
   - 433 MHz
   - 868 MHz
   - 915 MHz
+  - a variant of this board has a Temperature controlled oscillator (labelled TCXO) for improved frequency stability
 - **Connectors**
   - Micro USB
   - Antenna: SMA antenna connector
@@ -183,7 +181,7 @@ Early versions of these boards contained the wrong component in the LiPo battery
     - [Rokland](https://store.rokland.com/products/lilygo-ttgo-lora32-v2-1_1-6-version-915mhz-esp32-lora-oled-0-96-inch-sd-card-bluetooth-wifi-wireless-module-esp-32-sma-q211?ref=8Bb2mUO5i-jKwt)
   - International
     - [AliExpress](https://www.aliexpress.com/item/32915894264.html)
-    - [Lilygo](https://www.lilygo.cc/products/lora3)
+    - [Lilygo](https://lilygo.cc/products/lora3)
 
 ![TTGO Lora V2.1-1.6](/img/hardware/lora-v2.1-1.6.webp)
 
@@ -192,6 +190,10 @@ Early versions of these boards contained the wrong component in the LiPo battery
 <TabItem value="v2.1-1.8">
 
 ## Lora v2.1-1.8
+
+:::caution
+This board is still in production but for various reasons not recommended for new purchases or for unattended installations. Firmware support is phased out. If in doubt, choose the Lora T3S3 board.
+:::
 
 - **MCU**
   - ESP32 (WiFi & Bluetooth)
@@ -218,15 +220,47 @@ Early versions of these boards contained the wrong component in the LiPo battery
 
 </TabItem>
 
+<TabItem value="v3.0">
+
+## Lora v3.0
+
+:::caution
+This board is using a first generation Semtech chip and is therefore not recommended for new purchases. Firmware support is phased out. If in doubt, choose the Lora T3S3 board.
+:::
+
+- **MCU**
+  - ESP32 (WiFi & Bluetooth)
+- **LoRa Transceiver**
+  - Semtech SX127x with TCXO for improved frequency stability
+- **Frequency options**
+  - 433 MHz
+  - 868 MHz
+  - 915 MHz
+- **Connectors**
+  - USB-C
+  - Antenna: IPEX antenna connector
+
+### Features
+
+- Built in 0.96 inch OLED or 2.13 inch E-Paper display
+- Power and Reset switches, User Button
+- microSD connector
+- Solar panel and battery connector, includes solar charging circuit (CN3065)
+- QUIIC for UART and I2C each
+- No GPS
+
+</TabItem>
+
 <TabItem value="S3-v1">
 
-## Lora T3S3 v1.0
+## Lora T3S3 v1.0, v1.1 and v1.2
 
 - **MCU**
   - ESP32-S3 (WiFi & Bluetooth)
 - **LoRa Transceiver**
   - Semtech SX1262
-  - Semtech 1276
+  - Semtech SX1276
+  - Semtech LR1121 (Sub-GHz and LORA_24 dual band)
   - Semtech SX1280 with PA (Region LORA_24 worldwide use)
 - **Frequency options**
   - 868 MHz
@@ -273,12 +307,8 @@ If after successfully flashing the device and the screen remains black, you may 
 
 - Firmware file: `firmware-tlora-t3s3-v1.xxxxxxx.bin`
 - Purchase Links:
-  - US
-    - [Amazon](https://www.amazon.com/LILYGO-ESP32-S3-Development-Wireless-Display/dp/B0BW5W9QXZ)
   - International
-    - [AliExpress](https://www.aliexpress.com/item/1005004627139838.html)
-    - [Lilygo](https://www.lilygo.cc/products/t3s3-v1-0)
-    - [Tindie](https://www.tindie.com/products/lilygo/lilygo-t3-s3-v10-esp32-s3-lora-sx1280-24g/)
+    - [Lilygo](https://lilygo.cc/products/t3-s3-meshtastic)
 
 ![TTGO Lora T3S3 V1](/img/hardware/lora-t3s3.webp)
 

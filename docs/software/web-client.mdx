@@ -47,7 +47,11 @@ The method with the least platform support, which uses the [Web Serial API](http
 
 ## Updating
 
-The web interface is included in firmware releases. When a new firmware version is released, the latest WebUI will be automatically bundled.
+When a new firmware version is released, the latest available version of the Web UI (littlefswebui.bin) is included in the release folder for each supported ESP32 device. To update the Web UI, use the [Meshtastic Web Flasher](https://flasher.meshtastic.org/). First, toggle "Full Erase and Install" to reveal the "Bundle Web UI" option, then enable "Bundle Web UI" before flashing.
+
+![Bundle Web UI Toggle](/img/software/webui-toggle.webp)
+
+Additionally, the Web UI can be updated via the [install scripts](/docs/getting-started/flashing-firmware/esp32/cli-script.mdx) using the `--web` option.
 
 ## Self Hosting
 

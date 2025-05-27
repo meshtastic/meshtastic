@@ -8,6 +8,7 @@ description: Settings for advanced users who want to adjust the power configurat
 import Admonition from "@theme/Admonition";
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
+import { Icon } from "@iconify/react";
 import calculateADC from "/src/utils/calculateADC";
 
 :::info Use Device Config first
@@ -120,6 +121,7 @@ Should be set to floating point value between 2 and 6
       | t-echo | 2 |
 
     </div>
+
   </details>
 </div>
 
@@ -156,14 +158,43 @@ I2C addresses are normally represented in hexadecimal and will require conversio
 ## Power Config Client Availability
 
 <Tabs
-groupId="settings"
-defaultValue="cli"
-values={[
-{label: 'Android', value: 'android'},
-{label: 'Apple', value: 'apple'},
-{label: 'CLI', value: 'cli'},
-{label: 'Web', value: 'web'},
-]}>
+  groupId="settings"
+  defaultValue="apple"
+  values={[
+    {
+      label: (
+        <>
+          <Icon icon="mdi:android" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Android
+        </>
+      ),
+      value: "android",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:apple" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Apple
+        </>
+      ),
+      value: "apple",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:terminal" height="1.5rem" style={{ marginRight: "0.25rem" }} /> CLI
+        </>
+      ),
+      value: "cli",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:internet" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Web
+        </>
+      ),
+      value: "web",
+    },
+  ]}>
+
 <TabItem value="android">
 
 #### Android
@@ -184,7 +215,7 @@ Power Config options are available for Android.
 
 :::info
 
-Select Power config options are available on iOS, iPadOS and macOS at Settings > Deivce Configuration > Power.
+Select Power config options are available on iOS, iPadOS and macOS at Settings > Device Configuration > Power.
 
 :::
 

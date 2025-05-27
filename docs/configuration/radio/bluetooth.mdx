@@ -7,6 +7,7 @@ description: Configure Bluetooth settings on your Meshtastic device for connecti
 
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
+import { Icon } from "@iconify/react";
 
 The Bluetooth config options are: Enabled, Pairing Mode and Fixed PIN Value. Bluetooth config uses an admin message sending a `Config.Bluetooth` protobuf.
 
@@ -46,14 +47,43 @@ It is strongly recommended that you change the default `FIXED_PIN` code on your 
 ## Bluetooth Config Client Availability
 
 <Tabs
-groupId="settings"
-defaultValue="cli"
-values={[
-{label: 'Android', value: 'android'},
-{label: 'Apple', value: 'apple'},
-{label: 'CLI', value: 'cli'},
-{label: 'Web', value: 'web'},
-]}>
+  groupId="settings"
+  defaultValue="apple"
+  values={[
+    {
+      label: (
+        <>
+          <Icon icon="mdi:android" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Android
+        </>
+      ),
+      value: "android",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:apple" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Apple
+        </>
+      ),
+      value: "apple",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:terminal" height="1.5rem" style={{ marginRight: "0.25rem" }} /> CLI
+        </>
+      ),
+      value: "cli",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:internet" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Web
+        </>
+      ),
+      value: "web",
+    },
+  ]}>
+
 <TabItem value="android">
 
 #### Android
@@ -93,7 +123,7 @@ All Bluetooth config options are available in the python CLI. Example commands a
 | :------------------: | :---------------------------------: | :----------: |
 | `bluetooth.enabled`  |           `true`, `false`           |    `true`    |
 |   `bluetooth.mode`   | `RANDOM_PIN`, `FIXED_PIN`, `NO_PIN` | `RANDOM_PIN` |
-| `bluetooth.fixedPin` |        `integer` (6 digits)         |   `123456`   |
+| `bluetooth.fixed_pin` |        `integer` (6 digits)         |   `123456`   |
 
 :::tip
 

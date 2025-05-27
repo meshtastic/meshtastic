@@ -7,28 +7,30 @@ description: Learn about and compare device roles such as Client, Repeater, and 
 
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
+import { Icon } from "@iconify/react";
 
-The device config options are: Role, Serial Output, and Debug Log. Device config uses an admin message sending a `Config.Device` protobuf.
+The device config options are: Role, Rebroadcast Mode, GPIO for User Button, GPIO for PWM Buzzer, Node Info Broadcast Seconds, Double Tap as Button Press, Disable Triple Click, Timezone Definition, and LED Heartbeat Disabled. Device config uses an admin message sending a `Config.Device` protobuf.
 
 ## Device Config Values
 
 ## Roles
 
-| Device Role    | Description                                                                                                               | Best Uses                                                                                                                              |
-| -------------- | ------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
-| CLIENT         | App connected or stand alone messaging device.                                                                            | General use for individuals needing to communicate over the Meshtastic network with support for client applications.                   |
-| CLIENT_MUTE    | Device that does not forward packets from other devices.                                                                  | Situations where a device needs to participate in the network without assisting in packet routing, reducing network load.              |
-| CLIENT_HIDDEN  | Device that only broadcasts as needed for stealth or power savings.                                                       | Use in stealth/hidden deployments or to reduce airtime/power consumption while still participating in the network.                     |
-| TRACKER        | Broadcasts GPS position packets as priority.                                                                              | Tracking the location of individuals or assets, especially in scenarios where timely and efficient location updates are critical.      |
-| LOST_AND_FOUND | Broadcasts location as message to default channel regularly for to assist with device recovery.                           | Used for recovery efforts of a lost device.                                                                                            |
-| SENSOR         | Broadcasts telemetry packets as priority.                                                                                 | Deploying in scenarios where gathering environmental or other sensor data is crucial, with efficient power usage and frequent updates. |
-| TAK            | Optimized for ATAK system communication, reduces routine broadcasts.                                                      | Integration with ATAK systems (via the Meshtastic ATAK Plugin) for communication in tactical or coordinated operations.                |
-| TAK_TRACKER    | Enables automatic TAK PLI broadcasts and reduces routine broadcasts.                                                      | Standalone PLI integration with ATAK systems for communication in tactical or coordinated operations.                                  |
-| REPEATER       | Infrastructure node for extending network coverage by relaying messages with minimal overhead. Not visible in Nodes list. | Best positioned in strategic locations to maximize the network's overall coverage. Device is not shown in topology.                    |
-| ROUTER         | Infrastructure node for extending network coverage by relaying messages. Visible in Nodes list.                           | Best positioned in strategic locations to maximize the network's overall coverage. Device is shown in topology.                        |
+| Device Role    | Description                                                                                                                                                      | Best Uses                                                                                                                                                   |
+| -------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| CLIENT         | App connected or stand alone messaging device. Rebroadcasts packets when no other node has done so.                                                              | General use for individuals needing to communicate over the Meshtastic network with support for client applications.                                        |
+| CLIENT_MUTE    | Device that does not forward packets from other devices.                                                                                                         | Situations where a device needs to participate in the network without assisting in packet routing, reducing network load.                                   |
+| CLIENT_HIDDEN  | Device that only broadcasts as needed for stealth or power savings.                                                                                              | Use in stealth/hidden deployments or to reduce airtime/power consumption while still participating in the network.                                          |
+| TRACKER        | Broadcasts GPS position packets as priority.                                                                                                                     | Tracking the location of individuals or assets, especially in scenarios where timely and efficient location updates are critical.                           |
+| LOST_AND_FOUND | Broadcasts location as message to default channel regularly for to assist with device recovery.                                                                  | Used for recovery efforts of a lost device.                                                                                                                 |
+| SENSOR         | Broadcasts telemetry packets as priority.                                                                                                                        | Deploying in scenarios where gathering environmental or other sensor data is crucial, with efficient power usage and frequent updates.                      |
+| TAK            | Optimized for ATAK system communication, reduces routine broadcasts.                                                                                             | Integration with ATAK systems (via the Meshtastic ATAK Plugin) for communication in tactical or coordinated operations.                                     |
+| TAK_TRACKER    | Enables automatic TAK PLI broadcasts and reduces routine broadcasts.                                                                                             | Standalone PLI integration with ATAK systems for communication in tactical or coordinated operations.                                                       |
+| REPEATER       | Infrastructure node for extending network coverage by always rebroadcasting packets once with minimal overhead. Not visible in Nodes list.                       | Best positioned in strategic locations to maximize the network's overall coverage. Device is not shown in topology.                                         |
+| ROUTER         | Infrastructure node for extending network coverage by always rebroadcasting packets once. Visible in Nodes list.                                                 | Best positioned in strategic locations to maximize the network's overall coverage. Device is shown in topology.                                             |
+| ROUTER_LATE    | Infrastructure node that always rebroadcasts packets once but only after all other modes, ensuring additional coverage for local clusters. Visible in Nodes list. | Ideal for covering dead spots or ensuring reliability for a cluster of nodes where placement doesn’t benefit the broader mesh. Device is shown in topology. |
 
 :::tip
-Still not sure which role to use? Check out the [role configuration tips](/docs/configuration/tips/#roles)
+Still not sure which role to use? Check out our blog post: [Choosing the Right Device Role](/blog/choosing-the-right-device-role/)
 :::
 
 Looking for ROUTER_CLIENT? This role was deprecated in firmware 2.3.15. Learn more in the [2.3.15 release notes](https://github.com/meshtastic/firmware/releases/tag/v2.3.15.deb7c27)
@@ -48,6 +50,7 @@ This table shows the **default** values after selecting a preset. As always, ind
 | TAK            | Yes             | Optional       | Regular           | Yes            | No                  | Yes                   |
 | TAK_TRACKER    | Yes             | Optional       | Regular           | Yes            | No                  | Yes                   |
 | ROUTER         | No[^2]          | No             | High              | Yes            | Yes                 | Yes                   |
+| ROUTER_LATE    | Yes             | Yes            | High              | Yes            | No                  | Yes                   |
 | REPEATER       | Yes             | No             | High              | Yes            | Yes                 | No                    |
 
 [^1]: **Awake Only** indicates retransmissions will occur normally but not while asleep between transmission intervals.
@@ -72,32 +75,16 @@ In the `TRACKER` and `SENSOR` roles, there are special sleep behaviors when comb
 
 This setting defines the device's behavior for how messages are rebroadcasted.
 
-|        Value        |                                                                                      Description                                                                                       |
-| :-----------------: | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
-|        `ALL`        |   ALL (Default) - This setting will rebroadcast ALL messages from its primary mesh as well as other meshes with the same modem settings, including when encryption settings differ.    |
-| `ALL_SKIP_DECODING` |                      ALL_SKIP_DECODING - Same as behavior as ALL, but skips packet decoding and simply rebroadcasts them. **Only available with Repeater role.**                       |
-|    `LOCAL_ONLY`     | LOCAL_ONLY - Ignores observed messages from foreign meshes that are open or those which it cannot decrypt. Only rebroadcasts message on the nodes local primary / secondary channels.  |
-|    `KNOWN_ONLY`     | KNOWN_ONLY - Ignores observed messages from foreign meshes like LOCAL_ONLY, but takes it a step further by also ignoring messages from nodenums not in the node's known list (NodeDB). |
+|        Value         |                                                                                                  Description                                                                                                  |
+| :------------------: | :-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
+|        `ALL`         |               ALL (Default) - This setting will rebroadcast ALL messages from its primary mesh as well as other meshes with the same modem settings, including when encryption settings differ.               |
+| `ALL_SKIP_DECODING`  |                                  ALL_SKIP_DECODING - Same as behavior as ALL, but skips packet decoding and simply rebroadcasts them. **Only available with Repeater role.**                                  |
+|     `LOCAL_ONLY`     |             LOCAL_ONLY - Ignores observed messages from foreign meshes that are open or those which it cannot decrypt. Only rebroadcasts message on the nodes local primary / secondary channels.             |
+|     `KNOWN_ONLY`     |            KNOWN_ONLY - Ignores observed messages from foreign meshes like LOCAL_ONLY, but takes it a step further by also ignoring messages from nodenums not in the node's known list (NodeDB).             |
+|        `NONE`        |                                       NONE - Only permitted for SENSOR, TRACKER and TAK_TRACKER roles, this will inhibit all rebroadcasts, not unlike CLIENT_MUTE role.                                       |
+| `CORE_PORTNUMS_ONLY` | CORE_PORTNUMS_ONLY - Ignores packets from non-standard portnums such as: TAK, RangeTest, PaxCounter, etc. Only rebroadcasts packets with standard portnums: NodeInfo, Text, Position, Telemetry, and Routing. |
 
-## Serial Console
-
-Acceptable values: `true` or `false`
-
-Disabling this will disable the SerialConsole by not initializing the StreamAPI.
-
-## TZDEF (Timezone Definition)
-
-The `tzdef` setting allows the local offset to be defined for the device. It uses the TZ Database format to display the correct local time on the device display and in its logs.
-
-To set the timezone, use the POSIX TZ Database string for the relevant region. Here is a list of [supported timezones](https://github.com/nayarsystems/posix_tz_db/blob/master/zones.csv). For example, if your region is `America/Los_Angeles`, you would input `PST8PDT,M3.2.0,M11.1.0` as the timezone.
-
-## Debug Log
-
-Acceptable values: `true` or `false`
-
-By default we turn off logging as soon as an API client connects. Set this to true to leave the debug log outputting even when API is active.
-
-## GPIO for user button
+## GPIO for User Button
 
 This is the GPIO pin number that will be used for the user button, if your device does not come with a predefined user button.
 
@@ -113,21 +100,60 @@ This is the number of seconds between NodeInfo message (containing i.a. long and
 
 This option will enable a double tap, when a supported accelerometer is attached to the device, to be treated as a button press.
 
-## Managed Mode
+## Disable Triple Click
 
-Enabling Managed mode will restrict access to all radio configurations via client applications. Radio configurations will only be accessible through the Admin channel. To avoid being locked out, make sure the Admin channel is working properly before enabling it.
+Disables the triple-press of user button to enable or disable GPS.
+
+## TZDEF (Timezone Definition)
+
+The `tzdef` setting allows the local offset to be defined for the device. It uses the TZ Database format to display the correct local time on the device display and in its logs.
+
+To set the timezone, use the POSIX TZ Database string for the relevant region. Here is a list of [supported timezones](https://github.com/nayarsystems/posix_tz_db/blob/master/zones.csv). For example, if your region is `America/Los_Angeles`, you would input `PST8PDT,M3.2.0,M11.1.0` as the timezone.
+
+## LED Heartbeat Disabled
+
+If true, disable the default blinking LED (LED_PIN) behavior on the device.
 
 ## Device Config Client Availability
 
 <Tabs
-groupId="settings"
-defaultValue="apple"
-values={[
-{label: 'Android', value: 'android'},
-{label: 'Apple', value: 'apple'},
-{label: 'CLI', value: 'cli'},
-{label: 'Web', value: 'web'},
-]}>
+  groupId="settings"
+  defaultValue="apple"
+  values={[
+    {
+      label: (
+        <>
+          <Icon icon="mdi:android" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Android
+        </>
+      ),
+      value: "android",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:apple" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Apple
+        </>
+      ),
+      value: "apple",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:terminal" height="1.5rem" style={{ marginRight: "0.25rem" }} /> CLI
+        </>
+      ),
+      value: "cli",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:internet" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Web
+        </>
+      ),
+      value: "web",
+    },
+  ]}>
+
 <TabItem value="android">
 
 #### Android
@@ -161,24 +187,22 @@ All device config options are available in the python CLI. Example commands are 
 
 :::
 
-| Setting                           | Acceptable Values                                                                   | Default           |
-| --------------------------------- | ----------------------------------------------------------------------------------- | ----------------- |
-| device.debug_log_enabled          | `true`, `false`                                                                     | `false`           |
+| Setting                           | Acceptable Values                                                  | Default           |
+| --------------------------------- | ------------------------------------------------------------------ | ----------------- |
 | device.role                       | `CLIENT`, `CLIENT_MUTE`, `ROUTER`, `REPEATER`, `TRACKER`, `SENSOR` | `CLIENT`          |
-| device.rebroadcast_mode           | `ALL`, `ALL_SKIP_DECODING`, `LOCAL_ONLY`                                            | `ALL`             |
-| device.serial_enabled             | `true`, `false`                                                                     | `true`            |
-| device.button_gpio                | `0` - `34`                                                                          | `0`               |
-| device.buzzer_gpio                | `0` - `34`                                                                          | `0`               |
-| device.node_info_broadcast_secs   | `3600` - `UINT MAX`                                                                    | `10800` (3 hours) |
-| device.double_tap_as_button_press | `false`, `true`                                                                     | `false`           |
-| device.is_managed                 | `false`, `true`                                                                     | `false`           |
+| device.rebroadcast_mode           | `ALL`, `ALL_SKIP_DECODING`, `LOCAL_ONLY`                           | `ALL`             |
+| device.button_gpio                | `0` - `34`                                                         | `0`               |
+| device.buzzer_gpio                | `0` - `34`                                                         | `0`               |
+| device.node_info_broadcast_secs   | `3600` - `UINT MAX`                                                | `10800` (3 hours) |
+| device.double_tap_as_button_press | `false`, `true`                                                    | `false`           |
+| device.disable_triple_click       | `false`, `true`                                                    | `false`           |
 
 :::tip
 
 Because the device will reboot after each command is sent via CLI, it is recommended when setting multiple values in a config section that commands be chained together as one.
 
 ```shell title="Example:"
-meshtastic --set device.role CLIENT --set device.debug_log_enabled true
+meshtastic --set device.role CLIENT --set device.tzdef UTC0
 ```
 
 :::
@@ -187,16 +211,8 @@ meshtastic --set device.role CLIENT --set device.debug_log_enabled true
 meshtastic --set device.role CLIENT
 ```
 
-```shell title="Disable serial console"
-meshtastic --set device.serial_enabled false
-```
-
 ```shell title="Set tzdef"
 meshtastic --set device.tzdef UTC0
-```
-
-```shell title="Enable debug logging"
-meshtastic --set device.debug_log_enabled true
 ```
 
 </TabItem>

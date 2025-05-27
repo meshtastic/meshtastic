@@ -7,6 +7,7 @@ description: Configuration details to manage LEDs on your Meshtastic device.
 
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
+import { Icon } from "@iconify/react";
 
 The Ambient Lighting Module has settings for control of onboard LEDs and allows users to adjust the brightness levels and respective color levels. Initially created for the RAK14001 RGB LED module using the NCP5623 with I2C. Config options are: LED State, Current, Red Level, Green Level, and Blue Level.
 
@@ -37,14 +38,43 @@ Sets the blue LED level. Values are 0-255.
 ## Ambient Lighting Module Client Availability
 
 <Tabs
-groupId="settings"
-defaultValue="cli"
-values={[
-{label: 'Android', value: 'android'},
-{label: 'Apple', value: 'apple'},
-{label: 'CLI', value: 'cli'},
-{label: 'Web', value: 'web'},
-]}>
+  groupId="settings"
+  defaultValue="apple"
+  values={[
+    {
+      label: (
+        <>
+          <Icon icon="mdi:android" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Android
+        </>
+      ),
+      value: "android",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:apple" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Apple
+        </>
+      ),
+      value: "apple",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:terminal" height="1.5rem" style={{ marginRight: "0.25rem" }} /> CLI
+        </>
+      ),
+      value: "cli",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:internet" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Web
+        </>
+      ),
+      value: "web",
+    },
+  ]}>
+
 <TabItem value="android">
 
 #### Android
@@ -54,7 +84,7 @@ All Ambient Lighting Module config options are available for Android in app vers
 
 1. Open the Meshtastic App
 2. Navigate to: **Vertical Ellipsis (3 dots top right) > Radio Configuration > Ambient Lighting**
-:::
+   :::
 
 </TabItem>
 <TabItem value="apple">
@@ -102,6 +132,7 @@ meshtastic --set ambient_lighting.blue 148
 ```shell title="Get the Ambient Lighting Module Configuration"
 meshtastic --get ambient_lighting
 ```
+
 </TabItem>
 <TabItem value="web">
 
@@ -112,5 +143,6 @@ meshtastic --get ambient_lighting
 All Ambient Lighting module config options are available in the Web UI.
 
 :::
+
 </TabItem>
 </Tabs>

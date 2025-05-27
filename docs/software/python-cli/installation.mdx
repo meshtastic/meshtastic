@@ -4,11 +4,12 @@ title: Meshtastic Python CLI installation
 sidebar_label: Installation
 slug: /software/python/cli/installation
 sidebar_position: 1
-description: This page offers comprehensive instructions on methods of installing the Meshtastic Python CLI across different operating systems. 
+description: This page offers comprehensive instructions on methods of installing the Meshtastic Python CLI across different operating systems.
 ---
 
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
+import { Icon } from "@iconify/react";
 
 ## Meshtastic Python Library
 
@@ -31,15 +32,44 @@ After ensuring the requirements are met, follow the installation instructions fo
 To install the Meshtastic CLI, select the tab for your operating system and follow the step-by-step instructions for installing via `pip`. For Ubuntu only, you can alternatively install the [Standalone version](#standalone-installation-ubuntu-only) if you prefer.
 
 <Tabs
-groupId="operating-system"
-queryString="install-python-cli"
-defaultValue="windows"
-values={[
-{label: 'Linux', value: 'linux'},
-{label: 'macOS', value: 'macos'},
-{label: 'Windows', value: 'windows'},
-{label: 'Termux for Android', value: 'termux'},
-]}>
+  groupId="operating-system"
+  queryString="install-python-cli"
+  defaultValue="windows"
+  values={[
+    {
+      label: (
+        <>
+          <Icon icon="mdi:linux" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Linux
+        </>
+      ),
+      value: "linux",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:apple" height="1.5rem" style={{ marginRight: "0.25rem" }} /> macOS
+        </>
+      ),
+      value: "macos",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:microsoft" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Windows
+        </>
+      ),
+      value: "windows",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:terminal" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Termux for Android
+        </>
+      ),
+      value: "termux",
+    },
+  ]}>
+
 <TabItem value="linux">
 
 #### Linux
@@ -54,7 +84,7 @@ values={[
   - You should see something like:
     - `ID 10c4:ea60 Silicon Labs CP210x UART Bridge` for CP210X
     - `ID 1a86:55d4 QinHeng Electronics USB Single Serial` for CH9102
-        - If there is no seral device shown that matches the device you are using, please review our [Install Serial Drivers](/docs/getting-started/serial-drivers/) page before proceeding.
+      - If there is no seral device shown that matches the device you are using, please review our [Install Serial Drivers](/docs/getting-started/serial-drivers/) page before proceeding.
 
 - Check that your computer has Python 3 installed.
 
@@ -96,16 +126,17 @@ values={[
   ```
 - Install meshtastic:
   ```shell
-  pip3 install --upgrade meshtastic
+  pip3 install --upgrade "meshtastic[cli]"
   ```
+  (the `[cli]` suffix installs a few optional dependencies that match older versions of the CLI)
   - Using pipx as an alternative to pip3 if `externally-managed-environment` error is encountered
     ```shell
-    sudo apt install pipx && pipx install meshtastic
+    sudo apt install pipx && pipx install "meshtastic[cli]"
     ```
-      - If using `pipx` it may be necessary to update `$PATH` by running:
-        ```shell
-        pipx ensurepath
-        ```
+    - If using `pipx` it may be necessary to update `$PATH` by running:
+      ```shell
+      pipx ensurepath
+      ```
 
 </TabItem>
 <TabItem value="macos">
@@ -141,14 +172,17 @@ values={[
     ```
   - If this does not return a version, install [pip](https://pip.pypa.io/en/stable/installing)
 
-- Install pytap2
+- Install pipx
   ```shell
-  sudo pip3 install --upgrade pytap2
+  brew install pipx
+  pipx ensurepath
   ```
+
 - Install meshtastic:
   ```shell
-  sudo pip3 install --upgrade meshtastic
+  pipx install "meshtastic[cli]"
   ```
+  (the `[cli]` suffix installs a few optional dependencies that match older versions of the CLI)
 
 </TabItem>
 <TabItem value="windows">
@@ -183,8 +217,9 @@ When installing Python, make sure to select the option to "Add Python to PATH" o
   ```
 - Install meshtastic:
   ```powershell
-  pip3 install --upgrade meshtastic
+  pip3 install --upgrade "meshtastic[cli]"
   ```
+  (the `[cli]` suffix installs a few optional dependencies that match older versions of the CLI)
 
 </TabItem>
 <TabItem value="termux">
@@ -206,18 +241,18 @@ When installing Python, make sure to select the option to "Add Python to PATH" o
   ```
 - Upgrade pip and installed meshtastic and some of its dependencies
   ```shell
-  pip install --upgrade pip pygatt pytap2 wheel meshtastic
+  pip install --upgrade pip pygatt pytap2 wheel "meshtastic[cli]"
   ```
+  (the `[cli]` suffix installs a few optional dependencies that match older versions of the CLI)
 
 :::note
-Be aware that the Meshtastic CLI is not able to control the nodes over USB through termux, but you can control devices over Wifi using the `--host x.x.x.x` option with the device IP address (ESP32 or Pico W only). Wifi connection is currently under development and may not be working properly just yet. If you would like to provide feedback or test this feature, please visit our [forum](https://meshtastic.discourse.group) or join our [Discord server](https://discord.gg/ktMAKGBnBs) for more information.
+Be aware that the Meshtastic CLI is not able to control the nodes over USB through termux, but you can control devices over Wifi using the `--host x.x.x.x` option with the device IP address (ESP32 or Pico W only). Wifi connection is currently under development and may not be working properly just yet. If you would like to provide feedback or test this feature, please join our [Discord server](https://discord.gg/ktMAKGBnBs) for more information.
 :::
 
 </TabItem>
 </Tabs>
 
 **You may need to close and re-open the CLI. The path variables may or may not update for the current session when installing.**
-
 
 ### Standalone Installation (Ubuntu only)
 
@@ -227,6 +262,7 @@ Be aware that the Meshtastic CLI is not able to control the nodes over USB throu
 ```shell
 chmod +x meshtastic_ubuntu && mv meshtastic_ubuntu meshtastic
 ```
+
 3. To run the CLI:
 
 ```shell

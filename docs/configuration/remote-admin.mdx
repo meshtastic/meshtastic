@@ -3,201 +3,187 @@ id: remote-admin
 title: Remote Node Administration
 sidebar_label: Remote Nodes
 sidebar_position: 3
-description: An advanced feature which allows remote administration of a device through a secure channel on the Mesh instead of via Bluetooth, Serial, or IPv4.
+description: An advanced feature for securely administering remote devices over the mesh network instead of via Bluetooth, Serial, or IPv4.
 ---
 
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+import { Icon } from "@iconify/react";
+
 :::caution Disclaimer
-This is an advanced feature that few users should need. Keep in mind that it is possible (if you are not careful) to assign settings to a remote node that cause it to completely drop off of your mesh. We advise network admins have a test node to test settings with before applying changes to a remote node to prevent this.
+This is an advanced feature intended for experienced users. It’s possible (if not done carefully) to apply settings to a remote node that could cause it to disconnect from the mesh. Network admins are advised to use a test node to trial settings before applying changes to a remote node to prevent this.
 :::
 
-This feature allows you to remotely administer Meshtastic nodes through the mesh.
+This feature allows secure remote administration of Meshtastic nodes over the mesh network.
+
+By default, nodes will only respond to administrative commands via the local USB, Bluetooth, or TCP interfaces. This basic security measure prevents unauthorized access and defines how standard administration and settings changes are managed. The only difference with remote administration is that commands are sent securely as Admin Messages over the mesh.
 
 ## Prerequisites
 
-For any node that you want to administer, you must:
+For firmware versions 2.5 and later, remote administration is achieved by storing the public key of the local node in one of the Admin Key fields within the remote node’s Security Config. Each remote node can store up to three unique Admin Keys, providing flexibility for managing nodes across the network.
 
-1. Configure a channel with the channel name of `admin`.
-2. Set the PSK for the `admin` channel with the same key you wish to administer other all other nodes of the mesh with.
+For firmware versions 2.4.x and earlier, this is achieved by creating a secondary channel named `admin` with a shared PSK. In this setup, messages exchanged on this channel are encrypted only with the channel’s PSK, allowing any node in the channel to administer others.
 
-## Creating the admin channel
+This `admin` channel method is still supported in firmware versions 2.5 and later, but must be specifically enabled via the "Legacy Admin channel" setting and is only for managing pre-2.5 nodes. A firmware version 2.5 and later node cannot be managed in this way.
 
-By default, nodes will **only** respond to administrative commands via the local USB/Bluetooth/TCP interface. This provides basic security to prevent unauthorized access and is how normal administration and settings changes work. The only difference for the remote case is that we are sending those commands over the mesh.
-
-Before a node will allow remote admin access, it must have a primary channel:
-
-```shell title="Command"
-meshtastic --info
-```
-```markdown title="Expected output"
-Connected to radio
-...
-Channels:
-  PRIMARY psk=default { "psk": "AQ==" }
-Primary channel URL: https://meshtastic.org/e/#CgMSAQESCggBOANAA0gBUBs
-```
-
-From this output you see can that this node knows about only one channel and that its PSK is set to the default value.
-
-Now we add an admin channel:
-:::note
-The name of the channel is important and must be `admin`.
-:::
-```shell title="Command"
-meshtastic --ch-add admin
-```
-```shell title="Expected output"
-Connected to radio
-Writing modified channels to device
-```
-Run `meshtastic --info` and your channels will now look like this:
-
-```shell title="Expected output"
-Connected to radio
-...
-Channels:
-  PRIMARY psk=default { "psk": "AQ==" }
-  SECONDARY psk=secret { "psk": "YyDCitupTAOOXTcaMDxyNhDpPa3eThiQFziPFCqT0mo=", "name": "admin" }
-Primary channel URL: https://meshtastic.org/e/#CgMSAQESCggBOANAA0gBUBs
-Complete URL (includes all channels): https://meshtastic.org/e/#CgMSAQEKKRIgYyDCitupTAOOXTcaMDxyNhDpPa3eThiQFziPFCqT0moaBWFkbWluEgoIATgDQANIAVAb
-```
-
-Notice that now we have a new secondary channel and the `--info` option prints out TWO URLs. The `Complete URL` includes all of the channels this node understands. The URL contains the preshared keys and should be treated with caution and kept a secret. When deploying remote administration, you only need the node you want to administer and the node you are locally connected to, to know this new "admin" channel. All of the other nodes will forward the packets as long as they are a member of the primary channel.
-
-## Sharing the admin channel with other nodes
-
-Creating an "admin" channel automatically generates a preshared key. In order to administer other nodes remotely, we need to copy the preshared key to the new nodes.
-
-For this step you need physical access to both the nodes.
-
-1. Create the "admin" channel on the "local node" using the instructions above.
-2. Copy the "Complete URL" someplace for permanent reference/access.
-3. Connect to the "remote node" over the USB port.
-4. For the "remote node" type
-
-```shell
-meshtastic --seturl the-url-from-step-2
-```
-
-5. Run `meshtastic --info` and confirm that the "Complete URL" is the same for both of the nodes.
-
-At this point you can take your remote node and install it far away.  You will still be able to change any of its settings.
-
-## Remotely administering your node
-
-Now that both your local node and the remote node contain your secret admin channel key, you can now change settings remotely:
-
-Get the node list from the local node:
-
-```shell title="Command"
-meshtastic --nodes
-```
-```markdown title="Expected output"
-Connected to radio
-/-------------------------------------------------------------------------------------------------------------\
-|N|    User    |AKA|   ID    |Latitude|Longitude|Altitude|Battery|   SNR   |     LastHeard     |    Since     |
-|-+------------+---+---------+--------+---------+--------+-------+---------+-------------------+--------------|
-|1|Unknown 9058|?58|!28979058|25.0382°|121.5731°|  N/A   |  N/A  |-13.50 dB|2021-03-22 09:25:42|19 seconds ago|
-\-------------------------------------------------------------------------------------------------------------/
-```
-
-Using the node ID from that list, send a message through the mesh telling that node to change its owner name.
 :::info
-The --dest argument value must be in single quotes for linux/mac: '!28979058', no quotes for Windows: !28979058.
+Remote Admin is complemented by setting [Managed Mode](/docs/configuration/radio/security/#managed-mode) on the remote node, which restricts radio configurations on that node. It is not necessary to set Managed Mode for Remote Admin to function.
 :::
-```shell title="Command"
-meshtastic --dest '!28979058' --set-owner "Im Remote"
+
+## Remote Admin Config Client Availability
+
+<Tabs
+  groupId="settings"
+  queryString="settings"
+  defaultValue="apple"
+  values={[
+    {
+      label: (
+        <>
+          <Icon icon="mdi:android" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Android
+        </>
+      ),
+      value: "android",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:apple" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Apple
+        </>
+      ),
+      value: "apple",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:terminal" height="1.5rem" style={{ marginRight: "0.25rem" }} /> CLI
+        </>
+      ),
+      value: "cli",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:internet" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Web
+        </>
+      ),
+      value: "web",
+    },
+  ]}>
+
+<TabItem value="android">
+
+#### Android
+
+#### Setting up Remote Admin Using the PKC Method
+
+1. Connect to the local node that will be administering the remote node.
+2. Go to **⋮ > Radio Configuration > [Security](/docs/configuration/radio/security/#public-key)** to find its public key.
+3. Copy the public key to use for configuring the remote node.
+4. Connect to the node that will be the remotely administered node.
+5. Go to the same **Security** menu as in Step 2, and press **"Add"** to paste the public key of the local node into an Admin Key field.
+6. Up to 3 Admin Keys may be supplied, one per field, allowing up to 3 controlling nodes.
+
+#### Setting up Remote Admin using the Legacy method
+
+An Admin channel is set up by entering a secondary channel with the name `admin` using the method described in [Channels](/docs/configuration/radio/channels/)
+
+Legacy admin is enabled using the Legacy Admin channel option in [Security Config](/docs/configuration/radio/security/#admin-channel-enabled).
+
+#### Carrying out Remote Admin tasks
+
+1. Open the Meshtastic App, connect to the local controlling node.
+2. In the node list pane, select a node by tapping the Short Name in the colored bubble, then select More details.
+3. In the more details screen, select Remote Administration, next to a gear icon.
+4. From the Remote Administration screen, all Radio and Module configuration options are available.
+
+</TabItem>
+<TabItem value="apple">
+
+#### Apple
+
+#### Setting up Remote Admin Using the PKC Method
+
+1. Connect to the node that will be used to administer the remote node.
+2. Go to **Settings > App Settings** on this node and enable **Administration**.
+3. Navigate to **Settings > Radio Configuration > [Security](/docs/configuration/radio/security/#public-key)** to find its public key.
+4. Copy the public key to use for configuring the remote node.
+5. Connect to the remote node.
+6. In **Settings > Radio Configuration > Security**, add the public key of the local node as an Admin Key.
+7. Up to 3 Admin Keys may be supplied, allowing up to 3 controlling nodes.
+
+#### Setting up Remote Admin using the Legacy method
+
+An Admin channel is set up by entering a secondary channel with the name `admin` using the method described in [Channels](/docs/configuration/radio/channels/)
+
+Legacy admin is enabled using the Legacy Admin channel option in [Security Config](/docs/configuration/radio/security/#admin-channel-enabled).
+
+#### Carrying out Remote Admin tasks
+
+1. Open the Meshtastic App and connect to the local node you’re using to administer the remote node.
+2. Go to **Settings**.
+3. Select the node you want to manage under **Settings > Configure Node**.
+4. Supported Radio and Module settings for the remote node will be accessible from the **Settings** screen.
+5. When finished administering the remote node, select your own node again in Settings > Configure Node.
+
+</TabItem>
+<TabItem value="cli">
+
+#### CLI
+
+#### Setting up Remote Admin Using the PKC Method
+
+1. Connect via USB to the node that will be administering the remote node.
+2. Retrieve its Public Key by running:
+   ```bash
+   meshtastic --get security.public_key
+   ```
+3. Copy the public key to use when configuring the remote node.
+4. Connect to the remote node via USB.
+5. Set the Admin Key on the remote node by running:
+   ```bash
+   meshtastic --set security.admin_key "base64:PASTEPUBLICKEYHERE"
+   ```
+6. You may add up to 3 Admin Keys, enabling control from up to 3 different nodes.
+
+#### Setting up Remote Admin Using the Legacy Method
+
+To use the legacy method, set up an Admin channel as a secondary channel with the name `admin` by following the instructions in the [Channels](/docs/configuration/radio/channels/) section.
+
+Enable Legacy Admin in the [Security Config](/docs/configuration/radio/security/#admin-channel-enabled) by running the following CLI command:
+
+```bash
+meshtastic --set security.admin_channel_enabled
 ```
-```markdown title="Expected output"
-Connected to radio
-Setting device owner to Im Remote
-Waiting for an acknowledgment from remote node (this could take a while)
+
+#### Carrying Out Remote Admin Tasks
+
+Remote admin commands are issued using the `--dest` argument with the `!nodeid` of the target node. Only the `--set` and `--get` commands are supported for remote administration. You can use these commands to modify parameters, add channels, or retrieve settings from the remote node. For example:
+
+```bash
+meshtastic --set security.admin_key "PASTEPUBLICKEYHERE" --dest '!28979058'
 ```
 
-And you can now confirm via the local node that the remote node has changed:
+:::info
+For Linux/Mac, enclose the `nodeid` value in single quotes: `--dest '!28979058'`. For Windows, quotes are not required: `--dest !28979058`.
+:::
 
-```shell title="Command"
-meshtastic --nodes
-```
-```markdown title="Expected output"
-Connected to radio
-/----------------------------------------------------------------------------------------------------\
-|N|  User   |AKA|   ID    |        Position        |Battery|  SNR  |     LastHeard     |    Since    |
-|-+---------+---+---------+------------------------+-------+-------+-------------------+-------------|
-|1|Im Remote|IR |!28979058|25.0382°, 121.5731°, N/A|  N/A  |8.75 dB|2021-03-22 09:35:42|3 minutes ago|
-\----------------------------------------------------------------------------------------------------/
-```
+</TabItem>
+<TabItem value="web">
 
-Note: you can change **any** parameter, add channels or get settings from the remote node. Here's an example of setting ls_secs using the `--set` command and printing the position settings from the remote node using the `--get` command:
+#### Web
 
-```shell title="Command"
-meshtastic --dest '!28979058' --set power.ls_secs 301 --get position
-```
+1. Connect to the node that will be used to administer the remote node.
+2. Navigate to **⚙ Config > ⚙ Radio Config > [Security](/docs/configuration/radio/security/#public-key)** to find its public key.
+3. Copy the public key to use for configuring the remote node.
+4. Connect to the remote node.
+5. In **⚙ Config > ⚙ Radio Config > Security**, add the public key of the local node as an Admin Key.
+6. Only one Admin Keys may be supplied through the Web interface at present.
+7. Save the configuration.
 
-```markdown title="Expected output"
-Connected to radio
-Requesting current config from remote node (this can take a while).
+#### Carrying out Remote Admin tasks
 
-power:
-wait_bluetooth_secs: 60
-mesh_sds_timeout_secs: 7200
-sds_secs: 4294967295
-ls_secs: 300
-min_wake_secs: 10
+The Meshtastic Web Client does not support sending remote administration commands at this time.
 
-Set power.ls_secs to 301
-Writing modified preferences to device
-Requesting current config from remote node (this can take a while).
-Received an ACK.
-Completed getting preferences
-Waiting for an acknowledgment from remote node (this could take a while)
-
-position:
-position_broadcast_secs: 900
-position_broadcast_smart_enabled: true
-gps_enabled: true
-gps_update_interval: 120
-gps_attempt_time: 900
-position_flags: 3
-rx_gpio: 15
-tx_gpio: 13
-broadcast_smart_minimum_distance: 100
-broadcast_smart_minimum_interval_secs: 30
-
-Completed getting preferences
-```
-
-To set the `hop_limit` to 4 and then get the lora settings to confirm your new settings:
-
-```shell title="Command"
-meshtastic --dest '!28979058' --set lora.hop_limit 4 --get lora
-```
-```markdown title="Expected output"
-lora:
-use_preset: true
-region: US
-hop_limit: 3
-tx_enabled: true
-tx_power: 30
-
-Set lora.hop_limit to 4
-Writing modified preferences to device
-Requesting current config from remote node (this can take a while).
-Received an ACK.
-Completed getting preferences
-Waiting for an acknowledgment from remote node (this could take a while)
-
-lora:
-use_preset: true
-region: US
-hop_limit: 4
-tx_enabled: true
-tx_power: 30
-```
-## Admin Channel Setup is Complete
-
-You've finished setting up and adding two devices to the admin channel. Remember, because this is a mesh network, it doesn't matter which node you are at; you could administer your first device we set up from the second one we added to the channel. And the settings and examples on this page are just a taste of the other settings you can set.
-
-For further reading, I recommend starting out with the [Meshtastic Python CLI Guide](/docs/software/python/cli/) if you haven't already gone through this (hopefully you have since you are reading this). But for a full reference to the settings you can change, please see:
-
-[Settings Overview](/docs/configuration) and
-[Complete list of user settings in Protobufs](https://buf.build/meshtastic/protobufs/docs/main:meshtastic#meshtastic.User)
+</TabItem>
+</Tabs>

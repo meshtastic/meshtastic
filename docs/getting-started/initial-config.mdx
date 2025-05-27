@@ -9,6 +9,7 @@ description: Getting started with the initial configuration of your Meshtastic d
 
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
+import { Icon } from "@iconify/react";
 import LoRaRegions from "../blocks/_lora-regions.mdx";
 import Link from "@docusaurus/Link";
 
@@ -20,10 +21,32 @@ Depending on your connection, some configuration options are not fully supported
 groupId="settings"
 defaultValue="ble"
 values={[
-{label: 'Serial', value: 'serial'},
-{label: 'Bluetooth', value: 'ble'},
-{label: 'Network', value: 'network'},
-]}>
+    {
+      label: (
+        <>
+          <Icon icon="mdi:serial-port" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Serial
+        </>
+      ),
+      value: "serial",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:bluetooth" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Bluetooth
+        </>
+      ),
+      value: "ble",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:internet" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Network
+        </>
+      ),
+      value: "windows",
+    },
+  ]}>
+
 <TabItem value="serial">
 
 #### Serial
@@ -62,19 +85,48 @@ Connecting over network is only supported on ESP32 devices.
 In order to start communicating over the mesh, you must set your region. This setting controls which frequency range your device uses and should be set according to your regional location.
 
 <Tabs
-groupId="settings"
-defaultValue="apple"
-values={[
-{label: 'Android', value: 'android'},
-{label: 'Apple', value: 'apple'},
-{label: 'CLI', value: 'cli'},
-{label: 'Web', value: 'web'},
-]}>
+  groupId="settings"
+  defaultValue="apple"
+  values={[
+    {
+      label: (
+        <>
+          <Icon icon="mdi:android" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Android
+        </>
+      ),
+      value: "android",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:apple" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Apple
+        </>
+      ),
+      value: "apple",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:terminal" height="1.5rem" style={{ marginRight: "0.25rem" }} /> CLI
+        </>
+      ),
+      value: "cli",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:internet" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Web
+        </>
+      ),
+      value: "web",
+    },
+  ]}>
+
 <TabItem value="android">
 
 #### Android
 
-1. Follow the [installation](/docs/software/android/installation) and [usage](/docs/software/python/cli/usage) instructions for [Meshtastic Android](/docs/category/android-app).
+1. Follow the [installation](/docs/software/android/installation) and [usage](/docs/software/android/usage/) instructions for [Meshtastic Android](/docs/category/android-app).
 2. Open the app, connect to the device from your phone over USB Serial or Bluetooth.
 3. Once paired, Click "UNSET" next to the device name.
 4. Select the region from the list according to your regional location.

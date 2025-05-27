@@ -22,10 +22,21 @@ Meshtastic uses [PlatformIO](https://platformio.org), a development environment 
    If you want to build the RP2040 targets and get a 'Filename too long' error on Windows, please refer to [the Platformio documentation for this toolchain](https://arduino-pico.readthedocs.io/en/latest/platformio.html#important-steps-for-windows-users-before-installing)
    :::
 
+ ## Update the Build Environment
+
+1. Change to `firmware` folder
+   ```shell
+   cd firmware
+   ```
+2. Gather the latest changes to the [Meshtastic Firmware](https://github.com/meshtastic/firmware) repository and [submodules](https://github.com/meshtastic/firmware/blob/master/.gitmodules)
+   ```shell
+   git pull --recurse-submodules
+   ```
+
 ## Build
 
 1. Open the newly cloned folder in [Visual Studio Code](https://code.visualstudio.com). If you do this for the first time, this can take quite some while as PlatformIO will download all the necessary tooling and libraries. Also if platformio is not installed, VSCode will ask you to install it, probably requiring a restart of the program.
-2. To select the device you you wish to build, open your [command palette](https://code.visualstudio.com/docs/getstarted/userinterface#_command-palette):
+2. To select the device you wish to build, open your [command palette](https://code.visualstudio.com/docs/getstarted/userinterface#_command-palette):
    - Windows: `Ctrl + Shift + P`
    - Mac: `command + Shift + P`
 3. Enter: `PlatformIO: Pick Project Environment` and select your target.
@@ -38,13 +49,13 @@ The build system is modular. Adding a new board variant for an already supported
 
 ### Build with Custom Hardware
 
-1. Go to the `variants` folder in the firmware source code and make a new directory for your hardware, let's call it `m5stack_atom` and copy an existing configuration you wanna modify:
+1. Go to the `variants` folder in the firmware source code and make a new directory for your hardware, let's call it `m5stack_atom` and copy an existing configuration you want to modify:
    ```shell
    cd variants; mkdir m5stack_atom
    cp heltec_v1/* m5stack_atom
    cd m5stack_atom
    ```
-2. Modify the `platformio.ini`_in this subdirectory_ from the canonical define of the hardware variant (`HELTEC_V1` in this case) to `PRIVATE_HW` and make the `-I` on the `build_flags` point to the newly created dir.
+2. Modify the `platformio.ini` _in this subdirectory_ from the canonical define of the hardware variant (`HELTEC_V1` in this case) to `PRIVATE_HW` and make the `-I` on the `build_flags` point to the newly created dir.
    ```shell
    [env:m5stack-atom]
    extends = esp32_base

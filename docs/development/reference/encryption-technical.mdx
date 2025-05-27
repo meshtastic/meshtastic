@@ -1,0 +1,78 @@
+---
+id: encryption-technical
+title: Updated Security Implementation
+sidebar_label: Encryption Technical
+sidebar_position: 5
+description: Technical Overview of Encryption Employed with Meshtastic from Firmware 2.5.0 Onwards
+---
+
+## PSK for Channels, PKC for Direct Messages and Admin Messages
+
+Up to version 2.4.x of the firmware, Meshtastic relied entirely on Pre-Shared Key (PSK) cryptography for all messaging. Starting with firmware version 2.5.0, Meshtastic introduced Public Key Cryptography (PKC) for Direct Messages (DMs) and added Session IDs for Admin Messages. Together, these enhancements bring the security architecture of Meshtastic to a new level of robustness.
+
+Below is a detailed overview of how PSK, PKC, and Session IDs are integrated into your system to secure Channels, Direct Messages, and Admin Messages.
+
+### 1. Chat Channels Using PSK
+
+- **PSK Overview:**
+
+  - Chat Channels continue to utilize a PSK for encrypting communications.
+  - All participants share the same PSK for their Channels, which is used for both encryption and decryption within the channel.
+
+- **Security Considerations:**
+  - **Confidentiality:** Only participants with the correct PSK can access messages within the Chat Channel.
+  - **Key Management:** Secure distribution and regular rotation of the PSK are essential to maintaining the channel's security.
+
+### 2. DMs Now Using PKC
+
+- **PKC Implementation for DMs:**
+
+  - **Public/Private Key Pairs:** Each node is equipped with a unique public/private key pair. The private key is securely stored on the node, and the public key is shared with other nodes, allowing for secure, authenticated communication.
+  - **Encryption and Signature:**
+    - **Encryption:** DMs are encrypted using the recipient’s public key, ensuring only the recipient with the corresponding private key can decrypt the message.
+    - **Digital Signatures:** DMs are signed with the sender’s private key before encryption, allowing the recipient to verify the sender’s identity and the message’s integrity using the sender’s public key.
+
+- **Security Enhancements with PKC:**
+  - **Message Confidentiality and Integrity:** With PKC, each DM is encrypted and signed, ensuring that only the intended recipient can read the message, and verifying that it has not been tampered with.
+
+### 3. Admin Messages: Enhanced Security with PKC and Session IDs
+
+- **Key Exchange with DH Curve25519:**
+
+  - **Initial Key Exchange Setup:**
+
+    - **Key Generation:** A Diffie-Hellman (DH) key exchange occurs using Curve25519 upon first communication between nodes. This generates a shared secret for establishing a symmetric encryption key.
+    - **Hardware Support:** Curve25519 is supported in hardware, ensuring efficient and secure key exchanges.
+    - **Shared Secret:** The derived shared secret is used for all subsequent communications between the nodes.
+
+  - **Use of Shared Secret for Encryption:**
+    - **Symmetric Encryption:** Following the key exchange, messages are encrypted and decrypted using the shared secret with symmetric encryption algorithms like AES-CTR or AES-CCM.
+    - **Efficiency:** Symmetric encryption, especially when based on a secure DH exchange, balances security and performance, making it ideal for real-time applications.
+
+- **Session ID for Admin Messages:**
+
+  - **Session ID Usage:** Session IDs are generated for each admin session and used as an additional value inside the encrypted packet. This ensures that each session is secure and unique.
+  - **Session Duration:** The session ID is valid only for a short duration (e.g., 300 seconds) and is discarded once the session ends or after the next control message is sent.
+
+  - **Security Enhancements with PKC and Session ID:**
+    - **Replay Attack Mitigation:** By utilizing session IDs, replay attacks are effectively mitigated. Old session IDs cannot be reused, ensuring that intercepted packets are invalidated.
+    - **Isolated Impact:** The use of session IDs confines any issues related to session management to admin messages, without affecting broader communication functions like DMs or Chat Channels.
+
+### 4. Overall Security Architecture
+
+- **Integration of PKC with Existing Systems:**
+
+  - **Direct Messages:** PKC enhances the security of DMs by providing encryption, authentication, and integrity through the use of asymmetric encryption and digital signatures.
+  - **Admin Messages:** The combination of PKC and session IDs secures admin-related operations, providing an additional layer of protection for critical functions.
+
+- **Use of PSK with Existing Systems:**
+
+  - **Channels:** PSKs continue to be used for group communication, ensuring secure message exchanges within the channel.
+
+- **Scalability and Performance:**
+  - **Efficient Use of Resources:** PKC for DMs leverages asymmetric encryption for secure communication, while PSKs for Chat Channels and session IDs for admin messages optimize resource consumption on the platform.
+  - **Memory Management:** The selective use of PKC, PSKs, and session IDs ensures that memory and computational resources are effectively managed, allowing the system to scale while maintaining high security.
+
+## Conclusion
+
+PSKs and the expanded use of PKC and session IDs across different MCU architectures—ESP32, nRF52, and ARM—demonstrates a tailored approach to security that balances performance, power consumption, and memory management. Each architecture's strengths are leveraged to ensure that secure communications are maintained without compromising the efficiency or scalability of the system. This approach provides robust security for a wide range of applications, from low-power wearable devices to more powerful, feature-rich systems.
