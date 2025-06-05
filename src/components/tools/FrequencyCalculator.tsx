@@ -352,16 +352,6 @@ export const FrequencyCalculator = (): JSX.Element => {
 
       setNumChannels(calculatedNumChannels);
 
-      // Reset the channel to 0 when modemPreset or region changes
-      const defaultChannel = 0;
-      setChannel(defaultChannel);
-
-      // Recalculate the frequency for the default channel
-      const newChannelFrequency =
-        selectedRegion.freqStart +
-        selectedModemPreset.bw / 2000 +
-        defaultChannel * (selectedModemPreset.bw / 1000);
-      setChannelFrequency(newChannelFrequency);
 
       // Calculate the default slot using the new channel name logic
       const channelName = getChannelName(modemPreset); // Use the full name
@@ -370,6 +360,17 @@ export const FrequencyCalculator = (): JSX.Element => {
         calculatedNumChannels,
       );
       setDefaultSlot(defaultSlot);
+
+      // Reset the channel to the default when modemPreset or region changes
+      setChannel(defaultSlot);
+
+      // Recalculate the frequency for the default channel
+      const newChannelFrequency =
+        selectedRegion.freqStart +
+        selectedModemPreset.bw / 2000 +
+        defaultChannel * (selectedModemPreset.bw / 1000);
+      setChannelFrequency(newChannelFrequency);
+
     }
   }, [modemPreset, region]);
 
