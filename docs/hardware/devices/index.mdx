@@ -206,24 +206,20 @@ High power LoRa transceiver designed for Meshtastic licensed ham operation.
 | [Station G1](./b-and-q-consulting/station-series/) | ESP32 WROOM      | SX1262 | 2.4GHz b/g/n | 4.2 | OPTIONAL |
 | [Station G2](./b-and-q-consulting/station-series/) | ESP32-S3 WROOM-1 | SX1262 | 2.4GHz b/g/n | 5.0 | OPTIONAL |
 
-## [Raspberry Pi](./raspberrypi/)
+## [Elecrow](./elecrow/)
 
-### [Raspberry Pi Pico](./raspberrypi/pico/)
+### [ThinkNode Series](./elecrow/thinknode/)
 
-Fast versatile boards using the RP2040.
+| Name                                                     | MCU      | Radio  |     WiFi     | BT  | GPS |
+| :------------------------------------------------------- | :------- | :----- | :----------: | :-: | :-: |
+| [ThinkNode M1](./elecrow/thinknode/?thinknode-series=m1) | NRF52840 | SX1262 |      NO      | 5.0 | YES |
+| [ThinkNode M2](./elecrow/thinknode/?thinknode-series=m2) | ESP32-S3 | SX1262 | 2.4GHz b/g/n | 5.0 | NO  |
 
-| Name                                    | MCU    | Radio  |     WiFi     |      BT       | GPS |
-| :-------------------------------------- | :----- | :----- | :----------: | :-----------: | :-: |
-| [Raspberry Pi Pico](./raspberrypi/pico) | RP2040 | SX1262 | 2.4GHz b/g/n | not supported | NO  |
+### [CrowPanel Advance Series](./elecrow/crowpanel/)
 
-[**Pico Peripherals**](./raspberrypi/pico/peripherals/)<br/>
-SSD1306 OLED Display<br/>
-SH1106 OLED Display<br/>
-CardKB Keyboard<br/>
-
-### [Raspberry Pi Zero/Zero2/3/4/400/5](./linux-native-hardware/)
-
-Meshtastic offers support for Raspberry Pi devices through our Linux native platform, meshtasticd. For full information, please see our [Linux Native Hardware](./linux-native-hardware/) documentation.
+| Name                                                       | MCU      | Radio  |     WiFi     | BT  | GPS |
+| :--------------------------------------------------------- | :------- | :----- | :----------: | :-: | :-: |
+| [CrowPanel 2.4/2.8/3.5/4.3/5.0/7.0"](./elecrow/crowpanel/) | ESP32-S3 | SX1262 | 2.4GHz b/g/n | 5.0 | NO  |
 
 ## Seeed Studio
 
@@ -253,6 +249,25 @@ nRF52840-based development boards with GPS, and multiple ports to attach sensors
 | :------------------------------------------------------------------------ | :------- | :----- | :--: | :-: | :-: |
 | [Seeed Wio-WM1110 Dev Kit](./seeed-studio/wm1110?wm1110=wio-sdk-wm1110)   | nRF52840 | LR1110 | YES  | 5.3 | YES |
 | [Seeed Wio Tracker 1110](./seeed-studio/wm1110?wm1110=wio-tracker-wm1110) | nRF52840 | LR1110 | YES  | 5.3 | YES |
+
+## [Raspberry Pi](./raspberrypi/)
+
+### [Raspberry Pi Pico](./raspberrypi/pico/)
+
+Fast versatile boards using the RP2040.
+
+| Name                                    | MCU    | Radio  |     WiFi     |      BT       | GPS |
+| :-------------------------------------- | :----- | :----- | :----------: | :-----------: | :-: |
+| [Raspberry Pi Pico](./raspberrypi/pico) | RP2040 | SX1262 | 2.4GHz b/g/n | not supported | NO  |
+
+[**Pico Peripherals**](./raspberrypi/pico/peripherals/)<br/>
+SSD1306 OLED Display<br/>
+SH1106 OLED Display<br/>
+CardKB Keyboard<br/>
+
+### [Raspberry Pi Zero/Zero2/3/4/400/5](./linux-native-hardware/)
+
+Meshtastic offers support for Raspberry Pi devices through our Linux native platform, meshtasticd. For full information, please see our [Linux Native Hardware](./linux-native-hardware/) documentation.
 
 ## [CanaryOne](./canary)
 
