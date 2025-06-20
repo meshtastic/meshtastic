@@ -1,0 +1,80 @@
+---
+title: "Meshtastic 2.7 Preview: BaseUI Overhaul + Native Input + TFT Unification"
+description: "Meshtastic 2.7 is here with a complete redesign of BaseUI, native input support on Linux, and the ability to switch between UIs on TFT screens."
+slug: meshtastic-2-7-preview
+authors: crichton
+tags: ["meshtastic", "2.7", "BaseUI", "preview release"]
+date: 2025-06-19T12:00
+hide_table_of_contents: false
+image: "/img/blog/2_7_Social_Preview.png"
+---
+
+Meshtastic 2.7 Preview is here! This release marks not only the biggest overhaul to our default UI in over four years, but also its official renaming: introducing **BaseUI**. We've rebuilt and rebranded the interface from the ground up, making it more intuitive, more capable including new standalone features, and easier to use on a wider range of devices. This release also brings Linux-native joystick support and the ability to switch between interfaces, BaseUI and Meshtastic UI (MUI) on supported TFT screens.
+
+{/* truncate */}
+
+## What Does Preview Mean?
+
+As with our previous tech previews, 2.7 is not quite production-ready. We're sharing it now to gather feedback, identify bugs, and make adjustments before final release. If you're a tinkerer, a tester, or just excited to see what's next then go ahead and flash it and let us know how it goes!
+
+## What's New in 2.7
+
+### Introducing **BaseUI**: A Name (and Look) Long Overdue
+
+For years, the default Meshtastic interface on OLED screens and basic TFTs didn’t have a name. It was just... the UI. But with the rise of more advanced interfaces like MUI and InkHUD, and now with a complete redesign, it’s time it had one of its own: **BaseUI**.
+
+But don't worry, this isn't just a rebrand, it’s a full revamp! The new BaseUI is more intuitive, more capable, and much easier to navigate across screen sizes and input types giving new life to some of the more basic devices in the Meshtastic ecosystem.
+
+Highlights:
+
+- **Set Region & Timezone On-Device**: Configure the basics directly on the device now!
+- **Digital Clock**: Shows the current time based on your 12/24-hour preference.
+- **Favorites**: Favorited nodes now appear as a dedicated icon in the menu bar, making it easier to access your most important connections.
+- **Auto-Hiding Menu Bar with Action Menus**: A new menu bar (that hides when not being used) appears at the bottom of the screen when navigating between views making it more intuitive for users to know what each view means. Many menu items also include action menus for quick access to common tasks:
+  - **Home**: Open the action menu to sleep the screen or send a new preset (canned) message.
+  - **Messages**: Open the action menu to dismiss the most recent message or reply using preset (canned) messages.
+  - **Position**: Open the action menu to enable or disable GPS directly on the device.
+  - **LoRa**: Open the action menu to quickly select your LoRa region (Region can be set on freshly flashed/wipe devices as well).
+  - **System**: Open the action menu to enable/disable beeps, or configure them for notifications or system events only.
+  - **Digital Clock**: Open the action menu to set your preferred time zone from a list of the most common options.
+  - **Favorites**: open the action menu on a favorite node to send a preset (canned) message to it.
+
+Here's a video of the new BaseUI in action:
+
+<iframe
+  width="560"
+  height="315"
+  src="https://www.youtube.com/embed/8b1g0k2j3a4"
+  title="Meshtastic 2.7 BaseUI Preview"
+  frameborder="0"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+  allowfullscreen
+></iframe>
+
+### Linux Joystick Support
+
+Meshtastic on Linux, or meshtasticd, now supports joysticks. This feature was added for the [Waveshare 1.44" LCD HAT](https://www.waveshare.com/1.44inch-lcd-hat.htm), but should also work with other compatible joystick hats. You can use a joystick to navigate the UI, like BaseUI, on your meshtasticd device.
+
+### UI Switching: MUI or BaseUI
+
+You can now quickly switch between BaseUI and MUI on supported devices. No more separate firmware versions! This flexibility lets you choose the best interface for your needs at any time.
+
+For example, since MUI does not support a concurrent BLE connection, you can switch to BaseUI to connect with the client app and make additional configuration changes not available in MUI, or for any other reason you might prefer the client experience over the standalone MUI interface or if you prefer to run the BaseUI for a specific reason.
+
+### Key Verification
+
+A new "Key Verification" feature has been introduced in the firmware. This allows users to select another node and initiate a verification process which will provide a six-digit code that will be entered into a client, and both devices will receive a confirmation code. This proves these devices are communicating with each other using their respective keys.
+
+Future updates may extend this feature to support re-keying between nodes.
+
+Initial support for this feature has been added in the firmware, but further support in the clients will be needed and is planned for a future release.
+
+## Flashing the 2.7 Preview
+
+Meshtastic 2.7 is available now in the [Meshtastic Web Flasher](https://flasher.meshtastic.org) under the "Preview" section.
+
+⚠️ **Preview releases may require a full device wipe. Be sure to back up your config and keys before flashing.**
+
+## Help Us Make It Better
+
+We’d love your feedback. Whether you're testing on a classic T-Beam, a touchscreen device, or a Liux-native setup—tell us what’s working, what’s not, and what you'd like to see next. Join the conversation on [Discord](https://discord.com/invite/ktMAKGBnBs) or [Reddit](https://www.reddit.com/r/meshtastic/), and help shape the final release of 2.7.
