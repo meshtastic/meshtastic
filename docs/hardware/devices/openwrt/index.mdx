@@ -1,0 +1,105 @@
+---
+id: openwrt
+title: Meshtastic on OpenWRT Routers
+sidebar_label: OpenWRT
+sidebar_position: 9
+description: Set up and configure Meshtastic on OpenWRT routers using the meshtasticd binary.
+---
+
+:::caution Warning
+Please submit any issues at [meshtastic/openwrt](https://github.com/meshtastic/openwrt), rather than the primary `firmware` project.
+:::
+
+This page outlines the setup of Meshtastic on OpenWRT routers, utilizing the [openwrt-repo](https://openwrt.meshtastic.org).
+
+## Prerequisites and Hardware Compatibility
+
+Before proceeding with the setup, ensure the device meets the following requirements:
+
+### Tested Devices
+
+- [OpenWRT One](https://one.openwrt.org)
+- Raspberry Pi 3/4/5
+
+### Hardware Compatibility
+
+- \>2MB free flash storage.
+- An unused USB port, or SPI interface.
+
+Meshtastic OpenWRT packages are built for **every** CPU architecture supported by OpenWRT.
+
+### Supported OpenWRT versions
+
+- `SNAPSHOT` (`master`)
+- `24.10` (stable)
+
+## Installation
+
+### Installing Meshtasticd on OpenWRT
+
+#### OpenWRT 24.10 (stable)
+
+Connect to the router via SSH (ex: `ssh root@192.168.1.1`)
+
+1. Add the [Meshtastic OpenWRT repository](https://openwrt.meshtastic.org/#opkg)
+
+2. Install meshtasticd
+
+```sh
+opkg install meshtasticd
+# Optional: install meshtasticd web interface
+opkg install meshtasticd-web
+```
+
+`meshtasticd` can also be installed from the LuCI web interface, after the repo has been added.
+
+#### OpenWRT `SNAPSHOT`
+
+Ensure your router is running the latest `SNAPSHOT` version of OpenWRT, or install it from https://firmware-selector.openwrt.org/
+
+Connect to the router via SSH (ex: `ssh root@192.168.1.1`)
+
+1. Add the [Meshtastic OpenWRT repository](https://openwrt.meshtastic.org/#apk)
+
+2. Install meshtasticd
+
+```sh
+apk add meshtasticd
+# Optional: install meshtasticd web interface
+apk add meshtasticd-web
+```
+
+`meshtasticd` can also be installed from the LuCI web interface, after the repo has been added.
+
+## Configuration
+
+### Meshtasticd Configuration
+
+See [Linux Native meshtasticd configuration](/docs/hardware/devices/linux-native-hardware/#meshtasticd-configuration)
+
+### Persistence
+
+- The persistent .proto db files of the portduino version of meshtasticd are stored under: `/srv/meshtasticd/.portduino/default/prefs/`.
+
+## Using meshtasticd
+
+### Start/Stop
+
+Upon installing meshtasticd on your router, an init script is automatically created, and set to `auto-start` upon reboot.
+
+The following commands can be used to control the meshtastic service:
+
+```shell
+/etc/init.d/meshtasticd status
+/etc/init.d/meshtasticd start
+/etc/init.d/meshtasticd stop
+/etc/init.d/meshtasticd restart
+```
+
+### View Logs
+
+meshtasticd logs are sent to OpenWRT syslog.
+
+```shell
+logread
+```
