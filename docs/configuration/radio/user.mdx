@@ -9,7 +9,7 @@ import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 import { Icon } from "@iconify/react";
 
-The user config options are: Long Name, Short Name, and Is Licensed. User config uses an admin message sending a `User` protobuf.
+The user config options are: Long Name, Short Name, Is Licensed, and Is Unmessageable. User config uses an admin message sending a `User` protobuf.
 
 ## User Config Values
 
@@ -37,6 +37,12 @@ By enabling `IsLicensed`, you should also review the following related configura
 
 - **User:** `LongName` (Should be your Call Sign)
 - **Channel:** `PSK` (Should be Empty, removing encryption)
+
+### Is Unmessageable
+
+Whether or not the node can be direct messaged
+
+Default is False except for roles that typically would not be monitored for direct messages: ROUTER, ROUTER_LATE, REPEATER, SENSOR, LOST_AND_FOUNT, TRACKER, TAK_TRACKER 
 
 ## User Config Client Availability
 
