@@ -10,16 +10,24 @@ import TabItem from "@theme/TabItem";
 
 This module lets you test the communication range between two Meshtastic nodes. Only nodes with the module enabled will show range test messages on their connected clients.
 
-- Sender: fixed node that sends sequential packets ("Sender message interval" between 30-60s);
-- Receiver: mobile node (typically you) optionally with onboard or phone GPS.
+- Sender: stationary node that sends sequential packets ("Sender message interval" set between 15-60s);
+- Receiver: mobile node (typically you) optionally with onboard or phone GPS ("Sender message interval" set to 0)
 
-Nodes are in range as long as the sequential packets can be received.
+The sender node sends sequential messages with a hop count of zero at the set interval. The receiver is in direct range of the sender as long as the sequential messages are being received.
 
-The receiving node can be used to save the messages along with the GPS coordinates at which they were received into a .csv file. This .csv file can then be integrated into [Google Earth](https://earth.google.com), [Google Maps - My Maps](https://mymaps.google.com), or any other program capable of processing .csv files. This can enable you to visualize your mesh. Ensure you have [position precision](https://meshtastic.org/docs/configuration/radio/channels/#position-precision) in the default channel set to high, otherwise the collected data will not record your true location.
+The receiving node or client application can be used to save the messages along with the GPS coordinates to a rangetest.csv file. Note that the rangetest.csv may contain your approximate or exact GPS location and uploading it online may allow others to locate you.
+[![Example rangetest.csv from Android](/img/android/android-rangetest-csv.png)](/img/android/android-rangetest-csv.png)
+
+To visualize your coverage, you can import the rangetest.csv file into any application or website that directly supports .csv files. The saved .csv file may need to be cleaned up to remove extra/un-needed data rows.  This can be done easily with spreadsheet software like Google Sheets, Libreoffice Calc, Microsoft Excel, and others.
+
+Popular mapping examples that support .csv files directly would be Google Earth Pro, Google My Maps, and OpenStreetMaps uMap. See [Mapping Application Examples](https://meshtastic.org/docs/configuration/module/range-test/#application-examples) below. Alternatively .csv files can be converted beforehand into other file types that your preferred mapping application supports.
+
+For tips on keeping your location private, see: [Configuration Tips Not Sharing your Location](https://meshtastic.org/docs/configuration/tips/#not-sharing-your-location)  Also see the page on [position precision](https://meshtastic.org/docs/configuration/radio/channels/#position-precision).
+
 
 :::info
 
-Be sure to turn off the module or disable sending when not in use. This will use a lot of time on air, slow down your mesh, and spam your channel. The module will automatically turn off after 8 hours.
+Be sure to turn off the module or disable sending when not in use. This module uses a lot of air time and will slow down your mesh. The module will automatically turn off after 8 hours.
 
 :::
 
@@ -29,11 +37,11 @@ The range test module config options are: Enabled, Sender, and Save. Range Test 
 
 ### Enabled
 
-Enables the range test module. **Both Sender and Receiver must have the module enabled.** On the Apple and Android apps to receive any range test messages the module must be enabled. The device screen may continue to show range test packets from older firmware versions even if the module is disabled.
+Enables the range test module. **Both Sender and Receiver must have the module enabled.** On both Android and Apple apps, the module must be enabled to receive range test messages. The device screen may continue to show range test packets from older firmware versions even if the module is disabled.
 
 ### Sender Interval
 
-How long to wait between sending sequential test packets. 0 is default which disables sending messages.
+How long to wait between sending sequential test packets. 0 is the default which disables sending messages.  Receiver node should leave this set as 0.
 
 ### Recommended Sender Settings
 
@@ -48,15 +56,16 @@ How long to wait between sending sequential test packets. 0 is default which dis
 
 :::info
 
-**Leave disabled when using the Android or Apple apps.** Saves directly to the device's flash memory (without the need for a smartphone), and is only available on ESP32-based devices.
+**Leave disabled when using the Android or Apple apps.** Saves rangetest.csv file directly to the device's flash memory and is only available on ESP32-based devices.
 
 :::
 
-If enabled, all received messages are saved to the device's flash memory in a file named `rangetest.csv`.
+If enabled, all received messages are saved to the ESP32 device's flash memory in a file named `rangetest.csv`.
 
 To access this file, first turn on the WiFi on your device and connect to your network. Once you can connect to your device, navigate to `meshtastic.local/rangetest.csv` (or your_device_ip/rangetest.csv) and the file will be downloaded automatically. This file will only be created after receiving initial messages.
 
 To prevent filling up the storage, the device will abort writing if there is less than 50kb of space on the filesystem.
+
 
 ## Range Test Module Config Client Availability
 
@@ -82,7 +91,7 @@ Range Test Config options are available for Android.
 
 :::
 
-Android exports a rangetest.csv file from packets in the Debug Log. To clear old packet history data: `Debug Panel > Clear`
+Android exports a rangetest.csv file from packets in the Debug Log. To clear old packet history data: `Debug Panel > Clear`  Resulting rangetest.csv may need to be cleaned of unrelated rows.
 
 </TabItem>
 <TabItem value="apple">
@@ -157,11 +166,11 @@ All range test module config options are available in the Web UI.
 
 ## Application Examples
 
-### Google Earth Integration
+### Google Earth Pro Integration
 
 Steps:
 
-1. [Download](https://www.google.com/earth/versions/#download-pro) and open Google Earth
+1. [Download](https://www.google.com/earth/versions/#download-pro), install, and open Google Earth Pro
    1. Select File > Import
    2. Select CSV
    3. Select Delimited, Comma
@@ -174,9 +183,9 @@ Steps:
 
 Your data will load onto the map, make sure to click the checkbox next to your dataset in the sidebar to view it.
 
-### My Maps
+### Google My Maps
 
-You can use [My Maps](http://mymaps.google.com). It takes CSVs and the whole interface is much easier to work with.
+You can use [Google My Maps](http://mymaps.google.com). It accepts imported .csv files and the whole interface is rather easy to work with.
 
 Google has instructions on how to do that [here](https://support.google.com/mymaps/answer/3024836?co=GENIE.Platform%3DDesktop&hl=en#zippy=%2Cstep-prepare-your-info%2Cstep-import-info-into-the-map).
 
@@ -189,4 +198,4 @@ For an open source solution you could use [uMap](https://umap.openstreetmap.de/e
 Visit [uMap](https://umap.openstreetmap.de/en/) in your preferred language. 
 1. Click on "Create a map"
 2. Click on the "Import data"-Icon or press CTRL + I.
-3. Choose your rangetest.csv and click "Import". The dataformat is recognized and the locations are imported onto the map.
+3. Choose your rangetest.csv and click "Import". The data format is recognized and the locations are imported onto the map.
