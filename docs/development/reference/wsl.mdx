@@ -19,8 +19,11 @@ To run meshtasticd on Windows via the Windows Subsytem Layer (WSL), your compute
 - USBIP Device Host [usbipd-win](https://github.com/dorssel/usbipd-win) version 4.0.0 or newer installed
 - _(optional)_ [wsl-usb-manager](https://github.com/nickbeth/wsl-usb-manager) downloaded
 
-> ⚠ Attention:
-> This guide was written using Ubuntu on WSL in mind. Minor adjustments to the commands excecuted within Linux may be needed depending on your distro.
+:::tip
+
+This guide was written using Ubuntu on WSL in mind. Minor adjustments to the commands excecuted within Linux may be needed depending on your distro.
+
+:::
 
 ## Verifying pre-requisites
 
@@ -43,17 +46,25 @@ To run meshtasticd on Windows via the Windows Subsytem Layer (WSL), your compute
 4. Run `usbipd attach --wsl --busid=<BUSID>`, where `<BUSID>` is the bus ID identified in Step 2 to attach the device to WSL2.
 5. In your WSL terminal, run `lsusb` to see if your device, with its _device ID_ you identified in Step 2. If you see your device enumerated here, then you have correctly configured usbipd for your LoRA modem.
 
-> Note: while binding persists across reboots, attaching a device does not. You will have to re-attach your modem via usbipd every time you disconnect the device from your computer or reboot your host.
+:::note
+
+While binding persists across reboots, attaching a device does not. You will have to re-attach your modem via usbipd every time you disconnect the device from your computer or reboot your host.
+
+:::
 
 ### ...via wsl-usb-manager
 
-The [wsl-usb-manager](https://github.com/nickbeth/wsl-usb-manager) application makes it easy to bind and share USB devices over IP for those who are uncomfortable (or find inconvenient) using the command line. The steps to bind and attach the USB device over IP are the same as the CLI option above, except with a GUI.
+The [wsl-usb-manager](https://github.com/nickbeth/wsl-usb-manager) application makes it easy to bind and share USB devices over IP for those who are uncomfortable (or find inconvenient) using the command line. The steps to bind and attach the USB device over IP are the same as the CLI option above, except with a GUI. 
 
 ## Installing `meshtasticd` in your WSL instance
 
-> Refer to [Linux install instructions](https://meshtastic.org/docs/software/linux/installation/?os=ubuntu) for your respective distro. In this example, we will be using Ubuntu.
+:::info
 
-After installing meshtasticd via your respective package manager, run `sudo meshtastic`. Verify it runs, the terminate it for now.
+Refer to [Linux install instructions](https://meshtastic.org/docs/software/linux/installation/?os=ubuntu) for your respective distro. In this example, we will be using Ubuntu.
+
+:::
+
+After installing meshtasticd, run `sudo meshtastic`. Verify it runs, the terminate the process for now.
 
 ## Configuring your meshtastic node
 
