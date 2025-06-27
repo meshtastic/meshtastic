@@ -1,9 +1,9 @@
-import type { Config } from "@docusaurus/types";
 import type { Options as PresetClassicOptions } from "@docusaurus/preset-classic";
 import type { ThemeConfig } from "@docusaurus/preset-classic";
+import type { Config } from "@docusaurus/types";
+import autoprefixer from "autoprefixer";
 import remarkDefList from "remark-deflist";
 import tailwindcss from "tailwindcss";
-import autoprefixer from "autoprefixer";
 
 require("dotenv").config();
 
