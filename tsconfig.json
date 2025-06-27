@@ -1,6 +1,20 @@
 {
+  "extends": "@docusaurus/tsconfig",
   "compilerOptions": {
-    "moduleResolution": "node"
+    "baseUrl": ".",
+    "jsx": "react-jsx",
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "noImplicitAny": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true
   },
-  "extends": "@tsconfig/docusaurus/tsconfig.json"
+  "include": ["src", "docusaurus.config.ts"],
+  "exclude": ["node_modules", "build", ".docusaurus"]
 }
