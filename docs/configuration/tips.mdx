@@ -18,11 +18,11 @@ It is strongly recommended to keep your [ROLE](/docs/configuration/radio/device#
   - **This is the right choice for most situations.**
   - Automatically adds smart delays when rebroadcasting to keep the network stable.
   - Perfect for nodes that can help others: rooftop installations, high-visibility locations, or nodes that extend network coverage.
-  - Use when you're in remote areas (hiking, skiing, biking) where every node helps maintain connectivity.
+  - Use when in remote areas (hiking, skiing, biking) where every node helps maintain connectivity.
 
 - `CLIENT_MUTE` nodes can send and receive messages but never repeat them.
-  - Use for your personal handheld when you're near a more powerful node (like your rooftop node) in a busy network.
-  - Use when you have several nodes close together - set the best-positioned one to `CLIENT` and the others to `CLIENT_MUTE`.
+  - Use with a personal handheld device when located near a more powerful node (such as a rooftop node) in a congested network.
+  - Use when multiple nodes are in close proximity. Set the best-positioned node to `CLIENT` and the others to `CLIENT_MUTE`.
   - Perfect for indoor nodes that only talk to one outdoor node - since they can't reach other nodes anyway, repeating messages would just waste bandwidth.
 
 ![Client Node Example](/img/configuration/client.webp)
