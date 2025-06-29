@@ -1,10 +1,13 @@
-// @ts-check
+import type { Options as PresetClassicOptions } from "@docusaurus/preset-classic";
+import type { ThemeConfig } from "@docusaurus/preset-classic";
+import type { Config } from "@docusaurus/types";
+import autoprefixer from "autoprefixer";
+import remarkDefList from "remark-deflist";
+import tailwindcss from "tailwindcss";
 
 require("dotenv").config();
-import remarkDefList from "remark-deflist";
 
-/** @type {import('@docusaurus/types').Config} */
-const config = {
+const config: Config = {
   title: "Meshtastic",
   tagline:
     "An open source, off-grid, decentralized, mesh network built to run on affordable, low-power devices",
@@ -16,7 +19,7 @@ const config = {
   favicon: "design/web/favicon.ico",
   organizationName: "meshtastic",
   projectName: "meshtastic",
-  themeConfig: /** @type {import('@docusaurus/preset-classic').ThemeConfig} */ {
+  themeConfig: {
     docs: {
       sidebar: {
         autoCollapseCategories: true,
@@ -41,6 +44,10 @@ const config = {
         {
           label: "Downloads",
           to: "downloads",
+        },
+        {
+          type: "localeDropdown",
+          position: "right",
         },
         {
           label: "About",
@@ -105,14 +112,14 @@ const config = {
     prism: {
       additionalLanguages: ["shell-session", "bash"],
     },
-  },
+  } satisfies ThemeConfig,
   plugins: [
     () => {
       return {
         name: "docusaurus-tailwindcss",
         configurePostCss(postcssOptions) {
-          postcssOptions.plugins.push(require("tailwindcss"));
-          postcssOptions.plugins.push(require("autoprefixer"));
+          postcssOptions.plugins.push(tailwindcss);
+          postcssOptions.plugins.push(autoprefixer);
           return postcssOptions;
         },
       };
@@ -121,7 +128,6 @@ const config = {
   presets: [
     [
       "@docusaurus/preset-classic",
-      /** @type {import('@docusaurus/preset-classic').Options} */
       {
         docs: {
           sidebarPath: require.resolve("./sidebars.js"),
@@ -138,7 +144,7 @@ const config = {
         theme: {
           customCss: require.resolve("./src/css/custom.css"),
         },
-      },
+      } satisfies PresetClassicOptions,
     ],
   ],
   customFields: {
@@ -147,6 +153,44 @@ const config = {
   i18n: {
     defaultLocale: "en",
     locales: ["en", "cs-CZ", "de", "pl-PL", "sk-SK", "tr-TR", "zh-CN", "zh-TW"],
+    localeConfigs: {
+      en: {
+        label: "English",
+      },
+      "cs-CZ": {
+        label: "Čeština",
+      },
+      da: {
+        label: "Dansk",
+      },
+      fi: {
+        label: "Suomi",
+      },
+      de: {
+        label: "Deutsch",
+      },
+      it: {
+        label: "Italiano",
+      },
+      "pl-PL": {
+        label: "Polski",
+      },
+      "sk-SK": {
+        label: "Slovenčina",
+      },
+      sv: {
+        label: "Svenska",
+      },
+      "tr-TR": {
+        label: "Türkçe",
+      },
+      "zh-CN": {
+        label: "简体中文",
+      },
+      "zh-TW": {
+        label: "繁體中文",
+      },
+    },
   },
   markdown: {
     mermaid: true,
@@ -154,4 +198,4 @@ const config = {
   themes: ["@docusaurus/theme-mermaid"],
 };
 
-module.exports = config;
+export default config;
