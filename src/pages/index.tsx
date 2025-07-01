@@ -18,7 +18,7 @@ import {
 const SocialCards: SocialCardProps[] = [
   {
     color: "bg-[#5865F2]",
-    link: "https://discord.com/invite/ktMAKGBnBs",
+    link: "https://discord.gg/meshtastic",
     children: (
       <img
         alt="discord"
