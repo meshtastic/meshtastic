@@ -43,6 +43,10 @@ const config = {
           to: "downloads",
         },
         {
+          type: "localeDropdown",
+          position: "right",
+        },
+        {
           label: "About",
           position: "right",
           items: [
@@ -146,7 +150,58 @@ const config = {
   },
   i18n: {
     defaultLocale: "en",
-    locales: ["en", "cs-CZ", "de", "pl-PL", "sk-SK", "tr-TR", "zh-CN", "zh-TW"],
+    locales: [
+      "en",
+      "cs-CZ",
+      "da",
+      "fi",
+      "de",
+      "it",
+      "pl-PL",
+      "sk-SK",
+      "sv",
+      "tr-TR",
+      "zh-CN",
+      "zh-TW",
+    ],
+    localeConfigs: {
+      en: {
+        label: "English",
+      },
+      "cs-CZ": {
+        label: "Čeština",
+      },
+      da: {
+        label: "Dansk",
+      },
+      fi: {
+        label: "Suomi",
+      },
+      de: {
+        label: "Deutsch",
+      },
+      it: {
+        label: "Italiano",
+      },
+      "pl-PL": {
+        label: "Polski",
+      },
+      "sk-SK": {
+        label: "Slovenčina",
+      },
+      sv: {
+        label: "Svenska",
+      },
+      "tr-TR": {
+        label: "Türkçe",
+      },
+      "zh-CN": {
+        label: "简体中文",
+      },
+      "zh-TW": {
+        label: "繁體中文",
+      },
+    },
   },
   markdown: {
     mermaid: true,
