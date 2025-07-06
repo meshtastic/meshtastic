@@ -68,6 +68,11 @@ The following process will manually place the device into the Espressif Firmware
 
 With the device now in the Espressif Firmware Download mode, you can proceed with flashing using one of the supported flashing methods. It's generally recommended to use the [Web Flasher](https://flasher.meshtastic.org/). You can select "T Deck" from the device drop-down.
 
+## Configuring GPS on T-Deck Plus
+Referencing the [unit test code sample](https://github.com/Xinyuan-LilyGO/T-Deck/blob/master/examples/UnitTest/utilities.h) from LilyGo, you will need to set in Configuration -> Radio Config -> Position the GPIO pins for the GPS as follows:
+Tx: 43
+Rx: 44
+
 ## Resources
 
 - Firmware file: `firmware-t-deck-X.X.X.xxxxxxx.bin`
