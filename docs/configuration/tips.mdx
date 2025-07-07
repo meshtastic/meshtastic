@@ -14,14 +14,16 @@ It is strongly recommended to keep your [ROLE](/docs/configuration/radio/device#
 
 ### Recommended Roles
 
-- `CLIENT` nodes efficiently repeat and route packets as needed. 
-  - **Almost always the correct mode.**
-  - Uses smart delays for rebroadcasting, improving network stability.
-  - Use for "rooftop" or other nodes that enhance your mesh.
-  - Use during isolated activities such as hiking, skiing, or MTB where you're in an area with few nodes.
-- `CLIENT_MUTE` nodes behave as above but do not repeat packets.
-  - Use for personal nodes that are in range of a higher-profile node in a dense or congested mesh.
-  - Use when you have multiple nodes in close proximity (set your "best-placed" node to `CLIENT`).
+- `CLIENT` nodes receive, send, and intelligently repeat messages to help the mesh network.
+  - **This is the right choice for most situations.**
+  - Automatically adds smart delays when rebroadcasting to keep the network stable.
+  - Perfect for nodes that can help others: rooftop installations, high-visibility locations, or nodes that extend network coverage.
+  - Use when in remote areas (hiking, skiing, biking) where every node helps maintain connectivity.
+
+- `CLIENT_MUTE` nodes can send and receive messages but never repeat them.
+  - Use with a personal handheld device when located near a more powerful node (such as a rooftop node) in a congested network.
+  - Use when multiple nodes are in close proximity. Set the best-positioned node to `CLIENT` and the others to `CLIENT_MUTE`.
+  - Perfect for indoor nodes that only talk to one outdoor node - since they can't reach other nodes anyway, repeating messages would just waste bandwidth.
 
 ![Client Node Example](/img/configuration/client.webp)
 *One example of a 'Client' node.  Photo credit: Cully@KBOXLABS*
