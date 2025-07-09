@@ -5,8 +5,8 @@ sidebar_label: Range Test
 description: Learn to configure the range test module to create reports, maps, and more.
 ---
 
-import Tabs from "@theme/Tabs";
-import TabItem from "@theme/TabItem";
+import { Icon } from "@iconify/react";
+import { CompatibilityIcons } from '@site/src/components/CompatibilityIcons';
 
 This module lets you test the communication range between two Meshtastic nodes. Only nodes with the module enabled will show range test messages on their connected clients.
 
@@ -27,11 +27,11 @@ The range test module config options are: Enabled, Sender, and Save. Range Test 
 
 ## Range Test Module Config Values
 
-### Enabled
+### Enabled <CompatibilityIcons configKey="range_test_enabled" />
 
 Enables the range test module. **Both Sender and Receiver must have the module enabled.** On the Apple and Android apps to receive any range test messages the module must be enabled. The device screen may continue to show range test packets from older firmware versions even if the module is disabled.
 
-### Sender Interval
+### Sender Interval <CompatibilityIcons configKey="range_test_sender" />
 
 How long to wait between sending sequential test packets. 0 is default which disables sending messages.
 
@@ -44,7 +44,7 @@ How long to wait between sending sequential test packets. 0 is default which dis
 |    Medium     |         15          |
 |  Short Fast   |         15          |
 
-### Save CSV File
+### Save CSV File <CompatibilityIcons configKey="range_test_save" />
 
 :::info
 
@@ -58,53 +58,7 @@ To access this file, first turn on the WiFi on your device and connect to your n
 
 To prevent filling up the storage, the device will abort writing if there is less than 50kb of space on the filesystem.
 
-## Range Test Module Config Client Availability
-
-<Tabs
-groupId="settings"
-defaultValue="android"
-values={[
-{label: 'Android', value: 'android'},
-{label: 'Apple', value: 'apple'},
-{label: 'CLI', value: 'cli'},
-{label: 'Web', value: 'web'},
-]}>
-<TabItem value="android">
-
-#### Android
-
-:::info
-
-Range Test Config options are available for Android.
-
-1. Open the Meshtastic App
-2. Navigate to: **Vertical Ellipsis (3 dots top right) > Radio Configuration > Range Test**
-
-:::
-
-Android exports a rangetest.csv file from packets in the Debug Log. To clear old packet history data: `Debug Panel > Clear`
-
-</TabItem>
-<TabItem value="apple">
-
-#### Apple
-
-:::info
-All range test module config options are available on iOS, iPadOS and macOS at Settings > Module Configuration > Range Test.
-:::
-
-Apple apps also have the option to download logged position data which is stored on your iPhone/iPad/Mac.  Access this by clicking on the Nodes tab, selecting a node, then select Position Log and click Save.  This data file does not require the Range Test module to be active.
-
-</TabItem>
-<TabItem value="cli">
-
-#### CLI
-
-:::info
-
-Range Test module config options are available in the python CLI. Example commands are below:
-
-:::
+## CLI Examples
 
 |      Setting       |  Acceptable Values  | Default |
 | :----------------: | :-----------------: | :-----: |
@@ -140,20 +94,9 @@ meshtastic --set range_test.sender 60
 meshtastic --set range_test.sender 0
 ```
 
-</TabItem>
-<TabItem value="web">
+## Apple Position Logs
 
-#### Web
-
-:::info
-
-All range test module config options are available in the Web UI.
-
-:::
-
-</TabItem>
-</Tabs>
-
+Apple apps also have the option to download logged position data which is stored on your iPhone/iPad/Mac.  Access this by clicking on the Nodes tab, selecting a node, then select Position Log and click Save.  This data file does not require the Range Test module to be active.
 
 ## Application Examples
 

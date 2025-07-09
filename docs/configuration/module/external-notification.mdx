@@ -5,10 +5,9 @@ sidebar_label: External Notification
 description: This module will allow you to connect a buzzer, speaker, LED, or other similar accessory to your Meshtastic device.
 ---
 
-import Tabs from "@theme/Tabs";
-import TabItem from "@theme/TabItem";
 import { Icon } from "@iconify/react";
 import ReactPlayer from "react-player";
+import { CompatibilityIcons } from '@site/src/components/CompatibilityIcons';
 
 The External Notification Module will allow you to connect a buzzer, speaker, LED, or other device to notify you when a message has been received from the mesh network. You can enable up to 3 pins independently from each other.
 
@@ -25,23 +24,23 @@ The External Notification Module config options are: Enabled, Active, Alert Bell
 
 ## External Notification Module Config Values
 
-### Enabled
+### Enabled <CompatibilityIcons configKey="external_notification_enabled" />
 
 Enables the external notification module.
 
-### Active (general / LED only)
+### Active (general / LED only) <CompatibilityIcons configKey="external_notification_output" />
 
 Specifies whether the external circuit is active when the device's GPIO is low or high. If this is set true, the pin will be pulled active high, false means active low.
 
-### Alert when receiving a bell (general / LED, Vibra and Buzzer)
+### Alert when receiving a bell (general / LED, Vibra and Buzzer) <CompatibilityIcons configKey="external_notification_alert_bell" />
 
 Specifies if an alert should be triggered when receiving an incoming bell.
 
-### Alert when receiving a message (general / LED, Vibra and Buzzer)
+### Alert when receiving a message (general / LED, Vibra and Buzzer) <CompatibilityIcons configKey="external_notification_alert_message" />
 
 Specifies if an alert should be triggered when receiving an incoming message.
 
-### GPIO Pins (general / LED, Vibra and Buzzer)
+### GPIO Pins (general / LED, Vibra and Buzzer) <CompatibilityIcons configKey="external_notification_enabled" />
 
 Specifies the GPIO that your external circuit is attached to on the device. On devices that have a PWM buzzer, you can use the buzzer for notifications by setting the use_pwm property to TRUE. The Buzzer Pin will be ignored and the device.buzzer_gpio is used instead. If you enable PWM mode, the device will use
 so-called RTTTL ring tones for notification. You can find examples of RTTTL ring tones [here](https://www.laub-home.de/wiki/RTTTL_Songs) and upload them to the device via a client application.
@@ -50,87 +49,17 @@ so-called RTTTL ring tones for notification. You can find examples of RTTTL ring
 On ESP32 based boards, GPIOs 34 to 39 are GPIs – input only pins. These pins do not have internal pull-up or pull-down resistors. They can not be used as outputs, so you can NOT use these pins as outputs.
 :::
 
-### How long monitored GPIO is triggered
+### How long monitored GPIO is triggered <CompatibilityIcons configKey="external_notification_output_ms" />
 
 Specifies how long in milliseconds you would like your GPIOs to be active. In case of the repeat option, this is the duration of every tone and pause.
 
 Default of 0 is 1000ms
 
-### Repeat (Nag Timeout) (general / LED, Vibra and Buzzer)
+### Repeat (Nag Timeout) (general / LED, Vibra and Buzzer) <CompatibilityIcons configKey="external_notification_nag_timeout" />
 
 Specifies if the alert should be repeated. If set to a value greater than zero, the alert will be repeated until the user button is pressed or 'value' number of seconds have past.
 
-## External Notification Module Config Client Availability
-
-<Tabs
-  groupId="settings"
-  defaultValue="apple"
-  values={[
-    {
-      label: (
-        <>
-          <Icon icon="mdi:android" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Android
-        </>
-      ),
-      value: "android",
-    },
-    {
-      label: (
-        <>
-          <Icon icon="mdi:apple" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Apple
-        </>
-      ),
-      value: "apple",
-    },
-    {
-      label: (
-        <>
-          <Icon icon="mdi:terminal" height="1.5rem" style={{ marginRight: "0.25rem" }} /> CLI
-        </>
-      ),
-      value: "cli",
-    },
-    {
-      label: (
-        <>
-          <Icon icon="mdi:internet" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Web
-        </>
-      ),
-      value: "web",
-    },
-  ]}>
-<TabItem value="android">
-
-#### Android
-
-:::info
-
-External Notification Config options are available for Android.
-
-1. Open the Meshtastic App
-2. Navigate to: **Vertical Ellipsis (3 dots top right) > Radio Configuration > External Notification**
-
-:::
-
-</TabItem>
-<TabItem value="apple">
-
-#### Apple
-
-:::info
-All external notification module config options are available on iOS, iPadOS and macOS at Settings > Module Configuration > External Notification.
-:::
-
-</TabItem>
-<TabItem value="cli">
-
-#### CLI
-
-:::info
-
-All external notification module config options are available in the python CLI. Example commands are below:
-
-:::
+## CLI Examples
 
 |                  Setting                   |    Acceptable Values     | Default |
 | :----------------------------------------: | :----------------------: | :-----: |
@@ -187,18 +116,6 @@ meshtastic --set external_notification.output 21
 meshtastic --set external_notification.output_ms 0
 meshtastic --set external_notification.output_ms 1500
 ```
-
-</TabItem>
-<TabItem value="web">
-
-#### Web
-
-:::info
-All External Notification module config is available for the Web UI.
-:::
-
-</TabItem>
-</Tabs>
 
 :::warning
 GPIO access is fundamentally dangerous because invalid options can physically damage or destroy your hardware. Ensure that you fully understand the schematic for your particular device before trying this as we do not offer a warranty. Use at your own risk.

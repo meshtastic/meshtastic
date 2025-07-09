@@ -5,9 +5,8 @@ sidebar_label: Store & Forward
 description: This module allows you to resend text messages after a device has been temporarily not in LoRa range of the mesh.
 ---
 
-import Tabs from "@theme/Tabs";
-import TabItem from "@theme/TabItem";
 import { Icon } from "@iconify/react";
+import { CompatibilityIcons } from '@site/src/components/CompatibilityIcons';
 
 ## Overview
 
@@ -77,97 +76,31 @@ Since 2.4, when connecting to the Store & Forward Server itself, the text messag
 
 ## Settings
 
-### Enabled
+### Enabled <CompatibilityIcons configKey="store_forward_enabled" />
 
 Enables the module.
 
-### Heartbeat
+### Heartbeat <CompatibilityIcons configKey="store_forward_heartbeat" />
 
 The Store & Forward Server sends a periodic message onto the network. This allows connected devices to know that a server is in range and listening to received messages. A client like Android, iOS, or Web can (if supported) indicate to the user whether a Store & Forward Server is available.
 
-### History Return Max
+### History Return Max <CompatibilityIcons configKey="store_forward_history_return_max" />
 
 Sets the maximum number of messages to return to a client device when it requests the history.
 
-### History Return Window
+### History Return Window <CompatibilityIcons configKey="store_forward_history_return_window" />
 
 Limits the time period (in minutes) a client device can request.
 
-### Records
+### Records <CompatibilityIcons configKey="store_forward_records" />
 
 Set this to the maximum number of records the server will save. Best to leave this at the default (`0`) where the module will use 2/3 of your device's available PSRAM. This is about 11,000 records.
 
-### Is server
+### Is server <CompatibilityIcons configKey="store_forward_is_server" />
 
 Set to true to configure your node with PSRAM as a Store & Forward Server for storing and forwarding messages. This is an alternative to setting the node as a `ROUTER` and only available since 2.4.
 
-## Store & Forward Module Config Client Availability
-
-<Tabs
-  groupId="settings"
-  defaultValue="apple"
-  values={[
-    {
-      label: (
-        <>
-          <Icon icon="mdi:android" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Android
-        </>
-      ),
-      value: "android",
-    },
-    {
-      label: (
-        <>
-          <Icon icon="mdi:apple" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Apple
-        </>
-      ),
-      value: "apple",
-    },
-    {
-      label: (
-        <>
-          <Icon icon="mdi:terminal" height="1.5rem" style={{ marginRight: "0.25rem" }} /> CLI
-        </>
-      ),
-      value: "cli",
-    },
-    {
-      label: (
-        <>
-          <Icon icon="mdi:internet" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Web
-        </>
-      ),
-      value: "web",
-    },
-  ]}>
-
-<TabItem value="android">
-
-#### Android
-
-:::info
-Store and Forward Config options are available for Android.
-
-1. Open the Meshtastic App
-2. Navigate to: **Vertical Ellipsis (3 dots top right) > Radio Configuration > Store & Forward**
-
-:::
-
-</TabItem>
-
-<TabItem value="apple">
-
-#### Apple
-
-:::info
-All Store & Forward module config options are available on iOS, iPadOS and macOS at Settings > Module Configuration > Store & Forward.
-:::
-
-</TabItem>
-
-<TabItem value="cli">
-
-#### CLI
+## CLI Examples
 
 |               Setting               | Acceptable Values |        Default        |
 | :---------------------------------: | :---------------: | :-------------------: |
@@ -229,16 +162,3 @@ meshtastic --set store_forward.records 0
 ```shell title="Set store_forward.records to 100 records"
 meshtastic --set store_forward.records 100
 ```
-
-</TabItem>
-
-<TabItem value="web">
-
-#### Web
-
-:::info
-All Store & Forward module config options are available in the Web UI at Config > Module Config > S&F.
-:::
-
-</TabItem>
-</Tabs>
