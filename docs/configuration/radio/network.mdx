@@ -5,9 +5,8 @@ sidebar_label: Network
 description: Learn about network configuration for your Meshtastic device including NTP, WiFi, and Ethernet.
 ---
 
-import Tabs from "@theme/Tabs";
-import TabItem from "@theme/TabItem";
 import { Icon } from "@iconify/react";
+import { CompatibilityIcons } from '@site/src/components/CompatibilityIcons';
 
 The Network config options are: NTP Server, WiFi Enabled, WiFi SSID, WiFi PSK, Ethernet Enabled, IPv4 Networking Mode, Static Address rsyslog Server, and Protocol Flags. Network config uses an admin message sending a `Config.Network` protobuf.
 
@@ -19,49 +18,49 @@ ESP32 devices have the ability to connect to WiFi as a client. SoftAP mode is no
 
 ## Network Config Values
 
-### NTP Server
+### NTP Server <CompatibilityIcons configKey="network_ntp_server" />
 
 The NTP server used if IP networking is available.
 
 Set to `meshtastic.pool.ntp.org` by default. (Max Length: 32)
 
-### WiFi Enabled
+### WiFi Enabled <CompatibilityIcons configKey="network_wifi_enabled" />
 
 Enables or Disables WiFi.
 
 Set to `false` (Disabled) by default.
 
-### WiFi SSID
+### WiFi SSID <CompatibilityIcons configKey="network_wifi_ssid" />
 
 This is your WiFi Network's SSID.
 
 Empty `""` by default. (Case Sensitive, Max Length: 32)
 
-### WiFi PSK
+### WiFi PSK <CompatibilityIcons configKey="network_wifi_psk" />
 
 This is your WiFi Network's password.
 
 Empty `""` by default. (Case Sensitive, Max Length: 64)
 
-### Ethernet Enabled
+### Ethernet Enabled <CompatibilityIcons configKey="network_eth_enabled" />
 
 Enables or Disables Ethernet.
 
 Set to `false` (Disabled) by default.
 
-### IPv4 Networking Mode
+### IPv4 Networking Mode <CompatibilityIcons configKey="network_address_mode" />
 
 Set to `DHCP` by default. Change to `STATIC` to use a static IP address. Applies to both Ethernet and WiFi.
 
-### IPv4 Static Address configuration
+### IPv4 Static Address configuration <CompatibilityIcons configKey="network_ipv4_config" />
 
 Contains IP, Gateway, Subnet, and DNS server for a static configuration if selected in Networking Mode.
 
-### Rsyslog Server
+### Rsyslog Server <CompatibilityIcons configKey="network_rsyslog_server" />
 
 To configure an rsyslog Server and Port. Default logging facility is `user`.
 
-### Protocol Flags
+### Protocol Flags <CompatibilityIcons configKey="network_enabled_protocols" />
 
 Defines which auxiliary network protocols are used to send packets. Values are stored as a bit field of boolean configuration options (bitwise OR of ProtocolFlags).
 
@@ -74,82 +73,8 @@ Defines which auxiliary network protocols are used to send packets. Values are s
 The first time your device restarts after enabling WiFi or Ethernet, it will take an additional 20-30 seconds to boot. This is to generate self-signed SSL keys. The keys will be saved for future reuse.
 :::
 
-## Network Config Client Availability
 
-<Tabs
-  groupId="settings"
-  defaultValue="apple"
-  values={[
-    {
-      label: (
-        <>
-          <Icon icon="mdi:android" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Android
-        </>
-      ),
-      value: "android",
-    },
-    {
-      label: (
-        <>
-          <Icon icon="mdi:apple" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Apple
-        </>
-      ),
-      value: "apple",
-    },
-    {
-      label: (
-        <>
-          <Icon icon="mdi:terminal" height="1.5rem" style={{ marginRight: "0.25rem" }} /> CLI
-        </>
-      ),
-      value: "cli",
-    },
-    {
-      label: (
-        <>
-          <Icon icon="mdi:internet" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Web
-        </>
-      ),
-      value: "web",
-    },
-  ]}>
-
-<TabItem value="android">
-
-#### Android
-
-:::info
-
-Network Config options are available for Android.
-
-1. Open the Meshtastic App
-2. Navigate to: **Vertical Ellipsis (3 dots top right) > Radio Configuration > Network**
-
-:::
-
-</TabItem>
-
-<TabItem value="apple">
-
-#### Apple
-
-:::info
-
-All Network config options are available on iOS, iPadOS and macOS at Settings > Device Configuration > Network.
-
-:::
-
-</TabItem>
-
-<TabItem value="cli">
-
-#### CLI
-
-:::info
-
-All Network config options are available in the python CLI.
-
-:::
+## CLI Examples
 
 |       Setting        | Acceptable Values |          Default          |
 | :------------------: | :---------------: | :-----------------------: |
@@ -192,26 +117,3 @@ meshtastic --set network.wifi_psk mypassword
 meshtastic --set network.wifi_psk "my password"
 ```
 
-</TabItem>
-
-<TabItem value="web">
-
-#### Web
-
-:::info
-All Network config options are available in the Web UI.
-:::
-
-</TabItem>
-
-</Tabs>
-
-## Examples
-
-### WiFi Client
-
-With `network.wifi_ssid` & `network.wifi_psk` populated, the device will know to connect to your network. Make sure you are in range of your WiFi and it is a 2.4GHz-only network. If you have a single Meshtastic device on your local network it's easy to connect to your device with DNS `http://meshtastic.local`. If you have multiple Meshtastic devices you will need to connect using their respective IP addresses.
-
-### Disable WiFi
-
-To disable WiFi completely, set `network.wifi_enabled` to `false`.

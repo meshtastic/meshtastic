@@ -5,9 +5,8 @@ sidebar_label: Channels
 description: Understand how to configure channels on your Meshtastic device, including private channels, encryption, MQTT, and location precision.
 ---
 
-import Tabs from "@theme/Tabs";
-import TabItem from "@theme/TabItem";
 import { Icon } from "@iconify/react";
+import { CompatibilityIcons } from '@site/src/components/CompatibilityIcons';
 import PositionPrecisionBits from "@site/docs/blocks/_position-precision-bits.mdx";
 import QRCode from "@site/docs/blocks/_qr-code.mdx";
 
@@ -23,7 +22,7 @@ The Channels config options are: Index, Roles, and Settings. Channel config uses
 
 ## Channel Config Values
 
-### Index
+### Index <CompatibilityIcons configKey="channel_index" />
 
 The channel index begins at 0 and ends at 7.
 
@@ -44,7 +43,7 @@ _Indexing_ can not be modified.
 You can **not** have `DISABLED` channels in-between active channels such as `PRIMARY` and `SECONDARY`. Active channels must be consecutive.
 :::
 
-### Role
+### Role <CompatibilityIcons configKey="channel_role" />
 
 Each channel is assigned one of 3 roles:
 
@@ -67,7 +66,7 @@ To ensure devices with different PRIMARY channel name transmit on the same frequ
 
 The Channel Settings options are: Name, PSK, Downlink Enabled, and Uplink Enabled. Channel settings are embedded in the `Channel` protobuf as a `ChannelSettings` protobuf and sent as an admin message.
 
-### Name
+### Name <CompatibilityIcons configKey="channel_name" />
 
 A short identifier for the channel. _(< 12 bytes)_
 
@@ -82,7 +81,7 @@ Matching channel names are required in order to communicate on the same channel 
 
 :::
 
-### PSK
+### PSK <CompatibilityIcons configKey="channel_psk" />
 
 The encryption key used for private channels.
 
@@ -96,13 +95,13 @@ Matching PSKs are required in order to communicate on the same channel with othe
 
 :::
 
-### Downlink Enabled
+### Downlink Enabled <CompatibilityIcons configKey="channel_downlink_enabled" />
 
 If enabled, messages captured from a **public** internet gateway will be forwarded to the local mesh.
 
 Set to `false` by default for all channels.
 
-### Uplink Enabled
+### Uplink Enabled <CompatibilityIcons configKey="channel_uplink_enabled" />
 
 If enabled, messages from the mesh will be sent to the **public** internet through any node's configured gateway.
 
@@ -112,7 +111,7 @@ Set to `false` by default for all channels.
 
 The channel module settings options are: position precision. Channel module settings are embedded in the Channel protobuf as a ModuleSettings protobuf and sent as an admin message.
 
-### Position Precision
+### Position Precision <CompatibilityIcons configKey="channel_position_precision" />
 
 The `position_precision` setting allows control of the level of precision for location data that is sent over a particular channel. This can be useful for privacy reasons, where obfuscating the exact location may be desired when sending position data over certain channels.
 
@@ -127,53 +126,8 @@ The `position_precision` value is an integer between 0 and 32:
 
 The client applications have implemented different levels of precision giving the user a practical range to choose from. Setting across the full range of integers can be done via the Python CLI. See [Setting Position Precision](/docs/configuration/radio/channels/#setting-position-precision) for examples on setting different levels of precision using CLI.
 
-## Channel Config Client Availability
+## Android
 
-<Tabs
-  groupId="settings"
-  defaultValue="apple"
-  values={[
-    {
-      label: (
-        <>
-          <Icon icon="mdi:android" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Android
-        </>
-      ),
-      value: "android",
-    },
-    {
-      label: (
-        <>
-          <Icon icon="mdi:apple" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Apple
-        </>
-      ),
-      value: "apple",
-    },
-    {
-      label: (
-        <>
-          <Icon icon="mdi:terminal" height="1.5rem" style={{ marginRight: "0.25rem" }} /> CLI
-        </>
-      ),
-      value: "cli",
-    },
-    {
-      label: (
-        <>
-          <Icon icon="mdi:internet" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Web
-        </>
-      ),
-      value: "web",
-    },
-  ]}>
-
-<TabItem value="android">
-
-#### Android
-
-:::info
-Channel Config options are available on Android.
-:::
 ![Android Menu Tabs](/img/android/android-menu-channel.webp)
 
 The Radio Configuration tab can be used for common tasks:
@@ -198,27 +152,7 @@ Tap "Edit" to access the Channel Menu:
 5. Precise location (if position is enabled)
 6. Position precision (if precise location is disabled)
 
-</TabItem>
-
-<TabItem value="apple">
-
-#### Apple
-
-:::info
-
-A channel editor is available on the iOS, iPadOS and macOS applications at Settings > Radio Configuration > Channels.
-
-:::
-
-</TabItem>
-
-<TabItem value="cli">
-
-#### CLI
-
-:::info
-All Channel config options are available in the python CLI. Example commands are below:
-:::
+## CLI Examples
 
 :::tip
 
@@ -307,16 +241,3 @@ meshtastic --ch-set module_settings.position_precision 13 --ch-index 0
 ```shell title="Set position precision to full precision (32 bits)"
 meshtastic --ch-set module_settings.position_precision 32 --ch-index 1
 ```
-
-</TabItem>
-
-<TabItem value="web">
-
-#### Web
-
-:::info
-All Channel config options are available in the Web UI.
-:::
-
-</TabItem>
-</Tabs>

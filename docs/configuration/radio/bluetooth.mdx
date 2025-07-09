@@ -5,8 +5,6 @@ sidebar_label: Bluetooth
 description: Configure Bluetooth settings on your Meshtastic device for connectivity with smartphones and other devices.
 ---
 
-import Tabs from "@theme/Tabs";
-import TabItem from "@theme/TabItem";
 import { Icon } from "@iconify/react";
 import { CompatibilityIcons } from '@site/src/components/CompatibilityIcons';
 
@@ -46,14 +44,14 @@ It is strongly recommended that you change the default `FIXED_PIN` code on your 
 :::
 
 
-### CLI Examples
+## CLI Examples
 
 
 
-|       Setting        |          Acceptable Values          |   Default    |
-| :------------------: | :---------------------------------: | :----------: |
-| `bluetooth.enabled`  |           `true`, `false`           |    `true`    |
-|   `bluetooth.mode`   | `RANDOM_PIN`, `FIXED_PIN`, `NO_PIN` | `RANDOM_PIN` |
+|        Setting        |          Acceptable Values          |   Default    |
+|:---------------------:|:-----------------------------------:|:------------:|
+|  `bluetooth.enabled`  |           `true`, `false`           |    `true`    |
+|   `bluetooth.mode`    | `RANDOM_PIN`, `FIXED_PIN`, `NO_PIN` | `RANDOM_PIN` |
 | `bluetooth.fixed_pin` |        `integer` (6 digits)         |   `123456`   |
 
 :::tip

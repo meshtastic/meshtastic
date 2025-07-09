@@ -5,33 +5,32 @@ sidebar_label: Security
 description: This section covers security options for the device such public key, private key, and admin key
 ---
 
-import Tabs from "@theme/Tabs";
-import TabItem from "@theme/TabItem";
 import { Icon } from "@iconify/react";
+import { CompatibilityIcons } from '@site/src/components/CompatibilityIcons';
 
 The security config options are: Public Key, Private Key, Admin Key, Is Managed, Serial Console, Debug Logs, and Admin Channel.
 
 ## Security Config Values
 
-### Public Key
+### Public Key <CompatibilityIcons configKey="security_public_key" />
 
 Acceptable values: `bytes`
 
 The public key of the device, shared with other nodes on the mesh to allow them to compute a shared secret key for secure communication.
 
-### Private Key
+### Private Key <CompatibilityIcons configKey="security_private_key" />
 
 Acceptable values: `bytes`
 
 The private key of the device, used to create a shared key with a remote device for secure communication.**This key should be kept confidential.**
 
-### Admin Key
+### Admin Key <CompatibilityIcons configKey="security_admin_key" />
 
 Acceptable values: `repeated bytes`
 
 The public key(s) authorized to send administrative messages to this node. Only messages signed by these keys will be accepted for administrative control.
 
-### Managed Mode
+### Managed Mode <CompatibilityIcons configKey="security_is_managed" />
 
 Acceptable values: `true` or `false`
 
@@ -39,85 +38,26 @@ Enabling Managed Mode blocks client applications from writing configurations to 
 
 Before enabling Managed Mode, verify that the node can be controlled via Remote Admin or legacy Admin channel, and that all functions are working properly to prevent being locked out.
 
-### Serial Console
+### Serial Console <CompatibilityIcons configKey="security_serial_enabled" />
 
 Acceptable values: `true` or `false`
 
 Disabling this will prevent the Serial Console from initializing the Stream API.
 
-### Debug Log
+### Debug Log <CompatibilityIcons configKey="security_debug_log_api_enabled" />
 
 Acceptable values: `true` or `false`
 
 By default, logging is disabled when an API client connects to keep the shared serial link quiet. Set this to true to continue outputting live debug logs over serial or Bluetooth when the API is active.
 
-### Admin Channel Enabled
+### Admin Channel Enabled <CompatibilityIcons configKey="security_admin_channel_enabled" />
 
 Acceptable values: `true` or `false`
 
 Allows incoming device control over the insecure legacy admin channel. Enabling this option permits control messages to be received through the older, less secure admin channel.
 
-## Device Config Client Availability
 
-<Tabs
-  groupId="settings"
-  defaultValue="apple"
-  values={[
-    {
-      label: (
-        <>
-          <Icon icon="mdi:android" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Android
-        </>
-      ),
-      value: "android",
-    },
-    {
-      label: (
-        <>
-          <Icon icon="mdi:apple" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Apple
-        </>
-      ),
-      value: "apple",
-    },
-    {
-      label: (
-        <>
-          <Icon icon="mdi:terminal" height="1.5rem" style={{ marginRight: "0.25rem" }} /> CLI
-        </>
-      ),
-      value: "cli",
-    },
-    {
-      label: (
-        <>
-          <Icon icon="mdi:internet" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Web
-        </>
-      ),
-      value: "web",
-    },
-  ]}>
-<TabItem value="android">
-
-#### Android
-
-All Security config options are available for Android.
-
-1. Open the Meshtastic App
-2. Navigate to: **Vertical Ellipsis (3 dots top right) > Radio Configuration > Security**
-
-</TabItem>
-<TabItem value="apple">
-
-#### Apple
-
-All Security config options are available on iOS, iPadOS and macOS at Settings > Radio Configuration > Security.
-
-</TabItem>
-<TabItem value="cli">
-
-#### CLI
-
-All Security config options are available in the python CLI. Example commands are below:
+## CLI Examples
 
 | Setting                        | Acceptable Values | Default |
 | ------------------------------ | ----------------- | ------- |
@@ -146,16 +86,6 @@ meshtastic --set security.serial_enabled false
 ```shell title="Enable debug logging"
 meshtastic --set security.debug_log_api_enabled true
 ```
-
-</TabItem>
-<TabItem value="web">
-
-#### Web
-
-ALL Security config options are available in the Web client, but at present only 1 Remote Admin public key can be set.
-
-</TabItem>
-</Tabs>
 
 ## Security Keys - Backup and Restore
 

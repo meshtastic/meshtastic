@@ -5,9 +5,8 @@ sidebar_label: Position
 description: GPS position configuration settings for your Meshtastic device including update intervals, broadcast settings, and GPIO.
 ---
 
-import Tabs from "@theme/Tabs";
-import TabItem from "@theme/TabItem";
 import { Icon } from "@iconify/react";
+import { CompatibilityIcons } from '@site/src/components/CompatibilityIcons';
 
 Position data from GPS is provided by either the radio or your paired phone. It is not required to use Meshtastic, but time calculations require at least one device on the mesh to have either a GPS, RTC, or internet connection for NTP.
 
@@ -15,7 +14,7 @@ The position config uses an admin message to send a `Config.Position` protobuf. 
 
 ## Position Config Values
 
-### GPS Mode
+### GPS Mode <CompatibilityIcons configKey="position_gps_mode" />
 
 Configures whether the GPS functionality is enabled, disabled, or not present on the node.
 
@@ -23,11 +22,11 @@ Acceptable values: `DISABLED`, `ENABLED`, and `NOT_PRESENT`.
 
 Generally, depending on the device and its configuration, this value will default to either `ENABLED` or `NOT_PRESENT`.
 
-### GPS Update Interval
+### GPS Update Interval <CompatibilityIcons configKey="position_gps_update_interval" />
 
 How often we should try to get GPS position (in seconds), or zero for the default of once every 2 minutes, or a very large value (maxint) to update only once at boot.
 
-### Fixed Position
+### Fixed Position <CompatibilityIcons configKey="position_fixed_position" />
 
 Acceptable values: `true` or `false`
 
@@ -35,7 +34,7 @@ False by default
 
 If set, this node is at a fixed position. The device will generate GPS updates at the regular GPS update interval, but use whatever the last lat/lon/alt it saved for the node. The lat/lon/alt can be set by an internal GPS or with the help of the mobile device's GPS.
 
-### Smart Broadcast
+### Smart Broadcast <CompatibilityIcons configKey="position_broadcast_smart_enabled" />
 
 Acceptable values: `true` or `false`
 
@@ -47,19 +46,19 @@ Smart broadcast complements broadcast interval (doesn't override that setting) b
 
 Smart broadcast will calculate an ideal position update interval based on the data rate of your selected channel configuration.
 
-### Smart Broadcast Minimum Distance
+### Smart Broadcast Minimum Distance <CompatibilityIcons configKey="position_broadcast_smart_minimum_distance" />
 
 Default of `0` is 100 meters
 
 The minimum distance in meters traveled (since the last send) before we can send a position to the mesh if smart broadcast is enabled.
 
-### Smart Broadcast Minimum Interval
+### Smart Broadcast Minimum Interval <CompatibilityIcons configKey="position_broadcast_smart_minimum_interval_secs" />
 
 Default of `0` is 30 seconds
 
 The minimum number of seconds (since the last send) before we can send a position to the mesh if smart broadcast is enabled.
 
-### Broadcast Interval
+### Broadcast Interval <CompatibilityIcons configKey="position_broadcast_secs" />
 
 Default of `0` is 15 minutes
 
@@ -67,7 +66,7 @@ If smart broadcast is off we should send our position this often.
 
 The GPS updates will be sent out every broadcast interval, either with the actual GPS location or an empty location if no GPS fix was achieved.
 
-### Position Flags
+### Position Flags <CompatibilityIcons configKey="position_flags" />
 
 Defines which options are sent in POSITION messages. Values are stored as a bit field of boolean configuration options (bitwise OR of PositionFlags).
 
@@ -85,81 +84,11 @@ Defines which options are sent in POSITION messages. Values are stored as a bit 
 |      HEADING       |          Include positional heading (from GPS solution)          |
 |       SPEED        |           Include positional speed (from GPS solution)           |
 
-### GPIO RX/TX/EN for GPS Module
+### GPIO RX/TX/EN for GPS Module <CompatibilityIcons configKey="position_gps_mode" />
 
 If your device does not have a fixed GPS chip, you can define the GPIO pins for the RX, TX, and EN pins of a GPS module.
 
-## Position Config Client Availability
-
-<Tabs
-  groupId="settings"
-  defaultValue="apple"
-  values={[
-    {
-      label: (
-        <>
-          <Icon icon="mdi:android" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Android
-        </>
-      ),
-      value: "android",
-    },
-    {
-      label: (
-        <>
-          <Icon icon="mdi:apple" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Apple
-        </>
-      ),
-      value: "apple",
-    },
-    {
-      label: (
-        <>
-          <Icon icon="mdi:terminal" height="1.5rem" style={{ marginRight: "0.25rem" }} /> CLI
-        </>
-      ),
-      value: "cli",
-    },
-    {
-      label: (
-        <>
-          <Icon icon="mdi:internet" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Web
-        </>
-      ),
-      value: "web",
-    },
-  ]}>
-<TabItem value="android">
-
-#### Android
-
-:::info
-
-Position Config options are available for Android.
-
-1. Open the Meshtastic App
-2. Navigate to: **Vertical Ellipsis (3 dots top right) > Radio Configuration > Position**
-
-:::
-
-</TabItem>
-<TabItem value="apple">
-
-#### Apple
-
-:::info
-All position config values are available on iOS, iPadOS and macOS at Settings > Device Configuration > Position.
-:::
-
-</TabItem>
-<TabItem value="cli">
-
-#### CLI
-
-:::info
-
-All Position config commands are available in the python CLI. Example commands are below:
-
-:::
+## CLI Examples
 
 |                    Setting                     |                                                             Acceptable Values                                                             |           Default            |
 | :--------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------: | :--------------------------: |
@@ -223,15 +152,3 @@ It may take some time to see that the change has taken effect. The GPS location 
 meshtastic --pos-fields ALTITUDE ALTITUDE_MSL
 meshtastic --pos-fields UNSET
 ```
-
-</TabItem>
-<TabItem value="web">
-
-#### Web
-
-:::info
-All position config options are available in the Web UI.
-:::
-
-</TabItem>
-</Tabs>

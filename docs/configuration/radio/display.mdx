@@ -5,27 +5,26 @@ sidebar_label: Display
 description: Details on the configuration options for the display on your Meshtastic device.
 ---
 
-import Tabs from "@theme/Tabs";
-import TabItem from "@theme/TabItem";
 import { Icon } from "@iconify/react";
+import { CompatibilityIcons } from '@site/src/components/CompatibilityIcons';
 
 The display config options are: Screen On Duration, Auto Carousel Interval, Always Point North, GPS Format, Preferred Display Units, Flip Screen, OLED Definition, Display Mode, Heading Bold, Wake on Tap or Motion, Compass Orientation, and Use 12-Hour Clock. Display config uses an admin message sending a `Config.Display` protobuf.
 
 ## Display Config Values
 
-### Screen On Duration
+### Screen On Duration <CompatibilityIcons configKey="display_screen_on_secs" />
 
 How long the screen remains on after the user button is pressed or messages are received.
 
-### Auto Carousel Interval
+### Auto Carousel Interval <CompatibilityIcons configKey="display_auto_screen_carousel_secs" />
 
 Automatically toggles to the next page on the screen like a carousel, based on the specified interval.
 
-### Always Point North
+### Always Point North <CompatibilityIcons configKey="display_compass_north_top" />
 
 If this is set, the compass heading on the screen outside of the circle will always point north. This feature is off by default and the top of display represents your heading direction, the North indicator will move around the circle.
 
-### GPS Format
+### GPS Format <CompatibilityIcons configKey="display_gps_format" />
 
 The format used to display GPS coordinates on the device screen.
 
@@ -40,15 +39,15 @@ Acceptable values:
 | `OLC`  | Open Location Code (Plus Codes) |
 | `OSGR` | Ordnance Survey Grid Reference  |
 
-### Preferred Display Units
+### Preferred Display Units <CompatibilityIcons configKey="display_units" />
 
 Switch between `METRIC` (default) and `IMPERIAL` units
 
-### Flip Screen
+### Flip Screen <CompatibilityIcons configKey="display_flip_screen" />
 
 If enabled, the screen will be rotated 180 degrees, for cases that mount the screen upside down
 
-### OLED Definition
+### OLED Definition <CompatibilityIcons configKey="display_oled" />
 
 The type of OLED Controller is auto-detected by default, but can be defined with this setting if the auto-detection fails. For the SH1107, we assume a square display with 128x128 Pixels like the GME128128-1.
 
@@ -61,97 +60,27 @@ Acceptable values:
 | `OLED_SH1106`  |          Always use SH1106 driver           |
 | `OLED_SH1107`  | Always use SH1107 driver (Geometry 128x128) |
 
-### Display Mode
+### Display Mode <CompatibilityIcons configKey="display_displaymode" />
 
 The display mode can be set to `DEFAULT` (default), `TWOCOLOR`, `INVERTED` or `COLOR`. The `TWOCOLOR` mode is intended for OLED displays with the first line of output being a different color than the rest of the display. The `INVERTED` mode will invert that bicolor area, resulting in a white background headline on monochrome displays.
 
-### Heading Bold
+### Heading Bold <CompatibilityIcons configKey="display_heading_bold" />
 
 The heading can be hard to read when 'INVERTED' or 'TWOCOLOR' display mode is used. This setting will make the heading bold, so it is easier to read.
 
-### Wake on Tap or Motion
+### Wake on Tap or Motion <CompatibilityIcons configKey="display_wake_on_tap_or_motion" />
 
 This option enables the ability to wake the device screen when motion, such as a tap on the device, is detected via an attached accelerometer, or a capacitive touch button.
 
-### Compass Orientation
+### Compass Orientation <CompatibilityIcons configKey="display_compass_orientation" />
 
 Indicates how to rotate or invert the compass orientation on the display.
 
-### Use 12-Hour Clock
+### Use 12-Hour Clock <CompatibilityIcons configKey="display_use_12h_clock" />
 
 If false the device will display the time in 24-hour format on screen.  If true, the device will display the time in 12-hour format on screen.
 
-## Display Config Client Availability
-
-<Tabs
-  groupId="settings"
-  defaultValue="apple"
-  values={[
-    {
-      label: (
-        <>
-          <Icon icon="mdi:android" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Android
-        </>
-      ),
-      value: "android",
-    },
-    {
-      label: (
-        <>
-          <Icon icon="mdi:apple" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Apple
-        </>
-      ),
-      value: "apple",
-    },
-    {
-      label: (
-        <>
-          <Icon icon="mdi:terminal" height="1.5rem" style={{ marginRight: "0.25rem" }} /> CLI
-        </>
-      ),
-      value: "cli",
-    },
-    {
-      label: (
-        <>
-          <Icon icon="mdi:internet" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Web
-        </>
-      ),
-      value: "web",
-    },
-  ]}>
-<TabItem value="android">
-
-#### Android
-
-:::info
-
-Display Config is available for Android.
-
-1. Open the Meshtastic App
-2. Navigate to: **Vertical Ellipsis (3 dots top right) > Radio Configuration > Display**
-
-:::
-
-</TabItem>
-<TabItem value="apple">
-
-#### Apple
-
-:::info
-All display config options are available on iOS, iPadOS and macOS at Settings > Device Configuration > Display.
-:::
-
-</TabItem>
-<TabItem value="cli">
-
-#### CLI
-
-:::info
-
-All display config options are available in the python CLI. Example commands are below:
-
-:::
+## CLI Examples
 
 | Setting                           | Acceptable Values                                         | Default                       |
 | --------------------------------- | --------------------------------------------------------- | ----------------------------- |
@@ -190,15 +119,3 @@ meshtastic --set display.auto_screen_carousel_secs 120
 ```shell title="Specify GPS format on device screen"
 meshtastic --set display.gps_format UTM
 ```
-
-</TabItem>
-<TabItem value="web">
-
-#### Web
-
-:::info
-All display config options are available in the Web UI.
-:::
-
-</TabItem>
-</Tabs>
