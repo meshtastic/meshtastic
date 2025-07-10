@@ -5,9 +5,8 @@ sidebar_label: Audio
 description: Configuration details for the Audio Module of your Meshtastic device.
 ---
 
-import Tabs from "@theme/Tabs";
-import TabItem from "@theme/TabItem";
 import { Icon } from "@iconify/react";
+import { CompatibilityIcons } from '@site/src/components/CompatibilityIcons';
 
 The audio module config options are: Codec2 Enabled, PTT GPIO, Audio Bitrate/Codec Mode, I2S Word Select, I2S Data IN, I2S Data OUT and I2S Clock. Audio Module config uses an admin message sending a `ConfigModule.Audio` protobuf.
 
@@ -20,15 +19,15 @@ Required additional hardware:
 
 ## Audio Module Config Values
 
-### Codec2 Enabled
+### Codec2 Enabled <CompatibilityIcons configKey="audio_codec2_enabled" />
 
 Enables the audio module.
 
-### PTT GPIO
+### PTT GPIO <CompatibilityIcons configKey="audio_ptt_pin" />
 
 The GPIO to use for the Push-To-Talk button. The default is GPIO 39 on the ESP32.
 
-### Audio Bitrate/Codec Mode
+### Audio Bitrate/Codec Mode <CompatibilityIcons configKey="audio_bitrate" />
 
 The bitrate to use for audio. The default is `CODEC2_700B`. The available options are:
 
@@ -42,19 +41,19 @@ The bitrate to use for audio. The default is `CODEC2_700B`. The available option
 - CODEC2_700B
 - CODEC2_700
 
-### I2S Word Select
+### I2S Word Select <CompatibilityIcons configKey="audio_i2s_ws" />
 
 The GPIO to use for the WS signal in the I2S interface.
 
-### I2S Data IN
+### I2S Data IN <CompatibilityIcons configKey="audio_i2s_sd" />
 
 The GPIO to use for the SD signal in the I2S interface.
 
-### I2S Data OUT
+### I2S Data OUT <CompatibilityIcons configKey="audio_i2s_din" />
 
 The GPIO to use for the DIN signal in the I2S interface.
 
-### I2S Clock
+### I2S Clock <CompatibilityIcons configKey="audio_i2s_sck" />
 
 The GPIO to use for the SCK signal in the I2S interface.
 
@@ -62,77 +61,7 @@ The GPIO to use for the SCK signal in the I2S interface.
 These Pins comprise an I2S digital audio interface. Meshtastic uses it in monoaural mode. The software will use the logical 'LEFT' Stereo channel for the microphone and the logical 'RIGHT' Stereo channel for the speaker, so configure your breakouts accordingly. Audio is Half-Duplex, so we can re-use part of the pins for a bi-directional configuration. There's **no** default pin assignment, setting these is mandatory.
 :::
 
-## Audio Module Config Client Availability
-
-<Tabs
-  groupId="settings"
-  defaultValue="apple"
-  values={[
-    {
-      label: (
-        <>
-          <Icon icon="mdi:android" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Android
-        </>
-      ),
-      value: "android",
-    },
-    {
-      label: (
-        <>
-          <Icon icon="mdi:apple" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Apple
-        </>
-      ),
-      value: "apple",
-    },
-    {
-      label: (
-        <>
-          <Icon icon="mdi:terminal" height="1.5rem" style={{ marginRight: "0.25rem" }} /> CLI
-        </>
-      ),
-      value: "cli",
-    },
-    {
-      label: (
-        <>
-          <Icon icon="mdi:internet" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Web
-        </>
-      ),
-      value: "web",
-    },
-  ]}>
-<TabItem value="android">
-
-#### Android
-
-:::info
-
-Audio Config options are available for Android.
-
-1. Open the Meshtastic App
-2. Navigate to: **Vertical Ellipsis (3 dots top right) > Radio Configuration > Audio**
-
-:::
-
-</TabItem>
-<TabItem value="apple">
-
-#### Apple
-
-:::info
-Audio module config is not available on iOS, iPadOS and macOS.
-:::
-
-</TabItem>
-<TabItem value="cli">
-
-#### CLI
-
-:::info
-
-All audio module config options are available in the python CLI. Example commands are below:
-
-:::
+## CLI Examples
 
 |       Setting        |                                                        Acceptable Values                                                        |         Default          |
 | :------------------: | :-----------------------------------------------------------------------------------------------------------------------------: | :----------------------: |
@@ -175,18 +104,6 @@ meshtastic --set audio.ptt_pin 37
 meshtastic --set audio.bitrate CODEC2_DEFAULT
 meshtastic --set audio.bitrate CODEC2_1400
 ```
-
-</TabItem>
-<TabItem value="web">
-
-#### Web
-
-:::info
-All audio module config options are available in the Web UI.
-:::
-
-</TabItem>
-</Tabs>
 
 :::warning
 

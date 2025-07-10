@@ -5,9 +5,8 @@ sidebar_label: Serial
 description: This module is an interface to talk to and control your Meshtastic device over a serial port.
 ---
 
-import Tabs from "@theme/Tabs";
-import TabItem from "@theme/TabItem";
 import { Icon } from "@iconify/react";
+import { CompatibilityIcons } from '@site/src/components/CompatibilityIcons';
 import ReactPlayer from "react-player";
 
 The serial module config options are: Enabled, Echo, Mode, Receive GPIO, Transmit GPIO, Baud Rate, Timeout, and Override Console Serial Port. Serial Module config uses an admin message sending a `ConfigModule.Serial` protobuf.
@@ -27,15 +26,15 @@ This is an interface to talk to and control your Meshtastic device over a serial
 
 ## Serial Module Config Values
 
-### Enabled
+### Enabled <CompatibilityIcons configKey="serial_enabled" />
 
 Enables the serial module.
 
-### Echo
+### Echo <CompatibilityIcons configKey="serial_echo" />
 
 If set, any packets you send will be echoed back to your device.
 
-### Mode
+### Mode <CompatibilityIcons configKey="serial_mode" />
 
 Defaults to 'Simple'.
 
@@ -53,7 +52,7 @@ Available Values:
 `PROTO` mode will show no obvious output when passively observed by a serial monitor. When testing, consider using the [Python CLI](https://github.com/meshtastic/python) with the `--listen` option, to view the stream of protobufs.
 :::
 
-### Receive GPIO Pin
+### Receive GPIO Pin <CompatibilityIcons configKey="serial_rxd" />
 
 Set the GPIO pin to the RXD pin you have set up.
 
@@ -61,7 +60,7 @@ Set the GPIO pin to the RXD pin you have set up.
 With the RAK4631 on the RAK19007 and some versions of the RAK19003 baseboards, the default pins are TXD1 (16) and RXD1 (15). For this device, setting [GPS Mode](/docs/configuration/radio/position/#gps-mode) to `Not_Present` is necessary. For other versions of the RAK19003 baseboard, the pins TXD0 (20) and RXD0 (19) are accessible.
 :::
 
-### Transmit GPIO Pin
+### Transmit GPIO Pin <CompatibilityIcons configKey="serial_txd" />
 
 Set the GPIO pin to the TXD pin you have set up.
 
@@ -69,15 +68,15 @@ Set the GPIO pin to the TXD pin you have set up.
 Connect the TX pin to the other device's RX pin, and vice versa. Connect their grounds to each other (not necessary if they're both plugged into the same USB power source.)
 :::
 
-### Baud Rate
+### Baud Rate <CompatibilityIcons configKey="serial_baud" />
 
 The serial baud rate.
 
-### Timeout
+### Timeout <CompatibilityIcons configKey="serial_timeout" />
 
 The amount of time to wait before we consider your packet as "done".
 
-### Override Console Serial Port
+### Override Console Serial Port <CompatibilityIcons configKey="serial_override_console_serial_port" />
 
 If set to true, this will allow Serial Module to control (set baud rate) and use the primary USB serial bus for output. This is only useful for NMEA and CalTopo modes and may behave strangely or not work at all in other modes. Setting TX/RX pins in the Serial Module config will cause this setting to be ignored.
 
@@ -85,80 +84,10 @@ If set to true, this will allow Serial Module to control (set baud rate) and use
 Once module settings are changed, a **reset** is required for them to take effect.
 :::
 
-## Serial Module Config Client Availability
-
-<Tabs
-  groupId="settings"
-  defaultValue="apple"
-  values={[
-    {
-      label: (
-        <>
-          <Icon icon="mdi:android" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Android
-        </>
-      ),
-      value: "android",
-    },
-    {
-      label: (
-        <>
-          <Icon icon="mdi:apple" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Apple
-        </>
-      ),
-      value: "apple",
-    },
-    {
-      label: (
-        <>
-          <Icon icon="mdi:terminal" height="1.5rem" style={{ marginRight: "0.25rem" }} /> CLI
-        </>
-      ),
-      value: "cli",
-    },
-    {
-      label: (
-        <>
-          <Icon icon="mdi:internet" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Web
-        </>
-      ),
-      value: "web",
-    },
-  ]}>
-<TabItem value="android">
-
-#### Android
-
-:::info
-
-Serial Module Config options are available for Android.
-
-1. Open the Meshtastic App
-2. Navigate to: **Vertical Ellipsis (3 dots top right) > Radio Configuration > Serial**
-
-:::
-
-</TabItem>
-<TabItem value="apple">
-
-#### Apple
-
-:::info
-All serial module config options are available on iOS, iPadOS and macOS at Settings > Module Configuration > Serial.
-:::
-
-</TabItem>
-<TabItem value="cli">
-
-#### CLI
-
-:::info
-
-All serial module config options are available in the python CLI. Example commands are below:
-
-:::
+#### CLI Examples
 
 |               Setting               |                                                                                              Acceptable Values                                                                                               |               Default                |
-| :---------------------------------: | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :----------------------------------: |
+|:-----------------------------------:|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|:------------------------------------:|
 |           serial.enabled            |                                                                                               `true`, `false`                                                                                                |               `false`                |
 |             serial.echo             |                                                                                               `true`, `false`                                                                                                |               `false`                |
 |             serial.mode             |                                                                           `DEFAULT` `SIMPLE` `PROTO` `TEXTMSG`, `NMEA`, `CALTOPO`                                                                            |              `DEFAULT`               |
@@ -209,18 +138,6 @@ meshtastic --set serial.baud BAUD_576000
 ```shell title="Set Timeout to 15 milli seconds"
 meshtastic --set serial.timeout 15
 ```
-
-</TabItem>
-<TabItem value="web">
-
-#### Web
-
-:::info
-All serial module config options are available in the Web UI.
-:::
-
-</TabItem>
-</Tabs>
 
 :::warning
 GPIO access is fundamentally dangerous because invalid options can physically damage or destroy your hardware. Ensure that you fully understand the schematic for your particular device before trying this as we do not offer a warranty. Use at your own risk.

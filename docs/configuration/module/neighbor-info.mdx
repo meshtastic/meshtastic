@@ -5,9 +5,8 @@ sidebar_label: Neighbor Info
 description: This module allows you to send information about your immediate(0 hop) neighbors.
 ---
 
-import Tabs from "@theme/Tabs";
-import TabItem from "@theme/TabItem";
 import { Icon } from "@iconify/react";
+import { CompatibilityIcons } from '@site/src/components/CompatibilityIcons';
 
 The Neighbor Info Module is for sending information on each node's 0-hop neighbors to the mesh. Config options are: Enabled, Update Interval and Transmit Over LoRa.
 
@@ -21,86 +20,19 @@ In order to use it, make sure your devices use firmware version 2.2.0 or higher.
 
 ## Neighbor Info Module Config Values
 
-### Enabled
+### Enabled <CompatibilityIcons configKey="neighbor_info_enabled" />
 
 Enables the Neighbor Info Module.
 
-### Update Interval
+### Update Interval <CompatibilityIcons configKey="neighbor_info_update_interval" />
 
 How often the neighbor info is sent to the mesh. This cannot be set lower than 4 hours (14400 seconds). The default is 6 hours (21600 seconds).
 
-### Transmit Over LoRa
+### Transmit Over LoRa <CompatibilityIcons configKey="neighbor_info_transmit_over_lora" />
 
 Available from firmware 2.5.13 and higher. By default, neighbor info will only be sent to MQTT and a connected app. If enabled, the neighbor info will be sent on the primary channel over LoRa. Only available when the primary channel is not the public channel with default key and name.
 
-## Neighbor Info Module Client Availability
-
-<Tabs
-  groupId="settings"
-  defaultValue="apple"
-  values={[
-    {
-      label: (
-        <>
-          <Icon icon="mdi:android" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Android
-        </>
-      ),
-      value: "android",
-    },
-    {
-      label: (
-        <>
-          <Icon icon="mdi:apple" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Apple
-        </>
-      ),
-      value: "apple",
-    },
-    {
-      label: (
-        <>
-          <Icon icon="mdi:terminal" height="1.5rem" style={{ marginRight: "0.25rem" }} /> CLI
-        </>
-      ),
-      value: "cli",
-    },
-    {
-      label: (
-        <>
-          <Icon icon="mdi:internet" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Web
-        </>
-      ),
-      value: "web",
-    },
-  ]}>
-
-<TabItem value="android">
-
-#### Android
-
-:::info
-All Neighbor Info Module config options are available for Android in app version 2.2.0 and higher.
-
-1. Open the Meshtastic App
-2. Navigate to: **Vertical Ellipsis (3 dots top right) > Radio Configuration > Neighbor Info**
-   :::
-
-</TabItem>
-<TabItem value="apple">
-
-#### Apple
-
-Not yet implemented.
-
-</TabItem>
-<TabItem value="cli">
-
-:::info
-
-All Neighbor Info Module config options are available in the python CLI version 2.2.0 and higher.
-
-:::
-
-Example commands are below:
+## CLI Examples
 
 ```shell title="Enable/Disable the Neighbor Info Module"
 meshtastic --set neighbor_info.enabled true
@@ -118,15 +50,3 @@ meshtastic --set neighbor_info.transmit_over_lora true
 ```shell title="Get the Neighbor Info Module Configuration"
 meshtastic --get neighbor_info
 ```
-
-</TabItem>
-<TabItem value="web">
-
-:::info
-
-All Neighbor Info module config options are available in the Web UI.
-
-:::
-
-</TabItem>
-</Tabs>
