@@ -1,16 +1,16 @@
 ---
 id: openwrt
-title: Meshtastic on OpenWRT Routers
-sidebar_label: OpenWRT
+title: Meshtastic on OpenWrt Routers
+sidebar_label: OpenWrt
 sidebar_position: 9
-description: Set up and configure Meshtastic on OpenWRT routers using the meshtasticd binary.
+description: Set up and configure Meshtastic on OpenWrt routers using the meshtasticd binary.
 ---
 
 :::caution Warning
 Please submit any issues at [meshtastic/openwrt](https://github.com/meshtastic/openwrt), rather than the primary `firmware` project.
 :::
 
-This page outlines the setup of Meshtastic on OpenWRT routers, utilizing the [openwrt-repo](https://openwrt.meshtastic.org).
+This page outlines the setup of Meshtastic on OpenWrt routers, utilizing the [openwrt-repo](https://openwrt.meshtastic.org).
 
 ## Prerequisites and Hardware Compatibility
 
@@ -18,7 +18,7 @@ Before proceeding with the setup, ensure the device meets the following requirem
 
 ### Tested Devices
 
-- [OpenWRT One](https://one.openwrt.org)
+- [OpenWrt One](https://one.openwrt.org)
 - Raspberry Pi 3/4/5
 
 ### Hardware Compatibility
@@ -26,22 +26,22 @@ Before proceeding with the setup, ensure the device meets the following requirem
 - \>2MB free flash storage.
 - An unused USB port, or SPI interface.
 
-Meshtastic OpenWRT packages are built for **every** CPU architecture supported by OpenWRT.
+Meshtastic OpenWrt packages are built for **every** CPU architecture supported by OpenWrt.
 
-### Supported OpenWRT versions
+### Supported OpenWrt versions
 
-- `SNAPSHOT` (`master`)
+- `SNAPSHOT` (`main`)
 - `24.10` (stable)
 
 ## Installation
 
-### Installing Meshtasticd on OpenWRT
+### Installing Meshtasticd on OpenWrt
 
-#### OpenWRT 24.10 (stable)
+#### OpenWrt 24.10 (stable)
 
 Connect to the router via SSH (ex: `ssh root@192.168.1.1`)
 
-1. Add the [Meshtastic OpenWRT repository](https://openwrt.meshtastic.org/#opkg)
+1. Add the [Meshtastic OpenWrt repository](https://openwrt.meshtastic.org/#opkg)
 
 2. Install meshtasticd
 
@@ -53,13 +53,13 @@ opkg install meshtasticd-web
 
 `meshtasticd` can also be installed from the LuCI web interface, after the repo has been added.
 
-#### OpenWRT `SNAPSHOT`
+#### OpenWrt `SNAPSHOT`
 
-Ensure your router is running the latest `SNAPSHOT` version of OpenWRT, or install it from https://firmware-selector.openwrt.org/
+Ensure your router is running the latest `SNAPSHOT` version of OpenWrt, or install it from https://firmware-selector.openwrt.org/
 
 Connect to the router via SSH (ex: `ssh root@192.168.1.1`)
 
-1. Add the [Meshtastic OpenWRT repository](https://openwrt.meshtastic.org/#apk)
+1. Add the [Meshtastic OpenWrt repository](https://openwrt.meshtastic.org/#apk)
 
 2. Install meshtasticd
 
@@ -98,7 +98,7 @@ The following commands can be used to control the meshtastic service:
 
 ### View Logs
 
-meshtasticd logs are sent to OpenWRT syslog.
+meshtasticd logs are sent to OpenWrt syslog.
 
 ```shell
 logread
