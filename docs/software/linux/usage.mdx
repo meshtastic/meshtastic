@@ -28,13 +28,29 @@ First, [Pull the image](/docs/software/linux/installation/?os=docker)
 To run a container, type
 
 ```shell
-docker run -p 4403:4403 --restart unless-stopped --name meshtasticd meshtastic/meshtasticd:beta
+docker run -p 4403:4403 --restart unless-stopped --name meshtasticd meshtastic/meshtasticd:beta-debian
 ```
 
 or, to get an interactive shell on the docker created container:
 
 ```shell
-docker run -it -p 4403:4403 --restart unless-stopped --name meshtasticd meshtastic/meshtasticd:beta bash
+docker run -it -p 4403:4403 --restart unless-stopped --name meshtasticd meshtastic/meshtasticd:beta-debian bash
+```
+
+or with Docker compose:
+
+```plaintext
+services:
+  meshtasticd:
+    image: meshtastic/meshtasticd:beta-debian # can also use alpine base image (beta-alpine)
+    container_name: meshtasticd
+    restart: unless-stopped
+    ports:
+      - "4403:4403" # API port
+      - "443:443" # optional, for WebUI - ensure port is set to 443 in config file and you are using a debian base image
+    volumes:
+      - ./config.yaml:/etc/meshtasticd/config.yaml:ro # config file
+      - ./prefs:/var/lib/meshtasticd/prefs/ # optional - persists some prefs over a container reboot
 ```
 
 ### CH341 USB
@@ -66,6 +82,40 @@ additionally mounting a local configuration file:
 ```shell
 docker run -it -p 4403:4403 --restart unless-stopped --name meshtasticd --device=/dev/bus/usb/001/006 -v ./config.yaml:/etc/meshtasticd/config.yaml:ro meshtastic/meshtasticd:beta
 ```
+
+### SPI radio pass-through
+If you would like to use SPI to communicate with your radio (mainly for Raspberry Pi users), you need to pass the `/dev/spidev*` device into the container.
+
+To find the device, you can ls `/dev/spidev`. there will be a device like `/dev/spidev0.0` (example)
+
+Then, pass this device into the container:
+
+Compose:
+```plaintext
+    devices:
+      - "/dev/spidev<your_spi_id>:/dev/spidev<your_spi_id>"
+```
+
+Docker run:
+```plaintext
+--device=/dev/spidev<your_spi_id>:/dev/spidev<your_spi_id>
+```
+
+If you have issues, add the privileged flag:
+
+Compose:
+```plaintext
+    devices:
+      - "/dev/spidev<your_spi_id>:/dev/spidev<your_spi_id>"
+    privileged: true
+```
+
+Docker run:
+```plaintext
+--device=/dev/spidev<your_spi_id>:/dev/spidev<your_spi_id> --privileged
+```
+
+
 
 ### Executing the application interactively
 
