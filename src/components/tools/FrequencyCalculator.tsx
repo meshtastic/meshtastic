@@ -1,5 +1,5 @@
+import type {Types} from "@meshtastic/core";
 import * as Protobuf from "@meshtastic/protobufs";
-import {Types}  from "@meshtastic/core";
 import React, { useEffect, useState } from "react";
 
 interface Region {
