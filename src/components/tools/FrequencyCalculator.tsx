@@ -1,5 +1,6 @@
-import { Protobuf, type Types } from "@meshtastic/js";
-import { useEffect, useState } from "react";
+import type { Types } from "@meshtastic/core";
+import * as Protobuf from "@meshtastic/protobufs";
+import React, { useEffect, useState } from "react";
 
 interface Region {
   freqStart: number;
