@@ -5,41 +5,40 @@ sidebar_label: MQTT
 description: Learn to manage MQTT servers, encryption, and more for your Meshtastic device.
 ---
 
+import { Icon } from "@iconify/react";
+import { CompatibilityIcons } from '@site/src/components/CompatibilityIcons';
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
-import { Icon } from "@iconify/react";
 
 If your device is connected to Internet via wifi or ethernet, you can enable it to forward packets along to an MQTT server. This allows users on the local mesh to communicate with users on the internet. One or more channels must also be enabled as uplink and/or downlink for packets to be transmitted from and/or to your mesh (See [channels](/docs/configuration/radio/channels#downlink-enabled)).
 
 The MQTT module config options are: Enabled, Server Address, Username, Password, Encryption Enabled, JSON Enabled, TLS Enabled, Root Topic, Client Proxy Enabled, Map Reporting Enabled (with Position Precision and Publish Interval), and Okay to MQTT. MQTT Module config uses an admin message sending a `ConfigModule.MQTT` protobuf.
 
-## Settings
-
 ## MQTT Module Config Values
 
-### Enabled
+### Enabled <CompatibilityIcons configKey="mqtt_enabled" />
 
 Enables the MQTT module.
 
-### Server Address
+### Server Address <CompatibilityIcons configKey="mqtt_address" />
 
 The server to use for MQTT. If not set, the default public server will be used.
 
-### Username
+### Username <CompatibilityIcons configKey="mqtt_username" />
 
 MQTT Server username to use (most useful for a custom MQTT server). If using a custom server, this will be honored even if empty. If using the default public server, this will only be honored if set, otherwise the device will use the default username.
 
-### Password
+### Password <CompatibilityIcons configKey="mqtt_password" />
 
 MQTT password to use (most useful for a custom MQTT server). If using a custom server, this will be honored even if empty. If using the default server, this will only be honored if set, otherwise the device will use the default password.
 
-### Encryption Enabled
+### Encryption Enabled <CompatibilityIcons configKey="mqtt_encryption_enabled" />
 
 Whether to send encrypted or unencrypted packets to the MQTT server. Unencrypted packets may be useful for external systems that want to consume meshtastic packets.
 
 Note: All messages are sent to the MQTT broker unencrypted if this option is not enabled, even when your uplink channels have encryption keys set.
 
-### JSON Enabled
+### JSON Enabled <CompatibilityIcons configKey="mqtt_json_enabled" />
 
 :::note
 JSON is not supported on the nRF52 platform.
@@ -47,19 +46,19 @@ JSON is not supported on the nRF52 platform.
 
 Enable the sending / consumption of JSON packets on MQTT. These packets are not encrypted, but offer an easy way to integrate with systems that can read JSON.
 
-### TLS Enabled
+### TLS Enabled <CompatibilityIcons configKey="mqtt_tls_enabled" />
 
 If true, we attempt to establish a secure connection using TLS.
 
-### Root Topic
+### Root Topic <CompatibilityIcons configKey="mqtt_root" />
 
 The root topic to use for MQTT messages. This is useful if you want to use a single MQTT server for multiple meshtastic networks and separate them via ACLs.
 
-### Client Proxy Enabled
+### Client Proxy Enabled <CompatibilityIcons configKey="mqtt_proxy_to_client_enabled" />
 
 If true, let the device use the client's (e.g. your phone's) network connection to connect to the MQTT server. If false, it uses the device's network connection which you have to enable via the [network settings](/docs/configuration/radio/network).
 
-### Map Reporting Enabled
+### Map Reporting Enabled <CompatibilityIcons configKey="mqtt_map_reporting_enabled" />
 
 Available from firmware version 2.3.2 on.
 If true, your node will periodically send an unencrypted map report to the MQTT server to be displayed by online maps that support this packet. This report includes the following information:
@@ -72,90 +71,18 @@ If true, your node will periodically send an unencrypted map report to the MQTT 
 - Whether the node can be reached on the default channel with known key;
 - Number of local online nodes (heard in the last 2 hours, excluding those heard via MQTT).
 
-#### Map Report Position Precision
+### Map Report Position Precision <CompatibilityIcons configKey="mqtt_map_report_settings_position_precision" />
 
 The precision to use for the position in the map report. Defaults to a maximum deviation of around 1459m.
 
-#### Map Report Publish Interval
+### Map Report Publish Interval <CompatibilityIcons configKey="mqtt_map_report_settings_publish_interval_secs" />
 
 How often we should publish the map report to the MQTT server in seconds. Defaults to 3600 seconds (1 hour), which is also the minimum value.
 
-## MQTT Module Config Client Availability
-
-<Tabs
-  groupId="settings"
-  defaultValue="apple"
-  values={[
-    {
-      label: (
-        <>
-          <Icon icon="mdi:android" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Android
-        </>
-      ),
-      value: "android",
-    },
-    {
-      label: (
-        <>
-          <Icon icon="mdi:apple" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Apple
-        </>
-      ),
-      value: "apple",
-    },
-    {
-      label: (
-        <>
-          <Icon icon="mdi:terminal" height="1.5rem" style={{ marginRight: "0.25rem" }} /> CLI
-        </>
-      ),
-      value: "cli",
-    },
-    {
-      label: (
-        <>
-          <Icon icon="mdi:internet" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Web
-        </>
-      ),
-      value: "web",
-    },
-  ]}>
-<TabItem value="android">
-
-#### Android
-
-:::info
-
-MQTT Config options are available for Android.
-
-1. Open the Meshtastic App
-2. Navigate to: **Vertical Ellipsis (3 dots top right) > Radio Configuration > MQTT**
-
-:::
-
-</TabItem>
-<TabItem value="apple">
-
-#### Apple
-
-:::info
-
-All MQTT config options are available on iOS, iPadOS and macOS at Settings > Module Configuration > MQTT.
-
-:::
-
-</TabItem>
-<TabItem value="cli">
-
-#### CLI
-
-:::info
-
-The following configuration options are available in the Python CLI:
-
-:::
+## CLI Examples
 
 |           Setting            | Acceptable Values |        Default        |
-| :--------------------------: | :---------------: | :-------------------: |
+|:----------------------------:|:-----------------:|:---------------------:|
 |         mqtt.enabled         |  `true`, `false`  |        `false`        |
 |         mqtt.address         |     `string`      | `mqtt.meshtastic.org` |
 |        mqtt.username         |     `string`      |       `meshdev`       |
@@ -163,7 +90,7 @@ The following configuration options are available in the Python CLI:
 |   mqtt.encryption_enabled    |  `true`, `false`  |        `false`        |
 |      mqtt.json_enabled       |  `true`, `false`  |        `false`        |
 |       mqtt.tls_enabled       |  `true`, `false`  |        `false`        |
-|          mqtt.root           |     `string`      |                       |
+|          mqtt.root           |     `string`      |    `msh/[region]`     |
 | mqtt.proxy_to_client_enabled |  `true`, `false`  |        `false`        |
 |  mqtt.map_reporting_enabled  |  `true`, `false`  |        `false`        |
 
@@ -187,17 +114,6 @@ meshtastic --set mqtt.json_enabled true
 meshtastic --set mqtt.json_enabled false
 ```
 
-</TabItem>
-<TabItem value="web">
-
-#### Web
-
-:::info
-All MQTT module config options are available for the Web UI.
-:::
-
-</TabItem>
-</Tabs>
 
 ## Connect to the Default Public Server
 

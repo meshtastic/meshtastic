@@ -5,28 +5,27 @@ sidebar_label: Device
 description: Learn about and compare device roles such as Client, Repeater, and Router as well as other Device settings.
 ---
 
-import Tabs from "@theme/Tabs";
-import TabItem from "@theme/TabItem";
 import { Icon } from "@iconify/react";
+import { CompatibilityIcons } from '@site/src/components/CompatibilityIcons';
 
 The device config options are: Role, Rebroadcast Mode, GPIO for User Button, GPIO for PWM Buzzer, Node Info Broadcast Seconds, Double Tap as Button Press, Disable Triple Click, Timezone Definition, and LED Heartbeat Disabled. Device config uses an admin message sending a `Config.Device` protobuf.
 
 ## Device Config Values
 
-## Roles
+### Roles <CompatibilityIcons configKey="device_role" />
 
-| Device Role    | Description                                                                                                                                                      | Best Uses                                                                                                                                                   |
-| -------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| CLIENT         | App connected or stand alone messaging device. Rebroadcasts packets when no other node has done so.                                                              | General use for individuals needing to communicate over the Meshtastic network with support for client applications.                                        |
-| CLIENT_MUTE    | Device that does not forward packets from other devices.                                                                                                         | Situations where a device needs to participate in the network without assisting in packet routing, reducing network load.                                   |
-| CLIENT_HIDDEN  | Device that only broadcasts as needed for stealth or power savings.                                                                                              | Use in stealth/hidden deployments or to reduce airtime/power consumption while still participating in the network.                                          |
-| TRACKER        | Broadcasts GPS position packets as priority.                                                                                                                     | Tracking the location of individuals or assets, especially in scenarios where timely and efficient location updates are critical.                           |
-| LOST_AND_FOUND | Broadcasts location as message to default channel regularly for to assist with device recovery.                                                                  | Used for recovery efforts of a lost device.                                                                                                                 |
-| SENSOR         | Broadcasts telemetry packets as priority.                                                                                                                        | Deploying in scenarios where gathering environmental or other sensor data is crucial, with efficient power usage and frequent updates.                      |
-| TAK            | Optimized for ATAK system communication, reduces routine broadcasts.                                                                                             | Integration with ATAK systems (via the Meshtastic ATAK Plugin) for communication in tactical or coordinated operations.                                     |
-| TAK_TRACKER    | Enables automatic TAK PLI broadcasts and reduces routine broadcasts.                                                                                             | Standalone PLI integration with ATAK systems for communication in tactical or coordinated operations.                                                       |
-| REPEATER       | Infrastructure node for extending network coverage by always rebroadcasting packets once with minimal overhead. Not visible in Nodes list.                       | Best positioned in strategic locations to maximize the network's overall coverage. Device is not shown in topology.                                         |
-| ROUTER         | Infrastructure node for extending network coverage by always rebroadcasting packets once. Visible in Nodes list.                                                 | Best positioned in strategic locations to maximize the network's overall coverage. Device is shown in topology.                                             |
+| Device Role    | Description                                                                                                                                                       | Best Uses                                                                                                                                                   |
+|----------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| CLIENT         | App connected or stand alone messaging device. Rebroadcasts packets when no other node has done so.                                                               | General use for individuals needing to communicate over the Meshtastic network with support for client applications.                                        |
+| CLIENT_MUTE    | Device that does not forward packets from other devices.                                                                                                          | Situations where a device needs to participate in the network without assisting in packet routing, reducing network load.                                   |
+| CLIENT_HIDDEN  | Device that only broadcasts as needed for stealth or power savings.                                                                                               | Use in stealth/hidden deployments or to reduce airtime/power consumption while still participating in the network.                                          |
+| TRACKER        | Broadcasts GPS position packets as priority.                                                                                                                      | Tracking the location of individuals or assets, especially in scenarios where timely and efficient location updates are critical.                           |
+| LOST_AND_FOUND | Broadcasts location as message to default channel regularly for to assist with device recovery.                                                                   | Used for recovery efforts of a lost device.                                                                                                                 |
+| SENSOR         | Broadcasts telemetry packets as priority.                                                                                                                         | Deploying in scenarios where gathering environmental or other sensor data is crucial, with efficient power usage and frequent updates.                      |
+| TAK            | Optimized for ATAK system communication, reduces routine broadcasts.                                                                                              | Integration with ATAK systems (via the Meshtastic ATAK Plugin) for communication in tactical or coordinated operations.                                     |
+| TAK_TRACKER    | Enables automatic TAK PLI broadcasts and reduces routine broadcasts.                                                                                              | Standalone PLI integration with ATAK systems for communication in tactical or coordinated operations.                                                       |
+| REPEATER       | Infrastructure node for extending network coverage by always rebroadcasting packets once with minimal overhead. Not visible in Nodes list.                        | Best positioned in strategic locations to maximize the network's overall coverage. Device is not shown in topology.                                         |
+| ROUTER         | Infrastructure node for extending network coverage by always rebroadcasting packets once. Visible in Nodes list.                                                  | Best positioned in strategic locations to maximize the network's overall coverage. Device is shown in topology.                                             |
 | ROUTER_LATE    | Infrastructure node that always rebroadcasts packets once but only after all other modes, ensuring additional coverage for local clusters. Visible in Nodes list. | Ideal for covering dead spots or ensuring reliability for a cluster of nodes where placement doesn’t benefit the broader mesh. Device is shown in topology. |
 
 :::tip
@@ -35,7 +34,7 @@ Still not sure which role to use? Check out our blog post: [Choosing the Right D
 
 Looking for ROUTER_CLIENT? This role was deprecated in firmware 2.3.15. Learn more in the [2.3.15 release notes](https://github.com/meshtastic/firmware/releases/tag/v2.3.15.deb7c27)
 
-### Role Comparison
+#### Role Comparison
 
 This table shows the **default** values after selecting a preset. As always, individual settings can be adjusted after choosing a preset.
 
@@ -57,9 +56,9 @@ This table shows the **default** values after selecting a preset. As always, ind
 
 [^2]: The `ROUTER` role enables [Power Saving](/docs/configuration/radio/power/#power-saving) by default (ESP32 only). When needing to update a `ROUTER` via BLE, it's recommended you utilize an admin channel to temporarily change the role in order to update and then revert when done.
 
-## Notes about Power Saving + Role behavior
+### Notes about Power Saving + Role behavior
 
-### ESP32 Platform Only
+#### ESP32 Platform Only
 
 Every role except for the `TRACKER` and `SENSOR` roles are capable of traditional _sleep_ behavior using the `power.is_power_saving` setting. When a node goes to sleep, in general, the serial console, peripherals, GPS, and WiFi/Bluetooth radio are all shut down to conserve power. The CPU will enter a low power state (light sleep or deep sleep on the ESP32). The LoRA radio will be left on stand-by for receiving any packets which will _wake up_ the device to resume services and respond.
 
@@ -67,11 +66,11 @@ Timeout configurations of `display.screen_on_secs` (Screen timeout), `power.min_
 
 For the `ROUTER` role, the `power.is_power_saving` behavior of sleep is enabled automatically and cannot be turned off.
 
-### ESP32 and NRF52 Platforms
+#### ESP32 and NRF52 Platforms
 
 In the `TRACKER` and `SENSOR` roles, there are special sleep behaviors when combined with `power.is_power_saving`. For `TRACKER`, the device will go to sleep for `position.position_broadcast_secs` and upon waking will send a position packet when the GPS provides a valid location and repeat the cycle. For `SENSOR`, the device will go to sleep for `telemetry.environment_update_interval` and upon waking will gather environment data and send a telemetry packet and repeat the cycle. For both of these roles, the LoRA radio does not remain in standby mode to accept packets and wake up the device. Sleep remains constrained to their respective transmission intervals.
 
-## Rebroadcast Mode
+### Rebroadcast Mode <CompatibilityIcons configKey="device_rebroadcast_mode" />
 
 This setting defines the device's behavior for how messages are rebroadcasted.
 
@@ -84,108 +83,42 @@ This setting defines the device's behavior for how messages are rebroadcasted.
 |        `NONE`        |                                       NONE - Only permitted for SENSOR, TRACKER and TAK_TRACKER roles, this will inhibit all rebroadcasts, not unlike CLIENT_MUTE role.                                       |
 | `CORE_PORTNUMS_ONLY` | CORE_PORTNUMS_ONLY - Ignores packets from non-standard portnums such as: TAK, RangeTest, PaxCounter, etc. Only rebroadcasts packets with standard portnums: NodeInfo, Text, Position, Telemetry, and Routing. |
 
-## GPIO for User Button
+### GPIO for User Button <CompatibilityIcons configKey="device_button_gpio" />
 
 This is the GPIO pin number that will be used for the user button, if your device does not come with a predefined user button.
 
-## GPIO for PWM Buzzer
+### GPIO for PWM Buzzer <CompatibilityIcons configKey="device_buzzer_gpio" />
 
 This is the GPIO pin number that will be used for the PWM buzzer, if your device does not come with a predefined buzzer.
 
-## Node Info Broadcast Seconds
+
+### PWM Buzzer Mode <CompatibilityIcons configKey="device_buzzer_mode" />
+
+### Node Info Broadcast Seconds <CompatibilityIcons configKey="device_nodeinfo_broadcast_secs" />
 
 This is the number of seconds between NodeInfo message (containing i.a. long and short name) broadcasts from the device. The device will still respond ad-hoc to NodeInfo messages when a response is wanted. When the device hears any packet from a node it doesn't know yet, it will send its NodeInfo and ask for a response automatically.
 
-## Double Tap as Button Press
+### Double Tap as Button Press <CompatibilityIcons configKey="device_double_tap_as_button_press" />
 
 This option will enable a double tap, when a supported accelerometer is attached to the device, to be treated as a button press.
 
-## Disable Triple Click
+### Disable Triple Click <CompatibilityIcons configKey="device_disable_triple_click" />
 
 Disables the triple-press of user button to enable or disable GPS.
 
-## TZDEF (Timezone Definition)
+### TZDEF (Timezone Definition) <CompatibilityIcons configKey="device_tzdef" />
 
 The `tzdef` setting allows the local offset to be defined for the device. It uses the TZ Database format to display the correct local time on the device display and in its logs.
 
 To set the timezone, use the POSIX TZ Database string for the relevant region. Here is a list of [supported timezones](https://github.com/nayarsystems/posix_tz_db/blob/master/zones.csv). For example, if your region is `America/Los_Angeles`, you would input `PST8PDT,M3.2.0,M11.1.0` as the timezone.
 
-## LED Heartbeat Disabled
+### LED Heartbeat Disabled <CompatibilityIcons configKey="device_led_heartbeat_disabled" />
 
 If true, disable the default blinking LED (LED_PIN) behavior on the device.
 
-## Device Config Client Availability
 
-<Tabs
-  groupId="settings"
-  defaultValue="apple"
-  values={[
-    {
-      label: (
-        <>
-          <Icon icon="mdi:android" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Android
-        </>
-      ),
-      value: "android",
-    },
-    {
-      label: (
-        <>
-          <Icon icon="mdi:apple" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Apple
-        </>
-      ),
-      value: "apple",
-    },
-    {
-      label: (
-        <>
-          <Icon icon="mdi:terminal" height="1.5rem" style={{ marginRight: "0.25rem" }} /> CLI
-        </>
-      ),
-      value: "cli",
-    },
-    {
-      label: (
-        <>
-          <Icon icon="mdi:internet" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Web
-        </>
-      ),
-      value: "web",
-    },
-  ]}>
+## CLI Examples
 
-<TabItem value="android">
-
-#### Android
-
-:::info
-
-Device Config is available for Android.
-
-1. Open the Meshtastic App
-2. Navigate to: **Vertical Ellipsis (3 dots top right) > Radio Configuration > Device**
-
-:::
-
-</TabItem>
-<TabItem value="apple">
-
-#### Apple
-
-:::info
-All device config options other than NTP Server are available on iOS, iPadOS and macOS at Settings > Device Configuration > Device.
-:::
-
-</TabItem>
-<TabItem value="cli">
-
-#### CLI
-
-:::info
-
-All device config options are available in the python CLI. Example commands are below:
-
-:::
 
 | Setting                           | Acceptable Values                                                  | Default           |
 | --------------------------------- | ------------------------------------------------------------------ | ----------------- |
@@ -214,15 +147,3 @@ meshtastic --set device.role CLIENT
 ```shell title="Set tzdef"
 meshtastic --set device.tzdef UTC0
 ```
-
-</TabItem>
-<TabItem value="web">
-
-#### Web
-
-:::info
-All device config options are available in the Web UI.
-:::
-
-</TabItem>
-</Tabs>

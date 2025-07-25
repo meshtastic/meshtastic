@@ -5,9 +5,8 @@ sidebar_label: Telemetry
 description: This module allows sharing of Device, Environment, Health, and Air Quality metrics from your Meshtastic device.
 ---
 
-import Tabs from "@theme/Tabs";
-import TabItem from "@theme/TabItem";
 import { Icon } from "@iconify/react";
+import { CompatibilityIcons } from '@site/src/components/CompatibilityIcons';
 import ReactPlayer from "react-player";
 
 The Telemetry Module provides four types of data over the mesh: Device metrics (Battery Level, Voltage, Channel Utilization and Airtime) from your Meshtastic device, Environment Metrics, Air Quality Metrics, and Health metrics (Heart rate, Oxygen Saturation and body temperature).
@@ -61,17 +60,17 @@ Supported sensors connected to the I2C bus of the device will be automatically d
 
 ## Module Config Values
 
-### Environment Telemetry Enabled
+### Environment Telemetry Enabled <CompatibilityIcons configKey="telemetry_environment_measurement_enabled" />
 
 Enable the Environment Telemetry (Sensors).
 
-### Environment Metrics Update Interval
+### Environment Metrics Update Interval <CompatibilityIcons configKey="telemetry_environment_update_interval" />
 
 How often we should send Environment(Sensor) Metrics over the mesh.
 
 Default is `1800` seconds (30 minutes).
 
-### Device Metrics Update Interval
+### Device Metrics Update Interval <CompatibilityIcons configKey="telemetry_device_update_interval" />
 
 How often we should send Device Metrics over the mesh.
 
@@ -79,126 +78,53 @@ Default is `1800` seconds (30 minutes).
 
 Device Metrics to a connected client app will always be sent once per minute, regardless of this setting.
 
-### Environment Screen Enabled
+### Environment Screen Enabled <CompatibilityIcons configKey="telemetry_environment_screen_enabled" />
 
 Show the environment telemetry data on the device display.
 
 Default is `false`.
 
-### Display Fahrenheit
+### Display Fahrenheit <CompatibilityIcons configKey="telemetry_environment_display_fahrenheit" />
 
 The sensor is always read in Celsius, but the user can opt to display in Fahrenheit (on the device display only) using this setting.
 
 Default is `false`.
 
-### Air Quality Enabled
+### Air Quality Enabled <CompatibilityIcons configKey="telemetry_air_quality_enabled" />
 
 This option is used to enable/disable the sending of air quality metrics from an attached supported sensor over the mesh network.
 
 Default is `false`.
 
-### Air Quality Interval
+### Air Quality Interval <CompatibilityIcons configKey="telemetry_air_quality_interval" />
 
 This option is used to configure the interval (in seconds) that should be used to send air quality metrics from an attached supported sensor over the mesh network.
 
 Default is `1800` seconds (30 minutes).
 
-### Power Metrics Enabled
+### Power Metrics Enabled <CompatibilityIcons configKey="telemetry_power_measurement_enabled" />
 
 This option is used to enable/disable the sending of power telemetry as gathered by an attached supported voltage/current sensor. Note that this does not need to be enabled to monitor the voltage of the battery.
 
 Default is `false`.
 
-### Power Metrics Interval
+### Power Metrics Interval <CompatibilityIcons configKey="telemetry_power_update_interval" />
 
 This option is used to configure the interval (in seconds) that should be used to send power metrics from an attached supported sensor over the mesh network.
 
-### Health Telemetry Enabled
+### Health Telemetry Enabled <CompatibilityIcons configKey="telemetry_health_measurement_enabled" />
 
 This option is used to enable/disable the sending of health data from an attached supported sensor over the mesh network.
 
 Default is `false`.
 
-### Health Telemetry Interval
+### Health Telemetry Interval <CompatibilityIcons configKey="telemetry_health_update_interval" />
 
 This option is used to configure the interval (in seconds) that should be used to send health data from an attached supported sensor over the mesh network.
 
 Default is `1800` seconds (30 minutes).
 
-## Telemetry Config Client Availability
-
-<Tabs
-  groupId="settings"
-  defaultValue="apple"
-  values={[
-    {
-      label: (
-        <>
-          <Icon icon="mdi:android" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Android
-        </>
-      ),
-      value: "android",
-    },
-    {
-      label: (
-        <>
-          <Icon icon="mdi:apple" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Apple
-        </>
-      ),
-      value: "apple",
-    },
-    {
-      label: (
-        <>
-          <Icon icon="mdi:terminal" height="1.5rem" style={{ marginRight: "0.25rem" }} /> CLI
-        </>
-      ),
-      value: "cli",
-    },
-    {
-      label: (
-        <>
-          <Icon icon="mdi:internet" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Web
-        </>
-      ),
-      value: "web",
-    },
-  ]}>
-<TabItem value="android">
-
-#### Android
-
-:::info
-
-Telemetry Config options are available for Android.
-
-1. Open the Meshtastic App
-2. Navigate to: **Vertical Ellipsis (3 dots top right) > Radio Configuration > Telemetry**
-
-:::
-
-</TabItem>
-<TabItem value="apple">
-
-#### Apple
-
-:::info
-All telemetry module config options are available on iOS, iPadOS and macOS at Settings > Module Configuration > Telemetry (Sensors).
-
-:::
-
-</TabItem>
-<TabItem value="cli">
-
-#### CLI
-
-:::info
-
-All telemetry module config options are available in the python CLI. Example commands are below:
-
-:::
-
-## Settings
+## CLI Examples
 
 |                  Setting                  |  Acceptable Values  |                  Default                   |
 | :---------------------------------------: | :-----------------: | :----------------------------------------: |
@@ -248,21 +174,7 @@ meshtastic --set telemetry.environment_display_fahrenheit true
 meshtastic --set telemetry.environment_display_fahrenheit false
 ```
 
-</TabItem>
-<TabItem value="web">
-
-#### Web
-
-:::info
-
-All telemetry module config options are available in the Web UI.
-
-:::
-
-</TabItem>
-</Tabs>
-
-## Examples
+## Usage Examples
 
 ### RAK 4631 with BME680 Environment Sensor
 
