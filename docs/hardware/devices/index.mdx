@@ -185,6 +185,32 @@ Versatile ESP32-S3-based boards E-Ink development boards.
 | --------------------------------------------------------------- | :------- | :----- | :--- | :-: | :------: |
 | [Mesh Node T114](./heltec-automation/mesh-node/?mesh_node_t114) | nRF52840 | SX1262 | NO   | 5.0 | OPTIONAL |
 
+## Seeed Studio
+
+### [SenseCAP](./seeed-studio/sensecap/)
+
+The SenseCAP product line offers a comprehensive range of solutions for both hobbyists and industrial users, featuring the T1000-E card tracker, an IP65-rated, ready-to-go Meshtastic handheld device, the Indicator with a 4-inch touchscreen driven by ESP32-S3 and RP2040 Dual-MCU, and the Solar Node, a solar-powered device designed for long-term outdoor deployment. These devices are designed to be user-friendly, with pre-flashed Meshtastic firmware for easy setup and operation.
+
+| Name                                                          | MCU           | Radio  | WiFi         | BT  | GPS      |
+| ------------------------------------------------------------- | ------------- | ------ | ------------ | --- | -------- |
+| [Card Tracker T1000-E](./seeed-studio/sensecap/card-tracker/) | nRF52840      | LR1110 | NO           | 5.1 | YES      |
+| [SenseCAP Indicator](./seeed-studio/sensecap/indicator/)      | ESP32, RP2040 | SX1262 | 2.4GHz b/g/n | 5.0 | OPTIONAL |
+| [SenseCAP Solar Node](./seeed-studio/sensecap/solar-node/)    | nRF52840      | SX1262 | NO           | 5.0 | OPTIONAL |
+
+### [Wio Series](./seeed-studio/wio-series/)
+
+A lineup of development boards and modules for hobbyists and prototyping, with a variety of MCU and sensor options. Most models are intended for integration into custom projects, while the Tracker L1 has a "Pro" variant that is available as a ready-to-go handheld device with a pre-installed case and battery.
+
+| Name                                                                                         | MCU         | Radio      |     WiFi     | BT  |   GPS    |
+| :------------------------------------------------------------------------------------------- | :---------- | :--------- | :----------: | :-: | :------: |
+| [Wio Tracker L1](./seeed-studio/wio-series/tracker-l1)                                       | nRF52840    | SX1262     |      NO      | 5.0 |   YES    |
+| [XIAO ESP32-S3 & Wio-SX1262 Kit](./seeed-studio/wio-series/wio-sx1262s/?wio-sx1262=esp32-s3) | ESP32-S3    | Wio-SX1262 | 2.4GHz b/g/n | 5.0 | OPTIONAL |
+| [XIAO nRF52840 & Wio-SX1262 Kit](./seeed-studio/wio-series/wio-sx1262s/?wio-sx1262=nrf52840) | nRF52840    | Wio-SX1262 |      NO      | 5.0 | OPTIONAL |
+| [Seeed Wio-WM1110 Dev Kit](./seeed-studio/wio-series/seeed-wm1110/?wm1110=wio-sdk-wm1110)    | nRF52840    | LR1110     |     YES      | 5.3 |   YES    |
+| [Seeed Wio Tracker 1110](./seeed-studio/wio-series/seeed-wm1110/?wm1110=wio-tracker-wm1110)  | nRF52840    | LR1110     |     YES      | 5.3 |   YES    |
+| [Wio-E5 mini Dev Board](./seeed-studio/wio-series/seeed-wio-e5/?e5=wio-e5-mini)              | STM32WLE5JC | SX126X     |      NO      | NO  |    NO    |
+| [Wio-E5 Dev Kit](./seeed-studio/wio-series/seeed-wio-e5/?e5=wio-e5-dev)                      | STM32WLE5JC | SX126X     |      NO      | NO  |    NO    |
+
 ## [B&Q Consulting](./b-and-q-consulting/)
 
 ### [Nano Series](./b-and-q-consulting/nano/)
@@ -220,35 +246,6 @@ High power LoRa transceiver designed for Meshtastic licensed ham operation.
 | Name                                                       | MCU      | Radio  |     WiFi     | BT  | GPS |
 | :--------------------------------------------------------- | :------- | :----- | :----------: | :-: | :-: |
 | [CrowPanel 2.4/2.8/3.5/4.3/5.0/7.0"](./elecrow/crowpanel/) | ESP32-S3 | SX1262 | 2.4GHz b/g/n | 5.0 | NO  |
-
-## Seeed Studio
-
-### SenseCap
-
-The SenseCAP product line offers a comprehensive range of solutions for both hobbyists and industrial users, featuring the T1000-E card tracker, an IP65-rated, ready-to-go Meshtastic device, and the Indicator with a 4-inch touchscreen driven by ESP32-S3 and RP2040 Dual-MCU.
-
-| Name                                                          | MCU           | Radio  | WiFi         | BT  | GPS      |
-| ------------------------------------------------------------- | ------------- | ------ | ------------ | --- | -------- |
-| [Card Tracker T1000-E](./seeed-studio/sensecap/card-tracker/) | nRF52840      | LR1110 | NO           | 5.1 | YES      |
-| [SenseCAP Indicator](./seeed-studio/sensecap/indicator/)      | ESP32, RP2040 | SX1262 | 2.4GHz b/g/n | 5.0 | OPTIONAL |
-
-### [XIAO & Wio-SX1262 Series](./seeed-studio/wio-sx1262)
-
-The Seeed XIAO + SX1262 development kit series offers compact devices with multiple MCU options, and plenty of GPIOs to attach sensors or other hardware.
-
-| Name                                                                            | MCU           | Radio      |     WiFi     | BT  |   GPS    |
-| :------------------------------------------------------------------------------ | :------------ | :--------- | :----------: | :-: | :------: |
-| [XIAO ESP32-S3 & Wio-SX1262 Kit](./seeed-studio/wio-sx1262?wio-sx1262=esp32-s3) | XIAO ESP32-S3 | Wio-SX1262 | 2.4GHz b/g/n | 5.0 | OPTIONAL |
-| [XIAO nRF52840 & Wio-SX1262 Kit](./seeed-studio/wio-sx1262?wio-sx1262=nrf52840) | XIAO nRF52840 | Wio-SX1262 |      NO      | 5.0 | OPTIONAL |
-
-### [Seeed Wio-WM1110](./seeed-studio/wm1110)
-
-nRF52840-based development boards with GPS, and multiple ports to attach sensors.
-
-| Name                                                                      | MCU      | Radio  | WiFi | BT  | GPS |
-| :------------------------------------------------------------------------ | :------- | :----- | :--: | :-: | :-: |
-| [Seeed Wio-WM1110 Dev Kit](./seeed-studio/wm1110?wm1110=wio-sdk-wm1110)   | nRF52840 | LR1110 | YES  | 5.3 | YES |
-| [Seeed Wio Tracker 1110](./seeed-studio/wm1110?wm1110=wio-tracker-wm1110) | nRF52840 | LR1110 | YES  | 5.3 | YES |
 
 ## [Raspberry Pi](./raspberrypi/)
 
