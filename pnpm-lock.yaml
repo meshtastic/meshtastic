@@ -49,9 +49,12 @@ importers:
       '@mdx-js/react':
         specifier: ^3.1.0
         version: 3.1.0(@types/react@18.3.18)(react@18.3.1)
-      '@meshtastic/js':
-        specifier: 2.3.7-5
-        version: 2.3.7-5
+      '@meshtastic/core':
+        specifier: jsr:@meshtastic/core@^2.6.5
+        version: '@jsr/meshtastic__core@2.6.5'
+      '@meshtastic/protobufs':
+        specifier: jsr:@meshtastic/protobufs@^2.7.0
+        version: '@jsr/meshtastic__protobufs@2.7.0'
       autoprefixer:
         specifier: ^10.4.21
         version: 10.4.21(postcss@8.5.3)
@@ -104,9 +107,6 @@ importers:
       '@biomejs/biome':
         specifier: ^1.9.4
         version: 1.9.4
-      '@buf/meshtastic_protobufs.bufbuild_es':
-        specifier: 2.0.0-20240906232734-3da561588c55.2
-        version: 2.0.0-20240906232734-3da561588c55.2(@bufbuild/protobuf@2.0.0)
       '@docusaurus/module-type-aliases':
         specifier: 3.7.0
         version: 3.7.0(acorn@8.14.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -857,13 +857,8 @@ packages:
   '@braintree/sanitize-url@7.1.1':
     resolution: {integrity: sha512-i1L7noDNxtFyL5DmZafWy1wRVhGehQmzZaz1HiN5e7iylJMSZR7ekOV7NsIqa5qBldlLrsKv4HbgFUVlQrz8Mw==}
 
-  '@buf/meshtastic_protobufs.bufbuild_es@2.0.0-20240906232734-3da561588c55.2':
-    resolution: {tarball: https://buf.build/gen/npm/v1/@buf/meshtastic_protobufs.bufbuild_es/-/meshtastic_protobufs.bufbuild_es-2.0.0-20240906232734-3da561588c55.2.tgz}
-    peerDependencies:
-      '@bufbuild/protobuf': ^2.0.0
-
-  '@bufbuild/protobuf@2.0.0':
-    resolution: {integrity: sha512-sw2JhwJyvyL0zlhG61aDzOVryEfJg2PDZFSV7i7IdC7nAE41WuXCru3QWLGiP87At0BMzKOoKO/FqEGoKygGZQ==}
+  '@bufbuild/protobuf@2.6.1':
+    resolution: {integrity: sha512-DaG6XlyKpz08bmHY5SGX2gfIllaqtDJ/KwVoxsmP22COOLYwDBe7yD3DZGwXem/Xq7QOc9cuR7R3MpAv5CFfDw==}
 
   '@chevrotain/cst-dts-gen@11.0.3':
     resolution: {integrity: sha512-BvIKpRLeS/8UbfxXxgC33xOumsacaeCKAjAeLyOn7Pcp95HiRbrpl14S+9vaZLolnbssPIUuiUd8IvgkRyt6NQ==}
@@ -1399,6 +1394,12 @@ packages:
   '@jridgewell/trace-mapping@0.3.25':
     resolution: {integrity: sha512-vNk6aEwybGtawWmy/PzwnGDOjCkLWSD2wqvjGGAgOAwCGWySYXfYoxt00IJkTF+8Lb57DwOb3Aa0o9CApepiYQ==}
 
+  '@jsr/meshtastic__core@2.6.5':
+    resolution: {integrity: sha512-CFVdhdPRc2styk+A7XVk18ayhXArZ7Av8NLnltSl5UzthKoY2KXSqYsXOPpaloSg1aemtvlRGXilW4SQ3C4jjg==, tarball: https://npm.jsr.io/~/11/@jsr/meshtastic__core/2.6.5.tgz}
+
+  '@jsr/meshtastic__protobufs@2.7.0':
+    resolution: {integrity: sha512-ndZhUyB/ADSyjJI+iSeSOoIKqNGZ2+ERVjfY0qnh4jgF740tFTwefC5mzZhOqDLbreGFYS79+429NtH5Ujdzdg==, tarball: https://npm.jsr.io/~/11/@jsr/meshtastic__protobufs/2.7.0.tgz}
+
   '@leichtgewicht/ip-codec@2.0.5':
     resolution: {integrity: sha512-Vo+PSpZG2/fmgmiNzYK9qWRh8h/CHrwD0mo1h1DzL4yzHNSfWYujGTYsWGreD000gcgmZ7K4Ys6Tx9TxtsKdDw==}
 
@@ -1419,9 +1420,6 @@ packages:
 
   '@mermaid-js/parser@0.3.0':
     resolution: {integrity: sha512-HsvL6zgE5sUPGgkIDlmAWR1HTNHz2Iy11BAWPTa4Jjabkpguy4Ze2gzfLrg6pdRuBvFwgUYyxiaNqZwrEEXepA==}
-
-  '@meshtastic/js@2.3.7-5':
-    resolution: {integrity: sha512-77wYoCl83PgRLkvWE8ko0YFm5LbolrfFPqoBkwLd2AFgZOHGsHTlUwA7cj82yhZM3f4mf7yTFxl+8CBawEAXRA==}
 
   '@nodelib/fs.scandir@2.1.5':
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}
@@ -7072,11 +7070,7 @@ snapshots:
 
   '@braintree/sanitize-url@7.1.1': {}
 
-  '@buf/meshtastic_protobufs.bufbuild_es@2.0.0-20240906232734-3da561588c55.2(@bufbuild/protobuf@2.0.0)':
-    dependencies:
-      '@bufbuild/protobuf': 2.0.0
-
-  '@bufbuild/protobuf@2.0.0': {}
+  '@bufbuild/protobuf@2.6.1': {}
 
   '@chevrotain/cst-dts-gen@11.0.3':
     dependencies:
@@ -8265,6 +8259,20 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.0
 
+  '@jsr/meshtastic__core@2.6.5':
+    dependencies:
+      '@bufbuild/protobuf': 2.6.1
+      '@jsr/meshtastic__protobufs': 2.7.0
+      crc: 4.3.2
+      ste-simple-events: 3.0.11
+      tslog: 4.9.3
+    transitivePeerDependencies:
+      - buffer
+
+  '@jsr/meshtastic__protobufs@2.7.0':
+    dependencies:
+      '@bufbuild/protobuf': 2.6.1
+
   '@leichtgewicht/ip-codec@2.0.5': {}
 
   '@lit-labs/ssr-dom-shim@1.3.0': {}
@@ -8312,14 +8320,6 @@ snapshots:
   '@mermaid-js/parser@0.3.0':
     dependencies:
       langium: 3.0.0
-
-  '@meshtastic/js@2.3.7-5':
-    dependencies:
-      crc: 4.3.2
-      ste-simple-events: 3.0.11
-      tslog: 4.9.3
-    transitivePeerDependencies:
-      - buffer
 
   '@nodelib/fs.scandir@2.1.5':
     dependencies:

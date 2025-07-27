@@ -28,7 +28,6 @@
     "@heroicons/react": "^2.2.0",
     "@iconify/react": "^5.2.0",
     "@mdx-js/react": "^3.1.0",
-    "@meshtastic/js": "2.3.7-5",
     "autoprefixer": "^10.4.21",
     "base64-js": "^1.5.1",
     "clsx": "^2.1.1",
@@ -44,11 +43,12 @@
     "react-player": "^2.16.0",
     "remark-deflist": "^1.0.0",
     "swr": "^2.3.3",
-    "tailwindcss": "^3.4.17"
+    "tailwindcss": "^3.4.17",
+    "@meshtastic/protobufs": "jsr:@meshtastic/protobufs@^2.7.0",
+    "@meshtastic/core": "jsr:@meshtastic/core@^2.6.5"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
-    "@buf/meshtastic_protobufs.bufbuild_es": "2.0.0-20240906232734-3da561588c55.2",
     "@docusaurus/module-type-aliases": "3.7.0",
     "@tailwindcss/typography": "^0.5.16",
     "@tsconfig/docusaurus": "^2.0.3",
@@ -63,6 +63,11 @@
       "path-to-regexp": "^3.3.0",
       "cookie": "^0.7.0",
       "prismjs": "^1.30.0"
-    }
+    },
+    "ignoredBuiltDependencies": [
+      "@biomejs/biome",
+      "core-js",
+      "core-js-pure"
+    ]
   }
 }
