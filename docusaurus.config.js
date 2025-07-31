@@ -83,7 +83,7 @@ const config = {
       appId: "IG2GQB8L3V",
       apiKey: "2e4348812173ec7ea6f7879c7032bb21",
       indexName: "meshtastic",
-      contextualSearch: false,
+      contextualSearch: true,
       searchPagePath: "search",
     },
     colorMode: {
@@ -117,6 +117,16 @@ const config = {
         },
       };
     },
+  ],
+  scripts: [
+    ...(process.env.COOKIEYES_CLIENT_ID
+      ? [
+          {
+            src: `https://cdn-cookieyes.com/client_data/${process.env.COOKIEYES_CLIENT_ID}/script.js`,
+            async: true,
+          },
+        ]
+      : []),
   ],
   presets: [
     [
