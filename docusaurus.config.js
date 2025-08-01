@@ -118,6 +118,16 @@ const config = {
       };
     },
   ],
+  scripts: [
+    ...(process.env.COOKIEYES_CLIENT_ID
+      ? [
+          {
+            src: `https://cdn-cookieyes.com/client_data/${process.env.COOKIEYES_CLIENT_ID}/script.js`,
+            async: true,
+          },
+        ]
+      : []),
+  ],
   presets: [
     [
       "@docusaurus/preset-classic",
