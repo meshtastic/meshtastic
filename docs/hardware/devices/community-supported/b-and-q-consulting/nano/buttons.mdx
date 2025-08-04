@@ -12,25 +12,25 @@ import TabItem from "@theme/TabItem";
 
 <Tabs
 groupId="nano-series"
-defaultValue="g2"
+defaultValue="g1"
 values={[
-{label: 'Nano G2 Ultra', value:'g2'},
+{label: 'Nano G1 Explorer', value: 'g1-e'},
+{label: 'Nano G1', value: 'g1'}
 ]}>
 
-<TabItem value="g2">
+<TabItem value="g1-e">
 
-### Nano G2 Ultra
+### Nano G1 Explorer
 
 #### Buttons
 
 - **User/Program Button:**
   - **Single press:** Changes the information page displayed on the device's screen.
   - **Double press:** Sends an adhoc ping of the device's position to the network.
-  - **Long press:** Will signal the device to shutdown after 5 seconds (_soft off_).
 - **Message Read Button:**
   - **Single press:** Clears the New Message LED.
 
-#### Switches
+### Switches
 
 - **Power:**
   - **Toggle Up:** Turns on the device.
@@ -43,5 +43,7 @@ values={[
   - **Toggle Down:** Selects LED for Enhanced Message Notification Circuit.
 
 </TabItem>
+<TabItem value="g1">
 
+</TabItem>
 </Tabs>
