@@ -8,12 +8,13 @@ description: Instructions for uploading firmware through SWDIO by using a Raspbe
 
 Most Meshtastic devices can be flashed simply using USB.
 However, some (eg Seeed WM1110 Dev Kit) require the use of an external device that can connect via "SWDIO".
-There are dedicated devices such as the [RAKDAP1](https://store.rakwireless.com/products/daplink-tool)
+There are dedicated devices such as the [RAKDAP1](https://msh.to/rakdap1/) that can do this work, and there are also other devices such as the [Segger J-Link](https://msh.to/segger-jlink) or [ST-Link](https://msh.to/st-link) that can be used.
 that can do this work. However, for many people a Raspberry Pi is more convenient.
 
 This article provides instructions on how use a Raspberry Pi as a SWDIO Flash Tool.
 
 ## Set up Wiring
+
 The first step is to connect two wires between your Raspberry Pi and the SWDIO ports on your NRF52-based device.
 
 Connect GPIO pin 11 on your Raspberry Pi to the CLK pin on the Meshtastic Device.
@@ -41,6 +42,7 @@ $ sudo make install
 ```
 
 ## Check connection
+
 Let's try connecting to the NRF52-based device with SWDIO before we do anything with firmware.
 All the configuration you need is in the openocd repository.
 
@@ -71,16 +73,16 @@ Info : Listening on port 3333 for gdb connections
 Info : accepting 'telnet' connection on tcp/4444
 ```
 
- 
 If you see “Error connecting DP: cannot read IDR”, then you've probably connected the wires to the wrong place.
- 
+
 ## Obtaining Firmware
+
 Check the instructions for your [hardware](/docs/hardware/devices) to find the correct firmware for your device.
 For most devices following this guide, a .hex file is required.
 Then, copy the firmware file to your Raspberry Pi.
- 
 
 ## Flashing Firmware
+
 Once you have openocd running, you can connect to your Meshtastic device using telnet.
 Flashing is as simple as running a few commands inside the telnet session:
 
@@ -102,4 +104,5 @@ Open On-Chip Debugger
 Unplug the power and plug it back in after flashing.
 
 ## Connecting
+
 Congratulations, you should now be able to connect to your device through Bluetooth in the Meshtastic app.
