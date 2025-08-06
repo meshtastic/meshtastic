@@ -11,60 +11,10 @@ import TabItem from "@theme/TabItem";
 <Tabs
 groupId="wio-sx1262"
 queryString="wio-sx1262"
-defaultValue="esp32-s3"
+defaultValue="nrf52840"
 values={[
-  { label: "XIAO ESP32-S3", value: "esp32-s3" },
   { label: "XIAO nRF52840", value: "nrf52840" },
 ]}>
-
-<TabItem value="esp32-s3">
-
-## XIAO ESP32-S3 & Wio SX1262 Kit
-
-:::warning[Note]
-
-The Wio-SX1262 module shipped with this kit does not have the same pin configuration as the one shipped with the XIAO nRF52840 kit. If you want to use a Wio-SX1262 module from a different Seeed kit with a XIAO ESP32S3, you may need to flash custom firmware with the correct pin definitions.
-
-:::
-
-A compact LoRa development kit, combining WiFi, Bluetooth, and LoRa connectivity. It features an integrated power management chip and supports expansion via I²C, UART, and GPIO interfaces with compatibility for Arduino development.
-
-### Specifications
-
-- **MCU**
-  - XIAO ESP32S3 (WiFi & Bluetooth)
-- **LoRa Transceiver**
-  - Semtech SX1262
-- **Frequency options**
-  - 862-930 MHz
-- **Connectors**
-  - USB-C
-  - Antenna
-    - Dedicated 2.4 GHz metal spring antenna for WiFi/Bluetooth
-    - U.FL/IPEX antenna connector for LoRa
-
-### Features
-
-- **Thumb-sized Compact Design**: 21 x 18mm, adopting the classic form factor of XIAO.
-- **Grove Connectors**: 400+ Grove-compatible GPIOs for flexible expansion options.
-- **L76K GNSS Module available**: A compatible Seeed L76K GNSS Module is available with the same form factor as the XIAO nRF52840 & Wio-SX1262 Kit.
-  - When using the Seeed L76K GNSS Module together with this kit, the L76K `RST` pin is shared with the Wio-SX1262 `RST` pin. In order to use these modules together, you must cut the pin so that is not connected to the L76K GNSS Module.
-
-### Resources
-
-- [User Guide](https://wiki.seeedstudio.com/xiao_esp32s3_&_wio_SX1262_kit_for_meshtastic/)
-- Purchase Links:
-  - International
-    - [Seeed Studio Online Store](https://www.seeedstudio.com/Wio-SX1262-with-XIAO-ESP32S3-p-5982.html)
-  - Distributor
-    - [DigiKey](https://www.digikey.com/en/products/detail/seeed-technology-co-ltd/102010611/25835813)
-
-### Pin Map
-
-![SenseCAP Indicator for Meshtastic](/img/hardware/seeed/pinout.webp)
-![SenseCAP Indicator for Meshtastic](/img/hardware/seeed/pinout-back.webp)
-
-</TabItem>
 
 <TabItem value="nrf52840">
 
@@ -101,7 +51,7 @@ A thumb-sized LoRa dev kit based on the nRF52840 MCU, supporting BLE, and LoRa. 
 - [User Guide](https://wiki.seeedstudio.com/xiao_nrf52840&_wio_SX1262_kit_for_meshtastic/)
 - Purchase Links:
   - International
-    - [Seeed Studio Online Store](https://www.seeedstudio.com/XIAO-nRF52840-Wio-SX1262-Kit-for-Meshtastic-p-6400.html)
+    - [Seeed Studio Online Store](https://msh.to/seeed_xiao_nrf52840_kit/)
 
 ### Pin Map
 
