@@ -58,6 +58,7 @@ The `position_precision` setting allows control of the level of precision for lo
 For detailed information on position precision settings and how to configure them, please refer to the [Position Precision documentation](/docs/configuration/radio/channels/#position-precision).
 
 ### Sharing Location on a Private Secondary Channel
+> This is a newer feature that only works for firmware 2.6.10+
 
 To share your location on a private secondary channel while keeping the default primary channel unencrypted, follow these steps:
 
@@ -83,7 +84,6 @@ Imagine you’re in the following channels:
 - Friends (Channel 2) can request your location manually, but it won’t receive automatic updates.
 - TutuTuesdayGroup (Channel 3) allows chatting but does not share or receive location data.
 
-> Note: You can be in up to 8 channels, but automatic location sharing is limited to one channel at a time. Other channels can access your location only through manual requests.
 ## Rebroadcast "Public" Traffic
 
 Meshtastic nodes will rebroadcast all packets if they share [LoRa modem settings](/docs/configuration/radio/lora#lora-config-values), regardless of encryption (unless [Rebroadcast mode](/docs/configuration/radio/device#rebroadcast-mode) is set to `LOCAL_ONLY`).
