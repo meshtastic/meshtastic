@@ -128,9 +128,7 @@ For a detailed breakdown of available controls and their functions, refer to the
       />
     </Light>
   </div>
-  <p style={{ margin: 0, flex: 1 }}>
-    One icon not displayed in the graphic above but visible on standalone devices is the SD Card icon. It indicates the detected SD card's size and format and displays the used storage in both GB and percentage. Tapping the icon will refresh the SD Card status, the firmware may briefly freeze during this process. This is helpful if you have hot swapped the SD Card.
-  </p>
+  <p style={{ margin: 0, flex: 1 }}>One icon not displayed in the graphic above but visible on standalone devices is the SD Card icon. It indicates the detected SD card's size and format and displays the used storage in both GB and percentage. Tapping the icon will refresh the SD Card status, the firmware may briefly freeze during this process. This is helpful if you have hot swapped the SD Card.</p>
 </div>
 
 ### Nodes List
@@ -268,7 +266,7 @@ Inside a chat, messages are threaded:
 
 ### Map
 
-The map screen displays vector map tiles in PNG format, which must be stored on the SD card of the device. No map tiles are included, and must be manually added to the SD card in either a `/map` if using a single style or `/maps/{STYLE}/` directory if using multiple styles. 
+The map screen displays map tiles stored on the SD card of the device. No map tiles are included, and must be manually added to the SD card in either a `/map` if using a single style or `/maps/{STYLE}/` directory if using multiple styles. Tiles must be 256x256 PNG images and a 256-color palette with 8-bit color depth is recommended.
 
 A starter set of tiles for zoom levels 1-6 covering the Earth is available, along with instructions for obtaining additional map tiles, at [this link](https://github.com/meshtastic/device-ui/tree/master/maps).
 #### Map Controls
