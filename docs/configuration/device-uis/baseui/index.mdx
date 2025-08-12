@@ -3,7 +3,7 @@ id: base-ui
 title: BaseUI
 sidebar_label: BaseUI
 sidebar_position: 1
-description: BaseUI is a standalone interface for supported Meshtastic devices, enabling direct interaction without requiring a phone for most functions. It runs alongside the firmware, providing messaging and configuration options.
+description: BaseUI is a standalone interface for supported Meshtastic devices, enabling direct interaction without requiring a phone for common functions. It runs alongside the firmware, providing messaging and configuration options.
 ---
 
 ## What is BaseUI?
@@ -12,11 +12,11 @@ BaseUI starts a user's journey with Meshtastic for devices with OLED screens and
 
 ## Supported Devices
 
-All devices with an OLED and TFT display will support BaseUI
+All devices with an OLED or TFT display will support BaseUI.
 
 ## Installation
 
-BaseUI is by default installed on supported devices using the [Meshtastic Web Flasher](https://flasher.meshtastic.org). Select a 2.7+ version firmware. Devices that support [MeshtasticUI](../meshtasticui/) (MUI) can enable this with the option to use both UIs on their device; switching is performed their their respective menu systems.
+BaseUI is by default installed on supported devices using the [Meshtastic Web Flasher](https://flasher.meshtastic.org). Select a 2.7+ version firmware. Devices that support [Meshtastic UI](../meshtasticui/) can enable this with the option to use both UIs on their device; switching is performed their their respective menu systems.
 
 ## Initial Setup
 
@@ -25,13 +25,13 @@ BaseUI is by default installed on supported devices using the [Meshtastic Web Fl
 
 ## Buttons
 
-BaseUI is designed to be navigated with as little as one button but support a myraid of devices from CardKB, Rotary Encoders, Trackballs, and Rocker Switches.
+BaseUI is designed to be navigated with as little as one button but support a myriad of devices from CardKB, Rotary Encoders, Trackballs, and Rocker Switches.
 
 ## On-Screen Menu
 
 BaseUI has a built in menu, with a few basic actions, and options for configuring the device.
 
-To open the on-screen menu, **long-press** the user button.
+To open the action menu, **long-press** the user button.
 
 - **short-press**: next item
 - **long-press**: select
@@ -42,8 +42,7 @@ To open the on-screen menu, **long-press** the user button.
 
 Manually announces the device to other nodes on the mesh.
 
-This is optional, as nodes are discovered automatically,
-however sending a ping manually may speed up this process is some situations.
+This is optional, as nodes are discovered automatically, however sending a ping manually may speed up this process is some situations.
 
 #### Canned Messages
 
@@ -63,10 +62,6 @@ For devices with physical or virtual keyboards send freely typed text messages t
 
 Enables or disables the device's GPS hardware.
 
-#### Notifications
-
-If enabled, show pop-up notifications for new messages at top of display. This is an alternative to the the auto-show feature, which would instead switch applets to display the new message.
-
 #### 12-Hour Clock
 
-If enabled, times will be shown in 12 hour format (`1:50 PM`), instead of 24 hour format (`13:50`).
+If enabled, times will be shown in 12 hour format (`1:50pm`), instead of 24 hour format (`13:50`).
