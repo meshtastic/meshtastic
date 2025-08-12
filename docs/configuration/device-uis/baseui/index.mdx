@@ -36,32 +36,38 @@ To open the action menu, **long-press** the user button.
 - **short-press**: next item
 - **long-press**: select
 
-### Send
+### Action Menus
 
-#### Ping
+#### Home
+- Sleep - Temporarily turn off the display, can be awoken with the user button
+- Send Position - Manually announces the device to other nodes on the mesh. This is optional, as nodes are discovered automatically, however sending a ping manually may speed up this process is some situations.
+- New Preset Message - Send predefined text messages to the mesh network from the device without using the phone app. To enable this feature, [set a list of predefined messages](/docs/configuration/module/canned-message/#messages).
+- New FreeText Message - For devices with physical or virtual keyboards send freely typed text messages to the mesh network from the device without using the phone app.
 
-Manually announces the device to other nodes on the mesh.
+#### Message
+- New Preset Message - Send predefined text messages to the mesh network from the device without using the phone app. To enable this feature, [set a list of predefined messages](/docs/configuration/module/canned-message/#messages).
+- New FreeText Message - For devices with physical or virtual keyboards send freely typed text messages to the mesh network from the device without using the phone app.
 
-This is optional, as nodes are discovered automatically, however sending a ping manually may speed up this process is some situations.
+#### Node
+- Add Favorite - Manually select a node to add as a favorite on your device
+- Trace Route - Perform a trace route to a selected node
+- Key Verification - Perform a key verification between two 2.7+ nodes - these two nodes need to be in close proximity to visually compare keys
+- Reset NodeDB - Perform a nodeDB reset
 
-#### Canned Messages
+#### Position
+- GPS Toggle - Enables or disables the device's GPS hardware.
+- Compass Headings - Change between Dynamic, Fixed and Freeze Heading for "N" if you have a compass
 
-Send predefined text messages to the mesh network from the device without using the phone app.
-To enable this feature, [set a list of predefined messages](/docs/configuration/module/canned-message/#messages).
-No further configuration is required.
+#### LoRa
+- Region Picker - Change your LoRa Region
 
-To send, select the predefined message in the `Send` menu, then select a destination. The list of possible destinations will include the device's available channels, and nodes marked favorite.
+#### System
+- Notifications
+-- Buzzer Actions - Select for what type of notifications will invoke the buzzer
+- Bluetooth Toggle - Enable / Disable Bluetooth
+- Reboot/Shutdown - Manually reboot or power off the device
 
-#### FreeText Messages
-
-For devices with physical or virtual keyboards send freely typed text messages to the mesh network from the device without using the phone app.
-
-### Options
-
-#### Enable / Disable GPS
-
-Enables or disables the device's GPS hardware.
-
-#### 12-Hour Clock
-
-If enabled, times will be shown in 12 hour format (`1:50pm`), instead of 24 hour format (`13:50`).
+#### Clock
+- Clock Face - Change between Digital and Analog Watch Faces
+- Time Format - If enabled, times will be shown in 12 hour format (`1:50pm`), instead of 24 hour format (`13:50`).
+- Timezone - Elect which timezone offset for this device
