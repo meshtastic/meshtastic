@@ -8,20 +8,19 @@ description: BaseUI is a standalone interface for supported Meshtastic devices, 
 
 ## What is BaseUI?
 
-BaseUI starts a user's journey with Meshtastic for devices with OLED screens and basic TFTs; it serves as the base or foundation of your experience. BaseUI is a rebuild and rebrand of the interface from the ground up, making it more intuitive, more capable including new standalone features, and easier to use on a wider range of devices.
+BaseUI is the stock UI interface that's designed to support all devices with screens - making it more intuitive, more capable including new standalone features, and easier to use on a wider range of devices. BaseUI starts a user's journey with Meshtastic and serves as the base or foundation of the experience.
 
 ## Supported Devices
 
-All devices with an OLED or TFT display will support BaseUI.
+All devices with an OLED, EInk, or TFT display will support BaseUI.
 
 ## Installation
 
-BaseUI is by default installed on supported devices using the [Meshtastic Web Flasher](https://flasher.meshtastic.org). Select a 2.7+ version firmware. Devices that support [Meshtastic UI](../meshtasticui/) can enable this with the option to use both UIs on their device; switching is performed their their respective menu systems.
+BaseUI is by default installed on supported devices using the [Meshtastic Web Flasher](https://flasher.meshtastic.org). Select a 2.7+ version firmware. Devices that support [Meshtastic UI](../meshtasticui/) can enable this with the option to use both UIs on their device; switching is performed through their respective menu systems.
 
 ## Initial Setup
 
 - [Set your LoRa region](/docs/configuration/region-by-country/)
-- [Set your timezone](/docs/configuration/radio/device#tzdef-timezone-definition)
 
 ## Buttons
 
@@ -37,6 +36,8 @@ To open the action menu, **long-press** the user button.
 - **long-press**: select
 
 ### Action Menus
+
+_**Note**: Certain options described below may only be available depending on specific hardware components or configuration selections._
 
 #### Home
 - Sleep - Temporarily turn off the display, can be awoken with the user button
@@ -57,6 +58,7 @@ To open the action menu, **long-press** the user button.
 #### Position
 - GPS Toggle - Enables or disables the device's GPS hardware.
 - Compass Headings - Change between Dynamic, Fixed and Freeze Heading for "N" if you have a compass
+- Compass Calibrate - Perform a 30 second compass calibration
 
 #### LoRa
 - Region Picker - Change your LoRa Region
@@ -64,10 +66,19 @@ To open the action menu, **long-press** the user button.
 #### System
 - Notifications
 	- Buzzer Actions - Select for what type of notifications will invoke the buzzer
-- Bluetooth Toggle - Enable / Disable Bluetooth
-- Reboot/Shutdown - Manually reboot or power off the device
+- Screen Options
+	- Brightness - Pick Between Low, Medium, High brightness
+	- Screen Color - Pick display color from list of available choices
+- Bluetooth Toggle - Enable / Disable Bluetooth (will reboot device)
+- Reboot/Shutdown - Manually reboot or power off the device _(reboot or power off the device to save changes)_
 
 #### Clock
 - Clock Face - Change between Digital and Analog Watch Faces
 - Time Format - If enabled, times will be shown in 12 hour format (`1:50pm`), instead of 24 hour format (`13:50`).
 - Timezone - Elect which timezone offset for this device
+
+#### Favorites
+- New Preset Message - Send predefined text messages to the mesh network from the device without using the phone app. To enable this feature, [set a list of predefined messages](/docs/configuration/module/canned-message/#messages).
+- New FreeText Message - For devices with physical or virtual keyboards send freely typed text messages to the mesh network from the device without using the phone app.
+- Trace Route - Perform a trace route to the favorited node
+- Remove Favorite - Remove the current node from the favorite list, can be re-added through any Node list
