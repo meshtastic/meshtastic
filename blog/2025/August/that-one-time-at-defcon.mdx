@@ -1,0 +1,77 @@
+---
+title: "...That one time at DEF CON!"
+description: "A recap of the Meshtastic DEF CON deployment, including a vulnerability demonstration and the project's response."
+slug: that-one-time-at-defcon
+authors: [MeshtasticTeam]
+tags: [meshtastic, hardware, support, firmware]
+date: 2025-08-12T19:00
+hide_table_of_contents: false
+---
+
+import ReactPlayer from "react-player";
+
+This year marked the second time we have deployed an event-specific Meshtastic firmware at [DEF CON](https://defcon.org), and the first time we have partnered with the event organizers and community groups such as [Darknet-NG](https://darknet-ng.network) and the [Lonely Hackers Club](https://lonelyhackers.club) to create and roll it out. While the official numbers are not yet available, many attendees reported seeing more than 2,000 individual nodes connected during the event, with thousands of messages, including a healthy share of Rickrolls and even full Bee Movie scripts, flowing across both public and private channels throughout Las Vegas. This marks the largest known Meshtastic network to date.
+
+{/* truncate */}
+
+The goal of this custom firmware and DEF CON deployment was two-fold: to push the boundaries of what Meshtastic can do, and to advance the project by stress-testing it in a large-scale, high-traffic environment. As “real-world” as 2,000 nodes in a convention center in Las Vegas can be, it provided a unique opportunity to see how the system performs under extreme conditions.
+
+True to the DEF CON spirit, attendees put the network through its paces and uncovered bugs across nearly every platform including Android, iOS, firmware, and hardware. These ranged from emoji rendering quirks to full app crashes. What makes this community so valuable is that many of these discoveries came with clear technical descriptions and even proposed solutions, helping us improve Meshtastic for everyone.
+
+## Details on This Vulnerability
+
+During DEF CON, a security researcher replayed modified NodeInfo messages at scale. This technique is only possible when the pre-shared key is known by an attacker. This style of attack is possible against an ad-hoc network like Meshtastic, due to the network operating without a centralized identity authority. This was the first time that this type of attack had been observed on an active Meshtastic network and reported to the project’s development team.
+
+Due to its ad-hoc design, Meshtastic operates using the Trust on First Use (ToFU) model. The first time a device sees a NodeInfo packet from a given peer, it trusts that information. Meshtastic has an additional challenge, that individual nodes are all memory constrained. This means that the Firmware can only keep track of the node information of around 100 nodes at a time. DEF CON had over 2000 nodes present, so an individual node simply cannot retain the entire database.
+
+As more nodes are seen, the old nodes cycle out of the database. When this happens, the firmware can accept and store a spoofed NodeInfo. This is a known limitation, and is mitigated by the favorites system and additional checks via the mobile clients. When a node is marked as a favorite, it is never cycled out of the NodeDB. Nodes are automatically favorited when a DM is sent to that node, or when users share contacts via QR code.
+
+<ReactPlayer
+  url="https://youtube.com/shorts/6EfMNJqs7Qs"
+  title="Share Contact via QR Code in the Meshtastic iOS App"
+  controls
+  width="315px"
+  height="560px"
+/>
+
+Mobile clients provide one additional layer of protection, by storing a complete copy of the NodeDB. When a new NodeInfo is received with a changed public key, the mobile apps will flag the discrepancy and inform the user via the red warning notice on the interface. This worked as intended on the technical side, but we learned that there is some user-experience work to be done here.
+
+![Meshtastic Ninja](/img/blog/meshtastic_ninja.webp)
+
+An issue that needs further attention is that Meshtastic channels that use pre-shared keys do not have message verification. An attacker could inject messages that appear to come from other users if they have knowledge of the pre-shared channel key.
+
+Another noted issue is that a spoofed NodeInfo packet, that uses the correct Public Key and Node Number, can overwrite other details of that node on everyone else’s NodeDB. This is how node lists were showing nodes with the Ninja emoji **🥷** , which was a fun and DEF CON-appropriate way to demonstrate.
+
+The demonstration uncovered an additional vulnerability; The Meshtastic firmware stores a copy of its own NodeInfo on its local NodeDB. When a spoofed packet is received that has the local node’s Node Number, that copy can be partially overwritten. The node itself will then display this spoofed information in a connected client. This is limited to fields like the node Longname and Shortname, and a few other metadata elements (**not** including the public key). However, upon reboot, this data would be re-set to the correct owner information stored in firmware.
+
+A few notes/corrections about some of the research that was released publicly:
+
+1. Public keys are not automatically updated when a new NodeInfo packet is received. They are immutable in the NodeDB for as long as the Node exists in the NodeDB.
+2. Direct Messages are encrypted and signed using AES-CCM, based on the public key received on the initial nodeinfo exchange. Unless the attacker has knowledge of a node’s private keys or is able to completely control the initial NodeInfo exchange, there is no currently known technique to intercept and decrypt a 2-way DM conversation.
+
+## Addressing Findings
+
+The corrupted NodeInfo display vulnerability has been addressed via a targeted patch, which prevents packets impersonating the local node being processed by the NodeInfoModule. There’s a whole host of additional hardening fixes coming that will address the broader attack vector, of how a node handles spoofed packets that seem to originate from itself.
+
+Beyond this vulnerability, It was particularly interesting to see the packet spoofing technique deployed in the wild. There are user experience fixes being considered, like the option for the mobile client to re-deploy trusted keys to the locally-connected device.
+
+This year’s DEF CON deployment has brought into focus the need for signed messaging in PSK Channels as well as extended identity verification functionality.This would give Meshtastic users the tools to positively prove that a message was sent by the user it claims. Message signing has long been a goal of the project, but cryptographic signatures are often expensive in both device resources and bandwidth usage. The project is currently making progress on this front and will continue to implement feedback from the community to meet its goals.
+
+## Building a Resilient Mesh Ecosystem
+
+Meshtastic is developed without a singular use case, and the project has been careful to not endorse its use for sensitive communications. The project has bolstered its routing protocols to the point of usability in a 2000+ person mesh, and has moved to focus on other aspects such as security, identity, and the applied cryptography required to meet these new needs. PKI was implemented less than a year ago, and the concept of a large/open/city scale mesh was not the original goal of the project, but one we as a community are excited for and working to better support.
+
+The Meshtastic project appreciates the effort of the researchers and has created some action items to address what was observed:
+
+1. Solicit the help of applied-cryptography professionals to determine the best way to implement a (for example) space-constrained signing schema for various message types.
+2. Implement and document a recommended workflow for manual identity verification.
+3. Implement and document a centralized VDP so that reporting can be done responsibly**.**
+   1. A VDP with Intigriti was created for this DEF CON and the project will implement a more permanent solution. Also, vulnerability reporting continues to be enabled on the project’s key GitHub repositories.
+
+If you are an applied crypto person with a soft spot for LoRa, come hang out with us [on discord.](https://msh.to/discord).
+
+We're very happy with the outcomes of the Meshtastic DEF CON deployment, and will continue to develop the project to work towards a functional, free, and open source mesh.
+
+## TL;DR
+
+TL;DR: At DEF CON, a researcher demonstrated a way to forge node information under certain conditions, causing downstream issues in channel messaging. Encrypted DMs and private keys were not compromised. The specific issue has already been patched, and the event highlighted areas for future improvements, including user experience, identity verification, and message signing.
