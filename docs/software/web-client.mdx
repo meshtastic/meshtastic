@@ -6,11 +6,10 @@ sidebar_position: 3
 ---
 
 Meshtastic Web is a Meshtastic client that runs directly in your browser.
-There are three ways of accessing the app:
+There are two ways of accessing the app:
 
-1. Served directly from an ESP32 based node via [meshtastic.local](http://meshtastic.local) or the device's IP Address.[^1]
-2. A hosted version located at [client.meshtastic.org](https://client.meshtastic.org).
-3. Hosting it yourself.
+1. A hosted version located at [client.meshtastic.org](https://client.meshtastic.org).
+2. Hosting it yourself.
 
 ![WebUI](/img/webUI.webp)
 
@@ -45,18 +44,8 @@ The method with the least platform support, which uses the [Web Serial API](http
 
 ![Web Serial compatibility matrix](https://caniuse.bitsofco.de/image/web-serial.png)
 
-## Updating
-
-When a new firmware version is released, the latest available version of the Web UI (littlefswebui.bin) is included in the release folder for each supported ESP32 device. To update the Web UI, use the [Meshtastic Web Flasher](https://flasher.meshtastic.org/). First, toggle "Full Erase and Install" to reveal the "Bundle Web UI" option, then enable "Bundle Web UI" before flashing.
-
-![Bundle Web UI Toggle](/img/software/webui-toggle.webp)
-
-Additionally, the Web UI can be updated via the [install scripts](/docs/getting-started/flashing-firmware/esp32/cli-script.mdx) using the `--web` option.
-
 ## Self Hosting
 
 The source code for the WebUI can be found on our [GitHub](https://github.com/meshtastic/web)
 
 Instructions for building and running the project can be found in the repo's readme.
-
-[^1]: If multiple Meshtastic devices are serving the web client on the same local area network, these devices can be reached by adding a suffix of "-2" (or higher numbers if there are additional devices) to the local URL. Example `meshtastic-2.local` or `meshtastic-3.local`.

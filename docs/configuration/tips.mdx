@@ -14,14 +14,16 @@ It is strongly recommended to keep your [ROLE](/docs/configuration/radio/device#
 
 ### Recommended Roles
 
-- `CLIENT` nodes efficiently repeat and route packets as needed. 
-  - **Almost always the correct mode.**
-  - Uses smart delays for rebroadcasting, improving network stability.
-  - Use for "rooftop" or other nodes that enhance your mesh.
-  - Use during isolated activities such as hiking, skiing, or MTB where you're in an area with few nodes.
-- `CLIENT_MUTE` nodes behave as above but do not repeat packets.
-  - Use for personal nodes that are in range of a higher-profile node in a dense or congested mesh.
-  - Use when you have multiple nodes in close proximity (set your "best-placed" node to `CLIENT`).
+- `CLIENT` nodes receive, send, and intelligently repeat messages to help the mesh network.
+  - **This is the right choice for most situations.**
+  - Automatically adds smart delays when rebroadcasting to keep the network stable.
+  - Perfect for nodes that can help others: rooftop installations, high-visibility locations, or nodes that extend network coverage.
+  - Use when in remote areas (hiking, skiing, biking) where every node helps maintain connectivity.
+
+- `CLIENT_MUTE` nodes can send and receive messages but never repeat them.
+  - Use with a personal handheld device when located near a more powerful node (such as a rooftop node) in a congested network.
+  - Use when multiple nodes are in close proximity. Set the best-positioned node to `CLIENT` and the others to `CLIENT_MUTE`.
+  - Perfect for indoor nodes that only talk to one outdoor node - since they can't reach other nodes anyway, repeating messages would just waste bandwidth.
 
 ![Client Node Example](/img/configuration/client.webp)
 *One example of a 'Client' node.  Photo credit: Cully@KBOXLABS*
@@ -55,24 +57,32 @@ The `position_precision` setting allows control of the level of precision for lo
 
 For detailed information on position precision settings and how to configure them, please refer to the [Position Precision documentation](/docs/configuration/radio/channels/#position-precision).
 
-### Creating a Private Primary with Default Secondary
+### Sharing Location on a Private Secondary Channel
+> This is a newer feature that only works for firmware 2.6.10+
 
-Alternatively, if you wish to only share your location with trusted parties, you may create a private PRIMARY channel and use the defaults for a SECONDARY channel.
+To share your location on a private secondary channel while keeping the default primary channel unencrypted, follow these steps:
 
-1. Ensure you have not changed the LoRa [Modem Preset](/docs/configuration/radio/lora#modem-preset) from the default `unset` / `LONG_FAST`.
-2. On your PRIMARY channel, set anything you'd like for the channel's name and choose a random PSK.
-3. Enable a SECONDARY channel named "LongFast" with PSK "AQ==". For Apple devices, leave the channel name  blank.
-4. If your LoRa frequency slot is set to the default (`0`), the radio's transmit frequency will be automatically changed based on your PRIMARY channel's name. In this case, you will have to manually set it back to your region's default (in LoRa settings) in order to interface with users on the default slot:
+1. Disable location sharing on the primary channel (Channel 0) to prevent broadcasting your position to all users.
+2. Select a secondary channel where you want to share your location. Enable position sharing and choose your desired precision level.
+3. Understand automatic location updates:
+   - Only one channel receives your automatic, live location updates.
+   - This is the lowest-indexed secondary channel (excluding Channel 0) with location sharing enabled.
+   - If multiple secondary channels have location sharing enabled, only the one with the lowest index will receive automatic position broadcasts.
+   - Channels with location sharing enabled but not receiving automatic broadcasts can still be used for manual position requests.
 
-### Default Primary Frequency Slots by Region
+#### Example Scenario
 
-| US  | EU_433 | EU_868 | CN  | JP  | ANZ | KR  | TW  | RU  | IN  | NZ_865 | TH  | UA_433 | UA_868 | MY_433 | MY_919 | SG_923 | LORA_24 |
-| :-: | :----: | :----: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :----: | :-: | :----: | :----: | :----: | :----: | :----: | :-----: |
-| 20  |   4    |   1    | 36  | 20  | 20  | 12  | 16  |  2  |  4  |   4    | 16  |   6    |   2    |   4    |   16   |   4    |    6    |
+Imagine you’re in the following channels:
 
-To quickly test this configuration, find and scan your region's QR[^1] from [this repository](https://github.com/meshtastic/meshtastic/tree/master/static/img/configuration/qr-private-primary-example/).  The example QR code will create a private primary channel and default Meshtastic secondary channel as demonstrated above. The private channel name may be updated if desired, but a new PSK should be generated before sharing with trusted nodes.
+- Channel 0: “Everyone” (location OFF)
+- Channel 1: “CampChat” (location ON)
+- Channel 2: “Friends” (location ON)
+- Channel 3: “TutuTuesdayGroup” (location OFF)
 
-[^1]: <QRCode />
+##### How It Works
+- CampChat (Channel 1) receives your live, automatic location updates because it’s the lowest-indexed channel with location sharing enabled.
+- Friends (Channel 2) can request your location manually, but it won’t receive automatic updates.
+- TutuTuesdayGroup (Channel 3) allows chatting but does not share or receive location data.
 
 ## Rebroadcast "Public" Traffic
 

@@ -22,7 +22,7 @@ Meshtastic uses [PlatformIO](https://platformio.org), a development environment 
    If you want to build the RP2040 targets and get a 'Filename too long' error on Windows, please refer to [the Platformio documentation for this toolchain](https://arduino-pico.readthedocs.io/en/latest/platformio.html#important-steps-for-windows-users-before-installing)
    :::
 
- ## Update the Build Environment
+## Update the Build Environment
 
 1. Change to `firmware` folder
    ```shell
@@ -49,13 +49,13 @@ The build system is modular. Adding a new board variant for an already supported
 
 ### Build with Custom Hardware
 
-1. Go to the `variants` folder in the firmware source code and make a new directory for your hardware, let's call it `m5stack_atom` and copy an existing configuration you wanna modify:
+1. Go to the `variants` folder in the firmware source code and make a new directory for your hardware, let's call it `m5stack_atom`, and copy an existing configuration you want to modify:
    ```shell
    cd variants; mkdir m5stack_atom
    cp heltec_v1/* m5stack_atom
    cd m5stack_atom
    ```
-2. Modify the `platformio.ini`_in this subdirectory_ from the canonical define of the hardware variant (`HELTEC_V1` in this case) to `PRIVATE_HW` and make the `-I` on the `build_flags` point to the newly created dir.
+2. Modify the `platformio.ini` _in this subdirectory_ from the canonical define of the hardware variant (`HELTEC_V1` in this case) to `PRIVATE_HW` and make the `-I` on the `build_flags` point to the newly created dir.
    ```shell
    [env:m5stack-atom]
    extends = esp32_base
@@ -67,26 +67,18 @@ The build system is modular. Adding a new board variant for an already supported
       ${esp32_base.lib_deps}
    ```
 3. Edit the `variant.h` file _in this subdirectory_ to reflect the defines and configurations for your board. The example is very well commented.
-4. Build, run and debug until you are satisfied with the result.
+4. Build, run, and debug until you are satisfied with the result.
 
-### Distribute / Publish Custom Builds
+## Hardware Model Acceptance Policy
 
-1. Perform all of the steps [building with custom hardware](#build-with-custom-hardware) until your hardware runs fine.
-2. [Send a proposal](https://github.com/meshtastic/firmware/issues/new?assignees=&labels=enhancement%2Ctriage&template=New+Board.yml&title=%5BBoard%5D%3A+) to add a new board.
-3. If approved, go to [https://github.com/meshtastic/protobufs](https://github.com/meshtastic/protobufs) and send a Pull Request for the `mesh.proto` file, adding your board to the `HardwareModel` Enum.
-4. Change your define in `platformio.ini` from `PRIVATE_HW` to `YOUR_BOARD`. Adjust any macro guards in the code you need to support your board.
-5. Add your board identifier to `architecture.h` on the firmware repo in the folder of the platform you are using, and send in that Pull Request too.
-6. Wait for the Pulls to be merged back into Master.
-7. Profit :-)
+Due to limited availability and ongoing support, new hardware model numbers will only be added for Meshtastic Backers and Partners. The Meshtastic team reserves the right to make exceptions to this policy where needed. If you wish to have your hardware officially supported please contact [Meshtastic Solutions](https://meshtastic.com/contact).
 
-## Alternative route: Gitpod
+### Alternative for Community Contributors
 
-Gitpod offers an alternative method for compiling the firmware without installing Visual Studio Code. It is a web browser-based online IDE that can be used with a GitHub account. Gitpod provides a free tier suitable for light use, such as compiling custom firmware.
+Community Supported hardware is still welcomed, and community contributors can still add DIY hardware, however, please note:
 
-1. Go to [https://gitpod.io#https://github.com/meshtastic/firmware](https://gitpod.io#https://github.com/meshtastic/firmware).
-2. Make the desired changes to the chosen variant.
-3. Build the firmware by running: `pio run -e <variant_name>`
-4. Once complete, download `<variant_name>.bin` or `<variant_name>.uf2` from `/workspace/firmware/.pio/build/<variant_name>.`
-5. As flashing directly to the device isn't possible using Gitpod, upload using either:
-- [Drag & Drop](/docs/getting-started/flashing-firmware/nrf52/#drag--drop) for NRF52/RP2040 devices.
-- [Web flasher](https://flasher.meshtastic.org/) for ESP32 devices.
+- DIY hardware should use the `PRIVATE_HW` model number.
+- DIY hardware will **not** be officially supported by the core Meshtastic team, and will be denoted as `Community Supported`.
+- DIY hardware will **not** appear in the [Web Flasher](https://flasher.meshtastic.org/) or GitHub release assets.
+- You will be responsible for ongoing maintenance and support.
+- DIY hardware models are experimental and will likely have limited or no testing.
