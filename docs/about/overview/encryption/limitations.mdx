@@ -53,4 +53,4 @@ The ED25519 support is still being finalized as of the writing of this document,
 
 Once a node has successfully signed a User message with this scheme, the HAS_XEDDSA_SIGNED bit is set on the NodeInfoLite bitfield, which is translated to the has_xeddsa_signed bool on a NodeInfo message.
 
-Once this bit is set, unsigned user packets from this source will be dropped. To be determined is how other unsigned packets will be treated. At this point, I believe that short packets, that could be signed, should be dropped when unsigned.
+Once this bit is set, unsigned user packets from this source will be dropped. To be determined is how other unsigned packets will be treated. At this point, the recommendation is that short packets, that could be signed, should be dropped when unsigned.
