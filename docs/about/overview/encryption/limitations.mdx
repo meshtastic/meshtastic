@@ -36,7 +36,7 @@ This attack was anticipated when the DM system was designed, and accepted as an 
 
 First, while the NodeDB is limited to 100 nodes on embedded hardware, a connected mobile client has the ability to store information about many more nodes, and flag to the user when one of those nodes shows up with a different public key. This is what happens when a node on a client shows up with a red key icon. The firmware has seen a different public key for that node, and the mobile client knows that it has changed.
 
-The second major mitigation is that nodes that are marked as favorite are never dropped from the NodeDB. Clients have recently started automatically marking nodes as favorite when a DM is sent to that node, further ensuring that the node you were chatting with is still the same node.
+The second major mitigation is that nodes that are marked as favorite are never dropped from the NodeDB. Clients have now automatically mark nodes as favorite when a DM is sent to that node, further ensuring that the node a user was chatting with is still the same node.
 
 The meshtastic firmware does also support falling back to the old DM behavior. This is tightly controlled via the use of the “pki_encrypted” boolean and the “public_key” byte field. When the firmware receives a packet from the mesh, if that packet is sent using the DM PKI encryption, the bool is marked true, and the source public key is copied into the bytes field. DMs using the old channel PSK method will still be received and processed, but the pki_encrypted field is set false.
 
