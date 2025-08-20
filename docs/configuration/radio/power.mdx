@@ -6,9 +6,8 @@ description: Settings for advanced users who want to adjust the power configurat
 ---
 
 import Admonition from "@theme/Admonition";
-import Tabs from "@theme/Tabs";
-import TabItem from "@theme/TabItem";
 import { Icon } from "@iconify/react";
+import { CompatibilityIcons } from '@site/src/components/CompatibilityIcons';
 import calculateADC from "/src/utils/calculateADC";
 
 :::info Use Device Config first
@@ -19,7 +18,7 @@ The power config options are: Power Saving, Shutdown after losing power, ADC Mul
 
 ## Power Config Values
 
-### Power Saving
+### Power Saving <CompatibilityIcons configKey="power_is_power_saving" />
 
 :::warning
 If enabled, modifications to settings can be made by waking the device through pressing the user button, resetting, or through the [admin channel](/docs/configuration/remote-admin/) for remote administration.
@@ -27,14 +26,14 @@ If enabled, modifications to settings can be made by waking the device through p
 
 When activated, this feature disables Bluetooth, Serial, WiFi, and the device's screen to conserve power. This is particularly beneficial for devices relying on low-current power sources, like solar panels. For details on which device roles have this feature enabled by default, please check the [Device Config](/docs/configuration/radio/device) section.
 
-### Shutdown after losing power
+### Shutdown after losing power <CompatibilityIcons configKey="power_on_battery_shutdown_after_secs" />
 
 Automatically shut down a device after a defined time period if power is lost.
 
 Before setting this, ensure your board correctly detects when it is connected to external power (the "🔌" icon in the app). Otherwise, your device could shut down even when power is present.
 Many devices detect power status correctly, however for some devices, you will need to modify the ADC Multiplier (below).
 
-### ADC Multiplier Override
+### ADC Multiplier Override <CompatibilityIcons configKey="power_adc_multiplier_override" />
 
 Ratio of voltage divider for battery pin e.g. 3.20 (R1=100k, R2=220k)
 
@@ -95,43 +94,43 @@ Should be set to floating point value between 2 and 6
       </table>
       Default values for ADC Multipliers are:
 
-      |  Device   | Default ADC Multiplier |
-      | :-------: | :--------------------: |
-      | chatter2 | 5.0 |
-      | diy | 1.85 |
-      | esp32-s3-pico | 3.1 |
-      | heltec_v1 & heltec_v2 | 3.2 |
-      | heltec_v3 & heltec_wsl_v3 | 4.9 |
-      | heltec_wireless_paper | 2 |
-      | heltec_wireless_tracker 1.0/1.1 | 4.9 |
-      | lora_isp4520 | 1.436 |
-      | m5stack_coreink | 5 |
-      | nano-g1-explorer | 2 |
-      | nano-g2-ultra | 2 |
-      | picomputer-s3 | 3.1 |
-      | rak4631 | 1.73 |
-      | rpipico | 3.1 |
-      | rpipicow | 3.1 |
-      | station-g1 | 6.45 |
-      | station-g2 | 4 |
-      | tlora_v2_1_16 | 2 |
-      | tlora_v2_1_18 | 2.11 |
-      | tlora_t3s3_v1 | 2.11 |
-      | t-deck | 2.11 |
-      | t-echo | 2 |
+      |             Device              | Default ADC Multiplier |
+      |:-------------------------------:|:----------------------:|
+      |            chatter2             |          5.0           |
+      |               diy               |          1.85          |
+      |          esp32-s3-pico          |          3.1           |
+      |      heltec_v1 & heltec_v2      |          3.2           |
+      |    heltec_v3 & heltec_wsl_v3    |          4.9           |
+      |      heltec_wireless_paper      |           2            |
+      | heltec_wireless_tracker 1.0/1.1 |          4.9           |
+      |          lora_isp4520           |         1.436          |
+      |         m5stack_coreink         |           5            |
+      |        nano-g1-explorer         |           2            |
+      |          nano-g2-ultra          |           2            |
+      |          picomputer-s3          |          3.1           |
+      |             rak4631             |          1.73          |
+      |             rpipico             |          3.1           |
+      |            rpipicow             |          3.1           |
+      |           station-g1            |          6.45          |
+      |           station-g2            |           4            |
+      |          tlora_v2_1_16          |           2            |
+      |          tlora_v2_1_18          |          2.11          |
+      |          tlora_t3s3_v1          |          2.11          |
+      |             t-deck              |          2.11          |
+      |             t-echo              |           2            |
 
     </div>
 
   </details>
 </div>
 
-### Wait Bluetooth Interval
+### Wait Bluetooth Interval <CompatibilityIcons configKey="power_wait_bluetooth_secs" />
 
 How long to wait before turning off BLE in no Bluetooth states
 
 `0` for default of 1 minute
 
-### Light Sleep Interval
+### Light Sleep Interval <CompatibilityIcons configKey="power_ls_secs" />
 
 :::info ESP32 Only
 This setting only applies to ESP32-based boards, it will have no effect on nRF52/RP2040 boards.
@@ -141,13 +140,13 @@ In light sleep the CPU is suspended, LoRa radio is on, BLE is off and GPS is on
 
 `0` for default of five minutes
 
-### Minimum Wake Interval
+### Minimum Wake Interval <CompatibilityIcons configKey="power_min_wake_secs" />
 
 While in light sleep when we receive packets on the LoRa radio we will wake and handle them and stay awake in no Bluetooth mode for this interval
 
 `0` for default of 10 seconds
 
-### Device Battery INA2xx Address
+### Device Battery INA2xx Address <CompatibilityIcons configKey="power_device_battery_ina_address" />
 
 If an INA-2XX device is auto-detected on one of the I2C buses at the specified address, it will be used as the authoritative source for reading device battery level voltage. Setting is ignored for devices with PMUs (e.g. T-beams)
 
@@ -155,80 +154,7 @@ If an INA-2XX device is auto-detected on one of the I2C buses at the specified a
 I2C addresses are normally represented in hexadecimal and will require conversion to decimal in order to set via Meshtastic clients. For example the I2C address of 0x40 converted to decimal is 64.
 :::
 
-## Power Config Client Availability
-
-<Tabs
-  groupId="settings"
-  defaultValue="apple"
-  values={[
-    {
-      label: (
-        <>
-          <Icon icon="mdi:android" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Android
-        </>
-      ),
-      value: "android",
-    },
-    {
-      label: (
-        <>
-          <Icon icon="mdi:apple" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Apple
-        </>
-      ),
-      value: "apple",
-    },
-    {
-      label: (
-        <>
-          <Icon icon="mdi:terminal" height="1.5rem" style={{ marginRight: "0.25rem" }} /> CLI
-        </>
-      ),
-      value: "cli",
-    },
-    {
-      label: (
-        <>
-          <Icon icon="mdi:internet" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Web
-        </>
-      ),
-      value: "web",
-    },
-  ]}>
-
-<TabItem value="android">
-
-#### Android
-
-:::info
-
-Power Config options are available for Android.
-
-1. Open the Meshtastic App
-2. Navigate to: **Vertical Ellipsis (3 dots top right) > Radio Configuration > Power**
-
-:::
-
-</TabItem>
-<TabItem value="apple">
-
-#### Apple
-
-:::info
-
-Select Power config options are available on iOS, iPadOS and macOS at Settings > Device Configuration > Power.
-
-:::
-
-</TabItem>
-<TabItem value="cli">
-
-#### CLI
-
-:::info
-
-All Power config options are available in the python CLI.
-
-:::
+## CLI Examples
 
 |               Setting                |         Acceptable Values          |               Default               |
 | :----------------------------------: | :--------------------------------: | :---------------------------------: |
@@ -274,15 +200,3 @@ meshtastic --set power.ls_secs 120
 meshtastic --set power.min_wake_secs 0
 meshtastic --set power.min_wake_secs 120
 ```
-
-</TabItem>
-<TabItem value="web">
-
-#### Web
-
-:::info
-All power config options are available in the Web UI.
-:::
-
-</TabItem>
-</Tabs>
