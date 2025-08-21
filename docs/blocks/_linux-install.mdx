@@ -7,7 +7,16 @@ import { Icon } from "@iconify/react";
     Debian packages are provided via [OpenSUSE Build Service](https://build.opensuse.org/project/show/network:Meshtastic:beta).
      [![Debian build status](https://build.opensuse.org/projects/network:Meshtastic:beta/packages/meshtasticd/badge.svg?type=percent)](https://build.opensuse.org/package/show/network:Meshtastic:beta/meshtasticd)
 
-    Supported: `bookworm` (12)
+    Supported: `trixie` (13), `bookworm` (12)
+
+    **Install - Debian 13 (`trixie`):**
+
+    ```shell
+    echo 'deb http://download.opensuse.org/repositories/network:/Meshtastic:/beta/Debian_13/ /' | sudo tee /etc/apt/sources.list.d/network:Meshtastic:beta.list
+    curl -fsSL https://download.opensuse.org/repositories/network:Meshtastic:beta/Debian_13/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/network_Meshtastic_beta.gpg > /dev/null
+    sudo apt update
+    sudo apt install meshtasticd
+    ```
 
     **Install - Debian 12 (`bookworm`):**
 
@@ -23,9 +32,9 @@ import { Icon } from "@iconify/react";
 
       These builds are provided without support, please **do not file issues** relating to Experimental builds.
 
-      Experimental Support: `trixie` (testing), `sid` (unstable)
+      Experimental Support: `forky` (testing), `sid` (unstable)
 
-      **Install - Debian 13 (`trixie`):**
+      **Install - Debian 14 (`forky`):**
 
       ```shell
       echo 'deb http://download.opensuse.org/repositories/network:/Meshtastic:/beta/Debian_Testing/ /' | sudo tee /etc/apt/sources.list.d/network:Meshtastic:beta.list
@@ -161,9 +170,9 @@ import { Icon } from "@iconify/react";
     - Flatpak releases do not currently support the `web` component.
 
   </TabItem>
-  <TabItem value="openwrt" label={<><Icon icon="simple-icons:openwrt" style={{ marginRight: "0.25rem" }} height="1.5rem" /> OpenWRT</>}>
+  <TabItem value="openwrt" label={<><Icon icon="simple-icons:openwrt" style={{ marginRight: "0.25rem" }} height="1.5rem" /> OpenWrt</>}>
 
-    Supported OpenWRT Versions: SNAPSHOT, 24.10
+    Supported OpenWrt Versions: SNAPSHOT, 24.10
 
     Supported platforms:
     <details>
@@ -206,7 +215,7 @@ import { Icon } from "@iconify/react";
       - x86_64
     </details>
 
-    See [Meshtastic on OpenWRT routers](/docs/hardware/devices/openwrt/)
+    See [Meshtastic on OpenWrt routers](/docs/hardware/devices/openwrt/)
 
   </TabItem>
 </Tabs>

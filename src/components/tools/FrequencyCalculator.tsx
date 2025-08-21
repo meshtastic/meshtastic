@@ -1,5 +1,6 @@
-import { Protobuf, type Types } from "@meshtastic/js";
-import { useEffect, useState } from "react";
+import type { Types } from "@meshtastic/core";
+import * as Protobuf from "@meshtastic/protobufs";
+import React, { useEffect, useState } from "react";
 
 interface Region {
   freqStart: number;
@@ -77,6 +78,16 @@ const RegionData = new Map<
       dutyCycle: 100,
       spacing: 0,
       powerLimit: 30,
+    },
+  ],
+  [
+    Protobuf.Config.Config_LoRaConfig_RegionCode.ANZ_433,
+    {
+      freqStart: 433.05,
+      freqEnd: 434.79,
+      dutyCycle: 100,
+      spacing: 0,
+      powerLimit: 14,
     },
   ],
   [
