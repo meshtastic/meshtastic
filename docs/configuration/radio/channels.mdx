@@ -108,6 +108,10 @@ If enabled, messages from the mesh will be sent to the **public** internet throu
 
 Set to `false` by default for all channels.
 
+:::note
+When a channel name includes MQTT special characters like "#" or "+", it can cause issues when you try to publish messages.
+:::
+
 ## Channel Module Settings
 
 The channel module settings options are: position precision. Channel module settings are embedded in the Channel protobuf as a ModuleSettings protobuf and sent as an admin message.
