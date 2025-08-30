@@ -81,7 +81,7 @@ The easiest way to get started is:
 ### Receiving a Response
 allocReply() from ReplyModule is invoked only when the incoming packet sets want_response = true. Internally, [MeshModule::sendResponse()](https://github.com/meshtastic/firmware/blob/develop/src/mesh/MeshModule.cpp) calls your allocReply(). Most chat UIs (Android/iOS/Web) do not set this flag, so copying ReplyModule and sending a normal text will trigger no response from your module. 
 
-For initial testing, implement handleReceived() so your code runs on every packet to your port. If you prefer reply-on-request behavior, test allocReply() with a client that can set want_response = true.
+For initial testing, implement handleReceived() so your code runs on every packet to your port. For minimal changes from the template's code, test allocReply() with a client that can set want_response = true.
 
 ## Threading
 
