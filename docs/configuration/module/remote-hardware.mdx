@@ -5,9 +5,9 @@ sidebar_label: Remote Hardware
 description: The Remote Hardware Module allows to read, write and watch GPIO pins on a remote node.
 ---
 
-import Tabs from "@theme/Tabs";
-import TabItem from "@theme/TabItem";
+
 import { Icon } from "@iconify/react";
+import { CompatibilityIcons } from '@site/src/components/CompatibilityIcons';
 
 The Remote Hardware Module allows to read, write and watch GPIO pins on a remote node. Config options are: Enabled.
 
@@ -20,90 +20,17 @@ Additionally, while configuring this module may be available in clients, setting
 
 ## Remote Hardware Config Values
 
-### Enabled
+### Enabled <CompatibilityIcons configKey="remote_hardware_enabled" />
 
 Whether the module is enabled.
 
-## Remote Hardware Module Client Availability
+### Allow Undefined Pin Access <CompatibilityIcons configKey="remote_hardware_allow_undefined_pin_access" />
 
-<Tabs
-  groupId="settings"
-  defaultValue="apple"
-  values={[
-    {
-      label: (
-        <>
-          <Icon icon="mdi:android" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Android
-        </>
-      ),
-      value: "android",
-    },
-    {
-      label: (
-        <>
-          <Icon icon="mdi:apple" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Apple
-        </>
-      ),
-      value: "apple",
-    },
-    {
-      label: (
-        <>
-          <Icon icon="mdi:terminal" height="1.5rem" style={{ marginRight: "0.25rem" }} /> CLI
-        </>
-      ),
-      value: "cli",
-    },
-    {
-      label: (
-        <>
-          <Icon icon="mdi:internet" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Web
-        </>
-      ),
-      value: "web",
-    },
-  ]}>
+Whether the Module allows consumers to read / write to pins not defined in available_pins
 
-<TabItem value="android">
+### Available Pins <CompatibilityIcons configKey="remote_hardware_available_pins" />
 
-#### Android
-
-:::info
-All Remote Hardware Module config options are available for Android in app.
-
-1. Open the Meshtastic App
-2. Navigate to: **Vertical Ellipsis (3 dots top right) > Radio Configuration > Remote Hardware**
-   :::
-
-</TabItem>
-<TabItem value="apple">
-
-#### Apple
-
-:::info
-All Remote Hardware Module config options are available on iOS, iPadOS and macOS app.and higher at Settings > Module Configuration > Remote Hardware
-:::
-
-</TabItem>
-<TabItem value="cli">
-
-#### CLI
-
-:::info
-
-All Remote Hardware Module config options are available in the python CLI.
-
-:::
-
-</TabItem>
-<TabItem value="web">
-
-#### Web
-
-Not implemented.
-
-</TabItem>
-</Tabs>
+Exposes the available pins to the mesh for reading and writing
 
 ## Remote Hardware Module Usage
 
