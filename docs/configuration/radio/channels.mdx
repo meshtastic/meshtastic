@@ -65,7 +65,7 @@ To ensure devices with different PRIMARY channel name transmit on the same frequ
 
 ## Channel Settings Values
 
-The Channel Settings options are: Name, PSK, Downlink Enabled, and Uplink Enabled. Channel settings are embedded in the `Channel` protobuf as a `ChannelSettings` protobuf and sent as an admin message.
+The Channel Settings options are: Name, PSK, Downlink Enabled, Uplink Enabled and Mute. Channel settings are embedded in the `Channel` protobuf as a `ChannelSettings` protobuf and sent as an admin message.
 
 ### Name
 
@@ -108,6 +108,19 @@ If enabled, messages from the mesh will be sent to the **public** internet throu
 
 Set to `false` by default for all channels.
 
+### Mute
+If enabled, messages received over the channel will not invoke the devices buzzer if present. UI notifications such as `"New Message From []"` are also blocked, decluttering the display.
+
+Set by `false` to default for all channels.
+
+:::note
+
+When alerts are active, notification's containing a bell character ignore all mute settings.
+
+:::
+
+## Channel Config Client Availability
+
 ## Channel Module Settings
 
 The channel module settings options are: position precision. Channel module settings are embedded in the Channel protobuf as a ModuleSettings protobuf and sent as an admin message.
@@ -126,8 +139,6 @@ The `position_precision` value is an integer between 0 and 32:
 <PositionPrecisionBits />
 
 The client applications have implemented different levels of precision giving the user a practical range to choose from. Setting across the full range of integers can be done via the Python CLI. See [Setting Position Precision](/docs/configuration/radio/channels/#setting-position-precision) for examples on setting different levels of precision using CLI.
-
-## Channel Config Client Availability
 
 <Tabs
   groupId="settings"
@@ -290,6 +301,14 @@ meshtastic --ch-set uplink_enabled false --ch-index 0
 ```shell title="Enable/Disable Downlink on SECONDARY channel"
 meshtastic --ch-set downlink_enabled true --ch-index 1
 meshtastic --ch-set downlink_enabled false --ch-index 5
+```
+
+##### Mute
+Control the channel's notification behaviour.
+
+```shell title="Toggle mute on the PRIMARY channel"
+meshtastic --ch-set mute true --ch-index 0
+meshtastic --ch-set mute false --ch-index 0
 ```
 
 #### Setting Position Precision
