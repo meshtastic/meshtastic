@@ -133,3 +133,15 @@ meshtastic --set-muted-node '!xxxxxxxx'
 # un-mutes a node in the NodeDB
 meshtastic --remove-muted-node '!xxxxxxxx'
 ```
+
+If a particular node is bothering you and you don't want to receive their messages at all, try [ignoring a node](/docs/configuration/radio/lora#ignore-incoming-array). Which can be performed through the various client appllications.
+
+Using the python CLI:
+
+```bash
+# ignores a node in the NodeDB
+meshtastic --set-ignored-node '!xxxxxxxx'
+
+# un-ignores a node in the NodeDB
+meshtastic --remove-ignored-node '!xxxxxxxx'
+```
