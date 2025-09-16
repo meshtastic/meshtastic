@@ -117,3 +117,19 @@ This property, formerly known as "LoRa Channel Number", configures the frequency
 - If you are part of a large mesh and don't know what a setting does, don't change it (unless you're super curious).
 - TEST your settings and hardware before you install in hard-to-reach locations.
 - Connecting a node to the [public MQTT server](/docs/configuration/module/mqtt#connect-to-the-default-public-server) may publish the locations of all nodes in your mesh to the internet.
+
+## Keeping things quiet
+
+Things can get noisy in bigger meshes, especially when your device has a buzzer.
+This can become problematic at times, particularly in situations involving essential communications in an area with a chatty public channel.
+
+To mute a channel, see: [channel.mute](/docs/configuration/radio/channels#mute)
+
+For muting particular nodes, try using the python CLI:
+```bash
+# mutes a node in the NodeDB
+meshtastic --set-muted-node '!xxxxxxxx'
+
+# un-mutes a node in the NodeDB
+meshtastic --remove-muted-node '!xxxxxxxx'
+```
