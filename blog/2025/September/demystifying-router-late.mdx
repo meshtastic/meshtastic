@@ -53,12 +53,12 @@ CLIENT_BASE role, which is designed for that purpose.
 Due to the extremely limited bandwidth available, Meshtastic networks do not
 utilise complex routing algorithms that rely on additional communication
 between nodes. There is no equivalent to protocols such as OSPF, BGP etc. from
-the IP networking world. Instead, Meshtastic uses a combination of role
-selection, random delays, and timing based on the signal strength of a received
-packet to ensure that any given packet will be more likely to take a more
-efficient path across the network, while minimising unnecessary rebroadcasts
-that can add to congestion on the single frequency that is shared by the entire
-mesh.
+the IP networking world (see [here][2] for why). Instead, Meshtastic uses a
+combination of role selection, random delays, and timing based on the signal
+strength of a received packet to ensure that any given packet will be more
+likely to take a more efficient path across the network, while minimising
+unnecessary rebroadcasts that can add to congestion on the single frequency
+that is shared by the entire mesh.
 
 Any packet that is received with a remaining hop limit greater than zero is
 eligible for rebroadcast. Packets with a hop limit of zero are discarded after
@@ -230,3 +230,4 @@ using it in that manner will usually cause more problems than it solves.
 
 
 [1]: /blog/choosing-the-right-device-role/
+[2]: /blog/why-meshtastic-uses-managed-flood-routing/
