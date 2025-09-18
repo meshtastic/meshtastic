@@ -1,0 +1,232 @@
+---
+title: "Demystifying ROUTER_LATE"
+description: "What is the purpose of the ROUTER_LATE role, and when should it be used?"
+slug: demystifying-router-late
+authors: Erayd
+tags: ["Meshtastic", "devices", "roles", "routing", "infrastructure"]
+date: 2025-09-18T16:42+1200
+hide_table_of_contents: false
+---
+
+Since the last [guide on choosing the right role][1], a new role - ROUTER_LATE
+- has been added. What exactly does this role do, when should it be used, and
+how does it fit into the overall picture of how a Meshtastic network operates?
+
+Meshtastic has a large number of device roles, each designed for a different
+purpose. While the default CLIENT is a good start for simpler meshes without
+complex obstacles to work around, for larger meshes with more complex routing
+needs it's important to select the right role to ensure that the overall mesh
+is robust, does not get overloaded, and ensures the reliable transit of packets
+to where they need to go.
+
+{/* truncate */}
+
+## What is the purpose of ROUTER_LATE?
+
+ROUTER_LATE is designed as an infrastructure role for serving parts of larger
+or more complex meshes that do not have visibility to existing ROUTER sites.
+This could be e.g. a cluster of nodes on the other side of a hill, at the
+bottom of a canyon, or otherwise blocked by some significant obstacle. It is a
+mandatory-rebroadcast role, meaning that it will always rebroadcast any packet
+that it hears (provided that the hop limit for that packet has not been
+exceeded).
+
+It is intended to be deployed in sites that do not have the very large coverage
+footprint typically suited to ROUTER nodes. Sites that are critical for
+reliable passage of traffic, but known to not be optimally sited for serving
+the overall mesh, should use ROUTER_LATE.
+
+It is *not* intended as a rooftop node to extend the range of devices inside
+your house. Using it in this manner may be great for *you*, but because
+ROUTER_LATE will rebroadcast every single packet that it can, it can add
+significantly to the overall airtime use in your area. Too much of this can
+rapidly lead to a degraded or unusable mesh due to congestion, which causes
+collisions and packet loss. Please refrain from using infrastructure roles in
+locations where they are not genuinely warranted, especially on meshes that use
+a slower modulation (e.g. LONG_FAST).
+
+If you need a rooftop node for some reason, please look into the new
+CLIENT_BASE role, which is designed for that purpose.
+
+## Rebroadcast timing, and how ROUTER_LATE works
+
+Due to the extremely limited bandwidth available, Meshtastic networks do not
+utilise complex routing algorithms that rely on additional communication
+between nodes. There is no equivalent to protocols such as OSPF, BGP etc. from
+the IP networking world. Instead, Meshtastic uses a combination of role
+selection, random delays, and timing based on the signal strength of a received
+packet to ensure that any given packet will be more likely to take a more
+efficient path across the network, while minimising unnecessary rebroadcasts
+that can add to congestion on the single frequency that is shared by the entire
+mesh.
+
+Any packet that is received with a remaining hop limit greater than zero is
+eligible for rebroadcast. Packets with a hop limit of zero are discarded after
+processing, and are not rebroadcast at all.
+
+### Contention Windows
+
+Meshtastic has three different 'contention windows' in which a packet may be
+sent. These windows can be best thought of as slices of time since the packet
+was received. They do not overlap.
+
+| Window  | Duration   | Roles                          | Description                                                                                                                                                    |
+|---------|------------|--------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Early   | Very short | ROUTER, REPEATER, CLIENT_BASE* | The first timeslot in which packets may be rebroadcast. Preempts other rebroadcasting, and can cause non-infrastructure roles to cancel their own rebroadcast. |
+| Default | Normal     | All non-early roles            | The second timeslot, in which all rebroadcasts take place by default unless a node is using a specific role which causes it to use another window.             |
+| Late    | Normal     | ROUTER_LATE                    | The final timeslot, in which ROUTER_LATE will rebroadcast if it hears another node rebroadcasting the packet before it.                                        |
+
+With the exception of ROUTER_LATE, all roles will only perform rebroadcasting
+within the window to which their role relates. ROUTER_LATE is a special case:
+under normal circumstances, it will behave identically to a CLIENT, and will
+attempt to rebroadcast within the default contention window, using the same
+timing behaviour as CLIENT. However, if it hears another node rebroadcasting
+the packet first (in *any* prior window), then it will defer its own
+rebroadcast of that packet to the late contention window instead. Within that
+late window, it will still use the same timing behaviour as CLIENT.
+
+This has the effect of ensuring that ROUTER_LATE will politely 'give way' to
+other nodes, thereby preserving the normal routing behaviour of the mesh. Other
+than the obviously higher airtime used, the impact of deploying a ROUTER_LATE
+node is identical to as if a CLIENT were deployed at that location.
+
+*CLIENT_BASE will only rebroadcast in the early window if the packet is to or
+from a favourite node. In all other situations, it will behave the same as a
+regular CLIENT, and use the normal window.
+
+### Random timing and SNR bias
+
+Within each contention window, a random delay is added before rebroadcasting a
+packet. That delay is then modified based on the signal-to-noise ratio (SNR) of
+the packet when it was received, with packets having a worse SNR (which
+typically corresponds to a worse or more distant link) ending up with a shorter
+delay, and high quality signals having a longer delay.
+
+The purpose of this is to ensure that, when a packet is heard by multiple other
+nodes, they mostly do not try to transmit at the same time, and that nodes
+which are further away are given 'first dibs' at rebroadcasting. While SNR is
+not an ideal proxy for distance, it does have a rough correlation, and will
+result - on average - in packets travelling further with each hop than they
+would using random timing alone.
+
+### Rebroadcast cancellation / move to late contention window
+
+In order to ensure that the single, shared frequency is not overloaded, all
+roles other than ROUTER, REPEATER, and ROUTER_LATE (and CLIENT_BASE when the
+packet is to or from a favourite node) will cancel rebroadcasting and discard
+the packet if they hear another node rebroadcasting it.
+
+ROUTER_LATE will, instead of cancelling its rebroadcast, defer it to the late
+contention window if it hears another node rebroadcasting the packet.
+
+### When packets are dropped
+
+While ROUTER_LATE will normally rebroadcast everything it hears, there are some
+specific exceptions:
+
+1. If the packet arrives with a hop limit of zero. These packets are considered to have reached the end of the line, and are not supposed to be passed on any further.
+2. If the TX (transmit) queue is full, and another packet arrives that is both eligible for rebroadcast, and has a higher priority than the lowest-priority packet in the TX queue, then the lowest-priority packet in the queue is discarded. This typically happens on busy meshes, or meshes that use a slower modulation configuration. ROUTER_LATE is particularly prone to this, because it stores deferred packets in the TX queue while waiting for the opportunity to transmit them during the late contention window.
+
+## Frequently asked questions
+
+### Why can't I use this on my roof?
+
+Because ROUTER_LATE tries to rebroadcast everything it hears, it adds a notable
+amount of traffic to the single, shared frequency used by the mesh. This can
+cause problematic congestion, collisions, and lost packets. If the overall
+traffic volume gets too high, it can significantly impact the performance of
+the mesh, sometimes to the point of rendering it unusable.
+
+If you insist on using this role as a roof node *anyway*, then please closely
+monitor the ChUtil (shared airtime use) and AirTXUtil (airtime used by just
+this node) stats on your node. If ChUtil gets higher than 25%, or AirUtilTX
+higher than around 7-8%, please cease using this role in order to preserve
+overall functionality of the mesh.
+
+### Why did my packet go via a regular CLIENT, instead of the ROUTER_LATE node?
+
+Because ROUTER_LATE is a 'polite' rebroadcaster, if another CLIENT node is more
+favourably located at that particular point in time, or simply wins the random
+timing race, it may rebroadcast the packet first. The ROUTER_LATE will still
+rebroadcast, but you may not notice, as the packet may have already arrived at
+its destination via another path first.
+
+### Why did my packet go via a ROUTER  or REPEATER node, instead of the ROUTER_LATE one in my area?
+
+ROUTER and REPEATER nodes preempt all other roles for rebroadcasting. If there
+is one in range, packets will go via that node before anything else. If ROUTER
+or REPEATER nodes are deployed in suboptimal locations, this can result in hop
+limits being reached prematurely.
+
+### Why can't I see the ROUTER_LATE node in my traceroute result?
+
+See the two above answers.
+
+### Why is traffic via a ROUTER_LATE node slow?
+
+Because ROUTER_LATE will defer rebroadcasting packets if it hears another node
+rebroadcasting them first, this can result in additional delays. This is
+particularly noticeable on slower modulation settings (e.g. LONG_FAST), where
+such delays can become quite substantial.
+
+### Why is traffic that should go via a ROUTER_LATE node going missing?
+
+The shared frequency used by the mesh in your area is likely busy, and as a
+result the ROUTER_LATE is dropping low-priority packets when its transmit queue
+is full.
+
+Note that some operations on the mesh can generate a large number of packets in
+a very short space of time, so the queue can easily go from empty to full in
+the space of just a few seconds.
+
+### I run a ROUTER or REPEATER in a suboptimal location. Should I change it to ROUTER_LATE?
+
+If your node *must* rebroadcast in order for nodes within its coverage area to
+communicate with the rest of the mesh properly, then use ROUTER_LATE. If this
+is a rooftop node, please use CLIENT_BASE or CLIENT instead.
+
+### My node is the only ROUTER around, but it isn't at 10,000ft altitude. Should I change it to ROUTER_LATE?
+
+If your node's coverage footprint is genuinely excellent, please keep it as
+ROUTER. ROUTER will preempt all other roles, and is effectively asserting that
+it is the best path for all traffic within range.
+
+Please note that ROUTER and REPEATER nodes will cause all rebroadcast roles
+other than ROUTER, REPEATER, ROUTER_LATE and CLIENT_BASE (for packets to / from
+favourite nodes only) within their coverage area to cancel their own
+rebroadcasts - so only deploy ROUTER nodes in locations that are *actually*
+properly suited to that behaviour.
+
+### My node in $LOCATION can receive, but nobody hears me when I transmit. Should I deploy a ROUTER_LATE to help?
+
+No. In this case, please deploy a CLIENT node nearby. This node will
+rebroadcast all packets from those nodes which have not made it out via another
+path, but will not unnecessarily consume airtime by repeating packets that
+those clients can already hear just fine.
+
+This scenario is quite common for devices with a compromised internal antenna
+(e.g. T1000-E).
+
+### Should I put a ROUTER_LATE on my vehicle?
+
+In most situations, no. However it can occasionally be appropriate if your
+vehicle is serving as a relay for e.g. a hiking party that cannot see the rest
+of the mesh otherwise, and you need to deploy temporary infrastructure coverage
+for the area in which they are hiking.
+
+If you do deploy a ROUTER_LATE on your vehicle for such a purpose, please
+remember to switch it back to a more appropriate role after your temporary
+activity is done.
+
+If you wish to have a rebroadcasting node on your vehicle specifically to serve
+your own node while you are inside nearby buildings, please use CLIENT (if you
+can receive but not transmit) or CLIENT_BASE (if your node needs assistance in
+both directions).
+
+### Will a ROUTER_LATE permanently installed on my vehicle help the mesh?
+
+No. Please don't do this - ROUTER_LATE is not intended as a mobile role, and
+using it in that manner will usually cause more problems than it solves.
+
+
+[1]: /blog/choosing-the-right-device-role/
