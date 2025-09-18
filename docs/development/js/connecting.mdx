@@ -8,7 +8,9 @@ sidebar_label: Connecting
 import { MeshDevice } from "@meshtastic/core";
 import { TransportHTTP } from "@meshtastic/transport-http";
 
-const connection = await TransportHTTP.create("10.0.0.10");
+// Enter the IP address of your Meshtastic device. By default they
+// are discoverable also as 'meshtastic.local'
+const connection = await TransportHTTP.create("meshtastic.local");
 const device = new MeshDevice(connection);
 await device.configure();
 // After the configure step the device connection is ready
