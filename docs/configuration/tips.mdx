@@ -10,7 +10,7 @@ import QRCode from "@site/docs/blocks/_qr-code.mdx";
 
 ## Roles
 
-It is strongly recommended to keep your [ROLE](/docs/configuration/radio/device#roles) set to `CLIENT` or `CLIENT_MUTE`. Only use other roles if you have a specific, well-understood reason to do so. Read our [blog post about choosing the best role](/blog/choosing-the-right-device-role/).
+It is strongly recommended to keep your [ROLE](/docs/configuration/radio/device#roles) set to `CLIENT`, `CLIENT_MUTE`, or `CLIENT_BASE`. Only use other roles if you have a specific, well-understood reason to do so. Read our [blog post about choosing the best role](/blog/choosing-the-right-device-role/).
 
 ### Recommended Roles
 
@@ -24,6 +24,11 @@ It is strongly recommended to keep your [ROLE](/docs/configuration/radio/device#
   - Use with a personal handheld device when located near a more powerful node (such as a rooftop node) in a congested network.
   - Use when multiple nodes are in close proximity. Set the best-positioned node to `CLIENT` and the others to `CLIENT_MUTE`.
   - Perfect for indoor nodes that only talk to one outdoor node - since they can't reach other nodes anyway, repeating messages would just waste bandwidth.
+
+- `CLIENT_BASE` nodes prioritize rebroadcasting messages from your other personal nodes.
+  - Use for a stronger or well-positioned attic/roof “base station” node to distribute messages more widely from your own weaker, indoor, or less-well-positioned nodes.
+  - Set one node to `CLIENT_BASE`. Set your other nodes (typically `CLIENT` or `CLIENT_MUTE`) as favorites on the `CLIENT_BASE`.
+  - Perfect for ensuring all your nearby nodes take full advantage of your stronger, well-positioned attic/roof node.
 
 ![Client Node Example](/img/configuration/client.webp)
 *One example of a 'Client' node.  Photo credit: Cully@KBOXLABS*
