@@ -5,6 +5,22 @@ sidebar_label: T-Deck
 sidebar_position: 4
 ---
 
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+The T-Deck series is a family of compact handheld keyboard devices that pair a physical keyboard with different touchscreen displays. Variants include the original LCD T-Deck (and Plus) with support for MUI, and the new T-Deck Pro e-ink model for low-power, sunlight-readable operation.
+
+<Tabs
+groupId="t-deck"
+queryString="t-deck"
+defaultValue="t-deck"
+values={[
+{label: 'T-Deck/T-Deck Plus', value: 't-deck'},
+{label: 'T-Deck Pro', value: 't-deck-pro'}
+]}>
+
+<TabItem value = "t-deck">
+
 The T-Deck is a compact device featuring a 2.8-inch IPS LCD touch screen with a resolution of 320x240 pixels, integrated with a small keyboard, trackball, microphone and speaker running on an ESP32-S3 dual-core processor. A secondary ESP32-C3 MCU is used to manage the keyboard.
 
 T-Deck Plus variant also comes with a GPS module and a 2000 mAh battery
@@ -81,3 +97,45 @@ With the device now in the Espressif Firmware Download mode, you can proceed wit
     - [LilyGO Store (T-Deck Plus)](https://msh.to/t-deck-plus/)
 
 ![T-Deck](/img/hardware/LILYGO-T-DECK.webp)
+
+</TabItem>
+
+<TabItem value = "t-deck-pro">
+
+The T-Deck Pro is a compact handheld device that pairs a 3.1 inch e-ink touchscreen with a physical keyboard, microphone, speaker, integrated 1400 mAH battery in a sleek case. It is available in two main variants: A7682E (4G) and PCM5102A (Voice).
+
+## Specifications
+
+- **MCU**
+  - ESP32-S3FN16R8 (WiFi & Bluetooth 5 LE)
+- **LoRa Transceiver**
+  - Semtech SX1262
+- **Frequency options**
+  - 915 MHz
+  - 868 MHz
+  - 433 MHz
+  - 920 MHz
+- **Antenna**
+  - Integrated PCB antenna for LoRa
+- **Connectors**
+  - USB-C
+  - 3.5mm Audio Jack
+  - Qwiic connector
+
+## Features
+
+- Complete device with integrated 1400 mAh battery in sleek case.
+- I2S Speaker/Microphone with optional 3.5mm Audio Jack
+
+## Resources
+
+- Firmware file: `firmware-t-deck-pro-X.X.X.xxxxxxx.bin`
+- Purchase Links:
+  - International
+    - [LilyGO Store (T-Deck Pro)](https://msh.to/t-deck-pro/)
+
+![T-Deck](/img/hardware/LILYGO-T-DECK-PRO.webp)
+
+</TabItem>
+
+</Tabs>
