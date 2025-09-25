@@ -15,7 +15,6 @@ queryString="rakcore"
 defaultValue="RAK4631"
 values={[
 {label: 'RAK4631', value: 'RAK4631'},
-{label: 'RAK11200', value: 'RAK11200'},
 {label: 'RAK11310', value: 'RAK11310'}
 ]}>
 
@@ -52,10 +51,10 @@ Please be aware of the difference between the RAK4631 (Arduino bootloader) and t
 - Further information on the RAK4631 can be found on the [RAK Documentation Center](https://docs.rakwireless.com/product-categories/wisblock/rak4631/overview/#product-description).
 - Purchase Links:
   - US
-    - [Rokland - US915 Mhz](https://store.rokland.com/products/rak-wireless-rak4631-nordic-nrf52840-ble-core-module-for-lorawan-with-lora-sx1262)
+    - [Rokland - US915 Mhz](https://msh.to/rokland-4631)
   - International
-    - [RAKwireless Store](https://store.rakwireless.com/products/rak4631-lpwan-node?utm_source=website_partner&utm_medium=referral&utm_campaign=meshtastic_rak_collab)
-    - [RAKwireless AliExpress]https://www.aliexpress.com/item/3256801470104151.html?utm_source=website_partner&utm_medium=referral&utm_campaign=meshtastic_rak_collab
+    - [RAKwireless Store](https://msh.to/rakwireless-4631)
+    - [RAKwireless AliExpress](https://msh.to/aliexpress-4631)
 
 <img
   alt="RAK4631 Core Module"
@@ -93,73 +92,6 @@ meshtastic --set external_notification.output 10
 
 This will use IO6 on a RAK4631
 
-</TabItem>	
-<TabItem value="RAK11200">
-
-## RAK11200 - ESP32
-
-The RAK11200 does not contain a LoRa transceiver, and thus needs to be added separately in the form of the [RAK13300 LPWAN module](https://store.rakwireless.com/products/rak13300-wisblock-lpwan). This occupies the IO Port of the base board.
-
-- RAK11200
-  - **MCU:**
-    - ESP32-WROVER
-      - Bluetooth 4.2
-      - WiFi 802.11 b/g/n
-      - High power consumption (relative to nRF52)
-
-### Flashing the RAK11200
-
-To flash the RAK11200, you need to manually place it into Espressif’s firmware download mode. Unlike other ESP32 boards, the RAK11200 does not support automatic boot mode selection. You must force it into download mode before flashing Meshtastic.
-
-:::warning
-
-Do not proceed unless an antenna is connected to avoid possible damage to the device's radio.
-
-:::
-
-The following process will manually place the device into Espressif Firmware Download mode:
-
-1. Ensure the device is powered on and connected via USB.
-2. Locate the **BOOT** pin on the J10 header of the WisBlock Base Board ([RAK19007](/docs/hardware/devices/rak-wireless/wisblock/base-board/?rakbase=RAK19007) / [RAK5005-O](/docs/hardware/devices/rak-wireless/wisblock/base-board/?rakbase=RAK5005-O)).
-3. Connect **BOOT** to **GND** (the GND pin is adjacent to BOOT on the J10 header).
-   <div class="no-print">
-     <details>
-       <summary>Diagram</summary>
-       <div>
-         <img
-           src="/img/hardware/rak/rak11200_boot_mode.webp"
-           alt="RAK11200 Boot Mode Connection Diagram"
-         />
-       </div>
-     </details>
-   </div>
-4. Briefly tap the reset button.
-
-Once the device is in Espressif Firmware Download mode, you can proceed with flashing using one of the supported flashing methods. It’s generally recommended to use the [Web Flasher](https://flasher.meshtastic.org/), selecting the appropriate RAK11200 firmware.
-
-:::note
-
-If the device does not enter download mode, double-check the BOOT to GND connection before attempting again.
-
-:::
-
-### Resources
-
-- Firmware file: `firmware-rak11200-X.X.X.xxxxxxx.bin`
-- Further information on the RAK11200 can be found on the [RAK Documentation Center](https://docs.rakwireless.com/product-categories/wisblock/rak11200/overview/#product-description).
-- Purchase Links:
-  - US
-    - [Rokland](https://store.rokland.com/products/rakwireless-rak11200-wifi-and-ble-espressif-esp32-wrover-pid-110023)
-  - International
-    - [RAKwireless Store](https://store.rakwireless.com/products/wiscore-esp32-module-rak11200?utm_source=website_partner&utm_medium=referral&utm_campaign=meshtastic_rak_collab)
-    - [RAKwireless AliExpress](https://www.aliexpress.com/item/3256802312474717.html?utm_source=website_partner&utm_medium=referral&utm_campaign=meshtastic_rak_collab)
-
-<img
-  alt="RAK4631 5005 11200"
-  src="/img/hardware/rak11200.webp"
-  style={{ zoom: "50%" }}
-/>
-
 </TabItem>
 
 <TabItem value="RAK11310">
@@ -196,11 +128,11 @@ If the device does not enter download mode, double-check the BOOT to GND connect
 - Further information on the RAK11310 can be found on the [RAK Documentation Center](https://docs.rakwireless.com/product-categories/wisblock/rak11310/overview/#product-description).
 - Purchase Links:
   - US
-    - [Rokland](https://store.rokland.com/products/rak-raspberry-pi-rp2040-core-module-for-lorawan-with-lora-sx1262-us915-mhz-rak11310-pid-116003)
+    - [Rokland](https://msh.to/rokland-rak11310)
   - International
-    - [RAKwireless WisMesh RP2040 Starter Kit](https://store.rakwireless.com/products/wisblock-rp2040-starter-kit-for-meshtastic?utm_source=website_partner&utm_medium=referral&utm_campaign=meshtastic_rak_collab)
-    - [RAKwireless Store](https://store.rakwireless.com/products/rak11310-wisblock-lpwan-module)
-    - [RAKwireless AliExpress Starter Kit](https://www.aliexpress.com/item/3256803225175784.html?utm_source=website_partner&utm_medium=referral&utm_campaign=meshtastic_rak_collab)
+    - [RAKwireless WisMesh RP2040 Starter Kit](https://msh.to/rak11310)
+    - [RAKwireless Store](https://msh.to/rakwireless-11310)
+    - [RAKwireless AliExpress](https://msh.to/aliexpress-11310)
 
 </TabItem>	
 </Tabs>
