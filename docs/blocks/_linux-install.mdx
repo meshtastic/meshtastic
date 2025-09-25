@@ -27,6 +27,7 @@ import { Icon } from "@iconify/react";
     **Install - Debian 12 (`bookworm`):**
 
     ```shell
+    [[ "$(. /etc/os-release && echo $NAME)" == Raspbian* ]] && echo "ERROR: Raspberry Pi OS (32-bit) detected, please use the Raspbian repos."
     echo 'deb http://download.opensuse.org/repositories/network:/Meshtastic:/beta/Debian_12/ /' | sudo tee /etc/apt/sources.list.d/network:Meshtastic:beta.list
     curl -fsSL https://download.opensuse.org/repositories/network:Meshtastic:beta/Debian_12/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/network_Meshtastic_beta.gpg > /dev/null
     sudo apt update
@@ -66,7 +67,7 @@ import { Icon } from "@iconify/react";
     :::warning
     These builds are only suitable for 32-bit *armhf* Raspberry Pi OS installations.
 
-    For **64-bit** Raspberry Pi OS installations, please use the [<Icon icon="mdi:debian"/> Debian](./?os=debian#installing-meshtasticd) packages.
+    For **64-bit** Raspberry Pi OS installations, please use the [<Icon icon="mdi:debian"/> Debian](/docs/software/linux/installation/?os=debian) packages.
     :::
 
     | Feature                  | Status |
@@ -81,6 +82,7 @@ import { Icon } from "@iconify/react";
     **Install - Raspbian 12 (`bookworm`):**
 
     ```shell
+    [[ "$(. /etc/os-release && echo $NAME)" != Raspbian* ]] && echo "ERROR: Raspberry Pi OS (32-bit) not detected, please use the Debian repos."
     echo 'deb http://download.opensuse.org/repositories/network:/Meshtastic:/beta/Raspbian_12/ /' | sudo tee /etc/apt/sources.list.d/network:Meshtastic:beta.list
     curl -fsSL https://download.opensuse.org/repositories/network:Meshtastic:beta/Raspbian_12/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/network_Meshtastic_beta.gpg > /dev/null
     sudo apt update
@@ -305,5 +307,5 @@ import { Icon } from "@iconify/react";
 
 [MUI]: /docs/software/meshtastic-ui/
 [WebClient]: /docs/software/web-client/
-[USBRadio]: #usb
-[SPIRadio]: #spi-raspberry-pi
+[USBRadio]: /docs/hardware/devices/linux-native-hardware/
+[SPIRadio]: /docs/hardware/devices/linux-native-hardware/
