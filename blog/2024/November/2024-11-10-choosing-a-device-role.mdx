@@ -9,6 +9,8 @@ hide_table_of_contents: false
 image: "/design/web/social-preview-1200x630.png"
 ---
 
+_Last updated: September 24, 2025_
+
 When setting up your Meshtastic network, configuring the correct Role for each device can be crucial for optimizing performance and ensuring reliable communication. Conversely, the pitfalls of choosing the incorrect Role can lead to congestion and poor performance on your mesh. In this post, we'll explore why you might choose certain device roles and avoid others.
 
 {/* truncate */}
@@ -27,7 +29,13 @@ Despite the apparent baggage of the term _Client_ in some technological contexts
 
 The `CLIENT_MUTE` role is similar to the `CLIENT` role but with one key difference: it does not repeat or route messages. This role is ideal for devices that are intended to be used in areas with high network traffic where additional message routing could cause congestion. By using the `CLIENT_MUTE` role, you can ensure that the device will only send and receive its own messages without contributing to network traffic.
 
-This role is also highly recommended if you are a mesh enthusiast with multiple devices. Select one of your devices to be a `CLIENT` and set the rest to `CLIENT_MUTE` to keep your airtime usage more responsible.
+This role is also highly recommended if you are a mesh enthusiast with multiple devices. Select one of your devices to be a `CLIENT` or `CLIENT_BASE` and set the rest to `CLIENT_MUTE` to keep your airtime usage more responsible.
+
+### Client Base
+
+The `CLIENT_BASE` role is similar to `CLIENT`, but has priority in rebroadcasting messages from or to any of its favorited nodes. For mesh enthusiasts with multiple devices, this role is perfect for ensuring all your nearby nodes take full advantage of your stronger, well-positioned attic/roof “base station” node.
+
+If you have an attic/roof node, set this node to `CLIENT_BASE`. Set your other nodes (typically `CLIENT` or `CLIENT_MUTE`) as favorites on the `CLIENT_BASE`.
 
 ### Router and Repeater
 
