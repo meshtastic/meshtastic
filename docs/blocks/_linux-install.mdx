@@ -4,8 +4,14 @@ import { Icon } from "@iconify/react";
 
 <Tabs groupId="operating-systems" queryString="os">
   <TabItem value="debian" label={<><Icon icon="mdi:debian" style={{ marginRight: "0.25rem" }} height="1.5rem" /> Debian</>} default>
-    Debian packages are provided via [OpenSUSE Build Service](https://build.opensuse.org/project/show/network:Meshtastic:beta).
-     [![Debian build status](https://build.opensuse.org/projects/network:Meshtastic:beta/packages/meshtasticd/badge.svg?type=percent)](https://build.opensuse.org/package/show/network:Meshtastic:beta/meshtasticd)
+    Debian packages are provided via [<Icon icon="simple-icons:opensuse"/> OpenSUSE Build Service](https://build.opensuse.org/project/show/network:Meshtastic:beta).
+
+    | Feature                  | Status |
+    | ------------------------ | ------ |
+    | 🔌 [USB Radio][USBRadio] | ✅     |
+    | 🕸️ [SPI Radio][SPIRadio] | ✅     |
+    | 📱 [MUI][MUI]            | ✅     |
+    | 🌐 [Web][WebClient]      | ✅     |
 
     Supported: `trixie` (13), `bookworm` (12)
 
@@ -21,6 +27,7 @@ import { Icon } from "@iconify/react";
     **Install - Debian 12 (`bookworm`):**
 
     ```shell
+    [[ "$(. /etc/os-release && echo $NAME)" == Raspbian* ]] && echo "ERROR: Raspberry Pi OS (32-bit) detected, please use the Raspbian repos."
     echo 'deb http://download.opensuse.org/repositories/network:/Meshtastic:/beta/Debian_12/ /' | sudo tee /etc/apt/sources.list.d/network:Meshtastic:beta.list
     curl -fsSL https://download.opensuse.org/repositories/network:Meshtastic:beta/Debian_12/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/network_Meshtastic_beta.gpg > /dev/null
     sudo apt update
@@ -54,15 +61,28 @@ import { Icon } from "@iconify/react";
     </details>
 
   </TabItem>
-  <TabItem value="raspbian" label={<><Icon icon="cib:raspberry-pi" style={{ marginRight: "0.25rem" }} height="1.5rem" /> Raspbian</>}>
-    Raspbian (Raspberry Pi OS) packages are provided via [OpenSUSE Build Service](https://build.opensuse.org/project/show/network:Meshtastic:beta).
-     [![Raspbian build status](https://build.opensuse.org/projects/network:Meshtastic:beta/packages/meshtasticd/badge.svg?type=percent)](https://build.opensuse.org/package/show/network:Meshtastic:beta/meshtasticd)
+  <TabItem value="raspbian" label={<><Icon icon="cib:raspberry-pi" style={{ marginRight: "0.25rem" }} height="1.5rem" /> Raspbian (32-bit)</>}>
+    Raspbian (Raspberry Pi OS) packages are provided via [<Icon icon="simple-icons:opensuse"/> OpenSUSE Build Service](https://build.opensuse.org/project/show/network:Meshtastic:beta).
+
+    :::warning
+    These builds are only suitable for 32-bit *armhf* Raspberry Pi OS installations.
+
+    For **64-bit** Raspberry Pi OS installations, please use the [<Icon icon="mdi:debian"/> Debian](/docs/software/linux/installation/?os=debian) packages.
+    :::
+
+    | Feature                  | Status |
+    | ------------------------ | ------ |
+    | 🔌 [USB Radio][USBRadio] | ✅     |
+    | 🕸️ [SPI Radio][SPIRadio] | ✅     |
+    | 📱 [MUI][MUI]            | ✅     |
+    | 🌐 [Web][WebClient]      | ✅     |
 
     Supported: `bookworm` (12)
 
     **Install - Raspbian 12 (`bookworm`):**
 
     ```shell
+    [[ "$(. /etc/os-release && echo $NAME)" != Raspbian* ]] && echo "ERROR: Raspberry Pi OS (32-bit) not detected, please use the Debian repos."
     echo 'deb http://download.opensuse.org/repositories/network:/Meshtastic:/beta/Raspbian_12/ /' | sudo tee /etc/apt/sources.list.d/network:Meshtastic:beta.list
     curl -fsSL https://download.opensuse.org/repositories/network:Meshtastic:beta/Raspbian_12/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/network_Meshtastic_beta.gpg > /dev/null
     sudo apt update
@@ -71,9 +91,16 @@ import { Icon } from "@iconify/react";
 
   </TabItem>
   <TabItem value="ubuntu" label={<><Icon icon="mdi:ubuntu" style={{ marginRight: "0.25rem" }} height="1.5rem" /> Ubuntu</>}>
-    Ubuntu packages are provided via [Canonical Launchpad](https://launchpad.net/~meshtastic/+archive/ubuntu/beta).
+    Ubuntu packages are provided via [<Icon icon="simple-icons:launchpad"/> Canonical Launchpad](https://launchpad.net/~meshtastic/+archive/ubuntu/beta).
 
-    Supported: `plucky` (25.04), `oracular` (24.10), `noble` (24.04 LTS), `jammy` (22.04 LTS)
+    | Feature                  | Status |
+    | ------------------------ | ------ |
+    | 🔌 [USB Radio][USBRadio] | ✅     |
+    | 🕸️ [SPI Radio][SPIRadio] | ✅     |
+    | 📱 [MUI][MUI]            | ✅     |
+    | 🌐 [Web][WebClient]      | ✅     |
+
+    Supported: `plucky` (25.04), `noble` (24.04 LTS), `jammy` (22.04 LTS)
 
     **Install:**
 
@@ -86,10 +113,28 @@ import { Icon } from "@iconify/react";
     sudo apt install meshtasticd
     ```
 
+    <details>
+      <summary>Experimental builds</summary>
+
+      These builds are provided without support, please **do not file issues** relating to Experimental builds.
+
+      Experimental Support: `questing` (25.10)
+
+      **Install:**
+
+      > Install via the instructions above.
+    </details>
+
   </TabItem>
   <TabItem value="fedora" label={<><Icon icon="mdi:fedora" style={{ marginRight: "0.25rem" }} height="1.5rem" /> Fedora</>}>
-    Fedora packages are provided via [Fedora COPR](https://copr.fedorainfracloud.org/coprs/g/meshtastic/beta/).
-    [![Copr build status](https://copr.fedorainfracloud.org/coprs/g/meshtastic/beta/package/meshtasticd/status_image/last_build.png)](https://copr.fedorainfracloud.org/coprs/g/meshtastic/beta/package/meshtasticd/)
+    Fedora packages are provided via [<Icon icon="mdi:fedora"/> Fedora COPR](https://copr.fedorainfracloud.org/coprs/g/meshtastic/beta/).
+
+    | Feature                  | Status |
+    | ------------------------ | ------ |
+    | 🔌 [USB Radio][USBRadio] | ✅     |
+    | 🕸️ [SPI Radio][SPIRadio] | ✅     |
+    | 📱 [MUI][MUI]            | ✅     |
+    | 🌐 [Web][WebClient]      | ✅     |
 
     Supported: Fedora `42`, Fedora `41`
 
@@ -102,11 +147,29 @@ import { Icon } from "@iconify/react";
     sudo dnf install meshtasticd
     ```
 
+    <details>
+      <summary>Experimental builds</summary>
+
+      These builds are provided without support, please **do not file issues** relating to Experimental builds.
+
+      Experimental Support: Fedora `43`
+
+      **Install:**
+
+      > Install via the instructions above.
+    </details>
+
   </TabItem>
   <TabItem value="epel" label={<><Icon icon="mdi:redhat" style={{ marginRight: "0.25rem" }} height="1.5rem" /> RedHat (EPEL)</>}>
-    RedHat (EPEL) packages are provided via [Fedora COPR](https://copr.fedorainfracloud.org/coprs/g/meshtastic/beta/).
+    RedHat (EPEL) packages are provided via [<Icon icon="mdi:fedora"/> Fedora COPR](https://copr.fedorainfracloud.org/coprs/g/meshtastic/beta/).
     Built with Redhat's [UBI](https://www.redhat.com/en/blog/introducing-red-hat-universal-base-image).
-    [![Copr build status](https://copr.fedorainfracloud.org/coprs/g/meshtastic/beta/package/meshtasticd/status_image/last_build.png)](https://copr.fedorainfracloud.org/coprs/g/meshtastic/beta/package/meshtasticd/)
+
+    | Feature                  | Status |
+    | ------------------------ | ------ |
+    | 🔌 [USB Radio][USBRadio] | ✅     |
+    | 🕸️ [SPI Radio][SPIRadio] | ✅     |
+    | 📱 [MUI][MUI]            | ✅     |
+    | 🌐 [Web][WebClient]      | ✅     |
 
     Supported: EPEL `9`, EPEL `10`
 
@@ -125,17 +188,31 @@ import { Icon } from "@iconify/react";
 
   </TabItem>
   <TabItem value="docker" label={<><Icon icon="mdi:docker" style={{ marginRight: "0.25rem" }} height="1.5rem" /> Docker</>}>
-    Docker containers are provided via [DockerHub](https://hub.docker.com/r/meshtastic/meshtasticd).
+    Docker containers are provided via [<Icon icon="mdi:docker"/> DockerHub](https://hub.docker.com/r/meshtastic/meshtasticd).
 
     Supported platforms: `linux/amd64`, `linux/arm64`, `linux/arm/v7`
 
-    **Pull Debian:**
+    **Debian:**
+
+    | Feature                  | Status |
+    | ------------------------ | ------ |
+    | 🔌 [USB Radio][USBRadio] | ✅     |
+    | 🕸️ [SPI Radio][SPIRadio] | ✅     |
+    | 📱 [MUI][MUI]            | ❌     |
+    | 🌐 [Web][WebClient]      | ✅     |
 
     ```shell
     docker pull meshtastic/meshtasticd:beta-debian
     ```
 
-    **Pull Alpine:**
+    **Alpine:**
+
+    | Feature                  | Status |
+    | ------------------------ | ------ |
+    | 🔌 [USB Radio][USBRadio] | ✅     |
+    | 🕸️ [SPI Radio][SPIRadio] | ✅     |
+    | 📱 [MUI][MUI]            | ❌     |
+    | 🌐 [Web][WebClient]      | ❌     |
 
     ```shell
     docker pull meshtastic/meshtasticd:beta-alpine
@@ -145,9 +222,14 @@ import { Icon } from "@iconify/react";
 
   </TabItem>
   <TabItem value="flatpak" label={<><Icon icon="simple-icons:flatpak" style={{ marginRight: "0.25rem" }} height="1.5rem" /> Flatpak</>}>
-    Flatpaks are provided via [<Icon icon="simple-icons:flathub" /> FlatHub](https://flathub.org/apps/org.meshtastic.meshtasticd).
+    Flatpaks are provided via [<Icon icon="simple-icons:flathub"/> FlatHub](https://flathub.org/apps/org.meshtastic.meshtasticd).
 
-    Includes ✨ [Meshtastic UI](/docs/software/meshtastic-ui/).
+    | Feature                  | Status |
+    | ------------------------ | ------ |
+    | 🔌 [USB Radio][USBRadio] | ✅     |
+    | 🕸️ [SPI Radio][SPIRadio] | ❌     |
+    | 📱 [MUI][MUI]            | ✅     |
+    | 🌐 [Web][WebClient]      | ❌     |
 
     Supported platforms: `x86_64`, `aarch64`
 
@@ -165,14 +247,17 @@ import { Icon } from "@iconify/react";
     flatpak run org.meshtastic.meshtasticd
     ```
 
-    Notes:
-    - Flatpak releases currently only support USB radio connections, SPI radio connections are not supported.
-    - Flatpak releases do not currently support the `web` component.
-
   </TabItem>
   <TabItem value="openwrt" label={<><Icon icon="simple-icons:openwrt" style={{ marginRight: "0.25rem" }} height="1.5rem" /> OpenWrt</>}>
 
-    Supported OpenWrt Versions: SNAPSHOT, 24.10
+    | Feature                  | Status |
+    | ------------------------ | ---------------------------------------------------- |
+    | 🔌 [USB Radio][USBRadio] | ✅                                                   |
+    | 🕸️ [SPI Radio][SPIRadio] | [⏸️](https://github.com/openwrt/packages/pull/26832) |
+    | 📱 [MUI][MUI]            | ❌                                                   |
+    | 🌐 [Web][WebClient]      | ✅                                                   |
+
+    Supported OpenWrt Versions: `SNAPSHOT`, `24.10`, `23.05`, `22.03`
 
     Supported platforms:
     <details>
@@ -219,3 +304,8 @@ import { Icon } from "@iconify/react";
 
   </TabItem>
 </Tabs>
+
+[MUI]: /docs/software/meshtastic-ui/
+[WebClient]: /docs/software/web-client/
+[USBRadio]: /docs/hardware/devices/linux-native-hardware/
+[SPIRadio]: /docs/hardware/devices/linux-native-hardware/
