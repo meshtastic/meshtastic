@@ -71,10 +71,11 @@ OTA firmware updates are available on iOS & iPadOS using the nRF Device Firmware
 1. Download the firmware release you wish to install from the [Meshtastic Download Page](/downloads), [Meshtastic GitHub](https://github.com/meshtastic/firmware/releases), or via the iOS or iPadOS app.
 2. Unzip the firmware folder
 3. Open the nRF DFU App and select the correct device firmware file (will end with -ota.zip)
-4. Connect to your device
-5. Upload the firmware
+4. In the nRF DFU Settings (in the upper right hand corner) enable "Packets receipt notification" and set the "Numer of Packets" to 10.
+5. Connect to your device
+6. Upload the firmware
 
-The iPhone's auto-lock feature could potentially interrupt the Bluetooth firmware upload. To avoid this, occasionally tap on your screen, or temporarily set the auto-lock to "Never" during the upload process to ensure that the phone stays awake and the upload completes without interruption.
+The iPhone's auto-lock feature could potentially interrupt the Bluetooth firmware upload. To avoid this, occasionally tap on your screen, or temporarily set the auto-lock to "Never" during the upload process to ensure that the phone stays awake and the upload completes without interruption. You might consider turning on Airplane mode and disabling WiFi to prevent interruptions during the upload.
 
 If the update fails, you may find that adjusting the packet settings can help:
 
