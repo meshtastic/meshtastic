@@ -7,9 +7,11 @@ The following libraries must be installed before building `meshtasticd`:
   <TabItem value="debian" label={<><Icon icon="mdi:debian" style={{ marginRight: "0.25rem" }} height="1.5rem" /> Debian</>} default>
   ```shell
   # Base dependencies
-  sudo apt install libgpiod-dev libyaml-cpp-dev libbluetooth-dev libusb-1.0-0-dev libi2c-dev libuv1-dev
+  sudo apt install libgpiod-dev libyaml-cpp-dev libbluetooth-dev libusb-1.0-0-dev libi2c-dev libuv1-dev libxkbcommon-dev libinput-dev
   # Optional dependencies for web server support
   sudo apt install openssl libssl-dev libulfius-dev liborcania-dev
+  # Optional dependencies for sdl support
+  sudo apt install libsdl2-dev
   ```
   </TabItem>
 
@@ -21,6 +23,8 @@ The following libraries must be installed before building `meshtasticd`:
   sudo dnf install gcc-c++ pkgconfig(yaml-cpp) pkgconfig(libgpiod) pkgconfig(bluez) pkgconfig(libusb-1.0) libi2c-devel pkgconfig(libuv)
   # Optional dependencies for web server support
   sudo dnf install pkgconfig(openssl) pkgconfig(liborcania) pkgconfig(libyder) pkgconfig(libulfius)
+  # Optional dependencies for sdl support
+  sudo dnf install sdl2-compat-dev
   ```
   </TabItem>
 </Tabs>
