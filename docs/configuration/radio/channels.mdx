@@ -108,8 +108,14 @@ If enabled, messages from the mesh will be sent to the **public** internet throu
 
 Set to `false` by default for all channels.
 
-### Mute
-If enabled, messages received over the channel will not invoke the devices buzzer if present. UI notifications such as `"New Message From []"` are also blocked, decluttering the display.
+## Channel Config Client Availability
+
+## Channel Module Settings
+
+The channel module settings options are: Is muted and position precision. Channel module settings are embedded in the Channel protobuf as a ModuleSettings protobuf and sent as an admin message.
+
+### Is Muted
+If enabled, the `is_muted` setting silences invocation of the `ExternalNotificationModule` when messages are received over the specified channel(s). UI notifications such as `"New Message From []"` are also blocked from popup.
 
 Set to `false` by default for all channels.
 
@@ -119,11 +125,13 @@ When alerts are active, notification's containing a bell character ignore all mu
 
 :::
 
-## Channel Config Client Availability
+Control the channel's notification behaviour.
 
-## Channel Module Settings
+```shell title="Toggle is_muted on the PRIMARY channel"
+meshtastic --ch-set module_settings.is_muted true --ch-index 0
+meshtastic --ch-set module_settings.is_muted false --ch-index 0
+```
 
-The channel module settings options are: position precision. Channel module settings are embedded in the Channel protobuf as a ModuleSettings protobuf and sent as an admin message.
 
 ### Position Precision
 
@@ -301,14 +309,6 @@ meshtastic --ch-set uplink_enabled false --ch-index 0
 ```shell title="Enable/Disable Downlink on SECONDARY channel"
 meshtastic --ch-set downlink_enabled true --ch-index 1
 meshtastic --ch-set downlink_enabled false --ch-index 5
-```
-
-##### Mute
-Control the channel's notification behaviour.
-
-```shell title="Toggle mute on the PRIMARY channel"
-meshtastic --ch-set mute true --ch-index 0
-meshtastic --ch-set mute false --ch-index 0
 ```
 
 #### Setting Position Precision
