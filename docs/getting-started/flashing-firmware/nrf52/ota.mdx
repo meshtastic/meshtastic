@@ -66,7 +66,7 @@ OTA firmware updates are available for Android using an older release of the mor
 
 #### Apple
 
-OTA firmware updates are available on iOS & iPadOS using the nRF Device Firmware Update App available through the [Apple App Store](https://apps.apple.com/us/app/nrf-device-firmware-update/id1624454660)
+OTA firmware updates are available on iOS & iPadOS using the nRF Device Firmware Update App available through the [Apple App Store](https://apps.apple.com/us/app/nrf-device-firmware-update/id1624454660). Note that if the OTA update fails your device may stop working until you gain physical access to it and upload firmware over USB.
 
 1. Download the firmware release you wish to install from the [Meshtastic Download Page](/downloads), [Meshtastic GitHub](https://github.com/meshtastic/firmware/releases), or via the iOS or iPadOS app.
 2. Unzip the firmware folder
@@ -74,11 +74,12 @@ OTA firmware updates are available on iOS & iPadOS using the nRF Device Firmware
 4. Connect to your device
 5. Upload the firmware
 
-The iPhone's auto-lock feature could potentially interrupt the Bluetooth firmware upload. To avoid this, occasionally tap on your screen, or temporarily set the auto-lock to "Never" during the upload process to ensure that the phone stays awake and the upload completes without interruption.
+:::Info
+With the iPhone, interrupting the OTA upload can cause it to fail and leave your device in a non-working state. If your node is difficult to reach physically (such as on a roof top) you should follow the steps below before beginning the firmware upload to increase your chances of a successful OTA update.
+:::
+1. In the nRF Device Firmware Update App application Settings (in the upper right hand corner) enable "**Packets receipt notification**" and set the "**Numer of Packets**" to 5. 
+2. Turn on Airplane mode and disable WiFi to prevent interruptions during the upload. 
+3. The iPhone's auto-lock feature could potentially interrupt the Bluetooth firmware upload. To avoid this, occasionally tap on your screen, or temporarily set the auto-lock to "Never" during the upload process to ensure that the phone stays awake and the upload completes without interruption. 
 
-If the update fails, you may find that adjusting the packet settings can help:
-
-1. In settings, enable "**Packets Receipt Notification**". 
-2. Change "**Number of Packets**" to a lower value. Some users report success with "5". 
 </TabItem>
 </Tabs>
