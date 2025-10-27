@@ -49,3 +49,25 @@ The method with the least platform support, which uses the [Web Serial API](http
 The source code for the WebUI can be found on our [GitHub](https://github.com/meshtastic/web)
 
 Instructions for building and running the project can be found in the repo's readme.
+
+## SBC Linux manual update
+The WebUI can be manually updated on linux systems using the precompiled build tar.
+
+Download latest build.tar file, extract to /usr/local/shared/meshtasticd/web.
+
+```bash
+# Extract build.tar
+wget https://github.com/meshtastic/web/releases/download/v2.6.7/build.tar
+mkdir -p web && tar xf build.tar -C web
+
+# Extract files.
+gunzip web/ -r
+```
+
+# Edit config.yaml and change Webserver RootPath to location where you put extracted build.tar files
+  RootPath: /usr/local/share/meshtasticd/web # Root Dir of WebServer
+
+```bash
+# Make meshtasticd folder, and move files to the required directory
+sudo mkdir /usr/local/shared/meshtasticd ; sudo mv web /usr/local/shared/meshtasticd/
+```
