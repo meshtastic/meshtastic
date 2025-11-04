@@ -10,10 +10,12 @@ import { Dark, Light } from "/src/components/ColorMode";
 
 ## What is BaseUI?
 
-
 BaseUI is the stock UI interface that's designed to support all devices with screens - making it more intuitive, more capable including new standalone features, and easier to use on a wider range of devices. BaseUI starts a user's journey with Meshtastic and serves as the base or foundation of the experience.
 
-<img src="/img/configuration/baseui/baseui-01-welcome.jpg" alt="BaseUI Welcome Screen" />
+<img
+  src="/img/configuration/baseui/baseui-01-welcome.webp"
+  alt="BaseUI Welcome Screen"
+/>
 
 ## Supported Devices
 
@@ -26,22 +28,34 @@ BaseUI is by default installed on supported devices using the [Meshtastic Web Fl
 ## Initial Setup
 
 - [Set your LoRa region](/docs/configuration/region-by-country/)
-<Light>
-<img src="/img/configuration/baseui/baseui-03-lora-green.jpg" alt="LoRa Picker Menu" />
-</Light>
-<Dark>
-<img src="/img/configuration/baseui/baseui-03-lora-red.jpg" alt="LoRa Picker Menu" />
-</Dark>
+  <Light>
+    <img
+      src="/img/configuration/baseui/baseui-03-lora-green.webp"
+      alt="LoRa Picker Menu"
+    />
+  </Light>
+  <Dark>
+    <img
+      src="/img/configuration/baseui/baseui-03-lora-red.webp"
+      alt="LoRa Picker Menu"
+    />
+  </Dark>
 
 ## Buttons
 
 BaseUI is designed to be navigated with as little as one button but support a myriad of devices from CardKB, Rotary Encoders, Trackballs, and Rocker Switches.
 
 <Light>
-<img src="/img/configuration/baseui/baseui-02-home-green.jpg" alt="Home Screen" />
+  <img
+    src="/img/configuration/baseui/baseui-02-home-green.webp"
+    alt="Home Screen"
+  />
 </Light>
 <Dark>
-<img src="/img/configuration/baseui/baseui-02-home-red.jpg" alt="LHome Screen" />
+  <img
+    src="/img/configuration/baseui/baseui-02-home-red.webp"
+    alt="LHome Screen"
+  />
 </Dark>
 
 ## On-Screen Menu
@@ -54,10 +68,16 @@ To open the action menu, **long-press** the user button.
 - **long-press**: select
 
 <Light>
-<img src="/img/configuration/baseui/baseui-05-system-green.jpg" alt="System Action Menu" />
+  <img
+    src="/img/configuration/baseui/baseui-05-system-green.webp"
+    alt="System Action Menu"
+  />
 </Light>
 <Dark>
-<img src="/img/configuration/baseui/baseui-05-system-red.jpg" alt="System Action Menu" />
+  <img
+    src="/img/configuration/baseui/baseui-05-system-red.webp"
+    alt="System Action Menu"
+  />
 </Dark>
 
 ### Action Menus
@@ -65,56 +85,70 @@ To open the action menu, **long-press** the user button.
 _**Note**: Certain options described below may only be available depending on specific hardware components or configuration selections._
 
 #### Home
+
 - Sleep - Temporarily turn off the display, can be awoken with the user button
 - Send Position - Manually announces the device to other nodes on the mesh. This is optional, as nodes are discovered automatically, however sending a ping manually may speed up this process is some situations.
 - New Preset Message - Send predefined text messages to the mesh network from the device without using the phone app. To enable this feature, [set a list of predefined messages](/docs/configuration/module/canned-message/#messages).
 - New FreeText Message - For devices with physical or virtual keyboards send freely typed text messages to the mesh network from the device without using the phone app.
 
 #### Message
+
 - New Preset Message - Send predefined text messages to the mesh network from the device without using the phone app. To enable this feature, [set a list of predefined messages](/docs/configuration/module/canned-message/#messages).
 - New FreeText Message - For devices with physical or virtual keyboards send freely typed text messages to the mesh network from the device without using the phone app.
 
 #### Node
+
 - Add Favorite - Manually select a node to add as a favorite on your device
 - Trace Route - Perform a trace route to a selected node
 - Key Verification - Perform a key verification between two 2.7+ nodes - these two nodes need to be in close proximity to visually compare keys
 - Reset NodeDB - Perform a nodeDB reset
 
 <Light>
-<img src="/img/configuration/baseui/baseui-04-node-action-green.jpg" alt="Node Action Menu" />
+  <img
+    src="/img/configuration/baseui/baseui-04-node-action-green.webp"
+    alt="Node Action Menu"
+  />
 </Light>
 <Dark>
-<img src="/img/configuration/baseui/baseui-04-node-action-red.jpg" alt="Node Action Menu" />
+  <img
+    src="/img/configuration/baseui/baseui-04-node-action-red.webp"
+    alt="Node Action Menu"
+  />
 </Dark>
 
 #### Position
+
 - GPS Toggle - Enables or disables the device's GPS hardware.
 - GPS Format - Select between one of seven GPS format options available
 - Compass Headings - Change between Dynamic, Fixed and Freeze Heading for "N" if you have a compass
 - Compass Calibrate - Perform a 30 second compass calibration
 
 #### LoRa
+
 - Device Role - Choose between Client, Client Mute, Lost and Found, or Tracker
 - Radio Preset - Choose one of the available preset like ShortTurbo or LongFast
 - Region Picker - Change your LoRa Region
 
 #### System
+
 - Notifications
-	- Buzzer Actions - Select for what type of notifications will invoke the buzzer
+  - Buzzer Actions - Select for what type of notifications will invoke the buzzer
 - Screen Options
-	- Brightness - Pick Between Low, Medium, High brightness
-	- Screen Color - Pick display color from list of available choices
+  - Brightness - Pick Between Low, Medium, High brightness
+  - Screen Color - Pick display color from list of available choices
 - Bluetooth Toggle - Enable / Disable Bluetooth (will reboot device)
 - Reboot/Shutdown - Manually reboot or power off the device _(reboot or power off the device to save changes)_
 
 #### Clock
+
 - Clock Face - Change between Digital and Analog Watch Faces
 - Time Format - If enabled, times will be shown in 12 hour format (`1:50pm`), instead of 24 hour format (`13:50`).
 - Timezone - Elect which timezone offset for this device
 
-<img src="/img/configuration/baseui/baseui-06-clock.jpg" alt="Clock Display" />
+<img src="/img/configuration/baseui/baseui-06-clock.webp" alt="Clock Display" />
 
 #### Favorites
+
 - New Preset Message - Send predefined text messages to the mesh network from the device without using the phone app. To enable this feature, [set a list of predefined messages](/docs/configuration/module/canned-message/#messages).
 - New FreeText Message - For devices with physical or virtual keyboards send freely typed text messages to the mesh network from the device without using the phone app.
 - Trace Route - Perform a trace route to the favorited node
