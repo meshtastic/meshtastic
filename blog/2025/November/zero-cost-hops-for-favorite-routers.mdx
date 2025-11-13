@@ -70,16 +70,21 @@ With only 8 bits to work with in relay_node, there is a chance of collisions.
 - Deduplication avoids loops.
 - Accidental collisions are rare and harmless.
 
-Probability of a collision:
+Probability of a collision in a sample environment:
 
-| Nodes | Favorites | Collision Chance |
-|-------|-----------|------------------|
-| 10    | 1         | ~3.5 % |
-| 50    | 3         | ~43 % |
-| 100   | 5         | ~84 % |
-| 200   | 10        | ~99.9 % |
+| Total Nodes | Routers<br/>(3% of Total Nodes) | Favorite Routers Within Range<br/>(20% of Routers) | Collision Chance  |
+|-------------|--------------|------------------------------------|-------------------------------|
+| 10          | 0.3 (≈1)     | 1                                  | ~0.4 %                        |
+| 50          | 1.5 (≈2)     | 1                                  | ~0.4 %                        |
+| 100         | 3            | 1                                  | ~0.4 %                        |
+| 200         | 6            | 2                                  | ~0.8 %                        |
+| 400         | 12           | 3                                  | ~1.2 %                        |
+| 800         | 24           | 5                                  | ~2.0 %                        |
+| 1000        | 30           | 6                                  | ~2.3 %                        |
 
-In practice, chances of a collision also being a router is rare.
+*Note: "Total Nodes" is the network size; collision probability is calculated based on the number of favorite routers within range, not all nodes divided by 256. For example, with 1000 total nodes and 6 favorite routers, the chance a random relay_node matches a favorite within range is about 2.3%.*
+
+Chances of a collision here is rare.
 
 ---
 
