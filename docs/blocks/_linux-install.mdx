@@ -18,6 +18,7 @@ import { Icon } from "@iconify/react";
     **Install - Debian 13 (`trixie`):**
 
     ```shell
+    [[ "$(. /etc/os-release && echo $NAME)" == Raspbian* ]] && echo "ERROR: Raspberry Pi OS (32-bit) detected, please use the Raspbian repos."
     echo 'deb http://download.opensuse.org/repositories/network:/Meshtastic:/beta/Debian_13/ /' | sudo tee /etc/apt/sources.list.d/network:Meshtastic:beta.list
     curl -fsSL https://download.opensuse.org/repositories/network:Meshtastic:beta/Debian_13/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/network_Meshtastic_beta.gpg > /dev/null
     sudo apt update
@@ -77,7 +78,17 @@ import { Icon } from "@iconify/react";
     | 📱 [MUI][MUI]            | ✅     |
     | 🌐 [Web][WebClient]      | ✅     |
 
-    Supported: `bookworm` (12)
+    Supported: `trixie` (13), `bookworm` (12)
+
+    **Install - Raspbian 13 (`trixie`):**
+
+    ```shell
+    [[ "$(. /etc/os-release && echo $NAME)" != Raspbian* ]] && echo "ERROR: Raspberry Pi OS (32-bit) not detected, please use the Debian repos."
+    echo 'deb http://download.opensuse.org/repositories/network:/Meshtastic:/beta/Raspbian_13/ /' | sudo tee /etc/apt/sources.list.d/network:Meshtastic:beta.list
+    curl -fsSL https://download.opensuse.org/repositories/network:Meshtastic:beta/Raspbian_13/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/network_Meshtastic_beta.gpg > /dev/null
+    sudo apt update
+    sudo apt install meshtasticd
+    ```
 
     **Install - Raspbian 12 (`bookworm`):**
 
