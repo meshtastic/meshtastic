@@ -45,7 +45,7 @@ A hop is preserved if **all** of these are true:
 
 1. **node role** is `ROUTER`, `ROUTER_LATE`, or `CLIENT_BASE`.  
 2. **Not** the very first hop of the packet.  
-3. **Previous relay** is in your *favorites* **and** holds and is `ROUTER` or `ROUTER_LATE`  
+3. **Previous relay** is in your *favorites* **and** is `ROUTER` or `ROUTER_LATE`  
 
 Miss any one of those and the hop meter ticks down as usual.
 
@@ -196,7 +196,7 @@ Using [Meshview](https://github.com/pablorevilla-meshtastic/meshview) hosted by 
 
 ## Ready to Experiment?
 
-Pick two or three strategic infrastructure nodes. favorite them to each other mutually. 
+Pick two or three strategic infrastructure nodes. Favorite them to each other mutually. 
 Watch as hops are not consumed between the the routers.
 Do the same for your roof `CLIENT_BASE` node and receive more messages than before.
 
