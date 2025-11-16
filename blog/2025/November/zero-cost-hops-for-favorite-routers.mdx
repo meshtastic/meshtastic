@@ -6,7 +6,7 @@ authors: H3lix
 tags: ["Meshtastic", "routing", "favorites", "infrastructure", "hop limit"]
 date: 2025-11-13T00:00
 hide_table_of_contents: false
-image: /img/blog/zero_cost_hopscotch.webp
+image: /img/blog/zero_cost_hopscotch.png
 ---
 
 
@@ -18,46 +18,34 @@ That’s exactly what **Zero-Cost Hops** unlocks for your mesh.
 
 {/* truncate */}
 
-![Blursed image of a hopscotch game with multiple 3s and 4s written on the squares](/img/blog/zero_cost_hopscotch.webp)
+![Blursed image of a hopscotch game with multiple 3s and 4s written on the squares](/img/blog/zero_cost_hopscotch.png)
 
 ## TL;DR
 
-This feature allows a mesh to add more hops for messages between routers without burning hops.
-
----
+This feature improves message reach by preserving hops remaining between favorited routers.
 
 ## Why does this matter?
 
 - The faster presets like `SHORT_FAST` and `SHORT_TURBO` trade range for speed. In dense metro deployments that means you can burn through the 7-hops quickly.   
 - **Zero-Cost Hops** turns a mesh of well-placed infrastructure routers into a single hop leaving more hops for the first and last mile.  
 - For well managed networks, this could allow for communication between cities, or even countries, while staying within the 7 hop limit.  
-- Helps avoid `CLIENT_BASE` from being the last hop of a packet
-
-:::note  
-> Favoriting your local router from your roof CLIENT_BASE node means incoming packets don’t "die on the roof" before reaching your indoor nodes.
-:::
-
----
+- Helps avoid `CLIENT_BASE` from being the last hop of a packet, avoiding messages dying on the roof before reaching your indoor nodes.
 
 ## When Do Zero-Cost Hops Apply?
 
 A hop is preserved if **all** of these are true:
 
-1. **node role** is `ROUTER`, `ROUTER_LATE`, or `CLIENT_BASE`.  
-2. **Not** the very first hop of the packet.  
-3. **Previous relay** is in your *favorites* **and** is `ROUTER` or `ROUTER_LATE`  
+1. Node role is `ROUTER`, `ROUTER_LATE`, or `CLIENT_BASE`.  
+2. Not the very first hop of the packet.  
+3. Previous relay is in your *favorites* **and** is `ROUTER` or `ROUTER_LATE`  
 
 Miss any one of those and the hop meter ticks down as usual.
-
----
 
 ## What It *Doesn’t* Touch
 
 - `CLIENT_BASE` rebroadcast rules stay exactly the same. `CLIENT_BASE` uses `from`/`to`, while Zero-Cost Hops uses `relay_node`.
    - Favoriting a router **does not** cause CLIENT_BASE nodes to rebroadcast all packets.
 - Maximum Hop limit is still 7.
-
----
 
 ## “Favorite” Detection and implementation
 
@@ -86,8 +74,6 @@ Probability of a collision in a sample environment:
 
 Chances of a collision here is rare.
 
----
-
 ## Two Quick Scenarios
 
 ### 1. Metro Simple Example Downtown
@@ -111,14 +97,12 @@ Chances of a collision here is rare.
 
 **Result:** A hop is saved between R1 and R2 leaving an extra hop in case it is needed.
 
----
-
 ### 2. Home Base, Hill-Top Backbone
 
 **Setup**
 
 - Roof node is `CLIENT_BASE`.  
-- Hilltop `ROUTER`s are favorited.
+- Each hilltop `ROUTER` favorites each other.
 
 **Hop Route** starting at 7 maximum hops
 
@@ -135,8 +119,6 @@ Chances of a collision here is rare.
 
 
 This demonstrates the ability to go beyond the 7 hop protocol limit
-
----
 
 ## How to Put It to Work
 
@@ -155,15 +137,11 @@ This demonstrates the ability to go beyond the 7 hop protocol limit
 Design your mesh where all routers are favorited if bandwidth allows. It leaves as many hops as possible for scenic routing at the edge of the mesh.
 :::
 
----
-
 ## Safety Nets Still Apply
 
 - Early/default/late timing is still in effect.  
 - Packet deduplication works as expected.
 - Most impactful with nodes in high places, so abuse is unlikely with well managed networks.
-
----
 
 ## FAQ
 
@@ -182,8 +160,6 @@ For incoming favorited traffic from routers, yes. This avoids messages dying on 
 **Does traceroute still work?**  
 Zero-cost hops have no effect on traceroute other than traceroute itself is limited to 7 hops.
 
----
-
 ### Real-world example
 
 For Bay Mesh, there are over 700 nodes between Tahoe and San Luis Obispo. With careful placement of routers it is possible to have messages span over 300 miles that can only be accomplished on LoRa using zero-cost hops given the terrain and distance.
@@ -191,8 +167,6 @@ For Bay Mesh, there are over 700 nodes between Tahoe and San Luis Obispo. With c
 Using [Meshview](https://github.com/pablorevilla-meshtastic/meshview) hosted by [bayme.sh](https://meshview.bayme.sh) you can see the zero-cost hops in action between San Francisco, San Luis Obispo, and Tahoe.
 
 ![Zero-cost hops mesh view](/img/blog/zero_cost_meshview.webp)
-
----
 
 ## Ready to Experiment?
 
