@@ -37,7 +37,7 @@ A hop is preserved if **all** of these are true:
 
 1. Node role is `ROUTER`, `ROUTER_LATE`, or `CLIENT_BASE`.  
 2. Not the very first hop of the packet.  
-3. Previous relay is in your *favorites* **and** is `ROUTER` or `ROUTER_LATE`  
+3. Previous relay is in your *favorites* **and** is `ROUTER` or `ROUTER_LATE`.
 
 Miss any one of those and the hop meter ticks down as usual.
 
@@ -80,8 +80,8 @@ Chances of a collision here is rare.
 
 **Setup**
 
-- Routers **R1** and **R2** use `ROUTER` role and are favorited (to each other) 
-- Sender uses `CLIENT` role and wants to chat with a friend in the next town
+- Routers **R1** and **R2** use the `ROUTER` role and are favorited (to each other).
+- Sender uses the `CLIENT` role and wants to chat with a friend in the next town.
 
 **Path**
 
@@ -101,8 +101,9 @@ Chances of a collision here is rare.
 
 **Setup**
 
-- Roof node is `CLIENT_BASE`.  
-- Each hilltop `ROUTER` favorites each other.
+- Roof nodes use the `CLIENT_BASE` role and have favorited the local `ROUTER` nodes.
+- Each hilltop uses the `ROUTER` role and favorites each other.
+- All other nodes use the `CLIENT` role.
 
 **Hop Route** starting at 7 maximum hops
 
