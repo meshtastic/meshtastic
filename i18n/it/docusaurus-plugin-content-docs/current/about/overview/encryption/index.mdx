@@ -1,0 +1,115 @@
+---
+id: encryption
+title: Cifratura Meshtastic
+sidebar_label: Cifratura
+slug: /overview/encryption
+sidebar_position: 3
+description: "Comprendere la crittografia di Meshtastic: sicurezza opzionale AES256 a livello di rete per la comunicazione off-grid, garantendo la riservatezza contro l'intercettazione passiva."
+---
+
+## Spiegazione
+
+Quando si invia via LoRa, Meshtastic fornisce la crittografia AES256-CTR per il payload di ogni pacchetto, con una chiave diversa per ogni [canale](/docs/configuration/radio/channels/). L'[intestazione del pacchetto](/docs/overview/mesh-algo/#layer-1-unreliable-zero-hop-messaging) viene sempre inviata senza cifratura, il che permette ai nodi di inoltrare i pacchetti anche se non sono in grado di decifrarli. Si può disabilitare questo impostando una diversa [modalità rebroadcast](/docs/configuration/radio/device#rebroadcast-mode).
+
+Per impostazione predefinita, hai un canale primario, che viene crittografato con una semplice chiave conosciuta ("AQ=="), quindi per utilizzare la corretta cifratura, **devi prima cambiare** questa chiave o creare un nuovo canale e condividerla con quelli con cui vuoi comunicare. Tuttavia, senza un canale che utilizza la chiave predefinita, la comunicazione con i dispositivi che ancora lo utilizzano non sarà possibile.
+
+I messaggi diretti a un nodo specifico sono ora crittografati utilizzando Crittografia a Chiave Pubblica (PKC). Ogni nodo è dotato di una coppia unica di chiavi pubblica/privata, e i messaggi diretti sono crittografati con la chiave pubblica del destinatario. Questo assicura che solo il destinatario possa decifrare il messaggio usando la sua chiave privata. Inoltre, i messaggi sono firmati con la chiave privata del mittente, consentendo al destinatario di verificare l'identità del mittente e di garantire l'integrità del messaggio.
+
+Tutte le trasmissioni periodiche (posizione, telemetria, traceroutes, ecc.) che il dispositivo invia, vengono inviati sul canale principale e quindi crittografato con quella chiave.
+
+Il dispositivo decifrerà il payload prima di inviarlo a un'applicazione client tramite BLE, seriale, Wi-Fi/Ethernet. Per MQTT, è possibile [specificare](/docs/configuration/module/mqtt#encryption-enabled) se si desidera inviare un payload crittografato o non crittografato.
+
+## È sicuro come Wi-Fi WPA3, HTTPS TLS1.3 o Signal?
+
+**No**.
+
+[WPA3](https://en.wikipedia.org/wiki/WPA3), [TLS1.3](https://en.wikipedia.org/wiki/TLS1.3), [Signal](https://en.wikipedia.org/wiki/Signal_Protocol), e Meshtastic possono tutti usare AES256. Eppure AES è uno dei molti ingranaggi necessari in un moderno sistema di crittografia. Di seguito sono riportate le principali caratteristiche "mancanti" in Meshtastic.
+
+### Perfect Forward Secrecy
+
+[**P**erfect-**F**orward-**S**ecrecy, noto anche come **PFS**](https://en.wikipedia.org/wiki/Forward_secrecy), significa che comunicazioni _precedenti_ e, più in generale, qualsiasi cosa _catturata passivamente_ non può essere decifrata **_anche quando la chiave è compromessa_**.
+
+Questo significa che Meshtastic è vulnerabile ad attacchi di tipo [**« Harvest now, Decrypt later »**](https://en.wikipedia.org/wiki/Harvest_now,_decrypt_later). **Questo attacco da solo non è sufficiente per decifrare i messaggi**; si basa su un altro errore che espone la chiave del canale, come ad esempio:
+
+- Condividere accidentalmente la chiave del canale con la persona sbagliata.
+- Uno dei tuoi nodi viene rubato.
+- Qualsiasi bug sconosciuto che rivela la chiave del canale ad un attaccante.
+
+Altri protocolli, come _TLS1.2 mal configurato_, sono molto più colpiti dagli attacchi "Raccogli ora, Decifra dopo" perché le loro chiavi saranno violate dai futuri computer quantistici, eppure non forniscono nemmeno PFS.
+
+La crittografia AES256 di Meshtastic è considerata resistente ai computer quantistici[^1], ma lo scambio di chiavi pubblica/privata per i DM non lo è, poiché gli attuali schemi crittografici resistenti ai computer quantistici non rientrano nei pacchetti LoRa o nel nostro hardware IoT; i vettori di attacco realistici includono la gestione accidentale errata delle chiavi del canale, la perdita dei nodi e potenziali futuri attacchi quantistici sugli scambi di chiavi DM.
+
+[^1]: Sulla resistenza quantistica di AES256, vedi [questa domanda su stackoverflow, contenente un po' di dibattito e due buone risposte](https://crypto.stackexchange.com/q/6712) e la sezione delle [FAQ Post-Quantum del NIST](https://csrc.nist.gov/projects/post-quantum-cryptography/faqs) "Per proteggere contro la minaccia dei computer quantistici, dovremmo raddoppiare la lunghezza della chiave per AES ora? (aggiunto 18/11/18)"
+
+#### Raccomandazioni per gli utenti che utilizzano canali privati
+
+- **Non configurare i canali privati su nodi non presidiati**. I nodi inoltreranno il traffico Meshtastic anche se non sono in grado di decifrarlo. I tuoi router non presidiati non dovrebbero avere configurato il PSK privato, in quanto è facile ottenere l'accesso fisico ed estrarre la chiave del canale.
+- Tieni presente che tutto ciò che viene inviato su un canale può essere memorizzato e decriptato in seguito da chiunque acceda alla chiave, anche se elimini localmente i messaggi.
+- Cambia di volta in volta le tue chiavi del canale.
+
+#### Modifiche dal rilascio del firmware 2.5.0
+
+- I Messaggi Diretti (DM) sono ora protetti con PKC quando si inviano messaggi tra dispositivi con v2.5.0 o più recente e ha avuto luogo lo scambio di chiavi, i messaggi verso versioni firmware legacy 2.4.3 o più vecchie non sono protetti.
+- I Messaggi Admin tra due nodi v2.5.0 o più recenti sono ora protetti e sono presenti ulteriori protezioni contro gli attacchi relay.
+
+### Integrità
+
+Integrità significa garantire che i messaggi non possano essere modificati senza la chiave.
+
+Meshtastic non verifica l'integrità dei messaggi dei canali, per verificare se sono stati manomessi (vedere [issue #4030](https://github.com/meshtastic/firmware/issues/4030) per i dettagli).
+
+#### Raccomandazioni
+
+- Tieni presente che applicando un attacco con testo in chiaro noto, chiunque _potrebbe_ inviare messaggi su un canale anche se la chiave del canale è privata e sicura.
+- Per gli sviluppatori di applicazioni di terze parti che integrano Meshtastic, includere un MAC crittografico sul contenuto del messaggio e PSK. Stiamo anche considerando una [modalità canale protetta AEAD che fornirebbe questo nativamente](https://github.com/meshtastic/firmware/issues/4030).
+
+#### Modifiche dalla versione del firmware 2.5.0
+
+- L'integrità del messaggio è controllata per i messaggi diretti o per il controllo dell'amministratore, quando la comunicazione è tra il firmware v2.5.0 o più recente.
+
+### Autenticazione
+
+Autenticazione significa che i nodi si identificano sulla rete. Meshtastic non implementa questo, quindi è banale impersonare chiunque altro se si ha accesso alla chiave del canale
+
+Questo perché gli ID dei nodi sono basati su hardware [indirizzo MAC](https://en.wikipedia.org/wiki/MAC_address), che sono codificati a chiave dal produttore.
+
+Alcune reti come [Yggdrasil](https://yggdrasil-network.github.io/), [cjdns](https://github.com/cjdelisle/cjdns), o [libp2p](https://libp2p.io/) usano [coppie di chiavi pubblico/private](https://en.wikipedia.org/wiki/Public-key_cryptography), e la Chiave Pubblica diventa l'Identità del Nodo. Questo rende tutti i messaggi più grandi e/o richiede un processo di handshake interattivo.
+
+#### Raccomandazioni
+
+- Tieni a mente che il campo del mittente è indicativo, e chiunque abbia accesso alla chiave del canale può banalmente mentire.
+
+#### Modifiche dalla versione del firmware 2.5.0
+
+- Quanto sopra ora si riferisce solo alle chat di gruppo/canali poiché i DM sono protetti quando si inviano messaggi tra dispositivi 2.5 o più recenti, i messaggi verso dispositivi legacy 2.4 o più vecchi non beneficiano di questa autenticazione aggiuntiva.
+
+## Messaggi Diretti
+
+I messaggi diretti (DM) sono ora implementati utilizzando la crittografia a chiave pubblica (PKC). Questo fornisce un aggiornamento significativo della sicurezza rispetto alla crittografia precedente basata sul canale:
+
+- **Crittografia dei messaggi:** Ogni DM è crittografato utilizzando la chiave pubblica del destinatario, garantendo che solo il destinatario possa decifrare il messaggio con la sua chiave privata.
+- **Firme digitali:** I messaggi sono firmati con la chiave privata del mittente, consentendo al destinatario di verificare l'identità del mittente e di garantire l'integrità del messaggio.
+
+### Prima della versione del firmware 2.5.0
+
+In precedenza, i DM erano implementati come messaggi di canale con un campo protobuf`to`. Questo significava che chiunque nel canale poteva leggere tutti i tuoi messaggi diretti. Con PKC, questo problema è risolto, poiché solo il destinatario desiderato può decifrare e leggere il messaggio.
+
+### Raccomandazioni
+
+- Mentre PKC migliora significativamente la sicurezza dei DM, è ancora consigliabile evitare la condivisione di informazioni sensibili in messaggi diretti senza un'adeguata verifica della chiave pubblica del destinatario.
+
+## Messaggi Amministrativi
+
+I messaggi di amministrazione/controllo sono ora protetti da funzionalità di sicurezza avanzate, assicurandosi che le operazioni critiche all'interno della rete siano più sicure che mai.
+
+- **Crittografia più forte:** I messaggi di amministrazione ora utilizzano metodi di crittografia avanzati per garantire che solo i destinatari previsti possano accedervi e leggerli.
+- **Id Sessione:** Ad ogni sessione amministrativa viene assegnato un ID di Sessione univoco, che aiuta a prevenire l'accesso non autorizzato e garantisce che i messaggi non siano manomessi o riprodotti.
+
+### Prima della versione del firmware 2.5.0
+
+In precedenza, i messaggi di amministrazione non erano così sicuri, ma con questi aggiornamenti, sono ora molto meglio protetti contro potenziali attacchi e attacchi replay.
+
+### Raccomandazioni
+
+- Assicurati sempre che i tuoi dispositivi stiano utilizzando l'ultimo firmware per beneficiare di queste funzionalità di sicurezza migliorate.
+- Monitora regolarmente la rete per qualsiasi attività insolita per mantenere un elevato livello di sicurezza.

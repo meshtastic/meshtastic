@@ -1,0 +1,70 @@
+---
+id: web-interface
+title: Web Client Development
+sidebar_label: Web Client
+sidebar_position: 4
+---
+
+## Overview
+
+The Meshtastic web interface can be hosted or served from a node.
+
+The official hosted version can be found at [https://client.meshtastic.org](https://client.meshtastic.org).
+
+The version served from a node can be accessed by first [connecting your node to your network](/docs/configuration/radio/network) and then navigating to http://meshtastic.local (or your_node_ip.local).
+
+## Development & Building
+
+### Development
+
+Clone the [Meshtastic Web Repo](https://github.com/meshtastic/web) repository
+
+```shell
+git clone https://github.com/meshtastic/web.git
+cd web
+```
+
+Install the dependencies.
+
+```bash
+deno i
+```
+
+Start the development server:
+
+```bash
+deno task dev
+```
+
+### Building and Packaging
+
+Build the project:
+
+```bash
+deno task build
+```
+
+GZip the output:
+
+```bash
+deno task package
+```
+
+## Допринасяне
+
+We welcome contributions! Here’s how the deployment flow works for pull
+requests:
+
+- **Preview Deployments:**\
+  Every pull request automatically generates a preview deployment on Vercel.
+  This allows you and reviewers to easily preview changes before merging.
+
+- **Staging Environment (`client-test`):**\
+  Once your PR is merged, your changes will be available on our staging site:
+  [client-test.meshtastic.org](https://client-test.meshtastic.org/).\
+  This environment supports rapid feature iteration and testing without
+  impacting the production site.
+
+- **Production Releases:**\
+  At regular intervals, stable and fully tested releases are promoted to our
+  production site: [client.meshtastic.org](https://client.meshtastic.org/).

@@ -1,0 +1,326 @@
+---
+id: linux-native-hardware
+title: Meshtastic auf Linux basierten Geräten
+hide_title: true
+sidebar_label: Linux basierte Geräte
+sidebar_position: 8
+description: Richten Sie Meshtastic auf Linux basierten Geräten mithilfe der Binärdatei meshtasticd ein und konfigurieren Sie es.
+---
+
+import LinuxInstall from "@site/docs/blocks/_linux-install.mdx";
+import { Dark, Light } from "/src/components/ColorMode";
+
+<Dark>
+  <img
+    src="/img/meshtasticd/Meshtasticd-Terminal-Long_Dark.svg"
+    alt="Meshtasticd Terminal Dark"
+  />
+</Dark>
+<Light>
+  <img
+    src="/img/meshtasticd/Meshtasticd-Terminal-Long_Light.svg"
+    alt="Meshtasticd Terminal Light"
+  />
+</Light>
+
+Auf dieser Seite wird die Einrichtung von Meshtastic auf Linux-nativen Geräten beschrieben. Dabei wird Portduino verwendet, um die Meshtastic Firmware unter Linux auszuführen.
+
+## Voraussetzungen und Hardware Kompatibilität
+
+Bevor Sie mit der Einrichtung fortfahren, stellen Sie sicher, dass das Gerät die folgenden Anforderungen erfüllt:
+
+### Getestete Geräte
+
+#### SPI
+
+- Raspberry Pi: Zero 2, 3, 4, Pi 400, und Pi 5 auf Raspbian `bookworm`.
+- SPI
+
+#### USB (CH341)
+
+- Debian 12 (`Bookworm`) mit MeshStick.
+- Ubuntu LTS (`24.04`, `22.04`) mit MeshStick.
+- Fedora `41` mit MeshStick.
+- meshtasticd Docker-Container mit durchgeleitetem MeshStick.
+
+### Hardware Kompatibilität
+
+:::caution Warnung
+
+- Zubehörplatinen (Hats) mit **UART** Modulen und SX1302/SX1303 Chip basierte Module werden nicht unterstützt. Nur Zubehörplatinen (Hats), die ein SPI Funkmodul verwenden, werden mit Meshtastic funktionieren.
+- Der Waveshare SX1262 LoRaWAN Hat for Raspberry Pi wird nicht für den Einsatz empfohlen. Es gibt bekannte Hardwareeinschränkungen, die sich auf längere Nachrichten auswirken können. Wenn Sie es verwenden müssen, verwenden Sie bitte die Rolle **CLIENT_MUTE**, um eine erneute Übertragung zu vermeiden.
+- Der Pine64 Pinedio wird für den Einsatz ebenfalls nicht empfohlen, da er unter ähnlichen Hardwareeinschränkungen wie der Waveshare SX1262 LoRaWAN Hat leidet.
+
+Siehe: [Das Meshtastic CRC Problem](https://www.youtube.com/watch?v=PND1GlMSrEM)
+:::
+
+- Zu den getesteten USB-Geräten gehören der [MeshStick](https://github.com/markbirss/MESHSTICK) und der Pinedio CH341 USB-Adapter.
+- Zu den getesteten Raspberry Pi LoRa-Hats gehören [MeshAdv-Pi v1.1](https://github.com/chrismyers2000/MeshAdv-Pi-Hat), Adafruit RFM9x und Elecrow Lora RFM95 IOT.
+- Die Unterstützung für I2C/SPI Anzeigen und Tastatureingaben wurde bestätigt. Beim Stapeln von Hats muss man sich möglicher Pin-Konflikte bewusst sein.
+
+### Systemanforderungen
+
+- Die Meshtastic-Binärdatei ´meshtasticd´ erfordert Root-Zugriff oder einen Benutzer mit Berechtigungen für den Zugriff auf GPIO, SPI und andere Schnittstellen.
+- Eine Linux Distribution, die mit den Meshtastic Installationspaketen kompatibel ist.
+
+## Installation
+
+### Meshtasticd installieren:
+
+<LinuxInstall />
+
+## Hardware Schnittstellen
+
+### USB
+
+USB-Unterstützung für den **CH341** wurde in Meshtastic 2.5.18 hinzugefügt.
+
+Damit Linux mehrere CH341-USB-Geräte erkennen kann, muss ein EEPROM an Bord mit einer eindeutigen Seriennummer vorhanden sein.
+Geräte wie das Pine64 Pinedio v1 enthalten dies nicht.
+
+### SPI (Raspberry Pi)
+
+SPI Unterstützung für LoRa Funkmodul aktivieren
+
+- Dies kann durch Ausführen der folgenden Befehle auf einem Raspberry Pi (2-5) erfolgen.
+
+```shell
+sudo raspi-config nonint set_config_var dtparam=spi on /boot/firmware/config.txt # SPI aktivieren
+
+# Stellen Sie sicher das dtoverlay=spi0-0cs in /boot/firmware/config.txt enthalten ist ohne dtoverlay=vc4-kms-v3d oder dtparam=uart0 zu ändern
+sudo sed -i -e '/^\s*#\?\s*dtoverlay\s*=\s*vc4-kms-v3d/! s/^\s*#\?\s*(dtoverlay|dtparam\s*=\s*uart0)\s*=.*/dtoverlay=spi0-0cs/' /boot/firmware/config.txt
+
+# dtoverlay=spi0-0cs nach dtparam=spi=on einfügen, wenn nicht schon vorhanden
+if ! sudo grep -q '^\s*dtoverlay=spi0-0cs' /boot/firmware/config.txt; then
+    sudo sed -i '/^\s*dtparam=spi=on/a dtoverlay=spi0-0cs' /boot/firmware/config.txt
+fi
+```
+
+- Dies kann auch durch manuelles Aktivieren der SPI Unterstützung in `/boot/firmware/config.txt` erreicht werden:
+
+```plaintext
+dtparam=spi=on
+dtoverlay=spi0-0cs
+```
+
+### I2C (Raspberry Pi)
+
+I2C Unterstützung aktivieren
+
+Aktivieren mit:
+
+```shell
+sudo raspi-config nonint set_config_var dtparam=i2c_arm on /boot/firmware/config.txt # Enable i2c_arm
+```
+
+Oder manuell in `/boot/firmware/config.txt` aktiviert:
+
+```plaintext
+dtparam=i2c_arm=on
+```
+
+### UART (Raspberry Pi)
+
+UART Unterstützung für GPS aktivieren
+
+- Sie können UART aktivieren, indem Sie die folgenden Befehle ausführen (zusätzlich wird die serielle Konsole deaktiviert)
+
+```shell
+sudo raspi-config nonint do_serial_hw 0 # Seriellen Anschluss aktivieren(enable_uart=1)
+sudo raspi-config nonint do_serial_cons 1 # Serielle Konsole deaktivieren
+```
+
+- Oder Sie können den UART für GPS Module manuell aktivieren, indem Sie Änderungen in `/boot/firmware/config.txt` vornehmen:
+
+```plaintext
+# Benötigt für alle Pi Geräte.
+enable_uart=1
+
+# Nur für Pi 5 benötigt.
+dtoverlay=uart0
+```
+
+- Die richtige Gerätedatei für UART GPS auf dem Pi 5 nach einem Neustart ist `/dev/ttyAMA0`.
+- Die richtige Gerätedatei für UART GPS bei früheren Pi Versionen nach einem Neustart ist `/dev/ttyS0`.
+- Möglicherweise müssen Sie die serielle Konsole auf einem Pi deaktivieren und danach neu starten
+
+```shell
+sudo raspi-config nonint do_serial_cons 1 # Serielle Konsole deaktivieren
+```
+
+## Einstellungen
+
+### meshtasticd Konfiguration
+
+- Die meshtasticd Konfiguration befindet sich standardmäßig unter ´/etc/meshtasticd/config.yaml´. Wenn im aktuellen Verzeichnis eine ´config.yaml´ gefunden wird, hat diese Vorrang. Und eine mit der Option ´-c/--config´ angegebene Konfigurationsdatei hat die höchste Priorität.
+
+Um ein mit Ihrem Gerät verbundenes LoRa Funkmodul zu aktivieren, suchen Sie zunächst seine Konfiguration in den Voreinstellungen und kopieren Sie sie dann in `config.d`.
+
+```shell
+# Zuerst finden Sie Ihre Funkhardware
+ls /etc/meshtasticd/available.d
+# z.B.: display-waveshare-2.8.yaml lora-MeshAdv-900M30S.yaml lora-meshstick-1262. aml
+
+# Kopieren Sie dann die gewünschte Konfiguration nach `config.d`
+# Beispiel:
+cp /etc/meshtasticd/available.d/lora-MeshAdv-900M30S.yaml /etc/meshtasticd/config.d/
+```
+
+:::info
+Die `config.yaml` Datei ist empfindlich für die Formatierung, also stellen Sie sicher, dass die Einrückung und der Abstand korrekt sind.
+:::
+
+### Web Server
+
+`meshtasticd` unterstützt den Webserver, beginnend mit Release `2.3.0`.
+
+Um dies zu aktivieren:
+
+```yaml
+Webserver:
+  Port: 443 # Port für Webserver & Webservices
+  RootPath: /usr/share/meshtasticd/web # Root Dir des WebServers
+```
+
+### Bluetooth Unterstützung
+
+Bluetooth wird derzeit nicht unterstützt und funktioniert nicht auf Linux basierten Geräten. Das kann sich in Zukunft ändern.
+
+### Beständigkeit
+
+- Die persistenten .proto-db-Dateien der Portduino Version von meshtasticd werden unter `/root/.portduino/default/prefs/` gespeichert.
+
+## Erweiterte Einrichtung und Fehlerbehebung
+
+### Aktivieren des systemd Dienstes
+
+Um das Gerät so zu konfigurieren, dass meshtasticd als Dienst mit systemctl gestartet und gestoppt wird, können Sie die Serviceeinheit mit den folgenden Anweisungen einrichten.
+
+<details>
+  <summary>Erstellen Sie den systemd Dienst (nur für manuelle Installationen)</summary>
+
+Der `meshtasticd` systemd Service wird automatisch installiert, wenn die offiziellen Meshtastic Pakete verwendet werden.
+Diese Anweisungen werden nur bei manueller Installation benötigt.
+
+Erstellen Sie die Dienstdatei:
+
+Erstellen Sie eine neue Datei im Verzeichnis /etc/systemd/system/ mit einem Namen wie meshtasticd.service.
+
+```shell
+sudo nano /etc/systemd/system/meshtasticd.service
+```
+
+Fügen Sie den folgenden Quellcode Ihrer Datei hinzu:
+
+```plaintext
+[Unit]
+Description=Meshtastic Native Daemon
+After=network-online.target
+StartLimitInterval=200
+StartLimitBurst=5
+
+[Service]
+AmbientCapabilities=CAP_NET_BIND_SERVICE
+User=root
+Group=root
+Type=simple
+ExecStart=/usr/bin/meshtasticd
+Restart=always
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target
+```
+
+System neu laden, um den neuen Dienst zu erkennen:
+
+```shell
+sudo systemctl daemon-reload
+```
+
+</details>
+
+Aktivieren Sie den Dienst beim Booten:
+
+```shell
+sudo systemctl enable meshtasticd
+```
+
+#### Dienst starten und stoppen
+
+Dienst starten:
+
+```shell
+sudo systemctl start meshtasticd
+```
+
+Überprüfen Sie den Status des Dienstes:
+
+```shell
+sudo systemctl status meshtasticd
+```
+
+Dadurch erhalten Sie einen detaillierten Überblick über den Servicestatus und eventuelle Fehler.
+
+Beenden Sie den Dienst:
+
+```shell
+sudo systemctl stop meshtasticd
+```
+
+Indem Sie diese Schritte befolgen, richten Sie einen systemd-Dienst für meshtasticd ein, der beim Booten automatisch gestartet und bei einem Absturz neu gestartet wird. Sie können es mit den Standardbefehlen von systemctl (Start, Stopp, Neustart, Status usw.) verwalten.
+
+### Protokolle von Meshtastic anzeigen
+
+Um die Protokollausgabe des meshtasticd Dienstes anzuzeigen, verwenden Sie den folgenden Befehl, um sie aus dem Systemjournal auszulesen.
+
+```shell
+journalctl -u meshtasticd -b
+```
+
+### Avahi einrichten
+
+Dies wird es dem Android-Client ermöglichen, Ihr Linux basiertes Gerät automatisch zu entdecken.
+
+- Avahi Service installieren (Debian/Ubuntu)
+
+```shell
+sudo apt install avahi-daemon
+```
+
+- Konfigurieren Sie Avahi so, dass der Knoten angekündigt wird
+
+Erstellen Sie die Dienstdatei:
+
+```shell
+sudo nano /etc/avahi/services/meshtastic.service
+```
+
+Und fügen Sie Folgendes ein:
+
+```xml
+<?xml version="1.0" standalone="no"?><!--*-nxml-*-->
+<!DOCTYPE service-group SYSTEM "avahi-service.dtd">
+<service-group>
+    <name>Meshtastic</name>
+    <service protocol="ipv4">
+        <type>_meshtastic._tcp</type>
+        <port>4403</port>
+    </service>
+</service-group>
+```
+
+Dann speichern und schließen Sie die Datei.
+
+## Konfiguration der Kommandozeile
+
+Die Interaktion mit Meshtastic kann über die Befehlszeile erfolgen:
+
+```plaintext
+meshtastic --host localhost ...
+```
+
+Siehe:
+
+- [Installation der Python Kommandozeile](/docs/software/python/cli/installation/)
+- [Verwendung der Python Kommandozeile](/docs/software/python/cli/usage/)

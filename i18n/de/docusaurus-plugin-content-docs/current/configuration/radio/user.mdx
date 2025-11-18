@@ -1,0 +1,159 @@
+---
+id: user
+title: Benutzereinstellungen
+sidebar_label: Benutzer
+description: Details über den Langnamen, den Kurznamen und den lizenzierten Betrieb.
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+import { Icon } from "@iconify/react";
+
+Die Konfigurationsoptionen des Benutzers sind: langer Name, kurzer Name, lizenzierter Funkamateur und ist nicht erreichbar. Die Benutzereinstellung verwendet eine administrative Nachricht, die einen `User` Protocol Buffer sendet.
+
+## Benutzereinstellungen
+
+### Langer Name
+
+Ein personalisierter Name für Ihr Gerät
+
+Automatisch erzeugt.
+
+Wenn Sie ein lizenzierter Funkamateur sind und `Amateurfunklizenz` aktiviert haben, sollte dies auf Ihr Rufzeichen gesetzt werden.
+
+### Kurzname
+
+Eine personalisierte Kurzkennung für Ihr Gerät.
+
+Automatisch erzeugt.
+
+### Amateurfunklizenz
+
+Wenn Sie ein lizenzierter Amateurfunker sind und die [Privilegien und Einschränkungen](/docs/faq/#amateur-radio-ham) in Betracht gezogen haben, Meshtastic mit ihrer Lizenz zu benutzen, dann aktivieren Sie diese Option.
+
+Standardmäßig deaktiviert
+
+Wenn Sie `Amateurfunklizenz` aktivieren, sollten Sie auch die folgenden verwandten Einstellungen überprüfen:
+
+- **Benutzer:** `Langer Name` (sollte ihr Rufzeichen sein)
+- **Kanal:** `PSK Schlüssel` (sollte leer sein, um die Verschlüsselung zu entfernen)
+
+### Nicht erreichbar
+
+Gibt an, ob der Knoten direkte Nachrichten empfangen kann oder nicht.
+
+Standardmäßig deaktiviert, außer Rollen, die normalerweise nicht auf Direktnachrichten überwacht werden: ROUTER, ROUTER_LATE, REPEATER, SENSOR, LOST_AND_FOUND, TRACKER, TAK_TRACKER 
+
+## Verfügbarkeit der Benutzereinstellungen
+
+<Tabs
+  groupId="settings"
+  defaultValue="apple"
+  values={[
+    {
+      label: (
+        <>
+          <Icon icon="mdi:android" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Android
+        </>
+      ),
+      value: "android",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:apple" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Apple
+        </>
+      ),
+      value: "apple",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:terminal" height="1.5rem" style={{ marginRight: "0.25rem" }} /> CLI
+        </>
+      ),
+      value: "cli",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:internet" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Web
+        </>
+      ),
+      value: "web",
+    },
+  ]}>
+
+<TabItem value="android">
+
+#### Android
+
+:::info
+
+Alle Benutzereinstellungen sind für Android verfügbar.
+
+1. Öffnen Sie die Meshtastic Applikation
+2. Navigieren Sie zu: **vertikale Ellipse (3 Punkte oben rechts) > Geräteeinstellungen > Benutzer**
+
+:::
+
+</TabItem>
+
+<TabItem value="apple">
+
+#### Apple
+
+:::info
+
+Die Benutzereinstellungen sind in iOS, iPadOS und macOS unter Einstellungen > Gerätekonfiguration > Benutzer.
+
+:::
+
+</TabItem>
+
+<TabItem value="cli">
+
+#### Kommandozeile
+
+:::info
+
+Alle Benutzereinstellungen sind über die Python Kommandozeile verfügbar. Beispieleinstellungen sind folgende:
+
+:::
+
+Bitte lesen Sie sich die Anweisungen um die [Amateurfunklizenz zu aktivieren](/docs/software/python/cli/usage#ham-radio-support)
+
+:::tip
+
+Weil das Gerät nach jedem Befehl über die Kommandozeile neu startet, wird empfohlen, dass mehrere Werte in einem Konfigurationsblock zusammengefasst und übertragen werden.
+
+```shell title="Example:"
+meshtastic --set-owner 'Ihr Knotenname' --set-owner-short 'NODE'
+```
+
+:::
+
+```shell title="Set the LongName Value"
+meshtastic --set-owner 'Ihr Knotenname'
+```
+
+```shell title="Set the ShortName Value"
+meshtastic --set-owner-short 'NODE'
+```
+
+```shell title="Enable Ham Mode, set name to license, disable encryption"
+meshtastic  --set-ham 'Ihr Rufzeichen'
+```
+
+</TabItem>
+
+<TabItem value="web">
+
+#### Web
+
+:::info
+Alle Benutzereinstellungen sind in der Web-Oberfläche verfügbar.
+:::
+
+</TabItem>
+</Tabs>

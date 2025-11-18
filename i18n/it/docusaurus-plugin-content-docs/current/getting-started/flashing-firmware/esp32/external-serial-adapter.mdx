@@ -1,0 +1,81 @@
+---
+id: external-serial-adapter
+title: Flash con un adattatore seriale esterno
+sidebar_label: Adattatore Seriale Esterno (Utenti Avanzati)
+sidebar_position: 4
+description: Istruzioni per l'utilizzo di un adattatore seriale esterno per flashare il firmware Meshtastic su un dispositivo chipset ESP32.
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+import Link from "@docusaurus/Link";
+
+:::info
+Queste informazioni saranno probabilmente utili solo se hai già tentato di passare attraverso i prerequisiti e i processi delineati in [flashing manuale](/docs/getting-started/flashing-firmware/esp32/cli-script)
+:::
+
+:::caution
+Assicurati di non accendere la radio senza prima collegare l'antenna! Potresti danneggiare il chip radio!
+:::
+
+## Contesto
+
+Situazioni che potrebbero richiedere l'utilizzo di un adattatore esterno da USB a Seriale:
+
+- A causa della penuria di chip, i dispositivi di recente acquisto come il TTGO T-Beam potrebbero essere equipaggiati con chip adattatori USB-seriale datati o non conformi agli standard, che in certi casi si rivelano poco affidabili.
+- Alcuni dispositivi potrebbero avere chip USB-seriale difettosi.
+- Alcuni dispositivi, come [Hydra](https://github.com/Hydra-Designs/project-hydra-meshtastic-pcb) (Meshtastic-DIY target).
+
+### Adattatori USB-seriali
+
+Ci sono molte opzioni sul mercato. Si consiglia di acquistare un adattatore con il chip di Silicon Labs CP2102, in quanto è uno standard industriale affidabile.
+
+L'adattatore presente in questo documento può essere acquistato da:
+https://www.amazon.com/gp/product/B078W5L8W1/
+
+Collega l'adattatore al tuo computer senza collegarlo a nessun dispositivo. Assicurati che il tuo computer abbia i driver installati per l'adattatore. Su Windows, i driver corretti dovrebbero installarsi automaticamente.
+![image](https://user-images.githubusercontent.com/9000580/168445869-f73667f5-0169-46fd-ae13-15c3abad31aa.png)
+
+### Collegamento dell'adattatore al dispositivo
+
+:::info
+Ci sono diversi modi per collegare i pin dell'adattatore al dispositivo di destinazione: premendo i ponticelli contro i contatti, utilizzando pogo pin jigs, ecc. Questo tutorial dispone di header di dupont offset saldati sui pin GPIO operativi e collegati tramite jumpers.
+:::
+
+1. Collega il pin RX dell'adattatore al pin TX dei dispositivi
+2. Collega il pin TX dell'adattatore al pin RX dei dispositivi
+3. Collega un pin GND dell'adattatore al pin GND del dispositivo
+4. Collega il pin 5V dell'adattatore al pin 5V del dispositivo (illustrato) o il pin 3.3V dell'adattatore al pin 3.3V del dispositivo.
+5. Collega GPIO 0 a GND sul dispositivo con un ponticello. (Questo mette il dispositivo in modalità flash quando il dispositivo viene acceso)
+   Esempio di cablaggio con un T-Beam
+   ![image](https://user-images.githubusercontent.com/9000580/168446438-d14f34a0-b92d-4716-87fd-e0c2927a35fd.png)
+6. Collega il dispositivo a una porta USB sul computer
+7. Rimuovi il ponticello che collega il GPIO 0 a GND
+   ![enter-flash-mode](https://user-images.githubusercontent.com/9000580/168446974-c31d3e9c-3397-4cb1-90a4-91ef2e4d5fac.gif)
+
+### Flashing
+
+Dopo aver seguito i passaggi sopra, il dispositivo dovrebbe essere in modalità flash. Puoi flashare il tuo dispositivo usando il [metodo manuale](/docs/getting-started/flashing-firmware/esp32/cli-script)
+
+Dopo aver flashato il dispositivo è ora completo, resettare il dispositivo (tramite il pulsante RST se disponibile).
+Se hai installato Meshtastic Python CLI, è possibile eseguire `meshtastic --noproto` per collegare nuovamente il dispositivo sull'adattatore e visualizzare l'uscita seriale per confermare Meshtastic installato correttamente.
+![image](https://user-images.githubusercontent.com/9000580/168447159-71a6546a-f487-4bc2-86c1-4c489b2a8975.png)
+
+### Risoluzione problemi
+
+Si potrebbe ricevere un errore per l'autorizzazione della porta COM negli script di installazione manuale del dispositivo, questo può essere causato da una serie di problemi diversi.
+
+Potrebbe essere necessario eseguire il processo come amministratore, controllare per assicurarsi che software come Cura non stia monopolizzando le porte COM o riavviare.
+
+## Connetti e configura il dispositivo
+
+Dopo aver flashato il firmware Meshtastic sul dispositivo, è ora possibile passare alla configurazione iniziale.
+
+<div className="indexCtasBody">
+  <Link
+    className={"button button--outline button--lg cta--button"}
+    to={"/docs/getting-started/initial-config"}
+  >
+    Connetti e configura il dispositivo
+  </Link>
+</div>

@@ -1,0 +1,233 @@
+---
+id: device
+title: Geräteeinstellungen
+sidebar_label: Gerät
+description: Erfahren Sie mehr über die Geräterollen wie Client, Repeater und Router sowie andere Geräteeinstellungen.
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+import { Icon } from "@iconify/react";
+
+Die Geräteeinstellungen sind: Rolle, Sendemodus, GPIO für Benutzertaste, GPIO für PWM Summer, Übertragungsintervall Knoteninformation, Doppelklick als Tastendruck, Dreifachklick, Zeitzonendefinition und Puls LED deaktivieren. Die Gerätekonfiguration verwendet eine administrative Nachricht, die einen `ConfigModule.Device` Protocol Buffer sendet.
+
+## Geräteeinstellung
+
+## Rollen
+
+| Geräterolle    | Beschreibung                                                                                                                                                                                                                                                         | Beste Verwendung                                                                                                                                                                                                                            |
+| -------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| CLIENT         | Mit der App verbundenes oder eigenständiges Nachrichtengerät. Leitet Nachrichten weiter, wenn kein anderer Knoten dies getan hat.                                                                                                                                    | Allgemeine Nutzung für Personen, die über das Meshtastic Netzwerk mit Unterstützung für Client-Anwendungen kommunizieren wollen.                                                                                                            |
+| CLIENT_MUTE    | Gerät, welches keine Pakete von anderen Geräten weiterleitet.                                                                                                                                                                                                        | Situationen, in denen ein Gerät am Netzwerk teilnehmen muss, ohne bei der Nachrichtenweiterleitung zu unterstützen, wodurch die Netzwerklast verringert wird.                                                                               |
+| CLIENT_HIDDEN  | Gerät, das nur bei Bedarf sendet, um sich zu tarnen oder Strom zu sparen.                                                                                                                                                                                            | Verwendet an geheimen/versteckten Standorten oder um den Sendezeit-/Stromverbrauch zu senken, während Sie immer noch Teil des Netzwerkes sind.                                                                                              |
+| CLIENT_BASE    | Persönliche Basisstation: leitet Nachrichten immer von oder an ihre bevorzugten Knoten weiter. Behandelt alle anderen Nachrichten wie CLIENT.                                                                                                                        | Verwenden Sie einen stärkeren oder gut positionierten Knoten als `Basisstation` auf dem Dachboden/Dach, um Nachrichten von Ihren eigenen schwächeren, im Innenbereich oder weniger gut positionierten Knoten aus weiterzuleiten.            |
+| TRACKER        | GPS-Positionspakete mit Priorität gesendet.                                                                                                                                                                                                                          | Nachverfolgung des Standorts von Einzelpersonen oder Vermögenswerten, insbesondere in Szenarien, in denen zeitgerechte und effiziente Standortaktualisierungen entscheidend sind.                                                           |
+| LOST_AND_FOUND | Sendet den Standort regelmäßig als Nachricht an den Standardkanal, um bei der Wiederherstellung des Geräts zu helfen.                                                                                                                                                | Wird zum Wiederfinden eines verlorenen Gerätes verwendet.                                                                                                                                                                                   |
+| SENSOR         | Telemetrie-Pakete mit Priorität gesendet.                                                                                                                                                                                                                            | Einsatz in Szenarien, in denen die Erfassung von Umwelt- oder anderen Sensordaten entscheidend ist, mit effizientem Stromverbrauch und häufigen Updates.                                                                                    |
+| TAK            | Optimiert für Kommunikation des ATAK Systems, reduziert Routineübertragungen.                                                                                                                                                                                        | Integration mit ATAK-Systemen (über das Meshtastic ATAK-Plugin) zur Kommunikation in taktischen oder koordinierten Operationen.                                                                                                             |
+| TAK_TRACKER    | Aktiviert automatische TAK PLI Übertragungen und reduziert Routineübertragungen.                                                                                                                                                                                     | Standalone PLI Integration mit ATAK-Systemen zur Kommunikation in taktischen oder koordinierten Operationen.                                                                                                                                |
+| REPEATER [^4]  | Infrastrukturknoten zur Erweiterung der Netzabdeckung durch Weiterleitung alle Nachrichten mit minimalem Overhead. Nicht in der Knotenliste sichtbar.                                                                                                                | Am besten an strategischen Standorten positioniert, um die gesamte Netzwerkabdeckung zu maximieren. Gerät wird in der Topologie nicht angezeigt.                                                                                            |
+| ROUTER         | Infrastrukturknoten für die Erweiterung der Netzabdeckung durch die erneute, einmalige Übertragung von Nachrichten. Sichtbar in der Knotenliste.                                                                                                                     | Am besten an strategischen Standorten positioniert, um die gesamte Netzwerkabdeckung zu maximieren. Gerät wird in der Topologie angezeigt.                                                                                                  |
+| ROUTER_LATE    | Infrastrukturknoten, der Nachrichten immer einmalig erneut weiterleitet. Jedoch erst, nachdem alle anderen Rollen diese Möglichkeit haben, um eine zusätzliche Abdeckung für lokale Netze sicherzustellen. Sichtbar in der Knotenliste. Sichtbar in der Knotenliste. | Ideal zum Abdecken von toten Flecken oder zur Gewährleistung der Zuverlässigkeit für Knotengruppen, bei denen die Platzierung nicht dem großflächigen Netz zugutekommt. Gerät wird in der Topologie angezeigt.                              |
+
+[^4]: Diese Rolle ist ab Firmware-Version 2.7.11 veraltet.
+:::tip
+Sie sind sich noch nicht sicher, welche Rolle Sie verwenden sollen? Lesen Sie unseren Blogbeitrag: [Die richtige Geräterolle auswählen](/blog/choosing-the-right-device-role/)
+:::
+
+Suchen Sie nach ROUTER_CLIENT? Diese Rolle ist mit Firmware 2.3.15 veraltet und entfernt. Erfahren Sie mehr in den [2.3.15 Release Notes](https://github.com/meshtastic/firmware/releases/tag/v2.3.15.deb7c27)
+
+### Rollenvergleich
+
+Diese Tabelle zeigt die **Standardwerte** an, nachdem Sie eine Voreinstellung ausgewählt haben. Wie immer können Sie nach der Auswahl einer Voreinstellung individuelle Einstellungen vornehmen.
+
+| Geräterolle    | BLE/WLAN/Seriell   | Bildschirm aktiv | Energieverbrauch       | Weiterleitung     | Priorisierte Weiterleitung | Sichtbar in der Knotenliste |
+| -------------- | ------------------ | ---------------- | ---------------------- | ----------------- | -------------------------- | --------------------------- |
+| CLIENT         | Ja                 | Ja               | Normal                 | Ja                | Nein                       | Ja                          |
+| CLIENT_MUTE    | Ja                 | Ja               | Niedrigster            | Nein              | Nein                       | Ja                          |
+| CLIENT_HIDDEN  | Ja                 | Ja               | Niedrigster            | Nur lokal         | Nein                       | Nein                        |
+| CLIENT_BASE    | Ja                 | Ja               | Normal                 | Ja                | Nur Favoriten[^3]          | Ja                          |
+| TRACKER        | Ja                 | Nein             | Normal / Niedrig       | Nur aufwachen[^1] | Nein                       | Ja                          |
+| LOST_AND_FOUND | Ja                 | Nein             | Normal                 | Ja                | Nein                       | Ja                          |
+| SENSOR         | Ja                 | Nein             | Normal / Niedrig       | Nur aufwachen[^1] | Nein                       | Ja                          |
+| TAK            | Ja                 | Optional         | Normal                 | Ja                | Nein                       | Ja                          |
+| TAK_TRACKER    | Ja                 | Optional         | Normal                 | Ja                | Nein                       | Ja                          |
+| ROUTER         | Nein [^2]          | Nein             | Hoch                   | Ja                | Ja                         | Ja                          |
+| ROUTER_LATE    | Ja                 | Ja               | Hoch                   | Ja                | Nein                       | Ja                          |
+| REPEATER       | Ja                 | Nein             | Hoch                   | Ja                | Ja                         | Nein                        |
+
+[^1]: **Nur aufwachen** zeigt an, dass die Übertragung normal erfolgen wird, aber nicht Ruhemodus zwischen den Übertragungsintervallen.
+
+[^2]: Die `ROUTER` Rolle aktiviert standardmäßig [Energiesparen](/docs/configuration/radio/power/#power-saving) (nur ESP32). Wenn ein `ROUTER` über BLE aktualisiert werden muss, wird empfohlen, dass Sie eine administrative Nachricht benutzen, um vorübergehend die Rolle zu ändern, dann zu aktualisieren und am Ende die Rolle wieder rückgängig zu machen.
+
+[^3]: **Nur Favoriten** gibt an, dass die `CLIENT_BASE` Nachrichten von oder zu allen bevorzugten Knoten priorisiert. Von Ihrer `CLIENT_BASE` aus sollten Sie alle Ihre anderen Knoten als Favoriten markieren, die sich normalerweise in Reichweite der besser positionierten `CLIENT_BASE` Basisstation befinden.
+
+## Hinweise zum Energiesparen + Rollenverhalten
+
+### Nur ESP32 Plattform
+
+Jede Rolle außer den Rollen `TRACKER` und `SENSOR` ist in der Lage, traditionelles Energiesparen mit den `power.is_power_saving` Einstellung zu ermöglichen. Wenn ein Knoten in den Energiesparmodus geht, werden im Allgemeinen die serielle Konsole, Zubehör, GPS und WiFi/Bluetooth heruntergefahren, um Energie zu sparen. Die CPU schaltet in einen Zustand niedriger Leistung (leichter oder tiefer Schlaf beim ESP32). Das LoRA Funkgerät wird im Bereitschaftsmodus belassen, um Nachrichten zu empfangen, die das Gerät aufwecken werden, um dessen Dienste fortzusetzen und zu reagieren.
+
+Die Einstellung von `display.screen_on_secs` (Anzeigeverzögerung), `power.min_wake_secs` (Minimale Zeit bis zum Energiesparen) und `power.wait_bluetooth_secs` (Bluetooth Verzögerung) verzögern den Übergang eines Knotens zu einem Ruhezustand. Die Timeouts und der anschließende Übergang zu Ruhezustand können auch durch externe Ereignisse oder Aktionen wie das Empfangen einer Nachricht _zurückgesetzt werden, durch Drücken einer Taste oder durch Verbindung mit der App über serielle Schnittstelle oder andere Wege.
+
+Für die `ROUTER` Rolle ist das Energiesparverhalten durch `power.is_power_saving` automatisch aktiviert und kann nicht deaktiviert werden.
+
+### ESP32 und NRF52 Plattformen
+
+In den Rollen `TRACKER` und `SENSOR` gibt es spezielle Energiesparverhalten in Kombination mit `power.is_power_saving`. Beim `TRACKER`, wird das Gerät für `position.position_broadcast_secs` in den Ruhezustand wechseln und beim Aufwachen wird eine Standortnachricht gesendet, wenn das GPS eine gültige Lokalisierung ergibt und der Zyklus wird wiederholt. Beim `SENSOR`, das Gerät wird das Gerät für `telemetry.environment_update_interval` in den Ruhezustand wechseln und beim Aufwachen sammelt es Umgebungsdaten und sendet eine Telemetrienachricht und der Zyklus wird wiederholt. Bei beiden Rollen verbleibt das LoRa Funkgerät nicht im Bereitschaftsmodus, um Nachrichten zu empfangen die das Gerät aufzuwecken. Der Energiesparmodus bleibt auf die jeweiligen Übertragungsintervalle beschränkt.
+
+## Weiterleitungsmodus
+
+Diese Einstellung definiert das Verhalten des Gerätes für die Weiterleitung von Nachrichten.
+
+|     Wert             |                                                                        Beschreibung                                                                                                                                                                         |
+| :------------------: | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
+|     `ALL`            | ALL (Standard) - Diese Einstellung wird ALLE Nachrichten aus seinem primären Netz sowie anderen Netzen mit den gleichen Modem-Einstellungen, übertragen einschließlich derer, bei denen sich die Verschlüsselungseinstellungen unterscheiden.               |
+| `ALL_SKIP_DECODING`  |                              ALL_SKIP_DECODING - Gleiches Verhalten wie ALL, überspringt aber die Nachrichtendekodierung und sendet sie einfach erneut. **Nur verfügbar mit Repeater Rolle.**                                                               |
+|   `LOCAL_ONLY`       |                LOCAL_ONLY - Ignoriert Nachrichten aus öffentlichen fremden Netzen und solche die nicht entschlüsselt werden können. Weiterleitung von Nachrichten nur aus den lokalen primären / sekundären Kanälen des Knotens.                            |
+|   `KNOWN_ONLY`       |    KNOWN_ONLY - Ignoriert empfangene Nachrichten von fremden Netzen wie LOCAL_ONLY, geht aber noch einen Schritt weiter, indem auch Nachrichten von Knoten ignoriert werden, die nicht in der bekannten Knotenliste (NodeDB) enthalten sind.                |
+|     `NONE`           |                                           Dies ist nur für SENSOR, TRACKER und TAK_TRACKER zulässig. Dies verhindert alle Übertragungen, nicht anders als CLIENT_MUTE Rolle.                                                                                |
+| `CORE_PORTNUMS_ONLY` |         CORE_PORTNUMS_ONLY - Ignoriert Nachrichten von nicht standardmäßigen Anschlussnummern wie: TAK, Reichweitentest, Besucherzähler, etc. Sendet nur Nachrichten mit Standardanschlussnummern: NodeInfo, Text, Standort, Telemetrie und Routing.        |
+
+## GPIO für Benutzertaste
+
+Dies ist die GPIO Pinnummer, die für eine Benutzertaste verwendet wird, wenn Ihr Gerät keine vordefinierten Benutzertaste hat.
+
+## GPIO für PWM Summer
+
+Dies ist die GPIO Pinnummer, die für den PWM Summer verwendet wird, wenn Ihr Gerät keinen vordefinierten Summer hat.
+
+## Intervall Knoteninformation (Sekunden)
+
+Dies ist die Anzahl der Sekunden zwischen dem Aussenden einer Nachricht mit Knoteninformationen (enthält z.B. langen und kurzen Namen) durch das Gerät. Das Gerät reagiert weiterhin umgehend auf Knoteninformationsnachrichten, wenn eine Antwort gewünscht wird. Wenn das Gerät Nachrichten von einem Knoten hört, den es noch nicht kennt, wird es seine Knoteninformation senden und automatisch nach einer Antwort fragen.
+
+## Doppelklick als Tastendruck
+
+Diese Option aktiviert einen Doppeltipp, wenn ein unterstützter Beschleunigungsmesser am Gerät angeschlossen ist, der als Tastendruck behandelt wird.
+
+## Dreifachklicken deaktivieren
+
+Deaktiviert das dreifache Drücken der Benutzertaste zum Aktivieren oder Deaktivieren des GPS.
+
+## TZDEF (Zeitzonendefinition)
+
+Die `tzdef` Einstellung erlaubt die Definition der lokalen Zeitzone für das Gerät. Es verwendet das TZ Datenbankformat, um die korrekte lokale Zeit auf dem Gerät und in seinen Protokollen anzuzeigen.
+
+Um die Zeitzone festzulegen, verwenden Sie eine Zeichenkette aus der POSIX TZ Datenbank für die entsprechende Region. Hier ist eine Liste der [unterstützten Zeitzonen](https://github.com/nayarsystems/posix_tz_db/blob/master/zones.csv). Zum Beispiel, wenn Sie sich in der Region `America/Los_Angeles` befinden, würden Sie `PST8PDT,M3.2.0,M11.1.0` als Zeitzone eingeben.
+
+## Puls LED deaktivieren
+
+Wenn aktiviert, wird das Standardverhalten der Puls LED (LED_PIN) am Gerät deaktiviert.
+
+## Verfügbarkeit der Benutzereinstellungen
+
+<Tabs
+  groupId="settings"
+  defaultValue="apple"
+  values={[
+    {
+      label: (
+        <>
+          <Icon icon="mdi:android" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Android
+        </>
+      ),
+      value: "android",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:apple" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Apple
+        </>
+      ),
+      value: "apple",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:terminal" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Kommandozeile
+        </>
+      ),
+      value: "cli",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:internet" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Web
+        </>
+      ),
+      value: "web",
+    },
+  ]}>
+
+<TabItem value="android">
+
+#### Android
+
+:::info
+
+Geräteeinstellungen sind für Android verfügbar.
+
+1. Öffnen Sie die Meshtastic Applikation
+2. Navigieren Sie zu: **vertikale Ellipse (3 Punkte oben rechts) > Geräteeinstellungen > Gerät**
+
+:::
+
+</TabItem>
+<TabItem value="apple">
+
+#### Apple
+
+:::info
+Alle Geräteeinstellungen außer dem NTP-Server sind auf iOS, iPadOS und macOS unter Einstellungen > Geräteeinstellung > Gerät verfügbar.
+:::
+
+</TabItem>
+<TabItem value="cli">
+
+#### Kommandozeile
+
+:::info
+
+Alle Gerätestellungen sind über die Python Kommandozeile verfügbar. Beispieleinstellungen sind folgende:
+
+:::
+
+| Einstellung                           | Akzeptable Werte                                                   | Standardwert           |
+| ------------------------------------- | ------------------------------------------------------------------ | ---------------------- |
+| device.role                           | `CLIENT`, `CLIENT_MUTE`, `ROUTER`, `REPEATER`, `TRACKER`, `SENSOR` | 'CLIENT'               |
+| device.rebroadcast_mode               | `ALL`, `ALL_SKIP_DECODING`, `LOCAL_ONLY`                           | `ALL`                  |
+| device.button_gpio                    | `0` - `34`                                                         | `0`                    |
+| device.buzzer_gpio                    | `0` - `34`                                                         | `0`                    |
+| device.node_info_broadcast_secs       | `3600` - `UINT MAX`                                                | `10800` (3 Stunden)    |
+| device.double_tap_as_button_press     | `false`, `true`                                                    | `false`                |
+| device.disable_triple_click           | `false`, `true`                                                    | `false`                |
+
+:::tip
+
+Weil das Gerät nach jedem Befehl über die Kommandozeile neu startet, wird empfohlen, dass mehrere Werte in einem Konfigurationsblock zusammengefasst und übertragen werden.
+
+```shell title="Example:"
+meshtastic --set device.role CLIENT --set device.tzdef UTC0
+```
+
+:::
+
+```shell title="Set the role to client"
+meshtastic --set device.role CLIENT
+```
+
+```shell title="Set tzdef"
+meshtastic --set device.tzdef UTC0
+```
+
+</TabItem>
+<TabItem value="web">
+
+#### Web
+
+:::info
+Alle Geräteeinstellungen sind in der Web-Oberfläche verfügbar.
+:::
+
+</TabItem>
+</Tabs>

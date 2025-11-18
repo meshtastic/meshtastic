@@ -1,0 +1,54 @@
+---
+id: meshpocket
+title: HELTEC® MeshPocket
+sidebar_label: MeshPocket
+sidebar_position: 5
+---
+
+MeshPocket, hergestellt von [Heltec](/docs/hardware/devices/heltec-automation/), ist ein kompaktes und tragbares Gerät, das Magnetkontaktladegerät QI2 mit einem integrierten Meshtastic Gerät auf Basis der nRF52840 MCU und einem 2,13" E-Ink Bildschirm kombiniert. Erhältlich mit einer Batterie von 5000 oder 10000 mAh und ist für den täglichen Gebrauch, die Erkundung im Freien und die zuverlässige unabhängige Kommunikation konzipiert.
+
+## Spezifikationen
+
+- **MCU:**
+  - nRF52840
+    - Bluetooth 5.0
+- **LoRa Sendeempfänger:**
+  - Semtech SX1262
+- **Frequenzoptionen:**
+  - 863 - 870 MHz
+  - 902 - 928 MHz
+- **Antenne:**
+  - Integrierte LoRa Antenne
+- **Anschlüsse:**
+  - USB-C
+  - 4 Pins für den Anschluss des Meshtastic Gerätes
+
+### Merkmale
+
+- QI2 kabelloses Ladegerät mit integriertem Meshtastic Gerät.
+- 2,13" E-Ink Bildschirm.
+- 5000 oder 10000 mAh Akku.
+
+### Programmierung
+
+Um die Firmware auf der Heltec MeshPocket zu programmieren, müssen Sie das mitgelieferte Magnetkontaktkabel verwenden, das an die Seite des Gerätes angeschlossen wird. Der USB-C-Anschluss dient nur zum Laden des internen Akkus oder zur Stromversorgung auf ein anderes Gerät, er unterstützt weder Datenübertragung noch Firmware Programmierung.
+
+1. DFU Modus manuell durch Doppelklick auf den RST Knopf aktivieren.
+2. Kopieren Sie die Firmware UF2 Datei in das gemountete Laufwerk, das angezeigt wird.
+
+### Quellen
+
+- Firmware Dateien:
+  - 5000 mAh:
+    - `firmware-heltec-mesh-pocket-5000-X.X.X.xxxx.uf2`
+    - `firmware-heltec-mesh-pocket-inkhud-5000-X.X.X.xxxx.uf2`
+  - 10000 mAh:
+    - `firmware-heltec-mesh-pocket-10000-X.X.X.xxxx.uf2`
+    - `firmware-heltec-mesh-pocket-inkhud-10000-X.X.X.xxxx.uf2`
+- Links zum Direktkauf:
+  - International
+    - [Heltec Site](https://msh.to/heltec-mesh-pocket-10000/)
+- [Heltec MeshPocket Benutzerhandbuch](https://resource.heltec.cn/download/MeshPocket/user_manual/User_Guide_Rev.1.0.1.pdf)
+- [Heltec MeshPocket Datenblatt](https://resource.heltec.cn/download/MeshPocket/datasheet/MeshPocket_1.0.1.pdf)
+
+![Heltec MeshPocket](/img/hardware/heltec/meshpocket.webp)

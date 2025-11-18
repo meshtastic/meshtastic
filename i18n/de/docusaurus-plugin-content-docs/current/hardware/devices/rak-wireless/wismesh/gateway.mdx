@@ -1,0 +1,112 @@
+---
+id: gateway
+title: RAK WisMesh Gateway
+sidebar_label: Gateway
+sidebar_position: 5
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+Die WisMesh Gateway Serie erweitert die Funktionen von Meshtastic, indem sie netzunabhängige Mesh-Netzwerke mit MQTT verbindet oder einen Datenaustausch in Echtzeit ermöglicht. Ob Sie Sensornetzwerke integrieren, mehrere Netzwerkregionen verknüpfen oder die Kommunikationsreichweite erweitern möchten – diese Gateways bieten eine nahtlose Möglichkeit, Meshtastic mit der Cloud zu verbinden und so für mehr Flexibilität und Kontrolle zu sorgen.
+
+<Tabs
+groupId="gateway"
+queryString="gateway"
+defaultValue="gateway-ethernet"
+values={[
+{label: 'Ethernet MQTT Gateway', value: 'gateway-ethernet'},
+{label: 'WiFi MQTT Gateway', value: 'gateway-wifi'}
+]}>
+
+<TabItem value="gateway-ethernet">
+
+Das WisMesh Ethernet MQTT Gateway bietet eine stabile und kabelgebundene Verbindung zwischen Meshtastic Netzwerken und MQTT-Brokern mit einer Ethernet-Schnittstelle.
+
+- **Basisplatine:**
+  - [RAK19007](/docs/hardware/devices/rak-wireless/wisblock/base-board/?rakbase=RAK19007)
+- **MCU**
+  - [RAK4631 (nRF52840)](/docs/hardware/devices/rak-wireless/wisblock/core-module?rakcore=RAK4631)
+    - Bluetooth BLE 5.0
+    - Sehr niedriger Energieverbrauch
+- **LoRa Sendeempfänger:**
+  - SX1262
+- **Frequenzoptionen:**
+  - 864 MHz
+  - 865 MHz
+  - 868 MHz
+  - 915 MHz
+  - 920 MHz
+  - 923 MHz
+- **Anschlüsse:**
+  - RP-SMA
+  - USB-C
+  - Ethernet
+
+### Merkmale
+
+- Vormontierte Option mit IP67 Gehäuse
+  - Enthält WisMesh Blade Antenne
+- RAK13800 Ethernet-Modul (erfordert eine externe Spannungsversorgung)
+  - Optionales RAK19018 PoE Modul
+
+### Quellen
+
+- Firmware Datei: `firmware-rak4631_eth_gw-X.X.X.xxxxxxx.uf2`
+- Weitere Informationen zum WisMesh Ethernet MQTT Gateway finden Sie im [RAK Dokumentationszentrum](https://docs.rakwireless.com/product-categories/meshtastic/wismesh-eth-mqtt-gw/).
+- Links zum Direktkauf:
+  - International
+    - [RAKwireless Shop](https://msh.to/wismesh-ethernet-gateway)
+    - [RAKwireless AliExpress](https://msh.to/aliexpress-wismesh-ethernet-gateway)
+
+![WisMesh Ethernet MQTT Gateway](/img/hardware/rak/wismesh-ethernet-gateway.webp)
+
+</ TabItem>
+
+<TabItem value="gateway-wifi">
+
+Das WisMesh WiFi MQTT Gateway ist eine drahtlose Lösung zum Überbrücken von Meshtastic-Netzwerken mit MQTT-Brokern.
+
+- **Basisplatine:**
+  - [RAK19007](/docs/hardware/devices/rak-wireless/wisblock/base-board/?rakbase=RAK19007)
+- **MCU**
+  - [RAK11200 (ESP32)](/docs/hardware/devices/rak-wireless/wisblock/core-module?rakcore=RAK11200)
+    - Bluetooth BLE 4.2
+    - WLAN 2,4 GHz b/g/n
+    - Hoher Stromverbrauch (relativ zu nRF52)
+- **LoRa Sendeempfänger:**
+  - SX1262 ([RAK13300 LPWAN Modul](https://msh.to/rak13300))
+    - Dies belegt den IO Steckplatz der Basisplatine
+- **Frequenzoptionen:**
+  - 864 MHz
+  - 865 MHz
+  - 868 MHz
+  - 915 MHz
+  - 920 MHz
+  - 923 MHz
+- **Anschlüsse:**
+  - RP-SMA (nur Gehäuse)
+  - USB-C
+  - 5-Pin-Stecker M8 (nur Gehäuse)
+
+### Merkmale
+
+- WLAN Verbindung
+- Vormontierte Option mit IP67 Gehäuse
+  - Enthält WisMesh Blade Antenne
+  - Beinhaltet M8 Kabel für 5V Spannungsversorgung
+
+### Quellen
+
+- Firmware Datei: `firmware-rak11200-X.X.X.xxxxxxx.uf2`
+- Weitere Informationen zum WisMesh WiFi MQTT Gateway finden Sie im [RAK Dokumentationszentrum](https://docs.rakwireless.com/product-categories/meshtastic/wismesh-wifi-mqtt-gw/).
+- Links zum Direktkauf:
+  - International
+    - [RAKwireless Shop](https://msh.to/wismesh-wifi-gateway)
+    - [RAKwireless AliExpress](https://msh.to/aliexpress-wismesh-wifi-gateway)
+
+![WisMesh WiFi MQTT Gateway](/img/hardware/rak/wismesh-wifi-gateway.webp)
+
+</ TabItem>
+
+</ Tabs>

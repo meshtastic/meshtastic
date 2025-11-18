@@ -1,0 +1,320 @@
+---
+id: канали
+title: Конфигурация на канали
+sidebar_label: Канали
+description: Understand how to configure channels on your Meshtastic device, including private channels, encryption, MQTT, and location precision.
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+import { Icon } from "@iconify/react";
+import PositionPrecisionBits from "@site/docs/blocks/_position-precision-bits.mdx";
+import QRCode from "@site/docs/blocks/_qr-code.mdx";
+
+Опциите за конфигуриране на каналите са: Индекс, Роли и Настройки. Channel config uses an admin message sending a `Channel` protobuf which also consists of a `ChannelSettings` or `ModuleSettings` protobuf.
+
+:::info
+**Channel Settings** (as described on this page) should not be confused with [Modem Preset Settings](/docs/configuration/radio/lora#modem-preset)
+
+[Modem Preset Settings](/docs/configuration/radio/lora#modem-preset) contain the modem configuration (frequency settings, spreading factor, bandwidth, etc.) used for the LoRa radio. Тези настройки са еднакви за всички канали и **не** могат да бъдат уникални за всеки канал.
+
+**Channel Settings** contain information for segregating message groups, configuring optional encryption, and enabling or disabling messaging over internet gateways. Тези настройки **са** уникални и могат да се конфигурират за всеки канал.
+:::
+
+## Стойности за конфигурацията на каналите
+
+### Индекс
+
+Индексът на каналите започва от 0 и завършва на 7.
+
+_Индексирането_ не може да бъде променяно.
+
+| Индекс | Канал | Роля по подразбиране |          Предназначение                  |
+| :----: | :---: | :------------------: | :--------------------------------------: |
+|   0    |  1    |     `ПЪРВИЧЕН`       | Използва се като канал `по подразбиране` |
+|   1    |  2    |    `ДЕЗАКТИВИРАН`    |      Дефиниран от потребителя            |
+|   2    |  3    |    `ДЕЗАКТИВИРАН`    |      Дефиниран от потребителя            |
+|   3    |  4    |    `ДЕЗАКТИВИРАН`    |      Дефиниран от потребителя            |
+|   4    |  5    |    `ДЕЗАКТИВИРАН`    |      Дефиниран от потребителя            |
+|   5    |  6    |    `ДЕЗАКТИВИРАН`    |      Дефиниран от потребителя            |
+|   6    |  7    |    `ДЕЗАКТИВИРАН`    |      Дефиниран от потребителя            |
+|   7    |  8    |    `ДЕЗАКТИВИРАН`    |      Дефиниран от потребителя            |
+
+:::note
+Вие **не** можете да имате `ДЕЗАКТИВИРАНИ` канали между активни канали, като `ПЪРВИЧЕН` и `ВТОРИЧЕН`. Активните канали трябва да бъдат поредни.
+:::
+
+### Роля
+
+На всеки канал е присвоена една от 3 роли:
+
+1. `ПЪРВИЧЕН` или `1`
+   - Това е първият канал, който се създава за вас при първоначалната настройка.
+   - Може да съществува само един първичен канал и не може да бъде деактивиран.
+   - By default, periodic broadcasts like position and telemetry are sent over this channel.
+2. `ВТОРИЧЕН` или `2`
+   - Може да се променя ключа за криптиране (PSK).
+3. `ДЕЗАКТИВИРАН` или `0`
+   - Каналът вече не е достъпен за употреба.
+   - Настройките на канала са зададени по подразбиране.
+
+:::note
+While you can have a different PRIMARY channel and communicate over SECONDARY channels with the same Name & PSK, a hash of the PRIMARY channel's name sets the LoRa frequency slot, which determines the actual frequency you are transmitting on in the band.
+To ensure devices with different PRIMARY channel name transmit on the same frequency, you must explicitly set the LoRa frequency slot.
+:::
+
+## Channel Settings Values
+
+The Channel Settings options are: Name, PSK, Downlink Enabled, and Uplink Enabled. Channel settings are embedded in the `Channel` protobuf as a `ChannelSettings` protobuf and sent as an admin message.
+
+### Име
+
+Кратък идентификатор за канала. _(< 12 байта)_
+
+|      Запазено име      |                                                      Предназначение                                                                                                                                                                      |
+| :--------------------: | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
+| `""` (по подразбиране) |                                        If left empty on the Primary channel, this designates the `default` channel.                                                                                                                      |
+|       `admin`          | On Secondary channels, the name `admin` (case sensitive) designates the `admin` channel used to administer nodes over the mesh. Note that this is a Legacy feature, see [Remote Admin](docs/configuration/remote-admin.mdx) for details. |
+
+:::note
+
+Matching channel names are required in order to communicate on the same channel with other devices. Example: If your device is using the channel name `LongFast` the device you are attempting to communicate with must also have a channel named `LongFast`.
+
+:::
+
+### PSK
+
+Ключът за криптиране, използван за частни канали.
+
+Шестнадесетичен байт `0x01` за първичния канал `по подразбиране`.
+
+Трябва да бъде 0 байта (без криптиране), 16 байта (AES128) или 32 байта (AES256).
+
+:::note
+
+Matching PSKs are required in order to communicate on the same channel with other devices. Example: If your device is using a channel with the default PSK of `AQ==` the device you are attempting to communicate with must also have a matching channel with the same PSK.
+
+:::
+
+### Downlink Enabled
+
+If enabled, messages captured from a **public** internet gateway will be forwarded to the local mesh.
+
+Set to `false` by default for all channels.
+
+### Uplink Enabled
+
+If enabled, messages from the mesh will be sent to the **public** internet through any node's configured gateway.
+
+Set to `false` by default for all channels.
+
+## Channel Module Settings
+
+The channel module settings options are: position precision. Channel module settings are embedded in the Channel protobuf as a ModuleSettings protobuf and sent as an admin message.
+
+### Прецизност на позицията
+
+The `position_precision` setting allows control of the level of precision for location data that is sent over a particular channel. This can be useful for privacy reasons, where obfuscating the exact location may be desired when sending position data over certain channels.
+
+The `position_precision` value is an integer between 0 and 32:
+
+- A value of 0 means that location data is never sent over the given channel.
+- A value of 32 means that location data is sent with full precision.
+- Values in between indicate the number of bits of precision to be sent, which correspond to a position precision from the table below.
+- The public MQTT server filters out precise positions, see [here](https://meshtastic.org/docs/software/integrations/mqtt/#location-precision-filtering) for more information.
+
+<PositionPrecisionBits />
+
+The client applications have implemented different levels of precision giving the user a practical range to choose from. Setting across the full range of integers can be done via the Python CLI. See [Setting Position Precision](/docs/configuration/radio/channels/#setting-position-precision) for examples on setting different levels of precision using CLI.
+
+## Channel Config Client Availability
+
+<Tabs
+  groupId="settings"
+  defaultValue="apple"
+  values={[
+    {
+      label: (
+        <>
+          <Icon icon="mdi:android" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Android
+        </>
+      ),
+      value: "android",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:apple" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Apple
+        </>
+      ),
+      value: "apple",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:terminal" height="1.5rem" style={{ marginRight: "0.25rem" }} /> CLI
+        </>
+      ),
+      value: "cli",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:internet" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Web
+        </>
+      ),
+      value: "web",
+    },
+  ]}>
+
+<TabItem value="android">
+
+#### Андроид
+
+:::info
+Channel Config options are available on Android.
+:::
+
+The Radio Configuration tab can be used for common tasks:
+
+1. View your current channel configuration QR code and URL.[^1]
+2. Quickly create or modify your primary channel.
+3. Select a modem preset for all your channels i.e. `Long Range / Fast`.
+
+[^1]: <QRCode />
+
+See [Android App Usage](/docs/software/android/usage#setup-a-channel) for more further instruction on setting up your primary channel.
+
+[![Channel Editor](/img/android/android-channel-edit-sm.webp)](/img/android/android-channel-edit.webp)
+
+Tap "Edit" to access the Channel Menu:
+
+1. Add, remove, or modify secondary channels
+2. Създаване или промяна на ключове за криптиране
+3. Enable uplink and downlink for individual channels
+4. Позицията е активирана
+5. Precise location (if position is enabled)
+6. Position precision (if precise location is disabled)
+
+</TabItem>
+
+<TabItem value="apple">
+
+#### Apple
+
+:::info
+
+A channel editor is available on the iOS, iPadOS and macOS applications at Settings > Radio Configuration > Channels.
+
+:::
+
+</TabItem>
+
+<TabItem value="cli">
+
+#### CLI
+
+:::info
+Всички опции за конфигуриране на каналите са достъпни в python CLI. Example commands are below:
+:::
+
+:::tip
+
+Because the device will reboot after each command is sent via CLI, it is recommended when setting multiple values in a config section that commands be chained together as one.
+
+```shell title="Example:"
+meshtastic --ch-set name "My Channel" --ch-set psk random --ch-set uplink_enabled true --ch-index 4
+```
+
+:::
+
+##### Име
+
+```shell title="Set channel name for the PRIMARY channel"
+# без интервали
+meshtastic --ch-set name MyChannel --ch-index 0
+# с интервали
+meshtastic --ch-set name "My Channel" --ch-index 0
+```
+
+##### PSK
+
+If you use Meshtastic for exchanging messages you don't want other people to see, `random` is the setting you should use. Selecting `default` or any of the `simple` values from the following table will use publicly known encryption keys. They're shipped with Meshtastic source code and thus, anyone can listen to messages encrypted by them. They're great for testing and public channels.
+
+|    Настройка           |                           Поведение                                                                  |
+| :--------------------: | :--------------------------------------------------------------------------------------------------: |
+|     `none`             |                    Дезактивиране на криптирането                                                     |
+|    `default`           |         Криптиране по подразбиране (използване на слаб ключ за криптиране)                           |
+|     `random`           | Генериране на защитен 256-битов ключ за криптиране. Използвайте тази настройка за лична комуникация. |
+| `simple0`- `simple254` |                Използване на кодиране с един байт за криптиране                                      |
+
+```shell title="Set encryption to default on PRIMARY channel"
+meshtastic --ch-set psk default --ch-index 0
+```
+
+```shell title="Set encryption to random on PRIMARY channel"
+meshtastic --ch-set psk random --ch-index 0
+```
+
+```shell title="Set encryption to single byte  on PRIMARY channel"
+meshtastic --ch-set psk simple15 --ch-index 0
+```
+
+```shell title="Set encryption to your own key on PRIMARY channel"
+meshtastic --ch-set psk 0x1a1a1a1a2b2b2b2b1a1a1a1a2b2b2b2b1a1a1a1a2b2b2b2b1a1a1a1a2b2b2b2b --ch-index 0
+```
+
+```shell title="Set encryption to your own key on PRIMARY channel (Base64 encoded)"
+meshtastic --ch-set psk base64:puavdd7vtYJh8NUVWgxbsoG2u9Sdqc54YvMLs+KNcMA= --ch-index 0
+```
+
+:::tip
+Use this to copy and paste the `base64` encoded (single channel) key from the meshtastic --info command. Please don't use the omnibus (all channels) code here, it is not a valid key.
+:::
+
+```shell title="Disable encryption on PRIMARY channel"
+meshtastic --ch-set psk none --ch-index 0
+```
+
+##### Uplink / Downlink
+
+За конфигуриране на шлюзове, моля вижте [MQTT](/docs/configuration/module/mqtt)
+
+```shell title="Enable/Disable Uplink on PRIMARY channel"
+meshtastic --ch-set uplink_enabled true --ch-index 0
+meshtastic --ch-set uplink_enabled false --ch-index 0
+```
+
+```shell title="Enable/Disable Downlink on SECONDARY channel"
+meshtastic --ch-set downlink_enabled true --ch-index 1
+meshtastic --ch-set downlink_enabled false --ch-index 5
+```
+
+#### Настройка на точността на позицията
+
+:::info
+
+Това е настройка за всеки канал. The `--ch-index` parameter must be specified to set the position precision for a specific channel, e.g., `--ch-index 0` for the primary channel or `--ch-index 1` for the secondary channel 1.
+
+:::
+
+```shell title="Set position precision to 13 bits (approx ±3 km)"
+meshtastic --ch-set module_settings.position_precision 13 --ch-index 0
+```
+
+```shell title="Set position precision to full precision (32 bits)"
+meshtastic --ch-set module_settings.position_precision 32 --ch-index 1
+```
+
+</TabItem>
+
+<TabItem value="web">
+
+#### Уеб
+
+:::info
+Всички опции за конфигуриране на каналите са достъпни в уеб потребителския интерфейс.
+:::
+
+</TabItem>
+</Tabs>

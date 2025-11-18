@@ -1,0 +1,114 @@
+---
+id: lora
+title: LILYGO® TTGO Lora Geräte
+sidebar_label: LoRa32
+sidebar_position: 1
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+Weitere Informationen zu LILYGO®️ LoRa Geräten finden Sie auf LILYGO®️ [GitHub Seite](https://github.com/Xinyuan-LilyGO/LilyGo-LoRa-Series).
+
+<Tabs
+groupId="t-lora"
+queryString="t-lora"
+defaultValue="S3-v1"
+values={[
+{label: 'Lora T3S3', value:'S3-v1'},
+]}>
+<TabItem value="v3.0">
+
+## Lora v3.0
+
+:::caution
+Dieses Board verwendet einen Semtech Chip der ersten Generation und wird daher nicht für neue Käufer empfohlen. Die Firmware Unterstützung ist läuft aus. Im Zweifelsfall wählen Sie die Lora T3S3 Platine.
+:::
+
+- **MCU**
+  - ESP32-S3 (WLAN & Bluetooth 5 LE)
+- **LoRa Sendeempfänger**
+  - Semtech SX127x mit TCXO für verbesserte Frequenzstabilität
+- **Frequenzoptionen**
+  - 433 MHz
+  - 868 MHz
+  - 915 MHz
+- **Anschlüsse**
+  - USB-C
+  - Antenne: IPEX-Antennenanschluss
+
+### Merkmale
+
+- Eingebaut in OLED 0,96 Zoll oder 2,13 Zoll E-Ink Anzeige
+- Energie- und Reset Schalter, Benutzertaste
+- microSD-Anschluss
+- Solarpaneel und Batterieanschluss, enthält Solar-Ladeschaltung (CN3065)
+- QUIIC jeweils für UART und I2C
+- Kein GPS
+
+</TabItem>
+
+<TabItem value="S3-v1">
+
+## Lora T3S3 v1.0, v1.1 und v1.2
+
+- **MCU**
+  - ESP32-S3 (WLAN & Bluetooth 5 LE)
+- **LoRa Sendeempfänger**
+  - Semtech SX1262
+  - Semtech SX1276
+  - Semtech LR1121 (Sub-GHz und LORA_24 Dualband)
+  - Semtech SX1280 (Region LORA_24 weltweit)
+- **Frequenzoptionen**
+  - 868 MHz
+  - 915 MHz
+  - 2,4 GHz
+- **Anschlüsse**
+  - USB-C
+  - Antennen: SMA-Antennenanschluss
+
+### Merkmale
+
+- 0,96 Zoll OLED Anzeige eingebaut
+- Energie- und Reset Schalter, Boot/Benutzertaste
+- microSD-Anschluss
+- Kein GPS
+
+### T3S3 Programmieren
+
+Um ESP32-S3 Geräte wie die T3S3 zu programmieren, müssen Sie sie normalerweise im Espressifs Firmware-Download-Modus platzieren. Benutzen Sie dazu den "1200bps Reset" Knopf im Web-Flasher um dies zu tun. Wenn diese Methode aus irgendeinem Grund nicht funktioniert, können Sie dem manuellen Prozess folgen.
+
+:::warning
+
+Fahren Sie nicht fort, es sei denn, eine Antenne ist angeschlossen, um mögliche Schäden am Funkgerät zu vermeiden.
+
+:::
+
+Der folgende Prozess wird das Gerät manuell im Espressif Firmware Download Modus aktivieren:
+
+1. Schalten Sie das Gerät aus.
+2. Schließen Sie das USB-C-Datenkabel an das Gerät an. Eine blaue LED leuchtet während die Anzeige schwarz bleibt.
+3. Drücken und halten Sie die BOOT Taste rechts neben der Anzeige.
+4. Schalten Sie das Gerät ein.
+5. Nach 2-3 Sekunden lassen Sie die BOOT Taste los.
+
+Mit dem Gerät im Espressif Firmware Download Modus, können Sie mit der Programmierung durch eine der unterstützten Methoden fortfahren. Es wird generell empfohlen, den [Web Flasher](https://flasher.meshtastic.org/) zu benutzen. Sie können "TLora T2S3 V1" aus dem Auswahlmenü des Gerätes auswählen.
+
+:::note
+
+Wenn der Bildschirm nach dem erfolgreichen Programmieren des Gerätes schwarz bleibt, müssen Sie möglicherweise das [Kommandozeilenskript](https://meshtastic.org/docs/getting-started/flashing-firmware/esp32/cli-script) verwenden, um Meshtastic zu programmieren.
+
+:::
+
+### Quellen
+
+- Firmware Datei: `firmware-tlora-t3s3-v1.xxxxxxx.bin`
+- Links zum Direktkauf:
+  - International
+    - [Lilygo](https://msh.to/tlora-t3s3-v1/)
+
+![TTGO Lora T3S3 V1](/img/hardware/lora-t3s3.webp)
+
+</TabItem>
+
+</Tabs>

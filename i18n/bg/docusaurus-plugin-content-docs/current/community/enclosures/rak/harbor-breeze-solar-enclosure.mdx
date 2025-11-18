@@ -1,0 +1,64 @@
+---
+id: harbor-breeze-solar-hack
+title: RAK WisBlock Harbor Breeze Solar Light Enclosure Hack
+sidebar_label: Solar Light Enclosure Hack
+sidebar_position: 1
+---
+
+## Created by tavdog/Tavis Gustafson
+
+### Low Cost Harbor Breeze Solar Light RAK Enclosure Hack
+
+![Solar Hack Complete](/img/enclosures/hbmh_complete.webp)
+
+The Harbor Breeze Solar LED light can be purchased for about $15 and includes a capable solar panel, lithium ion cell and charge controller in a waterproof enclosure. The RAK baseboards fit perfectly inside the solar compartment. Below are the steps for completing this hack for a completely weatherproof solar powered Meshtastic node.
+
+### Необходими умения
+
+Необходимо е малко запояване, както и пробиване на отвор в пластмасовия корпус.
+
+### Необходими неща
+
+Необходим е ipex към sma пигтейл, за да има външна антена. Необходим е JST-PHR-2 конектор, ако искате свързване на батерията с конектор. Запоената връзка също ще работи. Уплътняващо лепило (силикон или морски уплътнител)
+
+### Стъпки
+
+Стъпка 1. Unscrew 4 small screws to open the solar compartment.
+
+Стъпка 2. Solder your battery JST-PHR-2 connector or power wires to the + and - terminals of the battery. If you don't have the proper connector you can solder directly to the pins on the back of the JST connector, just make sure you get the polarity correct.
+![Solder to battery terminals](/img/enclosures/harbor_breeze_solar_battery_solder_points.webp)
+
+Стъпка 3. Drill the hole for your sma pigtail. A perfectly vertical antenna via 90 degree bend will not allow for a very flat solar panel so choose wisely or use an externally mounted antenna. You can skip this step if you want to use an internal antenna that fits.
+![Drill sma holes](/img/enclosures/harbor_breeze_solar_sma_hole1.webp)![Drill sma holes](/img/enclosures/harbor_breeze_solar_sma_hole2.webp)
+
+Стъпка 4. Install the sma pigtail. Seal with silicone or marine sealant.
+![Install sma pigtail](/img/enclosures/harbor_breeze_solar_sma_installed.webp)![Seal](/img/enclosures/harbor_breeze_solar_sma_seal.webp)
+
+Стъпка 5. Install the RAK module in the free space. You can lightly tack glue this in place if you want to.
+![Instal module](/img/enclosures/harbor_breeze_solar_board_placement.webp)
+
+Стъпка 6. Connect the antenna and battery and close up the back.
+
+The light housing can be removed if not needed.
+![External antenna via sma pigtail](/img/enclosures/harbor_breeze_solar_antenna_pigtail.webp)
+
+The light housing is not as waterproof as the solar enclosure so be careful if putting electronics inside of it.
+Attach to a stick and put it high up.
+![External antenna via sma pigtail](/img/enclosures/harbor_breeze_solar_stick_mount.webp)
+
+The light will still turn on at night for a very stealthy node. To turn off the light there is a button on the back.
+
+### Връзки
+
+Here is a Lowes.com link to the solar light : (https://www.lowes.com/pd/60LM-Solar-Spot-Light/1002689960)
+
+Here is a link to the Meshtastic Starter kit : (https://msh.to/rak4631)
+
+Here is an amazon link to the sma and antennas : (https://www.amazon.com/gp/product/B0CTXL61LY) NOTE: Some of these antennas perform much worse when in a not straight configuration, so ensure you keep them straight or test them with a NANO VNA.
+
+Here is a 3d printed base for wall mounting just the solar panel and its pivot on a wall without the light (designed by a fan of this project): https://www.thingiverse.com/thing:6839973
+
+Here is a 3d printed wall mount that keeps the antenna in a straight configuration and does not require extra drilling: (https://www.printables.com/model/886187-harbor-breeze-meshtastic-mount)
+Here is an updated model that includes a piece to prevent unwanted rotation of the solar panel (https://www.printables.com/model/1347088-meshtastic-harbor-breeze-mounting-bracket-improved)
+
+Here is a 3d printed mount for the smaller RAK 19003 Wisblock board : (https://www.thingiverse.com/thing:6849930)

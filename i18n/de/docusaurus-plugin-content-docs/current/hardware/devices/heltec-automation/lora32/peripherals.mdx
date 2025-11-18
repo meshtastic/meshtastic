@@ -1,0 +1,116 @@
+---
+id: peripherals
+title: Heltec® LoRa 32 Zubehör
+sidebar_label: Zubehör
+sidebar_position: 3
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+<Tabs
+groupId="heltecESP32V3"
+queryString="heltecESP32V3"
+defaultValue="GPS"
+values={[
+{label: 'GPS Modul', value: 'GPS'},
+]}>
+<TabItem value="GPS">
+
+## GPS Modul
+
+### Einleitung
+
+Diese Anleitung beschreibt den Prozess zur Verbesserung der Heltec ESP32 V3 Platine durch Anschluss eines GT-U7 GPS Moduls, wobei fast jedes unterstützte GNSS-Modul auf die gleiche Weise angeschlossen werden kann. Die Erweiterung dieses Moduls bietet präzise GPS Funktionen und eine Echtzeituhr (RTC), so das der Bedarf WLAN oder ein Smartphone für die Zeiterfassung entfällt. Diese Verbesserung ist besonders vorteilhaft für ein Netzwerk, wo die Verfolgung der Dauer seit der letzten Sichtung des Gerätes entscheidend ist.
+
+Es ist jedoch wichtig zu beachten, dass das GPS Modul den Strombedarf des Knotens erhöht. Die Anleitung hilft, dies zu beheben, indem sie detailliert beschreibt, wie man einen Schalter oder einen N-Kanal MOSFET in die Hardware einbindet. Dies ermöglicht eine zusätzliche Firmware gesteuerte Energieverwaltung, das mehr Akkulaufzeit als der Soft Ruhemodus bereitstellt, ohne die Funktionalität zu beeinträchtigen.
+
+### Vorteile
+
+- **GPS Fähigkeiten**: Stellt dem Knoten die Möglichkeit zur Verfügung, seinen Standort mit hoher Genauigkeit zu bestimmen. Dies ist von unschätzbarem Wert für die Verfolgung, Kartierung und verschiedene andere Anwendungen, die Standortdaten benötigen.
+- **Echtzeituhr (RTC)**: Gewährleistet eine genaue Zeitmessung im Netz, ohne sich auf externe Zeitquellen wie das Internet oder ein angeschlossenes Smartphone zu verlassen.
+
+### Überlegungen zum Energieverbrauch
+
+Das GT-U7 Modul ist bekannt für seinen hohen Stromverbrauch, wodurch die Akkulebensdauer des Knotens verkürzt werden kann. Um dies zu verbessern, werden drei Ansätze empfohlen:
+
+- **Manueller Schalter**: Ein einfacher An-/Ausschalter für das GPS-Modul, der eine manuelle Energieverwaltung ermöglicht.
+- **Bedrahteter MOSFET**: Erleichtert die automatische Energieverwaltung durch die Firmware. Das Gerät kann das GPS Modul nach bestimmten Bedingungen oder nach einem bestimmten Zeitraum ausschalten.
+- **MOSFET für Oberflächenmontage SMD**: Wie oben, aber in einer kleineren Baugröße und mit einem geringeren Energieverbrauch bei der Verwendung.
+
+### Hinweise zu früheren Versionen dieser Anleitung
+
+Vorherige Versionen dieser Anleitung wurden mit einem bipolarem NPN Transistor 2N2222A zur Energiesteuerung spezifiziert. Darüber hinaus zeigte es den Transistor bei der Steuerung der spannungsführenden Seite (z.B. zwischen dem Heltec Vcc und dem GPS Vin). Während diese Methode für einige Platinen funktioniert, ist es nicht ideal, einen bipolaren NPN Transistor zu verwenden, um die spannungsführende Seite der Last so zu schalten.
+
+Die aktuelle Version der Anleitung benutzt entweder einen MOSFET für Oberflächenmontage (SMD) oder einem bedrahteten MOSFET, um die Masse des GPS Moduls zu schalten. Dadurch kann das MOSFET im gesättigten Zustand arbeiten, und N-Kanal MOSFETs haben einen geringeren Stromverbrauch als ein bipolarer NPN Transistor. Da die Masse für die beiden Teile (GPS Modul und Heltec Platine) jetzt isoliert wird, ist es wichtig, dass keine Teile des GPS Moduls (Antenne oder Abschirmung) die Masse der Heltec Platine kontaktieren.
+
+Die wesentlichen Verbindungen für den MOSFET werden im folgenden Schaltplan dargestellt.
+
+![Heltec_ESP32V3 MOSFET Schaltplan](/img/hardware/heltec/Heltec_ESP32V3_N-Mosfet_Schematic.webp)
+
+### Benötigte Materialien
+
+- Heltec ESP32 V3 Platine
+- GT-U7 GPS Modul
+- (Optional) Bedrahteter MOSFET (Anmerkung: diese sind in kleinen Mengen schwerer zu finden als SMD MOSFETS, aber alle die bei 3.3V arbeiten können, sind geeignet z.B. 2N7000, BS170)
+- (Optional) MOSFET für Oberflächenmontage (SMD)(Anmerkung: jeder passende N-Kanal MOSFET kann verwendet werden, z.B. SI2312, AO3400A, 2N7002)
+- Draht und Lötgeräte
+- (Optional) Schalter für manuelle Energieverwaltung
+
+### Instruktionen (bedrahteter MOSFET)
+
+Hinweis: Diese Anleitung geht davon aus, dass Sie einen 2N7000 N-Kanal MOSFET verwenden. Bei Verwendung anderer Bauteile, immer das Datenblatt überprüfen!
+
+1. Löten Sie einen Draht aus dem TXD Pin des GPS Moduls an GPIO Pin 48 auf der Heltec Platine. (Es kann auch ein GPIO Pin ausgewählt werden)
+2. Löten Sie einen Draht vom RXD Pin des GPS Moduls an GPIO Pin 47 auf Heltec Platine. (Es kann auch ein GPIO Pin ausgewählt werden)
+3. Löten Sie einen Draht vom VCC Pin des GPS Moduls an den 3V/5V Pin auf der Heltec Platine.
+4. Löten Sie einen Draht vom rechtem Bein (Anschluss 3, Drain) des MOSFET an Masse des GPS Moduls.
+5. Löten Sie einen Draht vom linken Bein (Anschluss 1, Source) des MOSFET an Masse der Heltec Platine.
+6. Löten Sie einen Draht vom mittleren Bein (Anschluss 2, Gate) des MOSFET an GPIO Pin 46 der Heltec Platine. (Es kann auch ein GPIO Pin ausgewählt werden)
+7. Gehen Sie zu Meshtastic App > Funkeinstellung > Standort
+8. Setzen Sie GPS_RX_PIN auf 48 (Dieser kommuniziert mit dem TXD Pin des GPS Moduls)
+9. Setzen Sie GPS_TX_PIN auf 47 (Dieser kommuniziert mit dem RXD Pin des GPS Moduls)
+10. Setzen Sie PIN_GPS_DE auf 46 (Dadurch kann die Meshtastic Firmware den Strom zum GPS mit der Benutzertaste der Heltec Platine ausschalten, indem sie diese 3 Mal drücken)
+
+### Schaltplan bedrahtete Version
+
+![Heltec ESP32V3 GPS Modul](/img/hardware/heltec/Heltec_ESP32V3_GPS_module_low-side.webp)
+
+### Anleitung (MOSFET Oberflächenmontage SMD)
+
+Hinweis: Diese Anleitung geht davon aus, dass Sie einen SI2312 N-Kanal MOSFET verwendet wird. Bei Verwendung anderer Bauteile, immer das Datenblatt überprüfen!
+
+1. Löten Sie einen Draht aus dem TXD Pin des GPS Moduls an GPIO Pin 48 auf der Heltec Platine. (Es kann auch ein GPIO Pin ausgewählt werden)
+2. Löten Sie einen Draht vom RXD Pin des GPS Moduls an GPIO Pin 47 auf Heltec Platine. (Es kann auch ein GPIO Pin ausgewählt werden)
+3. Löten Sie einen Draht vom GND Pin des GPS Moduls an den mittleren Pin des SI2312 N-MOSFET
+4. Löten Sie einen Draht vom VCC Pin des GPS Moduls an den 3V/5V Pin auf der Heltec Platine.
+5. Löten Sie einen Draht vom linken Bein des SI2312 MOSFET an GPIO 46 auf der Heltec Platine.         
+6. Löten Sie einen Draht aus dem rechten Bein des SI2312 MOSFET an den freien Lötpunkt auf der Heltec Platine (siehe Bilder).
+7. Gehen Sie zu Meshtastic App > Funkeinstellung > Standort
+8. Setzen Sie GPS_RX_PIN auf 48 (Dieser kommuniziert mit dem TXD Pin des GPS Moduls)
+9. Setzen Sie GPS_TX_PIN auf 47 (Dieser kommuniziert mit dem RXD Pin des GPS Moduls)
+10. Setzen Sie PIN_GPS_DE auf 46 (Dadurch kann die Meshtastic Firmware den Strom zum GPS mit der Benutzertaste der Heltec Platine ausschalten, indem sie diese 3 Mal drücken)
+11. Vergewissern Sie sich, dass die Masse des GPS Moduls nicht die Masse der Heltec Platine oder jede andere Komponente, die mit der Heltec Masse verbunden ist, kontaktiert. Dazu gehören Antennenabdeckungen, Akkustecker, etc. Wenn nicht sichergestellt wird, dass die Massen getrennt sind, kann dies dazu führen, dass der MOSFET überbrückt wird.
+
+### Fotos und Schaltpläne - SMD
+
+![Heltec ESP32V3 GPS Modul](/img/hardware/heltec/Heltec_ESP32V3_SMDMosfetDiagram.webp)
+
+![Heltec ESP32V3 GPS Modul](/img/hardware/heltec/Heltec_ESP32V3_SMDMosfetInPlace.webp)
+
+![Heltec ESP32V3 GPS Modul](/img/hardware/heltec/Heltec_ESP32V3_SMDMOSFET_GPSInPlace.webp)
+
+### Fehlerbehebung
+
+Wenn das GPS-Modul nicht eingeschaltet ist überprüfen Sie die Verbindungen zum Transistor und stellen Sie sicher, dass der mittlere GPIO Pin in den Firmware Einstellungen richtig konfiguriert ist.
+Wenn die Nachricht "GPS ist deaktiviert" erscheint, drücken Sie dreimal die Benutzertaste auf der Heltec Platine, um es zu aktivieren.
+Wenn die Meldung "Kein GPS verfügbar" erscheint, überprüfen Sie, ob TXD und RXD korrekt konfiguriert sind.
+Wenn die Meldung "Kein GPS Empfang" erscheint, dann positionieren Sie den Knoten an einen anderen Ort mit verbesserter Himmelssicht.
+Wenn der Standort nicht genau ist, spazieren Sie mit dem GPS bis dieser genau ermittelt ist.
+
+### Zusammenfassung
+
+Das Heltec ESP32 V3 Board lässt sich mit dieser Anleitung auf die wertvolle GPS Funktion und Echtzeituhr (RTC) erweitern und gleichzeitig kann es den Energieverbrauch effektiv steuern. Ob für ein Hobbyprojekt oder eine ernstere Anwendung, diese Ergänzungen erweitern das Potenzial des Gerätes deutlich.
+
+</TabItem>
+</Tabs>

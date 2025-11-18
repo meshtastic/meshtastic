@@ -1,0 +1,64 @@
+---
+id: wisblock
+title: RAK WisBlock Devices
+sidebar_label: WisBlock
+sidebar_position: 1
+---
+
+## RAK11200 - ESP32
+
+The RAK11200 does not contain a LoRa transceiver, and thus needs to be added separately in the form of the [RAK13300 LPWAN module](https://msh.to/rak13300). This occupies the IO Port of the base board.
+
+- RAK11200
+  - **MCU:**
+    - ESP32-WROVER
+      - Bluetooth 4.2
+      - WiFi 802.11 b/g/n
+      - High power consumption (relative to nRF52)
+
+### Flashing the RAK11200
+
+To flash the RAK11200, you need to manually place it into Espressif’s firmware download mode. Unlike other ESP32 boards, the RAK11200 does not support automatic boot mode selection. You must force it into download mode before flashing Meshtastic.
+
+:::warning
+
+Do not proceed unless an antenna is connected to avoid possible damage to the device's radio.
+
+:::
+
+The following process will manually place the device into Espressif Firmware Download mode:
+
+1. Ensure the device is powered on and connected via USB.
+2. Locate the **BOOT** pin on the J10 header of the WisBlock Base Board ([RAK19007](/docs/hardware/devices/rak-wireless/wisblock/base-board/?rakbase=RAK19007) / [RAK5005-O](/docs/hardware/devices/rak-wireless/wisblock/base-board/?rakbase=RAK5005-O)).
+3. Connect **BOOT** to **GND** (the GND pin is adjacent to BOOT on the J10 header).
+   <div class="no-print">
+     <details>
+       <summary>Diagram</summary>
+       <div>
+         <img
+           src="/img/hardware/rak/rak11200_boot_mode.webp"
+           alt="RAK11200 Boot Mode Connection Diagram"
+         />
+       </div>
+     </details>
+   </div>
+4. Briefly tap the reset button.
+
+Once the device is in Espressif Firmware Download mode, you can proceed with flashing using one of the supported flashing methods. It’s generally recommended to use the [Web Flasher](https://flasher.meshtastic.org/), selecting the appropriate RAK11200 firmware.
+
+:::note
+
+If the device does not enter download mode, double-check the BOOT to GND connection before attempting again.
+
+:::
+
+### Resurssit
+
+- Firmware file: `firmware-rak11200-X.X.X.xxxxxxx.bin`
+- Further information on the RAK11200 can be found on the [RAK Documentation Center](https://docs.rakwireless.com/product-categories/wisblock/rak11200/overview/#product-description).
+
+<img
+  alt="RAK4631 5005 11200"
+  src="/img/hardware/rak11200.webp"
+  style={{ zoom: "50%" }}
+/>

@@ -1,0 +1,102 @@
+---
+id: applets
+title: InkHUD Applets
+sidebar_label: Liste der Applets
+slug: /software/inkhud/applets
+sidebar_position: 1
+description: Eine Beschreibung der verschiedenen Applets, die als Teil der InkHUD Benutzeroberfläche verfügbar sind.
+---
+
+Es wird erwartet, dass diese Liste von Applets mit der Weiterentwicklung von InkHUD wächst.
+
+## Alle Nachrichten
+
+Zeigt die neueste Nachricht an. Sowohl Nachrichten in den Kanälen als auch Direktnachrichten werden angezeigt.
+
+<div align="center">
+  <img
+    src="/img/software/inkhud/applet-allmessages.webp"
+    alt="inkhud all messages applet"
+    style={{margin: '0px'}}
+  />
+</div>
+
+1. Empfangszeit
+2. Kurzname des Absenders
+3. Langer Name des Absenders
+
+## Direktnachrichten
+
+Zeigt nur die neueste Direktnachricht an.
+
+![inkhud direct message applet](/img/software/inkhud/applet-dm.webp)
+
+1. Empfangszeit
+2. Kurzname des Absenders
+3. Langer Name des Absenders
+
+## Kanal 0
+
+Zeigt die letzten Nachrichten von Kanal 0 an. Ältere Nachrichten sollten in einer verbundenen [Client-Anwendung] angesehen werden (/downloads/).  
+
+![inkhud channel0 applet](/img/software/inkhud/applet-channel0.webp)
+
+1. Kanalname
+2. Kurzname des Absenders
+3. Empfangszeit
+4. Ausgehende Nachricht
+
+## Kanal 1
+
+Zeigt mehrere aktuelle Nachrichten von Kanal 1 (Sekundärkanal) an. Ältere Nachrichten sollten in einer verbundenen [Client-Anwendung](/downloads/) angezeigt werden.  
+
+![inkhud channel1 applet](/img/software/inkhud/applet-channel1.webp)
+
+1. Kanalname
+2. Kurzname des Absenders
+3. Empfangszeit
+4. Ausgehende Nachricht
+
+## Standorte
+
+Zeigt den gemeldeten Standort aller Knoten als grobe Karte an.
+
+Norden ist immer mit der Oberkante des Bildschirms ausgerichtet. Die Größe jedes Kreuzes gibt an, wie viele [Sprünge](/docs/overview#how-it-works) ein Knoten entfernt ist. Mit `!` markierte Knoten liegen außerhalb Ihrer [maximalen Sprungweite](/docs/configuration/radio/lora#max-hops) und sind daher _unerreichbar_. 
+
+![inkhud positions applet](/img/software/inkhud/applet-positions.webp)
+
+1. Ihr eigener Knoten
+2. Knoten, der zuletzt den Standort gesendet hat
+3. Andere Knoten
+
+_Für dieses Applet sind Verbesserungen geplant._
+
+## Liste der letzten Einträge
+
+Zeigt eine Liste und Anzahl der Knoten an, die in den letzten Minuten gehört wurden.
+
+Wenn ein Knoten gehört wird, wird er oben in der Liste platziert. Alte Einträge werden automatisch entfernt. Wenn die Liste länger wird, scrollen die ältesten Einträge aus dem Bildschirm. Um zu ändern, wie viele Minuten Informationen dieses Applet anzeigt, passen Sie [Letzte Zeit](index.mdx#recents-duration) im Bildschirmmenü an.
+
+![inkhud recents list applet](/img/software/inkhud/applet-recentslist.webp)
+
+1. Anzahl der zuletzt gehörten Knoten
+2. Kurzname
+3. Langname
+4. Signal (wenn direkt gehört)
+5. Zwischenschritte entfernt
+6. Entfernung von unserem Knoten (falls bekannt)
+
+## Empfangen
+
+Zeigt eine Liste anderer Knoten und deren Informationen an, sortiert nach den zuletzt gehörten Knoten. _Informationen zu älteren Knoten sind in Ihrer [Client-Anwendung](/downloads/) verfügbar._
+
+Es wird auch eine Gesamtzahl bekannter Knoten angezeigt, es sei denn, Ihre Knotendatenbank ist voll (mindestens 80 Knoten). 
+
+![inkhud heard applet](/img/software/inkhud/applet-heard.webp)
+
+1. Gesamtzahl der bekannten Knoten
+2. Kurzname
+3. Langname
+4. Signal (wenn wir den Knoten direkt hören, 0 Sprünge)
+5. Zwischenschritte entfernt
+6. Entfernung von unserem Knoten (falls bekannt)

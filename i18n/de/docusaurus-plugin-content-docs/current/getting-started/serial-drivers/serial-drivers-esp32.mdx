@@ -1,0 +1,99 @@
+---
+id: esp32
+title: ESP32 serieller Treiber
+sidebar_label: ESP32 Treiber
+sidebar_position: 1
+description: Anleitung zur Installation von ESP32 USB seriellen Treibern zur Verbindung mit einem Meshtastic Gerät.
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+import { Icon } from "@iconify/react";
+import Link from "@docusaurus/Link";
+
+## ESP32 USB zu serielle Treiber installieren
+
+Möglicherweise müssen Sie einen Treiber von Silicon Labs für den [CP210X USB zu UART Adapter](https://www.silabs.com/products/development-tools/software/usb-to-uart-bridge-vcp-drivers) installieren
+
+Einige neuere Platinen benötigen möglicherweise den CH9102 (CH340/CH341) Treiber.
+
+<Tabs
+  groupId="operating-system"
+  defaultValue="windows"
+  values={[
+    {
+      label: (
+        <>
+          <Icon icon="mdi:tux" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Linux
+        </>
+      ),
+      value: "linux",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:apple" height="1.5rem" style={{ marginRight: "0.25rem" }} /> macOS
+        </>
+      ),
+      value: "macos",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:microsoft" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Windows
+        </>
+      ),
+      value: "windows",
+    },
+  ]}>
+
+<TabItem value="linux">
+
+#### Linux
+
+- [CP210X USB zu UART Adapter - Download](https://www.silabs.com/products/development-tools/software/usb-to-uart-bridge-vcp-drivers)
+- [CH9102 Treiber - Linux Download](http://www.wch-ic.com/downloads/CH341SER_LINUX_ZIP.html)
+
+</TabItem>
+
+<TabItem value="macos">
+
+#### macOS
+
+- [CP210X USB zu UART Adapter - Download](https://www.silabs.com/products/development-tools/software/usb-to-uart-bridge-vcp-drivers)
+- [CH9102 Treiber - MacOS Download](https://github.com/WCHSoftGroup/ch34xser_macos)
+
+</TabItem>
+
+<TabItem value="windows">
+
+#### Windows
+
+- [CP210X USB zu UART Adapter - Download](https://www.silabs.com/products/development-tools/software/usb-to-uart-bridge-vcp-drivers)
+- [CH9102 Treiber - Windows Download](http://www.wch.cn/downloads/CH343SER_ZIP.html)
+- [CH9102 Treiber - Windows Download (Direkter Download für Windows 7)](https://github.com/Xinyuan-LilyGO/CH9102_Driver)
+
+</TabItem>
+
+</Tabs>
+
+:::important
+
+Nach der Installation des Treibers stellen Sie sicher, dass Sie Ihren Computer neu starten, um den Installationsprozess abzuschließen.
+
+Sie können auch [Ihre serielle Treiberinstallation](/docs/getting-started/serial-drivers/test-serial-driver-installation) bei Bedarf mit diesem Schritt testen.
+
+:::
+
+### Firmware programmieren
+
+Nach der Installation der seriellen Treiber können Sie nun die Meshtastic Firmware auf Ihrem Gerät programmieren. Um fortzufahren, wählen Sie den passenden Gerätetyp für Ihr Gerät.
+
+<div className="indexCtasBody">
+  <Link
+    className={"button button--outline button--lg cta--button"}
+    to={"/docs/getting-started/flashing-firmware/esp32/"}
+  >
+    ESP32 Firmware programmieren
+  </Link>
+</div>

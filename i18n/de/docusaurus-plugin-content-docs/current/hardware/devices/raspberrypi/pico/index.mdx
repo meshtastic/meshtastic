@@ -1,0 +1,53 @@
+---
+id: raspberry-pi-pico
+title: Raspberry Pi Pico
+sidebar_label: Raspberry Pi Pico
+sidebar_position: 1
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+Die Raspberry Pi Pico Serie ist eine Reihe kleiner, schneller und vielseitiger Platine mit RP2040 der Flaggschiff-Mikrocontroller-Chip von Raspberry Pi im Vereinigten Königreich.
+
+:::info
+
+Nur der Pico W verfügt über WLAN/BLE Funktionen. Meshtastic unterstützt WLAN auf der Pico W (aber keinen Webserver und HTTP-API), unterstützt aber derzeit nicht BLE.
+:::
+
+## Spezifikationen
+
+- **MCU:**
+  - Raspberry Pi RP2040
+    - Doppel M0+ Core
+    - 133MHz CPU Takt
+- **Anschlüsse (des Pico):**
+  - Micro-USB auf Pico
+
+:::note
+
+Bitte beachte, dass der Raspberry Pi Pico in Kombination mit einem [Waveshare LoRa Module](https://www.waveshare.com/product/raspberry-pi/boards-kits/raspberry-pi-pico-cat/pico-lora-sx1262-868m.htm), verwendet werden muss , das das notwendige SX1262 LoRa Radio zur Verfügung stellt. Bitte stellen Sie sicher, dass Sie die richtige Frequenz für Ihre Region wählen.
+
+:::
+
+- **LoRa Sendeempfänger (auf LoRa Modul):**
+  - SX1262
+- **Frequenzoptionen:**
+  - 410 - 525 MHz
+  - 863 - 870 MHz
+  - 902 - 930 MHz
+- **Anschlüsse (auf LoRa Modul):**
+  - U.FL/IPEX Antennenanschluss für LoRa
+  - 1,25mm 2-Pin JST für Akku
+
+:::note
+
+LoRa-Übertragungen können die USB-Verbindung stören. Es wird empfohlen, die Antenne so weit wie möglich vom USB-Port zu platzieren.
+
+:::
+
+### Quellen
+
+- Firmware Datei:`firmware-pico-X.X.X.xxxxxxx.uf2`
+  - für Pico W Verwendung: `firmware-picow-X.X.X.xxxxx.uf2`
+- [Offizielle Website für die Raspberry Pi Pico](https://www.raspberrypi.com/products/raspberry-pi-pico/), inklusive offizieller Reseller-Links.

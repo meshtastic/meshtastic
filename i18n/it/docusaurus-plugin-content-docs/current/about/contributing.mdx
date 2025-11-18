@@ -1,0 +1,276 @@
+---
+title: Contribuire a Meshtastic
+sidebar_label: Contribuire
+slug: /contributing
+sidebar_position: 3
+description: Partecipa al progetto open-source di Meshtastic. Contribuisci a firmware, applicazioni web o app per dispositivi mobili e desktop. La tua esperienza può contribuire a migliorare questa piattaforma di comunicazione basata su volontari.
+---
+
+import Link from "@docusaurus/Link";
+import ThemedImage from "@theme/ThemedImage";
+import useBaseUrl from "@docusaurus/useBaseUrl";
+
+## Sviluppo basato su volontari
+
+Meshtastic è un team di volontari, e come tale ci sono sempre molti modi per aiutare. Questo progetto ottiene grandi contributi dalle persone nel loro tempo libero. Questi collaboratori lavorano sulle caratteristiche a cui sono interessati. È una comunità di sviluppatori molto aperta e accogliente, e siamo sempre alla ricerca di aiuto per migliorare Meshtastic.
+
+- Se sei uno sviluppatore, c'è molto da fare. Buttati!
+- Se stai interagendo con le radio Meshtastic, potremmo usare l'aiuto con test, documentazione e fornire feedback.
+- Se sei un Programmatore Web, controlla i diversi repository web.
+- Se sei un programmatore Kotlin e Android, controlla il link per il repo qui sotto.
+- Se sei un programmatore Python, controlla il link per il repo qui sotto
+- Se ti piace SwiftUI, controlla il link per il repo qui sotto
+- Se sei un radioamatore e ti piace LoRa, allora questo è un grande progetto per te!
+- If you're a datacentre sysadmin, we need machines for [github runners](/docs/development/github#requirement-for-self-hosted-runners).
+- ... fondamentalmente... ci piacerebbe avere il tuo aiuto e feedback
+
+Ci sono diversi sviluppatori, tester e utenti attivi su [Discord](https://discord.gg/ktMAKGBnBs).
+
+### Ecosistema Meshtastic
+
+L'ecosistema Meshtastic sfrutta una varietà di tecnologie e repository per fornire una solida piattaforma di comunicazione decentralizzata. Questo ecosistema è in continua evoluzione, grazie allo sforzo collaborativo di sviluppatori, contributori, e la comunità, con l'obiettivo di migliorare ed espandere le capacità di Meshtastic per la comunicazione decentralizzata off-grid.
+
+I componenti principali includono:
+
+- **Protocol Buffers**: La spina dorsale della comunicazione e delle interazioni, con modifiche e definizioni gestite nel [Meshtastic Protobuf Definitions repository](https://github.com/meshtastic/protobufs). Per informazioni dettagliate, vedere [Protobuf API Reference](https://buf.build/meshtastic/protobufs/).
+- **Firmware del dispositivo**: Lo sviluppo per i dispositivi basati su ESP32, nRF52 e RP2040 avviene nel [repository del firmware](https://github.com/meshtastic/firmware), concentrandosi sul codice C e C++ per l'interazione e la comunicazione hardware.
+- **Moduli Firmware**: Estendi le funzionalità principali dei dispositivi e delle reti mesh implementate principalmente all'interno del repository firmware. I moduli sono essenziali per aggiungere nuove caratteristiche e integrare i dispositivi all'interno dell'ecosistema.
+- **CLI Apps (Interfaccia Dispositivo)**: Il [Meshtastic Python CLI](https://github.com/meshtastic/python) consente l'interazione con le impostazioni e le funzionalità del dispositivo, servire sia come utilità che come libreria per lo sviluppo di applicazioni.
+- **Web e JavaScript Apps**: lo sviluppo per il server web ospitato su dispositivi ESP32 è fatto in [Meshtastic Web](https://github.com/meshtastic/web), con una libreria JavaScript per interfacce dispositivo disponibile in [Meshtastic JS](https://github.com/meshtastic/meshtastic.js).
+- **App per dispositivi mobili e desktop**: le applicazioni Android, iOS, iPadOS e macOS forniscono interfacce utente per interagire con dispositivi Meshtastic. Lo sviluppo per Android è dettagliato nel [repository Meshtastic-Android](https://github.com/meshtastic/Meshtastic-Android), mentre le piattaforme Apple sono supportate dal [repository Meshtastic-Apple](https://github.com/meshtastic/Meshtastic-Apple).
+- **Documentazione**: Il sorgente del sito web Meshtastic e la documentazione risiedono nel [repository meshtastic/meshtastic](https://github.com/meshtastic/meshtastic). Per le linee guida sul mantenimento della documentazione, visita la pagina [Documentazione di mantenimento](/docs/development/docs).
+
+Questo ecosistema è in continua evoluzione, grazie allo sforzo collaborativo di sviluppatori, contributori, e la comunità, con l'obiettivo di migliorare ed espandere le capacità di Meshtastic per la comunicazione decentralizzata off-grid.
+
+### Tradurre Meshtastic
+
+Meshtastic è un progetto globale e ci sforziamo di rendere le nostre risorse accessibili agli utenti di tutto il mondo. Tradurre la nostra documentazione e le nostre applicazioni in più lingue è un passo fondamentale per raggiungere questo obiettivo. Se siete fluenti in più lingue e volete contribuire agli sforzi di localizzazione di Meshtastic, accogliamo con favore il vostro aiuto nella traduzione delle nostre risorse.
+
+#### Traduzione App Android
+
+Per maggiori dettagli su come tradurre l'app Meshtastic Android, fare riferimento alla [guida per Android qui](/docs/software/android/android-app-translate/).
+
+#### Traduzione App Apple
+
+Per maggiori informazioni su come tradurre la Meshtastic Apple App, consultare la [guida per Apple qui](/docs/software/apple/apple-app-translate/).
+
+#### Traduzione Documentazione
+
+Per maggiori informazioni su come tradurre i documenti Meshtastic, consultare la [guida per la documentazione qui](/docs/development/documentation/translate-docs/).
+
+## Sostenere e contribuire a Meshtastic
+
+Il progetto Meshtastic beneficia enormemente dei contributi dei nostri volontari e del sostegno finanziario della nostra comunità. Con l'evolversi del progetto, l'espansione delle caratteristiche e dei servizi ha portato ad un aumento del fabbisogno finanziario, inclusi hardware per lo sviluppo, tariffe GitHub, hosting per servizi pubblici MQTT, tra gli altri. Questa crescita in una solida piattaforma per soluzioni decentralizzate di rete off-grid mostra la dedizione dei nostri sviluppatori e la generosità dei nostri sostenitori finanziari.
+
+### Come Si Può Sostenere Meshtastic Finanziariamente
+
+Se il contributo diretto allo sviluppo non è fattibile per voi, il sostegno finanziario è un altro modo inestimabile per aiutare Meshtastic crescere e prosperare. Offriamo due opzioni principali per le donazioni monetarie:
+
+<div className="indexCtasBody">
+  <div className="split-container">
+    <div className="split-item">
+      <a
+        className="button button--outline button--lg cta--button"
+        href="https://opencollective.com/meshtastic"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Supporto su Open Collective
+      </a>
+    </div>
+    <div className="split-item">
+      <a
+        className="button button--outline button--lg cta--button"
+        href="https://github.com/sponsors/meshtastic"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Sponsor su GitHub
+      </a>
+    </div>
+  </div>
+</div>
+
+### Sponsor
+
+Siamo profondamente grati per il sostegno dei nostri sponsor, elencati di seguito, che è stato fondamentale per la sostenibilità e la crescita del nostro progetto. Il loro sostegno ci permette di continuare a servire e ad espandere la nostra comunità.
+
+<div className="flex flex-wrap items-start">
+  <div className="w-full sm:w-3/12 p-3">
+    <ThemedImage
+      alt="Open Collective"
+      className="max-h-8"
+      sources={{
+        light: useBaseUrl("/img/contributing/Open_Collective_logo_2021.svg"),
+        dark: useBaseUrl("/img/contributing/Open_Collective_logo_2021.svg"),
+      }}
+    />
+  </div>
+  <div className="w-full sm:w-9/12 p-3">
+    La nostra collaborazione con Open Collective e Open Source Collective offre un solido quadro di gestione fiscale
+    e soluzioni bancarie, sostenere il nostro progetto
+    insieme a oltre tremila altre iniziative open source. Open
+    Collective's transparent framework permette a tutti di vedere le nostre finanze, tra cui
+    reddito, spese e contributi sulla pagina [Meshtastic's Open Collective
+    page](https://opencollective.com/meshtastic). Questa trasparenza e supporto
+    affermano che siamo in ottima compagnia.
+  </div>
+</div>
+<div className="flex flex-wrap items-start">
+  <div className="w-full sm:w-3/12 p-3">
+    <ThemedImage
+      alt="This project is supported by DigitalOcean"
+      className="max-h-8"
+      sources={{
+        light: useBaseUrl(
+          "https://opensource.nyc3.cdn.digitaloceanspaces.com/attribution/assets/PoweredByDO/DO_Powered_by_Badge_blue.svg",
+        ),
+        dark: useBaseUrl(
+          "https://opensource.nyc3.cdn.digitaloceanspaces.com/attribution/assets/PoweredByDO/DO_Powered_by_Badge_blue.svg",
+        ),
+      }}
+    />
+  </div>
+  <div className="w-full sm:w-9/12 p-3">
+    Campioni di open source, DigitalOcean supporta Meshtastic attraverso crediti,
+    che aiutano in modo significativo i nostri sforzi di sviluppo, infrastruttura e test
+. Questo contributo fa parte del loro impegno a promuovere l'innovazione e la collaborazione
+    all'interno dell'ecosistema open source.
+  </div>
+</div>
+<div className="flex flex-wrap items-start">
+  <div className="w-full sm:w-3/12 p-3">
+    <ThemedImage
+      alt="Vercel"
+      className="max-h-8"
+      sources={{
+        light: useBaseUrl("/img/contributing/vercel-logotype-dark.svg"),
+        dark: useBaseUrl("/img/contributing/vercel-logotype-light.svg"),
+      }}
+    />
+  </div>
+  <div className="w-full sm:w-9/12 p-3">
+    Coprendo i nostri costi di hosting, Vercel contribuisce direttamente alla crescita
+    di Meshtastic, migliorando la scalabilità e la presenza del web. La loro sponsorizzazione è
+    cruciale per il nostro continuo sviluppo e concentrarsi sulla creazione di una solida piattaforma
+    per la comunicazione decentralizzata.
+  </div>
+</div>
+<div className="flex flex-wrap items-start">
+  <div className="w-full sm:w-3/12 p-3">
+    <ThemedImage
+      alt="Datadog"
+      className="max-h-8"
+      sources={{
+        light: useBaseUrl("/img/contributing/dd_logo_h_rgb.svg"),
+        dark: useBaseUrl("/img/contributing/dd_logo_h_white.svg"),
+      }}
+    />
+  </div>
+  <div className="w-full sm:w-9/12 p-3">
+    Datadog è una piattaforma di osservabilità e sicurezza per applicazioni cloud,
+    fornisce monitoraggio dell'infrastruttura, monitoraggio delle prestazioni delle applicazioni e gestione dei log. Ci sponsorizzano concedendo il monitoraggio gratuito delle infrastrutture
+    e la registrazione, aiutando i nostri sforzi di sviluppo e operativi.
+  </div>
+</div>
+
+## Contribuire al Blog Meshtastic
+
+### Scopo
+
+Promuovere la crescita e la collaborazione condividendo conoscenze, aggiornamenti e innovazioni della comunità Meshtastic.
+
+### Linee guida sui contenuti
+
+#### Argomenti Accettabili
+
+- Focus su temi correlati a Meshtastic, come tutorial, casi di utilizzo, aggiornamenti di sviluppo, e immersioni profonde di tecnologia.
+- I post devono essere il tuo lavoro originale. Il contenuto precedente originariamente pubblicato altrove non può essere inviato, ma i messaggi possono essere ripubblicati altrove dopo essere stati pubblicati sul blog di Meshtastic.
+- I post non dovrebbero duplicare un blog precedentemente pubblicato a meno che non sia per aggiornare o rivedere il contenuto originale a causa di modifiche.
+
+#### Argomenti Non Accettabili
+
+- Evitare di auto-promozione o contenuti commerciali.
+- Promuovere la vendita di hardware, casi, ecc., o guidare il traffico verso altri siti web è inaccettabile.
+- I link affiliati non sono consentiti a meno che non sia stata concessa previa approvazione dal progetto Meshtastic.
+
+#### Biografia Autore
+
+Puoi collegarti al tuo lavoro personale o al tuo sito web, ma i link ai contenuti personali possono essere inclusi solo nelle informazioni relative all'autore, in prima istanza o nel file globale degli autori.
+
+- I link accettabili includono URL, indirizzi email e siti di social media.
+- Le foto devono aderire al [Codice di condotta Meshtastic](https://meshtastic.org/docs/legal/conduct/).
+- Vedi [il Blog Post Documentazione Autori su Docusaurus](https://docusaurus.io/docs/blog#blog-post-authors) per maggiori dettagli.
+
+#### Diritti Sul Contenuto
+
+I contributi sono sotto lo stesso CLA degli altri contributi della comunità di Meshtastic, allineandosi con la natura open-source del progetto.
+
+### Come Inviare un Post
+
+#### Preparazione e formattazione
+
+Scrivi il tuo post usando [Markdown](https://www.markdownguide.org/getting-started/). Assicurarsi che il contenuto sia professionale, informativo e accessibile.
+
+- Salva il file nel formato `.mdx`.
+- Nome del file simile allo `slug`, assicurandosi che sia conciso ma descrittivo (ad esempio, un post con lo slug `recent-mqtt-broker-changes` potrebbe essere `recent-mqtt-broker-changes.mdx`).
+- Fare riferimento alla [Documentazione Blog Docusaurus](https://docusaurus.io/docs/blog) per consigli utili e informazioni sulla creazione di blog.
+
+Utilizzare le seguenti migliori pratiche per [accessibilità (WCAG)](https://www.w3.org/WAI/tips/writing/):
+
+- Usa titoli unici e descrittivi.
+- Organizza il contenuto con intestazioni significative.
+- Usa testi di link descrittivi.
+- Fornisci testo alt significativo per le immagini.
+- Mantieni la scrittura chiara e concisa.
+
+#### Blocco in testa
+
+Il tuo post deve includere il seguente blocco in cima:
+
+```yaml
+---
+title: Il titolo del tuo post sul blog.
+description: Un riassunto conciso del tuo post sul blog, tipicamente visualizzato nelle anteprime o nei risultati di ricerca.
+slug: Un identificatore univoco per l'URL del tuo post del tuo blog. Dovrebbe essere breve, descrittivo e pertinente.
+autori: L'autore o gli autori del post del blog. Questo può fare riferimento al file degli autori globali o includere direttamente le informazioni degli autori.
+tags: Un elenco di tag che categorizzano il tuo post per una più facile scoperta.
+date: La data di pubblicazione in formato ISO (es. `2024-10-23T13:00`).
+hide_table_of_contents: Impostare a `false` per controllare la visibilità della tabella dei contenuti.
+image: Il percorso dell'immagine usata per l'anteprima sociale. Il valore predefinito è "/design/web/social-preview-1200x630.png". Le immagini personalizzate possono essere usate ma devono includere il logo Meshtastic (vedi sotto come dove devono essere posizionate).
+---
+```
+
+#### Immagini
+
+- Ottimizza e comprimi le immagini nel formato webp usando strumenti come [Tinify/TinyPng](https://tinypng.com/) o [cwebp](https://developers.google.com/speed/webp/docs/cwebp) per migliorare i tempi di caricamento.
+- Posiziona tutte le immagini usate nel tuo post nella cartella [static/img/blog](https://github.com/meshtastic/meshtastic/tree/master/static/img/blog).
+- Usa nomi di file concisi per le immagini.
+
+#### Contributi
+
+- Invia il tuo post come richiesta Pull al [meshtastic/meshtastic](https://github.com/meshtastic/meshtastic) Repository GitHub.
+- Se una cartella per il mese corrente non esiste nella directory del blog, creane una prima di aggiungere il tuo post.
+
+#### Processo di revisione
+
+- I contributi sono esaminati dai responsabili del progetto e da altri contributori.
+- La revisione garantisce il rispetto delle linee guida sui contenuti, la qualità delle informazioni e la rilevanza per la comunità.
+
+### Frequenza dei contributi
+
+#### Limiti Di Pubblicazione
+
+- Gli autori che inviano più di due posti al mese possono essere invitati a spaziare i loro contributi per consentire una maggiore diversità.
+
+### Tono e lunghezza
+
+#### Tono Atteso
+
+- I contributi dovrebbero essere professionali e informativi.
+- L'obiettivo è quello di mantenere una scrittura accessibile di alta qualità che rifletta lo spirito collaborativo di Meshtastic.
+
+#### Lunghezza
+
+- Il post dovrebbe essere di almeno 500-700 parole.
+- Se un post si avvicina alle 3000 parole, considera di condensare il materiale o dividerlo in più parti.

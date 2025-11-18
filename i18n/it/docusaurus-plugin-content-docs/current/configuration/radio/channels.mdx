@@ -1,0 +1,320 @@
+---
+id: channels
+title: Configurazione canali
+sidebar_label: Canali
+description: Comprendi come configurare i canali sul tuo dispositivo Meshtastic, inclusi canali privati, crittografia, MQTT e precisione della posizione.
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+import { Icon } from "@iconify/react";
+import PositionPrecisionBits from "@site/docs/blocks/_position-precision-bits.mdx";
+import QRCode from "@site/docs/blocks/_qr-code.mdx";
+
+Le opzioni di configurazione dei canali sono: indice, ruolo e impostazioni. La configurazione del canale utilizza un messaggio di amministrazione per inviare un protobuf `Channel` che consiste anche di un protobuf `ChannelSettings` o `ModuleSettings`.
+
+:::info
+**Channel Settings** (as described on this page) should not be confused with [Modem Preset Settings](/docs/configuration/radio/lora#modem-preset)
+
+[Impostazioni preimpostazione modem](/docs/configuration/radio/lora#modem-preset) contengono la configurazione del modem (impostazioni di frequenza, fattore di diffusione, larghezza di banda, ecc.) utilizzato per la radio LoRa. Queste impostazioni sono identiche per tutti i canali e **non** possono essere univoche per canale.
+
+**Impostazioni dei canali** contengono informazioni per segregare i gruppi di messaggi, configurare la crittografia opzionale e abilitare o disabilitare la messaggistica tramite gateway Internet. Queste impostazioni **sono** uniche e configurabili per canale.
+:::
+
+## Valori Di Configurazione Del Canale
+
+### Indice
+
+L'indice del canale inizia a 0 e termina a 7.
+
+L'_indicizzazione_ non può essere modificata.
+
+| Indice | Canale | Ruolo predefinito |        Scopo                |
+| :----: | :----: | :---------------: | :-------------------------: |
+|   0    |  1     |    `PRIMARIO`     | Usato come canale `default` |
+|   1    |  2     |  `DISABILITATO`   | Definito dall'utente        |
+|   2    |  3     |  `DISABILITATO`   | Definito dall'utente        |
+|   3    |  4     |  `DISABILITATO`   | Definito dall'utente        |
+|   4    |  5     |  `DISABILITATO`   | Definito dall'utente        |
+|   5    |  6     |  `DISABILITATO`   | Definito dall'utente        |
+|   6    |  7     |  `DISABILITATO`   | Definito dall'utente        |
+|   7    |  8     |  `DISABILITATO`   | Definito dall'utente        |
+
+:::note
+**Non** puoi avere canali `DISABLED` tra i canali attivi come `PRIMARY` e `SECONDARY`. I canali attivi devono essere consecutivi.
+:::
+
+### Ruolo
+
+Ad ogni canale viene assegnato uno dei 3 ruoli:
+
+1. `PRIMARIO` o `1`
+   - Questo è il primo canale creato per te nella configurazione iniziale.
+   - Solo un canale primario può esistere e non può essere disabilitato.
+   - By default, periodic broadcasts like position and telemetry are sent over this channel.
+2. `SECONDARIO` o `2`
+   - È possibile modificare la chiave di crittografia (PSK).
+3. `DISABLED` o `0`
+   - Il canale non è più disponibile per l'uso.
+   - Le impostazioni del canale sono impostate come predefinite.
+
+:::note
+Anche se puoi avere un canale PRIMARY diverso e comunicare sui canali SECONDARY con lo stesso Nome e PSK, un hash del nome del canale PRIMARY imposta lo slot di frequenza LoRa, che determina la frequenza effettiva su cui stai trasmettendo nella banda.
+Per garantire che i dispositivi con un nome di canale PRIMARIO diverso trasmettano sulla stessa frequenza, è necessario impostare esplicitamente lo slot di frequenza LoRa.
+:::
+
+## Valori Di Configurazione Del Canale
+
+Le impostazioni dei canali sono: Nome, PSK, Downlink Abilitato e Uplink Abilitato. Le impostazioni del canale sono incorporate nel protobuf `Channel` come protobuf `ChannelSettings` e inviate come messaggio amministratore.
+
+### Nome
+
+Un breve identificatore per il canale. _(< 12 byte)_
+
+| Nomi riservati  |                                                               Scopo                                                                                                                                                                               |
+| :-------------: | :-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
+|  `""` (default) |                                              Se lasciato vuoto sul canale Primario, questo designa il canale `default`.                                                                                                                           |
+|   `admin`       | Sui canali secondari, il nome `admin` (case sensitive) designa il canale `admin` usato per amministrare nodi sulla mesh. Nota che questa è una funzione Legacy, vedi [Amministratore remoto](docs/configuration/remote-admin.mdx) per i dettagli. |
+
+:::note
+
+Nomi di canale uguali sono necessari per comunicare sullo stesso canale con altri dispositivi. Esempio: se il tuo dispositivo sta usando il nome del canale `LongFast` il dispositivo con cui stai tentando di comunicare deve avere anche un canale chiamato `LongFast`.
+
+:::
+
+### PSK
+
+La chiave di crittografia utilizzata per i canali privati.
+
+Hex byte `0x01` per il canale `default` primario.
+
+Deve essere 0 byte (no crypto), 16 byte (AES128) o 32 byte (AES256).
+
+:::note
+
+Per comunicare sullo stesso canale con altri dispositivi sono necessari PSK uguali. Esempio: se il tuo dispositivo utilizza un canale con PSK predefinito di `AQ==` il dispositivo con cui stai tentando di comunicare deve avere anche un canale corrispondente con lo stesso PSK.
+
+:::
+
+### Downlink attivato
+
+Se abilitato, i messaggi catturati da un gateway internet **pubblico** verranno inoltrati alla rete locale.
+
+Impostato a `false` come impostazione predefinita per tutti i canali.
+
+### Uplink Abilitato
+
+Se abilitato, i messaggi dalla mesh verranno inviati a internet **pubblico** attraverso il gateway configurato in qualsiasi nodo.
+
+Impostato a `false` come impostazione predefinita per tutti i canali.
+
+## Impostazioni Modulo Canale
+
+Le opzioni di impostazione del modulo di canale sono: precisione di posizione. Le impostazioni del modulo del canale sono integrate nel protobuf del canale come protobuf ModuleSettings e inviate come messaggio di amministrazione.
+
+### Precisione Posizione
+
+L'impostazione `position_precision` consente di controllare il livello di precisione dei dati di localizzazione inviati su un particolare canale. Questo può essere utile per motivi di privacy, dove l'offuscare la posizione esatta può essere conveniente, quando si inviano dati di posizione su determinati canali.
+
+Il valore `position_precision` è un intero compreso tra 0 e 32:
+
+- Un valore pari a 0 significa che i dati relativi alla posizione non vengono mai inviati sul canale specificato.
+- Un valore di 32 significa che i dati relativi alla posizione vengono inviati con piena precisione.
+- I valori intermedi indicano il numero di bit di precisione da inviare, corrispondenti a una precisione di posizione della tabella seguente.
+- Il server pubblico MQTT filtra le posizioni precise, vedere [qui](https://meshtastic.org/docs/software/integrations/mqtt/#location-precision-filtering) per maggiori informazioni.
+
+<PositionPrecisionBits />
+
+Le applicazioni client hanno implementato diversi livelli di precisione dando all'utente una gamma pratica tra cui scegliere. Le impostazioni su tutta la gamma di interi possono essere effettuate tramite la CLI di Python. Vedere [Impostazione di precisione di posizione](/docs/configuration/radio/channels/#setting-position-precision) per esempi sull'impostazione di diversi livelli di precisione utilizzando CLI.
+
+## Disponibilità Client Configurazione Canale
+
+<Tabs
+  groupId="settings"
+  defaultValue="apple"
+  values={[
+    {
+      label: (
+        <>
+          <Icon icon="mdi:android" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Android
+        </>
+      ),
+      value: "android",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:apple" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Apple
+        </>
+      ),
+      value: "apple",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:terminal" height="1.5rem" style={{ marginRight: "0.25rem" }} /> CLI
+        </>
+      ),
+      value: "cli",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:internet" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Web
+        </>
+      ),
+      value: "web",
+    },
+  ]}>
+
+<TabItem value="android">
+
+#### Android
+
+:::info
+Le opzioni di configurazione del canale sono disponibili su Android.
+:::
+
+La scheda Configurazione radio può essere utilizzata per attività comuni:
+
+1. Visualizza il tuo attuale codice QR e URL di configurazione del canale.[^1]
+2. Crea o modifica rapidamente il tuo canale principale.
+3. Seleziona una preimpostazione modem per tutti i tuoi canali, ad esempio `Long Range / Fast`.
+
+[^1]: <QRCode />
+
+Vedi [Utilizzo App Android](/docs/software/android/usage#setup-a-channel) per ulteriori istruzioni sulla configurazione del tuo canale principale.
+
+[![Editor Canale](/img/android/android-channel-edit-sm.webp)](/img/android/android-channel-edit.webp)
+
+Tocca "Modifica" per accedere al menu canale:
+
+1. Aggiungi, rimuovi o modifica canali secondari
+2. Crea o modifica le chiavi di crittografia
+3. Abilita uplink e downlink per i singoli canali
+4. Posizione attiva
+5. Posizione precisa (se la posizione è abilitata)
+6. Precisione della posizione (se la posizione precisa è disabilitata)
+
+</TabItem>
+
+<TabItem value="apple">
+
+#### Apple
+
+:::info
+
+Un editor di canali è disponibile sulle applicazioni iOS, iPadOS e macOS su Impostazioni > Configurazione radio > Canali.
+
+:::
+
+</TabItem>
+
+<TabItem value="cli">
+
+#### CLI
+
+:::info
+Tutte le opzioni di configurazione canale sono disponibili nel CLI python. I comandi di esempio sono di seguito:
+:::
+
+:::tip
+
+Poiché il dispositivo si riavvierà dopo che ogni comando viene inviato tramite CLI, si raccomanda quando si impostano più valori in una sezione di configurazione, che i comandi siano concatenati insieme in un unico comando.
+
+```shell title="Example:"
+meshtastic --ch-set name "Mio canale" --ch-set psk random --ch-set uplink_enabled true --ch-index 4
+```
+
+:::
+
+##### Nome
+
+```shell title="Set channel name for the PRIMARY channel"
+# senza spazi
+meshtastic --ch-set name MioCanale --ch-index 0
+# con spazi
+meshtastic --ch-set name "Mio Canale" --ch-index 0
+```
+
+##### PSK
+
+Se usi Meshtastic per scambiare messaggi che non vuoi vedere ad altre persone, `random` è l'impostazione che dovresti usare. Selezionando `default` o uno qualsiasi dei valori `simple` della tabella seguente userà le chiavi di crittografia pubblicamente note. Sono inclusi col codice sorgente di Meshtastic e quindi, chiunque può ascoltare messaggi crittografati da loro. Sono ottimi per i canali di test e pubblici.
+
+|  Impostazione          |                            Comportamento                                                                  |
+| :--------------------: | :-------------------------------------------------------------------------------------------------------: |
+|    `nessuno`           |                           Disabilita cifratura                                                            |
+|    `default`           |             Crittografia predefinita (usa la chiave di crittografia debole)                               |
+|     `random`           | Genera una chiave di crittografia sicura a 256 bit. Usa questa impostazione per la comunicazione privata. |
+| `simple0`- `simple254` |                 Usa una codifica a singolo byte per la crittografia                                       |
+
+```shell title="Set encryption to default on PRIMARY channel"
+meshtastic --ch-set psk default --ch-index 0
+```
+
+```shell title="Set encryption to random on PRIMARY channel"
+meshtastic --ch-set psk random --ch-index 0
+```
+
+```shell title="Set encryption to single byte  on PRIMARY channel"
+meshtastic --ch-set psk simple15 --ch-index 0
+```
+
+```shell title="Set encryption to your own key on PRIMARY channel"
+meshtastic --ch-set psk 0x1a1a1a1a2b2b2b2b1a1a1a1a2b2b2b2b1a1a1a1a2b2b2b2b1a1a1a1a2b2b2b2b --ch-index 0
+```
+
+```shell title="Set encryption to your own key on PRIMARY channel (Base64 encoded)"
+meshtastic --ch-set psk base64:puavdd7vtYJh8NUVWgxbsoG2u9Sdqc54YvMLs+KNcMA= --ch-index 0
+```
+
+:::tip
+Usa questo per copiare e incollare la chiave `base64` codificata (canale singolo) dal comando --info meshtastic. Non utilizzare il codice omnibus (tutti i canali) qui, non è una chiave valida.
+:::
+
+```shell title="Disable encryption on PRIMARY channel"
+meshtastic --ch-set psk none --ch-index 0
+```
+
+##### Uplink / Downlink
+
+Per la configurazione dei gateway, vedere [MQTT](/docs/configuration/module/mqtt)
+
+```shell title="Enable/Disable Uplink on PRIMARY channel"
+meshtastic --ch-set uplink_enabled true --ch-index 0
+meshtastic --ch-set uplink_enabled false --ch-index 0
+```
+
+```shell title="Enable/Disable Downlink on SECONDARY channel"
+meshtastic --ch-set downlink_enabled true --ch-index 1
+meshtastic --ch-set downlink_enabled false --ch-index 5
+```
+
+#### Impostare la Precisione di Posizione
+
+:::info
+
+Questa è un'impostazione per canale. Il parametro --ch-index deve essere specificato per impostare la precisione della posizione per un canale specifico, ad esempio --ch-index 0 per il canale primario o --ch-index 1 per il canale secondario 1.
+
+:::
+
+```shell title="Set position precision to 13 bits (approx ±3 km)"
+meshtastic --ch-set module_settings.position_precision 13 --ch-index 0
+```
+
+```shell title="Set position precision to full precision (32 bits)"
+meshtastic --ch-set module_settings.position_precision 32 --ch-index 1
+```
+
+</TabItem>
+
+<TabItem value="web">
+
+#### Web
+
+:::info
+Tutte le opzioni di configurazione canale sono disponibili nell'interfaccia utente web.
+:::
+
+</TabItem>
+</Tabs>

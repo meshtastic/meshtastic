@@ -1,0 +1,108 @@
+---
+id: swdio
+title: SWDIO med en Raspberry Pi
+sidebar_label: SWDIO med en Raspberry Pi
+sidebar_position: 6
+description: Instruktioner för programvaruinstallation över SWDIO med hjälp av en Raspberry Pi
+---
+
+De flesta Meshtastic-enheter kan enkelt installeras med hjälp av USB.
+Vissa (t.ex. Seeed WM1110 Dev Kit) kräver dock användning av en extern enhet som kan anslutas via "SWDIO".
+There are dedicated devices such as the [RAKDAP1](https://msh.to/rakdap1/) that can do this work, and there are also other devices such as the [Segger J-Link](https://msh.to/segger-jlink) or [ST-Link](https://msh.to/st-link) that can be used.
+that can do this work. men för många människor är en Raspberry Pi mer tillgänglig.
+
+Den här artikeln förklarar hur man använder en Raspberry Pi som en SWDIO-programmerare.
+
+## Inkoppling
+
+Det första steget är att ansluta två kopplingskablar mellan din Raspberry Pi och SWDIO-portarna på din NRF52-baserade enhet.
+
+Anslut GPIO pin 11 på din Raspberry Pi till CLK på din Meshtastic-enhet.
+Anslut GPIO pin 8 på din Raspberry Pi till DIO på din Meshtastic-enhet.
+
+Säkerställ att GPIO numren stämmer.
+
+Anslut din Raspberry Pi till USB-ström.
+Strömsätt Meshtastic-enheten.
+
+## Installera OpenOCD
+
+Du kan använda OpenOCD för att hantera SWDIO-anslutningen med Meshtastic-enheten.
+Installera OpenOCD på din Raspberry Pi.
+
+```
+$ sudo apt update
+$ sudo apt install libtool autoconf automake texinfo telnet gdb-multiarch git
+$ git clone git://repo.or.cz/openocd.git
+$ cd openocd/
+$ ./bootstrap
+$ ./configure --enable-bcm2835gpio
+$ make -j4
+$ sudo make install
+```
+
+## Testa kommunikationen
+
+Testa kommunikationen till din nRF52-baserade enhet innan du försöker skriva programvaran till enheten.
+All konfiguration du behöver finns i openocd-arkivet.
+
+```
+$ openocd -f ./openocd/tcl/interface/raspberrypi-native.cfg -c "transport select swd" -f openocd/tcl/target/nrf52.cfg -s tcl
+```
+
+Den första flaggan väljer Raspberry Pi som värdmaskin, den andra att transporten är SWDIO, och den sista flaggan beskriver att du ansluter till ett nRF52-baserat chip.
+Det borde se ut ungefär så här:
+
+```
+Open On-Chip Debugger 0.12.0+dev-00633-gad87fbd1c
+Licensed under GNU GPL v2
+For bug reports, read
+    http://openocd.org/doc/doxygen/bugs.html
+srst_only separate srst_gates_jtag srst_push_pull connect_deassert_srst
+swd
+Info : Listening on port 6666 for tcl connections
+Info : Listening on port 4444 for telnet connections
+Info : BCM2835 GPIO JTAG/SWD bitbang driver
+Info : clock speed 100 kHz
+Info : SWD DPIDR 0x2ba01477
+Info : [nrf52.cpu] Cortex-M4 r0p1 processor detected
+Info : [nrf52.cpu] target has 6 breakpoints, 4 watchpoints
+Info : [nrf52.cpu] Examination succeed
+Info : [nrf52.cpu] starting gdb server on 3333
+Info : Listening on port 3333 for gdb connections
+Info : accepting 'telnet' connection on tcp/4444
+```
+
+Om du ser “Error connecting DP: cannot read IDR”, så har du förmodligen anslutit kopplingskablarna till fel pin.
+
+## Hämta Meshtastic-programvara
+
+Följ instruktionerna för din [hårdvara](/docs/hardware/devices) för att hitta rätt programvara för din enhet.
+För de flesta enheter som följer denna guide krävs en .hex-fil.
+Kopiera sedan den programvarufilen till din Raspberry Pi.
+
+## Installera programvara
+
+När du har openocd igång kan du ansluta till din Meshtastic-enhet med hjälp av telnet.
+Att installera programvaran är så enkelt som att köra några kommandon inuti telnet-sessionen:
+
+```
+$ telnet 127.0.0.1 4444
+Trying 127.0.0.1...
+Connected to 127.0.0.1.
+Escape character is '^]'.
+Open On-Chip Debugger
+> init
+> reset init
+> halt
+> nrf5 mass_erase
+> program firmware.hex verify
+> reset
+> exit 0
+```
+
+Koppla ur strömmen och koppla in den igen efter programmering.
+
+## Anslutning
+
+Grattis, du bör nu kunna ansluta till din enhet via Bluetooth i Meshtastic-appen.

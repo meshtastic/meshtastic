@@ -1,0 +1,22 @@
+---
+id: config
+title: Radio Configuration
+sidebar_label: Radio Config
+sidebar_position: 1
+description: Dive into the technical specifics of configuring your Meshtastic radio settings, including frequency ranges, power limits, and channels for optimal communication.
+---
+
+There are several config sections in the Meshtastic firmware, these are broken out so they can be sent as small admin messages over the mesh.
+
+|      Namn                |                                             Beskrivning                                                                                                                                   |
+| :----------------------: | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
+| [Bluetooth](./bluetooth) |                              The bluetooth config options are: Enabled, Pairing Mode and Fixed PIN.                                                                                       |
+|  [Channels](./channels)  |                                 The channels config options are: Index, Role and Settings.                                                                                                |
+|   [Device](./device)     |                          The device config options are: Device Role, Serial Output, Debug Log and Factory Reset.                                                                          |
+|  [Display](./display)    |                    The display config options are: Screen On Duration, Auto Carousel Interval, Always Point North, and GPS Format.                                                        |
+|    [LoRa](./lora)        |   The LoRa config options are: Region, Modem Preset, Max Hops, Transmit Power, Bandwidth, Spread Factor, Coding Rate, Frequency Offset, Transmit Disabled and Ignore Incoming Array.      |
+|  [Network](./network)    |                        The network config options are: WiFi Enabled, WiFi SSID, WiFi PSK, WiFi Mode and NTP Server.                                                                       |
+|  [Position](./position)  |       The position config options are: GPS Enabled, GPS Update Interval, GPS Attempt Time, Fixed Position, Smart Broadcast, Broadcast Interval and Position Packet Flags.                 |
+|   [Power](./power)       | The power config options are: Charge Current, Power Saving, Shutdown after losing power, ADC Multiplier Override Wait Bluetooth Interval, Light Sleep Interval and Minimum Wake Interval. |
+|  [Security](./security)  |                The security config options are: Public Key, Private Key, Admin Key, Is Managed, Serial Console, Debug Logs, and Admin Channel.                                            |
+|    [User](./user)        |                               The user config options are: Long Name, Short Name, and Is Licensed                                                                                         |

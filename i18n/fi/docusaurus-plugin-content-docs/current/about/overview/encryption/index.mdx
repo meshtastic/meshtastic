@@ -1,0 +1,115 @@
+---
+id: salaus
+title: Meshtastic Salaus
+sidebar_label: Salaus
+slug: /yleiskatsaus/salaus
+sidebar_position: 3
+description: "Ymmärrä Meshtasticin salaus: valinnainen verkonlaajuinen AES256-suojaus verkon ulkopuoliseen viestintään, mikä varmistaa luottamuksellisuuden passiivista salakuuntelua vastaan."
+---
+
+## Selitys
+
+Meshtastic provides AES256-CTR encryption for the payload of each packet when sending via LoRa, with a different key for each [channel](/docs/configuration/radio/channels/). The [packet header](/docs/overview/mesh-algo/#layer-1-unreliable-zero-hop-messaging) is always sent unencrypted, which allows nodes to relay packets they can't decrypt as well. One can disable this by setting a different [rebroadcast mode](/docs/configuration/radio/device#rebroadcast-mode).
+
+By default, you have one primary channel, which is encrypted with a simple known key ("AQ=="), so to use proper encryption, you **must change** this key first, or create a new channel and share it with the ones you want to communicate with. However, without a channel using the default key, communication with devices still using it will not be possible.
+
+Direct messages to a specific node are now encrypted using Public Key Cryptography (PKC). Each node is equipped with a unique public/private key pair, and direct messages are encrypted with the recipient's public key. This ensures that only the recipient can decrypt the message using their private key. Additionally, messages are signed with the sender's private key, allowing the recipient to verify the sender's identity and ensuring the message's integrity.
+
+All periodic broadcasts (position, telemetry, traceroutes, etc.) the device sends out itself are sent over the primary channel and thus encrypted with that key.
+
+The device will decrypt the payload before sending it to a client app via BLE, serial, Wi-Fi/Ethernet. For MQTT, you can [specify](/docs/configuration/module/mqtt#encryption-enabled) whether you want to send an encrypted or unencrypted payload.
+
+## Onko se yhtä turvallinen kuin Wi-Fi WPA3, HTTPS TLS1.3 vai Signal?
+
+**Ei**.
+
+[WPA3](https://en.wikipedia.org/wiki/WPA3), [TLS1.3](https://en.wikipedia.org/wiki/TLS1.3), [Signal](https://en.wikipedia.org/wiki/Signal_Protocol) ja Meshtastic voi kaikki käyttää AES256. Silti AES on yksi monista nykyaikaisessa salausjärjestelmässä vaadituista hampaista. Alla on Meshtasticin "puuttuvia" pääominaisuuksia.
+
+### Täydellinen eteenpäin suuntautuva salaisuus
+
+[**P**erfect-**F**orward-**S**ecrecy, also known as **PFS**](https://en.wikipedia.org/wiki/Forward_secrecy), means _previous_ communications and more generally anything _passively captured_ cannot be decrypted **_even when the key is compromised_**.
+
+Tämä tarkoittaa, että Meshtastic on haavoittuvainen [**"Kerää nyt, pura salaus myöhemmin"**](https://en.wikipedia.org/wiki/Harvest_now,_decrypt_later) -hyökkäyksille. **Tämä hyökkäys itsessään ei riitä viestien salauksen purkamiseen**; se perustuu toiseen vikaan, joka vuotaa kanava-avaimen, kuten:
+
+- Kanavan avaimen vahingossa jakaminen väärän henkilön kanssa.
+- Yksi laitteistasi on varastettu.
+- Mikä tahansa tuntematon vika, joka paljastaa kanavan avaimen hyökkääjälle.
+
+Other protocols, such as _misconfigured TLS1.2_, are far more impacted by Harvest now, Decrypt later attacks because their keys will be broken by near-future Quantum-Computers, yet they do not provide PFS either.
+
+Meshtastic's AES256 encryption is considered quantum-resistant[^1], but the public/private key exchange for DMs is not, as current quantum-resistant cryptography schemes don't fit in LoRa packets or our IoT hardware; realistic attack vectors include accidental mishandling of channel keys, nodes being lost, and potential future quantum attacks on DM key exchanges.
+
+[^1]: AES256:n kvanttivastustuskyvystä, katso [tämä StackOverflow-kysymys, joka sisältää hieman keskustelua ja kaksi hyvää vastausta](https://crypto.stackexchange.com/q/6712) sekä [NISTin post-kvanttikryptografian UKK](https://csrc.nist.gov/projects/post-quantum-cryptography/faqs) -osio "Kvanttitietokoneiden uhkan torjumiseksi, tulisiko AES:n avainpituus kaksinkertaistaa nyt?" (lisätty 18/11/18)"
+
+#### Suositukset yksityisiä kanavia käyttäville käyttäjille
+
+- **Älä määritä yksityisiä kanavia valvomattomilla laiteilla**. Laitteet välittää Meshtastic liikennettä vaikka ne eivät pysty purkamaan salausta. Valvomattomissa reitittimissä ei tulisi olla yksityistä PSK-avainta määritettynä, sillä fyysinen pääsy laitteeseen on helppo saada ja kanava-avain voidaan tällöin helposti purkaa.
+- Muista, että kaikki kanavalla lähetetyt voidaan tallentaa ja purkaa salaus myöhemmin kenen tahansa toimesta, joka pääsee käsiksi avaimeen, vaikka poistaisit viestit paikallisesti.
+- Muuta Kanavan avaimia aika ajoin.
+
+#### Muutokset 2.5.0-laiteohjelmistojulkaisun jälkeen
+
+- Suorat viestit on nyt suojattu PKC:llä, kun viestit laitteiden välillä versiossa 2.5.0 tai uudemmissa on tapahtunut ja avainten vaihto on tapahtunut. Viestit vanhoille versioille 2.4.3 tai vanhemmille laiteohjelmistoversioille eivät ole suojattuja.
+- Järjestelmänvalvojan viestit kahden v2.5.0 tai uudemman laitteen välillä on nyt suojattu ja ylimääräinen välityshyökkäyssuojaus on käytössä.
+
+### Eheys
+
+Eheys tarkoittaa sitä, että viestejä ei voi muuttaa ilman avainta.
+
+Meshtastic ei tarkista kanavaviestien eheyttä varmistaakseen, etteivät ne ole manipuloituja (katso lisätiedot [ongelmasta #4030](https://github.com/meshtastic/firmware/issues/4030)).
+
+#### Suositukset
+
+- Muista, että käyttämällä tunnettua selkotekstihyökkäystä kuka tahansa _voi_ lähettää viestejä kanavalla, vaikka kanavan avain olisi yksityinen ja suojattu.
+- Meshtasticin integroivien kolmannen osapuolen sovellusten kehittäjille on sisällytettävä salaus-MAC viestin sisällön ja PSK:n päälle. Harkitsemme myös [AEAD-suojatun kanavan tilaa, joka tarjoaisi tämän natiivisti](https://github.com/meshtastic/firmware/issues/4030).
+
+#### Muutokset 2.5.0-laiteohjelmistojulkaisun jälkeen
+
+- Viestin eheyden tarkistus suoritetaan suorille viesteille tai hallintakomennoille, kun viestintä tapahtuu v2.5.0 tai uudemman laiteohjelmiston välillä.
+
+### Todennus
+
+Todennus tarkoittaa laitteita jotka sanovat ketä he ovat verkossa. Meshtastic ei toteuta tätä, joten on triviaalia esiintyä kenenä tahansa muuna, jos sinulla on pääsy kanava-avaimeen.
+
+Tämä johtuu siitä, että laitteiden tunnukset perustuvat laitteiston [MAC-osoitteeseen](https://en.wikipedia.org/wiki/MAC_address), jotka valmistaja on kovakoodannut.
+
+Jotkin muut verkot, kuten [Yggdrasil](https://yggdrasil-network.github.io/), [cjdns](https://github.com/cjdelisle/cjdns) tai [libp2p](https://libp2p.io/), käyttävät [julkisia/yksityisiä avainpareja](https://en.wikipedia.org/wiki/Public-key_cryptography), ja julkinen avain toimii laitteen identiteettinä. Tämä tekee kaikista viesteistä isompia ja/tai vaatii interaktiivisen kättelyprosessin.
+
+#### Suositukset
+
+- Muista, että lähettäjäkenttä on suuntaa-antava, ja kuka tahansa, jolla on pääsy kanavaavaimeen, voi valehdella triviaalisti.
+
+#### Muutokset 2.5.0-laiteohjelmistojulkaisun jälkeen
+
+- Yllä oleva koskee nyt vain ryhmäkeskusteluja/kanavia, koska YV:t ovat suojattuja, kun viestit laitteiden välillä versiolla 2.5 tai uudemmalla, viestien lähettämisessä vanhoihin 2.4- tai vanhempiin laitteisiin ei ole mahdollista tätä lisätodennusta.
+
+## Yksityisviestit
+
+Yksityisviestit (YV) on nyt toteutettu käyttämällä julkisen avaimen salausta (PKC). Tämä tarjoaa merkittävän tietoturvan parannukseen verrattuna edelliseen kanavapohjaiseen salaukseen:
+
+- **Viestin salaus:** Jokainen YV on salattu vastaanottajan julkisella avaimella, joka varmistaa, että vain vastaanottaja voi purkaa viestin yksityisellä avaimellaan.
+- **Digitaaliset allekirjoitukset:** Viestit on allekirjoitettu lähettäjän yksityisellä avaimella, jolloin vastaanottaja voi tarkistaa lähettäjän henkilöllisyyden ja varmistaa viestin eheyden.
+
+### Ennen 2.5.0 Laiteohjelmiston versiota
+
+Aikaisemmin YV:t toteutettiin kanavaviesteinä, joissa oli "to" protobuf -kenttä. Tämä tarkoitti sitä, että kuka tahansa kanavalla voisi lukea kaikki suorat viestit. Tämä ongelma on ratkaistu PKC:n avulla, sillä vain tarkoitettu vastaanottaja voi purkaa ja lukea viestin.
+
+### Suositukset
+
+- Vaikka PKC parantaa merkittävästi YV:n turvallisuutta, on edelleen suositeltavaa välttää arkaluonteisten tietojen jakamista suorissa viesteissä ilman vastaanottajan julkisen avaimen asianmukaista tarkistamista.
+
+## Ylläpitäjän Viestit
+
+Järjestelmänvalvojan viestit/hallinta on nyt suojattu parannetuilla suojausominaisuuksilla, mikä varmistaa, että tärkeät toiminnot verkossa ovat turvallisempia kuin koskaan ennen.
+
+- Parannettu tietoturva: Ylläpitäjien viestit on nyt suojattu edistyneillä salausmenetelmillä, mikä varmistaa, että vain valtuutetut vastaanottajat voivat lukea ne.
+- **Istunnon tunnukset:** Jokaiselle hallinnolliselle istunnolle on määritetty yksilöllinen Istunnon tunnus, joka auttaa estämään luvattoman pääsyn ja varmistaa, että viestejä ei peukaloida tai toisteta.
+
+### Ennen 2.5.0 Laiteohjelmiston versiota
+
+Aiemmin ylläpitäjien viestit eivät olleet yhtä turvallisia, mutta näiden päivitysten myötä ne ovat nyt huomattavasti paremmin suojattuja mahdollisia hyökkäyksiä ja toistohyökkäyksiä vastaan.
+
+### Suositukset
+
+- Varmista aina, että laitteesi käyttävät uusinta laiteohjelmistoa, jotta voit hyötyä näistä parannetuista suojausominaisuuksista.
+- Tarkkaile verkkoa säännöllisesti epätavallisen toiminnan varalta korkean suojaustason ylläpitämiseksi.

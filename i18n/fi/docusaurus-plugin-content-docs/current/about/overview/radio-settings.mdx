@@ -1,0 +1,131 @@
+---
+id: radio-settings
+title: Radio Settings
+slug: /overview/radio-settings
+sidebar_label: Radio Settings
+sidebar_position: 1
+description: Maximize your Meshtastic device's potential with detailed radio settings instructions, including frequency bands, data rates, and encryption options.
+---
+
+import { FrequencyCalculator } from "/src/components/tools/FrequencyCalculator";
+import QRCode from "@site/docs/blocks/_qr-code.mdx";
+
+:::info
+Meshtastic is **not** LoRaWAN, Helium or TTN (TheThingsNetwork). Meshtastic uses the full spectrum frequency range designated to LoRa technology per region. This allows for several hundred possible frequency channels in the US region alone.
+:::
+
+:::info
+Power limits will generally be lifted in the software if `is_licensed` is set to `true`. See [Ham Mode](/docs/faq#amateur-radio-ham) for more information.
+:::
+
+<div class="no-print">
+  ## Frequency Slot Calculator
+
+<FrequencyCalculator />
+</div>
+
+## Europe Frequency Bands
+
+EU countries will generally be covered by the Radio Equipment Directive ([2014/53/EU](http://data.europa.eu/eli/dir/2014/53/2023-10-01)) and subsequent amendments, which is then enacted in local laws. Useful information on this is located [here](https://single-market-economy.ec.europa.eu/single-market/european-standards/harmonised-standards/radio-equipment_en).
+The bands below were selected based on the maximum power and the duty cycle available. It may be possible to use other frequency bands for specific applications, but these are not currently supported "out of the box".
+
+### 433 MHz
+
+The maximum power allowed for Europe is +10 dBm ERP ([Effective Radiated Power](https://en.wikipedia.org/wiki/Effective_radiated_power)).
+
+The band range is from 433 to 434 MHz.
+
+There are four frequency slots defined with the standard radio preset `LongFast`. After factory reset the radio will be set to frequency slot 4 with a center frequency of 433.875 MHz.
+
+### 868 MHz
+
+The maximum power allowed for Europe is +27 dBm ERP ([Effective Radiated Power](https://en.wikipedia.org/wiki/Effective_radiated_power)).
+
+The band range is from 869.40 to 869.65 MHz. This is less than the 863–870 MHz range defined as SRD ([Short Range Devices](https://www.etsi.org/technologies/short-range-devices)) Band, but allows for a higher ERP and a duty cycle of 10%.
+
+There is one frequency slot defined with the standard radio preset `LongFast`. After factory reset the radio will be set to frequency slot 1 with a center frequency of 869.525 MHz.
+
+It is worth noting that 868 MHz is generally the most popular frequency band for Meshtastic in Europe.
+
+## North America Frequency Bands
+
+### 915 MHz (ISM Band)
+
+The maximum output power for North America is +30 dBm ERP ([Effective Radiated Power](https://en.wikipedia.org/wiki/Effective_radiated_power)).
+
+The band range is from 902 to 928 MHz.
+
+In North America, the available Frequency Slots depend on the bandwidth setting, which is included in the selected Radio Preset. The standard Preset, LongFast, provides 104 Frequency Slots. After a factory reset, the radio defaults to LongFast with a Frequency Slot of 0, which translates to Slot 20 (centered at 906.875 MHz) based on the channel hashing algorithm.
+
+## Data Rates
+
+### Considerations
+
+Various data-rate options are available when configuring a frequency slot and are inversely proportional to the theoretical range of the devices.
+
+- **Spreading Factor (SF)** - How much we "spread" our data over time.
+  - Each step up in Spreading Factor doubles the airtime to transmit.
+  - Each step up in Spreading Factor adds about 2.5db extra link budget.
+- **Bandwidth** - How big of a slice of the spectrum we use.
+  - Each doubling of the bandwidth is almost 3db less link budget.
+  - Bandwidths less than 31 may be unstable unless you have a high quality Crystal Oscillator.
+- **Coding Rate** - How much redundancy we encode to resist noise.
+  - Increasing coding rate increases reliability while decreasing data-rate.
+  - 4/5 - 1.25x overhead
+  - 4/6 - 1.5x overhead
+  - 4/7 - 1.75x overhead
+  - 4/8 - 2x overhead
+
+### Presets
+
+We have eight LoRa radio presets. These are the most common settings and have been proven to work well:
+
+|      Radio Preset            | Alt Preset Name  | Data-Rate  | SF / Symbols | Coding Rate | Kaistanlevyes   | Link Budget |
+| :--------------------------: | :--------------: | :--------: | :----------: | :---------: | :-------------: | :---------: |
+|    Lyhyt Kantama / Turbo     |  Short Turbo     | 21.88 kbps |  7 / 128     |   4/5       |   500 kHz[^1]   |   140dB     |
+|    Lyhyt Kantama / Nopea     |   Short Fast     | 10.94 kbps |  7 / 128     |   4/5       |    250 kHz      |   143dB     |
+|    Lyhyt Kantama / Hidas     |   Short Slow     | 6.25 kbps  |  8 / 256     |   4/5       |    250 kHz      |  145.5dB    |
+| Keskipitkä Kantama / Nopea   |  Medium Fast     | 3.52 kbps  |  9 / 512     |   4/5       |    250 kHz      |   148dB     |
+| Keskipitkä Kantama / Hidas   |  Medium Slow     | 1.95 kbps  |  10 / 1024   |   4/5       |    250 kHz      |  150.5dB    |
+|   Pitkä Kantama / Nopea      |   Long Fast      | 1.07 kbps  |  11 / 2048   |   4/5       |    250 kHz      |   153dB     |
+| Pitkä Kantama / Kohtalainen  |  Long Moderate   | 0.34 kbps  |  11 / 2048   |   4/8       |    125 kHz      |   156dB     |
+|   Pitkä Kantama / Hidas      |   Long Slow      | 0.18 kbps  |  12 / 4096   |   4/8       |    125 kHz      |  158.5dB    |
+
+:::note
+The link budget used by these calculations assumes a transmit power of 22dBm and an antenna with 0dB gain. Adjust your link budget assumptions based on your actual devices. Data-rate in this table is the theoretical max but doesn't account for packet headers, hops and re-transmissions. Calculations based on data from the official [Semtech LoRa calculator](https://www.semtech.com/design-support/lora-calculator).
+:::
+
+![link budget vs data rate plot](/img/about/link-budget-vs-data-rate.webp)
+
+### Custom Settings
+
+Custom settings can be applied by using [supported software](/docs/software).
+
+After applying the settings, you will need to restart the device. After your device is restarted, it will generate a new crypto key and you will need to share the newly generated QR[^2] Code or URL to all your other devices.
+
+[^2]: <QRCode />
+
+Some example settings:
+
+| Data-rate  | SF / Symbols | Coding Rate | Kaistanlevyes | Link Budget | Note                                                                     |
+| :--------: | :----------: | :---------: | :-----------: | :---------: | :----------------------------------------------------------------------- |
+| 37.50 kbps |   6 / 64     |   4/5       |   500 kHz     |   129dB     | Fastest possible speed                                                   |
+| 3.125 kbps |  8 / 256     |   4/5       |   125 kHz     |   143dB     |                                                                          |
+| 1.953 kbps |  8 / 256     |   4/8       |   125 kHz     |   143dB     |                                                                          |
+| 1.343 kbps |  11 / 2048   |   4/8       |   500 kHz     |   145dB     |                                                                          |
+| 1.099 kbps |  9 / 512     |   4/8       |   125 kHz     |   146dB     |                                                                          |
+| 0.814 kbps |  10 / 1024   |   4/6       |   125 kHz     |   149dB     |                                                                          |
+| 0.610 kbps |  10 / 1024   |   4/8       |   125 kHz     |   149dB     |                                                                          |
+| 0.488 kbps |  11 / 2048   |   4/6       |   125 kHz     |   152dB     |                                                                          |
+| 0.073 kbps |  12 / 4096   |   4/5       |   31 kHz      |   160dB     | Twice the range and/or coverage of "Long Slow", low resilience to noise  |
+| 0.046 kbps |  12 / 4096   |   4/8       |   31 kHz      |   160dB     | Twice the range and/or coverage of "Long Slow", high resilience to noise |
+
+The link budget used by these calculations assumes a transmit power of 17dBm and an antenna with 0dB gain. Adjust your link budget assumptions based on your actual devices.
+
+These frequency slot settings may not have been tested. Use at your own discretion. Share on the [Meshtastic Discussions page](https://github.com/orgs/meshtastic/discussions) with your successes or failure.
+
+## Cryptography
+
+The pre-shared key (PSK) used by the devices can be an AES128 or AES256 sequence. Alternatively, encryption can be turned off, which may be useful if you are operating under a ham radio license.
+
+[^1]: Short Turbo is the fastest preset and the only one with 500kHz bandwidth. It is not legal to use in all regions due to this wider bandwidth.

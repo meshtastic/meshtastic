@@ -1,0 +1,79 @@
+---
+id: encryption-technical
+title: Aktualisierte Sicherheitsimplementierung
+sidebar_label: Technische Verschlüsselung
+sidebar_position: 5
+description: Technischer Überblick über die bei Meshtastic ab Firmware 2.5.0 verwendete Verschlüsselung
+---
+
+## PSK für Kanäle, PKC für Direktnachrichten und Admin-Nachrichten
+
+Bis zur Version 2.4.x der Firmware verließ sich Meshtastic bei der gesamten Nachrichtenübermittlung vollständig auf die Pre-Shared Key (PSK)-Kryptografie. Ab der Firmware-Version 2.5.0 hat Meshtastic öffentliche Schlüsselkryptografie (PKC) für Direktnachrichten (DMs) eingeführt und Sitzungs-IDs für administrative Nachrichten hinzugefügt. Zusammen bringen diese Verbesserungen die Sicherheitsarchitektur von Meshtastic auf ein neues Niveau der Robustheit.
+
+Nachfolgend finden Sie eine detaillierte Übersicht darüber, wie PSK, PKC und Sitzungs-IDs in Ihr System integriert werden, um Kanäle, Direktnachrichten und administrative Nachrichten zu sichern.
+
+### 1. Nachrichtenkanäle mit PSK
+
+- **PSK-Übersicht:**
+
+  - Nachichtenkanäle verwenden weiterhin einen PSK zur Verschlüsselung der Kommunikation.
+  - Alle Teilnehmer teilen sich für ihre Kanäle denselben PSK, der sowohl für die Verschlüsselung als auch für die Entschlüsselung innerhalb des Kanals verwendet wird.
+
+- **Sicherheitsüberlegungen:**
+  - **Vertraulichkeit:** Nur Teilnehmer mit dem richtigen PSK können auf Nachrichten im Kanal zugreifen.
+  - **Schlüsselverwaltung:** Eine sichere Verteilung und regelmäßige Rotation des PSK sind für die Aufrechterhaltung der Sicherheit des Kanals unerlässlich.
+
+### 2. Direktnachrichten verwenden jetzt PKC
+
+- **PKC Implementierung für Direktnachrichten:**
+
+  - **Öffentliche/private Schlüsselpaare:** Jeder Knoten ist mit einem einzigartigen öffentlichen/privaten Schlüsselpaar ausgestattet. Der private Schlüssel wird sicher auf dem Knoten gespeichert und der öffentliche Schlüssel wird mit anderen Knoten geteilt, was eine sichere, authentifizierte Kommunikation ermöglicht.
+  - **Verschlüsselung und Signatur:**
+    - **Verschlüsselung:** Direktnachrichten werden mit dem öffentlichen Schlüssel des Empfängers verschlüsselt, wodurch sichergestellt wird, dass nur der Empfänger mit dem entsprechenden privaten Schlüssel die Nachricht entschlüsseln kann.
+    - **Digitale Signaturen:** Direktnachrichten werden vor der Verschlüsselung mit dem privaten Schlüssel des Absenders signiert, sodass der Empfänger die Identität des Absenders und die Integrität der Nachricht mithilfe des öffentlichen Schlüssels des Absenders überprüfen kann.
+
+- **Sicherheitsverbesserungen mit PKC:**
+  - **Vertraulichkeit und Integrität von Nachrichten:** Mit PKC wird jede Direktnachricht verschlüsselt und signiert. Dadurch wird sichergestellt, dass nur der vorgesehene Empfänger die Nachricht lesen kann und dass sie nicht manipuliert wurde.
+
+### 3. Administrative Nachrichten: Verbesserte Sicherheit mit PKC und Sitzungs-IDs
+
+- **Schlüsselaustausch mit Diffie-Hellman Kurve25519:**
+
+  - **Ersteinrichtung des Schlüsselaustauschs:**
+
+    - **Schlüsselgenerierung:** Bei der ersten Kommunikation zwischen Knoten erfolgt ein Diffie-Hellman-Schlüsselaustausch (DH) mithilfe von Curve25519. Dadurch wird ein gemeinsames Geheimnis zum Erstellen eines symmetrischen Verschlüsselungsschlüssels generiert.
+    - **Hardware-Unterstützung:** Kurve25519 wird in der Hardware unterstützt, was einen effizienten und sicheren Schlüsselaustausch gewährleistet.
+    - **Gemeinsames Geheimnis:** Das abgeleitete gemeinsame Geheimnis wird für die gesamte nachfolgende Kommunikation zwischen den Knoten verwendet.
+
+  - **Verwendung des gemeinsamen Geheimnisses zur Verschlüsselung:**
+    - **Symmetrische Verschlüsselung:** Nach dem Schlüsselaustausch werden Nachrichten mithilfe des gemeinsamen Geheimnisses mit symmetrischen Verschlüsselungsalgorithmen wie AES-CTR oder AES-CCM verschlüsselt und entschlüsselt.
+    - **Effizienz:** Symmetrische Verschlüsselung, insbesondere wenn sie auf einem sicheren Diffie-Hellman Austausch basiert, schafft ein Gleichgewicht zwischen Sicherheit und Leistung und ist daher ideal für Echtzeitanwendungen.
+
+- **Sitzungs-ID für administrative Nachrichten:**
+
+  - **Verwendung der Sitzungs-ID:** Sitzungs-IDs werden für jede Administratorsitzung generiert und als zusätzlicher Wert innerhalb des verschlüsselten Pakets verwendet. Dadurch wird sichergestellt, dass jede Sitzung sicher und eindeutig ist.
+
+  - **Sitzungsdauer:** Die Sitzungs-ID ist nur für eine kurze Dauer (z. B. 300 Sekunden) gültig und wird verworfen, sobald die Sitzung endet oder die nächste Steuernachricht gesendet wird.
+
+  - **Sicherheitsverbesserungen mit PKC und Sitzungs-ID:**
+    - **Minderung von Replay-Angriffen:** Durch die Verwendung von Sitzungs-IDs werden Replay-Angriffe effektiv abgeschwächt. Alte Sitzungs-IDs können nicht wiederverwendet werden, wodurch sichergestellt wird, dass abgefangene Pakete ungültig werden.
+    - **Isolierte Auswirkungen:** Durch die Verwendung von Sitzungs-IDs werden alle Probleme im Zusammenhang mit der Sitzungsverwaltung auf administrative Nachrichten beschränkt, ohne dass allgemeinere Kommunikationsfunktionen wie Direktnachrichten oder Chat-Kanäle beeinträchtigt werden.
+
+### 4. Allgemeine Sicherheitsarchitektur
+
+- **Integration von PKC in bestehende Systeme:**
+
+  - **Direktnachrichten:** PKC erhöht die Sicherheit von Direktnachrichten, indem es durch die Verwendung asymmetrischer Verschlüsselung und digitaler Signaturen Verschlüsselung, Authentifizierung und Integrität bietet.
+  - **Administrative Nachrichten:** Die Kombination aus PKC und Sitzungs-IDs sichert administrative Vorgänge und bietet eine zusätzliche Schutzebene für kritische Funktionen.
+
+- **Verwendung von PSK mit bestehenden Systemen:**
+
+  - **Kanäle:** PSKs werden weiterhin für die Gruppenkommunikation verwendet, um einen sicheren Nachrichtenaustausch innerhalb des Kanals zu gewährleisten.
+
+- **Skalierbarkeit und Leistung:**
+  - **Effiziente Ressourcennutzung:** PKC für Direktnachrichten nutzt asymmetrische Verschlüsselung für sichere Kommunikation, während PSKs für Chat-Kanäle und Sitzungs-IDs für administrative Nachrichten den Ressourcenverbrauch auf der Plattform optimieren.
+  - **Speicherverwaltung:** Die selektive Verwendung von PKC, PSKs und Sitzungs-IDs stellt sicher, dass Speicher- und Rechenressourcen effektiv verwaltet werden, sodass das System skaliert werden kann und gleichzeitig eine hohe Sicherheit gewährleistet ist.
+
+## Zusammenfassung
+
+PSKs und die erweiterte Verwendung von PKC und Sitzungs-IDs über verschiedene MCU-Architekturen hinweg – ESP32, nRF52 und ARM – stellen einen maßgeschneiderten Sicherheitsansatz dar, der Leistung, Stromverbrauch und Speicherverwaltung in Einklang bringt. Die Stärken jeder Architektur werden genutzt, um sicherzustellen, dass eine sichere Kommunikation aufrechterhalten wird, ohne die Effizienz oder Skalierbarkeit des Systems zu beeinträchtigen. Dieser Ansatz bietet robuste Sicherheit für eine breite Palette von Anwendungen, von tragbaren Geräten mit geringem Stromverbrauch bis hin zu leistungsstärkeren Systemen mit vielen Funktionen.

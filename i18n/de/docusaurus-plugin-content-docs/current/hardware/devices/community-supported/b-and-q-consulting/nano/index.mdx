@@ -1,0 +1,103 @@
+---
+id: nano-series
+title: Nano Serie
+sidebar_label: Nano Serie
+sidebar_position: 1
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+Die Nano Serie, entworfen von Neil Hao von B&Q Consulting und powered by Meshtastic, als tragbare und langlebige Lösung für Outdoor-Abenteuer wie Wandern, Fliegen, Skifahren und vieles mehr. Sie sind so konzipiert, dass ein Gleichgewicht zwischen HF-Leistung, Größe, Robustheit und Energieeffizienz besteht – eine zuverlässige Lösung in verschiedenen Outdoor-Umgebungen.
+
+Für einen vollständigen Vergleich der verschiedenen Geräte der Nano Serie, Besuchen Sie B&Q Consulting's [Nano Serie Wiki](https://wiki.uniteng.com/en/meshtastic#nano-edition).
+
+<Tabs
+groupId="nano-series"
+queryString="nano-series"
+defaultValue="g1"
+values={[
+{label: 'Nano G1 Explorer', value: 'g1-e'},
+{label: 'Nano G1', value: 'g1'}
+]}>
+
+<TabItem value="g1-e">
+
+## Nano G1 Explorer
+
+Der Nano G1 Explorer, betrieben mit Meshtastic, ist eine bedeutende Verbesserung des Nano G1. Es beinhaltet die neuesten RF-Technologien von B&Q Consulting, mit einer neuen internen Breitbandantenne, die Frequenzen von 815 MHz bis 940 MHz unterstützt. Mit dieser neuen Antenne kombiniert mit einem optimierten LoRa HF Endstufe ist der Nano G1 Explorer ist in der Lage, mit den meisten LoRa Frequenzbändern weltweit ohne Antennenänderungen zu arbeiten. Das Design des Gerätes berücksichtigt auch die möglichen Auswirkungen des menschlichen Körpers auf seine Antennenleistung. Für eine optimale HF-Leistung auch im Tascheneinsatz.
+
+### Spezifikationen
+
+- **MCU:**
+  - ESP32 WROOM (WLAN & Bluetooth)
+    - Bluetooth 4.2
+- **LoRa Sendeempfänger:**
+  - Semtech SX1262
+- **Frequenzoptionen:**
+  - _US (902,0 MHz to 928,0 MHz), EU_868 (869,4 MHz to 869,65 MHz), JP (920,8 MHz to 927,8 MHz), ANZ (915,0 MHz to 928,0 MHz), RU (868,7 MHz to 869,2 MHz), KR (920,0 MHz to 923,0 MHz), TW (920,0 MHz to 925,0 MHz), IN (865,0 MHz to 867,0 MHz), NZ_865 (864,0 MHz to 868,0 MHz), TH (920,0 MHz to 925,0 MHz), UA_868 (868,0 MHz to 868,6 MHz), MY_919 (919,0 MHz to 924,0 MHz), SG_923 (917,0 MHz to 925,0 MHz),_
+- **Navigationsmodul:**
+  - ATGM336H-5N-71 (unterstützt GPS, BDS und GLONASS)
+- **Antenne:**
+  - Neue interne Breitbandantenne mit optimierter LoRa HF Endstufenschaltung.
+- **Anschlüsse:**
+  - USB-C
+
+### Merkmale
+
+- Meshtastic vorinstalliert.
+- Neue interne GPS-Antenne, die die GPS Erfassungszeit im Vergleich zum Nano G1 erheblich verkürzt. Zusätzlich kann das GPS Modul mit dem physikalischen GPS Schalter auf einen Energiesparmodus eingestellt werden.
+- Integrierte Benachrichtigungsschaltung für LED oder Summer, konfigurierbar über physikalische Schalter.
+- Ein physischer Schalter schaltet das Gerät ganz einfach ein oder aus.
+- Ersetzbarer 1,3 Zoll OLED Anzeige mit einem FPC Anschluss.
+- Interner Li-Polymer Akku-Lader. _(Eine optionale 3,7 V 603450 JST 1,25 mm Wiederaufladbare Li-Polymer-Batterie kann ebenfalls installiert werden.)_
+- Buck-Boost Wandler für stabile 3,3V für das System, auch wenn die Li-Polymer Akkuspannung auf 2,5V sinkt. Die Versorgungsspannungsstabilität ist sehr wichtig, um sicherzustellen, dass die Leistung von HF-Schaltkreisen die Konstruktionsanforderungen erfüllt.
+
+### Quellen
+
+- Firmware Datei: `firmware-nano-g1-explorer-X.X.xxxxx.bin`
+- [Unit Engineerings Offizielles Wiki](https://wiki.uniteng.com/en/meshtastic/nano-g1-explorer)
+
+![Nano G1 Explorer](/img/hardware/nano_g1_explorer.webp)
+
+</TabItem>
+
+<TabItem value="g1">
+
+## Nano G1
+
+Der Nano G1 ist das erste dedizierte Hardware-Gerät, das von Neil Hao komplett für Meshtastic entwickelt wurde. Es wurde so konzipiert, dass es klein und kompakt ist und eine hochwertige interne Leiterplattenantenne enthält.
+
+### Spezifikationen
+
+- **MCU**
+  - ESP32 WROOM (WLAN & Bluetooth)
+    - Bluetooth 4.2
+- **LoRa Sendeempfänger**
+  - Semtech SX1276
+  - Zusätzlicher Verstärker mit extrem niedrigem Rauschen zur Verbesserung der Empfindlichkeit des LoRa Empfängers
+- **Frequenzoptionen**
+  - US-915 MHz
+- **Navigationsmodul**
+  - ATGM336H-5N-71 (Supports GPS, BDS und GLONASS)
+- **Antenne**
+  - Eingebaute in 915 MHz Lora PCB Antenne (VSWR <1.5 @ 915 MHz)
+- **Anschlüsse**
+  - USB-C
+
+### Merkmale
+
+- Meshtastic vorinstalliert
+- Benutzer Taste
+- 1,3 Zoll OLED Anzeige
+- Summer
+
+### Quellen
+
+- Firmware Datei: `firmware-nano-g1-X.X.X.xxxxxxx.bin`
+- [Unit Engineerings Offizielles Wiki](https://uniteng.com/wiki/doku.php?id=meshtastic:nano)
+
+![Nano G1](/img/hardware/nano-g1-front.webp)
+
+</TabItem>
+</Tabs>

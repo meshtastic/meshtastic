@@ -1,0 +1,205 @@
+---
+id: display
+title: Anzeigeeinstellungen
+sidebar_label: Anzeige
+description: Details zu den Einstellungen für die Anzeige auf Ihrem Meshtastic Gerät.
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+import { Icon } from "@iconify/react";
+
+Die Anzeigekonfigurationsoptionen sind: Anzeigeeinschaltdauer, automatisches Karussellintervall, immer nach Norden zeigen, GPS Format, bevorzugte Anzeigeeinheiten, Anzeige drehen, OLED Definition, Anzeigemodus, Überschrift fett, Aufwachen durch Tippen oder Bewegung, Kompassausrichtung und 12-Stunden-Uhr verwenden. Die Anzeigeeinstellung verwendet eine administrative Nachricht, die ein `Config.Display` Protocol Buffer sendet.
+
+## Anzeigeeinstellungen
+
+### Anzeige Einschaltdauer
+
+Wie lange die Anzeige eingeschaltet bleibt, nachdem die Benutzertaste gedrückt oder Nachrichten empfangen wurden.
+
+### Auto Karussellintervall
+
+Wechselt automatisch wie ein Karussell zur nächsten Seite auf der Anzeige, basierend auf dem angegebenen Intervall.
+
+### Immer nach Norden zeigen
+
+Wenn dies eingestellt ist, zeigt die Kompassrichtung auf der Anzeige außerhalb des Kreises immer nach Norden. Diese Funktion ist standardmäßig deaktiviert und die Oberseite der Anzeige stellt Ihre Kursrichtung dar, der Nordindikator bewegt sich um den Kreis.
+
+### GPS Format
+
+Das Format, mit dem GPS Koordinaten angezeigt werden.
+
+Akzeptable Werte:
+
+|  Wert  |        Beschreibung                 |
+| :----: | :---------------------------------: |
+| `DEC`  |         Dezimalgrad                 |
+| `DMS`  |      Grad Minuten Sekunden          |
+| `UTM`  |   Universal Transversal Mercator    |
+| `MGRS` | Militärisches Gitterreferenzsystem  |
+| `OLC`  |  Offener Standortcode (Plus Codes)  |
+| `OSGR` |   Ordnance Survey Gitterreferenz    |
+| `MLS`  |     Maidenhead Locator System       |
+
+### Bevorzugte Anzeigeeinheiten
+
+Wechseln Sie zwischen den Einheiten `Metrisch` (Standard) und `Angelsächsisch`.
+
+### Anzeige drehen
+
+Wenn aktiviert, wird die Anzeige um 180 Grad gedreht, für Fälle, in denen die Anzeige verkehrt herum montiert wird.
+
+### OLED Beschreibung
+
+Der Typ des OLED Kontrollers wird standardmäßig automatisch erkannt, kann aber mit dieser Einstellung definiert werden, wenn die automatische Erkennung fehlschlägt. Beim SH1107 gehen wir von einer quadratischen Anzeige mit 128x128 Punkten wie dem GME128128-1 aus.
+
+Akzeptable Werte:
+
+|    Wert        |            Beschreibung                            |
+| :------------: | :------------------------------------------------: |
+|  `OLED_AUTO`   |    Anzeigekontroller automatisch erkennen          |
+| `OLED_SSD1306` |      SSD1306 Treiber immer verwenden               |
+| `OLED_SH1106`  |      SH1106 Treiber immer verwenden                |
+| `OLED_SH1107`  | SH1107 Treiber immer verwenden (Geometrie 128x128) |
+
+### Anzeigemodus
+
+Der Anzeigemodus kann auf Standard, Zweifarbig, Invertiert oder Mehrfarbig eingestellt werden. Der Zweifarbenmodus ist für OLED Anzeigen vorgesehen, bei denen die erste Ausgabezeile eine andere Farbe hat als der Rest der Anzeige. Der Modus „INVERTIERT“ invertiert diesen zweifarbigen Bereich, was zu einer Überschrift mit weißem Hintergrund auf monochromen Anzeigen führt.
+
+### Überschrift fett
+
+Die Überschrift kann schwer lesbar sein, wenn der Anzeigemodus „INVERTIERT“ oder „ZWEIFARBIG“ verwendet wird. Diese Einstellung macht die Überschrift fett, sodass sie leichter zu lesen ist.
+
+### Aufwachen durch Tippen oder Bewegung
+
+Diese Option ermöglicht es, die Geräteanzeige zu aktivieren, wenn über einen angeschlossenen Beschleunigungsmesser oder eine kapazitive Touch-Taste eine Bewegung erkannt wird, z. B. ein Tippen auf das Gerät.
+
+### Kompassausrichtung
+
+Gibt an, wie die Kompassausrichtung auf der Anzeige gedreht oder umgekehrt werden kann.
+
+### 12-Stunden Uhr
+
+Wenn aktiviert, zeigt das Gerät die Uhrzeit im 24-Stunden-Format an.  Wenn aktiviert, zeigt das Gerät die Uhrzeit im 12-Stunden-Format an.
+
+## Verfügbarkeit der Anzeigeeinstellungen
+
+<Tabs
+  groupId="settings"
+  defaultValue="apple"
+  values={[
+    {
+      label: (
+        <>
+          <Icon icon="mdi:android" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Android
+        </>
+      ),
+      value: "android",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:apple" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Apple
+        </>
+      ),
+      value: "apple",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:terminal" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Kommandozeile
+        </>
+      ),
+      value: "cli",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:internet" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Web
+        </>
+      ),
+      value: "web",
+    },
+  ]}>
+<TabItem value="android">
+
+#### Android
+
+:::info
+
+Anzeigeeinstellungen sind für Android verfügbar.
+
+1. Öffnen Sie die Meshtastic Applikation
+2. Navigieren Sie zu: **vertikale Ellipse (3 Punkte oben rechts) > Geräteeinstellungen > Anzeige**
+
+:::
+
+</TabItem>
+<TabItem value="apple">
+
+#### Apple
+
+:::info
+Die Benutzereinstellungen sind in iOS, iPadOS und macOS unter Einstellungen > Gerätekonfiguration > Anzeige.
+:::
+
+</TabItem>
+<TabItem value="cli">
+
+#### Kommandozeile
+
+:::info
+
+Alle Anzeigeeinstellungen sind über die Python Kommandozeile verfügbar. Beispieleinstellungen sind folgende:
+
+:::
+
+| Einstellung                           | Akzeptable Werte                                          | Standardwert                               |
+| ------------------------------------- | --------------------------------------------------------- | ------------------------------------------ |
+| display.auto_screen_carousel_secs     | Ganzzahl                                                  | Standard von `0` ist ausgeschaltet.        |
+| display.compass_north_top             | `false`, `true`                                           | `false`                                    |
+| display.flip_screen                   | `false`, `true`                                           | `false`                                    |
+| display.gps_format                    | `DEC`, `DMS`, `UTM`, `MGRS`, `OLC`, `OSGR`, `MLS`         | `DEC`                                      |
+| display.oled                          | `OLED_AUTO`, `OLED_SSD1306`, `OLED_SH1106`, `OLED_SH1107` | `OLED_AUTO`                                |
+| display.screen_on_secs                | Ganzzahl                                                  | Standard von `0` ist 10 Minuten.           |
+| display.units                         | `METRIC`, `IMPERIAL`                                      | `METRIC`                                   |
+| display.displaymode                   | `DEFAULT`, `TWOCOLOR`, `INVERTED`, `COLOR`                | `DEFAULT`                                  |
+| display.heading_bold                  | `false`, `true`                                           | `false`                                    |
+| display.wake_on_tap_or_motion         | `false`, `true`                                           | `false`                                    |
+
+:::tip
+
+Weil das Gerät nach jedem Befehl über die Kommandozeile neu startet, wird empfohlen, dass mehrere Werte in einem Konfigurationsblock zusammengefasst und übertragen werden.
+
+```shell title="Example:"
+meshtastic --set display.screen_on_secs 120 --set display.gps_format UTM
+```
+
+:::
+
+```shell title="Set Screen On Duration (Default of 0 is 10 minutes)"
+meshtastic --set display.screen_on_secs 0
+meshtastic --set display.screen_on_secs 120
+```
+
+```shell title="Set Auto Carousel Interval (Default of 0 is Off)"
+meshtastic --set display.auto_screen_carousel_secs 0
+// Auf 2 Minuten setzen (120 Sekunden)
+meshtastic --set display.auto_screen_carousel_secs 120
+```
+
+```shell title="Specify GPS format on device screen"
+meshtastic --set display.gps_format UTM
+```
+
+</TabItem>
+<TabItem value="web">
+
+#### Web
+
+:::info
+Alle Anzeigeeinstellungen sind in der Weboberfläche verfügbar.
+:::
+
+</TabItem>
+</Tabs>

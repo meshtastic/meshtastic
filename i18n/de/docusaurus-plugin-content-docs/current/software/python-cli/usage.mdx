@@ -1,0 +1,238 @@
+---
+id: usage
+title: Anwendung der Meshtastic Kommandozeile
+sidebar_label: Anwendung
+slug: /software/python/cli/usage
+sidebar_position: 2
+---
+
+Dieser Abschnitt behandelt die ausführbare Kommandozeile "meshtastic" , die Nachrichten anzeigt, die über das Netzwerk als JSON gesendet werden und die Informationen des Fehlerprotokolls der Meshtastic Geräte anzeigt.
+
+:::note
+Der Befehl `meshtastic` wird nicht innerhalb von Python ausgeführt, sondern ist ein Skript, das von deinem Shell-Prompt des Betriebssystems ausgeführt wird. Wenn Sie "meshtastic" eingeben und die Eingabeaufforderung nicht in Windows gefunden werden kann, überprüfen Sie, ob sich das Python "scripts" Verzeichnis [in Umgebungsvariablen PATH](https://docs.python.org/3/using/windows.html#excursus-setting-environment-variables) befindet.
+:::
+
+## Serielle Ausgabe anzeigen
+
+Der `--noproto` Befehl in der Meshtastic Kommandozeile wird verwendet, um die API und Funktion zu deaktivieren und dies nur als einfaches serielles Terminal zu verwenden. Dieser Operationsmodus erlaubt, das sowohl die API als auch die Gerätefunktionalitäten für den regulären Gebrauch zugänglich zu bleiben während gleichzeitig ein Fenster in für die serielle Ausgabe zur Verfügung gestellt wird. Diese Funktion kann besonders nützlich sein, um Fehler zu finden, beim Entwickeln oder die Kommunikation zwischen Geräten auf niedrigem Niveau zu verstehen. Benötigt eine serielle Verbindung per Kabel. Es wird eine Verbindung herstellen, aber keine Informationen über eine Netzwerkverbindung (--host) oder Bluetooth (--ble) werden angezeigt.
+
+```shellsession title="Example Usage"
+user@host % meshtastic --noproto
+# Sie sollten eine ähnliche Ausgabe sehen:
+WARNING file:mesh_interface.py _sendToRadio line:681 Not sending packet because protocol use is disabled by noProto
+Connected to radio
+WARNING file:mesh_interface.py _sendPacket line:531 Not sending packet because protocol use is disabled by noProto
+INFO  | 18:38:04 711 [DeviceTelemetryModule] (Sending): air_util_tx=0.116361, channel_utilization=1.916667, battery_level=101, voltage=4.171000
+DEBUG | 18:38:04 711 [DeviceTelemetryModule] updateTelemetry LOCAL
+DEBUG | 18:38:04 711 [DeviceTelemetryModule] Node status update: 2 online, 4 total
+INFO  | 18:38:04 711 [DeviceTelemetryModule] Sending packet to phone
+INFO  | 18:38:04 711 Telling client we have new packets 28
+```
+
+## Eine Liste der Benutzereinstellungen abrufen
+
+Sie können eine Liste der Benutzereinstellungen erhalten, indem Sie '--get' mit einem ungültigen Attribut wie 'all' ausführen.
+
+```shell
+meshtastic --get all
+```
+
+## Einstellungen ändern
+
+Mit diesem Werkzeug können Sie auch alle Geräteparameter einstellen, die im dauerhaft gespeichert werden. Zum Beispiel, wie man das Gerät
+einrichtet, um den Bluetooth-Link für acht Stunden am Leben zu halten (jede Nutzung des Bluetooth-Protokolls von deinem Telefon wird diesen Timer zurücksetzen)
+
+```shell title="Expected Output"
+# Sie sollten eine ähnliche Ausgabe sehen:
+mydir$ meshtastic --set power.wait_bluetooth_secs 28800
+Connected to radio...
+Setting power.wait_bluetooth_secs to 28800
+Writing modified preferences to device...
+```
+
+Oder um einen Knoten an einem festen Standort zu setzen und nie das GPS zu starten.
+
+```shell
+meshtastic --setlat 25.2 --setlon -16.8 --setalt 120
+```
+
+Oder um ein ESP32-basiertes Board so zu konfigurieren, dass es einem WLAN Netzwerk als Station beitritt:
+
+```shell
+meshtastic --set network.wifi_ssid mywifissid --set network.wifi_psk mywifipsw --set network.wifi_enabled 1
+```
+
+:::note
+Für eine vollständige Liste der Einstellungen, die gesetzt werden können (und deren Dokumentation) finden Sie in der [Protocol Buffer](https://buf.build/meshtastic/protobufs/docs/main:meshtastic#meshtastic.User) Beschreibung.
+:::
+
+### Kanaleinstellungen ändern
+
+Die Kanaleinstellungen können auch geändert werden, entweder über eine standardmäßige (teilbare) Meshtastic URL oder über bestimmte Kanalparameter (für fortgeschrittene Benutzer).
+
+:::warning
+Meshtastic kodiert den Funkkanal und PSK in die URL des Kanals. Alle Knoten müssen sich erneut mit dem Kanal verbinden, indem sie die URL verwenden, die nach einer Änderung in diesem Abschnitt angegeben wurde, indem sie das `--info` Kommando ausführen.
+:::
+
+```shell
+meshtastic --ch-set name mychan --ch-index 1 --info
+```
+
+Sie können die vorher verteilten Schlüssel auf eine bestimmte AES128 oder AES256 Sequenz setzen.
+
+```shell
+meshtastic --ch-index 1 --ch-set psk 0x1a1a1a1a2b2b2b2b1a1a1a1a2b2b2b2b1a1a1a1a2b2b2b2b1a1a1a1a2b2b2b2b --info
+```
+
+Verwenden Sie `--ch-set psk none --ch-index 0` um die Verschlüsselung zu deaktivieren.
+
+Verwenden Sie `--ch-set psk random --ch-index 0` um dem primären Kanal einen neuen zufälligen (mit hoher Qualität) AES256 Schlüssel zuzuweisen (ähnlich wie die Android-App beim Erstellen neuer Kanäle).
+
+Verwenden Sie `--ch-set psk default --ch-index 0` um den Standard AES128 Schlüssel wiederherzustellen (minimal sicher, da es im Quellcode für jedermann zu lesen ist).
+
+Verwenden Sie `--ch-set psk base64:{key} --ch-index {index}` um den PSK eines Kanals auf einen bekannten Schlüssel zu setzen.
+
+Alle `ch-set` Befehle müssen den `ch-index` Parameter angegeben haben:
+
+```shell
+meshtastic --ch-index 1 --ch-set name mychan --info
+```
+
+### Unterstützung für Amateurfunk
+
+Meshtastic ist so konzipiert, dass es ohne eine Amateurfunklizenz genutzt werden kann. Wenn Sie über eine Amateurfunklizenz verfügen, können Sie Ihr Rufzeichen festlegen und die Verschlüsselung ausschalten mit:
+
+```shell title="Expected Output"
+# Sie sollten eine ähnliche Ausgabe sehen:
+mydir$ meshtastic --set-ham KI1345
+Connected to radio
+Setting Ham ID to KI1345 and turning off encryption
+Writing modified channels to device
+```
+
+Umschalten von `set-ham` ändert die Einstellungen Ihres Gerätes auf folgende Weise.
+
+| Einstellung    |  `set-ham` Default  |                       Normaler Standard                                                      |
+| :------------: | :-----------------: | :------------------------------------------------------------------------------------------: |
+|  `IsLicensed`  |     `true`          | Siehe [Benutzereinstellung - Ist Lizensiert](/docs/configuration/radio/user#is-licensed-ham) |
+|   `LongName`   |  _Ihr_Rufzeichen_   |    Siehe [Benutzereinstellung - Langer Name](/docs/configuration/radio/user#long-name)       |
+|  `ShortName`   | _Abkz. Rufzeichen_  |    Siehe [Benutzereinstellung - Kurzer Name](/docs/configuration/radio/user#short-name)      |
+|    `PSK`       |     `""`            |           Siehe [Kanaleinstellungen - PSK](#changing-the-preshared-key)                      |
+
+## Vorverteilten Schlüssel ändern
+
+Sie können die vorher verteilten Schlüssel auf eine bestimmte AES128 oder AES256 Sequenz setzen.
+
+```shell
+meshtastic --ch-set psk 0x1a1a1a1a2b2b2b2b1a1a1a1a2b2b2b2b1a1a1a1a2b2b2b2b1a1a1a1a2b2b2b2b --info
+```
+
+Verwenden Sie `--ch-set psk none --ch-index ` um die Verschlüsselung zu deaktivieren.
+
+Verwenden Sie `--ch-set psk random` um dem Primärkanal einen neuen, zufälligen AES256 Schlüssel (mit hoher Qualität) zuweisen (ähnlich wie die Android-App beim Erstellen neuer Kanäle).
+
+Verwenden Sie `--ch-set psk default --ch-index ` um den Standard AES128 Schlüssel wiederherzustellen (minimal sicher, da es im Quellcode für jedermann zu lesen ist).
+
+Alle "ch-set"-Befehle werden standardmäßig auf den primären Kanal auf Index 0 gesetzt, können aber mit dem Parameter "ch-index" auf andere Kanäle angewendet werden.
+
+## Verwendung von BLE über den Python Kommandozeile
+
+Die Python Kommandozeile unterstützt die Kommunikation mit Meshtastic Geräten über Bluetooth Low Energy (BLE), zusätzlich zu den seriellen und TCP/IP-Anschlüssen. Um BLE nutzen zu können, benötigen Sie einen Bluetooth-Adapter auf Ihrem Computer.
+
+### Nach BLE Geräten suchen
+
+Zuerst können Sie nach verfügbaren Meshtastic Geräten suchen:
+
+```shell
+meshtastic --ble-scan
+```
+
+Dies listet alle über BLE gefundenen Meshtastic Geräte zusammen mit ihren Adressen und Namen im folgenden Format auf:
+
+```shell
+Found: name='Meshtastic_1234' address='AA11BB22-CC33-DD44-EE55-FF6677889900'
+BLE scan finished
+```
+
+### Verfügbare Befehle
+
+Sobald Sie die Geräteadresse oder den Namen haben, können Sie sie neben Ihren normalen Python Kommandozeilenbefehlen wie `--info`, `--nodes`, `--export-config`, etc. verwenden. Aber um mit der `--ble` Option über BLE anstatt der seriellen Schnittstelle zu kommunizieren.
+
+Sie können **entweder** den Namen **oder** die Adresse verwenden, um Befehle auszugeben.
+
+```shell
+meshtastic --ble <name> --info
+meshtastic --ble <address> --nodes
+```
+
+Beim ersten Mal, wenn Sie die `--ble` Option für ein bestimmtes Gerät verwenden, werden Sie aufgefordert, den BLE PIN Code einzugeben (wie es bei einem Koppelung üblich ist). Einmal gekoppelt ist dieser Schritt nicht erforderlich, es sei denn, Sie entfernen das Gerät.
+
+:::note
+Unter Linux müssen Sie das BLE Gerät unter Umständen mit `bluetoothctl` koppeln, bevor Sie sich verbinden können. Dies ermöglicht die Eingabe der erforderlichen PIN für die Koppelung.
+:::
+
+### Zusätzliche BLE Beispiele
+
+#### Suchen Sie nach Geräten und holen Sie sich Informationen vom ersten Gerät:
+
+```bash
+meshtastic --ble-scan
+# Sample output:
+# Found: name='Meshtastic_1234' address='AA11BB22-CC33-DD44-EE55-FF6677889900'
+# Found: name='Meshtastic_5678' address='FF00DD00-AA11-BB22-CC33-DD44EE5566FF'
+BLE scan finished
+
+meshtastic --ble AA11BB22-CC33-DD44-EE55-FF6677889900 --info
+```
+
+#### Verbinden Sie sich mit einem benannten Gerät und lesen Sie die Knotenliste aus:
+
+```shell
+meshtastic --ble Meshtastic_1234 --nodes
+```
+
+#### Exportiere die Gerätekonfiguration mit `--export-config`
+
+```shell
+meshtastic --ble Meshtastic_1234 --export-config > config.yaml
+```
+
+#### Senden Sie einen Befehl an ein entferntes Gerät mit der `--dest` Option:
+
+```shell
+meshtastic --dest '!fe1932db4' --set device.is_managed false --ble Meshtastic_9abc
+```
+
+#### Zur Fehlersuche können Sie das ausführliche BLE Protokoll aktivieren, indem Sie das `--debug` Flag hinzufügen:
+
+```shell
+meshtastic --ble AA11BB22-CC33-DD44-EE55-FF6677889900 --debug --info
+```
+
+## FAQ/Häufige Probleme
+
+Dies ist eine Sammlung gemeinsamer Fragen und Antworten aus unserem freundlichen Forum.
+
+### Zugriff verweigert: '/dev/ttyUSB0'
+
+Dies zeigt ein Berechtigungsproblem im Betriebssystem für den Zugriff Ihres Benutzers auf den seriellen USB-Port an. Normalerweise wird dies durch folgendes behoben.
+
+```shell
+sudo usermod -a -G dialout <username>
+```
+
+Wenn das Hinzufügen Ihres Benutzers zur Gruppe dialout nicht funktioniert, dann können Sie den folgenden Befehl verwenden, um herauszufinden, zu welcher Gruppe Sie Ihren Benutzer hinzufügen sollen.
+In diesem Beispiel (von Arch Linux) war die Gruppe "uucp"
+
+```shell
+ls -al /dev/ttyACM0
+crw-rw---- 1 root uucp 166, 0 Jul 20 21:52 /dev/ttyACM0
+```
+
+### Mac OS Big Sur
+
+Es gibt ein Problem mit Big Sur und Pyserial. Die Problemumgehung ist eine neuere Version von pyserial:
+
+```shell
+pip3 install -U --pre pyserial
+```

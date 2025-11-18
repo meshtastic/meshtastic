@@ -1,0 +1,326 @@
+---
+id: linux-native-hardware
+title: Meshtastic on Linux-Native Devices
+hide_title: true
+sidebar_label: Linux Native Devices
+sidebar_position: 8
+description: Set up and configure Meshtastic on Linux-native devices using the meshtasticd binary.
+---
+
+import LinuxInstall from "@site/docs/blocks/_linux-install.mdx";
+import { Dark, Light } from "/src/components/ColorMode";
+
+<Dark>
+  <img
+    src="/img/meshtasticd/Meshtasticd-Terminal-Long_Dark.svg"
+    alt="Meshtasticd Terminal Dark"
+  />
+</Dark>
+<Light>
+  <img
+    src="/img/meshtasticd/Meshtasticd-Terminal-Long_Light.svg"
+    alt="Meshtasticd Terminal Light"
+  />
+</Light>
+
+This page outlines the setup of Meshtastic on Linux-native devices, utilizing portduino to run the Meshtastic firmware under Linux.
+
+## Prerequisites and Hardware Compatibility
+
+Before proceeding with the setup, ensure the device meets the following requirements:
+
+### Tested Devices
+
+#### SPI
+
+- Raspberry Pi: Zero 2, 3, 4, Pi 400, and Pi 5 on Raspbian `bookworm`.
+- Luckfox Pico: [femtofox](https://github.com/noon92/femtofox/tree/main) on Ubuntu 22.04 `jammy`.
+
+#### USB (CH341)
+
+- Debian 12 (`bookworm`) with MeshStick.
+- Ubuntu LTS (`24.04`, `22.04`) with MeshStick.
+- Fedora `41` with MeshStick.
+- meshtasticd Docker container with MeshStick passed-through.
+
+### Hardware Compatibility
+
+:::caution Warning
+
+- **UART** HATs and SX1302/SX1303 chip-based HATs are not supported. Only hats that use a SPI radio can work with Meshtastic.
+- The Waveshare SX1262 LoRaWAN Hat for Raspberry Pi is not recommended for deployment. It has known hardware limitations that may affect longer messages. If you must use it, please use the **CLIENT_MUTE** role to avoid rebroadcasting.
+- The Pine64 Pinedio is also not recommended for deployment, as it suffers from similar hardware limitations as the Waveshare SX1262 LoRaWAN Hat.
+
+See: [The Meshtastic CRC Problem](https://www.youtube.com/watch?v=PND1GlMSrEM)
+:::
+
+- Tested USB devices include the [MeshStick](https://github.com/markbirss/MESHSTICK) and Pinedio CH341 USB adapter.
+- Tested Raspberry Pi LoRa hats include the [MeshAdv-Pi v1.1](https://github.com/chrismyers2000/MeshAdv-Pi-Hat), Adafruit RFM9x, and Elecrow Lora RFM95 IOT.
+- Support for I²C displays, SPI displays, and keyboard input has been confirmed. It is necessary to be aware of potential pin conflicts when stacking hats.
+
+### System Requirements
+
+- The Meshtastic binary, `meshtasticd`, necessitates root access or a user with permissions to access GPIO, SPI, and other interfaces.
+- A Linux distribution compatible with the Meshtastic installation packages.
+
+## Installation
+
+### Installing Meshtasticd
+
+<LinuxInstall />
+
+## Hardware Interfaces
+
+### USB
+
+USB support via the **CH341** was added in Meshtastic 2.5.18.
+
+Note that in order for Linux to recognize multiple CH341-USB devices, an EEPROM must be included onboard, burned with a unique serial number.
+Devices like the Pine64 Pinedio v1 do not include this.
+
+### SPI (Raspberry Pi)
+
+Enable SPI support for LoRa Radio
+
+- This can be done by running the below commands on a Raspberry Pi (2-5)
+
+```shell
+sudo raspi-config nonint set_config_var dtparam=spi on /boot/firmware/config.txt # Enable SPI
+
+# Ensure dtoverlay=spi0-0cs is set in /boot/firmware/config.txt without altering dtoverlay=vc4-kms-v3d or dtparam=uart0
+sudo sed -i -e '/^\s*#\?\s*dtoverlay\s*=\s*vc4-kms-v3d/! s/^\s*#\?\s*(dtoverlay|dtparam\s*=\s*uart0)\s*=.*/dtoverlay=spi0-0cs/' /boot/firmware/config.txt
+
+# Insert dtoverlay=spi0-0cs after dtparam=spi=on if not already present
+if ! sudo grep -q '^\s*dtoverlay=spi0-0cs' /boot/firmware/config.txt; then
+    sudo sed -i '/^\s*dtparam=spi=on/a dtoverlay=spi0-0cs' /boot/firmware/config.txt
+fi
+```
+
+- Or this can be accomplished by manually enabling SPI support in `/boot/firmware/config.txt`:
+
+```plaintext
+dtparam=spi=on
+dtoverlay=spi0-0cs
+```
+
+### I²C (Raspberry Pi)
+
+Enable I²C support
+
+Enabled with:
+
+```shell
+sudo raspi-config nonint set_config_var dtparam=i2c_arm on /boot/firmware/config.txt # Enable i2c_arm
+```
+
+Or manually enabled in `/boot/firmware/config.txt`:
+
+```plaintext
+dtparam=i2c_arm=on
+```
+
+### UART (Raspberry Pi)
+
+Enable UART support for GPS
+
+- You can enable UART by running the below commands (which additionally will disable serial console tty)
+
+```shell
+sudo raspi-config nonint do_serial_hw 0 # Enable Serial Port (enable_uart=1)
+sudo raspi-config nonint do_serial_cons 1 # Disable Serial Console
+```
+
+- Or you can manually enable UART for GPS hats by making modifications in `/boot/firmware/config.txt`:
+
+```plaintext
+# Needed for all Pi device.
+enable_uart=1
+
+# Needed for the Pi 5 only.
+dtoverlay=uart0
+```
+
+- The correct port for UART GPS on the Pi 5 after a reboot is `/dev/ttyAMA0`.
+- The correct port for UART GPS on earlier Pi versions after a reboot is `/dev/ttyS0`.
+- You may need to disable the serial console on a Pi and then reboot
+
+```shell
+sudo raspi-config nonint do_serial_cons 1 # Disable Serial Console
+```
+
+## Configuration
+
+### Meshtasticd Configuration
+
+- The meshtasticd configuration is at `/etc/meshtasticd/config.yaml` by default. If a `config.yaml` is found in the current directory, that takes precedence. And a config file specified with the `-c/--config` option has the highest precedence.
+
+To enable a LoRa radio connected to your device, first locate it's configuration in the presets, then copy to `config.d`.
+
+```shell
+# First, locate your radio hardware
+ls /etc/meshtasticd/available.d
+# Ex: display-waveshare-2.8.yaml  lora-MeshAdv-900M30S.yaml  lora-meshstick-1262.yaml
+
+# Then, copy desired config to `config.d`
+# Example:
+cp /etc/meshtasticd/available.d/lora-MeshAdv-900M30S.yaml /etc/meshtasticd/config.d/
+```
+
+:::info
+The `config.yaml` file is sensitive to spacing, so ensure that the indentation and spacing are correct.
+:::
+
+### Web Server
+
+`meshtasticd` has web server support starting with release `2.3.0`.
+
+To enable this:
+
+```yaml
+Webserver:
+  Port: 443 # Port for Webserver & Webservices
+  RootPath: /usr/share/meshtasticd/web # Root Dir of WebServer
+```
+
+### Bluetooth Support
+
+Bluetooth is currently unsupported and not functional on Linux Native devices. This may change in the future.
+
+### Persistence
+
+- The persistent .proto db files of the portduino version of meshtasticd are stored under: `/root/.portduino/default/prefs/`.
+
+## Advanced Setup and Troubleshooting
+
+### Enabling the systemd service
+
+To configure the device to start and stop meshtasticd as a service using systemctl you can setup the service unit using the instructions below.
+
+<details>
+  <summary>Create the systemd service (only for manual installs)</summary>
+
+The `meshtasticd` systemd service is automatically installed when using the official Meshtastic packages.
+These instructions are only needed when installing manually.
+
+Create the service unit file:
+
+Create a new file in the /etc/systemd/system/ directory with a name like meshtasticd.service.
+
+```shell
+sudo nano /etc/systemd/system/meshtasticd.service
+```
+
+Add the following content to the file:
+
+```plaintext
+[Unit]
+Description=Meshtastic Native Daemon
+After=network-online.target
+StartLimitInterval=200
+StartLimitBurst=5
+
+[Service]
+AmbientCapabilities=CAP_NET_BIND_SERVICE
+User=root
+Group=root
+Type=simple
+ExecStart=/usr/bin/meshtasticd
+Restart=always
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target
+```
+
+Reload systemd to recognize the new service:
+
+```shell
+sudo systemctl daemon-reload
+```
+
+</details>
+
+Enable the service to start on boot:
+
+```shell
+sudo systemctl enable meshtasticd
+```
+
+#### Starting and Stopping the Service
+
+Start the service:
+
+```shell
+sudo systemctl start meshtasticd
+```
+
+Check the status of the service:
+
+```shell
+sudo systemctl status meshtasticd
+```
+
+This will give you a detailed view of the service status and any potential errors.
+
+Stop the service:
+
+```shell
+sudo systemctl stop meshtasticd
+```
+
+By following these steps, you set up a systemd service for meshtasticd that will start automatically at boot and restart if it crashes. You can manage it using the standard systemctl commands (start, stop, restart, status, etc.).
+
+### View Logs of Meshtastic
+
+To view the log output of the meshtasticd service, use the below command to read them out of the system journal.
+
+```shell
+journalctl -u meshtasticd -b
+```
+
+### Avahi setup
+
+This will allow the Android client to auto-discover your Linux Native device.
+
+- Install avahi-daemon (debian/ubuntu)
+
+```shell
+sudo apt install avahi-daemon
+```
+
+- Configure Avahi to advertise the node
+
+Create the service file:
+
+```shell
+sudo nano /etc/avahi/services/meshtastic.service
+```
+
+And paste the following:
+
+```xml
+<?xml version="1.0" standalone="no"?><!--*-nxml-*-->
+<!DOCTYPE service-group SYSTEM "avahi-service.dtd">
+<service-group>
+    <name>Meshtastic</name>
+    <service protocol="ipv4">
+        <type>_meshtastic._tcp</type>
+        <port>4403</port>
+    </service>
+</service-group>
+```
+
+Then save and exit.
+
+## CLI Configuration
+
+Interaction with Meshtastic can be conducted via the command line:
+
+```plaintext
+meshtastic --host localhost ...
+```
+
+See:
+
+- [CLI Installation](/docs/software/python/cli/installation/)
+- [CLI Usage](/docs/software/python/cli/usage/)

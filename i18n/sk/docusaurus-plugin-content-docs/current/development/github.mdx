@@ -1,0 +1,61 @@
+---
+id: github
+title: Github
+sidebar_label: Github
+sidebar_position: 2
+description: How the Meshtastic Project uses Github
+---
+
+The Meshtastic project uses Github for its version control system,
+[discussion forums](https://github.com/orgs/meshtastic/discussions), and issue tracking.
+
+[Contributions](/docs/contributing/) are welcome from anyone, and we have a [Meshtastic organisation](https://github.com/orgs/meshtastic), 
+to manage overarching settings for our 100+ repositories, and manage the access that release
+managers, CI/CD admins, security team members, and core contributors require to perform
+their functions.
+
+## Github Actions
+
+We use GitHub Actions for CI (testing), and CD (releasing) across many
+projects (E.g. firmware, web, android, python, openwrt). Github provides 20 runner slots to
+run actions on their infrastructure and we supplement the capacity by running self-hosted
+runners.
+
+### Requirement for Self-Hosted Runners
+
+If you're interested in contributing runners and can meet the requirements
+below, please send us a message in the #hosting channel on discord.
+
+#### Hardware Requirements [for 1 runner]
+
+- Able to run a build within 10mins (i.e. CPU less than 7 years old)
+- Min 2 CPUs, Min 4GB Ram, but 4+ CPU/8GB+ RAM preferred
+- Min 15GB HDD, 30+GB preferred
+
+#### Firewall requirements
+
+- Able to download and upload on port 80 and 443
+
+#### Current network usage
+
+- 20GB of inbound traffic per day
+- 1GB of outbound traffic per day
+
+#### Operating System
+
+- We have tested modern Ubuntu and Fedora
+- However other \*nix distributions that support running podman images probably work
+
+#### Security requirements
+
+- Regular operating system patches 
+- Single non-root user account to run podman container
+- Policy and security measures in place to protect secrets and build artefacts
+
+#### Reliability requirements
+
+A failed job due to a runner failure really annoys the developers, and only a
+ few people can re-start the failed jobs, so reliability is very important 🙂
+In the past we had used desktops at home, but they kept getting network dropouts,
+power outages, re-purposed machines for other things, filling up hard disks, etc.
+So, we prefer datacentre-based hosting with reliable cooling, power, network.

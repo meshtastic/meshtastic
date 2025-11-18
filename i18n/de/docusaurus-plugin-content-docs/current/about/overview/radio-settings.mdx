@@ -1,0 +1,131 @@
+---
+id: radio-settings
+title: Funkeinstellungen
+slug: /overview/radio-settings
+sidebar_label: Funkeinstellungen
+sidebar_position: 1
+description: Maximieren Sie das Potenzial Ihres Meshtastic Gerätes mit detaillierten Funkeinstellungen, einschließlich des Frequenzbereiches, der Datenrate und der Verschlüsselungsoptionen.
+---
+
+import { FrequencyCalculator } from "/src/components/tools/FrequencyCalculator";
+import QRCode from "@site/docs/blocks/_qr-code.mdx";
+
+:::info
+Meshtastic ist **nicht** LoRaWAN, Helium oder das TTN (TheThingsNetwork). Meshtastic verwendet den gesamten Frequenzbereich der LoRa Technologie für die ausgewählte Region. Dies erlaubt allein in der US-Region hunderte mögliche Frequenzkanäle.
+:::
+
+:::info
+Die Leistungsbegrenzungen werden in der Software generell aufgehoben, wenn `Lizenziert` auf `wahr` gesetzt ist. Siehe [Amateurfunk Modus](/docs/faq#amateur-radio-ham) für weitere Informationen.
+:::
+
+<div class="no-print">
+  ## Frequency Slot Calculator
+
+<FrequencyCalculator />
+</div>
+
+## Frequenzbereiche in Europa
+
+Die EU-Länder werden in der Regel unter die Richtlinie über Funkgeräte ([2014/53/EU](http://data.europa.eu/eli/dir/2014/53/2023-10-01)) und deren Änderungen fallen, die dann durch lokalen Gesetze umgesetzt werden. Nützliche Informationen hierüber befinden sich [hier](https://single-market-economy.ec.europa.eu/single-market/european-standards/harmonised-standards/radio-equipment_de).
+Die unten aufgeführten Frequenzbereiche wurden aufgrund der maximalen Leistung und der maximalen Frequenzauslastung ausgewählt. Es ist möglich, andere Frequenzbereiche für bestimmte Anwendungen zu verwenden, aber diese werden derzeit nicht als Sofortlösung unterstützt.
+
+### 433 MHz
+
+Die maximal zulässige Leistung für Europa ist +10 dBm ERP ([Effektive Strahlungsleistung](https://de.wikipedia.org/wiki/Effektive_Strahlungsleistung)).
+
+Der Frequenzbereich liegt zwischen 433 MHz und 434 MHz.
+
+Es gibt vier Frequenzschlitze mit der Standardeinstellung LONG_FAST. Nach der Werkseinstellung wird das Funkgerät auf den Frequenzschlitz 4 mit der Mittelfrequenz 433,875 MHz gesetzt.
+
+### 868 MHz
+
+Die maximal zulässige Leistung für Europa ist +27 dBm ERP ([Effektive Strahlungsleistung](https://de.wikipedia.org/wiki/Effektive_Strahlungsleistung)).
+
+Der Frequenzbereich liegt zwischen 869,40 MHz und 869,65 MHz. Dies ist weniger als der Frequenzbereich 863 MHz bis 870 MHz, welcher für Geräte kurzer Reichweite ([SRD](https://www.etsi.org/technologies/short-range-devices)) definiert ist, ermöglicht aber eine höhere effektive Strahlungsleistung und einen Frequenzauslastung von maximal 10 %.
+
+Es gibt einen Frequenzschlitz in der Standardeinstellung LONG_FAST. Nach der Werkseinstellung wird das Funkgerät auf den Frequenzschlitz 1 mit der Mittelfrequenz 869,525 MHz gesetzt.
+
+Es ist erwähnenswert, dass 868 MHz im Allgemeinen der beliebteste Frequenzbereich für Meshtastic in Europa ist.
+
+## Frequenzbereiche in Nordamerika
+
+### 915 MHz (ISM Frequenzbereich)
+
+Die maximale Ausgangsleistung für Nordamerika ist +30 dBm ERP ([Effektive Strahlungsleistung](https://de.wikipedia.org/wiki/Effektive_Strahlungsleistung)).
+
+Der Frequenzbereich liegt zwischen 902 MHz und 928 MHz.
+
+In Nordamerika hängen die verfügbaren Frequenzschlitze von der Bandbreiteneinstellung ab, die in der ausgewählten Voreinstellung des Funkgerätes enthalten ist. Die Standardeinstellung LONG_FAST bietet 104 Frequenzschlitze. Beim Zurücksetzen auf Werkseinstellungen wird das Funkgerät auf Voreinstellung LONG_FAST mit Frequenzschlitz 0 gesetzt. Der Kanalalgorithmus verwendet Schlitz 20 mit der Mittenfrequenz 906,875 MHz.
+
+## Datenraten
+
+### Weitere Hinweise
+
+Beim Konfigurieren eines Frequenzschlitzes stehen verschiedene Datenraten zur Verfügung. Diese sind umgekehrt proportional zum theoretischen Bereich der Geräte.
+
+- **Spreizfaktor (SF)** - Verhältnis zwischen Bandbreite und Bitrate.
+  - Jede Vergrößerung des Spreizfaktor verdoppelt die Sendezeit der Übertragung.
+  - Jede Erhöhung des Spreizfaktors erhöht das Link-Budget um ca. 2,5 dB.
+- **Bandbreite** - Anteil im Spektrum, der bei der Übertragung verwendet wird.
+  - Jede Verdoppelung der Bandbreite reduziert das Link-Budget um ca. 3 dB.
+  - Bandbreite kleiner 31 können instabil sein, es sei den, das Gerät verwendet einen temperaturstabilen Quarz-Oszillator (TCXO).
+- **Fehlerkorrektur** - Anteil der Redundanz die den Daten hinzugefügt wird, um die Störempfindlichkeit zu verbessern.
+  - Höhere Fehlerkorrektur erhöht die Zuverlässigkeit verringert aber die Datenrate.
+  - 4/5 - 1,25-fache Datenmenge
+  - 4/6 - 1,5-fache Datenmenge
+  - 4/7 - 1.75-fache Datenmenge
+  - 4/8 - 2-fache Datenmenge
+
+### Voreinstellungen
+
+Es gibt acht LoRa Radio-Voreinstellungen. Dies sind die gängigsten Voreinstellungen, die sich gut bewährt haben:
+
+|    Funkvoreinstellung           | Alternativer Name  |  Datenrate   | Spreizfaktor | Fehlerkorrektur | Bandbreite   | Link-Budget |
+| :-----------------------------: | :----------------: | :----------: | :----------: | :-------------: | :----------: | :---------: |
+|    Kurze Reichweite / Turbo     |   SHORT_TURBO      | 21,88 kbit/s |  7 / 128     |     4/5         |  500 kHz[^1] |  140 dB     |
+|   Kurze Reichweite / Schnell    |    SHORT_FAST      | 10,94 kbit/s |  7 / 128     |     4/5         |   250 kHz    |  143 dB     |
+|   Kurze Reichweite / Langsam    |    SHORT_SLOW      | 6,25 kbit/s  |  8 / 256     |     4/5         |   250 kHz    |  145,5 dB   |
+| Mittlere Reichweite / Schnell   |   MEDIUM_FAST      | 3,52 kbit/s  |  9 / 512     |     4/5         |   250 kHz    |  148 dB     |
+| Mittlere Reichweite / Langsam   |   MEDIUM_SLOW      | 1,95 kbit/s  |  10 / 1024   |     4/5         |   250 kHz    |  150,5 dB   |
+|   Hohe Reichweite / Schnell     |    LON_FAST        | 1,07 kbit/s  |  11 / 2048   |     4/5         |   250 kHz    |  153 dB     |
+|    Hohe Reichweite / Medium     |   LONG_MODERATE    | 0,34 kbit/s  |  11 / 2048   |     4/8         |   125 kHz    |  156 dB     |
+|   Hohe Reichweite / Langsam     |    LONG_SLOW       | 0,18 kbit/s  |  12 / 4096   |     4/8         |   125 kHz    |  158,5 dB   |
+
+:::note
+Das für diese Berechnungen verwendete Link-Budget geht von einer Sendeleistung von 22 dBm und einer Antenne mit 0 dB-Gewinn aus. Passen Sie Ihre Erwartungen zum Link-Budget basierend auf Ihren aktuellen Geräten an. Die Datenrate in dieser Tabelle ist das theoretische Maximum, aber es werden keine Protokolldaten, Sprungweiten und wiederholte Übertragungen berücksichtigt. Berechnungen basierend auf Daten aus dem offiziellen [Semtech LoRa Rechner](https://www.semtech.com/design-support/lora-calculator).
+:::
+
+![Link Budget vs Datenraten](/img/about/link-budget-vs-data-rate.webp)
+
+### Benutzerdefinierte Einstellungen
+
+Benutzerdefinierte Einstellungen können über die [unterstützte Software](/docs/software) angewendet werden.
+
+Nach der Änderung der Einstellungen müssen Sie das Gerät neu starten. Nachdem Ihr Gerät neu gestartet wurde, generiert es einen neuen Krypto-Schlüssel. Sie müssen den neu generierten QR[^2] Code oder die URL mit Ihren anderen Geräten teilen.
+
+[^2]: <QRCode />
+
+Beispieleinstellungen:
+
+|  Datenrate   | Spreizfaktor | Fehlerkorrektur | Bandbreite | Link-Budget | Bemerkung                                                                         |
+| :----------: | :----------: | :-------------: | :--------: | :---------: | :-------------------------------------------------------------------------------- |
+| 37,50 kbit/s |   6 / 64     |     4/5         | 500 kHz    |  129 dB     | Schnellste Geschwindigkeit                                                        |
+| 3,125 kbit/s |  8 / 256     |     4/5         | 125 kHz    |  143 dB     |                                                                                   |
+| 1,953 kbit/s |  8 / 256     |     4/8         | 125 kHz    |  143 dB     |                                                                                   |
+| 1,343 kbit/s |  11 / 2048   |     4/8         | 500 kHz    |  145 dB     |                                                                                   |
+| 1,099 kbit/s |  9 / 512     |     4/8         | 125 kHz    |  146 dB     |                                                                                   |
+| 0,814 kbit/s |  10 / 1024   |     4/6         | 125 kHz    |  149 dB     |                                                                                   |
+| 0,610 kbit/s |  10 / 1024   |     4/8         | 125 kHz    |  149 dB     |                                                                                   |
+| 0,488 kbit/s |  11 / 2048   |     4/6         | 125 kHz    |  152 dB     |                                                                                   |
+| 0,073 kbit/s |  12 / 4096   |     4/5         | 31 kHz     |  160 dB     | Doppelte Reichweite und/oder Abdeckung von LONG_SLOW, empfindlich für Störungen.  |
+| 0,046 kbit/s |  12 / 4096   |     4/8         | 31 kHz     |  160 dB     | Doppelte Reichweite und/oder Abdeckung von LONG_SLOW, hohe Störfestigkeit         |
+
+Das für diese Berechnungen verwendete Link-Budget geht von einer Sendeleistung von 17 dBm und einer Antenne mit 0 dB Gewinn aus. Passen Sie Ihre Erwartungen zum Link-Budget basierend auf Ihren aktuellen Geräten an.
+
+Diese Einstellungen der Frequenz wurden möglicherweise nicht getestet. Verwenden Sie diese nach eigenem Ermessen. Teilen Sie ihre Erfahrungen auf der [Meshtastic Diskussionsseite](https://github.com/orgs/meshtastic/discussions).
+
+## Verschlüsselung
+
+Der vordefinierte Schlüssel (PSK) kann eine AES128 oder AES256 Sequenz sein. Alternativ kann die Verschlüsselung abgeschaltet werden, was nützlich sein kann, wenn Sie eine Amateurfunklizenz besitzen.
+
+[^1]: SHORT_TURBO ist die schnellste Voreinstellung und die einzige mit 500 kHz Bandbreite. Aufgrund dieser großen Bandbreite ist sie nicht in allen Regionen zulässig.

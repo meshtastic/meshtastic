@@ -1,0 +1,76 @@
+---
+id: comments
+title: Commenti su Crittografia di Meshtastic
+sidebar_label: Commenti
+sidebar_position: 2
+description: Esplora le intuizioni della comunità e le opinioni degli esperti sulla crittografia di Meshtastic, tra cui implementazione AES256, consigli di sicurezza e potenziali vulnerabilità.
+---
+
+import QRCode from "@site/docs/blocks/_qr-code.mdx";
+
+Questa pagina contiene feedback della comunità e recensioni di esperti sull'approccio di crittografia di Meshtastic. Apprezziamo questi approfondimenti e miriamo a migliorare la nostra implementazione di crittografia laddove possibile. Esplora i dettagli delle chiavi, consigli pratici e comprendi i punti di forza e i potenziali limiti della crittografia AES256 di Meshtastic.
+
+## Commenti
+
+La crittografia è complicata, quindi abbiamo cercato di applicare 'semplicemente' le soluzioni di crittografia standard alla nostra implementazione. Tuttavia, gli sviluppatori del progetto non sono esperti di crittografia.
+
+Sulla base dei commenti dei revisori (vedi sotto), ecco alcuni suggerimenti per l'utilizzo di queste radio, in modo da poter conoscere il livello di protezione offerto:
+
+- È probabile che la sicurezza AES256 sia implementata 'correttamente' e un osservatore non sarà in grado di decodificare i tuoi messaggi.
+- **Attenzione:** Se un aggressore è in grado di mettere mano su uno dei dispositivi radio, potrebbero a) estrarre la chiave del canale da quel dispositivo, oppure b) utilizzare quella radio per ascoltare nuove comunicazioni.
+- **Attenzione:** Se un attaccante riesce a ottenere il "Codice QR del canale[^1]/URL" che condividi con altri, quell'attaccante potrebbe essere in grado di leggere qualsiasi messaggio inviato sul canale (sia domani che in passato - se ha mantenuto una copia grezza di quei pacchetti trasmessi).
+
+[^1]: <QRCode />
+
+L'implementazione attuale fornisce riservatezza facoltativa ai membri di una rete configurata:
+
+- La crittografia è implementata in dispositivi/nodi con chiavi di crittografia a livello di rete.
+- La crittografia è opzionale ed è disattivata quando i dispositivi sono in 'modalità radioamatore (HAM)'.
+- Non c'è crittografia supportata nei client (iOS, Android) per facilitare la distribuzione come software di mercato di massa.
+- Il collegamento dal client al dispositivo è possibile via:
+  - Cavo USB diretto
+  - pairing BT
+- I dispositivi sono 'promiscui' e si abbinano con qualsiasi client vicino. La riservatezza della rete richiede la protezione fisica di tutti i nodi.
+
+Tenete sempre a mente la nota [xkcd sulla crittografia](https://xkcd.com/538).
+
+- Se sei un esperto di crittografia, ti preghiamo di rivedere queste note e le nostre domande qui sotto. Puoi aiutarci esaminando le nostre note qui sotto e offrendo consigli? Saremo felici di dare tanto o poco credito, come desideri ;-).
+- Considerate la nostra soluzione esistente come 'alpha', e probabilmente abbastanza sicura contro un avversario non particolarmente aggressivo (ma non possiamo ancora fare una dichiarazione più sicura).
+
+## Note per i revisori
+
+Se state rivedendo la nostra implementazione, questa è una breve dichiarazione del nostro metodo.
+
+- Eseguiamo tutta la crittografia solo a livello di SubPacket (payload), in modo che tutti i nodi Meshtastic facciano routing per altri - anche quei canali che sono crittografati con una chiave che il nodo non possiede.
+- Principalmente basato sulla lettura [Wikipedia](https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#Counter_(CTR)) e utilizzando le modalità per le quali l'ESP32 fornisce supporto in hardware.
+- Usiamo AES256-CTR come cifratura di flusso (con zero padding sull'ultimo BLOCK) perché è ben supportato con l'accelerazione hardware.
+- La nostra chiave AES è 128 o 256 bit, condivisi come parte della specifica 'Canale'.
+- Il numero di nodo concatenato con il numero di pacchetto è usato come NONCE. Questa nonce sarà memorizzata in memoria flash nel dispositivo e dovrebbe essenzialmente non ripetersi. Se l'utente crea un nuovo 'Canale' (cioè scegliendo una nuova chiave casuale a 256 bit), il numero del pacchetto inizierà a zero.
+- Il numero del pacchetto viene inviato in testo chiaro con ogni pacchetto. Il numero di nodo può essere derivato dal campo "da" di ogni pacchetto. (Cleartext è accettabile perché fornisce solo IV per ogni esecuzione di cifratura)
+- Ogni 16 byte BLOCK per un pacchetto ha un COUNTER incrementante. Il COUNTER inizia a zero per il primo blocco di ogni pacchetto.
+- Il IV per ogni blocco è costruito concatenando il NONCE come i 96 bit superiori del IV e il COUNTER come i 32 bit inferiori. Dal momento che i nostri pacchetti sono piccoli, la porzione del contatore non sarà mai superiore a 32 (cinque bit).
+
+### Commenti dal revisore #1
+
+Questo revisore è un professionista della crittografia, ma vorrebbe rimanere anonimo. Li ringraziamo per i commenti ;-):
+
+Sto presumendo che meshtastic venga utilizzato per escursioni in luoghi dove qualcuno di capace sta cercando di violarlo - come se stessi per camminare intorno al DefCon usando questi dispositivi. Ho trascorso circa un'ora a rivedere la crittografia, e ho le seguenti note:
+
+- La scrittura non è abbastanza chiara come il codice.
+- Il codice utilizza correttamente la modalità AES-CTR per garantire la riservatezza.
+- Il commento di initNonce riguarda davvero le informazioni necessarie.
+- Penso che la domanda di crittografia più grande è "che cosa deve fare la crittografia"? Allo stato attuale, un aggressore che deve ancora catturare uno dei dispositivi non può ragionevolmente catturare i dati di testo o di posizione. Un aggressore che cattura qualsiasi dispositivo nel canale / mesh può leggere tutto quello che va a quel dispositivo, tutto ciò che è memorizzato su quel dispositivo, e qualsiasi altra comunicazione all'interno del canale che hanno catturato in forma crittografata. Se tale capacità corrisponde sostanzialmente alle tue aspettative, è adatta per qualsiasi avventura per cui era destinata, quindi, basandosi su informazioni pubblicamente disponibili o ampiamente divulgate, la crittografia è buona. Se tali proprietà sono angoscianti (come, la cronologia del dispositivo è deliberatamente limitata e non si desidera che un dispositivo catturato oggi metta in pericolo le informazioni inviate sul canale ieri) potremmo parlare di modi per raggiungere questo (molto probabilmente sincronizzando il tempo e sostituendo la chiave con la propria SHA256 ogni X ore, e garantire che la vecchia chiave non venga mantenuta inutilmente).
+- Altre due cose da tenere a mente sono che AES-CTR non fornisce di per sé autenticità (ad esempio un attaccante può invertire bit nel riprodurre dati e confondere il testo in chiaro risultante), e che lo schema attuale fornisce alcuni indizi sulla trasmissione nella dimensione. Quindi, se ti preoccupi di un avversario che deliberatamente danneggia i messaggi o conosce la lunghezza di un messaggio di testo, sembra che queste cose potrebbero essere possibili.
+
+Immagino che la rete si comporti in qualche modo come una rete store-and-forward - o, almeno l'obiettivo è quello di evitare di stabilire una connessione bidirezionale per la trasmissione dei dati. Temo di non aver lavorato molto con reti mesh, ma ricordo di averle studiate brevemente a scuola circa dieci anni fa.
+
+### Commenti da @Jorropo
+
+- L'inizializzazione IV usa solo 31 bit casuali per riavvio, quindi incrementa i messaggi sequenzialmente. Questo non è alto, rende improbabile duplicato, ma probabile, data la scala completa della rete. Per fortuna IV include 32 bit inferiori dell'indirizzo MAC che dovrebbero essere univoci per nodo, quindi ogni nodo è il proprio paradosso del compleanno, non siamo alla ricerca di un paradosso di compleanno largo rete che sarebbe facile da violare. Vedi [`#4031`](https://github.com/meshtastic/firmware/issues/4031).
+  Potrebbe essere risolto.
+- La mancanza di [integrità non è stata considerata correttamente](https://github.com/meshtastic/firmware/issues/4030), il modulo di amministrazione remota implementa chiamate RPC privilegiate su AES-CTR senza alcun MAC o AEAD.
+  Potrebbe essere risolto.
+- L'implementazione di AES-CTR sembra proteggere la riservatezza supponendo che IVs non siano duplicati.
+- La mancanza di Forward Secrecy è un po 'preoccupante per un messaggero di chat quando i nuovi utenti non hanno la pratica paranoica e fastidiosa di gestione delle chiavi che sarebbe necessario per un funzionamento sicuro.
+- IMO i clienti dovrebbero avere una grande scatola rossa la prima volta che si apre un Direct-Message che indica le tesi non sono private e non E2E. Questo non mi era chiaro senza leggere il codice.
+- Questo progetto è completamente bello per chiacchierare con sconosciuti, utilizzando la chiave predefinita e sapendo che tutto è pubblico, Non mi fiderei con nulla di privato senza qualche altro strato o rework significativo. Per esempio considererei SSH o Signal più sicuri di Meshtastic. Tuttavia Meshtastic non sceglie di avere una crittografia peggiore per cattive ragioni, rendono la rete significativamente più utilizzabile sul backbone LoRa lento e inaffidabile che utilizza.

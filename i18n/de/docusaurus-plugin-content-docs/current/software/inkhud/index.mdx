@@ -1,0 +1,164 @@
+---
+id: inkhud
+title: InkHUD
+slug: /software/inkhud
+sidebar_label: InkHUD
+sidebar_position: 8
+description: InkHUD ist eine Benutzeroberfläche für Meshtastic Geräte mit E-Ink Anzeige. Es soll einen schnellen Überblick verschaffen und wichtige Informationen auf einen Blick anzeigen.
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+## Was ist InkHUD?
+
+InkHUD ist eine Benutzeroberfläche für Meshtastic Geräte mit E-Ink Anzeige. Es ist für den schnellen Überblick konzipiert, zeigt wichtige Informationen auf einen Blick und ergänzt eine verbundene [Client-Anwendung](/downloads/). Es ist speziell auf E-Ink Anzeigen ausgerichtet und wird als Alternative zur ursprünglichen OLED Benutzeroberfläche angeboten.
+
+Die Liste der Funktionen und unterstützten Geräte wird seit Ende 2024 aktiv weiterentwickelt und ständig erweitert.
+
+## Unterstützte Geräte
+
+Ab Juni 2025. Beobachten Sie diesen Bereich 👀
+
+- **Erledige Geräte**
+  - Elecrow ThinkNode M1
+  - LilyGo T3 S3 E-Paper
+  - LilyGo T-Echo
+  - Heltec MeshPocket
+  - Heltec Vision Master E213
+  - Heltec Vision Master E290
+  - Heltec Wireless Papier
+- **DIY Anzeigen** ([Sonderanfertigungen](/docs/software/inkhud/diy-builds/), _für die Mutigen_).
+  - WeAct Studio 1,54 Zoll Schwarz & Weiß
+  - WeAct Studio 2,13 Zoll Schwarz & Weiß (2025 Revision)
+  - WeAct Studio 2,9 Zoll Schwarz & Weiß
+  - WeAct Studio 4,2 Zoll Schwarz & Weiß
+
+## Installation
+
+InkHUD kann mit dem [Meshtastic Web Flasher](https://flasher.meshtastic.org) auf unterstützten Geräten installiert werden. Wählen Sie eine Firmware-Version 2.6+ aus und aktivieren Sie die Option `InkHUD Anzeige installieren` auf dem Flash-Bildschirm.
+
+Vorgefertigte Firmware-Binärdateien sind auch auf der [Downloadseite](/downloads/) verfügbar. Die InkHUD Versionen werden durch das Suffix **"-inkhud"** im Dateinamen identifiziert.
+
+Für [DIY InkHUD-Geräte](/docs/software/inkhud/diy-builds/) muss die Firmware manuell erstellt werden.
+
+## Ersteinrichtung
+
+- [Legen Sie Ihre LoRa-Region fest](/docs/configuration/region-by-country/)
+- [Stellen Sie Ihre Zeitzone ein](/docs/configuration/radio/device#tzdef-timezone-definition)
+
+## Tasten
+
+InkHUD ist für die Verwendung mit nur einer Taste konzipiert. Zur Steuerung der Benutzeroberfläche wird eine Mischung aus kurzen und langen Tastendrücken verwendet.
+
+## Applets
+
+InkHUD bietet eine Reihe von Applets, von denen jedes einen anderen Satz von Informationen anzeigt. Sie können über das Bildschirmmenü auswählen, welche Applets aktiviert werden sollen. Ausführliche Beschreibungen finden Sie in der [Liste der InkHUD-Applets](./applets.mdx).
+
+- **Kurz drücken**: Zum nächsten Applet wechseln.
+
+<img
+  src="/img/software/inkhud/next-applet.gif"
+  alt="animation of cycling though inkhud applets with user button"
+  style={{maxHeight: '256px', width:'auto'}}
+/>
+
+## Bildschirmmenü
+
+InkHUD verfügt über ein integriertes Menü mit einigen grundlegenden Aktionen und Optionen zum Konfigurieren des Gerätes.
+
+Um das Bildschirmmenü zu öffnen, **drücken Sie lange** die Benutzertaste.
+
+- **kurz drücken**: nächstes Element
+- **lange drücken**: auswählen
+
+Wollten Sie nur kurz auf die Uhr schauen? Drücken Sie ein zweites Mal lange, um das Menü zu schließen. 
+
+<img
+  src="/img/software/inkhud/menu.gif"
+  alt="animation of navigating inkhud menu"
+  style={{maxHeight: '256px', width: 'auto'}}
+/>
+
+### Senden
+
+#### Ping
+
+Gibt das Gerät manuell bei anderen Knoten im Netzwerk bekannt. 
+
+Dies ist optional, da Knoten automatisch erkannt werden.
+In manchen Situationen kann das manuelle Senden eines Pings diesen Vorgang jedoch beschleunigen.
+
+#### Vordefinierte Nachricht
+
+Senden Sie vordefinierte Textnachrichten vom Gerät an das Mesh-Netzwerk, ohne die Telefon-App zu verwenden. 
+Um diese Funktion zu aktivieren, [legen Sie eine Liste vordefinierter Nachrichten fest](https://meshtastic.org/docs/configuration/module/canned-message/#messages).
+Es ist keine weitere Einstellung erforderlich.
+
+Wählen Sie zum Senden die vordefinierte Nachricht im Menü „Senden“ und wählen Sie dann ein Ziel aus. Die Liste der möglichen Ziele enthält die verfügbaren Kanäle des Gerätes und als Favoriten markierte Knoten.
+
+### Optionen
+
+#### GPS aktvieren/deaktivieren
+
+Aktiviert oder deaktiviert die GPS Hardware des Gerätes. Diese Option ist ausgeblendet, wenn das GPS nicht vorhanden ist.
+
+#### Applet Auswahl
+
+Wählen Sie welche Applets aktiviert werden sollen. Ermöglicht Ihnen, die angezeigten Informationen anzupassen.
+
+#### Automatisch anzeigen
+
+Wählen Sie aus, welche Applets automatisch angezeigt werden, wenn sie neue Informationen zur Anzeige haben.
+
+Beispiel: Wenn Sie die automatische Anzeige für das Applet „Alle Nachrichten“ aktivieren, wechselt InkHUD zu „Alle Nachrichten“, wenn eine neue Textnachricht eingeht.
+
+#### Zeitliche Übersicht
+
+Einige Applets zeigen Informationen an, die eine Zusammenfassung der letzten Minuten darstellen. Mit dieser Option können Sie konfigurieren, wie viele Minuten an Informationen diese Applets anzeigen sollen.
+
+#### Darstellung
+
+InkHUD kann mehrere Applets gleichzeitig „kacheln“ und den Anzeigebereich zwischen ihnen aufteilen. Diese Option ändert, wie viele Applets angezeigt werden.
+
+#### Bildschirmausrichtung
+
+Drehen Sie die Anzeige im Uhrzeigersinn, jeweils um 90°.
+
+#### Benachrichtigungen
+
+Wenn aktiviert, werden Popup Benachrichtigungen für neue Nachrichten oben angezeigt. Dies ist eine Alternative zur Auto-Show-Funktion, bei der stattdessen Applets gewechselt werden, um die neue Nachricht anzuzeigen.
+
+#### Akkustand
+
+Wenn aktiviert, wird in der oberen rechten Ecke der Anzeige ein kleines Symbol angezeigt, das den Ladezustand des Akkus anzeigt.
+
+#### 12-Stunden Uhr
+
+Wenn aktiviert, werden die Zeiten im 12-Stunden Format (`13:50 Uhr`) statt im 24-Stunden Format (`13:50`) angezeigt.
+
+## Mehrere Applets
+
+InkHUD kann mehrere Applets gleichzeitig anzeigen; eine Funktion, die als _Kacheln_ bekannt ist. Um die Anzahl der Kacheln zu ändern, wählen Sie im Bildschirmmenü `Optionen > Layout`.
+
+### Wechseln zwischen Kacheln
+
+#### Verwenden des Menüs
+
+Bei den meisten Geräten wird das Bildschirmmenü zum Wechseln zwischen Kacheln verwendet.
+
+<img
+  src="/img/software/inkhud/next-tile.gif"
+  alt="animation of changing tiles in inkhud using the menu"
+  style={{maxHeight: '256px', width: 'auto'}}
+/>
+
+#### Verwenden einer zusätzlichen Schaltfläche
+
+Einige Geräte verfügen über eine zusätzliche Hardwaretaste, die eine bequemere Methode zum Wechseln zwischen Kacheln bietet.
+
+<img
+  src="/img/software/inkhud/next-tile-aux.gif"
+  alt="animation of changing tiles in inkhud using an aux button"
+  style={{maxHeight: '256px', width: 'auto'}}
+/>

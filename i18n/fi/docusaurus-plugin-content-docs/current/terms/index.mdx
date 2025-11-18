@@ -1,0 +1,122 @@
+---
+id: sanasto
+title: Termien sanasto
+slug: /termit/
+---
+
+Sovellus
+: Sovellus, joka yhdistää Meshtastic laitteeseen, yleensä tietojen lähettämiseen tai vastaanottamiseen verkon kautta.
+
+Taajuus
+: LoRassa käytetyt taajuudet ovat riippuvaisia alueesta. Meshtastic edelleen jakaa nämä taajuudet kanaviin. Joskus tunnistetaan alueen ala- ja ylärajat (esim. 902-928MHz), joskus tunnistetaan alueen keskitaajuudella (esim. 915MHz), ja joskus vain alueella, jota ne koskevat (esim. Yhdysvallat).
+
+Yleislähetys
+: Viestin tai tietojen lähettäminen yhdestä laitteesta kaikille muille Meshtastic-verkon kantaman sisällä oleville laitteille tietyn vastaanottajan sijaan.
+
+Kanava | [konfiguraatio](/docs/configuration/radio/channels/) | [Taajuuslaskin](/docs/overview/radio-settings/#frequency-slot-calculator)
+: Vähintään kaksi määritelmää Meshtastic-käytössä: 1) Yksi laiteohjelmiston kahdeksasta konfiguroitavasta kanavasta, joista jokainen tukee erillistä nimeä ja salausta, joista yksi on asetettu ensisijaiseksi ja loput toissijaiseksi. 2) Tietty taajuus LoRa taajuusalueella, jota laite voidaan konfiguroida käyttämään.
+
+CLI | [Opas](/docs/software/python/cli/)
+: Komentorivikäyttöliittymä, tekstipohjainen käyttöliittymä, jota käytetään ohjelmistojen tai laitteiden, kuten Meshtasticin, kanssa vuorovaikutukseen.
+
+Asiakas
+: Laite tai sovellus, joka muodostaa yhteyden Meshtastic-nodeen, yleensä tietojen lähettämiseksi tai vastaanottamiseksi mesh-verkon kautta.
+
+Laite
+: Fyysinen laitteisto, joka käyttää Meshtastic-ohjelmistoa ja LoRa (Long Range) -radioteknologiaa luodakseen hajautetun, pitkän kantaman mesh-verkon.
+
+DFU
+: Laitteen laiteohjelmiston päivitys, tila, johon laite asetetaan, jotta se voi vastaanottaa laiteohjelmiston päivityksen
+
+ESP32 | [Ajurit](/docs/getting-started/serial-drivers/esp32/) | [Laiteohjelmisto](/docs/getting-started/flashing-firmware/esp32/)
+: Espressifin valmistama/suunnittelemat mikro-ohjainpiirisarja, jota käyttää useat laitteet. Suurempi virrankulutus kuin NRF52, mutta usein halvempi ja tukee haluttaessa WiFiä.
+
+Laiteohjelmisto | [Opas](https://meshtastic.org/docs/getting-started/flashing-firmware/)
+: Meshtastic-laitteeseen ohjelmoitu matalan tason ohjelmisto, joka ohjaa sen laitteistotoimintoja ja mahdollistaa viestinnän mesh-verkossa LoRa-teknologian avulla. Laiteohjelmisto
+
+Asennus | [Opas](https://meshtastic.org/docs/getting-started/flashing-firmware/)
+: Prosessi, jossa Meshtastic-laitteeseen päivitetään tai asennetaan laiteohjelmisto. Tämä tehdään yleensä tietokoneella lataamalla uusia laiteohjelmistoversioita tai muokkaamall ohjelmistoa laitteen toiminnallisuuden parantamiseksi tai muuttamiseksi.
+
+Vierasverkko
+: Vierasverkko on sellainen, jossa vastaanottava laite ei jaa kanavia lähettävän laitteen kanssa. Kun laite vastaanottaa viestin, jonka salausta se ei pysty purkamaan, niin viestin sanotaan tulevan vieraastaverkosta.
+
+GPIO
+: Yleiskäyttöinen tulo/lähtö. Sitoutumaton digitaalinen signaalipinni laitteessa
+
+LoRa
+: Matala teho, pitkän kantaman langattoman viestintätekniikan, jota Meshtastic laitteet käyttävät mahdollistaakseen kommunikoinnin useiden kilometrien matkoilla ilman, että tarvitaan mobiili verkkoa, Wi-Fi, tai muita perinteisiä verkkoinfrastruktuureja.
+
+LoS
+: Näköyhteys, kahden pisteen välinen reitti pelkästään ilman kautta.
+
+Verkko | [Algoritmi](/docs/overview/mesh-algo/)
+: Meshtasticin ja verkottumisen kontekstissa verkko viittaa topologiaan, jossa laitteet (nodet) ovat keskenään yhteydessä, mahdollistaen niiden suoran ja dynaamisen viestinnän toistensa kanssa. Tämä järjestely mahdollistaa datan välittämisen verkossa, parantaa kattavuutta ja luotettavuutta erityisesti haastavissa ympäristöissä.
+
+Viesti
+: Pala dataa tai tekstiä Meshtastic laitteiden välillä verkon yli joka voi sisältää tekstiviestintää, GPS sijainti päivityksiä ja muita pieniä datan hyötykuormia.
+
+MHz
+: Megahertz, taajuuden yksikkö, joka on miljoona hertsi (sykliä sekunnissa), käytetään määrittämään toimintataajuus LoRa laitteiden Meshtastic verkossa, joka vaikuttaa alueen ja datanopeuteen.
+
+Moduuli ¶ [Ohjelmistomoduulit](/docs/configuration/module/) ¶ [Laitteistomoduulit](/docs/hardware/devices/)
+: Vähintään kaksi määritelmää Meshtastic käytössä: 1) Ohjelmistoliitännäinen, joka laajentaa Meshtastic laitteen ominaisuuksia. 2) Anturi: Laitteistokomponentti tai lisäosa Meshtastic-laitteelle, kuten lämpötila-anturi tai GPS.
+
+[MQTT](/docs/software/integrations/mqtt/)
+: Lyhenne sanoista Message Queuing Telemetry Transport, on pienille antureille ja mobiililaitteille suunniteltu kevyt viestintäprotokolla, joka mahdollistaa tehokkaan tiedonsiirron Meshtastic-verkossa Internet-yhteyksiä ja IoT-alustojen kanssa integrointia varten. Ks. https://en.wikipedia.org/wiki/MQTT. Meshtasticissa MQTT on tarkoitettu yhdistämään laite internetiin, ja sitä voidaan käyttää yhdistämään useita verkkoja toisiinsa.
+
+Laite
+: Meshtastic-verkon yksikkö, joka voi lähettää, vastaanottaa ja välittää viestejä, mikä auttaa muodostamaan ja laajentamaan mesh-verkon kattavuutta.
+
+NRF52 | [Ohjaimet](/docs/getting-started/serial-drivers/nrf52/) | [Laiteohjelmisto](/docs/getting-started/flashing-firmware/nrf52/)
+: Nordicin valmistama Mikrokontrolleri piirisarja, jota käyttävät useat laitteet, kuten RAK Meshtastic Starter Kit ja Lilygo T-Echo. Sähkönkulutus pienempi kuin ESP32:ssa.
+
+OTA
+: Lyhenne sanasta "Over the Air". Yleensä käytetään viittaamaan OTA-päivitykseen, joka tapahtuu langattoman verkon kautta. 
+
+Paketti
+: Muotoiltu yksikkö verkon kautta lähetettyjä tietoja. Meshtasticissa paketit sisältävät viestejä, GPS-sijainteja ja muita tietoja LoRa mesh verkon kautta.
+
+Protobuf | [Viite](/docs/development/reference/protobufs/)
+: Protocol Buffers, Googlen kehittämä menetelmä strukturoidun tiedon sarjoittamiseksi, jota käytetään Meshtasticissa tehokkaaseen viestintäprotokollaan laitteiden välillä.
+
+Esijaettu avain (PSK) | [Salaus](/docs/overview/encryption/)
+: Esijaettu avain, salainen koodi tai tunnuslause, jota käytetään Meshtastic-kanavissa salaukseen varmistaen, että vain laitteet, joilla on vastaava avain, voivat kommunikoida kyseisellä kanavalla.
+
+Julkisen avaimen kryptografia (PKC) | [Salaus](/docs/overview/encryption/)
+: Salausmenetelmä, joka esiteltiin Meshtastic v2.5:ssa suorille viesteille ja järjestelmänvalvojan viesteille, jossa jokainen laite käyttää ainutlaatuista julkista ja yksityistä avainparia. Muiden laitteiden kanssa jaettu julkinen avain mahdollistaa viestin suojatun salauksen, kun taas yksityinen avain mahdollistaa viestin salauksen purkamisen ja todentamisen vain sille tarkoitetulle vastaanottajalle. Tämä lähestymistapa parantaa yksityisyyttä ja eheyttä sekä suorassa laitteiden välisessä tiedonsiirrossa että arkaluonteisissa järjestelmänvalvojan toiminnoissa.
+
+Toistin | [Roolimääritykset](/docs/configuration/radio/device/#roles)
+: Infrastruktuurin laite verkon peittoalueen laajentamiseen välittämällä viestejä minimaalisella ylikuormituksella. Ei näy laite luettelossa.
+
+Reititin ¶ [Roolimääritykset](/docs/configuration/radio/device/#roles)
+: Infrastruktuurin laite, jolla laajennetaan verkon kattavuutta välittämällä viestejä. Näkyy laite luettelossa.
+
+rp2040
+: Raspberry Pi:n kehittämä mikrokontrollerisiru, jossa on kaksi ARM Cortex-M0+ -prosessoria.
+
+RX
+: Lyhenne vastaanottamisesta.
+
+Sensori
+: Laitekomponentti, joka tunnistaa ja vastaa tietyntyyppistä syötettä fyysisestä ympäristöstä. Meshtasticissa antureita voidaan käyttää ympäristödatan (esim. lämpötila, kosteus, GPS-sijainti) keräämiseen, joka voidaan sitten lähettää mesh-verkon kautta valvontaa tai muita sovelluksia varten.
+
+Sarja
+: Tietoliikenneprotokolla, jota käytetään tietojen välittämiseen Meshtastic laitteen ja tietokoneen tai muiden laitteiden välillä. Yleensä USB:n tai UART:n kautta.
+
+SNR
+: Signaali-kohinasuhde, jota käytetään viestinnässä halutun signaalin määrän määrittämiseksi taustamelun tasolle. Meshtastisissa ja muissa langattomissa järjestelmissä korkeampi SNR osoittaa selkeämmän signaalin, joka voi parantaa tiedonsiirron luotettavuutta ja laatua.
+
+SWR
+: Seisova aaltosuhde, mittaa radiotaajuisen (RF) tehonsiirron tehokkuutta lähettimestä siirtolinjan kautta antenniin Meshtastic-laitteissa. Se ilmaisee seisovan aallon amplitudin maksimi- ja minimiamplitudin suhteen, kun ihanteellinen SWR on lähellä 1:1, mikä tarkoittaa, että suurin osa tehosta lähetetään antenniin minimaalisilla heijastuksilla.
+
+Telemtria
+: Anturin tietojen tai järjestelmämittareiden lähettäminen verkkoverkon kautta.
+
+Lähetin-vastaanotin
+: Laite, joka pystyy sekä lähettämään että vastaanottamaan viestintää.
+
+Lähettää
+: Toiminto, jossa dataa, kuten viestejä tai GPS-sijainteja, lähetetään Meshtastic-laitteesta toiseen LoRa-verkon kautta.
+
+TX
+: Lyhenne lähetyksestä.

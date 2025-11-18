@@ -1,0 +1,73 @@
+---
+id: update-nrf52-bootloader
+title: Come aggiornare o recuperare il Bootloader sui dispositivi nRF52 all'ultima versione
+sidebar_label: Aggiorna il Bootloader del nRF52
+sidebar_position: 5
+description: Istruzioni per l'aggiornamento o il recupero del bootloader su dispositivi nRF52.
+---
+
+Se hai problemi con l'aggiornamento o il flashing delle versioni più recenti del firmware Meshtastic, e il dispositivo nRF52 non esegue l'ultima versione di bootloader, l'aggiornamento del bootloader potrebbe risolvere questi problemi.
+
+Per verificare quale versione del bootloader è in esecuzione, posizionare il dispositivo in modalità DFU. Quindi, apri l'unità montata che appare sul tuo computer e controlla il file `INFO_UF2.TXT`.
+
+## Aggiornamento del bootloader
+
+Di seguito sono riportati i passaggi per aggiornare il bootloader.
+
+### Metodo 1: Utilizzo del file UF2 (raccomandato)
+
+A seconda del dispositivo, è necessario selezionare il pacchetto di bootloader corretto. Di seguito sono riportati i link ai pacchetti bootloader:
+
+- [Lilygo T-Echo](https://github.com/meshtastic/firmware/raw/master/bin/update-lilygo_techo_bootloader-0.6.1_nosd.uf2)
+- [RAK4631](https://github.com/RAKWireless/WisBlock/raw/master/bootloader/RAK4630/Latest/wiscore_rak4631_board_bootloader-0.4.3_s140_6.1.1.uf2)
+- [Seeed Tracker 1000-E](https://github.com/adafruit/Adafruit_nRF52_Bootloader/releases/download/0.9.2/update-t1000_e_bootloader-0.9.2_nosd.uf2)
+- [Generico Meshtastic 6.1.1 per DIY](https://github.com/meshtastic/firmware/raw/master/bin/generic/update-Meshtastic_6.1.0_bootloader-0.9.2_nosd.uf2)
+- [Generico Meshtastic 7.3.0 per DIY](https://github.com/meshtastic/firmware/raw/master/bin/generic/update-Meshtastic_7.3.0_bootloader-0.9.2_nosd.uf2)
+
+1. Scarica il file UF2 Bootloader corretto.
+2. Collega il dispositivo al computer con un cavo dati USB.
+3. Attiva la modalità bootloader premendo rapidamente 2 volte il pulsante RESET sul dispositivo. Per The Seeed Tracker 1000-E, è necessario premere e tenere premuto il pulsante utente e collegare rapidamente il cavo USB alla porta magsafe due volte. Il dispositivo dovrebbe apparire come un'unità rimovibile sul computer.
+4. Trascina e rilascia il file UF2 scaricato nell'unità rimovibile. Il dispositivo aggiornerà automaticamente il bootloader e verrà resettato.
+5. Una volta ripristinato il dispositivo, l'aggiornamento è completato. Il tuo dispositivo sta ora eseguendo l'ultima versione del bootloader e puoi procedere con [flashing the firmware](/docs/getting-started/flashing-firmware/nrf52/drag-n-drop/).
+
+### Metodo 2: utilizzo di adafruit-nrfutil
+
+:::caution
+
+A differenza dei caricamenti uf2, adafruit-nrfutil non controlla se hai il pacchetto di bootloader corretto per il tuo dispositivo. Se si flasha il bootloader sbagliato, si può rendere il dispositivo inoperabile (brick). Si prega di verificare anche il checksum SHA256 prima di flashare.
+
+:::
+
+:::info
+
+Queste istruzioni presuppongono che tu abbia già installato python e pip. In caso contrario, installa l'ultima versione di python (che include pip) da [Python.org](https://www.python.org/downloads/).
+
+:::
+
+A seconda del dispositivo, è necessario selezionare il pacchetto di bootloader corretto. Di seguito sono riportati i link ai pacchetti bootloader:
+
+- [Lilygo T-Echo](https://github.com/meshtastic/firmware/raw/master/bin/lilygo_techo_bootloader-0.6.1.zip) SHA256: 85d8a334bbf82802d712e183f29ec5215f06786ca88914687c437aceab75d9cf
+- [RAK4631](https://github.com/RAKWireless/WisBlock/raw/master/bootloader/RAK4630/Latest/wiscore_rak4631_board_bootloader-0.4.3_s140_6.1.1.zip) SHA256: 4a216ad2be8be23b80371a11753677c850c5711d3b85129390a416fc47ea0910
+- [Seeed Tracker 1000-E](https://github.com/adafruit/Adafruit_nRF52_Bootloader/releases/download/0.9.2/t1000_e_bootloader-0.9.2_s140_7.3.0.zip) SHA256: 8c69f0d43a7aac925055451d7262682d6926d4cfb7ea8240b466dc8f16a692ba
+- [Generico Meshtastic 6.1.1 for DIY](https://github.com/meshtastic/firmware/raw/master/bin/generic/Meshtastic_6.1.0_bootloader-0.9.2_s140_6.1.1.zip) SHA256: ecebecea849ab79d09517ddd4f6ff98de5647fe275b0b4d525501e6c29cb5a586
+- [Generic Meshtastic 7.3.0 for DIY](https://github.com/meshtastic/firmware/raw/master/bin/generic/Meshtastic_7.3.0_bootloader-0.9.2_s140_7.3.0.zip) SHA256: 9a38edf4e974a6f705c41b296499a4fc57682ec9bb686eecd9f3d8d02fc6ffcf
+
+1. Apri un terminale o un prompt dei comandi e installa adafruit-nrfutil eseguendo:
+
+```bash
+pip3 install adafruit-nrfutil
+```
+
+2. Ottieni il pacchetto zip corretto.
+3. Collega il dispositivo al computer con un cavo dati USB.
+4. Nel terminale o nel prompt dei comandi, vai alla directory dove hai scaricato il pacchetto zip di bootloader ed esegui il comando seguente, sostituendo /dev/ttyACM0 con la porta corretta per il tuo dispositivo (gli utenti Windows potrebbero usare COMx):
+
+```bash
+adafruit-nrfutil --singlebank --touch 1200 --verbose dfu serial --package <downloaded file>.zip -p /dev/ttyACM0 -b 115200
+```
+
+5. Una volta terminato il processo, l'aggiornamento è completo. Il tuo dispositivo sta ora eseguendo l'ultima versione del bootloader e puoi procedere con [flashing del firmware](/docs/getting-started/flashing-firmware/nrf52/drag-n-drop/).
+
+### Metodo 3: Usare un Debugger
+
+Se i metodi di cui sopra non funzionano e se l'hardware lo supporta (es. ha i pin SWD richiesti), un debugger come un DAPLink o J-Link può essere usato per flashare direttamente il bootloader. Fare riferimento alle [Istruzioni per il debugger](https://meshtastic.org/docs/getting-started/flashing-firmware/nrf52/convert-rak4631r/#debugger) per un esempio con il RAK4631.

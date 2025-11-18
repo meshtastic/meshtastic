@@ -1,0 +1,124 @@
+---
+id: tbeam
+title: LILYGO® TTGO T-Beam Geräte
+sidebar_label: T-Beam
+sidebar_position: 2
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+Alle T-Beam Modelle (mit Ausnahme des S3-Core) haben auf der Rückseite des Gerätes einen Batteriehalter der 18650 Größe. Dieser ist nach der ursprünglichen Spezifikation der 18650 Zellen konzipiert und es passen nur ungeschützte 18650 Zellen hinein. Geschützte Zellen sind in der Regel länger als 65 mm, oft in etwa 70 mm.
+
+Weitere Informationen zu LILYGO®️ T-Beam Geräten finden Sie auf LILYGO®️ [GitHub Seite](https://github.com/Xinyuan-LilyGO/LilyGo-LoRa-Series).
+
+<Tabs
+groupId="t-beam"
+queryString="t-beam"
+defaultValue="supreme"
+values={[
+{label: 'S3-Core', value: 's3core'},
+{label: 'Supreme', value: 'supreme'}
+]}>
+
+<TabItem value = "s3core">
+
+## T-Beam S3 Core
+
+- **MCU**
+- ESP32-S3 (WLAN & Bluetooth 5 LE)
+- **LoRa Sendeempfänger**
+  - **Semtech SX1262** (verbesserte Leistung)
+- **Frequenzoptionen**
+  - 433 MHz
+  - 868 MHz
+  - 915 MHz
+- **Navigationsmodul**
+  - **NEO-M10S - GNSS-Empfänger (unterstützt GPS, GLONASS, Galileo, BeiDou)** (bessere GPS-Empfindlichkeit)
+  - **Quectel L76K - (unterstützt GPS, Beidou, GLONASS)** (günstiger)
+- **Anschlüsse**
+  - USB-C
+  - Antenne: U.FL Antennenanschluss
+
+### Merkmale
+
+- SoftRF vorinstalliert (Programmierung auf Meshtastic erforderlich)
+- Benutzer und Reset Schalter
+- Kann ohne 'Supreme' Zusatzplatine in alleiniger Konfiguration verwendet werden
+
+### Quellen
+
+- Firmware Datei: `firmware-tbeam-s3-core-X.X.xxxxx.bin`
+- Links zum Direktkauf:
+  - International
+    - [LilyGO Shop](https://msh.to/tbeam-s3-core/)
+
+![T-Beam S3-Core](/img/hardware/T-BEAM-S3Core.webp)
+
+</TabItem>
+
+<TabItem value = "supreme">
+
+## T-Beam Supreme
+
+- **MCU**
+- ESP32-S3 (WLAN & Bluetooth 5 LE)
+- **LoRa Sendeempfänger**
+  - **Semtech SX1262** (verbesserte Leistung)
+- **Frequenzoptionen**
+  - 433 MHz
+  - 868 MHz
+  - 915 MHz
+- **Navigationsmodul**
+  - **NEO-M10S - GNSS-Empfänger (unterstützt GPS, GLONASS, Galileo, BeiDou)** (bessere GPS-Empfindlichkeit)
+  - **Quectel L76K - (unterstützt GPS, Beidou, GLONASS)** (günstiger)
+- **Anschlüsse**
+  - USB-C
+  - Antenne: U.FL-Antennenanschluss
+
+### Merkmale
+
+- Enthält T-Beam S3-Core Modul
+- SoftRF vorinstalliert (Programmierung auf Meshtastic erforderlich)
+- Energie, Benutzer und Reset Schalter
+- 1,3" OLED enthalten
+- BME280 Luftdrucksensor
+- QMI8658 IMU
+- QMC6310 Magnetometer
+- PCF8563 RTC
+- Micro-SD Reader (nicht in Meshtastic implementiert)
+
+### Programmierung
+
+Um ESP32-S3 Geräte wie das T-Beam Supreme zu programmieren, müssen Sie sie normalerweise den Espressifs Firmware Download Modus aktivieren. Benutzen Sie dazu den "1200bps Reset" Knopf im Web-Flasher um dies zu tun. Wenn diese Methode aus irgendeinem Grund nicht funktioniert, können Sie dem manuellen Prozess folgen.
+
+:::warning
+
+Fahren Sie nicht fort, es sei denn, eine Antenne ist angeschlossen, um mögliche Schäden am Funkgerät zu vermeiden.
+
+:::
+
+Der folgende Prozess wird das Gerät manuell im Espressif Firmware Download Modus aktivieren:
+
+1. Gerät trennen.
+2. Drücken und halten Sie die BOOT Taste.
+3. Gerät anschließen.
+4. Nach 2-3 Sekunden lassen Sie die BOOT Taste los.
+
+Mit dem Gerät im Espressif Firmware Download Modus, können Sie mit der Programmierung durch eine der unterstützten Methoden fortfahren. Es wird generell empfohlen, den [Web Flasher](https://flasher.meshtastic.org/) zu benutzen. Sie können "Tbeam S3 Core" aus dem Auswahlmenü des Gerätes auswählen.
+
+### Quellen
+
+- Firmware Datei: `firmware-tbeam-s3-core-X.X.xxxxx.bin`
+- Links zum Direktkauf:
+  - International
+    - [LilyGO Shop](https://msh.to/tbeam-s3-core/)
+  - US
+    - [Rokland NEO-M10S](https://store.rokland.com/products/lilygo-t-beam-supreme-esp32-s3-lora-development-board-sx1262-915mhz-gps-l76k-or-u-blox?variant=41051191378003)
+    - [Rokland Quectel L76K](https://store.rokland.com/products/lilygo-t-beam-supreme-esp32-s3-lora-development-board-sx1262-915mhz-gps-l76k-or-u-blox?variant=41051191345235)
+
+![T-Beam Supreme](/img/hardware/T-BEAM-S3-Supreme.webp)
+
+</TabItem>
+
+</Tabs>

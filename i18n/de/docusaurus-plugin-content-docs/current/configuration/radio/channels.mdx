@@ -1,0 +1,320 @@
+---
+id: channels
+title: Kanaleinstellungen
+sidebar_label: Kanäle
+description: Erfahren Sie, wie Sie Kanäle auf Ihrem Meshtastic Gerät konfigurieren, einschließlich privater Kanäle, Verschlüsselung, MQTT und Standortgenauigkeit.
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+import { Icon } from "@iconify/react";
+import PositionPrecisionBits from "@site/docs/blocks/_position-precision-bits.mdx";
+import QRCode from "@site/docs/blocks/_qr-code.mdx";
+
+Die Einstellungen für Kanäle sind: Index, Rollen und Einstellungen. Die Kanalkonfiguration verwendet eine administrative Nachricht, die ein `Channel` Protocol Buffer sendet, der auch aus einem `ChannelSettings` oder `ModuleSettings` Protocol Buffer besteht.
+
+:::info
+**Channel Settings** (as described on this page) should not be confused with [Modem Preset Settings](/docs/configuration/radio/lora#modem-preset)
+
+[Modem Voreinstellungen](/docs/configuration/radio/lora#modem-preset) enthalten die Modemkonfiguration (Frequenzeinstellungen, Spreizfaktor, Bandbreite usw.) wird für den LoRa Funk verwendet. Diese Einstellungen sind für alle Kanäle identisch und können **nicht** pro Kanal eindeutig sein.
+
+**Kanaleinstellungen** enthalten Informationen zum Trennen von Nachrichtengruppen, zum Konfigurieren optionaler Verschlüsselung und zum Aktivieren oder Deaktivieren von Nachrichten über Internet-Gateways. Diese Einstellungen **sind** einmalig und pro Kanal konfigurierbar.
+:::
+
+## Werte für die Kanaleinstellung
+
+### Index
+
+Der Kanalindex beginnt bei 0 und endet bei 7.
+
+Der _Index_ kann nicht geändert werden.
+
+| Index | Kanal |  Standardrolle |    Verwendungszweck            |
+| :---: | :---: | :------------: | :----------------------------: |
+|  0    |  1    |   `PRIMÄR`     | Als `Standard`-Kanal verwendet |
+|  1    |  2    | `DEAKTIVIERT`  |    Benutzerdefiniert           |
+|  2    |  3    | `DEAKTIVIERT`  |    Benutzerdefiniert           |
+|  3    |  4    | `DEAKTIVIERT`  |    Benutzerdefiniert           |
+|  4    |  5    | `DEAKTIVIERT`  |    Benutzerdefiniert           |
+|  5    |  6    | `DEAKTIVIERT`  |    Benutzerdefiniert           |
+|  6    |  7    | `DEAKTIVIERT`  |    Benutzerdefiniert           |
+|  7    |  8    | `DEAKTIVIERT`  |    Benutzerdefiniert           |
+
+:::note
+Sie können **nicht** `DEAKTIVIERTE` Kanäle zwischen aktiven Kanälen wie `PRIMÄR` und `SEKUNDÄR` haben. Aktive Kanäle müssen aufeinander folgend sein.
+:::
+
+### Rolle
+
+Jedem Kanal ist eine von 3 Rollen zugewiesen:
+
+1. `PRIMÄR` oder `1`
+   - Dies ist der erste Kanal, der für Sie bei der Ersteinrichtung erstellt wird.
+   - Nur ein primärer Kanal kann existieren und dieser kann nicht deaktiviert werden.
+   - Standardmäßig werden periodische Nachrichten wie Position und Telemetrie über diesen Kanal gesendet.
+2. 'SEKUNDÄR' oder '2'
+   - Kann die Verschlüsselung (PSK) ändern.
+3. `DEAKTIVIERT` oder `0`
+   - Der Kanal steht nicht mehr zur Verfügung.
+   - Die Kanaleinstellungen sind auf Standardwerte gesetzt.
+
+:::note
+Sie können zwar einen anderen PRIMÄREN Kanal haben und über SEKUNDÄRE Kanäle mit demselben Namen und PSK kommunizieren, aber ein Hash des Namens des PRIMÄREN Kanals legt den LoRa-Frequenzschlitz fest, der die tatsächliche Frequenz bestimmt, auf der Sie im Band senden.
+Um sicherzustellen, dass Geräte mit unterschiedlichen PRIMÄREN Kanalnamen auf derselben Frequenz senden, müssen Sie den LoRa Frequenzsteckplatz explizit festlegen.
+:::
+
+## Kanaleinstellungen
+
+Die Kanaleinstellungen sind: Name, PSK, Downlink aktiviert und Uplink aktiviert. Die Kanalkonfiguration verwendet eine administrative Nachricht, die ein `Channel` Protocol Buffer sendet, der auch aus einem `ChannelSettings` Protocol Buffer besteht.
+
+### Name
+
+Eine kurze Kennung für den Kanal. _(< 12 Bytes)_
+
+| Reservierter Name  |                                                                                                   Verwendungszweck                                                                                                                                                                                                                   |
+| :----------------: | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
+|   `""` (standard)  |                                                                                  Wenn der primäre Kanal leer gelassen wird, wird hiermit der Standardkanal bezeichnet.                                                                                                                                                               |
+|     `admin`        | Auf sekundären Kanälen bezeichnet der Name `admin` (Groß-/Kleinschreibung beachten) den administrativen Kanal, der zum Fernverwalten von Knoten über das Netzwerk verwendet wird. Beachten Sie, dass dies eine veraltete Funktion ist. Weitere Informationen finden Sie unter [Fernverwaltung](docs/configuration/remote-admin.mdx). |
+
+:::note
+
+Um auf demselben Kanal mit anderen Geräten kommunizieren zu können, sind übereinstimmende Kanalnamen erforderlich. Beispiel: Wenn Ihr Gerät den Kanalnamen „LongFast“ verwendet, muss das Gerät, mit dem Sie kommunizieren möchten, auch über einen Kanal mit dem Namen „LongFast“ verfügen.
+
+:::
+
+### PSK
+
+Der Schlüssel der für private Kanäle verwendet wird.
+
+Hexadezimal Byte `0x01` für den primären `Standard` Kanal.
+
+Muss entweder 0 Bytes (keine Verschlüsselung), 16 Bytes (AES128) oder 32 Bytes (AES256) lang sein.
+
+:::note
+
+Um auf demselben Kanal mit anderen Geräten kommunizieren zu können, sind übereinstimmende PSKs erforderlich. Beispiel: Wenn Ihr Gerät einen Kanal mit dem Standardschlüssel `AQ==` verwendet, muss das Gerät, mit dem Sie kommunizieren möchten, auch über einen passenden Kanal mit demselben Schlüssel verfügen.
+
+:::
+
+### Downlink aktiviert
+
+Wenn aktiviert, werden von einem **öffentlichen** Internet Zugang erfasste Nachrichten an das lokale Netzwerk weitergeleitet.
+
+Standardmäßig für alle Kanäle auf `false` gesetzt.
+
+### Uplink aktiviert
+
+Wenn aktiviert, werden Nachrichten aus dem Mesh über das konfigurierte Gateway eines beliebigen Knotens an das **öffentliche** Internet gesendet.
+
+Standardmäßig für alle Kanäle auf `false` gesetzt.
+
+## Kanalmoduleinstellungen
+
+Die Einstellungen des Kanalmoduls sind: Standortgenauigkeit. Die Kanalmoduleinstellungen werden als ModuleSettings Protocol Buffer in das Kanal Protocol Buffer eingebettet und als administrative Nachricht gesendet.
+
+### Standortgenauigkeit
+
+Die Einstellung `position_precision` ermöglicht die Steuerung des Genauigkeitsgrads für Standortdaten, die über einen bestimmten Kanal gesendet werden. Dies kann aus Datenschutzgründen nützlich sein, wenn beim Senden von Standortdaten über bestimmte Kanäle eine Verschleierung des genauen Standorts erwünscht sein kann.
+
+Der Wert `position_precision` ist eine Ganzzahl zwischen 0 und 32:
+
+- Ein Wert von 0 bedeutet, dass Standortdaten niemals über den angegebenen Kanal gesendet werden.
+- Ein Wert von 32 bedeutet, dass Standortdaten mit voller Genauigkeit gesendet werden.
+- Werte dazwischen geben die Anzahl der zu sendenden Genauigkeitsbits an, die einer Standortgenauigkeit aus der folgenden Tabelle entsprechen.
+- Der öffentliche MQTT-Server filtert den genauen Standort heraus. Weitere Informationen finden Sie [hier](https://meshtastic.org/docs/software/integrations/mqtt/#location-precision-filtering).
+
+<PositionPrecisionBits />
+
+Die Client-Anwendungen haben unterschiedliche Präzisionsstufen implementiert, sodass der Benutzer aus einer praktischen Auswahl wählen kann. Die Einstellung für den gesamten Bereich ganzer Zahlen kann über die Python Kommandozeile erfolgen. Beispiele zum Einstellen verschiedener Genauigkeitsstufen mithilfe der Kommandozeile finden Sie unter [Einstellen der Standortgenauigkeit](/docs/configuration/radio/channels/#setting-position-precision).
+
+## Verfügbarkeit der Kanaleinstellungen
+
+<Tabs
+  groupId="settings"
+  defaultValue="apple"
+  values={[
+    {
+      label: (
+        <>
+          <Icon icon="mdi:android" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Android
+        </>
+      ),
+      value: "android",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:apple" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Apple
+        </>
+      ),
+      value: "apple",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:terminal" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Kommandozeile
+        </>
+      ),
+      value: "cli",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:internet" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Web
+        </>
+      ),
+      value: "web",
+    },
+  ]}>
+
+<TabItem value="android">
+
+#### Android
+
+:::info
+Alle Kanaleinstellungen sind für Android verfügbar.
+:::
+
+Die Registerkarte „Funkeinstellungen“ kann für allgemeine Aufgaben verwendet werden:
+
+1. Sehen Sie sich den QR-Code und die URL Ihrer aktuellen Kanaleinstellungen an.[^1]
+2. Erstellen oder ändern Sie schnell Ihren primären Kanal.
+3. Wählen Sie für alle Ihre Kanäle eine Modemvoreinstellung, z. B. `Long Range / Fast`.
+
+[^1]: <QRCode />
+
+Weitere Anweisungen zum Einrichten Ihres primären Kanals finden Sie unter [Android App Nutzung](/docs/software/android/usage#setup-a-channel).
+
+[![Kanaleditor](/img/android/android-channel-edit-sm.webp)](/img/android/android-channel-edit.webp)
+
+Tippen Sie auf „Bearbeiten“, um auf das Kanalmenü zuzugreifen:
+
+1. Sekundärkanäle hinzufügen, entfernen oder ändern
+2. Erstellen oder Ändern der Verschlüsselung
+3. Uplink und Downlink für einzelne Kanäle aktivieren
+4. Standort aktiviert
+5. Genauer Standort (wenn der Standort aktiviert ist)
+6. Standortgenauigkeit (wenn die genaue Standortbestimmung deaktiviert ist)
+
+</TabItem>
+
+<TabItem value="apple">
+
+#### Apple
+
+:::info
+
+Ein Kanaleditor ist auf den Anwendungen iOS, iPadOS und macOS unter Einstellungen > Funkkonfiguration > Kanäle verfügbar.
+
+:::
+
+</TabItem>
+
+<TabItem value="cli">
+
+#### Kommandozeile
+
+:::info
+Alle Kanaleinstellungen sind über die Python Kommandozeile verfügbar. Beispieleinstellungen sind folgende:
+:::
+
+:::tip
+
+Weil das Gerät nach jedem Befehl über die Kommandozeile neu startet, wird empfohlen, dass mehrere Werte in einem Konfigurationsblock zusammengefasst und übertragen werden.
+
+```shell title="Example:"
+meshtastic --ch-set name "My Channel" --ch-set psk random --ch-set uplink_enabled true --ch-index 4
+```
+
+:::
+
+##### Name
+
+```shell title="Set channel name for the PRIMARY channel"
+# ohne Leerzeichen
+meshtastic --ch-set name MyChannel --ch-index 0
+# mit Leerzeichen
+meshtastic --ch-set name "My Channel" --ch-index 0
+```
+
+##### PSK
+
+Wenn Sie Meshtastic zum Austauschen von Nachrichten verwenden, die andere nicht sehen sollen, sollten Sie die Einstellung `random` verwenden. Wenn Sie Standard oder einen der einfachen Werte aus der folgenden Tabelle auswählen, werden öffentlich bekannte Verschlüsselungsschlüssel verwendet. Sie werden mit dem Meshtastic Quellcode geliefert und daher kann jeder die von ihnen verschlüsselten Nachrichten abhören. Sie eignen sich hervorragend zum Testen und für öffentliche Kanäle.
+
+|   Einstellung           |                              Verhalten                                                                     |
+| :---------------------: | :--------------------------------------------------------------------------------------------------------: |
+|     `keine`             |                       Verschlüsselung deaktivieren                                                         |
+|    `standard`           |                      Standardverschlüsselung (schwacher Schlüssel)                                         |
+|    `zufällig`           | Erstellen Sie einen sicheren 256-Bit Schlüssel. Verwenden Sie diese Einstellung für private Kommunikation. |
+| `simple0` - `simple254` |             Verwendet eine einzige Byte-Kodierung für die Verschlüsselung                                  |
+
+```shell title="Set encryption to default on PRIMARY channel"
+meshtastic --ch-set psk default --ch-index 0
+```
+
+```shell title="Set encryption to random on PRIMARY channel"
+meshtastic --ch-set psk random --ch-index 0
+```
+
+```shell title="Set encryption to single byte  on PRIMARY channel"
+meshtastic --ch-set psk simple15 --ch-index 0
+```
+
+```shell title="Set encryption to your own key on PRIMARY channel"
+meshtastic --ch-set psk 0x1a1a1a1a2b2b2b2b1a1a1a1a2b2b2b2b1a1a1a1a2b2b2b2b1a1a1a1a2b2b2b2b --ch-index 0
+```
+
+```shell title="Set encryption to your own key on PRIMARY channel (Base64 encoded)"
+meshtastic --ch-set psk base64:puavdd7vtYJh8NUVWgxbsoG2u9Sdqc54YvMLs+KNcMA= --ch-index 0
+```
+
+:::tip
+Verwenden Sie dies, um den `base64` kodierten (Einzelkanal-)Schlüssel aus dem Befehl `meshtastic --info` zu kopieren und einzufügen. Bitte verwenden Sie hier nicht den Omnibus-Code (alle Kanäle), da dies kein gültiger Schlüssel ist.
+:::
+
+```shell title="Disable encryption on PRIMARY channel"
+meshtastic --ch-set psk none --ch-index 0
+```
+
+##### Uplink / Downlink
+
+Informationen zum Konfigurieren von Gateways finden Sie unter [MQTT](/docs/configuration/module/mqtt).
+
+```shell title="Enable/Disable Uplink on PRIMARY channel"
+meshtastic --ch-set uplink_enabled true --ch-index 0
+meshtastic --ch-set uplink_enabled false --ch-index 0
+```
+
+```shell title="Enable/Disable Downlink on SECONDARY channel"
+meshtastic --ch-set downlink_enabled true --ch-index 1
+meshtastic --ch-set downlink_enabled false --ch-index 5
+```
+
+#### Standortgenauigkeit
+
+:::info
+
+Dies ist eine Einstellung pro Kanal. Der Parameter `--ch-index` muss angegeben werden, um die Standortgenauigkeit für einen bestimmten Kanal festzulegen, z. B. `--ch-index 0` für den primären Kanal oder `--ch-index 1` für den sekundären Kanal 1.
+
+:::
+
+```shell title="Set position precision to 13 bits (approx ±3 km)"
+meshtastic --ch-set module_settings.position_precision 13 --ch-index 0
+```
+
+```shell title="Set position precision to full precision (32 bits)"
+meshtastic --ch-set module_settings.position_precision 32 --ch-index 1
+```
+
+</TabItem>
+
+<TabItem value="web">
+
+#### Web
+
+:::info
+Alle Kanaleinstellungen sind in der Web-Oberfläche verfügbar.
+:::
+
+</TabItem>
+</Tabs>

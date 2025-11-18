@@ -1,0 +1,108 @@
+---
+id: swdio
+title: SWDIO mit einem Raspberry Pi
+sidebar_label: SWDIO mit einem Raspberry Pi
+sidebar_position: 6
+description: Anweisungen zum Hochladen von Firmware über SWDIO mithilfe eines Raspberry Pi.
+---
+
+Die meisten Meshtastic Geräte können einfach per USB geflasht werden.
+Einige (z. B. Seeed WM1110 Dev Kit) erfordern jedoch die Verwendung eines externen Gerätes, das über „SWDIO“ eine Verbindung herstellen kann.
+Es gibt spezielle Geräte wie den [RAKDAP1](https://msh.to/rakdap1/), die diese Aufgabe erledigen können, und es gibt auch andere Geräte wie den [Segger J-Link](https://msh.to/segger-jlink) oder [ST-Link](https://msh.to/st-link), die verwendet werden können.
+die diese Arbeit erledigen können. Für viele Menschen ist ein Raspberry Pi jedoch praktischer.
+
+Dieser Artikel enthält Anweisungen zur Verwendung eines Raspberry Pi als SWDIO Programmierwerkzeug.
+
+## Verdrahtung einrichten
+
+Der erste Schritt besteht darin, zwei Kabel zwischen Ihrem Raspberry Pi und den SWDIO Ports Ihres NRF52-basierten Gerätes anzuschließen.
+
+Verbinden Sie den GPIO Pin 11 auf Ihrem Raspberry Pi mit dem CLK Pin auf dem Meshtastic Gerät.
+Verbinden Sie den GPIO Pin 8 Ihres Raspberry Pi mit dem DIO Pin des Meshtastic Gerätes.
+
+Stellen Sie sicher, dass Sie die richtigen GPIO Nummern haben.
+
+Schließen Sie Ihren Raspberry Pi an die USB-Stromversorgung an.
+Schließen Sie das Meshtastic Gerät an die Stromversorgung an.
+
+## OpenOCD installieren
+
+Sie können OpenOCD verwenden, um die SWDIO-Verbindung mit dem Meshtastic Gerät herzustellen.
+Installieren Sie es auf Ihrem Raspberry Pi.
+
+```
+$ sudo apt update
+$ sudo apt install libtool autoconf automake texinfo telnet gdb-multiarch git
+$ git clone git://repo.or.cz/openocd.git
+$ cd openocd/
+$ ./bootstrap
+$ ./configure --enable-bcm2835gpio
+$ make -j4
+$ sudo make install
+```
+
+## Verbindung prüfen
+
+Versuchen wir, mit SWDIO eine Verbindung zum NRF52 basierten Gerät herzustellen, bevor wir etwas mit der Firmware machen.
+Die gesamte erforderliche Konfiguration befindet sich im OpenOCD Repository.
+
+```
+$ openocd -f ./openocd/tcl/interface/raspberrypi-native.cfg -c "transport select swd" -f openocd/tcl/target/nrf52.cfg -s tcl
+```
+
+Das erste Flag wählt den Raspberry Pi als Ihren Hostcomputer aus, der Transport ist SWDIO und das letzte Flag gibt an, dass Sie eine Verbindung zu einem nRF52-basierten Chip herstellen.
+Sie sollten ungefähr Folgendes sehen:
+
+```
+Open On-Chip Debugger 0.12.0+dev-00633-gad87fbd1c
+Licensed under GNU GPL v2
+For bug reports, read
+    http://openocd.org/doc/doxygen/bugs.html
+srst_only separate srst_gates_jtag srst_push_pull connect_deassert_srst
+swd
+Info : Listening on port 6666 for tcl connections
+Info : Listening on port 4444 for telnet connections
+Info : BCM2835 GPIO JTAG/SWD bitbang driver
+Info : clock speed 100 kHz
+Info : SWD DPIDR 0x2ba01477
+Info : [nrf52.cpu] Cortex-M4 r0p1 processor detected
+Info : [nrf52.cpu] target has 6 breakpoints, 4 watchpoints
+Info : [nrf52.cpu] Examination succeed
+Info : [nrf52.cpu] starting gdb server on 3333
+Info : Listening on port 3333 for gdb connections
+Info : accepting 'telnet' connection on tcp/4444
+```
+
+Wenn die Meldung „Fehler beim Verbinden des DP: IDR kann nicht gelesen werden“ angezeigt wird, haben Sie die Kabel wahrscheinlich an der falschen Stelle angeschlossen.
+
+## Firmware beziehen
+
+Sehen Sie in den Anweisungen für Ihre [Hardware](/docs/hardware/devices) nach, um die richtige Firmware für Ihr Gerät zu finden.
+Für die meisten Geräte, die dieser Anleitung folgen, ist eine .hex-Datei erforderlich.
+Kopieren Sie dann die Firmware Datei auf Ihren Raspberry Pi.
+
+## Programmieren der Firmware
+
+Sobald Sie openocd ausführen, können Sie über Telnet eine Verbindung zu Ihrem Meshtastic Gerät herstellen.
+Das Programmieren ist so einfach wie das Ausführen einiger Befehle innerhalb der Telnet Sitzung:
+
+```
+$ telnet 127.0.0.1 4444
+Trying 127.0.0.1...
+Connected to 127.0.0.1.
+Escape character is '^]'.
+Open On-Chip Debugger
+> init
+> reset init
+> halt
+> nrf5 mass_erase
+> program firmware.hex verify
+> reset
+> exit 0
+```
+
+Ziehen Sie den Netzstecker und stecken Sie ihn nach dem Programmieren wieder ein.
+
+## Verbindung
+
+Herzlichen Glückwunsch, Sie sollten jetzt in der Meshtastic App über Bluetooth eine Verbindung zu Ihrem Gerät herstellen können.

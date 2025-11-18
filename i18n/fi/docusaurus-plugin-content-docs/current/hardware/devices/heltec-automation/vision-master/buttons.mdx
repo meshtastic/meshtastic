@@ -1,0 +1,28 @@
+---
+id: painikkeet
+title: Vision Master Laitteistopainikkeet
+sidebar_label: Painikkeet
+sidebar_position: 1
+---
+
+## Toiminnallisuus
+
+### Vision Master E213/E290
+
+- **RST painike (sivu):**
+  - **Yksi painallus:** Nollaa laite.
+- **GPIO21 painike (sivu)**
+  - **Pitkä painallus:** Sammuttaa laitteen 5 sekunnin kuluttua.
+  - **Yksi painallus:** Muuta laitteen näytöllä näytettävää informaatiosivua.
+  - **Kaksinkertainen painallus:** Lähettää laitteen tilapäisen sijainnin verkkoon.
+  - **Kolminkertainen painallus:** Mahdollistaa GPS-moduulin käynnistyksen/sammutuksen. Jos NPN transistori on lisätty, se katkaisee virran GPS-levylle. NPN-nasta on määritettävä sovelluksen Position-moduulin PIN_GPS_EN-koodissa, jotta tämä vaihto toimii.
+
+### Vision Master T190
+
+- **RST Button(side):**
+  - **Single press:** Resets the device.
+- **BOOT Button(top):**
+  - **Long press:** Will signal the device to shutdown after 5 seconds.
+  - **Single press:** Changes the information page displayed on the device's screen.
+  - **Double press:** Sends an adhoc ping of the device's position to the network.
+  - **Triple press:** Enables/Disables the GPS Module on demand. If an NPN Transistor is added it will cut power to the GPS board. The NPN pin must be configured on the PIN_GPS_EN inside the Position module in the App for this switching to work.

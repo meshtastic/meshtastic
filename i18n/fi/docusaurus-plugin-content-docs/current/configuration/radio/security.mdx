@@ -1,0 +1,177 @@
+---
+id: security
+title: Security Configuration
+sidebar_label: Turvallisuus
+description: This section covers security options for the device such public key, private key, and admin key
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+import { Icon } from "@iconify/react";
+
+The security config options are: Public Key, Private Key, Admin Key, Is Managed, Serial Console, Debug Logs, and Admin Channel.
+
+## Security Config Values
+
+### Julkinen avain
+
+Acceptable values: `bytes`
+
+The public key of the device, shared with other nodes on the mesh to allow them to compute a shared secret key for secure communication.
+
+### Yksityinen avain
+
+Acceptable values: `bytes`
+
+The private key of the device, used to create a shared key with a remote device for secure communication.**This key should be kept confidential.**
+
+### Ylläpitäjän avain
+
+Acceptable values: `repeated bytes`
+
+The public key(s) authorized to send administrative messages to this node. Only messages signed by these keys will be accepted for administrative control.
+
+### Hallintatila
+
+Acceptable values: `true` or `false`
+
+Enabling Managed Mode blocks client applications from writing configurations to a radio(they may be read). Once enabled, radio configurations can only be changed through PKC Remote Admin messages with firmware version 2.5+ or the legacy Admin channel with firmware prior to version 2.5. This setting is **not** required for remote node administration.
+
+Before enabling Managed Mode, verify that the node can be controlled via Remote Admin or legacy Admin channel, and that all functions are working properly to prevent being locked out.
+
+### Serial Console
+
+Acceptable values: `true` or `false`
+
+Disabling this will prevent the Serial Console from initializing the Stream API.
+
+### Debug Log
+
+Acceptable values: `true` or `false`
+
+By default, logging is disabled when an API client connects to keep the shared serial link quiet. Set this to true to continue outputting live debug logs over serial or Bluetooth when the API is active.
+
+### Admin Channel Enabled
+
+Acceptable values: `true` or `false`
+
+Allows incoming device control over the insecure legacy admin channel. Enabling this option permits control messages to be received through the older, less secure admin channel.
+
+## Device Config Client Availability
+
+<Tabs
+  groupId="settings"
+  defaultValue="apple"
+  values={[
+    {
+      label: (
+        <>
+          <Icon icon="mdi:android" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Android
+        </>
+      ),
+      value: "android",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:apple" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Apple
+        </>
+      ),
+      value: "apple",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:terminal" height="1.5rem" style={{ marginRight: "0.25rem" }} /> CLI
+        </>
+      ),
+      value: "cli",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:internet" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Web
+        </>
+      ),
+      value: "web",
+    },
+  ]}>
+<TabItem value="android">
+
+#### Android
+
+All Security config options are available for Android.
+
+1. Open the Meshtastic App
+2. Navigate to: **Vertical Ellipsis (3 dots top right) > Radio Configuration > Security**
+
+</TabItem>
+<TabItem value="apple">
+
+#### Apple
+
+All Security config options are available on iOS, iPadOS and macOS at Settings > Radio Configuration > Security.
+
+</TabItem>
+<TabItem value="cli">
+
+#### CLI
+
+All Security config options are available in the python CLI. Example commands are below:
+
+| Setting                        | Acceptable Values | Oletus  |
+| ------------------------------ | ----------------- | ------- |
+| security.public_key            | `bytes`           | `None`  |
+| security.private_key           | `bytes`           | `None`  |
+| security.admin_key             | `repeated bytes`  | `None`  |
+| security.is_managed            | `true`, `false`   | `false` |
+| security.serial_enabled        | `true`, `false`   | `true`  |
+| security.debug_log_api_enabled | `true`, `false`   | `false` |
+| security.admin_channel_enabled | `true`, `false`   | `false` |
+
+:::tip
+
+Because the device may reboot after each command is sent via CLI, it is recommended when setting multiple values in a config section that commands be chained together as one.
+
+```shell title="Example:"
+meshtastic --set security.is_managed false --set device.debug_log_api_enabled true
+```
+
+:::
+
+```shell title="Disable serial console"
+meshtastic --set security.serial_enabled false
+```
+
+```shell title="Enable debug logging"
+meshtastic --set security.debug_log_api_enabled true
+```
+
+</TabItem>
+<TabItem value="web">
+
+#### Web
+
+ALL Security config options are available in the Web client, but at present only 1 Remote Admin public key can be set.
+
+</TabItem>
+</Tabs>
+
+## Security Keys - Backup and Restore
+
+### Backup
+
+Public and private keys will be lost and regenerated by performing a firmware erase and reinstall. It is your responsibility to back up your keys to maintain encrypted direct messaging with existing nodes on your mesh.
+
+Suggested backup methods:
+
+- With the [Meshtastic CLI](/docs/software/python/cli/), run: `meshtastic --export-config > config_backup.yaml` - this will save your entire configuration including your public and private keys to a file.
+- Copy the keys to a secure location, such as a password protected note.
+- Take a screenshot - the most basic way, you must ensure you saved the entirety of both keys.
+
+### Restore
+
+To restore your keys you may:
+
+- Use the Meshtastic CLI to run `meshtastic --configure config_backup.yaml` - This is the fastest way to get your entire node back to where you left it!
+- Manually paste or retype the keys into the client app from your saved location.

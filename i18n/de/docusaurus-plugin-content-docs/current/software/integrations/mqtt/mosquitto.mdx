@@ -1,0 +1,106 @@
+---
+id: mosquitto
+title: Mosquitto
+sidebar_label: Mosquitto
+sidebar_position: 1
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+<Tabs
+groupId="install"
+defaultValue="mac"
+values={[
+{label: 'Mac', value: 'mac'},
+{label: 'Linux', value: 'linux'},
+]}>
+<TabItem value="mac">
+### Using mosquitto on a mac
+
+1. Installieren Sie den MQTT Server
+
+   ```sh
+   brew install mosquitto
+   ```
+
+2. Starten Sie den MQTT Server
+
+   ```sh
+   brew services restart mosquitto
+   ```
+
+3. Führen Sie einen schnellen Servertest durch, starten Sie einen Abonnenten zu einem Thema:
+
+   Hinweis: Dieser wird warten, bis Sie STRG-C drücken (Siehe unten, eine Nachricht veröffentlichen)
+
+   ```sh
+   mosquitto_sub -t test/hello
+   ```
+
+4. Veröffentlichen Sie in einer anderen Konsole eine Nachricht zu diesem Thema:
+
+   ```sh
+   mosquitto_pub -h localhost -q 0 -t test/hello -m 'yo!'
+   ```
+
+5. Damit Meshtastic auf diesen Server zugreifen kann, müssen zwei Einstellungen in der Datei
+   `/usr/local/etc/mosquitto/mosquitto.conf` geändert werden:
+
+   ```shell
+   listener 1883 0.0.0.0
+   allow_anonymous true
+   ```
+
+6. Starten Sie den Dienst neu
+
+   ```shell
+   brew services restart mosquitto
+   ```
+
+7. Wenn Sie die Mac Firewall verwenden, öffnen Sie: Systemeinstellungen > Sicherheit & Privatsphäre > Firewall > Firewall-Optionen und fügen Sie diese hinzu.
+   </TabItem>
+   <TabItem value="linux">
+
+### Verwendung von Mosquitto mit Raspberry Pi bookworm
+
+1. Installieren Sie den MQTT Server
+
+   ```sh
+   sudo apt-get install mosquitto mosquitto-clients
+   ```
+
+2. Starten Sie den MQTT Server
+
+   ```sh
+   sudo systemctl start mosquitto
+   ```
+
+3. Führen Sie einen schnellen Servertest durch, starten Sie einen Abonnenten zu einem Thema:
+
+   Hinweis: Dieser wird warten, bis Sie STRG-C drücken (Siehe unten, eine Nachricht veröffentlichen)
+
+   ```sh
+   mosquitto_sub -t test/hello
+   ```
+
+4. Veröffentlichen Sie in einer anderen Konsole eine Nachricht zu diesem Thema:
+
+   ```sh
+   mosquitto_pub -h localhost -q 0 -t test/hello -m 'yo!'
+   ```
+
+5. Damit Meshtastic auf diesen Server zugreifen kann, müssen zwei Einstellungen in der Datei `/etc/mosquitto/mosquitto.conf` geändert werden:
+
+   ```shell
+   sudo sh -c "echo 'listener 1883 0.0.0.0\nallow_anonymous true' >> /etc/mosquitto/mosquitto.conf"
+   ```
+
+6. Starten Sie den Dienst neu
+
+   ```shell
+   sudo systemctl restart mosquitto
+   ```
+
+   </TabItem>
+   </Tabs>

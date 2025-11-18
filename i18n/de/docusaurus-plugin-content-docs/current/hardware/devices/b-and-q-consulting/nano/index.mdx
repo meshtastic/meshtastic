@@ -1,0 +1,70 @@
+---
+id: nano-series
+title: Nano Serie
+sidebar_label: Nano Serie
+sidebar_position: 1
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+Die Nano Serie, entworfen von Neil Hao von B&Q Consulting und powered by Meshtastic, als tragbare und langlebige Lösung für Outdoor-Abenteuer wie Wandern, Fliegen, Skifahren und vieles mehr. Sie sind so konzipiert, dass ein Gleichgewicht zwischen HF-Leistung, Größe, Robustheit und Energieeffizienz besteht – eine zuverlässige Lösung in verschiedenen Outdoor-Umgebungen.
+
+Für einen vollständigen Vergleich der verschiedenen Geräte der Nano Serie, Besuchen Sie B&Q Consulting's [Nano Serie Wiki](https://wiki.uniteng.com/en/meshtastic#nano-edition).
+
+<Tabs
+groupId="nano-series"
+queryString="nano-series"
+defaultValue="g2"
+values={[
+{label: 'Nano G2 Ultra', value:'g2'},
+]}>
+
+<TabItem value="g2">
+
+## Nano G2 Ultra
+
+Der Nano G2 Ultra und Nano G1 Explorer haben genau das gleiche LoRa Schaltungsdesign der HF Eingangstufe und die interne Breitbandantenne. Das Hauptziel des Nano G2 Ultra ist es, den Stromverbrauch zu reduzieren und die Akkulaufzeit durch den Einsatz des MCU NRF52840 zu verbessern. Die typische Akkulaufzeit ist auf ca. 3,5 Tage optimiert. Das Design des Gerätes berücksichtigt auch die möglichen Auswirkungen des menschlichen Körpers auf seine Antennenleistung. Für eine optimale HF-Leistung auch im Tascheneinsatz.
+
+### Spezifikationen
+
+- **MCU:**
+  - NRF52840
+    - Bluetooth 5.4
+- **LoRa Sendeempfänger:**
+  - Semtech SX1262
+- **Frequenzoptionen:**
+  - _US (902,0 MHz to 928,0 MHz), EU_868 (869,4 MHz to 869,65 MHz), JP (920,8 MHz to 927,8 MHz), ANZ (915,0 MHz to 928,0 MHz), RU (868,7 MHz to 869,2 MHz), KR (920,0 MHz to 923,0 MHz), TW (920,0 MHz to 925,0 MHz), IN (865,0 MHz to 867,0 MHz), NZ_865 (864,0 MHz to 868,0 MHz), TH (920,0 MHz to 925,0 MHz), UA_868 (868,0 MHz to 868,6 MHz), MY_919 (919,0 MHz to 924,0 MHz), SG_923 (917,0 MHz to 925,0 MHz),_
+- **Navigationsmodul:**
+  - ATGM336H-5N-71 (unterstützt GPS, BDS und GLONASS)
+- **Antenne:**
+  - Neue interne Breitbandantenne mit optimierter LoRa HF Endstufenschaltung.
+- **Anschlüsse:**
+  - USB-C
+
+### Merkmale
+
+- Meshtastic vorinstalliert.
+- Neue interne GPS-Antenne, die die GPS Erfassungszeit im Vergleich zum Nano G1 erheblich verkürzt. Zusätzlich kann das GPS Modul mit dem physikalischen GPS Schalter auf einen Energiesparmodus eingestellt werden.
+- Integrierte Benachrichtigungsschaltung für LED oder Summer, konfigurierbar über physikalische Schalter.
+- Ein physischer Schalter schaltet das Gerät ganz einfach ein oder aus.
+- Ersetzbarer 1,3 Zoll OLED-Bildschirm mit einem FPC Anschluss.
+- Interner Li-Polymer Akku-Lader. _(Eine optionale 3,7V 603450 JST 1,25 mm Wiederaufladbare Li-Polymer-Batterie kann ebenfalls installiert werden.)_
+- Buck-Boost Wandler für stabile 3,3V für das System, auch wenn die Li-Polymer Akkuspannung auf 2,5V sinkt. Die Versorgungsspannungsstabilität ist sehr wichtig, um sicherzustellen, dass die Leistung von HF-Schaltkreisen die Konstruktionsanforderungen erfüllt.
+- NXP PCF8563 Echtzeituhr (RTC)
+- Optionales I2C-Erweiterungsmodul (1x GROVE I2C-Sockel und 1x SparkFun QWIIC I2C-Sockel für Sensoren und Tastatur)
+
+### Quellen
+
+- Firmware Datei: `firmware-nano-g2-ultra-X.X.xxxxx.uf2`
+- [Unit Engineerings Offizielles Wiki](https://wiki.uniteng.com/en/meshtastic/nano-g2-ultra)
+- Links zum Direktkauf:
+  - International
+    - [Offizieller Shop](https://msh.to/nano-g2-ultra)
+    - [Offizieller Tindie Shop](https://msh.to/nano-g2-ultra-tindie/)
+
+![Nano G2 Ultra](/img/hardware/nano_g2_ultra.webp)
+
+</TabItem>
+
+</Tabs>

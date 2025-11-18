@@ -1,0 +1,87 @@
+---
+id: discrete-event-sim
+title: Handbuch zur Verwendung des diskreten Ereignissimulators
+sidebar_label: Diskreter Ereignissimulator
+sidebar_position: 1
+description: Eine Gebrauchsanleitung zur Simulation von Funkkommunikation mit konfigurierbaren Parametern und Knotenverhalten.
+---
+
+Der diskrete Ereignissimulator ahmt die Funkgerätefunktionen der Firmware nach. Es basiert derzeit auf Meshtastic 2.1.
+
+## Anwendung
+
+Bitte `git clone` oder dieses Repository herunterladen, zum Meshtasticator Verzeichnis navigieren (optional eine virtuelle Umgebung erstellen) und die erforderlichen Voraussetzungen mit folgendem Befehl installieren:
+`pip install -r requirements.txt`
+
+Um eine Simulation mit den Standardkonfigurationen zu starten, führen Sie Folgendes aus: `python3 loraMesh.py [nr_nodes]`
+
+Wenn kein Argument angegeben wird, müssen Sie die Knoten zuerst auf einem Plot platzieren. Nachdem Sie einen Knoten platziert haben, können Sie den Knoten optional als Router festlegen und seine Sprungweite, seine Höhe (Elevation) und seinen Antennengewinn ändern. Diese Einstellungen werden automatisch gespeichert, wenn Sie einen neuen Knoten platzieren oder die Simulation starten.
+
+![Konfigurationsknoten](/img/software/meshtasticator/configNode.webp)
+
+Wenn die Anzahl der Knoten angegeben ist, werden die Knoten zufällig im Bereich platziert. Es stellt sicher, dass jeder Knoten mindestens einen anderen Knoten erreichen kann. Darüber hinaus werden alle Knoten in einem konfigurierbaren Mindestabstand (MINDIST) zueinander platziert.
+
+Wenn Sie die Knoten selbst platziert haben, werden nach einer Simulation die Anzahl der Knoten, ihre Koordinaten und die Konfiguration automatisch gespeichert und Sie können das Szenario mit folgendem Befehl erneut ausführen: `python3 loraMesh.py --from-file`
+
+Wenn Sie eine der Konfigurationen ändern möchten, passen Sie die Datei _out/nodeConfig.yaml_ an, bevor Sie sie mit dem obigen Befehl ausführen.
+
+Um mehrere Simulationswiederholungen für einen Parametersatz, z. B. die Anzahl der Knoten, durchzuführen, führen Sie Folgendes aus: `python3 batchSim.py`
+
+Nach Abschluss der Simulationen werden die aus den Simulationen gewonnenen relevanten Messwerte grafisch dargestellt. Es speichert diese Metriken in _/out/report/_ zur späteren Analyse. Ein Beispiel-Python-Skript zum Plotten der Ergebnisse finden Sie unter _plotExample.py_.
+
+Um verschiedene Parameter zu simulieren, müssen Sie das Skript _batchSim.py_ selbst ändern.
+
+## Benutzerdefinierte Einstellungen
+
+Hier listen wir einige der Konfigurationen auf, die Sie ändern können, um Ihr Szenario in _/lib/config.py_ zu modellieren. Diese gelten für alle Knoten, mit Ausnahme derjenigen, die Sie bei Verwendung des Plots pro Knoten konfigurieren.
+
+### Modem
+
+Das verwendete LoRa Modem ([siehe Meshtastic Funkgeräteeinstellungen](/docs/overview/radio-settings#presets)), wie unten definiert:
+
+| Modem | Name           | Bandbreite (kHz) | Fehlerkorrektur | Spreizfaktor     | Datenrate (kbps) |
+| ----- | -------------- | ---------------- | --------------- | ---------------- | ---------------- |
+| 0     | Short Fast     | 250              | 4/8             | 7                | 6,8              |
+| 1     | Short Slow     | 250              | 4/8             | 8                | 3,9              |
+| 2     | Mid Fast       | 250              | 4/8             | 9                | 2,2              |
+| 3     | Mid Slow       | 250              | 4/8             | 10               | 1,2              |
+| 4     | Long Fast      | 250              | 4/8             | 11               | 0,67             |
+| 5     | Long Moderate  | 125              | 4/8             | 11               | 0,335            |
+| 6     | Long Slow      | 125              | 4/8             | 12               | 0,18             |
+| 7     | Very Long Slow | 62,5             | 4/8             | 12               | 0,09             |
+
+### Periode
+
+Mittlere Zeitspanne (in ms), mit der die Knoten eine neue Nachricht generieren, die einer Exponentialverteilung folgt. Wenn Sie ihn beispielsweise auf 300 s einstellen, generiert jeder Knoten durchschnittlich alle fünf Minuten eine Nachricht.
+
+### Paketlänge
+
+Nutzlastgröße jeder generierten Nachricht in Bytes. Bei einem Standortpaket sind es etwa 40 Bytes.
+
+### Modell
+
+Diese Funktion bezieht sich auf das Pfadverlustmodell, d. h. auf das, was der Simulator verwendet, um zu berechnen, wie gut sich ein Signal ausbreitet. Beachten Sie, dass dies nur eine grobe Schätzung der physischen Umgebung ist und nicht 100 % genau ist, da sie von vielen Faktoren abhängt. Die implementierten Pfadverlustmodelle sind:
+
+- `0` setzt das Modell für große Entfernung
+- `1` setze das Okumura-Hata Modell für kleine und mittelgroße Städte
+- `2` setze das Okumura-Hata für Ballungsräume
+- `3` stellt den Okumura-Hata für Vorstadtumgebungen ein
+- `4` stellt das Okumura-Hata für ländliche Gebiete ein
+- `5` stellt das 3GPP für Vorort-Makrozellen ein
+- `6` stellt das 3GPP für Metropolitan Macro-Cell ein
+
+### Sendungen oder Direktnachrichten
+
+Standardmäßig ist _Direktnachrichten_ auf „False“ eingestellt, was bedeutet, dass nur Broadcast Nachrichten gesendet werden. Wenn Sie es aktivieren, sendet jeder Knoten Direktnachrichten nur an einen zufällig ausgewählten anderen Knoten im Netzwerk.
+
+## Erklärung
+
+Ein diskreter Ereignissimulator springt im Laufe der Zeit von Ereignis zu Ereignis, wobei ein Ereignis eine Änderung des Systemzustands ist. Es eignet sich daher gut zur Simulation von Kommunikationsnetzwerken.
+
+Für jeden Knoten in der Simulation wird eine Instanz erstellt, die die [Meshtastic Logik](/docs/overview/mesh-algo) nachahmt. Jeder Knoten führt drei Prozesse parallel aus: _generateMessage_, _transmit_ und _receive_. Die erste Methode erzeugt ein Ereignis, indem sie zu einem zufälligen Zeitpunkt eine neue Nachricht mit einer eindeutigen Sequenznummer erstellt, die einer Exponentialverteilung entnommen ist. Derzeit hat jede generierte Nachricht die gleiche Nutzlastgröße. Der zweite und dritte Prozess modellieren das tatsächliche Sende- bzw. Empfangsverhalten.
+
+Das Modell der physischen (PHY) Schicht von LoRa befindet sich in _/lib/phy.py_. Abhängig vom verwendeten Modem berechnet es die Sendezeit eines Pakets. Die PHY-Schicht verwendet ein konfigurierbares Pfadverlustmodell, um abzuschätzen, ob Knoten in einer bestimmten Entfernung die Pakete des jeweils anderen erfassen können. Darüber hinaus wird ermittelt, ob zwei Pakete kollidieren. Dies hängt von der Frequenz, dem Spreizfaktor, der Empfangszeit und der Empfangsleistung der beiden Pakete ab.
+
+Das Routing-Verhalten wird in jedem der Prozesse des Knotens implementiert. Innerhalb von _generateMessage_ werden zuverlässige erneute Übertragungen verarbeitet, wenn keine implizite Bestätigung empfangen wird. Zur Übertragung der Nachricht wird ein MeshPacket (definiert in _/lib/packet.py_) erstellt. Beachten Sie, dass aufgrund von erneuten Übertragungen und erneutem Senden möglicherweise mehrere Pakete mit derselben Nachricht erstellt werden. In _receive_ wird entschieden, was beim Empfang eines Pakets geschehen soll. Ein Paket wird überflutet, wenn sein Hop-Limit ungleich Null ist und zuvor keine erneute Ausstrahlung dieses Pakets gehört wurde. In _transmit_ werden Verzögerungen der Medium Access Control (MAC)-Schicht von _/lib/mac.py_ aufgerufen. Der MAC verwendet einen Hören-vor-Senden Mechanismus, der die Einführung (zufälliger oder SNR-basierter) Verzögerungen vor der Übertragung eines Pakets umfasst. Wenn ein Paket zur Übertragung bereit ist, wird zunächst geprüft, ob in der Zwischenzeit noch keine Bestätigung empfangen wurde; andernfalls wird die Übertragung abgebrochen.
+
+Die eigentliche Kommunikation zwischen Prozessen verschiedener Knoten wird von einer BroadcastPipe von [Simpy](https://simpy.readthedocs.io/en/latest/examples/process_communication.html) abgewickelt. Dadurch wird sichergestellt, dass ein von einem Knoten übertragenes Paket bei den empfangenden Knoten Ereignisse erzeugt (eines am Anfang und eines am Ende des Pakets).

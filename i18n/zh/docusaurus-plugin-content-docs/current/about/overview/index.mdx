@@ -1,0 +1,27 @@
+---
+title: 總覽
+sidebar_label: 總覽
+slug: /overview
+sidebar_position: 2
+description: Discover the basics of Meshtastic's operation, from sending messages via the companion app to the network's intelligent rebroadcast system for extended reach.
+---
+
+## 運作方式
+
+When you send a message on your Meshtastic companion app, it is relayed to the radio using Bluetooth, Wi-Fi/Ethernet or serial connection. That message is then broadcasted by the radio. If it hasn't received a confirmation from any other device after a certain timeout, it will retransmit the message up to three times.
+
+When a receiving radio captures a packet, it checks to see if it has heard that message before. If it has it ignores the message. If it hasn't heard the message, it will rebroadcast it.
+
+For each message a radio rebroadcasts, it marks the "hop limit" down by one. When a radio receives a packet with a hop limit of zero, it will not rebroadcast the message.
+
+The radio will store a small amount of packets (around 30) in its memory for when it's not connected to a client app. If it's full, it will replace the oldest packets with newly incoming text messages only.
+
+## What is a mesh?
+
+At the radio level a Meshtastic mesh is a set of nodes that share the same LoRa spreading factor, center frequency, and bandwidth. A node can only be in one radio mesh; it will not see or respond to messages from nodes using different values for these settings. For a mesh to form, nodes need to share the same values. 
+
+These values are grouped into "presets" that can be easily chosen in the LoRa configuration section. Presets make it easy for nodes to configure the same radio parameters.
+
+Sitting on top of this radio mesh are Channels. A logical mesh is formed by a Channel with a particular name and encryption key. The default channel in a radio mesh is Channel 0 with a blank "name" and an encryption key of AQ==. 
+
+Nodes can belong to a maximum of 8 Channels in the radio mesh. A custom Channel can be created for use by a specific group. Only nodes configured with the same Channel name and encryption key will be able to read and display messages on that Channel. However, all nodes in the radio mesh will receive and may retransmit messages (depending on their Role) regardless of the Channel settings for the message.
