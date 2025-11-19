@@ -1,0 +1,41 @@
+---
+id: painikkeet
+title: T-Beam Hardware Buttons
+sidebar_label: Painikkeet
+sidebar_position: 1
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+<Tabs
+groupId="t-beam buttons"
+queryString="t-beam"
+defaultValue="t-beam"
+values={[
+{label: 'T-Beam', value: 't-beam'},
+]}>
+<TabItem value="t-beam">
+
+## Toiminnallisuus
+
+- **Power Button (left):**
+  - **Long press:** Powers the device on or off.
+- **Reset Button (right):**
+  - **Yksi painallus:** Nollaa laite.
+- **User/Program Button (middle):**
+  - **Pitkä painallus:** Sammuttaa laitteen 5 sekunnin kuluttua.
+  - **Yksi painallus:** Muuta laitteen näytöllä näytettävää informaatiosivua.
+  - **Kaksinkertainen painallus:** Lähettää laitteen tilapäisen sijainnin verkkoon.
+  - **Triple press:** Disables the device's GPS. Repeat to re-enable. (_This will be indicated on both information screen pages on the device's display as shown below_)
+
+<img src="/img/hardware/GPS-disabled.webp" width="200" align="center-left" />
+<img
+  src="/img/hardware/GPS-disabled-by-button.webp"
+  width="200"
+  align="center-right"
+/>
+
+</TabItem>
+
+</Tabs>

@@ -1,0 +1,353 @@
+---
+id: canned-message
+title: Einstellung des Moduls für vordefinierte Nachrichten
+sidebar_label: Vordefinierte Nachricht
+description: Einstellungen für vorgeschriebene (vordefinierte) Nachrichten auf Ihrem Meshtastic Gerät.
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+import { Icon } from "@iconify/react";
+import ReactPlayer from "react-player";
+
+Das Modul für vordefinierte Nachrichten erlaubt es Ihnen, Nachrichten an das Netzwerk des Gerätes zu senden, ohne die Telefon-App zu verwenden. Sie können Textnachrichten vordefinieren, aus denen Sie auswählen können.
+
+Die Einstellungen für das Modul vordefinierte Nachrichten sind: Aktiviert, Glocke, Nachrichten, Eingabequelle, Drehgeber aktiviert, Hoch/Runter Geber aktiviert, Eingabe Pin A, Eingabe Pin B, Eingabe Pin Drucktaster, Eingabeereignis im Uhrzeigersinn, Eingabeereignis gegen den Uhrzeigersinn, Eingabeereignis Drucktaste. Die Konfiguration des Moduls vordefinierte Nachrichten verwendet eine administrative Nachricht, die einen `ConfigModule.CannedMessage` Protocol Buffer sendet.
+
+<div style={{ maxWidth: "800px", margin: "auto" }}>
+  <ReactPlayer
+    url="https://youtu.be/qKQVYUbLLkg"
+    controls
+    width="100%"
+    height="400px"
+  />
+</div>
+
+## Einstellung des Moduls für vordefinierte Nachrichten
+
+### Aktiviert
+
+Aktiviert das Modul für vordefinierte Nachrichten.
+
+### Sende Glocke
+
+Sendet ein Klingelzeichen (Glocke) mit jeder Nachricht.
+
+Das [Modul für externe Benachrichtigungen](external-notification.mdx) kann so eingestellt werden, dass es aktiv wird, wenn eine neue Nachricht eintrifft.
+Dieses Modul kann auch so eingestellt werden, das es aktiv wird, wenn eine Nachricht die Glocke enthält.
+
+### Nachrichten
+
+Die Liste der vordefinierten Nachrichten, wie sie vom Benutzer festgelegt wurden. Nachrichten sollten durch das Zeichen `|` getrennt werden. Die Gesamtgröße für die Nachrichtenliste kann bis zu 200 Bytes betragen.
+
+### Eingabequelle
+
+Ereignisquellen, die vom Module vordefinierten Nachrichten akzeptiert werden.
+
+|    Wert         |                        Beschreibung                                                     |
+| :-------------: | :-------------------------------------------------------------------------------------: |
+|   `_any`        | Standardwert. Ermöglicht jedes periphere Eingabegerät, das mit dem Gerät verbunden ist. |
+|   `rotEnc1`     |                       Einfacher Drehgeber                                               |
+|  `upDownEnc1`   |      Hoch/Runter Geber (verwenden Sie diesen auch für den RAK14006 Drehgeber)           |
+| `scanAndSelect` |             Einfacher Drucktaster (kurzes und langes Drücken)                           |
+|   `cardkb`      |          M5 Stack CardKB (gilt auch für die RAK14004 Tastaturmatrix).                   |
+|  `serialkb`     |                        Serielle Tastatur                                                |
+
+### Drehgeber aktiviert
+
+Drehgeber aktivieren.
+
+### Hoch/Runter Geber aktivieren
+
+Aktiviert den Geber Hoch/Runter.
+
+### Drehgeber Pin A
+
+GPIO Pin Wert (1-39) für Drehgeber Pin A
+
+### Drehgeber Pin B
+
+GPIO Pin Wert (1-39) für Drehgeber Pin B
+
+### Drehgeber Pin Drucktaster
+
+GPIO Pin Wert (1-39) für die Drehgeber Drucktaste
+
+### Eingabeereignis im Uhrzeigersinn
+
+Erzeugt ein Eingabeereignis beim Drehen des Gebers im Uhrzeigersinn.
+
+### Eingabeereignis gegen den Uhrzeigersinn
+
+Erzeugt ein Eingabeereignis beim Drehen des Gebers gegen den Uhrzeigersinn.
+
+### Eingabeereignis Drucktaste
+
+Erzeugt ein Eingabeereignis beim Drücken der des Drehgebers.
+
+## Verfügbarkeit der Modulkonfiguration vordefinierte Nachrichten
+
+<Tabs
+  groupId="settings"
+  defaultValue="apple"
+  values={[
+    {
+      label: (
+        <>
+          <Icon icon="mdi:android" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Android
+        </>
+      ),
+      value: "android",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:apple" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Apple
+        </>
+      ),
+      value: "apple",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:terminal" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Kommandozeile
+        </>
+      ),
+      value: "cli",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:internet" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Web
+        </>
+      ),
+      value: "web",
+    },
+  ]}>
+<TabItem value="android">
+
+#### Android
+
+:::info
+
+Konfigurationseinstellungen vordefinierte Nachrichten sind für Android verfügbar.
+
+1. Öffnen Sie die Meshtastic Applikation
+2. Navigiere zu: **vertikale Ellipse (3 Punkte oben rechts) > Funkkonfiguration > Vordefinierte Nachrichten**
+
+:::
+
+</TabItem>
+<TabItem value="apple">
+
+#### Apple
+
+:::info
+Alle Konfigurationsoptionen für das Modul vordefinierte Nachrichten sind unter Einstellungen > Modulkonfiguration > Vordefinierte Nachrichten in iOS, iPadOS und macOS verfügbar.
+:::
+
+</TabItem>
+<TabItem value="cli">
+
+#### Kommandozeile
+
+:::info
+
+Alle Einstellungen für die Konfiguration des Moduls vordefinierte Nachrichten sind über die Python Kommandozeile verfügbar.
+
+:::
+
+Beispieleinstellungen sind folgende:
+
+|       Einstellung                      |        Akzeptable Werte                   |            Standardwert                     |
+| :------------------------------------: | :---------------------------------------: | :-----------------------------------------: |
+|     canned_message.enabled             |        `true`, `false`                    |              `false`                        |
+|     canned_message.send_bell           |        `true`, `false`                    |              `false`                        |
+|  canned_message.allow_input_source     | `rotEnc1`, `_any`, `upDownEnc1`, `cardkb` |              `_any`                         |
+|     \--set-canned-message              |         `string`                          | "" (Text Separierung durch das "|" Zeichen) |
+|  canned_message.inputbroker_event_cw   |       `InputEventChar`                    |          (nicht festgelegt)                 |
+|  canned_message.inputbroker_event_ccw  |       `InputEventChar`                    |          (nicht festgelegt)                 |
+| canned_message.inputbroker_event_press |       `InputEventChar`                    |          (nicht festgelegt)                 |
+|   canned_message.inputbroker_pin_a     |          Ganzzahl                         |          (nicht festgelegt)                 |
+|   canned_message.inputbroker_pin_b     |          Ganzzahl                         |          (nicht festgelegt)                 |
+|  canned_message.inputbroker_pin_press  |          Ganzzahl                         |          (nicht festgelegt)                 |
+
+:::tip
+
+Weil das Gerät nach jedem Befehl über die Kommandozeile neu startet, wird empfohlen, dass mehrere Werte in einem Konfigurationsblock zusammengefasst und übertragen werden.
+
+```shell title="Example:"
+meshtastic --set canned_message.enabled true --set canned_message.send_bell true
+```
+
+:::
+
+```shell title="Enable/Disable the Canned Message Module"
+meshtastic --set canned_message.enabled true
+meshtastic --set canned_message.enabled false
+```
+
+```shell title="Enable/Disable send bell character"
+meshtastic --set canned_message.send_bell true
+meshtastic --set canned_message.send_bell false
+```
+
+```shell title="Set Messages"
+meshtastic --set-canned-message "Ich brauche einen Bergsteiger!|Ruf mich an|Verstanden|Ruhe bewahren|Auf dem Weg"
+```
+
+```shell title="Set Input Source"
+meshtastic --set canned_message.allow_input_source "_any"
+meshtastic --set canned_message.allow_input_source "rotEnc1"
+```
+
+```shell title="Enable/Disable rotary1"
+meshtastic --set canned_message.rotary1_enabled 1
+```
+
+```shell title="Set/Unset Encoder Pin A"
+meshtastic --set canned_message.inputbroker_pin_a 17
+meshtastic --set canned_message.inputbroker_pin_a 0
+```
+
+```shell title="Set/Unset Encoder Pin B"
+meshtastic --set canned_message.inputbroker_pin_b 39
+meshtastic --set canned_message.inputbroker_pin_b 0
+```
+
+```shell title="Set/Unset Encoder Pin Press"
+meshtastic --set canned_message.inputbroker_pin_press 21
+meshtastic --set canned_message.inputbroker_pin_press 0
+```
+
+```shell title="Set/Unset Input Broker CW Event"
+meshtastic --set canned_message.inputbroker_event_cw UP
+meshtastic --set canned_message.inputbroker_event_cw ""
+```
+
+```shell title="Set/Unset Input Broker CCW Event"
+meshtastic --set canned_message.inputbroker_event_ccw DOWN
+meshtastic --set canned_message.inputbroker_event_ccw ""
+```
+
+```shell title="Set/Unset Input Broker Press Event"
+meshtastic --set canned_message.inputbroker_event_press SELECT
+meshtastic --set canned_message.inputbroker_event_press ""
+```
+
+</TabItem>
+<TabItem value="web">
+
+#### Web
+
+:::info
+Alle Einstellungen für die Konfiguration des Moduls vordefinierte Nachrichten sind über Web-Oberfläche verfügbar.
+:::
+
+</TabItem>
+</Tabs>
+
+:::warning
+GPIO access is fundamentally dangerous because invalid options can physically damage or destroy your hardware. Ensure that you fully understand the schematic for your particular device before trying this as we do not offer a warranty. Use at your own risk.
+
+Dieses Modul erfordert das Anschließen eines externen Zubehörs an Ihr Gerät. Es wird ohne ein solches nicht funktionieren.
+:::
+
+## Hardware
+
+Um durch die vordefinierten Nachrichten zu navigieren und eine auszuwählen, benötigen Sie etwas Hardware, die an Ihrem Gerät angeschlossen ist. Zurzeit wird das Modul mit einem einfachen Drehgeber, mit einer 3-Tasten-Logik und mehreren I2C Tastaturen getestet. In Zukunft werden weitere Eingabemethoden hinzugefügt.
+
+### I2C Tastaturmatrix
+
+Diese wurde mit der RAK14004 Tastatur getestet. Bei Tastendruck wird die Nachricht entsprechend der Tastennummer sofort versendet. Die Tasten sind von links oben nach unten rechts auf der Tastatur nummeriert. Wenn Sie also die obere linke Taste drücken, wird die erste Nachricht gesendet. Die zweite Taste sendet die zweite Nachricht und so weiter.
+
+**Nachteil:** Der RAK 3x4 Tastaturmatrix fehlt beim Einlesen die 4. Tastenzeile, daher muss jeder 4. Nachrichtenplatz übersprungen werden. Taste 1 sendet Nachricht 1 und Taste 4 sendet Nachricht 5
+Beispiel: 1|2|3|5|6|7|9|11||||13|14|15 - die Plätze 4, 8 und 12 können nicht verwendet werden.
+
+### CardKB
+
+Die Tastatur CardKB wird im Freitextmodus und im Auswahlmodus unterstützt. Benutzen Sie HOCH/RUNTER/ENTER um eine vordefinierte Nachricht auszuwählen und zu versenden. Für eine Freitextnachricht geben Sie diese einfach ein und drücken Sie ENTER um sie zu versenden.
+
+Wenn Sie Ihre Freitextnachricht nicht öffentlich versenden möchten, können Sie die CardKB Tastatur verwenden, um sie an einen bestimmten Knoten zu adressieren. Drücken Sie die TAB Taste und wählen Sie den Zielknoten mit den LINKS/RECHTS Tasten. Die Nachricht wird an den Knoten mit dem passenden Namen und Knotennummer gesendet. Der Zielknoten wird für Ihre nächste Nachricht gespeichert.
+
+### 3 Tasten hoch/runter und RAK Drehgeber
+
+Benutzen Sie HOCH/RUNTER/ENTER um eine vordefinierte Nachricht auszuwählen und zu versenden.
+
+### Suchen und Auswählen
+
+Verwenden Sie einen einzigen Drucktaster, um vordefinierte Nachrichten auszuwählen und zu versenden.
+
+#### Einstellungen
+
+- Schließen Sie einen normalen Drucktaster zwischen Masse und einen GPIO Pin Ihrer Wahl an.
+- Modul für vordefinierte Nachrichten konfigurieren
+  - Setze [Eingabequelle](#input-source) auf `scanAndSelect`
+  - Setzen Sie [den GPIO Pin für den Drucktaster](#input-broker-pin-press)
+  - Definieren Sie eine [Liste der vordefinierten Nachrichten](#messages)
+
+#### Anwendung
+
+- Kurzer Druck: durch Nachrichten wechseln
+- Langer Druck: Senden Sie die aktuell ausgewählte Nachricht an Ihren primären Kanal
+
+### Drehgeber
+
+Meshtastic unterstützt Drehgeber als Eingangsgeräte.
+
+Sie benötigen einen einfachen Drehgeber. Die unten aufgeführten Typen haben fünf Anschlüsse, in denen zwei für einen Drucktaster verwendet werden, aber alle anderen Typen werden die Aufgabe wohl auch erfüllen. Sie können auch einen Typ mit drei Anschlüssen verwenden und einen separaten Drucktaster verwenden.
+
+<!--- TODO Links in Hardware Abschnitt verschieben--->
+
+- [Amazon link](https://www.amazon.com/Rotary-Encoder-Washers-Digital-Potentiometer/dp/B07Y619CZR/ref=sr_1_21?keywords=rotary+encoder&qid=1642317807&sprefix=rotary+enco%2Caps%2C186&sr=8-21)
+- [Amazon.DE link](https://www.amazon.de/-/en/sourcing-Degree-Rotary-Encoder-Digital/dp/B07RLZPX5K/ref=sr_1_12?keywords=rotary+encoder&qid=1642320025&sprefix=rotary%2Caps%2C105&sr=8-12)
+- [Aliexpress link1](https://www.aliexpress.com/item/32992227812.html?spm=a2g0o.productlist.0.0.1afe21a50SLvi2&algo_pvid=a19c4182-08aa-406d-bfdf-132582ef5ebb&algo_exp_id=a19c4182-08aa-406d-bfdf-132582ef5ebb-23&pdp_ext_f=%7B%22sku_id%22%3A%2266940265509%22%7D&pdp_pi=-1%3B1.66%3B-1%3B-1%40salePrice%3BUSD%3Bsearch-mainSearch)
+- [Aliexpress link2](https://www.aliexpress.com/item/32946444853.html?spm=a2g0o.productlist.0.0.1afe21a50SLvi2&algo_pvid=a19c4182-08aa-406d-bfdf-132582ef5ebb&aem_p4p_detail=2022011523263276283624312400022072680&algo_exp_id=a19c4182-08aa-406d-bfdf-132582ef5ebb-6&pdp_ext_f=%7B%22sku_id%22%3A%2266223434642%22%7D&pdp_pi=-1%3B1.91%3B-1%3B-1%40salePrice%3BUSD%3Bsearch-mainSearch)
+- [Aliexpress link3](https://www.aliexpress.com/item/10000056483250.html?spm=a2g0o.productlist.0.0.1afe21a50SLvi2&algo_pvid=a19c4182-08aa-406d-bfdf-132582ef5ebb&algo_exp_id=a19c4182-08aa-406d-bfdf-132582ef5ebb-9&pdp_ext_f=%7B%22sku_id%22%3A%2220000000116682147%22%7D&pdp_pi=-1%3B2.51%3B-1%3B-1%40salePrice%3BUSD%3Bsearch-mainSearch)
+
+Schließen Sie Ihren Drehgeber wie folgt an. Der Drehgeber hat zwei Reihen mit Anschlüssen. Eine der Reihen enthält zwei Anschlüsse, die andere drei Anschlüsse. Ansicht Unterseite:
+
+```text
+  B o --- o PRESS
+GND o | |
+  A o --- o GND
+```
+
+Dies zwei rechten Anschlüsse sind für den Drucktaster. Schließen Sie den GND Pin an Masse. (Es ist egal welche Masse Sie verwenden) Schließen Sie den PRESS Pin an einen GPIO Pin an.
+
+Die drei linken Anschlüsse dienen zur Erfassung der Dreheingabe und Drehrichtung. Schließen Sie den mittleren Anschluss an Massen und die beiden anderen an jeweils einen GPIO Pin. Lassen Sie uns diese Anschlüsse "A" und "B" nennen, gemäß dem untenstehenden Schema.
+
+```text
+A   --||
+GND --||]========
+B   --||
+```
+
+Empfohlene GPIO Pins zum Anschließen eines Drehgebers.
+
+- TTGO LoRa V1:
+  - A - GPIO-22
+  - B - GPIO-23
+  - PRESS - GPIO-21
+
+Es gibt ein Referenzdesign für ein 3D Gehäuse das einen Drehgeber mit dem TTGO LoRa V1 benutzt: [Gehäuse für TTGO-ESP32-LORA-OLED-v1.0 mit Drehgeber](https://www.thingiverse.com/thing:5178495)
+
+## Beispiele
+
+- Ein kompatibles Zubehör anschliessen. Notieren Sie die GPIO Pinnummern, die Sie verwenden, da sie im folgenden Schritt benötigt werden.
+
+:::note
+Ersetzen Sie alle `GPIO` (x3) unten mit den GPIO Pinnummern aus Ihrer Hardware Einstellung.
+:::
+
+```shell title="Canned Message Module - Required Rotary Encoder Module Settings"
+meshtastic --set canned_message.inputbroker_pin_a GPIO
+meshtastic --set canned_message.inputbroker_pin_b GPIO
+meshtastic --set canned_message.inputbroker_pin_press GPIO
+meshtastic --set canned_message.inputbroker_event_cw UP
+meshtastic --set canned_message.inputbroker_event_ccw DOWN
+meshtastic --set canned_message.inputbroker_event_press SELECT
+meshtastic --set canned_message.rotary1_enabled True
+```
+
+Das war's! Mit einem funktionierenden und aktivierten Drehgeber können Sie mit der Einstellung des Moduls für vordefinierte Nachrichten beginnen.

@@ -1,0 +1,244 @@
+---
+id: community-tlora
+title: LILYGO® TTGO Lora Devices
+sidebar_label: LoRa32
+sidebar_position: 1
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+Further information on the LILYGO® LoRa devices can be found on LILYGO®'s [GitHub page](https://github.com/Xinyuan-LilyGO/LilyGo-LoRa-Series).
+
+<Tabs
+groupId="t-lora"
+queryString="t-lora"
+defaultValue="v2.1-1.8"
+values={[
+{label: 'Lora V3.0', value:'v3.0'},
+{label: 'Lora V2.1-1.6', value:'v2.1'},
+{label: 'Lora V2.1-1.8', value:'v2.1-1.8'},
+{label: 'Lora V2.0', value: 'v2.0'},
+{label: 'Lora V1.3', value: 'v1.3'},
+{label: 'Lora V1', value: 'v1'}
+]}>
+<TabItem value="v1">
+
+## Lora v1
+
+:::warning
+Not recommended with a battery! These boards contain the wrong component in the LiPo battery charging circuit allowing the battery to be overcharged.
+:::
+
+:::caution
+This board is still in production but for various reasons not recommended for new purchases or for unattended installations. Firmware support is phased out. If in doubt, choose the Lora T3S3 board.
+:::
+
+- **MCU**
+  - ESP32 (WiFi & Bluetooth)
+- **LoRa-lähetin-vastaanotin**
+  - Semtech SX1276
+- \*\*Taajuusvaihtoehdot
+  - 915 MHz
+  - 868 MHz
+- **Liitännät**
+  - Micro USB
+  - Antenna: U.FL antenna connector
+
+### Ominaisuudet
+
+- Built in 0.96 inch OLED display
+
+### Resurssit
+
+- Firmware file: `firmware-tlora-v1-X.X.X.xxxxxxx.bin`
+
+![LILYGO® TTGO Lora V1](/img/hardware/lora-v1.webp)
+
+</TabItem>
+
+<TabItem value="v1.3">
+
+## Lora v1.3
+
+:::warning
+Not recommended with a battery! These boards contain the wrong component in the LiPo battery charging circuit allowing the battery to be overcharged.
+:::
+
+:::caution
+This board is still in production but for various reasons not recommended for new purchases or for unattended installations. Firmware support is phased out. If in doubt, choose the Lora T3S3 board.
+:::
+
+- **MCU**
+  - ESP32 (WiFi & Bluetooth)
+- **LoRa-lähetin-vastaanotin**
+  - Semtech SX127x
+- \*\*Taajuusvaihtoehdot
+  - 915 MHz
+  - 868 MHz
+- **Liitännät**
+  - Micro USB
+  - Antenna: U.FL antenna connector
+
+### Ominaisuudet
+
+- Built in 0.96 inch OLED display
+
+### Resurssit
+
+- Firmware file: `firmware-tlora_v1_3-X.X.X.xxxxxxx.bin`
+
+![LILYGO® TTGO Lora V1.3](/img/hardware/lora-v1.3.webp)
+![LILYGO® TTGO Lora V1.3 pin map](/img/hardware/lora-v1.3_pinmap.webp)
+
+</TabItem>
+<TabItem value="v2.0">
+
+## Lora V2.0
+
+:::warning
+Not recommended with a battery! These boards contain the wrong component in the LiPo battery charging circuit allowing the battery to be overcharged.
+:::
+
+:::caution
+This board is still in production but for various reasons not recommended for new purchases or for unattended installations. Firmware support is phased out. If in doubt, choose the Lora T3S3 board.
+:::
+
+- **MCU**
+  - ESP32 (WiFi & Bluetooth)
+- **LoRa-lähetin-vastaanotin**
+  - Semtech SX127x
+- \*\*Taajuusvaihtoehdot
+  - 433 MHz
+  - 868 MHz
+  - 915 MHz
+- **Liitännät**
+  - Micro USB
+  - Antenna: U.FL antenna connector
+
+### Ominaisuudet
+
+- Built in 0.96 inch OLED display
+- Power and Reset switches
+- microSD connector
+- No GPS
+
+### Resurssit
+
+- Firmware file: `firmware-tlora-v2-X.X.X.xxxxxxx.bin`
+
+![LILYGO® TTGO Lora V2](/img/hardware/lora-v2.0.webp)
+
+</TabItem>
+<TabItem value="v2.1">
+
+## Lora v2.1-1.6
+
+:::caution
+Early versions of these boards contained the wrong component in the LiPo battery charging circuit allowing the battery to be overcharged. Boards purchased after 2021, unless the version is T3_v1.6 20180606, should not have this issue.
+:::
+
+:::caution
+This board is still in production but for various reasons not recommended for new purchases or for unattended installations. Firmware support is phased out. If in doubt, choose the Lora T3S3 board.
+:::
+
+- **MCU**
+  - ESP32 (WiFi & Bluetooth)
+- **LoRa-lähetin-vastaanotin**
+  - Semtech SX127x
+- \*\*Taajuusvaihtoehdot
+  - 433 MHz
+  - 868 MHz
+  - 915 MHz
+  - a variant of this board has a Temperature controlled oscillator (labelled TCXO) for improved frequency stability
+- **Liitännät**
+  - Micro USB
+  - Antenna: SMA antenna connector
+
+### Variations of identifying marks
+
+- FCC ID: 2ASYE-T3-V1-6-1
+- "T3_v1.6.1 20210104" on the board
+- "T3_v1.6 20180606" on the board
+- "Model T3 V1.6.1" on the FCC sticker
+
+### Ominaisuudet
+
+- Built in 0.96 inch OLED display
+- Power and Reset switches
+- microSD connector
+- No GPS
+
+### Resurssit
+
+- Firmware file: `firmware-tlora-v2-1-1.6-X.X.X.xxxxxxx.bin`
+
+![TTGO Lora V2.1-1.6](/img/hardware/lora-v2.1-1.6.webp)
+
+</TabItem>
+
+<TabItem value="v2.1-1.8">
+
+## Lora v2.1-1.8
+
+:::caution
+This board is still in production but for various reasons not recommended for new purchases or for unattended installations. Firmware support is phased out. If in doubt, choose the Lora T3S3 board.
+:::
+
+- **MCU**
+  - ESP32 (WiFi & Bluetooth)
+- **LoRa-lähetin-vastaanotin**
+  - Semtech SX1280 (Region LORA_24 worldwide use)
+- \*\*Taajuusvaihtoehdot
+  - 2.4 GHz
+- **Liitännät**
+  - USB-C
+  - Antenna: SMA antenna connector
+
+### Ominaisuudet
+
+- Built in 0.96 inch OLED display
+- Power and Reset switches
+- microSD connector
+- No GPS
+
+### Resurssit
+
+- Firmware file: `firmware-tlora-v2-1-1.8-X.X.X.xxxxxxx.bin`
+
+![TTGO Lora V2.1-1.8](/img/hardware/lora-v2.1-1.8.webp)
+
+</TabItem>
+
+<TabItem value="v3.0">
+
+## Lora v3.0
+
+:::caution
+This board is using a first generation Semtech chip and is therefore not recommended for new purchases. Firmware support is phased out. If in doubt, choose the Lora T3S3 board.
+:::
+
+- **MCU**
+  - ESP32 (WiFi & Bluetooth)
+- **LoRa-lähetin-vastaanotin**
+  - Semtech SX127x with TCXO for improved frequency stability
+- \*\*Taajuusvaihtoehdot
+  - 433 MHz
+  - 868 MHz
+  - 915 MHz
+- **Liitännät**
+  - USB-C
+  - Antenna: IPEX antenna connector
+
+### Ominaisuudet
+
+- Built in 0.96 inch OLED or 2.13 inch E-Paper display
+- Power and Reset switches, User Button
+- microSD connector
+- Solar panel and battery connector, includes solar charging circuit (CN3065)
+- QUIIC for UART and I2C each
+- No GPS
+
+</TabItem>
+
+</Tabs>

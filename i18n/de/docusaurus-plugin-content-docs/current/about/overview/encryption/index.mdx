@@ -1,0 +1,115 @@
+---
+id: encryption
+title: Meshtastic Verschlüsselung
+sidebar_label: Verschlüsselung
+slug: /overview/encryption
+sidebar_position: 3
+description: "Verstehen Sie die Meshtastic Verschlüsselung: Optionale Netzwerkweite AES256 Sicherheit für unabhängige Kommunikation, um die Privatsphäre gegen passives Abhören zu gewährleisten."
+---
+
+## Erklärung
+
+Meshtastic bietet eine AES256-CTR Verschlüsselung für die Nutzdaten in jeder Nachricht beim Senden über LoRa, mit einem unterschiedlichen Schlüssel für jeden [Kanal](/docs/configuration/radio/channels/). Der [Nachrichtenkopf](/docs/overview/mesh-algo/#layer-1-unreliable-zero-hop-messaging) wird immer unverschlüsselt übertragen, was es den Knoten erlaubt, Nachrichten weiterzuleiten, die sie selbst nicht entschlüsseln können. Man kann diese Weiterleitung deaktivieren, indem man einen anderen [Weiterleitungsmodus](/docs/configuration/radio/device#rebroadcast-mode) auswählt.
+
+Standardmäßig erhalten Sie einen primären Kanal, der mit einem einfachen bekannten Schlüssel verschlüsselt ist (AQ==). Um also eine sichere Verschlüsselung zu verwenden, **müssen Sie diesen Schlüssel zuerst ändern** oder einen neuen Kanal erstellen, mit dem Sie kommunizieren möchten. Ohne einen Kanal, der den Standardschlüssel nutzt, ist die Kommunikation mit Geräten, die diesen verwenden, jedoch nicht möglich.
+
+Direkte Nachrichten an einen bestimmten Knoten werden jetzt mittels öffentlich-privaten Schlüsselpaar (PKC) asymmetrisch verschlüsselt. Jeder Knoten enthält ein eindeutiges öffentlich-privates Schlüsselpaar. Direktnachrichten werden mit dem öffentlichen Schlüssel des Empfängers asymmetrisch verschlüsselt. Dies stellt sicher, dass nur der Empfänger die Nachricht mit seinem privaten Schlüssel entschlüsseln kann. Zusätzlich werden Nachrichten mit dem privaten Schlüssel des Absenders signiert, so dass der Empfänger die Identität des Absenders überprüfen und die Integrität der Nachricht sicherstellen kann.
+
+Alle periodischen Übertragungen (Standort, Telemetrie, Traceroute, etc.), die das Gerät selbst sendet werden nur über den primären Kanal übertragen und mit dem Kanalschlüssel verschlüsselt.
+
+Das Gerät entschlüsselt die Nutzdaten bevor es diese über Bluetooth, serielle Verbindung oder über WiFi/Ethernet an die Meshtastic App sendet. Für MQTT können Sie unabhängig [festlegen](/docs/configuration/module/mqtt#encryption-enabled) ob Sie verschlüsselte oder unverschlüsselte Nutzdaten senden möchten.
+
+## Ist es so sicher wie WiFi WPA3, HTTPS TLS1.3 oder Signal?
+
+**Nein**
+
+[WPA3](https://en.wikipedia.org/wiki/WPA3), [TLS1.3](https://en.wikipedia.org/wiki/TLS1.3), [Signal](https://en.wikipedia.org/wiki/Signal_Protocol), und Meshtastic können alle AES256 verwenden. Doch AES ist nur eines der vielen Zahnräder, die in einem modernen Verschlüsselungssystem benötigt werden. Nachfolgend sind die wichtigsten Funktionen die in Meshtastic fehlen.
+
+### Perfekte voraus gerichtete Geheimhaltung (PFS)
+
+[**P**erfect-**F**orward-**S**ecrecy, auch bekannt als **PFS**](https://en.wikipedia.org/wiki/Forward_secrecy), bedeutet _vergangene_ Kommunikation und generell _passiv Erfasstes_ kann nicht entschlüsselt werden, **_auch wenn der Schlüssel kompromittiert ist_**.
+
+Dies bedeutet, dass Meshtastic für [**« Sammele jetzt, entschlüssele später »**](https://en.wikipedia.org/wiki/Harvest_now,_decrypt_later) Angriffe verwundbar ist. **Dieser Angriff allein reicht nicht aus, um Nachrichten zu entschlüsseln**; er beruht darauf, dass durch einen anderer Fehler der Kanalschlüssel kompromittiert, wie z.B.:
+
+- Zufällig den Kanalschlüssel mit der falschen Person teilen.
+- Einer deiner Knoten wird gestohlen.
+- Jeder unbekannte Fehler, der den Kanalschlüssel einem Angreifer offenbart.
+
+Andere Protokolle, wie _falsch konfiguriertes TLS1.2_, sind jetzt viel stärker von sammele jetzt-entschlüssele später Angriffen betroffen, weil ihre Schlüssel von zukünftigen Quantum-Computern kompromittiert werden können. Aber sie bieten auch keine voraus gerichtete Geheimhaltung (PFS) an.
+
+Meshtastic's AES256-Verschlüsselung gilt als quantenresistent[^1], aber der öffentlich-private Schlüsselaustausch für Direktnachrichten ist es nicht, da aktuelle quantenresistente Verschlüsselungssysteme nicht in LoRa Nachrichten oder unsere IoT-Hardware passen. Realistische Angriffsvektoren beinhalten die zufällige Fehlnutzung von Kanalschlüsseln, verlorene oder gestohlene Knoten und mögliche zukünftige Quantenangriffe auf den Schlüsselaustausch bei Direktnachrichten.
+
+[^1]: Zur Quantenresistenz von AES256 siehe [diese Frage bei Stackoverflow, inklusive Debatte und zwei guten Antworten](https://crypto.stackexchange.com/q/6712) und der [NIST Post-Quantum FAQ](https://csrc.nist.gov/projects/post-quantum-cryptography/faqs) Abschnitt "Um vor der Bedrohung durch Quantencomputer zu schützen, sollten wir die Schlüssellänge für AES jetzt verdoppeln?" (hinzugefügt am 18.11.2018)
+
+#### Empfehlungen für Nutzer mit privaten Kanälen
+
+- **Konfiguriere keine privaten Kanäle auf unbeaufsichtigten Knoten**. Knoten übertragen Meshtastic Nachrichten, auch wenn sie nicht in der Lage sind, diesen zu entschlüsseln. Unbeaufsichtigten Knoten sollten nicht den privaten Schlüssel konfiguriert haben, da es einfach ist, physischen Zugriff zu erlangen und den Kanalschlüssel zu extrahieren.
+- Denken Sie daran, dass alles, was auf einem Kanal gesendet wird, später von jedem, der Zugriff auf den Schlüssel erhält, gespeichert und entschlüsselt werden kann, auch wenn Sie die lokalen Nachrichten löschen.
+- Ändern Sie Ihre Kanalschlüssel von Zeit zu Zeit.
+
+#### Änderungen seit der Firmware Version v2.5.0
+
+- Direkte Nachrichten sind jetzt durch asymmetrische Verschlüsselung mit öffentlich-privaten Schlüssel geschützt, wenn sie zwischen Geräten mit Firmware Version v.2.5.0 oder neuer stattfindet und vorher ein Schlüsselaustausch erfolgt ist. Nachrichten an Geräte mit Firmware v2.4.3 oder älter sind nicht geschützt.
+- Administrative Nachrichten zwischen zwei Knoten mit Firmware v2.5.0 oder neuer sind jetzt geschützt und ein zusätzlicher Schutz gegen Weiterleitungsattacken ist vorhanden.
+
+### Integrität
+
+Integrität bedeutet, dass Nachrichten ohne Schlüssel nicht verändert werden können.
+
+Meshtastic überprüft nicht die Integrität von Nachrichten in Kanälen, ob diese manipuliert wurden (siehe [Ausgabe #4030](https://github.com/meshtastic/firmware/issues/4030) für Details).
+
+#### Empfehlungen
+
+- Bedenken Sie, dass durch einen bekannten Klartext-Angriff jeder Nachrichten an einen Kanal senden _könnte_, auch wenn der Kanalschlüssel privat und sicher ist.
+- Entwickler von Drittanbieter-Anwendungen, die Meshtastic integrieren, sollten ein Nachrichtenauthentifizierungscode (MAC) über den Nachrichteninhalt und vorher vereinbarten Schlüssel (PSK) hinzufügen. Wir erwägen auch einen [gesicherten Kanalmodus](https://github.com/meshtastic/firmware/issues/4030) der dies von vornherein unterstützen würde.
+
+#### Änderungen seit der Firmware Version v2.5.0
+
+- Die Nachrichtenintegrität wird für direkte oder administrative Nachrichten überprüft, wenn die Kommunikation zwischen Geräten mit Firmware v2.5.0 oder neuer stattfindet.
+
+### Authentifizierung
+
+Authentifizierung bedeutet, dass Knoten angeben, wer sie im Netzwerk sind. Meshtastic implementiert dies nicht, daher ist es einfach jemanden nachzuahmen, wenn Sie Zugriff auf den Kanalschlüssel haben.
+
+Das liegt daran, dass die IDs der Knoten auf der Hardware [MAC-Adresse](https://en.wikipedia.org/wiki/MAC_address) basiert, die vom Hersteller hartkodiert werden.
+
+Einige andere Netzwerke wie [Yggdrasil](https://yggdrasil-network.github.io/), [cjdns](https://github.com/cjdelisle/cjdns), oder [libp2p](https://libp2p.io/) verwenden [öffentlich-private Schlüsselpaare](https://en.wikipedia.org/wiki/Public-key_cryptography), und der öffentliche Schlüssel wird zur Identität des Knotens. Dadurch werden alle Nachrichten größer und/oder erfordern einen interaktiven Prozess zum Schlüsselaustausch.
+
+#### Empfehlungen
+
+- Beachten Sie, dass das Absenderfeld aussagekräftig ist und jeder mit Zugriff auf den Kanalschlüssel einfach lügen kann.
+
+#### Änderungen seit der Firmware Version v2.5.0
+
+- Das obige bezieht sich nun nur auf Gruppenchats/Kanäle, da Direktnachrichten geschützt sind, wenn diese zwischen Geräten mit Firmware v2.5.0 oder neuer ausgetauscht werden. Bei Nachrichtenaustausch mit Geräten der Firmware v2.4 oder ältere wird diese zusätzliche Authentifizierung nicht unterstützt.
+
+## Direktnachrichten
+
+Für Direktnachrichten ist die öffentlich-private Verschlüsselung (PKC) implementiert. Dies bietet eine signifikante Verbesserung der Sicherheit im Vergleich zur vorherigen, Kanal basierten Verschlüsselung:
+
+- **Nachrichtenverschlüsselung:** Jede Direktnachricht wird mit dem öffentlichen Schlüssel des Empfängers verschlüsselt und stellt sicher, dass nur der Empfänger die Nachricht mit seinem privaten Schlüssel entschlüsseln kann.
+- **Digitale Signaturen:** Nachrichten werden mit dem privaten Schlüssel des Absenders signiert, so dass der Empfänger die Identität des Absenders überprüfen und die Integrität der Nachricht sicherstellen kann.
+
+### Verhalten vor der Firmware Version v2.5.0
+
+Zuvor wurden Direktnachrichten als Kanalnachrichten implementiert, die ein "an" Protobuffer Feld gesetzt hatten. Dies bedeutete, dass jeder im Kanal alle deine Direktnachrichten lesen konnte. Durch öffentlich-private Verschlüsselung wird dieses Problem behoben, da nur der beabsichtigte Empfänger die Nachricht entschlüsseln und lesen kann.
+
+### Empfehlungen
+
+- Während öffentlich-private Verschlüsselung die Sicherheit von Direktnachrichten deutlich erhöht, ist es immer ratsam, den Austausch sensibler Informationen in Direktnachrichten zu vermeiden, ohne vorher den öffentlichen Schlüssel des Empfängers ordnungsgemäß zu überprüfen.
+
+## Administrative Nachrichten
+
+Administrative Nachrichten werden jetzt durch erweiterte Sicherheitsfunktionen geschützt, wodurch sichergestellt wird, dass kritische Operationen im Netzwerk sicherer als je zuvor sind.
+
+- **Stärkere Verschlüsselung:** Administrative Nachrichten verwenden jetzt verbesserte Verschlüsselungsmethoden, um sicherzustellen, dass nur die beabsichtigten Empfänger auf sie zugreifen und diese lesen können.
+- **Sitzung IDs:** Jeder administrativen Sitzung wird eine eindeutige ID zugewiesen. Dies hilft, unbefugten Zugriff zu verhindern und sicherzustellen, dass Nachrichten nicht manipuliert oder wiederholt werden können.
+
+### Verhalten vor der Firmware Version v2.5.0
+
+Früher waren administrative Nachrichten nicht so sicher, aber mit diesen ktualisierungen sind sie jetzt wesentlich besser gegen mögliche Angriffe und  auch gegen Weiterleitungsangriffe geschützt.
+
+### Empfehlungen
+
+- Stellen Sie immer sicher, dass Ihre Geräte die aktuellste Firmware verwenden, um von diesen verbesserten Sicherheitsfunktionen zu profitieren.
+- Überwachen Sie Ihr Netzwerk regelmäßig auf ungewöhnliche Aktivitäten, um ein hohes Sicherheitsniveau zu gewährleisten.

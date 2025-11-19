@@ -1,0 +1,237 @@
+---
+id: position
+title: Standorteinstellungen
+sidebar_label: Standort
+description: GPS Standorteinstellungen für Ihr Meshtastic Gerät, einschließlich Aktualisierungsintervallen, Übertragungseinstellungen und GPIO.
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+import { Icon } from "@iconify/react";
+
+Standortdaten vom GPS werden entweder vom Funkgerät oder Ihrem gekoppelten Telefon bereitgestellt. Die Verwendung von Meshtastic ist nicht erforderlich, für Zeitberechnungen ist jedoch mindestens ein Gerät im Mesh erforderlich, das entweder über eine GPS, Echtzeituhr oder Internetverbindung für NTP verfügt.
+
+Die Standortkonfiguration verwendet eine administrative Nachricht, um einen `Config.Position` Protocol Buffer zu senden. Die Optionen zur Standortkonfiguration sind: GPS Modus, GPS Aktualisierungsintervall, fester Standort, Smart Broadcast, Mindestabstand für Smart Broadcast, Mindestintervall für Smart Broadcast, Aktualisierungsintervall, Standortnachrichtenoptionen und GPS RX/TX/EN Pins.
+
+## Standorteinstellungen
+
+### GPS Modus
+
+Konfiguriert, ob die GPS Funktionalität auf dem Knoten aktiviert, deaktiviert oder nicht vorhanden ist.
+
+Akzeptable Werte: `DISABLED`, `ENABLED`, und `NOT_PRESENT`.
+
+Im Allgemeinen ist dieser Wert je nach Gerät und dessen Konfiguration standardmäßig entweder `AKTIVIERT` oder `NICHT VORHANDEN`.
+
+### GPS Aktualisierungsintervall
+
+Wie versucht wird, den GPS Standort abzurufen (in Sekunden), oder Null für den Standardwert von einmal alle 2 Minuten oder einen sehr großen Wert (maxint), um nur einmal beim Starten zu aktualisieren.
+
+### Fester Standort
+
+Akzeptable Werte: `true` oder `false`
+
+Standardmäßig deaktiviert
+
+Wenn festgelegt, befindet sich dieser Knoten an einem festen Standort. Das Gerät generiert GPS Aktualisierungen im regulären GPS Aktualisierungsintervall, verwendet jedoch die letzten Breiten-/Längen-/Höhenangaben, die es für den Knoten gespeichert hat. Die Einstellung von Breiten-/Längen-/Höhengrad kann über ein internes GPS oder mithilfe des GPS des Mobilgerätes erfolgen.
+
+### Intelligenter Standort
+
+Akzeptable Werte: `true` oder `false`
+
+Standardmäßig aktiviert
+
+Smart Broadcast sendet Ihren Standort nur dann häufiger, wenn sich Ihr Standort so stark geändert hat, dass eine Standortaktualisierung sinnvoll ist.
+
+Smart Broadcast ergänzt den Aktualisierungsintervall (überschreibt diese Einstellung nicht), wendet jedoch einen Algorithmus an, um Ihr Netzwerk häufiger zu aktualisieren, wenn Sie in Bewegung sind, und es dann zu drosseln, wenn Sie stillstehen. Wenn Sie diese Funktion verwenden, belassen Sie das Übertragungsintervall am besten auf dem Standardwert.
+
+Smart Broadcast berechnet basierend auf der Datenrate Ihrer ausgewählten Kanalkonfiguration ein ideales Standortaktualisierungsintervall.
+
+### Smart Broadcast Mindestentfernung
+
+Standard von `0` ist 100 Meter
+
+Die zurückgelegte Mindestdistanz in Metern (seit dem letzten Senden), bevor wir den Standort an das Netzwerk senden können, wenn Smart Broadcast aktiviert ist.
+
+### Smart Broadcast Mindestintervall
+
+Standard von `0` ist 30 Sekunden
+
+Die Mindestanzahl von Sekunden (seit dem letzten Senden), bevor wir den Standort an das Mesh senden können, wenn Smart Broadcast aktiviert ist.
+
+### Übertragungsintervall
+
+Standard von `0` ist 15 Minuten
+
+Wenn Smart Broadcast deaktiviert ist, sollten wir unser Standort so oft senden.
+
+Die GPS Aktualisierungen werden in jedem Sendeintervall gesendet, entweder mit dem tatsächlichen GPS Standort oder einem leeren Standort, wenn keine GPS Lösung erreicht wurde.
+
+### Standort Optionen
+
+Definiert, welche Optionen in Standortnachrichten gesendet werden. Werte werden als Bitfeld boolescher Konfigurationsoptionen gespeichert (bitweises ODER von PositionFlags).
+
+|       Wert             |                  Beschreibung                                            |
+| :--------------------: | :----------------------------------------------------------------------: |
+|  NICHT GESETZT         |             Zum Kompilieren erforderlich                                 |
+|        Höhe            |            Höhenwert (falls verfügbar) hinzufügen                        |
+|       Höhe MSL         |               Höhenwert ist über MSL                                     |
+| Geodätische Separation |              geoidale Trennung hinzufügen                                |
+|       DOP              | DOP Wert hinzufügen; PDOP wird standardmäßig verwendet, siehe unten      |
+|      HVDOP             |   Wenn POS_DOP gesetzt ist, sende separate HDOP / VDOP Werte statt PDOP  |
+|     SATINVIEW          |         Anzahl der sichtbaren Satelliten hinzufügen                      |
+|   Sequenznummer        |              Eine Sequenznummer pro Paket hinzufügen                     |
+|    Zeitstempel         |              Zeitstempel (aus GPS-Lösung) hinzufügen                     |
+|     Richtung           |             Kursrichtung (aus GPS-Lösung) hinzufügen                     |
+| Geschwindigkeit        |           Geschwindigkeit (von GPS-Lösung) hinzufügen                    |
+
+### GPIO RX/TX/DE für GPS Modul
+
+Wenn Ihr Gerät keinen festen GPS Chip hat, können Sie die GPIO Pins für die RX, TX und EN Pins eines GPS Moduls definieren.
+
+## Verfügbarkeit der Standorteinstellungen
+
+<Tabs
+  groupId="settings"
+  defaultValue="apple"
+  values={[
+    {
+      label: (
+        <>
+          <Icon icon="mdi:android" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Android
+        </>
+      ),
+      value: "android",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:apple" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Apple
+        </>
+      ),
+      value: "apple",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:terminal" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Kommandozeile
+        </>
+      ),
+      value: "cli",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:internet" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Web
+        </>
+      ),
+      value: "web",
+    },
+  ]}>
+<TabItem value="android">
+
+#### Android
+
+:::info
+
+Alle Standorteinstellungen sind für Android verfügbar.
+
+1. Öffnen Sie die Meshtastic Applikation
+2. Navigiere zu: **vertikale Ellipse (3 Punkte oben rechts) > Funkkonfiguration > Standort**
+
+:::
+
+</TabItem>
+<TabItem value="apple">
+
+#### Apple
+
+:::info
+Die Standorteinstellungen sind in iOS, iPadOS und macOS unter Einstellungen > Gerätekonfiguration > Standort.
+:::
+
+</TabItem>
+<TabItem value="cli">
+
+#### Kommandozeile
+
+:::info
+
+Alle Standorteinstellungen sind über die Python Kommandozeile verfügbar. Beispielbefehle sind folgende:
+
+:::
+
+|         Einstellung                            |                                Akzeptable Werte                                                                                           |       Standardwert                  |
+| :--------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------: | :---------------------------------: |
+|        position.gps_mode                       |                      `AKTIVIERT`, `DEAKTIVIERT`, `NICHT VERFÜGBAR`                                                                        | `AKTIVIERT` oder `NICHT VERFÜGBAR`  |
+|      position.gps_update_interval              |                               Ganzzahl (Sekunden)                                                                                         |   Standard von `0` ist 2 Minuten    |
+|       position.fixed_position                  |                                `true`, `false`                                                                                            |          `false`                    |
+|  position.position_broadcast_smart_enabled     |                                `true`, `false`                                                                                            |          `true`                     |
+|  position.broadcast_smart_minimum_distance     |                                Ganzzahl (Meter)                                                                                           |    Standard von `0` ist 100 Meter   |
+| position.broadcast_smart_minimum_interval_secs |                               Ganzzahl (Sekunden)                                                                                         |   Standard von `0` ist 15 Minuten   |
+|     position.position_broadcast_secs           |                               Ganzzahl (Sekunden)                                                                                         |   Standard von `0` ist 15 Minuten   |
+|         position.flags                         | `UNSET`, `ALTITUDE`, `ALTITUDE_MSL`, `GEOIDAL_SEPARATION`, `DOP`, `HVDOP`, `PDOP`, `SATINVIEW`, `SEQ_NO`, `TIMESTAMP`, `HEADING`, `SPEED` |      `NICHT GESETZT`                |
+|         position.rx_gpio                       |                                Ganzzahl (0-39)                                                                                            |      `NICHT GESETZT`                |
+|         position.tx_gpio                       |                                Ganzzahl (0-34)                                                                                            |      `NICHT GESETZT`                |
+
+:::tip
+
+Weil das Gerät nach jedem Befehl über die Kommandozeile neu startet, wird empfohlen, dass mehrere Werte in einem Konfigurationsblock zusammengefasst und übertragen werden. **Dies ist besonders wichtig für Standortwerte, um sicherzustellen, dass sie gleichzeitig festgelegt werden und nicht durch nachfolgende Befehle überschrieben werden.**
+
+```shell title="Example:"
+meshtastic --set position.fixed_position true --setlat 37.8651 --setlon -119.5383
+```
+
+:::
+
+```shell title="Set GPS update interval (Default of 0 is 2 Minutes)"
+meshtastic --set position.gps_update_interval 0
+meshtastic --set position.gps_update_interval 45
+```
+
+```shell title="Set Fixed Position - Current Location"
+meshtastic --set position.fixed_position true
+```
+
+:::note
+Das Gerät erfasst weiterhin GPS Koordinaten gemäß dem `gps_update_interval`, verwendet jedoch die zuletzt gespeicherten Koordinaten als Fixpunkt.
+:::
+
+```shell title="Set and Enable Fixed Position - User Defined"
+meshtastic --setlat 37.8651 --setlon -119.5383
+```
+
+```shell title="Remove and Unset Fixed Position"
+meshtastic --remove-position
+```
+
+```shell title="Enable / Disable Smart position broadcast (Enabled by default)"
+meshtastic --set position.position_broadcast_smart_enabled true
+meshtastic --set position.position_broadcast_smart_enabled false
+```
+
+```shell title="Set Position Broadcast Interval (Default of 0 is 15 minutes)"
+meshtastic --set position.broadcast_secs 0
+meshtastic --set position.broadcast_secs 60
+```
+
+:::note
+Es kann einige Zeit dauern, bis die Änderung wirksam wird. Der GPS Standort wird gemäß dem unter `gps_update_interval` angegebenen Wert aktualisiert und das Netzwerk wird über den neue Standort in Bezug auf den Wert `position_broadcast_secs` benachrichtigt.
+:::
+
+```shell title="Set / Unset Position Flags"
+meshtastic --pos-fields ALTITUDE ALTITUDE_MSL
+meshtastic --pos-fields UNSET
+```
+
+</TabItem>
+<TabItem value="web">
+
+#### Web
+
+:::info
+Alle Standorteinstellungen sind in der Weboberfläche verfügbar.
+:::
+
+</TabItem>
+</Tabs>

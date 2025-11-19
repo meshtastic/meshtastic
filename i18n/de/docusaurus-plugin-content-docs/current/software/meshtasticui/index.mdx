@@ -1,0 +1,409 @@
+---
+id: meshtastic-ui
+title: Meshtastic Benutzeroberfläche
+hide_title: true
+slug: /software/meshtastic-ui
+sidebar_label: Meshtastic Benutzeroberfläche
+sidebar_position: 4
+description: Meshtastic UI (MUI) ist eine eigenständige Benutzeroberfläche für unterstützte Meshtastic Geräte, die eine direkte Interaktion mit den meisten Funktionen ermöglicht, ohne dass ein Telefon benötigt wird. Es läuft neben der Firmware und bietet Werkzeuge für Nachrichten, Karten und Einstellungen.
+image: /img/software/meshtastic-ui/mui_link_preview.png
+---
+
+import { Dark, Light } from "/src/components/ColorMode";
+
+<Dark>
+  <img
+    src="/img/software/meshtastic-ui/Meshtastic-UI-Long_Dark.svg"
+    alt="Meshtasticd UI Dunkel"
+  />
+</Dark>
+<Light>
+  <img
+    src="/img/software/meshtastic-ui/Meshtastic-UI-Long_Light.svg"
+    alt="Meshtasticd UI Hell"
+  />
+</Light>
+
+## Was ist die Meshtastic Benutzeroberfläche?
+
+Meshtastic UI (MUI) ist eine unabhängige Benutzeroberfläche für Meshtastic Geräte, entworfen, um eine direkte Interaktion mit dem Netzwerk zu ermöglichen, ohne eine Telefonanwendung für die elementarsten Einstellungen zu benötigen. Die ursprünglich für eigenständige Touchscreen Geräte entwickelte MUI hat sich seitdem auf Linux Systeme ausgeweitet und ist somit eine vielseitige Lösung für verschiedene Hardwareplattformen. Während viele Einstellungen direkt vorgenommen werden können, erfordern einige erweiterte Optionen möglicherweise noch eine Verbindung mit einem anderen Gerät, wie beispielsweise einem Telefon.
+
+Die Entwicklung von MUI begann Anfang 2024, und nach mehr als einem Jahr aktiver Arbeit wurde die erste Vorschau Anfang 2025 veröffentlicht. Zu diesem Zeitpunkt war es auf 12.000 Zeilen handschriftlichen Code gewachsen, 50.000 Zeilen generierter Code, und wurde erfolgreich auf 10 verschiedene Geräte portiert und in 18 Sprachen übersetzt. MUI wird mit neuen Funktionen, Optimierungen und erweiterter Hardware-Unterstützung weiterentwickelt.
+
+<div align="center">
+  <Dark>
+    <img
+      src="/img/software/meshtastic-ui/mui_home_dashboard_dark.webp"
+      alt="MUI Home Dashboard Dark"
+    />
+  </Dark>
+  <Light>
+    <img
+      src="/img/software/meshtastic-ui/mui_home_dashboard_light.webp"
+      alt="MUI Home Dashboard Light"
+    />
+  </Light>
+</div>
+
+### Unterstützte Geräte
+
+MUI ist mit einer Vielzahl von Geräten kompatibel, einschließlich:
+
+- **Eigenständige LoRa Geräte mit ESP32-S3 und TFT Anzeige**
+  - LilyGo T-Deck
+  - Seeed SenseCAP Indicator
+  - unPhone
+  - PICOmputer
+- **CYD-Geräte mit ESP32-S3 mit serieller Verbindung zu jedem LoRa-Gerät**
+  - T-HMI
+  - Mesh-Tab "Replicator" (ESP-4848S040)
+  - Makerfabs 4"
+- **Linux-Geräte mit SPI/I2C und GPIOs**
+  - Raspberry Pi
+  - Milk-V
+  - LuckFox mit TFT SPI und LoRa Aufsatz
+- ** Linux Meshtasticd Service **
+  - PC mit Meshstick oder SIMRadio Simulation mit X11 Benutzeroberfläche
+
+### Installation
+
+Für die meisten eigenständigen Geräte kann MUI mit dem [Meshtastic Web Flasher](https://flasher.meshtastic.org) installiert werden. Suchen Sie nach dem MUI Logo auf unterstützter Hardware, wählen Sie eine 2.6+ Version Firmware aus und schalten Sie die Option Meshtastic UI bei der Programmierung ein.
+
+Einige Geräte werden im Web Flasher nicht unterstützt, aber vorkompilierte Firmware Binärdateien sind verfügbar. Diese Firmware Dateien können durch das **"-tft"** Suffix im Dateinamen identifiziert werden. Vorkompilierte Firmware kann auf der [Download-Seite](/downloads/) gefunden werden.
+
+Einige unterstützte Geräte haben keine automatische Firmware Kompilierung oder Unterstützung zur Programmierung im Web Flasher. Diese Geräte erfordern manuelle Kompilierung und Programmierung. Anweisungen zur manuellen Erstellung von Firmware finden Sie in der [Entwicklungsdokumentation](/docs/development/firmware/build/).
+
+## Anwendung
+
+### Unterstützung für SD-Karten
+
+Bei Geräten mit unterstütztem SD Kartensteckplatz stellen Sie sicher, dass die Karte vor der Verwendung richtig konfiguriert ist. Die SD-Karte sollte mit einem MBR formatiert werden. MUI unterstützt sowohl FAT32 als auch exFAT Partitionen, wobei exFAT das empfohlene Format ist.
+
+### Ersteinrichtung
+
+Beim ersten Booten von MUI auf einem Gerät oder nach dem werkseitigen Zurücksetzen eines Gerätes, wird der Startbildschirm als Schnelleinstellungsbildschirm angezeigt, um die Region des Gerätes und sowohl den langen und kurzen Namens festzulegen. Dieser Bildschirm erlaubt die gleichzeitige Einstellung dieser Einstellungen und benötigt nur einen Neustart, anstatt separat jedes einzelne einzustellen und zweimal neu zu starten.
+
+<div align="center">
+  <img
+    src="/img/software/meshtastic-ui/mui_initial_boot.webp"
+    alt="Meshtastic UI Initial Setup"
+  />
+</div>
+
+### Startseite
+
+Die Startseite ist der erste Bildschirm, der beim Start nach dem Initialisierungsbildschirm angezeigt wird. Sie bietet einen schnellen Überblick über den Status des Gerätes und ermöglicht eine schnelle Navigation zur Auswahl von Bereichen oder zur Änderung von Einstellungen. Viele Steuerelemente unterstützen sowohl kurzen als auch langen Druck für zusätzliche Funktionalität.
+
+Eine detaillierte Aufschlüsselung der verfügbaren Steuerelemente und ihrer Funktionen finden Sie in der Infografik.
+
+<div align="center">
+  <Dark>
+    <img
+      src="/img/software/meshtastic-ui/home_dark.webp"
+      alt="MUI Home Dashboard Dark"
+    />
+  </Dark>
+  <Light>
+    <img
+      src="/img/software/meshtastic-ui/home_light.webp"
+      alt="MUI Home Dashboard Light"
+    />
+  </Light>
+</div>
+
+<div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+  <div style={{ display: 'flex', flexShrink: 0 }}>
+    <Dark>
+      <img
+        src="/img/software/meshtastic-ui/sd_dark.svg"
+        alt="MUI SD Card Dark"
+        style={{ height: '32px', width: '32px' }}
+      />
+    </Dark>
+    <Light>
+      <img
+        src="/img/software/meshtastic-ui/sd_light.svg"
+        alt="MUI SD Card Light"
+        style={{ height: '32px', width: '32px' }}
+      />
+    </Light>
+  </div>
+  <p style={{ margin: 0, flex: 1 }}>Das SD Kartensymbol ist im Bild oben nicht sichtbar, ist aber auf eigenständigen Geräten vorhanden. Es zeigt die Größe und das Format der erkannten SD Karte an und zeigt den verwendeten Speicher in GB und Prozentsatz an. Durch Tippen des Symbols wird der SD Kartenstatus neu geladen, die Firmware kann während dieses Prozesses kurz einfrieren. Dies ist hilfreich, wenn Sie die SD Karte im laufenden Betrieb ausgetauscht haben.</p></div>
+
+### Knotenliste
+
+Die Knotenliste enthält eine Liste aller Knoten im Netz. Es erlaubt den Benutzern, Knoten basierend auf ausgewählten Kriterien anzuzeigen, zu filtern und hervorzuheben.
+
+- **Kurzes Tippen** auf das Knotensymbol öffnet die Knotenliste, die alle aktiven Knoten im Netz anzeigt.
+- **Lange Drücken** auf das Knotensymbol öffnet die Knoteneinstellungen, wo Filter und Hervorhebungen angewendet werden können.
+
+<div align="center">
+  <Dark>
+    <img
+      src="/img/software/meshtastic-ui/mui_node_list_dark.webp"
+      alt="MUI Node List Dark"
+    />
+  </Dark>
+  <Light>
+    <img
+      src="/img/software/meshtastic-ui/mui_node_list_light.webp"
+      alt="MUI Node List Light"
+    />
+  </Light>
+</div>
+
+#### Knotenoptionen - Filter
+
+In der Registerkarte Filter können Benutzer Knoten nach ausgewählten Kriterien filtern.
+
+<div align="center">
+  <Dark>
+    <img
+      src="/img/software/meshtastic-ui/mui_node_filter_dark.webp"
+      alt="MUI Node Filter Dark"
+    />
+  </Dark>
+  <Light>
+    <img
+      src="/img/software/meshtastic-ui/mui_node_filter_light.webp"
+      alt="MUI Node Filter Light"
+    />
+  </Light>
+</div>
+
+#### Knotenoptionen - Hervorheben
+
+In der Registerkarte Hervorheben können Sie ausgewählte Knoten anhand ausgewählter Kriterien hervorheben.
+
+<div align="center">
+  <Dark>
+    <img
+      src="/img/software/meshtastic-ui/mui_node_highlight_dark.webp"
+      alt="MUI Node Highlight Dark"
+    />
+  </Dark>
+  <Light>
+    <img
+      src="/img/software/meshtastic-ui/mui_node_highlight_light.webp"
+      alt="MUI Node Highlight Light"
+    />
+  </Light>
+</div>
+
+### Kanäle
+
+Der Bildschirm Kanäle listet alle konfigurierten Kanäle für das Gerät auf. Jeder Kanal wird mit einem Symbol dargestellt, das seinen Verschlüsselungsstatus anzeigt:
+
+- Ein **gelber Schlüssel** gibt an, dass der Kanal einen standardmäßigen PSK (Pre-Shared Key, vorher geteilten Schlüssel) verwendet.
+- Ein **grünes Schloss** zeigt an, dass der Kanal einen konfigurierten PSK verwendet.
+- Ein **rotes Schloss** zeigt an, dass kein PSK für diesen Kanal konfiguriert ist.
+
+Ein Tippen auf einen konfigurierten Kanal öffnet einen Chat für diesen Kanal.
+
+<div align="center">
+  <Dark>
+    <img
+      src="/img/software/meshtastic-ui/mui_channels_dark.webp"
+      alt="MUI Channels Dark"
+    />
+  </Dark>
+  <Light>
+    <img
+      src="/img/software/meshtastic-ui/mui_channels_light.webp"
+      alt="MUI Channels Light"
+    />
+  </Light>
+</div>
+
+### Chats
+
+Der Chat Bildschirm listet alle verfügbaren Chats für das Gerät auf, einschließlich gemeinsamer Kanäle und Direktnachrichten. Die Chat Liste kann durch Tippen auf das Chat Symbol geöffnet werden.
+
+<div align="center">
+  <Dark>
+    <img
+      src="/img/software/meshtastic-ui/mui_chat_list_dark.webp"
+      alt="MUI Chat List Dark"
+    />
+  </Dark>
+  <Light>
+    <img
+      src="/img/software/meshtastic-ui/mui_chat_list_light.webp"
+      alt="MUI Chat List Light"
+    />
+  </Light>
+</div>
+
+- Lange Drücken auf einen Chat zeigt eine `DEL` Schaltfläche, um diese zu löschen.
+- Ein in Orange hervorgehobener Chat zeigt eine neue ungelesene Nachricht an.
+
+#### Chat Nachrichten
+
+Innerhalb eines Chats werden Nachrichten wie folgt dargestellt:
+
+- Nachrichten von anderen Geräten erscheinen auf der linken Seite.
+- Nachrichten vom lokalen Gerät erscheinen auf der rechten Seite.
+- Wenn eine Nachricht gesendet wird, wird der Umriss des Nachrichtenfensters basierend auf ihrem Status aktualisiert:
+  - Wenn eine Bestätigung (ACK) empfangen wird, ändert sich die Umrisslinie in Meshtastic Grün.
+  - Wenn die maximalen Sendewiederholung erreicht und keine Bestätigung (ACK) wird empfangen, dann wird die Umrisslinie in Rot dargestellt.
+  - Wird die Nachricht von anderen Knoten gehört und weitergeleitet, so wird die Umrisslinie in Gelb dargestellt.
+
+<div align="center">
+  <Dark>
+    <img
+      src="/img/software/meshtastic-ui/mui_chat_message_dark.webp"
+      alt="MUI Chat Message Dark"
+    />
+  </Dark>
+  <Light>
+    <img
+      src="/img/software/meshtastic-ui/mui_chat_message_light.webp"
+      alt="MUI Chat Message Light"
+    />
+  </Light>
+</div>
+
+### Karte
+
+Der Kartenbildschirm zeigt Karten-Kacheln an, die auf der SD-Karte des Gerätes gespeichert sind. Es sind keine Kacheln enthalten. Diese müssen manuell der SD Karte im Verzeichnis `/map` hinzugefügt werden, wenn ein einzelner Typ verwendet wird, oder im Verzeichnis `/maps/{STYLE}/` wenn mehrere Typen verwendet werden. Kacheln müssen als 256x256 PNG Bilder gespeichert sein und eine 256-Farbpalette mit 8-Bit-Farbtiefe wird empfohlen.
+
+Unter diesem [Link](https://github.com/meshtastic/device-ui/tree/master/maps) ist ein Startersatz von Kacheln für Zoomstufen 1-6 der Erde verfügbar, zusammen mit Anweisungen, wie Sie zusätzlicher Karten erhalten können.
+
+#### Kartensteuerung
+
+Der Kartenbildschirm zeigt den gewählten Kartentyp an und bietet interaktive Steuerelemente für die Navigation:
+
+- **Pfeil Symbole** – Bewegen die Kartenansicht in die entsprechende Richtung.
+- **Lupe (+/-)** – Passen Sie die Vergrößerungsstufe an.
+- **GPS Symbol** – Zentriert die Karte auf den aktuellen GPS Standort des Gerätes (falls verfügbar).
+- **Fadenkreuz** – zentrieren Sie den eigenen Standort, lange drücken, um einen neuen Standort manuell zu setzen.
+
+Wenn keine Geräte mit einem bekannten Standort vorhanden sind und das Gerät selbst keinen Standort hat, wird die Karte auf Big Ben in London, UK zentriert.
+
+<div align="center">
+  <Dark>
+    <img
+      src="/img/software/meshtastic-ui/mui_map_dark.webp"
+      alt="MUI Map Dark"
+    />
+  </Dark>
+  <Light>
+    <img
+      src="/img/software/meshtastic-ui/mui_map_light.webp"
+      alt="MUI Map Light"
+    />
+  </Light>
+</div>
+
+#### Karteneinstellungen
+
+Das Kartenmenü, auf das durch langes Drücken des Kartensymbols zugegriffen werden kann, bietet Folgendes:
+
+- Helligkeit und Kontrastanpassungen
+- Kartenstil auswählen (falls mehrere Stile verfügbar sind)
+
+<div align="center">
+  <Dark>
+    <img
+      src="/img/software/meshtastic-ui/mui_map_options_dark.webp"
+      alt="MUI Map Options Dark"
+    />
+  </Dark>
+  <Light>
+    <img
+      src="/img/software/meshtastic-ui/mui_map_options_light.webp"
+      alt="MUI Map Options Light"
+    />
+  </Light>
+</div>
+
+### Einstellungen & Werkzeuge
+
+Der Bildschirm Einstellungen & Werkzeuge bietet Zugriff auf Gerätekonfigurationen und unterstützende Funktionen. Es ist in zwei Registerkarten unterteilt:  
+
+- **Einstellungen** – Erlaubt Benutzern verschiedene Aspekte des Gerätes innerhalb von MUI zu konfigurieren.  
+- **Werkzeuge** – Stellt Hilfsprogramme zur Netzwerkdiagnostik und -überwachung bereit.  
+
+#### Zugriff auf Einstellungen & Werkzeuge
+
+- **Kurzes Tippen** auf das Einstellungssymbol tippen öffnet den Bildschirm Einstellungen & Werkzeuge.  
+- **Lange Drücken** auf das Einstellungssymbol sperrt den Bildschirm, wenn die Sperrbildschirmfunktion aktiviert ist. Wenn der Sperrbildschirm deaktiviert ist, wird das Gerät durch diese Aktion in den Ruhezustand versetzt.  
+
+#### Registerkarte Einstellungen
+
+Die Registerkarte Einstellungen enthält verschiedene Einstellungen, die innerhalb von MUI eingestellt werden können.
+
+<div align="center">
+  <Dark>
+    <img
+      src="/img/software/meshtastic-ui/mui_settings_dark.webp"
+      alt="MUI Settings Dark"
+    />
+  </Dark>
+  <Light>
+    <img
+      src="/img/software/meshtastic-ui/mui_settings_light.webp"
+      alt="MUI Settings Light"
+    />
+  </Light>
+</div>
+
+#### Registerkarte Werkzeuge
+
+Die Registerkarte Werkzeuge bietet Zugriff auf verschiedene Diagnosewerkzeuge, einschließlich:  
+
+- **Mesh Detektor** – Sendet regelmäßig eine Anfrage zu Knoteninformationen um Knoten in der Nähe zu erkennen. 
+- **Signal Monitor** – überwacht die Signalstärke zwischen ausgewählten Knoten, um die Knotenplatzierung zu unterstützen.
+- **Trace Route** – Führt eine Routenverfolgung zum ausgewählten Knoten aus. 
+- **Statistik** – zerlegt empfangene Nachrichten nach Typ, wie Telemetrie, Standortaktualisierung, Routenverfolgung etc.  
+- **Nachrichtenprotokoll** – Zeigt ein Protokoll der gesendeten und empfangenen Nachrichten.  
+
+<div align="center">
+  <Dark>
+    <img
+      src="/img/software/meshtastic-ui/mui_settings_tools_dark.webp"
+      alt="MUI Settings Tool Dark"
+    />
+  </Dark>
+  <Light>
+    <img
+      src="/img/software/meshtastic-ui/mui_settings_tools_light.webp"
+      alt="MUI Settings Tools Light"
+    />
+  </Light>
+</div>
+
+## Bluetooth Programmiermodus
+
+MUI funktioniert als Benutzeroberfläche, ähnlich den Android und Apple Apps. Es läuft auf einem Kern der MCU, während die reguläre Meshtastic Firmware auf dem anderen läuft. MUI kommuniziert mit der Firmware über die API, die gleiche Schnittstelle, die von anderen Meshtastic Clients verwendet wird.  
+
+Die API unterstützt nur _eine_ aktive Verbindung gleichzeitig, was bedeutet, dass Bluetooth während der Ausführung von MUI nicht verwendet werden kann. Da nicht alle Einstellungen innerhalb von MUI konfiguriert werden können, erlaubt der Bluetooth Programmiermodus es MUI vorübergehend zu deaktivieren und Bluetooth zu aktivieren, damit das Gerät über eine andere App konfiguriert werden kann.  
+
+### Zugriff auf den Bluetooth Programmiermodus
+
+Der Bluetooth Programmiermodus kann auf zwei Arten aktiviert werden:
+
+- Beim Booten drücken und halten Sie das Meshtastic Logo auf dem Boot-Bildschirm.
+- Drücken Sie das Bluetooth-Symbol in den Einstellungen im Menü: Herunterfahren/Zurücksetzen.
+
+<div align="center">
+    <img
+      src="/img/software/meshtastic-ui/shutdown_screen.webp"
+      alt="Reset/Bluetooth Programming Mode/Shutdown"
+      width="60%"      
+    />
+</div>
+
+Wenn aktiviert, startet das Gerät im Bluetooth Programmierungsmodus neu. In diesem Modus wird der Bildschirm eine zufällig generierte Pinnummer anzeigen, die bei während Bluetooth Verbindung in der App eingegeben werden muss.
+
+<div align="center">
+    <img
+      src="/img/software/meshtastic-ui/bluetooth_programming_mode.webp"
+      alt="Bluetooth Programming Mode"
+      width="60%"
+    />
+</div>
+
+### Bluetooth Programmierungsmodus beenden
+
+Drücke und halte das Bluetooth-Symbol, um das Gerät wieder in MUI zu starten.

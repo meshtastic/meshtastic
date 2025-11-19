@@ -1,0 +1,23 @@
+---
+id: flashing-esp32-devices
+title: Flash Dispositivi ESP32
+sidebar_label: Dispositivo ESP32
+sidebar_position: 2
+description: Istruzioni per flashare il firmware Meshtastic su un dispositivo con chipset ESP32.
+---
+
+:::info
+Il metodo consigliato per flashare il firmware è il [Web Flasher.](https://flasher.meshtastic.org)
+:::
+
+## Metodo di flash per i dispositivi ESP32
+
+1. Il [Web Flasher](/docs/getting-started/flashing-firmware/esp32/web-flasher.mdx) richiede browser Chrome o Edge, ma è una scelta eccellente per flashare rapidamente. **Questo metodo è altamente raccomandato per il flashing del firmware, specialmente per i nuovi utenti del progetto, in quanto è facile da usare.**
+2. Lo [Script CLI](/docs/getting-started/flashing-firmware/esp32/cli-script) è considerato il "processo manuale" per flashare il firmware.
+3. Il flash del dispositivo utilizzando un [adattatore seriale esterno](/docs/getting-started/flashing-firmware/esp32/external-serial-adapter) dovrebbe essere tentato come ultima spiaggia, se nessun altro metodo ha avuto successo in precedenza.
+
+:::info note
+
+Il [web client](/docs/software/web-client) a meshtastic.local viene aggiornato solo con una completa pulizia e reinstallazione del dispositivo. Se scegli una reinstallazione, otterrai l'ultima interfaccia web (inclusa nel pacchetto).  Per preservare le impostazioni, è possibile [esportare la configurazione](/docs/software/python/cli#--export-config) prima di una reinstallazione e caricarle successivamente.
+
+:::

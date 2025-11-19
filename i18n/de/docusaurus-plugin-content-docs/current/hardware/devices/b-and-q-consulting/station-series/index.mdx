@@ -1,0 +1,68 @@
+---
+id: station-series
+title: Station Serie
+sidebar_label: Station Serie
+sidebar_position: 2
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+Die Station Serie von Geräten, die von Neil Hao von B&Q Consulting und betrieben mit Meshtastic, sind kompakte und langlebige LoRa Geräte, die für eine leistungsstarke Funkkommunikation entwickelt wurden. Sie verfügen über eine leistungsstarken Verstärker für LoRa Kommunikation, einen robusten SMA-Antennenanschluss und eine Vielzahl externer IO Schnittstellen.
+
+Für umfassendere Informationen über die Station Serie von Geräten besuchen Sie bitte die B&Q Consulting Station Serie [Wiki Seite.](https://wiki.uniteng.com/en/meshtastic/station-g2)
+
+<Tabs
+groupId="station-series"
+queryString="station-series"
+defaultValue="g2"
+values={[
+{label: 'Station G2', value: 'g2'}
+]}>
+
+<TabItem value="g2">
+
+## Spezifikationen
+
+- **MCU**
+  - ESP32-S3 WROOM-1
+    - WLAN
+    - Bluetooth 5.0
+- **LoRa Sendeempfänger**
+  - Semtech SX1262
+  - Zusätzlicher 35 dBm LoRa Leistungsverstärker
+  - Extra Verstärker mit sehr niedrigem Rauschpegel
+- **Frequenzoptionen**
+  - 864 - 928 MHz
+- **Navigationsmodul**
+  - Optional (1x GROVE GPS Steckplatz)
+- **Antenne**
+  - SMA Buchse
+- **Anschlüsse**
+  - USB-C (PD Protokoll)
+
+## Merkmale
+
+- Meshtastic vorinstalliert
+- Benutzer Taste
+- 1,3 Zoll OLED Bildschirm
+- 1x5P Pinweite = 1,5mm Stecker (9 V-19 V externes Netzteil)
+- GROVE I2C Steckplatz ( 1x4P Pinweite = 2 mm )
+- SparkFun QWIIC I2C Stecker ( 1x4P Pinweite = 1 mm )
+- GROVE GPS Steckplatz ( 1x4P Pinweite = 2 mm )
+- IO Erweiterungssteckplatz ( 1x10P Pinweite = 1,5 mm)
+
+## Quellen
+
+- Firmware Datei: `firmware-station-g2-X.X.x.xxxxx.bin`
+- [Unit Engineerings Offizielles Wiki](https://wiki.uniteng.com/en/meshtastic/station-g2)
+- Links zum Direktkauf:
+  - International
+    - [Offizieller Shop](https://msh.to/station-g2/)
+    - [Offizieller Tindie Shop](https://msh.to/station-g2-tindie/)
+
+![Station G2 Front](/img/hardware/station-series/station-g2-front.webp)
+![Station G2 Rückseite](/img/hardware/station-series/station-g2-back.webp)
+
+</TabItem>
+</Tabs>

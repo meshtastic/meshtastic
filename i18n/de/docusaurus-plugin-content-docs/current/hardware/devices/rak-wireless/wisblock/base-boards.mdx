@@ -1,0 +1,235 @@
+---
+id: base-board
+title: RAK WisBlock Basisplatinen
+sidebar_label: Basisplatinen
+sidebar_position: 1
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+Die Operation erfordert sowohl eine Basisplatine als auch ein [Kernmodul](../core-module/).
+
+<Tabs
+groupId="rakbase board"
+queryString="rakbase"
+defaultValue="RAK19007"
+values={[
+{label: 'RAK5005-O', value: 'RAK5005-O'},
+{label: 'RAK19007', value:'RAK19007'},
+{label: 'RAK19003', value: 'RAK19003'},
+{label: 'RAK19001', value: 'RAK19001'}
+]}>
+<TabItem value="RAK5005-O">
+
+## RAK5005-O
+
+:::caution
+Die RAK5005-O Platine ist nicht mehr in der Produktion. Es wird empfohlen, stattdessen die RAK19007 zu verwenden.
+:::
+
+- RAK5005-O - Die originale WisBlock Basisplatine.
+- **Steckplätze**
+  - (x1) Kernmodulsteckplatz
+  - (x1) WisBlock IO Modulsteckplatz
+  - (x4) WisBlock Sensormodul Steckplätze
+- **Tasten**
+  - (x1) Reset Taste
+  - Eine Benutzertaste kann über das [13002 IO Modul](https://msh.to/rak13002) hinzugefügt werden.
+- **Anschlüsse**
+  - JST PHR-2 Stecker für 3,7 V LiPo-Akku (mit Ladesteuerung)
+  - JST-ZHR-2 Stecker für 5 V Solarpanel (max 5,5 V)
+  - I<sup>2</sup>C, UART, GPIOs und Analogeingang zugänglich mit Lötkontakten
+  - Micro-USB Anschluss für Fehlersuche und Stromversorgung
+- **Bildschirmunterstützung**
+  - OLED-Bildschirmunterstützung (OLED-Bildschirm separat erhältlich)
+
+:::note
+Die RAK5005 (ohne -O) ist nicht kompatibel.
+:::
+
+### Anschlussplan
+
+<img
+  alt="RAK19001-O Connectors"
+  src="/img/hardware/rak5005-0_connectors.web"
+  style={{ zoom: "50%" }}
+/>
+
+### Stromversorgung
+
+- JST-PHR-2 Stecker für 3,7 V Lipo Akku.
+  - Der maximale Strom des Ladereglers beträgt 500mA.
+  - Die minimale Eingangsspannung zum Aufladen beträgt 3,3 V, maximal 4,3 V.
+- JST-ZHR-2 Stecker für 5 V Solarpanel (max 5,5 V)
+  - Die minimale Eingangsspannung beträgt 4,4 V, maximal 5,5 V.
+
+Weitere Informationen zum RAK5005-O finden Sie im [RAK Dokumentationszentrum](https://docs.rakwireless.com/product-categories/wisblock/rak5005-o/overview/#product-description).
+
+<img
+  alt="RAK4631 5005"
+  src="/img/hardware/rak4631_5005.webp"
+  style={{ zoom: "50%" }}
+/>
+
+</TabItem>
+
+<TabItem value="RAK19007">
+
+## RAK19007
+
+- [RAK19007](https://msh.to/rak19007) - WisBlock Basisplatine (2. Generation, eine Verbesserung zum RAK5005-O)
+- **Steckplätze**
+  - (x1) Kernmodulsteckplatz
+  - (x1) WisBlock IO Modulsteckplatz
+  - (x4) WisBlock Sensormodul Steckplätze
+- **Tasten**
+  - (x1) Reset Taste
+  - Um einen Benutzerknopf hinzuzufügen, können Sie den AIN1-Pin verwenden, der in der Firmware als Pin 31 angezeigt wird.
+- **Anschlüsse**
+  - JST-PHR-2 Stecker für 3,7 V Lipo Akku.
+  - JST-ZHR-2 Stecker für 5 V Solarpanel (max 5,5 V)
+  - I<sup>2</sup>C, UART, GPIOs und Analogeingang zugänglich mit Lötkontakten
+  - USB-C-Anschluss für Fehlersuche und Stromversorgung
+- **Bildschirmunterstützung**
+  - OLED-Bildschirmunterstützung (OLED-Bildschirm separat erhältlich)
+
+Weitere Informationen zum RAK19007 finden Sie im [RAK Dokumentationszentrum](https://docs.rakwireless.com/product-categories/wisblock/rak19007/overview/#product-description).
+
+### Anschlussplan
+
+<img
+  alt="RAK19007 Connectors"
+  src="/img/hardware/rak19007_connectors.webp"
+  style={{ zoom: "50%" }}
+/>
+
+### Stromversorgung
+
+- JST-PHR-2 Stecker für 3,7 V Lipo Akku.
+  - Der maximale Strom des Ladereglers beträgt 350mA.
+  - Die minimale Eingangsspannung zum Aufladen beträgt 3,3 V, maximal 4,3 V.
+- JST-ZHR-2 Stecker für 5 V Solarpanel (max 5,5 V)
+  - Die minimale Eingangsspannung beträgt 4,4 V, maximal 5,5 V.
+
+### Quellen
+
+- Links zum Direktkauf:
+  - US
+    - [Rokland](https://msh.to/rokland-rak19007)
+    - [muzi ᴡᴏʀᴋꜱ Starter Kit](https://msh.to/muzi-rak4631)
+  - International
+    - [RAKwireless](https://msh.to/rak19007)
+    - [RAKwireless Starter Kit](https://msh.to/rak4631)
+    - [RAKwireless AliExpress](https://msh.to/aliexpress-rak19007)
+    - [RAKwireless AliExpress Starter Kit](https://msh.to/aliexpress-rak4631)
+
+</TabItem>
+
+<TabItem value="RAK19003">
+
+## RAK19003
+
+- [RAK19003](https://msh.to/rak19003) - WisBlock's Mini Basisplatine.
+- **Steckplätze**
+  - (x1) Kernmodulsteckplatz
+  - (x2) WisBlock Sensormodul Steckplätze
+- **Tasten**
+  - (x1) Reset Taste
+- **Anschlüsse**
+  - JST-PHR-2 Stecker für 3,7 V Lipo Akku.
+  - JST-ZHR-2 Stecker für 5 V Solarpanel.
+  - I<sup>2</sup>C, UART und BOOT Kopfzeilen zugänglich mit Lötkontakten
+  - USB-C-Anschluss für Fehlersuche und Stromversorgung
+- **Bildschirmunterstützung**
+  - OLED-Bildschirmunterstützung (OLED-Bildschirm separat erhältlich)
+
+Weitere Informationen zum RAK19003 finden Sie im [RAK Dokumentationszentrum](https://docs.rakwireless.com/product-categories/wisblock/rak19003/overview/#product-description)
+
+### Anschlussplan
+
+<img
+  alt="RAK19003 Connectors"
+  src="/img/hardware/rak19003_connectors.webp"
+  style={{ zoom: "50%" }}
+/>
+
+### Stromversorgung
+
+- JST-PHR-2 Stecker für 3,7 V Lipo Akku.
+  - Der maximale Strom des Ladereglers beträgt 350mA.
+  - Die minimale Eingangsspannung zum Aufladen beträgt 3,3 V, maximal 4,3 V.
+- JST-ZHR-2 Stecker für 5 V Solarpanel.
+  - Die minimale Eingangsspannung beträgt 4,4 V, maximal 5,5 V.
+
+### Quellen
+
+- Links zum Direktkauf:
+  - US
+    - [Rokland](https://msh.to/rokland-19003)
+  - International
+    - [RAKwireless](https://msh.to/rak19003)
+    - [RAKwireless AliExpress](https://msh.to/aliexpress-rak19003)
+
+<img
+  alt="RAK4631 19003"
+  src="/img/hardware/rak4631_19003.webp"
+  style={{ zoom: "50%" }}
+/>
+
+</TabItem>
+<TabItem value="RAK19001">
+
+## RAK19001
+
+- [RAK19001](https://msh.to/rak19001) - Dual IO Basisplatine von WisBlock.
+- **Steckplätze**
+  - (x1) Kernmodulsteckplatz
+  - (x2) WisBlock IO Modulsteckplatz
+  - (x6) WisBlock Sensormodul Steckplätze
+- **Tasten**
+  - (x1) Reset Taste
+  - (x1) Benutzertaste
+  - (x1) Schalter zur Akkuwahl
+  - Auf dieser Platine ist die Pin für die Benutzertaste (IO5) als Lötkontakt in der oberen Anschlussleiste verfügbar.
+- **Anschlüsse**
+  - JST-PHR-2 Stecker für 3,7 V LiPo Akku (mit Ladesteuerung)
+  - JST-ZHR-2 Stecker für 5 V Solarpanel (max 5,5 V)
+  - Separater FGH20005-S02M2W1B Stecker für nicht wiederaufladbare Batterien
+  - I<sup>2</sup>C, SPI, UART, BOOT und GPIOs zugänglich mit Lötkontakten
+  - USB-C-Anschluss für Fehlersuche und Stromversorgung
+- **Bildschirmunterstützung**
+  - OLED-Bildschirmunterstützung (OLED-Bildschirm separat erhältlich)
+
+Weitere Informationen zum RAK19001 finden Sie im [RAK Dokumentationszentrum](https://docs.rakwireless.com/product-categories/wisblock/rak19001/overview/#product-description).
+
+### Anschlussplan
+
+<img
+  alt="RAK19001 Connectors"
+  src="/img/hardware/rak19001_connectors.webp"
+  style={{ zoom: "50%" }}
+/>
+
+### Stromversorgung
+
+- JST-PHR-2 Stecker für 3,7 V Lipo Akku.
+  - Der maximale Strom des Ladereglers beträgt 500mA.
+  - Die minimale Eingangsspannung zum Aufladen beträgt 3,3 V, maximal 4,3 V.
+- JST-ZHR-2 Stecker für 5 V Solarpanel.
+  - Die minimale Eingangsspannung beträgt 4,4 V, maximal 5,5 V.
+- Separater FGH20005-S02M2W1B Stecker für nicht wiederaufladbare Batterien
+  - Das Minimum erforderlich ist 3,3 V, typisch 3,7 V, maximal 5,5 V.
+  - Der aktive Akku wird mit dem Akku Wahlschalter ausgewählt.
+
+### Quellen
+
+- Links zum Direktkauf:
+  - US
+    - [Rokland](https://msh.to/rokland-19001)
+  - International
+    - [RAKwireless](https://msh.to/rak19001)
+    - [RAKwireless AliExpress](https://msh.to/aliexpress-rak19001)
+
+</TabItem>
+ </Tabs>

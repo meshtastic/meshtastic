@@ -1,0 +1,76 @@
+---
+id: comments
+title: Anmerkung zur Netzverschlüsselung
+sidebar_label: Anmerkungen
+sidebar_position: 2
+description: Entdecken Sie Meinungen von Experten und der Meshtastic Gemeinschaft zur Verschlüsselung. Einschließlich der AES256 Implementierung, Sicherheitstipps und deren potenziellen Schwachstellen.
+---
+
+import QRCode from "@site/docs/blocks/_qr-code.mdx";
+
+Diese Seite sammelt Bemerkungen und Gutachten von Experten über die Meshtastic Verschlüsselung. Wir wissen diese Einsichten zu schätzen und sind bestrebt, unsere Verschlüsselung bestmöglich zu verbessern. Entdecken Sie die wichtigsten Details, praktische Tipps und verstehen Sie die Stärken und potenziellen Einschränkungen der AES256 Verschlüsselung von Meshtastic.
+
+## Anmerkungen
+
+Die Verschlüsselung ist kompliziert, deshalb haben wir versucht, eine einfache Standardlösung für unsere Implementierung zu verwenden. Allerdings sind die Projektentwickler keine Verschlüsselungsexperten.
+
+Basierend auf den Kommentaren derjenigen, die die Verschlüsselung geprüft haben (siehe unten), finden Sie hier einige Tipps für die Nutzung der Funkgeräte und welchen Schutz die Verschlüsselung bietet:
+
+- Die AES256 Verschlüsselung ist mit hoher Sicherheit richtig implementiert. Ein Beobachter kann Ihre Nachrichten nicht dekodieren.
+- **Warnung:** Wenn ein Angreifer in der Lage ist, in den Besitz eines Funkgerätes zu kommen, dann kann er entweder a) den Kanalschlüssel von diesem Gerät extrahieren oder b) dieses Funkgerät benutzen, um zukünftige Kommunikation mit zuhören.
+- **Warnung:** Wenn ein Angreifer den "Kanal QR[^1] Code/URL" erhält den du mit anderen teilst, dann kann dieser Angreifer Nachrichten lesen, die auf dem Kanal gesendet werden (Zukünftige oder vergangene Nachrichten - wenn eine Kopie der Daten vorliegt).
+
+[^1]: <QRCode />
+
+Die aktuelle Implementierung bietet den Teilnehmern eines konfigurierten Netzwerks eine optionale Privatsphäre:
+
+- Die Verschlüsselung ist in Funkgeräten/Knoten mit Netzwerkweiten Schlüssel implementiert.
+- Verschlüsselung ist optional und wird deaktiviert, wenn sich das Funkgerät sich im Amateurfunk Modus befindet.
+- Es wird keine Verschlüsselung in den Apps (iOS oder Android) unterstützt um die Verteilung der Software über die App-Stores zu erleichtern.
+- Verbindung von App zu Gerät durch:
+  - Direktes USB-Kabel
+  - Bluetooth Koppelung
+- Funkgeräte sind offen zugänglich. Sie werden sich mit jedem Bluetooth Gerät in der Nähe koppeln. Die Vertraulichkeit des Netzwerks erfordert den physischen Schutz aller Knoten.
+
+Denken Sie immer an den [xkcd Hinweis zur Verschlüsselung](https://xkcd.com/538).
+
+- Wenn Sie ein Verschlüsselungsexperte sind, lesen Sie bitte diese Anmerkungen und unsere Fragen weiter unten nach. Helfen Sie uns, indem Sie diese Anmerkungen überprüfen und Ratschläge oder Verbesserungen anbieten. Wir geben Ihnen gerne so viel oder so wenig Anerkennung wie Sie möchten ;-).
+- Betrachten Sie unsere Lösung als Anfangsstadium und wahrscheinlich ziemlich sicher gegen einen nicht besonders aggressiven Angreifer. (Wir können derzeit noch keine zuversichtliche Aussage machen)
+
+## Anmerkungen zur Überprüfung
+
+Dies ist eine kurze Erklärung zu unserer Verschlüsselungsmethode, falls Sie unsere Implementierung überprüfen wollen:
+
+- Nur die Nutzdaten werden verschlüsselt, so das alle Meshtastic Knoten immer alle Nachrichten weiterleiten. Auch Nachrichten für Kanäle, für die der Knoten keinen Schlüssel besitzt.
+- Hauptsächlich basierend durch das Lesen von [Wikipedia](https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#Counter_(CTR)) und der Verwendung der Modi des ESP32, welche in der Hardware unterstützt werden.
+- Wir verwenden AES256-CTR als Verschlüsselung des Datenstroms (inklusive Auffüllung durch null im letzten Block). Diese Verschlüsselung wird gut durch Hardwarebeschleunigung unterstützt.
+- Unser AES Schlüssel ist 128 oder 256 Bit lang und wird als Teil der Kanalspezifikation verteilt.
+- Die Knotennummer und die Nachrichtennummer werden logisch verknüpft. Das Ergebnis ist eine Nummer, die nur einmalig verwendet wird. (englisch: Nonce) Diese Nummer wird im Speicher abgelegt und sollte sich im Idealfall niemals wiederholen. Wenn der Benutzer einen neuen Kanal erstellt (d.h. einen neuen zufälligen 256 Bit Schlüssel erzeugt), dann startet diese Nummer bei null.
+- Die Nummer wird in Klartext mit jeder Nachricht gesendet. Die Knotennummer kann aus dem Feld "von" in jeder Nachricht abgeleitet werden. (Die Nummer in Klartext ist akzeptabel, weil diese lediglich den Initialisierungsvektor (IV) für jede Verschlüsselung bereitstellt)
+- Jeder 16 Byte Block einer Nachricht hat einen zusätzlichen Zähler. Der Zähler startet bei null im ersten Block in jeder Nachricht.
+- Der Initialisierungsvektor (IV) eines jeden Blocks wird erzeugt durch die logische Verknüpfung der einmaligen Nummer (Nonce), als die oberen 96 Bit des Initialisierungsvektors (IV) und der Zähler als die unteren 32 Bit. Da die Nachrichten klein sind, wird der Zähleranteil nie höher als 32 (fünf Bits) sein.
+
+### Anmerkung zur Überprüfung #1
+
+Dieser Prüfer ist ein Verschlüsselungsprofi, möchte aber anonym bleiben. Wir danken ihm für seine Kommentare ;-):
+
+Ich gehe davon aus, dass Meshtastic an Orten benutzt wird, an denen sich jemand befindet, der in der Lage ist, die Verschlüsselung zu brechen z.B., wenn man damit zur DefCon geht. Ich habe ungefähr eine Stunde lang die Verschlüsselung überprüft und folgende Anmerkungen:
+
+- Die Beschreibung ist nicht ganz so klar wie der Quellcode.
+- Der Quellcode verwendet den AES-CTR Modus korrekt, um die Vertraulichkeit zu gewährleisten.
+- Der Kommentar für initNonce liefert alle notwendigen Informationen.
+- Ich denke, die größere Frage zur Verschlüsselung ist: "Was muss die Verschlüsselung leisten?" So wie es ist, kann ein Angreifer, der noch kein Funkgerät erbeutet hat, auch keinen Zugriff auf Text- oder Standortdaten erlangen. Ein Angreifer, der ein Funkgerät für einen Kanal oder Netzwerk erbeutet hat, kann alles lesen, was dieses empfängt, was im Gerät gespeichert ist und jede Kommunikation eines Kanals die in verschlüsselter Form empfangen wird. Wenn diese Fähigkeiten grundsätzlich mit den Erwartungen übereinstimmen, wenn es für die angedachten Zwecke ausreicht, dann, basierend auf den öffentlich verfügbaren oder weithin bekannten Informationen, ist die Verschlüsselung gut. Wenn diese Eigenschaften besorgniserregend sind, (z.B. Der Verlauf in den  Geräten ist bewusst begrenzt und Sie möchten nicht, dass ein Gerät, das heute erbeutet wird, die Informationen gefährdet, die in der Vergangenheit über einen Kanal gesendet wurden) dann können wir über Wege sprechen, dies zu verbessern (höchstwahrscheinlich durch Synchronisierung der Zeit und Ersetzen des Schlüssels durch einen SHA256 alle X Stunden und sicherstellen das die alten Schlüssels nicht unnötig beibehalten werden).
+- Zwei weitere Dinge sind zu beachten: AES-CTR selbst sorgt nicht für Authentizität (z.B. kann ein Angreifer Bits durch Wiedergabe von Daten ändern und den resultierenden Klartext vermischen). Das aktuelle System gibt dann einige Hinweise durch die Größe der Übertragung. Wenn sie sich also Sorgen machen, das ein Angreifer vorsätzlich Nachrichten sabotiert oder die Länge der Nachricht bekannt ist, dann ist dies durchaus möglich.
+
+Ich vermute das sich das Netzwerk wie ein Speichern und weiterleiten Netzwerk verhält. Oder zumindest mit dem Ziel, eine Zwei-Wege-Verbindung zur Datenübertragung zu vermeiden. Ich fürchte, ich habe nicht viel mit verteilten Netzwerken gearbeitet, aber erinnere mich, sie vor etwa zehn Jahren kurz in der Schule studiert zu haben.
+
+### Anmerkungen von @Jorropo
+
+- Die Erzeugung des Initialisierungsvektors (IV) verwendet nur 31 zufällige Bits pro Neustart, erhöht diesen dann in Nachrichten sequentiell. Es ist nicht viel, aber es macht Duplikate unwahrscheinlich, aber eher aufgrund der Größe des kompletten Netzwerkes. Glücklicherweise enthält der Initialisierungsvektor (IV) die unteren 32 Bit der MAC Adresse welche einzigartig für jeden Knoten sein sollte. Jeder Knoten hat sein Geburtstags-Paradox (falsche Schätzung der Wahrscheinlichkeit) aber wir sind nicht auf der Suche nach dem netzwerkweiten Geburtstags-Paradox, das leicht zu hacken wäre. Siehe Fehlermeldung [`#4031`](https://github.com/meshtastic/firmware/issues/4031).
+  Könnte behoben werden.
+- Der Mangel an [Integrität wurde nicht richtig berücksichtigt](https://github.com/meshtastic/firmware/issues/4030). Das Modul für Fernadministration implementiert privilegierte RPC-Aufrufe über AES-CTR ohne MAC oder AEAD.
+  Könnte behoben werden.
+- Die AES-CTR Implementierung sieht so aus, als schützt sie die Vertraulichkeit, wenn Initialisierungsvektoren (IV) nicht dupliziert werden.
+- Das Fehlen von voraus gerichteter Geheimhaltung ist ein wenig beunruhigend für einen Chat-Messenger, wenn es neuen Benutzern an der paranoiden und lästigen Praxis der Schlüsselverwaltung fehlt, die für einen sicheren Betrieb erforderlich wäre.
+- Meiner Meinung nach sollten die Apps beim ersten Öffnen einer direkten Nachricht eine große rote Meldung anzeigen, dass diese nicht privat und nicht Ende-zu-Ende verschlüsselt sind. Das war mir nicht klar, ohne den Quellcode zu lesen.
+- Dieses Projekt ist völlig in Ordnung, um mit Fremden zu kommunizieren, wenn Sie den Standardschlüssel verwenden und verstehen, das alles öffentlich ist. Ich würde es nicht für Privates ohne irgendeine zusätzliche Ebene oder ohne signifikante Nacharbeiten benutzen. Ich würde zum Beispiel SSH oder Signal über Meshtastic als sicher betrachten. Dennoch entscheidet sich Meshtastic nicht für eine schlechtere Verschlüsselung aus niederen Gründen. Sie machen das Netzwerk über die Unzuverlässige, langsame LoRa Verbindung wesentlich nutzbarer.

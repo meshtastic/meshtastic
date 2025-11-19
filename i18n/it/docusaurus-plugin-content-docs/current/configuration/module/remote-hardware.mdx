@@ -1,0 +1,276 @@
+---
+id: remote-hardware
+title: Utilizzo Del Modulo Hardware Remoto
+sidebar_label: Hardware Remoto
+description: Il modulo hardware remoto permette di leggere, scrivere e guardare i pin GPIO su un nodo remoto.
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+import { Icon } from "@iconify/react";
+
+Il modulo hardware remoto permette di leggere, scrivere e guardare i pin GPIO su un nodo remoto. Le opzioni di configurazione sono: Abilitate.
+
+:::info
+
+Per le versioni del firmware > 2.5.3, questo modulo richiede di compilare il proprio firmware e rimuovere il contrassegno `-DMESHTASTIC_EXCLUDE_REMOTEHARDWARE=1` in `platformio.ini`.
+Inoltre, durante la configurazione di questo modulo potrebbe essere disponibile nei client, attualmente è possibile impostare e leggere GPIO solo usando il [Meshtastic Python CLI](/docs/software/python/cli)
+
+:::
+
+## Valori Di Configurazione Hardware Remoto
+
+### Abilitato
+
+Se il modulo è abilitato.
+
+## Disponibilità Client Del Modulo Hardware Remoto
+
+<Tabs
+  groupId="settings"
+  defaultValue="apple"
+  values={[
+    {
+      label: (
+        <>
+          <Icon icon="mdi:android" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Android
+        </>
+      ),
+      value: "android",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:apple" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Apple
+        </>
+      ),
+      value: "apple",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:terminal" height="1.5rem" style={{ marginRight: "0.25rem" }} /> CLI
+        </>
+      ),
+      value: "cli",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:internet" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Web
+        </>
+      ),
+      value: "web",
+    },
+  ]}>
+
+<TabItem value="android">
+
+#### Android
+
+:::info
+All Remote Hardware Module config options are available for Android in app.
+
+1. Apri l'applicazione Meshtastic
+2. Naviga a: **Menu (3 punti in alto a destra) > Configurazione radio > Hardware remoto**
+   :::
+
+</TabItem>
+<TabItem value="apple">
+
+#### Apple
+
+:::info
+Tutte le opzioni di configurazione del modulo hardware remoto sono disponibili su iOS, iPadOS e macOS su Impostazioni > Configurazione modulo > Hardware Remoto
+:::
+
+</TabItem>
+<TabItem value="cli">
+
+#### CLI
+
+:::info
+
+Tutte le opzioni di configurazione del modulo hardware remoto sono disponibili nella CLI python.
+
+:::
+
+</TabItem>
+<TabItem value="web">
+
+#### Web
+
+Non implementato.
+
+</TabItem>
+</Tabs>
+
+## Utilizzo Del Modulo Hardware Remoto
+
+:::warning
+L'accesso a GPIO è fondamentalmente pericoloso perché le opzioni non valide possono danneggiare fisicamente o distruggere l'hardware. Assicurati di comprendere completamente lo schema per il tuo particolare dispositivo prima di provare questo, perché non offriamo alcuna garanzia. Utilizzare a proprio rischio e pericolo.
+:::
+
+### Operazioni Supportate
+
+- Impostare qualsiasi GPIO
+- Leggere qualsiasi GPIO
+- Ricevere una notifica sul mesh se un qualsiasi GPIO cambia stato.
+  Si noti che non è possibile rilevare cambiamenti veloci come la pressione di un pulsante. Per questo, guarda invece il modulo [Sensore di rilevamento](/docs/configuration/module/detection-sensor).
+
+Il risultato della lettura di un GPIO o delle notifiche di modifiche GPIO verrà inviato anche su MQTT (se abilitato) in formato JSON (se abilitato).
+
+### Configurazione
+
+Puoi ottenere l'ultimo tool/libreria python con `pip3 install --upgrade meshtastic` su Windows/Linux/OS-X. Vedi la [sezione python](/docs/software/python/cli/installation) per maggiori dettagli.
+
+Per impedire l'accesso a utenti non attendibili, devi prima creare un canale `gpio` utilizzato per l'accesso autenticato a questa funzione. Dovrai installare questo canale sia sul nodo locale che su quello remoto. Inoltre, è necessario abilitare il modulo su entrambe le unità.
+
+La procedura che utilizza lo strumento a riga di comando python è:
+
+1. Collega dispositivo locale tramite USB
+2. Abilita il modulo Hardware remoto:
+   ```shell
+   meshtastic --set remote_hardware.enabled true
+   ```
+3. Crea un canale GPIO:
+   ```shell
+   meshtastic --ch-add gpio
+   ```
+4. Controllare che il canale sia stato creato e copiare il lungo "URL completo" che contiene tutti i canali su quel dispositivo:
+   ```shell
+   meshtastic --info
+   ```
+5. Collegare il dispositivo remoto tramite USB (o utilizzare la funzione [amministratore remoto](/docs/configuration/remote-admin) per raggiungerlo attraverso la mesh)
+6. Abilita il modulo Hardware remoto:
+   ```shell
+   meshtastic --set remote_hardware.enabled true
+   ```
+7. Impostalo per entrare nel canale gpio che hai creato:
+   ```shell
+   meshtastic --seturl lurlchehaicopiatoalpasso3
+   ```
+
+Ora entrambi i dispositivi dovrebbero essere in grado di parlare sul canale `gpio`. Invia un messaggio di testo da uno all'altro per verificare. Esegui anche `--nodes` per verificare che il secondo nodo venga visualizzato.
+
+### Maschere
+
+Una maschera viene utilizzata per impostare i GPIO da controllare. Per GPIO 1, bit 1 della maschera è impostato (0x2 in esadecimale), per GPIO 2, bit 2 della maschera è impostato (0x4 in esadecimale), e così via.
+Per determinare la maschera appropriata per i pin che si desidera conoscere, il programma python (e l'output) qui sotto potrebbe aiutare:
+
+```python
+>>> for i in range(1,45):
+...     print(f'GPIO:{i} mask:{hex(2**i)}')
+...
+GPIO:1 mask:0x2
+GPIO:2 mask:0x4
+GPIO:3 mask:0x8
+GPIO:4 mask:0x10
+GPIO:5 mask:0x20
+GPIO:6 mask:0x40
+GPIO:7 mask:0x80
+GPIO:8 mask:0x100
+GPIO:9 mask:0x200
+GPIO:10 mask:0x400
+GPIO:11 mask:0x800
+GPIO:12 mask:0x1000
+GPIO:13 mask:0x2000
+GPIO:14 mask:0x4000
+GPIO:15 mask:0x8000
+GPIO:16 mask:0x10000
+GPIO:17 mask:0x20000
+GPIO:18 mask:0x40000
+GPIO:19 mask:0x80000
+GPIO:20 mask:0x100000
+GPIO:21 mask:0x200000
+GPIO:22 mask:0x400000
+GPIO:23 mask:0x800000
+GPIO:24 mask:0x1000000
+GPIO:25 mask:0x2000000
+GPIO:26 mask:0x4000000
+GPIO:27 mask:0x8000000
+GPIO:28 mask:0x10000000
+GPIO:29 mask:0x20000000
+GPIO:30 mask:0x40000000
+GPIO:31 mask:0x80000000
+GPIO:32 mask:0x100000000
+GPIO:33 mask:0x200000000
+GPIO:34 mask:0x400000000
+GPIO:35 mask:0x800000000
+GPIO:36 mask:0x1000000000
+GPIO:37 mask:0x2000000000
+GPIO:38 mask:0x4000000000
+GPIO:39 mask:0x8000000000
+GPIO:40 mask:0x10000000000
+GPIO:41 mask:0x20000000000
+GPIO:42 mask:0x40000000000
+GPIO:43 mask:0x80000000000
+GPIO:44 mask:0x100000000000
+```
+
+## Usare GPIO dalla CLI di Python
+
+:::info
+Puoi anche controllare o guardare GPIO del tuo nodo connesso con USB impostando `--dest` all'ID del nodo locale. In questo caso non è necessario alcun canale `gpio`.
+:::
+
+### Scrittura di un GPIO
+
+```shell title="Example: turning 'on' GPIO4"
+meshtastic --port /dev/ttyUSB0 --gpio-wrb 4 1 --dest 28979058
+# Connesso alla radio
+# Scrittura maschera GPIO 0x10 con il valore 0x10 a !28979058
+```
+
+### Lettura di un GPIO
+
+```shell title="Example: read GPIO4"
+meshtastic --port /dev/ttyUSB0 --gpio-rd 0x10 --dest 28979058
+# Connesso alla radio
+# Lettura della maschera GPIO 0x10 da ! 8979058
+# GPIO leggi la risposta gpio_value=16
+```
+
+:::note
+Se la maschera e il valore corrispondono, allora il valore è "on". Se il valore gpio_value è 0, allora il valore è "spento".
+:::
+
+### Guardando le modifiche GPIO
+
+```shell title="Example: watching GPIO4 for changes"
+meshtastic --port /dev/ttyUSB0 --gpio-watch 0x10 --dest 28979058
+# Connesso alla radio
+# Guardare maschera GPIO 0x10 da ! 8979058
+# Ricevuto RemoteHardware typ=GPIOS_CHANGED, gpio_value=16
+# Ricevuto RemoteHardware typ=GPIOS_CHANGED, gpio_value=0
+# Ricevuto RemoteHardware typ=GPIOS_CHANGED, gpio_value=16
+# < premere ctrl-c per uscire >
+```
+
+## Testare Le Operazioni GPIO
+
+È possibile eseguire operazioni programmatiche dal proprio codice python utilizzando la classe Meshtastic `RemoteHardwareClient`. Vedi la documentazione [Python API](/docs/software/python/cli/installation) per maggiori dettagli.
+
+È possibile aggiungere un semplice LED e resistenza per convalidare che le operazioni GPIO funzionino come previsto. Usa [questo tutorial](https://www.instructables.com/Slide-Switch-With-Arduino-Uno-R3/) come guida.
+
+### Requisiti
+
+- (x2) Dispositivi Meshtastic (un dispositivo potrebbe essere su un computer locale, e l'altro solo deve essere alimentato ed è quello con dove sarà collegato il LED)
+- (x2) fili (nero e giallo; possono essere di qualsiasi colore, ma tipicamente nero è utilizzato per la massa)
+- (x1) LED
+- (x1) resistenza da 220Ω (facoltativa, ma consigliata)
+- (x1) Breadboard (opzionale)
+
+### Preparazione
+
+1. Scollegare il dispositivo remoto dall'alimentazione (batteria/usb)
+2. Collegare la resistenza al piedino più lungo (positivo) del LED e il filo giallo all'altra estremità della resistenza
+3. Collegare l'altra estremità del filo giallo a un pin GPIO che non causerà alcun problema (es: per TLoraV1, possiamo usare GPIO21)
+4. Collegare il filo "massa" nero dal pin di massa sul dispositivo (es: per TLoraV1 è il pin finale accanto al pulsante RST) al piedino (negativo) più corto del LED
+5. Accendi il dispositivo
+
+### Convalidazione
+
+Per impostazione predefinita, il pin può essere "off" o "on". (Molto probabilmente "off".) Vedere i passaggi sottostanti per l'esecuzione dei comandi. Nell'esempio di GPIO21, la maschera sarebbe `0x200000`.
+
+![T-Lora v1 con LED su GPIO 21](/img/LED_on_TLoraV1.webp)

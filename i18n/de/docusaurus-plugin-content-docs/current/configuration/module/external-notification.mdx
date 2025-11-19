@@ -1,0 +1,236 @@
+---
+id: external-notification
+title: Konfiguration des Moduls externen Benachrichtigungen
+sidebar_label: Externe Benachrichtigung
+description: Mit diesem Modul können Sie einen Summer, Lautsprecher, eine LED oder ein ähnliches Zubehör an Ihr Meshtastic Gerät anschließen.
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+import { Icon } from "@iconify/react";
+import ReactPlayer from "react-player";
+
+Mit dem externen Benachrichtigungsmodul können Sie einen Summer, Lautsprecher, eine LED oder ein anderes Gerät anschließen, das Sie benachrichtigt, wenn eine Nachricht vom Mesh-Netzwerk empfangen wurde. Sie können bis zu 3 Pins unabhängig voneinander aktivieren.
+
+Die Konfigurationsoptionen des externen Benachrichtigungsmoduls sind: Aktiviert, Aktiv, Alarmglocke (Allgemein), Alarmglocke-Vibration, Alarmglocken-Summer, Alarmnachricht (Allgemein), Alarmnachricht-Vibration, Alarmnachricht-Summer, Ausgabe (Allgemein), Ausgabe-Vibration, Ausgabe-Summer, Ausgabe-Millisekunden, PWM verwenden und Alarmabspielzeit. Die Konfiguration für externe Benachrichtigungen verwendet eine administrative Nachricht, die ein „ConfigModule.ExternalNotificationConfig“ Protocol Buffer sendet.
+
+<div style={{ maxWidth: "800px", margin: "auto" }}>
+  <ReactPlayer
+    url="https://youtu.be/MWt3RHMpifo"
+    controls
+    width="100%"
+    height="400px"
+  />
+</div>
+
+## Konfiguration des Moduls externen Benachrichtigungen
+
+### Aktiviert
+
+Einstellung für das Modul externe Benachrichtigung.
+
+### Aktiv (nur Allgemein / nur LED)
+
+Gibt an, ob der externe Schaltkreis aktiv ist, wenn der GPIO des Gerätes niedrig oder hoch ist. Wenn dies auf true gesetzt ist, wird der Pin aktiv hochgezogen, false bedeutet aktiv niedrig.
+
+### Alarm bei Empfang eine Glocke (allgemein / LED, Vibration und Summer)
+
+Gibt an, ob beim Empfang einer eingehenden Glocke ein Alarm ausgelöst werden soll.
+
+### Alarm beim Empfang einer Nachricht (allgemein / LED, Vibration und Summer)
+
+Gibt an, ob beim Empfang einer eingehenden Nachricht ein Alarm ausgelöst werden soll.
+
+### GPIO-Pins (allgemein / LED, Vibration und Summer)
+
+Gibt den GPIO an, an den Ihr externer Schaltkreis auf dem Gerät angeschlossen ist. Auf Geräten mit einem PWM Summer können Sie den Summer für Benachrichtigungen verwenden, indem Sie die Eigenschaft use_pwm auf TRUE setzen. Der Summer Pin wird ignoriert und stattdessen device.buzzer_gpio verwendet. Wenn Sie den PWM Modus aktivieren, verwendet das Gerät sogenannte RTTTL Klingeltöne zur Benachrichtigung. Beispiele für RTTTL Klingeltöne können Sie [hier](https://www.laub-home.de/wiki/RTTTL_Songs) finden und über eine App auf das Gerät laden.
+
+:::info
+Auf ESP32 basierten Boards sind die GPIOs 34 bis 39 reine Eingänge. Diese Pins haben keine internen Pullup oder Pulldown Widerstände. Sie können nicht als Ausgänge verwendet werden, daher können Sie diese Pins NICHT als Ausgänge verwenden.
+:::
+
+### Wie lange überwachter GPIO ausgelöst wird.
+
+Gibt an, wie lange (in Millisekunden) Ihre GPIOs aktiv sein sollen. Bei der Wiederholungsoption ist dies die Dauer jedes Tons und jeder Pause.
+
+Standard von 0 ist 1000ms
+
+### Abspielzeit (allgemein / LED, Vibration und Summer)
+
+Gibt an, wie Alarm abgespielt werden soll. Wenn ein Wert größer als Null eingestellt ist, wird der Alarm abgespielt, bis die Benutzertaste gedrückt wird oder die eingestellte Anzahl von Sekunden vergangen ist.
+
+## Verfügbarkeit des externen Benachrichtigungsmoduls
+
+<Tabs
+  groupId="settings"
+  defaultValue="apple"
+  values={[
+    {
+      label: (
+        <>
+          <Icon icon="mdi:android" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Android
+        </>
+      ),
+      value: "android",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:apple" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Apple
+        </>
+      ),
+      value: "apple",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:terminal" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Kommandozeile
+        </>
+      ),
+      value: "cli",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:internet" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Web
+        </>
+      ),
+      value: "web",
+    },
+  ]}>
+<TabItem value="android">
+
+#### Android
+
+:::info
+
+Einstellungen für externe Benachrichtigungen sind für Android verfügbar.
+
+1. Öffnen Sie die Meshtastic Applikation
+2. Navigiere zu: **vertikale Ellipse (3 Punkte oben rechts) > Funkkonfiguration > Externe Benachrichtigung**
+
+:::
+
+</TabItem>
+<TabItem value="apple">
+
+#### Apple
+
+:::info
+Alle Einstellungen für das externe Benachrichtigungsmodul sind auf iOS, iPadOS und macOS unter Einstellungen > Modulkonfiguration > Externe Benachrichtigung verfügbar.
+:::
+
+</TabItem>
+<TabItem value="cli">
+
+#### Kommandozeile
+
+:::info
+
+Alle Einstellungen für das externe Benachrichtigungsmodul sind für die Python Kommandozeile verfügbar. Beispieleinstellungen sind folgende:
+
+:::
+
+|        Einstellung                         |   Akzeptable Werte       | Standardwert |
+| :----------------------------------------: | :----------------------: | :----------: |
+|    external_notification.enabled           |   `true`, `false`        |    `false`   |
+|     external_notification.active           |   `true`, `false`        |    `false`   |
+|    external_notification.alert_bell        |   `true`, `false`        |    `false`   |
+|  external_notification.alert_bell_vibra    |   `true`, `false`        |    `false`   |
+|  external_notification.alert_bell_buzzer   |   `true`, `false`        |    `false`   |
+|   external_notification.alert_message      |   `true`, `false`        |    `false`   |
+| external_notification.alert_message_vibra  |   `true`, `false`        |    `false`   |
+| external_notification.alert_message_buzzer |   `true`, `false`        |    `false`   |
+|     external_notification.output           |     Ganzzahl             |     `0`      |
+|   external_notification.output_vibra       |     Ganzzahl             |     `0`      |
+|   external_notification.output_buzzer      |     Ganzzahl             |     `0`      |
+|    external_notification.output_ms         | Ganzzahl (Millisekunden) |     `0`      |
+|    external_notification.use_pwm           |   `true`, `false`        |    `false`   |
+|   external_notification.nag_timeout        |  Ganzzahl (Sekunden)     |     `0`      |
+
+:::tip
+
+Weil das Gerät nach jedem Befehl über die Kommandozeile neu startet, wird empfohlen, dass mehrere Werte in einem Konfigurationsblock zusammengefasst und übertragen werden.
+
+```shell title="Example:"
+meshtastic --set external_notification.enabled true --set external_notification.alert_bell true
+```
+
+:::
+
+```shell title="Enable/Disable External Notification Module"
+meshtastic --set external_notification.enabled true
+meshtastic --set external_notification.enabled false
+```
+
+```shell title="Enable/Disable alert on incoming bell"
+meshtastic --set external_notification.alert_bell true
+meshtastic --set external_notification.alert_bell false
+```
+
+```shell title="Set GPIO active high / low (default of false is low)"
+meshtastic --set external_notification.active false
+meshtastic --set external_notification.active true
+```
+
+```shell title="Enable/Disable alert on incoming message"
+meshtastic --set external_notification.alert_message true
+meshtastic --set external_notification.alert_message false
+```
+
+```shell title="Set GPIO to monitor to 21"
+meshtastic --set external_notification.output 21
+```
+
+```shell title="Set monitored GPIO output duration (default of 0 is 1000ms)"
+meshtastic --set external_notification.output_ms 0
+meshtastic --set external_notification.output_ms 1500
+```
+
+</TabItem>
+<TabItem value="web">
+
+#### Web
+
+:::info
+Alle Einstellungen des externen Benachrichtigungsmoduls ist für die Weboberfläche verfügbar.
+:::
+
+</TabItem>
+</Tabs>
+
+:::warning
+GPIO access is fundamentally dangerous because invalid options can physically damage or destroy your hardware. Ensure that you fully understand the schematic for your particular device before trying this as we do not offer a warranty. Use at your own risk.
+
+Dieses Modul erfordert das Anschließen eines externen Zubehörs an Ihr Gerät. Es wird ohne ein solches nicht funktionieren.
+:::
+
+## Beispiele
+
+### Alarmtypen
+
+Wir unterstützen die Benachrichtigung bei zwei Ereignissen:
+
+1. Eingehende Textnachricht
+
+2. Eingehende Textnachricht, die das ASCII Glockenzeichen enthält. Derzeit kann nur die Python-API ein ASCII Glockenzeichen senden, in Zukunft wird jedoch möglicherweise mehr Unterstützung hinzugefügt.
+
+:::info
+Das Glockenzeichen ist ASCII 0x07. Fügen Sie 0x07 an beliebiger Stelle in die Textnachricht ein und wenn ext_notification.alert_bell aktiviert ist, geben wir eine externe Benachrichtigung aus.
+:::
+
+## Externe Geräte
+
+Achten Sie auf die maximale Strombelastung des ESP32 GPIO Pins. Die am einfachsten zu verbindenden Geräte wären entweder eine LED oder ein aktiver Summer.
+
+Ideen für externe Hardware:
+
+- LED
+- Aktiver Summer
+- Flammenwerfer
+- Blitzlicht
+- Sirene
+
+## Bekannte Einschränkungen
+
+- Dieses Modul überwacht nur Textnachrichten. Wir werden keine anderen Paketarten überwachen.

@@ -1,0 +1,33 @@
+| Region Code |        Opis             | Frequency Range (MHz) | Duty Cycle (%) | Power Limit (dBm) |
+| :---------: | :---------------------: | :-------------------: | :------------: | :---------------: |
+|  `UNSET`    |     Odznacz             |      N/A              |    N/A         |     N/A           |
+|   `US`      |    United States        |   902.0 - 928.0       |    100         |     30            |
+|  `EU_433`   |  European Union 433MHz  |   433.0 - 434.0       |    10          |     12            |
+|  `EU_868`   |  European Union 868MHz  |   869.4 - 869.65      |    10          |     27            |
+|   `CN`      |      China              |   470.0 - 510.0       |    100         |     19            |
+|   `JP`      |      Japan              |   920.8 - 927.8       |    100         |     16            |
+|   `ANZ`     | Australia & New Zealand |   915.0 - 928.0       |    100         |     30            |
+|  `ANZ_433`  | Australia & New Zealand |   433.05 - 434.79     |    100         |     14            |
+|   `KR`      |      Korea              |   920.0 - 923.0       |    100         |                   |
+|   `TW`      |     Taiwan              |   920.0 - 925.0       |    100         |     27            |
+|   `RU`      |     Russia              |   868.7 - 869.2       |    100         |     20            |
+|   `IN`      |      India              |   865.0 - 867.0       |    100         |     30            |
+|  `NZ_865`   |  New Zealand 865MHz     |   864.0 - 868.0       |    100         |     36            |
+|   `TH`      |     Thailand            |   920.0 - 925.0       |    100         |     16            |
+|  `UA_433`   |   Ukraine 433MHz        |   433.0 - 434.7       |    10          |     10            |
+|  `UA_868`   |   Ukraine 868MHz        |   868.0 - 868.6       |    1           |     14            |
+|  `MY_433`   |   Malaysia 433MHz       |   433.0 - 435.0       |    100         |     20            |
+|  `MY_919`   |   Malaysia 919MHz       |   919.0 - 924.0       |    100         |     27            |
+|  `SG_923`   |   Singapore 923MHz      |   917.0 - 925.0       |    100         |     20            |
+|  `KZ_433`   |   Kazakhstan 433 MHz    |  433.075 - 434.775    |    100         |     10            |
+|  `KZ_863`   |   Kazakhstan 863 MHz    |   863.0 - 868.0       |    100         |     30            |
+|  `BR_902`   |   Brazil 902MHz         |   902.0 - 907.5       |    100         |     30            |
+|  `PH_433`   |   Philippines 433MHz    |   433.0 - 434.7       |    100         |     10            |
+|  `PH_868`   |   Philippines 868MHz    |   868.0 - 869.4       |    100         |     14            |
+|  `PH_915`   |   Philippines 915MHz    |   915.0 - 918.0       |    100         |     24            |
+|  `NP_865`   |   Nepal 865MHz          |   865.0 - 868.0       |    100         |                   |
+|  `LORA_24`  | 2.4 GHz band worldwide  |   2400.0 - 2483.5     |    100         |     10            |
+
+:::info
+EU_433 and EU_868 have to adhere to an hourly duty cycle limitation of 10%, calculated every minute on a rolling 1-hour basis. Your device will stop transmitting if you reach it, until it is allowed again.
+:::

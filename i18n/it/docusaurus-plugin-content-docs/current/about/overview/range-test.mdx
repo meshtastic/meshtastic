@@ -1,0 +1,165 @@
+---
+id: range-tests
+title: Test Distanza
+slug: /overview/range-tests
+sidebar_label: Test Distanza
+sidebar_position: 4
+description: Esplora i risultati impressionanti della gamma di Meshtastic con le impostazioni dettagliate del modem e le configurazioni del dispositivo sia per i record di terra che per quelli di aria.
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+<Tabs
+defaultValue="ground"
+values={[
+{label: 'Terra-Terra', value: 'ground'},
+{label: 'Terra-Aria', value: 'air'},
+]}>
+
+<TabItem value="ground">
+
+#### Record di Terra Attuale: 331km
+
+- **Distanza:** 331km (205 miglia)
+- **Detentori del record:** _MartinR7_ & _alleg_
+- **Fonte:** [reddit](https://www.reddit.com/r/meshtastic/comments/1fnduwo/mountain_to_mountain_331_km/)
+
+<h5 id="modem-settings-331">Impostazioni Modem</h5>
+
+Default Very Long Slow
+
+- **Frequenza:** 868MHz
+- **Larghezza Di Banda:** 62.5
+- **Spread Factor:** 12
+- **Coding Rate:** 4/8
+
+<h5 id="node-a-331">Nodo A</h5>
+
+- **Dispositivo:** [RAK4631 Core](/docs/hardware/devices/rak-wireless/wisblock/core-module/?rakcore=RAK4631)+[RAK19003](/docs/hardware/devices/rak-wireless/wisblock/base-board/?rakbase=RAK19003)+[RAK1906](/docs/hardware/devices/rak-wireless/wisblock/peripherals/?rakmodules=Sensors#rak1906-environment-sensor)+[INA219](/docs/configuration/module/telemetry/#currently-supported-sensor-types)
+- **Versione Firmware:** 2.3.6
+- **Antenna:** 55cm collinear 868mhz (AliExpress)
+
+<h5 id="node-b-331">Nodo B</h5>
+
+- **Dispositivo:** [RAK4631 Core](/docs/hardware/devices/rak-wireless/wisblock/core-module/?rakcore=RAK4631)+[RAK19003](/docs/hardware/devices/rak-wireless/wisblock/base-board/?rakbase=RAK19003)+[RAK1901](/docs/hardware/devices/rak-wireless/wisblock/peripherals/?rakmodules=Sensors#rak1901-temperature-and-humidity-sensor)
+- **Versione Firmware:** 2.4.2
+- **Antenna:** RAKARJ17
+
+<img src="/img/records/MartinR7-XARC.webp" alt="Node A" />
+
+<img src="/img/records/MartinR7-Sneznik.webp" alt="Node B" />
+
+<img src="/img/records/MartinR7-map.webp" alt="Map" />
+
+<img src="/img/records/MartinR7-map2.webp" alt="Map2" />
+
+<img src="/img/records/MartinR7-path.webp" alt="Path" />
+
+<img src="/img/records/MartinR7-message-trace.webp" alt="Trace" />
+
+#### Precedente Record Di Terra: 254km
+
+- **Distanza:** 254km (158 miglia)
+- **Detentori del record:** _kboxlabs_
+- **Fonte:** [Meshtastic Discourse (archivio)](https://web.archive.org/web/20250102052417/https://meshtastic.discourse.group/t/practical-range-test-results/692/137)
+
+<h5 id="modem-settings-254">Impostazioni Modem</h5>
+
+Default Long_Fast
+
+- **Frequenza:** 915MHz
+- **Larghezza Di Banda:** 250
+- **Spread Factor:** 11
+- **Coding Rate:** 4/8
+
+<h5 id="node-a-254">Nodo A</h5>
+
+- **Dispositivo:** [RAK4631 Core](/docs/hardware/devices/rak-wireless/wisblock/core-module/?rakcore=RAK4631) con [RAK 5005-O Base Board](/docs/hardware/devices/rak-wireless/wisblock/base-board/?rakbase=RAK5005-O)
+- **Versione Firmware:** 2.1.17
+- **Antenna:** 902-928MHz 5.8 dBi Slinkdsco Outdoor
+
+<h5 id="node-b-254">Nodo B</h5>
+
+- **Dispositivo:** [RAK4631 Core](/docs/hardware/devices/rak-wireless/wisblock/core-module/?rakcore=RAK4631) con [RAK 19003 Mini Base Board](/docs/hardware/devices/rak-wireless/wisblock/base-board/?rakbase=RAK19003)
+- **Versione Firmware:** 2.1.18
+- **Antenna:** LoRa Standard 915Mhz 60Mm 2dBi Omnidirezionale
+
+<img src="/img/records/kboxlabs_sender.webp" alt="Sending Node" />
+
+<img src="/img/records/kboxlabs_receiver.webp" alt="Receiving Node" />
+
+<img src="/img/records/kboxlabs_map.webp" alt="Geographic Locations" />
+
+#### Record Precedente 166km
+
+- **Distanza:** 166km (103 miglia)
+- **Detentore record:** _PuzzledPancake_
+- **Fonte:** [Meshtastic Discourse (archivio)](https://web.archive.org/web/20250102052417/https://meshtastic.discourse.group/t/practical-range-test-results/692/44)
+
+<h5 id="modem-settings-166">Impostazioni Modem</h5>
+
+- **Frequenza:** 868MHz
+- **Larghezza Di Banda:** 125
+- **Spread Factor:** 12
+- **Coding Rate:** 4/8
+
+<h5 id="node-a-166">Nodo A</h5>
+
+- **Dispositivo:** [LILYGO TTGO T-Beam w/ SX1262](/docs/hardware/devices/lilygo/tbeam/?t-beam=sx1262)
+- **Versione Firmware:** 1.2
+- **Antenna:** [868MHz 5dBi Antenna](https://ivent.co.nz/product/category/1000/868mhz%205dbi%20antenna%20193mm%20black%20sma%20%28m%29/38646)
+
+<h5 id="node-b-166">Nodo B</h5>
+
+- **Dispositivo:** [LILYGO TTGO T-Beam w/ SX1262](/docs/hardware/devices/lilygo/tbeam/?t-beam=sx1262)
+- **Versione Firmware:** 1.2
+- **Antenna:** [868MHz Vertical 6dBi](https://ivent.co.nz/product/category/1000/868mhz%20vertical%206dbi%20antenna/38606)
+
+![Mappa Topografica](/img/records/topographical_map.webp)
+
+![Nodo A](/img/records/node_a.webp)
+
+![Nodo B](/img/records/node_b.webp)
+
+<h5>Risorse Usate</h5>
+
+- http://www.heywhatsthat.com
+
+</TabItem>
+
+<TabItem value="air">
+
+#### Record corrente Aria: 206km
+
+- **Distanza:** 206km (128 miglia)
+- **Detentori record:** _StarWatcher, CVR, rook, kboxlabs_
+- **Fonte:** [Meshtastic Discourse (archivio)](https://web.archive.org/web/20250102052417/https://meshtastic.discourse.group/t/practical-range-test-results/692/130)
+
+<h5 id="modem-settings-206">Impostazioni Modem</h5>
+
+Default Long_Fast
+
+- **Frequenza:** 915MHz
+- **Larghezza Di Banda:** 250
+- **Spread Factor:** 11
+- **Coding Rate:** 4/8
+
+<h5 id="node-a-206">Nodo A</h5>
+
+- **Dispositivo:** [LILYGO TTGO T-Beam](/docs/hardware/devices/lilygo/tbeam/?t-beam=1.1)
+- **Versione Firmware:** 2.1.10
+- **Antenna:** Antenna Stock
+
+<h5 id="node-b-206">Nodo B</h5>
+
+- **Dispositivo:** [LILYGO TTGO T-Beam](/docs/hardware/devices/lilygo/tbeam/?t-beam=1.1)
+- **Versione Firmware:** 2.1.10 (modificato per posizionare il GPS in modalità aereo)
+- **Antenna:** Antenna Stock
+
+<img src="/img/records/Devices-Balloon.webp" alt="Nodes and Balloon" />
+
+<img src="/img/records/app-screenshots.webp" alt="App Screenshots" />
+
+</TabItem>
+</Tabs>

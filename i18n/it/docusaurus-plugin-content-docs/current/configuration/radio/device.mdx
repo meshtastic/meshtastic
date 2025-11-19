@@ -1,0 +1,233 @@
+---
+id: device
+title: Configurazione dispositivo
+sidebar_label: Dispositivo
+description: Scopri e confronta i ruoli del dispositivo come Client, Ripetitore e Router e altre impostazioni del dispositivo.
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+import { Icon } from "@iconify/react";
+
+Le opzioni di configurazione del dispositivo sono: Role, modalità di ritrasmissione, GPIO per il pulsante utente, GPIO per il Buzzer PWM, Nodo Info Broadcast Secondi, Doppio tocco come pulsante di stampa, Disabilita Triplo Click, Definizione fuso orario e LED Heartbeat Disattivato. La configurazione del dispositivo utilizza un messaggio di amministrazione inviando un protobuf `Config.Device`.
+
+## Valori Di Configurazione Dispositivo
+
+## Ruoli
+
+| Ruolo Del Dispositivo    | Descrizione                                                                                                                                                                                              | Usi Migliori                                                                                                                                                                                |
+| ------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| CLIENT                   | App collegata o dispositivo di messaggistica standalone. Reinvia i pacchetti quando nessun altro nodo lo ha fatto.                                                                                       | Uso generale per gli individui che hanno bisogno di comunicare attraverso la rete Meshtastic con supporto per le applicazioni client.                                                       |
+| CLIENT_MUTE              | Dispositivo che non inoltra pacchetti da altri dispositivi.                                                                                                                                              | Situazioni in cui un dispositivo deve partecipare alla rete senza assistere nel routing dei pacchetti, riducendo il carico di rete.                                                         |
+| CLIENT_HIDDEN            | Dispositivo che trasmette solo quando necessario, per risparmiare energia o restare invisibile.                                                                                                          | Utilizzare per deployment nascosti/stealth o per diminuire airtime/consumo energetico continuando a partecipare alla rete.                                                                  |
+| CLIENT_BASE              | Personal base station: always rebroadcasts packets from or to its favorited nodes. Handles all other packets like CLIENT.                                                                                | Use for stronger attic/roof “base station” nodes to distribute messages more widely from your own weaker, indoor, or less-well-positioned nodes.                                            |
+| TRACKER                  | Dà priorità alla trasmissione di pacchetti di posizione GPS.                                                                                                                                             | Tracciare la localizzazione di individui o beni, soprattutto in scenari in cui sono cruciali aggiornamenti tempestivi ed efficienti.                                                        |
+| LOST_AND_FOUND           | Trasmette a intervalli regolari la posizione come messaggio nel canale predefinito per aiutare il recupero del dispositivo.                                                                              | Utilizzato per gli sforzi di recupero di un dispositivo perso.                                                                                                                              |
+| SENSOR                   | Dà priorità alla trasmissione di pacchetti di telemetria.                                                                                                                                                | Distribuire in scenari in cui la raccolta di dati ambientali o di altri sensori è fondamentale, con un uso efficiente di energia e aggiornamenti frequenti.                                 |
+| TAK                      | Ottimizzato per la comunicazione del sistema ATAK, riduce le trasmissioni di routine.                                                                                                                    | Integrazione con sistemi ATAK (tramite il Meshtastic ATAK Plugin) per la comunicazione in operazioni tattiche o coordinate.                                                                 |
+| TAK_TRACKER              | Abilita le trasmissioni automatiche TAK PLI e riduce le trasmissioni di routine.                                                                                                                         | Integrazione PLI standalone con sistemi ATAK per la comunicazione in operazioni tattiche o coordinate.                                                                                      |
+| REPEATER [^4]            | Nodo infrastrutturale per estendere la copertura di rete ritrasmettendo sempre i pacchetti una volta con sovraccarico minimo. Non visibile nell'elenco Nodi.                                             | Meglio se posizionato in luoghi strategici per massimizzare la copertura complessiva della rete. Il dispositivo non è mostrato nella topologia.                                             |
+| ROUTER                   | Nodo infrastrutturale per estendere la copertura di rete ritrasmettendo sempre i pacchetti una volta con sovraccarico minimo. Visibile nella lista Nodi.                                                 | Meglio se posizionato in luoghi strategici per massimizzare la copertura complessiva della rete. Il dispositivo è mostrato in topologia.                                                    |
+| ROUTER_LATE              | Nodo dell'infrastruttura che ritrasmette sempre i pacchetti, ma solo dopo tutte le altre modalità, garantendo una copertura aggiuntiva per i cluster locali. Visibile nella lista Nodi.                  | Ideale per coprire punti morti o per garantire l'affidabilità di un cluster di nodi dove il posizionamento non va a vantaggio della rete più ampia. Il dispositivo è mostrato in topologia. |
+
+[^4]: This role has been deprecated as of firmware version 2.7.11
+:::tip
+Still not sure which role to use? Check out our blog post: [Choosing the Right Device Role](/blog/choosing-the-right-device-role/)
+:::
+
+Cerchi ROUTER_CLIENT? Questo ruolo è stato deprecato nel firmware 2.3.15. Ulteriori informazioni nelle [note di rilascio 2.3.15](https://github.com/meshtastic/firmware/releases/tag/v2.3.15.deb7c27)
+
+### Confronto Ruoli
+
+Questa tabella mostra i valori **default** dopo aver selezionato una preimpostazione. Come sempre, le impostazioni individuali possono essere regolate dopo aver scelto una preimpostazione.
+
+| Ruolo Del Dispositivo    | BLE/WiFi/Seriale | Schermo Abilitato | Consumo energetico  | Ritrasmissione      | Routing Prioritato  | Visibile nella lista Nodi |
+| ------------------------ | ---------------- | ----------------- | ------------------- | ------------------- | ------------------- | ------------------------- |
+| CLIENT                   | Sì               | Sì                | Normale             | Sì                  | No                  | Sì                        |
+| CLIENT_MUTE              | Sì               | Sì                | Minimo              | No                  | No                  | Sì                        |
+| CLIENT_HIDDEN            | Sì               | Sì                | Minimo              | Solo Locale         | No                  | No                        |
+| CLIENT_BASE              | Sì               | Sì                | Normale             | Sì                  | Favorites Only[^3]  | Sì                        |
+| TRACKER                  | Sì               | No                | Normale / Basso     | Solo se sveglio[^1] | No                  | Sì                        |
+| LOST_AND_FOUND           | Sì               | No                | Normale             | Sì                  | No                  | Sì                        |
+| SENSOR                   | Sì               | No                | Normale / Basso     | Solo se sveglio[^1] | No                  | Sì                        |
+| TAK                      | Sì               | Opzionale         | Normale             | Sì                  | No                  | Sì                        |
+| TAK_TRACKER              | Sì               | Opzionale         | Normale             | Sì                  | No                  | Sì                        |
+| ROUTER                   | No[^2]           | No                | Alta                | Sì                  | Sì                  | Sì                        |
+| ROUTER_LATE              | Sì               | Sì                | Alto                | Sì                  | No                  | Sì                        |
+| REPEATER                 | Sì               | No                | Alto                | Sì                  | Sì                  | No                        |
+
+[^1]: **Solo quando Attivo** indica che le ritrasmissioni avvengono normalmente ma non durante la modalità sleep tra gli intervalli di trasmissione.
+
+[^2]: Il ruolo `ROUTER` abilita [il risparmio energetico](/docs/configuration/radio/power/#power-saving) di default (solo ESP32). Quando è necessario aggiornare un `ROUTER` tramite BLE, si consiglia di utilizzare un canale di amministrazione per modificare temporaneamente il ruolo al fine di aggiornare e quindi ripristinare quando fatto.
+
+[^3]: **Favorites Only** indicates that the `CLIENT_BASE` will prioritize packets from or to any favorited nodes. From your `CLIENT_BASE`, you should favorite all of your other nodes which are typically within range of the better-positioned `CLIENT_BASE` base station.
+
+## Note sul risparmio energetico + comportamento ruolo
+
+### Solo Piattaforma ESP32
+
+Ogni ruolo tranne che per i ruoli `TRACKER` e `SENSOR` sono in grado di avere il tradizionale comportamento _sleep_ utilizzando l'impostazione `power.is_power_saving`. Quando un nodo va in sleep, in generale, la console seriale, le periferiche, il GPS e la radio WiFi/Bluetooth vengono spenti tutti per risparmiare energia. La CPU entrerà in uno stato di bassa potenza (light sleep o deep sleep su ESP32). La radio LoRA sarà lasciata in stand-by per ricevere qualsiasi pacchetto che _sveglierà_ il dispositivo per riprendere i servizi e rispondere.
+
+Le configurazioni di timeout di `display.screen_on_secs` (Screen timeout), `power.min_wake_secs` (Minimo tempo fino al sonno) e `power.wait_bluetooth_secs` (Bluetooth timeout) ritarderanno la transizione di un nodo verso uno stato di sonno. I timeout e la successiva transizione agli stati di sonno possono anche essere _resettati_ da eventi esterni o azioni come la ricezione di un pacchetto, la pressione di un pulsante, o il collegamento al client tramite seriale o altri mezzi.
+
+Per il ruolo `ROUTER`, il comportamento `power.is_power_saving` del sonno è abilitato automaticamente e non può essere disattivato.
+
+### Piattaforme ESP32 e NRF52
+
+Nei ruoli `TRACKER` e `SENSOR`, ci sono speciali comportamenti di sonno combinati con `power.is_power_saving`. Per `TRACKER`, il dispositivo andrà a dormire per `position. osition_broadcast_secs` secondi e al risveglio invierà un pacchetto di posizione quando il GPS fornirà una posizione valida e ripeterà il ciclo. Per `SENSOR`, il dispositivo andrà a dormire per `telemetry.environment_update_interval` e al risveglio raccoglierà i dati ambientali, invierà un pacchetto di telemetria e ripeterà il ciclo. Per entrambi questi ruoli, la radio LoRA non rimane in modalità standby per accettare pacchetti e risvegliare il dispositivo. Il sonno rimane limitato ai rispettivi intervalli di trasmissione.
+
+## Modalità ritrasmissione
+
+Questa impostazione definisce il comportamento del dispositivo per come i messaggi vengono ritrasmessi.
+
+|    Valore            |                                                            Descrizione                                                                                                                                                            |
+| :------------------: | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
+|     `ALL`            | (predefinito) Questa impostazione ritrasmetterà TUTTI i messaggi dalla sua rete primaria così come da altre mesh con le stesse impostazioni del modem, incluso quando le impostazioni di crittografia differiscono.               |
+| `ALL_SKIP_DECODING`  |                       Lo stesso comportamento di ALL, ma salta la decodifica dei pacchetti e semplicemente li ritrasmette. **Disponibile solo con il ruolo di ripetitore.**                                                       |
+|   `LOCAL_ONLY`       |                        Ignora i messaggi osservati da mesh esterne aperte o quelli che non si possono decifrare. Ritrasmetti il messaggio solo sui nodi locali nei canali primari / secondari.                                    |
+|   `KNOWN_ONLY`       |                        Ignora i messaggi osservati da mesh esterne come fa LOCAL_ONLY, ma fa un passo in più ignorando anche i messaggi dai nodi non nella lista conosciuta del nodo (NodeDB).                                    |
+|     `NONE`           |                                 Permesso solo per i ruoli SENSOR, TRACKER e TAK_TRACKER, questo inibirà tutte le ritrasmissioni, come il ruolo CLIENT_MUTE.                                                                       |
+| `CORE_PORTNUMS_ONLY` |                      Ignora i pacchetti da portnums non standard come: TAK, RangeTest, PaxCounter, ecc. Ritrasmette solo i pacchetti con portnums standard: NodeInfo, Testo, Posizione, Telemetria e Routing.                     |
+
+## GPIO per il pulsante utente
+
+Questo è il numero di pin GPIO che verrà utilizzato per il pulsante utente, se il dispositivo non è dotato di un pulsante utente predefinito.
+
+## GPIO per PWM Buzzer
+
+Questo è il numero di pin GPIO che verrà utilizzato per il buzzer PWM, se il dispositivo non è dotato di un buzzer predefinito.
+
+## Secondi Di Trasmissione Di Informazioni Nodo
+
+Questo è il numero di secondi tra le trasmissioni del messaggio NodeInfo (contenente ad esempio nome breve e lungo) dal dispositivo. Il dispositivo risponderà ancora ad hoc ai messaggi NodeInfo quando si desidera una risposta. Quando il dispositivo ascolta qualsiasi pacchetto da un nodo che non conosce ancora, invierà il suo NodeInfo e chiederà una risposta automaticamente.
+
+## Doppio tocco come pressione pulsante
+
+Questa opzione consente di trattare un doppio tocco, quando un accelerometro supportato è collegato al dispositivo, come una pressione di un pulsante.
+
+## Disabilita triplo-click
+
+Disabilita la tripla pressione del pulsante utente per abilitare o disabilitare il GPS.
+
+## TZDEF (Definizione Di Timezone)
+
+L'impostazione `tzdef` consente di definire l'offset locale per il dispositivo. Utilizza il formato TZ Database per visualizzare l'ora locale corretta sul display del dispositivo e nei suoi log.
+
+Per impostare il fuso orario, utilizzare la stringa del database POSIX TZ per la regione pertinente. Ecco un elenco di [fusi orari supportati](https://github.com/nayarsystems/posix_tz_db/blob/master/zones.csv). Ad esempio, se la tua regione è `America/Los_Angeles`, inseriresti `PST8PDT,M3.2.0,M11.1.0` come fuso orario.
+
+## LED Heartbeat Disabilitato
+
+Se VERO, disabilita il comportamento predefinito del LED lampeggiante (LED_PIN) sul dispositivo.
+
+## Disponibilità Client Configurazione Canale
+
+<Tabs
+  groupId="settings"
+  defaultValue="apple"
+  values={[
+    {
+      label: (
+        <>
+          <Icon icon="mdi:android" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Android
+        </>
+      ),
+      value: "android",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:apple" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Apple
+        </>
+      ),
+      value: "apple",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:terminal" height="1.5rem" style={{ marginRight: "0.25rem" }} /> CLI
+        </>
+      ),
+      value: "cli",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:internet" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Web
+        </>
+      ),
+      value: "web",
+    },
+  ]}>
+
+<TabItem value="android">
+
+#### Android
+
+:::info
+
+La configurazione del dispositivo è disponibile per Android.
+
+1. Apri l'applicazione Meshtastic
+2. Vai a: **Menu (3 punti in alto a destra) > Configurazione radio > Dispositivo**
+
+:::
+
+</TabItem>
+<TabItem value="apple">
+
+#### Apple
+
+:::info
+Tutte le opzioni di configurazione del dispositivo diverse dal server NTP sono disponibili su iOS, iPadOS e macOS in Impostazioni > Configurazione del dispositivo > Dispositivo.
+:::
+
+</TabItem>
+<TabItem value="cli">
+
+#### CLI
+
+:::info
+
+Tutte le opzioni di configurazione del dispositivo sono disponibili nella CLI python. I comandi di esempio sono di seguito:
+
+:::
+
+| Impostazione                           | Valori Accettabili                                                  | Predefinito           |
+| -------------------------------------- | ------------------------------------------------------------------- | --------------------- |
+| device.role                            | `CLIENT`, `CLIENT_MUTE`, `ROUTER`, `REPEATER`, `TRACKER`, `SENSOR`  | `CLIENT`              |
+| device.rebroadcast_mode                | `ALL`, `ALL_SKIP_DECODING`, `LOCAL_ONLY`                            | `ALL`                 |
+| device.button_gpio                     | `0` - `34`                                                          | `0`                   |
+| device.buzzer_gpio                     | `0` - `34`                                                          | `0`                   |
+| device.node_info_broadcast_secs        | `3600` - `UINT MAX`                                                 | `10800` (3 ore)       |
+| device.double_tap_as_button_press      | `false`, `true`                                                     | `false`               |
+| device.disable_triple_click            | `false`, `true`                                                     | `false`               |
+
+:::tip
+
+Poiché il dispositivo si riavvierà dopo che ogni comando viene inviato tramite CLI, si raccomanda quando si impostano più valori in una sezione di configurazione, che i comandi siano concatenati insieme in un unico comando.
+
+```shell title="Example:"
+meshtastic --set device.role CLIENT --set device.tzdef UTC0
+```
+
+:::
+
+```shell title="Set the role to client"
+meshtastic --set device.role CLIENT
+```
+
+```shell title="Set tzdef"
+meshtastic --set device.tzdef UTC0
+```
+
+</TabItem>
+<TabItem value="web">
+
+#### Web
+
+:::info
+Tutte le opzioni di configurazione canale sono disponibili nell'interfaccia utente web.
+:::
+
+</TabItem>
+</Tabs>

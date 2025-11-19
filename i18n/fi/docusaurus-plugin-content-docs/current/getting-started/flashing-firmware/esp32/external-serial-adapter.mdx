@@ -1,0 +1,81 @@
+---
+id: ulkoinen sarjasovitin
+title: Asennus ulkoisella sarjasovittimella
+sidebar_label: Ulkoinen sarjasovitin (kokeneet käyttäjät)
+sidebar_position: 4
+description: Ohjeet ulkoisen sarjaliittimen käyttämiseen Meshtastic firmware -ohjelmiston asentamiseksi ESP32 -piirisarjalaitteeseen.
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+import Link from "@docusaurus/Link";
+
+:::info
+Nämä tiedot ovat todennäköisesti hyödyllisiä vain, jos olet jo yrittänyt käydä läpi [manuaalisen asennuksen](/docs/getting-started/flashing-firmware/esp32/cli-script)
+:::
+
+:::caution
+Varmista, että et laita radiota päälle ilman antennia! Voit vahingoittaa radio-sirua!
+:::
+
+## Tausta
+
+Tilanteet, jotka saattavat edellyttää ulkoisen USB-sarjasovittimen käyttöä:
+
+- Johtuen sirujen puutteesta, hiljattain ostetut laitteet, kuten TTGO T-Beam voivat olla vanhoja tai epätyypillisiä USB-adapterisiruja, jotka ovat joissakin tapauksissa epäluotettavia.
+- Tietyissä laitteissa voi olla viallinen USB sarjasovitin siru.
+- Certain devices, such as the [Hydra](https://github.com/Hydra-Designs/project-hydra-meshtastic-pcb) (Meshtastic-DIY target).
+
+### USB-sarjasovittimet
+
+Markkinoilla on monia vaihtoehtoja. On suositeltavaa ostaa adapteri, jossa on Silicon Labs CP2102 siru, koska se on luotettava alan standardi.
+
+Adapteri joka on mainittu, sen voi ostaa täältä:
+https://www.amazon.com/gp/product/B078W5L8W1/
+
+Laita adapteri tietokoneeseen yhdistämättä sitä vielä mihinkään laitteeseen. Varmista, että tietokoneessasi on asennetut ajurit adapteria varten. Windowsissa oikeat ajurit pitäisi asentua automaattisesti.
+![image](https://user-images.githubusercontent.com/9000580/168445869-f73667f5-0169-46fd-ae13-15c3abad31aa.png)
+
+### Yhdistetään adapteri laitteeseen
+
+:::info
+There are multiple ways to connect the pins of the adapter to the target device: pressing jumpers against contacts, using pogo pin jigs, etc. This tutorial features offset dupont headers soldered onto the operative GPIO pins and connected via jumpers.
+:::
+
+1. Liitä adapterin RX pinni laitteen TX pinniin
+2. Liitä adapterin TX pinni laitteen RX pinniin
+3. Liitä adapterin GND pinni laitteen GND pinniin
+4. Liitä joko adapterin 5V pinni laitteen 5V pinniin(kuvassa) tai 3.3V pinni Laitteen 3.3V pinniin.
+5. Yhdistä GPIO 0 -> GND hyppylangalla. (This places the device into flash mode when the device is powered up)
+   Example wiring featuring a T-Beam
+   ![image](https://user-images.githubusercontent.com/9000580/168446438-d14f34a0-b92d-4716-87fd-e0c2927a35fd.png)
+6. Yhdistä laite tietokoneessa olevaan USB-porttiin
+7. Poista hyppylanka GPIO 0 -> GND väliltä
+   ![enter-flash-mode](https://user-images.githubusercontent.com/9000580/168446974-c31d3e9c-3397-4cb1-90a4-91ef2e4d5fac.gif)
+
+### Ohjelmointi
+
+Kun olet suorittanut edellä mainitut vaiheet, laitteen pitäisi olla ohjelmointi tilassa. Voit ohjelmoida laitteesi käyttäen [manuaalista menetelmää](/docs/getting-started/flashing-firmware/esp32/cli-script)
+
+Ohjelmoinnin jälkeen laite on valmis, nollaa laite (RST-painikkeen avulla, jos saatavilla).
+If you have the Meshtastic Python CLI installed, you can run `meshtastic --noproto` to connect the device again over the adapter and view the serial output to confirm Meshtastic installed correctly.
+![image](https://user-images.githubusercontent.com/9000580/168447159-71a6546a-f487-4bc2-86c1-4c489b2a8975.png)
+
+### Vianetsintä
+
+You might receive an error for COM port permission in the manual device install scripts, this can be caused by a number of different issues.
+
+You might need to run the process as an administrator, check to ensure software like Cura isn't monopolizing COM ports, or reboot.
+
+## Yhdistä ja konfiguroi laite
+
+Kun laitteelle on asennettu Meshtastic firmware -ohjelmisto, voit jatkaa konfigurointiin.
+
+<div className="indexCtasBody">
+  <Link
+    className={"button button--outline button--lg cta--button"}
+    to={"/docs/getting-started/initial-config"}
+  >
+    Yhdistä ja konfiguroi laite
+  </Link>
+</div>

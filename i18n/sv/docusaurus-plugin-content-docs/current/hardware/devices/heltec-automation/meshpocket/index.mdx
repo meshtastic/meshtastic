@@ -1,0 +1,54 @@
+---
+id: meshpocket
+title: HELTEC® MeshPocket
+sidebar_label: MeshPocket
+sidebar_position: 5
+---
+
+MeshPocket, made by [Heltec](/docs/hardware/devices/heltec-automation/), is a compact and portable device that combines QI2 magnetic wireless charging with an integrated low-power Meshtastic device based on the nRF52840 MCU and a 2.13" e-ink display. Available with either a 5000 or 10000 mAh battery, it is designed for everyday use, outdoor exploration, and reliable off-grid messaging.
+
+## Specifications
+
+- **MCU:**
+  - nRF52840
+    - Bluetooth 5.0
+- **LoRa Transceiver:**
+  - Semtech SX1262
+- **Frequency Options:**
+  - 863 - 870 MHz
+  - 902 - 928 MHz
+- **Antenna:**
+  - Integrated LoRa antenna
+- **Connectors:**
+  - USB-C
+  - 4-pin magnetic pins for interacting with the Meshtastic device
+
+### Features
+
+- QI2 wireless charger with integrated Meshtastic device.
+- 2.13" e-ink display.
+- 5000 or 10000 mAh battery options.
+
+### Installera programvaran
+
+To flash firmware on the Heltec MeshPocket, you must use the included magnetic pogo pin cable connected to the side of the device. The USB-C port is only for charging the internal battery or supplying power to another device, it does not support data transfer or firmware flashing.
+
+1. Trigger DFU mode manually by double-clicking the RST button.
+2. Copy the firmware UF2 file into the mounted drive that appears.
+
+### Resources
+
+- Firmware files:
+  - 5000 mAh:
+    - `firmware-heltec-mesh-pocket-5000-X.X.X.xxxx.uf2`
+    - `firmware-heltec-mesh-pocket-inkhud-5000-X.X.X.xxxx.uf2`
+  - 10000 mAh:
+    - `firmware-heltec-mesh-pocket-10000-X.X.X.xxxx.uf2`
+    - `firmware-heltec-mesh-pocket-inkhud-10000-X.X.X.xxxx.uf2`
+- Purchase links
+  - International
+    - [Heltec Site](https://msh.to/heltec-mesh-pocket-10000/)
+- [Heltec MeshPocket User Guide](https://resource.heltec.cn/download/MeshPocket/user_manual/User_Guide_Rev.1.0.1.pdf)
+- [Heltec MeshPocket Datasheet](https://resource.heltec.cn/download/MeshPocket/datasheet/MeshPocket_1.0.1.pdf)
+
+![Heltec MeshPocket](/img/hardware/heltec/meshpocket.webp)

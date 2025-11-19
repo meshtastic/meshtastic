@@ -1,0 +1,31 @@
+---
+id: flashing-nrf52-devices
+title: nRF52 & RP2040 Geräte programmieren
+sidebar_label: nRF52/RP2040 Geräte
+sidebar_position: 2
+description: Anleitung zum Programmieren der Meshtastic Firmware auf nRF52 oder RP2040 Geräten.
+---
+
+## Methoden zur Programmierung von nRF52 und RP2040 Geräten
+
+nRF52 und RP2040 basierende Geräte verfügen über den einfachsten Firmware Aktualisierungsprozess. Treiber- oder Softwareinstallation ist auf jeder Plattform unnötigt.
+
+### Ziehen & Ablegen
+
+nRF52 und RP2040 Geräte verwenden die [Ziehen & Ablegen](/docs/getting-started/flashing-firmware/nrf52/drag-n-drop) Installationsmethode um Firmware Versionen zu installieren.
+
+### Over-The-Air (OTA)
+
+nRF52 Geräte können [OTA Firmware Aktualisierungen](/docs/getting-started/flashing-firmware/nrf52/ota) von einem mobilen Gerät über Bluetooth empfangen.
+
+### nRF auf Werkseinstellungen zurücksetzen
+
+Sie können das Gerät vor der Installation der Firmware auf [Werkseinstellungen zurücksetzen](/docs/getting-started/flashing-firmware/nrf52/nrf52-erase), um Daten zu löschen, die Format und Ort zwischen den Releases ändern können.
+
+### RAK4631-R in RAK4631 umwandeln
+
+Falls Ihr Gerät nicht mit dem Arduino Bootloader kommt, müssen Sie [Konvertierung](/docs/getting-started/flashing-firmware/nrf52/convert-rak4631r) durchführen.
+
+### Verwenden Sie Raspberry Pi als SWDIO Programmierwerkzeug
+
+Wenn Ihr Gerät nicht über USB oder Bluetooth programmieren können, dann kann eine weitere Option eine [direkte SWDIO-Verbindung](/docs/getting-started/flashing-firmware/nrf52/swdio) sein.

@@ -1,0 +1,62 @@
+---
+id: wio-sx1262s
+title: Seeed Wio-SX1262 Series
+sidebar_label: Wio-SX1262 Series
+sidebar_position: 2
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+<Tabs
+groupId="wio-sx1262"
+queryString="wio-sx1262"
+defaultValue="nrf52840"
+values={[
+  { label: "XIAO nRF52840", value: "nrf52840" },
+]}>
+
+<TabItem value="nrf52840">
+
+## XIAO nRF52840 & Wio SX1262 Kit
+
+:::warning[Note]
+
+The Wio-SX1262 module shipped with this kit does not have the same pin configuration as the one shipped with the XIAO ESP32S3 kit. If you want to use a Wio-SX1262 module from a different Seeed kit with a XIAO nRF52840, you may need to flash custom firmware with the correct pin definitions.
+
+:::
+
+A thumb-sized LoRa dev kit based on the nRF52840 MCU, supporting BLE, and LoRa. It includes a built-in power management chip and can be extended via I²C, UART, and other GPIO interfaces, with compatibility for Arduino development.
+
+### Tekniset tiedot
+
+- **MCU**
+  - XIAO nRF52840 (Bluetooth)
+- **LoRa-lähetin-vastaanotin**
+  - Semtech SX1262
+- \*\*Taajuusvaihtoehdot
+  - 862–930 MHz
+- **Liitännät**
+  - USB-C
+  - Antenna
+    - U.FL/IPEX antenna connector for LoRa
+
+### Ominaisuudet
+
+- **Thumb-sized Compact Design**: 21 x 18mm, adopting the classic form factor of XIAO.
+- **L76K GNSS Module available**: A compatible Seeed L76K GNSS Module is available with the same form factor as the XIAO nRF52840 & Wio-SX1262 Kit.
+
+### Resurssit
+
+- [User Guide](https://wiki.seeedstudio.com/xiao_nrf52840&_wio_SX1262_kit_for_meshtastic/)
+- Linkit ostamiseen:
+  - Kansainvälinen
+    - [Seeed Studio Online Store](https://msh.to/seeed_xiao_nrf52840_kit/)
+
+### Pin Map
+
+![xiao_nrf52840](/img/hardware/seeed/XIAO_nRF52840-pin_map.webp)
+![wio-sx1262](/img/hardware/seeed/Wio-SX1262-pin_map.webp)
+
+</TabItem>
+</Tabs>

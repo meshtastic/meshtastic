@@ -1,0 +1,58 @@
+---
+id: meshtasticator
+title: Meshtasticator
+sidebar_label: Meshtasticator (Simulator)
+sidebar_position: 6
+description: Übersicht über den Meshtasticator Simulator zur Bewertung der Leistung und Skalierbarkeit des Meshtastic Protokolls mithilfe diskreter Ereignis- und interaktiver Simulationen.
+---
+
+import ReactPlayer from "react-player";
+
+**Meshtasticator** ist ein ereignisdiskreter und interaktiver Simulator, der den Funkgeräteteil der Firmware repliziert. Es hilft bei der Bewertung der Leistung verschiedener Szenarien und der Skalierbarkeit des Protokolls. Den **Meshtasticator**-Simulator finden Sie auf [Github](https://github.com/meshtastic/meshtasticator).
+
+## Diskreter Ereignissimulator
+
+Der ereignisdiskrete Simulator modelliert den Funkabschnitt der Gerätesoftware, um dessen Verhalten zu analysieren. Es kann die Leistung bestimmter Szenarien und die Skalierbarkeit des Protokolls bewerten.
+
+### Erste Schritte
+
+Eine Schritt-für-Schritt-Anleitung zur Verwendung der ereignisdiskreten Simulation finden Sie im [Handbuch zur Verwendung der ereignisdiskreten Simulation](./discrete-event-sim).
+
+### Simulationseinblicke
+
+Nach jeder Simulation zeichnet das Tool die Knotenplatzierungen auf und plant den Zeitpunkt für überlappende Nachrichten, die während der Simulation gesendet werden.
+
+![Platzierungsplan](/img/software/meshtasticator/placement_schedule.webp)
+
+Der Simulator ermöglicht Netzwerkanalysen mit unterschiedlichen Parametersätzen. Nachfolgend sind beispielsweise die Ergebnisse von 100 Simulationen mit jeweils 200 Sekunden Dauer und unterschiedlichen Hop-Limits und Knotenzahlen aufgeführt. Wie erwartet steigt die durchschnittliche Anzahl der pro Nachricht erreichten Knoten mit einer höheren Sprungweite.
+
+![Erreichbarkeitssprünge](/img/software/meshtasticator/reachability_hops.webp)
+
+Diese Verbesserung geht jedoch auf Kosten der **Nützlichkeit** – der Anteil der empfangenen Pakete, die neue (nicht doppelte) Nachrichten enthalten, nimmt mit zunehmender erneuter Ausstrahlung ab.
+
+![Nützliche Sprünge](/img/software/meshtasticator/usefulness_hops.webp)
+
+## Interaktiver Simulator
+
+Der interaktive Simulator nutzt die [Linux-native Meshtastic Anwendung](https://meshtastic.org/docs/software/linux/installation/), d. h. die echte Gerätesoftware, und emuliert gleichzeitig einige Hardwarekomponenten, einschließlich des LoRa Chips. Es kann auch unter Windows oder macOS mit Docker ausgeführt werden.
+
+### Einrichtungsanleitung
+
+Informationen zum Einstieg in den interaktiven Simulator finden Sie im [Benutzerhandbuch zum interaktiven Simulator](./interactive-sim).
+
+### Debugging und Visualisierung
+
+Dieser Simulator erleichtert das Debuggen mehrerer kommunizierender Knoten, ohne dass physische Geräte erforderlich sind.
+
+<div style={{ maxWidth: "800px", margin: "auto" }}>
+  <ReactPlayer
+    url="https://youtu.be/SwhO-WdwvrU"
+    controls
+    width="100%"
+    height="400px"
+  />
+</div>
+
+Da der Simulator außerdem über eine `Orakelansicht` des Netzwerks verfügt, bietet er Einblicke in die Routen der Nachrichten.
+
+![Routenplan](/img/software/meshtasticator/route_plot.webp)

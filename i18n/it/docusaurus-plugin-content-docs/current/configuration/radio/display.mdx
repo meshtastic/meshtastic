@@ -1,0 +1,205 @@
+---
+id: display
+title: Configurazione display
+sidebar_label: Schermo
+description: Dettagli sulle opzioni di configurazione per il display sul dispositivo Meshtastic.
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+import { Icon } from "@iconify/react";
+
+Le opzioni di configurazione dello schermo sono: Schermo sulla Durata, Intervallo Carosello Automatico, Sempre Punto Nord, Formato GPS, Unità Di Visualizzazione Preferite, Rifletti schermo, definizione OLED, modalità di visualizzazione, intestazione grassetto, sveglia il tocco o il movimento, bussola di orientamento e utilizza l'orologio 12 ore. Display config utilizza un messaggio di amministrazione inviando un protobuf `Config.Display`.
+
+## Configurazione display
+
+### Durata Schermo Attivo
+
+Per quanto tempo lo schermo rimane acceso dopo che il pulsante utente viene premuto o i messaggi vengono ricevuti.
+
+### Intervallo Di Carosello Automatico
+
+Commuta automaticamente alla pagina successiva sullo schermo come un carosello, in base all'intervallo specificato.
+
+### Punta Sempre a Nord
+
+Se impostata, l'intestazione della bussola sullo schermo al di fuori del cerchio punta sempre a nord. Questa funzione è disattivata per impostazione predefinita e la parte superiore del display rappresenta la direzione di movimento, l'indicatore Nord si muoverà intorno al cerchio.
+
+### Formato GPS
+
+Il formato utilizzato per visualizzare le coordinate GPS sullo schermo del dispositivo.
+
+Valori Accettabili:
+
+| Valore  |              Descrizione                       |
+| :-----: | :--------------------------------------------: |
+|  `DEC`  |             Gradi Decimali                     |
+|  `DMS`  |           Gradi, Minuti, Secondi               |
+|  `UTM`  |         Mercatore Trasverso Universale         |
+|  `MGRS` | Sistema Di Riferimento Della Griglia Militare  |
+|  `OLC`  |        Open Location Code (Codici Plus)        |
+|  `OSGR` |   Riferimento di griglia di Ordnance Survey    |
+|  `MLS`  |          Maidenhead Locator System             |
+
+### Unità Display Preferite
+
+Passa tra le unità `METRIC` (predefinito) e `IMPERIAL`
+
+### Capovolgi schermo
+
+Se abilitata, lo schermo sarà ruotato di 180 gradi, per i case che montano lo schermo a testa in giù
+
+### Definizione OLED
+
+Il tipo di OLED Controller viene rilevato automaticamente per impostazione predefinita, ma può essere definito con questa impostazione se il rilevamento automatico fallisce. Per il SH1107, assumiamo un display quadrato con 128x128 Pixel come il GME128128-1.
+
+Valori Accettabili:
+
+|   Valore       |               Descrizione                               |
+| :------------: | :-----------------------------------------------------: |
+|  `OLED_AUTO`   | Rileva automaticamente il controller del display        |
+| `OLED_SSD1306` |        Utilizza sempre il driver SSD1306                |
+| `OLED_SH1106`  |         Utilizza sempre driver SH1106                   |
+| `OLED_SH1107`  |   Utilizza sempre il driver SH1107 (Geometria 128x128)  |
+
+### Modalità di visualizzazione
+
+La modalità di visualizzazione può essere impostata su `DEFAULT` (predefinito), `TWOCOLOR`, `INVERTED` o `COLOR`. La modalità `TWOCOLOR` è destinata ai display OLED con la prima linea di output che è un colore diverso dal resto del display. La modalità `INVERTED` inverte quell'area bicolore, risultando in un titolo di sfondo bianco sui display monocromatici.
+
+### Titoli in grassetto
+
+L'intestazione può essere difficile da leggere quando viene usata la modalità di visualizzazione 'INVERTED' o 'TWOCOLOR'. Questa impostazione renderà il titolo in grassetto, quindi sarà più facile da leggere.
+
+### Sveglia al tocco o al movimento
+
+Questa opzione consente di riattivare lo schermo del dispositivo durante il movimento, come un tocco sul dispositivo, viene rilevato tramite un accelerometro collegato, o un pulsante di tocco capacitivo.
+
+### Orientamento bussola
+
+Indica come ruotare o invertire l'orientamento della bussola sul display.
+
+### Usa Orologio 12 Ore
+
+Se falso, il dispositivo visualizzerà il tempo in formato 24 ore sullo schermo.  Se vero, il dispositivo visualizzerà il tempo in formato 12 ore sullo schermo.
+
+## Disponibilità Client Configurazione Display
+
+<Tabs
+  groupId="settings"
+  defaultValue="apple"
+  values={[
+    {
+      label: (
+        <>
+          <Icon icon="mdi:android" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Android
+        </>
+      ),
+      value: "android",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:apple" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Apple
+        </>
+      ),
+      value: "apple",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:terminal" height="1.5rem" style={{ marginRight: "0.25rem" }} /> CLI
+        </>
+      ),
+      value: "cli",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:internet" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Web
+        </>
+      ),
+      value: "web",
+    },
+  ]}>
+<TabItem value="android">
+
+#### Android
+
+:::info
+
+La configurazione del dispositivo è disponibile per Android.
+
+1. Apri l'applicazione Meshtastic
+2. Vai a: **Menu (3 punti in alto a destra) > Configurazione radio > Display**
+
+:::
+
+</TabItem>
+<TabItem value="apple">
+
+#### Apple
+
+:::info
+Most display config options are available on iOS, iPadOS and macOS at Settings > Device Configuration > Display.
+:::
+
+</TabItem>
+<TabItem value="cli">
+
+#### CLI
+
+:::info
+
+Tutte le opzioni di configurazione del display sono disponibili nella CLI python. I comandi di esempio sono di seguito:
+
+:::
+
+| Impostazione                           | Valori Accettabili                                         | Predefinito                                   |
+| -------------------------------------- | ---------------------------------------------------------- | --------------------------------------------- |
+| display.auto_screen_carousel_secs      | `intero`                                                   | Il valore predefinito di `0` è spento.        |
+| display.compass_north_top              | `false`, `true`                                            | `false`                                       |
+| display.flip_screen                    | `false`, `true`                                            | `false`                                       |
+| display.gps_format                     | `DEC`, `DMS`, `UTM`, `MGRS`, `OLC`, `OSGR`, `MLS`          | `DEC`                                         |
+| display.oled                           | `OLED_AUTO`, `OLED_SSD1306`, `OLED_SH1106`, `OLED_SH1107`  | `OLED_AUTO`                                   |
+| display.screen_on_secs                 | `intero`                                                   | Il valore predefinito di `0` è di 10 minuti.  |
+| display.units                          | `METRIC`, `IMPERIAL`                                       | `METRIC`                                      |
+| display.displaymode                    | `DEFAULT`, `TWOCOLOR`, `INVERTED`, `COLOR`                 | `DEFAULT`                                     |
+| display.heading_bold                   | `false`, `true`                                            | `false`                                       |
+| display.wake_on_tap_or_motion          | `false`, `true`                                            | `false`                                       |
+
+:::tip
+
+Poiché il dispositivo si riavvierà dopo che ogni comando viene inviato tramite CLI, si raccomanda quando si impostano più valori in una sezione di configurazione, che i comandi siano concatenati insieme in un unico comando.
+
+```shell title="Example:"
+meshtastic --set display.screen_on_secs 120 --set display.gps_format UTM
+```
+
+:::
+
+```shell title="Set Screen On Duration (Default of 0 is 10 minutes)"
+meshtastic --set display.screen_on_secs 0
+meshtastic --set display.screen_on_secs 120
+```
+
+```shell title="Set Auto Carousel Interval (Default of 0 is Off)"
+meshtastic --set display.auto_screen_carousel_secs 0
+// Imposta a 2 minuti (120 secondi)
+meshtastic --set display.auto_screen_carousel_secs 120
+```
+
+```shell title="Specify GPS format on device screen"
+meshtastic --set display.gps_format UTM
+```
+
+</TabItem>
+<TabItem value="web">
+
+#### Web
+
+:::info
+Tutte le opzioni di configurazione sono disponibili nell'interfaccia utente web.
+:::
+
+</TabItem>
+</Tabs>

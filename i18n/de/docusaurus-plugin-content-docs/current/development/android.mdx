@@ -1,0 +1,62 @@
+---
+id: android
+title: Android App erstellen
+sidebar_label: Android
+sidebar_position: 1
+---
+
+## Anleitung zum Erstellen
+
+Wenn Sie diese Anwendung weiter entwickeln möchten, würden wir uns über Ihre Unterstützung freuen! Diese Anweisungen sind kurz und sollten verbessert werden, bitte senden Sie eine PR, wenn Sie können.
+
+1. Verwenden Sie Android Studio zum Erstellen/Debuggen
+2. Kopieren Sie das Projektarchiv und ändern Sie nach erfolgreichem Klonen das Arbeitsverzeichnis zu Meshtastic-Android/
+   ```shell
+   git clone https://github.com/meshtastic/Meshtastic-Android.git --recursive && cd Meshtastic-Android/
+   ```
+3. Jetzt sollten Sie in der Lage sein "Run" im IDE auszuwählen und Applikation sollte auf Ihrem Telefon oder dem Emulator starten.
+
+:::note
+Die Emulatoren unterstützen Bluetooth nicht, daher können einige Funktionen in dieser Umgebung nicht verwendet werden.
+:::
+
+## Analyse einrichten
+
+Analysen sind enthalten, können aber vom Benutzer auf dem Einstellungsbildschirm deaktiviert werden.
+
+1. Analyse für das Entwicklungsgerät konfigurieren
+
+   ```shell
+   adb shell setprop debug.firebase.analytics.app com.geeksville.mesh
+   adb shell setprop log.tag.FirebaseCrashlytics DEBUG
+   ```
+
+2. Ausführliche Protokollierung festlegen
+
+   ```shell
+   adb shell setprop log.tag.FA VERBOSE
+   ```
+
+## In Google Play veröffentlichen
+
+:::info
+Nur verfügbar für Kernentwickler, die Veröffentlichungen erstellen.
+:::
+
+1. Repository-Geheimnisse hinzufügen:
+   - **KEYSTORE_FILENAME**
+     - Name der `.jks`
+   - **KEYSTORE**
+     - Konvertieren Sie die `.jks` in base64:
+       ```shell
+       openssl base64 < filename.jks | tr -d '\n' | tee filename.txt
+       ```
+   - **KEYSTORE_PROPERTIES**
+     - `storePassword=nononononono`
+     - `keyPassword=nononononono`
+     - `keyAlias=upload`
+     - `storeFile=nononononono.jks`
+2. Protocol Buffer aktualisieren
+3. Gehen Sie zu Aktionen / Release erstellen / Workflow ausführen
+4. Wählen Sie den Versionszweig
+5. Geben Sie die Version in `app/gradle.build` ein

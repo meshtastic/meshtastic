@@ -1,0 +1,122 @@
+---
+id: traceroute
+title: Traceroute Modulverwendung
+sidebar_label: Traceroute
+description: Das Traceroute Modul ermöglicht es Ihnen, den Pfad einer Nachricht zu verstehen, über den sie das endgültige Ziel im Netz zu erreicht.
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+import ReactPlayer from "react-player";
+import { Icon } from "@iconify/react";
+
+## Übersicht
+
+Aufgrund der begrenzten Bandbreite von LoRa, behält Meshtastic nicht den Überblick über die Knoten, die verwendet/übersprungen werden damit eine Nachricht ihr Ziel erreicht. Jedoch gibt es ab Firmware 2.0.8 ein Traceroute Modul, das Ihnen dies anzeigen kann.
+
+Nur Knoten, die den Schlüssel des Kanals kennen, den Sie verwenden, können verfolgt werden. Beachten Sie auch, dass eine Nachricht verschiedene Wege aufgrund von Vervielfältigung und Weiterleitung nehmen kann. Dieses Modul verfolgt nur die Sprünge des ersten Pakets mit der Traceroute Anforderung, das am Ziel angekommen ist.
+
+Um dieses Modul nutzen zu können, stellen Sie sicher, dass Ihre Geräte die Firmware Version v2.0.8 oder höher enthalten.
+
+Ab Firmware Version 2.5 wird die Route zurück zum Ursprung zusammen mit dem Signalrauschabstand (SNR) für jede Verbindung aufgezeichnet. Knoten mit älterer Firmware oder solche, die den Traceroute nicht entschlüsseln können, werden als „Unbekannt“ angezeigt (dargestellt durch eine ID gleich 4294967295 oder 0xFFFFFFFF in Hexadezimal), wenn alle Knoten in der Route mindestens die Firmware-Version 2.3.12 verwenden.
+
+<div style={{ maxWidth: "800px", margin: "auto" }}>
+  <ReactPlayer
+    url="https://youtu.be/PKUmaELKaUo"
+    controls
+    width="100%"
+    height="400px"
+  />
+</div>
+
+## Repeater Verhalten
+
+Repeater-Knoten werden im Traceroute-Protokoll angezeigt, wenn sie über den Verschlüsselungsschlüssel verfügen. Wenn sie jedoch nicht in der Knotenliste enthalten sind, werden sie je nach App möglicherweise als „Unbekannt“ angezeigt.
+
+## Verfügbarkeit des Traceroute Moduls
+
+<Tabs
+  groupId="settings"
+  defaultValue="apple"
+  values={[
+    {
+      label: (
+        <>
+          <Icon icon="mdi:android" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Android
+        </>
+      ),
+      value: "android",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:apple" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Apple
+        </>
+      ),
+      value: "apple",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:terminal" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Kommandozeile
+        </>
+      ),
+      value: "cli",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:internet" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Web
+        </>
+      ),
+      value: "web",
+    },
+  ]}>
+
+<TabItem value="android">
+
+#### Android
+
+In der Knotenliste drücken Sie lange auf einen Zielknoten und wählen Sie 'Traceroute', um die Anfrage zu senden. Je nachdem, wie viele Sprünge benötigt werden, kann dies eine Weile dauern. Das Ergebnis wird über ein Popup angezeigt.
+
+</TabItem>
+<TabItem value="apple">
+
+#### Apple
+
+In der Knotenliste drücken Sie lange auf einen Zielknoten und wählen Sie 'Traceroute', um die Anfrage zu senden. Je nachdem, wie viele Sprünge benötigt werden, kann dies eine Weile dauern. Auf iOS/iPadOS 17 und macOS 14+ werden die Ergebnisse im Tracerroute Protokoll des Knotens angezeigt. Für frühere Versionen klicken Sie auf Einstellungen > Protokollieren > Mesh Log.
+
+</TabItem>
+<TabItem value="cli">
+
+#### Kommandozeile
+
+Stellen Sie sicher, dass das die Kommandozeilenapplikation mindestens Version 2.0.6 ist. Dann verwenden Sie diesen Befehl:
+
+```shell title="CLI traceroute command"
+meshtastic --traceroute 'destinationId'
+```
+
+Wobei Sie für „destinationId“ die ID des Ziels eingeben müssen, zu dem Sie die Sprünge verfolgen möchten. Diese erhalten Sie durch Ausführen von „meshtastic --nodes“. Abhängig von Ihrem Betriebssystem müssen Sie die ID ggf. in Anführungszeichen setzen. Dann wird eine bestimmte Nachricht gesendet, um die Sprünge zu verfolgen. Zum Beispiel werden Sie das erhalten:
+
+```shell title="Traceroute from !25048234 to !bff18ce4"
+meshtastic --traceroute '!bff18ce4'
+Connected to radio
+Sending traceroute request to !bff18ce4 (this could take a while)
+Route traced towards destination:
+!25048234 --> !ba4bf9d0 (6.0dB) --> !bff18ce4 (-3.5dB)
+Route traced back to us:
+!bff18ce4 --> !ba4bf9d0 (-2.75dB) --> !25048234 (5.25dB)
+```
+
+Die erste ID, die angezeigt wird, ist das über die Kommandozeile angeschlossene Ursprungsgerät. Wie im obigen Bild gezeigt wurde, reiste das Paket durch einen zusätzlichen Knoten, um sein Ziel zu erreichen und zurückzukommen.
+
+</TabItem>
+<TabItem value="web">
+
+#### Web
+
+Nachdem Sie einen Knoten aus der Liste ausgewählt haben, klicken Sie auf "Route" in der oberen rechten Ecke, um eine Traceroute-Anfrage an den ausgewählten Knoten zu schicken. Das Ergebnis wird auf der Nachrichtenseite des Knotens angezeigt.
+
+</TabItem>
+</Tabs>

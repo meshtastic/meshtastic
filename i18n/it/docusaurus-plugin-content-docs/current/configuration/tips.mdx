@@ -1,0 +1,126 @@
+---
+id: tips
+title: Suggerimenti Di Configurazione
+description: Suggerimenti e soluzioni per aiutarti a sfruttare al meglio il tuo dispositivo Meshtastic e la tua rete.
+sidebar_label: Suggerimenti
+sidebar_position: 4
+---
+
+import QRCode from "@site/docs/blocks/_qr-code.mdx";
+
+## Ruoli
+
+It is strongly recommended to keep your [ROLE](/docs/configuration/radio/device#roles) set to `CLIENT`, `CLIENT_MUTE`, or `CLIENT_BASE`. Usa altri ruoli solo se hai una ragione specifica e ben compresa per farlo. Leggi il nostro [blog post sulla scelta del miglior ruolo](/blog/choosing-the-right-device-role/).
+
+### Ruoli Consigliati
+
+- I nodi `CLIENT` ricevono, inviano e ripetono in modo intelligente i messaggi per aiutare la rete mesh.
+  - **Questa è la scelta corretta per la maggior parte dei casi.**
+  - Aggiunge automaticamente dei ritardi intelligenti durante le ritrasmissioni per mantenere stabile la rete.
+  - Perfetto per nodi che possono aiutare gli altri: installazioni sul tetto, posizioni ad alta visibilità o nodi che estendono la copertura della rete.
+  - Usare in zone remote (escursioni, sci, ciclismo) dove ogni nodo aiuta a mantenere la connettività.
+
+- I nodi con ruolo `CLIENT_MUTE` possono inviare e ricevere messaggi, ma mai ritrasmetterli.
+  - Utilizzare con un dispositivo portatile personale quando ci si trova vicino a un nodo più potente (come un nodo sul tetto) in una rete congestionata.
+  - Usare quando più nodi sono nelle immediate vicinanze. Imposta il nodo con la posizione migliore su `CLIENT` e gli altri su `CLIENT_MUTE`.
+  - Perfetto per i nodi indoor che parlano solo con un nodo esterno, dato che non possono raggiungere altri nodi comunque, ripetere i messaggi significherebbe sprecare la larghezza di banda.
+
+- `CLIENT_BASE` nodes prioritize rebroadcasting messages from your other personal nodes.
+  - Use for a stronger or well-positioned attic/roof “base station” node to distribute messages more widely from your own weaker, indoor, or less-well-positioned nodes.
+  - Set one node to `CLIENT_BASE`. Set your other nodes (typically `CLIENT` or `CLIENT_MUTE`) as favorites on the `CLIENT_BASE`.
+  - Perfect for ensuring all your nearby nodes take full advantage of your stronger, well-positioned attic/roof node.
+
+![Esempio Nodo Client](/img/configuration/client.webp)
+_Un esempio di nodo 'Client'.  Crediti foto: Cully@KBOXLABS_
+
+### Evita `ROUTER`e `REPEATER`
+
+Usare i ruoli `ROUTER` o `REPEATER` può causare problemi gravi di rete:
+
+- Aumento del rischio di collisione dei pacchetti.
+- Riduzione dei tassi di consegna dei messaggi.
+- Riduzione del raggio di rete effettivo a causa del consumo inutile di hop.
+
+Questi ruoli riguardano applicazioni molto specifiche. Prima di cambiare da ruolo `CLIENT`, [rivedere attentamente la documentazione](/docs/configuration/radio/device#roles) per capire le implicazioni. Inoltre, coordina questo con la tua comunità locale per assicurarti che il suo impatto sia positivo, piuttosto che negativo.
+
+Ricorda: Una rete di nodi `CLIENT` con un piccolo numero di `ROUTERS` ben posizionati è di solito la configurazione più efficiente e stabile.
+
+![Esempio Nodo Client](/img/configuration/router.webp)
+_Un esempio di nodo 'Client'.  Crediti foto: Cully@KBOXLABS_
+
+## (Non) Condividere La Tua Posizione
+
+La telemetria è condivisa sul tuo [canale PRIMARIO](/docs/configuration/radio/channels#role). Ciò significa che se il nodo ha acquisito le coordinate GPS da un chip GPS integrato, o dal dispositivo mobile, le tue coordinate saranno inviate alla mesh su questo canale, utilizzando la sua crittografia definita (se presente).
+
+Per impostazione predefinita, il nome del canale PRIMARIO è LongFast con la chiave di crittografia "AQ==" (Base64 equivalente di Hex 0x01). Se questa opzione non viene modificata, la tua posizione verrà condivisa con tutti i nodi dell'intervallo che utilizzano anche il canale predefinito.
+
+### Usare La Precisione di Posizione
+
+Meshtastic ora supporta la capacità di controllare la precisione dei dati di localizzazione inviati su un particolare canale.
+
+L'impostazione `position_precision` consente di controllare il livello di precisione dei dati di localizzazione inviati su un particolare canale. Questo può essere utile per motivi di privacy, dove l'offuscare la posizione esatta può essere conveniente, quando si inviano dati di posizione su determinati canali.
+
+Per informazioni dettagliate sulle impostazioni di precisione della posizione e su come configurarle, fare riferimento alla [documentazione di precisione della posizione](/docs/configuration/radio/channels/#position-precision).
+
+### Condividere la posizione su un canale secondario privato
+
+> This is a newer feature that only works for firmware 2.7.1+
+
+Per condividere la tua posizione su un canale secondario privato mantenendo il canale primario predefinito non crittografato, segui questi passaggi:
+
+1. Disabilita la condivisione della posizione sul canale primario (Canale 0) per evitare di trasmettere la tua posizione a tutti gli utenti.
+2. Seleziona un canale secondario in cui vuoi condividere la tua posizione. Abilita la condivisione della posizione e scegli il livello di precisione desiderato.
+3. Comprendi gli aggiornamenti automatici della posizione:
+   - Solo un canale riceve gli aggiornamenti automatici e in tempo reale.
+   - Questo è il canale secondario indicizzato più basso (escluso Canale 0) con la condivisione della posizione abilitata.
+   - Se più canali secondari hanno la condivisione della posizione attivata, solo quello con l'indice più basso riceverà le trasmissioni automatiche di posizione.
+   - I canali con condivisione della posizione abilitata, ma non la ricezione di trasmissioni automatiche possono ancora essere utilizzati per le richieste manuali di posizione.
+
+#### Scenario Di Esempio
+
+Immagina di essere nei seguenti canali:
+
+- Canale 0: “Tutti” (posizione OFF)
+- Canale 1: “CampChat” (posizione ON)
+- Canale 2: “Amici” (posizione ON)
+- Canale 3: “GruppoPalestra” (posizione OFF)
+
+##### Come funziona
+
+- CampChat (Canale 1) riceve il tuo live, aggiornamenti automatici della posizione perché è il canale più basso indicizzato con la condivisione della posizione attivata.
+- Amici (Channel 2) possono richiedere la tua posizione manualmente, ma non riceveranno aggiornamenti automatici.
+- GruppoPalestra (Canale 3) permette di chattare, ma non condividere o ricevere i dati di posizione.
+
+## Ricrasmissione del Traffico "Pubblico"
+
+I nodi Meshtastic ritrasmetteranno tutti i pacchetti se questi condividono le [impostazioni modem LoRa](/docs/configuration/radio/lora#lora-config-values), indipendentemente dalla crittografia (a meno che la [modalità rebroadcast](/docs/configuration/radio/device#rebroadcast-mode) non sia impostata su `LOCAL_ONLY`).
+
+:::info
+Se vuoi che i tuoi nodi includano/espandano la rete "pubblica", devi usare il [preset modem](/docs/configuration/radio/lora#modem-preset) `LONG_FAST`. Se cambi il tuo nome del canale PRIMARIO, devi impostare manualmente il canale LoRa come predefinito per la tua regione (vedi sopra).
+:::
+
+### Conteggio Hop
+
+Si raccomanda **caldamente** di lasciare il tuo [MAX HOPS](/docs/configuration/radio/lora#max-hops) impostato a 3 a meno che tu non ne abbia bisogno di più (o meno) per raggiungere il nodo di destinazione. Un numero di hop inutilmente elevato spesso porta a problemi di rete. Se è necessario aumentare il numero di hop, applica le modifiche solo ai nodi presenti ai bordi della rete, non quelli vicino al centro.
+
+![Immagine Hop Count](/img/configuration/max-hops.webp)
+
+## Canali di chat e slot di frequenza LoRa
+
+In precedenza, Meshtastic usava la parola "canali" per definire due diverse proprietà di configurazione: Canali di messaggistica e numeri di canale LoRa. Tuttavia, ciò poteva portare a confusione in quanto i "canali" sono stati utilizzati per fare riferimento a due concetti distinti. Per chiarire la distinzione, la decisione è stata presa per modificare "il numero del canale LoRa" in "lo slot di frequenza LoRa".
+
+### Configurazione Radio: Canali
+
+Questi configurano i "gruppi di messaggi" e includono i canali PRIMARI e SECONDARI. Tutti i canali SECONDARI utilizzano la stessa configurazione del modem LoRa del canale PRIMARIO (incluso lo slot di frequenza LoRa).
+
+Ci sono 8 canali di messaggistica totali. Canale 0 è il tuo canale PRIMARIO con canali 1-7 disponibili per la messaggistica di gruppo privata e/o canali speciali come [`admin`](/docs/configuration/remote-admin).
+
+### Configurazione Radio: Slot Di Frequenza Lora
+
+Questa proprietà, precedentemente conosciuta come "LoRa Channel Number", configura la frequenza a cui è impostata la radio. Dai un'occhiata al [calcolatore di frequenza](/docs/overview/radio-settings#frequency-slot-calculator) per vedere la relazione tra "slot di frequenza" e radiofrequenza.
+
+## Buone pratiche
+
+- Se fai parte di una grande mesh e non sai cosa fa un'impostazione, non cambiarla (a meno che tu non sia super curioso).
+- TESTA le impostazioni e l'hardware prima di installarlo in luoghi difficili da raggiungere.
+- Collegare un nodo al [server pubblico MQTTT](/docs/configuration/module/mqtt#connect-to-the-default-public-server) può pubblicare le posizioni di tutti i nodi nel tuo mesh a Internet.

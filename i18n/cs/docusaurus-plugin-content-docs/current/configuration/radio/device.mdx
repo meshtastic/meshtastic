@@ -1,0 +1,233 @@
+---
+id: device
+title: Konfigurace zařízení
+sidebar_label: Zařízení
+description: Přečtěte si a porovnejte role zařízení, jako je Klient, Opakovač a Router a také ostatní nastavení zařízení.
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+import { Icon } from "@iconify/react";
+
+The device config options are: Role, Rebroadcast Mode, GPIO for User Button, GPIO for PWM Buzzer, Node Info Broadcast Seconds, Double Tap as Button Press, Disable Triple Click, Timezone Definition, and LED Heartbeat Disabled. Konfigurace zařízení používá administrátorskou zprávu, která posílá protobuf `Config.Device`.
+
+## Device Config Values
+
+## Role
+
+| Role zařízení    | Popis                                                                                                                                                                    | Best Uses                                                                                                                                                                       |
+| ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| KLIENT           | App connected or stand alone messaging device. Rebroadcasts packets when no other node has done so.                                                                      | Všeobecné používání pro jednotlivce, kteří potřebují komunikovat prostřednictvím sítě Meshtastic s podporou pro klientské aplikace.                                             |
+| CLIENT_MUTE      | Zařízení, které nepřeposílá pakety ostatních zařízení.                                                                                                                   | Situations where a device needs to participate in the network without assisting in packet routing, reducing network load.                                                       |
+| CLIENT_HIDDEN    | Zařízení, které vysílá pouze podle potřeby pro utajení nebo úsporu energie.                                                                                              | Use in stealth/hidden deployments or to reduce airtime/power consumption while still participating in the network.                                                              |
+| CLIENT_BASE      | Personal base station: always rebroadcasts packets from or to its favorited nodes. Handles all other packets like CLIENT.                                                | Use for stronger attic/roof “base station” nodes to distribute messages more widely from your own weaker, indoor, or less-well-positioned nodes.                                |
+| TRACKER          | Prioritně vysílá pakety s pozicí GPS.                                                                                                                                    | Tracking the location of individuals or assets, especially in scenarios where timely and efficient location updates are critical.                                               |
+| LOST_AND_FOUND   | Pravidelně vysílá polohu jako zprávu do výchozího kanálu a pomáhá tak při hledání ztraceného zařízení.                                                                   | Používá se k hledání ztraceného zařízení.                                                                                                                                       |
+| SENZOR           | Prioritně vysílá pakety s telemetrií.                                                                                                                                    | Použití v situacích, kdy je zásadní shromažďování dat o životním prostředí nebo jiných senzorech, s efektivním využíváním energie a častými aktualizacemi.                      |
+| TAK              | Optimalizované pro systémy komunikace ATAK, snižuje rutinní vysílání.                                                                                                    | Integrace se systémy ATAK (prostřednictvím Meshtastic ATAK Plugin) pro komunikaci v taktických nebo koordinovaných operacích.                                                   |
+| TAK_TRACKER      | Povolí automatické vysílání TAK PLI a snižuje běžné vysílání.                                                                                                            | Samostatná integrace PLI se systémy ATAK pro komunikaci při taktických nebo koordinovaných operacích.                                                                           |
+| REPEATER [^4]    | Infrastructure node for extending network coverage by always rebroadcasting packets once with minimal overhead. Není viditelný v seznamu uzlů.                           | Best positioned in strategic locations to maximize the network's overall coverage. Zařízení není zobrazeno v topologii.                                                         |
+| ROUTER           | Infrastructure node for extending network coverage by always rebroadcasting packets once. Visible in Nodes list.                                                         | Best positioned in strategic locations to maximize the network's overall coverage. Zařízení je zobrazeno v topologii.                                                           |
+| ROUTER_LATE      | Infrastructure node that always rebroadcasts packets once but only after all other modes, ensuring additional coverage for local clusters. Visible in Nodes list.        | Ideal for covering dead spots or ensuring reliability for a cluster of nodes where placement doesn’t benefit the broader mesh. Zařízení je zobrazeno v topologii.               |
+
+[^4]: This role has been deprecated as of firmware version 2.7.11
+:::tip
+Still not sure which role to use? Check out our blog post: [Choosing the Right Device Role](/blog/choosing-the-right-device-role/)
+:::
+
+Hledáte ROUTER_CLIENT? Tato role byla ve firmwaru 2.3.15 zastaralá. Zjistěte více v [2.3.15 poznámkách k vydání](https://github.com/meshtastic/firmware/releases/tag/v2.3.15.deb7c27)
+
+### Porovnání rolí
+
+This table shows the **default** values after selecting a preset. As always, individual settings can be adjusted after choosing a preset.
+
+| Role zařízení    | BLE/WiFi/Serial | Obrazovka povolena | Spotřeba energie     | Retransmit     | Prioritized Routing | Viditelné v seznamu uzlů |
+| ---------------- | --------------- | ------------------ | -------------------- | -------------- | ------------------- | ------------------------ |
+| KLIENT           | Ano             | Ano                | Normální             | Ano            | Ne                  | Ano                      |
+| CLIENT_MUTE      | Ano             | Ano                | Nízká                | Ne             | Ne                  | Ano                      |
+| CLIENT_HIDDEN    | Ano             | Ano                | Nízká                | Local Only     | Ne                  | Ne                       |
+| CLIENT_BASE      | Ano             | Ano                | Normální             | Ano            | Favorites Only[^3]  | Ano                      |
+| TRACKER          | Ano             | Ne                 | Normální / Nízká     | Awake Only[^1] | Ne                  | Ano                      |
+| LOST_AND_FOUND   | Ano             | Ne                 | Normální             | Ano            | Ne                  | Ano                      |
+| SENZOR           | Ano             | Ne                 | Normální / Nízká     | Awake Only[^1] | Ne                  | Ano                      |
+| TAK              | Ano             | Volitelné          | Normální             | Ano            | Ne                  | Ano                      |
+| TAK_TRACKER      | Ano             | Volitelné          | Normální             | Ano            | Ne                  | Ano                      |
+| ROUTER           | Ne[^2]          | Ne                 | Vysoká               | Ano            | Ano                 | Ano                      |
+| ROUTER_LATE      | Ano             | Ano                | Vysoká               | Ano            | Ne                  | Ano                      |
+| OPAKOVAČ         | Ano             | Ne                 | Vysoká               | Ano            | Ano                 | Ne                       |
+
+[^1]: **Awake Only** indicates retransmissions will occur normally but not while asleep between transmission intervals.
+
+[^2]: The `ROUTER` role enables [Power Saving](/docs/configuration/radio/power/#power-saving) by default (ESP32 only). When needing to update a `ROUTER` via BLE, it's recommended you utilize an admin channel to temporarily change the role in order to update and then revert when done.
+
+[^3]: **Favorites Only** indicates that the `CLIENT_BASE` will prioritize packets from or to any favorited nodes. From your `CLIENT_BASE`, you should favorite all of your other nodes which are typically within range of the better-positioned `CLIENT_BASE` base station.
+
+## Notes about Power Saving + Role behavior
+
+### Pouze platforma ESP32
+
+Every role except for the `TRACKER` and `SENSOR` roles are capable of traditional _sleep_ behavior using the `power.is_power_saving` setting. When a node goes to sleep, in general, the serial console, peripherals, GPS, and WiFi/Bluetooth radio are all shut down to conserve power. The CPU will enter a low power state (light sleep or deep sleep on the ESP32). The LoRA radio will be left on stand-by for receiving any packets which will _wake up_ the device to resume services and respond.
+
+Timeout configurations of `display.screen_on_secs` (Screen timeout), `power.min_wake_secs` (Minimum time till sleep), and `power.wait_bluetooth_secs` (Bluetooth timeout) will delay a node's transition to a sleep state. The timeouts and subsequent transition to sleep states may also be _reset_ by external events or actions such as receiving a packet, pressing a button, or connecting via client through serial or other means.
+
+For the `ROUTER` role, the `power.is_power_saving` behavior of sleep is enabled automatically and cannot be turned off.
+
+### Platformy ESP32 a NRF52
+
+In the `TRACKER` and `SENSOR` roles, there are special sleep behaviors when combined with `power.is_power_saving`. For `TRACKER`, the device will go to sleep for `position.position_broadcast_secs` and upon waking will send a position packet when the GPS provides a valid location and repeat the cycle. For `SENSOR`, the device will go to sleep for `telemetry.environment_update_interval` and upon waking will gather environment data and send a telemetry packet and repeat the cycle. For both of these roles, the LoRA radio does not remain in standby mode to accept packets and wake up the device. Sleep remains constrained to their respective transmission intervals.
+
+## Režim opětovného vysílání
+
+Toto nastavení definuje chování zařízení pro opětovné vysílání zpráv.
+
+|    Hodnota           |                                                     Popis                                                                                                                                                     |
+| :------------------: | :-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
+|     `ALL`            |        ALL (Default) - This setting will rebroadcast ALL messages from its primary mesh as well as other meshes with the same modem settings, including when encryption settings differ.                      |
+| `ALL_SKIP_DECODING`  |                  ALL_SKIP_DECODING - Same as behavior as ALL, but skips packet decoding and simply rebroadcasts them. **Only available with Repeater role.**                                                  |
+|   `LOCAL_ONLY`       |       LOCAL_ONLY - Ignores observed messages from foreign meshes that are open or those which it cannot decrypt. Only rebroadcasts message on the nodes local primary / secondary channels.                   |
+|   `KNOWN_ONLY`       |       KNOWN_ONLY - Ignores observed messages from foreign meshes like LOCAL_ONLY, but takes it a step further by also ignoring messages from nodenums not in the node's known list (NodeDB).                  |
+|     `NONE`           |                    NONE - Only permitted for SENSOR, TRACKER and TAK_TRACKER roles, this will inhibit all rebroadcasts, not unlike CLIENT_MUTE role.                                                          |
+| `CORE_PORTNUMS_ONLY` | CORE_PORTNUMS_ONLY - Ignores packets from non-standard portnums such as: TAK, RangeTest, PaxCounter, etc. Only rebroadcasts packets with standard portnums: NodeInfo, Text, Position, Telemetry, and Routing. |
+
+## GPIO for User Button
+
+This is the GPIO pin number that will be used for the user button, if your device does not come with a predefined user button.
+
+## GPIO for PWM Buzzer
+
+This is the GPIO pin number that will be used for the PWM buzzer, if your device does not come with a predefined buzzer.
+
+## Node Info Broadcast Seconds
+
+This is the number of seconds between NodeInfo message (containing i.a. long and short name) broadcasts from the device. The device will still respond ad-hoc to NodeInfo messages when a response is wanted. When the device hears any packet from a node it doesn't know yet, it will send its NodeInfo and ask for a response automatically.
+
+## Dvojité klepnutí jako stisk tlačítka
+
+Tato volba zapne dvojité klepnutí, pokud je k zařízení připojen podporovaný akcelerometr, aby se s ním zacházelo jako s stisknutím tlačítka.
+
+## Disable Triple Click
+
+Zakáže funkci trojnásobného stisknutí uživatelského tlačítka pro zapnutí nebo vypnutí GPS.
+
+## TZDEF (Timezone Definition)
+
+The `tzdef` setting allows the local offset to be defined for the device. It uses the TZ Database format to display the correct local time on the device display and in its logs.
+
+To set the timezone, use the POSIX TZ Database string for the relevant region. Here is a list of [supported timezones](https://github.com/nayarsystems/posix_tz_db/blob/master/zones.csv). For example, if your region is `America/Los_Angeles`, you would input `PST8PDT,M3.2.0,M11.1.0` as the timezone.
+
+## LED Heartbeat Disabled
+
+If true, disable the default blinking LED (LED_PIN) behavior on the device.
+
+## Device Config Client Availability
+
+<Tabs
+  groupId="settings"
+  defaultValue="apple"
+  values={[
+    {
+      label: (
+        <>
+          <Icon icon="mdi:android" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Android
+        </>
+      ),
+      value: "android",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:apple" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Apple
+        </>
+      ),
+      value: "apple",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:terminal" height="1.5rem" style={{ marginRight: "0.25rem" }} /> CLI
+        </>
+      ),
+      value: "cli",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:internet" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Web
+        </>
+      ),
+      value: "web",
+    },
+  ]}>
+
+<TabItem value="android">
+
+#### Android
+
+:::info
+
+Konfigurace zařízení je dostupná pro Android.
+
+1. Otevřete aplikaci Meshtastic
+2. Navigate to: **Vertical Ellipsis (3 dots top right) > Radio Configuration > Device**
+
+:::
+
+</TabItem>
+<TabItem value="apple">
+
+#### Apple
+
+:::info
+All device config options other than NTP Server are available on iOS, iPadOS and macOS at Settings > Device Configuration > Device.
+:::
+
+</TabItem>
+<TabItem value="cli">
+
+#### CLI
+
+:::info
+
+All device config options are available in the python CLI. Example commands are below:
+
+:::
+
+| Nastavení                           | Přípustné hodnoty                                                  | Výchozí           |
+| ----------------------------------- | ------------------------------------------------------------------ | ----------------- |
+| device.role                         | `CLIENT`, `CLIENT_MUTE`, `ROUTER`, `REPEATER`, `TRACKER`, `SENSOR` | `CLIENT`          |
+| device.rebroadcast_mode             | `ALL`, `ALL_SKIP_DECODING`, `LOCAL_ONLY`                           | `ALL`             |
+| device.button_gpio                  | `0` - `34`                                                         | `0`               |
+| device.buzzer_gpio                  | `0` - `34`                                                         | `0`               |
+| device.node_info_broadcast_secs     | `3600` - `UINT MAX`                                                | `10800` (3 hours) |
+| device.double_tap_as_button_press   | `false`, `true`                                                    | `false`           |
+| device.disable_triple_click         | `false`, `true`                                                    | `false`           |
+
+:::tip
+
+Because the device will reboot after each command is sent via CLI, it is recommended when setting multiple values in a config section that commands be chained together as one.
+
+```shell title="Example:"
+meshtastic --set device.role CLIENT --set device.tzdef UTC0
+```
+
+:::
+
+```shell title="Set the role to client"
+meshtastic --set device.role CLIENT
+```
+
+```shell title="Set tzdef"
+meshtastic --set device.tzdef UTC0
+```
+
+</TabItem>
+<TabItem value="web">
+
+#### Web
+
+:::info
+All device config options are available in the Web UI.
+:::
+
+</TabItem>
+</Tabs>

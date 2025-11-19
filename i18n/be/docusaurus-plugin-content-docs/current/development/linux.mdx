@@ -1,0 +1,27 @@
+---
+id: linux
+title: Linux Development
+sidebar_label: Linux
+sidebar_position: 2
+description: Building and packaging Meshtastic for Linux.
+---
+
+import NativeLibraries from "@site/docs/blocks/_native-libraries.mdx";
+
+The device software can also run on a native Linux machine thanks to the [Portduino framework](https://github.com/meshtastic/framework-portduino).
+
+The application either simulates some of the interfaces, or uses the real hardware of your machine.
+Device firmware from 1.3.42 and on even allows you to simulate the LoRa chip by sending and receiving Meshtastic packets via a local TCP port.
+In this way, you can let multiple instances of the application communicate with each other as if they did via LoRa.
+For instructions on how to use it, see the [interactive simulator](https://github.com/GUVWAF/Meshtasticator/blob/master/INTERACTIVE_SIM.md) that also emulates a wireless environment using simulated positions of the nodes.
+
+<NativeLibraries />
+
+## Building
+
+The easiest way of building the native application is using Visual Studio Code with the PlatformIO extension.
+See the instructions for creating such a building environment [here](/docs/development/firmware/build).
+
+Then after opening the firmware repository in Visual Studio Code, simply click on the PlatformIO extension in the left bar, select `native` and click on 'Build'.
+This will generate the binary file 'program' which you can find in `.pio/build/native/`.
+Once in this directory or when you copied the file to your current directory, launch the application with `./program`.

@@ -1,0 +1,257 @@
+---
+id: peripherals
+title: Von RAK WisBlock unterstütztes Zubehör
+sidebar_label: Zubehör
+sidebar_position: 3
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+## Antennen
+
+### WisMesh Blade Antenne
+
+Die WisMesh Blade Antenne ist in zwei Varianten erhältlich:
+
+- 915MHz (902-928 MHz) mit einem maximalen Gewinn von 2,3 dBi und einem VSWR <1,5
+- 868MHz (863-870 MHz) mit einem maximalen Gewinn von 2,8 dBi und einem VSWR <1,3
+
+#### Quellen
+
+- Links zum Direktkauf:
+  - International
+    - [RAKwireless](https://msh.to/wismesh-antenna)
+    - [RAKwireless AliExpress](https://msh.to/aliexpress-wismesh-antenna)
+
+## Gehäuse
+
+### WisMesh Gehäuse
+
+Das WisMesh Unify-Gehäuse ist ein IP65-zertifiziertes Außengehäuse für Meshtastic mit optionalen Solarmodulen, zwei Größenvarianten und flexiblen Montageoptionen.
+
+#### Quellen
+
+- Links zum Direktkauf:
+  - International
+    - [RAKwireless](https://msh.to/wismesh-unify-enclosure)
+    - [RAKwireless AliExpress](https://msh.to/aliexpress-wismesh-unify-enclosure)
+
+## WisBlock Module
+
+<Tabs
+groupId="rakmodules"
+queryString="rakmodules"
+defaultValue="GPS"
+values={[
+{label: 'GPS Module', value: 'GPS'},
+{label: 'Buzzer', value: 'Buzzer'},
+{label: 'Vibration', value: 'Vibration'},
+{label: 'I/O Module', value: 'IO'},
+{label: 'Environmental Sensors', value:'Sensors'},
+{label: 'RTC Module', value:'RTC'},
+{label: 'User Button', value: 'User Button'}
+]}>
+
+<TabItem value="GPS">
+
+### GPS-Module
+
+#### RAK12500
+
+Der [RAK12500 GPS Sensor](https://msh.to/rak12500) ist ein neueres GPS Modul und wird im Allgemeinen bevorzugt.
+
+- uBlox Zoe-M8Q GNSS Empfänger
+- Unterstützung für GPS, GLONASS, QZSS und BeiDou
+
+Der RAK12500 wird auf den folgenden Basisplatinen und Steckplätzen unterstützt:
+
+- RAK19007 auf Steckplatz A
+- RAK19003 auf Steckplatz C
+- RAK19001 auf Steckplatz F
+
+#### RAK1910
+
+Der [RAK1910 GPS-Sensor](https://docs.rakwireless.com/product-categories/rak1910/overview/#product-description) ist die ältere Generation der unterstützten RAKwireless GPS-Module. Obwohl er in Meshtastic noch unterstützt wird, hat er das Produktionsende (EOL, End of Life) erreicht und ist nicht mehr zum Kauf erhältlich.
+
+- uBlox MAX-7Q GPS Modul
+- Unterstützung von GPS und GLONASS
+
+Der RAK1910 wird auf den folgenden Basisplatinen und Steckplätzen unterstützt:
+
+- RAK5005-0 auf Steckplatz A
+- RAK19007 auf Steckplatz A
+- RAK19003 auf Steckplatz C
+- RAK19001 auf Steckplatz F
+
+#### Quellen
+
+- RAK Dokumentationszentrum
+  - [RAK12500](https://docs.rakwireless.com/product-categories/wisblock/rak12500/overview/#product-description)
+  - [RAK1910](https://docs.rakwireless.com/product-categories/wisblock/rak1910/overview/#product-description)
+- Links zum Direktkauf:
+  - International
+    - [RAKwireless](https://msh.to/rak12500)
+    - [AliExpress](https://msh.to/aliexpress-rak12500)
+
+</TabItem>
+<TabItem value="Buzzer">
+
+### Summer
+
+#### RAK Summer
+
+Das [RAK18001 Summermodul](https://msh.to/rak18001) kann mit dem Plugin für externe Benachrichtigungen verwendet werden. Derzeit besteht ein bekannter Konflikt mit dem Summer, wenn das Modul in Steckplatz D eingesetzt wird, obwohl andere Steckplätze funktionieren sollten. HINWEIS: Viele Benutzer haben sich darüber beschwert, dass der RAK Summer in seiner aktuellen Version sehr leise ist. Bislang gibt es für dieses Problem keine Lösung.
+
+#### Quellen
+
+- [RAK Dokumentationszentrum](https://docs.rakwireless.com/product-categories/wisblock/rak18001/overview/#product-description)
+- Links zum Direktkauf:
+  - International
+    - [RAKwireless](https://msh.to/rak18001)
+    - [AliExpress](https://msh.to/aliexpress-rak18001)
+
+### Summer von Drittanbietern
+
+Eine andere Möglichkeit besteht darin, einen standardmäßigen „passiven Summer“ und einen Transistor (z. B. einen 2N2222 Transistor) zu verwenden. Dies kann erreicht werden, indem der VCC Pin mit dem Anschluss 1 des Transistors und der Pluspol des Summers mit dem Anschluss 3 verbunden wird. Verbinden Sie den Pin RX1 auf der Wisblock-Platine mit dem mittleren Pin (2) des Transistors. Verbinden Sie den Minuspol des Summers mit dem GND Pin auf der Wisblock Platine. Gehen Sie in den Einstellungen zu Gerät und setzen Sie PIN_BUZZER (Buzzer GPIO) neu definieren auf 15. Gehen Sie dann zu externe Benachrichtigung und aktivieren Sie das Modul, aktivieren Sie den PWM Summer, aktivieren Sie den Warnmeldungssummer und setzen Sie den GPIO Ausgang auf 15. Speichern Sie Ihre Einstellungen und Ihr Summer sollte aktiviert werden, wenn Sie eine eingehende Nachricht erhalten.
+
+#### Quellen
+
+- Links zum Direktkauf:
+  - International
+    - Amazon: [Summer](https://www.amazon.com/dp/B018I1WBNQ)
+    - Amazon: [Transistor](https://www.amazon.com/dp/B07YN7KQQB)
+
+</TabItem>
+<TabItem value="Vibration">
+
+### Vibration
+
+Um Ihrem Wisblock Gerät Vibrationen hinzuzufügen, benötigen Sie einen Standard-3-V-Gleichstrom-Vibrationsmotor und einen Transistor (z. B. einen 2N2222-Transistor). Dies kann erreicht werden, indem der VCC Pin mit dem Anschluss 1 des Transistors und das positive (rote) Kabel des Vibrationsmotors mit dem Anschluss 3 verbunden wird. Verbinden Sie den Pin AIN1 auf der Wisblock Platine mit dem mittleren Pin (2) des Transistors. Verbinden Sie das Minuskabel (schwarz) des Vibrationsmotors mit dem GND Pin auf der Wisblock Platine. Gehen Sie in den Einstellungen zu externe Benachrichtigung aktivieren Sie das Modul, aktivieren Sie Alarmmeldung Vibration und setzen Sie den Ausgang Vibration GPIO auf 31. Speichern Sie Ihre Einstellungen und die Vibration sollte aktiviert werden, wenn Sie eine eingehende Nachricht erhalten.
+
+#### Quellen
+
+- Links zum Direktkauf:
+  - International
+    - Amazon: [Vibrator](https://www.amazon.com/dp/B07Q1ZV4MJ)
+    - Amazon: [Transistor](https://www.amazon.com/dp/B07YN7KQQB)
+
+</TabItem>
+<TabItem value="IO">
+
+### IO Modul
+
+Mit dem [RAK13002 IO-Modul](https://msh.to/rak13002) kann unter anderem den RAK-Basisplatinen (ausgenommen der RAK19003 Mini-Basisplatine) eine Benutzertaste hinzugefügt werden. Es bietet eine Reihe verschiedener Schnittstellenoptionen:
+
+- 2x I<sup>2</sup>C Schnittstellen
+- 2x UART Schnittstellen
+- 1x SPI Schnittstelle
+- Bis zu 6x GPIOs
+- 2x ADC Schnittstellen
+- 3,3 V Spannungsschiene
+
+Derzeit laufen Entwicklungsaktivitäten, um Sensoren wie diesen zum Meshtastic Core hinzuzufügen.
+
+#### Quellen
+
+- [RAK Dokumentationszentrum](https://docs.rakwireless.com/product-categories/wisblock/rak13002/overview/)
+- Links zum Direktkauf:
+  - US
+    - [muzi ᴡᴏʀᴋꜱ](https://msh.to/muzi-rak13002)
+    - [Rokland](https://msh.to/rokland-rak13002)
+  - International
+    - [RAKwireless](https://msh.to/rak13002)
+    - [AliExpress](https://msh.to/aliexpress-rak13002)
+
+</TabItem>
+<TabItem value="Sensors">
+
+### Umweltsensoren
+
+#### RAK1901 Temperatur und Feuchtigkeitssensor
+
+Der [RAK1901 Temperatur- und Feuchtigkeitssensor](https://msh.to/rak1901) basiert auf dem Sensirion SHTC3-Modul und verfügt über die folgenden Funktionen:
+
+- Temperaturmessung (Bereich -40&deg;C bis +125&deg;C)
+- Luftfeuchtigkeitsmessung (Bereich 0% bis 100%)
+- Niedriger Stromverbrauch
+
+#### RAK-1902 Barometrischer Drucksensor
+
+Der [Luftdrucksensor RAK1902](https://msh.to/rak1902) basiert auf dem Modul LPS22HB von STMicroelectronics und verfügt über die folgenden Funktionen:
+
+- Barometer-Messung (Bereich 260 bis 1260 hPa)
+- Niedriger Stromverbrauch von 3uA
+- Kleine Baugröße
+
+#### RAK1906 Umweltsensor
+
+Der [RAK1906 Umgebungssensor](https://msh.to/rak1906) basiert auf dem Bosch BME680 Modul und verfügt über folgende Features:
+
+- Temperaturmessung (Bereich -40&deg;C bis +85&deg;C)
+- Luftfeuchtigkeitsmessung (Bereich 0% bis 100%)
+- Barometer-Messung (Range 300 bis 1100 hPa)
+- Messung der Luftqualität
+
+#### Quellen
+
+- RAK Dokumentationszentrum
+  - [RAK1901](https://docs.rakwireless.com/product-categories/wisblock/rak1901/overview/#product-description)
+  - [RAK1902](https://docs.rakwireless.com/product-categories/wisblock/rak1902/overview/#product-description)
+  - [RAK1906](https://docs.rakwireless.com/product-categories/wisblock/rak1906/overview/#product-description)
+- Links zum Direktkauf:
+  - US
+    - [Rokland RAK1901](https://msh.to/rokland-rak1901)
+    - [Rokland RAK1902](https://msh.to/rokland-rak1902)
+    - [Rokland RAK1906](https://msh.to/rokland-rak1906)
+  - International
+    - [RAKwireless RAK1901](https://msh.to/rak1901)
+    - [RAKwireless RAK1902](https://msh.to/rak1902)
+    - [RAKwireless RAK1906](https://msh.to/rak1906)
+    - [AliExpress RAK1901](https://msh.to/aliexpress-rak1901)
+    - [AliExpress RAK1902](https://msh.to/aliexpress-rak1902)
+    - [AliExpress RAK1906](https://msh.to/aliexpress-rak1906)
+
+</TabItem>
+<TabItem value="RTC">
+
+### Echtzeituhr
+
+Das [RAK12002 WisBlock RTC-Modul](https://msh.to/rak12002) ist eine Echtzeituhr mit Superkondensator-Backup, die es einem Knoten ermöglicht, über Neustarts hinweg und bis zu sieben Tage ohne Strom die richtige Zeit beizubehalten. Es arbeitet mit einem Quarzoszillator und kommuniziert über die I2C Schnittstelle. Das Modul kann in die Steckplätze A, B oder C eingesetzt werden (einige Benutzer haben Probleme mit Steckplatz D gemeldet) und ist Plug-and-Play – es sind keine Einstellungen erforderlich.
+
+#### Quellen
+
+- [RAK Dokumentationszentrum RAK12002](https://docs.rakwireless.com/product-categories/wisblock/rak12002/overview/)
+- Links zum Direktkauf:
+  - US
+    - [Rokland](https://msh.to/rokland-rak12002)
+  - International
+    - [RAKwireless](https://msh.to/rak12002)
+    - [AliExpress](https://msh.to/aliexpress-rak12002)
+
+</TabItem>
+
+<TabItem value="User Button">
+
+### Benutzer Taste
+
+Jeder Taster ist kompatibel, solange er an die richtigen Pins angeschlossen ist. Hier ist ein Beispiel für einen [Taster](https://a.co/d/bPhhTxm).
+
+Es wird empfohlen, den Knopf an den folgenden freiliegenden Stiften oder Steckplätzen der Basisplatine zu verwenden:
+
+- RAK19007 auf AIN1 (Pin 31) – Siehe unterstützende Anweisungen [Hier](https://store.rokland.com/pages/adding-a-user-button-rak19007)
+- RAK19001 auf IO5 (Pin 37)
+
+#### Verdrahtung
+
+Eine Seite des Schalters sollte auf GND liegen und die andere auf dem empfohlenen Pin Ihrer Grundplatine. Die PIN muss auf dem Knoten mithilfe der App, der Weboberfläche oder der Kommandozeile konfiguriert werden.
+
+#### Quellen
+
+Weitere Informationen zur Benutzertastenfunktion finden Sie unter
+
+- [RAK WisBlock Hardwaretasten](/docs/hardware/devices/rak-wireless/wisblock/buttons/)
+
+</TabItem>
+
+</Tabs>

@@ -1,0 +1,103 @@
+---
+id: md_wsl
+title: Running meshtasticd on WSL
+sidebar_label: meshtasticd on WSL
+sidebar_position: 6
+description: A how-to guide on running meshtastic daemon under WSL for use with a USB LoRA Modem
+---
+
+## Genel Bakış
+
+This guide will walk you through how to run meshtasticd under WSL, the Windows Subsystem for Linux. 
+
+## Requirements
+
+To run meshtasticd on Windows via the Windows Subsytem Layer (WSL), your computer must have the following satisfied:
+
+- Windows 10 (64-bit), version 1809 or newer
+- A WSL Linux distribution with a kernel version greater than 5.10.60.1.
+- A WSL Linux distrubiton under WSL 2
+- USBIP Device Host [usbipd-win](https://github.com/dorssel/usbipd-win) version 4.0.0 or newer installed
+- _(optional)_ [wsl-usb-manager](https://github.com/nickbeth/wsl-usb-manager) downloaded
+
+:::tip
+
+This guide was written using Ubuntu on WSL in mind. Minor adjustments to the commands excecuted within Linux may be needed depending on your distro.
+
+:::
+
+## Verifying pre-requisites
+
+1. Verify your WSL Linux distirbution is greater than 5.10.60.1. 
+   - Do this by executing `uname -r` in the WSL terminal.
+   - It may be necessary to update WSL by running `wsl --update` in an elevated command prompt or PowerShell window.
+2. Verify your WSL Linux installation is a WSL2 installation.
+   - Do this by executing `wsl --list --verbose`
+3. Ensure USBIP-Win is installed and configured.
+   - In a commmand prompt or PowerShell window, run `usbipd list` to enumerate your USB devices.
+   - If you do not have `usbip-win` installed, you may install it via the .msi installer provided on [their GitHub](https://github.com/dorssel/usbipd-win), or by running `winget install usbipd` to install via the Windows Package Manager. You will need to relaunch your command prompt or PowerShell window, as this installation updates your PATH.
+
+## Connecting your Meshtastic-compatible LoRA USB modem to WSL
+
+### ...via command line / PowerShell
+
+1. Leave your LoRA USB modem disconnected for now. In an **elevated** command prompt or PowerShell terminal, enumerate the current visible devices with `usbipd list`.
+2. Connect your USB modem, then run the same command. Make note of the new device that enumerated in that list, and the bus ID it is associated to, and the device ID belonging to it.
+3. Run `usbipd bind --busid=<BUSID>`, where `<BUSID>` is the bus ID identified in Step 2 to bind the device.
+4. Run `usbipd attach --wsl --busid=<BUSID>`, where `<BUSID>` is the bus ID identified in Step 2 to attach the device to WSL2.
+5. In your WSL terminal, run `lsusb` to see if your device, with its _device ID_ you identified in Step 2. If you see your device enumerated here, then you have correctly configured usbipd for your LoRA modem.
+
+:::note
+
+While binding persists across reboots, attaching a device does not. You will have to re-attach your modem via usbipd every time you disconnect the device from your computer or reboot your host.
+
+:::
+
+### ...via wsl-usb-manager
+
+The [wsl-usb-manager](https://github.com/nickbeth/wsl-usb-manager) application makes it easy to bind and share USB devices over IP for those who are uncomfortable (or find inconvenient) using the command line. The steps to bind and attach the USB device over IP are the same as the CLI option above, except with a GUI. 
+
+## Installing `meshtasticd` in your WSL instance
+
+:::info
+
+Refer to [Linux install instructions](https://meshtastic.org/docs/software/linux/installation/?os=ubuntu) for your respective distro. In this example, we will be using Ubuntu.
+
+:::
+
+After installing meshtasticd, run `sudo meshtastic`. Verify it runs, the terminate the process for now.
+
+## Configuring your meshtastic node
+
+You may configigure your Meshtastic node via the command-line interface, or by the daemon's web client. 
+
+### Accessing the Meshtastic node via the CLI
+
+1. Run `ip a` in your WSL terminal to determine the IP address for the eth0 interface of your WSL instance.
+2. Run `meshtastic --host <WSL_IP_ADDRESS>` to test a connection to your WSL container.
+3. Issue configuration commands using the CLI as you would any other Meshtastic device.
+
+### Enabling and accessing the Meshtastic Web Client
+
+1. Edit the `config.yaml` to enable the web server by uncommenting the Port and RootPath entries.
+2. Run `ip a` (or equivalent) in your WSL terminal to determine the IP address for the eth0 interface of your WSL instance.
+3. Connect to `https://<WSL_IP_ADDRESS>:9443/` in your web browser. (You may have to accept self-signed certificates.)
+4. Proceed with configuring your node as you would with any other Meshtastic node, such as setting the region, node name, etc. 
+
+## Some notes
+
+- As WSL does not have a `system` daemon, when you save your settings via Meshtastic CLI or the web client, you will have to restart `meshtasticd` in your WSL instance.
+
+## Appendix
+
+### Convert WSL1 to WSL2
+
+In the case where you already have WSL1 installed, you will need to upgrade it to WSL2.
+
+Running `wsl --set-version <distro> 2`, where `<distro>` is the name of the WSL installation from `wsl --list --verbose`, may convert your WSL1 installtion to WSL2.
+
+However, if you are unable to do so, it may mean that your WSL installation on Windows is much older and will require upgrading. Follow this [guide](https://learn.microsoft.com/en-us/windows/wsl/install-manual#step-4---download-the-linux-kernel-update-package) from Microsoft to do so.
+
+## References
+
+- Microsoft - https://learn.microsoft.com/en-us/windows/wsl/connect-usb

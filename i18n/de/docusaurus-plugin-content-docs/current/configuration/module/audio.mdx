@@ -1,0 +1,203 @@
+---
+id: audio
+title: Tonmodul Konfiguration
+sidebar_label: Ton
+description: Konfigurationsdetails für das Tonmodul Ihres Meshtastic Gerätes.
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+import { Icon } from "@iconify/react";
+
+Die Konfigurationsoptionen des Tonmoduls sind wie folgt:- Codec2 Enabled
+- PTT GPIO
+- Audio Bitrate/Codec Modus
+- I2S Word Select
+- I2S Data IN
+- I2S Data OUT
+- I2S Clock Die Konfiguration des Tonmoduls verwendet eine administrative Nachricht, die einen `ConfigModule.Audio` Protocol Buffer sendet.
+
+Mit diesem **experimentellen** Modul können Sie ein digitales I2S-Mikrofon und Lautsprecher zu jedem ESP32-Gerät, das ein SX128x Funkgerät besitzt und im 2,4 GHz ISM Band arbeitet, hinzufügen. Die Bänder unter 1 GHz unterstützen nicht genug Bandbreite, um kontinuierliche Tonnachrichten im Netzwerk zu unterstützen. Auch nicht in den kurzen und schnellen Übertragungsmoden. Die einzigen Geräte, die dies im Moment unterstützen, sind die LilyGo TLora 2.1-1.8 und TLora T3S3 Platinen. Das Modul wurde für Kanäle mit 2 kBit/s Datenrate oder höher entwickelt.
+
+Erforderliche zusätzliche Hardware:
+
+- MAX98357 - I2S 3W Klasse D Verstärker
+- MSM261S4030H0 - I2S MEMS Mikrofon mit niedrigem Rauschen
+
+## Tonmodul Konfiguration
+
+### Codec2 aktiviert
+
+Aktiviert das Tonmodul.
+
+### PTT GPIO
+
+Der GPIO Pin für die Sendetaste. Standard ist der GPIO 39 auf dem ESP32.
+
+### Ton Bitrate/Codec Modus
+
+Die zu verwendende Bitrate für die Tonübertragung. Die Standardeinstellung ist `CODEC2_700B`. Verfügbare Optionen sind:
+
+- CODEC2_DEFAULT
+- CODEC2_3200
+- CODEC2_2400
+- CODEC2_1600
+- CODEC2_1400
+- CODEC2_1300
+- CODEC2_1200
+- CODEC2_700B
+- CODEC2_700
+
+### I2S Wortauswahl
+
+Der GPIO Pin für das WS Signal in der I2S Schnittstelle.
+
+### I2S Daten Eingang
+
+Der GPIO Pin für das SD Signal in der I2S-Schnittstelle.
+
+### I2S Daten Ausgang
+
+Der GPIO Pin für das DIN Signal in der I2S-Schnittstelle.
+
+### I2S Takt
+
+Der GPIO Pin für das SCK Signal in der I2S-Schnittstelle.
+
+:::info Was ist das?
+Diese Pins stellen eine digitale I2S-Audioschnittstelle zur Verfügung. Meshtastic verwendet diese im Mono Modus. Die Software nutzt den linken Stereo-Kanal für das Mikrofon und den rechten Stereo-Kanal für den Lautsprecher, also konfigurieren Sie Ihre Anschlüsse dementsprechend. Die Tonübertragung arbeitet im Wechselbetrieb (half duplex), sodass wir einen Teil der Pins für eine bidirektionale Konfiguration wiederverwenden können. Es gibt **kein** Standard in der Pin Zuordnung, diese Einstellung ist somit erforderlich.
+:::
+
+## Verfügbarkeit der Tonmodul Konfiguration
+
+<Tabs
+  groupId="settings"
+  defaultValue="apple"
+  values={[
+    {
+      label: (
+        <>
+          <Icon icon="mdi:android" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Android
+        </>
+      ),
+      value: "android",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:apple" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Apple
+        </>
+      ),
+      value: "apple",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:terminal" height="1.5rem" style={{ marginRight: "0.25rem" }} /> CLI
+        </>
+      ),
+      value: "cli",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:internet" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Web
+        </>
+      ),
+      value: "web",
+    },
+  ]}>
+<TabItem value="android">
+
+#### Android
+
+:::info
+
+Ton Konfigurationseinstellungen sind für Android verfügbar.
+
+1. Öffnen Sie die Meshtastic App
+2. Navigieren Sie zu: **vertikale Ellipse (3 Punkte oben rechts) > Geräteeinstellungen > Audio**
+
+:::
+
+</TabItem>
+<TabItem value="apple">
+
+#### Apple
+
+:::info
+Die Konfiguration des Tonmoduls ist nicht für iOS, iPadOS und macOS verfügbar.
+:::
+
+</TabItem>
+<TabItem value="cli">
+
+#### Kommandozeile
+
+:::info
+
+Alle Einstellungen für die Konfiguration des Tonmoduls sind über die Python Kommandozeile verfügbar. Beispieleinstellungen sind folgende:
+
+:::
+
+|  Einstellung         |                             Akzeptable Werte                                                                                    |          Standardwert                  |
+| :------------------: | :-----------------------------------------------------------------------------------------------------------------------------: | :------------------------------------: |
+| audio.codec2_enabled |                             `true`, `false`                                                                                     |            'falsch'                    |
+|   audio.ptt_pin      |                            GPIO Pin Nummer 1-39                                                                                 | Standardwert `39` ist nicht festgelegt |
+|   audio.bitrate      | `CODEC2_DEFAULT` `CODEC2_3200` `CODEC2_2400` `CODEC2_1600` `CODEC2_1400` `CODEC2_1300` `CODEC2_1200` `CODEC2_700B` `CODEC2_700` |          `CODEC2_DEFAULT`              |
+|   audio.i2s_ws       |                            GPIO Pin Nummer 1-34                                                                                 |        kein Standardwert               |
+|   audio.i2s_sd       |                            GPIO Pin Nummer 1-39                                                                                 |        kein Standardwert               |
+|   audio.i2s_din      |                            GPIO Pin Nummer 1-34                                                                                 |        kein Standardwert               |
+|   audio.i2s_sck      |                            GPIO Pin Nummer 1-34                                                                                 |        kein Standardwert               |
+
+:::tip
+
+Weil das Gerät nach jedem Befehl über die Kommandozeile neu startet, wird empfohlen, dass mehrere Werte in einem Konfigurationsblock zusammengefasst und übertragen werden.
+
+```shell title="Example:"
+meshtastic --set audio.codec2_enabled true --set audio.bitrate CODEC2_1400
+```
+
+:::
+
+```shell title="Enable / Disable Module"
+meshtastic --set audio.codec2_enabled true
+meshtastic --set audio.codec2_enabled false
+```
+
+```shell title="Set WS to GPIO pin number 7"
+meshtastic --set audio.i2s_ws 7
+```
+
+```shell title="Set DIN to GPIO pin number 28"
+meshtastic --set audio.i2s_din 28
+```
+
+```shell title="Set PTT to GPIO pin number 37"
+meshtastic --set audio.ptt_pin 37
+```
+
+```shell title="Set Codec Bitrate"
+meshtastic --set audio.bitrate CODEC2_DEFAULT
+meshtastic --set audio.bitrate CODEC2_1400
+```
+
+</TabItem>
+<TabItem value="web">
+
+#### Web
+
+:::info
+Alle Konfigurationsoptionen des Tonmodul sind in der Web-Oberfläche verfügbar.
+:::
+
+</TabItem>
+</Tabs>
+
+:::warning
+
+Konfiguration der GPIO Pins ist grundsätzlich gefährlich, da fehlerhafte Einstellungen Ihre Hardware physisch beschädigen oder zerstören können. Vergewissern Sie sich, dass Sie den Schaltplan für Ihr Gerät vollständig verstehen, bevor Sie es ausprobieren. Wir übernehmen keine Garantie. Verwendung auf eigene Gefahr!
+
+Dieses Modul erfordert das Anschließen eines externen Zubehörs an Ihr Gerät. Es wird ohne ein solches nicht funktionieren.
+
+:::

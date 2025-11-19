@@ -1,0 +1,76 @@
+---
+id: kommentit
+title: Kommentit Meshtasticin salauksesta
+sidebar_label: Kommentit
+sidebar_position: 2
+description: Tutki yhteisön näkemyksiä ja asiantuntijoiden mielipiteitä Meshtasticin salauksesta, mukaan lukien AES256-toteutus, turvallisuusvinkit ja mahdolliset haavoittuvuudet.
+---
+
+import QRCode from "@site/docs/blocks/_qr-code.mdx";
+
+Tämä sivu kokoaa yhteisön palautetta ja asiantuntijoiden arvioita Meshtasticin salaustavasta. Arvostamme näitä näkemyksiä ja pyrimme parantamaan salauksen toteutustamme aina kun se on mahdollista. Tutki keskeisiä yksityiskohtia, käytännön vinkkejä sekä ymmärrä Meshtasticin AES256-salauksen vahvuudet ja mahdolliset rajoitukset.
+
+## Kommentit
+
+Salaus on hankalaa, joten olemme yrittäneet 'yksinkertaisesti' soveltaa vakiomuotoisia salausratkaisuja täytäntöönpanoomme. Projektin kehittäjät eivät kuitenkaan ole salauksen asiantuntijoita.
+
+Arvostelijoiden kommenttien (katso alla) perusteella tässä on joitain vinkkejä näiden radioiden käyttöön, jotta saatat ymmärtää tarjotun suojan tason:
+
+- On todennäköistä, että AES256-suojaus on toteutettu "oikein" eikä tarkkailija pysty purkamaan viestejäsi.
+- **Varoitus:** Jos hyökkääjä pystyy saamaan yhden radiosta heidän haltuunsa, voivat joko a) poimia kanavan avaimen kyseisestä laitteesta tai b) käyttää kyseistä radiota kuuntelemaan uutta viestintää.
+- **Varoitus:** Jos hyökkääjä saa "Kanavan QR[^1]-koodin/URL-osoitteen", jonka jaat muiden kanssa, hyökkääjä voi sitten lukea kaikki kanavalla lähetetyt viestit (joko huomenna tai aiemmin – jos heillä oli raakakopiot lähetyspaketeista tallessa).
+
+[^1]: <QR koodi />
+
+Tämänhetkinen täytäntöönpano tarjoaa valinnaisen luottamuksellisuuden määritetyn verkon jäsenille:
+
+- Salaus on toteutettu laitteilla/nodeilla verkon laajuisilla salausavaimilla.
+- Salaus on valinnainen ja on pois päältä, kun laitteet ovat 'Ham tilassa'.
+- Asiakasohjelmissa (iOS, Android) ei ole tuettu salausta, joka helpottaa jakelua massamarkkinaohjelmistoina.
+- Pariliitoksen muodostaminen asiakasohjelman ja laitteen välillä tapahtuu seuraavasti:
+  - Suora USB-kaapeli
+  - Bluetooth-pariliitos
+- Laitteet ovat 'lupaavia' ja yhdistävät mihin tahansa lähellä olevaan laitteeseen. Verkon luottamuksellisuus edellyttää fyysistä suojausta kaikkien nodejen osalta.
+
+Pidä aina mielessä [xkcd:n huomautus salauksesta](https://xkcd.com/538).
+
+- Jos olet salauksen asiantuntija, tarkista nämä muistiinpanot ja alla olevat kysymykset. Voitko auttaa meitä tarkistamalla muistiinpanot ja neuvoja tarjoamalla? Annamme mielellämme niin paljon tai niin vähän kunniaa kuin haluat ;-).
+- Harkitse olemassa olevaa ratkaisuamme "alfa" ja todennäköisesti melko turvassa ei erityisen aggressiivista vastustajaa vastaan ​​(mutta emme voi vielä antaa varmempaa lausuntoa).
+
+## Huomautukset tarkastajille
+
+Jos te arvioitte täytäntöönpanoamme, tämä on lyhyt selvitys menetelmästä.
+
+- Teemme kaiken salauksen vain SubPacket (hyötykuorma) -tasolla, jotta kaikki Meshtastic-laitteet reitittävät muita - myös ne kanavat, jotka on salattu avaimella, jota laitteella ei ole.
+- Enimmäkseen perustuu [Wikipedian](https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#Counter_(CTR)) lukemiseen ja ESP32:n tarjoamien tilojen käyttöön laitteistossa.
+- Käytämme AES256-CTR:ää stream-salauksena (nollatäytöllä viimeisessä lohkossa), koska se on hyvin tuettu laitteistokiihdytyksellä.
+- AES-avaimemme on 128 tai 256 bittiä, jotka on jaettu osana kanavan määrittelyä.
+- Laitteen numero, joka on yhdistetty paketin numerolla, käytetään NONCE-numerona. Tämä nonce tallennetaan flash-muistiin laitteeseen, eikä sen pitäisi käytännössä koskaan toistua. Jos käyttäjä tekee uuden kanavan (eli uuden satunnaisen 256 bittisen avaimen), paketin numero alkaa nollasta.
+- Pakettien numero lähetetään selkeällä tekstillä jokaisen paketin kanssa. Solmun numero voidaan johtaa kunkin paketin "from"-kentästä. (Selkeä teksti on hyväksyttävää, koska se tarjoaa vain IV:n jokaiselle salausajolle)
+- Jokaisella paketin 16-tavuisella LOHKOLLA on kasvava LASKURI. LASKURI alkaa nollasta kunkin paketin ensimmäisen lohkon kohdalla.
+- Kunkin lohkon IV on rakennettu siten, että NONCE on ylin 96 bittiä IV ja LASKURIN alareunassa 32 bittiä. Koska pakettimme ovat pieniä, laskuri osa ei koskaan ole suurempi kuin 32 (5 bittiä).
+
+### Arvostelijan #1 kommentit
+
+Tämä arvostelija on salauksen ammattilainen, mutta haluaa pysyä nimettömänä. Kiitämme heitä heidän kommenteistaan ;-):
+
+Oletan, että meshtasticia käytetään vaeltamiseen paikoissa, joissa joku osaava yrittää rikkoa sen - kuin olisit kävelemässä DefConissa näitä käyttämällä. Käytin noin tunnin salauksen tarkistamiseen, ja minulla on seuraavat huomautukset:
+
+- Kirjoitus ei ole aivan yhtä selkeä kuin koodi.
+- Koodi käyttää AES-CTR-tilaa oikein luottamuksellisuuden varmistamiseksi.
+- InitNoncen kommentti kattaa todella tarvittavat tiedot.
+- Mielestäni suurempi salauskysymys on "mitä salauksen pitää tehdä"? Nykyisessä muodossaan hyökkääjä, joka ei ole vielä kaapannut mitään laitteista, ei voi siepata tekstiä tai sijaintitietoja. Hyökkääjä, joka kaappaa minkä tahansa laitteen kanavassa/verkossa, voi lukea kaiken kyseiselle laitteelle menevän, kaiken tälle laitteelle tallennetun ja kaiken muun salatussa muodossa tallennetun viestinnän kanavassa. Jos tämä ominaisuus periaatteessa vastaa odotuksiasi, se sopii mihin tahansa seikkailuihin, joihin tämä on tarkoitettu, niin julkisesti saatavilla olevien tai laajalti julkistettujen tietojen perusteella salaus on hyvä. Jos nämä ominaisuudet ovat huolestuttavia (kuten laitteen historiaa on tarkoituksella rajoitettu etkä halua, että tänään kaapattu laite vaarantaa kanavan eilen lähetetyn tiedon), voimme keskustella tavoista sen saavuttamiseksi (todennäköisimmin synkronoida aika ja korvata avain omalla SHA256:lla X tunnin välein ja varmistaa, ettei vanhaa avainta säilytetä tarpeettomasti).
+- Kaksi muuta asiaa, jotka tulee muistaa, ovat, että AES-CTR ei itsessään tarjoa aitoutta (esim. hyökkääjä voi kääntää bittejä toistettaessa tietoja ja sekoittaa tuloksena olevaa selkeää tekstiä), ja että nykyinen järjestelmä antaa joitain vihjeitä lähetyksestä koossa. Jos siis olette huolissanne vastustajan tahallisesta sotkemisesta tai tekstiviestin pituuden tuntemisesta, näyttää siltä, että ne voivat olla mahdollisia.
+
+Oletan, että verkko käyttäytyy jossain määrin kuin tallenna ja välitä verkko - tai ainakin tavoitteena on välttää kaksisuuntaisen yhteyden muodostaminen tiedon siirtämistä varten. Pelkään, etten ole työskennellyt paljoa mesh-verkkojen kanssa, mutta muistan opiskelleeni niitä lyhyesti koulussa noin kymmenen vuotta sitten.
+
+### Kommentit käyttäjältä @Jorropo
+
+- IV-alustus käyttää vain 31 satunnaista bittiä uudelleenkäynnistystä kohti, minkä jälkeen se lisää viestejä peräkkäin. Tämä ei ole korkea, se tekee päällekkäisyydestä epätodennäköistä, mutta todennäköistä, kun otetaan huomioon verkon koko laajuus. Onneksi IV sisältää MAC-osoitteen alemmat 32 bittiä, jotka pitäisi olla yksilöllisiä jokaiselle laitteelle, joten jokainen laitte on oma syntymäpäiväparadoksinsa. Emme etsi verkon laajuista syntymäpäiväparadoksia, joka olisi helppo hakkeroida. Katso [`#4031`](https://github.com/meshtastic/firmware/issues/4031).
+  Voitaisiin korjata.
+- [Eheyden puutetta ei huomioitu asianmukaisesti](https://github.com/meshtastic/firmware/issues/4030), etähallintamoduuli toteuttaa etuoikeutettuja RPC-kutsuja AES-CTR:n kautta ilman MAC osoitetta tai AEAD:ia.
+  Voitaisiin korjata.
+- AES-CTR-toteutus näyttää siltä, ​​että se suojaa luottamuksellisuutta, jos IV:t eivät ole päällekkäisiä.
+- Edelleenlähetyssalaisuuden puute on hieman huolestuttavaa chat-viestimelle, kun uusilta käyttäjiltä puuttuu vainoharhainen ja ärsyttävä avaintenhallintakäytäntö, jota turvallisen toiminnan edellyttäisi.
+- IMO the clients should have a big red box the first time you open a Direct-Message indicating theses are not private and not E2E. Tämä ei ollut minulle selvää lukematta koodia.
+- Tämä projekti on täysin riittävä keskusteluun tuntemattomien kanssa. Se käyttää oletusavainta ja ymmärtää, että kaikki on julkista. En luottaisi siihen mitään yksityistä ilman jotain muuta tasoa tai merkittäviä muutoksia. Esimerkiksi pitäisin SSH: ta tai Signalia turvallisempana kuin Meshtastic. Meshtastic ei kuitenkaan valitse huonompaa kryptoa huonoista syistä, vaan he tekevät verkosta huomattavasti käyttökelpoisemman sen käyttämän epäluotettavan hitaan LoRa-backhaul-yhteyden sijaan.

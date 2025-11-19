@@ -1,0 +1,278 @@
+---
+id: lora
+title: Configurazione LoRa
+sidebar_label: LoRa
+description: Comprendere le impostazioni di configurazione LoRa sul dispositivo Meshtastic tra cui regione, modem, limite di hop e altro ancora.
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+import { Icon } from "@iconify/react";
+import LoRaRegions from "../../blocks/_lora-regions.mdx";
+
+Le opzioni di configurazione LoRa sono: Regione, Usa Preset, Preimpostazione Modem, Max Hops, Potenza di trasmissione, Larghezza di banda, Fattore di diffusione, Tasso di codifica, Offset di frequenza, Trasmetti attivato, slot di frequenza, ignora l'array in arrivo, ignora MQTT, sovrascrivi limite del ciclo di funzionamento, SX126x RX potenziato guadagno, frequenza di sovrascrittura e ventilatore PA disabilitato. LoRa config utilizza un messaggio di amministrazione per inviare un protobuf `Config.LoRa`.
+
+:::note
+Per poter comunicare completamente, i dispositivi all'interno di una mesh devono avere impostazioni identiche per la Regione e Preimpostazione Modem, o impostazioni personalizzate identiche.
+:::
+
+## Valori Di Configurazione Lora
+
+:::note
+Devi impostare l'impostazione `lora.region` del tuo dispositivo. Questo garantirà che si sta operando entro i limiti legali per la vostra zona.
+:::
+
+### Regione
+
+Imposta la regione del tuo nodo. Il valore predefinito è `unset`. Finché questo valore non è impostato, la schermata del nodo visualizzerà un messaggio e non trasmetterà alcun pacchetto.
+
+<LoRaRegions />
+
+### Usa Preset
+
+Se abilitato, i campi `Modem Preset` saranno rispettati, altrimenti il `Bandwidth`/`Spread Factor`/`Coding Rate` sarà prelevato dai rispettivi campi definiti manualmente.
+
+### Configurazione Modem
+
+Il valore predefinito è `unset` che equivale a `LONG_FAST`. I Preset sono impostazioni del modem predefinite (larghezza di banda, fattore di diffusione e tasso di codificazione) che influenzano sia la velocità del messaggio che l'intervallo. Il valore predefinito fornirà una forte combinazione di velocità e di distanza, per la maggior parte degli utenti.
+
+I preset sono progettati per fornire ulteriori opzioni per ottimizzare la velocità (e ridurre la congestione della rete) o la distanza, che può essere utile per due scenari del mondo reale:
+
+1. Un numero elevato di dispositivi esistono nella mesh, o messaggi vengono inviati molto frequentemente. Velocità più rapide (e quindi meno tempo radio per dispositivo) possono aiutare con la congestione della rete mesh.
+2. La portata massima è desiderata, per scenari a lungo raggio in cui qualche secondo di ritardo nella ricezione dei messaggi è accettabile (per esempio, nel tentativo di inviare messaggi da una città ad una montagna lontana).
+
+Le preimpostazioni disponibili sono le seguenti, e seguono uno schema lineare di Più veloce \<\-\-\> Più lento, e più breve \<\-\-\> Più lungo:
+
+1. `SHORT_TURBO` (più veloce, più grande larghezza di banda, più basso airtime, più breve distanza. Non è legale utilizzare in tutte le regioni a causa della sua larghezza di banda di 500kHz.)
+
+2. `SHORT_FAST`
+
+3. `SHORT_SLOW`
+
+4. `MEDIUM_FAST`
+
+5. `MEDIUM_SLOW`
+
+6. `LONG_FAST` (predefinito)
+
+7. `LONG_MODERATE`
+
+8. `LONG_SLOW`
+
+9. `VERY_LONG_SLOW` (Più lento, la più piccola larghezza di banda, più alto airtime, più a lungo raggio. Sconsigliato per l'uso regolare in quanto non forma bene le mesh ed è inaffidabile)
+
+### Max Hops
+
+Numero massimo di hop. Questo valore non può essere maggiore di 7. Il valore predefinito è 3, e dovrebbe andare bene per la maggior parte delle applicazioni. _**Davvero, 3 va benissimo.**_
+
+![Hop Count](/img/configuration/max-hops.webp)
+
+### Potenza Di Trasmissione
+
+Se zero, allora utilizzare la massima potenza continua legale predefinita (cioè qualcosa che non bruci l'hardware radio)
+
+Nella maggior parte dei casi dovresti usare zero qui. Le unità sono in dBm.
+
+### Larghezza di banda
+
+Alcuni numeri di larghezza di banda sono 'speciali' e saranno convertiti dal firmware del dispositivo al valore appropriato in virgola mobile:
+
+| Valore speciale | Interpretato Come |
+| :-------------: | :---------------: |
+|     31          |    31,25 kHz      |
+|     62          |    62,5 kHz       |
+|     200         |   203,125 kHz     |
+|     400         |    406,25 kHz     |
+|     800         |    812,5 kHz      |
+|    1600         |    1625,0 kHz     |
+
+Tieni presente che i valori < 62,5kHz possono richiedere un TCXO su alcuni dispositivi hardware.
+
+### Spread Factor
+
+Un numero da 7 a 12. Indica il numero di chirps per simbolo come 1[\<\<]spread_factor.
+
+### Coding Rate
+
+Il denominatore del tasso di codifica. cioè per 4/5, il valore è 5. 4/8 il valore è 8.
+
+### Offset Di Frequenza
+
+Questo parametro è per gli utenti avanzati con apparecchiature di test avanzate, non consigliamo la maggior parte degli utenti usarlo.
+
+Scostamento della frequenza che viene aggiunto alla frequenza del centro della banda calcolata. Usato per correggere errori di calibrazione dei cristalli.
+
+### Trasmissione Abilitata
+
+Consente di abilitare e disabilitare la trasmissione (TX) dalla radio LoRa. Utile per antenne a scambio rapido e altre prove.
+
+Predefinito a true
+
+### Slot di frequenza
+
+Questa impostazione controlla la reale frequenza hardware alla quale le trasmissioni radio, rappresentata da uno slot di frequenza compreso tra 1 e NUM_SLOTS (il massimo per la regione corrente e il preset del modem). Se impostato a `0`/UNSET, il dispositivo ripristina l'algoritmo basato sull'hash del nome del canale più vecchio per determinare lo slot di frequenza.
+
+### Ignora L'Array In Arrivo
+
+Per testare è utile a volte forzare un nodo a non ascoltare mai particolari altri nodi (simulare la radio fuori dal campo). Tutti i nodenum presenti nell'array ignore_incoming avranno i pacchetti inviati eliminati in ricezione (da router.cpp)
+
+### Ignora MQTT
+
+Impostare questa opzione per 'true' significa che il dispositivo ignorerà qualsiasi messaggio che riceve tramite LoRa che è arrivato via MQTT da qualche parte lungo il percorso verso il dispositivo. Nota che questo funziona solo quando il tuo dispositivo e il nodo MQTT sono in esecuzione almeno la versione del firmware 2.2.19.
+
+### OK per MQTT
+
+Valori accettabili: `true`, `false`
+
+Il valore predefinito è `false`. Se impostato su `true`, questa configurazione indica che l'utente approva i pacchetti da caricare verso i broker MQTT. Se impostato su `false`, ai nodi che ricevono i pacchetti viene richiesto di non inoltrare pacchetti verso MQTT. Questa configurazione si applica solo ai canali configurati con le chiavi `defaultpsk` e `eventpsk` impostate nel firmware Meshtastic; i canali con chiavi personalizzate ignorano questa impostazione.
+
+**Importante:** Questa non è una soluzione crittografica, ma una richiesta educata che viene applicata nel firmware ufficiale.
+
+### Ignora limite di Duty Cycle
+
+Impostare questa opzione a 'true' significa che il dispositivo ignorerà il limite del duty cycle orario in Europa. Ciò significa che si potrebbe violare le norme se il dispositivo trasmette troppo. Per impostazione predefinita, questa opzione è impostata a 'false, il che significa che il dispositivo interromperà l'invio di dati quando raggiunge il limite orario e riprenderà quando sarà autorizzato a farlo.
+
+### Migliora guadagno in RX su SX126X
+
+Questa è un'opzione specifica per la serie di chip SX126x che permette al chip di consumare una piccola quantità di potenza supplementare per aumentare la sensibilità RX.
+
+### Sovrascrivi frequenza
+
+Questo parametro è per gli utenti avanzati e gli operatori radiofonici HAM autorizzati. Se abilitato, il calcolo del canale verrà ignorato e verrà invece utilizzata la frequenza impostata (frequency_offset si applica ancora). Questo ti permetterà di utilizzare frequenze fuori banda. Si prega di rispettare le leggi e i regolamenti locali. Se sei un operatore HAM con licenza, assicurati di abilitare la modalità HAM e disattivare la crittografia.
+
+### Ventola PA disabilitata
+
+Se true, disabilita il FAN PA integrato utilizzando pin definito in RF95_FAN_EN.
+
+## Disponibilità Client LoRa Config
+
+<Tabs
+  groupId="settings"
+  defaultValue="apple"
+  values={[
+    {
+      label: (
+        <>
+          <Icon icon="mdi:android" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Android
+        </>
+      ),
+      value: "android",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:apple" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Apple
+        </>
+      ),
+      value: "apple",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:terminal" height="1.5rem" style={{ marginRight: "0.25rem" }} /> CLI
+        </>
+      ),
+      value: "cli",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:internet" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Web
+        </>
+      ),
+      value: "web",
+    },
+  ]}>
+<TabItem value="android">
+
+#### Android
+
+:::info
+
+Le opzioni di configurazione LoRa sono disponibili su Android.
+
+1. Apri l'applicazione Meshtastic
+2. Vai a: ** Menu (3 punti in alto a destra) > Configurazione radio > LoRa**
+
+:::
+
+</TabItem>
+<TabItem value="apple">
+
+#### Apple
+
+:::info
+Tutte le opzioni di configurazione LoRa sono disponibili su iOS, iPadOS e macOS in Impostazioni > Configurazione radio > LoRa.
+:::
+
+</TabItem>
+<TabItem value="cli">
+
+#### CLI
+
+:::info
+
+Tutte le opzioni di configurazione utente sono disponibili nel CLI python. I comandi di esempio sono di seguito:
+
+:::
+
+|    Impostazione             |                                                            Valori Accettabili                                                                                                                                | Predefinito   |
+| :-------------------------: | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :-----------: |
+|    lora.modem_preset        |                                    `LONG_FAST`, `LONG_SLOW`, `VERY_LONG_SLOW`, `MEDIUM_SLOW`, `MEDIUM_FAST`, `SHORT_SLOW`, `SHORT_FAST`, `SHORT_TURBO`                                                       |  `LONG_FAST`  |
+|    lora.use_preset          |                                                             `false`, `true`                                                                                                                                  |   `false`     |
+|     lora.region             | `UNSET`, `US`, `EU_433`, `EU_868`, `CN`, `JP`, `ANZ`, `ANZ_433`, `KR`, `TW`, `RU` ,`IN`, `NZ_865`, `TH`, `LORA_24`, `UA_433`, `UA_868`, `MY_433`, `MY_919`, `SG_923`, `KZ_433`, `KZ_863`, `BR_902`, `NP_865` |   `UNSET`     |
+|    lora.bandwidth           |                                                         `31`, `62`, `125`, `250`, `500`                                                                                                                      |    `250`      |
+|   lora.spread_factor        |                                                         `7`, `8`, `9`, `10`, `11`, `12`                                                                                                                      |    `12`       |
+|    lora.coding_rate         |                                                            `5`, `6`, `7`, `8`                                                                                                                                |    `8`        |
+|   lora.frequency_offset     |                                                            da `0` a `1000000`                                                                                                                                |    `0`        |
+|    lora.hop_limit           |                                                          `1`,`2`,`3`,`4`,`5`,`6`,`7`                                                                                                                         |    `3`        |
+|     lora.tx_power           |                                                             da `0` a `30`                                                                                                                                    |    `0`        |
+|    lora.tx_enabled          |                                                             `false`, `true`                                                                                                                                  |   `true`      |
+|    lora.channel_num         |                                                           `0`, `1` a `NUM_CHANNELS`                                                                                                                          |    `0`        |
+|    lora.ignore_mqtt         |                                                             `false`, `true`                                                                                                                                  |   `false`     |
+|  lora.config_ok_to_mqtt     |                                                             `true`, `false`                                                                                                                                  |   `false`     |
+|  lora.override_duty_cycle   |                                                             `false`, `true`                                                                                                                                  |   `false`     |
+| lora.sx126x_rx_boosted_gain |                                                             `false`, `true`                                                                                                                                  |   `false`     |
+|  lora.override_frequency    |                                     Qualsiasi frequenza supportata dalla radio LoRa. Si prega di rispettare le norme e i regolamenti locali                                                                  |    `0`        |
+
+:::tip
+
+Poiché il dispositivo si riavvierà dopo che ogni comando viene inviato tramite CLI, si raccomanda quando si impostano più valori in una sezione di configurazione, che i comandi siano concatenati insieme in un unico comando.
+
+```shell title="Example:"
+meshtastic --set lora.region US --set lora.modem_preset LONG_FAST
+```
+
+:::
+
+```shell title="Set Modem Preset"
+meshtastic --set lora.modem_preset LONG_FAST
+meshtastic --set lora.modem_preset MEDIUM_FAST
+```
+
+```shell title="Set Region"
+meshtastic --set lora.region US
+meshtastic --set lora.region EU_433
+```
+
+```shell title="Set Hop Limit"
+
+meshtastic --set lora.hop_limit 2
+```
+
+```shell title="Override Duty Cycle"
+meshtastic --set lora.override_duty_cycle true
+meshtastic --set lora.override_duty_cycle false
+```
+
+</TabItem>
+<TabItem value="web">
+
+#### Web
+
+:::info
+All LoRa config options are available in the Web UI.
+:::
+
+</TabItem>
+</Tabs>

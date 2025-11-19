@@ -1,0 +1,26 @@
+---
+id: portnum
+title: Meshtastic Anschlussnummern
+sidebar_label: Anschlussnummern
+sidebar_position: 4
+---
+
+Jede neue App, die auf dem Gerät oder über Schwesteranwendungen auf Telefonen/PCs ausgeführt wird, sollte eine einzigartige Anschlussnummer für ihre Anwendungen auswählen und verwenden.
+
+Die aktuelle Liste der Anschlussnummern kann im [Protocol Buffer](https://buf.build/meshtastic/protobufs/docs/main:meshtastic#meshtastic.PortNum) gefunden werden.
+
+## Zuordnung
+
+Anschlussnummern sollten durch die folgenden Bereiche zugewiesen werden:
+
+| Anschlussnummer | Anwendung                                                                                                                                                                 |
+| :-------------: | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+|      0-63       | Meshtastic Kernverwendung, nicht für Anwendungen von Drittanbietern.                                                                                                      |
+|     64-127      | Registrierte Anwendungen von Drittanbietern. Um Ihre Anwendung zu registrieren, senden Sie eine Github Pull Anfrage, die einen neuen Eintrag zu portnums.proto hinzufügt. |
+|     256-511     | Verwenden Sie diese Anschlussnummern für Ihre privaten Anwendungen, die Sie nicht öffentlich registrieren möchten.                                                        |
+
+Alle anderen Werte sind reserviert.
+
+## Integration
+
+Wenn Sie eine neue Anwendung für Meshtastic erstellen, dann senden Sie bitte eine Github Pull Anfrage, um Ihre gewählte Anschlussnummer zu dieser Tabelle hinzuzufügen.

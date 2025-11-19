@@ -1,0 +1,291 @@
+---
+id: power
+title: Configurazione Alimentazione
+sidebar_label: Alimentazione
+description: Impostazioni per utenti avanzati che vogliono regolare la configurazione di alimentazione sul loro dispositivo Meshtastic.
+---
+
+import Admonition from "@theme/Admonition";
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+import { Icon } from "@iconify/react";
+import calculateADC from "/src/utils/calculateADC";
+
+:::info Utilizza prima la configurazione del dispositivo
+Le impostazioni di alimentazione sono configurazioni avanzate, la maggior parte degli utenti dovrebbe scegliere un ruolo in [Configura dispositivo](/docs/configuration/radio/device) per gestire l'alimentazione per il proprio dispositivo e non dovrebbe mai avere bisogno di modificare queste impostazioni.
+:::
+
+Le opzioni di configurazione di alimentazione sono: risparmio energetico, arresto dopo la perdita di energia, ADC Moltiplicatore di sovrascrittura, Intervallo di attesa Bluetooth, Intervallo di sonno leggero, Intervallo di risveglio minimo e Indirizzo della batteria del dispositivo INA2xx. Power config utilizza un messaggio di amministrazione inviando un protobuf `Config.Power`.
+
+## Valori Di Configurazione Potenza
+
+### Risparmio energetico
+
+:::warning
+Se abilitata, le modifiche alle impostazioni possono essere fatte risvegliando il dispositivo premendo il pulsante utente, resettandolo, o attraverso il [canale amministratore](/docs/configuration/remote-admin/) per l'amministrazione remota.
+:::
+
+Quando attivata, questa funzione disabilita Bluetooth, Serial, WiFi, e lo schermo del dispositivo per risparmiare energia. Ciò è particolarmente vantaggioso per i dispositivi che dipendono da fonti di energia a bassa corrente, come i pannelli solari. Per maggiori dettagli su quali ruoli del dispositivo sono abilitati per impostazione predefinita, controlla la sezione [Configurazione dispositivo](/docs/configuration/radio/device).
+
+### Spegnimento dopo aver perso potenza
+
+Spegni automaticamente un dispositivo dopo un periodo di tempo definito in caso di perdita di potenza.
+
+Prima di impostarlo, assicurati che la tua scheda rilevi correttamente quando è collegata all'alimentazione esterna (l'icona "🔌" nell'app). In caso contrario, il dispositivo potrebbe spegnersi anche quando è presente l'alimentazione.
+Molti dispositivi rilevano lo stato di alimentazione correttamente, tuttavia per alcuni dispositivi, è necessario modificare il Moltiplicatore ADC (sotto).
+
+### Sovrascrivi Moltiplicatore ADC
+
+Rapporto del divisore di tensione per il pin della batteria ad esempio 3,20 (R1=100k, R2=220k)
+
+Sostituisce il ADC_MULTIPLIER definito nel file variante del dispositivo firmware per il calcolo della tensione della batteria.
+
+Deve essere impostato su un valore in virgola mobile compreso tra 2 e 6
+
+#### Processo Di Taratura ([Attribution](https://wiki.uniteng.com/en/meshtastic/nano-g1-explorer#calibration-process))
+
+1. Installare la batteria ricaricabile.
+2. Carica la batteria completamente. L'indicazione di questo stato può variare a seconda del dispositivo. A questo punto, la tensione della batteria dovrebbe essere 4,2V +-1%.
+3. Inserisci il "Percentuale di Carica della batteria" visualizzato sullo schermo o nell'app collegata nella calcolatrice qui sotto.
+4. Se "Percentuale Di Carica Della Batteria" (Es., B 3,82V 60%) non viene visualizzato sullo schermo, significa che il valore predefinito di "Moltiplicatore di Adc Operativo" è troppo alto. Abbassa il "Moltiplicatore di Adc Operativo" ad un numero minore (si consiglia di diminuire di 0,1) fino a quando lo schermo visualizza "Percentuale di Carica della Batteria". Inserisci l'attuale "Moltiplicatore Adc Operativo" in uso nel campo "Moltiplicatore Adc Operativo" nella calcolatrice. Inoltre, inserisci il "Battery Charge Percent" visualizzato sullo schermo nella calcolatrice.
+5. Fare clic sul pulsante "Calcola" per calcolare il "Calcolato Nuovo Moltiplicatore Adc Operativo" e impostarlo come il nuovo "Moltiplicatore Adc Operativo" per il dispositivo.
+
+<div class="no-print">
+  <details>
+    <summary>Calcolatore ADC</summary>
+    <div>
+      <Admonition type="info">
+        <p>Questo metodo di calibrazione mappa solo 4.2V alla Percentuale di Carica Batteria al 100%, e non affronta le potenziali non-linearità dell'ADC.</p>
+      </Admonition>
+      <table>
+        <tr>
+          <td>Percentuale Carica Batteria: </td>
+          <td>
+            <input type="text" id="batteryChargePercent" defaultValue="65" />
+          </td>
+        </tr>
+        <tr>
+          <td>Moltiplicatore ADC Corrente: </td>
+          <td>
+            <input type="text" id="operativeAdcMultiplier" defaultValue="2" />
+          </td>
+        </tr>
+        <tr>
+          <td>Nuovo Moltiplicatore ADC Operativo Calcolato: </td>
+          <td>
+            <input
+              type="text"
+              id="newOperativeAdcMultiplier"
+              value="2"
+              disabled="disabled"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>
+            <button
+              className="button button--outline  button--lg cta--button"
+              onClick={calculateADC}
+            >
+              Calcola
+            </button>
+          </td>
+        </tr>
+      </table>
+      Valori predefiniti per i Moltiplicatori ADC sono:
+
+```
+  |  Device   | Default ADC Multiplier |
+  | :-------: | :--------------------: |
+  | chatter2 | 5.0 |
+  | diy | 1.85 |
+  | esp32-s3-pico | 3.1 |
+  | heltec_v1 & heltec_v2 | 3.2 |
+  | heltec_v3 & heltec_wsl_v3 | 4.9 |
+  | heltec_wireless_paper | 2 |
+  | heltec_wireless_tracker 1.0/1.1 | 4.9 |
+  | heltec_T114 | 4.916 |
+  | lora_isp4520 | 1.436 |
+  | m5stack_coreink | 5 |
+  | nano-g1-explorer | 2 |
+  | nano-g2-ultra | 2 |
+  | picomputer-s3 | 3.1 |
+  | rak4631 | 1.73 |
+  | rpipico | 3.1 |
+  | rpipicow | 3.1 |
+  | station-g1 | 6.45 |
+  | station-g2 | 4 |
+  | tlora_v2_1_16 | 2 |
+  | tlora_v2_1_18 | 2.11 |
+  | tlora_t3s3_v1 | 2.11 |
+  | t-deck | 2.11 |
+  | t-echo | 2 |
+
+</div>
+```
+
+</details>
+</div>
+
+### Intervallo Di Attesa Bluetooth
+
+Tempo di attesa prima di disattivare il BLE quando Bluetooth è inattivo
+
+`0` per default di 1 minuto
+
+### Intervallo Di Sonno Leggero
+
+:::info Solo ESP32
+Questa impostazione si applica solo alle schede basate su ESP32 e non avrà alcun effetto sulle schede nRF52/RP2040.
+:::
+
+Nel sonno leggero la CPU è sospesa, la radio LoRa è accesa, BLE è spento e il GPS è acceso
+
+`0` per default di 1 minuto
+
+### Intervallo Di Risveglio Minimo
+
+Durante il sonno leggero quando riceviamo pacchetti sulla radio LoRa li sveglieremo e li gestiremo e rimarremo svegli in nessuna modalità Bluetooth per questo intervallo
+
+`0` per default di 10 secondi
+
+### Indirizzo INA2xx Batteria Dispositivo
+
+Se un dispositivo INA-2XX viene rilevato automaticamente su uno dei bus I2C all'indirizzo specificato, verrà utilizzato come fonte autorevole per la lettura della tensione del livello della batteria del dispositivo. L'impostazione viene ignorata per i dispositivi con PMU (ad esempio T-beams)
+
+:::tip[Convert esadecimale a decimale]
+Gli indirizzi I2C sono normalmente rappresentati in esadecimale e richiedono la conversione in decimale per poter essere impostati tramite clienti Meshtastic. Ad esempio, l'indirizzo I2C di 0x40 convertito in decimale è 64.
+:::
+
+## Disponibilità Client Configurazione Alimentazione
+
+<Tabs
+  groupId="settings"
+  defaultValue="apple"
+  values={[
+    {
+      label: (
+        <>
+          <Icon icon="mdi:android" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Android
+        </>
+      ),
+      value: "android",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:apple" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Apple
+        </>
+      ),
+      value: "apple",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:terminal" height="1.5rem" style={{ marginRight: "0.25rem" }} /> CLI
+        </>
+      ),
+      value: "cli",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:internet" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Web
+        </>
+      ),
+      value: "web",
+    },
+  ]}>
+
+<TabItem value="android">
+
+#### Android
+
+:::info
+
+Opzioni di configurazione di alimentazione sono disponibili per Android.
+
+1. Apri l'applicazione Meshtastic
+2. Vai a: **Menu (3 punti in alto a destra) > Configurazione radio > Potenza**
+
+:::
+
+</TabItem>
+<TabItem value="apple">
+
+#### Apple
+
+:::info
+
+Selezionare le opzioni di configurazione di alimentazione sono disponibili su iOS, iPadOS e macOS in Impostazioni > Configurazione del dispositivo > Alimentazione.
+
+:::
+
+</TabItem>
+<TabItem value="cli">
+
+#### CLI
+
+:::info
+
+Tutte le opzioni di configurazione Alimentazione sono disponibili nel CLI python.
+
+:::
+
+|      Impostazione                    |       Valori Accettabili                |                         Predefinito                                       |
+| :----------------------------------: | :-------------------------------------: | :-----------------------------------------------------------------------: |
+|      power.is_power_save             |        `true`, `false`                  |                           `false`                                         |
+| power.on_battery_shutdown_after_secs |        `intero` (secondi)               |                Il valore predefinito di `0` è spento                      |
+|   power.adc_multiplier_override      |   `2-4` (valore in virgola mobile)      |        Il valore predefinito di `0` utilizza i valori del firmware        |
+|    power.wait_bluetooth_secs         |        `intero` (secondi)               |              Il valore predefinito di `0` è di 1 minuto                   |
+|       power.ls_secs                  |        `intero` (secondi)               |               Il valore predefinito di `0` è di 5 minuti                  |
+|     power.min_wake_secs              |        `intero` (secondi)               |              Il valore predefinito di `0` è di 10 secondi                 |
+|  power.device_battery_ina_address    | `integer` (indirizzo I2C come decimale) | Il valore predefinito di `0` indica che non è impostato alcun indirizzo   |
+
+:::tip
+
+Poiché il dispositivo si riavvierà dopo che ogni comando viene inviato tramite CLI, si raccomanda quando si impostano più valori in una sezione di configurazione, che i comandi siano concatenati insieme in un unico comando.
+
+```shell title="Example:"
+meshtastic --set power.is_power_saving true --set power.on_battery_shutdown_after_secs 120
+```
+
+:::
+
+```shell title="Enable / Disable Power Saving"
+meshtastic --set power.is_power_saving true
+meshtastic --set power.is_power_saving false
+```
+
+```shell title="Enable / Disable Shutdown after losing power"
+meshtastic --set power.on_battery_shutdown_after_secs 120
+meshtastic --set power.on_battery_shutdown_after_secs 0
+```
+
+```shell title="Set  Wait Bluetooth Interval  (Default of 0 is 60 seconds)"
+meshtastic --set power.wait_bluetooth_secs 0
+meshtastic --set power.wait_bluetooth_secs 120
+```
+
+```shell title="Set Light Sleep to default (Default of 0 is 5 minutes)"
+meshtastic --set power.ls_secs 0
+meshtastic --set power.ls_secs 120
+```
+
+```shell title="Set Minimum Wake Interval (Default of 0 is 10 seconds)"
+meshtastic --set power.min_wake_secs 0
+meshtastic --set power.min_wake_secs 120
+```
+
+</TabItem>
+<TabItem value="web">
+
+#### Web
+
+:::info
+Tutte le opzioni di configurazione utente sono disponibili nell'interfaccia utente web.
+:::
+
+</TabItem>
+</Tabs>
