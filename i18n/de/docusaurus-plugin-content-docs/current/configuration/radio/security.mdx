@@ -1,0 +1,177 @@
+---
+id: security
+title: Sicherheitseinstellungen
+sidebar_label: Sicherheit
+description: Dieser Abschnitt behandelt Sicherheitseinstellungen für das Gerät wie den öffentlichen Schlüssel, den privaten Schlüssel und die Administratorschlüssel.
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+import { Icon } from "@iconify/react";
+
+Die Sicherheitskonfigurationsoptionen sind: öffentlicher Schlüssel, privater Schlüssel, administrative Schlüssel, wird verwaltet, serielle Konsole, Debug Protokolle und administrativer Kanal.
+
+## Sicherheitseinstellungen
+
+### Öffentlicher Schlüssel
+
+Akzeptable Werte: `bytes`
+
+Der öffentliche Schlüssel des Gerätes, der mit anderen Knoten im Mesh geteilt wird, damit diese einen gemeinsamen geheimen Schlüssel für die sichere Kommunikation berechnen können.
+
+### Privater Schlüssel
+
+Akzeptable Werte: `bytes`
+
+Der private Schlüssel des Gerätes, der verwendet wird, um einen gemeinsamen Schlüssel mit einem entfernten Gerät für sichere Kommunikation zu erstellen.**Dieser Schlüssel sollte vertraulich behandelt werden.**
+
+### Administrativer Schlüssel
+
+Akzeptable Werte: `wiederholte Bytes`
+
+Die öffentlichen Schlüssel, der berechtigt sind, administrative Nachrichten an diesen Knoten zu schicken. Nur Nachrichten, die von diesen Schlüsseln signiert werden, werden zur administrativen Kontrolle akzeptiert.
+
+### Verwalteter Modus
+
+Akzeptable Werte: `true` oder `false`
+
+Das Aktivieren des verwalteten Modus blockiert Anwendungen beim Schreiben von Einstellungen auf ein Gerät (diese können jedoch gelesen werden). Nach der Aktivierung können Funkkonfigurationen nur über PKC Remote Admin-Nachrichten mit Firmware-Version 2.5+ oder den Legacy-Admin-Kanal mit Firmware vor Version 2.5 geändert werden. Diese Einstellung ist **nicht** für die entfernte Knotenverwaltung erforderlich.
+
+Bevor Sie den verwalteten Modus aktivieren, überprüfen Sie, ob der Knoten über Remote Admin oder den Legacy-Admin-Kanal gesteuert werden kann und ob alle Funktionen ordnungsgemäß funktionieren, um eine Aussperrung zu verhindern.
+
+### Serielle Konsole
+
+Akzeptable Werte: `true` oder `false`
+
+Wenn Sie dies deaktivieren, kann die serielle Konsole die Stream-API nicht initialisieren.
+
+### Fehlersuchprotokolle (Debug)
+
+Akzeptable Werte: `true` oder `false`
+
+Standardmäßig ist die Protokollierung deaktiviert, wenn ein API-Client eine Verbindung herstellt, um die gemeinsame serielle Verbindung ruhig zu halten. Setzen Sie dies auf `true`, um weiterhin Live Debug Protokolle über die serielle Schnittstelle oder Bluetooth auszugeben, wenn die API aktiv ist.
+
+### Administrativer Kanal aktiviert
+
+Akzeptable Werte: `true` oder `false`
+
+Ermöglicht die Steuerung eingehender Geräte über den unsicheren veralteten, administrativen Kanal. Durch Aktivieren dieser Option können Steuernachrichten über den veralteten, weniger sicheren administrativen Kanal empfangen werden.
+
+## Verfügbarkeit der Gerätekonfiguration
+
+<Tabs
+  groupId="settings"
+  defaultValue="apple"
+  values={[
+    {
+      label: (
+        <>
+          <Icon icon="mdi:android" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Android
+        </>
+      ),
+      value: "android",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:apple" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Apple
+        </>
+      ),
+      value: "apple",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:terminal" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Kommandozeile
+        </>
+      ),
+      value: "cli",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:internet" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Web
+        </>
+      ),
+      value: "web",
+    },
+  ]}>
+<TabItem value="android">
+
+#### Android
+
+Alle Sicherheitseinstellungen sind für Android verfügbar.
+
+1. Öffnen Sie die Meshtastic Applikation
+2. Navigiere zu: **vertikale Ellipse (3 Punkte oben rechts) > Funkkonfiguration > Sicherheit**
+
+</TabItem>
+<TabItem value="apple">
+
+#### Apple
+
+Die Benutzereinstellungen sind in iOS, iPadOS und macOS unter Einstellungen > Gerätekonfiguration > Sicherheit.
+
+</TabItem>
+<TabItem value="cli">
+
+#### Kommandozeile
+
+Alle Sicherheitstellungen sind über die Python Kommandozeile verfügbar. Beispieleinstellungen sind folgende:
+
+| Einstellung                        | Akzeptable Werte     | Standardwert |
+| ---------------------------------- | -------------------- | ------------ |
+| security.public_key                | `Byte`               | `Keine`      |
+| security.private_key               | `Byte`               | `Keine`      |
+| security.admin_key                 | `wiederholte Bytes`  | `Keine`      |
+| security.is_managed                | `true`, `false`      | `false`      |
+| security.serial_enabled            | `true`, `false`      | `true`       |
+| security.debug_log_api_enabled     | `true`, `false`      | `false`      |
+| security.admin_channel_enabled     | `true`, `false`      | `false`      |
+
+:::tip
+
+Da das Gerät nach jedem über die Kommandozeile gesendeten Befehl möglicherweise neu gestartet wird, wird beim Festlegen mehrerer Werte in einem Konfigurationsabschnitt empfohlen, die Befehle zu einem einzigen Befehl zu verketten.
+
+```shell title="Example:"
+meshtastic --set security.is_managed false --set device.debug_log_api_enabled true
+```
+
+:::
+
+```shell title="Disable serial console"
+meshtastic --set security.serial_enabled false
+```
+
+```shell title="Enable debug logging"
+meshtastic --set security.debug_log_api_enabled true
+```
+
+</TabItem>
+<TabItem value="web">
+
+#### Web
+
+ALLE Konfigurationsoptionen sind in der Weboberfläche verfügbar, aber derzeit kann nur ein öffentlicher, administrativer Schlüssel für die Fernverwaltung gesetzt werden.
+
+</TabItem>
+</Tabs>
+
+## Sicherheitsschlüssel - Sicherung und Wiederherstellung
+
+### Sicherung
+
+Öffentliche und private Schlüssel gehen verloren und werden durch Löschen und Neuinstallieren der Firmware wiederhergestellt. Es liegt in Ihrer Verantwortung, Ihre Schlüssel zu sichern, um die verschlüsselte Direktnachrichtenübermittlung mit vorhandenen Knoten in Ihrem Mesh aufrechtzuerhalten.
+
+Vorgeschlagene Sicherungsmethoden:
+
+- Führen Sie mit der [Meshtastic Kommandozeile](/docs/software/python/cli/) Folgendes aus: `meshtastic --export-config > config_backup.yaml` – dadurch wird Ihre gesamte Konfiguration einschließlich Ihrer öffentlichen und privaten Schlüssel in einer Datei gespeichert.
+- Kopieren Sie die Schlüssel an einen sicheren Ort, beispielsweise auf eine passwortgeschützte Notiz.
+- Machen Sie einen Screenshot – die einfachste Methode. Sie müssen sicherstellen, dass Sie beide Schlüssel vollständig gespeichert haben.
+
+### Wiederherstellung
+
+Um Ihre Schlüssel wiederherzustellen, können Sie:
+
+- Verwenden Sie die Meshtastic Kommandozeile, um „meshtastic --configure config_backup.yaml“ auszuführen. Dies ist der schnellste Weg, Ihren gesamten Knoten wieder dorthin zu bringen, wo Sie ihn verlassen haben!
+- Fügen Sie die Schlüssel manuell von Ihrem gespeicherten Speicherort in die Client-App ein oder geben Sie sie erneut ein.

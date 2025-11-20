@@ -1,0 +1,36 @@
+---
+id: buttons
+title: Hardware Tasten der Station Serie
+sidebar_label: Tasten
+sidebar_position: 1
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+<Tabs
+groupId="station-buttons"
+queryString="station-buttons"
+defaultValue="g2"
+values={[
+{label: 'Station G2', value: 'g2'}
+]}>
+
+<TabItem value="g2">
+
+## Funktionen
+
+- **Benutzer/Programm Taste:**
+  - **Einfaches Drücken:** Ändert die Informationsseite auf der Anzeige des Gerätes.
+  - **Doppeltes Drücken:** sendet ein Adhoc-Ping mit dem Standort des Gerätes an das Netzwerk.
+  - **Lange drücken:** signalisiert dem Gerät nach 5 Sekunden herunterzufahren.
+- **Firmware Download Taste:** Aktiviert das Gerät im Firmware Download Modus.
+  1. Drücken und halten Sie die Firmware Download Taste.
+  2. Dann drücken Sie einfach die Reset Taste.
+  3. Am Schluss die Firmware Download-Taste loslassen.
+- **Reset Taste:**
+  - **Einfaches Drücken:** setzt das Gerät zurück.
+
+</TabItem>
+
+</Tabs>

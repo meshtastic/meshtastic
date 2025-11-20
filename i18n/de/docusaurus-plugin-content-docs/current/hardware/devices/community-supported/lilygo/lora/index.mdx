@@ -1,0 +1,244 @@
+---
+id: community-tlora
+title: LILYGO® TTGO Lora Devices
+sidebar_label: LoRa32
+sidebar_position: 1
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+Weitere Informationen zu LILYGO®️ LoRa Geräten finden Sie auf LILYGO®️ [GitHub Seite](https://github.com/Xinyuan-LilyGO/LilyGo-LoRa-Series).
+
+<Tabs
+groupId="t-lora"
+queryString="t-lora"
+defaultValue="v2.1-1.8"
+values={[
+{label: 'Lora V3.0', value:'v3.0'},
+{label: 'Lora V2.1-1.6', value:'v2.1'},
+{label: 'Lora V2.1-1.8', value:'v2.1-1.8'},
+{label: 'Lora V2.0', value: 'v2.0'},
+{label: 'Lora V1.3', value: 'v1.3'},
+{label: 'Lora V1', value: 'v1'}
+]}>
+<TabItem value="v1">
+
+## Lora v1
+
+:::warning
+Nicht empfohlen mit einem Akku! Diese Platinen enthalten die falschen Komponenten in der LiPo Akku Ladeschaltung, sodass der Akku überladen werden kann.
+:::
+
+:::caution
+Diese Platine ist noch in der Produktion, wird aber aus verschiedenen Gründen nicht für Neuankäufe oder für unbeaufsichtigte Installationen empfohlen. Die Firmware Unterstützung ist läuft aus. Im Zweifelsfall wählen Sie die Lora T3S3 Platine.
+:::
+
+- **MCU**
+  - ESP32 (WLAN & Bluetooth)
+- **LoRa Sendeempfänger**
+  - Semtech SX1276
+- **Frequenzoptionen**
+  - 915 MHz
+  - 868 MHz
+- **Anschlüsse**
+  - Micro USB
+  - Antenne: U.FL Antennenanschluss
+
+### Merkmale
+
+- 0,96 Zoll OLED Anzeige eingebaut
+
+### Quellen
+
+- Firmware Datei: `firmware-tlora-v1-X.X.X.xxxxxxx.bin`
+
+![LILYGO® TTGO Lora V1](/img/hardware/lora-v1.webp)
+
+</TabItem>
+
+<TabItem value="v1.3">
+
+## Lora v1.3
+
+:::warning
+Nicht empfohlen mit einem Akku! Diese Platinen enthalten die falschen Komponenten in der LiPo Akku Ladeschaltung, sodass der Akku überladen werden kann.
+:::
+
+:::caution
+Diese Platine ist noch in der Produktion, wird aber aus verschiedenen Gründen nicht für Neuankäufe oder für unbeaufsichtigte Installationen empfohlen. Die Firmware Unterstützung ist läuft aus. Im Zweifelsfall wählen Sie die Lora T3S3 Platine.
+:::
+
+- **MCU**
+  - ESP32 (WLAN & Bluetooth)
+- **LoRa Sendeempfänger**
+  - Semtech SX127x
+- **Frequenzoptionen**
+  - 915 MHz
+  - 868 MHz
+- **Anschlüsse**
+  - Micro USB
+  - Antenne: U.FL Antennenanschluss
+
+### Merkmale
+
+- 0,96 Zoll OLED Anzeige eingebaut
+
+### Quellen
+
+- Firmware Datei: `firmware-tlora_v1_3-X.X.X.xxxxxxx.bin`
+
+![LILYGO® TTGO Lora V1.3](/img/hardware/lora-v1.3.webp)
+![LILYGO® TTGO Lora V1.3 Anschlussplan](/img/hardware/lora-v1.3_pinmap.webp)
+
+</TabItem>
+<TabItem value="v2.0">
+
+## Lora v2.0
+
+:::warning
+Nicht empfohlen mit einem Akku! Diese Platinen enthalten die falschen Komponenten in der LiPo Akku Ladeschaltung, sodass der Akku überladen werden kann.
+:::
+
+:::caution
+Diese Platine ist noch in der Produktion, wird aber aus verschiedenen Gründen nicht für Neuankäufe oder für unbeaufsichtigte Installationen empfohlen. Die Firmware Unterstützung ist läuft aus. Im Zweifelsfall wählen Sie die Lora T3S3 Platine.
+:::
+
+- **MCU**
+  - ESP32 (WLAN & Bluetooth)
+- **LoRa Sendeempfänger**
+  - Semtech SX127x
+- **Frequenzoptionen**
+  - 433 MHz
+  - 868 MHz
+  - 915 MHz
+- **Anschlüsse**
+  - Micro USB
+  - Antenne: U.FL Antennenanschluss
+
+### Merkmale
+
+- 0,96 Zoll OLED Anzeige eingebaut
+- Energie und Reset Taste
+- microSD-Anschluss
+- Kein GPS
+
+### Quellen
+
+- Firmware Datei: `firmware-tlora-v2-X.X.X.xxxxxxx.bin`
+
+![LILYGO® TTGO Lora V2](/img/hardware/lora-v2.0.webp)
+
+</TabItem>
+<TabItem value="v2.1">
+
+## Lora v2.1-1.6
+
+:::caution
+Frühe Versionen dieser Platinen enthalten die falschen Komponenten in der LiPo Akku Ladeschaltung, sodass der Akku überladen werden kann. Die nach 2021 gekauften Platinen sollten dieses Problem nicht haben, es sei denn, die Version ist T3_v1.6 20180606.
+:::
+
+:::caution
+Diese Platine ist noch in der Produktion, wird aber aus verschiedenen Gründen nicht für Neuankäufe oder für unbeaufsichtigte Installationen empfohlen. Die Firmware Unterstützung ist läuft aus. Im Zweifelsfall wählen Sie die Lora T3S3 Platine.
+:::
+
+- **MCU**
+  - ESP32 (WLAN & Bluetooth)
+- **LoRa Sendeempfänger**
+  - Semtech SX127x
+- **Frequenzoptionen**
+  - 433 MHz
+  - 868 MHz
+  - 915 MHz
+  - Eine Variante dieser Platine hat einen temperaturgeregelten Oszillator (TCXO) für eine verbesserte Frequenzstabilität.
+- **Anschlüsse**
+  - Micro USB
+  - Antennen: SMA-Antennenanschluss
+
+### Variationen der Identifizierung von Marken
+
+- FCC ID: 2ASYE-T3-V1-6-1
+- "T3_v1.6.1 20210104" auf der Platine
+- "T3_v1.6 20180606" auf der Platine
+- "Model T3 V1.6.1" auf dem FCC Aufkleber
+
+### Merkmale
+
+- 0,96 Zoll OLED Anzeige eingebaut
+- Energie und Reset Taste
+- microSD-Anschluss
+- Kein GPS
+
+### Quellen
+
+- Firmware Datei: `firmware-tlora-v2-1-1.6-X.X.X.xxxxxxx.bin`
+
+![TTGO Lora V2.1-1.6](/img/hardware/lora-v2.1-1.6.webp)
+
+</TabItem>
+
+<TabItem value="v2.1-1.8">
+
+## Lora v2.1-1.8
+
+:::caution
+Diese Platine ist noch in der Produktion, wird aber aus verschiedenen Gründen nicht für Neuankäufe oder für unbeaufsichtigte Installationen empfohlen. Die Firmware Unterstützung ist läuft aus. Im Zweifelsfall wählen Sie die Lora T3S3 Platine.
+:::
+
+- **MCU**
+  - ESP32 (WLAN & Bluetooth)
+- **LoRa Sendeempfänger**
+  - Semtech SX1280 (Region LORA_24 weltweit)
+- **Frequenzoptionen**
+  - 2,4 GHz
+- **Anschlüsse**
+  - USB-C
+  - Antennen: SMA-Antennenanschluss
+
+### Merkmale
+
+- 0,96 Zoll OLED Anzeige eingebaut
+- Energie und Reset Taste
+- microSD-Anschluss
+- Kein GPS
+
+### Quellen
+
+- Firmware Datei: `firmware-tlora-v2-1-1.8-X.X.X.xxxxxxx.bin`
+
+![TTGO Lora V2.1-1.8](/img/hardware/lora-v2.1-1.8.webp)
+
+</TabItem>
+
+<TabItem value="v3.0">
+
+## Lora v3.0
+
+:::caution
+Dieses Board verwendet einen Semtech Chip der ersten Generation und wird daher nicht für neue Käufer empfohlen. Die Firmware Unterstützung ist läuft aus. Im Zweifelsfall wählen Sie die Lora T3S3 Platine.
+:::
+
+- **MCU**
+  - ESP32 (WLAN & Bluetooth)
+- **LoRa Sendeempfänger**
+  - Semtech SX127x mit TCXO für verbesserte Frequenzstabilität
+- **Frequenzoptionen**
+  - 433 MHz
+  - 868 MHz
+  - 915 MHz
+- **Anschlüsse**
+  - USB-C
+  - Antenne: IPEX-Antennenanschluss
+
+### Merkmale
+
+- Eingebaut in OLED 0,96 Zoll oder 2,13 Zoll E-Ink Anzeige
+- Energie- und Reset Schalter, Benutzertaste
+- microSD-Anschluss
+- Solarpaneel und Batterieanschluss, enthält Solar-Ladeschaltung (CN3065)
+- QUIIC jeweils für UART und I2C
+- Kein GPS
+
+</TabItem>
+
+</Tabs>

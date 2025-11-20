@@ -1,0 +1,38 @@
+---
+id: integrations-atak-plugin
+title: ATAK Plugin
+sidebar_label: ATAK Plugin
+sidebar_position: 2
+---
+
+## Offizielles Meshtastic ATAK Plugin
+
+Meshtastic kann mit ATAK auf Android über das [offizielle ATAK Plugin](https://github.com/meshtastic/ATAK-Plugin) integriert werden.
+
+### Einleitung
+
+Das ATAK Plugin erlaubt keine Meshtastic Konfiguration. Das Plugin erledigt drei Dinge:
+
+1. Bindet sich an den IMeshService an, der von der Meshtastic Android App bereitgestellt wird, um senden zu können.
+2. Fängt alle ausgehenden ATAK CoT über das ATAK "PreSendProcessor" Interface ab und sendet sie an den IMeshService.
+3. Hört auf Nachrichten von der Meshtastic Android App mit der ATAK_PLUGIN Anschlussnummer.
+
+### So funktioniert's
+
+1. Verwenden Sie die Meshtastic Android App auf allen Geräten und stellen Sie sicher, dass sie mit ihrem lokalen LoRa Funkgerät sprechen können. Bestätigen Sie, dass einfache Textnachrichten mit der App empfangen werden können.
+
+2. Setze die Rolle des Gerätes in den [Geräteeinstellungen]auf `TAK` (/docs/configuration/radio/device/).
+
+3. Installieren Sie die Version des Meshtastic ATAK Plugins, das der ATAK Version auf allen Geräten des [Projekt GitHub Releases](https://github.com/meshtastic/ATAK-Plugin/releases) zugeordnet ist.
+
+4. Die Meshtastic Android App muss im Hintergrund laufen (um sicherzustellen, dass der IMeshService arbeitet). Starten Sie ATAK (mit dem Meshtastic ATAK-Plugin installiert oder installieren Sie es, sobald ATAK läuft) und Sie sollten ein grünes Meshtastic Icon unten rechts sehen. Wenn das Symbol rot ist, konnte sich das Plugin nicht an den IMeshService der Meshtastic Android App binden. Wenn dies der Fall ist, überprüfen Sie ob die Meshtastic Android App funktioniert. Das Plugin wird nach einer fehlgeschlagenen Bindung versuchen sich erneut verbinden, ohne ATAK neu zu starten. Wenn Sie kein Meshtastic Icon sehen, stellen Sie sicher, dass Sie das Meshtastic ATAK-Plugin korrekt installiert haben.
+
+## Eigenständige TAK Tracker Verwendung
+
+Wenn Geräte mit GPS verfügbar sind, erlaubt das Konfigurieren der Rolle des Gerätes auf `TAK_TRACKER` die Übertragung von TAK PLI (Standortinformationen) unabhängig von ATAK. Diese Daten können in ATAK EUDs empfangen und angezeigt werden, die an ein Meshtastic Gerät angeschlossen sind und mit dem Meshtastic ATAK-Plugin konfiguriert werden (vorausgesetzt, sie sind auf den gleichen Meshtastic Channels konfiguriert).
+
+Ein paar wichtige Anmerkungen zu dieser Einrichtung:
+
+1. Die Intervalle und das Verhalten der TAK PLI Aussendungen werden die Einstellungen für die [Standorteinstellung](/docs/configuration/radio/position/) in Meshtastic berücksichtigen.
+
+2. Das mit der PLI gesendete Rufzeichen erscheint im ATAK zusammen mit dem Benutzer [Langer Name](/docs/configuration/radio/user/#long-name) der für das Meshtastic Gerät konfiguriert ist.

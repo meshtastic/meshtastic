@@ -1,0 +1,354 @@
+---
+id: canned-message
+title: Configurazione Modulo Messaggi Predefiniti
+sidebar_label: Messaggi Preconfezionati
+description: Dettagli di configurazione per i messaggi predefiniti sul dispositivo Meshtastic.
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+import { Icon } from "@iconify/react";
+import ReactPlayer from "react-player";
+
+Il modulo dei messaggi predefiniti ti permetterà di inviare messaggi alla rete mesh dal dispositivo senza utilizzare l'app del telefono. È possibile predefinire messaggi di testo tra cui scegliere.
+
+Le opzioni di configurazione del modulo messaggi predefiniti sono: Abilitata, Invia Campanella, Messaggi, Sorgente di ingresso, Rotary Encoder Abilitato, Codificatore Up Down Abilitato, Input Broker Pin A, Input Broker Pin B, Input Broker Pin Press, Input Broker Evento in senso orario, Input Broker Evento Counter in senso orario e Input Broker Evento Press. La configurazione dei messaggi predefiniti utilizza un messaggio di amministrazione per inviare un protobuf `ConfigModule.CannedMessage`.
+
+<div style={{ maxWidth: "800px", margin: "auto" }}>
+  <ReactPlayer
+    url="https://youtu.be/qKQVYUbLLkg"
+    controls
+    width="100%"
+    height="400px"
+  />
+</div>
+
+## Configurazione Modulo Messaggi Predefiniti
+
+### Abilitato
+
+Abilita il modulo di messaggi predefiniti.
+
+### Invia Campanella
+
+Invia un carattere campanella con ogni messaggio.
+
+Il [modulo di notifica esterno](external-notification.mdx) può essere impostato per avvisare quando arriva un nuovo messaggio.
+Questo modulo può anche essere configurato per avvisare acusticamente solo quando un messaggio contiene il carattere campanella.
+
+### Messaggi
+
+L'elenco dei messaggi preimpostati come configurati dall'utente. I messaggi devono essere separati dal carattere pipe `|`. Il conteggio totale dei byte per l'elenco dei messaggi può essere fino a 200 byte
+
+### Sorgente di input
+
+Fonti degli eventi di input accettate dal modulo dei messaggi predefiniti.
+
+|   Valore        |                            Descrizione                                                         |
+| :-------------: | :--------------------------------------------------------------------------------------------: |
+|   `_any`        | Predefinito. Consente a qualsiasi dispositivo di ingresso periferico collegato al dispositivo. |
+|   `rotEnc1`     |                        Encoder Rotativo Di Base                                                |
+|  `upDownEnc1`   |       Codificatore Up Down (utilizzalo anche per il codificatore rotativo RAK14006)            |
+| `scanAndSelect` |                    Pulsante singolo (pressione breve e lunga)                                  |
+|   `cardkb`      |                   M5 Stack CardKB (questo copre RAK14004 Keymatrix)                            |
+|  `serialkb`     |                        Tastiera seriale Chatter                                                |
+
+### Encoder Rotativo Abilitato
+
+Abilita l'encoder rotativo.
+
+### Encoder Su/Giù Abilitato
+
+Abilita Encoder Su/Giù.
+
+### Input Broker Pin A
+
+Valore Pin GPIO (1-39) Per porta encoder A
+
+### Input Broker Pin B
+
+Valore Pin GPIO (1-39) Per porta encoder B
+
+### Input Broker Pin Pressione
+
+Valore Pin GPIO (1-39) Per porta pressione encoder
+
+### Input Broker Evento In senso Orario
+
+Genera l'evento rotativo in senso orario.
+
+### Input Broker Evento In senso Anti Orario
+
+Genera l'evento rotativo in senso orario.
+
+### Input Broker Pin Pressione
+
+Genera un evento di input su Pressione di questo tipo.
+
+## Disponibilità Client Di Configurazione Del Modulo Messaggi Predefiniti
+
+<Tabs
+  groupId="settings"
+  defaultValue="apple"
+  values={[
+    {
+      label: (
+        <>
+          <Icon icon="mdi:android" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Android
+        </>
+      ),
+      value: "android",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:apple" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Apple
+        </>
+      ),
+      value: "apple",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:terminal" height="1.5rem" style={{ marginRight: "0.25rem" }} /> CLI
+        </>
+      ),
+      value: "cli",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:internet" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Web
+        </>
+      ),
+      value: "web",
+    },
+  ]}>
+<TabItem value="android">
+
+#### Android
+
+:::info
+
+Le opzioni di configurazione dei messaggi predefiniti sono disponibili per Android.
+
+1. Apri l'applicazione Meshtastic
+2. Vai a: **Menu (3 punti in alto a destra) > Configurazione radio > Messaggi Predefiniti**
+
+:::
+
+</TabItem>
+<TabItem value="apple">
+
+#### Apple
+
+:::info
+Tutte le opzioni di configurazione del modulo messaggi predefiniti sono disponibili su iOS, iPadOS e macOS in Impostazioni > Configurazione del modulo > Messaggi predefiniti.
+:::
+
+</TabItem>
+<TabItem value="cli">
+
+#### CLI
+
+:::info
+
+Tutte le opzioni di configurazione del modulo messaggi predefiniti sono disponibili nel CLI python.
+
+:::
+
+I comandi di esempio sono di seguito:
+
+|      Impostazione                      |       Valori Accettabili                  |       Predefinito                |
+| :------------------------------------: | :---------------------------------------: | :------------------------------: |
+|     canned_message.enabled             |        `true`, `false`                    |         `false`                  |
+|     canned_message.send_bell           |        `true`, `false`                    |         `false`                  |
+|  canned_message.allow_input_source     | `rotEnc1`, `_any`, `upDownEnc1`, `cardkb` |         `_any`                   |
+|     \--set-canned-message              |         `stringa`                         | `""` (separa usando le pipe "|") |
+|  canned_message.inputbroker_event_cw   |       `InputEventChar`                    |       (non definito)             |
+|  canned_message.inputbroker_event_ccw  |       `InputEventChar`                    |       (non definito)             |
+| canned_message.inputbroker_event_press |       `InputEventChar`                    |       (non definito)             |
+|   canned_message.inputbroker_pin_a     |          `intero`                         |       (non definito)             |
+|   canned_message.inputbroker_pin_b     |          `intero`                         |       (non definito)             |
+|  canned_message.inputbroker_pin_press  |          `intero`                         |       (non definito)             |
+
+:::tip
+
+Poiché il dispositivo si riavvierà dopo che ogni comando viene inviato tramite CLI, si raccomanda quando si impostano più valori in una sezione di configurazione, che i comandi siano concatenati insieme in un unico comando.
+
+```shell title="Example:"
+meshtastic --set canned_message.enabled true --set canned_message.send_bell true
+```
+
+:::
+
+```shell title="Enable/Disable the Canned Message Module"
+meshtastic --set canned_message.enabled true
+meshtastic --set canned_message.enabled false
+```
+
+```shell title="Enable/Disable send bell character"
+meshtastic --set canned_message.send_bell true
+meshtastic --set canned_message.send_bell false
+```
+
+```shell title="Set Messages"
+meshtastic --set-canned-message "Ho bisogno di un alpinista!|Chiamami|Ricevuto|Mantieni la calma|Sto arrivando"
+```
+
+```shell title="Set Input Source"
+meshtastic --set canned_message.allow_input_source "_any"
+meshtastic --set canned_message.allow_input_source "rotEnc1"
+```
+
+```shell title="Enable/Disable rotary1"
+meshtastic --set canned_message.rotary1_enabled 1
+```
+
+```shell title="Set/Unset Encoder Pin A"
+meshtastic --set canned_message.inputbroker_pin_a 17
+meshtastic --set canned_message.inputbroker_pin_a 0
+```
+
+```shell title="Set/Unset Encoder Pin B"
+meshtastic --set canned_message.inputbroker_pin_b 39
+meshtastic --set canned_message.inputbroker_pin_b 0
+```
+
+```shell title="Set/Unset Encoder Pin Press"
+meshtastic --set canned_message.inputbroker_pin_press 21
+meshtastic --set canned_message.inputbroker_pin_press 0
+```
+
+```shell title="Set/Unset Input Broker CW Event"
+meshtastic --set canned_message.inputbroker_event_cw UP
+meshtastic --set canned_message.inputbroker_event_cw ""
+```
+
+```shell title="Set/Unset Input Broker CCW Event"
+meshtastic --set canned_message.inputbroker_event_ccw DOWN
+meshtastic --set canned_message.inputbroker_event_ccw ""
+```
+
+```shell title="Set/Unset Input Broker Press Event"
+meshtastic --set canned_message.inputbroker_event_press SELECT
+meshtastic --set canned_message.inputbroker_event_press ""
+```
+
+</TabItem>
+<TabItem value="web">
+
+#### Web
+
+:::info
+Tutte le opzioni di configurazione del modulo messaggi predefiniti sono disponibili nell'interfaccia utente web.
+:::
+
+</TabItem>
+</Tabs>
+
+:::warning
+GPIO access is fundamentally dangerous because invalid options can physically damage or destroy your hardware. Ensure that you fully understand the schematic for your particular device before trying this as we do not offer a warranty. Use at your own risk.
+
+Questo modulo richiede di collegare un accessorio periferico al tuo dispositivo. Non funzionerà senza.
+:::
+
+## Hardware
+
+Per navigare attraverso i messaggi e selezionarne uno, è necessario un certo tipo di di hardware collegato al dispositivo. Attualmente, il modulo è testato con un codificatore rotante generico, con logica a 3 pulsanti su/giù/pressione e diverse Tastiere I2C. Ulteriori metodi di input saranno aggiunti in futuro.
+
+### Keymatrix I2C
+
+Questo è stato testato con la tastiera RAK14004. Una pressione del tasto invierà immediatamente il messaggio allegato al numero del pulsante. I pulsanti sono numerati in alto a sinistra e in basso a destra sui tasti. Quindi premendo il pulsante in alto a sinistra verrà inviato il primo messaggio. Il secondo pulsante invierà il secondo messaggio e così via.
+
+**Inghippo:** alla matrice di tasti RAK 3x4 manca la quarta riga di pulsante durante la scansione, quindi devi saltare ogni quarto slot di messaggio. Il pulsante 1 invia il messaggio 1 e il pulsante 4 invierà il messaggio 5.
+Esempio: 1|2|3||5|6|7||9|10|11||13|14|15 - gli slot 4, 8 e 12 non possono essere usati. Il concetto è che alcuni slot sono "vuoti" e non mappati ai pulsanti.
+
+### CardKB
+
+Il CardKB è completamente supportato in modalità testo libero e modalità selezione. Utilizzare SU/GIU/INVIO per selezionare un messaggio predefinito e inviarlo. Per un messaggio di testo libero, basta digitarlo e premere INVIO per inviarlo.
+
+Se non si desidera trasmettere il messaggio di testo libero, è possibile utilizzare CardKB per inviarlo a un nodo specifico. Basta premere TAB e selezionare il nodo di destinazione con i tasti DESTRA/SINISTRA. Il messaggio verrà inviato al nodo con il nome e il numero del nodo corrispondenti. Il nodo di destinazione verrà ricordato per il tuo prossimo messaggio.
+
+### 3 Pulsanti su/giù e codificatore rotativo RAK
+
+Utilizzare SU/GIU/INVIO per selezionare un messaggio predefinito e inviarlo.
+
+### Scansiona e Seleziona
+
+Utilizzare un singolo pulsante per selezionare e inviare messaggi predefiniti.
+
+#### Configurazione
+
+- Collega un pulsante a pressione normalmente aperto tra massa e un pin GPIO che preferisci
+- Configura il modulo messaggi predefiniti
+  - Imposta [Sorgente di ingresso](#input-source) a `scanAndSelect`
+  - Imposta [Input Broker Pin Press](#input-broker-pin-press) alla GPIO scelta
+  - Definisci un [elenco di messaggi preimpostati](#messages)
+
+#### Utilizzo
+
+- Pressione breve: scorrere i messaggi
+- Pressione prolungata: invia il messaggio attualmente evidenziato al tuo canale principale
+
+### Encoder Rotativo
+
+Meshtastic supporta encoder rotativi cablati come dispositivi di ingresso.
+
+Avrai bisogno di un codificatore rotativo generico. I tipi elencati di seguito hanno cinque piedini in cui due sono dedicati ad un'azione "pressione", ma qualsiasi altro tipo probabilmente farà al caso. È inoltre possibile utilizzare una versione a tre piedini, in cui l'azione "pressione" dovrebbe essere cablata da un interruttore indipendente.
+
+<!--- TODO sposta i link alla sezione hardware --->
+
+- [Amazon link](https://www.amazon.com/Rotary-Encoder-Washers-Digital-Potentiometer/dp/B07Y619CZR/ref=sr_1_21?keywords=rotary+encoder&qid=1642317807&sprefix=rotary+enco%2Caps%2C186&sr=8-21)
+- [Amazon.DE link](https://www.amazon.de/-/en/sourcing-Degree-Rotary-Encoder-Digital/dp/B07RLZPX5K/ref=sr_1_12?keywords=rotary+encoder&qid=1642320025&sprefix=rotary%2Caps%2C105&sr=8-12)
+- [Aliexpress link1](https://www.aliexpress.com/item/32992227812.html?spm=a2g0o.productlist.0.0.1afe21a50SLvi2&algo_pvid=a19c4182-08aa-406d-bfdf-132582ef5ebb&algo_exp_id=a19c4182-08aa-406d-bfdf-132582ef5ebb-23&pdp_ext_f=%7B%22sku_id%22%3A%2266940265509%22%7D&pdp_pi=-1%3B1.66%3B-1%3B-1%40salePrice%3BUSD%3Bsearch-mainSearch)
+- [Aliexpress link2](https://www.aliexpress.com/item/32946444853.html?spm=a2g0o.productlist.0.0.1afe21a50SLvi2&algo_pvid=a19c4182-08aa-406d-bfdf-132582ef5ebb&aem_p4p_detail=2022011523263276283624312400022072680&algo_exp_id=a19c4182-08aa-406d-bfdf-132582ef5ebb-6&pdp_ext_f=%7B%22sku_id%22%3A%2266223434642%22%7D&pdp_pi=-1%3B1.91%3B-1%3B-1%40salePrice%3BUSD%3Bsearch-mainSearch)
+- [Aliexpress link3](https://www.aliexpress.com/item/10000056483250.html?spm=a2g0o.productlist.0.0.1afe21a50SLvi2&algo_pvid=a19c4182-08aa-406d-bfdf-132582ef5ebb&algo_exp_id=a19c4182-08aa-406d-bfdf-132582ef5ebb-9&pdp_ext_f=%7B%22sku_id%22%3A%2220000000116682147%22%7D&pdp_pi=-1%3B2.51%3B-1%3B-1%40salePrice%3BUSD%3Bsearch-mainSearch)
+
+Collega il tuo encoder rotativo come segue. L'encoder rotativo ha due file di piedini. Una delle file contiene due piedini, l'altra contiene tre piedini. Vista laterale inferiore:
+
+```text
+  B o --- o PRESSIONE
+GND o | |
+  A o --- o GND
+```
+
+I due piedini sono per rilevare l'azione di pressione. Collegare uno dei due a MASSA e l'altro a un pin GPIO. (Uno vale l'altro.) Chiamiamo le porte collegate 'PRESS'.
+
+I tre piedini sono per rilevare l'azione di rotazione. Collega il piedino centrale a MASSA e quelli sul lato ai pin GPIO. Chiamiamo queste porte 'A' e 'B', secondo lo schema sottostante.
+
+```text
+A   --||
+GND --||]========
+B   --||
+```
+
+Pin GPIO raccomandati per il collegamento di un encoder rotativo.
+
+- TTGO LoRa V1:
+  - A - GPIO-22
+  - B - GPIO-23
+  - PRESS - GPIO-21
+
+Esiste un caso di riferimento di progettazione 3D che utilizza l'encoder rotante per TTGO LoRa V1:
+[Caso per TTGO-ESP32-LORA-OLED-v1.0 con encoder rotante](https://www.thingiverse.com/thing:5178495)
+
+## Esempi
+
+- Collega un dispositivo periferico compatibile. Prendi nota dei numeri GPIO che utilizzi, in quanto saranno utilizzati nella fase seguente.
+
+:::note
+Sostituisci ogni `GPIO` (x3) sotto con i numeri GPIO dalla tua configurazione hardware.
+:::
+
+```shell title="Canned Message Module - Required Rotary Encoder Module Settings"
+meshtastic --set canned_message.inputbroker_pin_a GPIO
+meshtastic --set canned_message.inputbroker_pin_b GPIO
+meshtastic --set canned_message.inputbroker_pin_press GPIO
+meshtastic --set canned_message.inputbroker_event_cw UP
+meshtastic --set canned_message.inputbroker_event_ccw DOWN
+meshtastic --set canned_message.inputbroker_event_press SELECT
+meshtastic --set canned_message.rotary1_enabled True
+```
+
+Ecco fatto! Con un encoder rotante funzionante e abilitato, sei pronto per iniziare a configurare il modulo di messaggi predefiniti.

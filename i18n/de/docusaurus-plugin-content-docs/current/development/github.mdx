@@ -1,0 +1,53 @@
+---
+id: github
+title: Github
+sidebar_label: Github
+sidebar_position: 2
+description: Wie das Meshtastic Projekt Github nutzt
+---
+
+Das Meshtastic Projekt nutzt Github für sein Versionskontrollsystem,
+[Diskussionsforen](https://github.com/orgs/meshtastic/discussions) und die Problemverfolgung.
+
+[Beiträge](/docs/contributing/) sind von jedem willkommen, und wir haben eine [Meshtastic Organisation](https://github.com/orgs/meshtastic),
+um die übergreifenden Einstellungen für unsere über 100 Repositories zu verwalten und den Zugriff zu regeln, den Release-Manager, CI/CD-Administratoren, Mitglieder des Sicherheitsteams und Hauptbeitragende zur Erfüllung ihrer Aufgaben benötigen.
+
+## Github Aktionen
+
+Wir verwenden GitHub Aktionen für CI (Testen) und CD (Release) in vielen Projekten (z. B. Firmware, Web, Android, Python, OpenWRT). Github bietet 20 Runner Plätze zum Ausführen von Aktionen auf seiner Infrastruktur. Wir ergänzen die Kapazität durch die Ausführung selbstgehosteter Runner.
+
+### Anforderung an selbstgehostete Runner
+
+Wenn Sie daran interessiert sind, Runner beizutragen und die unten aufgeführten Anforderungen erfüllen, senden Sie uns bitte eine Nachricht im #hosting Kanal auf Discord.
+
+#### Hardwareanforderungen [für 1 Runner]
+
+- Kann einen Build innerhalb von 10 Minuten ausführen (d. h. CPU weniger als 7 Jahre alt)
+- Mindestens 2 CPUs, mindestens 4 GB RAM, aber 4+ CPU/8 GB+ RAM bevorzugt
+- Mindestens 15 GB Festplatte, 30+ GB bevorzugt
+
+#### Firewall Anforderungen
+
+- Download und Upload über Port 80 und 443 möglich
+
+#### Aktuelle Netzwerknutzung
+
+- 20 GB eingehenden Datenverkehr pro Tag
+- 1 GB ausgehenden Datenverkehr pro Tag
+
+#### Betriebssystem
+
+- Wir haben modernes Ubuntu und Fedora getestet
+- Andere \*nix Distributionen, die die Ausführung von Podman Abbildern unterstützen, funktionieren jedoch wahrscheinlich
+
+#### Sicherheitsanforderungen
+
+- Regelmäßige Betriebssystem-Patches 
+- Einzelnes nicht-Root Benutzerkonto zum Ausführen des Podman Containers
+- Richtlinien und Sicherheitsmaßnahmen zum Schutz von Geheimnissen und zum Erstellen von Artefakten
+
+#### Zuverlässigkeitsanforderungen
+
+Ein fehlgeschlagener Job aufgrund eines Runner Fehlers ist für die Entwickler sehr ärgerlich, und nur wenige können die fehlgeschlagenen Jobs neu starten. Daher ist Zuverlässigkeit sehr wichtig. 🙂
+Früher hatten wir zu Hause Desktop-PCs verwendet, aber es kam immer wieder zu Netzwerkausfällen, Stromausfällen, Umfunktionierungen der Rechner, überfüllten Festplatten usw.
+Daher bevorzugen wir Rechenzentrum basiertes Hosting mit zuverlässiger Kühlung, Stromversorgung und Netzwerk.

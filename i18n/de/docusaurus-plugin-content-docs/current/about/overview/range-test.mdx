@@ -1,0 +1,165 @@
+---
+id: range-test
+title: Reichweitentest
+slug: /overview/range-tests
+sidebar_label: Reichweitentest
+sidebar_position: 4
+description: Entdecken Sie die beeindruckende Reichweite von Meshtastic mit detaillierten Geräteeinstellungen um Rekorde an Land und in der Luft zu erreichen.
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+<Tabs
+defaultValue="ground"
+values={[
+{label: 'Ground to Ground', value: 'ground'},
+{label: 'Ground to Air', value: 'air'},
+]}>
+
+<TabItem value="ground">
+
+#### Aktueller Überland Rekord: 331 km
+
+- **Reichweite:** 331 km (205 Meilen)
+- **Rekordhalter:** _MartinR7_ & _alleg_
+- **Quelle:** [reddit](https://www.reddit.com/r/meshtastic/comments/1fnduwo/mountain_to_mountain_331_km/)
+
+<h5 id="modem-settings-331">Modem-Einstellungen</h5>
+
+Voreinstellung VERY_LONG_SLOW
+
+- **Frequenz:** 868 MHz
+- **Bandbreite:** 62,5
+- **Spreizfaktor:** 12
+- **Fehlerkorrektur:** 4/8
+
+<h5 id="node-a-331">Knoten A</h5>
+
+- **Gerät:** [RAK4631 Basis](/docs/hardware/devices/rak-wireless/wisblock/core-module/?rakcore=RAK4631)+[RAK19003](/docs/hardware/devices/rak-wireless/wisblock/base-board/?rakbase=RAK19003)+[RAK1906](/docs/hardware/devices/rak-wireless/wisblock/peripherals/?rakmodules=Sensors#rak1906-environment-sensor)+[INA219](/docs/configuration/module/telemetry/#currently-supported-sensor-types)
+- **Firmware-Version:** 2.3.6
+- **Antenne:** 55 cm Kollinear 868 MHz (AliExpress)
+
+<h5 id="node-b-331">Knoten B</h5>
+
+- **Gerät:** [RAK4631 Basis](/docs/hardware/devices/rak-wireless/wisblock/core-module/?rakcore=RAK4631)+[RAK19003](/docs/hardware/devices/rak-wireless/wisblock/base-board/?rakbase=RAK19003)+[RAK1901](/docs/hardware/devices/rak-wireless/wisblock/peripherals/?rakmodules=Sensors#rak1901-temperature-and-humidity-sensor)
+- **Firmware-Version:** 2.4.2
+- **Antenne:** RAKARJ17
+
+<img src="/img/records/MartinR7-XARC.webp" alt="Node A" />
+
+<img src="/img/records/MartinR7-Sneznik.webp" alt="Node B" />
+
+<img src="/img/records/MartinR7-map.webp" alt="Map" />
+
+<img src="/img/records/MartinR7-map2.webp" alt="Map2" />
+
+<img src="/img/records/MartinR7-path.webp" alt="Path" />
+
+<img src="/img/records/MartinR7-message-trace.webp" alt="Trace" />
+
+#### Letzter Überland Rekord: 254 km
+
+- **Reichweite:** 254 km (158 Meilen)
+- **Rekordhalter:** _kboxlabs_
+- **Quelle:** [Meshtastic Discourse (Archiv)](https://web.archive.org/web/20250102052417/https://meshtastic.discourse.group/t/practical-range-test-results/692/137)
+
+<h5 id="modem-settings-254">Modem-Einstellungen</h5>
+
+Voreinstellung LONG_FAST
+
+- **Frequenz:** 915 MHz
+- **Bandbreite:** 250
+- **Spreizfaktor:** 11
+- **Fehlerkorrektur:** 4/8
+
+<h5 id="node-a-254">Knoten A</h5>
+
+- **Gerät:** [RAK4631 Basis](/docs/hardware/devices/rak-wireless/wisblock/core-module/?rakcore=RAK4631) mit [RAK 5005-O Trägerplatine](/docs/hardware/devices/rak-wireless/wisblock/base-board/?rakbase=RAK5005-O)
+- **Firmware-Version:** 2.1.17
+- **Antenne:** 902-928 MHz 5,8 dBi Slinkdsco Outdoor
+
+<h5 id="node-b-254">Knoten B</h5>
+
+- **Gerät:** [RAK4631 Basis](/docs/hardware/devices/rak-wireless/wisblock/core-module/?rakcore=RAK4631) mit [RAK 19003 Mini-Trägerplatine](/docs/hardware/devices/rak-wireless/wisblock/base-board/?rakbase=RAK19003)
+- **Firmware-Version:** 2.1.18
+- **Antenne:** Standard LoRa 915 MHz 60 mm 2 dBi Omnidirektional
+
+<img src="/img/records/kboxlabs_sender.webp" alt="Sending Node" />
+
+<img src="/img/records/kboxlabs_receiver.webp" alt="Receiving Node" />
+
+<img src="/img/records/kboxlabs_map.webp" alt="Geographic Locations" />
+
+#### Letzter Rekord 166 km
+
+- **Reichweite:** 166 km (103 Meilen)
+- **Rekordhalter:** _PuzzledPfannke_
+- **Quelle:** [Meshtastic Discourse (Archiv)](https://web.archive.org/web/20250102052417/https://meshtastic.discourse.group/t/practical-range-test-results/692/44)
+
+<h5 id="modem-settings-166">Modem-Einstellungen</h5>
+
+- **Frequenz:** 868 MHz
+- **Bandbreite:** 125
+- **Spreizfaktor:** 12
+- **Fehlerkorrektur:** 4/8
+
+<h5 id="node-a-166">Knoten A</h5>
+
+- **Gerät:** [LILYGO TTGO T-Beam mit SX1262](/docs/hardware/devices/lilygo/tbeam/?t-beam=sx1262)
+- **Firmware-Version:** 1.2
+- **Antenne:** [868 MHz 5 dBi Antenne](https://ivent.co.nz/product/category/1000/868mhz%205dbi%20antenna%20193mm%20black%20sma%20%28m%29/38646)
+
+<h5 id="node-b-166">Knoten B</h5>
+
+- **Gerät:** [LILYGO TTGO T-Beam mit SX1262](/docs/hardware/devices/lilygo/tbeam/?t-beam=sx1262)
+- **Firmware-Version:** 1.2
+- **Antenne:** [868 MHz Vertikal 6 dBi](https://ivent.co.nz/product/category/1000/868mhz%20vertical%206dbi%20antenna/38606)
+
+![Topographische Karte](/img/records/topographical_map.webp)
+
+![Knoten A](/img/records/node_a.webp)
+
+![Knoten B](/img/records/node_b.webp)
+
+<h5>Verwendete Ressourcen</h5>
+
+- http://www.heywhatsthat.com
+
+</TabItem>
+
+<TabItem value="air">
+
+#### Aktueller Luftrekord: 206 km
+
+- **Reichweite:** 206 km (128 Meilen)
+- **Rekordhalter:** _StarWatcher, CVR, rook, kboxlabs_
+- **Quelle:** [Meshtastic Discourse (Archiv)](https://web.archive.org/web/20250102052417/https://meshtastic.discourse.group/t/practical-range-test-results/692/130)
+
+<h5 id="modem-settings-206">Modem-Einstellungen</h5>
+
+Voreinstellung LONG_FAST
+
+- **Frequenz:** 915 MHz
+- **Bandbreite:** 250
+- **Spreizfaktor:** 11
+- **Fehlerkorrektur:** 4/8
+
+<h5 id="node-a-206">Knoten A</h5>
+
+- **Gerät:** [LILYGO TTGO T-Beam](/docs/hardware/devices/lilygo/tbeam/?t-beam=1.1)
+- **Firmware-Version:** 2.1.10
+- **Antenne:** mit gelieferte Antenne
+
+<h5 id="node-b-206">Knoten B</h5>
+
+- **Gerät:** [LILYGO TTGO T-Beam](/docs/hardware/devices/lilygo/tbeam/?t-beam=1.1)
+- **Firmware-Version:** 2.1.10 (geändert um GPS im Flugmodus zu verwenden)
+- **Antenne:** mit gelieferte Antenne
+
+<img src="/img/records/Devices-Balloon.webp" alt="Nodes and Balloon" />
+
+<img src="/img/records/app-screenshots.webp" alt="App Screenshots" />
+
+</TabItem>
+</Tabs>

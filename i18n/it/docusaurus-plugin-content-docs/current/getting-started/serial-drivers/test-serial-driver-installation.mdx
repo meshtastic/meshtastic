@@ -1,0 +1,132 @@
+---
+id: test-serial-driver-installation
+title: Test Serial Driver Installation
+sidebar_label: Test Serial Driver Installation
+sidebar_position: 3
+description: Istruzioni per testare l'installazione del driver seriale su Linux, macOS o Windows.
+---
+
+import Link from "@docusaurus/Link";
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+import { Icon } from "@iconify/react";
+
+### Prova Installazione Del Driver Seriale
+
+È possibile verificare che si disponga di un cavo dati adeguato (piuttosto che di un cavo a sola ricarica) e che i driver appropriati per il sistema siano installati eseguendo il seguente test:
+
+<Tabs
+  groupId="operating-system"
+  defaultValue="windows"
+  values={[
+    {
+      label: (
+        <>
+          <Icon icon="mdi:tux" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Linux
+        </>
+      ),
+      value: "linux",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:apple" height="1.5rem" style={{ marginRight: "0.25rem" }} /> macOS
+        </>
+      ),
+      value: "macos",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:microsoft" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Windows
+        </>
+      ),
+      value: "windows",
+    },
+  ]}>
+
+<TabItem value="linux">
+
+#### Linux
+
+1. Collega il tuo dispositivo Meshtastic alla tua porta USB
+
+2. Apri un **Terminal** e inserisci il seguente comando:
+
+   ```shell
+   lsusb
+   ```
+
+3. Dovresti vedere qualcosa come:
+
+   ```shell
+   ID xxxx:xxxx Silicon Labs CP210x UART Bridge
+   # o
+   ID xxxx:xxxx QinHeng Electronics USB Single Serial
+   # o
+   ID xxxx:xxxx Adafruit WisCore RAK4631 Board
+   ```
+
+</TabItem>
+<TabItem value="macos">
+
+#### macOS
+
+1. Entra nella sezione `Menu Apple  > Informazioni su questo Mac > Maggiori informazioni > Report di sistema... > Hardware > USB`.
+2. Dovresti vedere qualcosa di simile a una delle seguenti voci:
+
+- `CP210X USB to UART Bridge Controller`
+- `CH9102 USB to UART Bridge Controller`
+- `WisCore RAK4631 Board`
+- `USB Single Serial`
+
+</TabItem>
+<TabItem value="windows">
+
+#### Windows
+
+1. Entra in `Device Manager > Porte (COM & LPT)`
+2. Dovresti vedere qualcosa di simile a una delle seguenti voci:
+
+- `Silicon Labs CP210X USB to UART Bridge (COM5)`
+- `Silicon Labs CH9102 USB to UART Bridge (COM5)`
+- `USB-Enhanced-SERIAL CH9102 (COM5)`
+- `USB Serial Device (COM5)`
+
+</TabItem>
+</Tabs>
+
+:::info
+
+Se non riesci a vedere il tuo dispositivo:
+
+- Assicurati che il tuo cavo non sia solo per la ricarica, ma anche per il [trasferimento di dati](/docs/getting-started#verify-data-cable).
+- È possibile che tu abbia bisogno di [reinstallare il driver seriale USB](/docs/getting-started/serial-drivers).
+
+:::
+
+## Flash del Firmware
+
+Dopo aver completato i passaggi precedenti, è ora possibile flashare il firmware Meshtastic sul dispositivo. Per procedere, seleziona il tipo di dispositivo appropriato per il tuo dispositivo.
+
+<div className="indexCtasBody">
+  <div className="split-container">
+    <div className="split-item">
+      <Link
+        className={"button button--outline button--lg cta--button"}
+        to={"/docs/getting-started/flashing-firmware/esp32/"}
+      >
+        Flash del Firmware ESP32
+      </Link>
+    </div>
+
+<div className="split-item">
+      <Link
+        className={"button button--outline button--lg cta--button"}
+        to={"/docs/getting-started/flashing-firmware/nrf52/"}
+      >
+        Flash Firmware per nRF52/RP2040
+      </Link>
+    </div>
+  </div>
+</div>

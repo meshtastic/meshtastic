@@ -1,0 +1,131 @@
+---
+id: radio-settings
+title: Impostazioni Radio
+slug: /overview/radio-settings
+sidebar_label: Impostazioni Radio
+sidebar_position: 1
+description: Massimizza il potenziale del dispositivo Meshtastic con istruzioni dettagliate per le impostazioni radio, comprese bande di frequenza, velocità di dati e opzioni di crittografia.
+---
+
+import { FrequencyCalculator } from "/src/components/tools/FrequencyCalculator";
+import QRCode from "@site/docs/blocks/_qr-code.mdx";
+
+:::info
+Meshtastic **non** è LoRaWAN, Helium o TTN (TheThingsNetwork). Meshtastic utilizza l'intera gamma di frequenze dello spettro designata per la tecnologia LoRa per regione. Ciò consente diverse centinaia di possibili canali di frequenza nella sola regione degli Stati Uniti.
+:::
+
+:::info
+I limiti di potenza saranno generalmente eliminati nel software se `is_licensed` è impostato a `true`. Vedi [Modalità radioamatore (HAM)](/docs/faq#amateur-radio-ham) per maggiori informazioni.
+:::
+
+<div class="no-print">
+  ## Calcolatore Slot Frequenza
+
+<FrequencyCalculator />
+</div>
+
+## Banda Di Frequenza Europea
+
+I paesi dell'UE saranno in genere coperti dalla direttiva sulle apparecchiature radio ([2014/53/UE](http://data.europa.eu/eli/dir/2014/53/2023-10-01)) e dalle successive modifiche, che sono poi introdotte nelle leggi locali. Informazioni utili su questo si trovano [qui](https://single-market-economy.ec.europa.eu/single-market/european-standards/harmonised-standards/radio-equipment_en).
+Le bande sotto indicate sono state selezionate in base alla potenza massima e al ciclo di funzionamento disponibile (duty cycle). Potrebbe essere possibile utilizzare altre bande di frequenza per applicazioni specifiche, ma queste non sono attualmente supportate "out of the box".
+
+### 433 MHz
+
+La potenza massima consentita per l'Europa è +10 dBm ERP ([potenza radiata effettiva](https://en.wikipedia.org/wiki/Effective_radiated_power)).
+
+La gamma della banda è da 433 a 434 MHz.
+
+Ci sono quattro slot di frequenza definiti con la radio standard preimpostata `LongFast`. Dopo il ripristino di fabbrica la radio sarà impostata su slot di frequenza 4 con una frequenza centrale di 433.875 MHz.
+
+### 868 MHz
+
+La potenza massima consentita per l'Europa è +27 dBm ERP ([potenza radiata effettiva](https://en.wikipedia.org/wiki/Effective_radiated_power)).
+
+La gamma della banda è da 869.40 a 869.65 MHz. Questo è inferiore alla banda 863-870 MHz definita come SRD ([Dispositivi a corto raggio](https://www.etsi.org/technologies/short-range-devices)) Band, ma consente un ERP più elevato e un ciclo di funzionamento del 10%.
+
+Ci sono quattro slot di frequenza definiti con la radio standard preimpostata `LongFast`. Dopo il ripristino di fabbrica la radio sarà impostata su slot di frequenza 1 con una frequenza centrale di 869.525 MHz.
+
+Vale la pena notare che 868 MHz è generalmente la banda di frequenza più popolare per Meshtastic in Europa.
+
+## Bande Di Frequenza Nord America
+
+### 915 MHz (banda ISM)
+
+La potenza di uscita massima per il Nord America è +30 dBm ERP ([potenza radiata effettiva](https://en.wikipedia.org/wiki/Effective_radiated_power)).
+
+La gamma della banda è da 902 a 928 MHz.
+
+In Nord America, le slot di frequenza disponibili dipendono dall'impostazione della larghezza di banda, che è inclusa nella preset radio selezionata. La Preset standard, LongFast, fornisce 104 slot di frequenza. Dopo un reset di fabbrica, la radio predefinita per LongFast con uno Slot di Frequenza di 0, che si traduce in Slot 20 (centrato a 906.875 MHz) basato sull'algoritmo di hashing del canale.
+
+## Data Rate
+
+### Data Rate
+
+Nella configurazione di uno slot di frequenza sono disponibili varie opzioni di data-rate e sono inversamente proporzionali alla gamma teorica dei dispositivi.
+
+- **Spreading Factor (SF)** - Quanto "diffondiamo" i nostri dati nel tempo.
+  - Ogni passo in su nel Fattore di Diffusione raddoppia il tempo di trasmissione per trasmettere.
+  - Ogni passo in su in Spreading Factor aggiunge circa 2,5 dB di link budget extra.
+- **Larghezza di banda** - Quanto grande di una fetta dello spettro che usiamo.
+  - Ogni raddoppio della larghezza di banda è quasi 3dB in meno di link budget.
+  - Larghezze di banda inferiori a 31 possono essere instabili a meno che non si dispone di un oscillatore a cristallo di alta qualità.
+- **Rate Codifica** - Quanto ridondanza codifichiamo per resistere al rumore.
+  - L'aumento del tasso di codifica aumenta l'affidabilità mentre diminuisce la velocità dei dati.
+  - 4/5 - 1,25x overhead
+  - 4/6 - 1,5x overhead
+  - 4/7 - 1,75x overhead
+  - 4/8 - 2x overhead
+
+### Preset
+
+Abbiamo otto preset radio LoRa. Queste sono le impostazioni più comuni e si sono dimostrate funzionare bene:
+
+|          Radio Preset                |   Nome Preset   | Data-rate  | SF / simboli | Tasso Di Codifica | Larghezza di banda   | Link Budget |
+| :----------------------------------: | :-------------: | :--------: | :----------: | :---------------: | :------------------: | :---------: |
+|       Distanza Breve / Turbo         |  Short Turbo    | 21,88 kbps |  7 / 128     |      4/5          |      500 kHz[^1]     |   140dB     |
+|       Distanza Breve / Veloce        |  Short Fast     | 10,94 kbps |  7 / 128     |      4/5          |       250 kHz        |   143dB     |
+|       Distanza Breve / Lento         |  Short Slow     | 6,25 kbps  |  8 / 256     |      4/5          |       250 kHz        |  145,5dB    |
+|       Distanza Media / Veloce        |  Medium Fast    | 3,52 kbps  |  9 / 512     |      4/5          |       250 kHz        |   148dB     |
+|       Distanza Media / Lento         |  Medium Slow    | 1,95 kbps  |  10 / 1024   |      4/5          |       250 kHz        |  150,5dB    |
+|      Distanza Grande / Veloce        |  Long Fast      | 1,07 kbps  |  11 / 2048   |      4/5          |       250 kHz        |   153dB     |
+| Distanza Grande / Velocità Moderata  | Long Moderate   | 0,34 kbps  |  11 / 2048   |      4/8          |       125 kHz        |   156dB     |
+|      Distanza Grande / Lento         |  Long Slow      | 0,18 kbps  |  12 / 4096   |      4/8          |       125 kHz        |  158,5dB    |
+
+:::note
+Il link budget utilizzato da questi calcoli assume una potenza di trasmissione di 22dBm e un'antenna con guadagno 0dB. Regola le tue ipotesi di link budget in base ai tuoi dispositivi effettivi. La velocità dei dati in questa tabella è il massimo teorico ma non tiene conto delle intestazioni dei pacchetti, degli hop e delle ritrasmissioni. Calcoli basati sui dati della calcolatrice ufficiale [Semtech LoRa](https://www.semtech.com/design-support/lora-calculator).
+:::
+
+![link budget vs data rate plot](/img/about/link-budget-vs-data-rate.webp)
+
+### Impostazioni Personalizzate
+
+Le impostazioni personalizzate possono essere applicate utilizzando il [software supportato](/docs/software).
+
+Dopo aver applicato le impostazioni, è necessario riavviare il dispositivo. Dopo il riavvio della console, genererà una nuova chiave crittografica e dovrai condividere il codice QR[^2] appena generato o l'URL a tutti gli altri dispositivi.
+
+[^2]: <QRCode />
+
+Alcune impostazioni di esempio:
+
+| Data-rate  | SF / simboli | Tasso Di Codifica | Larghezza di banda | Link Budget | Note                                                                              |
+| :--------: | :----------: | :---------------: | :----------------: | :---------: | :-------------------------------------------------------------------------------- |
+| 37,50 kbps |   6 / 64     |      4/5          |     500 kHz        |   129dB     | Massima velocità possibile                                                        |
+| 3,125 kbps |  8 / 256     |      4/5          |     125 kHz        |   143dB     |                                                                                   |
+| 1,953 kbps |  8 / 256     |      4/8          |     125 kHz        |   143dB     |                                                                                   |
+| 1,343 kbps |  11 / 2048   |      4/8          |     500 kHz        |   145dB     |                                                                                   |
+| 1,099 kbps |  9 / 512     |      4/8          |     125 kHz        |   146dB     |                                                                                   |
+| 0,814 kbps |  10 / 1024   |      4/6          |     125 kHz        |   149dB     |                                                                                   |
+| 0,610 kbps |  10 / 1024   |      4/8          |     125 kHz        |   149dB     |                                                                                   |
+| 0,488 kbps |  11 / 2048   |      4/6          |     125 kHz        |   152dB     |                                                                                   |
+| 0,073 kbps |  12 / 4096   |      4/5          |     31 kHz         |   160dB     | Due volte la portata e/o la copertura di "Long Slow", bassa resilienza al rumore  |
+| 0,046 kbps |  12 / 4096   |      4/8          |     31 kHz         |   160dB     | Due volte la portata e/o la copertura di "Long Slow", alta resilienza al rumore   |
+
+Il link budget utilizzato da questi calcoli assume una potenza di trasmissione di 17dBm e un'antenna con guadagno 0dB. Regola le tue ipotesi di link budget in base ai tuoi dispositivi effettivi.
+
+Queste impostazioni dello slot di frequenza potrebbero non essere state testate. Usa a tua discrezione. Condividi sulla pagina [Discussioni Meshtastic](https://github.com/orgs/meshtastic/discussions) con i tuoi successi o fallimenti.
+
+## Crittografia
+
+La chiave pre-condivisa (PSK) utilizzata dai dispositivi può essere una sequenza AES128 o AES256. In alternativa, la crittografia può essere disattivata, il che può essere utile se si opera con una licenza da radio amatore.
+
+[^1]: Short Turbo è il preset più veloce e l'unico con larghezza di banda di 500kHz. Non è legale utilizzare in tutte le regioni a causa di questa più ampia larghezza di banda.

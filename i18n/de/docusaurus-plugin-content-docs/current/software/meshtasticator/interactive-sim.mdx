@@ -1,0 +1,129 @@
+---
+id: interactive-sim
+title: Handbuch zur Verwendung des interaktiven Simulators
+sidebar_label: Interaktiver Ereignissimulator
+sidebar_position: 2
+description: Eine Gebrauchsanleitung zum Simulieren mehrerer Meshtastic-Instanzen mit TCP-basierter Kommunikation und konfigurierbaren Pfadverlustmodellen.
+---
+
+Das Python-Skript _`interactiveSim.py`_ verwendet die [native Linux-Anwendung von Meshtastic](https://meshtastic.org/docs/software/linux/installation/), um mehrere Instanzen der Gerätesoftware zu simulieren. Diese Instanzen kommunizieren über das Skript per TCP und simulieren den LoRa Chip. Der Simulator leitet Nachrichten vom Absender an alle Knoten in Reichweite weiter, basierend auf ihren simulierten Standorten und dem ausgewählten Verlustmodell (siehe [Verlustmodell](#pathloss-model)). **Hinweis:** Paketkollisionen werden noch nicht simuliert.
+
+## Anwendung
+
+1. Klonen oder laden Sie das Repository herunter und navigieren Sie zum Ordner Meshtasticator.
+2. (Optional) Erstellen einer virtuellen Umgebung.
+3. Abhängigkeiten installieren:
+
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+Der Simulator führt die native Linux-Anwendung der Meshtastic Firmware aus. Du kannst entweder [PlatformIO](https://meshtastic.org/docs/development/firmware/build) oder [Docker](https://meshtastic.org/docs/software/linux/usage/#usage-with-docker) verwenden, um die Firmware auszuführen:
+
+### Verwenden von PlatformIO
+
+Wählen Sie `nativ` und klicken Sie auf `Erstellen`. Suchen Sie die generierte Binärdatei, wahrscheinlich in _`firmware/.pio/build/native/`_.
+
+Kopieren Sie die Datei `program` in das Verzeichnis, in dem Sie das Python-Skript ausführen möchten, oder geben Sie den Pfad als Argument mit `-p` an:
+
+```bash
+python3 interactiveSim.py 3 -p /home/User/Meshtastic-device/.pio/build/native/program
+```
+
+### Docker verwenden
+
+Der Simulator zieht ein Docker-Image, das die neueste Meshtastic Firmware erstellt.
+
+Stellen Sie sicher, dass das Docker SDK für Python installiert ist:
+
+```bash
+pip3 install docker
+```
+
+Stellen Sie sicher, dass der Docker Dämon oder die Desktop-App ausgeführt wird. Verwenden Sie das Argument `-d`, um den Simulator zu starten:
+
+```bash
+python3 interactiveSim.py 3 -d
+```
+
+## Simulator ausführen
+
+Um den interaktiven Simulator auszuführen:
+
+```bash
+python3 interactiveSim.py [nrNodes] [-p <full-path-to-program>]
+```
+
+- **`nrNodes`** (optional): Anzahl der zu startenden Instanzen. Jede Instanz öffnet ein Terminal und einen TCP-Port (beginnend bei 4403).
+- Wenn Sie die Anzahl der Knoten angeben, werden diese zufällig platziert. Andernfalls können Sie Knoten manuell auf einem Diagramm platzieren.
+- Nachdem Sie Knoten platziert haben, können Sie deren [Rolle](https://meshtastic.org/docs/settings/config/device#role), Sprungweite, Höhe (Elevation) und Antennengewinn konfigurieren. Konfigurationen werden automatisch gespeichert.
+
+![Konfigurationshinweis](/img/software/meshtasticator/configNode.webp)
+
+## Befehle während der Simulation
+
+Sobald die Simulation beginnt, können Sie Befehle ausgeben (oder ein vordefiniertes [Skript](#usage-with-script) verwenden), um Nachrichten zwischen Knoten zu senden. Verwenden Sie `Plot`, um Nachrichtenrouten und Sendezeitstatistiken zu visualisieren:
+
+- Geben Sie eine Nachrichten-ID ein, um ihre Route anzuzeigen.
+- Bewegen Sie den Mauszeiger über die Bögen, um Informationen zu erhalten, und klicken Sie, um die Überlagerung zu entfernen.
+- Zwei Diagramme zeigen die Kanalauslastung (einminütiges Fenster) und die Sendezeitnutzung (stündliches Fenster) für jeden Knoten.
+
+![Routenplan 2](/img/software/meshtasticator/route_plot-2.webp)
+
+## Liste der Befehle
+
+- **`broadcast <fromNode> <txt>`**: Senden Sie einen Broadcast vom Knoten _fromNode_ mit dem Text _txt_.
+- **`DM <fromNode> <toNode> <txt>`**: Senden Sie eine Direktnachricht vom Knoten _fromNode_ zum Knoten _toNode_ mit dem Text _txt_.
+- **`traceroute <fromNode> <toNode>`**: Senden Sie eine Traceroute Anfrage vom Knoten _fromNode_ zum Knoten _toNode_.
+- **`reqPos <fromNode> <toNode>`**: Senden Sie eine Standortanfrage vom Knoten _fromNode_ an den Knoten _toNode_.
+- **`ping <fromNode> <toNode>`**: Senden Sie einen Ping vom Knoten _fromNode_ zum Knoten _toNode_.
+- **`remove <id>`**: Entfernt die Knoten-ID aus der aktuellen Simulation.
+- **`Knoten <id0> [id1 usw.]`**: Zeigt die Knotenliste an, wie sie von den Knoten _id0_, _id1_ usw. gesehen wird.
+- **`plot`**: Zeichnen Sie die Routen der gesendeten Nachrichten und die Sendezeitstatistik auf.
+- **`exit`**: Beenden Sie den Simulator, ohne Routen zu planen.
+
+## Verwendung mit Skript
+
+Ändern Sie die `try` Klausel in _`interactiveSim.py`_, um Nachrichten vorzudefinieren. Führen Sie den Simulator mit dem Argument `-s` aus:
+
+```bash
+python3 interactiveSim.py 3 -s
+```
+
+- Nachdem die Knoten NodeInfo ausgetauscht haben, beginnen sie mit dem Senden von Nachrichten.
+- Schließen Sie die Simulation manuell mit `Strg+C` oder warten Sie auf das Timeout.
+
+## Tipps und Tricks
+
+1. **Beschleunigung des Knoteninformationsaustauschs:**
+   Deaktivieren Sie bestimmte Module, indem Sie `new NodeInfoModule()` aus _`src/modules/Modules.cpp`_ in der Firmware entfernen.
+
+2. **Konfigurationen speichern und neu laden:**
+   Nach einer Simulation werden Knotenkonfigurationen gespeichert. Sie können dasselbe Szenario erneut ausführen mit:
+
+   ```bash
+   python3 interactiveSim.py --from-file
+   ```
+
+   Ändern Sie die Datei _`out/nodeConfig.yaml`_, um die Konfigurationen vor dem Neuladen anzupassen.
+
+3. **Verwendung der Python Kommandozeile:**
+   Sie können Funktionen der Node-Klasse über `sim.getNodeById(<id>)` in _`interactiveSim.py`_ aufrufen. Beispiel:
+
+   ```python
+   node.setURL('<YOUR_URL>')
+   ```
+
+## Pfadverlustmodell
+
+Der Simulator schätzt die Signalausbreitung mithilfe eines Pfadverlustmodells. Dies ist eine Annäherung an die physische Umgebung und daher möglicherweise nicht 100 % genau. Die verfügbaren Modelle sind:
+
+- **0**: Langstreckenmodell
+- **1**: Okumura-Hata-Modell (kleine/mittlere Städte)
+- **2**: Okumura-Hata Modell (städtische Gebiete)
+- **3**: Okumura-Hata Modell (vorstädtische Umgebung)
+- **4**: Okumura-Hata Modell (ländliche Regionen)
+- **5**: 3GPP Modell (vorstädtische Makrozellen)
+- **6**: 3GPP Modell (städtische Makrozelle)
+
+Sie können das Pathloss-Modell und die Bereichskonfiguration in _`lib/config.py`_ ändern. Die LoRa Einstellungen bleiben auf ihren Meshtastic Standardwerten, sofern sie nicht während der Knotenplatzierung angepasst werden.

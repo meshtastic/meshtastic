@@ -1,0 +1,55 @@
+---
+id: limitations
+title: Bekannte Einschränkungen und Zukunftspläne der Verschlüsselung von Meshtastic
+sidebar_label: Einschränkungen und Zukunft
+sidebar_position: 3
+description: Hinweise zum Meshtastic Verschlüsselungs- und Sicherheitsmodell, Erläuterung der bekannten Einschränkungen, die sich aus den verschiedenen Anforderungen des Projekts ergeben, und Diskussion einiger Zukunftspläne.
+---
+
+import QRCode from "@site/docs/blocks/_qr-code.mdx";
+
+Das Sicherheitsmodell von Meshtastic ist eine Überlappung mehrerer widersprüchlicher Anforderungen. Dieses Dokument erläutert die Anforderungen, die damit verbundenen Kompromisse und beschreibt die aktuellen Einschränkungen, die gewählt wurden, um Meshtastic nutzbar zu machen. Es behandelt auch die letzten Änderungen und kommenden Korrekturen.
+
+Diese Informationen sind nicht neu, wurden aber bisher über Discord-Diskussionen, GitHub-Probleme und Kommentare in der Meshtastic Codebasis verbreitet. Dieses Dokument ist ein Versuch, alles es an einer Stelle klar und deutlich zu formulieren.
+
+## Geschichte
+
+Am Anfang wurde Meshtastic ursprünglich nur für die Arbeit mit geschlossenen, vertrauenswürdigen Gruppen entwickelt. Meshtastic Channels werden mit einem vorher verteiltem Schlüssel (PSK) und AES-STR verschlüsselt. Dieser Verschlüsselungstyp umfasst keine Authentifizierung und daher kann jeder mit dem PSK eine Nachricht als jeder andere Benutzer auf diesem Kanal senden.
+
+AES-CTR weist eine weitere Schwäche auf: Es erzeugt einen Stromchiffre für einen gegebenen Initialisierungsvektor (IV) und der eigentliche Verschlüsselungsschritt erfolgt durch XOR Verknüpfung des Klartext mit diesem Stromchiffre. In Meshtastic Kanalnachrichten ist dieser IV eine Kombination aus dem Knoten ID des Absenders und der Paket ID der gegebenen Nachricht. Dies bedeutet, dass ein Angreifer, der den genauen Klartext einer verschlüsselten Nachricht ableiten kann, die Kombination aus Nodenum und PacketID wiederverwenden kann, um gefälschte Nachrichten zu senden, selbst ohne den PSK des Kanals zu kennen. Dies ist aufgrund der Anforderung zur Wiederverwendung von Paket ID und Knoten ID von begrenztem Nutzen, um einen passenden IV zu erhalten.
+
+In seiner ursprünglichen Version verarbeitete Meshtastic Direktnachrichten (DM), indem es einfach den vorhandenen Kanal-PSK verwendete und Direktnachrichten als nur an den Zielknoten gerichtet markierte. Dieser Ansatz war akzeptabel, als Meshtastic nur von kleinen Gruppen verwendet wurde, aber das Aufkommen großer öffentlicher Netzwerke mit dem Potenzial für böswillige Akteure hat diesen Ansatz erheblich verändert. Seit etwa einem Jahr fügt Meshtastic gezielt Funktionen hinzu, um sich gegen dieses Szenario abzusichern, allerdings mit minimalen Kompatibilitätsbrüchen.
+
+Insbesondere die vorher verteilten Schlüssel für Direktnachrichten wurden als Problem erkannt und das neue System für Direktnachrichten wurde mit Meshtastic 2.5 ausgeführt. Dieses System verwendet x25519 Verschlüsselung mit öffentlichen Schlüssel und AES-CCM, um zwischen Knoten gesendete Direktnachrichten zu verschlüsseln und zu authentifizieren. Diese öffentlichen Schlüssel werden in Benutzerpaketen gesendet, die mit den vorhandenen Kanalschlüsseln verschlüsselt sind.
+
+## Einschränkungen
+
+Dieses System verwendet notwendigerweise ein Vertrauensmodell bei der ersten Nutzung (Trust On First Use - TOFU). Es gibt keine zentrale Autorität zum Signieren von Benutzerschlüsseln. Daher speichern und behalten Knoten den ersten öffentlichen Schlüssel, der für eine bestimmte Knotennummer empfangen wird. Dies ist im Wesentlichen eine schwierige Voraussetzung für ein dezentralisiertes Netzwerk.
+
+Dieses Problem wird durch den begrenzten Speicher für die Speicherung von Knoteninformationen in einem Meshtastic Knoten verschlimmert. Die Knotendatenbank ist auf den meisten Hardwaregeräten auf 100 Knoten beschränkt. Wenn in einem Netzwerk mehr Knoten erkannt werden, wird der älteste und am wenigsten interessante Knoten aus der Knotendatenbank entfernt, um Platz für neue Knoten zu schaffen. Die Ausnahme hiervon sind bevorzugte Knoten, die garantiert nicht aus der Knotendatenbank entfernt werden.
+
+Die Kombination von TOFU-Modell und eingeschränkter Hardware führt zu einem Problem. Wenn ein Knoten aus der Knotendatenbank entfernt wird, kann die Meshtastic Firmware nicht ermitteln, ob ein zukünftiges Benutzerpaket keine Fälschung dieser Knotennummer mit einem anderen öffentlichen Schlüssel ist. Dieses Problem wird durch die Möglichkeit verschärft, dass ein Angreifer auf dem Kanal schnell viele gefälschte Knoten erstellen kann, was dazu führt, dass legitime Knoten früher aus der Knotendatenbank entfernt werden.
+
+Dieser Angriff wurde bei der Entwicklung des Systems für Direktnachrichten vorhergesehen und als unvermeidliche Folge des Aufbaus eines einfachen und dezentralen Netzes akzeptiert. Zur Erinnerung, es gibt keine zentrale Autorität zum Signieren von Schlüsseln. Aus diesem Grund wurden in das System mehrere Abwehrmaßnahmen eingebaut, um den tatsächlichen Nutzen dieses Angriffs zu minimieren.
+
+## Beabsichtigtes Verhalten
+
+Erstens: Während die Knotendatenbank auf eingebetteter Hardware auf 100 Knoten beschränkt ist, kann eine verbundener mobile App Informationen zu viel mehr Knoten speichern und den Benutzer darauf hinweisen, wenn einer dieser Knoten mit einem anderen öffentlichen Schlüssel angezeigt wird. Dies ist der Fall, wenn ein Knoten in einer App mit einem roten Schlüsselsymbol angezeigt wird. Die Firmware hat einen anderen öffentlichen Schlüssel für diesen Knoten gesehen und die mobile App weiß, dass er sich geändert hat.
+
+Die zweite wichtige Abhilfe besteht darin, dass als Favoriten markierte Knoten niemals aus der Knotendatenbank gelöscht werden. Die Apps markieren Knoten jetzt automatisch als Favoriten, wenn eine Direktnachricht an einen Knoten gesendet wird. Dadurch wird zusätzlich sichergestellt, dass der Knoten, mit dem ein Benutzer gechattet hat, immer noch derselbe Knoten ist.
+
+Die Meshtastic Firmware unterstützt auch das Zurückfallen auf das alte Verhalten bei Direktnachrichten. Dies wird durch die Verwendung der Variablen 'pki_encrypted' und des Byte-Feldes 'public_key' streng kontrolliert. Wenn die Firmware ein Paket vom Netzwerk empfängt und dieses Paket mit der Verschlüsselung für Direktnachrichten gesendet wird, wird die Variable als '1' markiert und der öffentliche Quellschlüssel in das Byte-Feld kopiert. Direktnachrichten, die die alte Kanalverschlüsselungsmethode verwenden, werden weiterhin empfangen und verarbeitet, aber das Feld 'pki_encrypted' ist auf '0' gesetzt.
+
+Von einer verbundenen App gesendete Pakete können die Variable 'pki_encrpyted' auf '1' setzen und das Byte-Feld 'public_key' aus einem über die lokale API gesendeten Pakets füllen. Wenn die Variable auf '1' gesetzt ist, wird das Paket nur mit der Verschlüsselung für Direktnachrichten gesendet. Wenn das Byte-Feld ausgefüllt ist, wird das Paket nur gesendet, wenn der öffentliche Schlüssel in der API-Nachricht mit dem öffentlichen Schlüssel für diesen Knoten in der lokalen Knotendatenbank übereinstimmt. Wenn die Variable nicht auf '1' gesetzt ist, sendet die Firmware das Paket mit Verschlüsselung für Direktnachrichten, wenn es tatsächlich an ein einzelnes Ziel gesendet wird und die Firmware über einen öffentlichen Schlüssel für dieses Ziel verfügt. Ausgehende Nachrichten werden auf die weniger sichere Kanalverschlüsselung zurückgreifen, wenn kein öffentlicher Schlüssel für den Empfängerknoten bekannt ist und die Variable 'pki_encrypted' nicht auf '1' gesetzt ist.
+
+## Die Zukunft des ED25519
+
+Einige Schwächen des Meshtastic-Systems können durch Hinzufügen eines Nachrichtensignatursystems zu Kanalnachrichten behoben werden. Da wir immer noch begrenzten Speicherplatz in der Knotendatenbank haben und LoRa Pakete immer noch auf eine maximale Größe von 256 Byte begrenzt sind, ist es praktisch erforderlich, dass dieses Signatursystem die vorhandenen öffentlichen/privaten Schlüsselpaare wiederverwendet und die Signaturen so klein wie möglich sind.
+
+Es wurde wiederholt der zusätzliche Vorschlag gemacht, die Knotennummer aus dem öffentlichen Schlüssel abzuleiten, um die Möglichkeit eines Angreifers zu minimieren, ein Benutzerpaket von einer vorhandenen Knotennummer mit einem neuen öffentlichen Schlüssel zu fälschen. Obwohl das Meshtastic Sicherheitsteam diesem Vorschlag grundsätzlich zustimmte, war es nicht praktikabel, ihn als grundlegende Änderung im Netzwerk umzusetzen. Das Hinzufügen signierter Nachrichten bietet tatsächlich die Möglichkeit, diese neue Quelle für Knotennummern durchzusetzen und gleichzeitig die Abwärtskompatibilität mit dem älteren System zu wahren. 
+
+Die ED25519 Unterstützung wird zum Zeitpunkt der Erstellung dieses Dokuments noch fertiggestellt, aber der aktuelle Prototyp Code verwendet das XEdDSA System von Signal, um vorhandene X25519 Signaturen zu übernehmen und sie als ED25519 Signaturen wiederzuverwenden. Dies verbessert zwar die Sicherheitsgarantien des Meshtastic Systems erheblich, diese Signaturen sind jedoch 64 Byte lang, was angesichts der Größe der LoRa Nachrichten von Bedeutung ist.
+
+Sobald ein Knoten eine Benutzernachricht mit diesem Schema erfolgreich signiert hat, wird das Bit HAS_XEDDSA_SIGNED im 'NodeInfoLite' Bitfeld gesetzt, das in einer Nachricht mit Knoteninformationen als Variable 'has_xeddsa_signed' übersetzt wird.
+
+Sobald dieses Bit gesetzt ist, werden nicht signierte Benutzerpakete von dieser Quelle verworfen. Es muss noch festgelegt werden, wie mit anderen nicht signierten Paketen verfahren wird. An dieser Stelle wird empfohlen, kurze Pakete, die signiert werden könnten, zu verwerfen, wenn sie nicht signiert sind.

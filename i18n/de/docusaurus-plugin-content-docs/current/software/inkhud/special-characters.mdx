@@ -1,0 +1,46 @@
+---
+id: special-characters
+title: Sonderzeichen in InkHUD
+sidebar_label: Sonderzeichen
+slug: /software/inkhud/specials-characters
+sidebar_position: 2
+description: Anleitung zum Erstellen von InkHUD mit einem anderen Zeichensatz
+---
+
+Aufgrund von Hardware-Einschränkungen enthalten Schriften eine begrenzte Anzahl von Zeichen. 
+Standardmäßig wird InkHUD mit einem "westeuropäischen" Zeichensatz (Windows-1252) erstellt.
+Schriften werden auch für "mitteleuropäische" und "kyrillische" Zeichensätze zur Verfügung gestellt.
+
+## Zeichensatz auswählen
+
+Wikipedia unterhält eine umfassende Liste, welche Sprachen von jedem Zeichensatz unterstützt werden.
+
+- https://de.wikipedia.org/wiki/Windows-1252 - Westeuropäisch (InkHUD Standard) 
+- https://de.wikipedia.org/wiki/Windows-1250 - Mitteleuropäisch
+- https://de.wikipedia.org/wiki/Windows-1251 - Kyrillisch
+
+## Zeichensatz ändern
+
+Um einen alternativen Zeichensatz zu verwenden, müssen Sie [die Meshtastic Firmware](/docs/development/firmware/build/) neu kompilieren.
+
+Die Auswahl der Schriftart ist in `/variants/<Device Model>/nicheGraphics.h` gesetzt. 
+
+Die Zeilen finden:
+
+```cpp
+// Zeichensätze
+InkHUD::Applet::fontLarge = FREESANS_9PT_WIN1252;
+InkHUD::Applet::fontSmall = FREESANS_6PT_WIN1252;
+```
+
+Ersetzen durch eines von Beiden:
+
+```cpp
+InkHUD::Applet::fontLarge = FREESANS_9PT_WIN1250;
+InkHUD::Applet::fontSmall = FREESANS_6PT_WIN1250;
+```
+
+```cpp
+InkHUD::Applet::fontLarge = FREESANS_9PT_WIN1251;
+InkHUD::Applet::fontSmall = FREESANS_6PT_WIN1251;
+```

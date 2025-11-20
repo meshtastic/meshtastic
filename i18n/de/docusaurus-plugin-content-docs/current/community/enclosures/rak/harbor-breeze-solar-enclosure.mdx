@@ -1,0 +1,64 @@
+---
+id: harbor-breeze-solar-hack
+title: Hack des Harbor Breeze Solarlampen-Gehäuses für RAK WisBlock
+sidebar_label: Hack Solarlampen-Gehäuse
+sidebar_position: 1
+---
+
+## Erstellt von tavdog/Tavis Gustafson
+
+### Hack für ein billiges Gehäuse aus einer Harbor Breeze Solarlampe für RAK
+
+![Solarlampen Hack fertig](/img/enclosures/hbmh_complete.webp)
+
+Die Harbor Breeze LED Solarlampe kann für etwa $15 gekauft werden und enthält ein ausreichendes Solarpanel, Lithium-Ionen Akku und Laderegler in einem wasserdichten Gehäuse. Die RAK Basisplatinen passen perfekt in das Solarfach. Unten sind die Schritte für die Fertigstellung dieses Hacks für einen komplett wetterfesten Meshtastic Knoten.
+
+### Erforderliche Fertigkeiten
+
+Es muss gelötet und ein Loch in das Kunststoffgehäuse bohren werden.
+
+### Benötigte Bauteile
+
+Für eine externe Antenne ist ein IPEX zu SMA Adapterkabel erforderlich. Ein JST-PHR-2-Anschluss wird für eine Batterieanbindung zum Anstecken benötigt. Gelötete Verbindungen funktionieren aber auch. Dichtmittel (Silikon oder aus dem Schiffbau)
+
+### Schritte
+
+Schritt 1 Entfernen Sie die 4 kleine Schrauben, um das Solarfach zu öffnen.
+
+Schritt 2 Löten Sie Ihren JST-PHR-2-Stecker oder Stromkabel an die + und - Anschlüsse der Batterie. Wenn Sie nicht über den richtigen Stecker verfügen, können Sie auch direkt an den Pins auf der Rückseite des JST-Steckers löten. Stellen Sie sicher, dass die Polarität korrekt ist.
+![Löten der Batterieanschlüsse](/img/enclosures/harbor_breeze_solar_battery_solder_points.webp)
+
+Schritt 3 Bohre Sie ein Loch für die SMA Buchse. Eine perfekt vertikale Antenne durch eine 90 Grad Biegung erlaubt keine sehr flache Solarplatte, treffen Sie eine gute Wahl oder verwenden Sie eine externe Antenne. Sie können diesen Schritt überspringen, wenn Sie eine interne Antenne verwenden möchten, die passt.
+![Loch für SMA Buchse bohren](/img/enclosures/harbor_breeze_solar_sma_hole1.webp)![Loch für SMA Buchse bohren](/img/enclosures/harbor_breeze_solar_sma_hole2.webp)
+
+Schritt 4 Bauen Sie die SMA Buchse ein. Dichten Sie diese mit Silikon oder anderer Dichtmasse ab.
+![SMA Buchse einbauen](/img/enclosures/harbor_breeze_solar_sma_installed.webp)![Abdichtung](/img/enclosures/harbor_breeze_solar_sma_seal.webp)
+
+Schritt 5 Bauen Sie das RAK Modul im freien Platz ein. Wenn Sie möchten, können Sie die Platine leicht an der Stelle verkleben.
+![Einbau der RAK Platine](/img/enclosures/harbor_breeze_solar_board_placement.webp)
+
+Schritt 6 Schließen Sie die Antenne sowie den Akku an und verschließen Sie die Rückseite.
+
+Das Lampengehäuse kann bei Bedarf entfernt werden.
+![Externe Antenne über SMA Adapter](/img/enclosures/harbor_breeze_solar_antenna_pigtail.webp)
+
+Das Lampengehäuse ist nicht so wasserdicht wie das Solargehäuse also seien Sie vorsichtig, wenn Sie Elektronik dort einbauen.
+An einem Stab befestigen und hoch aufstellen.
+![Externe Antenne über SMA Adapter](/img/enclosures/harbor_breeze_solar_stick_mount.webp)
+
+Das Licht wird sich nachts für einen sehr gut getarnten Knoten einschalten. Um das Licht auszuschalten, gibt es einen Knopf auf der Rückseite.
+
+### Links
+
+Hier ist ein Lowes.com Link zur Solarlampe: (https://www.lowes.com/pd/60LM-Solar-Spot-Light/1002689960)
+
+Hier ist ein Link zum Meshtastic Starter Kit : (https://msh.to/rak4631)
+
+Hier ist ein Amazon Link zu SMA und Antennen: (https://www.amazon. om/gp/product/B0CTXL61LY) HINWEIS: Einige dieser Antennen sind viel schlechter, wenn sie nicht gerade aufgestellt sind, so stellen Sie sicher, dass Sie diese gerade halten oder testen Sie sie mit einer NANO VNA.
+
+Hier ist eine 3D-bedruckte Basis für die Wandmontage nur für das Solarpanel mit drehbarer Halterung an einer Wand ohne die Lampe (entworfen von einem Fan dieses Projekts): https://www. hingiverse.com/thing:6839973
+
+Ein [3D gedruckter Wandhalter] (https://www.printables. om/model/886187-harbor-breeze-meshtastic-mount), der die Antenne in einer gerader Position hält und keine zusätzlichen Bohrungen erfordert:
+Ein [aktualisiertes Modell](https://www.printables.com/model/1347088-meshtastic-harbor-breeze-mounting-bracket-verbessert), das durch ein Teil eine unerwünschte Rotation des Solarpanels verhindert.
+
+Hier ist eine 3D-gedruckte Halterung für die kleinere RAK 19003 Wisblock Platine : (https://www.thingiverse.com/thing:6849930)

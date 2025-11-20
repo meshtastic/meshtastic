@@ -1,0 +1,184 @@
+---
+id: mqtt
+title: MQTT | Integrationsübersicht
+sidebar_label: MQTT
+sidebar_position: 6
+description: Netznetze über das Internet überbrücken und Meshtastic-Protokolle mit populären Technologien wie Home Assistant, Node Red und Adafruit IO integrieren.
+---
+
+## Öffentlicher MQTT Server
+
+![Allgemeines MQTT Layout](/img/software/mqtt/mqtt.webp)
+
+Das Meshtastic Projekt bietet einen öffentlichen MQTT Dienst, mit dem sich Benutzer verbinden können. Es gelten bestimmten Einschränkungen, um die Netzwerkstabilität zu gewährleisten. Dieser Service ermöglicht es Meshtastic Geräten sich über das Internet zu verbinden, was globale Konnektivität für abgelegene Netzwerke bietet.
+
+Anweisungen zum Verbinden mit dem öffentlichen MQTT-Server finden Sie unter [mit dem öffentlichen Standard Server verbinden](/docs/configuration/module/mqtt/#connect-to-the-default-public-server).
+
+### Einschränkungen auf dem öffentlichen MQTT Server
+
+Um die optimale Leistung zu gewährleisten und LoRa Netze zu schützen, wird derzeit der öffentlichen MQTT-Server eingeschränkt.
+
+#### Null-Sprungweiten Richtlinie
+
+Datenverkehr vom öffentlichen MQTT-Server wird nicht vollständig über lokale Netznetze weitergeleitet. Direkt verbundene Knoten erhalten die Daten, aber aufgrund der Null-Sprung Richtlinie werden diese nicht weiter an andere Knoten innerhalb des lokalen Netzwerks verteilt.
+
+#### Optimierte Filterung des Datenverkehrs
+
+Nur bestimmte Anschlussnummern werden bei der Übertragung über den öffentlichen MQTT-Server bevorzugt, wenn der Standard-Schlüssel (PSK) verwendet wird:
+
+- NodeinfoApp
+- TextMessageCompressedApp
+- TextMessageApp
+- PositionApp
+- TelemetryApp
+- MapReportApp
+- RoutingApp
+
+#### Filter für Standortgenauigkeit
+
+Mit dem Standard-Schlüssel (PSK) beschränkt der öffentliche Server auch die Genauigkeit der Standortdaten, um die Privatsphäre der Benutzer zu schützen. Nur Standortnachrichten mit ungenauen Standortdaten (10-16 Bits) werden im MQTT Thema geteilt, sodass genaue Standortdetails nicht verteilt werden. Weitere Informationen darüber, finden Sie im Abschnitt [Standortgenauigkeit](https://meshtastic.org/docs/configuration/radio/channels/#position-precision).
+
+Diese Filterung konzentriert die Netzwerkressourcen auf kritische Daten, verbessert die Gesamtleistung und reduziert den unnötigen Datenfluss. Da diese Einschränkungen auf Netzwerk-Ebene angewendet werden, sind keine Firmware Aktualisierungen erforderlich. Da Meshtastic Netzwerke weiter wachsen, können weitere Maßnahmen zur Reduzierung des Verkehrs notwendig werden, um die Netzwerkbelastung zu verwalten und die Leistung über alle Kanäle hinweg zuverlässig zu erhalten.
+
+### Private Broker verwenden
+
+Es wird nicht empfohlen, den Standard-Schlüssel (PSK) für einen privaten Broker zu verwenden. Dies öffnet möglicherweise Sicherheitslücken und kann das Netzwerk mit Daten fluten, da private Broker nicht die Null-Sprung Richtlinie durchsetzen, die für öffentliche Kanäle notwendig ist. Private Broker sind für den Einsatz mit privaten Kanälen bestimmt, wo persönliche Schlüssel (PSK) eine sichere, isolierte Kommunikation ermöglichen.
+
+## Software Integration
+
+Verwenden oder Senden von Nachrichten direkt aus Smart Home Kontrollsoftware wie Home Assistant oder anderen Verbrauchern, die JSON Nachrichten benutzen können.
+
+Wenn MQTT aktiviert ist, leitet das Meshtastic Gerät einfach jede Protocol Buffer Nachricht zum MQTT Broker weiter, die es empfängt. Eingeschlossen in einem [ServiceEnvelope Protocol Bufffer](https://buf.build/meshtastic/protobufs/docs/main:meshtastic#meshtastic.ServiceEnvelope). Zusätzlich werden einige Nachrichtentypen von/zu JSON serialisiert oder deserialisiert um die einfachere Verwendung zu ermöglichen. Alle Nachrichten werden an den Broker gesendet, egal ob sie nun von einem anderen Gerät im Netzwerk oder vom Gateway-Knoten selbst stammen.
+
+### MQTT [Themen](https://www.hivemq.com/blog/mqtt-essentials-part-5-mqtt-topics-best-practices)
+
+Wenn kein spezifisches [Wurzelthema](/docs/configuration/module/mqtt#root-topic) konfiguriert ist, wird das Standard Wurzelthema `msh/REGION` sein.
+
+Für jeden Kanal, in dem `uplink` und/oder `downlink` aktiviert ist, können zwei Themen verwendet werden:
+
+#### Thema Protocol Buffer
+
+Ein Gateway-Knoten wird binäre ([Protocol Buffer](https://developers.google.com/protocol-buffers)) Daten als Nachricht im Thema weiterleiten:
+
+`msh/REGION/2/e/CHANNELNAME/USERID`, wobei `CHANNELNAME` der Name des Kanals ist (Firmware-Versionen vor v2.3.0 veröffentlicht ein Thema mit `/c/` an Stelle von `/e/`).
+
+Zum Beispiel: `msh/US/2/e/LongFast/!abcd1234`
+
+Die Nutzlast ist ein binärer Protocol Buffer, dessen Definitionen für Meshtastic [hier](https://github.com/meshtastic/protobufs/blob/master/meshtastic) gefunden werden können. Referenzanleitungen für die Arbeit mit Protocol Buffer in mehreren gängigen Programmiersprachen finden Sie [hier](https://protobuf.dev/reference/). Ein Blick auf die MQTT Daten mit einem Programm wie `mosquitto_sub` wird Ihnen mitteilen, dass es funktioniert, aber nicht viele nützliche Informationen zur Verfügung stellen. Zum Beispiel:
+
+```text
+苓????"!
+	!937bed1cTanksTnk"D???05??=???aP`
+	ShortFast	!937bed1c
+```
+
+Wenn [encryption_enabled](/docs/configuration/module/mqtt#encryption-enabled) auf true gesetzt ist, werden die Nutzdaten der Nachricht mit dem Schlüssel für den angegebenen Kanal verschlüsselt.
+
+#### JSON Thema
+
+:::note
+JSON wird auf der nRF52 Plattform nicht unterstützt.
+:::
+
+Wenn [JSON aktiviert ist](/docs/configuration/module/mqtt#json-enabled), werden Nachrichten von folgenden [Anschlussnummern](/docs/development/firmware/portnum) als JSON serialisiert: `TEXT_MESSAGE_APP`, `TELEMETRY_APP`, `NODEINFO_APP`, `POSITION_APP`, `WAYPOINT_APP`, `NEIGHBORINFO_APP`, `TRACEROUTE_APP`, `DETECTION_SENSOR_APP`, `PAXCOUNTER_APP` und `REMOTE_HARDWARE_APP`. Diese werden dann an das Thema weitergeleitet:
+
+`msh/US/2/json/CHANNELNAME/USERID`.
+
+Ein Beispiel für eine empfangene `NODEINFO_APP` Nachricht:
+
+```json
+{
+  "id": 452664778,
+  "channel": 0,
+  "from": 2130636288,
+  "payload": {
+    "hardware": 10,
+    "id": "!7efeee00",
+    "longname": "base0",
+    "shortname": "BA0"
+  },
+  "sender": "!7efeee00",
+  "timestamp": 1646832724,
+  "to": -1,
+  "type": "nodeinfo"
+}
+```
+
+Die Bedeutung dieser Felder ist folgende:
+
+- `id` ist die eindeutige ID für diese Nachricht.
+- `channel` ist der Kanal-Index, auf dem diese Nachricht empfangen wurde.
+- `from` ist die eindeutige dezimal-äquivalente Knoten-ID des Knotens auf dem Netz, der diese Nachricht gesendet hat. (Der Hexadezimalwert `7efeee00` repräsentiert durch eine Ganzzahl ist als Dezimalwert `2130636288`).
+- `id` in den Nutzdaten einer `NODEINFO_APP` Nachricht ist die hexadezimale Knoten-ID (manchmal User-ID) des Knotens, der sie gesendet hat.
+- `hardware` ist das [Hardware Modell](https://github.com/meshtastic/protobufs/blob/master/meshtastic/mesh.proto#L215) des Knotens, der die `NODEINFO_APP` Nachricht sendet.
+- `longname` ist der lange Name des Gerätes, das die `NODEINFO_APP` Nachricht gesendet hat.
+- `shortname` ist der Kurzname des Gerätes, das die `NODEINFO_APP` Nachricht gesendet hat.
+- `sender` ist die hexadezimale Knoten-ID des Gateway-Gerätes, in diesem Fall derselbe Knoten, der die `NODEINFO_APP` Nachricht gesendet hat.
+- `timestamp` ist die Unix-Epoche, als die Nachricht empfangen wurde, die als Ganzzahl in dezimaler Form dargestellt wird.
+- `to` ist die dezimal-äquivalente Knoten-ID des Ziels der Nachricht. In diesem Fall bedeutet `-1` eine Broadcast-Nachricht (dies ist die dezimale Ganzzahl als Darstellung von `0xFFFFFF`).
+- "`type`" ist der Typ der Nachricht, in diesem Fall war es eine `NODEINFO_APP` Nachricht.
+
+Das Feld `from` kann daher als sicherer Bezeichner für einen bestimmten Knoten verwendet werden. Beachten Sie, dass dies in Firmware vor v2.2.0 ein vorzeichenbehafteter Wert in JSON ist, während ab Firmware v2.2.0 und höher die JSON-Werte ohne Vorzeichen sind.
+
+Wenn die empfangene Nachricht eine gültige JSON Zeichenfolge als Nutzdaten enthält, dann wird JSON deserialisiert und als JSON-Objekt anstatt einer Zeichenkette mit dem serialisierten JSON hinzugefügt.
+
+#### JSON Downlink um einen Knoten anzuweisen, eine Nachricht zu senden
+
+Sie können auch eine JSON Nachricht an das Thema `msh/US/2/json/mqtt/` senden, um einen Gateway-Knoten anzuweisen, eine Nachricht an das Netzwerk weiterzuleiten.
+
+Stellen Sie sicher, dass Ihr Knoten einen Meshtastic Kanal konfiguriert hat, der `mqtt` heißt. Downlink aktivieren. Der vorher vereinbarte Schlüssel (PSK) kann zufällig sein und spielt keine Rolle. Dieser Kanal erlaubt es dem Knoten Nachrichten zum Thema `msh/US/2/json/mqtt/` zu empfangen.
+
+Starten Sie Ihr Gerät nach dem Erstellen dieses Kanals neu.
+
+Die JSON Nachricht sollte folgende Felder enthalten:
+
+```json
+{
+   "from": <decimal Node ID of MQTT node>,
+   "to": <decimal Node ID of recipient for a DM (optional)>,
+   "channel": <channel index (optional)>,
+   "type": "type",
+   "payload": {
+       "key":"value"
+       ...
+    }
+}
+```
+
+Die Felder `from` und `payload` sind für eine gültige Nachricht erforderlich (beachten Sie das in der Firmware &lt;2.2.20 ein Feld `sender` benötigt wurde, aber dies ist nicht mehr der Fall). Das Feld `from` sollte die gleiche dezimale Knoten-ID des Knotens sein, der die Nachricht überträgt. Wenn die Knoten-ID (manchmal User-ID) !7efeee00 ist, dann wäre das Dezimaläquivalent 2130636288. Optional können Sie einen anderen Kanal als den primären Kanal angeben, indem Sie das Feld `channel` auf einen Kanalindex (0-7) setzen. Außerdem können Sie eine Direktnachricht senden, indem Sie das Feld `to` auf die Dezimalzahl der Knoten-ID des Ziels setzen. Wenn das Feld `to` nicht gesetzt ist, wird die Nachricht an alle Knoten im Netzwerk übertragen.
+
+Derzeit werden zwei Arten von Nachrichten unterstützt: `sendtext` und `sendposition`.
+Für den Typ `sendtext` sollte der `payload` eine Zeichenfolge sein, die den zu sendenden Text enthält. Für den Typ `sendposition` sollte der `payload` ein Objekt mit den Feldern `latitude_i`, `longitude_i`, `altitude` (optional) und `time` (optional) sein.
+
+### Grundeinstellungen
+
+Unter [MQTT Einstellungen](/docs/configuration/module/mqtt) finden Sie alle Informationen. Für schnelle Anweisungen, lesen Sie weiter.
+
+- Verbinden Sie Ihren Gateway-Knoten mit Wifi, indem Sie die Einstellungen `network.wifi_ssid`, `network.wifi_psk` und `network.wifi_enabled` festlegen.
+- Alternativ können Sie ein RAK4631 mit dem Ethernet-Modul RAK13800 verwenden, indem Sie `network.eth_mode` und `network.eth_enabled` setzen (beachten Sie, dass JSON nicht auf der nRF52 Plattform unterstützt wird).
+- Konfigurieren Sie Ihre Broker Einstellungen: `mqtt.address`, `mqtt.username` und `mqtt.password`. Wenn alles leer gelassen sind, wird sich das Gerät mit dem Meshtastic Broker verbinden.
+- Setzen Sie `uplink_enabled` und `downlink_enabled` entsprechend für jeden Kanal. Die meisten Benutzer haben nur einen einzigen Kanal (mit Kanalindex 0). `meshtastic --ch-index 0 --ch-set uplink_enabled true`
+
+`uplink_enabled` teilt dem Gerät mit, Netzwerk Nachrichten per MQTT zu veröffentlichen.
+`downlink_enabled` teilt dem Gerät mit, MQTT zu abonnieren und alle Nachrichten von dort in das Netzwerk weiterzuleiten.
+
+### Gateway Knoten
+
+Jeder Meshtastik Knoten, der eine direkte Internetverbindung hat (entweder über eine Hilfsapplikation oder installierte WiFi/4G/Satellitenhardware) kann als "Gateway" Knoten fungieren.
+
+Gateway-Knoten (über Code, der auf dem Telefon läuft) werden zwei Tabellen enthalten, um bestimmten Datenverkehr freizugeben, der entweder ins Internet oder zum Netzwerk weitergeleitet werden soll. Benutzer, die benutzerdefinierte Applikationen entwickeln, können diese Filter/Abonnements anpassen.
+
+Da mehrere Gateway-Knoten mit einem einzigen Netz verbunden sein könnten, ist es möglich, dass doppelte Nachrichten zu einem bestimmten Thema veröffentlicht werden. Daher sollten Abonnenten dieser Themen
+bei Bedarf Kopien mithilfe der Nachrichtennummer entfernen.
+
+## Beispiele
+
+- [Verwendung von mosquitto auf einem Mac](/docs/software/integrations/mqtt/mosquitto.mdx)
+
+- [Senden/Empfangen von Nachrichten mit dem mosquitto Server mit Python](/docs/software/integrations/mqtt/python.mdx)
+
+- [MQTT mit Node-RED benutzen](/docs/software/integrations/mqtt/nodered.mdx)
+
+- [MQTT mit Home Assistant benutzen](/docs/software/integrations/mqtt/home-assistant.mdx)
+
+- [MQTT mit Adafruit IO benutzen](/docs/software/integrations/mqtt/adafruit-io.mdx)

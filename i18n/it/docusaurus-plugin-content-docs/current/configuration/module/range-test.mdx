@@ -1,0 +1,192 @@
+---
+id: range-test
+title: Configurazione Modulo Range Test
+sidebar_label: Test Distanza
+description: Impara a configurare il modulo range test per creare report, mappe e altro ancora.
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+Questo modulo consente di testare il raggio di comunicazione tra due nodi Meshtastic. Solo i nodi con il modulo abilitato mostreranno i messaggi di test dell'intervallo sui loro client connessi.
+
+- Mittente: nodo fisso che invia pacchetti sequenziali ("Intervallo messaggio mittente" tra 30-60s);
+- Ricevitore: nodo mobile (tipicamente tu) opzionalmente con GPS a bordo o sul telefono.
+
+I nodi sono nel raggio d'azione finché i pacchetti sequenziali possono essere ricevuti.
+
+Il nodo ricevente può essere usato per salvare i messaggi insieme alle coordinate GPS, in cui sono stati ricevuti, in un file .csv. Questo file .csv può quindi essere integrato in [Google Earth](https://earth.google.com), [Google Maps - My Maps](https://mymaps.google.com), o qualsiasi altro programma in grado di elaborare . file .csv. Questo ti consente di visualizzare la tua mesh. Assicurati di avere [precisione della posizione](https://meshtastic.org/docs/configuration/radio/channels/#position-precision) nel canale predefinito impostato su alto, altrimenti i dati raccolti non registreranno la tua posizione vera.
+
+:::info
+
+Assicurati di disattivare il modulo o disabilitare l'invio quando non è in uso. Questo utilizzerà un sacco di airtime, rallenterà la rete mesh e spammerà il canale. Il modulo si spegnerà automaticamente dopo 8 ore.
+
+:::
+
+Le opzioni di configurazione del modulo di range test sono: Abilitato, mittente e Salva. La configurazione del modulo Range Test utilizza un messaggio di amministrazione per inviare un protobuf `ModuleConfig.RangeTestConfig`.
+
+## Configurazione Modulo Range Test
+
+### Abilitato
+
+Abilita il modulo range test. \*_Sia il mittente che il destinatario devono avere il modulo abilitato. _ Sulle app Apple e Android il modulo deve essere abilitato per poter ricevere qualsiasi messaggio di range test. La schermata del dispositivo può continuare a mostrare pacchetti di test range da vecchie versioni del firmware anche se il modulo è disabilitato.
+
+### Intervallo Del Mittente
+
+Per quanto tempo attendere tra l'invio di pacchetti sequenziali di test. 0 è predefinito che disabilita l'invio dei messaggi.
+
+### Impostazioni Mittente Consigliate
+
+| Impostazioni Radio | `range_test.sender` |
+| :----------------: | :-----------------: |
+|     Long Slow      |     60              |
+|     Long Fast      |     30              |
+|     Medium         |     15              |
+|    Short Fast      |     15              |
+
+### Salva File CSV
+
+:::info
+
+\*_Lasciare disabilitato quando si utilizzano le app Android o Apple. _ Salva direttamente nella memoria flash del dispositivo (senza bisogno di uno smartphone), ed è disponibile solo su dispositivi basati su ESP32.
+
+:::
+
+Se abilitata, tutti i messaggi ricevuti vengono salvati nella memoria flash del dispositivo in un file chiamato `rangetest.csv`.
+
+Per accedere a questo file, attiva il WiFi sul tuo dispositivo e connettiti alla tua rete. Una volta che puoi connetterti al tuo dispositivo, vai su `meshtastic.local/rangetest.csv` (o your_device_ip/rangetest.csv) e il file verrà scaricato automaticamente. Questo file verrà creato solo dopo aver ricevuto i messaggi iniziali.
+
+Per evitare di riempire lo spazio di archiviazione, il dispositivo annullerà la scrittura se ci sono meno di 50 KB di spazio disponibile sul filesystem.
+
+## Disponibilità Del Client Di Configurazione Del Modulo Range Test
+
+<Tabs
+groupId="settings"
+defaultValue="android"
+values={[
+{label: 'Android', value: 'android'},
+{label: 'Apple', value: 'apple'},
+{label: 'CLI', value: 'cli'},
+{label: 'Web', value: 'web'},
+]}>
+<TabItem value="android">
+
+#### Android
+
+:::info
+
+Opzioni Config di Range Test sono disponibili per Android.
+
+1. Apri l'applicazione Meshtastic
+2. Vai a: **Menu (3 punti in alto a destra) > Configurazione radio > Range Test**
+
+:::
+
+Android esporta un file rangetest.csv dai pacchetti nel registro di debug. Per cancellare i vecchi dati della cronologia dei pacchetti: `Debug Panel > Svuota`
+
+</TabItem>
+<TabItem value="apple">
+
+#### Apple
+
+:::info
+Tutte le opzioni di configurazione del modulo di range test sono disponibili su iOS, iPadOS e macOS in Impostazioni > Configurazione del modulo > Range Test.
+:::
+
+Le app Apple hanno anche la possibilità di scaricare i dati di posizione registrati che vengono memorizzati sul tuo iPhone/iPad/Mac.  Accedi facendo clic sulla scheda Nodi, selezionando un nodo, quindi selezionare Log posizione e fare clic su Salva.  Questo file di dati non richiede che il modulo Range Test sia attivo.
+
+</TabItem>
+<TabItem value="cli">
+
+#### CLI
+
+:::info
+
+Tutte le opzioni di configurazione del modulo range test sono disponibili nell'interfaccia utente web. I comandi di esempio sono di seguito:
+
+:::
+
+| Impostazione       | Valori Accettabili  | Predefinito |
+| :----------------: | :-----------------: | :---------: |
+| range_test.enabled |  `true`, `false`    |   `false`   |
+|  range_test.save   |  `true`, `false`    |   `false`   |
+| range_test.sender  |  `intero` (secondi) |    `0`      |
+
+:::tip
+
+Poiché il dispositivo si riavvierà dopo che ogni comando viene inviato tramite CLI, si raccomanda quando si impostano più valori in una sezione di configurazione, che i comandi siano concatenati insieme in un unico comando.
+
+```shell title="Example:"
+meshtastic --set range_test.enabled true --set range_test.save false
+```
+
+:::
+
+```shell title="Enable / Disable the range test"
+meshtastic --set range_test.enabled true
+meshtastic --set range_test.enabled false
+```
+
+```shell title="Enable / Disable range test save"
+meshtastic --set range_test.save true
+meshtastic --set range_test.save false
+```
+
+```shell title="Enable range test sender (send every 60 seconds)"
+meshtastic --set range_test.sender 60
+```
+
+```shell title="Disable range test sender"
+meshtastic --set range_test.sender 0
+```
+
+</TabItem>
+<TabItem value="web">
+
+#### Web
+
+:::info
+
+Tutte le opzioni di configurazione del modulo range test sono disponibili nell'interfaccia utente web.
+
+:::
+
+</TabItem>
+</Tabs>
+
+## Esempi Di Applicazione
+
+### Integrazione Google Earth
+
+Passi:
+
+1. [Scarica](https://www.google.com/earth/versions/#download-pro) e apri Google Earth
+   1. Seleziona File > Importa
+   2. Seleziona CSV
+   3. Seleziona Delimitato, Virgola
+   4. Assicurarsi che il pulsante che indica “Questo set di dati non contiene informazioni di latitudine / longitudine, ma indirizzi stradali” sia deselezionato
+   5. Seleziona “rx lat” & “rx long” per i campi lat/lng appropriati
+   6. Clicca su Finito
+2. Quando ti richiede di creare un modello di stile, fai clic su sì.
+   1. Impostare il campo nome a qualsiasi colonna si desidera essere visualizzati sulla mappa (non preoccuparti troppo di questo, quando si fa clic su un'icona, vengono visualizzati tutti i dati pertinenti)
+   2. Seleziona un colore, un'icona, ecc. e premi OK.
+
+I tuoi dati verranno caricati sulla mappa, assicurati di fare clic sulla casella accanto al set di dati nella barra laterale per visualizzarlo.
+
+### Mie Mappe
+
+Puoi usare [Le Mie Mappa](http://mymaps.google.com). Permette di caricare CSV e l'intera interfaccia è molto più facile da usare.
+
+Google ha istruzioni su come fare [qui](https://support.google.com/mymaps/answer/3024836?co=GENIE.Platform%3DDesktop&hl=en#zippy=%2Cstep-prepare-your-info%2Cstep-import-info-into-the-map).
+
+È possibile stilare gli intervalli in modo diverso in base ai valori, in modo da poter avere pin più scuri se il SNR o RSSI (se questo viene aggiunto) è più alto.
+
+### OpenStreetMap - uMap
+
+Per una soluzione open source è possibile utilizzare [uMap](https://umap.openstreetmap.de/en/). Un servizio basato sul popolare progetto OpenStreetMap.
+
+Visita [uMap](https://umap.openstreetmap.de/en/) nella tua lingua preferita. 
+
+1. Clicca su "Crea una mappa"
+2. Fare clic sull'icona "Importa dati" o premere CTRL + I.
+3. Scegli il tuo rangetest.csv e clicca su "Importa". Il formato dei dati è riconosciuto e le posizioni sono importate sulla mappa.

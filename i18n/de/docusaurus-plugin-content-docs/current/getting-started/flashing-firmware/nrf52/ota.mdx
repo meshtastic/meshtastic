@@ -1,0 +1,85 @@
+---
+id: ota
+title: nRF52 OTA Firmware Aktualisierung
+sidebar_label: Over-The-Air
+sidebar_position: 2
+description: Anweisungen zur Verwendung der Over-The-Air(OTA)-Methode zum Flashen der Meshtastic Firmware auf Geräte mit nRF52-Chipsatz.
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+import { Icon } from "@iconify/react";
+
+nRF52 Geräte von RAK können OTA-Firmware-Updates von einem Mobilgerät über Bluetooth akzeptieren. Ältere T-Echo-Bootloader bieten keine OTA Unterstützung.
+
+:::caution
+
+Bei OTA Firmware Aktualisierung besteht ein erhöhtes Fehlerrisiko. Wenn der Aktualisierungsvorgang fehlschlägt, bleibt Ihr Gerät in einem funktionslosen Zustand und erfordert für einen Eingriff physischen Zugriff.
+
+:::
+
+<Tabs
+  groupId="settings"
+  defaultValue="apple"
+  values={[
+    {
+      label: (
+        <>
+          <Icon icon="mdi:android" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Android
+        </>
+      ),
+      value: "android",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:apple" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Apple
+        </>
+      ),
+      value: "apple",
+    },
+  ]}>
+
+<TabItem value="android">
+
+#### Android
+
+:::info
+Zum Zeitpunkt des Schreibens dieses Artikels ist die aktuelle Android-Version der nRF DFU-App (v2.3.0) nicht mit Meshtastic Firmware Aktualisierungen kompatibel. Bitte verwenden Sie die folgenden Anweisungen zum Aktualisieren über OTA mit der nRF Connect App.
+:::
+
+OTA-Firmware-Updates sind für Android verfügbar, wenn eine ältere Version der fortschrittlicheren nRF Connect App **Version 4.24.3** verwendet wird, die von der [Nordic Semiconductor GitHub-Seite](https://github.com/NordicSemiconductor/Android-nRF-Connect/releases/tag/v4.24.3) heruntergeladen werden kann.
+
+1. Laden Sie die Firmware-Version, die Sie installieren möchten, von der [Meshtastic Downloadseite](/downloads) oder [Meshtastic GitHub](https://github.com/meshtastic/firmware/releases) herunter.
+2. Entpacken Sie den Firmware Ordner
+3. Öffnen Sie die nRF Connect App und wählen Sie auf Ihrem Gerät auf der Registerkarte SCANNER die Option CONNECT aus.
+4. Wenn in der oberen rechten Ecke der angezeigten Schnittstelle DISCONNECT angezeigt wird, fahren Sie mit Schritt 5 fort. Wenn dort CONNECT angezeigt wird, wählen Sie CONNECT
+5. Wählen Sie das DFU Symbol oben rechts auf der Anzeige.
+6. Wählen Sie OK, nachdem Sie überprüft haben, dass „Distribution Packet (ZIP)“ ausgewählt ist
+7. Wählen Sie die richtige Geräte Firmware Datei (endet mit -ota.zip)
+8. Das Update startet automatisch (es ist langsam)
+9. Sobald das Update abgeschlossen ist, wird das Gerät automatisch neu gestartet
+
+</TabItem>
+
+<TabItem value="apple">
+
+#### Apple
+
+OTA-Firmware-Updates sind für iOS und iPadOS mit der nRF Device Firmware Update App verfügbar, die im [Apple App Store](https://apps.apple.com/us/app/nrf-device-firmware-update/id1624454660) erhältlich ist.
+
+1. Laden Sie die Firmware-Version, die Sie installieren möchten, von der [Meshtastic Downloadseite](/downloads), [Meshtastic GitHub](https://github.com/meshtastic/firmware/releases) oder über die iOS- oder iPadOS-App herunter.
+2. Entpacken Sie den Firmware Ordner
+3. Öffnen Sie die nRF DFU-App und wählen Sie die richtige Geräte Firmware Datei aus (endet mit -ota.zip).
+4. Stellen Sie eine Verbindung zu Ihrem Gerät her
+5. Laden Sie die Firmware hoch
+
+Die automatische Sperrfunktion des iPhones könnte möglicherweise den Bluetooth Firmware Upload unterbrechen. Um dies zu vermeiden, tippen Sie während des Upload-Vorgangs gelegentlich auf Ihren Bildschirm oder stellen Sie die automatische Sperre vorübergehend auf „Nie“, um sicherzustellen, dass das Telefon wach bleibt und der Upload ohne Unterbrechung abgeschlossen wird.
+
+Wenn die Aktualisierung fehlschlägt, kann möglicherweise eine Anpassung der Paketeinstellungen Abhilfe schaffen:
+
+1. Aktivieren Sie in den Einstellungen „**Benachrichtigung über Paketempfang**".
+2. Ändern Sie „**Anzahl der Pakete**" auf einen niedrigeren Wert. Einige Benutzer berichten von Erfolgen mit „5".
+
+</TabItem>
+</Tabs>

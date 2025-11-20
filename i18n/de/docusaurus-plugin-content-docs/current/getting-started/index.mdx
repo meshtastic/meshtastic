@@ -1,0 +1,136 @@
+---
+id: getting-started
+title: Erste Schritte
+sidebar_label: Erste Schritte
+slug: /getting-started
+sidebar_position: 2
+description: Der offizielle Meshtastic Leitfaden für den Einstieg. Betrifft alle Geräte und Konfigurationen.
+---
+
+import Link from "@docusaurus/Link";
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+## Hardware erkennen
+
+:::note
+
+In dieser Anleitung wird davon ausgegangen, dass Sie die Geräte, die Sie mit Meshtastic verwenden werden, bereits gekauft haben. Wenn Sie dies bisher nicht getan haben, können Sie sich unsere Liste von [unterstützter Hardware](/docs/hardware/devices/index.mdx)
+ansehen, um Ihre Möglichkeiten zu sehen.
+:::
+
+Bevor Sie beginnen, müssen Sie unbedingt feststellen, welche Art von Hardware Sie verwenden. Meshtastic funktioniert mit Geräten, die über folgende Arten von Mikrocontrollereinheiten (MCU) verfügen:
+
+### ESP32
+
+Der ESP32-Chip ist älter und verbraucht mehr Strom als der nRF52-Chip, ist aber sowohl mit WLAN als auch mit Bluetooth ausgestattet. Unterstützte EP32 Geräte sind:
+
+- LILYGO® TTGO T-Beam (>V1.1 empfohlen)
+- LILYGO® TTGO Lora (>V2.1 empfohlen)
+- Nano G1
+- Station G1
+- Heltec V3 and Wireless Stick Lite V3
+- RAK11200 Kernmodul für RAK WisBlock Module
+
+### nRF52
+
+Der nRF52-Chip ist wesentlich energieeffizienter als der ESP32-Chip und einfacher zu aktualisieren, ist aber nur mit Bluetooth ausgestattet. Unterstützte nRF52-Geräte sind:
+
+- RAK4631 Kernmodul für RAK WisBlock Module
+- LILYGO® TTGO T-Echo
+
+### RP2040
+
+Der RP2040 ist ein Dual-Core ARM-Chip, der von Raspberry Pi entwickelt wurde. Unterstützte RP2040 Geräte:
+
+- Raspberry Pi Pico + Waveshare LoRa Modul (Hinweis: **Bluetooth auf dem Pico W wird von Meshtastic noch nicht unterstützt**)
+- RAK11310 Kernmodul für RAK WisBlock Module
+
+:::info
+
+Wenn Ihr Gerät oben nicht aufgelistet, dann überprüfen Sie bitte unsere [unterstützten Geräte](/docs/hardware/devices/index.mdx) um festzustellen, welche MCU Ihr Gerät verwendet, oder kontaktieren Sie uns auf [Discord](https://discord.gg/ktMAKGBnBs) mit ihren Fragen.
+
+:::
+
+:::danger STOP! Legen Sie die Stromkabel weg!
+
+Schalten Sie das Radio niemals ein, ohne eine Antenne anzuschließen, da dies den Funkchip beschädigen könnte!
+
+:::
+
+Bevor Sie Ihr Meshtastic Gerät an den Computer anschließen, sollten Sie die folgenden grundlegenden Prüfungen durchführen.
+
+### Datenkabel überprüfen
+
+Einige Kabel dienen nur zum Aufladen. Überprüfen Sie vor dem Fortfahren, ob Ihr Kabel auch zum Übertragen von Daten geeignet ist. Um zu überprüfen, ob Ihr Kabel auch Daten übertragen kann, versuchen Sie, es an ein anderes Gerät (z. B. ein Telefon) anzuschließen und prüfen Sie, ob Sie eine Datei darauf oder davon kopieren können. Wenn die Dateiübertragung funktioniert, ist Ihr Kabel auch in der Lage, Daten zu übertragen und Sie können fortfahren.
+
+### Serielle Treiber installieren
+
+:::caution
+
+nRF52/RP2040 Geräte benötigen normalerweise keine seriellen Treiber. Sie verwenden den UF2 Bootloader, der die Geräte als USB Laufwerke erscheinen lässt.  Laden Sie die USB-Gerätetreiber _nicht herunter_, es sei denn, sie müssen die UF2 Unterstützung installieren.
+
+:::
+
+Wenn Sie serielle Treiber auf Ihrem Computer installieren müssen, wählen Sie bitte eine der folgenden Optionen und installieren Sie sie, bevor Sie fortfahren.
+
+<div className="indexCtasBody">
+  <div className="split-container">
+    <div className="split-item">
+      <Link
+        className={'button button--outline button--lg cta--button'}
+        to={'/docs/getting-started/serial-drivers/esp32'}
+      >
+        ESP32 Treiber installieren
+      </Link>
+    </div>
+
+<div className="split-item">
+      <Link
+        className={'button button--outline button--lg cta--button'}
+        to={'/docs/getting-started/serial-drivers/nrf52'}
+      >
+         nRF52/RP2040 Treiber installieren
+      </Link>
+    </div>
+  </div>
+</div>
+
+### Firmware programmieren
+
+Nachdem Sie die vorherigen Schritte abgeschlossen haben, können Sie nun die Meshtastic Firmware auf Ihrem Gerät programmieren. Um fortzufahren, wählen Sie den entsprechenden Gerätetyp für Ihr Gerät.
+
+<div className="indexCtasBody">
+  <div className="split-container">
+    <div className="split-item">
+      <Link
+        className={"button button--outline button--lg cta--button"}
+        to={"/docs/getting-started/flashing-firmware/esp32/"}
+      >
+        ESP32 Firmware programmieren
+      </Link>
+    </div>
+
+<div className="split-item">
+      <Link
+        className={"button button--outline button--lg cta--button"}
+        to={"/docs/getting-started/flashing-firmware/nrf52/"}
+      >
+        nRF52/RP2040 Firmware programmieren
+      </Link>
+    </div>
+  </div>
+</div>
+
+### Gerät anschließen und konfigurieren
+
+Nachdem Sie die Meshtastic Firmware auf das Gerät programmiert haben, können Sie mit der Erstkonfiguration fortfahren.
+
+<div className="indexCtasBody">
+  <Link
+    className={"button button--outline button--lg cta--button"}
+    to={"/docs/getting-started/initial-config"}
+  >
+    Gerät verbinden und konfigurieren
+  </Link>
+</div>

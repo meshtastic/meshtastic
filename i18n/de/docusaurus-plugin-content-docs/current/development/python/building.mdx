@@ -1,0 +1,52 @@
+---
+id: building
+title: Erstellen
+sidebar_label: Erstellen
+---
+
+Eine Python-Version besteht darin, die Veröffentlichung auf [PyPi](https://pypi.org/project/meshtastic/) zu ermöglichen, sowie einzelne ausführbare Dateien zu erstellen, die von [Github](https://github.com/meshtastic/Meshtastic-python/releases) heruntergeladen werden können.
+
+### Voraussetzungen
+
+Es werden keine Voraussetzungen für eine Veröffentlichung auf lokaler Ebene benötigt. Die Erstellung wird derzeit über Github Aktionen durchgeführt.
+
+Zum Testen/Validieren Führen Sie Folgendes aus:
+
+```shell
+pip3 install poetry
+poetry install
+```
+
+Hinweis: Wir verwenden jetzt den [poetry](https://python-poetry.org/) Paketmanager für die Erstellung von Meshtastic.  Wenn Sie mit unseren
+älteren `venv` Base-Anweisungen vertraut waren, können Sie trotzdem auf diesen Mechanismus zugreifen, indem Sie `poetry shell` ausführen, um eine Shell mit der (automatisch gewarteten) virtuellen Umgebung zu öffnen.
+
+Dies kann nützlich sein, wenn Sie den Befehl "meshtastic" ausführen wollen, ohne das Paket global zu installieren.
+
+### So funktioniert's
+
+- Aktualisieren Sie die Protocol Buffer durch den Workflow "Update protobufs" in den [Aktionen](https://github.com/meshtastic/Meshtastic-python/actions/workflows/update_protobufs.yml)
+
+- Führen Sie den "smoke1" Test aus (optional):
+
+Schließen Sie ein Gerät an den seriellen Anschluss an und führen Sie aus:
+
+```shell
+poetry run pytest -m smoke1
+```
+
+- Unit-Tests ausführen: `poetry run pytest` (optional)
+
+- run bin/test-release.sh (optional)
+
+- Führen Sie den "Make Release" Workflow in Github Aktionen aus: https://github.com/meshtastic/Meshtastic-python/actions/workflows/release.yml
+
+- Nachdem die "Make Release" Aktion beendet ist, öffnen Sie die [Releases](https://github.com/meshtastic/Meshtastic-python/releases) Es sollte einen Entwurf geben. Fügen Sie den Titel hinzu, aktualisieren Sie die "What's Changed" (Tipp: Klicken Sie auf die Schaltfläche "Auto-generate release notes". Deaktivieren Sie die Option "This is a pre-release" (falls zutreffend).
+
+:::note
+Sie benötigen entsprechende Berechtigungen im GitHub Projekt, um die Erstellung zu starten.
+:::
+
+### Anweisungen - automatisiert
+
+- Gehen Sie zu Aktionen / Make Release / Run Workflow https://github.com/meshtastic/Meshtastic-gui-installer/actions/workflows/release.yml
+- Entwurf & Veröffentlichung der Version https://github.com/meshtastic/Meshtastic-gui-installer/release

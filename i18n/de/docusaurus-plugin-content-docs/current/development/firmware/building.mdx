@@ -1,0 +1,85 @@
+---
+id: build
+title: Meshtastic Firmware bauen
+sidebar_label: Firmware bauen
+sidebar_position: 2
+---
+
+Meshtastic verwendet [PlatformIO](https://platformio.org), eine Entwicklungsumgebung, die einfache Multi-Plattform-Entwicklung und zentralisierte Werkzeuge erlaubt.
+
+## Bauumgebung einrichten
+
+1. [Git Installation](https://git-scm.com/downloads)
+2. [Installieren von PlatformIO](https://platformio.org/platformio-ide)
+3. Klonen des [Meshtastic Firmware](https://github.com/meshtastic/firmware) Repository
+   ```shell
+   git clone https://github.com/meshtastic/firmware.git
+   ```
+4. Aktualisieren Sie das Repository [submodules](https://github.com/meshtastic/firmware/blob/master/.gitmodules)
+   ```shell
+   cd firmware && git submodule update --init
+   ```
+   :::info
+   Wenn Sie die RP2040 Ziele erstellen und einen 'Dateiname zu lang' Fehler unter Windows erhalten dann schauen Sie sich [die Platformio-Dokumentation](https://arduino-pico.readthedocs.io/en/latest/platformio.html#important-steps-for-windows-users-before-installing) an.
+   :::
+
+## Bauumgebung einrichten
+
+1. Zum Ordner `firmware` wechseln
+   ```shell
+   cd firmware
+   ```
+2. Holen Sie die aktuellen Änderungen der [Meshtastic Firmware](https://github.com/meshtastic/firmware) und der [Untermodule](https://github.com/meshtastic/firmware/blob/master/.gitmodules)
+   ```shell
+   git pull --recurse-submodules
+   ```
+
+## Erstellen der Firmware
+
+1. Öffnen Sie den neu geklonten Ordner in [Visual Studio Code](https://code.visualstudio.com). Wenn Sie dieses zum ersten Mal tun, kann es einige Zeit dauern, da PlatformIO alle benötigten Werkzeuge und Bibliotheken herunterlädt. Auch wenn Platformio nicht installiert ist, wird VSCode Sie auffordern, es zu installieren, was einen Neustart des Programms erfordert.
+2. Um das Gerät auszuwählen, das Sie bauen möchten, öffnen Sie Ihre [Befehlspalette](https://code.visualstudio.com/docs/getstarted/userinterface#_command-palette):
+   - Windows: `Ctrl + Shift + P`
+   - Mac: `command + Shift + P`
+3. Geben Sie `PlatformIO: Wählen Sie Projektumgebung` und wählen Sie Ihr Ziel.
+4. Um die Firmware zu erstellen, starten Sie einfach `PlatformIO: Build` aus Ihrer Kommandopalette.
+5. Programmieren Sie die Firmware auf ihr Gerät, indem sie `PlatformIO: Upload` auswählen.
+
+## Eigene Hardware hinzufügen
+
+Das System zum Bauen der Firmware ist modular. Das Hinzufügen einer neuen Variante für eine bereits unterstützte Architektur ist einfach.
+
+### Mit eigener Hardware erstellen
+
+1. Gehen Sie in den `variants` Verzeichnis im Firmware Quellcode und erstellen Sie ein neues Verzeichnis für Ihre Hardware, nennen wir es `m5stack_atom`, und kopieren Sie eine existierende Konfiguration, die Sie ändern möchten:
+   ```shell
+   cd variants; mkdir m5stack_atom
+   cp heltec_v1/* m5stack_atom
+   cd m5stack_atom
+   ```
+2. Ändern Sie die `platformio.ini` _in diesem Unterverzeichnis_ aus der kanonischen Definition der Hardware-Variante (`HELTEC_V1` in diesem Fall) zu `PRIVATE_HW` und ändern Sie das Verzeichnis `-I` in den `build_flags` auf das neu erstellte Verzeichnis.
+   ```shell
+   [env:m5stack-atom]
+   extends = esp32_base
+   board = m5stack-atom
+   monitor_filters = esp32_exception_decoder
+   build_flags =
+      ${esp32_base.build_flags} -D PRIVATE_HW -I variants/m5stack_atom
+   lib_deps =
+      ${esp32_base.lib_deps}
+   ```
+3. Bearbeiten Sie die `variant.h` Datei _in diesem Unterverzeichnis_, um die Definitionen und Konfigurationen für ihre Platine hinzuzufügen. Das Beispiel ist sehr gut kommentiert.
+4. Erstellen, erproben und suchen Sie Fehler, bis Sie mit dem Ergebnis zufrieden sind.
+
+## Akzeptanzrichtlinien für Hardwaremodelle
+
+Aufgrund begrenzter Verfügbarkeit und laufende Unterstützung werden neue Hardwaremodellnummern nur für Meshtastic Unterstützer und Partner hinzugefügt. Das Meshtastic Team behält sich das Recht vor, bei Bedarf Ausnahmen von dieser Richtlinie zu machen. Wenn Sie Ihre Hardware offiziell unterstützen möchten, kontaktieren Sie bitte [Meshtastic Solutions](https://meshtastic.com/contact).
+
+### Alternative für Mitwirkende in der Gemeinschaft
+
+Die von der Gemeinschaft unterstützte Hardware ist immer noch willkommen, und Mitwirkende können immer noch Eigenbau (DIY) Hardware hinzufügen. Bitte beachten Sie:
+
+- Eigenbau (DIY) Hardware sollte die `PRIVATE_HW` Modellnummer verwenden.
+- Eigenbau (DIY) Hardware wird **nicht** offiziell vom Meshtastic Kernteam unterstützt und wird als `Gemeinschafts unterstützt` bezeichnet.
+- Eigenbau (DIY) Hardware wird **nicht** im [Web Programmierer](https://flasher.meshtastic.org/) oder GitHub Release Assets erscheinen.
+- Sie sind für die laufende Wartung und den Support verantwortlich.
+- Eigenbau (DIY) Hardwaremodelle sind experimentell und werden wahrscheinlich nur begrenzte oder gar keine Tests haben.

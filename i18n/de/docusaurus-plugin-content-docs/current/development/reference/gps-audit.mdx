@@ -1,0 +1,140 @@
+---
+id: gnss-modules
+title: GNSS Module verstehen
+sidebar_label: GNSS Module
+sidebar_position: 4
+---
+
+Ein ausführlicher Beitrag des Community-Mitarbeiters GPSFan, der einen umfassenden Einblick in GNSS-Module bietet, insbesondere mit Schwerpunkt auf u-blox-Modulen, die für Hardwareentwickler nützlich sein könnten, die Geräte zur Integration von GPS-Funktionalität in Meshtastic-Hardwareprojekte entwerfen.
+
+## u-blox Modultypen
+
+### Klone
+
+- Klone wie Beitian, Goouu Tech, BZGNSS und VKEL können funktional gleichwertig mit U-Blox-Teilen sein und verfügen über ein eigenes Etikett auf dem Modul. 
+- Manchmal verfügen Klone über die richtige Speichergröße und können aktualisiert werden, wenn neue Firmware herauskommt, manchmal jedoch nicht.
+
+### Fälschung
+
+- Fälschungen verwenden im Inneren normalerweise U-Blox Chips, weisen auf dem Modul jedoch ein Etikett auf, das wie ein U-Blox aussieht, und enthalten minderwertige Schaltkreise.
+
+### Fälschungen
+
+- Fälschungen haben ein Etikett, das aussieht wie ein U-Blox, aber was sich darin befindet, ist völlig ungewiss: Oft handelt es sich um einen weiteren chinesischen Chip oder einen 6010 mit einem M8-Etikett.
+
+Vorsicht, die meisten Module, die Sie auf Amazon, eBay, Banggood, Temu oder AliExpress finden, fallen in eine der drei oben genannten Kategorien.
+
+### Echte u-blox Module
+
+Digikey, Mouser, Arrow, u-blox und andere verkaufen echte u-blox Ersatzteile zu Premiumpreisen.
+
+## u-blox Chip Serien
+
+### Neo-6 Serie
+
+Das Neo-6 ist das älteste (obwohl es ältere U-Blox 4- und 5-Teile gibt), stromhungrigste, leistungsschwächste und empfindlichste Modul. Der 6010 Chip unterstützt 50 Kanäle.
+
+### Neo-7 Serie
+
+Das Neo-7 unterstützt SBAS, GLONASS sowie GPS und verfügt über einige schöne hochpräzise Teile (Neo-7P). Der 7020 Chip unterstützt 56 Kanäle.
+
+### M8 Serie
+
+Das M8 unterstützt GPS, SBAS, GLONASS, QZSS, BaiDou und Galileo, kann jedoch nur die drei wichtigsten gleichzeitig unterstützen. QZSS und GPS sollten für M8- und höhere Teile immer entweder zusammen aktiviert oder beide deaktiviert sein. Der 8030 Chip unterstützt 72 Kanäle.
+
+### M9 Serie
+
+Der M9 unterstützt alle oben genannten Konstellationen, kann jedoch 4 Systeme gleichzeitig verwenden (SBAS und QZSS sind Erweiterungssysteme und zählen nicht zu dieser Zahl). Der 9140-Chip bildet die Grundlage der Produkte M9, D9 und F9, wobei der F9P ein sehr leistungsfähiges L1/L2- oder L5-RTK fähiges Produkt ist. Der 9140 Chip unterstützt 92 Kanäle.
+
+### M10 Serie
+
+Es bleibt als Übung für den Leser, die Produktbriefe für die M10-Serie zu lesen. Der 10050 Chip unterstützt 72 Kanäle.  
+
+### Vergleich zu anderen GNSS-Chips
+
+Zum Vergleich:
+
+- Die Unicore UM980 hat 1408 Kanäle
+- Das Septentrio Mosaik-T hat 448 "Hardware-Kanäle"
+
+## u-blox Chip Konfigurationen
+
+Die u-blox Chips haben mehrere Konfigurationen, die vom Modulhersteller angepasst werden können:
+
+- Speichergröße
+- LNA (Eingangsverstärker)
+- TCXO (Temperaturkontrollierter Oszillator)
+- SAW Filter (Eingangsfilter)
+- Allgemeines Schaltungslayout
+
+## u-blox Firmware und Protokoll
+
+Jede Chipserie unterstützt eine andere und zukünftige Protokollversion. Ab 23.01 wurden die alten CFG-Befehle durch eine andere Konfigurationsmethode mit der Befehlsreihe VALSET/VALGET/VALDEL ersetzt. Aber selbst bis zum Protokoll 34 funktionieren viele der CFG Befehle noch immer. Die neue Konfigurations-Methode erlaubt viel feinere Konfiguration auf Kosten der Komplexität. Der Versuch, sowohl veraltete als auch neue Konfigurationsmethoden zu unterstützen, kann eine Herausforderung sein.
+
+### Protokollspezifikationsebenen
+
+Es gibt 3 Ebenen der Protokollspezifikation:
+
+1. **Nur für den internen Gebrauch**: Niemand außer den Mitarbeitern von u-blox sieht diese und sie enthalten den gesamten Firmware Befehlssatz im Detail.
+
+2. **Durch Geheimhaltungsvereinbarung eingeschränkt**: OEMs, die viele Teile kaufen und eine Geheimhaltungsvereinbarung unterzeichnen, haben Zugriff darauf. Nur wenige, wenn überhaupt, schaffen es in die freie Wildbahn, und sie beschreiben nur einen Teil der internen Spezifikationen.
+
+3. **Öffentlich**: Kann von jedem von der u-blox Website heruntergeladen werden. Diese stellen eine Teilmenge der durch die Geheimhaltungsvereinbarung eingeschränkten Informationen dar und enthalten häufig Fehler und Auslassungen.
+
+### Bibliotheken und versteckte Befehle
+
+- Alle u-blox Firmwares unterstützen versteckte oder undokumentierte Befehle. 
+- SparkFun hat eine u-blox Konfigurations-Bibliothek, die die neue Methode verwendet, sie ist sehr umfangreich und überdimensioniert.
+
+## Zukünftige u-blox Chips
+
+Es sind neue Chips/Module von u-blox in Entwicklung, und im Bereich Forschung und Entwicklung dürfte u-blox im Wettbewerb mit den in China entworfenen und produzierten Teilen wie dem UM980 und dem UC6580 (so sollte man hoffen) bessere und billigere Teile hervorbringen.
+
+## Häufige GPS Probleme
+
+### Selbstverschuldete Probleme
+
+#### Erwartung einer Standortlösung im Innenraum
+
+- Es wird nicht empfohlen, im Innenraum einen Standort zu empfangen. 
+- Die GNSS Signale sind sehr schwach und alles zwischen der Antenne und dem Satelliten (sogar die Atmosphäre) verschlechtert das Signal. 
+- Nicht alle Innenräume sind hinsichtlich des Signalempfangs gleich.
+
+#### Unrealistische Erwartungen hinsichtlich der Zeit bis zur Standortlösung
+
+- Es ist unrealistisch, unmittelbar nach dem Einschalten einen Standort zu empfangen. 
+- Die Zeit bis zum ersten Standort (TTFF) variiert, je nachdem, ob es sich um einen Kaltstart (der Empfänger verfügt über keine Zeit-/Almanach-/Ephemeridendaten), einen Warmstart oder einen Heißstart handelt. 
+- Bei einem guten Empfänger kann unter idealen Bedingungen die Kaltstartkorrektur bis zu 28 Sekunden dauern.
+
+#### Ungeduldige Wartezeit
+
+Zu langes Warten auf eine Lösung, wenn die Empfängerparameter möglicherweise abgelaufen sind, was bedeutet, dass nach Ablauf dieser Zeitüberschreitung nie wieder eine Lösung erfolgt.  
+
+#### Verwendung suboptimaler Konstellationen
+
+Die Verwendung von nur einer oder zwei Konstellationen, wenn der Empfänger viele empfangen kann, ist eine Verschwendung von Hardwareressourcen.
+
+#### Schlechte Antennenplatzierung
+
+- GNSS Antennen sind gerichtet und haben keinen großen Gewinn. 
+- Wenn Sie den Empfänger in die Tasche stecken oder die Antenne nicht zum Himmel richten, verringert sich die Wirksamkeit.
+
+### Andere Gründe
+
+#### Hardware Design und Fertigungsqualität
+
+- GNSS-Empfänger arbeiten mit Mikrowellenfrequenzen, daher sind Impedanz der Signalwege und Rauschminderung wichtig. 
+- Durch den Einsatz einer guten externen Antenne mit LNA und SAW Filter kann lokal erzeugtes Rauschen verringert werden. 
+- Auch die richtigen Koaxialkabel sind von entscheidender Bedeutung.
+
+#### Kostensenkung
+
+Ein über aggressiver Ansatz zur Kostensenkung kann die Leistung schrittweise bis zur Nutzlosigkeit des Empfängers verringern.
+
+#### Aggressives Energiemanagement
+
+Die meisten Empfänger verfügen über aggressives Energiemanagement, die die Erfassung/Verfolgung in Kombination mit einer schlechten Sicht auf den Himmel behindern können.  
+
+#### Falsche Initialisierung
+
+Die Unterstützung von Produkten aus mehreren Generationen und verschiedenen Empfängerherstellern macht die richtige Initialisierung des Empfängers zu einer Herausforderung.

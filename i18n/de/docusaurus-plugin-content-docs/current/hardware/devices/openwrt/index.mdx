@@ -1,0 +1,105 @@
+---
+id: openwrt
+title: Meshtastic auf OpenWrt Routern
+sidebar_label: OpenWrt
+sidebar_position: 9
+description: Richten Sie Meshtastic auf OpenWrt-Routern mithilfe der Binärdatei meshtasticd ein und konfigurieren Sie es.
+---
+
+:::caution Warnung
+Bitte melden Sie alle Probleme unter [meshtastic/openwrt](https://github.com/meshtastic/openwrt) und nicht beim primären `Firmware` Projekt.
+:::
+
+Auf dieser Seite wird die Einrichtung von Meshtastic auf OpenWrt-Routern unter Verwendung des [openwrt-repo](https://openwrt.meshtastic.org) beschrieben.
+
+## Voraussetzungen und Hardwarekompatibilität
+
+Bevor Sie mit der Einrichtung fortfahren, stellen Sie sicher, dass das Gerät die folgenden Anforderungen erfüllt:
+
+### Getestete Geräte
+
+- [OpenWrt One](https://one.openwrt.org)
+- Raspberry Pi 3/4/5
+
+### Hardware Kompatibilität
+
+- > 2 MB kostenloser Flash-Speicher.
+- Ein nicht verwendeter USB-Anschluss oder eine SPI Schnittstelle.
+
+Meshtastic OpenWrt-Pakete werden für **jede** von OpenWrt unterstützte CPU Architektur erstellt.
+
+### Unterstützte OpenWrt-Versionen
+
+- `SNAPSHOT` (`main`)
+- `24.10` (stable)
+
+## Installation
+
+### Meshtasticd auf OpenWrt installieren
+
+#### OpenWrt 24.10 (stable)
+
+Stellen Sie über SSH eine Verbindung zum Router her (Beispiel: `ssh root@192.168.1.1`)
+
+1. Fügen Sie das [Meshtastic OpenWrt-Repository](https://openwrt.meshtastic.org/#opkg) hinzu.
+
+2. Installieren Sie meshtasticd
+
+```sh
+opkg install meshtasticd
+# Optional: install meshtasticd web interface
+opkg install meshtasticd-web
+```
+
+`meshtasticd` kann auch über die LuCI Weboberfläche installiert werden, nachdem das Repo hinzugefügt wurde.
+
+#### OpenWrt `SNAPSHOT`
+
+Stellen Sie sicher, dass auf Ihrem Router die neueste `SNAPSHOT` Version von OpenWrt ausgeführt wird, oder installieren Sie sie von https://firmware-selector.openwrt.org/
+
+Stellen Sie über SSH eine Verbindung zum Router her (Beispiel: `ssh root@192.168.1.1`)
+
+1. Fügen Sie das [Meshtastic OpenWrt Repository](https://openwrt.meshtastic.org/#apk) hinzu.
+
+2. Installieren Sie meshtasticd
+
+```sh
+apk add meshtasticd
+# Optional: install meshtasticd web interface
+apk add meshtasticd-web
+```
+
+`meshtasticd` kann auch über die LuCI Weboberfläche installiert werden, nachdem das Repo hinzugefügt wurde.
+
+## Einstellungen
+
+### Meshtasticd Konfiguration
+
+Siehe [Linux basierte meshtasticd Konfiguration](/docs/hardware/devices/linux-native-hardware/#meshtasticd-configuration)
+
+### Beständigkeit
+
+- Die persistenten .proto-db-Dateien der Portduino Version von meshtasticd werden unter `/srv/meshtasticd/.portduino/default/prefs/` gespeichert.
+
+## Meshtasticd Verwendung
+
+### Start/Stop
+
+Bei der Installation von meshtasticd auf Ihrem Router wird automatisch ein Init Skript erstellt und beim Neustart auf „Autostart“ eingestellt.
+
+Zur Steuerung des Meshtastic Dienstes können folgende Befehle verwendet werden:
+
+```shell
+/etc/init.d/meshtasticd status
+/etc/init.d/meshtasticd start
+/etc/init.d/meshtasticd stop
+/etc/init.d/meshtasticd restart
+```
+
+### Protokolle anzeigen
+
+meshtasticd-Protokolle werden an das OpenWrt-Syslog gesendet.
+
+```shell
+logread
+```

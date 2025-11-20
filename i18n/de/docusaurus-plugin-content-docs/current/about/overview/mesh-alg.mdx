@@ -1,0 +1,134 @@
+---
+id: mesh-algo
+title: Netzwerk-Weiterleitungsalgorithmus
+slug: /overview/mesh-algo
+sidebar_label: Netzwerk Algorithmus
+sidebar_position: 2
+description: "Entdecken Sie den Meshtastic Netzwerk-Weiterleitungsalgorithmus: ein effektives Weiterleitungsprotokoll, das für die unabhängige Kommunikation mit LoRa Technologie entwickelt wurde."
+---
+
+import ReactPlayer from "react-player";
+
+## Aktueller Algorithmus
+
+Das Weiterleitungsprotokoll für Meshtastic wurde entwickelt, um verschiedene Anwendungsfälle zu unterstützen. Am wichtigsten ist, das es nicht nur von statischen Knoten aus geht. Wenn du seine theoretische Leistung testen möchtest, kannst du dir den [Simulator] ansehen (https://github.com/GUVWAF/Meshtasticator). Das Protokoll wird stark durch den Netzwerk-Weiterleitungsalgorithmus beeinflusst, der in [RadioHead](https://www.airspayce.com/mikem/arduino/RadioHead) verwendet wurde (der in sehr frühen Versionen dieses Projektes). Es hat vier konzeptionelle Ebenen und verwendet (seit Version 2.6) einen anderen Ansatz für Weiterleitung und Direktnachrichten.
+
+<div style={{ maxWidth: "800px", margin: "auto" }}>
+  <ReactPlayer
+    url="https://youtu.be/7v6UbC5blJU"
+    controls
+    width="100%"
+    height="400px"
+  />
+</div>
+
+### Anmerkung zu Protocol Buffers
+
+Da wir möchten, dass unsere Geräte über verschiedene Hersteller und Implementierungen hinweg funktionieren, verwenden wir den [Protocol Buffer](https://github.com/meshtastic/protobufs). Für dieses Dokument müssen Sie meistens nur
+die Nachrichtentypen MeshPacket und SubPacket betrachten.
+
+### Ebene 0: LoRa Funkgerät
+
+Alle Daten werden in LoRa Symbole umgewandelt, die zur Übertragung an das Funkgerät gesendet werden. Die Details werden an anderer Stelle beschrieben, aber man sollte erwähnen, dass es zusätzlich zu den unten beschriebenen konvertierten Nachrichtenbytes gibt es auch eine Präambel gibt, die am Anfang der Nachrichtendaten gesendet wird.
+
+Mit dieser Präambel können Funkgeräte sich intern synchronisieren und mit dem Empfang zu beginnen. Wir verwenden eine Präambellänge von 16, die länger ist als die minimale Präambellänge von 8, um den SX126x LoRa Empfänger eine Weile schlafen lassen, wodurch der Stromverbrauch gesenkt wird.
+
+Nach der Präambel kommen die LoRa Kopfdaten, die Informationen über die Nachrichtenlänge sowie ein Synchronisationswort zur Unterscheidung von Netzwerken enthält. Für Meshtastic ist dieses Synchronisationswort auf `0x2B` gesetzt.
+
+### Ebene 1: Unzuverlässige Null-Sprung-Nachrichten
+
+Diese Ebene ist konventionelle, unzuverlässige LoRa Nachrichtenübertragung. Ein Nachricht, die von einem Meshtastic Gerät generiert wurde, hat die folgende Gliederung vor der Kodierung für die Übertragung:
+
+| Position |             Länge                              |   Typ    | Anwendung                                                                                                                    |
+| :------: | :--------------------------------------------: | :------: | :--------------------------------------------------------------------------------------------------------------------------- |
+|   0x00   |             4 Byte                             | Ganzzahl | Nachrichtenkopf: Ziel. Die einzigartige NodeID des Zieles. `0xFFFFFF` für die Weiterleitung an alle Knoten. Little Endian    |
+|   0x04   |             4 Byte                             | Ganzzahl | Nachrichtenkopf: Absender. Die eindeutige NodeID des Absenders. Little Endian                                                |
+|   0x08   |             4 Byte                             | Ganzzahl | Nachrichtenkopf: Die eindeutige Kennung dieser Nachricht. Little Endian                                                      |
+|   0x0C   |             1 Byte                             |  Bits    | Nachrichtenkopf: Bitfeld. Siehe [Kopfzeilenbits](#packet-header-flags) zur Verwendung.                                       |
+|   0x0D   |             1 Byte                             |  Bits    | Nachrichtenkopf: Kanal-Hash. Wird als Hinweis für die Entschlüsselung des Empfängers verwendet.                              |
+|   0x0E   |             1 Byte                             |   Byte   | Nachrichtenkopf: Nächster Sprung zum Weiterleiten.                                                                           |
+|   0x0F   |             1 Byte                             |   Byte   | Nachrichtenkopf: Weiterleitungsknoten der aktuellen Übertragung.                                                             |
+|   0x10   | Maximal 237 Byte (ohne Protocol Buffer Zusatz) |   Byte   | Aktuelle Nutzdaten. Nicht verwendete Bytes werden auch nicht übertragen.                                                     |
+
+#### Nachrichtenkopf Bitfeld
+
+| Index | Anzahl der Bits | Anwendung                                             |
+| :---: | :-------------: | :---------------------------------------------------- |
+|  0    |      3          | Sprungweite (siehe Anmerkung in Ebene 3)              |
+|  3    |      1          | WantAck (Bestätigung erwartet)                        |
+|  4    |      1          | ViaMQTT (Nachricht über MQTT)                         |
+|  5    |      3          | HopStart (ursprüngliche Sprungweite)                  |
+
+#### Verwendungsdetails
+
+- **Nachrichtenkopf:** wird direkt von der `PacketHeader` Klasse im C++ Quellcode beschrieben. Aber indirekt entspricht er dem ersten Teil der `MeshPacket` Protocol Buffer Definition. Beachten Sie, dass der Nachrichtenkopf nicht mit durch Protocol Buffer kodiert ist, sondern als Rohdaten sendet wird. Dies spart sowohl die Sendezeit und es ermöglicht dem empfangenden Funkgerät optional Nachrichten zu filtern, bevor die Haupt-CPU aufgeweckt wird.
+
+- **Nachrichtenkopf - NodeIDs:** Werden aus den unteren vier Byte der Bluetooth MAC-Adresse erzeugt. Weil das OUI (Organizationally Unique Identifier, einzigartige ID für eine Organisation oder Hersteller) vom IEEE zugewiesen wird und wir derzeit nur einige wenige CPU-Hersteller unterstützen, ist das obere Byte De-facto-garantiert einzigartig für jeden Hersteller. Die unteren 3 Byte werden durch den Hersteller garantiert.
+
+- **Nachrichtenkopf - Eindeutige ID:** Die ID ist eine große, 32 Bit ID, um sicherzustellen, dass es einen eindeutigen Initialisierungsvektor (IV) gibt, um die verschlüsselten Nutzdaten vor Angriffen zu schützen.
+
+- **Nutzdaten:** Eine verschlüsselte und gepackte Protocol Buffer Kodierung des Typs SubPacket. Nur die Nutzdaten (SubPacket) sind verschlüsselt, während der Nachrichtenkopf nicht verschlüsselt ist. Dies erlaubt es den Knoten, Nachrichten weiter zuleiten, ohne etwas über die verschlüsselten Nutzdaten zu wissen. Weitere Informationen finden Sie zur [Verschlüsselung](/docs/overview/encryption) und in der [Protocol Buffer API Referenz](https://buf.build/meshtastic/protobufs/). Alle Daten, die die maximale Länge überschreiten, werden abgeschnitten.
+
+#### Trägererkennung mit Mehrfachzugriff und Kollisionsvermeidung (CSMA/CA)
+
+Meshtastic übernimmt CSMA/CA, ähnlich dem, was bei WiFi verwendet wird. Das bedeutet, dass alle Sender eine Kanalaktivitätserkennung (CAD) durchführen müssen, bevor sie eine Übertragung versuchen. Wird der Kanal als belegt erkannt, wird der Knoten warten, bis der Kanal frei ist. Wenn ein Kanal frei ist, könnten mehrere Knoten gleichzeitig mit der Übertragung beginnen, in diesem Fall muss ein Knoten durch eine zufällige Vielfache des Zeitschlitzes warten. Dieser Zeitschlitz ist die Zeit, die benötigt wird, um zuverlässig die Kanalaktivitätserkennung (CAD) durchzuführen. Das Vielfache des Zeitschlitzes für die Wartezeit wird zufällig aus einem Kontenfenster (CW) ermittelt, dessen Größe von der aktuellen Kanalnutzung abhängt. Das Kontenfenster ist länger bei höherer Kanalauslastung, um die Wahrscheinlichkeit von Kollisionen zu begrenzen.
+
+### Ebene 2: Zuverlässige Null-Sprung-Nachrichten
+
+Diese Ebene fügt eine zuverlässige Übertragung zwischen einem Knoten und seinen unmittelbaren Nachbarn hinzu.
+
+Die Standardnachricht von Layer 1 wird erweitert, indem das `WantAck` Bit im MeshPacket Protocol Buffer gesetzt wird. Wenn `WantAck` gesetzt ist, gilt die folgende Dokumentation von mesh.proto:
+
+> Diese Nachricht wird als verlässliche Übertragung verschickt, wir würden es vorziehen, wenn sie am Ziel ankommt. Wir würden gerne eine Bestätigungsnachricht (ACK) als Antwort erhalten.
+>
+> Weiterleitungsnachrichten behandeln diese Markierung speziell: Da Bestätigungen (ACK) für Weiterleitungen den Kanal schnell überlasten würden, wird das normale Bestätigungsverhalten unterdrückt. Stattdessen prüft der ursprüngliche Absender, ob mindestens ein Knoten diese Nachricht erneut sendet (ein einfacher Flutalgorithmus). In diesem Fall stehen sind die Chancen hoch (bei typischer LoRa Topologie), dass jeder Knoten die Nachricht empfangen wird. Damit erzeugt FloodingRouter.cpp eine implizite Bestätigung (ACK), die an den ursprünglichen Absender übertragen wird. Wenn wir nach einiger Zeit niemanden empfangen, der unsere Nachricht erneut überträgt, werden wir abbrechen und eine erneute Übertragung mit der regulären Wiederholungslogik durchführen.
+
+Wenn ein Knoten nach einer bestimmten Wartezeit keine positive oder negative Bestätigungsnachricht (ACK oder NAK) erhält, dann wird Layer 1 verwenden, um eine erneute Übertragung der gesendeten Nachricht zu versuchen. Eine zuverlässige Nachricht (bei dieser 'Null-Sprung' Ebene) wird maximal dreimal erneut gesendet. Wenn bis dahin keine Bestätigungsnachricht (ACK oder NAK) empfangen wurde, erzeugt der lokale Knoten intern eine negative Bestätigung (NAK, entweder für den internen Gebrauch oder für die Verwendung durch höhere Ebenen des Protokolls). Die Verfallszeit der erneuten Übertragung basiert auf der maximalen Zeit, die benötigt wird, um eine (implizite) positive Bestätigung (ACK) zu erhalten. Unter Berücksichtigung der Übertragungszeit der gesendeten Nachricht und etwaiger Verzögerungen bei der Bearbeitung.
+Für Direktnachrichten sendet der gewählte Empfänger auch eine positive Bestätigung (ACK) zurück zum ursprünglichen Absender. Aber die Nachricht wird nur dann erneut übertragen, wenn es überhaupt keine positive Bestätigung (ACK) empfangen wurde.
+
+### Ebene 3: Multi-Sprung-Nachrichten
+
+## Übertragungen durch gesteuertes Fluten
+
+Angesichts der verschiedenen Anwendungsfälle und Szenarien die Meshtastic unterstützt, ist unser Protokoll größtenteils um [Fluten des Netzwerkes](https://en.wikipedia.org/wiki/Flooding_(computer_networking)) herum aufgebaut. Das bedeutet, dass jeder Knoten eine empfange Nachricht überträgt bis das festgelegte Hop-Limit erreicht ist. Ein wichtiger Unterschied in Meshtastic besteht jedoch darin, dass vor der erneuten Übertragung ein Knoten eine kurze Zeit prüft, ob ein anderer Knoten die Nachricht bereits erneut übertragen hat. Wenn dem so ist, wird die Nachricht nicht erneut übertragen. "Gesteuertes Fluten" ist daher ein besserer Begriff.
+
+Das grundlegende Prinzip ist: Wenn ein Knoten eine Nachricht mit einer anderen Sprungweite als Null sieht, wird er die Sprungweite um eins reduzieren und versuchen im Namen des ursprünglichen Knotens die Nachricht erneut zu senden. Um zu unterstützen, dass auch weit entfernte Knoten die Nachricht weiterleiten, so das sie eine möglichst große Reichweite erreicht, hängt das Kontenfenster (siehe Layer 1) für eine flutende Nachricht vom Signalrauschabstand (SNR) eben dieser ab. Die Größe des Kontenfensters ist kleiner für einen niedrigen Signalrauschabstand (SNR), sodass Knoten, die weiter entfernt sind eher weiterleiten als Knoten die näher sind und deshalb die Weiterleitung unterlassen. Eine Ausnahme zu dieser Regel ist für die Rollen `ROUTER` und `REPEATER`, die eine höhere Priorität haben, um Nachrichten erneut zu übertragen und sie werden dies tun, auch wenn sie feststellen, dass ein anderer Knoten bereits die Nachricht weitergeleitet hat.
+
+### Beispiel
+
+Unten sehen Sie eine Beispieltopologie, die aus vier Knoten im CLIENT-Modus besteht, wobei Knoten 0 an einem bestimmten Punkt eine weiterzuleitende Nachricht senden möchte.
+Aufgrund der begrenzten Abdeckung erreicht er nur die anderen Knoten 1 und 2. Da Knoten 2 weiter entfernt ist, ist der Signalrauschabstand (SNR) niedriger und er beginnt daher früher als Knoten 1 mit der erneuten Übertragung.
+Nachdem Knoten 0 diese erneute Übertragung erhalten hat, wird die Nachricht bestätigt. Beachten Sie, dass eine Nachricht bereits bestätigt wird, sobald eine erneute Übertragung von einem Meshtastic Knoten (unabhängig davon, ob dieser denselben Schlüssel besitzt oder nicht) empfangen wird.
+Da Knoten 1 die erneute Übertragung von 2 hört, wird die Nachricht nicht erneut übertragen. Knoten 3 hörte die Nachricht zum ersten Mal und die Sprungweite ist noch nicht null, sodass er eine erneute Übertragung für potenziell andere Empfänger startet.
+
+![Beispiel des Netzalgorithmus](/img/SNR_based_flooding.webp)
+
+## Direktnachrichten mittels Next-Hop Weiterleitung
+
+Seit der Firmware Version v2.6 verwendet Meshtastic einen anderen Ansatz für Direktnachrichten. Ursprünglich wird die bereits erwähnte gesteuerte Weiterleitung genutzt, um das Nachrichtenziel zu erreichen.
+Wir behalten den Überblick über die Knoten, die versuchen, die Nachricht für uns weiterzuleiten. Bei erfolgreichem Empfang kommt eine Antwort zurück (z.B. eine NodeInfo Antwort, eine Bestätigung oder Routen-Verfolgung) und der Knoten, der dies an Sie weiterleitet, war auch einer der Knoten, der die ursprüngliche Nachricht weiterleitete hat. Er wird von nun an als nächster Sprung bezeichnet. Das bedeutet, anstatt das alle Knoten versuchen die Nachricht weiterzuleiten, wird nur der Knoten, für den das nächsten Sprungbyte übereinstimmt die Weiterleitung übernehmen. Beachten Sie, dass dies pro Weiterleitungssprung ermittelt wird, wenn es also einen asymmetrischen Link oder einen Knoten gibt, auf einer älteren Firmware läuft, dann wird die gesteuerte Weiterleitung angewendet. Wenn sich ein Knoten bewegt, oder sich die HF-Bedingungen ändern, kann es sein, dass der nächste Sprung nicht mehr gültig ist. Daher wird ein Knoten bei dem letzten Wiedergabeversuch immer wieder zur gesteuerten Weiterleitung zurückfallen, wenn er seinen nächsten Sprung-Server nicht hört.
+Die Prozedur wird im folgenden Diagramm dargestellt:
+
+![Next-Hop Weiterleitungsprozedur](/img/blog/NextHopRouting.webp)
+
+### Regelmäßige Übertragungsintervalle
+
+Ohne zusätzliche Module werden drei verschiedene Arten von regelmässigen Datenverkehr als Teil des Netzes erzeugt:
+
+1. Gerätetelemetrie
+   - Steuerbar durch `telemetry.device_update_interval`
+   - Standard: 30 Minuten
+2. Standort
+   - Steuerbar durch `position.position_broadcast_secs`
+   - Standard: 15 Minuten\* (mit [Smart Broadcast](/docs/configuration/radio/position/#smart-broadcast) aktiviert)
+3. NodeInfo des Knoten
+   - Steuerbar durch `device.node_info_broadcast_secs`
+   - Standard: 3 Stunden
+
+Je größer die Netze werden und je mehr das Datenaufkommen zunimmt, umso mehr wird die Firmware diese Intervalle erhöhen. Dies ist zusätzlich zur Drosselung des Übertragungszyklus, Kanal- und Sendezeit Belegung.
+
+Beginnend mit der Firmware Version v2.4, wird die Firmware die Intervalle für Telemetrie, Standort und Daten auf anderen zusätzliches Ports für Netze größer als 40 Knoten (Knoten in den letzten 2 Stunden) mit folgendem Algorithmus zurücksetzen:
+
+`ScaledInterval = Interval * (1,0 + (NumberOfOnlineNodes - 40) * 0,075)`
+
+Zum Beispiel würde ein aktives Mesh von 62 Knoten `telemetry.device_update_interval` auf 79,5 Minuten heruntersetzen anstelle des 30 Minuten Standardwertes.

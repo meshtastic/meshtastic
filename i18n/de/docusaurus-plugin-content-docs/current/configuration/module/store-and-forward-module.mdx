@@ -1,0 +1,244 @@
+---
+id: store-and-forward-module
+title: Speichern & Weiterleiten Einstellungen
+sidebar_label: Speichern & Weiterleiten
+description: Dieses Modul ermöglicht das erneute Senden von Textnachrichten, nachdem ein Gerät vorübergehend nicht in der LoRa Reichweite des Netzwerks war.
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+import { Icon } from "@iconify/react";
+
+## Übersicht
+
+Bei Verwendung dieses Moduls kann ein Gerät einen speziellen Speichern&Weiterleiten Server bitten, Textnachrichten erneut zu versenden, nachdem das Gerät vorübergehend nicht in der LoRa Reichweite des Netzes war.
+Wenn Sie sich mit einer Client-App mit dem Speichern & Weiterleiten Server verbinden, erhalten Sie seit Firmware Version 2.4 automatisch den Verlauf, der viel größer ist als der Standardcache von etwa 30 Paketen auf einem Gerät.
+
+:::info
+Nur ESP32 basierte Geräte mit zusätzlichem PSRAM wie T-Beam und T3S3 können ein Speichern & Weiterleiten Server sein.
+:::
+
+Wenn ein Client-Gerät den Verlauf vom Speichern & Weiterleiten Server anfordert, wird dieser Textnachrichten über LoRa erneut senden, die er bereits empfangen hat. Der Server gibt nur Nachrichten zurück, die sich innerhalb der vom Client angeforderten Zeit bis zur maximalen Anzahl an für den Server konfigurierten Nachrichten befinden.
+Der Server weiß nicht, welche Nachrichten das Client-Gerät tatsächlich verpasst hat, daher ist es möglich, dass Sie Duplikate erhalten.
+
+:::important
+Vorsicht beim Abfragen des Verlaufs da der Server viele Nachrichten senden kann, die Ihr Netz für einen kurzen Zeitraum belasten.
+Das Anfordern des Verlaufs über LoRa ist nicht auf dem öffentlichen Standardkanal verfügbar.
+:::
+
+## Details
+
+### So funktioniert's
+
+![Speichern & Weiterleiten - Übersicht](/img/modules/store_and_forward/store_and_forward-overview.webp)
+
+### Voraussetzungen
+
+Erste Voraussetzungen für den Speichern & Weiterleiten Server:
+
+- Speichern & Weiterleiten Server sind immer online. Wenn dieses Modul Nachrichten verpasst, wird die Zuverlässigkeit der gespeicherten Nachrichten verringert.
+- ESP32 Prozessor basiertes Gerät mit zusätzlichem PSRAM (T-Beam > v1.0, T3S3, und vielleicht andere).
+
+### Überblick über die Verwendung
+
+- Um dies über LoRa zu verwenden / zu testen, benötigen Sie mindestens 3 Geräte:
+
+  - Ein ESP32 Gerät mit PSRAM als `ROUTER` oder `store_forward.is_server` konfiguriert.
+  - Zwei weitere Geräte werden regelmäßige Knoten sein. Wenn ein Gerät eine Textnachricht sendet, wenn der andere nicht in Reichweite ist, dann kann das andere Gerät den Verlauf vom Server anfordern und die verpassten Nachricht zu empfangen, wenn es wieder in Reichweite ist.
+
+- Um dies mit einer App zu verwenden/zu testen zu können, benötigen Sie mindestens 2 Geräte:
+  - Ein ESP32 Gerät mit PSRAM als `ROUTER` oder `store_forward.is_server` konfiguriert.
+  - Ein weiteres Gerät, das Textnachrichten sendet, wenn keine App mit dem Speichern & Weiterleiten Server verbunden ist. Wenn Sie eine App mit dem Server verbinden, wird der Verlauf automatisch abgerufen.
+
+### Servereinrichtung
+
+- Konfigurieren Sie Ihr Gerät als `ROUTER` oder setzen Sie `store_forward.is_server true`.
+- Benennen Sie Ihren Serverknoten etwas, das ihn leicht identifizierbar macht, z.B. "Basidknoten (S&F)".
+- Modul Speichern & Weiterleitung konfigurieren
+
+  ```shell title="Required - Enable the module"
+  meshtastic --set store_forward.enabled true
+  ```
+
+  ```shell title="Optional - Disable sending heartbeat."
+  meshtastic --set store_forward.heartbeat false
+  ```
+
+  :::tip
+  Deaktivieren Sie am besten den Puls (der alle 15 Minuten gesendet wird) um den Netzwerkverkehr zu verringern, wenn Sie ihn nur durch Verbindung mit einer App zum Server abrufen möchten oder wenn alle Geräte den Server identifiziert haben.
+  :::
+
+### App Nutzung
+
+Aktuell implementiert in den Android und Apple Apps Version 2.2.23 und höher. Um den Verlauf des Speichern & Weiterleiten Servers anzufordern, ist für Android eine direkte Nachricht mit dem Text "SF" (ohne Anführungszeichen) nötigt. Der Server wird dann mit den angeforderten Nachrichten antworten.
+Die Apple App zeigt in der Knotenliste auch, ob ein Knoten ein Speichern & Weiterleiten Server ist, nachdem sie den Puls empfangen hat. Sie können dann den Knoten lange drücken und "Client-History" wählen, um den Verlauf vom Server anzufordern.
+
+Seit v2.4 wird bei der Verbindung zum Speichern & Weiterleiten Server selbst der Nachrichtverlauf automatisch in der App abgerufen und angezeigt.
+
+## Einstellungen
+
+### Aktiviert
+
+Aktiviert dieses Modul.
+
+### Puls
+
+Der Speichern & Weiterleiten Server sendet regelmäßige eine Nachricht an das Netzwerk. Dies erlaubt verbundenen Geräten zu erkennen, dass ein Server in Reichweite ist und Nachrichten empfängt. Eine App wie Android, iOS oder Web kann (falls unterstützt) dem Benutzer zeigen, ob ein Speichern & Weiterleiten Server verfügbar ist.
+
+### Verlauf Rücksendung Max
+
+Legt die maximale Anzahl von Nachrichten fest, die auf einem Gerät zurückgegeben werden, wenn es den Verlauf anfordert.
+
+### Zeitraum Rückgabewert
+
+Begrenzt die Zeitspanne (in Minuten), die ein Client-Gerät kann anfordern.
+
+### Datensätze
+
+Setzen Sie diese Einstellung auf die maximale Anzahl von Datensätzen, die der Server speichern wird. Am besten lassen Sie dies auf der Standardeinstellung (`0`), mit der das Modul 2/3 des verfügbaren PSRAM Ihres Gerätes verwendet. Das sind etwa 11.000 Datensätze.
+
+### Ist Server
+
+Auf true setzen, um Ihren Knoten mit PSRAM als Server zum Speichern und Weiterleiten von Nachrichten zu konfigurieren. Dies ist eine Alternative zum Setzen des Knotens als "ROUTER" und nur seit 2.4 verfügbar.
+
+## Verfügbarkeit des Speichern & Weiterleiten Moduls
+
+<Tabs
+  groupId="settings"
+  defaultValue="apple"
+  values={[
+    {
+      label: (
+        <>
+          <Icon icon="mdi:android" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Android
+        </>
+      ),
+      value: "android",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:apple" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Apple
+        </>
+      ),
+      value: "apple",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:terminal" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Kommandozeile
+        </>
+      ),
+      value: "cli",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:internet" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Web
+        </>
+      ),
+      value: "web",
+    },
+  ]}>
+
+<TabItem value="android">
+
+#### Android
+
+:::info
+Store and Forward Config options are available for Android.
+
+1. Öffnen Sie die Meshtastic Applikation
+2. Navigiere zu: **vertikale Ellipse (3 Punkte oben rechts) > Funkeinstellungen > Speichern & Weiterleiten**
+
+:::
+
+</TabItem>
+
+<TabItem value="apple">
+
+#### Apple
+
+:::info
+Alle Konfigurationsoptionen für das Speichern & Weiterleiten Module sind unter Einstellungen > Modulkonfiguration > Speichern & Weiterleiten unter iOS, iPadOS und macOS verfügbar.
+:::
+
+</TabItem>
+
+<TabItem value="cli">
+
+#### Kommandozeile
+
+|      Einstellung                    |   Akzeptable Werte  |   Standardwert         |
+| :---------------------------------: | :-----------------: | :--------------------: |
+|     store_forward.enabled           |   `true`, `false`   |     `false`            |
+|    store_forward.heartbeat          |   `true`, `false`   |     `false`            |
+|  store_forward.history_return_max   |     Ganzzahl        | `0` (25 Nachrichten)   |
+| store_forward.history_return_window |     Ganzzahl        |   `0` (240 Minuten)    |
+|     store_forward.records           | `true`, `false`     | `0` (~11.000 Einträge) |
+|    store_forward.is_server          |   `true`, `false`   |     `false`            |
+
+:::tip
+
+Weil das Gerät nach jedem Befehl über die Kommandozeile neu startet, wird empfohlen, dass mehrere Werte in einem Konfigurationsblock zusammengefasst und übertragen werden.
+
+```shell title="Example:"
+meshtastic --set store_forward.enabled true --set store_forward.history_return_max 0
+```
+
+:::
+
+##### Beispiele zur Nutzung der Kommandozeile
+
+```shell title="Enable the module"
+meshtastic --set store_forward.enabled true
+```
+
+```shell title="Disable the module"
+meshtastic --set store_forward.enabled false
+```
+
+```shell title="Set node as server"
+meshtastic --set store_forward.is_server true
+```
+
+```shell title="Set store_forward.heartbeat to default"
+meshtastic --set store_forward.heartbeat 0
+```
+
+```shell title="Set store_forward.history_return_max to default (25 messages)"
+meshtastic --set store_forward.history_return_max 0
+```
+
+```shell title="Set store_forward.history_return_max to 100 messages"
+meshtastic --set store_forward.history_return_max 100
+```
+
+```shell title="Set store_forward.history_return_window to default (240 minutes)"
+meshtastic --set store_forward.history_return_window 0
+```
+
+```shell title="Set store_forward.history_return_window to 1 day (1440 minutes)"
+meshtastic --set store_forward.history_return_window 1440
+```
+
+```shell title="Set store_forward.records to default (≈11,000 records)"
+meshtastic --set store_forward.records 0
+```
+
+```shell title="Set store_forward.records to 100 records"
+meshtastic --set store_forward.records 100
+```
+
+</TabItem>
+
+<TabItem value="web">
+
+#### Web
+
+:::info
+Alle Speichern & Weiterleiten Einstellungen sind in der Weboberfläche unter Einstellungen > Moduleinstellungen > S&F verfügbar.
+:::
+
+</TabItem>
+</Tabs>
