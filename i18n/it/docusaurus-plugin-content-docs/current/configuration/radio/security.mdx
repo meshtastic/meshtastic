@@ -1,0 +1,177 @@
+---
+id: security
+title: Configurazione Di Sicurezza
+sidebar_label: Sicurezza
+description: Questa sezione comprende le opzioni di sicurezza per il dispositivo come chiave pubblica, chiave privata e chiave di amministrazione
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+import { Icon } from "@iconify/react";
+
+Le opzioni di configurazione di sicurezza sono: chiave pubblica, chiave privata, chiave di amministratore, è gestito, console seriale, log di debug e canale di amministrazione.
+
+## Valori Di Configurazione Di Sicurezza
+
+### Chiave Pubblica
+
+Valori accettabili: `bytes`
+
+La chiave pubblica del dispositivo, condivisa con altri nodi sulla mesh per consentire loro di calcolare una chiave segreta condivisa per una comunicazione sicura.
+
+### Chiave Privata
+
+Valori accettabili: `bytes`
+
+La chiave privata del dispositivo, utilizzata per creare una chiave condivisa con un dispositivo remoto per una comunicazione sicura.**Questa chiave deve essere mantenuta riservata.**
+
+### Chiave Amministratore
+
+Valori accettabili: `repeated bytes`
+
+Chiave o chiavi pubbliche autorizzate a inviare messaggi amministrativi a questo nodo. Solo i messaggi firmati da queste chiavi saranno accettati per il controllo amministrativo.
+
+### Modalità Gestita
+
+Valori accettabili: `true`, `false`
+
+L'attivazione della Modalità Gestita blocca la scrittura delle configurazioni da parte delle applicazioni client sulla radio (rimane possibile la lettura). Una volta abilitata, le configurazioni radio possono essere modificate solo tramite i messaggi PKC Remote Admin con firmware versione 2.5+ o il vecchio canale Admin con firmware prima della versione 2.5. Questa impostazione **non** è richiesta per l'amministrazione del nodo remoto.
+
+Prima di abilitare la modalità Managed verificare che il nodo possa essere controllato tramite l'amministratore remoto o il canale di amministrazione legacy, e che tutte le funzioni funzionano correttamente per evitare di essere chiusi fuori dal dispositivo.
+
+### Console seriale
+
+Valori accettabili: `true`, `false`
+
+Disabilitando questa opzione si impedirà alla Console Serial di inizializzare l'API Stream.
+
+### Log di debug
+
+Valori accettabili: `true`, `false`
+
+Di default, la registrazione dei log è disattivata alla connessione di un client API per non intasare il link seriale condiviso. Impostare a TRUE per continuare a creare registri di debug dal vivo su seriale o Bluetooth quando l'API è attiva.
+
+### Canale Amministratore Abilitato
+
+Valori accettabili: `true`, `false`
+
+Consente il controllo del dispositivo in arrivo sul canale amministratore non sicuro legacy. Abilitando questa opzione i messaggi di controllo possono essere ricevuti attraverso il canale di amministrazione più vecchio e meno sicuro.
+
+## Disponibilità Client Configurazione Dispositivo
+
+<Tabs
+  groupId="settings"
+  defaultValue="apple"
+  values={[
+    {
+      label: (
+        <>
+          <Icon icon="mdi:android" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Android
+        </>
+      ),
+      value: "android",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:apple" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Apple
+        </>
+      ),
+      value: "apple",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:terminal" height="1.5rem" style={{ marginRight: "0.25rem" }} /> CLI
+        </>
+      ),
+      value: "cli",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:internet" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Web
+        </>
+      ),
+      value: "web",
+    },
+  ]}>
+<TabItem value="android">
+
+#### Android
+
+Tutte le opzioni di configurazione di sicurezza sono disponibili per Android.
+
+1. Apri l'applicazione Meshtastic
+2. Vai a: **Menu (3 punti in alto a destra) > Configurazione radio > Sicurezza**
+
+</TabItem>
+<TabItem value="apple">
+
+#### Apple
+
+Tutte le opzioni di configurazione di sicurezza sono disponibili su iOS, iPadOS e macOS in Impostazioni > Configurazione radio > Sicurezza.
+
+</TabItem>
+<TabItem value="cli">
+
+#### CLI
+
+Tutte le opzioni di configurazione di sicurezza sono disponibili nel CLI python. I comandi di esempio sono di seguito:
+
+| Impostazione                        | Valori Accettabili | Predefinito |
+| ----------------------------------- | ------------------ | ----------- |
+| security.public_key                 | `byte`             | `Nessuno`   |
+| security.private_key                | `byte`             | `Nessuno`   |
+| security.admin_key                  | `repeated bytes`   | `Nessuno`   |
+| security.is_managed                 | `true`, `false`    | `false`     |
+| security.serial_enabled             | `true`, `false`    | `true`      |
+| security.debug_log_api_enabled      | `true`, `false`    | `false`     |
+| security.admin_channel_enabled      | `true`, `false`    | `false`     |
+
+:::tip
+
+Poiché il dispositivo si riavvierà dopo che ogni comando viene inviato tramite CLI, si raccomanda quando si impostano più valori in una sezione di configurazione, che i comandi siano concatenati insieme in un unico comando.
+
+```shell title="Example:"
+meshtastic --set security.is_managed false --set device.debug_log_api_enabled true
+```
+
+:::
+
+```shell title="Disable serial console"
+meshtastic --set security.serial_enabled false
+```
+
+```shell title="Enable debug logging"
+meshtastic --set security.debug_log_api_enabled true
+```
+
+</TabItem>
+<TabItem value="web">
+
+#### Web
+
+TUTTE le opzioni di configurazione di sicurezza sono disponibili nel client Web, ma al momento solo una chiave pubblica di amministratore remoto può essere impostata.
+
+</TabItem>
+</Tabs>
+
+## Chiavi di sicurezza - Backup e ripristino
+
+### Backup
+
+Le chiavi pubbliche e private verranno perse e rigenerate eseguendo una cancellazione e reinstallazione del firmware. È vostra responsabilità eseguire il backup delle chiavi per mantenere la messaggistica diretta crittografata con i nodi esistenti sulla vostra mesh.
+
+Metodi di backup suggeriti:
+
+- Con il [Meshtastic CLI](/docs/software/python/cli/), esegui: `meshtastic --export-config > config_backup. aml` - questo salverà la tua intera configurazione, incluse le tue chiavi pubbliche e private su un file.
+- Copiare le chiavi in una posizione sicura, ad esempio una nota protetta da password.
+- Fai uno screenshot - il modo più semplice, è necessario assicurarsi di aver salvato la totalità di entrambe le chiavi.
+
+### Ripristino
+
+Per ripristinare le chiavi puoi:
+
+- Utilizzare il CLI Meshtastic per eseguire `meshtastic --configure config_backup. aml` - Questo è il modo più veloce per riportare l'intero nodo a dove lo hai lasciato!
+- Incolla o reinserisci manualmente le chiavi nell'app client dalla tua posizione salvata.

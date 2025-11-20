@@ -1,0 +1,369 @@
+---
+id: home-assistant
+title: Home Assistant
+sidebar_label: Home Assistant
+sidebar_position: 4
+---
+
+### Home Assistant Integrationen für Meshtastic
+
+:::warning Anmerkung
+
+Aufgrund eines bekannten Problems mit nRF52 Geräten und JSON werden nRF52 Geräte derzeit nicht für den Einsatz mit Home Assistant unterstützt.
+
+:::
+
+Die Integration von Meshtastic in den Home Assistant fügt eine neue Ebene der Kontrolle und Überwachung in Ihrem Netzwerk hinzu. Auf dieser Seite führen wir Sie durch den Prozess der Erstellung von Meshtastic MQTT Sensor Entitäten in Home Assistant. Egal ob Sie den Akkustand, die Umweltbedingungen überwachen wollen oder sogar Benachrichtigungen von Ihrem Netznetzwerk erhalten möchten, diese Integrationen stellen Ihnen die Werkzeuge zur Verfügung, um dies zu erreichen.
+
+:::info
+
+Es wird dringend empfohlen, den MQTT Explorer herunterzuladen, um die JSON Daten zu analysieren, die über den Broker laufen. Dies kann hier [http://mqtt-explorer.com/](http://mqtt-explorer.com/) heruntergeladen werden.
+
+:::
+
+## Meshtastic MQTT Sensor Entitäten erstellen
+
+- Stellen Sie sicher, dass Ihr Meshtastic Gerät mit Ihrem MQTT Broker verbunden ist und JSON als Ausgabe nutzt.
+
+- Öffnen Sie die Datei configuration.yaml und fügen Sie folgende Zeile ein:
+
+```yaml
+mqtt: !include mqtt.yaml
+```
+
+- Erstellen Sie eine neue Textdatei namens `mqtt.yaml` im Stammverzeichnis des Home-Assistenten (der gleiche Ordner wie configuration.yaml).
+
+- Fügen Sie den folgenden Quellcode Ihrer mqtt.yaml Datei hinzu.
+
+### Telemetriebeispiel für Standardknoten
+
+```yaml
+sensor:
+
+# Node #1 
+
+  - name: "Node 1 Battery Voltage"
+    unique_id: "node_1_battery_voltage"
+    state_topic: "msh/US/2/json/LongFast/!67ea9400"
+    state_class: measurement
+    value_template: >-
+      {% if value_json.from == 4038675309 and
+            value_json.payload.voltage is defined and
+            value_json.payload.temperature is not defined %}
+        {{ (value_json.payload.voltage | float) | round(2) }}
+      {% else %}
+        {{ this.state }}
+      {% endif %}
+    unit_of_measurement: "Volts"
+    # Telemetry packets come in two flavors: The default node telemetry, and the I2C sensor data.
+    # Both packets contain "voltage" so we check for temperature to ignore the sensor packet here.
+
+  - name: "Node 1 Battery Percent"
+    unique_id: "node_1_battery_percent"
+    state_topic: "msh/US/2/json/LongFast/!67ea9400"
+    state_class: measurement
+    value_template: >-
+      {% if value_json.from == 4038675309 and value_json.payload.battery_level is defined %}
+        {{ (value_json.payload.battery_level | float) | round(2) }}
+      {% else %}
+        {{ this.state }}
+      {% endif %}
+    device_class: "battery"
+    unit_of_measurement: "%"
+
+  - name: "Node 1 ChUtil"
+    unique_id: "node_1_chutil"
+    state_topic: "msh/US/2/json/LongFast/!67ea9400"
+    state_class: measurement
+    value_template: >-
+      {% if value_json.from == 4038675309 and value_json.payload.channel_utilization is defined %}
+        {{ (value_json.payload.channel_utilization | float) | round(2) }}
+      {% else %}
+        {{ this.state }}
+      {% endif %}
+    unit_of_measurement: "%"
+
+  - name: "Node 1 AirUtilTX"
+    unique_id: "node_1_airutiltx"
+    state_topic: "msh/US/2/json/LongFast/!67ea9400"
+    state_class: measurement
+    value_template: >-
+      {% if value_json.from == 4038675309 and value_json.payload.air_util_tx is defined %}
+        {{ (value_json.payload.air_util_tx | float) | round(2) }}
+      {% else %}
+        {{ this.state }}
+      {% endif %}
+    unit_of_measurement: "%"
+```
+
+### Telemetriemodul Entitäten
+
+- Wenn Sie Umweltsensoren installiert haben, erstellen Sie Entitäten für diese, indem Sie einige oder alle der folgenden Blöcke enthalten:
+
+```yaml
+  - name: "Node 1 Temperature"
+    unique_id: "node_1_temperature"
+    state_topic: "msh/US/2/json/LongFast/!67ea9400"
+    state_class: measurement
+    value_template: >-
+      {% if value_json.from == 4038675309 and value_json.payload.temperature is defined %}
+        {{ (((value_json.payload.temperature | float) * 1.8) +32) | round(2) }}
+      {% else %}
+        {{ this.state }}
+      {% endif %}
+    device_class: "temperature"
+    unit_of_measurement: "°F"
+# With device_class: "temperature" set, make sure to use the configured unit for temperature in your HA instance.
+# If you don't, then non-temperature messages will change the value of this sensor by reinterpreting the current state with the wrong unit, unless you account for it.
+# For Celsius use:    {{ (value_json.payload.temperature | float) | round(1) }} 
+# For Fahrenheit use: {{ (((value_json.payload.temperature | float) * 1.8) +32) | round(2) }}
+
+  - name: "Node 1 Humidity"
+    unique_id: "node_1_humidity"
+    state_topic: "msh/US/2/json/LongFast/!67ea9400"
+    state_class: measurement
+    value_template: >-
+      {% if value_json.from == 4038675309 and value_json.payload.relative_humidity is defined %}
+        {{ (value_json.payload.relative_humidity | float) | round(2) }}
+      {% else %}
+        {{ this.state }}
+      {% endif %}
+    device_class: "humidity"
+    unit_of_measurement: "%"
+
+  - name: "Node 1 Pressure"
+    unique_id: "node_1_pressure"
+    state_topic: "msh/US/2/json/LongFast/!67ea9400"
+    state_class: measurement
+    value_template: >-
+      {% if value_json.from == 4038675309 and value_json.payload.barometric_pressure is defined %}
+        {{ (value_json.payload.barometric_pressure | float) | round(2) }}
+      {% else %}
+        {{ this.state }}
+      {% endif %}
+    device_class: "pressure"
+    unit_of_measurement: "hPa"
+# With device_class: "pressure" set, make sure to use the configured unit for pressure in your HA instance.
+# For psi use:    {{ ((value_json.payload.barometric_pressure | float) / 68.9475729) | round(2) }} 
+
+  - name: "Node 1 Gas Resistance"
+    unique_id: "node_1_gas_resistance"
+    state_topic: "msh/US/2/json/LongFast/!67ea9400"
+    state_class: measurement
+    value_template: >-
+      {% if value_json.from == 4038675309 and value_json.payload.gas_resistance is defined %}
+        {{ (value_json.payload.gas_resistance | float) | round(2) }}
+      {% else %}
+        {{ this.state }}
+      {% endif %}
+    unit_of_measurement: "MOhms"
+```
+
+### Nachrichten Entitäten
+
+- Für zusätzliche Funktionen können Sie eine Entität für Nachrichten von einem Knoten erstellen:
+
+```yaml
+- name: "Node 1 Messages"
+    unique_id: "node_1_messages"
+    state_topic: "msh/US/2/json/LongFast/!67ea9400"
+    value_template: >-
+      {% if value_json.from == 4038675309 and value_json.payload.text is defined %}
+        {{ value_json.payload.text }}
+      {% else %}
+        {{ this.state }}
+      {% endif %}
+```
+
+### Karten & Geräteverfolgung
+
+Damit Ihre Knoten im Home Assistant in den Karten angezeigt werden können, müssen Sie eine [Geräteverfolgung](https://www.home-assistant.io/integrations/device_tracker/) Entität einrichten. Glücklicherweise erlaubt der Home Assistant diese zu erstellen, indem er einfach den `device_tracker.see`-Dienst aus einem Skript oder einer Automatisierung aufruft.
+
+Erstellen Sie dazu eine neue Automatisierung und verwenden Sie das Drei-Punkte-Menü um in den Modus "In YAML bearbeiten" zu wechseln, und richten Sie es wie folgt ein:
+
+```yaml
+alias: Update Node 1 location
+description: Update Meshtastic node when corresponding MQTT messages are seen.
+trigger:
+  - platform: mqtt
+    topic: msh/US/2/json/LongFast/!67ea9400
+    payload: "on"
+    value_template: |-
+      {% if value_json.from == 4038675309 and
+            value_json.payload.latitude_i is defined and 
+            value_json.payload.longitude_i is defined %}on{% endif %}
+condition: []
+action:
+  - service: device_tracker.see
+    metadata: {}
+    data:
+      dev_id: node_1
+      gps:
+        - "{{ (trigger.payload | from_json).payload.latitude_i | int * 1e-7 }}"
+        - "{{ (trigger.payload | from_json).payload.longitude_i | int * 1e-7 }}"
+      battery: "{{ states('sensor.node_1_battery_percent')|float(0) }}"
+mode: single
+```
+
+Die `dev_id` innerhalb des Service-Aufrufs bestimmt, welche Geräteverfolgung Entität aufgerufen wird, zum Beispiel `device_tracker.node_1` für oben. Vergewissern Sie sich, dass Sie in diesem Feld unterschiedliche Namen für Ihre verschiedenen Knoten haben, sonst werden sie alle unter dem gleichen Tracker erscheinen! Meshtastic erzeugt Breitengrad und Längengrad als Ganzzahlen, weshalb diese mit `1e-7` multipliziert werden müssen, um den realen Standort zu erzeugen.
+
+Geräteverfolgung kann auch einige andere zusätzliche Felder unterstützen, aber das wichtigste für den Meshtastic Einsatz ist der Batteriestatus, der aus den zuvor erzeugten Sensoren bezogen werden kann.
+
+### Weitere Entitäten
+
+Home Assistant Entitäten können für jeden Datentyp erstellt werden, der in MQTT veröffentlicht wird.  Zum Beispiel: `altitude`, `latitude_i`, `longitude_i`, `time`, `current` und `neighbors`.  Verwenden Sie die obigen Vorlagen als Anleitung, um bei Bedarf zusätzliche Entitäten zu erstellen.
+
+### Konfigurieren Sie ihre Themen & Knoten-ID
+
+- Ersetzen Sie `msh/US/2/json/LongFast/!67ea9400` mit dem Thema, dass ihre Knoten veröffentlicht. In diesem Beispiel bezieht sich `!67ea9400` auf den Knoten, der MQTT im Netzwerk aktiviert hat und an den Broker weiterleitet.
+
+- Ersetzen Sie in jeder Entität `4038675309` mit der Knotennummer des Funkgerätes, das Sie überwachen möchten.  In diesem Beispiel ist `4038675309` der Knoten im Netzwerk mit Umgebungssensoren und Telemetrie, die Sie beobachten möchten. Knotennummern können gefunden werden, indem die Ausgabe im MQTT Explorer überwacht wird, mit dem MQTT Addon oder unter Verwendung der Python Kommandozeile mit `meshtastic --info`.
+
+### Zusätzliche Knoten
+
+Kopieren und fügen Sie diese Entitäten ein und ändern Sie dann die Parameter `name`, `unique_id`, `from` und `states` um Entitäten von zusätzlichen Knoten zu erstellen:
+
+```yaml
+- name: "Node 2 Messages"
+    unique_id: "node_2_messages"
+    state_topic: "msh/US/2/json/LongFast/!67ea9400"
+    value_template: >-
+      {% if value_json.from == 695318008 and value_json.payload.text is defined %}
+        {{ value_json.payload.text }}
+      {% else %}
+        {{ this.state }}
+      {% endif %}
+```
+
+### Konfiguration überprüfen und YAML neu laden
+
+- Im Home Assistant starten Sie `CHECK CONFIGURATION` im Abschnitt Entwicklerwerkzeuge und laden dann alle yaml Konfiguration.
+
+:::danger Warnung
+
+Überprüfen Sie immer die Konfiguration, bevor Sie YAML neu laden oder starten Sie den Home Assistant neu, um Fehler zu identifizieren.
+
+:::
+
+![HA Entwickler Tools](/img/software/mqtt/ha_developer_tools.webp)
+
+## Dashboard Karten erstellen
+
+### Entitätskarte für Telemetrie
+
+Erstellen Sie eine neue Entitätskarte und wählen Sie die Objekte, die Sie erstellt haben.
+
+![HA Entitätenkarte](/img/software/mqtt/ha_entities_card.webp)
+
+### Logbuchkarte für Nachrichten
+
+Die Logbuchkarte ist nützlich, um eingehende Nachrichten aus dem Netz aufzuzeichnen. Unten ist ein Beispiel dafür, wie die Logbuchkarte eingerichtet wird.
+
+![HA Logbuch Karte](/img/software/mqtt/ha_logbook_card.webp)
+
+## HA Automatisierung auslösen
+
+Es ist möglich, Home Assistant Automatisierungen können basierend auf Nachrichten oder Ereignissen auf Ihrem Netz auslöst werden. 
+
+### Benachrichtigungen
+
+Dieses Beispiel wartet auf eine Nachricht mit @Tropho und sendet dann eine Pop-up-Benachrichtigung an sein Telefon mit dieser Nachricht.  Optional können ALLE Nachrichten aus dem Netz als HA Benachrichtigungen an Ihr Telefon gesendet werden.
+
+![HA bei Tropho Nachricht](/img/software/mqtt/ha_at_tropho.webp)
+
+Fügen Sie den folgenden Quellcode Ihrer automations.yaml Datei hinzu.  Stellen Sie sicher, dass Sie die `topic`, `regex_search` und `service` für Ihre Konfiguration ändern.
+
+```yaml
+- alias: Meshtastic - New notification
+  description: any message with an @Tropho will send to mobile device
+  trigger:
+    - platform: mqtt
+      topic: msh/US/2/json/LongFast/!67ea9400
+      value_template: |
+        {% if value_json.type == "text" %}on{% endif %}
+      payload: "on"
+      id: text
+      trigger: mqtt
+  condition:
+    - condition: template
+      value_template: "{{ trigger.payload_json.payload.text | regex_search('@Tropho') }}"
+    # or send ALL messages from the mesh to HA notifications (except for range tests)
+    # value_template: "{{ trigger.payload_json.payload.text is defined and "seq " not in trigger.payload_json.payload.text}}"
+      enabled: true
+  action:
+    - service: notify.mobile_app_trophos_galaxy_z_flip5
+      data:
+      # show the message as coming from "Meshtastic": 
+        message: "Meshtastic: {{ trigger.payload_json.payload.text }}"
+      # or show the device id instead:  
+      # message: "{{ trigger.payload_json.from }}: {{ trigger.payload_json.payload.text }}"
+    - delay:
+        hours: 0
+        minutes: 0
+        seconds: 30
+        milliseconds: 0
+  mode: single
+```
+
+Diese gleiche Art von Automatisierung ist sehr nützlich, um andere Aktionen im Home Assistant auszulösen.  Zum Beispiel könnten Sie einen Lüfter einschalten, wenn die Temperatur einen bestimmten Wert erreicht oder einen Ton im Lautsprecher abspielen, wenn eine neue Nachricht empfangen wird. 
+
+## Erstellen Sie eine Entität zum Senden von Nachrichten.
+
+Es ist möglich, ein Eingabefeld zu erstellen, um Nachrichten an Ihr Netzwerk aus dem Home Assistenten zu senden.
+
+### Texteingabehelfer Entität
+
+Zuerst erstellen Sie eine Eingabetexthelfer Entität. Der bevorzugte Weg zur Konfiguration eines Eingabetextes ist über die HA Schnittstelle unter Einstellungen > Geräte & Dienste > Helfer. Klicken Sie auf die Schaltfläche hinzufügen und wählen Sie dann die Option Text aus. Stellen Sie einen Texteingabehelfer mit einer maximalen Länge von 190 auf um auf der sicheren Seite zu sein. Siehe Beispiel unten.
+
+![HA Texteingabehelfer](/img/software/mqtt/ha_input_text_helper.webp)
+
+### Erstellen Sie eine Automatisierung zum Senden von Nachrichten.
+
+Diese Automatisierung aktiviert das Sendefeld bei Änderungen.  Nach Eingabe einer Nachricht drücken Sie entweder Enter oder klicken Sie außerhalb des Feldes und die Automatisierung wird einen Text in JSON 
+ Kodierung an den MQTT Broker senden.
+
+Stellen Sie sicher, dass Ihr Knoten einen Meshtastic Kanal konfiguriert hat, der "mqtt" heißt. Der vorher vereinbarte Schlüssel (PSK) spielt keine Rolle. Dieser Kanal erlaubt es dem Knoten Nachrichten mit dem Thema msh/US/2/json/mqtt/ zu empfangen.
+
+Stellen Sie nun sicher, dass Sie im gleichen MQTT Thema veröffentlichen, die Gerätekennung und das "von"-Feld im folgenden Beispiel aktualisieren können. Ein Feld `channel` kann zur Übertragung hinzugefügt werden, um auf einem anderen Kanal-Index als dem primären Kanal zu senden. Oder fügen Sie ein `to`-Feld mit einer Knotennummer hinzu, um eine Direktnachricht zu senden.
+
+```yaml
+- alias: Meshtastic - Send Automation
+  description: ""
+  trigger:
+    - platform: state
+      entity_id:
+        - input_text.meshtastic_send_box
+  condition: []
+  action:
+    - delay:
+        hours: 0
+        minutes: 0
+        seconds: 1
+        milliseconds: 0
+    - service: mqtt.publish
+      data:
+        qos: 0
+        retain: false
+        topic: msh/US/2/json/mqtt/!67ea9400
+        payload: >-
+          {"from":1743426560,"type":"sendtext","payload":"{{    
+          states('input_text.meshtastic_send_box') }}"}
+    - delay:
+        hours: 0
+        minutes: 0
+        seconds: 1
+        milliseconds: 0
+    - service: input_text.set_value
+      data:
+        value: " "
+      target:
+        entity_id: input_text.meshtastic_send_box
+    - delay:
+        hours: 0
+        minutes: 0
+        seconds: 2
+        milliseconds: 0
+  mode: single
+```
+
+  Fügen Sie diese Karte zu Ihrem Dashboard hinzu, indem Sie zu Bearbeiten Dashboard -> + ADD CARD gehen.  Dann suchen Sie per Entität nach `Meshtastic Send Box` und aktivieren Sie das Kästchen neben dem Eintrag.  Klicken Sie weiter, dann zum Dashboard hinzufügen.

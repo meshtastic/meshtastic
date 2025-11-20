@@ -1,0 +1,67 @@
+---
+id: drag-n-drop
+title: Aggiorna Firmware di nRF52 & RP2040 con Drag & Drop
+sidebar_label: Drag & Drop (consigliato)
+sidebar_position: 1
+description: Istruzioni per l'utilizzo del metodo di file Drag & Drop (raccomandato) per flashare il firmware Meshtastic su dispositivi chipset nRF52 o RP2040.
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+import Link from "@docusaurus/Link";
+
+## Flash del Firmware
+
+:::info
+Ora è possibile utilizzare il [Meshtastic Web Flasher](https://flasher.meshtastic.org) per scaricare e copiare il firmware sui dispositivi basati su nRF52 o RP2040. In alternativa, seguire le istruzioni qui sotto per scaricare e installare firmware.
+:::
+
+Se hai appena eseguito una [cancellazione di fabbrica](/docs/getting-started/flashing-firmware/nrf52/nrf52-erase/), il dispositivo può avviarsi automaticamente in modalità bootloader e si può passare a "Copia il firmware appropriato..." per il tuo dispositivo qui sotto:
+
+### nRF52
+
+1. Scarica e decomprimi l'ultimo firmware da [Meshtastic Downloads](https://meshtastic.org/downloads).
+2. Collega il dispositivo al computer con un cavo dati USB.
+3. Fai doppio clic sul pulsante di reset del dispositivo (questo lo metterà in modalità bootloader).
+4. Nota che una nuova unità sarà montata sul computer (Windows, Mac, Linux o Android).
+5. Apri questa unità e dovresti vedere tre file: `CURRENT.UF2`, `INDEX.HTM`, e `INFO_UF2.TXT`.
+6. Copia il file del firmware appropriato (`firmware-NOME_DISPOSITIVO-X.X.X-xxxxxxx.uf2`) su questa unità.
+7. Una volta che il file sarà stato copiato sul dispositivo, questo si riavvierà e installerà il firmware Meshtastic.
+
+### RP2040
+
+1. Scarica e decomprimi l'ultimo firmware da [Meshtastic Downloads](https://meshtastic.org/downloads).
+2. Premi il pulsante BOOTSEL e, tenendolo premuto, collega il dispositivo al computer tramite un cavo USB.
+3. Nota che una nuova unità sarà montata sul computer (Windows, Mac, Linux o Android).
+4. Apri questa unità e dovresti vedere due file: `INDEX.HTM` e `INFO_UF2.TXT`.
+5. Copia il file del firmware appropriato (`firmware-NOME_DISPOSITIVO-X.X.X-xxxxxxx.uf2`) su questa unità.
+6. Una volta che il file sarà stato copiato sul dispositivo, questo si riavvierà e installerà il firmware Meshtastic.
+
+## Connetti e configura il dispositivo
+
+Dopo aver flashato il firmware Meshtastic sul dispositivo, è ora possibile passare alla configurazione iniziale.
+
+<div className="indexCtasBody">
+  <Link
+    className={"button button--outline button--lg cta--button"}
+    to={"/docs/getting-started/initial-config"}
+  >
+    Connetti e configura il dispositivo
+  </Link>
+</div>
+
+### Problemi potenziali nel flashing
+
+:::info
+
+Prima di flashare conferma di avere [RAK4631](https://docs.rakwireless.com/product-categories/wisblock/rak4631/overview) e non [RAK4631-R](https://docs.rakwireless.com/product-categories/wisblock/rak4631-r/overview) Se questo non è il caso, allora nessun problema. L'hardware è identico, ma richiede di cambiare il bootloader. Le istruzioni su come fare questo [si trovano qui](/docs/getting-started/flashing-firmware/nrf52/convert-rak4631r).
+
+:::
+
+:::info
+
+Le vecchie versioni del firmware potrebbero lasciare dati corrotti che bloccano il dispositivo in continui riavvii all'accensione. Se si verificano problemi durante l'aggiornamento del dispositivo nRF52 da una versione precedente di Meshtastic, potrebbe essere necessario eseguire un ripristino di fabbrica completo della memoria flash interna.
+
+Segui la guida [ripristino di fabbrica nRF52](/docs/getting-started/flashing-firmware/nrf52/nrf52-erase) del dispositivo, prima di continuare a [flash del firmware](#flash-firmware).
+
+:::

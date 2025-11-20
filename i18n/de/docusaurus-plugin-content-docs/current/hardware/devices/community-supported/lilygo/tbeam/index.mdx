@@ -1,0 +1,164 @@
+---
+id: tbeam
+title: LILYGO® TTGO T-Beam Geräte
+sidebar_label: T-Beam
+sidebar_position: 2
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+Alle T-Beam Modelle (mit Ausnahme des S3-Core) haben auf der Rückseite des Gerätes einen Batteriehalter der 18650 Größe. Dieser ist nach der ursprünglichen Spezifikation der 18650 Zellen konzipiert und es passen nur ungeschützte 18650 Zellen hinein. Geschützte Zellen sind in der Regel länger als 65 mm, oft in etwa 70 mm.
+
+Weitere Informationen zu LILYGO®️ T-Beam Geräten finden Sie auf LILYGO®️ [GitHub Seite](https://github.com/Xinyuan-LilyGO/LilyGo-LoRa-Series).
+
+<Tabs
+groupId="t-beam"
+queryString="t-beam"
+defaultValue="sx1262"
+values={[
+{label: 'v0.7', value:'0.7'},
+{label: 'v1.1', value: '1.1'},
+{label: 'M8N', value: 'm8n'},
+{label: 'M8N & SX1262', value: 'sx1262'},
+]}>
+
+<TabItem value="0.7">
+
+## T-Beam v0.7
+
+:::caution Firmware Versionshinweis
+Dies ist eine frühere Version der T-Beam Platine. Aufgrund von Änderungen im Design verwendet diese Platine eine bestimmte Firmware Datei, die sich von den anderen T-Beam Platinen unterscheidet. Dieses Board ist nicht mehr in der Produktion und wird nicht für Neukäufe empfohlen.
+:::
+
+- **MCU**
+  - ESP32 (WLAN & Bluetooth)
+- **LoRa Sendeempfänger**
+  - Semtech SX1276
+- **Frequenzoptionen**
+  - 433 MHz
+  - 868 MHz
+  - 915 MHz
+- **Navigationsmodul**
+  - NEO-6M (GPS Empfänger)
+- **Anschlüsse**
+  - Micro USB
+  - Antennen: SMA-Antennenanschluss
+
+### Merkmale
+
+- Meshtastic vorinstalliert
+- Energie, Benutzer und Reset Schalter
+- Bildschirm wird separat verkauft
+- Kein GPS
+
+### Quellen
+
+- Firmware Datei: `firmware-tbeam0.7-X.X.xxxxx.bin`
+
+![T-Beam v0.7](/img/hardware/t-beam-v0.7.webp)
+![T-Beam v0.7 Pin Übersicht](/img/hardware/t-beam_v0.7_pinmap.webp)
+
+</TabItem>
+
+<TabItem value="1.1">
+
+## T-Strahl v1.1
+
+- **MCU**
+  - ESP32 (WLAN & Bluetooth)
+- **LoRa Sendeempfänger**
+  - Semtech SX1276
+- **Frequenzoptionen**
+  - 433 MHz
+  - 868 MHz
+  - 915 MHz
+  - 923 MHz
+- **Navigationsmodul**
+  - NEO-6M (GPS-Empfänger)
+- **Anschlüsse**
+  - Micro USB
+  - Antennen: SMA-Antennenanschluss
+
+### Merkmale
+
+- Meshtastic vorinstalliert
+- Energie, Benutzer und Reset Schalter
+- **Kommt mit 0,96 Zoll OLED-Anzeige** (Löten für Montage erforderlich)
+
+### Quellen
+
+- Firmware Datei: `firmware-tbeam-X.X.x.xxxxx.bin`
+
+![TTGO T-Beam v1.1](/img/hardware/t-beam-v1.1.webp)
+![TTGO T-Beam v1.1 Pin Übersicht](/img/hardware/t-beam_v1.1_pinmap.webp)
+
+</TabItem>
+
+<TabItem value="m8n">
+
+## T-Beam mit M8N und SX1276
+
+- **MCU**
+  - ESP32 (WLAN & Bluetooth)
+- **LoRa Sendeempfänger**
+  - Semtech SX1276
+- **Frequenzoptionen**
+  - 433 MHz
+  - 868 MHz
+  - 915 MHz
+  - 923 MHz
+- **Navigationsmodul**
+  - **NEO-M8N - GNSS-Empfänger (unterstützt GPS, GLONASS, Galileo, BeiDou)** (bessere GPS-Empfindlichkeit)
+- **Anschlüsse**
+  - Micro USB
+  - Antenne: U.FL Antennenanschluss
+
+### Merkmale
+
+- Meshtastic vorinstalliert
+- Energie, Benutzer und Reset Schalter
+- Bildschirm wird separat verkauft
+
+### Quellen
+
+- Firmware Datei: "firmware-tbeam-X.X.xxxxx.bin"
+
+![TTGO T-Beam M8N](/img/hardware/t-beam-m8n.webp)
+
+</TabItem>
+
+<TabItem value="sx1262">
+
+## T-Beam mit M8N und SX1276
+
+- **MCU**
+  - ESP32 (WLAN & Bluetooth)
+- **LoRa Sendeempfänger**
+  - **Semtech SX1262** (verbesserte Leistung)
+- **Frequenzoptionen**
+  - 433 MHz
+  - 868 MHz
+  - 915 MHz
+  - 923 MHz
+- **Navigationsmodul**
+  - **NEO-M8N - GNSS-Empfänger (unterstützt GPS, GLONASS, Galileo, BeiDou)** (bessere GPS-Empfindlichkeit)
+- **Anschlüsse**
+  - Micro USB
+  - Antenne: U.FL Antennenanschluss
+
+### Merkmale
+
+- Meshtastic vorinstalliert
+- Energie, Benutzer und Reset Schalter
+- Bildschirm wird separat verkauft
+
+### Quellen
+
+- Firmware Datei: `firmware-tbeam-X.X.X.xxxxx.bin`
+
+![T-Beam M8N & SX1262](/img/hardware/t-beam-sx1262.webp)
+
+</TabItem>
+
+</Tabs>

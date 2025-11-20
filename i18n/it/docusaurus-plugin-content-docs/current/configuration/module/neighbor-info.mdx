@@ -1,0 +1,132 @@
+---
+id: neighbor-info
+title: Uso Del Modulo Informazioni Vicino
+sidebar_label: Informazioni Vicinato
+description: Questo modulo ti permette di inviare informazioni sui tuoi vicini immediati (0 hop).
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+import { Icon } from "@iconify/react";
+
+Il Modulo Info Vicini è per l'invio di informazioni sui vicini 0-hop di ogni nodo alla mesh. Le opzioni di configurazione sono: Abilitato, Intervallo di aggiornamento e Trasmettere su LoRa.
+
+:::info
+Informazioni Vicini è solo informativo e non influisce sul comportamento di routing della rete mesh. È quindi facoltativo e disabilitato per impostazione predefinita.
+:::
+
+Al fine di salvare la larghezza di banda, Meshtastic non tiene traccia del percorso un pacchetto sta prendendo per arrivare alla destinazione, tranne quando si utilizza Traceroute. Attivando questo modulo e abilitando "Trasmettere su LoRa", il tuo nodo invierà periodicamente un pacchetto con una lista dei suoi vicini diretti e la qualità (SNR) del link corrispondente. Se abiliti questo su tutti i nodi, puoi creare un grafico della rete completa per vedere come è connessa. Al momento della scrittura, non ci sono clienti che lo visualizzano per voi, ma è possibile utilizzare, ad esempio, MQTT per raccogliere tutti i dati.
+
+Per utilizzare questo modulo, assicurati che i tuoi dispositivi abbiano la versione del firmware 2.2.0 o superiore. Da 2.3.2 in poi, il modulo può rilevare vicini anche se altri nodi non hanno il modulo abilitato.
+
+## Valori Di Configurazione Del Modulo Info Vicini
+
+### Abilitato
+
+Abilita o disabilita Modulo Info Vicini.
+
+### Intervallo di Aggiornamento
+
+Quanto spesso le informazioni dei vicini vengono inviate alla mesh. Questo valore non può essere inferiore a 4 ore (14400 secondi). Il valore predefinito è 6 ore (21600 secondi).
+
+### Trasmettere su LoRa
+
+Disponibile dal firmware 2.5.13 e superiore. Per impostazione predefinita, le informazioni vicine verranno inviate solo a MQTT e ad un'app connessa. Se abilitata, le informazioni vicine saranno inviate sul canale principale su LoRa. Disponibile solo quando il canale primario non è il canale pubblico con chiave e nome predefiniti.
+
+## Disponibilità Del Client Del Modulo Info Vicini
+
+<Tabs
+  groupId="settings"
+  defaultValue="apple"
+  values={[
+    {
+      label: (
+        <>
+          <Icon icon="mdi:android" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Android
+        </>
+      ),
+      value: "android",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:apple" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Apple
+        </>
+      ),
+      value: "apple",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:terminal" height="1.5rem" style={{ marginRight: "0.25rem" }} /> CLI
+        </>
+      ),
+      value: "cli",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:internet" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Web
+        </>
+      ),
+      value: "web",
+    },
+  ]}>
+
+<TabItem value="android">
+
+#### Android
+
+:::info
+All Neighbor Info Module config options are available for Android in app version 2.2.0 and higher.
+
+1. Apri l'applicazione Meshtastic
+2. Vai a: **Menu (3 punti in alto a destra) > Configurazione radio > Info vicini**
+   :::
+
+</TabItem>
+<TabItem value="apple">
+
+#### Apple
+
+Non ancora implementato.
+
+</TabItem>
+<TabItem value="cli">
+
+:::info
+
+Tutte le opzioni di configurazione del Modulo Info Vicini sono disponibili nella versione di python CLI 2.2.0 e superiore.
+
+:::
+
+I comandi di esempio sono di seguito:
+
+```shell title="Enable/Disable the Neighbor Info Module"
+meshtastic --set neighbor_info.enabled true
+meshtastic --set neighbor_info.enabled false
+```
+
+```shell title="Set the update interval to 5 hours"
+meshtastic --set neighbor_info.update_interval 18000
+```
+
+```shell title="Set transmit over LoRa to true"
+meshtastic --set neighbor_info.transmit_over_lora true
+```
+
+```shell title="Get the Neighbor Info Module Configuration"
+meshtastic --get neighbor_info
+```
+
+</TabItem>
+<TabItem value="web">
+
+:::info
+
+Tutte le opzioni di configurazione del modulo Info Vicini sono disponibili nell'interfaccia web.
+
+:::
+
+</TabItem>
+</Tabs>

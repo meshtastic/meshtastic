@@ -1,0 +1,54 @@
+---
+id: nrf52-erase
+title: Ripristino di Fabbrica nRF52/RP2040
+sidebar_label: Cancellazione Fabbrica
+sidebar_position: 3
+description: Istruzioni per la cancellazione in fabbrica di un dispositivo nRF52 o RP2040.
+---
+
+import Link from "@docusaurus/Link";
+
+Meshtastic utilizza la libreria [littlefs](https://github.com/littlefs-project/littlefs) per memorizzare configurazione, registri e altri dati nel flash interno di dispositivi nRF52 & RP2040. L'aggiornamento del firmware non cancella_ questi dati aggiuntivi, che possono causare problemi quando il formato e la posizione dei dati cambiano tra le versioni.
+
+:::info
+You may now use the [Meshtastic Web Flasher](https://flasher.meshtastic.org) to Factory Erase your nRF52 or RP2040-based devices. Visit the flasher, select your board, and click the trash can icon to the right of the Flash button. This will open a dialogue to begin the erase procedure.
+
+In alternativa, seguire le istruzioni riportate di seguito.
+:::
+
+### nRF52
+
+Per resettare la memoria flash sulla scheda nRF52:
+
+1. Scarica e decomprimere l'ultimo firmware da [Meshtastic Downloads](https://meshtastic.org/downloads).
+2. Collega il dispositivo al computer con un cavo dati USB.
+3. Premere due volte il pulsante di reset del dispositivo (questo lo metterà in modalità bootloader)
+4. Nota che una nuova unità sarà montata sul computer (Windows, Mac, Linux o Android)
+5. Apri questa unità e dovresti vedere tre file: `CURRENT.UF2`, `INDEX.HTM`, e `INFO_UF2.TXT`
+6. Apri il file `INFO_UF2.TXT` con un editor di testo e segnati il valore di `SoftDevice`.
+7. Trova il file incluso nel firmware scaricato che corrisponde al tuo numero principale di versione (7.x.x o 6.x.x). Usa `Meshtastic_nRF52_factory_erase_v3_S140_7.3.0.uf2` o `Meshtastic_nRF52_factory_erase_v3_S140_6.1.0.uf2` e copialo sul nuovo disco. Il dispositivo dovrebbe riavviarsi.
+8. Con il [Meshtastic CLI](/docs/software/python/cli/) installato, apri il tuo Terminal/Console e inserisci il comando: `meshtastic --noproto`.
+9. Dovresti vedere il messaggio: `Formatting... Done`.
+
+Una volta che il dispositivo è stato cancellato, è possibile procedere all'installazione dell'ultimo firmware Meshtastic su un file system pulito facendo clic sul link qui sotto.
+
+### RP2040
+
+Per resettare la memoria flash sulla scheda RP2040:
+
+1. Scarica [flash_nuke.uf2](https://datasheets.raspberrypi.com/soft/flash_nuke.uf2) sul tuo computer.
+2. Premi il pulsante BOOTSEL e, tenendolo premuto, collega il dispositivo al computer tramite un cavo USB.
+3. La scheda dovrebbe ora apparire come un dispositivo di archiviazione di massa sul computer con l'etichetta RPI-RP2.
+4. Copia il file flash_nuke.uf2 sul dispositivo.
+5. La scheda ora si riavvierà e la memoria flash verrà cancellata.
+
+Una volta che il dispositivo è stato cancellato, è possibile procedere all'installazione dell'ultimo firmware Meshtastic su un file system pulito facendo clic sul link qui sotto.
+
+<div className="indexCtasBody">
+  <Link
+    className={"button button--outline button--lg cta--button"}
+    to={"/docs/getting-started/flashing-firmware/nrf52/"}
+  >
+    Flash Firmware nRF52/RP2040
+  </Link>
+</div>

@@ -1,0 +1,27 @@
+---
+title: Panoramica
+sidebar_label: Panoramica
+slug: /overview
+sidebar_position: 2
+description: Scopri le basi del funzionamento di Meshtastic, dall'invio di messaggi tramite l'app, al sistema intelligente di rebroadcast della rete per una maggiore portata.
+---
+
+## Come funziona
+
+Quando invii un messaggio sulla tua app Meshtastic, questo viene trasmesso alla radio utilizzando Bluetooth, Wi-Fi/Ethernet o connessione seriale. Tale messaggio viene poi trasmesso dalla radio. Se non ha ricevuto una conferma da nessun altro dispositivo dopo un certo periodo di tempo, ritrasmetterà il messaggio fino a tre volte.
+
+Quando una radio ricevente cattura un pacchetto, controlla per vedere se ha mai sentito prima quel messaggio. Nel caso lo avesse sentito allora ignorerà il messaggio. Se non lo avesse già sentito in precedenza, allora lo ritrasmetterà.
+
+Per ogni messaggio che una radio ritrasmette, decrementa di uno il "limite di hop". Quando una radio riceve un pacchetto con un limite di hop pari a zero, non ritrasmetterà il messaggio.
+
+La radio memorizzerà una piccola quantità di pacchetti (circa 30) nella sua memoria, per quando non è collegata ad un'app client. Se la memoria è piena, sostituirà solo i pacchetti più vecchi con nuovi messaggi di testo in ingresso.
+
+## Che cos'è una mesh?
+
+Al livello radio una mesh Meshtastic è un insieme di nodi che condividono lo stesso fattore di diffusione LoRa, frequenza centrale e larghezza di banda. Un nodo può essere in una sola rete radio; non vedrà o non risponderà ai messaggi dei nodi che usano valori diversi per queste impostazioni. Per formare una mesh i nodi devono condividere gli stessi valori. 
+
+Questi valori sono raggruppati in "presets" che possono essere facilmente scelti nella sezione di configurazione LoRa. Le preimpostazioni consentono ai nodi di configurare facilmente gli stessi parametri radio.
+
+Sopra a queste mesh radio ci sono canali. Una mesh logica è formata da un canale con un nome particolare e chiave di cifratura. Il canale predefinito in una mesh radio è Canale 0 con un "nome" vuoto e una chiave di crittografia uguale ad AQ==. 
+
+I nodi possono appartenere ad un massimo di 8 canali nella rete mesh radio. Un Canale personalizzato può essere creato per essere usato da un gruppo specifico. Solo i nodi configurati con la stessa chiave di cifratura e nome del canale saranno in grado di leggere e visualizzare i messaggi su quel canale. Tuttavia, tutti i nodi nella rete radio riceveranno e potranno ritrasmettere messaggi (a seconda del loro ruolo) indipendentemente dalle impostazioni del canale per il messaggio.

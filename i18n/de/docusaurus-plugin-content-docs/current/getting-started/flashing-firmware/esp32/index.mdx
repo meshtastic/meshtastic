@@ -1,0 +1,23 @@
+---
+id: flashing-esp32-devices
+title: ESP32 Geräte programmieren
+sidebar_label: ESP32 Gerät
+sidebar_position: 2
+description: Anleitung zum Programmieren der Meshtastic Firmware auf einem ESP32 Gerät.
+---
+
+:::info
+Die empfohlene Methode für die Programmierung der Firmware ist der [Web Flasher.](https://flasher.meshtastic.org)
+:::
+
+## Methode zur Programmierung für ESP32 Geräte
+
+1. Der [Web Flasher](/docs/getting-started/flashing-firmware/esp32/web-flasher.mdx) benötigt entweder Chrome- oder Edge-Browser, ist aber eine ausgezeichnete Wahl für die schnelle Programmierung von Geräten. **Diese Methode wird dringend zur Programmierung der Firmware für neue Benutzer des Projekts empfohlen, da sie einfach zu verwenden ist.**
+2. Das [Kommandozeilenskript](/docs/getting-started/flashing-firmware/esp32/cli-script) wird als "Manueller Prozess" für das Programmieren von Firmware betrachtet.
+3. Die Programmierung des Gerätes mit einem [externen seriellen Adapter](/docs/getting-started/flashing-firmware/esp32/external-serial-adapter) sollte nur als letzter Ausweg versucht werden, wenn keine andere Methode erfolgreich war.
+
+:::info Anmerkung
+
+Der [Weboberfläche](/docs/software/Weboberfläche) unter meshtastic.local wird nur mit einem vollständigen Löschen und Neuinstallation des Gerätes aktualisiert. Wenn Sie eine Neuinstallation wählen, erhalten Sie die neueste (gebündelte) Webschnittstelle.  Um Ihre Einstellungen zu sichern, können Sie diese vor einer Neuinstallation [Exportieren](/docs/software/python/cli#--export-config) und danach wiederherstellen.
+
+:::

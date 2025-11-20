@@ -1,0 +1,244 @@
+---
+id: store-and-forward-module
+title: Impostazioni Modulo Store & Forward
+sidebar_label: Salva & Inoltra
+description: Questo modulo consente di inviare di nuovo i messaggi di testo dopo che un dispositivo è stato temporaneamente non nel range della mesh LoRa.
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+import { Icon } from "@iconify/react";
+
+## Panoramica
+
+Per usare questo modulo, un dispositivo client può chiedere a uno speciale server Store & Forward per inviare di nuovo messaggi di testo dopo che il client è stato temporaneamente non nel range LoRa della mesh.
+Dal firmware versione 2.4, quando ci si connette al server Store & Forward con un'app client, si ottiene la cronologia in modo automatico, questa sarà molto più grande della cache predefinita di circa 30 pacchetti su un dispositivo.
+
+:::info
+Solo i dispositivi basati su ESP32 con PSRAM installata come T-Beam e T3S3 possono essere un server Store & Forward.
+:::
+
+Quando un dispositivo client richiede la cronologia dal server Store & Forward, invierà nuovamente i messaggi di testo su LoRa che ha ricevuto. Il server restituirà solo messaggi che si trovano entro la finestra temporale richiesta dal client fino al numero massimo di messaggi configurati per il server.
+Il server non sa quali messaggi il dispositivo client ha effettivamente perso, quindi è possibile che si ricevano duplicati.
+
+:::important
+Siate consapevoli quando chiedete la cronologia messaggi, dato che il server potrebbe inviare un sacco di messaggi che appesantiranno la vostra rete mesh per un breve periodo di tempo.
+La cronologia delle richieste su LoRa non è disponibile sul canale pubblico predefinito.
+:::
+
+## Dettagli
+
+### Come funziona
+
+![Store & Forward - Panoramica](/img/modules/store_and_forward/store_and_forward-overview.webp)
+
+### Requisiti
+
+Requisiti iniziali per il server Store and Forward:
+
+- Server Store & Forward sono destinati ad essere sempre online. Se questo modulo perde dei messaggi, l'affidabilità dei messaggi memorizzati sarà ridotta.
+- Dispositivi basati sul processore ESP32 con PSRAM (T-Beam > v1.0, T3S3, e forse altri).
+
+### Panoramica di utilizzo
+
+- Per usare / testare questo su LoRa sarebbe meglio avere almeno 3 dispositivi:
+
+  - Un dispositivo ESP32 con PSRAM configurato come `ROUTER` o `store_forward.is_server` impostato.
+  - Gli altri due saranno normali CLIENT. Se un client invia un messaggio di testo quando l'altro non è in range, l'altro può richiedere la cronologia dal server per ricevere il messaggio perso quando è di nuovo nel range.
+
+- Per usarlo / testarlo con un'app client sarebbe meglio avere almeno 2 dispositivi:
+  - Un dispositivo ESP32 con PSRAM configurato come `ROUTER` o `store_forward.is_server` impostato.
+  - Un altro dispositivo che invia messaggi di testo quando nessuna app è connessa al server Store & Forward. Quando connetti un'app al server, recupererà automaticamente la cronologia.
+
+### Configurazione Server
+
+- Configura il tuo dispositivo come `ROUTER` o imposta `store_forward.is_server true`.
+- Dai un nome al nodo del tuo server che lo rende facilmente identificabile, ad esempio "Nodo di Base (S&F)".
+- Configura il modulo Store e Forward
+
+  ```shell title="Required - Enable the module"
+  meshtastic --set store_forward.enabled true
+  ```
+
+  ```shell title="Optional - Disable sending heartbeat."
+  meshtastic --set store_forward.heartbeat false
+  ```
+
+  :::tip
+  Meglio disabilitare l'heartbeat (che viene inviato ogni 15 minuti) per ridurre il traffico di rete, se si desidera solo recuperarlo collegandosi con un'app al server, o quando tutti i dispositivi client hanno identificato il server.
+  :::
+
+### Utilizzo del client
+
+Attualmente implementato nelle applicazioni Android e Apple versione 2.2.23 e superiore. Per richiedere la cronologia dal Server Store & Forward, per Android è necessario inviare un messaggio diretto contenente il testo "SF" (senza virgolette). Il server risponderà quindi con i messaggi richiesti.
+Le app Apple mostreranno anche se un nodo è un server Store & Forward nella lista dei nodi dopo aver sentito l'heartbeat. È quindi possibile premere a lungo il nodo e selezionare "Cronologia Client" per richiedere la cronologia dal server.
+
+Dalla versione 2.4, quando ci si connette allo stesso Server Store & Forward, la cronologia dei messaggi di testo verrà automaticamente recuperata e visualizzata nell'app.
+
+## Impostazioni
+
+### Abilitato
+
+Abilita questo modulo.
+
+### Heartbeat
+
+Il server Store & Avanti invia un messaggio periodico alla rete. Ciò consente ai dispositivi connessi di sapere che un server è in range e in ascolto dei messaggi ricevuti. Un client come Android, iOS o Web può (se supportato) indicare all'utente se è disponibile un Server Store & Forward.
+
+### History Return Max
+
+Imposta il numero massimo di messaggi da restituire a un dispositivo client quando richiede la cronologia.
+
+### History Return Window
+
+Limita il periodo di tempo (in minuti) che un dispositivo client può richiedere.
+
+### Record
+
+Impostare questo al numero massimo di record che il server salverà. Meglio lasciare questo come predefinito (`0`) dove il modulo userà 2/3 della PSRAM, disponibile per il tuo dispositivo. Si tratta di circa 11.000 record.
+
+### Is server
+
+Impostare a VERO per configurare il nodo con PSRAM come Server Store & Forward per memorizzare e inoltrare i messaggi. Questa è un'alternativa all'impostazione del nodo come `ROUTER` e disponibile solo dalla 2.4.
+
+## Disponibilità Del Client Di Configurazione Del Modulo Store & Forward
+
+<Tabs
+  groupId="settings"
+  defaultValue="apple"
+  values={[
+    {
+      label: (
+        <>
+          <Icon icon="mdi:android" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Android
+        </>
+      ),
+      value: "android",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:apple" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Apple
+        </>
+      ),
+      value: "apple",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:terminal" height="1.5rem" style={{ marginRight: "0.25rem" }} /> CLI
+        </>
+      ),
+      value: "cli",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:internet" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Web
+        </>
+      ),
+      value: "web",
+    },
+  ]}>
+
+<TabItem value="android">
+
+#### Android
+
+:::info
+Store and Forward Config options are available for Android.
+
+1. Apri l'applicazione Meshtastic
+2. Vai a: **Menu (3 punti in alto a destra) > Configurazione radio > Store & Forward**
+
+:::
+
+</TabItem>
+
+<TabItem value="apple">
+
+#### Apple
+
+:::info
+Tutte le opzioni di configurazione del modulo Store & Forward sono disponibili su iOS, iPadOS e macOS su Impostazioni > Configurazione del modulo > Store & Forward.
+:::
+
+</TabItem>
+
+<TabItem value="cli">
+
+#### CLI
+
+|      Impostazione                   | Valori Accettabili |     Predefinito           |
+| :---------------------------------: | :----------------: | :-----------------------: |
+|     store_forward.enabled           |  `true`, `false`   |       `false`             |
+|    store_forward.heartbeat          |  `true`, `false`   |       `false`             |
+|  store_forward.history_return_max   |    `intero`        |    `0` (25 messaggi)      |
+| store_forward.history_return_window |    `intero`        |     `0` (240 minuti)      |
+|     store_forward.records           |    `intero`        | `0` (circa 11.000 record) |
+|    store_forward.is_server          |  `true`, `false`   |       `false`             |
+
+:::tip
+
+Poiché il dispositivo si riavvierà dopo che ogni comando viene inviato tramite CLI, si raccomanda quando si impostano più valori in una sezione di configurazione, che i comandi siano concatenati insieme in un unico comando.
+
+```shell title="Example:"
+meshtastic --set store_forward.enabled true --set store_forward.history_return_max 0
+```
+
+:::
+
+##### Esempi di utilizzo CLI
+
+```shell title="Enable the module"
+meshtastic --set store_forward.enabled true
+```
+
+```shell title="Disable the module"
+meshtastic --set store_forward.enabled false
+```
+
+```shell title="Set node as server"
+meshtastic --set store_forward.is_server true
+```
+
+```shell title="Set store_forward.heartbeat to default"
+meshtastic --set store_forward.heartbeat 0
+```
+
+```shell title="Set store_forward.history_return_max to default (25 messages)"
+meshtastic --set store_forward.history_return_max 0
+```
+
+```shell title="Set store_forward.history_return_max to 100 messages"
+meshtastic --set store_forward.history_return_max 100
+```
+
+```shell title="Set store_forward.history_return_window to default (240 minutes)"
+meshtastic --set store_forward.history_return_window 0
+```
+
+```shell title="Set store_forward.history_return_window to 1 day (1440 minutes)"
+meshtastic --set store_forward.history_return_window 1440
+```
+
+```shell title="Set store_forward.records to default (≈11,000 records)"
+meshtastic --set store_forward.records 0
+```
+
+```shell title="Set store_forward.records to 100 records"
+meshtastic --set store_forward.records 100
+```
+
+</TabItem>
+
+<TabItem value="web">
+
+#### Web
+
+:::info
+Tutte le opzioni di configurazione del modulo Store & Forward sono disponibili nell'interfaccia web alla configurazione > Configurazione del modulo > S&F.
+:::
+
+</TabItem>
+</Tabs>

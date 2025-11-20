@@ -1,0 +1,107 @@
+---
+id: python
+title: Meshtastic Python Entwicklung
+sidebar_position: 5
+sidebar_label: Python
+---
+
+## Ein Hinweis an Entwickler dieser Bibliothek
+
+Wir verwenden die voreingestellten Python Formatierungskonventionen (autopep8) für Visual Studio Code. Wenn Sie diese IDE verwenden, sollten Sie also in der Lage sein, "Formatdokument" zu verwenden und keine Unterschiede zu erzeugen, die nicht miteinander in Zusammenhang stehen. Wenn Sie einen anderen Editor verwenden, ändern Sie bitte keine Formatierung in Zeilen, die Sie nicht geändert haben.
+
+### Erstellen
+
+```shell title="To build a new release"
+apt install pandoc
+sudo pip3 install markdown pdoc3 webencodings pyparsing twine autopep8 pylint pytest pytest-cov
+```
+
+```shell title="For development"
+poetry install --all-extras --with dev,powermon
+```
+
+### Linting
+
+```shell
+pylint meshtastic
+```
+
+### Testen
+
+#### Pytest installieren und ausführen
+
+- Füge `-v` oder sogar `-vv` für mehr Ausführlichkeit hinzu
+
+```shell
+pip3 install .
+pytest -vv
+```
+
+```shell title="Run just unit tests"
+pytest
+# oder (ausführlicher)
+pytest -m unit
+# oder
+make
+```
+
+```shell title="Run just integration tests"
+pytest -m int
+```
+
+```shell title="Run the smoke test with only one device connected serially (aka smoke1)"
+pytest -m smoke1
+```
+
+:::caution
+Das Ausführen von `smoke1` wird die Werte auf dem Gerät zurücksetzen, einschließlich der Region auf 1 (US).
+Achten Sie darauf, den Reset-Button auf dem Gerät zu drücken, nachdem der Test abgeschlossen ist.
+:::
+
+```shell title="Run the smoke test with only two device connected serially (aka smoke2)"
+pytest -m smoke2
+```
+
+```shell title="Run the wifi smoke test"
+pytest -m smokewifi
+```
+
+```shell title="Run a specific test"
+pytest -msmoke1 meshtastic/tests/test_smoke1.py::test_smoke1_info
+
+# oder für einen bestimmten smoke2 test
+pytest -m smoke2 meshtastic/tests/test_smoke2. y::test_smoke2_info
+
+# oder für einen bestimmten smoke_wifi-Test
+pytest -m smokewifi meshtastic/tests/test_smoke_wifi.py::test_smokewifi_info
+```
+
+**Füge eine weitere Klassifikation von Tests wie `unit` oder `smoke1`** hinzu
+
+Siehe [pytest.ini](https://github.com/meshtastic/Meshtastic-python/blob/master/pytest.ini).
+
+```shell title="To see the unit test code coverage"
+pytest --cov=meshtastic
+# oder wenn Sie einen Report in HTML wünschen
+pytest --cov-report html --cov=meshtastic
+# oder
+make cov
+```
+
+```shell title="To see slowest unit tests, you can run"
+pytest --durations=0
+# oder
+make slow
+```
+
+## Drahtkodierung
+
+Beim Versenden von Protocol Buffer Paketen über serielle oder TCP Verbindung wird jedem Paket eine uint32 Ganzzahl vorangestellt, die in Netzwerk-Byte-Reihenfolge (Big Endian) gesendet werden.
+Die oberen 16 Bits müssen 0x94C3 sein. Die unteren 16 Bits sind Paketlänge (diese Kodierung gibt Platz, um letztlich ziemlich große Pakete zu ermöglichen).
+
+Implementierungen validieren die Länge mit der maximal möglichen Größe eines BLE-Pakets (unser kleinster gemeinsamer Nenner) von 512 Bytes. Wenn die angegebene Länge größer als diese ist, gehen wir davon aus, dass das Paket beschädigt ist und suchen erneut nach dem 0x4403 Framing.
+
+Die zum Gerät gesendeten Pakete sind ToRadio Protocol Buffer, die vom Gerät empfangenen Pakete sind FromRadio Protocol Buffer.
+Der 0x94C3 Marker kann als Framing zum (letztendlichen) Resync verwendet werden, wenn Pakete über das Kabel beschädigt werden.
+
+Hinweis: Das 0x94C3 Framing wurde gewählt, um Verwirrung mit dem 7 Bit ascii Zeichensatz zu verhindern. Es kollidieren auch nicht mit einer gültigen utf8-Kodierung. Dies macht es ein wenig einfacher, ein Gerät zu starten, das reguläre Ausgaben zur Fehlersuche auf seinem seriellen Anschluss ausgibt und dann erst, nachdem es ein gültiges Paket vom PC erhalten hat, wird die unkodierte Ausgabe zur Fehlersuche deaktiviert und zur Packetkodierung gewechselt.

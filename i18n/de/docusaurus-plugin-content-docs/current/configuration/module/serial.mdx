@@ -1,0 +1,355 @@
+---
+id: seriell
+title: Serielle Modulkonfiguration
+sidebar_label: Seriell
+description: Dieses Modul ist eine Schnittstelle, mit der Sie Ihr Meshtastic über eine serielle Schnittstelle kommunizieren und steuern können.
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+import { Icon } from "@iconify/react";
+import ReactPlayer from "react-player";
+
+Die Konfigurationsoptionen des seriellen Moduls sind: Aktivierung, Echo, Betriebsmodus, Empfangs GPIO Pin, Sende GPIO Pin, Baudrate, Wartezeit und das Überschreiben des seriellen Ports der Konsole.. Die Konfiguration des seriellen Moduls verwendet eine administrative Nachricht, die einen `ConfigModule.Serial` Protocol Buffer sendet.
+
+Dieses Modul ist eine Schnittstelle, mit der Sie Ihr Meshtastic Gerät über eine serielle Schnittstelle ansprechen und steuern können. Das Modul kann auf verschiedene [Betriebsmoden](#mode) gesetzt werden, die jeweils einen anderen Anwendungszweck erfüllen.
+
+![image](/img/modules/Serial/jet.webp)
+
+<div style={{ maxWidth: "800px", margin: "auto" }}>
+  <ReactPlayer
+    url="https://youtu.be/HdOiGKBtapw"
+    controls
+    width="100%"
+    height="400px"
+  />
+</div>
+
+## Serielle Modulkonfiguration
+
+### Aktiviert
+
+Aktiviert das serielle Modul.
+
+### Echo
+
+Wenn aktiviert, werden alle Nachrichten, die Sie senden, an Ihr Gerät zurückgesendet.
+
+### Betriebsmodus
+
+Standard ist 'Einfach'.
+
+Verfügbare Werte:
+
+- `DEFAULT` entspricht `SIMPLE`.
+- `SIMPLE` arbeitet als transparenter UART-Tunnel. Was da hineingeht wird auch herauskommen. Erfordert einen Kanal mit dem Namen "seriell".
+- `PROTO` enthüllt die Protocol Buffer API auf diesem seriellen Anschluss. Sie können diese verwenden, um dich mit einem anderen Gerät zu verbinden, siehe [Arduino Bibliothek](https://github.com/meshtastic/Meshtastic-arduino) und [API Referenz](/docs/development/device/client-api).
+- `TEXTMSG` erlaubt dir, eine Zeichenfolge über den seriellen Anschluss an das Gerät zu senden, die als Textnachricht auf den Standardkanal übertragen wird. Jede Textnachricht aus dem Netz wird wie folgt an den seriellen Anschluss gesendet: `<Short Name>: <text>`.
+- `NMEA` gibt einen NMEA 0183 Datenstrom aus, der das interne GPS oder den festen Standort sowie andere Knotenpositionen als Wegpunkte (WPL) enthält.
+- `CALTOPO` gibt alle 10 Sekunden NMEA 0183 Wegpunkte (WPL) für alle gültigen Knoten aus, die mit [CalTopo / SARTopo](/docs/software/integrations/caltopo.mdx) genutzt werden können.
+- `WS85` analysiert und berechnet die Daten der Windgeschwindigkeiten über die serielle Schnittstelle des Ecowitt WS85. Überträgt alle 5 Minuten Werte per Telemetrienachricht. Eine Änderung des WS85 Wettersensors ist erforderlich (https://hackaday.io/project/196990-meshtastic-ultrasonic-anemometer-wx-station). Wenn die Option in der App nicht verfügbar ist dann aktivieren Sie diese über den Kommandozeilenbefehl "meshtastic --set serial.mode 6"
+
+:::tip
+Der `PROTO` Modus zeigt keine offensichtliche Ausgabe an, wenn er passiv mit einem seriellen Monitor beobachtet wird. Wenn Sie dies testen, sollten Sie die [Python Kommandozeile](https://github.com/meshtastic/python) mit der `--listen` Option verwenden, um den Datenstrom des Protocol Buffers anzuzeigen.
+:::
+
+### GPIO Pin zum Empfangen
+
+Setzen Sie den GPIO Pin, den Sie eingerichtet haben, als RXD Pin.
+
+:::tip
+Auf dem RAK4631 auf dem RAK19007 und einigen Versionen der RAK19003 Grundplatine sind die Standardpins TXD1 (16) und RXD1 (15). Für dieses Gerät ist die Einstellung [GPS Mode](/docs/configuration/radio/position/#gps-mode) auf `Not_Present` notwendig. Auf anderen Versionen der RAK19003 Grundplatine sind die Pins TXD0 (20) und RXD0 (19) verfügbar.
+:::
+
+### Sende GPIO Pin
+
+Setzen Sie den GPIO Pin, den Sie eingerichtet haben, als TXD Pin.
+
+:::tip
+Schließen Sie den TXD Pin an den RXD Pin des anderen Gerätes an und umgekehrt. Verbinden Sie die Masse untereinande (nicht notwendig, wenn beide an die gleiche USB-Stromquelle angeschlossen sind.)
+:::
+
+### Baudrate
+
+Die serielle Baudrate.
+
+### Zeitüberschreitung
+
+Die Zeit, die Sie warten müssen, bevor wir Ihre Nachricht als "erledigt" betrachtet wird.
+
+### Seriellen Port der Konsole überschreiben
+
+Wenn auf `true` gesetzt, erlaubt es dem seriellen Modul die Steuerung (Baudrate setzen) und die Verwendung des primären USB Bus für die Ausgabe. Dies ist nur für NMEA und CalTopo Moden nützlich. Kann komisch oder gar nicht in allen anderen Moden funktionieren. Wenn Sie TX/RX Pins in der seriellen Modulkonfiguration einstellen, wird diese Einstellung ignoriert.
+
+:::tip
+Sobald die Moduleinstellungen geändert wurden, wird ein **Neustart** benötigt, damit diese wirksam werden.
+:::
+
+## Verfügbarkeit der seriellen Modulkonfiguration
+
+<Tabs
+  groupId="settings"
+  defaultValue="apple"
+  values={[
+    {
+      label: (
+        <>
+          <Icon icon="mdi:android" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Android
+        </>
+      ),
+      value: "android",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:apple" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Apple
+        </>
+      ),
+      value: "apple",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:terminal" height="1.5rem" style={{ marginRight: "0.25rem" }} /> CLI
+        </>
+      ),
+      value: "cli",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:internet" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Web
+        </>
+      ),
+      value: "web",
+    },
+  ]}>
+<TabItem value="android">
+
+#### Android
+
+:::info
+
+Serielle Konfigurationseinstellungen sind für Android verfügbar.
+
+1. Öffnen Sie die Meshtastic App
+2. Navigieren Sie zu: **vertikale Ellipse (3 Punkte oben rechts) > Geräteeinstellungen > Serial**
+
+:::
+
+</TabItem>
+<TabItem value="apple">
+
+#### Apple
+
+:::info
+Alle Konfigurationsoptionen für das serielle Modul sind unter Einstellungen > Modulkonfiguration > Serial in iOS, iPadOS und macOS verfügbar.
+:::
+
+</TabItem>
+<TabItem value="cli">
+
+#### Kommandozeile
+
+:::info
+
+Alle Einstellungen für die Konfiguration des seriellen Moduls sind über die Python Kommandozeile verfügbar. Beispieleinstellungen sind folgende:
+
+:::
+
+|       Einstellung                    |                                                Akzeptable Werte                                                                                                                                              |          Standardwert                        |
+| :----------------------------------: | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :------------------------------------------: |
+|       serial.enabled                 |                                                `true`, `false`                                                                                                                                               |            `false`                           |
+|        serial.echo                   |                                                `true`, `false`                                                                                                                                               |            `false`                           |
+|        serial.mode                   |                                      `DEFAULT` `SIMPLE` `PROTO` `TEXTMSG`, `NMEA`, `CALTOPO`                                                                                                                 |            `DEFAULT`                         |
+|        serial.rxd                    |                                              GPIO Pin Nummer 1 - 39                                                                                                                                          | Standardwert `0` ist nicht festgelegt        |
+|        serial.txd                    |                                              GPIO Pin Nummer 1 - 33                                                                                                                                          | Standardwert `0` ist nicht festgelegt        |
+|        serial.baud                   | `BAUD_DEFAULT` `BAUD_110` `BAUD_300` `BAUD_600` `BAUD_1200` `BAUD_2400` `BAUD_4800` `BAUD_9600` `BAUD_19200` `BAUD_38400` `BAUD_57600` `BAUD_115200` `BAUD_230400` `BAUD_460800` `BAUD_576000` `BAUD_921600` |         `BAUD_DEFAULT` (38400)               |
+|       serial.timeout                 |                                               Ganzahl (Millisekunden)                                                                                                                                        |      Standard von `0` entspricht 250 ms      |
+| seriell.override_console_serial_port |                                                `true`, `false`                                                                                                                                               |            `false`                           |
+
+:::tip
+
+Weil das Gerät nach jedem Befehl über die Kommandozeile neu startet, wird empfohlen, dass mehrere Werte in einem Konfigurationsblock zusammengefasst und übertragen werden.
+
+```shell title="Example:"
+meshtastic --set serial.enabled true --set serial.echo true
+```
+
+:::
+
+```shell title="Enable / Disable Module"
+meshtastic --set serial.enabled true
+meshtastic --set serial.enabled false
+```
+
+```shell title="Enable / Disable Echo"
+meshtastic --set serial.echo true
+meshtastic --set serial.echo false
+```
+
+```shell title="Set Mode"
+meshtastic --set serial.mode DEFAULT
+meshtastic --set serial.mode PROTO
+```
+
+```shell title="Set RXD to GPIO pin number 7"
+meshtastic --set serial.rxd 7
+```
+
+```shell title="Set TXD to GPIO pin number 28"
+meshtastic --set serial.txd 28
+```
+
+```shell title="Set Baud Rate"
+meshtastic --set serial.baud BAUD_DEFAULT
+meshtastic --set serial.baud BAUD_576000
+```
+
+```shell title="Set Timeout to 15 milli seconds"
+meshtastic --set serial.timeout 15
+```
+
+</TabItem>
+<TabItem value="web">
+
+#### Web
+
+:::info
+Alle Konfigurationsoptionen des serielle Modul sind in der Web-Oberfläche verfügbar.
+:::
+
+</TabItem>
+</Tabs>
+
+:::warning
+GPIO access is fundamentally dangerous because invalid options can physically damage or destroy your hardware. Ensure that you fully understand the schematic for your particular device before trying this as we do not offer a warranty. Use at your own risk.
+
+Dieses Modul erfordert das Anschließen eines externen Zubehörs an Ihr Gerät. Es wird ohne ein solches nicht funktionieren.
+:::
+
+## Beispiele
+
+Standardmäßig wird der RX GPIO Pin 16 und TX GPIO Pin 17 verwendet.
+
+### Grundlegende Verwendung
+
+1. Aktivieren Sie das Modul, indem Sie `serial.enabled` auf `1` setzen.
+
+2. Legen Sie die Pins (`serial.rxd` / `serial.txd`) gemäß den bevorzugten RX und TX GPIO Pins fest. Auf T-Beam Platinen wird empfohlen, folgend ePins zu verwenden:
+   - RXD 13
+   - TXD 14
+
+3. Setzen Sie `serial.timeout` auf die zu wartende Zeit, bevor die Nachricht als "bearbeitet" betrachtet wird.
+
+4. (Optional) Setzen Sie `serial.mode` auf `TEXTMSG`, wenn Sie Nachrichten zum allgemeinen Kanal für Textnachrichten senden und von diesem empfangen möchten. Benutze für genauere Steuerung den `PROTO`-Modus, z.B. in Kombination mit der [Arduino Bibliothek](https://github.com/meshtastic/Meshtastic-arduino/blob/master/examples/SendReceiveClient/SendReceiveClient.ino).
+
+5. Verwenden Sie für die Verbindung über die serielle Schnittstelle mit Ihrem Gerät die Einstellung `38400 8N1`.
+
+   z.B. per [tio](https://github.com/tio/tio) &ndash; `tio -e -b 38400 -f none /dev/myserialport`
+
+6. Sende eine Nachricht mit bis zu 237 Bytes in Länge. Diese wird über den Standardkanal übertragen.
+
+7. (Optional) Setze `serial.echo` auf `1` und jede Nachricht, die du verschickst, wird an dein Gerät zurückgesendet.
+
+### PIR-Sensor mit externem Mikrocontroller verbinden
+
+Die folgenden Beispiele sind die Verwendung von Raspberry Pi Pico oder Arduino Mini Pro mit angeschlossenem PIR-Sensor um Bewegung zu erkennen. Wenn eine Bewegung erkannt wird, wird eine Nachricht über eine serielle Schnittstelle an das T-Beam gesendet. Der T-Beam überträgt die Nachricht als Text über den Standardkanal durch Verwendung des seriellen Moduls im TXTMSG Modus.
+
+#### Meshtastic Software Konfiguration
+
+- Serielles Modul aktiviert, Modus: TEXTMSG
+- GPIO Pins (für T-Beam) RX 13, TX 14
+- 38400 Baud
+
+#### Raspberry Pi Pico BOM
+
+- Ein Raspberry Pi Pico auf dem [CircuitPython](https://learn.adafruit.com/getting-started-with-raspberry-pi-pico-circuitpython) läuft.
+- T-Beam V1.1 mit Meshtastic
+- PIR-Sensor ([Adafruit Steckbrett Version](https://www.adafruit.com/product/4871))
+
+#### Raspberry Pi Pico Verdrahtung
+
+![image](/img/modules/Serial/pico-pir-wiring.webp)
+
+- TX-Pin 14 de T-Beam an RX Pin 2 des Pico
+- RX-Pin 13 de T-Beam an TX Pin 1 des Pico
+- PIR-Sensor Vcc und GND Pins an Vcc/GND auf dem Steckbrett entsprechend anschliessen.
+- PIR-Sensor Triggerleitung an Pico GPIO28 (Pico Pin 34)
+- GND Pin des T-Beam an GND Pin 38 des Pico
+- GND-Pin 38 des Pico zur GND Schiene des Steckbretts
+- 3V3 Pin 36 des Pico zur positiven Spannungsschiene des Steckbretts
+- Optional, um den Pico vom T-Beam anstelle von USB mit Spannung zu versorgen:
+  - Verbinden Sie den 5V Pin des T-Beam mit Vbus Pin 40 des Pico
+
+#### Circuit Python Code
+
+```python
+import time
+import board
+import busio
+import digitalio
+
+# Setup PIR sensor on GP28
+pir = digitalio.DigitalInOut(board.GP28)
+pir.direction = digitalio.Direction.INPUT
+
+# Setup serial UART connection TX/RX on (GP0/GP1)
+uart = busio.UART(board.GP0, board.GP1, baudrate=38400, timeout=0)
+
+while True:
+    if(pir.value == True):
+        uart.write(bytes("Motion Detected", "ascii"))
+        time.sleep(30)
+    time.sleep(0.5)
+```
+
+#### Arduino Mini Pro BOM
+
+- Eine Arduino Mini Pro mit Beispielprogramm von unten hochgeladen.
+- T-Beam V1.1 mit Meshtastic
+- PIR-Sensor ([Adafruit Breadboard Modell](https://www.adafruit.com/product/4871))
+
+#### Arduino Mini Pro Wiring
+
+![image](/img/modules/Serial/arduino-mini-pro-pir-wiring.webp)
+
+- T-BEAM RX PIN 13 an TX PIN auf dem ARDUINO MINI
+- T-BEAM TX PIN 14 an RX PIN auf dem ARDUINO MINI
+- T-BEAM PIN 3.3V an 3.3V PIN auf dem ARDUINO MINI
+- T-BEAM PIN GND an GND PIN auf dem ARDUINO MINI
+- ARDUINO MINI PIN 2 an OUT PIN des PIR SENSOR
+- ARDUINO MINI PIN 3.3V an 3.3V des PIR SENSOR
+- ARDUINO MINI PIN GND an GND PIN des PIR SENSOR
+
+#### Arduino Mini Pro Quellcode
+
+```cpp
+int LED = 13; // the pin to which the LED is connected
+int PIR = 2;  // the pin to which the sensor is connected
+int previousState = LOW; // previous state of the sensor
+
+
+void setup() {
+pinMode(LED, OUTPUT); // initialize the LED as an output
+pinMode(PIR, INPUT);  // initialize the sensor as an input
+Serial.begin(9600);   // initialize serial communication
+}
+
+void loop(){
+   int currentState = digitalRead(PIR); // read the current state of the sensor
+  if (currentState != previousState) { // check if the state has changed
+    if (currentState == HIGH) { // check if there is motion
+      digitalWrite(LED, HIGH);  // turn the LED on
+      Serial.println("Motion Detected");
+}
+    else {
+      digitalWrite(LED, LOW);  // turn the LED off
+      Serial.println("No Motion");
+    }
+previousState = currentState; // update the previous state
+  }
+  delay(100); // small delay to avoid false sensor readings
+
+}
+```

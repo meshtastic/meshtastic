@@ -1,0 +1,31 @@
+---
+id: flashing-nrf52-device
+title: Flashare dispositivi nRF52 e RP2040
+sidebar_label: Dispositivo nRF52/RP2040
+sidebar_position: 2
+description: Istruzioni per flashare il firmware Meshtastic su dispositivi con chipset nRF52 o RP2040.
+---
+
+## Metodi di Flashing per dispositivi nRF52 e RP2040
+
+I dispositivi basati su nRF52 e RP2040 hanno il processo di aggiornamento del firmware più semplice. Non è richiesta l'installazione di driver o software su nessuna piattaforma.
+
+### Drag & Drop
+
+i dispositivi nRF52 e RP2040 utilizzano il metodo di installazione [Drag & Drop](/docs/getting-started/flashing-firmware/nrf52/drag-n-drop) per installare le versioni del firmware.
+
+### Over-The-Air (OTA)
+
+I dispositivi nRF52 sono in grado di accettare [aggiornamenti del firmware OTA](/docs/getting-started/flashing-firmware/nrf52/ota) da un dispositivo mobile via bluetooth.
+
+### Cancellazione di fabbrica nRF
+
+Potresti voler eseguire una [Cancellazione Totale](/docs/getting-started/flashing-firmware/nrf52/nrf52-erase) prima di installare il firmware, per eliminare dati che potrebbero cambiare formato e posizione tra le versioni.
+
+### Converti RAK4631-R in RAK4631
+
+Se il tuo dispositivo non è arrivato con il bootloader Arduino, dovrai [eseguire la conversione](/docs/getting-started/flashing-firmware/nrf52/convert-rak4631r).
+
+### Usare un Raspberry Pi come strumento Flash SWDIO
+
+Se il dispositivo non può essere flashato tramite USB o Bluetooth, un'altra opzione potrebbe essere una [connessione SWDIO diretta](/docs/getting-started/flashing-firmware/nrf52/swdio).

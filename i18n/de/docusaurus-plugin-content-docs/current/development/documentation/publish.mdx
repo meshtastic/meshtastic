@@ -1,0 +1,55 @@
+---
+id: publish
+title: Veröffentlichen von Meshtastic.org
+sidebar_label: Veröffentlichen
+sidebar_position: 3
+---
+
+## Live veröffentlichen
+
+1. Protocol Buffer Dokumentation erstellen
+
+   ```shell
+   cd meshtastic
+   ./scripts/gen-proto-docs.sh
+   ```
+
+2. Erstellen
+
+   ```shell
+   pnpm build
+   ```
+
+3. Pull-Request senden
+
+## Auf Vercel veröffentlichen
+
+Die Einrichtung eines Vercel-Kontos ist ein optionaler Schritt, der Ihnen helfen kann, Ihre Änderungen an der Dokumentation in einer Serverumgebung genau wie die eigentlichen Docs anzusehen. Dies kann hilfreich sein, wenn Sie einen Pull-Request einreichen, so dass Entwickler Ihre Änderungen überprüfen und visuell überprüfen können, ob die Dinge richtig aussehen.
+
+### Vercel Konto einrichten
+
+- Gehen Sie zu [vercel.com](https://vercel.com)
+- Melden Sie sich mit Ihrem GitHub Account an, klicken Sie `Mit GitHub fortfahren`
+
+### Verknüpfen Sie Ihren Fork des Projekts
+
+- Klicken Sie auf `Neues Projekt`
+- Unter `Importiere Git Repository` wählen Sie `+ Github Account hinzufügen`
+  Sie werden zu GitHub weitergeleitet, um Zugriff auf ausgewählte Repositories zu ermöglichen.
+- Wählen Sie Ihren Fork des Projekts: `username/Meshtastic`
+
+### Projekt konfigurieren
+
+Projekt konfigurieren:
+
+- Name für das Projekt festlegen
+- Wählen Sie die Framework Voreinstellung: `Docusaurus 2`
+- Klicke auf `Deploy`
+
+Das war's! Sie sollten nun Ihr Projekt mit einem grünen oder orangefarbenen Statuspunkt sehen, der zeigt, dass Ihre Fork des Projekts kompiliert wurde. Es wird eine Commit spezifische URL geben, die Sie teilen können, um Ihre Änderungen anzuzeigen. Es gibt auch eine Branch spezifische URL, die Sie sehen können. Wenn es irgendwelche Fehler gibt, wird es rot erscheinen und die Protokolle enthalten damit Sie herausfinden können, was schiefgelaufen ist.
+
+:::tip
+There is a limited number of branch urls that you will be able to view. If you notice that option has disappeared, you can delete unused branches on your fork and that will enable that feature again.
+
+Branch URLs sind in PRs hilfreich, da sie konstant bleiben, und Sie müssen keine neue URL erneut einreichen, um jeden neuen Commit zu überprüfen, falls Änderungen angefordert werden.
+:::

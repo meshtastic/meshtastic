@@ -1,0 +1,163 @@
+---
+id: bluetooth
+title: Bluetooth Einstellungen
+sidebar_label: Bluetooth
+description: Konfigurieren Sie die Bluetooth-Einstellungen auf Ihrem Meshtastic Gerät für die Verbindung mit Smartphones und anderen Geräten.
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+import { Icon } from "@iconify/react";
+
+Die Bluetooth-Konfigurationsoptionen sind: Aktiviert, Kopplungsmodus und feste Pin. Die Bluetooth Konfiguration verwendet eine administrative Nachricht, die einen `Config.Bluetooth` Protocol Buffer sendet.
+
+:::info
+ESP32 Geräte: Bluetooth wird deaktiviert, wenn WiFi aktiviert ist. Die WLAN Einstellung hat Vorrang.
+:::
+
+## Bluetooth Einstellungen
+
+### Aktiviert
+
+Aktiviert Bluetooth.
+
+### Kopplungsmodus
+
+Kopplungsmodus angeben.
+
+`RANDOM_PIN` generiert eine zufällige PIN während der Laufzeit.
+`FIXED_PIN` verwendet die feste PIN, die dann zusätzlich angegeben werden muss.
+Schließlich deaktiviert `NO_PIN` die PIN Authentifizierung.
+
+### Standardkopplungsmodus
+
+Der Standard-Kopplungsmodus wird basierend darauf bestimmt, ob beim ersten Start (oder bei einem veralteten Gerätestatus) ein Bildschirm an das Gerät angeschlossen ist oder nicht, sofern er nicht manuell über die Bluetooth-Konfigurationsoptionen konfiguriert wird.
+
+- **Bildschirm verbunden:** Wenn Ihr Gerät zum ersten Mal hochfährt (oder mit einem veralteten Gerätestatus) und ein Bildschirm erkannt wird, wird der Standard-Kopplungsmodus auf `zufällige Pin` eingestellt. Sollte der angeschlossene Bildschirm entfernt werden, nachdem das Gerät bereits hochgefahren wurde, bleibt der Standard-Kopplungsmodus `zufällige Pin` bestehen, sofern er nicht manuell auf `feste Pin` oder `kein Pin` geändert wird. Es wird empfohlen, den Kopplungsmodus vor dem Entfernen des angeschlossenen Bildschirms zu aktualisieren.
+- **Kein Bildschirm angeschlossen:** Wenn Ihr Gerät zum ersten Mal hochfährt (oder mit einem veralteten Gerätestatus) und kein Bildschirm erkannt wird, wird der Standardkopplungsmodus auf „FIXED_PIN“ mit dem unten aufgeführten Standardwert eingestellt, sofern er nicht manuell auf einen benutzerdefinierten Wert konfiguriert wird.
+
+### Feste PIN
+
+Wenn Ihr Kopplungsmodus auf `FIXED_PIN` gesetzt ist, ist der Standardwert **123456**. Bei allen anderen Kopplungsmodi wird diese Zahl ignoriert. Eine benutzerdefinierte Ganzzahl (6 Ziffern) kann über die Bluetooth-Konfigurationsoptionen eingestellt werden.
+
+:::danger Warnung
+Es wird dringend empfohlen, den Standardcode `FIXED_PIN` auf Ihrem Gerät zu ändern. Die Beibehaltung des Standardcodes kann ein erhebliches Sicherheitsrisiko darstellen.
+:::
+
+## Verfügbarkeit der Bluetooth Einstellungen
+
+<Tabs
+  groupId="settings"
+  defaultValue="apple"
+  values={[
+    {
+      label: (
+        <>
+          <Icon icon="mdi:android" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Android
+        </>
+      ),
+      value: "android",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:apple" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Apple
+        </>
+      ),
+      value: "apple",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:terminal" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Kommandozeile
+        </>
+      ),
+      value: "cli",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:internet" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Web
+        </>
+      ),
+      value: "web",
+    },
+  ]}>
+
+<TabItem value="android">
+
+#### Android
+
+:::info
+
+Alle Bluetooth Einstellungen sind für Android verfügbar.
+
+1. Öffnen Sie die Meshtastic Applikation
+2. Navigiere zu: **vertikale Ellipse (3 Punkte oben rechts) > Funkkonfiguration > Bluetooth**
+
+:::
+
+</TabItem>
+<TabItem value="apple">
+
+#### Apple
+
+:::info
+
+Die Benutzereinstellungen sind in iOS, iPadOS und macOS unter Einstellungen > Gerätekonfiguration > Bluetooth.
+
+:::
+
+</TabItem>
+<TabItem value="cli">
+
+#### Kommandozeile
+
+:::info
+
+Alle Bluetooth Einstellungen sind über die Python Kommandozeile verfügbar. Beispieleinstellungen sind folgende:
+
+:::
+
+|   Einstellung         |      Akzeptable Werte               | Standardwert    |
+| :-------------------: | :---------------------------------: | :-------------: |
+|  `bluetooth.enabled`  |      `true`, `false`                |    `true`       |
+|   `bluetooth.mode`    | `RANDOM_PIN`, `FIXED_PIN`, `NO_PIN` |   `RANDOM_PIN`  |
+| `bluetooth.fixed_pin` |     Ganzzahl (6 Ziffern)            |    `123456`     |
+
+:::tip
+
+Weil das Gerät nach jedem Befehl über die Kommandozeile neu startet, wird empfohlen, dass mehrere Werte in einem Konfigurationsblock zusammengefasst und übertragen werden.
+
+```shell title="Example:"
+meshtastic --set bluetooth.enabled true  --set bluetooth.fixed_pin 111111
+```
+
+:::
+
+```shell title="Enable/Disable Bluetooth Module"
+meshtastic --set bluetooth.enabled true
+meshtastic --set bluetooth.enabled false
+```
+
+```shell title="Set a fixed pin"
+meshtastic --set bluetooth.mode FIXED_PIN
+meshtastic --set bluetooth.fixed_pin 111111
+```
+
+</TabItem>
+<TabItem value="web">
+
+#### Web
+
+:::info
+
+Alle Konfigurationsoptionen des Bluetooth Moduls sind in der Web-Oberfläche verfügbar.
+
+1. Öffnen Sie die Meshtastic Web-Oberfläche.
+2. Navigieren Sie zu: **Funkkonfiguration > Bluetooth**
+
+:::
+
+</TabItem>
+</Tabs>

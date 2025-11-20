@@ -1,0 +1,218 @@
+---
+id: network
+title: Netzwerkeinstellung
+sidebar_label: Netzwerk
+description: Erfahren Sie mehr über die Netzwerkkonfiguration für Ihr Meshtastic-Gerät, einschließlich NTP, WLAN und Ethernet.
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+import { Icon } from "@iconify/react";
+
+Die Netzwerkkonfigurationsoptionen sind: NTP-Server, WLAN aktiviert, WLAN-SSID, WLAN-PSK, Ethernet aktiviert, IPv4-Netzwerkmodus, statische Adresse, rsyslog-Server und Protokollflags. Die Netzwerkkonfiguration verwendet eine administrative Nachricht, die einen `Config.Network` Protocol Buffer sendet.
+
+:::info
+Durch die Aktivierung von WLAN wird Bluetooth deaktiviert. Es funktioniert immer nur eine Verbindungsmethode.
+:::
+
+ESP32-Geräte können als Client eine Verbindung zu WLAN herstellen. Der SoftAP Modus wird von der Meshtastic Firmware nicht unterstützt.
+
+## Netzwerkeinstellungen
+
+### NTP Server
+
+Der NTP Server, der verwendet wird, wenn ein IP Netzwerk verfügbar ist.
+
+Standardmäßig auf `meshtastic.pool.ntp.org` eingestellt. (Maximale Länge: 32)
+
+### WLAN aktiviert
+
+Aktiviert oder deaktiviert WLAN.
+
+Standardmäßig auf `false` (deaktiviert) gesetzt.
+
+### WLAN SSID
+
+Dies ist die SSID Ihres WLAN Netzwerks.
+
+Standardmäßig leer `""` (Groß-/Kleinschreibung beachten, maximale Länge: 32)
+
+### WLAN PSK
+
+Dies ist das Passwort Ihres WLAN-Netzwerks.
+
+Standardmäßig leer `""` (Groß-/Kleinschreibung beachten, maximale Länge: 64)
+
+### Ethernet aktiviert
+
+Aktiviert oder deaktiviert Ethernet.
+
+Standardmäßig auf `false` (deaktiviert) gesetzt.
+
+### IPv4 Netzwerkmodus
+
+Standardmäßig auf `DHCP` gesetzt. Wechseln Sie zu `STATIC` um eine statische IP-Adresse zu verwenden. Gilt sowohl für Ethernet als auch für WLAN.
+
+### Konfiguration der statischen IPv4 Adresse
+
+Enthält IP, Gateway, Subnetz und DNS-Server für eine statische Konfiguration, wenn im Netzwerkmodus ausgewählt.
+
+### Rsyslog Server
+
+Einen rsyslog Server und Port konfigurieren. Standard Log Funktion ist "Benutzer".
+
+### Protokolloptionen
+
+Definiert, welche zusätzlichen Netzwerkprotokolle zum Senden von Paketen verwendet werden. Werte werden als Bitfeld boolescher Konfigurationsoptionen gespeichert (bitweises ODER von ProtocolFlags).
+
+|    Wert       |                     Beschreibung                                             |
+| :-----------: | :--------------------------------------------------------------------------: |
+| NO_BROADCAST  |              Sendet keine Pakete über ein Netzwerkprotokoll.                 |
+| UDP_BROADCAST | Aktivieren Sie die Übertragung von Paketen per UDP über das lokale Netzwerk. |
+
+:::tip
+Wenn Ihr Gerät nach der Aktivierung von WLAN oder Ethernet zum ersten Mal neu gestartet wird, dauert das Booten weitere 20–30 Sekunden. Dies dient der Generierung eines selbst signierten SSL Schlüssels. Die Schlüssel werden zur späteren Wiederverwendung gespeichert.
+:::
+
+## Verfügbarkeit der Netzwerkeinstellungen
+
+<Tabs
+  groupId="settings"
+  defaultValue="apple"
+  values={[
+    {
+      label: (
+        <>
+          <Icon icon="mdi:android" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Android
+        </>
+      ),
+      value: "android",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:apple" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Apple
+        </>
+      ),
+      value: "apple",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:terminal" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Kommandozeile
+        </>
+      ),
+      value: "cli",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:internet" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Web
+        </>
+      ),
+      value: "web",
+    },
+  ]}>
+
+<TabItem value="android">
+
+#### Android
+
+:::info
+
+Alle Netzwerkeinstellungen sind für Android verfügbar.
+
+1. Öffnen Sie die Meshtastic Applikation
+2. Navigiere zu: **vertikale Ellipse (3 Punkte oben rechts) > Funkkonfiguration > Netzwerk**
+
+:::
+
+</TabItem>
+
+<TabItem value="apple">
+
+#### Apple
+
+:::info
+
+Die Benutzereinstellungen sind in iOS, iPadOS und macOS unter Einstellungen > Gerätekonfiguration > Netzwerk.
+
+:::
+
+</TabItem>
+
+<TabItem value="cli">
+
+#### Kommandozeile
+
+:::info
+
+Alle Netzwerkeinstellungen sind über die Python Kommandozeile verfügbar.
+
+:::
+
+|  Einstellung         |  Akzeptable Werte  |   Standardwert            |
+| :------------------: | :----------------: | :-----------------------: |
+|  network.ntp_server  | Zeichenfolge       | `meshtastic.pool.ntp.org` |
+| network.wifi_enabled |  `true`, `false`   |      `false`              |
+|  network.wifi_ssid   | Zeichenfolge       |      `""`                 |
+|  network.wifi_psk    | Zeichenfolge       |      `""`                 |
+| network.eth_enabled  |  `true`, `false`   |      `false`              |
+| network.address_mode |  `DHCP`, `STATIC`  |      `DHCP`               |
+
+:::tip
+
+Weil das Gerät nach jedem Befehl über die Kommandozeile neu startet, wird empfohlen, dass mehrere Werte in einem Konfigurationsblock zusammengefasst und übertragen werden.
+
+```shell title="Example:"
+meshtastic --set network.wifi_enabled true --set network.wifi_ssid "Mein Netzwerk" --set network.wifi_psk meinpasswort
+```
+
+:::
+
+```shell title="Set NTP Server"
+meshtastic --set network.ntp_server "meshtastic.pool.ntp.org"
+```
+
+```shell title="Enable / Disable WiFi"
+meshtastic --set network.wifi_enabled true
+meshtastic --set network.wifi_enabled false
+```
+
+```shell title="Set WiFi SSID"
+// ohne Leerzeichen
+meshtastic --set network.wifi_ssid MeinNetzwerk
+// mit Leerzeichen
+meshtastic --set network.wifi_ssid "Mein Netzwerk"
+```
+
+```shell title="Set WiFi password"
+// ohne Leerzeichen
+meshtastic --set network.wifi_psk meinpasswort
+// mit Leerzeichen
+meshtastic --set network.wifi_psk "mein passwort"
+```
+
+</TabItem>
+
+<TabItem value="web">
+
+#### Web
+
+:::info
+Alle Netzwerkeinstellungen sind in der Weboberfläche verfügbar.
+:::
+
+</TabItem>
+
+</Tabs>
+
+## Beispiele
+
+### WLAN Client
+
+Wenn `network.wifi_ssid` und `network.wifi_psk` ausgefüllt sind, weiß das Gerät, dass es eine Verbindung zu Ihrem Netzwerk herstellen kann. Stellen Sie sicher, dass Sie sich in Reichweite Ihres WLANs befinden und es sich um ein reines 2,4 GHz Netzwerk handelt. Wenn Sie ein einzelnes Meshtastic Gerät in Ihrem lokalen Netzwerk haben, können Sie ganz einfach über DNS `http://meshtastic.local` eine Verbindung zu Ihrem Gerät herstellen. Wenn Sie mehrere Meshtastic Geräte haben, müssen Sie die Verbindung über ihre jeweiligen IP-Adressen herstellen.
+
+### WLAN deaktivieren
+
+Um WLAN komplett zu deaktivieren, setzen Sie `network.wifi_enabled` auf `false`.

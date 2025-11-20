@@ -1,0 +1,189 @@
+---
+id: remote-admin
+title: Amministrazione Nodo Remoto
+sidebar_label: Nodi Remoti
+sidebar_position: 3
+description: Una funzionalità avanzata per amministrare in modo sicuro i dispositivi remoti sulla rete mesh invece che tramite Bluetooth, Serial o IPv4.
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+import { Icon } from "@iconify/react";
+
+:::caution Avviso
+Questa è una funzionalità avanzata destinata agli utenti esperti. È possibile (se non è stato fatto con attenzione) applicare le impostazioni a un nodo remoto che potrebbero causare la disconnessione dalla rete. Per evitare che ciò accada si consiglia agli amministratori di rete di utilizzare un nodo di prova, per le impostazioni di prova, prima di applicare le modifiche a un nodo remoto.
+:::
+
+Questa funzione consente la gestione remota sicura dei nodi Meshtastic sulla rete mesh.
+
+Per impostazione predefinita, i nodi risponderanno solo ai comandi amministrativi tramite le interfacce USB locale, Bluetooth, o TCP. Questa misura di sicurezza di base impedisce l'accesso non autorizzato e definisce come vengono gestite le modifiche dell'amministrazione e delle impostazioni standard. L'unica differenza con l'amministrazione remota è che i comandi vengono inviati in modo sicuro come messaggi di amministrazione sopra la mesh.
+
+## Prerequisiti
+
+Per versioni del firmware 2.5 e successive, l'amministrazione remota si ottiene memorizzando la chiave pubblica del nodo locale in uno dei campi chiave di amministrazione all'interno delle Impostazioni di Sicurezza del nodo remoto. Ogni nodo remoto può memorizzare fino a tre chiavi di amministrazione uniche, offrendo flessibilità per gestire i nodi attraverso la rete.
+
+Per le versioni del firmware 2.4.x e precedenti, questo si ottiene creando un canale secondario chiamato `admin` con un PSK condiviso. In questa configurazione, i messaggi scambiati su questo canale vengono crittografati solo con PSK del canale, consentendo a qualsiasi nodo nel canale di amministrare altri.
+
+Questo metodo del canale `admin` è ancora supportato nelle versioni del firmware 2.5 e successive, ma deve essere specificamente abilitato tramite l'impostazione "Legacy Admin channel" ed è solo per la gestione di nodi pre-2.5. Un nodo di versione 2.5 e successiva non può essere gestito in questo modo.
+
+:::info
+Il Remote Admin è integrato dall'impostazione [Modalità gestita](/docs/configuration/radio/security/#managed-mode) sul nodo remoto, che limita le configurazioni radio su quel nodo. Non è necessario impostare la Modalità Gestita per far funzionare l'amministratore remoto.
+:::
+
+## Disponibilità Client per Configurazione Admin Remota
+
+<Tabs
+  groupId="settings"
+  queryString="settings"
+  defaultValue="apple"
+  values={[
+    {
+      label: (
+        <>
+          <Icon icon="mdi:android" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Android
+        </>
+      ),
+      value: "android",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:apple" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Apple
+        </>
+      ),
+      value: "apple",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:terminal" height="1.5rem" style={{ marginRight: "0.25rem" }} /> CLI
+        </>
+      ),
+      value: "cli",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:internet" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Web
+        </>
+      ),
+      value: "web",
+    },
+  ]}>
+
+<TabItem value="android">
+
+#### Android
+
+#### Impostazione dell'amministratore remoto utilizzando il metodo PKC
+
+1. Connettiti al nodo locale che amministrerà il nodo remoto.
+2. Vai a **⋮ > Configurazione radio > [Sicurezza](/docs/configuration/radio/security/#public-key)** per trovare la sua chiave pubblica.
+3. Copia la chiave pubblica da usare per configurare il nodo remoto.
+4. Connettiti al nodo che sarà il nodo amministrato da remoto.
+5. Vai allo stesso menu **Sicurezza** del passo 2, e premi **"Aggiungi"** per incollare la chiave pubblica del nodo locale in un campo chiave amministratore.
+6. È possibile fornire fino a 3 chiavi di amministrazione, uno per campo, consentendo il controllo fino a 3 nodi.
+
+#### Impostazione dell'amministratore remoto utilizzando il metodo Legacy
+
+Viene impostato un canale di amministrazione inserendo un canale secondario con il nome `admin` utilizzando il metodo descritto in [Channels](/docs/configuration/radio/channels/)
+
+L'amministratore legacy è abilitato utilizzando l'opzione del canale Legacy Admin in [Impostazioni Sicurezza](/docs/configuration/radio/security/#admin-channel-enabled).
+
+#### Esecuzione di attività Amministratore remoto
+
+1. Aprire l'app Meshtastic, connettersi al nodo locale di controllo.
+2. Nel riquadro elenco dei nodi, selezionare un nodo toccando il nome corto nella bolla colorata, quindi selezionare Maggiori dettagli.
+3. Nella schermata maggiori dettagli, selezionare Amministrazione remota, accanto all'icona dell'ingranaggio.
+4. Dalla schermata Amministrazione remota sono disponibili tutte le opzioni di configurazione Radio e Modulo.
+
+</TabItem>
+<TabItem value="apple">
+
+#### Apple
+
+#### Impostazione dell'amministratore remoto utilizzando il metodo PKC
+
+1. Connettiti al nodo che verrà usato per amministrare il nodo remoto.
+2. Vai su **Impostazioni > Impostazioni app** su questo nodo e abilita **Amministrazione**.
+3. Vai a **Impostazioni > Configurazione Radio > [Sicurezza](/docs/configuration/radio/security/#public-key)** per trovare la sua chiave pubblica.
+4. Copia la chiave pubblica da usare per configurare il nodo remoto.
+5. Connettiti al nodo remoto.
+6. In **Impostazioni > Configurazione radio > Sicurezza**, aggiungere la chiave pubblica del nodo locale come chiave di amministrazione.
+7. È possibile fornire fino a 3 chiavi di amministrazione, consentendo il controllo fino a 3 nodi.
+
+#### Impostazione dell'amministratore remoto utilizzando il metodo Legacy
+
+Viene impostato un canale di amministrazione inserendo un canale secondario con il nome `admin` utilizzando il metodo descritto in [Channels](/docs/configuration/radio/channels/)
+
+L'amministratore legacy è abilitato utilizzando l'opzione del canale Legacy Admin in [Impostazioni Sicurezza](/docs/configuration/radio/security/#admin-channel-enabled).
+
+#### Esecuzione di attività Amministratore remoto
+
+1. Apri l'app Meshtastic e connettiti al nodo locale che stai usando per amministrare il nodo remoto.
+2. Vai su **Impostazioni**.
+3. Seleziona il nodo che vuoi gestire in **Impostazioni > Configura Node**.
+4. Le impostazioni di Radio e Modulo supportate per il nodo remoto saranno accessibili dalla schermata **Impostazioni**.
+5. Una volta finito di amministrare il nodo remoto, selezionare nuovamente il proprio nodo in Impostazioni > Configura nodo.
+
+</TabItem>
+<TabItem value="cli">
+
+#### CLI
+
+#### Impostazione dell'amministratore remoto utilizzando il metodo PKC
+
+1. Connettiti al nodo locale che amministrerà il nodo remoto.
+2. Recupera la sua chiave pubblica eseguendo:
+   ```bash
+   meshtastic --set security.public_key
+   ```
+3. Copia la chiave pubblica da usare per configurare il nodo remoto.
+4. Connettiti al nodo remoto tramite USB.
+5. Impostare la chiave di amministrazione sul nodo remoto eseguendo:
+   ```bash
+   meshtastic --set security.admin_key "base64:INCOLLAQUILACHIAVEPUBBLICA"
+   ```
+6. È possibile aggiungere fino a 3 chiavi di amministrazione, abilitando il controllo da un massimo di 3 nodi diversi.
+
+#### Impostazione dell'amministratore remoto utilizzando il metodo Legacy
+
+Per usare il metodo legacy, impostare un canale Admin come canale secondario con il nome `admin` seguendo le istruzioni nella sezione [Channels](/docs/configuration/radio/channels/).
+
+Abilita l'amministratore legacy nelle [Impostazioni di Sicurezza](/docs/configuration/radio/security/#admin-channel-enabled) eseguendo il seguente comando CLI:
+
+```bash
+meshtastic --set security.admin_channel_enabled
+```
+
+#### Esecuzione Delle Attività Di Amministratore Remoto
+
+I comandi di amministrazione remoti vengono emessi usando l'argomento `--dest` con il `!nodeid` del nodo di destinazione. Solo i comandi `--set` e `--get` sono supportati per l'amministrazione remota. È possibile utilizzare questi comandi per modificare i parametri, aggiungere canali, o recuperare le impostazioni dal nodo remoto. Ad esempio:
+
+```bash
+meshtastic --set security.admin_key "INCOLLACHIAVEPUBBLICAQUI" --dest '!28979058'
+```
+
+:::info
+Per Linux/Mac, racchiudere il valore `nodeid` nelle virgolette singole: `--dest '!28979058'`. Per Windows, le virgolette non sono richieste: `--dest !28979058`.
+:::
+
+</TabItem>
+<TabItem value="web">
+
+#### Web
+
+1. Connettiti al nodo che verrà usato per amministrare il nodo remoto.
+2. Vai a **⚙️ Config > ⚙️ Radio Config > [Sicurezza](/docs/configuration/radio/security/#public-key)** per trovare la sua chiave pubblica.
+3. Copia la chiave pubblica da usare per configurare il nodo remoto.
+4. Connettiti al nodo remoto.
+5. In **⚙️ Impostazioni > ⚙️ Impostazioni Radio > Sicurezza**, aggiungere la chiave pubblica del nodo locale come chiave di amministrazione.
+6. Attualmente è possibile fornire solo una chiave di amministrazione tramite l'interfaccia Web.
+7. Salva la configurazione.
+
+#### Esecuzione di attività Amministratore remoto
+
+Meshtastic Web Client non supporta l'invio di comandi di amministrazione remota in questo momento.
+
+</TabItem>
+</Tabs>

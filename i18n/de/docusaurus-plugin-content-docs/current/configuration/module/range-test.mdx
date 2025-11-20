@@ -1,0 +1,192 @@
+---
+id: range-test
+title: Einstellung des Moduls Reichweitentest
+sidebar_label: Reichweitentest
+description: Erfahren Sie, wie Sie das Modul Reichweitentest einstellen, um Berichte, Karten und mehr zu erstellen.
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+Mit diesem Modul können Sie die Kommunikationsreichweite zwischen zwei Meshtastic Knoten testen. Nur Knoten mit aktiviertem Modul zeigen auf ihren verbundenen Clients Reichweitentestmeldungen an.
+
+- Sender: fester Knoten, der sequenzielle Pakete sendet („Sender-Nachrichtenintervall“ zwischen 30 und 60 Sekunden);
+- Empfänger: mobiler Knoten (normalerweise Sie), optional mit integriertem oder Telefon GPS.
+
+Knoten sind in Reichweite, solange die sequenziellen Pakete empfangen werden können.
+
+Der Empfangsknoten kann verwendet werden, um die Nachrichten zusammen mit den GPS-Koordinaten, an denen sie empfangen wurden, in einer CSV-Datei zu speichern. Diese CSV-Datei kann dann in [Google Earth](https://earth.google.com), [Google Maps – Meine Karten](https://mymaps.google.com) oder jedes andere Programm integriert werden, das CSV-Dateien verarbeiten kann. Dadurch können Sie Ihr Netz visualisieren. Stellen Sie sicher, dass die [Standortgenauigkeit](https://meshtastic.org/docs/configuration/radio/channels/#position-precision) im Standardkanal auf „hoch“ eingestellt ist, da die erfassten Daten sonst Ihren tatsächlichen Standort nicht aufzeichnen.
+
+:::info
+
+Achten Sie darauf, das Modul auszuschalten oder das Senden zu deaktivieren, wenn es nicht verwendet wird. Dies verbraucht viel Sendezeit, verlangsamt Ihr Netzwerk und überflutet Ihren Kanal mit Spam. Das Modul schaltet sich nach 8 Stunden automatisch ab.
+
+:::
+
+Die Einstellungen des Moduls Reichweitentest sind: Aktiviert, Sender und Speichern. Die Einstellung des Moduls Reichweitentest verwendet eine administrative Nachricht, die ein `ModuleConfig.RangeTestConfig` Protocol Buffer sendet.
+
+## Einstellung des Moduls Reichweitentest
+
+### Aktiviert
+
+Aktiviert das Modul Reichweitentest **Sowohl beim Sender als auch beim Empfänger muss das Modul aktiviert sein.** Um in den Apple- und Android-Apps Reichweitentests zu empfangen, muss das Modul aktiviert sein. Auf dem Gerätebildschirm werden möglicherweise weiterhin Reichweitentestnachrichten älterer Firmware Versionen angezeigt, auch wenn das Modul deaktiviert ist.
+
+### Sendeintervall
+
+Wie lange soll zwischen dem Senden von Testnachrichten gewartet werden. 0 ist Standard und deaktiviert das Versenden von Nachrichten.
+
+### Empfohlene Sendereinstellungen
+
+| Funkeinstellungen | `range_test.sender` |
+| :---------------: | :-----------------: |
+|    Long Slow      |     60              |
+|    Long Fast      |     30              |
+|  Medium Fast      |     15              |
+|    Short Fast     |     15              |
+
+### CSV Datei speichern
+
+:::info
+
+**Deaktiviert lassen, wenn Sie die Android- oder Apple-Apps verwenden.** Speichert direkt im Flash-Speicher des Gerätes (ohne dass ein Smartphone erforderlich ist) und ist nur auf ESP32 basierten Geräten verfügbar.
+
+:::
+
+Wenn aktiviert, werden alle empfangenen Nachrichten im Flash-Speicher des Gerätes in einer Datei mit dem Namen „rangetest.csv“ gespeichert.
+
+Um auf diese Datei zuzugreifen, schalten Sie zuerst das WLAN auf Ihrem Gerät ein und stellen Sie eine Verbindung zu Ihrem Netzwerk her. Sobald Sie eine Verbindung zu Ihrem Gerät herstellen können, navigieren Sie zu „meshtastic.local/rangetest.csv“ (oder „your_device_ip/rangetest.csv“) und die Datei wird automatisch heruntergeladen. Diese Datei wird erst nach Erhalt der ersten Nachrichten erstellt.
+
+Um zu verhindern, dass der Speicher voll wird, bricht das Gerät den Schreibvorgang ab, wenn im Dateisystem weniger als 50 KB Speicherplatz vorhanden sind.
+
+## Verfügbarkeit der Einstellungen für das Modul Reichweitentest
+
+<Tabs
+groupId="settings"
+defaultValue="android"
+values={[
+{label: 'Android', value: 'android'},
+{label: 'Apple', value: 'apple'},
+{label: 'CLI', value: 'cli'},
+{label: 'Web', value: 'web'},
+]}>
+<TabItem value="android">
+
+#### Android
+
+:::info
+
+Alle Einstellungen für das Modul Reichweitentest sind für Android verfügbar.
+
+1. Öffnen Sie die Meshtastic Applikation
+2. Navigiere zu: **vertikale Ellipse (3 Punkte oben rechts) > Funkkonfiguration > Reichweitentest**
+
+:::
+
+Android exportiert eine rangetest.csv-Datei aus Paketen im Debug-Protokoll. So löschen Sie alte Paketverlaufsdaten: `Debug-Panel > Löschen`
+
+</TabItem>
+<TabItem value="apple">
+
+#### Apple
+
+:::info
+Alle Einstellungen für das Modul Reichweitentest sind unter Einstellungen > Modulkonfiguration > Reichweitentest in iOS, iPadOS und macOS verfügbar.
+:::
+
+Apple-Apps bieten außerdem die Möglichkeit, protokollierte Standortdaten herunterzuladen, die auf Ihrem iPhone/iPad/Mac gespeichert sind.  Klicken Sie auf die Registerkarte Knoten, wählen Sie einen Knoten, wählen Sie dann Standortprotokoll und klicken Sie auf Speichern.  Für diese Datendatei muss das Modul Reichweitentest nicht aktiviert sein.
+
+</TabItem>
+<TabItem value="cli">
+
+#### Kommandozeile
+
+:::info
+
+Alle Einstellungen für das Modul Reichweitentest sind über die Python Kommandozeile verfügbar. Beispieleinstellungen sind folgende:
+
+:::
+
+|  Einstellung       |  Akzeptable Werte   | Standardwert |
+| :----------------: | :-----------------: | :----------: |
+| range_test.enabled |  `true`, `false`    |    `false`   |
+|  range_test.save   |  `true`, `false`    |    `false`   |
+| range_test.sender  | Ganzzahl (Sekunden) |     `0`      |
+
+:::tip
+
+Weil das Gerät nach jedem Befehl über die Kommandozeile neu startet, wird empfohlen, dass mehrere Werte in einem Konfigurationsblock zusammengefasst und übertragen werden.
+
+```shell title="Example:"
+meshtastic --set range_test.enabled true --set range_test.save false
+```
+
+:::
+
+```shell title="Enable / Disable the range test"
+meshtastic --set range_test.enabled true
+meshtastic --set range_test.enabled false
+```
+
+```shell title="Enable / Disable range test save"
+meshtastic --set range_test.save true
+meshtastic --set range_test.save false
+```
+
+```shell title="Enable range test sender (send every 60 seconds)"
+meshtastic --set range_test.sender 60
+```
+
+```shell title="Disable range test sender"
+meshtastic --set range_test.sender 0
+```
+
+</TabItem>
+<TabItem value="web">
+
+#### Web
+
+:::info
+
+Alle Einstellungen für das Modul Reichweitentest sind über Weboberfläche verfügbar.
+
+:::
+
+</TabItem>
+</Tabs>
+
+## Anwendungsbeispiele
+
+### Google Earth Integration
+
+Schritte:
+
+1. [Download](https://www.google.com/earth/versions/#download-pro) und Google Earth öffnen
+   1. Datei für Import wählen
+   2. CSV auswählen
+   3. Wählen Sie „Getrennt, Komma“
+   4. Stellen Sie sicher, dass die Schaltfläche „Dieser Datensatz enthält keine Längen- und Breitengradinformationen, sondern Straßenadressen“ deaktiviert ist.
+   5. Wählen Sie „rx lat“ und „rx long“ für die entsprechenden Breiten und Längen Felder
+   6. Klicken Sie auf Fertig
+2. Wenn Sie aufgefordert werden, eine Stilvorlage zu erstellen, klicken Sie auf „Ja“.
+   1. Legen Sie das Namensfeld auf die Spalte fest, die auf der Karte angezeigt werden soll (machen Sie sich darüber nicht zu viele Gedanken, wenn Sie auf ein Symbol klicken, werden alle relevanten Daten angezeigt).
+   2. Wählen Sie eine Farbe, ein Symbol usw. aus und klicken Sie auf „OK“.
+
+Ihre Daten werden auf die Karte geladen. Klicken Sie zum Anzeigen unbedingt auf das Kontrollkästchen neben Ihrem Datensatz in der Seitenleiste.
+
+### Meine Karten
+
+Sie können [Meine Karten](http://mymaps.google.com) verwenden. Es akzeptiert CSVs und die gesamte Benutzeroberfläche ist viel einfacher zu bedienen.
+
+Google bietet [hier](https://support.google.com/mymaps/answer/3024836?co=GENIE.Platform%3DDesktop&hl=en#zippy=%2Cstep-prepare-your-info%2Cstep-import-info-into-the-map) Anweisungen dazu.
+
+Sie können die Bereiche je nach Wert unterschiedlich gestalten, sodass die Pins dunkler sein können, wenn das SNR oder RSSI (falls hinzugefügt) höher ist.
+
+### OpenStreetMap - uMap
+
+Als Open-Source-Lösung können Sie [uMap](https://umap.openstreetmap.de/en/) verwenden. Ein Dienst, der auf dem beliebten OpenStreetMap-Projekt basiert.
+
+Besuchen Sie [uMap](https://umap.openstreetmap.de/en/) in Ihrer bevorzugten Sprache. 
+
+1. Klicken Sie auf „Karte erstellen“
+2. Klicken Sie auf das „Daten importieren“-Symbol oder drücken Sie STRG + I.
+3. Wählen Sie Ihre rangetest.csv und klicken Sie auf „Importieren“. Das Datenformat wird erkannt und die Standorte in die Karte importiert.

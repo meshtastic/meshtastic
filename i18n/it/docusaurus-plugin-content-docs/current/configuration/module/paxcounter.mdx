@@ -1,0 +1,132 @@
+---
+id: paxcounter
+title: Uso Del Modulo Paxcounter
+sidebar_label: Paxcounter
+description: Questo modulo utilizza WiFi e BLE per contare persone o dispositivi che passano dal tuo dispositivo Meshtastic. Utilizzato nella vendita al dettaglio, nei musei, ecc.
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+import { Icon } from "@iconify/react";
+
+Il modulo Paxcounter conta il numero di persone che passano da un'area specifica scansionando gli indirizzi WiFi e BLE MAC. È comunemente utilizzato nei negozi al dettaglio, nei musei e in altri spazi pubblici per monitorare il traffico pedonale e raccogliere dati preziosi per l'analisi.
+
+Per utilizzare questo modulo, assicurati che i tuoi dispositivi abbiano la versione del firmware 2.2.17 o superiore.
+
+:::info
+Questo modulo può essere utilizzato solo con i dispositivi ESP32. Per utilizzare il modulo Paxcounter, è obbligatorio spegnere sia il WiFi che il Bluetooth nelle impostazioni di rete e Bluetooth.
+:::
+
+## Valori Di Configurazione Del Modulo Paxcounter
+
+### Abilitato
+
+Se il modulo è abilitato.
+
+### Intervallo di Aggiornamento
+
+L'intervallo in secondi di quanto spesso possiamo inviare un messaggio alla mesh quando viene rilevato un cambiamento di stato.
+
+## Disponibilità Client Modulo Paxcounter
+
+<Tabs
+  groupId="settings"
+  defaultValue="apple"
+  values={[
+    {
+      label: (
+        <>
+          <Icon icon="mdi:android" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Android
+        </>
+      ),
+      value: "android",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:apple" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Apple
+        </>
+      ),
+      value: "apple",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:terminal" height="1.5rem" style={{ marginRight: "0.25rem" }} /> CLI
+        </>
+      ),
+      value: "cli",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:internet" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Web
+        </>
+      ),
+      value: "web",
+    },
+  ]}>
+
+<TabItem value="android">
+
+#### Android
+
+:::info
+Paxcounter Config options are available for Android.
+
+1. Apri l'applicazione Meshtastic
+2. Vai a: **Menu (3 punti in alto a destra) > Configurazione radio > Paxcounter**
+
+:::
+
+</TabItem>
+<TabItem value="apple">
+
+#### Apple
+
+:::info
+
+Tutte le opzioni di configurazione Paxcounter sono disponibili su iOS, iPadOS e macOS in Impostazioni > Configurazione del modulo > Paxcounter.
+
+:::
+
+</TabItem>
+<TabItem value="cli">
+
+#### CLI
+
+:::info
+
+Tutte le opzioni di configurazione del modulo Paxcounter sono disponibili nella versione di python CLI 2.2.16 e successive.
+
+:::
+
+I comandi di esempio sono di seguito:
+
+```shell title="Enable/Disable the Paxcounter Module"
+meshtastic --set paxcounter.enabled true
+meshtastic --set paxcounter.enabled false
+```
+
+```shell title="Set the Minimum Broadcast Interval to 900 seconds"
+meshtastic --set paxcounter.paxcounter_update_interval 900
+```
+
+```shell title="Get the Paxcounter Module Configuration"
+meshtastic --get paxcounter
+```
+
+</TabItem>
+<TabItem value="web">
+
+#### </TabItem>
+<TabItem value="web">
+
+:::info
+
+Tutte le opzioni di configurazione del modulo Paxcounter sono disponibili nell'interfaccia utente web.
+
+:::
+
+</TabItem>
+</Tabs>

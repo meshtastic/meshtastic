@@ -1,0 +1,132 @@
+---
+id: neighbor-info
+title: Verwendung des Nachbarinformationsmoduls
+sidebar_label: Nachbarinformation
+description: Mit diesem Modul können Sie Informationen über Ihre unmittelbaren (0 Sprung)Nachbarn senden.
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+import { Icon } from "@iconify/react";
+
+Das Nachbarinformationsmodule dient zum Senden von Informationen über die 0-Sprung Nachbarn jedes Knotens an das Netzwerk. Einstellungen sind: Aktiviert, Aktualisierungsintervall und Übertragung über LoRa.
+
+:::info
+Nachbarinformationen dienen nur zu Informationszwecken und haben keinen Einfluss auf das Weiterleitungsverhalten des Netzwerks. Es ist daher optional und standardmäßig deaktiviert.
+:::
+
+Um Bandbreite zu sparen, verfolgt Meshtastic nicht die Route, die ein Paket zum Ziel nimmt, außer bei Verwendung von Traceroute. Wenn Sie dieses Modul aktivieren und „Über LoRa übertragen“ aktivieren, sendet Ihr Knoten regelmäßig ein Paket mit einer Liste seiner direkten Nachbarn und der Qualität (SNR) der entsprechenden Verbindung. Wenn Sie dies auf allen Knoten aktivieren, können Sie ein Diagramm des gesamten Netzwerks erstellen, um zu sehen, wie es verbunden ist. Zum Zeitpunkt des Schreibens gibt es keine Clients, die es für Sie visualisieren, aber Sie können beispielsweise MQTT verwenden, um alle Daten zu sammeln.
+
+Um dieses Modul nutzen zu können, stellen Sie sicher, dass Ihre Geräte die Firmware Version v2.2.0 oder höher enthalten. Ab 2.3.2 kann das Modul Nachbarn erkennen, auch wenn andere Knoten das Modul nicht aktiviert haben.
+
+## Einstellungen für Nachbarinformation
+
+### Aktiviert
+
+Aktiviert das Nachbarinformationsmodul.
+
+### Aktualisierungsintervall
+
+Wie oft die Nachbarinformation an das Netz gesendet wird. Dies kann nicht kleiner als 4 Stunden (14400 Sekunden) eingestellt werden. Die Voreinstellung ist 6 Stunden (21600 Sekunden).
+
+### Übertragen über LoRa
+
+Verfügbar ab Firmware 2.5.13 und höher. Standardmäßig werden Nachbarinformationen nur an MQTT und eine verbundene App gesendet. Wenn aktiviert, werden die Nachbarinformationen auf dem primären Kanal über LoRa gesendet. Nur verfügbar, wenn der primäre Kanal nicht der öffentliche Kanal mit Standardschlüssel und -name ist.
+
+## Verfügbarkeit für Nachbarinformationsmodul
+
+<Tabs
+  groupId="settings"
+  defaultValue="apple"
+  values={[
+    {
+      label: (
+        <>
+          <Icon icon="mdi:android" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Android
+        </>
+      ),
+      value: "android",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:apple" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Apple
+        </>
+      ),
+      value: "apple",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:terminal" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Kommandozeile
+        </>
+      ),
+      value: "cli",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:internet" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Web
+        </>
+      ),
+      value: "web",
+    },
+  ]}>
+
+<TabItem value="android">
+
+#### Android
+
+:::info
+All Neighbor Info Module config options are available for Android in app version 2.2.0 and higher.
+
+1. Öffnen Sie die Meshtastic Applikation
+2. Navigieren Sie zu: **vertikale Ellipse (3 Punkte oben rechts) > Funkkonfiguration > Nachbarn Info**
+   :::
+
+</TabItem>
+<TabItem value="apple">
+
+#### Apple
+
+Funktion nicht verfügbar.
+
+</TabItem>
+<TabItem value="cli">
+
+:::info
+
+Alle Einstellungen des Nachbarinformationsmoduls sind in der Python Kommandozeile Version v2.2.2 und höher verfügbar.
+
+:::
+
+Beispieleinstellungen sind folgende:
+
+```shell title="Enable/Disable the Neighbor Info Module"
+meshtastic --set neighbor_info.enabled true
+meshtastic --set neighbor_info.enabled false
+```
+
+```shell title="Set the update interval to 5 hours"
+meshtastic --set neighbor_info.update_interval 18000
+```
+
+```shell title="Set transmit over LoRa to true"
+meshtastic --set neighbor_info.transmit_over_lora true
+```
+
+```shell title="Get the Neighbor Info Module Configuration"
+meshtastic --get neighbor_info
+```
+
+</TabItem>
+<TabItem value="web">
+
+:::info
+
+Alle Einstellungen des Nachbarinformationsmoduls sind in der Web-Oberfläche verfügbar.
+
+:::
+
+</TabItem>
+</Tabs>
