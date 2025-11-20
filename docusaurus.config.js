@@ -69,6 +69,10 @@ const config = {
           ],
         },
         {
+          type: "localeDropdown",
+          position: "right",
+        },
+        {
           href: "https://github.com/meshtastic",
           position: "right",
           className: "header-github-link",
