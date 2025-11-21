@@ -15,7 +15,7 @@ import QRCode from "@site/docs/blocks/_qr-code.mdx";
 
 The Meshtastic Android app is your gateway to the mesh. It allows you to manage your radio, send messages, and view node locations. The app features a modern interface centered around a bottom navigation bar for quick access to all primary functions.
 
-![Main Navigation](./assets/android-nav-connected.png)
+<img src={require('./assets/android-nav-connected.png').default} alt="Main Navigation" style={{maxWidth:300}} loading="lazy" />
 
 The navigation bar consists of five main tabs:
 * **Conversations:** Where you can send and receive messages from other nodes on your mesh.
@@ -26,7 +26,7 @@ The navigation bar consists of five main tabs:
 
 When you first open the app, you will land on the **Nodes** screen. If no radio is connected, you can proceed to the **Connection** tab to set one up.
 
-![Fresh install with no device connected](./assets/android-home-empty.png)
+<img src={require('./assets/android-home-empty.png').default} alt="Fresh install with no device connected" style={{maxWidth:300}} loading="lazy" />
 
 ## Connecting to Your Radio
 
@@ -42,7 +42,7 @@ The app can connect to your radio via Bluetooth, Wi-Fi, or USB.
     *   If you are connecting for the first time, you may need to enter a pairing PIN.
         *   For devices with a screen, the PIN will be displayed on it.
         *   For headless devices (no screen), the default PIN is `123456`.
-    ![Bluetooth pairing list](./assets/android-pairing-list.png)
+    <img src={require('./assets/android-pairing-list.png').default} alt="Bluetooth pairing list" style={{maxWidth:300}} loading="lazy" />
 4.  **For Network (Wi-Fi/Ethernet):**
     *   Devices on the same network as your phone should be automatically discovered.
     *   You can also manually add a device by its IP address.
@@ -103,14 +103,16 @@ After scanning or opening a link, the app will ask for confirmation to switch to
 
 The **Conversations** tab operates like most messaging apps. It lists your direct messages and channels.
 
-![Message States](./assets/android-message-states.png)
+<img src={require('./assets/android-message-states.png').default} alt="Message States" style={{maxWidth:300}} loading="lazy" />
 
 Because LoRa is an unreliable transport, the app includes message delivery status icons. These appear to the right of every message you send:
 
-*   **Pending (Clock Icon):** The message is waiting to be sent from your phone to your radio.
-*   **Sent (Single Checkmark):** Your radio has transmitted the message over the air. This does not guarantee it was received.
-*   **Acknowledged (Double Checkmark):** The destination node has received the message and sent an acknowledgement (ACK). For group messages, this means at least one node in the group has acknowledged it.
-*   **Failed (Red Exclamation):** The message could not be delivered to the radio, or no acknowledgement was received within the timeout period.
+*   **UNKNOWN:** Not known for this message.
+*   **RECEIVED:** Message delivered and acknowledged by the intended node.
+*   **QUEUED:** Message waiting to be sent to the mesh as soon as the device connects.
+*   **ENROUTE:** Message delivered to the radio, but no ACK or NAK received yet.
+*   **DELIVERED:** Message successfully delivered and acknowledged to the mesh (ACK received).
+*   **ERROR:** Message not delivered (NAK received or other error).
 
 Long-press a message or contact for more options, such as replying, copying, or deleting.
 
