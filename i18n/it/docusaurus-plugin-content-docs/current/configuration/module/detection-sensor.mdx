@@ -1,0 +1,177 @@
+---
+id: detection-sensor
+title: Utilizzo Modulo Sensore Di Rilevamento
+sidebar_label: Sensore Di Rilevamento
+description: Dettagli di configurazione per il modulo sensore di rilevamento del vostro dispositivo Meshtastic. Usato per rilevatori di movimento, magnetici (reed) e altri sistemi di apertura/chiusura.
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+import { Icon } from "@iconify/react";
+
+Il modulo Sensore di Rilevamento consente di configurare un pin GPIO da monitorare per uno stato alto/basso specificato e di inviare avvisi di testo su portnum del Sensore di Rilevamento, quando viene rilevato un evento. Ciò è particolarmente utile per i sensori di rilevamento del movimento, gli interruttori magnetici (reed) e altri sistemi a stato aperto/chiuso in cui sono desiderate le notifiche sulla mesh. Le opzioni di configurazione sono: Abilitato, Intervallo Minimo di Trasmissione, Intervallo Trasmissione Stato, Invia Campanella, Nome, Pin di Monitoraggio, Rilevamento Attivato su Alto, e Usa Pull-up.
+
+Per utilizzare questo modulo, assicurati che i tuoi dispositivi abbiano la versione del firmware 2.2.2 o superiore.
+
+## Valori Di Configurazione Del Modulo Del Sensore Di Rilevamento
+
+### Abilitato
+
+Se il modulo è abilitato.
+
+### Intervallo Minimo Di Trasmissione
+
+L'intervallo in secondi di quanto spesso possiamo inviare un messaggio alla mesh quando viene rilevato un cambiamento di stato.
+
+### Intervallo Di Trasmissione
+
+L'intervallo in secondi che determina quanto spesso inviare un messaggio alla mesh con lo stato attuale indipendentemente dai cambiamenti. Quando impostato a 0, verranno trasmessi solo i cambi di stato. Funziona come una sorta di heartbeat di stato per tranquillità.
+
+### Invia Campanella
+
+Invia campanella ASCII con messaggio di avviso. Utile per l'attivazione di notifiche esterne sul nome della campanella.
+
+### Nome Descrittivo
+
+Usato per formattare il messaggio inviato alla mesh. Esempio: Un nome "Motion" porterebbe a un messaggio "Motion detected". Lunghezza massima di 20 caratteri.
+
+### Pin Monitor
+
+Il pin GPIO da monitorare per i cambiamenti di stato.
+
+### Rilevamento Trigger su HIGH
+
+Determina se il rilevamento dello stato del pin GPIO si attiva su HIGH (1) o su LOW (0).
+
+### Usa Pull-up
+
+Indica se usare o meno la modalità INPUT_PULLUP per il pin GPIO. Applicabile solo se la scheda utilizza resistenze pull-up sul pin.
+
+## Disponibilità Client Sensore Di Rilevamento
+
+<Tabs
+  groupId="settings"
+  defaultValue="apple"
+  values={[
+    {
+      label: (
+        <>
+          <Icon icon="mdi:android" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Android
+        </>
+      ),
+      value: "android",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:apple" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Apple
+        </>
+      ),
+      value: "apple",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:terminal" height="1.5rem" style={{ marginRight: "0.25rem" }} /> CLI
+        </>
+      ),
+      value: "cli",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:internet" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Web
+        </>
+      ),
+      value: "web",
+    },
+  ]}>
+
+<TabItem value="android">
+
+#### Android
+
+:::info
+All Detection Sensor Module config options are available for Android in app version 2.2.2 and higher.
+
+1. Apri l'applicazione Meshtastic
+2. Vai a: **Menu (3 punti in alto a destra) > Configurazione radio > Sensore di rilevamento**
+   :::
+
+</TabItem>
+<TabItem value="apple">
+
+#### Apple
+
+:::info
+Tutte le opzioni di configurazione del modulo sensore di rilevamento sono disponibili su iOS, iPadOS e macOS versioni dell'app 2.2.2 e superiore in Impostazioni > Configurazione del modulo > Sensore di rilevamento
+:::
+
+</TabItem>
+<TabItem value="cli">
+
+#### CLI
+
+:::info
+
+Tutte le opzioni di configurazione del modulo Paxcounter sono disponibili nella versione di python CLI 2.2.2 e successive.
+
+:::
+
+I comandi di esempio sono di seguito:
+
+```shell title="Enable/Disable the Detection Sensor Module"
+meshtastic --set detection_sensor.enabled true
+meshtastic --set detection_sensor.enabled false
+```
+
+```shell title="Set the Minimum Broadcast Interval to 90 seconds"
+meshtastic --set detection_sensor.minimum_broadcast_secs 90
+```
+
+```shell title="Set the State Broadcast Interval to 5 minutes"
+meshtastic --set detection_sensor.state_broadcast_secs 300
+```
+
+```shell title="Enable/Disable Send Bell"
+meshtastic --set detection_sensor.send_bell true
+meshtastic --set detection_sensor.send_bell false
+```
+
+```shell title="Set the friendly name to 'motion'"
+meshtastic --set detection_sensor.name "motion"
+```
+
+```shell title="Set the Monitor Pin to 7"
+meshtastic --set detection_sensor.monitor_pin 7
+```
+
+```shell title="Enable Notifications when the Monitor Pin goes HIGH"
+meshtastic --set detection_sensor.detection_triggered_high true
+```
+
+```shell title="Enable Notifications when the Monitor Pin goes LOW"
+meshtastic --set detection_sensor.detection_triggered_high false
+```
+
+```shell title="Enable the use INPUT_PULLUP mode"
+meshtastic --set detection_sensor.use_pullup true
+```
+
+```shell title="Get the Detection Sensor Module Configuration"
+meshtastic --get detection_sensor
+```
+
+</TabItem>
+<TabItem value="web">
+
+#### Web
+
+:::info
+
+Tutte le opzioni di configurazione del modulo sensore di rilevamento sono disponibili nell'interfaccia utente Web.
+
+:::
+
+</TabItem>
+</Tabs>

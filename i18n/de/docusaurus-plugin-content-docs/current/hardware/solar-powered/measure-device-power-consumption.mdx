@@ -1,0 +1,68 @@
+---
+id: measure-power-consumption
+title: Wie man den Stromverbrauch des Meshtastic Gerätes ermittelt
+sidebar_label: Stromverbrauch messen
+sidebar_position: 1
+---
+
+Bevor Sie berechnen können, welche Größe für Solarpanel und Akkupack benötigt werden, müssen Sie festlegen, wie viel Energie Ihr Gerät verbraucht. Dies ist ein wesentlicher und erster Schritt beim Bau einer Solarstromversorgung.
+
+## Aufbau und Voraussetzungen
+
+Um den durchschnittlichen Stromverbrauch eines Funkgerätes wie z.B. eines Meshtastic Knotens zu messen, bedarf es einiger Hardware und etwas Verständniss.
+
+### Leistungsmesser
+
+Sie brauchen eine Möglichkeit, um die Leistung zu messen. Dies könnte ein Tischnetzteil mit Spannungs- und Stromstärkenangaben sein. Es könnte sich um ein spezielles Gerät wie ein USB-Leistungsmessgerät oder etwas anderes handeln. Am wichtigsten ist, dass Sie entweder Volt und Ampere ODER Watt im Zeitverlauf ablesen müssen (im Zeitverlauf bedeutet, dass der Stromverbrauch im Zeitverlauf erfasst werden muss, nicht nur die Momentanwerte). Überlegen Sie auch, ob Ihr Messgerät über die Auflösung verfügt, um so niedrig zu messen, wie Sie es benötigen. Zum Beispiel verbrauchen einige Knoten 0,005A bei 5v. Kann dein Leistungsmesser so geringe Ergebnisse messen und anzeigen? Wichtig hierbei ist, dass Ihr Messgerät die Amperestunden oder Wattstunden erfassen muss. Ein normales Multimeter kann dies nicht erfassen.
+
+### Was messen wir?
+
+Die Einheit zur Messung der Leistung ist Watt. Verwenden Sie diese Einheit, um auszudrücken, wie viel Strom Ihr Gerät verbraucht. Wenn Sie Volt und Ampere messen, erhalten Sie Watt. Es ist eine einfache Gleichung. Multiplizieren Sie die Spannung (V) mit der Stromstärke (A) um die Leistung (W) zu erhalten: 5 V x 50 mA = 250 mW (auch beschrieben als 5 V _ 0.05 A = 0,25 W). 250 mW ist die Leistungsaufnahme in diesem bestimmten Fall. Technisch beschreibt es die verbrauchte Leistung über eine Stunde. Wir können diese Zahl nicht verwenden, da Funkgeräte wie Meshtastic viel Zeit mit Empfangen und nur einige Zeit mit Senden verbringen (das Senden verbraucht viel mehr Strom als das Empfangen). Wenn wir die Leistung messen, wenn das Gerät empfängt, und angeben, dass dies der Verbrauch in einer Stunde ist, berücksichtigen wir nicht die weniger häufigen, aber leistungsintensive Übertragungen. Wir müssen über die Zeit einen Durchschnittswert ermitteln. Um die Leistung über einen bestimmten Zeitraum zu messen, verwenden wir Wattstunden. Wenn Ihr Gerät beispielsweise eine Stunde lang 250 mW verbraucht und Sie wissen möchten, wie viel Strom es in 24 Stunden verbraucht, drücken wir dies folgendermaßen aus: 24 h _ 250 mW = 6000 mWh. Dieses Ergebnis wird in Milliwattstunden ausgedrückt (es kann auch als 6 Wh ausgedrückt werden).
+
+### Arbeitszyklus
+
+Funkgeräte verbrauchen beim Empfangen relativ wenig Strom. Im Gegensatz dazu verbrauchen sie beim Senden viel mehr Strom. Der Arbeitszyklus ist der Prozentsatz der Zeit, in der das Funkgerät sendet. Wie viel Zeit wird im Laufe der Zeit mit Senden verbracht? 5%? 10%? 25%? Es ist schwer zu sagen. Das hängt von Ihrem Anwendungsfall ab. Anstatt zu versuchen, die Empfangsleistung im Vergleich zur Sendeleistung anhand der Datenblattzahlen zu berechnen, können Sie einen simulierten Test durchführen und den Stromverbrauch über einen bestimmten Zeitraum messen. Führen Sie Ihren Stromverbrauchstest mindestens eine Stunde lang durch. Je länger Sie den Test laufen lassen, desto genauer wird er (sofern Ihre Testbedingungen repräsentativ für die Realität sind). Betrachten Sie 2-6 Stunden als gute Testdauer.
+
+## Testbedingungen
+
+Das Ausführen eines Tests ist in der Praxis ziemlich einfach, erfordert jedoch ein gewisses Verständnis dafür, wie Meshtastic im Hintergrund funktioniert.
+
+### Netzwerkaktivität im Hintergrund
+
+Meshtastic Knoten übertragen Daten in regelmäßigen Abständen. Bei diesen Datenpaketen handelt es sich nicht um Nachrichten, die Sie an andere Personen senden könnten. Sie sind wie Leuchtfeuer; sie werden verwendet, um dem Netzwerk mitzuteilen, dass Ihr Knoten betriebsbereit und im Netzwerk ist. Ihr Knoten weiß, ob andere Knoten online sind und wo sie sich befinden (bei GPS-fähigen Knoten). Diese Datenpakete werden im Hintergrund gesendet und sind für die Funktion des Netzwerks erforderlich (einige davon können jedoch deaktiviert oder so konfiguriert werden, dass sie seltener übertragen werden). Andere Knoten im Netzwerk antworten auf einige dieser Beacons mit einer Empfangsbestätigung. Dies bedeutet, dass es eine Basislinie an Netzwerkaktivität gibt, die durch Empfangen und Senden etwas Strom verbraucht, unabhängig von den Nachrichten, die Sie manuell senden. 
+
+### Simuliertes Testen
+
+Um einen ordnungsgemäßen Test einzurichten, müssen Sie wissen oder schätzen, wie viel Nachrichtenverkehr Ihr Netzwerk haben wird (manuelle Nachrichten, die von einem Knoten gesendet werden). Sind es 5, 10, 20 oder 50 Nachrichten in einer Stunde? Das können nur Sie wissen, denn jeder hat eine andere Situation.
+
+Wenn Ihre Nachrichtenrate gering ist (etwa 2–5 Nachrichten pro Stunde), hat dies möglicherweise keine großen Auswirkungen auf den Stromverbrauch. Der Knoten überträgt bereits regelmäßig im Hintergrund, sodass diese geringe Anzahl zusätzlicher Nachrichtenübertragungen nur geringe Auswirkungen auf den Gesamtstromverbrauch hat. Ihre Nachrichtenrate hängt vollständig vom Anwendungsfall ab und niemand kann Ihnen sagen, wie hoch Ihr Arbeitszyklus ist. Sie können jedoch schätzen und Ihren Berechnungen einen Spielraum hinzufügen, um die Betriebszeit sicherzustellen.
+
+#### Stellen Sie ein niedriges GPS-Standortübertragungsintervall ein
+
+Eine Möglichkeit, eine Nachricht in Meshtastic zu simulieren ist, den Intervall zur erhöhen, mit dem der Knoten den GPS Standort sendet. Ihr Gerät benötigt kein GPS Modul um diese Option zu verwenden. Zum Zeitpunkt des Schreibens dieses Artikels beträgt das Standardintervall 2 Minuten für einen normalen Knoten mit GPS oder 15 Minuten für einen Knoten mit festem Standort. Sie können dieses Intervall verringern, wodurch häufiger eine Nachricht gesendet wird und so eine manuelle Nachricht im Netzwerk simuliert wird. Sie können dieses Intervall in der iPhone-App, Android-App, Weboberfläche und Kommandozeile ändern. Mit dieser Funktion können wir häufigere Übertragungen erzwingen und so den Nachrichtenverkehr simulieren. Dies ist hilfreich, da es automatisiert ist und Sie während des Tests nicht daran denken müssen, manuell Nachrichten zu senden.
+
+#### Fester Standort Übertragungsintervall
+
+Die meisten Solarbasisstationen verfügen nicht über ein GPS-Modul, da es den Standort nicht ändert und GPS viel Strom verbraucht. In Meshtastic können Sie die GPS Koordinaten für jeden Knoten manuell festlegen. Dies ist bei Solarknoten üblich. Wenn ein Knoten einen festen Standort hat, wird dieser alle 15 Minuten (standardmäßig) aktualisiert. Das ist eine Basis von 4 GPS Standortaktualisierungen pro Stunde. Wenn Sie 16 Nachrichten pro Stunde simulieren möchten, können Sie dieses Intervall auf 3 Minuten setzen. Damit wird alle 3 Minuten ein Update verschickt, somit 20 Updates insgesamt. Wenn Sie die 4 Basisupdates abziehen (die nach Ihrem Test bei der Bereitstellung vorhanden sein werden), erhalten Sie 16 „Nachrichten“ pro Stunde. Für 56 simulierte Nachrichten pro Stunde würden Sie dieses Intervall auf 1 Minute setzen.
+
+### Beispiel Testbedingung mit Knoteneinstellungen
+
+Die Tests benötigen mindestens 2 Knoten. Der Knoten, von dem Sie die Leistung messen, und ein weiterer. Es ist jedoch möglicherweise realistischer, 3 oder 4 Knoten in das Netzwerk aufzunehmen. Das Ziel besteht darin, bei der Messung des Stromverbrauchs so nah wie möglich an der endgültigen Größe Ihres Einsatznetzwerks zu liegen. Diese Testbedingungen würden ein „gesprächiges“ Netzwerk simulieren:
+
+- 3 Knoten im Netzwerk.
+- Ein "anderer" Knoten sendet den Standort alle 60 Sekunden (Smart-Standort deaktiviert).
+- Testknoten sind mit einem Telefon über Bluetooth verbunden.
+- Testknoten hat einen festen GPS-Standort.
+- Testknoten sendet alle 60 Sekunden den Standort (Smart-Standort deaktivieren).
+
+Konfigurieren Sie alle Ihre Geräte wie angegeben. Es kann hilfreich sein, den Test zur vollen Stunde oder in einem 15 minütigen Intervall zu starten (z.B. 14:15). Notieren Sie die Startzeit für jeden Testknoten. Wenn Sie den Test stoppen, versuchen Sie es zur vollen Stunde oder im 15-Minuten Intervall zu tun. Dies erleichtert die Berechnung der Ergebnisse. Stellen Sie sicher, dass Sie vor dem Start alle vorherigen Strommessungen auf Ihrem Stromzähler zurücksetzen. Führen Sie den Test aus und nehmen Sie die Endzeit und die Gesamtleistung auf, die während des Tests verbraucht wird.
+
+## Ergebnisse
+
+Ihre Ergebnisse werden hoffentlich in Watt/Stunde angezeigt. Teilen Sie die aufgezeichneten Watt/Stunde einfach durch die Anzahl der Stunden für Ihren Test, um Ihre durchschnittliche Leistungsbewertung in Watt/Stunde oder Milliwatt/Stunde zu erreichen. Notieren Sie dieses Ergebnis und fahren Sie mit der Berechnung der Solarzellengröße fort.
+
+Wenn Ihr Messgerät die Ampere/Stunde misst, müssen Sie dies umwandeln.
+
+### Ampere/Stunde zu Watt/Stunde konvertieren
+
+Nehmen Sie Ihr Gesamtergebnis in Ampere/Stunden und multiplizieren Sie es mit der für den Test verwendeten Spannung(in Volt). Zum Beispiel, Ihr Test lief für 3 Stunden bei 5,1 V und Ihr Messgerät zeigt 142 mAh. Das ist 5,1 V \* 142 mAh = 724,2 mWh. Teilen Sie nun die Gesamtsumme durch die Testdauer: 724,2 mWh / 3h = 241,4 mW. Dieses Beispiel zeigt einen durchschnittlichen Stromverbrauch von 241,1 mW. Notieren Sie Ihr Testergebnis für den nächsten Schritt, die Berechnung der Solarzellengröße.

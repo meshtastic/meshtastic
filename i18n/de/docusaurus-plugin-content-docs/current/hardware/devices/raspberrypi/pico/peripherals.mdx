@@ -1,0 +1,14 @@
+---
+id: peripherals
+title: Raspberry Pi Pico unterstütztes Zubehör
+sidebar_label: Zubehör
+sidebar_position: 1
+---
+
+## I<sup>2</sup>C Zubehör
+
+I<sup>2</sup>C Zubehör wie OLED Anzeigen (z.B. SSD1306 oder SH1106) und Tastaturen (z.B. CardKB) können an GPIO Pins 4 (SDA) und 5 (SCL) angeschlossen werden, die dann beim Booten erkannt werden. Beachten Sie, dass für die Eingabe der Tastatur das Modul [Vordefinierte Nachrichten](/docs/configuration/module/canned-message) aktiviert sein muss und die [Eingabequelle](/docs/configuration/module/canned-message#input-source) angegeben werden soll.
+
+## Externes Gerät mit seriellem Modul
+
+Um ein externes Gerät über das [Serielle Modul](/docs/configuration/module/serial) zu verbinden, wird empfohlen, GPIO Pins 8 (`serial.txd`) und 9 (`serial.rxd`) zu verwenden.

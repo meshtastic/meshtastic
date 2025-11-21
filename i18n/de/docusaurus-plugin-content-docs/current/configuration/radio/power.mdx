@@ -1,0 +1,291 @@
+---
+id: power
+title: Energieeinstellungen
+sidebar_label: Energie
+description: Einstellungen für fortgeschrittene Benutzer, die die Energiekonfiguration ihres Meshtastic Gerätes anpassen möchten.
+---
+
+import Admonition from "@theme/Admonition";
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+import { Icon } from "@iconify/react";
+import calculateADC from "/src/utils/calculateADC";
+
+:::info Gerätekonfiguration zuerst verwenden
+Energieeinstellungen sind erweiterte Konfiguration. Die meisten Benutzer sollten unter [Geräteeinstellungen](/docs/configuration/radio/device) eine Rolle wählen, um die Energiemerkmale für ihr Gerät zu verwalten und sollten diese Einstellungen nicht anpassen müssen.
+:::
+
+Die Energieeinstellungen sind: Energiesparen, Herunterfahren bei niedriger Spannung, ADC Multiplikator, Warten auf Bluetooth Intervall, Intervall des Ruhemodus, minimaler Weckintervall und I2C Adresse eines INA2xx Stromsensors. Die Energiekonfiguration verwendet eine administrative Nachricht, die einen `Config.Power` Protocol Buffer sendet.
+
+## Energieeinstellungen
+
+### Energiesparen
+
+:::warning
+Wenn aktiviert, können Änderungen an den Einstellungen vorgenommen werden, indem das Gerät durch Drücken der Benutzertaste geweckt wird, zurückgesetzt wird oder durch [administrative Nachrichten](/docs/configuration/remote-admin/) mit der Fernverwaltung.
+:::
+
+Bei Aktivierung dieser Funktion werden Bluetooth, serielle Schnittstelle, WLAN und die Anzeige des Gerätes abgeschaltet, um Strom zu sparen. Dies ist besonders vorteilhaft für Geräte, die sich auf Stromquellen mit geringer Stromerzeugung, wie Solarzellen, stützen. Für Details, welche Geräterollen diese Funktion standardmäßig aktiviert haben, prüfen Sie bitte den Abschnitt [Gerätekonfiguration](/docs/configuration/radio/device).
+
+### Herunterfahren nach Verlust der Stromversorgung
+
+Ein Gerät automatisch nach einer definierten Zeitspanne heruntergefahren, wenn die Stromversorgung verloren geht.
+
+Bevor Sie dies einstellen, stellen Sie sicher, dass Ihr Board korrekt erkennt, wann es mit externer Spannungsversorgung verbunden ist (das "🔌"-Symbol in der App). Andernfalls könnte Ihr Gerät auch bei vorhandener Stromversorgung herunterfahren.
+Viele Geräte erkennen den Energiestatus korrekt. Für einige Geräte müssen Sie jedoch den ADC Multiplikator (unten) modifizieren.
+
+### ADC Multiplikationsfaktor
+
+Verhältnis des Spannungsteilers für Akkuladung z.B. 3,20 (R1=100k, R2=220k)
+
+Überschreibt den ADC Multiplikator in der Firmware Datei der Gerätevariante zur Berechnung der Akkuspannung.
+
+Sollte auf Fließkommawert zwischen 2 und 6 gesetzt werden
+
+#### Kalibrierungsprozess ([Attribution](https://wiki.uniteng.com/en/meshtastic/nano-g1-explorer#calibration-process))
+
+1. Installieren Sie einen wiederaufladbaren Akkus.
+2. Laden Sie den Akku bis er voll ist. Die Angabe dieses Zustands kann je nach Gerät variieren. An diesem Punkt sollte die Batteriespannung 4,2 V +-1 % betragen.
+3. Geben Sie die "Akkuladung in Prozent" auf der Anzeige oder in Ihrer verbundenen App in den Rechner unten ein.
+4. Wenn "Akkuladung Prozent" (z.B. 3,2 V 60 %) nicht angezeigt wird, dann bedeutet das, dass der Standardwert des aktuellen ADC Multiplikators zu hoch ist. Verringern Sie den ADC Multiplikator auf eine kleinere Zahl (um 0,1 wird empfohlen), bis "Akkuladung Prozent" angezeigt wird. Geben Sie den aktuellen ADC Multiplikator in das Feld "Operative Adc Multiplikator" im Rechner ein. Geben Sie auch die angezeigte "Akkuladung Prozent" in den Rechner ein.
+5. Klicken Sie auf die Schaltfläche "Berechnen" um den neuen ADC Multiplikator zu berechnen und setzen Sie ihn als den neuen "Operativen Adc Multiplikator" für das Gerät ein.
+
+<div class="no-print">
+  <details>
+    <summary>ADC Rechner</summary>
+    <div>
+      <Admonition type="info">
+        <p>Diese Methode kalibriert 4.2V zu 100% Akkuladezustand und berücksichtigt nicht die Unlinearitäten des ADC.</p>
+      </Admonition>
+      <table>
+        <tr>
+          <td> Akkuladezustand %: </td>
+          <td>
+            <input type="text" id="batteryChargePercent" defaultValue="65" />
+          </td>
+        </tr>
+        <tr>
+          <td>Aktueller ADC Multiplikator: </td>
+          <td>
+            <input type="text" id="operativeAdcMultiplier" defaultValue="2" />
+          </td>
+        </tr>
+        <tr>
+          <td>Neuen ADC Multiplikator berechnen: </td>
+          <td>
+            <input
+              type="text"
+              id="newOperativeAdcMultiplier"
+              value="2"
+              disabled="disabled"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>
+            <button
+              className="button button--outline  button--lg cta--button"
+              onClick={calculateADC}
+            >
+              Berechnen
+            </button>
+          </td>
+        </tr>
+      </table>
+      Die Standardwerte für den ADC Multiplikator sind:
+
+```
+  |  Gerät   | Standard ADC Multiplikator |
+  | :------: | :------------------------: |
+  | chatter2 | 5.0 |
+  | diy | 1.85 |
+  | esp32-s3-pico | 3.1 |
+  | heltec_v1 & heltec_v2 | 3.2 |
+  | heltec_v3 & heltec_wsl_v3 | 4.9 |
+  | heltec_wireless_paper | 2 |
+  | heltec_wireless_tracker 1.0/1.1 | 4.9 |
+  | heltec_T114 | 4.916 |
+  | lora_isp4520 | 1.436 |
+  | m5stack_coreink | 5 |
+  | nano-g1-explorer | 2 |
+  | nano-g2-ultra | 2 |
+  | picomputer-s3 | 3.1 |
+  | rak4631 | 1.73 |
+  | rpipico | 3.1 |
+  | rpipicow | 3.1 |
+  | station-g1 | 6.45 |
+  | station-g2 | 4 |
+  | tlora_v2_1_16 | 2 |
+  | tlora_v2_1_18 | 2.11 |
+  | tlora_t3s3_v1 | 2.11 |
+  | t-deck | 2.11 |
+  | t-echo | 2 |
+```
+
+    </div>
+
+</details>
+</div>
+
+### Warte auf Bluetooth Intervall
+
+Dauer bis BLE in den Zustand kein Bluetooth geschaltet wird
+
+`0` für Standard 1 Minute
+
+### Leichter Ruhemodus Intervall
+
+:::info Nur für ESP32
+Diese Einstellung gilt nur für ESP32 basierte Platinen, sie hat keinen Effekt auf nRF52/RP2040/RP2350 Platinen.
+:::
+
+Im leichten Ruhemodus ist die CPU inaktiv, LoRa Funk ist eingeschaltet, BLE ist ausgeschaltet und GPS ist aktiviert
+
+`0` für Standard von 5 Minuten
+
+### Minimaler Weckintervall
+
+Werden im leichten Ruhemodus Pakete im LoRa Funk empfangen, werden sie von der CPU behandelt und wird für diesen Intervall im Bluetooth-Modus aktiv bleiben.
+
+`0` für standardmäßig 10 Sekunden
+
+### INA2xx Adresse des Stromsensors im Gerät
+
+Wird an der angegebenen Adresse ein INA2xx Sensor automatisch an einem der I2C-Busse erkannt, dann wird er als die maßgebliche Quelle für die Messung der Batteriespannung und des Stromes verwendet. Einstellung wird für Geräte mit PMU ignoriert (z.B. T-Beams)
+
+:::tip[Convert hexadezimal zu dezimal]
+I2C-Adressen werden normalerweise in Hexadezimalen dargestellt und erfordern eine Konvertierung in Dezimalstellen, um sie über die Meshtastic App einzustellen. Zum Beispiel ist die I2C-Adresse von 0x40 in Dezimalzahl 64 konvertiert.
+:::
+
+## Verfügbarkeit der Energieeinstellungen
+
+<Tabs
+  groupId="settings"
+  defaultValue="apple"
+  values={[
+    {
+      label: (
+        <>
+          <Icon icon="mdi:android" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Android
+        </>
+      ),
+      value: "android",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:apple" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Apple
+        </>
+      ),
+      value: "apple",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:terminal" height="1.5rem" style={{ marginRight: "0.25rem" }} />Kommandozeile
+        </>
+      ),
+      value: "cli",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:internet" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Web
+        </>
+      ),
+      value: "web",
+    },
+  ]}>
+
+<TabItem value="android">
+
+#### Android
+
+:::info
+
+Alle Energieeinstellungen sind für Android verfügbar.
+
+1. Öffnen Sie die Meshtastic Applikation
+2. Navigiere zu: **vertikale Ellipse (3 Punkte oben rechts) > Gerätekonfiguration > Energie**
+
+:::
+
+</TabItem>
+<TabItem value="apple">
+
+#### Apple
+
+:::info
+
+Die Energieeinstellungen sind in iOS, iPadOS und macOS unter Einstellungen > Gerätekonfiguration > Energie.
+
+:::
+
+</TabItem>
+<TabItem value="cli">
+
+#### Kommandozeile
+
+:::info
+
+Alle Energieeinstellungen sind über die Python Kommandozeile verfügbar.
+
+:::
+
+|      Einstellung                     |      Akzeptable Werte              |          Standardwert                        |
+| :----------------------------------: | :--------------------------------: | :------------------------------------------: |
+|     power.is_power_saving            |      `true`, `false`               |             `false`                          |
+| power.on_battery_shutdown_after_secs |     Ganzzahl (Sekunden)            |   Standard von `0` ist ausgeschaltet         |
+|   power.adc_multiplier_override      |      `2-4` (Fließkommawert)        |   Standard von `0` verwendet Firmware-Werte  |
+|    power.wait_bluetooth_secs         |     Ganzzahl (Sekunden)            |      Standard von `0` ist 1 Minute           |
+|       power.ls_secs                  |     Ganzzahl (Sekunden)            |      Standard von `0` ist 5 Minuten          |
+|     power.min_wake_secs              |     Ganzzahl (Sekunden)            |     Standard von `0` ist 10 Sekunden         |
+|  power.device_battery_ina_address    | Ganzzahl (I2C-Adresse als Dezimal) | Standard von `0` ist keine Adresse gesetzt   |
+
+:::tip
+
+Weil das Gerät nach jedem Befehl über die Kommandozeile neu startet, wird empfohlen, dass mehrere Werte in einem Konfigurationsblock zusammengefasst und übertragen werden.
+
+```shell title="Example:"
+meshtastic --set power.is_power_saving true --set power.on_battery_shutdown_after_secs 120
+```
+
+:::
+
+```shell title="Enable / Disable Power Saving"
+meshtastic --set power.is_power_saving true
+meshtastic --set power.is_power_saving false
+```
+
+```shell title="Enable / Disable Shutdown after losing power"
+meshtastic --set power.on_battery_shutdown_after_secs 120
+meshtastic --set power.on_battery_shutdown_after_secs 0
+```
+
+```shell title="Set  Wait Bluetooth Interval  (Default of 0 is 60 seconds)"
+meshtastic --set power.wait_bluetooth_secs 0
+meshtastic --set power.wait_bluetooth_secs 120
+```
+
+```shell title="Set Light Sleep to default (Default of 0 is 5 minutes)"
+meshtastic --set power.ls_secs 0
+meshtastic --set power.ls_secs 120
+```
+
+```shell title="Set Minimum Wake Interval (Default of 0 is 10 seconds)"
+meshtastic --set power.min_wake_secs 0
+meshtastic --set power.min_wake_secs 120
+```
+
+</TabItem>
+<TabItem value="web">
+
+#### Web
+
+:::info
+Alle Energieeinstellungen sind in der Web-Oberfläche verfügbar.
+:::
+
+</TabItem>
+</Tabs>

@@ -1,0 +1,80 @@
+---
+id: screens
+title: RAK WisBlock Anzeigen
+sidebar_label: Anzeigen
+sidebar_position: 2
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+Derzeit gibt es zwei verschiedene Anzeigen, die vom RAK WisBlock System unterstützt werden:
+
+<Tabs
+groupId="rakscreens"
+queryString="rakscreens"
+defaultValue="OLED"
+values={[
+{label: 'OLED Anzeige', value: 'OLED'},
+{label: 'E-Ink Anzeige', value: 'E-Ink'}
+]}>
+<TabItem value="OLED">
+
+## RAK1921 OLED Anzeige
+
+Das [RAK1921 OLED Anzeige](https://msh.to/rak1921) ist eine monochrome 0,96 Zoll Anzeige.
+
+- 0,96 Zoll OLED Anzeige
+- Auflösung 128 x 64 Pixel
+- I<sup>2</sup>C Schnittstelle
+
+Dieses Element erfordert Löten.
+Ähnliche Module sind bei anderen Anbietern weit verbreitet, aber überprüfen Sie die Platinen, da bei einigen die VDD und GND Pins vertauscht sind. Dies verhindert das direkte Verlöten der Anzeige auf der Basisplatine. Die bevorzugte Reihenfolge ist VDD, GND, SCL, SDA.
+Wenn die Pinreihenfolge auf der OLED-Platine vertauscht ist, gibt es einige Tricks, um entweder die Pins des OLED über gelötete Jumper neu zu konfigurieren oder die Drähte für die Pins, die nicht in der richtigen Reihenfolge sind, sorgfältig zu verlöten. Als Lösung ist die Verwendung von längeren Drähten zwischen der Basisplatine und der Anzeige möglich, was eine Umverdrahtung je nach Bedarf erlaubt.
+
+### Quellen
+
+- [RAK Dokumentationszentrum](https://docs.rakwireless.com/product-categories/wisblock/rak1921/overview/#product-description)
+- Links zum Direktkauf:
+  - US
+    - [Rokland](https://msh.to/rokland-rak1921)
+    - [muzi ᴡᴏʀᴋꜱ](https://msh.to/muzi-rak1921)
+  - International
+    - [RAKwireless](https://msh.to/rak1921)
+    - [RAKwireless AliExpress](https://msh.to/aliexpress-rak1921)
+
+[<img alt="0.96 inch OLED display" src="/img/hardware/screen.webp" style={{zoom:'25%'}} />](/img/hardware/screen.webp)
+
+</TabItem>
+<TabItem value="E-Ink">
+
+## RAK14000 E-Ink Anzeige
+
+Das [RAK14000 EPD Modul](https://msh.to/rak14000) ist eine extrem energiesparende E-Ink Anzeige mit drei Tasten.
+
+- 2,13 Zoll schwarz-weiße E-Ink Anzeige
+- Drei Tasten Modul
+- Auflösung 212 x 104 Pixel
+- Belegt den IO Steckplatz einer Wiseblock Basisplatine.
+
+Bitte beachten Sie, dass zurzeit nur die weiß-schwarze Anzeige unterstützt wird, die weiß-schwarz-rote Anzeige funktioniert zwar gut, wird aber nicht unterstützt.
+
+### Quellen
+
+- Firmware für 5005 mit RAK14000 e-Papier: [`firmware-rak4631_eink-X.X.xxxxxxx.uf2`](/downloads)
+- [RAK Dokumentationszentrum](https://docs.rakwireless.com/product-categories/wisblock/rak14000/overview/#product-description)
+- Links zum Direktkauf:
+  - US
+    - [Rokland](https://msh.to/rokland-rak14000)
+  - International
+    - [RAKwireless](https://msh.to/rak14000)
+    - [RAKwireless AliExpress](https://msh.to/aliexpress-rak14000)
+
+<img
+  alt="RAK4631 5005 14000"
+  src="/img/hardware/rak4631_5005_epaper.webp"
+  style={{ zoom: "50%" }}
+/>
+
+</TabItem>
+</Tabs>

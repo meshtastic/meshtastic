@@ -1,0 +1,80 @@
+---
+id: heltec-sensors
+title: HELTEC®️ Plug&Play Sensoren
+sidebar_label: Sensoren
+sidebar_position: 2
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+<Tabs
+groupId="heltec"
+queryString="heltec"
+defaultValue="v3.0"
+values={[
+{label: 'Capsule V3.0', value: 'v3.0'}
+]}>
+<TabItem value="v3.0">
+
+## Heltec Capsule Sensor Rev. 3.0
+
+- **MCU:**
+  - ESP32-S3FN8 (WiFi & Bluetooth)
+- **LoRa Sendeempfänger:**
+  - Semtech SX1262
+- **Frequenzoptionen:**
+  - 433 MHz
+  - 470 - 510 MHz
+  - 863 - 870 MHz
+  - 902 - 928 MHz
+- **Anschlüsse:**
+  - Magnetische Schnittstelle
+  - Antenne:
+    - Separate 2,4 GHz SMT Antenne für WLAN/Bluetooth
+    - Separate SMT Antenne für LoRa
+
+### Wie wird die Firmware aktualisiert
+
+:::info
+Capsule Sensor V3 verwendet den drahtlosen Bootmodus, um Firmware hochzuladen, Informationen auszutauschen und Protokolle über WLAN zu verschicken.
+Das heißt, ob Sie die Firmware lokal oder über das Internet aktualisieren, Sie müssen das Gerät zuerst in den drahtlosen Bootmodus bringen.
+:::
+
+### Unterschiede der Touch Version zur Version mit physischen Tasten
+
+:::warning
+Da die Touch-Taste versehentlich in der Nähe von Metall oder in der Tasche aktiviert werden kann, hat die Heltec die Produktion dieser Version eingestellt. Allerdings ist eine kleine Anzahl dieser Geräte auf den Markt gekommen.
+:::
+
+- Tastenunterschiede
+  ![Capsule Sensor V3 Taste](/img/hardware/heltec/capsule-sensor-v3-button.webp)
+- Andere Hardwareunterschiede
+  1. Entfernen des [FDG6322C](https://www.mouser.com/datasheet/2/308/1/FDG6322C_D-2312203.pdf) (ein doppelter N & P Kanal FET) aus der physischen Tastenversion.
+  2. Antennenfilter Werte der physischen Tastenversion (L11 = 1,8 pF, C15 = 2,7 nH, C24 = 1,8 pF) orientiert sich stärker an ESP32-S3 Referenzdesign als Touch Version (L11 = 1,6 nH, C15 = 6,9 pF, C24 = 2,4 pF).
+
+### Merkmale
+
+- Meshtastic vorinstalliert.
+- Integrierter Akku.
+- Sensor austauschbar.
+
+### PIN Nummer
+
+- Anschlüsse:
+  - Modellname: [DF12NB(3.0)-10DS-0.5V(51)](https://resource.heltec.cn/download/Heltec%20Capsule%20Sensor%20V3/Connector.pdf)
+  - Anschlussplan:
+    ![Capsule Sensor V3](/img/hardware/heltec/capsule-connector.webp)
+- Weitere Pindefinitionen siehe [Schaltplan](https://resource.heltec.cn/download/Heltec%20Capsule%20Sensor%20V3/Capsule_Main_Esp32_Schematic_Diagram.pdf)
+
+### Quellen
+
+- Firmware Datei: `firmware-heltec_capsule_sensor_v3-X.X.X.xxxxxx.bin`
+- Links zum Direktkauf:
+  - International
+    - [Heltec](https://heltec.org/project/heltec-capsule-sensor-v3/)
+    - [AliExpress](https://www.aliexpress.us/item/3256805256690400.html)
+
+</TabItem>
+
+</Tabs>

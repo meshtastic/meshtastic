@@ -1,0 +1,599 @@
+---
+id: python-cli
+title: Anleitung für die Meshtastic Python Kommandozeile
+slug: /software/python/cli
+sidebar_label: Python Kommandozeile
+sidebar_position: 5
+---
+
+import QRCode from "@site/docs/blocks/_qr-code.mdx";
+
+Das Python pip Paket installiert eine "meshtastic" Kommandozeilenanwendung, die Nachrichten anzeigt, die über das Netzwerk als JSON gesendet werden und die das serielle Fehlerprotokoll mit Informationen den Meshtastic Geräten anzeigen. Dieser Befehl wird nicht innerhalb von python ausgeführt, Sie starten ihn direkt von der Shell-Prompt Ihres Betriebssystems. Wenn Sie "meshtastic" eingeben, der Befehl nicht gefunden wird und Sie Windows benutzen: Überprüfen Sie, ob sich das Python "scripts" Verzeichnis in Ihrem Pfad (Umgebungsvariable PATH) befindet.
+
+:::tip
+For a more complete list of options, run:
+
+```shell
+meshtastic --help
+```
+
+:::
+
+## Verbindungsargumente
+
+### \--port Port
+
+Der Anschluss, mit dem das Meshtastic Gerät verbunden ist, d.h. `/dev/ttyUSB0`, `/dev/cu.wchusbserial`, `COM4` etc. wenn nicht angegeben, wird meshtastic versuchen, diesen zu finden. Wichtig, wenn mehrere Geräte angeschlossen sind, um sicherzustellen, dass Sie den Befehl für das richtige Gerät aufrufen.
+
+Dieses Argument kann auch als `--serial` oder `-s` angegeben werden.
+
+```shell title="Usage"
+meshtastic --port /dev/ttyUSB0 --info
+meshtastic --port COM4 --info
+meshtastic -s --info
+```
+
+### \--host HOST
+
+Der Hostname/IP Adresse des Gerätes, zu dem eine Verbindung hergestellt wird (über TCP). Wird kein Host bereitgestellt, wird das meshtastic versuchen, eine Verbindung zu `localhost` herzustellen.
+
+Dieses Argument kann auch als `--tcp` oder `-t` angegeben werden.
+
+```shell title="Usage"
+meshtastic --host meshtastic.local --info
+meshtastic --host --info
+```
+
+### \--ble BLE
+
+Verbinden Sie sich mit einem Meshtastic Gerät mit seiner Bluetooth BLE Adresse oder Name. Diese Option ermöglicht eine drahtlose Kommunikation mit dem Gerät, ähnlich wie die Option `--host` für TCP-Verbindungen verwendet wird. Wenn keine Adresse angegeben ist, versucht meshtastic ein kompatibles Gerät zu finden, das gekoppelt ist.
+
+Dieses Argument kann auch als `-b` angegeben werden.
+
+```shell title="Usage"
+meshtastic --ble "device_name_or_address" --info
+meshtastic -b --info
+```
+
+## Hilfs- und Unterstützungsargumente
+
+### \-h oder --help
+
+Zeigt eine Hilfemeldung, die die Argumente beschreibt.
+
+```shell title="Usage"
+meshtastic -h
+```
+
+### \--version
+
+Zeigt die Versionsnummer des Programms an und beendet es.
+
+```shell title="Usage"
+meshtastic -- version
+```
+
+### \--support
+
+Zeigt Ihnen Informationen an, die bei der Unterstützung von Problemen hilfreich sind.
+
+```shell title="Usage"
+meshtastic --support
+```
+
+## Optionale Argumente
+
+### \--export-config
+
+Die Konfiguration des Gerätes exportieren. (kann mit dem Befehl '--configure' wieder eingelesen werden).
+
+Um eine Datei mit der Konfiguration des verbundenen Gerätes zu erstellen, muss die Ausgabe dieses Befehls in eine yaml Datei umgeleitet werden.
+
+```shell title="Usage"
+meshtastic --export-config > example_config.yaml
+```
+
+### \--configure
+
+Konfigurieren Sie das Meshtastic Gerät mit einer yaml Datei.
+
+```shell title="Usage"
+meshtastic --configure example_config.yaml
+```
+
+### \--seriallog SERIALLOG
+
+Protokolliert die serielle Ausgabe der Geräte entweder in 'stdout', 'none' oder einen Dateinamen, den Sie angegegben haben. Standardmäßig wird 'stdout' verwendet, wenn kein Dateiname angegeben wurde.
+
+```shell title="Usage"
+meshtastic --port /dev/ttyUSB0 --seriallog
+meshtastic -t meshtastic.local --seriallog log.txt
+```
+
+### \--info
+
+Lesen und anzeigen Sie die Informationen über die Funkgeräteeinstellung.
+
+```shell title="Usage"
+meshtastic --port /dev/ttyUSB0 --info
+```
+
+### \--set-canned-message
+
+Legen Sie vordefinierte Nachrichtenfest. Trennen Sie diese durch das Zeichen `|` (bis zu 200 Zeichen insgesamt).
+
+```shell title="Usage"
+meshtastic --set-canned-message "Ich brauche einen Bergsteiger!|Ruf mich an|Verstanden|Ruhe bewahren|Auf dem Weg"
+```
+
+### \--get-canned-message
+
+Zeigt die vordefinierte Nachrichten für dieses Modul.
+
+```shell title="Usage"
+meshtastic --get-canned-message
+```
+
+### \--set-ringtone RINGTONE
+
+Legen Sie den Klingelton für Benachrichtigungen fest (bis zu 230 Zeichen).
+
+```shell title="Usage"
+meshtastic --set-ringtone "LeisureSuit:d=16,o=6,b=56:f.5,f#.5,g.5,g#5,32a#5,f5,g#.5,a#.5,a#.5,32f5,g#5,32a#5,g#5,8c#.,a#5,c#.,32a#.,32a#5,32c#,d#,d#,8e,c#.,f.,f.,f.,32e,d#,8d#,22.f,e,32f,c#.,c#"
+```
+
+### \--get-ringtone
+
+Zeige den gespeicherten Klingelton.
+
+```shell title="Usage"
+meshtastic --get-ringtone
+```
+
+### \--nodes
+
+Gibt eine Knotenliste in einer schönen formatierten Tabelle aus.
+
+```shell title="Usage"
+meshtastic --nodes
+```
+
+### \--qr[^1]
+
+Zeigt die URL und den QR-Code an, der dem aktuellen Primärkanal entspricht.
+
+```shell title="Usage"
+meshtastic --qr
+```
+
+[^1]: <QRCode />
+
+### \--qr-all
+
+Zeigt die URL und den QR-Code an, der allen konfigurierten Kanälen auf dem Knoten entspricht.
+
+```shell title="Usage"
+meshtastic --qr-all
+```
+
+### \--get [config_section]
+
+Ruft einen Einstellungsparameter ab.
+
+Die entsprechenden Werte werden in der [Konfiguration](https://meshtastic.org/docs/configuration) beschrieben.
+
+```shell title="Usage"
+meshtastic --get lora
+meshtastic --get lora.region
+```
+
+Um alle gültigen Werte zu sehen, geben Sie einen ungültigen Wert wie `0` an:
+
+```shell title="Usage"
+meshtastic --get 0
+```
+
+### \--set [config_section].[option]&nbsp; [value]
+
+Legt einen Einstellungsparameter fest.
+
+Die entsprechenden Werte werden in der [Konfiguration](https://meshtastic.org/docs/configuration) beschrieben.
+
+```shell title="Usage"
+meshtastic --set lora.region Unset
+```
+
+### \--seturl SETURL
+
+Legen Sie die Kanal-URL fest, die die Einstellungen für LoRa sowie die der Kanäle enthält. Ersetzt Ihre aktuelle Konfiguration und Kanäle vollständig.
+
+```shell title="Usage"
+meshtastic --seturl https://www.meshtastic.org/c/GAMiIE67C6zsNmlWQ-KE1tKt0fRKFciHka-DShI6G7ElvGOiKgZzaGFyZWQ=
+```
+
+### \--pos-fields POS_FIELDS
+
+Konfigurieren Sie die Standortparameter, die mit dem Standort gesendet werden sollen. Sie können mehrere Werte übergeben. Mit 0 Werten werden die aktuellen Einstellungen aufgelistet.
+
+```shell title="Usage"
+meshtastic --pos-fields
+meshtastic --pos-fields ALTITUDE HEADING SPEED
+```
+
+### \--ch-index CH_INDEX
+
+Verwenden Sie den angegebenen Kanalindex. Gilt für Optionen, die Kanäle konfigurieren (wie `--ch-set` und `--ch-del`) sowie für Optionen, die Nachrichten an das Netz senden (z. B. `--sendtext` und `--traceroute`).
+
+```shell title="Usage"
+meshtastic --ch-index 1 --ch-disable
+```
+
+### \--ch-add CH_ADD
+
+Fügen Sie einen sekundären Kanal hinzu, Sie müssen einen Kanalnamen eingeben.
+
+Nicht kompatibel mit `--ch-index`. Wenn Sie `--ch-add` verwenden, dann werden alle nachfolgenden `--ch-set` und andere Befehle, die einen Kanal verwenden, den Index des neu hinzugefügten Kanals verwenden.
+
+```shell title="Usage"
+meshtastic --ch-add testing-channel
+```
+
+### \--ch-del
+
+Löscht den Kanal, der von `--ch-index` angegeben wurde.
+
+```shell title="Usage"
+meshtastic --ch-index 1 --ch-del
+```
+
+### \--ch-enable (veraltet)
+
+Diese Option ist veraltet. Die Verwendung von `--ch-add` wird bevorzugt, um sicherzustellen, dass es keine Lücken in der Kanalliste gibt.
+
+Aktivieren Sie den Kanal, der von `--ch-index` angegeben wurde.
+
+```shell title="Usage"
+meshtastic --ch-index 1 --ch-enable
+```
+
+### \--ch-disable (veralted)
+
+Diese Option ist veraltet. Die Verwendung von `--ch-del` wird bevorzugt, um sicherzustellen, dass es keine Lücken in der Kanalliste gibt.
+
+Deaktiviere den Kanal der von `--ch-index` angegeben wird.
+
+```shell title="Usage"
+meshtastic --ch-index 1 --ch-disable
+```
+
+### \--ch-set CH_SET CH_SET
+
+Setze einen Kanalparameter auf den Kanal, der durch `--ch-index` angegeben wurde.
+
+```shell title="Usage"
+meshtastic --ch-set id 1234 --ch-index 0
+```
+
+### \--ch-vlongslow
+
+Modem Voreinstellung auf `VERY_LONG_SLOW` ändern.
+
+```shell title="Usage"
+meshtastic --ch-vlongslow
+```
+
+### \--ch-longslow
+
+Modem Voreinstellung auf `LONG_SLOW` ändern.
+
+```shell title="Usage"
+meshtastic --ch-longslow
+```
+
+### \--ch-longfast
+
+Modem Voreinstellung auf (die Standardeinstellung) `LONG_FAST` ändern.
+
+```shell title="Usage"
+meshtastic --ch-longfast
+```
+
+### \--ch-medslow
+
+Modem Voreinstellung auf `MEDIUM_SLOW` ändern.
+
+```shell title="Usage"
+meshtastic --ch-medslow
+```
+
+### \--ch-medfast
+
+Modem Voreinstellung auf `MEDIUM_FAST` ändern.
+
+```shell title="Usage"
+meshtastic --ch-medfast
+```
+
+### \--ch-shortslow
+
+Modem Voreinstellung auf `SHORT_SLOW` ändern.
+
+```shell title="Usage"
+meshtastic --ch-shortslow
+```
+
+### \--ch-shortfast
+
+Modem Voreinstellung auf `SHORT_FAST` ändern.
+
+```shell title="Usage"
+meshtastic --ch-shortfast
+```
+
+### \--set-owner SET_OWNER
+
+Legen Sie den Namen des Geräteigentümers fest, der manchmal auch als langer Name bezeichnet wird.
+
+```shell title="Usage"
+meshtastic --set-owner "MeshyJohn"
+```
+
+### \--set-owner-short SET_OWNER
+
+Kurzname des Gerätebesitzers festlegen (max. 4 Zeichen).
+
+```shell title="Usage"
+meshtastic --set-owner-short "MJ"
+```
+
+### \--set-ham SET_HAM
+
+Legen Sie die Amateurfunklizenz fest (indem Sie den Namen des Eigentümers setzen) und deaktivieren Sie damit die Verschlüsselung im primären Kanal.
+
+Um den Amateurfunkmodus zu deaktivieren, benutzen Sie `--set-owner` und `--set-owner-short`, um die Namen des Besitzers zurückzusetzen, und verwenden Sie `--seturl` oder `--ch-set`, um Kanäle mit dem Namen und der Verschlüsselung zu konfigurieren, die sie verwenden möchten. Oder verwenden Sie `--factory-reset` um die Standardeinstellungen zurückzusetzen.
+
+```shell title="Usage"
+meshtastic --set-ham KI1345
+```
+
+### \--dest DEST
+
+Die Zielknoten ID für alle gesendeten Befehle, wenn diese nicht mit einem Befehl auf andere Weise übergeben wurde. Verwendet für [Knoten Fernverwaltung](/docs/configuration/remote-admin).
+
+Auf vielen Shells lösen Ausrufezeichen ein spezielles Verhalten aus, es sei denn, sie sind in einfachen Anführungszeichen eingeschlossen.
+
+```shell title="Usage"
+meshtastic --dest '!28979058' --set-owner "MeshyJohn"
+```
+
+### \--sendtext SENDTEXT
+
+Senden Sie eine Textnachricht. Sie können einen Kanalindex (`--ch-index`) und/oder ein Ziel (`--dest`) angeben.
+
+```shell title="Usage"
+meshtastic --sendtext 'Hallo Mesh!'
+meshtastic --ch-index 1 --sendtext 'Hallo sekundärer Kanal!'
+```
+
+### \--traceroute TRACEROUTE
+
+Routenverfolgung vom angeschlossenen Knoten zu einem Ziel. Sie müssen die Zielknoten ID als Argument übergeben und können `--ch-index` verwenden, um einen Kanal auszuwählen. Der Knoten, den Sie verfolgen, muss den gleichen Kanal konfiguriert haben, und nur Knoten, die diesen Kanal dekodieren können, werden sich innerhalb der Antwort identifizieren. Bei der aktueller Firmware können andere Knoten als `!ffffffffff` enthalten sein, aber nicht mit ihrer eigentlichen ID.
+
+```shell title="Usage"
+meshtastic --traceroute '!ba4bf9d0'
+```
+
+### \--request-telemetry
+
+Telemetrie von einem Knoten anfordern. Sie müssen die Zielknoten ID als Argument mit `--dest` übergeben. Bei Knoten mit der Rolle Repeater kann die Verwendung der dezimalen ID des Knotens effektiver sein, aber auch eine hexadezimale ID sollte funktionieren.
+
+```shell title="Usage"
+meshtastic --request-telemetry --est '!ba4bf9d0'
+meshtastic --request-telemetry --dest 1828779180
+```
+
+### \--request-position
+
+Standort von einem Knoten anfordern. Sie müssen die Zielknoten ID als Argument mit `--dest` übergeben.
+
+```shell title="Usage"
+meshtastic --request-position --dest '!ba4bf9d0' --ch-index 1
+```
+
+### \--ack
+
+Wird in Kombination mit `--sendtext` und anderen Befehlen verwendet, um auf eine Bestätigung zu warten. Nicht alle Befehle können eine Bestätigung zurückgeben. Wird am besten für Befehle verwendet, die einen einzelnen Zielknoten ansprechen.
+
+```shell title="Usage"
+meshtastic --sendtext 'Hello Mesh!' --dest '!28979058' --ack
+```
+
+### \--reboot
+
+Starten Sie den Knoten neu.
+
+```shell title="Usage"
+meshtastic --reboot
+```
+
+### \--shutdown
+
+Den Knoten herunterfahren.
+
+```shell title="Usage"
+meshtastic --shutdown
+```
+
+### \--factory-reset
+
+Den Knoten auf Werkseinstellungen zurücksetzten.
+
+```shell title="Usage"
+meshtastic --factory-reset
+```
+
+### \--reset-nodedb
+
+Die Knotendatenbank löschen.
+
+```shell title="Usage"
+meshtastic --reset-nodedb
+```
+
+### \--remove-node NODE
+
+Den angegebenen Knoten aus der Datenbank löschen.
+
+```shell title="Usage"
+meshtastic --remove-node '!48759737'
+```
+
+### \--reply
+
+Nachrichten abrufen. Wenn eine Nachricht empfangen wird, senden Sie eine Nachricht an den primären Kanal, die die Nachricht zusammen mit einigen Informationen wiederholen wird.
+
+```shell title="Usage"
+meshtastic --reply
+```
+
+### \--no-time
+
+Unterdrücken Sie das Senden der aktuellen Zeit an das Netz beim Start. Kann die Zuverlässigkeit und die Startzeit verbessern.
+
+```shell title="Usage"
+meshtastic --port /dev/ttyUSB0 --no-time
+```
+
+### \--no-nodes
+
+Keine Knoteninformationen aus der Knotendatenbank beim Start abrufen. Benötigt Firmware mit ausreichender Version. Befehle, die Knoteninformationen verwenden, können sich unvorhersehbar verhalten, da diese Informationen nicht gefüllt werden, aber dies kann die Effizienz für Befehle verbessern, die dies nicht tun.
+
+```shell title="Usage"
+meshtastic --no-nodes --no-time --sendtext "Eine schnelle Nachricht versenden"
+```
+
+### \--wait-to-disconnect WAIT_TO_DISCONNECT
+
+Wartet die angegebene Zeit, nachdem alle Aktionen durch andere Optionen ausgeführt wurden, bevor Sie die Verbindung zum Gerät getrennt wird. Einige Geräte werden neu gestartet, wenn die serielle Verbindung getrennt wird, daher kann das Hinzufügen einer Wartezeit die Zuverlässigkeit verbessern. Standardmäßig 5 Sekunden, wenn nicht anders angegeben wird.
+
+```shell title="Usage"
+meshtastic --set lora.channel_num 20 --wait-to-disconnect 10
+```
+
+### \-- setalt SETALT
+
+Die Höhe des Gerätes (ohne GPS verwendbar) festlegen und den festen Standortmodus aktivieren.
+
+Kann nur auf lokal verbundenen Knoten verwendet werden und nicht zusammen mit `--dest`.
+
+```shell title="Usage"
+meshtastic --setalt 120
+```
+
+### \--setlat SETLAT
+
+Legen Sie die Breitengrad des Gerätes fest (ohne GPS verwendbar) und aktivieren Sie den festen Standortmodus.
+
+Kann nur auf lokal verbundenen Knoten verwendet werden und nicht zusammen mit `--dest`.
+
+```shell title="Usage"
+meshtastic --setlat 25.2
+```
+
+### \--setlon SETLON
+
+Legen Sie den Längengrad des Gerätes fest (ohne GPS verwendbar), und aktivieren Sie den festen Standortmodus.
+
+Kann nur auf lokal verbundenen Knoten verwendet werden und nicht zusammen mit `--dest`.
+
+```shell title="Usage"
+meshtastic --setlon -16.8
+```
+
+### \--remove-position
+
+Löschen Sie den aktuell festgelegten Standort des Knotens und deaktivieren Sie den festen Standortmodus.
+
+Kann nur auf lokal verbundenen Knoten verwendet werden und nicht zusammen mit `--dest`.
+
+```shell title="Usage"
+meshtastic --remove-position
+```
+
+### \--debug
+
+Zeige Fehlerprotokollmeldungen der API Bibliothek.
+
+```shell title="Usage"
+meshtastic --debug --info
+```
+
+### \--listen
+
+Die Meshtastic Applikation bleibt geöffnet und zeigt die Meldungen des Fehlerprotokolls. Diese Option aktiviert `--debug` auch wenn sie nicht neben diesem Argument zur Verfügung gestellt wird.
+
+```shell title="Usage"
+meshtastic --listen
+```
+
+### \--test
+
+Führen Sie einen Stresstest gegen alle verbundenen Meshtastic Geräte durch.
+
+```shell title="Usage"
+meshtastic --test
+```
+
+### \--ble-scan
+
+Suchen Sie mit Bluetooth BLE nach verfügbaren Meshtastic Geräten. Dieser Befehl listet entdeckbare Geräte auf, die eine bequeme Methode zur Identifizierung von Geräten für die Verbindung über BLE bieten.
+
+```shell title="Usage"
+meshtastic --ble-scan
+```
+
+### \--noproto
+
+Die API nicht starten, sondern als einfaches serielles Terminal. Nützlich für die Fehlersuche, weil es nicht als Client zählt. Benötigt eine serielle Verbindung per Kabel. Es wird eine Verbindung herstellen, aber keine Informationen über eine Netzwerkverbindung (--host) oder Bluetooth (--ble) werden angezeigt.
+
+```shell title="Usage"
+meshtastic --noproto
+```
+
+## Entfernte Hardwareargumente
+
+### \--gpio-wrb GPIO_WRB GPIO_WRB
+
+Setze einen bestimmten GPIO Pin auf 1 oder 0.
+
+```shell title="Usage"
+meshtastic --port /dev/ttyUSB0 --gpio-wrb 4 1 --dest '!28979058'
+```
+
+### \--gpio-rd GPIO_RD
+
+Lesen Sie von einer GPIO-Maske.
+
+```shell title="Usage"
+meshtastic --port /dev/ttyUSB0 --gpio-rd 0x10 --dest '!28979058'
+```
+
+### \--gpio-watch GPIO_WATCH
+
+Beobachten Sie eine GPIO-Maske auf Änderungen.
+
+```shell title="Usage"
+meshtastic --port /dev/ttyUSB0 --gpio-watch 0x10 --dest '!28979058'
+```
+
+## Tunnelargumente
+
+### \--tunnel
+
+Nur Linux, sehr experimentell. Geringe Bandbreite und geringe Zuverlässigkeit.
+
+Erstellen Sie ein TUN Tunnelgerät zum Weiterleiten von IP-Paketen über das Netz.
+
+## \--subnet TUNNEL_NET
+
+Legen Sie das Subnetz für das lokale Ende des geschaffenen Tunnels mit dem `--tunnel` fest.

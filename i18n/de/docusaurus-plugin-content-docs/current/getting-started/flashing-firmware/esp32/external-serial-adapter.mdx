@@ -1,0 +1,80 @@
+---
+id: external-serial-adapter
+title: Programmierung mit externem seriellen Adapter
+sidebar_label: Externer serieller Adapter (Fortgeschrittener Benutzer)
+sidebar_position: 4
+description: Anleitung zur Programmierung die Meshtastic Firmware mit einem externen seriellen Adapter für ein ESP32 Gerät.
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+import Link from "@docusaurus/Link";
+
+:::info
+Diese Informationen werden wahrscheinlich nur dann hilfreich sein, wenn Sie bereits versucht haben, die in [manuelle Programmierung](/docs/getting-started/flashing-firmware/esp32/cli-script) beschriebenen Voraussetzungen und Prozesse durchzuführen.
+:::
+
+:::caution
+Stellen Sie sicher, dass Sie das Funkgerät nicht einschalten, ohne vorher die Antenne anzuschließen! Sie können sonst den Funkchip beschädigen!
+:::
+
+## Hintergrund
+
+Situationen die möglicherweise einen externen USB zu seriell Adapter erfordern:
+
+- Aufgrund eines Chipmangels bei vor kurzem gekaufte Geräten wie dem TTGO T-Beam können diese mit älteren oder nicht standardmäßigen USB zu seriell Adapter Chips geliefert werden, die in einigen Fällen unzuverlässig sind.
+- Bestimmte Geräte können einen defekten USB zu seriellen Chip aufweisen.
+- Bestimmte Geräte wie das [Hydra](https://github.com/Hydra-Designs/project-hydra-meshtastic-pcb) (eine Meshtastic-DIY Variante).
+
+### Serielle USB Adapter
+
+Es gibt eine große Auswahl auf dem Markt. Es wird empfohlen, einen Adapter mit dem Silicon Labs CP2102 Chip zu kaufen, da dieser ein zuverlässiger Industriestandard ist.
+
+Der in diesem Dokument verwendete Adapter kann gekauft werden bei:
+[https://www.amazon.com/gp/product/B078W5L8W1/](https://www.amazon.com/gp/product/B078W5L8W1/)
+
+Schließen Sie den Adapter an Ihren Computer an, ohne ihn mit einem Gerät zu verbinden. Stellen Sie sicher, dass auf Ihrem Computer Treiber für den Adapter installiert sind. Unter Windows sollten die richtigen Treiber automatisch installiert werden.
+![image](https://user-images.githubusercontent.com/9000580/168445869-f73667f5-0169-46fd-ae13-15c3abad31aa.png)
+
+### Adapter mit dem Gerät verbinden
+
+:::info
+Es gibt mehrere Wege, die Pins des Adapters an das Gerät anzuschließen: Drücken von Jumpern gegen Kontakte, Verwendung von Pogo-Pins usw. Dieses Tutorial nutzt Steckerleisten, die auf die operativen GPIO-Pins verlötet und über Jumper angeschlossen werden.
+:::
+
+1. Den RX-Pin des Adapters an den TX-Pin der Geräte anschließen
+2. Schließen Sie den TX-Pin des Adapters an den RX-Pin des Gerätes an
+3. Schließen Sie einen GND-Pin des Adapters an den GND-Pin des Gerätes an
+4. Verbinden Sie entweder den 5 V Pin des Adapters an den 5 V Pin des Gerätes (illustriert) oder die 3,3 V Pin des Adapters an den 3,3 V Pin des Gerätes.
+5. Brücke GPIO 0 zu GND auf dem Gerät mit einem Jumper. (Dies setzt das Gerät in den Programmiermodus, wenn das Gerät eingeschaltet wird) Beispielverkabelung mit einem T-Beam
+   ![image](https://user-images.githubusercontent.com/9000580/168446438-d14f34a0-b92d-4716-87fd-e0c2927a35fd.png)
+6. Verbinden Sie das Gerät mit einem USB-Port am Computer
+7. Entferne den Jumper, der GPIO 0 zu GND
+   überbrückt![enter-flash-mode](https://user-images.githubusercontent.com/9000580/168446974-c31d3e9c-3397-4cb1-90a4-91ef2e4d5fac.gif)
+
+### Programmierung
+
+Nachdem Sie den oben genannten Schritten gefolgt sind, sollte Ihr Gerät im Programmiermodus sein. Sie können ihr Gerät mit der [manuellen Methode] programmieren (/docs/getting-started/flashing-firmware/esp32/cli-script)
+
+Nach dem Programmieren des Gerätes ist dieses bereit. Setzen Sie Ihr Gerät zurück (über die RST Taste, falls verfügbar).
+Wenn Sie die Meshtastic Python Kommandozeile installiert haben, dann können Sie `meshtastic --noproto` ausführen, um das Gerät wieder über den Adapter zu verbinden und die serielle Ausgabe anzusehen. Damit können prüfen ob Meshtastic korrekt installiert ist.
+![image](https://user-images.githubusercontent.com/9000580/168447159-71a6546a-f487-4bc2-86c1-4c489b2a8975.png)
+
+### Fehlerbehebung
+
+Möglicherweise erhalten Sie in den manuellen Installationsskripten einen Fehler beim Zugriff auf den COM-Port. Dies kann durch eine Reihe verschiedener Probleme verursacht werden.
+
+Möglicherweise müssen Sie den Prozess als Administrator ausführen, überprüfen Sie, ob Software wie Cura keine COM-Ports monopolisiert oder startet Sie den Computer neu.
+
+## Gerät anschließen und konfigurieren
+
+Nach dem Programmieren der Meshtastic Firmware auf das Gerät, können Sie mit der ersten Konfiguration fortfahren.
+
+<div className="indexCtasBody">
+  <Link
+    className={"button button--outline button--lg cta--button"}
+    to={"/docs/getting-started/initial-config"}
+  >
+    Gerät verbinden und konfigurieren
+  </Link>
+</div>

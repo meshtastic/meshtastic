@@ -1,0 +1,31 @@
+---
+id: flashing-nrf52-devices
+title: Installera nRF52- & RP2040-enheter
+sidebar_label: nRF52/RP2040 enheter
+sidebar_position: 2
+description: Instruktioner för att installera Meshtastic till nRF52- eller RP2040-enheter.
+---
+
+## Installationsmetoder för nRF52- och RP2040-enheter
+
+nRF52- och RP2040-baserade enheter har den enklaste uppgraderingsprocessen. Ingen installation av drivrutiner eller extra programvara krävs på någon plattform.
+
+### Drag & Drop
+
+nRF52- och RP2040-enheter använder installationsmetoden [Drag & Drop](/docs/getting-started/flashing-firmware/nrf52/drag-n-drop) för att installera programvaran.
+
+### Over-The-Air (OTA)
+
+nRF52 enheter kan ta emot trådlösa [OTA-uppdateringar](/docs/getting-started/flashing-firmware/nrf52/ota) från en mobil enhet över bluetooth.
+
+### nRF-frabriksåterställning
+
+Du kanske vill utföra en [fabriksåterställning](/docs/getting-started/flashing-firmware/nrf52/nrf52-erase) innan du installerar programvaran för att radera data som kan ändra format och plats mellan programvaruversionerna.
+
+### Konvertera RAK4631-R till RAK4631
+
+Om din enhet inte kom med Arduino bootloader måste du [utföra konverteringen](/docs/getting-started/flashing-firmware/nrf52/convert-rak4631r).
+
+### Använd Raspberry Pi som ett SWDIO Flash-verktyg
+
+Om din enhet inte kan installeras via USB eller Bluetooth kan ett annat alternativ vara en [direkt SWDIO-anslutning](/docs/getting-started/flashing-firmware/nrf52/swdio).

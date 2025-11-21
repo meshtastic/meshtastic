@@ -1,0 +1,136 @@
+---
+id: getting-started
+title: Come iniziare
+sidebar_label: Come iniziare
+slug: /getting-started
+sidebar_position: 2
+description: La guida ufficiale per iniziare con Meshtastic. Copre tutti i dispositivi e le configurazioni.
+---
+
+import Link from "@docusaurus/Link";
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+## Identifica Hardware
+
+:::note
+
+Questa guida presuppone che hai già acquistato i dispositivi che utilizzerai con Meshtastic. Se non lo hai fatto, puoi consultare la nostra lista di [hardware supportato](/docs/hardware/devices/index.mdx)
+per vedere le tue opzioni.
+:::
+
+Prima di iniziare, è importante determinare il tipo di hardware che stai utilizzando. Meshtastic funziona con dispositivi che hanno questi tipi di Unità Micro-Controller (MCU):
+
+### ESP32
+
+Il chip ESP32 è più vecchio e consuma più potenza rispetto al chip nRF52, ma è dotato di WiFi e Bluetooth. I dispositivi ESP32 supportati includono:
+
+- LILYGO®️ TTGO T-Beam (consigliato >V1.1)
+- LILYGO®️ TTGO Lora (consigliato >V2.1)
+- Nano G1
+- Station G1
+- Heltec V3 e Wireless Stick Lite V3
+- Modulo RAK11200 Core per schede modulari RAK WisBlock
+
+### nRF52
+
+Il chip nRF52 è molto più efficiente del chip ESP32 e più facile da aggiornare, ma è dotato solo di Bluetooth. I dispositivi nRF52 supportati includono:
+
+- Modulo RAK4631 Core per schede modulari RAK WisBlock
+- LILYGO®️ TTGO T-Echo
+
+### RP2040
+
+L'RP2040 è un chip ARM dual-core sviluppato da Raspberry Pi. I dispositivi RP2040 supportati includono:
+
+- Raspberry Pico + Modulo LoRa Waveshare (Nota: **il Bluetooth sul Pico W non è ancora supportato da Meshtastic**)
+- Modulo RAK11310 Core per schede modulari RAK WisBlock
+
+:::info
+
+Se il tuo dispositivo non è elencato sopra, si prega di rivedere i nostri [dispositivi supportati](/docs/hardware/devices/index.mdx) per determinare quale MCU il tuo dispositivo ha o contattaci in [Discord](https://discord.gg/ktMAKGBnBs) per qualsiasi domanda.
+
+:::
+
+:::danger STOP! Metti Giù Il Cavo Corrente!
+
+Mai accendere il dispositivo radio senza aver prima attaccato una antenna, altrimenti si potrebbe danneggiare il chip radio!
+
+:::
+
+Prima di collegare il dispositivo Meshtastic al computer, dovresti eseguire i seguenti controlli di base.
+
+### Verifica Il Cavo Dati
+
+Alcuni cavi forniscono solo _alimentazione_, verifica che il cavo sia anche in grado di _trasferire dati_ prima di procedere. Per verificare se il cavo può anche trasferire dati, provare a collegarlo ad un altro dispositivo (come un telefono) e vedere se è possibile copiare un file su o da esso. Se il trasferimento di file funziona, allora il cavo è anche in grado di trasferire i dati e si può continuare.
+
+### Installa I Driver Seriali
+
+:::caution
+
+i dispositivi nRF52/RP2040 tipicamente non richiedono driver seriali. Usano il bootloader UF2 che fa apparire i dispositivi come unità flash.  _NON_ scaricare i driver del dispositivo USB a meno che non sia necessario installare il supporto UF2.
+
+:::
+
+Se hai bisogno di driver seriali installati sul tuo computer, scegli una delle opzioni qui sotto e installali prima di continuare.
+
+<div className="indexCtasBody">
+  <div className="split-container">
+    <div className="split-item">
+      <Link
+        className={'button button--outline button--lg cta--button'}
+        to={'/docs/getting-started/serial-drivers/esp32'}
+      >
+        Installa driver ESP32
+      </Link>
+    </div>
+
+<div className="split-item">
+      <Link
+        className={'button button--outline button--lg cta--button'}
+        to={'/docs/getting-started/serial-drivers/nrf52'}
+      >
+        Installa driver nRF52/RP2040
+      </Link>
+    </div>
+  </div>
+</div>
+
+### Flash del Firmware
+
+Dopo aver completato i passaggi precedenti, è ora possibile flashare il firmware Meshtastic sul dispositivo. Per procedere, seleziona il tipo di dispositivo appropriato per il tuo dispositivo.
+
+<div className="indexCtasBody">
+  <div className="split-container">
+    <div className="split-item">
+      <Link
+        className={"button button--outline button--lg cta--button"}
+        to={"/docs/getting-started/flashing-firmware/esp32/"}
+      >
+        Flash Firmware per ESP32
+      </Link>
+    </div>
+
+<div className="split-item">
+      <Link
+        className={"button button--outline button--lg cta--button"}
+        to={"/docs/getting-started/flashing-firmware/nrf52/"}
+      >
+        Flash Firmware per nRF52/RP2040
+      </Link>
+    </div>
+  </div>
+</div>
+
+### Connetti e configura il dispositivo
+
+Dopo aver flashato il firmware Meshtastic sul dispositivo, è ora possibile passare alla configurazione iniziale.
+
+<div className="indexCtasBody">
+  <Link
+    className={"button button--outline button--lg cta--button"}
+    to={"/docs/getting-started/initial-config"}
+  >
+    Connetti e configura il dispositivo
+  </Link>
+</div>

@@ -1,0 +1,54 @@
+---
+id: nrf52-erase
+title: nRF52/RP2040 Werkseinstellungen
+sidebar_label: Auf Werkseinstellungen zurücksetzen
+sidebar_position: 3
+description: Anweisungen zum Löschen eines nRF52- oder RP2040-Gerätes auf Werkseinstellungen.
+---
+
+import Link from "@docusaurus/Link";
+
+Meshtastic verwendet die Bibliothek [littlefs](https://github.com/littlefs-project/littlefs), um Konfigurationen, Protokolle und andere Daten im internen Flash von nRF52- und RP2040-Geräten zu speichern. Durch das Aktualisieren der Firmware werden diese zusätzlichen Daten _nicht_ gelöscht, was zu Problemen führen kann, wenn sich Format und Speicherort der Daten zwischen den Versionen ändern.
+
+:::info
+You may now use the [Meshtastic Web Flasher](https://flasher.meshtastic.org) to Factory Erase your nRF52 or RP2040-based devices. Visit the flasher, select your board, and click the trash can icon to the right of the Flash button. This will open a dialogue to begin the erase procedure.
+
+Alternativ können Sie auch die nachstehenden Anweisungen befolgen.
+:::
+
+### nRF52
+
+So setzen Sie den Programmspeicher auf Ihrer nRF52 Platine zurück:
+
+1. Laden Sie die neueste Firmware von [Meshtastic Downloads](https://meshtastic.org/downloads) herunter und entpacken Sie sie.
+2. Verbinden Sie Ihr Gerät mit einem USB-Datenkabel mit Ihrem Computer.
+3. Doppelklicken Sie auf die Reset Taste auf Ihrem Gerät (dadurch wird es in den Bootloader Modus versetzt).
+4. Beachten Sie, dass auf Ihrem Computer (Windows, Mac oder Linux) ein neues Laufwerk bereitgestellt wird.
+5. Öffnen Sie dieses Laufwerk und Sie sollten drei Dateien sehen: `CURRENT.UF2`, `INDEX.HTM` und `INFO_UF2.TXT`.
+6. Öffnen Sie die Datei „INFO_UF2.TXT“ mit einem Texteditor und notieren Sie den Wert „SoftDevice“.
+7. Finden Sie die Datei, die in der heruntergeladenen Firmware enthalten ist, die Ihrer Hauptversionsnummer entspricht (7.x.x und 6.x.x). Verwenden Sie entweder `Meshtastic_nRF52_factory_erase_v3_S140_7.3.0.uf2` oder `Meshtastic_nRF52_factory_erase_v3_S140_6.1.0.uf2` und kopieren Sie es auf das neue Laufwerk. Das Gerät sollte neu starten.
+8. Öffnen Sie nach der Installation der [Meshtastic Kommandozeile](/docs/software/python/cli/) Ihr Terminal/Ihre Konsole und geben Sie den Befehl `meshtastic --noproto` ein.
+9. Sie sollten die Nachricht sehen: `Formatieren... Fertig`.
+
+Sobald das Gerät gelöscht wurde, können Sie mit der Installation der neuesten Meshtastic Firmware auf einem sauberen Speicherdateisystem fortfahren, indem Sie auf den unten stehenden Link klicken.
+
+### RP2040
+
+Um den Programmspeicher auf Ihrer RP2040 Platine zurückzusetzen:
+
+1. Laden Sie [flash_nuke.uf2](https://datasheets.raspberrypi.com/soft/flash_nuke.uf2) auf Ihren Computer herunter.
+2. Drücken Sie die BOOTSEL Taste und verbinden Sie das Gerät über ein USB-Datenkabel.
+3. Die Platine sollte nun als Massenspeichergerät auf Ihrem Computer mit dem Label RPI-RP2 erscheinen.
+4. Kopieren Sie die Datei flash_nuke.uf2 auf das Gerät.
+5. Die Platine wird nun neu gestartet und der Programmspeicher wird gelöscht.
+
+Sobald das Gerät gelöscht wurde, können Sie mit der Installation der neuesten Meshtastic-Firmware auf einem sauberen Speicherdateisystem fortfahren, indem Sie auf den unten stehenden Link klicken.
+
+<div className="indexCtasBody">
+  <Link
+    className={"button button--outline button--lg cta--button"}
+    to={"/docs/getting-started/flashing-firmware/nrf52/"}
+  >
+     nRF52/RP2040 Firmware programmieren
+  </Link>
+</div>

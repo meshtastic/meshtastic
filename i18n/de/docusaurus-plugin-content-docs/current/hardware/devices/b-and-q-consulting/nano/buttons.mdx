@@ -1,0 +1,47 @@
+---
+id: buttons
+title: Hardware Tasten der Nano-Serie
+sidebar_label: Tasten
+sidebar_position: 1
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+## Gerät
+
+<Tabs
+groupId="nano-series"
+defaultValue="g2"
+values={[
+{label: 'Nano G2 Ultra', value:'g2'},
+]}>
+
+<TabItem value="g2">
+
+### Nano G2 Ultra
+
+#### Tasten
+
+- **Benutzer/Programm Taste:**
+  - **Einfaches Drücken:** Ändert die Informationsseite auf der Anzeige des Geräts.
+  - **Doppeltes Drücken:** sendet ein Adhoc-Ping mit dem Standort des Gerätes an das Netzwerk.
+  - **Lange drücken:** signalisiert dem Gerät nach 5 Sekunden herunterzufahren.
+- **Nachricht Lesetaste:**
+  - **Einfaches Drücken:** Löscht die neue Nachrichten LED.
+
+#### Tasten
+
+- **Stromversorgung:**
+  - **Nach oben:** Schaltet das Gerät ein.
+  - **Nach unten:** Schaltet das Gerät aus.
+- **Standort Pin:**
+  - **Nach oben:** Setzt GPS in den Betriebsmodus.
+  - **Nach unten:** Setzt GPS in den Energiesparmodus.
+- **Glocke:**
+  - **Nach oben:** Wählt Summer für die erweiterte Benachrichtigung.
+  - **Nach unten:** Wählt LED für erweiterte Benachrichtigung.
+
+</TabItem>
+
+</Tabs>

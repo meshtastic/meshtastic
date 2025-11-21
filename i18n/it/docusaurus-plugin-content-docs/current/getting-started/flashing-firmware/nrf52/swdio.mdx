@@ -1,0 +1,108 @@
+---
+id: swdio
+title: SWDIO usando un Raspberry Pi
+sidebar_label: SWDIO usando un Raspberry Pi
+sidebar_position: 6
+description: Istruzioni per il caricamento del firmware attraverso SWDIO utilizzando un Raspberry Pi.
+---
+
+La maggior parte dei dispositivi Meshtastic possono essere flashati semplicemente utilizzando USB.
+Tuttavia, alcuni (ad esempio Seeed WM1110 Dev Kit) richiedono l'uso di un dispositivo esterno che può connettersi tramite "SWDIO".
+Ci sono dispositivi dedicati come la [RAKDAP1](https://msh.to/rakdap1/) che possono fare questo lavoro, e ci sono anche altri dispositivi come il [Segger J-Link](https://msh.to/segger-jlink) o [ST-Link](https://msh.to/st-link) che possono essere utilizzati
+per fare questo lavoro. Tuttavia, per molte persone un Raspberry Pi è più conveniente.
+
+Questo articolo fornisce istruzioni su come utilizzare un Raspberry Pi come SWDIO Flash Tool.
+
+## Configura il cablaggio
+
+Il primo passo è quello di collegare due fili tra il tuo Raspberry Pi e le porte SWDIO sul tuo dispositivo basato su NRF52.
+
+Collega il pin 11 GPIO sul tuo Raspberry Pi al pin CLK sul dispositivo Meshtastic.
+Collega il pin 8 GPIO sul tuo Raspberry Pi al pin DIO sul dispositivo Meshtastic.
+
+Assicurati di avere i numeri GPIO corretti.
+
+Collega il tuo Raspberry Pi all'alimentazione USB.
+Collegare il dispositivo Meshtastic all'alimentatore.
+
+## Installa OpenOCD
+
+È possibile utilizzare OpenOCD per gestire la connessione SWDIO con il Dispositivo Meshtastic.
+Installalo sul tuo Raspberry Pi.
+
+```
+$ sudo apt update
+$ sudo apt install libtool autoconf automake texinfo telnet gdb-multiarch git
+$ git clone git://repo.or.cz/openocd.git
+$ cd openocd/
+$ ./bootstrap
+$ ./configure --enable-bcm2835gpio
+$ make -j4
+$ sudo make install
+```
+
+## Controllare la connessione
+
+Proviamo a connetterci al dispositivo basato su NRF52 con SWDIO prima di fare qualsiasi cosa con il firmware.
+Tutta la configurazione di cui hai bisogno è nel repository openocd.
+
+```
+$ openocd -f ./openocd/tcl/interface/raspberrypi-native.cfg -c "transport select swd" -f openocd/tcl/target/nrf52.cfg -s tcl
+```
+
+Il primo flag seleziona il Raspberry Pi come macchina ospite, il trasporto è SWDIO, e l'ultimo flag dice che ti stai connettendo a un chip basato su nRF52.
+Dovresti vedere qualcosa di simile:
+
+```
+Open On-Chip Debugger 0.12.0+dev-00633-gad87fbd1c
+Licensed under GNU GPL v2
+For bug reports, read
+    http://openocd.org/doc/doxygen/bugs.html
+srst_only separate srst_gates_jtag srst_push_pull connect_deassert_srst
+swd
+Info : Listening on port 6666 for tcl connections
+Info : Listening on port 4444 for telnet connections
+Info : BCM2835 GPIO JTAG/SWD bitbang driver
+Info : clock speed 100 kHz
+Info : SWD DPIDR 0x2ba01477
+Info : [nrf52.cpu] Cortex-M4 r0p1 processor detected
+Info : [nrf52.cpu] target has 6 breakpoints, 4 watchpoints
+Info : [nrf52.cpu] Examination succeed
+Info : [nrf52.cpu] starting gdb server on 3333
+Info : Listening on port 3333 for gdb connections
+Info : accepting 'telnet' connection on tcp/4444
+```
+
+Se vedi “Errore di connessione DP: non è possibile leggere IDR”, probabilmente hai collegato i fili al posto sbagliato.
+
+## Ottenere il Firmware
+
+Controlla le istruzioni per il tuo [hardware](/docs/hardware/devices) per trovare il firmware corretto per il tuo dispositivo.
+Per la maggior parte dei dispositivi che seguono questa guida, è necessario un file .hex.
+Quindi, copiare il file firmware sul tuo Raspberry Pi.
+
+## Flash del Firmware
+
+Una volta che hai openocd in esecuzione, puoi connetterti al tuo dispositivo Meshtastic utilizzando telnet.
+Il flashing è semplice come eseguire alcuni comandi all'interno della sessione telnet:
+
+```
+$ telnet 127.0.0.1 4444
+Trying 127.0.0.1...
+Connected to 127.0.0.1.
+Escape character is '^]'.
+Open On-Chip Debugger
+> init
+> reset init
+> halt
+> nrf5 mass_erase
+> program firmware.hex verify
+> reset
+> exit 0
+```
+
+Scollegare l'alimentazione e collegarla nuovamente dopo aver fatto il flash.
+
+## Connessione
+
+Congratulazioni, ora dovresti essere in grado di connetterti al tuo dispositivo tramite Bluetooth nell'app Meshtastic.

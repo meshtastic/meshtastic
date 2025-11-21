@@ -1,0 +1,99 @@
+---
+id: usage
+title: meshtasticd Anwendung
+description: Anwendung des Meshtastic Dämon auf Linux-Systemen.
+sidebar_label: Anwendung
+sidebar_position: 2
+---
+
+## meshtasticd Kommandozeilenoptionen
+
+Zusätzliche Argumente können dem Programm übergeben werden, die im Folgenden aufgelistet werden:
+
+- `-c CONFIG_FILE`: Die zu verwendende Konfigurationsdatei.
+- `-d DIRECTORY`: Das Verzeichnis, das als virtuelles Dateisystem (VFS) verwendet wird.
+- `-e`: Löschen Sie das virtuelle Dateisystem vor der Nutzung.
+- `-h MAC_ADDRESS`: Die MAC-Adresse, die dieser virtuellen Maschine zugewiesen wird.
+- `-p TCP_PORT`: Der lokale TCP-Port, der für den Betrieb der Meshtastic API verwendet werden soll.
+
+## Verwendung mit Docker
+
+Wenn Sie keinen Linux Rechner besitzen oder einfach nur die Dinge trennen wollen, dann können Sie die Anwendung in einem Docker Container ausführen.
+
+### Anwendung
+
+Zunächst das [Abbild ziehen](/docs/software/linux/installation/?os=docker)
+
+Um einen Container auszuführen, geben Sie Folgendes ein
+
+```shell
+docker run -p 4403:4403 --restart unless-stopped --name meshtasticd meshtastic/meshtasticd:beta
+```
+
+oder um eine interaktive Shell auf dem Docker erstellten Container auszuführen:
+
+```shell
+docker run -it -p 4403:4403 --restart unless-stopped --name meshtasticd meshtastic/meshtasticd:beta bash
+```
+
+### CH341 USB
+
+Wenn Sie einen `CH341` USB-Adapter (MeshStick) verwenden möchten, müssen Sie das `bus` Gerät an den Container mit dem `--device` Parameter übergeben:
+
+Suchen Sie zuerst das USB-Gerät mit `lsusb`:
+
+```shell
+lsusb
+```
+
+Sie sollten etwas sehen wie:
+
+```plaintext
+Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+Bus 001 Device 002: ID 1199:9091 Sierra Wireless, Inc. EM7565-9
+Bus 001 Device 003: ID 8087:0032 Intel Corp. AX210 Bluetooth
+Bus 001 Device 004: ID 13d3:56b2 IMC Networks Integrated Camera
+Bus 001 Device 005: ID 06cb:009a Synaptics, Inc. Metallica MIS Touch Fingerprint Reader
+Bus 001 Device 006: ID 1a86:5512 QinHeng Electronics CH341 in EPP/MEM/I2C mode, EPP/I2C adapter
+```
+
+Finde das `CH341` Gerät und notieren die **Bus** und **Gerät** Nummern. In diesem Beispiel: `001/006`.
+
+Führen Sie dann den Container mit dem `--device` Parameter aus,
+es wird zusätzlich eine lokale Konfigurationsdatei verbunden:
+
+```shell
+docker run -it -p 4403:4403 --restart unless-stopped --name meshtasticd --device=/dev/bus/usb/001/006 -v ./config.yaml:/etc/meshtasticd/config.yaml:ro meshtastic/meshtasticd:beta
+```
+
+### Die Anwendung interaktiv ausführen
+
+Um die Python Kommandozeile mit dem exponierten TCP Port 4403 zu verwenden, tippen Sie auf der Host Maschine ein:
+
+```shell
+meshtastic --info --host localhost
+```
+
+Sie können mit dem Container genauso interagieren wie ein normales Gerät mit einem Client, der TCP-Verbindungen unterstützt.
+
+### Den Container stoppen
+
+Wenn Sie den Container mit `--name meshtasticd` gestartet haben, dann können Sie den Container mit folgendem Befehl beenden:
+
+```shell
+`docker kill meshtasticd`
+```
+
+Führen Sie Folgendes aus, um die ID zu erhalten:
+
+```shell
+docker ps
+```
+
+Beenden Sie den Container mit dem Befehl:
+
+```shell
+docker kill <id>
+```
+
+> Tipp: Sie können die ersten paar Zeichen der ID in den Docker-Befehlen verwenden

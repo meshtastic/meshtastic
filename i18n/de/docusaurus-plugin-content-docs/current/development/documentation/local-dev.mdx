@@ -1,0 +1,104 @@
+---
+id: lokal-dev
+title: Dokumentation lokal für die Entwicklung bereitstellen
+sidebar_label: Lokale Entwicklung
+sidebar_position: 2
+---
+
+## Voraussetzungen
+
+Um Ihre lokale Umgebung einzurichten, müssen Sie folgendes installieren:
+
+- [Node Version Manager](https://github.com/nvm-sh/nvm)
+- [PNPM Paketmanager](https://pnpm.io)
+
+## Erste Schritte
+
+### Erstellen Sie einen eigenen Fork des Meshtastic Repositorys
+
+Loggen Sie sich in GitHub ein und erstellen Sie einen Fork des [meshtastic/meshtastic](https://github.com/meshtastic/meshtastic) Projektarchivs.
+
+### Klonen Sie Ihre Meshtastic Repository Fork
+
+:::note
+Ersetzen Sie `YOUR_GITHUB_USERNAME` durch Ihren GitHub Benutzernamen.
+:::
+
+```shell title="Clone your Fork of the Documentation Repository"
+git clone https://github.com/YOUR_GITHUB_USERNAME/meshtastic.git
+```
+
+### Verzeichnis in Ihre lokale Kopie wechseln
+
+```shell title="Change Directory"
+cd ./meshtastic
+```
+
+### Untermodule installieren
+
+```shell title="Install Submodules"
+git submodule update --init --recursive
+```
+
+### Abhängigkeiten installieren
+
+```shell title="Install Node.js using NVM"
+nvm install && nvm use
+```
+
+```shell title="Install dependencies using pnpm"
+pnpm i
+```
+
+### Entwicklungsserver starten
+
+```shell title="Run node.js server"
+pnpm start
+```
+
+:::tip
+Before submitting a pull request, it's helpful to run the following command to ensure there are no broken links or errors:
+
+```shell title="Build Project"
+pnpm build
+```
+
+:::
+
+## Lokales Repository aktualisieren
+
+### Upstream Remote überprüfen
+
+```shell title="Check Remote and Upstream Repositories"
+git remote -v
+```
+
+Wenn gesetzt, springen Sie zu [Ausrichten mit meshtastic/meshtastic Master Branch](#align-with-meshtasticmeshtastic-master-branch)
+
+#### Upstream aktualisieren/einstellen, falls nicht korrekt konfiguriert
+
+Falls der Upstream existiert, setzen Sie die URL:
+
+```shell title="Update Upstream Repository"
+git remote set-url Upstream https://github.com/meshtastic/meshtastic.git
+```
+
+Wenn der Upstream nicht existiert, fügen Sie die URL hinzu:
+
+```shell title="Add Upstream Repository"
+git remote add upstream https://github.com/meshtastic/meshtastic.git
+```
+
+### Mit meshtastic/meshtastic Master Branch ausrichten
+
+:::caution
+Dies wird alle offenen Arbeiten löschen. Vergewissern Sie sich, dass Sie jede Arbeit gespeichert und durchgeführt haben, die Sie auf Ihren Fork schieben möchten.
+:::
+
+:::info
+Der folgende Befehl nimmt an, dass sich der Klon Ihrer Meshtastic Fork im Home-Verzeichnis befindet (`~/meshtastic`). Passen Sie den Pfad an den korrekten Pfad Ihres Rechners an.
+:::
+
+```shell title="Rebase local Meshtastic to remote Meshtastic"
+cd ~/meshtastic ; git loade upstream ; git checkout master ; git rebase upstream/master
+```

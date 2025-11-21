@@ -1,0 +1,23 @@
+---
+id: flashing-esp32-devices
+title: Installera ESP32-enheter
+sidebar_label: ESP32-enhet
+sidebar_position: 2
+description: Instruktioner för att använda CLI för att installera Meshtastic till en ESP32-enhet.
+---
+
+:::info
+Den rekommenderade metoden för programvaruinstallation är [Web Flasher.](https://flasher.meshtastic.org)
+:::
+
+## Installationsmetod för ESP32-enheter
+
+1. [Web Flasher](/docs/getting-started/flashing-firmware/esp32/web-flasher.mdx) kräver antingen Chrome eller Edge webbläsare men är ett utmärkt val för snabb installation av enheter. **Denna metod rekommenderas starkt för att installera programvaran, särskilt för nya användare av Meshtastic, eftersom den är lätt att använda.**
+2. [CLI-skripten](/docs/getting-started/flashing-firmware/esp32/cli-script) anses vara en "manuell process" för att installera programvaran.
+3. Att installera din enhet med hjälp av en [extern seriell adapter](/docs/getting-started/flashing-firmware/esp32/external-serial-adapter) bör endast användas som en sista utväg om ingen annan metod har lyckats.
+
+:::info Not
+
+Den lokala [webbklienten](/docs/software/web-client) på meshtastic.local uppdateras endast med en fullständig rensning och ominstallation av enheten. Om du väljer en ominstallation får du det senaste (paketerade) webbgränssnittet.  För att spara dina inställningar kan du [exportera din konfiguration](/docs/software/python/cli#--export-config) innan en ominstallation och sedan läsa in dem igen.
+
+:::

@@ -1,0 +1,63 @@
+---
+id: buttons
+title: T-Beam Hardware Tasten
+sidebar_label: Tasten
+sidebar_position: 1
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+<Tabs
+groupId="t-beam buttons"
+queryString="t-beam"
+defaultValue="t-beam"
+values={[
+{label: 'T-Beam', value: 't-beam'},
+{label: 'T-Beam Supreme', value:'t-beam-supreme'},
+]}>
+<TabItem value="t-beam">
+
+## Funktionen
+
+- **Power Taste (links):**
+  - **Lange drücken:** Schaltet das Gerät ein oder aus.
+- **Reset Taste (rechts):**
+  - **Einfaches Drücken:** setzt das Gerät zurück.
+- **Benutzer/Programm Taste (Mitte):**
+  - **Lange drücken:** signalisiert dem Gerät nach 5 Sekunden herunterzufahren.
+  - **Einfaches Drücken:** Ändert die Informationsseite auf der Anzeige des Gerätes.
+  - **Doppeltes Drücken:** sendet ein Adhoc-Ping mit dem Standort des Gerätes an das Netzwerk.
+  - **Dreifach drücken:** Deaktiviert das GPS des Gerätes. Wiederholen um wieder zu aktivieren. (_Dies wird auf beiden Informationsbildschirm-Seiten auf der Anzeige des Gerätes angezeigt, wie unten angezeigt_)
+
+<img src="/img/hardware/GPS-disabled.webp" width="200" align="center-left" />
+<img
+  src="/img/hardware/GPS-disabled-by-button.webp"
+  width="200"
+  align="center-right"
+/>
+
+</TabItem>
+<TabItem value = "t-beam-supreme">
+
+## Funktionen
+
+- **Power Taste (Mitte):**
+  - **Lange drücken:** Schaltet das Gerät ein oder aus.
+- **Reset Taste (rechts):**
+  - **Einfaches Drücken:** setzt das Gerät zurück.
+- **Benutzer/Programm Taste (links):**
+  - **Lange drücken:** signalisiert dem Gerät nach 5 Sekunden herunterzufahren.
+  - **Einfaches Drücken:** Ändert die Informationsseite auf der Anzeige des Gerätes.
+  - **Doppeltes Drücken:** sendet ein Adhoc-Ping mit dem Standort des Gerätes an das Netzwerk.
+  - **Dreifach drücken:** Deaktiviert das GPS des Gerätes. Wiederholen um wieder zu aktivieren. (_Dies wird auf beiden Informationsbildschirm-Seiten auf der Anzeige des Gerätes angezeigt, wie unten angezeigt_)
+
+<img src="/img/hardware/GPS-disabled.webp" width="200" align="center-left" />
+<img
+  src="/img/hardware/GPS-disabled-by-button.webp"
+  width="200"
+  align="center-right"
+/>
+
+</TabItem>
+</Tabs>

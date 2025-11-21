@@ -1,0 +1,28 @@
+---
+id: error-codes
+title: Kritische Fehlercodes
+sidebar_label: Fehlercodes
+sidebar_position: 4
+---
+
+Das Gerät meldet diese Fehlercodes auf der Anzeige, wird aber auch auf der seriellen Ausgabe des Gerätes ausgegeben. Wenn Sie einen Fehlercode erhalten, dann posten Sie bitte im Forum und wir werden versuchen Ihnen zu helfen.
+
+:::note
+Diese Tabelle wird vom [Protocol Buffer] abgeleitet (https://buf.build/meshtastic/protobufs/docs/main:meshtastic#meshtastic.CriticalErrorCode)
+:::
+
+|       Name                   | Nummer | Beschreibung                                                                                                                                                                                                                                                  |
+| :--------------------------: | :----: | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+|      TxWatchdog              |  1     | Beim Senden von LoRa wurde ein Softwarefehler erkannt.                                                                                                                                                                                                        |
+|     SleepEnterWait           |  2     | Beim Eintritt in den Stromsparmodus wurde ein Softwarefehler erkannt.                                                                                                                                                                                         |
+|      NoRadio                 |  3     | Es konnte keine LoRa Funk-Hardware gefunden werden.                                                                                                                                                                                                           |
+|     Unspecified              |  4     | Wird normalerweise nicht verwendet.                                                                                                                                                                                                                           |
+|    UBloxInitFailed           |  5     | Fehler beim Konfigurieren eines UBlox GPS.                                                                                                                                                                                                                    |
+|      NoAXP192                |  6     | Es wird erwartet, dass diese Platine einen Chip für Energieverwaltung besitzt, aber dieser wurde nicht gefunden oder ist defekt.                                                                                                                              |
+|   InvalidRadioSetting        |  7     | Der Kanal versuchte eine Funkgeräteeinstellung zu setzen, die von diesem Chipsatz nicht unterstützt wird. Funkkommunikationseinstellungen sind jetzt nicht definiert.                                                                                         |
+|     TransmitFailed           |  8     | Fehler im Sendezweig des Funkgerätes. Die Daten wurden an das Funkgerät gesendet, aber dieser reagierte nicht mit einem Interrupt.                                                                                                                            |
+|      Brownout                |  9     | Die Spannung der Haupt-CPU fiel unter den zulässigen minimalen Wert.                                                                                                                                                                                          |
+|     SX1262Failure            |  10    | Der Selbsttest des SX1262 Funk-Chips ist fehlgeschlagen.                                                                                                                                                                                                      |
+|     RadioSpiBug              |  11    | Ein Fehler (wahrscheinlich Software, möglicherweise Hardware) wurde beim Senden von Nachrichten entdeckt. Wenn dies bei Ihrer Platine geschieht, schreiben Sie bitte im Forum, um uns dabei zu helfen, Informationen zu sammeln, um diesen Fehler zu beheben. |
+|  FlashCorruptionRecoverable  |  12    | Ein Fehler wurde auf dem Flash-Dateisystem erkannt, aber er wurde repariert.                                                                                                                                                                                  |
+| FlashCorruptionUnrecoverable |  13    | Ein Fehler wurde im Flash-Dateisystem erkannt und konnte nicht repariert werden. _Hinweis: Ihr Knoten wird beim nächsten Neustart wahrscheinlich eine Neukonfiguration benötigen (z.B. Verlust des Regionalcode)._                                            |

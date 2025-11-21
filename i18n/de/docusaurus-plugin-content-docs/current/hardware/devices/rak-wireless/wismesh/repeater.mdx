@@ -1,0 +1,105 @@
+---
+id: repeater
+title: RAK WisMesh Repeater Geräte
+sidebar_label: Repeater
+sidebar_position: 4
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+Die WisMesh Repeater Serie erweitert die Reichweite von Meshtastic Netzwerken mit zuverlässigen, solarbetriebenen Geräten, die für die netzunabhängige Kommunikation entwickelt wurden. Diese für den Einsatz im Freien konzipierten Geräte bieten robuste Gehäuse, effizientes Energiemanagement und flexible Montageoptionen. Ob für professionelle Installationen oder tragbare Setups, die WisMesh Repeater Serie gewährleistet nahtlose Konnektivität selbst in den entlegensten Umgebungen.
+
+<Tabs
+groupId="repeater"
+queryString="repeater"
+defaultValue="repeater"
+values={[
+{label: 'Repeater', value: 'repeater'},
+{label: 'Repeater Mini', value: 'repeater-mini'}
+]}>
+
+<TabItem value="repeater">
+
+Der WisMesh Repeater ist ein robustes, ortsfestes Meshtastic Gerät, das für den langfristigen Einsatz im Freien konzipiert ist. Mit einem optionalen Akku mit hoher Kapazität und Unterstützung für externe Solarmodule ermöglicht es einen Dauerbetrieb an abgelegenen Standorten. Sein Gehäuse mit Schutzart IP67 gewährleistet Langlebigkeit unter rauen Bedingungen und macht es ideal für die Erweiterung der Netzwerkabdeckung in professionellen und netzunabhängigen Anwendungen.
+
+- **MCU**
+  - [RAK4630 (nRF52840)](https://docs.rakwireless.com/product-categories/wisduo/rak4630-module/overview/)
+    - Bluetooth BLE 5.0
+    - Sehr niedriger Energieverbrauch
+- **LoRa Sendeempfänger:**
+  - SX1262
+- **Frequenzoptionen:**
+  - 864 MHz
+  - 865 MHz
+  - 868 MHz
+  - 915 MHz
+  - 920 MHz
+  - 923 MHz
+- **Anschlüsse:**
+
+### Merkmale
+
+- Professionelles IP67-Gehäuse für den Außenbereich
+- Funktioniert mit benutzerdefinierten Solaranlagen
+  - Akzeptiert eine Eingangsspannung zwischen 5 und 16 V DC
+- Optionales Solarpanel
+- Optionaler 5,2 Ah Akku
+
+### Quellen
+
+- Firmware Datei: `firmware-rak2560-X.X.X.xxxxxxx.uf2`
+- Weitere Informationen zum WisMesh Repeater finden Sie im [RAK Dokumentationszentrum](https://docs.rakwireless.com/product-categories/meshtastic/wismesh-repeater/).
+- Links zum Direktkauf:
+  - International
+    - [RAKwireless Shop](https://msh.to/wismesh-repeater)
+    - [RAKwireless AliExpress](https://msh.to/aliexpress-wismesh-repeater)
+
+![RAK WisMesh Repeater](/img/hardware/rak/wismesh-repeater.webp)
+
+</ TabItem>
+
+<TabItem value="repeater-mini">
+
+Der WisMesh Repeater Mini ist ein kompaktes und tragbares Meshtastic Gerät, das für eine einfache Bereitstellung konzipiert ist. Mit einem integrierten Solarpanel und mehreren Montageoptionen bietet es eine leichte Lösung zur Erweiterung von Netzwerken in netzunabhängigen Gebieten. Es verfügt über ein Gehäuse mit Schutzart IP67 und bietet zuverlässige Leistung unter verschiedenen Außenbedingungen.
+
+- **Basisplatine:**
+  - [RAK19003](/docs/hardware/devices/rak-wireless/wisblock/base-board/?rakbase=RAK19003)
+- **MCU**
+  - [RAK4631 (nRF52840)](/docs/hardware/devices/rak-wireless/wisblock/core-module?rakcore=RAK4631)
+    - Bluetooth BLE 5.0
+    - Sehr niedriger Energieverbrauch
+- **LoRa Sendeempfänger:**
+  - SX1262
+- **Frequenzoptionen:**
+  - 864 MHz
+  - 865 MHz
+  - 868 MHz
+  - 915 MHz
+  - 920 MHz
+  - 923 MHz
+- **IP67 Steckverbinder:**
+  - RP-SMA
+  - USB-C
+
+### Merkmale
+
+- IP67 Unify-Gehäuse mit integriertem Solarpanel
+- 3200 mAh Akku
+- Tragbar
+- Mehrere Montageoptionen (Wand oder Rohr)
+- WisMesh Blade Antenne
+
+### Quellen
+
+- Firmware Datei: `firmware-rak4631-X.X.X.xxxxxxx.uf2`
+- Weitere Informationen zum WisMesh Repeater Mini finden Sie im [RAK Dokumentationszentrum](https://docs.rakwireless.com/product-categories/meshtastic/wismesh-repeater-mini/).
+- Links zum Direktkauf:
+  - International
+    - [RAKwireless Shop](https://msh.to/wismesh-repeater-mini)
+    - [RAKwireless AliExpress](https://msh.to/aliexpress-wismesh-repeater-mini)
+
+![RAK WisMesh Repeater Mini](/img/hardware/rak/wismesh-repeater-mini.webp)
+
+</ TabItem>
+</ Tabs>

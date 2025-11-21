@@ -1,0 +1,41 @@
+---
+id: community-node-red-messages
+title: Node-RED Nachrichten Knoten
+sidebar_label: Node-RED Nachrichten
+sidebar_position: 4
+---
+
+:::note
+
+Dies ist ein Gemeinschaftsprojekt von @danpeig.
+Entwicklung kann auf [GitHub](https://github.com/danpeig/node-red-meshtastic-msg) verfolgt werden.
+Unterstützung sollte bei den jeweiligen Autoren erfragt werden.
+
+:::
+
+## Übersicht
+
+Dieser [Node-RED](https://nodered.org) Knoten erlaubt das Senden und Empfangen von Nachrichten an das Meshtastic Netzwerk über ein via HTTP angeschlossenes Gerät.
+Es basiert auf der [Meshtastic.js](https://js.meshtastic.org/) Bibliothek.
+
+## Merkmale
+
+- Senden und Empfangen von Textnachrichten mit jedem Gerät im Netz.
+- Gerätestatus überwachen.
+- Abonnieren und erhalten Sie alle Arten von Ereignissen, die von [Meshtastic.js](https://js.meshtastic.org/) unterstützt werden. (Beispiele: Atak, Standort, Bereichstest, Kartenbericht, Speichern und Weiterleiten, etc.)
+- Sende Nachrichten an jede Meshtastic App (Port-Nummer)
+- Plug and Play: keine zusätzlichen Server, keine Container, kein Kommandozeile, keine Binärdateien - super einfache Konfiguration
+- Indirekte Unterstützung von MQTT über Uplink/Downlink Kanäle
+
+## Einschränkungen
+
+- Verbindung direkt mit dem MQTT-Server: Dies wird nicht von [Meshtastic.js](https://js.meshtastic.org/) unterstützt.
+- Verbindung mit einem Gerät über Bluetooth oder serielle Schnittstelle (noch nicht implementiert).
+
+## So funktioniert's
+
+Für Installations- und Nutzungsanweisungen besuchen Sie bitte die Projektseite unter [GitHub](https://github.com/danpeig/node-red-meshtastic-msg).
+
+## Bildschirmfoto
+
+![Node-RED Meshtastic Nachrichten Knoten](/img/community/node-red_messages_flow_example.webp)

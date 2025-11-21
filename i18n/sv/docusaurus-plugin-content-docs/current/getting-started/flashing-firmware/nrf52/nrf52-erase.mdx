@@ -1,0 +1,53 @@
+---
+id: nrf52-erase
+title: Radering av internminne hos nRF52/RP2040
+sidebar_label: Radering av internminne
+sidebar_position: 3
+description: Instruktioner för radering av internminne hos en nRF52- eller RP2040-enhet.
+---
+
+import Link from "@docusaurus/Link";
+
+Meshtastic använder [littlefs](https://github.com/littlefs-project/littlefs)-biblioteket för att lagra konfiguration, loggar och annan data i internminnet hos nRF52- och RP2040-enheter. Uppdatering av Meshtastic-programvaran tar inte bort denna användardata, vilket kan orsaka problem när formatet och platsen för lagring ändras mellan programversioner.
+
+:::info
+You may now use the [Meshtastic Web Flasher](https://flasher.meshtastic.org) to Factory Erase your nRF52 or RP2040-based devices. Visit the flasher, select your board, and click the trash can icon to the right of the Flash button. This will open a dialogue to begin the erase procedure.
+
+Alternativt följer du instruktionerna nedan.
+:::
+
+### nRF52
+
+För att återställa internminnet på din nRF52-enhet:
+
+1. Ladda ner och packa upp den senaste programvaran från [hemsidan](https://meshtastic.org/downloads).
+2. Anslut enheten till datorn med en USB-kabel.
+3. Dubbelklicka på återställningsknappen på din enhet (det kommer att sätta den i programmeringsläge)
+4. Notera hur en ny lagringsenhet dyker upp på din dator (Windows, Mac, Linux eller Android)
+5. Om du öppna denna enhet bör du se tre filer: `CURRENT.UF2`, `INDEX.HTM `, och `INFO_UF2.TXT`
+6. Öppna filen `INFO_UF2.TXT` med en textredigerare och notera `SoftDevice`-värdet.
+7. Hitta filen som ingår i din nedladdade programvara som matchar det större versionsnumret i ditt `SoftDevice`-värde (7.x.x eller 6.x.x). Använd antingen `Meshtastic_nRF52_factory_erase_v3_S140_7.3.0.uf2` eller `Meshtastic_nRF52_factory_erase_v3_S140_6.1.0.uf2` och kopiera den till den nya lagringsenheten. Enheten bör då startas om.
+8. Med [Meshtastic CLI](/docs/software/python/cli/) installerad, öppna din kommandotolk och ange kommandot: `meshtastic --noproto`.
+9. Du bör se meddelandet: `Formatting... Done`.
+
+När enheten har raderats kan du fortsätta att installera den senaste Meshtastic-programvaran på ett tomt internminne genom att klicka på länken nedan.
+
+### RP2040
+
+För att återställa internminnet på din RP2040-enhet:
+
+1. Ladda ner [flash_nuke.uf2](https://datasheets.raspberrypi.com/soft/flash_nuke.uf2) till din dator.
+2. Håll ner BOOTSEL-knappen och anslut samtidigt enheten till datorn via en USB-kabel.
+3. Enheten ska nu visas som en masslagringsenhet på din dator med etiketten RPI-RP2.
+4. Kopiera flash_nuke.uf2-filen till enheten.
+5. Enheten kommer nu att starta om och internminnet kommer att raderas.
+
+När enheten har raderats kan du fortsätta att installera den senaste inbyggda Meshtastic-programvaran på ett tomt internminne genom att klicka på länken nedan.
+
+<div className="indexCtasBody">
+  <Link
+    className={"button button--outline button--lg cta--button"}
+    to={"/docs/getting-started/flashing-firmware/nrf52/"}
+  >
+    Installera nRF52/RP2040-programvara  </Link>
+</div>

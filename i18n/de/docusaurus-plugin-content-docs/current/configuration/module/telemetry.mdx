@@ -1,0 +1,317 @@
+---
+id: telemetry
+title: Telemetriemodul Konfiguration
+sidebar_label: Telemetrie
+description: Dieses Modul ermöglicht das Teilen von Geräte-, Umgebungs-, Gesundheits- und Luftqualitätsdaten von Ihrem Meshtastic Gerät.
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+import { Icon } from "@iconify/react";
+import ReactPlayer from "react-player";
+
+Das Telemetrie Modul sendet vier Arten von Nachrichten über das Netz: Gerätedaten (Akkustand, Spannung, Kanalauslastung und Sendezeit), Umweltdaten, Luftqualitätsdaten und Gesundheitsdaten (Puls, Sauerstoffsättigung und Körpertemperatur).
+
+Unterstützte Sensoren, die an den I2C-Bus des Gerätes angeschlossen sind, werden beim Start automatisch erkannt. Die Umweltdaten, die Luftqualitätsdaten und die Gesundheitsdaten müssen aktiviert werden, damit sie gemessen und ihre Werte über das Netz gesendet werden.
+
+<div style={{ maxWidth: "800px", margin: "auto" }}>
+  <ReactPlayer
+    url="https://youtu.be/6jj1s-fsPlc"
+    controls
+    width="100%"
+    height="400px"
+  />
+</div>
+
+### Derzeit unterstützte Sensortypen
+
+|   Sensor     | I<sup>2</sup>C-Adresse |                  Datenpunkte                                               |
+| :----------: | :--------------------: | :------------------------------------------------------------------------: |
+| AHT10, AHT20 |      0x38              |           Temperatur und Luftfeuchtigkeit                                  |
+|   BMP085     |    0x76, 0x77          |                 Temperatur und Luftdruck                                   |
+|   BMP180     |    0x76, 0x77          |                 Temperatur und Luftdruck                                   |
+|   BMP280     |    0x76, 0x77          |                 Temperatur und Luftdruck                                   |
+|   BME280     |    0x76, 0x77          |           Temperatur, Luftdruck und Luftfeuchtigkeit                       |
+|   BMP388     |    0x76, 0x77          |                  Luftdruck, Temperatur                                     |
+|   BMP390     |    0x76, 0x77          |                  Luftdruck, Temperatur                                     |
+|   BME68x     |    0x76, 0x77          |       Temperatur, Luftdruck, Luftfeuchtigkeit und Luftwiderstand           |
+|   DPS310     |    0x76, 0x77          |                  Luftdruck, Temperatur                                     |
+|  MCP9808     |      0x18              |                  Temperatur                                                |
+|   INA219     |   0x40, 0x41, 0x43     |                Strom und Spannung                                          |
+|   INA226     |   0x40, 0x41, 0x43     |                Strom und Spannung                                          |
+|   INA260     |   0x40, 0x41, 0x43     |                Strom und Spannung                                          |
+|  INA3221     |      0x42              |               3-Kanal Strom und Spannung                                   |
+|   LPS22      |    0x5D, 0x5C          |                     Luftdruck                                              |
+|   SHTC3      |      0x70              |           Temperatur und Luftfeuchtigkeit                                  |
+|   SHT31      |    0x44, 0x45          |           Temperatur und Luftfeuchtigkeit                                  |
+|   SHT4X      |    0x44, 0x45          |           Temperatur und Luftfeuchtigkeit                                  |
+|  OPT3001     |    0x44, 0x45          |                 Lichtintensität                                            |
+|  VEML7700    |      0x10              |                 Lichtintensität                                            |
+|  TSL2591     |      0x29              |                 Lichtintensität                                            |
+|  LTR390UV    |      0x53              |                UV-Lichtintensität                                          |
+|  RCWL9620    |      0x57              |               Ultraschallabstandssensor                                    |
+|  PMSA003I    |      0x12              |  Konzentrationseinheiten nach Größe und Partikelanzahl nach Größe          |
+| DFROBOT_LARK |      0x42              | Temperatur, Luftdruck, Luftfeuchtigkeit, Windrichtung, Windgeschwindigkeit |
+| DFROBOT_RAIN |      0x1d              |                Kippeimer Regen Zähler                                      |
+|  RadSens     |      0x66              |               Strahlungsdosimeter                                          |
+|  MAX30102    |      0x57              |      Herzfrequenz, Sauerstoffsättigung und Körpertemperatur                |
+|  MLX90614    |      0x5A              |                 Körpertemperatur                                           |
+|  MLX90632    |      0x3A              |                 Körpertemperatur                                           |
+|  NAU7802     |      0x2A              |         24 Bit differentieller ADC für Wheatstone Brücke                   |
+
+## Modulkonfiguration
+
+### Umgebungstelemetrie aktiviert
+
+Aktiviert die Telemetrie für Umweltdaten (Sensoren).
+
+### Aktualisierungsintervall für Umweltdaten
+
+Wie oft werden Umweltdaten über das Netz gesendet.
+
+Standard ist `1800` Sekunden (30 Minuten).
+
+### Aktualisierungsintervall für Gerätedaten
+
+Wie oft werden Gerätedaten über das Netz senden.
+
+Standard ist `1800` Sekunden (30 Minuten).
+
+Gerätedaten werden an eine verbundene App unabhängig von dieser Einstellung immer einmal pro Minute gesendet.
+
+### Umweltdaten auf Bildschirm aktiviert
+
+Zeige die Umweltdaten auf der Geräteanzeige.
+
+Standard ist `false`.
+
+### Temperatur in Fahrenheit
+
+Der Sensor wird immer in Celsius gelesen, aber der Benutzer kann mit dieser Einstellung in Fahrenheit (nur auf der Anzeige des Gerätes) anzeigen.
+
+Standard ist `false`.
+
+### Luftqualität aktiviert
+
+Diese Option wird verwendet, um das Senden von Luftqualitätsdaten eines angeschlossenen Sensors über das Netznetz zu aktivieren/deaktivieren.
+
+Standard ist `false`.
+
+### Luftqualität Intervall
+
+Diese Option wird verwendet, um den Intervall (in Sekunden) zu konfigurieren, mit dem Luftqualitätsdaten von einem angeschlossenen Sensor über das Netznetz gesendet werden sollen.
+
+Standard ist `1800` Sekunden (30 Minuten).
+
+### Energiedaten aktiviert
+
+Diese Option wird verwendet, um das Senden von Energiedaten, die von einem angeschlossenen Spannung/Strom-Sensor gemessen werden, zu aktivieren/deaktivieren. Beachten Sie, dass dies nicht aktiviert werden muss, um die Spannung der Batterie zu überwachen.
+
+Standard ist `false`.
+
+### Energiedaten Intervall
+
+Diese Option wird verwendet, um den Intervall (in Sekunden) zu konfigurieren, mit dem Energiedaten von einem angeschlossenen Sensor über das Netznetz gesendet werden sollen.
+
+### Gesundheitsdaten aktiviert
+
+Diese Option wird verwendet, um das Senden von Gesundheitsdaten eines angeschlossenen Sensors über das Netznetz zu aktivieren/deaktivieren.
+
+Standard ist `false`.
+
+### Gesundheitsdaten Intervall
+
+Diese Option wird verwendet, um den Intervall (in Sekunden) zu konfigurieren, mit dem Gesundheitsdaten von einem angeschlossenen Sensor über das Netznetz gesendet werden sollen.
+
+Standard ist `1800` Sekunden (30 Minuten).
+
+## Verfügbarkeit der Telemetrieeinstellungen
+
+<Tabs
+  groupId="settings"
+  defaultValue="apple"
+  values={[
+    {
+      label: (
+        <>
+          <Icon icon="mdi:android" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Android
+        </>
+      ),
+      value: "android",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:apple" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Apple
+        </>
+      ),
+      value: "apple",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:terminal" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Kommandozeile
+        </>
+      ),
+      value: "cli",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:internet" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Web
+        </>
+      ),
+      value: "web",
+    },
+  ]}>
+<TabItem value="android">
+
+#### Android
+
+:::info
+
+Alle Telemetrieeinstellungen sind für Android verfügbar.
+
+1. Öffnen Sie die Meshtastic Applikation
+2. Navigiere zu: **vertikale Ellipse (3 Punkte oben rechts) > Funkkonfiguration > Telemetrie**
+
+:::
+
+</TabItem>
+<TabItem value="apple">
+
+#### Apple
+
+:::info
+All telemetry module config options are available on iOS, iPadOS and macOS at Settings > Module Configuration > Telemetry (Sensors).
+
+:::
+
+</TabItem>
+<TabItem value="cli">
+
+#### Kommandozeile
+
+:::info
+
+Alle Einstellungen für das Telemetrie Modul sind über die Python Kommandozeile verfügbar. Beispielbefehle sind folgende:
+
+:::
+
+## Einstellungen
+
+|        Einstellung                        |  Akzeptable Werte   |         Standardwert                           |
+| :---------------------------------------: | :-----------------: | :--------------------------------------------: |
+|   telemetry.device_update_interval        | Ganzzahl (Sekunden) | Standard `0` ist 30 Minuten (`1800` Sekunden). |
+| telemetry.environment_display_fahrenheit  |  `true`, `false`    |            `false`                             |
+| telemetry.environment_measurement_enabled |  `true`, `false`    |            `false`                             |
+|  telemetry.environment_screen_enabled     |  `true`, `false`    |            `false`                             |
+|  telemetry.environment_update_interval    | Ganzzahl (Sekunden) | Standard `0` ist 30 Minuten (`1800` Sekunden). |
+|    telemetry.air_quality_enabled          |  `true`, `false`    |            `false`                             |
+|    telemetry.air_quality_interval         | Ganzzahl (Sekunden) | Standard `0` ist 30 Minuten (`1800` Sekunden). |
+|   telemetry.power_measurement_enabled     |  `true`, `false`    |            `false`                             |
+|    telemetry.power_update_interval        | Ganzzahl (Sekunden) | Standard `0` ist 30 Minuten (`1800` Sekunden). |
+|  telemetry.health_measurement_enabled     |  `true`, `false`    |            `false`                             |
+|   telemetry.health_update_interval        | Ganzzahl (Sekunden) | Standard `0` ist 30 Minuten (`1800` Sekunden). |
+|    telemetry.health_screen_enabled        |  `true`, `false`    |            `false`                             |
+
+:::tip
+
+Weil das Gerät nach jedem Befehl über die Kommandozeile neu startet, wird empfohlen, dass mehrere Werte in einem Konfigurationsblock zusammengefasst und übertragen werden.
+
+```shell title="Example:"
+meshtastic --set telemetry.device_update_interval 0 --set telemetry.environment_update_interval 0
+```
+
+:::
+
+```shell title="Set module update intervals (Default of 0 is 5 Minutes)"
+meshtastic --set telemetry.device_update_interval 0
+// Gerätedaten zwei Minuten
+meshtastic --set telemetry. evice_update_interval 0
+// Umweltdaten zwei Minuten
+meshtastic --set telemetry.environment_update_interval 120
+```
+
+```shell title="Enable/Disable Environment Module"
+meshtastic --set telemetry.environment_measurement_enabled true
+meshtastic --set telemetry.environment_measurement_enabled false
+```
+
+```shell title="Enable/Disable on device screen"
+meshtastic --set telemetry.environment_screen_enabled true
+meshtastic --set telemetry.environment_screen_enabled false
+```
+
+```shell title="Enable / Disable Display Fahrenheit"
+meshtastic --set telemetry.environment_display_fahrenheit true
+meshtastic --set telemetry.environment_display_fahrenheit false
+```
+
+</TabItem>
+<TabItem value="web">
+
+#### Web
+
+:::info
+
+Alle Einstellungen für das Telemetrie Modul sind in der Web-Oberfläche verfügbar.
+
+:::
+
+</TabItem>
+</Tabs>
+
+## Beispiele
+
+### RAK 4631 mit BME680 Umweltsensor
+
+Einrichtung eines RAK 4631 mit Umweltsensor
+
+[<img src="RAK4631_with_EnvSensor" src="/img/hardware/rak/RAK4631_with_EnvSensor.webp" style={{zoom:'25%'}} />](/img/hardware/rak/RAK4631_with_EnvSensor.webp)
+
+Voraussetzungen:
+
+- RAK4631
+- Umweltsensor
+
+Schritte:
+
+- Konfigurieren Sie das Gerät:
+
+```shell
+meshtastic --set telemetry.environment_measurement_enabled true --set telemetry.environment_screen_enabled true --set telemetry.environment_display_fahrenheit true
+```
+
+:::tip
+
+Während die obigen Werte als Beispiel dienen und an Ihre spezifischen Bedürfnisse angepasst werden können ist es ratsam, mehrere Befehle miteinander zu verketten, wie es im Beispiel gezeigt wird. Dieser Ansatz minimiert die Anzahl der notwendigen Neustarts.
+
+:::
+
+- Das Gerät wird neu gestartet, nachdem der Befehl gesendet wurde.
+- Wenn das Gerät erneut bootet, sollte es Telemetrie melden, und die Sensordaten anzeigen.
+- Falls dies keine Auswirkungen hat, führen Sie Folgendes aus:
+
+```shell
+meshtastic --noproto
+```
+
+Lesen Sie das Fehlerprotokoll und achten Sie auf Telemetrie Diagnosemeldungen.
+
+## Zusätzliche Sensoren unterstützen
+
+### Umweltdaten
+
+Die Umweltdaten im Telemetrie Modul unterstützen eine begrenzte Anzahl von Parametern, da sie im Gerät gespeichert werden. Unterstützung für Sensoren, die einen oder mehrere der folgenden Parameter zur Verfügung stellen, können ggf. zur Firmware hinzugefügt werden, vorausgesetzt es gibt eine GPL lizenzierte Bibliothek für uns, um sie zu unterstützen und die Bibliothek ist nicht zu groß.
+
+- Temperatur
+- Relative Luftfeuchtigkeit
+- Luftdruck
+- Gaswiderstand (AQI)
+- Spannung
+- Stromstärke
+
+### Unterstützung anderer Sensortypen
+
+Für andere interessante Sensortypen und Anwendungsfälle müssen Sie eine Anschlussnummer für generische Telemetrienachrichten hinzufügen und ein zweiter MCU muss mit dem Sensor interagieren und die Daten verarbeiten, die über das Netz gesendet werden. Diese Daten werden nicht in der Knotendatenbank auf dem Gerät gespeichert.

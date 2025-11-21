@@ -1,0 +1,63 @@
+---
+id: lora-antenna
+title: LoRa Antennenauswahl
+sidebar_label: LoRa Antennen
+sidebar_position: 2
+---
+
+Die mit dem T-Beam und anderen Platinen gelieferten Standardantennen stammen normalerweise aus `gemischten Tüten`. Sie sind möglicherweise nicht für Ihren Frequenzbereich konzipiert oder abgestimmt und weisen möglicherweise keine hochwertige Konstruktion auf.
+
+Die Anpassung einer Antenne an die Sendefrequenz ist ebenso wichtig wie die Wahl eines geeigneten Designs.
+
+Das Design der Antenne wird sich auf folgende Bereiche auswirken:
+
+- Effizienz - Der Anteil des Signals, der die Antenne verlässt
+- Richtung, in der das Signal übertragen wird
+- Interferenz durch horizontale oder vertikale Polarisation
+- Signalmenge, die zum Gerät selbst zurück reflektiert wird
+
+:::caution
+Obwohl es sich bei den LoRa Geräten, die wir für Meshtastic verwenden, um Funkgeräte mit relativ geringer Leistung handelt, sollte darauf geachtet werden, _keine_ Funkübertragungsgeräte ohne Antenne oder mit einer schlecht angepassten Antenne zu betreiben. Ohne Antenne gesendete Funksignale können reflektiert werden und das Gerät beschädigen.
+:::
+
+<object data="https://www.youtube.com/embed/V3f-Y3EfsBU?autohide=1&autoplay=0" width="100%" height="400"></object>
+
+## Wichtige Überlegungen
+
+### Welche Sendefrequenz verwenden Sie?
+
+Geräte auf einer anderen Frequenz können nicht mit Ihrer interagieren. In dieser Liste von [The Things Network](https://www.thethingsnetwork.org/docs/lorawan/frequencies-by-country.html) finden Sie für bestimmte Länder lizenzierte Frequenzen.
+
+### Wie werden Sie das Funkgerät tragen/transportieren?
+
+Eine große Richtantenne überträgt über eine wesentlich größere Entfernung als eine Rundstrahlantenne. Allerdings muss es auf sein Ziel gerichtet werden – für den mobilen Einsatz ist es also nicht optimal.
+
+Eine abgestimmte Halbwellen Peitschenantenne hat möglicherweise eine größere Rundstrahlreichweite als eine Viertelwellen Stummelantenne, fällt in Ihrer Tasche jedoch auf.
+
+Viele Antennen, insbesondere Viertelwellen Stummelantennen, erfordern die Verwendung von Masseflächen, um eine optimale Sendeleistung zu erzielen.
+
+### Möchten Sie eine Übertragung in alle Richtungen?
+
+Während Menschen (vor allem Wasser) das Signal (bei LoRa Frequenzen) nicht stark dämpfen, ist dies bei Gebäuden und Wänden der Fall. Wenn Ihre Antenne dauerhaft an einem Gebäude angebracht ist, geht das zur Wand übertragene Signal größtenteils verloren oder wird gedämpft.
+
+### Verfügt mein Meshtastic Gerät über den richtigen Leistungsbereich, die richtige Impedanz und den richtigen Anschluss für die Antenne?
+
+Bei LoRa Geräten sollte die Impedanz 50 Ohm mit SMA-Anschluss betragen. Viele Antennen werden in ihren technischen Details für den LoRa Einsatz empfohlen.
+
+Im Gegensatz dazu sind eine kontaktlose NFC Antenne für den Nahbereich oder eine riesige Antenne am Ende eines Koaxialkabels, die für einen 100 W Sender ausgelegt ist, nicht funktionsfähig.
+
+### Kosten, Qualität und Lieferservice?
+
+Die auf dem Papier perfekte Antenne, die vom anderen Ende der Welt kommt und gemischte Kritiken hat, ist nicht mit der eines lokalen Lieferanten zu vergleichen, der sich die Zeit genommen hat, alle Antennendatenblätter sorgfältig zum Vergleich zusammenzustellen und einen sofort verfügbaren Lagerbestand vorrätig hat. Persönlich zahle ich lieber deutlich mehr für einen zeitsparenden und qualitativ hochwertigen Service.
+
+### Wie nah wird die Antenne an meinem Meshtastic Gerät sein?
+
+Bei den meisten Kabeln wird die Signalstärke über größere Entfernungen deutlich verringert. Es ist oft effektiver, einen Knoten im Freien zu platzieren, als ihn im Haus mit der Antenne außen aufzustellen. Eine Ausnahme kann bei extremer Hitze, Kälte oder Feuchtigkeit vorliegen und wenn das kürzestmögliche verlustarme Kabel verwendet wird.
+
+Dennoch sollte eine geeignete Einhausung schlechtes Wetter abmildern.
+
+## Terminologie / Referenzen
+
+Sie könnten viel Schlimmeres tun, als den [Wikipedia-Eintrag für Antenne](https://en.wikipedia.org/wiki/Antenna_(radio)) zusammen mit dem [Wikipedia-Eintrag für LoRa](https://en.wikipedia.org/wiki/LoRa) zu lesen.
+
+Anstatt die Begriffe aufzulisten, empfehlen wir dieses hervorragende [Tutorial](https://www.youtube.com/watch?v=J3PBL9oLPX8) von Andreas Spiess (dem „Typen mit dem Schweizer Akzent“).

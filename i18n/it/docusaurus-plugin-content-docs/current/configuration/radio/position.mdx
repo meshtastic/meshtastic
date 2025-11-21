@@ -1,0 +1,237 @@
+---
+id: position
+title: Configurazione Posizione
+sidebar_label: Posizione
+description: Impostazioni di configurazione della posizione GPS per il dispositivo Meshtastic, inclusi intervalli di aggiornamento, impostazioni di trasmissione e GPIO.
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+import { Icon } from "@iconify/react";
+
+I dati di posizione dal GPS sono forniti dalla radio o dal telefono collegato. Non è necessario utilizzare Meshtastic, ma i calcoli di tempo richiedono almeno un dispositivo sulla mesh per avere un GPS, RTC, o connessione internet per NTP.
+
+La configurazione della posizione utilizza un messaggio di amministrazione per inviare un protobuf `Config.Position`. Le opzioni di configurazione di posizione sono: Modalità GPS, Intervallo di aggiornamento GPS, Posizione fissa, Trasmissione intelligente, Distanza minima di trasmissione intelligente, Intervallo minimo, Intervallo di trasmissione intelligente, segnaletica di posizione, e pin GPS RX/TX/EN.
+
+## Valori Di Configurazione Posizione
+
+### Modalità GPS
+
+Configura se la funzionalità GPS è abilitata, disabilitata o non presente sul nodo.
+
+Valori accettabili: `DISABLED`, `ENABLED`, e `NOT_PRESENT`.
+
+Generalmente, a seconda del dispositivo e della sua configurazione, questo valore sarà predefinito per `ENABLED` o `NOT_PRESENT`.
+
+### Intervallo di aggiornamento GPS
+
+Quante volte dovremmo cercare di ottenere la posizione GPS (in secondi), o zero per il valore predefinito di una volta ogni 2 minuti, o un valore molto grande (maxint) da aggiornare solo una volta all'avvio.
+
+### Posizione Fissa
+
+Valori accettabili: `true`, `false`
+
+Falso per impostazione predefinita
+
+Se impostato, questo nodo è in posizione fissa. Il dispositivo genererà gli aggiornamenti GPS all'intervallo di aggiornamento GPS regolare, ma utilizzare qualunque sia l'ultimo lat/lon/alt salvato per il nodo. Il lat/lon/alt può essere impostato da un GPS interno o con l'aiuto del GPS del dispositivo mobile.
+
+### Smart Broadcast
+
+Valori accettabili: `true`, `false`
+
+Vero per impostazione predefinita
+
+La trasmissione intelligente invierà la tua posizione ad una maggiore frequenza solo se la tua posizione è cambiata abbastanza per un aggiornamento della posizione per essere utile.
+
+La trasmissione intelligente integra l'intervallo di trasmissione (non sovrascriverà quella impostazione), ma applicherà un algoritmo per aggiornare più frequentemente la rete mesh se sei in movimento e quindi accelerarlo quando sei ancora in piedi. Se si utilizza questa funzione, è meglio lasciare l'intervallo di trasmissione per impostazione predefinita.
+
+La trasmissione intelligente calcolerà un intervallo ideale di aggiornamento della posizione in base alla frequenza dei dati della configurazione del canale selezionata.
+
+### Distanza Minima Smart Broadcast
+
+Il valore predefinito di `0` è di 100 metri
+
+La distanza minima in metri percorsa (dall'ultimo invio) prima di poter inviare una posizione alla mesh se la trasmissione intelligente è abilitata.
+
+### Intervallo Minimo Smart Broadcast
+
+Il valore predefinito di `0` è di 30 secondi
+
+Il numero minimo di secondi (dall'ultimo invio) prima di poter inviare una posizione alla mesh se la trasmissione intelligente è abilitata.
+
+### Intervallo Di Trasmissione
+
+Il valore predefinito di `0` è di 15 minuti
+
+Se la trasmissione intelligente è disattivata dovremmo inviare la nostra posizione con questa frequenza.
+
+Gli aggiornamenti GPS saranno trasmessi ogni intervallo di broadcast, con la posizione GPS reale oppure con posizione vuota se il fix GPS non è stato acquisito.
+
+### Flag Di Posizione
+
+Definisce quali opzioni sono inviate nei messaggi POSITION. I valori sono memorizzati come un po 'di campo di opzioni di configurazione booleana (bitwise OR di PositionFlags).
+
+|    Valore          |                      Descrizione                                                 |
+| :----------------: | :------------------------------------------------------------------------------: |
+|    UNSET           |                 Richiesto per la compilazione                                    |
+|    ALTITUDE        |           Includi un valore di altitudine (se disponibile)                       |
+|   ALTITUDE_MSL     |                Il valore di altitudine è MSL                                     |
+| GEOIDAL_SEPARATION |                  Includi separazione geoidale                                    |
+|     DOP            | Includi il valore DOP ; PDOP usato per impostazione predefinita, vedi sotto      |
+|    HVDOP           |      Se POS_DOP impostato, invia valori HDOP / VDOP separati invece di PDOP      |
+|   SATINVIEW        |              Includi il numero di "satelliti in vista"                           |
+|    SEQ_NO          |         Includi un numero di sequenza incrementato per pacchetto                 |
+|   TIMESTAMP        |           Includi timestamp di posizione (dalla soluzione GPS)                   |
+|    HEADING         |        Includi l'intestazione di posizione (dalla soluzione GPS)                 |
+|    SPEED           |         Includi la velocità di posizione (dalla soluzione GPS)                   |
+
+### GPIO RX/TX/EN per il modulo GPS
+
+Se il dispositivo non dispone di un chip GPS fisso, è possibile definire i pin GPIO per i pin RX, TX e EN di un modulo GPS.
+
+## Disponibilità Client Configurazione Posizione
+
+<Tabs
+  groupId="settings"
+  defaultValue="apple"
+  values={[
+    {
+      label: (
+        <>
+          <Icon icon="mdi:android" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Android
+        </>
+      ),
+      value: "android",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:apple" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Apple
+        </>
+      ),
+      value: "apple",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:terminal" height="1.5rem" style={{ marginRight: "0.25rem" }} /> CLI
+        </>
+      ),
+      value: "cli",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:internet" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Web
+        </>
+      ),
+      value: "web",
+    },
+  ]}>
+<TabItem value="android">
+
+#### Android
+
+:::info
+
+Opzioni di configurazione posizione sono disponibili per Android.
+
+1. Apri l'applicazione Meshtastic
+2. Vai a: **Menu (3 punti in alto a destra) > Configurazione radio > Posizione**
+
+:::
+
+</TabItem>
+<TabItem value="apple">
+
+#### Apple
+
+:::info
+Tutti i valori di configurazione della posizione sono disponibili su iOS, iPadOS e macOS in Impostazioni > Configurazione del dispositivo > Posizione.
+:::
+
+</TabItem>
+<TabItem value="cli">
+
+#### CLI
+
+:::info
+
+Tutte le opzioni di configurazione utente sono disponibili nel CLI python. I comandi di esempio sono di seguito:
+
+:::
+
+|        Impostazione                            |                               Valori Accettabili                                                                                          |            Predefinito                       |
+| :--------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------: | :------------------------------------------: |
+|        position.gps_mode                       |                          `ENABLED`, `DISABLED`, `NOT_PRESENT`                                                                             |          `ENABLED` o `NOT_PRESENT`           |
+|      position.gps_update_interval              |                               `intero` (secondi)                                                                                          | Il valore predefinito di `0` è di 2 minuti   |
+|       position.fixed_position                  |                                `true`, `false`                                                                                            |              `false`                         |
+|  position.position_broadcast_smart_enabled     |                                `true`, `false`                                                                                            |               `true`                         |
+|  position.broadcast_smart_minimum_distance     |                                `intero` (metri)                                                                                           |  Il valore predefinito di `0` è di 100 metri |
+| position.broadcast_smart_minimum_interval_secs |                               `intero` (secondi)                                                                                          |  Il valore predefinito di `0` è di 15 minuti |
+|     position.position_broadcast_secs           |                               `intero` (secondi)                                                                                          |  Il valore predefinito di `0` è di 15 minuti |
+|         position.flags                         | `UNSET`, `ALTITUDE`, `ALTITUDE_MSL`, `GEOIDAL_SEPARATION`, `DOP`, `HVDOP`, `PDOP`, `SATINVIEW`, `SEQ_NO`, `TIMESTAMP`, `HEADING`, `SPEED` |              `UNSET`                         |
+|         position.rx_gpio                       |                                `intero` (0-39)                                                                                            |              `UNSET`                         |
+|         position.tx_gpio                       |                                `intero` (0-34)                                                                                            |              `UNSET`                         |
+
+:::tip
+
+Poiché il dispositivo si riavvierà dopo che ogni comando viene inviato tramite CLI, si raccomanda quando si impostano più valori in una sezione di configurazione, che i comandi siano concatenati insieme in un unico comando. **Questo è particolarmente importante per i valori di posizione per assicurarsi che siano impostati allo stesso tempo ed evitare di essere sovrascritti dai comandi successivi.**
+
+```shell title="Example:"
+meshtastic --set position.fixed_position true --setlat 37.8651 --setlon -119.5383
+```
+
+:::
+
+```shell title="Set GPS update interval (Default of 0 is 2 Minutes)"
+meshtastic --set position.gps_update_interval 0
+meshtastic --set position.gps_update_interval 45
+```
+
+```shell title="Set Fixed Position - Current Location"
+meshtastic --set position.fixed_position true
+```
+
+:::note
+Il dispositivo continuerà ad acquisire le coordinate GPS secondo il `gps_update_interval`, ma userà le ultime coordinate salvate come punto fisso.
+:::
+
+```shell title="Set and Enable Fixed Position - User Defined"
+meshtastic --setlat 37.8651 --setlon -119.5383
+```
+
+```shell title="Remove and Unset Fixed Position"
+meshtastic --remove-position
+```
+
+```shell title="Enable / Disable Smart position broadcast (Enabled by default)"
+meshtastic --set position.position_broadcast_smart_enabled true
+meshtastic --set position.position_broadcast_smart_enabled false
+```
+
+```shell title="Set Position Broadcast Interval (Default of 0 is 15 minutes)"
+meshtastic --set position.broadcast_secs 0
+meshtastic --set position.broadcast_secs 60
+```
+
+:::note
+Potrebbe essere necessario un certo tempo per vedere che il cambiamento ha avuto effetto. La posizione GPS viene aggiornata in base al valore specificato su `gps_update_interval` e la mesh verrà avvisata della nuova posizione in relazione al valore `position_broadcast_secs`.
+:::
+
+```shell title="Set / Unset Position Flags"
+meshtastic --pos-fields ALTITUDE ALTITUDE_MSL
+meshtastic --pos-fields UNSET
+```
+
+</TabItem>
+<TabItem value="web">
+
+#### Web
+
+:::info
+Tutte le opzioni di configurazione di posizione sono disponibili nell'interfaccia utente web.
+:::
+
+</TabItem>
+</Tabs>

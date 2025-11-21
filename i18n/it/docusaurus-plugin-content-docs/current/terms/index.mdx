@@ -1,0 +1,122 @@
+---
+id: glossary
+title: Glossario dei Termini
+slug: /terms/
+---
+
+Applicazione / Applicazione / Client
+: Un'applicazione che si collega a un nodo Meshtastic, tipicamente allo scopo di inviare o ricevere dati attraverso la rete di maglia.
+
+Banda
+: Una gamma di frequenze utilizzate per la LoRa, dipendente dalla regione. Meshtastic divide ulteriormente queste bande in canali. A volte identificati dai limiti inferiori e superiori dell'intervallo (ad esempio 902-928MHz), a volte identificati da una frequenza centrale all'interno dell'intervallo (ad esempio 915MHz), e talvolta solo dalla regione a cui si rivolgono (ad esempio gli Stati Uniti).
+
+Broadcast
+: Inviare un messaggio o dati da un dispositivo a tutti gli altri dispositivi all'interno della rete Meshtastic, piuttosto che a un destinatario specifico.
+
+Canale | [Configuration](/docs/configuration/radio/channels/) | [Calcolatore di frequenza](/docs/overview/radio-settings/#frequency-slot-calculator)
+: Almeno due definizioni nell'uso Meshtastic: 1) Uno dei 8 canali configurabili nel firmware, ciascuno che supporta un nome e una crittografia separati, con un set come primario e il resto secondario. 2) Una frequenza specifica all'interno di una banda LoRa che un dispositivo può essere configurato per l'uso.
+
+CLI | [Guide](/docs/software/python/cli/)
+: Interfaccia a linea di comando, un'interfaccia basata sul testo utilizzata per interagire con software o dispositivi come Meshtastic.
+
+Applicazione / Applicazione / Client
+: Un'applicazione che si collega a un nodo Meshtastic, tipicamente allo scopo di inviare o ricevere dati attraverso la rete a mesh.
+
+Dispositivo
+: Un pezzo fisico di hardware che utilizza il software Meshtastic e la tecnologia radio LoRa (Long Range) per creare un decentralizzato, rete a maglie a lungo raggio.
+
+DFU
+: Device Firmware Update, ovvero Aggiornamento del firmware del dispositivo, uno stato in cui un dispositivo viene inserito per ricevere un aggiornamento del firmware
+
+ESP32 | [Drivers](/docs/getting-started/serial-drivers/esp32/) | [Firmware](/docs/getting-started/flashing-firmware/esp32/)
+: Un chipset di microcontrollore fatto / progettato da Espressif, utilizzato da un certo numero di dispositivi. Maggiore consumo di energia rispetto a NRF52, ma spesso più economico e supporta il WiFi se lo si desidera.
+
+Firmware | [Guide](https://meshtastic.org/docs/getting-started/flashing-firmware/)
+: Il software di basso livello programmato su un dispositivo Meshtastic, per controllare le sue funzioni hardware e consentirgli di comunicare all'interno della rete mesh utilizzando la tecnologia LoRa. Firmware
+
+Flash/Flashing/Flashare [Guide](https://meshtastic.org/docs/getting-started/flashing-firmware/)
+: Il processo di aggiornamento o installazione del firmware su un dispositivo Meshtastic. Questo viene tipicamente fatto utilizzando un computer per caricare nuove versioni del firmware o software personalizzato per migliorare o modificare la funzionalità del dispositivo.
+
+Foreign Mesh
+: Una Foreign Mesh (mesh straniera) è una rete in cui il nodo ricevente non condivide alcun canale con il nodo trasmittente. Quando un nodo riceve un messaggio che non è in grado di decifrare, si dice che il messaggio venga da una Foreign Mesh (Mesh straniera).
+
+GPIO
+: General Purpose Input/Output. Un pin di segnale digitale non impegnato su un dispositivo
+
+LoRa
+: Una tecnologia di comunicazione wireless a basso consumo e lungo raggio utilizzata dai dispositivi Meshtastic per comunicare su distanze di diversi chilometri senza bisogno di reti cellulari, Wi-Fi o altre infrastrutture di rete tradizionali.
+
+LoS
+: Line of Sight (Linea di vista), un percorso in linea d'aria tra due punti.
+
+Mesh | [Algoritmo](/docs/overview/mesh-algo/)
+: Nel contesto di Meshtastic e networking, una mesh si riferisce a una topologia di rete in cui i dispositivi (nodi) sono interconnessi, consentendo loro di comunicare direttamente e dinamicamente tra loro. Questa configurazione consente di trasmettere i dati attraverso la rete, migliorando la copertura e l'affidabilità, soprattutto in ambienti difficili.
+
+Messaggio
+: Un pezzo di dati o testo inviato tra dispositivi Meshtastic sulla rete mesh che possono includere comunicazioni di testo, aggiornamenti di posizione GPS, e altri piccoli payload di dati.
+
+MHz
+: Megahertz, un'unità di frequenza pari a un milione di hertz (cicli al secondo), utilizzato per specificare la frequenza di funzionamento dei dispositivi LoRa nella rete Meshtastic, influenzando la gamma e la frequenza dei dati.
+
+Modulo | [Moduli software](/docs/configuration/module/) | [Moduli hardware](/docs/hardware/devices/)
+: Almeno due definizioni nell'uso Meshtastic: 1) Un software plug-in per espandere le capacità di un dispositivo Meshtastic. 2) Un componente hardware o aggiuntivo per un dispositivo Meshtastic, come un sensore di temperatura o GPS.
+
+[MQTT](/docs/software/integrations/mqtt/)
+: Un acronimo per Message Queuing Telemetry Transport, è un protocollo di messaggistica leggero progettato per piccoli sensori e dispositivi mobili, consentire una trasmissione efficiente dei dati nella rete Meshtastic per la connettività Internet e l'integrazione con le piattaforme IoT. Vedi https://en.wikipedia.org/wiki/MQTT. In Meshtastic, MQTT è utilizzato per collegare un nodo a internet, e può essere utilizzato per collegare più reti mesh tra di loro.
+
+Nodo
+: Un'unità all'interno della rete Meshtastic che può inviare, ricevere e rispedire i messaggi, aiutando a formare ed estendere la copertura della rete mesh .
+
+NRF52 | [Drivers](/docs/getting-started/serial-drivers/nrf52/) | [Firmware](/docs/getting-started/flashing-firmware/nrf52/)
+: un microcontroller fatto da Nordic, utilizzato da una serie di dispositivi come il RAK Meshtastic Starter Kit e il Lilygo T-Echo. Consumo di energia inferiore a ESP32.
+
+OTA
+: Abbreviazione per "Over the Air". Di solito usato per riferirsi ad un aggiornamento che avviene attraverso una rete wireless (over the air). 
+
+Pacchetto
+: Un'unità formattata di dati inviati attraverso la rete. In Meshtastic, i pacchetti trasportano messaggi, posizioni GPS e altre informazioni attraverso la rete mesh LoRa.
+
+Protobuf | [Reference](/docs/development/reference/protobufs/)
+: buffer del protocollo, un metodo sviluppato da Google per la serializzazione dei dati strutturati, utilizzato in Meshtastic per un efficiente protocollo di comunicazione tra dispositivi.
+
+Pre-Shared Key (PSK) | [Encryption](/docs/overview/encryption/)
+: Chiave pre-condivisa, un codice segreto o frase segreta utilizzata nei canali Meshtastic per la crittografia, garantire che solo i dispositivi con la PSK corrispondente possano comunicare all'interno di quel canale specifico.
+
+Crittografia a chiave pubblica (PKC) <unk> [Encryption](/docs/overview/encryption/)
+: Un metodo crittografico introdotto in Meshtastic v2.5 per i messaggi diretti e i messaggi amministrativi, dove ogni dispositivo utilizza una coppia univoca di chiavi pubblica e privata. La chiave pubblica, condivisa con altri dispositivi, consente la crittografia sicura dei messaggi, mentre la chiave privata consente solo al destinatario di decifrare e autenticare il messaggio. Questo approccio migliora la privacy e l'integrità sia per la comunicazione diretta tra dispositivo e dispositivo che per le funzioni di amministrazione sensibili.
+
+Repeater | [Definizioni del ruolo](/docs/configuration/radio/device/#roles)
+: nodo infrastruttura per estendere la copertura della rete tramite il collegamento dei messaggi con il minimo overhead. Non visibile nell'elenco Nodi.
+
+Ripetitore | [Definizioni del ruolo](/docs/configuration/radio/device/#roles)
+: nodo infrastruttura per estendere la copertura della rete tramite il collegamento dei messaggi con il minimo overhead. Visibile nella lista Nodi.
+
+rp2040
+: Un microcontrollore sviluppato da Raspberry Pi, con due processori ARM Cortex-M0+.
+
+RX
+: Abbreviazione per ricevitore.
+
+Sensore
+: Un componente del dispositivo che rileva e risponde ad alcuni tipi di input dall'ambiente fisico. In Meshtastic, i sensori possono essere utilizzati per raccogliere dati ambientali (ad es. temperatura, umidità, localizzazione GPS) che possono essere trasmesse attraverso la rete mesh per il monitoraggio o altre applicazioni.
+
+Serial
+: Un protocollo di comunicazione utilizzato per la trasmissione di dati tra il dispositivo Meshtastic e un computer o altri dispositivi. Tipicamente su USB o UART.
+
+SNR
+: rapporto segnale-rumore, una misura utilizzata nelle comunicazioni per quantificare il livello di un segnale desiderato al livello di rumore di fondo. In Meshtastic e in altri sistemi wireless, un SNR più elevato indica un segnale più chiaro che può migliorare l'affidabilità e la qualità della trasmissione dei dati.
+
+SWR
+: Standing Wave Ratio, una misura dell'efficienza della trasmissione di potenza di radiofrequenza (RF) da un trasmettitore attraverso una linea di trasmissione a un'antenna in dispositivi Meshtastic. Indica il rapporto tra l'ampiezza di un'onda stazionaria al massimo e l'ampiezza minima, con un SWR ideale vicino a 1:1, che significa che la maggior parte della potenza viene trasmessa all'antenna con riflessi minimi.
+
+Telemetria
+: L'invio di dati del sensore o metriche del sistema sulla rete mesh .
+
+Ricetrasmettitore
+: un dispositivo in grado di trasmettere e ricevere comunicazioni.
+
+Trasmettere
+: L'atto di inviare dati, come messaggi o posizioni GPS, da un dispositivo Meshtastic a un altro attraverso la rete LoRa.
+
+TX
+: Abbreviazione per Trasmettitore.

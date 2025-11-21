@@ -1,0 +1,101 @@
+---
+id: http-api
+title: HTTP API
+sidebar_label: HTTP API
+sidebar_position: 2
+---
+
+:::info
+Dies ist eine Mini-Spezifikation einer HTTP-API, die von browserbasierten Clients zur Interaktion mit Meshtastic Geräten verwendet werden kann.
+:::
+
+## Warum Protocol Buffer
+
+- Auf dem ressourcenbeschränkten eingebetteten Server ist keine JSON-Analyse erforderlich.
+- Klein.
+- Wird bereits für alle anderen Transporte verwendet (also gemeinsame Test-/Werkzeugabdeckung).
+- Abwärts- und aufwärtskompatibel.
+
+## Anforderungskopfzeilen
+
+- `Content-Type: application/x-protobuf`
+  - Zeigt den Protocol Buffer Inhalt an (Meshtastic Protocol Buffer)
+
+## Antwortkopfzeilen
+
+- `Content-Type: application/x-protobuf`
+  - Zeigt den Protocol Buffer Inhalt an (Meshtastic Protocol Buffer)
+- `X-Protobuf-Schema: <URI zur .proto-Schemadatei>`
+  - Nicht erforderlich, aber zu Dokumentations-/Reflexionszwecken empfohlen
+
+## Endpunkte
+
+Zwei Endpunkte sind spezifiziert:
+
+### /api/v1/toradio
+
+Erlaubt `PUT` und `OPTION` Anfragen.
+
+#### PUT
+
+Von einer `PUT` Anfrage an diesen Endpunkt wird erwartet, dass sie eine Reihe von ToRadio-Protobuf-Nutzdaten enthält.
+
+Die Protocol Buffer werden binär als Hauptteil der Anfrage gesendet.
+
+Es wird nur eine ToRadio Nachricht pro Anfrage unterstützt.
+
+#### OPTIONS
+
+Eine `OPTIONS` Anfrage an diesen Endpunkt gibt einen Antwortstatuscode `204` und nur Kopfzeilen zurück.
+
+### /api/v1/fromradio
+
+Erlaubt `GET` Anfragen.
+
+#### GET
+
+Eine `GET` Anfrage von diesem Endpunkt gibt eine Reihe von FromRadio Protocol Buffer zurück.
+
+Die Protocol Buffer werden binär als Hauptteil der Anfrage gesendet.
+
+**Parameter**
+
+##### **/api/v1/fromradio?all**
+
+- `all=false` (Standardeinstellung)
+  - Es wird nur ein Protocol Buffer zurückgegeben.
+- `all=true`
+  - Alle verfügbaren Protocol Buffer werden zurückgegeben.
+
+##### **/api/v1/fromradio?chunked**
+
+- `chunked=false` (Standardeinstellung, noch nicht implementiert)
+  - Die Anfrage gibt alle Protocol Buffer zurück, die für die Sitzung des Clients bereitgestellt werden können (dies würde es dem Client ermöglichen, durch Ausführen einer Reihe von Anfragen eine Abfrage durchzuführen). Dies ist die einzige Option, die in der Erstversion unterstützt wird.
+- `chunked=true` (noch nicht implementiert)
+  - Wenn chunked=true ist, wird die Antwort ein [Stream von Chunks](https://en.wikipedia.org/wiki/Chunked_transfer_encoding), den der Server offen halten wird, solange der Client möchte. Dies ermöglicht ein effizientes Streaming neuer „FromRadio“ Protocol Buffer, während sie vom Funkgerät generiert werden.
+
+## Authentifizierung
+
+Es gibt keine **keine** Benutzerauthentifizierung. Wir gehen davon aus, dass der Zugriff auf den HTTP-Server ausreicht, um Vertrauen aufzubauen.
+
+## Client
+
+### JavaScript
+
+Siehe [https://github.com/meshtastic/meshtastic.js
+
+Ein in JavaScript geschriebener Referenzclient stellt eine JavaScript-API für die Verwendung dieses Transports bereit. Dieser Client stellt HTTP-Verbindungen her, verwendet den generierten Protobuf-JavaScript-Code und stellt eine API bereit, die die gesamte REST-Verbindung verbirgt. Die beiden wichtigsten Methoden sind `sendToRadio(packet)` und `onFromRadio(callback)`.
+
+### Protoman
+
+Siehe [https://github.com/spluxx/Protoman
+
+Protoman kann sofort mit der Meshtastic REST API interagieren. Dies ist nützlich für das manuelle Testen der Endpunkte.
+
+## Sicherheit
+
+HTTP und HTTPS werden beide auf dem ESP32 unterstützt, indem selbstsignierte Zertifikate auf HTTPS verwendet werden.
+
+## Weiterführende Dokumente
+
+- Interessantes Folienpaket zum Konzept: https://www.slideshare.net/mokeefe/javaone-2009-ts5276-restful-protocol-buffers

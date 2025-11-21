@@ -1,0 +1,103 @@
+---
+id: md_wsl
+title: Ausführen von meshtasticd in WSL
+sidebar_label: meshtasticd in WSL
+sidebar_position: 6
+description: Eine Anleitung zum Ausführen des Meshtastic Dämons unter WSL zur Verwendung mit einem USB LoRa Modem
+---
+
+## Übersicht
+
+Diese Anleitung führt Sie durch die Ausführung von meshtasticd unter WSL, dem Windows-Subsystem für Linux. 
+
+## Voraussetzungen
+
+Um meshtastic unter Windows über die Windows Subsystem Layer (WSL) auszuführen, muss Ihr Computer die folgenden Voraussetzungen erfüllen:
+
+- Windows 10 (64-Bit), Version 1809 oder neuer
+- Eine WSL Linux Distribution mit einer Kernelversion höher als 5.10.60.1.
+- Eine WSL Linux Distribution unter WSL 2
+- USBIP Gerätehost [usbipd-win](https://github.com/dorssel/usbipd-win) Version 4.0.0 oder neuer installiert
+- _(optional)_ [wsl-usb-manager](https://github.com/nickbeth/wsl-usb-manager) heruntergeladen
+
+:::tip
+
+Dieses Handbuch wurde unter Berücksichtigung von Ubuntu auf WSL geschrieben. Je nach Ihrer Distribution sind möglicherweise geringfügige Anpassungen an den in Linux ausgeführten Befehlen erforderlich.
+
+:::
+
+## Überprüfen der Voraussetzungen
+
+1. Stellen Sie sicher, dass Ihre WSL Linux Distribution größer als 5.10.60.1 ist. 
+   - Führen Sie dazu `uname -r` in der WSL Kommandozeile aus.
+   - Möglicherweise müssen Sie WSL aktualisieren, indem Sie `wsl --update` in einer Eingabeaufforderung mit erhöhten Rechten oder einem PowerShell Fenster ausführen.
+2. Stellen Sie sicher, dass es sich bei Ihrer WSL Linux Installation um eine WSL2 Installation handelt.
+   - Führen Sie dazu `wsl --list --verbose` aus.
+3. Stellen Sie sicher, dass USBIP-Win installiert und konfiguriert ist.
+   - Führen Sie in einer Eingabeaufforderung oder einem PowerShell-Fenster `usbipd list` aus, um Ihre USB-Geräte aufzulisten.
+   - Wenn Sie „usbip-win“ nicht installiert haben, können Sie es über das auf [ihrem GitHub](https://github.com/dorssel/usbipd-win) bereitgestellte MSI-Installationsprogramm installieren oder „winget install usbipd“ ausführen, um es über den Windows-Paket-Manager zu installieren. Sie müssen Ihre Eingabeaufforderung oder Ihr PowerShell-Fenster neu starten, da diese Installation Ihren PATH aktualisiert.
+
+## Verbinden Sie Ihr Meshtastic kompatibles LoRa USB Modem mit WSL
+
+### ...über die Kommandozeile / PowerShell
+
+1. Lassen Sie Ihr LoRa USB Modem vorerst getrennt. Listen Sie in einer **erhöhten** Eingabeaufforderung oder einem PowerShell-Terminal die aktuell sichtbaren Geräte mit `usbipd list` auf.
+2. Schließen Sie Ihr USB Modem an und führen Sie dann denselben Befehl aus. Notieren Sie sich das neue Gerät, das in dieser Liste aufgeführt ist, die zugehörige Bus-ID und die zugehörige Geräte-ID.
+3. Führen Sie `usbipd bind --busid=<BUSID>` aus, wobei `<BUSID>` die in Schritt 2 ermittelte Bus-ID ist, um das Gerät zu binden.
+4. Führen Sie `usbipd attach --wsl --busid=<BUSID>` aus, wobei `<BUSID>` die in Schritt 2 ermittelte Bus-ID ist, um das Gerät an WSL2 anzuschließen.
+5. Führen Sie in Ihrem WSL-Terminal `lsusb` aus, um zu sehen, ob Ihr Gerät mit der _Geräte-ID_, die Sie in Schritt 2 identifiziert haben, funktioniert. Wenn Ihr Gerät hier aufgelistet ist, haben Sie usbipd für Ihr LoRa Modem korrekt konfiguriert.
+
+:::note
+
+Während die Bindung auch nach einem Neustart bestehen bleibt, ist dies beim Anschließen eines Gerätes nicht der Fall. Sie müssen Ihr Modem jedes Mal über usbipd erneut anschließen, wenn Sie das Gerät von Ihrem Computer trennen oder Ihren Host neu starten.
+
+:::
+
+### ...über wsl-usb-manager
+
+Die Anwendung [wsl-usb-manager](https://github.com/nickbeth/wsl-usb-manager) erleichtert das Binden und Freigeben von USB-Geräten über IP für diejenigen, die sich mit der Verwendung der Befehlszeile nicht wohlfühlen (oder diese als unpraktisch empfinden). Die Schritte zum Binden und Anschließen des USB Gerätes über IP sind dieselben wie bei der obigen Kommandozeilen Optionen, außer dass eine grafische Benutzeroberfläche verwendet wird. 
+
+## Installation von `meshtasticd` in einer WSL Instanz
+
+:::info
+
+Siehe [Linux Installationsanweisungen](https://meshtastic.org/docs/software/linux/installation/?os=ubuntu) für Ihre jeweilige Distribution. In diesem Beispiel verwenden wir Ubuntu.
+
+:::
+
+Führen Sie nach der Installation von meshtasticd `sudo meshtastic` aus. Überprüfen Sie, ob es ausgeführt wird, und beenden Sie den Vorgang dann vorerst.
+
+## Konfigurieren Ihres Meshtastic Knotens
+
+Sie können Ihren Meshtastic Knoten über die Befehlszeilenschnittstelle oder über den Webclient des Dämons konfigurieren. 
+
+### Zugriff auf den Meshtastic Knoten über die Kommandozeile
+
+1. Führen Sie `ip a` in Ihrem WSL Terminal aus, um die IP-Adresse für die eth0 Schnittstelle Ihrer WSL Instanz zu ermitteln.
+2. Führen Sie `meshtastic --host <WSL_IP_ADDRESS>` aus, um eine Verbindung zu Ihrem WSL-Container zu testen.
+3. Geben Sie Konfigurationsbefehle mithilfe der Kommandozeile ein, wie Sie es bei jedem anderen Meshtastic Gerät tun würden.
+
+### Aktivierung und Zugriff auf den Meshtastic Web Client
+
+1. Bearbeiten Sie die Datei `config.yaml` um den Webserver zu aktivieren, indem Sie die Port und RootPath Einträge aktivieren.
+2. Führen Sie `ip a` (oder äquivalent) in Ihrem WSL-Terminal aus, um die IP-Adresse für die eth0 Schnittstelle Ihrer WSL Instanz zu ermitteln.
+3. Verbinden Sie sich mit `https://<WSL_IP_ADDRESS>:9443/` in Ihrem Webbrowser. (Möglicherweise müssen Sie selbstsignierte Zertifikate akzeptieren.)
+4. Fahren Sie mit der Konfiguration Ihres Knotens fort, wie Sie es mit jedem anderen Meshtastic Knoten tun würden, wie zum Beispiel das Setzen der Region, Knotenname, etc. 
+
+## Einige Hinweise:
+
+- Da WSL keinen „System“-Daemon hat, müssen Sie „meshtasticd“ in Ihrer WSL-Instanz neu starten, wenn Sie Ihre Einstellungen über die Meshtastic Kommandozeile oder die Weboberfläche speichern.
+
+## Anhang
+
+### WSL1 mit WSL2 verbinden
+
+Falls Sie WSL1 bereits installiert haben, müssen Sie es auf WSL2 aktualisieren.
+
+Durch Ausführen von `wsl --set-version <distro> 2`, wobei `<distro>` der Name der WSL Installation aus `wsl --list --verbose` ist, kann Ihre WSL1 Installation in WSL2 konvertiert werden.
+
+Wenn dies jedoch nicht möglich ist, kann dies bedeuten, dass Ihre WSL-Installation unter Windows viel älter ist und aktualisiert werden muss. Befolgen Sie dazu diese [Anleitung](https://learn.microsoft.com/en-us/windows/wsl/install-manual#step-4---download-the-linux-kernel-update-package) von Microsoft.
+
+## Referenzen
+
+- Microsoft - https://learn.microsoft.com/de-de/windows/wsl/connect-usb

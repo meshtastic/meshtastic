@@ -1,0 +1,372 @@
+---
+id: mqtt
+title: Configurazione Modulo MQTT
+sidebar_label: MQTT
+description: Impara a gestire server MQTT, crittografia e altro per il tuo dispositivo Meshtastic.
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+import { Icon } from "@iconify/react";
+
+Se il dispositivo è connesso a Internet tramite wifi o ethernet, è possibile attivarlo per inoltrare pacchetti lungo un server MQTT. Ciò consente agli utenti sulla mesh locale di comunicare con gli utenti su Internet. Uno o più canali devono anche essere abilitati come uplink e/o downlink per la trasmissione di pacchetti da e/o a mesh (vedere [Canali](/docs/configuration/radio/channels#downlink-enabled)).
+
+Le opzioni di configurazione del modulo MQTT sono: Abilitato, Indirizzo server, Nome utente, Password, Crittografia Abilitata, JSON Abilitato, TLS Abilitato, Root Topic, Client Proxy Abilitato, Map Reporting Abilitato (con precisione di posizione e intervallo di pubblicazione), e Okay a MQTT. La configurazione del modulo MQTT utilizza un messaggio di amministrazione per inviare un protobuf `ConfigModule.MQTT`.
+
+## Impostazioni
+
+## Valori Di Configurazione Del Modulo MQTT
+
+### Abilitato
+
+Abilita il modulo MQTT.
+
+### Indirizzo Server
+
+Il server da usare per MQTT. Se non impostato, verrà utilizzato il server pubblico predefinito.
+
+### Username
+
+Nome utente MQTT Server da usare (più utile per un server MQTT personalizzato). Se si utilizza un server personalizzato, questo valore verrà considerato anche se vuoto. Se si utilizza il server pubblico predefinito, questo verrà considerato solo se impostato, altrimenti il dispositivo userà il nome utente predefinito.
+
+### Password
+
+Password MQTT da usare (più utile per un server MQTT personalizzato). Se si utilizza un server personalizzato, questo valore verrà considerato anche se vuoto. Se si utilizza il server predefinito, questo verrà considerato solo se impostato, altrimenti il dispositivo userà la password predefinita.
+
+### Crittografia Abilitata
+
+Indica se inviare pacchetti cifrati o non cifrati al server MQTT. Pacchetti non crittografati possono essere utili per sistemi esterni che vogliono consumare pacchetti meshtastic.
+
+Nota: Tutti i messaggi sono inviati al broker MQTT non cifrati se questa opzione non è abilitata, anche quando i canali uplink hanno chiavi di crittografia impostate.
+
+### JSON Abilitato
+
+:::note
+JSON non è supportato sulla piattaforma nRF52.
+:::
+
+Abilita l'invio / il consumo di pacchetti JSON su MQTT. Questi pacchetti non sono crittografati, ma offrono un modo semplice per integrarsi con sistemi che possono leggere JSON.
+
+### TLS abilitato
+
+Se true, cerchiamo di stabilire una connessione sicura utilizzando TLS.
+
+### Root topic
+
+L'argomento principale da usare per i messaggi MQTT. Questo è utile se si desidera utilizzare un singolo server MQTT per più reti meshtastic e separarli tramite ACL.
+
+### Proxy Client Abilitato
+
+Se true, consente al dispositivo di utilizzare la connessione di rete del client (ad esempio del tuo telefono) per connettersi al server MQTT. Se falso, utilizza la connessione di rete del dispositivo che è necessario abilitare tramite le [impostazioni di rete](/docs/configuration/radio/network).
+
+### Segnalazione sulla Mappa Abilitata
+
+Disponibile dalla versione del firmware 2.3.2 e successiva.
+Se attivo, il nodo invierà periodicamente un report di posizione non crittografato al server MQTT per la visualizzazione su mappe online compatibili. Il report di posizione contiene le seguenti informazioni:
+
+- Il nome lungo e corto del nodo e l'ID;
+- Posizione del nodo (con precisione configurabile) e altitudine;
+- Il modello hardware del nodo e [ruolo](/docs/configuration/radio/device/#roles);
+- Versione firmware del nodo;
+- Regione LoRa del nodo, preimpostazione modem e nome del canale primario;
+- Se il nodo può essere raggiunto sul canale predefinito con la chiave conosciuta;
+- Numero di nodi locali online (ascoltati nelle ultime 2 ore, esclusi quelli ascoltati tramite MQTT).
+
+#### Precisione Del Report Posizione
+
+La precisione da utilizzare per la posizione nella mappa. Di default, deviazione massima di circa 1459m.
+
+#### Intervallo di Pubblicazione Report Mappa
+
+Quante volte dovremmo pubblicare il report della mappa sul server MQTT in pochi secondi. Il valore predefinito è di 3600 secondi (1 ora), che è anche il valore minimo.
+
+## Disponibilità Client Di Configurazione Del Modulo MQTT
+
+<Tabs
+  groupId="settings"
+  defaultValue="apple"
+  values={[
+    {
+      label: (
+        <>
+          <Icon icon="mdi:android" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Android
+        </>
+      ),
+      value: "android",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:apple" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Apple
+        </>
+      ),
+      value: "apple",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:terminal" height="1.5rem" style={{ marginRight: "0.25rem" }} /> CLI
+        </>
+      ),
+      value: "cli",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:internet" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Web
+        </>
+      ),
+      value: "web",
+    },
+  ]}>
+<TabItem value="android">
+
+#### Android
+
+:::info
+
+Le opzioni di configurazione MQTT sono disponibili per Android.
+
+1. Apri l'applicazione Meshtastic
+2. Vai a: **Menu (3 punti in alto a destra) > Configurazione radio > MQTT**
+
+:::
+
+</TabItem>
+<TabItem value="apple">
+
+#### Apple
+
+:::info
+
+Tutte le opzioni di configurazione MQTT sono disponibili su iOS, iPadOS e macOS in Impostazioni > Configurazione del modulo > MQTT.
+
+:::
+
+</TabItem>
+<TabItem value="cli">
+
+#### CLI
+
+:::info
+
+Le seguenti opzioni di configurazione sono disponibili nella CLI di Python:
+
+:::
+
+|    Impostazione              | Valori Accettabili |   Predefinito         |
+| :--------------------------: | :----------------: | :-------------------: |
+|     mqtt.enabled             |  `true`, `false`   |     `false`           |
+|     mqtt.address             |   `stringa`        | `mqtt.meshtastic.org` |
+|     mqtt.username            |   `stringa`        |    `meshdev`          |
+|     mqtt.password            |   `stringa`        |   `large4cats`        |
+|  mqtt.encryption_enabled     |  `true`, `false`   |     `false`           |
+|    mqtt.json_enabled         |  `true`, `false`   |     `false`           |
+|    mqtt.tls_enabled          |  `true`, `false`   |     `false`           |
+|      mqtt.root               |   `stringa`        |                       |
+| mqtt.proxy_to_client_enabled |  `true`, `false`   |     `false`           |
+|  mqtt.map_reporting_enabled  |  `true`, `false`   |     `false`           |
+
+:::tip
+
+Poiché il dispositivo si riavvierà dopo che ogni comando viene inviato tramite CLI, si raccomanda quando si impostano più valori in una sezione di configurazione, che i comandi siano incatenati insieme in un unico comando.
+
+```shell title="Example:"
+meshtastic --set mqtt.enabled true --set mqtt.json_enabled true
+```
+
+:::
+
+```shell title="Enable/Disable MQTT Module"
+meshtastic --set mqtt.enabled true
+meshtastic --set mqtt.enabled false
+```
+
+```shell title="Enable/Disable MQTT JSON"
+meshtastic --set mqtt.json_enabled true
+meshtastic --set mqtt.json_enabled false
+```
+
+</TabItem>
+<TabItem value="web">
+
+#### Web
+
+:::info
+Tutte le opzioni di configurazione del modulo MQTT sono disponibili per l'interfaccia utente Web.
+:::
+
+</TabItem>
+</Tabs>
+
+## Connetti al server pubblico predefinito
+
+:::important
+Il canale predefinito (LongFast) sul server pubblico di solito ha molto traffico. Il dispositivo potrebbe essere sovraccaricato e potrebbe non funzionare più correttamente. Si consiglia di utilizzare un canale diverso o di utilizzare il proprio server MQTT se si verificano problemi.
+:::
+
+<Tabs
+  groupId="settings"
+  defaultValue="apple"
+  values={[
+    {
+      label: (
+        <>
+          <Icon icon="mdi:android" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Android
+        </>
+      ),
+      value: "android",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:apple" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Apple
+        </>
+      ),
+      value: "apple",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:terminal" height="1.5rem" style={{ marginRight: "0.25rem" }} /> CLI
+        </>
+      ),
+      value: "cli",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:internet" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Web
+        </>
+      ),
+      value: "web",
+    },
+  ]}>
+
+<TabItem value="android">
+
+#### Android
+
+##### 1. Abilita il modulo MQTT
+
+Vai a: Menu (3 punti in alto a destra) > Configurazione radio > MQTT: attiva il cursore per **MQTT abilitato** e tocca **Invia**.
+
+[![Impostazioni MQTTT](/img/modules/mqtt/android_mqtt_encryption_sm.webp)](/img/modules/mqtt/android_mqtt_encryption.webp)
+
+_Opzionale:_ Per utilizzare la connessione internet del telefono per inviare e ricevere pacchetti sul web, abilitare anche lo slider per **MQTT Client Proxy** e saltare il passo "Configura le impostazioni di rete" qui sotto.
+
+[![Client Proxy](/img/modules/mqtt/android_mqtt_proxy_sm.webp)](/img/modules/mqtt/android_mqtt_proxy_encryption.webp)
+
+##### 2. Abilita Uplink & Downlink Del Canale
+
+Naviga a: Menu (3 punti in alto a destra) > Configurazione radio > Canali > LongFast: Attiva i cursori per **Uplink abilitato** e **Downlink abilitato**, quindi tocca **Salva** e tocca **Invia**.
+
+[![Impostazioni Canale](/img/modules/mqtt/android_channel_sm.webp)](/img/modules/mqtt/android_channel.webp)
+
+##### 3. Configura Impostazioni Di Rete
+
+Naviga a: Menu (3 punti in alto a destra) > Configurazione radio > Rete: Attiva il cursore per **WiFi abilitato**, Inserisci il **SSID** e **PSK** per la tua rete, quindi tocca **Invia**.
+
+[![Impostazioni Rete](/img/modules/mqtt/android_network_sm.webp)](/img/modules/mqtt/android_network.webp)
+
+</TabItem>
+<TabItem value="apple">
+
+#### Apple
+
+##### 1. Abilita il modulo MQTT
+
+Vai a Impostazioni > MQTT: attiva il cursore per MQTT abilitato e tocca **Salva**
+
+[![Impostazioni MQTT 1](/img/modules/mqtt/apple_mqtt_1_encryption_sm.webp)](/img/modules/mqtt/apple_mqtt_1_encryption.webp)
+[![Impostazioni MQTT 2](/img/modules/mqtt/apple_mqtt_2_sm.webp)](/img/modules/mqtt/apple_mqtt_2.webp)
+
+_Opzionale:_ Per utilizzare la connessione internet del telefono per inviare e ricevere pacchetti sul web, abilitare anche lo slider per **MQTT Client Proxy** e saltare il passo "Configura le impostazioni di rete" qui sotto.
+
+[![Client Proxy](/img/modules/mqtt/apple_mqtt_1_proxy_sm.webp)](/img/modules/mqtt/apple_mqtt_1_proxy_encryption.webp)
+
+##### 2. Abilita Uplink & Downlink Del Canale
+
+Passa a Impostazioni > Canali > Canale primario: attiva i cursori per **Uplink abilitato** e **Downlink abilitato** - Premi **Salva**
+
+[![Impostazioni Canale](/img/modules/mqtt/apple_channel_sm.webp)](/img/modules/mqtt/apple_channel.webp)
+
+##### 3. Configura Impostazioni Di Rete
+
+Vai a Impostazioni > Rete: attiva il cursore per **WiFi abilitato** - Inserisci il tuo **SSID** e **PSK** per la tua rete - Tocca **Salva**
+
+[![Impostazioni Rete](/img/modules/mqtt/apple_network_sm.webp)](/img/modules/mqtt/apple_network.webp)
+
+</TabItem>
+<TabItem value="cli">
+
+#### CLI
+
+##### 1. Abilita il modulo MQTT
+
+```shell
+meshtastic --set mqtt.enabled 
+```
+
+##### 2. Abilita Uplink & Downlink Del Canale
+
+```shell
+meshtastic --ch-set uplink_enabled true --ch-index 0
+meshtastic --ch-set downlink_enabled true --ch-index 0
+```
+
+o concatenati:
+
+```shell
+meshtastic --ch-set uplink_enabled true --ch-index 0 --ch-set downlink_enabled true --ch-index 0
+```
+
+##### 3. Configura Impostazioni Di Rete
+
+```shell
+meshtastic --set network.wifi_enabled true
+meshtastic --set network.wifi_ssid "la tua rete"
+meshtastic --set network.wifi_psk latuapassword
+```
+
+o concatenati:
+
+```shell
+meshtastic --set network.wifi_enabled true --set network.wifi_ssid "la tua rete" --set network.wifi_psk latuapassword
+```
+
+</TabItem>
+<TabItem value="web">
+
+#### Web
+
+##### 1. Abilita il modulo MQTT
+
+Vai alla configurazione > Configurazione del modulo > MQTT - Attiva il cursore per MQTT abilitato - Clicca sull'icona **Salva**.
+
+[![Impostazioni MQTTT](/img/modules/mqtt/web_mqtt_encryption_sm.webp)](/img/modules/mqtt/web_mqtt_encryption.webp)
+
+_Opzionale:_ Per utilizzare la connessione internet del tuo cliente per inviare e ricevere pacchetti sul web, abilitare anche il cursore per **Proxy to Client Abilitato** e saltare il passo Configura le impostazioni di rete qui sotto.
+
+[![Client Proxy](/img/modules/mqtt/web_mqtt_proxy_sm.webp)](/img/modules/mqtt/web_mqtt_proxy_encryption.webp)
+
+:::caution
+
+Anche se questa opzione può essere visibile nel vostro UI, Client Proxy non è ancora funzionale con il Web Client.
+
+:::
+
+##### 2. Abilita Uplink & Downlink Del Canale
+
+Passa a Impostazioni > Canali > Canale primario: attiva i cursori per **Uplink abilitato** e **Downlink abilitato** - Premi **Salva**.
+
+[![Impostazioni Canale](/img/modules/mqtt/web_channel_sm.webp)](/img/modules/mqtt/web_channel.webp)
+
+##### 3. Configura Impostazioni Di Rete
+
+Naviga su Radio Config > Dispositivo > Rete: Attiva il cursore per **Abilitato** - Inserisci il tuo **SSID** e **PSK** per la tua rete - Clicca sull'icona **Salva**.
+
+[![Impostazioni Rete](/img/modules/mqtt/web_network_sm.webp)](/img/modules/mqtt/web_network.webp)
+
+</TabItem>
+</Tabs>

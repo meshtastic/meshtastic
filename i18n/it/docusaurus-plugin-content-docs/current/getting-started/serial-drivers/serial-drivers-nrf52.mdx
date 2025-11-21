@@ -1,0 +1,116 @@
+---
+id: nrf52
+title: Driver Seriali nRF52/RP2040
+sidebar_label: Driver nRF52/RP2040
+sidebar_position: 2
+description: Istruzioni per l'installazione di driver USB-Seriali nRF52 e RP2040 per interagire con un dispositivo Meshtastic.
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+import { Icon } from "@iconify/react";
+import Link from "@docusaurus/Link";
+
+## Installare driver USB-seriali per nRF52 / RP2040
+
+:::caution
+
+i dispositivi nRF52/RP2040 tipicamente non richiedono driver seriali. Usano il bootloader UF2 che fa apparire i dispositivi come unità flash. _NON_ scaricare i driver USB del dispositivo a meno che non sia necessario installare il supporto UF2.
+
+:::
+
+<Tabs
+  groupId="operating-system"
+  defaultValue="windows"
+  values={[
+    {
+      label: (
+        <>
+          <Icon icon="mdi:tux" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Linux
+        </>
+      ),
+      value: "linux",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:apple" height="1.5rem" style={{ marginRight: "0.25rem" }} /> macOS
+        </>
+      ),
+      value: "macos",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:microsoft" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Windows
+        </>
+      ),
+      value: "windows",
+    },
+  ]}>
+
+<TabItem value="linux">
+
+#### Linux
+
+- [Driver CH34x - Linux Download](http://www.wch-ic.com/downloads/CH341SER_LINUX_ZIP.html)
+
+</TabItem>
+
+<TabItem value="macos">
+
+#### macOS
+
+:::info
+
+Con le ultime versioni di MacOS, il driver USB-Seriale è integrato. Se hai già scaricato/installato qualsiasi driver, rimuovili.
+
+:::
+
+##### Rimuovere il driver USB CH34x (macOS)
+
+Se hai già scaricato/installato i driver macOS WCH-IC CH340/CH341
+("CH341SER_MAC") tramite il CH34x_Install_V1.5.pkg, dovrai
+Disinstallare l'estensione del kernel:
+
+1. Scollega il tuo dispositivo
+2. Apri il terminale ed esegui:
+3. `sudo rm -rf /Library/Extensions/usbserial.kext`
+4. Riavvia
+
+##### Installa il driver CH34x
+
+- [CH34x Driver- macOS Download](https://github.com/WCHSoftGroup/ch34xser_macos)
+
+</TabItem>
+
+<TabItem value="windows">
+
+#### Windows
+
+- [CH34x Driver - Windows Download](http://www.wch-ic.com/downloads/CH341SER_EXE.html)
+
+</TabItem>
+
+</Tabs>
+
+:::important
+
+Dopo aver installato il driver, assicurati di riavviare il computer per completare il processo di installazione.
+
+Puoi anche [testare l'installazione del driver seriale](/docs/getting-started/serial-drivers/test-serial-driver-installation) in questo passaggio se necessario.
+
+:::
+
+### Flash del Firmware
+
+Dopo aver installato i driver seriali, è ora possibile flashare il firmware Meshtastic sul dispositivo. Per procedere, seleziona il tipo di dispositivo appropriato per il tuo dispositivo.
+
+<div className="indexCtasBody">
+  <Link
+    className={"button button--outline button--lg cta--button"}
+    to={"/docs/getting-started/flashing-firmware/nrf52/"}
+  >
+    Flash del Firmware nRF52/RP2040
+  </Link>
+</div>

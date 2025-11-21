@@ -1,0 +1,122 @@
+---
+id: traceroute
+title: Utilizzo Del Modulo Traceroute
+sidebar_label: Traceroute
+description: Il modulo traceroute consente di capire il percorso che un messaggio ha preso per raggiungere la destinazione finale sulla mesh.
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+import ReactPlayer from "react-player";
+import { Icon } from "@iconify/react";
+
+## Panoramica
+
+A causa della limitata larghezza di banda di LoRa, Meshtastic non tiene traccia dei nodi in cui un messaggio è passato per arrivare alla destinazione. Tuttavia, dal firmware 2.0.8 su, c'è un modulo Traceroute che può mostrare questo.
+
+Solo i nodi che conoscono la chiave di crittografia del canale che si utilizza possono essere tracciati. Nota anche che un messaggio può arrivare attraverso percorsi multipli a causa della duplicazione dovuta alla ritrasmissione. Questo modulo traccierà solo gli hop del primo pacchetto contenente la richiesta di traceroute che è arrivata a destinazione.
+
+Per utilizzare questo modulo, assicurati che i tuoi dispositivi abbiano la versione del firmware 2.0.8 o superiore.
+
+Dalla versione del firmware ≥ 2.5, viene registrato il percorso di ritorno all'origine, insieme al rapporto segnale-rumore (SNR) per ogni collegamento. I nodi con un vecchio firmware o quelli che non sono in grado di decrittare il traceroute saranno mostrati come "Unknown" (rappresentato da un ID pari a 4294967295 o 0xFFFFFF in esadecimale) se tutti i nodi del percorso utilizzano almeno la versione del firmware 2.3.12.
+
+<div style={{ maxWidth: "800px", margin: "auto" }}>
+  <ReactPlayer
+    url="https://youtu.be/PKUmaELKaUo"
+    controls
+    width="100%"
+    height="400px"
+  />
+</div>
+
+## Comportamento Del Ripetitore
+
+I nodi ripetitori appariranno nel registro dei traceroute se hanno la chiave di cifratura, ma se non sono nella lista dei nodi potrebbero apparire come "Unknown" a seconda dell'app.
+
+## Disponibilità Client Modulo Traceroute
+
+<Tabs
+  groupId="settings"
+  defaultValue="apple"
+  values={[
+    {
+      label: (
+        <>
+          <Icon icon="mdi:android" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Android
+        </>
+      ),
+      value: "android",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:apple" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Apple
+        </>
+      ),
+      value: "apple",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:terminal" height="1.5rem" style={{ marginRight: "0.25rem" }} /> CLI
+        </>
+      ),
+      value: "cli",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:internet" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Web
+        </>
+      ),
+      value: "web",
+    },
+  ]}>
+
+<TabItem value="android">
+
+#### Android
+
+All'interno della lista dei nodi, tieni premuto un nodo di destinazione e seleziona 'Traceroute' per inviare la richiesta. A seconda della quantità di hop necessaria, questo potrebbe richiedere un po' di tempo. Il risultato verrà mostrato usando un pop-up.
+
+</TabItem>
+<TabItem value="apple">
+
+#### Apple
+
+All'interno della lista dei nodi, tieni premuto un nodo di destinazione e seleziona 'Traceroute' per inviare la richiesta. A seconda della quantità di hop necessaria, questo potrebbe richiedere un po' di tempo. Su iOS/iPadOS 17 e macOS 14+, i risultati saranno mostrati nel Trace Route del nodo Log nei dettagli del nodo. Per le versioni precedenti, controlla Impostazioni > Registrazione > Registro Mesh.
+
+</TabItem>
+<TabItem value="cli">
+
+#### CLI
+
+Assicurarsi che la CLI sia almeno di versione 2.0.6. Quindi usa questo comando:
+
+```shell title="CLI traceroute command"
+meshtastic --traceroute 'destinationId'
+```
+
+Dove per `destinationId` devi compilare l'ID della destinazione a cui vuoi tracciare gli hop, che puoi ottenere eseguendo `meshtastic --nodes`. A seconda del tuo sistema operativo, potresti aver bisogno di virgolette intorno all'ID. Quindi invierà un messaggio specifico per tracciare gli hop. Per esempio, questo è quello che otterrete:
+
+```shell title="Traceroute from !25048234 to !bff18ce4"
+meshtastic --traceroute '!bff18ce4'
+Connesso alla radio
+Invio richiesta traceroute a !bff18ce4 (questo potrebbe richiedere un po' di tempo)
+Percorso tracciato verso destinazione:
+!25048234 --> !ba4bf9d0 (6.0dB) --> !bff18ce4 (-3.5dB)
+Percorso risalito a noi:
+!bff18ce4 --> !ba4bf9d0 (-2.75dB) --> !25048234 (5.25dB)
+```
+
+Il primo ID mostrato è il dispositivo di origine collegato tramite CLI. Come dimostrato nell'immagine sopra, il pacchetto ha viaggiato attraverso un nodo aggiuntivo per raggiungere la sua destinazione e tornare.
+
+</TabItem>
+<TabItem value="web">
+
+#### Web
+
+Dopo aver selezionato un nodo dall'elenco, fare clic sul pulsante "Percorso" nell'angolo in alto a destra per inviare una richiesta di traceroute al nodo selezionato. Il risultato verrà visualizzato nella pagina dei messaggi del nodo.
+
+</TabItem>
+</Tabs>

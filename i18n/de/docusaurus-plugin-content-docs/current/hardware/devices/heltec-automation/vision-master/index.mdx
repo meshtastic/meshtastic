@@ -1,0 +1,207 @@
+---
+id: vision-master
+title: HELTEC® Vision Master
+sidebar_label: Vision Master
+sidebar_position: 3
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+<Tabs
+groupId="heltec"
+queryString="heltec"
+defaultValue="vision_master_e213"
+values={[
+{label: 'Vision Master E213', value: 'vision_master_e213'},
+{label: 'Vision Master E290', value:'vision_master_e290'},
+{label: 'Vision Master T190', value:'vision_master_t190'}
+]}>
+<TabItem value="vision_master_e213">
+
+## Vision Master E213
+
+- **MCU:**
+  - ESP32-S3R8 (WLAN & Bluetooth)
+- **LoRa Sendeempfänger:**
+  - HT-RA62(Semtech SX1262)
+- **Frequenzoptionen:**
+  - 433 MHz
+  - 470 - 510 MHz
+  - 863 - 870 MHz
+  - 902 - 928 MHz
+- **Anschlüsse:**
+  - USB-C
+  - 2x1.25 Lithium Batterie Anschluss
+  - 2 x SH1.0-4P Sensorschnittstelle
+  - Antenne:
+    - U.FL/IPEX Antennenanschluss für LoRa
+    - Integrierter 2,4 GHz Platinenantenne, U.FL/IPEX Anschluss für 2,4 GHz externe Antenne.
+
+### Merkmale
+
+- Anzeigebildschirm mit 2,13 Zoll schwarz-weiß E-Ink
+- Boot, Reset und Benutzertaste (GPIO 21)
+- Kein GPS
+
+### Programmierung
+
+Um ESP32-S3 Geräte wie den Vision Master E213 zu programmieren, müssen Sie sie normalerweise den Espressifs Firmware Download Modus aktivieren. Benutzen Sie dazu den "1200bps Reset" Knopf im Web-Flasher um dies zu tun. Wenn diese Methode aus irgendeinem Grund nicht funktioniert, können Sie dem manuellen Prozess folgen.
+
+:::warning
+
+Fahren Sie nicht fort, es sei denn, eine Antenne ist angeschlossen, um mögliche Schäden am Funkgerät zu vermeiden.
+
+:::
+
+Der folgende Prozess wird das Gerät manuell im Espressif Firmware Download Modus aktivieren:
+
+1. Gerät trennen.
+2. Drücken und halten Sie die BOOT Taste.
+3. Gerät anschließen.
+4. Nach 2-3 Sekunden lassen Sie die BOOT Taste los.
+
+Mit dem Gerät im Espressif Firmware Download Modus, können Sie mit der Programmierung durch eine der unterstützten Methoden fortfahren. Es wird generell empfohlen, den [Web Flasher](https://flasher.meshtastic.org/) zu benutzen. Wählen Sie "Heltec Vision Master E213" aus der Liste der Geräte.
+
+### Anschlussplan
+
+![HT-VME213_PIN_MAP](/img/hardware/heltec/HT-VME213_PIN_MAP.webp)
+
+Bildquelle: [Heltec](https://resource.heltec.cn/download/HT-VME213/HT-VME213.png)
+
+### Quellen
+
+Auf der Platine befindet sich eine zusätzliche Schnittstelle für 2,4 GHz Funksignale. Beim Anschluss einer externen Antenne muss der Widerstand um 90 Grad nach links gedreht werden. Für weitere Details lesen Sie bitte die [FAQ auf der offiziellen Website von Heltec] (https://heltec.org/project/vision-master-e213/).
+
+- Firmware Datei: `firmware-heltec-vision-master-e213-X.X.X.xxxxxxx.bin`
+- Links zum Direktkauf:
+  - [Heltec](https://msh.to/heltec-vision-master-e213/)
+  - [AliExpress](https://msh.to/aliexpress-heltec-vision-master-e213/)
+
+</TabItem>
+<TabItem value="vision_master_e290">
+
+## Vision Master E290
+
+- **MCU:**
+  - ESP32-S3R8 (WLAN & Bluetooth)
+- **LoRa Sendeempfänger:**
+  - HT-RA62(Semtech SX1262)
+- **Frequenzoptionen:**
+  - 433 MHz
+  - 470 - 510 MHz
+  - 863 - 870 MHz
+  - 902 - 928 MHz
+- **Anschlüsse:**
+  - USB-C
+  - 2x1.25 Lithium Batterie Anschluss
+  - SH1.0-4P Sensorschnittstelle
+  - Antenne:
+    - U.FL/IPEX Antennenanschluss für LoRa
+    - Integrierter 2,4 GHz Platinenantenne, U.FL/IPEX Antenne für 2,4 GHz externe Antenne.
+
+### Merkmale
+
+- Anzeigebildschirm mit 2,90 Zoll schwarz-weiß E-Ink
+- Boot, Reset und Benutzertaste (GPIO 21)
+- Raspberry Pi GPIO Steckerleiste 2x20
+- Kein GPS
+
+### Programmierung
+
+Um ESP32-S3 Geräte wie den Vision Master E190 zu programmieren, müssen Sie sie normalerweise den Espressifs Firmware Download Modus aktivieren. Benutzen Sie dazu den "1200bps Reset" Knopf im Web-Flasher um dies zu tun. Wenn diese Methode aus irgendeinem Grund nicht funktioniert, können Sie dem manuellen Prozess folgen.
+
+:::warning
+
+Fahren Sie nicht fort, es sei denn, eine Antenne ist angeschlossen, um mögliche Schäden am Funkgerät zu vermeiden.
+
+:::
+
+Der folgende Prozess wird das Gerät manuell im Espressif Firmware Download Modus aktivieren:
+
+1. Gerät trennen.
+2. Drücken und halten Sie die BOOT Taste.
+3. Gerät anschließen.
+4. Nach 2-3 Sekunden lassen Sie die BOOT Taste los.
+
+Mit dem Gerät im Espressif Firmware Download Modus, können Sie mit der Programmierung durch eine der unterstützten Methoden fortfahren. Es wird generell empfohlen, den [Web Flasher](https://flasher.meshtastic.org/) zu benutzen. Wählen Sie "Heltec Vision Master E290" aus der Liste der Geräte.
+
+### Anschlussplan
+
+![HT-VME290_PIN_MAP](/img/hardware/heltec/HT-VME290_PIN_MAP.webp)
+
+Bildquelle: [Heltec](https://resource.heltec.cn/download/HT-VME290/HT-VME290%20Pin%20map.png)
+
+### Quellen
+
+Auf der Platine befindet sich eine zusätzliche Schnittstelle für 2,4 GHz Funksignale. Beim Anschluss einer externen Antenne muss der Widerstand um 90 Grad nach links gedreht werden. Für weitere Details lesen Sie bitte die [FAQ auf der offiziellen Website von Heltec] (https://heltec.org/project/vision-master-e290/).
+
+- Firmware Datei: `firmware-vision-master-e290-X.X.X.xxxxxxx.bin`
+- Links zum Direktkauf:
+  - [Heltec](https://msh.to/heltec-vision-master-e290/)
+  - [AliExpress](https://msh.to/aliexpress-heltec-vision-master-e290/)
+
+</TabItem>
+<TabItem value="vision_master_t190">
+
+## Vision Master T190
+
+- **MCU:**
+  - ESP32-S3R8 (WLAN & Bluetooth)
+- **LoRa Sendeempfänger:**
+  - HT-RA62(Semtech SX1262)
+- **Frequenzoptionen:**
+  - 433 MHz
+  - 470 - 510 MHz
+  - 863 - 870 MHz
+  - 902 - 928 MHz
+- **Anschlüsse:**
+  - USB-C
+  - 2x1.25 Lithium Batterie Anschluss
+  - SH1.0-4P Sensorschnittstelle
+  - Antenne:
+    - U.FL/IPEX Antennenanschluss für LoRa
+    - Integrierter 2,4 GHz Platinenantenne, U.FL/IPEX Antenne für 2,4 GHz externe Antenne.
+
+### Merkmale
+
+- Auf dem 1,90 Zoll TFT-LCD-Farbbildschirm
+- Boot, Reset und Benutzertaste
+- Kein GPS
+
+### Programmierung
+
+Um ESP32-S3 Geräte wie den Vision Master T190 zu programmieren, müssen Sie sie normalerweise den Espressifs Firmware Download Modus aktivieren. Benutzen Sie dazu den "1200bps Reset" Knopf im Web-Flasher um dies zu tun. Wenn diese Methode aus irgendeinem Grund nicht funktioniert, können Sie dem manuellen Prozess folgen.
+
+:::warning
+
+Fahren Sie nicht fort, es sei denn, eine Antenne ist angeschlossen, um mögliche Schäden am Funkgerät zu vermeiden.
+
+:::
+
+Der folgende Prozess wird das Gerät manuell im Espressif Firmware Download Modus aktivieren:
+
+1. Gerät trennen.
+2. Drücken und halten Sie die BOOT Taste.
+3. Gerät anschließen.
+4. Nach 2-3 Sekunden lassen Sie die BOOT Taste los.
+
+Mit dem Gerät im Espressif Firmware Download Modus, können Sie mit der Programmierung durch eine der unterstützten Methoden fortfahren. Es wird generell empfohlen, den [Web Flasher](https://flasher.meshtastic.org/) zu benutzen. Wählen Sie "Heltec Vision Master T190" aus der Liste der Geräte.
+
+### Anschlussplan
+
+![HT-VMT290_PIN_MAP](/img/hardware/heltec/HT-VMT190_PIN_MAP.webp)
+
+Bildquelle: [Heltec](https://resource.heltec.cn/download/HT-VMT190/HT-VMT190%20pin%20map.png)
+
+### Quellen
+
+Auf der Platine befindet sich eine zusätzliche Schnittstelle für 2,4 GHz Funksignale. Beim Anschluss einer externen Antenne muss der Widerstand um 90 Grad nach links gedreht werden. Für weitere Details lesen Sie bitte die [FAQ auf der offiziellen Website von Heltec] (https://heltec.org/project/vision-master-t190/).
+
+- Firmware Datei: `firmware-vision-master-t190-X.X.X.xxxxxxx.bin`
+- Links zum Direktkauf:
+  - [Heltec](https://msh.to/heltec-vision-master-t190/)
+  - [AliExpress](https://msh.to/aliexpress-heltec-vision-master-t190/)
+
+</TabItem>
+</Tabs>

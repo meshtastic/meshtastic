@@ -1,0 +1,141 @@
+---
+id: tdeck
+title: LILYGO® T-Deck
+sidebar_label: T-Deck
+sidebar_position: 4
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+Die T-Deck-Serie ist eine Familie kompakter, tragbarer Tastaturgeräte, die eine physische Tastatur mit verschiedenen Touch Anzeigen kombinieren. Zu den Varianten gehören das ursprüngliche LCD T-Deck (und Plus) mit Unterstützung für MUI und das neue E-Ink Modell T-Deck Pro für stromsparenden, im Sonnenlicht lesbaren Betrieb.
+
+<Tabs
+groupId="t-deck"
+queryString="t-deck"
+defaultValue="t-deck"
+values={[
+{label: 'T-Deck/T-Deck Plus', value: 't-deck'},
+{label: 'T-Deck Pro', value: 't-deck-pro'}
+]}>
+
+<TabItem value = "t-deck">
+
+Das T-Deck ist ein kompaktes Gerät mit einem 2,8-Zoll-IPS-LCD-Touchscreen mit einer Auflösung von 320 x 240 Pixeln, integriert mit einer kleinen Tastatur, einem Trackball, einem Mikrofon und einem Lautsprecher, das auf einem ESP32-S3-Dual-Core-Prozessor läuft. Zur Verwaltung der Tastatur wird eine sekundäre ESP32-C3 MCU verwendet.
+
+T-Deck Plus Variante enthält auch ein GPS Modul und einen 2000 mAh Akku
+
+## Spezifikationen
+
+- **MCU**
+  - ESP32-S3FN16R8 (WLAN & Bluetooth 5 LE)
+  - ESP32-C3 (nur für Tastatur)
+- **LoRa Sendeempfänger**
+  - Semtech SX1262
+- **Frequenzoptionen**
+  - 915 MHz
+  - 868 MHz
+  - 433 MHz
+- **Antenne**
+  - U.FL/IPEX Antennenanschluss für LoRa
+- **Anschlüsse**
+  - USB-C
+
+## Merkmale
+
+- LILYGO® beleuchtetes T-Tastatur
+- Trackball
+- 2,8 Zoll ST7789 SPI Interface IPS LCD (Auflösung: 320 x 240)
+- I2S Lautsprecher/Mikrofon
+
+## Tastaturkürzel
+
+| Tastaturkürzel          | Funktion                                                             |
+| ----------------------- | -------------------------------------------------------------------- |
+| `alt` & `b`             | Tastaturbeleuchtung ein-/ausschalten.                                |
+| `alt` & `c`             | Modifikatorfunktion umschalten. `Fn` wird angezeigt.                 |
+| `alt` & `c` + `m`       | Benachrichtigungen deaktivieren/aktivieren                           |
+| `alt` & `c` + `q`       | Beenden/Abbrechen (Nachricht, vordefinierte Nachricht, etc.)         |
+| `alt` & `c` + `t`       | Tab Taste (einmal für Direktnachricht, zweimal für Kanal)            |
+| `alt` & `c` + `i`       | Bildschirmhelligkeit verringern.                                     |
+| `alt` & `c` + `o`       | Bildschirmhelligkeit erhöhen.                                        |
+| `alt` & `c` + `g`       | GPS ein-/ausschalten.                                                |
+| `alt` & `c` + `⎵`       | Netzwerkping senden.                                                 |
+
+Ab der Firmware-Version 2.3.9 gibt es eine neu hinzugefügte Modifikator-Funktionstastenkombination, die das Hinzufügen zusätzlicher Tastenkombinationen ermöglicht. Um die Funktionstaste zu aktivieren, drücken Sie gleichzeitig `Alt` und `C`. Unten rechts wird ein kleines `Fn` angezeigt. Nachdem die Funktionstaste aktiviert wurde, können Sie die Taste für die Funktion drücken, die Sie ausführen möchten. Um beispielsweise Benachrichtigungen zu deaktivieren/aktivieren, drücken Sie `Alt` und `C`, gefolgt von `M`.
+
+## Programmierung
+
+Um ESP32-S3 Geräte wie die T-Deck zu programmieren, müssen Sie sie normalerweise im Espressifs Firmware-Download-Modus platzieren. Benutzen Sie dazu den "1200bps Reset" Knopf im Web-Flasher um dies zu tun. Wenn diese Methode aus irgendeinem Grund nicht funktioniert, können Sie dem manuellen Prozess folgen.
+
+:::warning
+
+Fahren Sie nicht fort, es sei denn, eine Antenne ist angeschlossen, um mögliche Schäden am Funkgerät zu vermeiden.
+
+:::
+
+Der folgende Prozess wird das Gerät manuell im Espressif Firmware Download Modus aktivieren:
+
+1. Stellen Sie sicher, dass das Gerät ausgeschaltet ist.
+2. Drücken und halten Sie den TRACKBALL.
+3. Schalten Sie das Gerät ein.
+4. Nach 2-3 Sekunden lassen Sie den Trackball los.
+5. Wenn der Gerätebildschirm schwarz ist und die Hintergrundbeleuchtung ausgeschaltet ist, befindet sich das Gerät im Firmware Downloadmodus. Wenn die Beleuchtung eingeschaltet ist, wiederholen Sie diese Schritte.
+
+Mit dem Gerät im Espressif Firmware Download Modus, können Sie mit der Programmierung durch eine der unterstützten Methoden fortfahren. Es wird generell empfohlen, den [Web Flasher](https://flasher.meshtastic.org/) zu benutzen. Sie können "T Deck" aus dem Auswahlmenü des Gerätes auswählen.
+
+## Quellen
+
+- Firmware Datei: `firmware-t-deck-X.X.xxxxx.bin`
+- Links zum Direktkauf:
+  - US
+    - [Rokland T-Deck Basis](https://msh.to/rokland-t-deck-base/)
+    - [Rokland T-Deck komplett](https://msh.to/rokland-t-deck-complete/)
+    - [Rokland T-Deck Plus](https://msh.to/rokland-t-deck-plus/)
+  - International
+    - [LilyGO Store (T-Deck Entwicklungsplatine)](https://msh.to/t-deck/)
+    - [LilyGO Store (T-Deck Plus)](https://msh.to/t-deck-plus/)
+
+![T-Deck](/img/hardware/LILYGO-T-DECK.webp)
+
+</TabItem>
+
+<TabItem value = "t-deck-pro">
+
+Das T-Deck Pro ist ein kompaktes, tragbares Gerät, das einen 3,1 Zoll E-Ink Touchanzeige mit einer physischen Tastatur, einem Mikrofon, einem Lautsprecher und einem integrierten 1400 mAh Akku in einem eleganten Gehäuse kombiniert. Es ist in zwei Hauptvarianten erhältlich: A7682E (4G) und PCM5102A (Sprache).
+
+## Spezifikationen
+
+- **MCU**
+  - ESP32-S3FN16R8 (WLAN & Bluetooth 5 LE)
+- **LoRa Sendeempfänger**
+  - Semtech SX1262
+- **Frequenzoptionen**
+  - 915 MHz
+  - 868 MHz
+  - 433 MHz
+  - 920 MHz
+- **Antenne**
+  - Interne Leiterplattenantenne für LoRa
+- **Anschlüsse**
+  - USB-C
+  - 3,5 mm Audiobuchse
+  - Qwiic Anschluss
+
+## Merkmale
+
+- Komplettgerät mit integriertem 1400 mAh Akku im schicken Gehäuse.
+- I2S Lautsprecher/Mikrofon mit optionaler 3,5 mm Audiobuchse
+
+## Quellen
+
+- Firmware Datei: `firmware-t-deck-pro-X.X.X.xxxxxxx.bin`
+- Links zum Direktkauf:
+  - International
+    - [LilyGO Shop (T-Deck Pro)](https://msh.to/t-deck-pro/)
+
+![T-Deck](/img/hardware/LILYGO-T-DECK-PRO.webp)
+
+</TabItem>
+
+</Tabs>

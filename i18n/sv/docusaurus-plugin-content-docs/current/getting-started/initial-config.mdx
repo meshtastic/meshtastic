@@ -1,0 +1,188 @@
+---
+id: initial-config
+title: Första inställningen
+sidebar_label: Första inställningen
+slug: /getting-started/initial-config
+sidebar_position: 4
+description: Kom igång med den första inställningenav din Meshtastic-enhet, inklusive seriell kommunikation, Bluetooth, LoRa, med mera.
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+import { Icon } from "@iconify/react";
+import LoRaRegions from "../blocks/_lora-regions.mdx";
+import Link from "@docusaurus/Link";
+
+## Klienter som stöds per anslutningstyp
+
+Beroende på din anslutningstyp stöds inte vissa inställningar fullt ut. Ta reda på vilken klient som är bäst för din typ av anslutning.
+
+<Tabs
+groupId="settings"
+defaultValue="ble"
+values={[
+    {
+      label: (
+        <>
+          <Icon icon="mdi:serial-port" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Seriell kommunikation
+        </>
+      ),
+      value: "serial",
+    },
+    {
+      etikett: (
+        <>
+          <Icon icon="mdi:bluetooth" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Bluetooth
+        </>
+      ),
+      value: "ble",
+    },
+    {
+      etikett: (
+        <>
+          <Icon icon="mdi:internet" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Nätverk
+        </>
+      ),
+      value: "windows",
+    },
+]}>
+
+<TabItem value="serial">
+
+#### Seriell kommunikation
+
+- [Python CLI](/docs/software/python/cli/)
+- [Webbklient](https://client.meshtastic.org)
+- [Android-app](/docs/category/android-app)
+
+</TabItem>
+<TabItem value="ble">
+
+#### Bluetooth
+
+- [Android-app](/docs/category/android-app)
+- [Webbklient](https://client.meshtastic.org)
+
+</TabItem>
+<TabItem value="network">
+
+#### Nätverk
+
+:::info
+Anslutning över nätverk stöds endast på ESP32-enheter.
+:::
+
+- [Webbklient](https://client.meshtastic.org)
+- [Android-app](/docs/category/android-app)
+- [iOS-app](/docs/category/apple-apps)
+- [Python CLI](/docs/software/python/cli/)
+
+</TabItem>
+</Tabs>
+
+## Ställ in regionala inställningar
+
+För att börja kommunicera över meshen, måste du ställa in din region. Den här inställningen kontrollerar vilket frekvensområde din enhet använder och ska ställas in efter din region.
+
+<Tabs
+  groupId="settings"
+  defaultValue="apple"
+  values={[
+    {
+      label: (
+        <>
+          <Icon icon="mdi:android" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Android
+        </>
+      ),
+      value: "android",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:apple" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Apple
+        </>
+      ),
+      value: "apple",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:terminal" height="1.5rem" style={{ marginRight: "0.25rem" }} /> CLI
+        </>
+      ),
+      value: "cli",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:internet" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Webb
+        </>
+      ),
+      value: "web",
+    },
+]}>
+
+<TabItem value="android">
+
+#### Android
+
+1. Följ instruktionerna för [installation](/docs/software/android/installation) och [användning](/docs/software/android/usage/) för [Meshtastic Android](/docs/category/android-app).
+2. Öppna appen, anslut till enheten från telefonen via USB (seriell kommunikation) eller Bluetooth.
+3. När du har parkopplat enheten, klicka på "UNSET" bredvid enhetsnamnet.
+4. Välj region från listan efter den plats du kommer använda enheten på.
+
+</TabItem>
+<TabItem value="apple">
+
+#### Apple
+
+:::info
+Konfiguration av region, modeminställningar och hopp-gräns finns tillgänglig på iOS, iPadOS och macOS under Inställningar > Radiokonfiguration > LoRa.
+:::
+
+</TabItem>
+<TabItem value="cli">
+
+#### CLI
+
+1. Installera [Meshtastic Python CLI](/docs/software/python/cli/installation)
+   ```sh
+   pip3 install --upgrade pytap2
+   pip3 install --upgrade meshtastic
+   ```
+2. Kör följande kommando, ersätt `<REGIONSKOD>` med regionkoden som anges ovan enligt din region.
+   ```sh
+   meshtastic --set lora.region <REGIONSKOD>
+   ```
+
+</TabItem>
+<TabItem value="web">
+
+#### Webb
+
+1. Öppna webbgränssnittet: [client.meshtastic.org](https://client.meshtastic.org)
+2. Navigera till **LoRa**-menyn.
+3. Under **Regionala inställningar**, ange din **Region**.
+4. Klicka på **Spara**.
+
+</TabItem>
+</Tabs>
+
+### Regionskoder
+
+<LoRaRegions />
+
+Se [LoRa-region per land](/docs/configuration/region-by-country) för en mer omfattande lista.
+
+## Fortsätt konfigurationen
+
+Nu när du har ställt in LoRa-regionen på din enhet kan du fortsätta att konfigurera ytterligare inställningar efter dina behov.
+
+<div className="indexCtasBody">
+  <Link
+    className={"button button--outline button--lg cta--button"}
+    to={"/docs/configuration/"}
+  >
+    Enhetsinställningar
+  </Link>
+</div>

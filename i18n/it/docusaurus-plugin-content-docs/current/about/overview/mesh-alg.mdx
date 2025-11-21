@@ -1,0 +1,134 @@
+---
+id: mesh-algo
+title: Algoritmo Di Trasmissione Mesh
+slug: /overview/mesh-algo
+sidebar_label: Algoritmo Mesh
+sidebar_position: 2
+description: "Scopri l'algoritmo Meshtastic Mesh Broadcast: un efficace protocollo di routing progettato per la comunicazione off-grid utilizzando la tecnologia LoRa."
+---
+
+import ReactPlayer from "react-player";
+
+## Algoritmo Corrente
+
+Il protocollo di routing per Meshtastic è progettato per supportare tutti i tipi di diversi casi d'uso. Soprattutto, non assume solo nodi statici. Se vuoi testare le sue prestazioni teoriche, puoi dare un'occhiata al [simulatore](https://github.com/GUVWAF/Meshtasticator). Il protocollo è fortemente influenzato dall'algoritmo di routing delle mesh utilizzato in [RadioHead](https://www.airspayce.com/mikem/arduino/RadioHead) (che è stato utilizzato nelle prime versioni di questo progetto). Ha quattro livelli concettuali e (dalla versione 2.6) utilizza un approccio diverso per le trasmissioni e i messaggi diretti.
+
+<div style={{ maxWidth: "800px", margin: "auto" }}>
+  <ReactPlayer
+    url="https://youtu.be/7v6UbC5blJU"
+    controls
+    width="100%"
+    height="400px"
+  />
+</div>
+
+### Una Nota Sui Buffer Di Protocollo
+
+Poiché vogliamo che i nostri dispositivi funzionino in vari fornitori e implementazioni, usiamo [Protocol Buffers](https://github.com/meshtastic/protobufs) in modo pervasivo. Ai fini di questo documento, devi considerare per lo più solo i tipi di messaggi MeshPacket e Subpacket.
+
+### Layer 0: Radio LoRa
+
+Tutti i dati vengono convertiti in simboli LoRa che vengono inviati alla radio per la trasmissione. I dettagli sono descritti altrove, ma vale la pena notare che oltre ai byte di pacchetto convertiti descritti di seguito, c'è anche un preambolo inviato all'inizio di qualsiasi pacchetto di dati.
+
+Questo preambolo permette di ricevere le radio per sincronizzare gli orologi e avviare il framing. Usiamo una lunghezza del preambolo di 16, che è più lunga della lunghezza minima del preambolo di 8, per permettere ai ricevitori SX126x LoRa di andare in sleep per un po', riducendo così il consumo energetico.
+
+Dopo il preambolo arriva l'intestazione fisica LoRa, che contiene informazioni sulla lunghezza del pacchetto e una parola di sincronizzazione per distinguere le reti. Per Meshtastic, è impostato su `0x2B`.
+
+### Layer 1: Messaggistica Zero Hop Inaffidabile
+
+Questo strato è la trasmissione convenzionale del pacchetto LoRa non affidabile. Un pacchetto generato da un dispositivo Meshtastic ha la seguente rappresentazione prima della codifica per la trasmissione:
+
+| Offset |         Lunghezza                          | Tipo   | Utilizzo                                                                                                                                   |
+| :----: | :----------------------------------------: | :----: | :----------------------------------------------------------------------------------------------------------------------------------------- |
+|  0x00  |           4 byte                           | Intero | Intestazione Pacchetto: Destinazione. NodeID univoco della destinazione. `0xFFFFFFFF` per la trasmissione. Little endian.                  |
+|  0x04  |           4 byte                           | Intero | Intestazione Pacchetto: Mittente. NodeID univoco del mittente. Little endian.                                                              |
+|  0x08  |           4 byte                           | Intero | Intestazione Pacchetto: l'ID del pacchetto univoco del nodo di invio per questo pacchetto. Little endian.                                  |
+|  0x0C  |           1 byte                           | Bits   | Intestazione Pacchetto: Flag.                                                                                                              |
+|  0x0D  |           1 byte                           | Bits   | Intestazione Pacchetto: Hash del canale. Utilizzato come suggerimento per la decrittazione per il ricevitore.                              |
+|  0x0E  |           1 byte                           |  Byte  | Intestazione Pacchetto: Next-hop utilizzato per l'inoltro.                                                                                 |
+|  0x0F  |           1 byte                           |  Byte  | Intestazione pacchetto: nodo relay della trasmissione corrente.                                                                            |
+|  0x10  | Max. 237 bytes (escluso overhead protobuf) |  Byte  | Dati effettivi del pacchetto. I byte inutilizzati non sono trasmessi.                                                                      |
+
+#### Flag Intestazione Pacchetto
+
+| Indice | # di bit | Utilizzo                                |
+| :----: | :------: | :-------------------------------------- |
+|   0    |   3      | HopLimit (vedi nota nel livello 3)      |
+|   3    |   1      | WantAck                                 |
+|   4    |   1      | ViaMQTT (pacchetto è arrivato via MQTT) |
+|   5    |   3      | HopStart (HopLimit originale)           |
+
+#### Dettagli di utilizzo
+
+- **Intestazione del pacchetto:** è descritto direttamente dalla classe `PacketHeader` nel codice sorgente C++. Ma indirettamente corrisponde alla prima parte della definizione di protobuf `MeshPacket`. Nota che l'intestazione del pacchetto non è codificata usando un protobuf, ma viene inviata come byte grezzi. Ciò consente di risparmiare tempo di trasmissione (airtime) e permette all'hardware ricevente di filtrare opzionalmente i pacchetti prima di risvegliare la CPU principale.
+
+- **Packet Header - NodeID:** sono costruiti dai quattro byte inferiori dell'indirizzo MAC dell'indirizzo Bluetooth. Poiché l'OUI è assegnato dall'IEEE, e attualmente supportiamo solo alcuni produttori di CPU, il byte superiore è de-facto garantito unico per ogni venditore. I 3 byte inferiori sono garantiti unici da quel venditore.
+
+- **Intestazione del pacchetto - ID unico:** L'ID è un grande, 32 bit ID per garantire che ci sia abbastanza stato unico per proteggere un payload crittografato da attacchi.
+
+- **Payload:** Una codifica protobuf crittografata e impacchettata del protobuf di SubPacket. Solo il SubPacket è crittografato, mentre le intestazioni non lo sono. Questo permette la possibilità di consentire ai nodi di instradare i pacchetti senza sapere nulla del payload crittografato. Per ulteriori informazioni, vedere [encryption](/docs/overview/encryption) e [Protobuf API Reference](https://buf.build/meshtastic/protobufs/). Tutti i dati che superano la lunghezza massima vengono troncati.
+
+#### Carrier-Sense Multiple Access with Collision Avoidance (CSMA/CA)
+
+Meshtastic adotta CSMA/CA, simile a quello che viene utilizzato in WiFi. Ciò significa che tutti i trasmettitori devono eseguire il Rilevamento Attività Canale (CAD) prima di tentare di trasmettere. Se il canale è considerato occupato, il nodo aspetterà fino a quando non è più. Dal momento che una volta che il canale diventa inattivo più nodi potrebbero voler iniziare la trasmissione, un nodo deve aspettare un multiplo casuale di tempi di slot. Il tempo dello slot è il tempo necessario per eseguire in modo affidabile CAD. La quantità di tempi di attesa viene prelevata in modo casuale da una finestra di contesa (CW), che la dimensione dipende dall'utilizzo corrente del canale. La finestra di contesa è più grande per un maggiore utilizzo del canale, al fine di limitare la possibilità di collisioni.
+
+### Layer 2: Messaggistica Zero Hop Inaffidabile
+
+Questo livello aggiunge messaggi affidabili solo tra il nodo e i suoi vicini immediati.
+
+Il messaggio predefinito fornito dal livello 1 viene esteso impostando il flag `WantAck` nel protobuf di MeshPacket. Se `WantAck` è impostata, si applica la seguente documentazione di mesh.proto:
+
+> Questo pacchetto viene inviato come un messaggio affidabile, preferiremmo che arrivasse a destinazione. Vorremmo ricevere un pacchetto ACK in risposta.
+>
+> I messaggi di trasmissione trattano questo flag in particolare: poiché ACK multipli per le trasmissioni inonderebbero rapidamente il canale, il normale comportamento ACK viene soppresso. Invece, il mittente originale ascolta per vedere se almeno un nodo sta ritrasmettendo questo pacchetto
+> (perché è un algoritmo di propagazione ingenuo). E se ciò succede, le probabilità (data tipica topologia LoRa) che ogni nodo alla fine riceva il messaggio, sono molto alte. Quindi FloodingRouter.cpp genera un ACK implicito che viene consegnato al mittente originale. Se dopo un po' di tempo non sentiamo nessuno ritrasmettere il nostro pacchetto, andremo in timeout e ritrasmetteremo, utilizzando la logica di resend regolare.
+
+Se un nodo di trasmissione non riceve un pacchetto ACK (o NAK) dopo un certo tempo di scadenza, userà il livello 1 per tentare una ritrasmissione del pacchetto inviato. Un pacchetto affidabile (a questo livello di 'zero hop') sarà ritrasmesso un massimo di tre volte. Se nessun ACK o NAK è stato ricevuto da allora il nodo locale genererà internamente un NAK (sia per il consumo locale che per l'uso da parte di livelli più alti del protocollo). Il tempo di scadenza di ritrasmissione è basato sul tempo massimo che ci vorrebbe per ricevere un (implicito) ACK, tenendo conto del tempo di trasmissione del pacchetto inviato e di eventuali ritardi di elaborazione.
+Per i messaggi diretti, il destinatario previsto invierà anche un ACK reale fino al mittente originale, ma il dispositivo ritrasmetterà solo quando non avrà ricevuto alcun ACK.
+
+### Layer 3: Messaggistica Multi-Hop
+
+## Trasmissioni con Managed Flooding
+
+Visti i vari casi di utilizzo e scenari supportati da Meshtastic, la maggior parte del nostro protocollo è costruito intorno al [flooding](https://en.wikipedia.org/wiki/Flooding_(computer_networking)), il significato che ogni nodo ritrasmette un pacchetto che riceve, fino a un certo limite di hop (salti). Tuttavia, una differenza importante in Meshtastic è che prima di ritrasmettere, un nodo ascolta un tempo breve per vedere se un altro nodo ha già ritrasmesso il pacchetto. In caso affermativo, non lo ritrasmetterà. "Managed Flooding" è quindi un termine migliore.
+
+Il principio è il seguente. Se un nodo mesh vede un pacchetto con un HopLimit diverso da zero, decrementerà HopLimit e tenterà di ritrasmettere per conto del nodo di invio originale. Al fine di promuovere i nodi che sono più lontani a propagare il messaggio, in modo che il messaggio alla fine arrivi più lontano, la finestra di contesa (vedi Livello 1) per un messaggio di flood dipende dal rapporto segnale-rumore (SNR) del pacchetto ricevuto. La dimensione CW è piccola per un SNR basso, in modo che i nodi più lontani abbiano maggiori probabilità di ritrasmettere, e i primi nodi più vicini che sentono questo si asterranno dal ritrasmettere. Un'eccezione a questa regola è per i ruoli `ROUTER` e `REPEATER`, che hanno una priorità maggiore di ritrasmissione e lo faranno anche se sentono un altro nodo ritrasmettere.
+
+### Esempio
+
+Qui sotto vedi una topologia di esempio composta da quattro nodi in modalità `CLIENT`, dove a un certo punto il nodo 0 vuole inviare un messaggio di trasmissione.
+A causa di una copertura limitata, raggiunge solo i nodi 1 e 2. Dal momento che il nodo 2 è più lontano, il suo SNR è più basso e quindi inizia la ritrasmissione prima di 1.
+Dopo che il nodo 0 ha ricevuto questa ritrasmissione, il suo messaggio è riconosciuto (ACK). Si noti che un messaggio è già riconosciuto una volta che è stato ricevuto da qualsiasi nodo Meshtastic (indipendentemente dal fatto che abbia o meno la stessa chiave di cifratura).
+Dal momento che il nodo 1 ha sentito il rebroadcast di 2, non ritrasmetterà di nuovo. Il nodo 3 ha sentito il messaggio per la prima volta e l'HopLimit non è ancora zero, quindi inizia a ritrasmettere per potenziali altri ricevitori.
+
+![Esempio algoritmo mesh](/img/SNR_based_flooding.webp)
+
+## Messaggi diretti che utilizzano l'instradamento Next-Hop
+
+Dalla versione 2.6, Meshtastic utilizza un approccio diverso per i messaggi diretti. Inizialmente, il metodo di managed flooding come menzionato in precedenza è utilizzato per raggiungere la destinazione.
+Torneremo quindi a tenere traccia dei nodi che stanno cercando di trasmettere il pacchetto per noi. Se dopo una consegna riuscita, una risposta ritorna (ad es. una risposta NodeInfo, riconoscimento o traceroute) e il nodo che trasmette questo verso di te era anche il nodo o uno dei nodi che hanno trasmesso il pacchetto originale, sarà indicato come prossimo hop d'ora in poi. Questo significa che invece di lasciare che tutti i nodi cerchino di inoltrare il pacchetto, solo il nodo per cui corrisponde il byte del prossimo hop lo farà. Si noti che questo è determinato per ogni hop, quindi se c'è un collegamento asimmetrico o un nodo sul firmware più vecchio in mezzo, il managed flooding verrà utilizzato in questo hop. Quando un nodo si sposta, o le condizioni RF cambiano, potrebbe essere che il prossimo hop non sia più valido. Pertanto, se un nodo non sente l'inoltro del prossimo hop, farà sempre fallback al managed flooding, durante l'ultimo tentativo di ritrasmissione.
+La procedura viene visualizzata nel seguente schema:
+
+![Procedura di routing Next-Hop](/img/blog/NextHopRouting.webp)
+
+### Intervalli Di Trasmissione Regolare
+
+Senza moduli aggiuntivi configurati, i nodi produrranno tre diversi tipi di traffico a intervalli regolari come parte della mesh:
+
+1. Telemetria dispositivo
+   - Controllato da `telemetry.device_update_interval`
+   - Predefinito: 30 minuti
+2. Posizione
+   - Controllato da `position.position_broadcast_secs`
+   - Predefinito: 15 minuti\* (con [smart broadcast](/docs/configuration/radio/position/#smart-broadcast) abilitato)
+3. Utente NodeInfo
+   - Controllato da `device.node_info_broadcast_secs`
+   - Predefinito: 3 ore
+
+Man mano che le mesh crescono e il traffico diventa più controverso, il firmware aumenterà questi intervalli. Questo è in aggiunta al duty cycle, canale e tempo di throttle dell'airtime.
+
+A partire dalla versione 2.4.0, il firmware ridimensionerà Telemetria, Posizione, e altri traffici ausiliari per reti mesh superiori a 40 nodi (nodi visti nelle ultime 2 ore) utilizzando il seguente algoritmo:
+
+`IntervalloScalato = Intervallo * (1,0 + ((NumeroDiNodiOnline - 40) * 0,075)`
+
+Ad esempio, una mesh attiva di 62 nodi potrebbe ridimensionare il file `telemetry.device_update_interval` a 79,5 minuti invece del valore predefinito di 30 minuti.

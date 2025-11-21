@@ -1,0 +1,91 @@
+---
+id: antenna-testing
+title: Antennentests
+description: Erkunden Sie Meshtastic Antennentests um die Gerätereichweite zu verbessern. Erlernen Sie einfach zu entwickelnde Techniken zur Auswahl der richtigen Antenne, um eine effiziente und kostengünstige Kommunikation zu gewährleisten.
+sidebar_label: Antennentests
+sidebar_position: 1
+---
+
+Die Prüfung von Antennen kann sowohl einfach als auch komplex sein. Am einfachsten ist es, Nachrichten von verschiedenen Orten zu senden und zu sehen, welche empfangen werden, und dann die Ergebnisse mit anderen Antennen zu vergleichen. Am komplexen Ende kann dies mit kostspieligen Prüfkammern und Geräten zur Messung der Signalstärke, des Gewinns und des Abstrahldiagramms erfolgen. Es hat jedoch den Anschein, dass man auch mit einfachen Methoden vernünftig arbeiten kann.
+
+Wenn Sie genügend Reichweite mit Ihrer vorhandenen Antenne haben, überspringen Sie diesen Bereich. Wenn Sie dies nicht tun, erwägen Sie entweder mehr Knoten und / oder ersetzen Sie die Antenne durch besser eingestellt (auf die Frequenz Ihrer Region):
+
+- Eine auf Lambda/4 abgestimmte Gummiantenne (\<10 cm für die Hosentasche) sollte eine reale Reichweite von ein paar Kilometern ohne wesentliche Hindernisse (Gebäude / Hügel) haben.
+- Antennenkriterium: Impedanz 50 Ohm, geeigneter Stecker (üblicherweise SMA oder U.FL/IPEX), niedrige Stehwelle (VSWR \<2) bei Resonanzfrequenz (siehe Datenblatt), Gewinn > 0 dBi.
+- Vorsicht, vermeiden Sie Anbieter, welche:
+  - nicht die abgestimmte Frequenz und den spezifischen Zweck (LoRa Netzwerk) angeben
+  - riesige Gewinne bei Rundstrahlantennen angeben
+  - keine langweilig professionellen Datenblätter zur Verfügung stellen
+
+Lesen Sie weiter wenn, Sie mehr über Reichweite und Ausrichtung wissen wollen.
+
+## Allgemeine Anleitung
+
+Das Meshtastic System ist einfach und intuitiv zu bedienen. Die LoRa Funkgeräte stützen sich jedoch auf eine Punkt-zu-Punkt-Kommunikation, ein Gerät-zu-Gerät, eine Antenne-zu-Antenne Signal. Ganz anders als die nahezu allgegenwärtige Funkabdeckung der heutigen Mobiltelefon- und WLAN-Verbindungen.
+
+Ein gewisses Verständnis der Faktoren, die die Funkkommunikation beeinflussen, wird dazu beitragen, einen wesentlich besseren Nutzen und eine schnellere Übertragung über einen größeren Bereich mit Ihren Geräten zu erreichen. Hier werden wir versuchen, eine Reihe von Anleitungen auf höchster Ebene für die Verwendung und die Auswahl von Antennen zu liefern. Quellen für weitere Grundlagen und jede Menge Gelegenheit das Wissen zu vertiefen.
+
+Die Meshtastic Geräte (in verschiedenen Varianten) verleiten zum Experimentieren, nicht nur, weil Sie ihre Antennen austauschen können, sondern auch wegen ihrer Netzwerkfähigkeit. Alle Knoten werden ohne Änderung die Kommunikation von anderen Mitgliedern des Netzwerks um Hindernisse und über größere Entfernungen weiterleiten. Die Kosten für Investitionen in Antenne sollten gegen Investitionen in zusätzliche, billige Knoten abgewogen werden.
+
+:::caution
+Obwohl die LoRa Geräte, die wir für Meshtastic verwenden, Funkgeräte mit geringer Ausgangsleistung sind, sollten nicht ohne oder mit schlecht abgestimmter Antenne verwendet werden. Funksignale, die ohne Antenne übertragen werden, können zurück in das Gerät reflektieren und dieses beschädigen.
+:::
+
+Die hier gesammelten Informationen sind keineswegs vollständig, sondern notwendigerweise gekürzt (dies ist ein riesiges Thema).
+
+## Reichweitentests
+
+Wie bereits erwähnt, ist die einfachste Methode, um einen Test durchzuführen:
+
+- Spazieren Sie mit einem Funkgerät und versenden Sie Nachrichten,
+- Für jede Nachricht notieren Sie den Standort und ob Bestätigungen empfangen werden,
+- Notieren Sie auch die empfangene Signalstärke,
+- Ändern Sie die Antenne, wiederholen und bewerten Sie die Ergebnisse.
+
+:::note
+Das [Reichweitenmodul](/docs/configuration/module/range-test) wurde genau für diesen Zweck entwickelt. Es erlaubt einem Knoten, ständig eine Nachricht zu senden, und einem zweiten Knoten diese zu empfangen und aufzuzeichnen. Diese Daten werden gespeichert und können in Anwendungen wie Google Earth importiert werden.
+:::
+
+Zum Thema Testen - Führen Sie Ihre eigenen Tests durch und geben Sie Rückmeldung. Die ist das Lebenselixier von Meshtastic und Open Source Projekten.
+
+## Signalstärketest
+
+Reale Test werden von Andreas Spiess (dem Kerl mit dem Schweizer Akzent) in seiner [Anleitung](https://www.youtube.com/watch?v=J3PBL9oLPX8) diskutiert. Er hat [Quellcode](https://github.com/SensorsIot/Antenna-Tester) geschrieben, um Antennen mit zwei Lora32 V1-Boards zu testen, um das Verhalten verschiedener Antennen zu vergleichen. Lilygo hat auch Code zum Testen des RSSI auf der [LORA32](https://github.com/LilyGO/TTGO-LORA32) [Platinen](https://github.com/Xinyuan-LilyGO/TTGO-LoRa-Series) und dem [T-Beam](https://github.com/LilyGO/TTGO-T-Beam).
+
+Hier sind ein [paar](https://medium.com/home-wireless/testing-lora-antennas-at-915mhz-6d6b41ac8f1d) [sehr gute](https://medium.com/home-wireless/testing-and-reviewing-lora-antennas-5b37dfa594a3) Antennenvergleiche. Ihre Analyse geht über die getesteten spezifischen Antennen hinaus und gibt Einsicht in:
+
+- Antennentypen und ihre Eigenschaften,
+- Testmöglichkeiten.
+
+## Antennenanpassung & Vektor Netzwerkanalysator
+
+Das Wichtigste zuerst ist, dass die Antenne, die Sie benutzen wollen, auf die Frequenz abgestimmt ist, die Sie verwenden. Viele billige Antennen sind mit einer falschen Resonanzfrequenz gekennzeichnet, was die Signalstärke sofort reduzieren wird. Ein Vektor Netzwerk Analysator (VNA) kann verwendet werden, um sicherzustellen, dass die Antenne angemessen auf den Sendeempfänger abgestimmt, das die Antenne die richtige Impedanz aufweist und das bei der gewünschten Sendefrequenz so wenig wie möglich Leistung zum Sender zurück reflektiert wird.
+
+Andreas Spiess präsentiert auch eine großartige Erklärung für [wie man einen Vektor Netzwerk Analysator verwendet](https://www.youtube.com/watch?v=ZpKoLvqOWyc) um Antennen korrekt einzustellen, sowie eine weitere [detailierte Anleitung zur Verwendung von VNAs](https://www.youtube.com/watch?v=_pjcEKQY_Tk). Es ist jedoch wichtig daran zu erinnern, dass VNAs nur ermitteln, wie gut die Antenne abgestimmt ist, nicht wie gut ihr Abstrahlverhalten ist. Ein 50 Ohm-Widerstand auf am Senderausgang wäre ideal abgestimmt, aber es wäre sinnlos, ein Signal zu senden. Es gibt jetzt eine Anzahl von VNAs für weniger als 100 $, damit ist dies nicht mehr außer Reichweite für die meisten Hobbyisten, im Gegensatz zu teuren Spektrumanalysatoren.
+
+## Nicht-Antennenfaktoren, die die Übertragung beeinträchtigen
+
+Sofern Sie Ihre Geräte nicht in einem Vakuum mit einer klaren Sichtlinie zwischen Antennen verwenden, wird Folgendes einen Einfluss haben:
+
+- Wetter (Temperatur, Feuchtigkeit und Luftdruck),
+- Übertragungsleistung, Bandbreite, Spreizfaktor und andere zugehörige Kanalfaktoren
+- Anzahl der Knoten innerhalb der Reichweite des Netzes (wirkt sich auf Wiederholungen aus),
+- Absorption nach Materialien (mit unterschiedlicher Dämpfung, Material und Tiefe),
+- Reflexion von Oberflächen (und Kanalisierung durch Materialtunnel, einschließlich warmer und kalter Strömungen in der Atmosphäre),
+- Beugung um Hindernisse (über Wälder und um Ecken).
+- Fresnel Zone - Eine elliptische Zone zwischen Antennen, die von Hindernissen befreit sein muss oder sonst das Signal abgeschwächt.
+
+### Umweltfaktoren
+
+Leichte Lektüre zum Lesen über Umweltforschung:
+
+- [HF Dämpfung in der Vegetation](https://web.archive.org/web/20201216041455/https://www.itu.int/dms_pubrec/itu-r/rec/p/R-REC-P.833-9-201609-I!!PDF-E.pdf) (Ja wirklich); wenn du durch den Wald wanderst und dich fragt, wie dein HF die Blätter abprallt, abhängig von ihrer Vielfalt, und Windgeschwindigkeit … Sie wissen es jetzt.
+- [HF Dämpfung mit verschiedenen Baumaterialien](https://web.archive.org/web/20230606172231/https://www.ofcom.org.uk/__data/assets/pdf_file/0016/84022/building_materials_and_propagation.pdf).
+- Diese [Analyse der Dämpfung](https://web.archive.org/web/20211005174833/https://www.itu.int/dms_pubrec/itu-r/rec/p/R-REC-P.2040-1-201507-I!!PDF-E.pdf) von der ITU ist sehr detailliert (ich wusste nicht, dass alle HF-Strahlung ähnlich wie Licht Reflextion / Übertragungsmerkmale aufweist, wenn sie auf eine Materialoberfläche trifft. Also, je nach Auftreffwinkel, Material und Wellenlänge wird die Strahlung reflektiert und / oder durchdrungen.
+- Diese HF Bänder werden auch [gestört durch benachbartes LTE](https://www.ofcom.org.uk/__data/assets/pdf_file/0023/55922/lte-coexistence.pdf)
+
+Zusammenfassend - Wellenlängen in Europa in Sichtverbindung gut übertragen, beugen über nicht so hohe Hindernisse (einschließlich Bäume) und sie reflektieren von Oberflächen bei kleinem Auftreffwinkel. Sie gehen durchdringen Menschen ohne viel Dämpfung; aber nicht Ziegel, Stein, oder jedes Material mit höherer Dämpfung als Glas / Kevlar. Oh, und sitzen Sie nicht unter einem LTE Turm und erwarten, dass es einfach funktioniert. HF-Emissionen von benachbarten Frequenzen können bei ausreichend hoher Leistung stören.
+
+## Diskussion
+
+Für weitere Einsichten schließe dich dem Gespräch über Antennenreichweite und deren Leistung auf [Github Meshtastic Diskussionen](https://github.com/orgs/meshtastic/discussions) an.

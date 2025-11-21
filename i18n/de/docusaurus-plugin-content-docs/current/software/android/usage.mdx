@@ -1,0 +1,310 @@
+---
+id: usage
+title: Android Anwendungsnutzung
+sidebar_label: Anwendung
+sidebar_position: 2
+---
+
+import PositionPrecision from "@site/docs/blocks/_position-precision.mdx";
+import Link from "@docusaurus/Link";
+import ThemedImage from "@theme/ThemedImage";
+import useBaseUrl from "@docusaurus/useBaseUrl";
+import QRCode from "@site/docs/blocks/_qr-code.mdx";
+
+## Einleitung
+
+Die Meshtastic Android App kümmert sich um die Kommunikation und kann den Standort aller Mitglieder in Ihrer privaten Gruppe anzeigen. Jedes Mitglied Ihres privaten Netzwerks kann den Standort und die Entfernung von Mitgliedern und Textnachrichten sehen, die an Ihren Gruppenchat gesendet werden.
+
+[![Kein Gerät verbunden](/img/android/android-settings-none-sm.webp)](/img/android/android-settings-none.webp)
+
+Öffnen Sie die App und Sie sollten die Registerkarte Einstellungen wie oben sehen. Beachten Sie die durchgestrichene Wolke oben rechts, diese zeigt keine Geräteverbindung. Sie können die Registerkarten auswählen, aber es wird nichts sichtbar sein, bis Sie sich mit einem Funkgerät verbinden.
+
+## Verbindung
+
+Sie benötigen ein Gerät, das Meshtastic installiert hat, um weitere Schritte zu unternehmen. Siehe [Erste Schritte](/docs/getting-started) Abschnitt für ausführliche Informationen darüber.
+
+[![Geräte suchen](/img/android/android-settings-none-c.webp)](/img/android/android-settings-none.webp)
+
+Um Geräte für eine Bluetooth-Verbindung zu finden, klicken Sie auf "+" unten rechts in der Ecke. Geräte, die über WLAN oder Ethernet über das gleiche Netzwerk wie Ihr Telefon verbunden sind, sollten automatisch gefunden werden, oder sie können manuell durch Eingabe der IP-Adresse ausgewählt werden. Wenn Sie das Gerät über USB OTG an Ihr Telefon anschließen, wird es automatisch gefunden.
+
+[![Gerät zur Auswahl verfügbar](/img/android/android-settings-connect-sm.webp)](/img/android/android-settings-connect.webp)
+
+1. Wählen Sie in diesem Beispiel den Gerätenamen `Meshtastic_769d` aus. (Sie werden alle Geräte in Reichweite sehen, also achten Sie darauf, das richtige auszuwählen.)
+2. Bevor Sie zum ersten Mal eine Verbindung herstellen können, müssen Sie die Geräte koppeln, um die Kommunikation zwischen ihnen zu ermöglichen. Einige Geräte sind offen, andere benötigen die Eingabe einer PIN, die  angezeigt wird.
+   :::Anmerkung
+   Wenn das Gerät ohne Bildschirm programmiert wurde, wird automatisch die Pin '123456' zur Koppelung verwendet. Wenn es einmal mit einem Bildschirm gestartet wurde, wird eine zufälligen Pin gesetzt. Wenn Sie den Bildschirm danach entfernen, bleibt diese erhalten.
+   Entweder setzen Sie die Standardpin manuell oder setzen Sie ihn auf Werkseinstellungen zurück und sie wird nach dem nächsten Neustart auf '123456' zurückgesetzt.
+   :::
+3. Dadurch wird die Kommunikation mit dem Gerät gestartet. Das Wolkensymbol in der Statusleiste sollte sich ändern und einen Haken zeigen.
+
+[![Gerät verbunden](/img/android/android-settings-mike-c.webp)](/img/android/android-settings-mike-c.webp)
+
+Das Wolkensymbol oben rechts zeigt an, ob Sie mit einem Gerät verbunden sind. Diese hat derzeit drei Anzeigen:
+
+<center>
+  <ThemedImage
+    alt="Nicht verbunden"
+    className="max-h-14"
+    sources={{
+      light: useBaseUrl("/img/android/android-no-ack_lt.webp"),
+      dark: useBaseUrl("/img/android/android-no-ack_dk.webp"),
+    }}
+  />
+</center>
+Durchgestrichene Wolke: Kein Gerät ist mit der Anwendung verbunden.
+
+<center>
+  <ThemedImage
+    alt="Verbunden"
+    className="max-h-14"
+    sources={{
+      light: useBaseUrl("/img/android/android-imp-ack_lt.webp"),
+      dark: useBaseUrl("/img/android/android-imp-ack_dk.webp"),
+    }}
+  />
+</center>
+Wolke mit Haken: Ein Gerät ist mit der Anwendung verbunden.
+
+<center>
+  <ThemedImage
+    alt="Ruhemodus"
+    className="max-h-14"
+    sources={{
+      light: useBaseUrl("/img/android/android-waiting_lt.webp"),
+      dark: useBaseUrl("/img/android/android-waiting_dk.webp"),
+    }}
+  />
+</center>
+Wolke mit einem Pfeil nach oben: Ein Gerät ist verbunden, aber derzeit im Ruhemodus oder ausser Reichweite.
+
+## Allgemeine Aufgaben
+
+### Region festlegen
+
+Um mit dem Netz zu kommunizieren, müssen Sie eine Region auswählen. Diese Einstellung bestimmt, welchen Frequenzbereich Ihr Gerät nutzt und sollte entsprechend Ihrem Standort eingestellt werden. Siehe [Region Einstellungen](https://meshtastic.org/docs/getting-started/initial-config#set-regional-settings) für eine Liste der regionalen Abkürzungen und ihrer Bedeutungen.
+
+- Tippen Sie auf das Menü "Region" in der oberen rechten Ecke und treffen Sie die entsprechende Auswahl.
+
+### Ändern Sie Ihren Namen
+
+Geben Sie Ihren Namen ein. Dies ist der Name, den andere sehen werden, also wählen Sie einen Einzigartigen in Ihrer Gruppe. Die Initialen z.B. "MB" sollten ebenfalls eindeutig sein und werden verwendet, um Sie im Nachrichtenverlauf und auf den Bildschirmen zu identifizieren. Die Initialen bzw. der Kurzname können in der Funkeinstellungen, unter Benutzereinstellungen angepasst werden. Die vier Zeichen, die nach den Initialen angezeigt werden, können nicht geändert werden. Dies sind die letzten vier hexadezimalen Ziffern der MAC Adresse. Geräte mit leeren, nicht gesetzten Namen werden diese vier Zeichen als Kurzname des Gerätes anzeigen.
+
+[![Gerätename ändern](/img/android/android-settings-mike-sm.webp)](/img/android/android-settings-mike.webp)
+
+### Einen Kanal einrichten
+
+Wenn Ihnen ein QR-Code oder Link für Meshtastic geschickt wurde, springen Sie zu [einem Kanal beitreten](#join-a-channel). Geräte haben einen vorkonfigurierten Kanal, der als `#LongFast-I (Long range / Fast)` angezeigt wird. Es ist in Ordnung, diesen Kanal zu verwenden, wenn der Knoten für alle Meshtastic Benutzer (innerhalb der Reichweite) sichtbar sein soll, die auch den Standardkanal verwenden.
+
+Sie können auch einen neuen Kanal erstellen und die Details mit Ihrer Gruppe teilen. Die Gruppe ist privat und nur wer die Details hat, kann der Gruppe beitreten und die Nachrichten ansehen. Sie müssen dies zunächst einmalig tun und dann nur, wenn Sie eine neue Netzwerkgruppe ändern oder erstellen wollen.
+
+Über die Registerkarte Kanal können Sie ein neues privates Netz erstellen. Dieser Bildschirm ist zunächst gesperrt, so dass Sie ihn nicht versehentlich ändern. Drücken Sie das Schlosssymbol und Sie können es bearbeiten. Wählen Sie zunächst die Kanaloptionen, wie hier gezeigt und wählen Sie die passendste Option:
+
+[![Kanaleinstellungen ändern](/img/android/android-change-channel-sm.webp)](/img/android/android-change-channel.webp)
+
+Hier haben wir `Long Range / Fast` ausgewählt und dann einen Kanalnamen über die Tastatur erstellt. Dies identifiziert Ihre Gruppe, hier "Owl Team".
+
+[![Kanalname ändern](/img/android/android-channel-owl-sm.webp)](/img/android/android-channel-owl.webp)
+
+Sie werden eine Warnung sehen, da das Ändern des Kanals die Kommunikation mit Ihrer Gruppe unterbrechen wird. z.B. wenn Sie Ihre Einstellungen ändern, ohne die neuen Details mit der Gruppe zu teilen.
+
+[![Möchten Sie den Kanal ändern?](/img/android/android-new-channel-sm.webp)](/img/android/android-new-channel.webp)
+
+Die App wird einen neuen QR-Code auf der Anzeige generieren. Dies kodiert die Kanaldetails mit einem zufälligen 256-Bit Schlüssel zum Teilen mit der neuen Gruppe. Sie können den QR-Code mit anderen Meshtastic Benutzern teilen oder über die Schaltfläche Teilen den Link per Chat-Nachricht, SMS oder E-Mail versenden. Der Link ist ein sehr langer Code, zum Beispiel: https://www.meshtastic.org/d/#CgUYAyIBAQ
+
+### Einem Kanal beitreten
+
+1. Wenn ein anderer Benutzer einen QR-Code teilt, können Sie ihn direkt mit Ihrer Kamera durch `Scan` einlesen.[^1]
+
+   [![Mit Meshtastic öffnen](/img/android/android-open-with-c.webp)](/img/android/android-open-with.webp)
+
+[^1]: <QRCode />
+
+2. Wenn der Kanal von einer Datei oder einem Link mit der Schaltfläche `Share` geteilt wird, Sie können die Datei oder den Link anklicken und wählen Sie "Mit Meshtastic öffnen".
+
+:::info Wenn ein QR oder URL eine Webseite öffnet, anstatt der App oder "Mit Meshtastic öffnen" steht nicht zur Auswahl:
+
+1. Gehen Sie zu Android Einstellungen > Apps > Standard-Apps > Meshtastic > Links öffnen
+2. Stellen Sie sicher, dass Sie in "Links/Web-Adresse" sind: www.meshtastic.org
+3. Wenn Sie die Option "Unterstützte Links öffnen", stellen Sie sicher, dass sie aktiviert ist.
+   :::
+
+[![Neuen Kanal akzeptieren](/img/android/android-accept-channel-c.webp)](/img/android/android-accept-channel.webp)
+
+Fahren Sie fort und Sie sollten eine Nachricht wie "Möchten Sie zum 'Owl Team' Kanal wechseln?" sehen.
+Akzeptieren Sie dies, und die App wird in diesen neuen Kanal wechseln. Sie werden alle aktuellen Kanaleinstellungen verlieren!
+
+:::Anmerkung
+Das Setzen des gleichen Namens und der Einstellungen funktioniert nicht wie andere Funkgeräteeinstellungen (wie der eindeutige, verteilte Schlüssel) im QR-Code oder Link.
+:::
+
+Sie können die Änderung von Kanälen mit dem unten angegebenen QR-Code testen.[^1]
+
+![Meshtastic Standardkanal](/img/android/default-channel.webp)
+
+### Kanal anpassen
+
+Sie können die folgenden Einstellungen ändern, indem Sie auf den Namen eines bestehenden Kanals tippen:
+
+1. MQTT Uplink
+2. MQTT Downlink
+3. Standort aktiviert
+4. Genauer Standort (wenn der Standort aktiviert ist)
+5. Standortgenauigkeit (wenn genauer Standort deaktiviert ist)
+
+#### Standortgenauigkeit
+
+Die Genauigkeitswerte, die derzeit in der App verwendet werden, entsprechen den Werten in der unten stehenden Tabelle. Sie können diese als der Radius eines Kreises um einen Punkt betrachten (nicht ihr aktueller Standort), in dem Sie sich befinden.
+
+<PositionPrecision />
+
+### Eine Nachricht senden
+
+[![Nachrichten](/img/android/android-messages-sm.webp)](/img/android/android-messages.webp)
+
+Das Nachrichtenfenster funktioniert wie in den meisten Nachrichtenanwendungen. Beachten Sie, dass Ihr primärer Kanal z.B. `LongFast` Kontakt immer angezeigt wird und als Gruppenchat funktioniert. Andere Kontakte sind für direkte Nachrichten oder private Gruppenchats gedacht.
+
+- Kontakte oder Nachrichten lange drücken, um Aktionen auszuwählen, z.B. Löschen.
+- Wählen Sie einen Knoten aus der Knotenliste, um Direktnachrichten zu versenden.
+
+Bei LoRa (oder wie bei jedem anderem Funkgerät) besteht eine Ungewissheit, ob die Nachricht empfangen wurde, deshalb wurde eine Bestätigung in das Protokoll integriert. Auf der rechten Seite der gesendeten Nachrichten werden kleine Symbole angezeigt:
+
+<center>
+  <ThemedImage
+    alt="cloud up"
+    className="max-h-18"
+    sources={{
+      light: useBaseUrl("/img/android/android-waiting_lt.webp"),
+      dark: useBaseUrl("/img/android/android-waiting_dk.webp"),
+    }}
+  />
+</center>
+Wolke mit einem Pfeil nach oben: Die Nachricht wird in der App gespeichert, warten auf die Übergabe an das Gerät.
+
+<center>
+  <ThemedImage
+    alt="cloud only"
+    className="max-h-18"
+    sources={{
+      light: useBaseUrl("/img/android/android-sent_lt.webp"),
+      dark: useBaseUrl("/img/android/android-sent_dk.webp"),
+    }}
+  />
+</center>
+Leere Wolke: Das Gerät hat die Nachricht von der App erhalten, und sie wurde über LoRa versendet.
+
+<center>
+  <ThemedImage
+    alt="Cloud with a check mark"
+    className="max-h-18"
+    sources={{
+      light: useBaseUrl("/img/android/android-imp-ack_lt.webp"),
+      dark: useBaseUrl("/img/android/android-imp-ack_dk.webp"),
+    }}
+  />
+</center>
+Wolke mit einem Haken: Die versendete Nachricht hat mindestens eine Bestätigung erhalten. Bestätigungen können von einem beliebigen Gerät stammen.
+
+<center>
+  <ThemedImage
+    alt="Person with a check mark"
+    className="max-h-18"
+    sources={{
+      light: useBaseUrl("/img/android/android-DM-ack_lt.webp"),
+      dark: useBaseUrl("/img/android/android-DM-ack_dk.webp"),
+    }}
+  />
+</center>
+Person mit einem Haken - Der beabsichtigte Empfängerknoten Ihrer Direktnachricht bestätigt.
+
+<center>
+  <ThemedImage
+    alt="Cloud crossed out"
+    className="max-h-18"
+    sources={{
+      light: useBaseUrl("/img/android/android-no-ack_lt.webp"),
+      dark: useBaseUrl("/img/android/android-no-ack_dk.webp"),
+    }}
+  />
+</center>
+Durchgestrichene Wolke: Der ursprüngliche Absender hat keine Bestätigung während der Wartezeit erhalten.
+
+Standardmäßig gibt es keine langfristige Speicherung und Weiterleitung von Nachrichten, weshalb Nachrichten, die während der Übertragung nicht empfangen werden, verloren gehen.
+
+### Ihr Netzwerk anzeigen
+
+![[Lokales Meshtastic Netzwerk](/img/android/android-nodes-sm.webp)](/img/android/android-nodes.webp)
+
+Die Netzwerkliste zeigt alle Benutzer (Geräte) an, die mit dem gleichen Kanal verbunden sind. Für jeden Eintrag wird angezeigt wann er das letzte Mal aktiv war, den Standort und die Entfernung (wenn verfügbar) und den letzten bekannten Energiestatus. Im obigen Beispiel ist Monkey der lokale Benutzer, Rabbit wurde zuletzt vor 10 Minuten gehört und ist 50m entfernt. Panda wurde zuletzt vor 11 Minuten gehört und ist 5 Meter entfernt.
+
+- Tippen Sie auf einen Knoten in der Liste, um mehr Details über den Knoten anzuzeigen. Im Filtermenü befindet sich ein Schalter, um die Details dauerhaft anzuzeigen.
+- Tippen Sie auf den farbigen Chip eines Knotens, um Direktnachrichten zu starten und eine Standortaktualisierung anzufordern, lösen Sie ein [Traceroute](/docs/configuration/module/traceroute) aus oder fügen Sie ihn zu Ihrer [Ignorierenliste](/docs/configuration/radio/lora#ignore-incoming-array) hinzu.
+- Tippen Sie auf die Koordinaten eines Knotens um sie in einer Kartenanwendung zu öffnen. Drücken Sie diese lange, um die Koordinaten in die Zwischenablage zu kopieren.
+- Wenn Sie einen [administrativen Kanal](/docs/configuration/remote-admin) auf Ihrem Gerät aktiviert haben, dann wird, wenn Sie auf den farbigen Chip des Knotens tippen, auch eine Option angezeigt, um den Knoten aus der Ferne zu konfigurieren. (veraltete Methode)
+
+### Karte anzeigen
+
+[![Meshtastic Kartenansicht](/img/android/android-map-sm.webp)](/img/android/android-map.webp)
+
+Die Karten-Registerkarte zeigt eine lokale Karte mit einem Symbol für jeden aktiven Meshknoten, der einen bekannten Standort hat. Die Benutzernamen werden über dem Symbol angezeigt.
+
+[![Kartenebenen](/img/android/android-map-layers-c.webp)](/img/android/android-map-layers.webp)
+
+- Wenn Sie auf das Ebenensymbol oben rechts klicken, können Sie den Kartentyp auswählen.
+
+### Offline Karten
+
+[![Offline Karten herunterladen](/img/android/android-map-download-c.webp)](/img/android/android-map-download.webp)
+
+- Einige Kartentypen erlauben das Herunterladen zur Offline Nutzung. Wenn Offline-Karten für den ausgewählten Kartentyp verfügbar sind, erscheint in der unteren rechten Ecke der Karte ein Download-Symbol. Tippen Sie auf dieses Symbol und wählen Sie die Option zum Download des Bereiches, den Sie herunterladen möchten.
+
+## Einstellungen
+
+[![Meshtastic Einstellungsoptionen](/img/android/android-settings-options-c.webp)](/img/android/android-settings-options.webp)
+
+Drücken Sie die drei vertikalen Punkte in der oberen rechten Ecke zeigt das Einstellungsmenü.
+
+### Debug Anzeige
+
+[![Fehlerprotokoll](/img/android/android-debug-sm.webp)](/img/android/android-debug.webp)
+
+Das Fehlerprotokoll erlaubt Ihnen alle Daten, die zwischen der Anwendung und dem Gerät gesendet werden, zu sehen. Dies kann für die Fehlersuche nützlich sein.
+
+### Funkgeräteeinstellung
+
+[![Meshtastic Einstellungsoptionen](/img/android/android-radio-configuration-c.webp)](/img/android/android-radio-configuration.webp)
+
+Diese Einstellungen öffnet eine Liste aller Funk- und Moduleinstellungen.
+
+- Siehe [Funkeinstellung](/docs/configuration/radio).
+- Siehe [Moduleinstellung](/docs/configuration/module).
+- Am Ende dieser Liste befinden sich Schaltflächen für Neustart, Herunterfahren, Werkseinstellungen und Knotendatenbank löschen.
+
+### Exportiere rangetest.csv
+
+Ermöglicht Ihnen, alle Standortdaten Ihres Netzwerks mit GPS Koordinaten in einer .csv (kommaseparierter Werte) Datei auf Ihrem Telefon zu speichern. Diese Datei kann in die Tabellenkalkulation Ihrer Wahl importiert werden. Diese Funktion ist ähnlich, aber unabhängig vom Gerät [Modul Reichweitentest](/docs/configuration/module/range-test), und die Ergebnisse können abweichen.
+
+Um die Werte zurückzusetzen, gehen Sie in das Fehlerprotokoll und drücken Sie die "Löschen".
+
+### Thema
+
+[![Meshtastic Design](/img/android/android-settings-theme-c.webp)](/img/android/android-settings-theme.webp)
+
+Ermöglicht es Ihnen, zwischen hellen und dunklen Designs zu wechseln oder die Systemeinstellung auszuwählen.
+
+### Sprache
+
+Ermöglicht es Ihnen, eine Sprache für die Benutzeroberfläche der Anwendung auszuwählen.
+
+### Einführung zeigen
+
+Öffnet die Einführung als Diashow.
+
+### Schnellchat-Optionen
+
+[![Schnellchat](/img/android/android-quick-chat-sm.webp)](/img/android/android-quick-chat.webp)
+
+Stellt einen Editor zur Erstellung und Bearbeitung von Schnellantwortnachrichten zur Verfügung. Diese werden als Schaltflächen im Chatfenster angezeigt. Nachrichten können sofort verschickt oder manuell an Ihre Nachricht angehängt und gesendet werden.
+
+### Über
+
+Zeigt die aktuelle Version der App.

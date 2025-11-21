@@ -1,0 +1,64 @@
+---
+id: wisblock
+title: RAK WisBlock Geräte
+sidebar_label: WisBlock
+sidebar_position: 1
+---
+
+## RAK11200 - ESP32
+
+Das RAK11200 enthält kein LoRa Funkmodul und dieses muss daher separat in Form des [RAK13300 LPWAN Modul](https://msh.to/rak13300) hinzugefügt werden. Dies belegt den IO Steckplatz der Basisplatine.
+
+- RAK11200
+  - **MCU:**
+    - ESP32-WROVER
+      - Bluetooth 4.2
+      - WLAN 2,4 GHz b/g/n
+      - Hoher Stromverbrauch (relativ zu nRF52)
+
+### RAK11200 programmieren
+
+Um den RAK11200 programmieren zu können, müssen Sie ihn manuell im Firmware Downloadmodus von Espressif bringen. Im Gegensatz zu anderen ESP32 Platinen unterstützt die RAK11200 keine automatische Bootmodusauswahl. Sie müssen es in den Downloadmodus zwingen, bevor Sie Meshtastic programmieren.
+
+:::warning
+
+Fahren Sie nicht fort, es sei denn, eine Antenne ist angeschlossen, um mögliche Schäden am Funkgerät zu vermeiden.
+
+:::
+
+Der folgende Prozess wird das Gerät manuell im Espressif Firmware Download Modus aktivieren:
+
+1. Stellen Sie sicher, dass das Gerät eingeschaltet und über USB verbunden ist.
+2. Suchen Sie den **BOOT** Pin am J10 Stecker der WisBlock Basisplatine ([RAK19007](/docs/hardware/devices/rak-wireless/wisblock/base-board/?rakbase=RAK19007) / [RAK5005-O](/docs/hardware/devices/rak-wireless/wisblock/base-board/?rakbase=RAK5005-O)).
+3. Verbinden Sie **BOOT** mit **GND** (der GND Pin ist neben BOOT am J10 Stecker).
+   <div class="no-print">
+     <details>
+       <summary>Schaltplan</summary>
+       <div>
+         <img
+           src="/img/hardware/rak/rak11200_boot_mode.webp"
+           alt="RAK11200 Boot Mode Connection Diagram"
+         />
+       </div>
+     </details>
+   </div>
+4. Tippen Sie kurz auf die Reset Taste.
+
+Mit dem Gerät im Espressif Firmware Download Modus, können Sie mit der Programmierung durch eine der unterstützten Methoden fortfahren. Es wird generell empfohlen, den [Web Flasher](https://flasher.meshtastic.org/) zu benutzen und die entsprechende RAK11200 Firmware zu wählen.
+
+:::note
+
+Wenn das Gerät nicht in den Downloadmodus wechselt, überprüfen Sie die BOOT auf GND Verbindung bevor Sie erneut versuchen.
+
+:::
+
+### Quellen
+
+- Firmware Datei: `firmware-rak11200-X.X.xxxxx.bin`
+- Weitere Informationen zum RAK11200 finden Sie im [RAK Dokumentationszentrum](https://docs.rakwireless.com/product-categories/wisblock/rak11200/overview/#product-description).
+
+<img
+  alt="RAK4631 5005 11200"
+  src="/img/hardware/rak11200.webp"
+  style={{ zoom: "50%" }}
+/>

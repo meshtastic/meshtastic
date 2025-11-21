@@ -1,0 +1,38 @@
+---
+id: siteplanner
+title: Meshtastic Standortplaner
+sidebar_label: Meshtastic Standortplaner
+sidebar_position: 5
+description: Übersicht des Meshtastic Standortplaners - für Vorhersagen der Funkreichweite, die Physik und Gelände berücksichtigen
+---
+
+Der Meshtastic Standortplaner ist ein Open-Source Webservice zur Vorhersage der Knotenreichweite und der Abdeckung. Es ist auf site.meshtastic.org zu finden, und der Quellcode wird unter https://github.com/meshtastic/meshtastic-site-planner gepflegt.
+
+## Erste Schritte
+
+1. Gehen Sie zur [offiziellen Version](https://site.meshtastic.org) oder führen sie eine Entwicklungskopie aus und öffnen Sie die Anwendung in einem Webbrowser. 
+2. In `Standortparameter > Sender`, geben Sie einen Namen für den Standort, die geografischen Koordinaten, und die Antennenhöhe über Grund ein. Geben Sie in Bezug auf die [regionalen Meshtastic Parameter](https://meshtastic.org/docs/configuration/region-by-country/) die Übertragungsleistung, Frequenz und Antennengewinnung für Ihr Gerät ein. 
+3. Geben Sie in `Standortparameter > Empfänger` die Empfängerempfindlichkeit (`-130 dBm` für den Standardkanal `LongFast` Kanal), die Empfängerhöhe und den Empfängerantennengewinn ein.
+4. Geben Sie in \`Standortarameter > Empfänger die maximale Reichweite für die Simulation in Kilometern ein. Die Auswahl der großen Reichweiten (> 50 Kilometer) führt zu längeren Berechnungszeiten.
+5. Drücken Sie "Simulation ausführen" Die Abdeckungskarte wird angezeigt, wenn die Berechnung abgeschlossen ist. 
+
+Durch Wiederholung dieser Schritte können mehrere Standorte zur Simulation hinzugefügt werden. Die anderen einstellbaren Parameter sind standardmäßig auf sinnvolle Werte für Meshtastic Funkgeräte eingestellt, aber Sie können diese ändern, wenn Ihr Projekt unterschiedliche Hardware verwendet. 
+
+## Ergebnisse verstehen
+
+Der Meshtastic Standortplaner erstellt eine farblich kodierte Karte, die die Reichweite Ihres Funksignals mit Simulationsparametern und dem Geländeverlauf darstellt. Die erwartete Signalstärke (RSSI) kann aus der Farbleiste abgelesen werden. Regionen mit einem starken Signal (vorhergesagte RSSI > -110 dBm) haben eine größere Chance, Signale zu empfangen und zu senden. In Bereichen mit niedrigem RSSI (< 125 dBm) können Hindernisse die Kommunikationssicherheit einschränken. Sie können den Grenzwert für die Signalausschaltung unter 'Empfänger > Sensitivitätslimit' anpassen. Die minimalen Signalschwellen hängen von den Funkchipsätzen und Voreinstellungen ab, die dem Folgenden entsprechen:
+
+| **Voreinstellungen**       | **Bandbreite (kHz)** | **Spreizfaktor (SF)**     | **Fehlerkorrektur** | **Empfindlichkeit (dBm)** |
+| -------------------------- | -------------------- | ------------------------- | ------------------- | ------------------------- |
+| **ShortTurbo**             | 500                  | 7                         | 4/5                 | \-117                     |
+| **ShortFast**              | 250                  | 7                         | 4/5                 | \-121                     |
+| **ShortSlow**              | 250                  | 8                         | 4/5                 | \-124                     |
+| **MediumFast**             | 250                  | 9                         | 4/5                 | \-127                     |
+| **MediumSlow**             | 250                  | 10                        | 4/5                 | \-130                     |
+| **LongFast**               | 125                  | 11                        | 4/5                 | \-133                     |
+| **LongModerate**           | 125                  | 11                        | 4/8                 | \-136                     |
+| **LongSlow**               | 125                  | 12                        | 4/8                 | \-137                     |
+
+## Einschränkungen
+
+Der Standortplaner verwendet Geländedaten der NASA SRTM (Shuttle Radar Topography) Mission. Dieser Höhendatensatz ist auf ca. 90 Meter genau und berücksichtigt keine Hindernisse wie Gebäude oder Bäume. Sie können den Effekt von zufälligen Hindernissen durch Eingabe ihrer durchschnittlichen Höhe in "Umgebung" > "Clutter Height" abschätzen. Es ist eine gute Idee, Vorhersagen von diesem Tool immer anhand von realen Tests zu überprüfen. 

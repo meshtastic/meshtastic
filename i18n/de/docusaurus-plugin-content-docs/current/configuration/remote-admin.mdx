@@ -1,0 +1,189 @@
+---
+id: remote-admin
+title: Ferneinstellung
+sidebar_label: Knoten Ferneinstellung
+sidebar_position: 3
+description: Eine erweiterte Funktion zur sicheren Verwaltung von entfernten Geräten über das Netzwerk statt über Bluetooth, USB oder TCP.
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+import { Icon } from "@iconify/react";
+
+:::caution Haftungsausschluss
+Dies ist eine erweiterte Funktion, die für erfahrene Benutzer gedacht ist. Es ist möglich (wenn dies nicht sorgfältig durchgeführt wird), Einstellungen auf einen entfernten Knoten anzuwenden, die dazu führen können, dass dieser die Verbindung zum Netzwerk trennt. Um dies zu verhindern, wird Netzwerkadministratoren empfohlen, die Einstellungen mithilfe eines Testknotens zu testen, bevor sie Änderungen an einem entfernten Knoten vornehmen.
+:::
+
+Diese Funktion ermöglicht die sichere Fernverwaltung von Meshtastic Knoten über das Netzwerk.
+
+Standardmäßig reagieren Knoten nur auf Verwaltungsbefehle über die lokalen USB, Bluetooth oder TCP Schnittstellen. Diese grundlegende Sicherheitsmaßnahme verhindert unbefugten Zugriff und definiert, wie Standardverwaltungs- und Einstellungsänderungen gehandhabt werden. Der einzige Unterschied bei der Fernverwaltung besteht darin, dass Befehle sicher als administrative Nachrichten über das Netzwerk gesendet werden.
+
+## Voraussetzungen
+
+Bei Firmware-Versionen ab 2.5 erfolgt die Fernverwaltung durch Speichern des öffentlichen Schlüssels des lokalen Knotens in einem der administrativen Schlüsselfelder in der Sicherheitskonfiguration des entfernten Knotens. Jeder entfernte Knoten kann bis zu drei eindeutige administrative Schlüssel speichern und bietet so Flexibilität bei der Verwaltung von Knoten im gesamten Netzwerk.
+
+Bei Firmware Versionen 2.4.x und früher wird dies durch die Erstellung eines sekundären Kanals mit dem Namen `admin` mit einem gemeinsamen PSK erreicht. In diesem Setup werden die auf diesem Kanal ausgetauschten Nachrichten nur mit dem PSK des Kanals verschlüsselt, sodass jeder Knoten im Kanal andere verwalten kann.
+
+Diese `admin` Kanalmethode wird in den Firmware-Versionen 2.5 und höher noch unterstützt, muss jedoch speziell über die Einstellung „Legacy Admin Channel“ aktiviert werden und dient nur der Verwaltung von Knoten vor 2.5. Ein Knoten mit Firmware Version 2.5 und höher kann auf diese Weise nicht verwaltet werden.
+
+:::info
+Fernverwaltung wird durch die Einstellung des [verwalteten Modus](/docs/configuration/radio/security/#managed-mode) auf dem abgesetzten Knoten ergänzt, wodurch die Funkkonfigurationen auf diesem Knoten eingeschränkt werden. Es ist nicht erforderlich, den verwalteten Modus für die Fernverwaltung einzustellen, damit diese funktioniert.
+:::
+
+## Verfügbarkeit des Moduls Fernverwaltung
+
+<Tabs
+  groupId="settings"
+  queryString="settings"
+  defaultValue="apple"
+  values={[
+    {
+      label: (
+        <>
+          <Icon icon="mdi:android" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Android
+        </>
+      ),
+      value: "android",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:apple" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Apple
+        </>
+      ),
+      value: "apple",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:terminal" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Kommandozeile
+        </>
+      ),
+      value: "cli",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:internet" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Web
+        </>
+      ),
+      value: "web",
+    },
+  ]}>
+
+<TabItem value="android">
+
+#### Android
+
+#### Einrichten der Fernverwaltung mit der PKC Methode.
+
+1. Verbinden Sie sich mit dem lokalen Knoten, der den entfernten Knoten verwaltet.
+2. Navigieren Sie zu **⚙ Konfiguration > ⚙ Funkkonfiguration > [Sicherheit](/docs/configuration/radio/security/#public-key)**, um den öffentlichen Schlüssel zu finden.
+3. Kopieren Sie den öffentlichen Schlüssel für die Konfiguration des entfernten Knotens.
+4. Verbinden Sie sich mit dem Knoten, der der fernverwaltete Knoten sein wird.
+5. Gehen Sie zum gleichen **Sicherheits** Menü wie in Schritt 2 und drücken Sie **„Hinzufügen“**, um den öffentlichen Schlüssel des lokalen Knotens in ein administratives Schlüsselfeld einzufügen.
+6. Bis zu 3 administrative Schlüssel können angegeben werden, einer pro Feld, wodurch bis zu 3 Kontrollknoten möglich sind.
+
+#### Einrichten der Fernverwaltung mit der veralteten Methode
+
+Ein administrativer Kanal wird eingerichtet, indem ein sekundärer Kanal mit dem Namen `admin` mit der in [Kanäle](/docs/configuration/radio/channels/) beschriebenen Methode eingegeben wird.
+
+Die veraltete Fernverwaltung wird mithilfe der Option veralteter, administrativer Kanal in der [Sicherheitskonfiguration](/docs/configuration/radio/security/#admin-channel-enabled) aktiviert.
+
+#### Aufgaben über Fernverwaltung ausführen
+
+1. Öffnen Sie die Meshtastic App, verbinden Sie sich mit dem lokalen Kontrollknoten.
+2. Wählen Sie im Knotenlistenbereich einen Knoten aus, indem Sie auf den Kurznamen in der farbigen Blase tippen, und wählen Sie dann weitere Details aus.
+3. Wählen Sie weitere Details neben einem Zahnradsymbol die Option Fernverwaltung aus.
+4. Auf dem Fernverwaltungsanzeige sind alle Funk- und Modulkonfigurationsoptionen verfügbar.
+
+</TabItem>
+<TabItem value="apple">
+
+#### Apple
+
+#### Aufgaben über Fernverwaltung ausführen
+
+1. Verbinden Sie sich mit dem lokalen Knoten, der den entfernten Knoten verwaltet.
+2. Gehen Sie auf **Einstellungen > App-Einstellungen** in diesem Knoten und aktivieren Sie **Administration**.
+3. Navigieren Sie zu **⚙ Konfiguration > ⚙ Funkkonfiguration > [Sicherheit](/docs/configuration/radio/security/#public-key)**, um den öffentlichen Schlüssel zu finden.
+4. Kopieren Sie den öffentlichen Schlüssel für die Konfiguration des entfernten Knotens.
+5. Verbinden Sie sich mit dem entfernten Knoten.
+6. Fügen Sie in **Einstellungen > Funkeinstellungen > Sicherheit** den öffentlichen Schlüssel des lokalen Knotens als administrativen Schlüssel hinzu.
+7. Es können bis zu 3 administrative Schlüssel bereitgestellt werden, wodurch bis zu 3 Steuerknoten möglich sind.
+
+#### Einrichten der Fernverwaltung mit der veralteten Methode
+
+Ein administrativer Kanal wird eingerichtet, indem ein sekundärer Kanal mit dem Namen `admin` mit der in [Kanäle](/docs/configuration/radio/channels/) beschriebenen Methode eingegeben wird.
+
+Die veraltete Fernverwaltung wird mithilfe der Option veralteter, administrativer Kanal in der [Sicherheitskonfiguration](/docs/configuration/radio/security/#admin-channel-enabled) aktiviert.
+
+#### Aufgaben über Fernverwaltung ausführen
+
+1. Öffnen Sie die Meshtastic App und stellen Sie eine Verbindung zum lokalen Knoten her, den Sie zur Verwaltung des entfernten Knotens verwenden.
+2. Gehe zu **Einstellungen**.
+3. Wählen Sie unter **Einstellungen > Knoten konfigurieren** den Knoten aus, den Sie verwalten möchten.
+4. Auf die unterstützten Funkgeräte- und Moduleinstellungen für den entfernten Knoten kann über **Einstellungen** zugegriffen werden.
+5. Wenn Sie mit der Verwaltung des entfernten Knotens fertig sind, wählen Sie unter Einstellungen > Knoten konfigurieren erneut Ihren eigenen Knoten aus.
+
+</TabItem>
+<TabItem value="cli">
+
+#### Kommandozeile
+
+#### Einrichten der Fernverwaltung mit der PKC Methode.
+
+1. Verbinden Sie sich über USB mit dem lokalen Knoten, der den entfernten Knoten verwaltet.
+2. Den öffentlichen Schlüssel abrufen, indem Sie folgendes ausführen:
+   ```bash
+   meshtastic --get security.public_key
+   ```
+3. Kopieren Sie den öffentlichen Schlüssel für die Konfiguration des entfernten Knotens.
+4. Verbinden Sie sich mit dem entfernten Knoten über USB.
+5. Legen Sie den administrativen Schlüssel auf dem entfernten Knoten fest, indem Sie Folgendes ausführen:
+   ```bash
+   meshtastic --set security.admin_key "base64:ÖFFENTLICHERSCHLÜSSELHIER"
+   ```
+6. Sie können bis zu 3 administrative Schlüssel hinzufügen, wodurch die Kontrolle von bis zu 3 verschiedenen Knoten aktiviert wird.
+
+#### Einrichten der Fernverwaltung mit der veralteten Methode
+
+Um die veraltete Methode zu verwenden, richten Sie einen administrativen Kanal als sekundären Kanal mit dem Namen `admin` ein, indem Sie den Anweisungen im Abschnitt [Kanäle](/docs/configuration/radio/channels/) folgen.
+
+Aktivieren Sie den veralteten administrativen Modus in der [Sicherheitskonfiguration](/docs/configuration/radio/security/#admin-channel-enabled), indem Sie den folgenden Befehl auf der Kommandozeile ausführen:
+
+```bash
+meshtastic --set security.admin_channel_enabled
+```
+
+#### Aufgaben über Fernverwaltung ausführen
+
+Fernverwaltungsbefehle werden mit dem Argument `--dest` und der `!KnotenID` des Zielknotens ausgegeben. Für die Fernverwaltung werden nur die Befehle `--set` und `--get` unterstützt. Mit diesen Befehlen können Sie Parameter ändern, Kanäle hinzufügen oder Einstellungen vom entfernten Knoten abrufen. Zum Beispiel:
+
+```bash
+meshtastic --set security.admin_key "ÖFFENTLICHERSCHLÜSSELHIER" --dest '!28979058'
+```
+
+:::info
+Für Linux/Mac, fügen Sie den `nodeid` Wert in einfache Anführungszeichen ein: `--dest '!28979058'`. Für Windows sind keine Anführungszeichen erforderlich: `--dest !28979058`.
+:::
+
+</TabItem>
+<TabItem value="web">
+
+#### Web
+
+1. Verbinden Sie sich mit dem lokalen Knoten, der den entfernten Knoten verwaltet.
+2. Navigieren Sie zu **⚙ Konfiguration > ⚙ Funkkonfiguration > [Sicherheit](/docs/configuration/radio/security/#public-key)**, um den öffentlichen Schlüssel zu finden.
+3. Kopieren Sie den öffentlichen Schlüssel, der zum Konfigurieren des entfernten Knotens verwendet werden soll.
+4. Verbinden Sie sich mit dem entfernten Knoten.
+5. Fügen Sie in **Einstellungen > Funkeinstellungen > Sicherheit** den öffentlichen Schlüssel des lokalen Knotens als administrativen Schlüssel hinzu.
+6. Derzeit kann nur ein Administratorschlüssel über die Weboberfläche bereitgestellt werden.
+7. Einstellungen speichern.
+
+#### Aufgaben über Fernverwaltung ausführen
+
+Die Meshtastic Weboberfläche unterstützt derzeit nicht das Senden von Fernverwaltungsbefehlen.
+
+</TabItem>
+</Tabs>

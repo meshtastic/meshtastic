@@ -1,0 +1,71 @@
+---
+id: library
+title: Verwendung der Meshtastic Python Bibliothek
+sidebar_label: Python Bibliothek
+---
+
+Ein Beispiel, das Python 3 Code verwendet, um eine Nachricht an das Netz zu senden, eine Funkgeräteeinstellung zu erhalten und zu setzen:
+
+```python
+import meshtastic
+import meshtastic.serial_interface
+
+# By default will try to find a meshtastic device,
+# otherwise provide a device path like /dev/ttyUSB0
+interface = meshtastic.serial_interface.SerialInterface()
+# or something like this
+# interface = meshtastic.serial_interface.SerialInterface(devPath='/dev/cu.usbmodem53230050571')
+
+# or sendData to send binary data, see documentations for other options.
+interface.sendText("hello mesh")
+
+ourNode = interface.getNode('^local')
+print(f'Our node preferences:{ourNode.localConfig}')
+
+# update a value
+print('Changing a preference...')
+ourNode.localConfig.position.gps_update_interval = 60
+
+print(f'Our node preferences now:{ourNode.localConfig}')
+ourNode.writeConfig("position")
+
+interface.close()
+```
+
+Ein weiteres Beispiel, das Python3 Code benutzt, um eine Nachricht an das Netz zu senden, wenn WLAN aktiviert ist:
+
+```python
+import time
+import meshtastic
+import meshtastic.tcp_interface
+from pubsub import pub
+
+def onReceive(packet, interface): # called when a packet arrives
+    print(f"Received: {packet}")
+
+def onConnection(interface, topic=pub.AUTO_TOPIC): # called when we (re)connect to the radio
+    # defaults to broadcast, specify a destination ID if you wish
+    interface.sendText("hello mesh")
+
+pub.subscribe(onReceive, "meshtastic.receive")
+pub.subscribe(onConnection, "meshtastic.connection.established")
+interface = meshtastic.tcp_interface.TCPInterface(hostname='192.168.68.74')
+while True:
+    time.sleep(1000)
+interface.close()
+```
+
+Hinweis: Stellen Sie sicher, dass Sie die IP-Adresse im obigen Code in eine gültige IP-Adresse für Ihr Gerät ändern.
+
+Für die groben Notizen/Implementierungspläne siehe [TODO](https://github.com/meshtastic/python/blob/master/TODO.md). Lesen Sie die API für alle Details zur Verwendung der Bibliothek.
+
+## Ein Hinweis an Entwickler dieser Bibliothek
+
+Wir verwenden die voreingestellten Python Formatierungskonventionen (autopep8) für Visual Studio Code. Wenn Sie diese IDE verwenden, sollten Sie also in der Lage sein, "Formatdokument" zu verwenden und keine Unterschiede zu erzeugen, die nicht miteinander in Zusammenhang stehen. Wenn Sie einen anderen Editor verwenden, ändern Sie bitte keine Formatierung in Zeilen, die Sie nicht geändert haben.
+
+Wenn Sie eine neue Version erstellen müssen, benötigen Sie:
+
+```shell title="Command"
+apt install pandoc
+sudo pip3 install markdown pandoc webencodings pyparsing twine autopep8
+```

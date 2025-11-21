@@ -1,0 +1,66 @@
+---
+id: oled-guide
+title: OLED Übersetzungsanleitung
+sidebar_label: OLED Übersetzung
+sidebar_position: 3
+---
+
+## Übersicht der Übersetzungsschritte
+
+Dieser Leitfaden enthält Anweisungen zur Übersetzung einer OLED Anzeige, indem er eigene Schriftarten anlegt, relevante Code-Dateien aktualisiert und Spracheinstellungen definiert. Der Übersetzungsprozess beinhaltet die folgenden Schritte:
+
+### 1. Erstellen Sie eine erweiterte ASCII Schriftart.
+
+Verwenden Sie einen Schriftzeicheneditor, um eine neue Schriftart zu erstellen. Der einfachste Weg ist der Online-[Schriftzeicheneditor](https://rawgit.com/ThingPulse/esp8266-oled-ssd1306/master/resources/glyphEditor.html) aus der OLED-Bibliothek ([Schriftzeicheneditor Quellcode](https://github.com/ThingPulse/esp8266-oled-ssd1306/tree/master/resources)).
+
+1. Kopieren und fügen Sie die vorhandene Schriftart ein.
+2. Ändern Sie diese gemäß der gewünschten Codepage und speichern Sie die neue Schriftart im Ordner `graphics/font`.
+
+_Hinweis: Das Schriftdateiformat unterscheidet sich vom gewöhnlichen Adafruit GFX Format._
+
+### 2. Aktualisieren Sie die Funktion `customFontTableLookup` in `Screen.h`
+
+1. Ordnen Sie den Doppelbyte UTF-8 Code dem zugehörigen erweiterten ASCII-Zeichen der gewünschten Codepage zu. Aktualisieren Sie dazu die `customFontTableLookup` Funktion in der Datei `Screen.h`.
+2. Ändern Sie die `switch (last)` Anweisung: Benutze das linke Byte aus dem UTF-8-Code im `case` Label, um das rechte Byte des Schriftzeichens seinem erweiterten ASCII-Code zuzuordnen. Geben Sie dazu das Offset an.
+
+### 3. Sprache und Schriftart in der Datei `Screen.cpp` definieren
+
+Sprachspezifische Schriftdefinitionen mit bedingter Kompilierung hinzufügen:
+
+```c
+#ifdef OLED_{LANG_NAME}
+#include "fonts/OLEDDisplayFonts{LANG_NAME}.h"
+#endif
+
+...
+
+#ifdef OLED_{LANG_NAME}
+#define FONT_SMALL ArialMT_Plain_10_{LANG_NAME}
+#else
+#define FONT_SMALL ArialMT_Plain_10
+#endif
+```
+
+### 4. Spracheinstellungen konfigurieren
+
+#### Primäre Methode: Definieren Sie eine Variante in `variant/*/platformio.ini`
+
+Spracheinstellungen können in der Datei `platformio.ini` unter dem entsprechenden Variantenverzeichnis definiert werden:
+
+```text
+build_flags =
+${esp32_base.build_flags}
+-D xxxxx
+-D OLED_{LANG_NAME}
+-I variants/xxxxx
+```
+
+#### Alternative: Definition in der Datei `userPrefs.h`
+
+Als Alternative zur Änderung der Datei `platformio.ini` kann die Sprache in auch in der Datei `userPrefs.h` definiert werden.
+
+```c
+#define OLED_{LANG_NAME}
+```
+
+Beide Methoden erzielen das gleiche Ergebnis und die Auswahl hängt von der jeweiligen Projekteinstellung ab.

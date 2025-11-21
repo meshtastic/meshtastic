@@ -1,0 +1,53 @@
+---
+id: telemetry-harbor
+title: Telemetry Harbor Integration
+sidebar_label: Telemetry Harbor Integration
+sidebar_position: 5
+---
+
+## Telemetry Harbour mit Meshtastic verwenden
+
+### Wie funktioniert es?
+
+#### Bereiten Sie Ihr Meshtastic Gerät vor
+
+1. Stellen Sie sicher, dass Ihr Meshtastic Gerät verbunden und betriebsbereit ist.
+2. Ermitteln Sie den COM-Port, der dem Gerät zugeordnet ist.
+
+#### Das Skript einrichten
+
+Dieses Repository klonen:
+
+```sh
+git clone https://github.com/TelemetryHarbor/harbor-meshtastic.git
+cd harbor-meshtastic
+```
+
+Benötigte Abhängigkeiten installieren:
+
+```sh
+pip install -r requirements.txt
+```
+
+#### Das Skript ausführen
+
+Führen Sie das Skript aus und geben Sie die erforderlichen Informationen ein:
+
+- **Batch Endpoint**: Sie erhalten diesen über Ihr Telemetry Harbor Konto.
+- **API Key**: Dein einzigartiger Schlüssel für die sichere Kommunikation.
+- **COM Port**: Der Port mit dem Ihr Meshtastic Gerät verbunden ist.
+
+```sh
+python app.py
+```
+
+#### Datenstrom
+
+Das Skript schiebt die Telemetrie-Daten von Ihrem Gerät an den Endpunkt bei Telemetry Harbor.
+
+#### Visualisieren in Grafana
+
+1. Melden Sie sich bei Ihrer Telemetry Harbor Grafana Instanz an.
+2. Greifen Sie auf vorkonfigurierte Dashboards zu, um Ihre Meshtastic Daten anzusehen und zu analysieren.
+
+[Repository Link](https://github.com/TelemetryHarbor/harbor-meshtastic)

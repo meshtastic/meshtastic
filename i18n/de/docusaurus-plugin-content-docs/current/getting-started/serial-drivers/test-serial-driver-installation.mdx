@@ -1,0 +1,132 @@
+---
+id: test-serial-driver-installation
+title: Serielle Treiberinstallation testen
+sidebar_label: Serielle Treiberinstallation testen
+sidebar_position: 3
+description: Anleitung zum Testen der seriellen Treiber-Installation unter Linux, macOS oder Windows.
+---
+
+import Link from "@docusaurus/Link";
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+import { Icon } from "@iconify/react";
+
+### Serielle Treiberinstallation testen
+
+Sie können überprüfen, ob Sie ein geeignetes Datenkabel haben (statt ein Lade-Typenkabell) und dass die passenden Treiber für Ihr System installiert werden, indem Sie folgende Tests durchführen:
+
+<Tabs
+  groupId="operating-system"
+  defaultValue="windows"
+  values={[
+    {
+      label: (
+        <>
+          <Icon icon="mdi:tux" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Linux
+        </>
+      ),
+      value: "linux",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:apple" height="1.5rem" style={{ marginRight: "0.25rem" }} /> macOS
+        </>
+      ),
+      value: "macos",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:microsoft" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Windows
+        </>
+      ),
+      value: "windows",
+    },
+  ]}>
+
+<TabItem value="linux">
+
+#### Linux
+
+1. Verbinden Sie Ihr Meshtastic Gerät mit Ihrem USB-Anschluss
+
+2. Öffnen Sie ein **Terminal** und geben Sie folgenden Befehl ein:
+
+   ```shell
+   lSusb
+   ```
+
+3. Sie sollten etwas sehen wie:
+
+   ```shell
+   ID xxxx:xxxx Silicon Labs CP210x UART Bridge
+   # oder
+   ID xxxx:xxxx QinHeng Electronics USB Single Serial
+   # oder
+   ID xxxx:xxxx Adafruit WisCore RAK4631 Board
+   ```
+
+</TabItem>
+<TabItem value="macos">
+
+#### macOS
+
+1. Navigieren Sie zu `Apple Menü > Über diesen Mac > Mehr Info > Systembericht... > Hardware > USB`.
+2. Sie sollten einen der folgenden Einträge oder Ähnliches sehen:
+
+- `CP210X USB to UART Bridge Controller`
+- `CH9102 USB to UART Bridge Controller`
+- `WisCore RAK4631 Board`
+- `USB Single Serial`
+
+</TabItem>
+<TabItem value="windows">
+
+#### Windows
+
+1. Navigieren Sie zu `Gerätemanager > Anschlüsse (COM & LPT)`
+2. Sie sollten einen der folgenden Einträge oder Ähnliches sehen:
+
+- `Silicon Labs CP210X USB to UART Bridge (COM5)`
+- `Silicon Labs CH9102 USB to UART Bridge (COM5)`
+- `USB-Enhanced-SERIAL CH9102 (COM5)`
+- `USB Serial Device (COM5)`
+
+</TabItem>
+</Tabs>
+
+:::info
+
+Wenn Sie Ihr Gerät nicht sehen können:
+
+- Stellen Sie sicher, dass Ihr Kabel nicht nur zum Laden, sondern auch für [Datenübertragung](/docs/getting-started#verify-data-cable) geiegnet ist.
+- Es ist möglich, dass Sie [den seriellen USB-Treiber neu installieren](/docs/getting-started/serial-drivers) müssen.
+
+:::
+
+## Firmware programmieren
+
+Nachdem Sie die vorherigen Schritte abgeschlossen haben, können Sie nun die Meshtastic Firmware auf Ihrem Gerät programmieren. Um fortzufahren, wählen Sie den passenden Gerätetyp für Ihr Gerät.
+
+<div className="indexCtasBody">
+  <div className="split-container">
+    <div className="split-item">
+      <Link
+        className={"button button--outline button--lg cta--button"}
+        to={"/docs/getting-started/flashing-firmware/esp32/"}
+      >
+        ESP32 Firmware programmieren
+      </Link>
+    </div>
+
+<div className="split-item">
+      <Link
+        className={"button button--outline button--lg cta--button"}
+        to={"/docs/getting-started/flashing-firmware/nrf52/"}
+      >
+        nRF52/RP2040 Firmware programmieren
+      </Link>
+    </div>
+  </div>
+</div>

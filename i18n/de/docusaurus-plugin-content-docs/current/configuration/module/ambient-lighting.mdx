@@ -1,0 +1,148 @@
+---
+id: ambient-lighting
+title: Umgebungsbeleuchtungsmodul verwenden
+sidebar_label: Umgebungsbeleuchtung
+description: Konfigurationsdetails zur Verwaltung von LEDs auf Ihrem Meshtastic Gerät.
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+import { Icon } from "@iconify/react";
+
+Das Umgebungsbeleuchtungsmodul verfügt über Einstellungen zur Steuerung von LEDs auf der Geräteplatine und ermöglicht es dem Benutzer, die Helligkeitsstufen und die entsprechenden Farbstufen anzupassen. Ursprünglich erstellt für das RAK14001 RGB LED-Modul mit dem NCP5623 und Ansteuerung über I2C. Einstellungen sind: LED-Zustand, Strom, rote Leuchtstärke, grüne Leuchtstärke und blaue Leuchtstärke.
+
+Um dieses Modul nutzen zu können, stellen Sie sicher, dass Ihre Geräte die Firmware Version v2.2.5 oder höher enthalten.
+
+## Umgebungsbeleuchtungseinstellungen
+
+### LED Status
+
+Setzt die LED auf ein oder aus
+
+### Stromstärke
+
+Legt die Stromstärke für den LED Ausgang fest. Der Standardwert ist 10.
+
+### Rot
+
+Legt die rote Leuchtstärke fest. Die Werte sind 0-255.
+
+### Grün
+
+Legt die grüne Leuchtstärke fest. Die Werte sind 0-255.
+
+### Blau
+
+Legt die blaue Leuchtstärke fest. Die Werte sind 0-255.
+
+## Verfügbarkeit für Umgebungsbeleuchtung in der App
+
+<Tabs
+  groupId="settings"
+  defaultValue="apple"
+  values={[
+    {
+      label: (
+        <>
+          <Icon icon="mdi:android" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Android
+        </>
+      ),
+      value: "android",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:apple" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Apple
+        </>
+      ),
+      value: "apple",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:terminal" height="1.5rem" style={{ marginRight: "0.25rem" }} /> CLI
+        </>
+      ),
+      value: "cli",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:internet" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Web
+        </>
+      ),
+      value: "web",
+    },
+  ]}>
+
+<TabItem value="android">
+
+#### Android
+
+:::info
+All Ambient Lighting Module config options are available for Android in app version 2.2.3 and higher.
+
+1. Öffnen Sie die Meshtastic App
+2. Navigieren Sie zu: **vertikale Ellipse (3 Punkte oben rechts) > Geräteeinstellungen > Ambient Lighting**
+   :::
+
+</TabItem>
+<TabItem value="apple">
+
+#### Apple
+
+:::info
+Alle Konfigurationsoptionen für das Umgebungsbeleuchtungmodul sind auf iOS, iPadOS und macOS App-Versionen 2.2.3 verfügbar und höher unter Geäreeinstellungen > Moduleinstellung > Ambient Lighting
+:::
+
+</TabItem>
+<TabItem value="cli">
+
+#### Kommandozeile
+
+:::info
+
+Alle Konfigurationsoptionen des Umgebungsbeleuchtungmodul sind in der Python CLI Version v2.2.3 und höher verfügbar.
+
+:::
+
+Beispielbefehle sind folgende:
+
+```shell title="Set the LED to on or off"
+meshtastic --set ambient_lighting.led_state 1
+meshtastic --set ambient_lighting.led_state 0
+```
+
+```shell title="Set the led current to 5"
+meshtastic --set ambient_lighting.current 5
+```
+
+```shell title="Set the red LED brightness to 103"
+meshtastic --set ambient_lighting.red 103
+```
+
+```shell title="Set the green brightness to 234"
+meshtastic --set ambient_lighting.green 234
+```
+
+```shell title="Set the blue LED brightness to 148"
+meshtastic --set ambient_lighting.blue 148
+```
+
+```shell title="Get the Ambient Lighting Module Configuration"
+meshtastic --get ambient_lighting
+```
+
+</TabItem>
+<TabItem value="web">
+
+#### Web
+
+:::info
+
+Alle Konfigurationsoptionen des Umgebungsbeleuchtungmodul sind in der Web-Oberfläche verfügbar.
+
+:::
+
+</TabItem>
+</Tabs>

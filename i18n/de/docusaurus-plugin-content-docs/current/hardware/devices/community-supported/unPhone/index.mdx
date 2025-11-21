@@ -1,0 +1,66 @@
+---
+id: unphone
+title: unPhone
+sidebar_label: unPhone
+sidebar_position: 11
+---
+
+Das UnPhone ist ein vielseitiges offenes Hardware- und Open-Source-Software-Entwicklungsgerät, das für nahtlose Anbindung und Erweiterbarkeit konzipiert ist. Entwickelt von der Universität Sheffield, in Partnerschaft mit Pimoroni und Gareth Coleman. Es verfügt über Touchscreen, Batterie, Gehäuse, Antenne und vieles mehr und eignet sich somit ideal für verschiedene Projekte.
+
+Für umfassendere Informationen über das UnPhone besuchen Sie bitte die Website des Projekts unter [https://unphone.net](https://unphone.net).
+
+## Spezifikationen
+
+- **MCU**
+  - ESP32-S3-WROOM-1
+    - Bluetooth 5.0
+    - WLAN Unterstützung
+- **LoRa Sendeempfänger**
+  - HopeRF RF950W
+- **Frequenzoptionen**
+  - 868 MHz
+- **Navigationsmodul**
+  - Nicht enthalten
+- **Antenne**
+  - Integriert
+- **Anschlüsse**
+  - USB-C
+
+## Merkmale
+
+- 8MB Flash und 8MB PSRAM
+- 3,5" (320x480) LCD kapazitive Touchanzeige
+- IR LEDs
+- 1200mAh LiPo-Akku mit USB-C Ladegerät
+- Vibrationsmotor
+- Kompass/Beschleunigungsmesser (beide 3-Achsen)
+- SD-Kartensteckplatz
+- Erweiterungsplatine, die zwei Federwing Steckplätze und einen Prototypenbereich unterstützt
+
+## Programmierung
+
+Um ESP32-S3 Geräte wie das unPhone zu programmieren, müssen Sie sie normalerweise den Espressifs Firmware Download Modus aktivieren. Benutzen Sie dazu den "1200bps Reset" Knopf im Web-Flasher um dies zu tun. Wenn diese Methode aus irgendeinem Grund nicht funktioniert, können Sie dem manuellen Prozess folgen.
+
+:::warning
+
+Fahren Sie nicht fort, es sei denn, eine Antenne ist angeschlossen, um mögliche Schäden am Funkgerät zu vermeiden.
+
+:::
+
+Der folgende Prozess wird das Gerät manuell im Espressif Firmware Download Modus aktivieren:
+
+1. Stellen Sie sicher, dass das Gerät eingesteckt und eingeschaltet ist, indem Sie den Batterieschalter auf "EIN" schalten.
+2. Drücken und halten Sie die mittlere Taste (Kreis).
+3. Während Sie die mittlere Taste (Kreis) drücken und halten, drücken Sie gleichzeitig die Reset Taste an der Seite. _Siehe [image](#images)._
+4. Nach 2-3 Sekunden lassen Sie die mittlere Taste (Kreis) los.
+
+Mit dem Gerät im Espressif Firmware Download Modus, können Sie mit der Programmierung durch eine der unterstützten Methoden fortfahren. Es wird generell empfohlen, den [Web Flasher](https://flasher.meshtastic.org/) zu benutzen. Sie können "UnPhone" im Auswahlmenü des Gerätes auswählen.
+
+## Quellen
+
+- Firmware Datei: `firmware-unphone-X.X.X.xxxxxxx.bin`
+
+## Bilder
+
+![unPhone-side](/img/hardware/unPhone/unphone-side.webp)
+![unphone-front](/img/hardware/unPhone/unphone-front-with-exander.webp)

@@ -1,0 +1,27 @@
+---
+title: Übersicht
+sidebar_label: Übersicht
+slug: /overview
+sidebar_position: 2
+description: Entdecken Sie die Grundlagen von Meshtastic, vom Nachrichten versenden über die App, bis zum intelligenten Verteilungssystem des Netzwerkes um die Reichweite zu maximieren.
+---
+
+## So funktioniert's
+
+Wenn du eine Nachricht in deiner Meshtastic App sendest, wird sie über Bluetooth, Wi-Fi/Ethernet oder serielle Verbindung an das Funkgerät weitergeleitet. Die Nachricht wird dann vom Funkgerät ins Netzwerk übertragen. Wenn es nach einer bestimmten Zeit keine Bestätigung von einem anderen Gerät erhalten hat, wird die Nachricht bis zu dreimal erneut übertragen.
+
+Wenn ein Funkgerät eine Nachricht empfängt, prüft es, ob es diese Nachricht zuvor gehört hat. Wenn die Nachricht bereits empfangen wurde, dann wird sie ignoriert. Wenn die Nachricht noch nicht empfangen wurde, dann wird sie weitergeleitet.
+
+Für jede Nachricht wird die Sprungweite um eins reduziert. Wenn das Funkgerät eine Nachricht mit der Sprungweite null empfängt, dann wird die Nachricht nicht mehr weitergeleitet.
+
+Das Funkgerät speichert eine kleine Anzahl von Nachrichten (ca. 30) in seinem Speicher, wenn es nicht mit einer App verbunden ist. Wenn der interne Speicher voll ist, werden die ältesten Nachrichten durch neu eingehende Nachrichten ersetzt.
+
+## Was ist das Netz?
+
+Bei Funkgeräten ist ein Meshtastic Netz eine Sammlung von Knoten, die den gleichen LoRa Spreizfaktor, die gleiche Frequenz und Bandbreite verwenden. Ein Knoten kann nur Teilnehmer in einem Meshtastic Netz sein. Er wird Nachrichten von Knoten mit anderen Einstellungen nicht sehen, bestätigen oder weiterleiten. Um ein Netz zu formen, müssen Knoten die gleichen Einstellungen verwenden. 
+
+Diese Voreinstellungen werden gruppiert, die in der LoRa Konfiguration einfach ausgewählt werden können. Voreinstellungen erleichtern es, Knoten mit den gleichen Einstellungen zu konfigurieren.
+
+Die Kanäle sind dem Netz übergeordnet. Ein logisches Netz wird durch einen Kanal mit einem bestimmten Namen und Schlüssel gebildet. Der Standardkanal in einem Netz ist der Kanal 0 mit leerem Namen und dem Krypto-Schlüssel `AQ==`. 
+
+Knoten können maximal 8 Kanäle im Netz nutzen. Ein benutzerdefinierter Kanal kann für eine bestimmte Gruppe erstellt werden. Nur Knoten, die mit gleichem Kanalnamen und Schlüssel konfiguriert sind, können Nachrichten auf diesem Kanal schreiben, lesen und anzeigen. Jedoch können alle Knoten im Netz Nachrichten empfangen und weiterleiten. Die Weiterleitung erfolgt unabhängig von den Kanaleinstellungen einer Nachricht ist aber abhängig von der Rolle des Knotens.

@@ -1,0 +1,68 @@
+---
+id: docs
+title: Pflege der Dokumentation
+slug: /development/docs
+sidebar_label: Dokumentation
+sidebar_position: 9
+---
+
+Meshtastische Dokumentation ist ein wichtiger Bestandteil des Gesamtprojekts. Wir möchten, dass die Benutzer sofort loslegen können und die benötigten Informationen direkt zur Hand haben. Dieser Abschnitt behandelt die Dokumentationssoftware, die Datei Organisation und Stil Anleitungen.
+
+## Dokumentationssoftware
+
+Alle unsere Dokumentation befindet sich auf GitHub. Anweisungen zur Einrichtung eines GitHub-Kontos befinden sich [hier](/docs/development/reference/github).
+
+Unsere Dokumentation wird von [Docusaurus](https://docusaurus.io) betrieben — einer Dokumentationsplattform, die auf React basiert und Markdown Dateien verwendet. Da Markdown-Dateien einfach zu bearbeiten sind, sollten die meisten Änderungen von Inhalten ziemlich einfach sein.
+
+Eine weitere Komponente, die wir verwenden, ist [Vercel](https://vercel.com) — eine Plattform für Frontend-Frameworks und statische Sites. Anweisungen zum Einrichten einer Instanz von Vercel befinden sich [hier](/docs/development/documentation/publish#publish-to-vercel).
+
+## Organisation der Dokumentation
+
+|    Abschnitt             |    Dateipfad           |                                                                              Beschreibung                                                                                                                                                                                                       |
+| :----------------------: | :--------------------: | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
+|    Über Meshtastic       |    `docs/about`        |                                        Eine detailierte Erläuterung von Meshtastic plus alles rund um das Meshtastic Netzwerk. Dazu gehören Funkeinstellungen, Mesh-Algorithmus und Verschlüsselung.                                                                                            |
+|    Erste Schritte        | `docs/getting-started` |                                                              Anleitungen, wie man die Meshtastic Firmware auf ein Benutzergerät bringt.                                                                                                                                                         |
+| Geräteeinstellungen      |   `docs/settings`      | Details für die Geräte- und Moduleinstellung. Detailliert die Einstellung jedes Benutzers und gibt Erläuterungen zu seinen Funktionalitäten, zusätzlich zur Anleitung des Benutzers, wie das Gerät mit den verschiedenen verfügbaren Clients konfiguriert werden kann (Android, CLI, iOS, Web). |
+|   Hardware Details       |   `docs/hardware`      |                                            Hardware-relevante Inhalte wie offiziell unterstützte Funkgeräte und deren Zubehör wie 3D-Druckersysteme, Antennen, Tasten, Summer, Drehgeber und Bildschirme.                                                                                       |
+|  Meshtastic Software     |   `docs/software`      |                               Ein Überblick über die aktuelle Software, die in Verbindung mit Meshtastic verwendet wird, um offiziell unterstützte Client- und Gemeinschaftsanwendungen zu integrieren.                                                                                         |
+| Mitwirken bei Meshtastic |  `docs/developers`     |                                                  Details zu den notwendigen Informationen für Entwickler, um einen Beitrag zur Entwicklung des Meshtastic Projekts zu leisten.                                                                                                                  |
+|   Rechtliches            |    `docs/legal`        |        Alle rechtlichen Informationen. Die meisten Änderungen hier werden von Entwicklern behandelt, die tatsächlich an Projekten arbeiten, die rechtliche Offenbarungen erfordern. Beispiele hierfür sind: das Markenzeichen Meshtastic und die Datenschutzrichtlinie.                         |
+
+## Kurzanleitung
+
+Angenommen, Sie haben die [Voraussetzungen installiert](/docs/development/documentation/local-dev#prerequisites), dann benötigt das Ausführen einer lokalen Instanz von Docusaurus drei Schritte:
+
+1. Forken/Klonen Sie das [meshtastic/meshtastic](https://github.com/meshtastic/meshtastic) Projektarchiv und navigiere zum Hauptverzeichnis des Projekts.
+
+   ```shell title="Clone the project"
+   git clone https://github.com/meshtastic/meshtastic.git
+   ```
+
+   ```shell title="Clone fork of the project"
+   git clone https://github.com/[username]/meshtastic.git
+   ```
+
+   ```shell title="Change Directory"
+   cd ~/Meshtastic
+   ```
+
+2. Abhängigkeiten installieren
+
+   ```shell title="Install dependencies using pnpm"
+   pnpm i
+   ```
+
+3. Docusaurus ausführen
+
+   ```shell title="Run a local documentation server and open it in your browser"
+   pnpm run start
+   ```
+
+:::tip
+Before submitting a pull request, it's helpful to run the following command to ensure there are no broken links or errors:
+
+```shell title="Build Project"
+pnpm run build
+```
+
+:::

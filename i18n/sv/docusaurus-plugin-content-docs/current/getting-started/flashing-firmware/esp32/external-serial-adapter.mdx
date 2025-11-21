@@ -1,0 +1,81 @@
+---
+id: external-serial-adapter
+title: Installera med en extern seriell adapter
+sidebar_label: Extern seriell adapter (avancerade användare)
+sidebar_position: 4
+description: Instruktioner för att använda en extern seriell adapter för att installera Meshtastic firmware till en ESP32-enhet.
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+import Link from "@docusaurus/Link";
+
+:::info
+Denna information kommer sannolikt bara att vara till hjälp om du redan har försökt gå igenom de förutsättningar och steg som beskrivs i [manuell installation](/docs/getting-started/flashing-firmware/esp32/cli-script)
+:::
+
+:::caution
+Se till att inte slå på radion utan att först koppla in antennen! Du kan skada radiochippet!
+:::
+
+## Bakgrund
+
+Situationer som kan kräva användning av en extern USB-till-seriell adapter:
+
+- På grund av brist på chip, kan nyinköpta enheter som TTGO T-Beam komma med äldre eller icke-standard USB-till-seriell adapter som i vissa fall är opålitliga.
+- Vissa enheter kan ha defekt USB-till-seriell krets.
+- Vissa enheter, såsom [Hydra](https://github.com/Hydra-Designs/project-hydra-meshtastic-pcb) (Meshtastic-DIY programvara).
+
+### USB-till-seriell adaptrar
+
+Det finns många alternativ på marknaden. Det rekommenderas att köpa en adapter med Silicon Labs CP2102 chipp, eftersom det är en tillförlitlig branschstandard.
+
+Adaptern som presenteras i detta dokument kan köpas från:
+https://www.amazon.se/-/en/Serial-Adapter-CP2102-Compatible-Windows/dp/B078W5L8W1
+
+Koppla in adaptern till din dator utan att ansluta den till några enheter. Se till att din dator har drivrutiner installerade för adaptern. På Windows bör rätt drivrutiner installeras automatiskt.
+![image](https://user-images.githubusercontent.com/9000580/168445869-f73667f5-0169-46fd-ae13-15c3abad31aa.png)
+
+### Anslutning av adaptern till enheten
+
+:::info
+Det finns flera sätt att ansluta stiften i adaptern till radioenheten: att hålla kablar mot anslutningspunkterna, med hjälp av pogo-pin-jiggar etc. Den här guiden använder sig av fastlödd stiftlist på rätt GPIO-stift som sedan kopplats ihop med kopplingskabel.
+:::
+
+1. Anslut RX-stiftet på adaptern till TX-stiftet på enheten
+2. Anslut TX-stiftet på adaptern till RX-stiftet på enheten
+3. Anslut GND-stiftet på adaptern till GND-stiftet på enheten
+4. Anslut antingen 5V-stiftet på adaptern till 5V-stiftet på enheten (illustrerat) eller 3,3V stiftet på adaptern till 3,3V stiftet på enheten.
+5. Bygla GPIO 0 till GND på enheten med en kopplingskabel. (Detta placerar enheten i programmeringsläge när enheten startar upp)
+   Exempel på hur kopplingskabeln kan anslutas med en T-Beam
+   ![image](https://user-images.githubusercontent.com/9000580/168446438-d14f34a0-b92d-4716-87fd-e0c2927a35fd.png)
+6. Anslut adaptern till en USB-port på datorn
+7. Ta bort byglingen av GPIO 0 till GND
+   ![enter-flash-mode](https://user-images.githubusercontent.com/9000580/168446974-c31d3e9c-3397-4cb1-90a4-91ef2e4d5fac.gif)
+
+### Installera programvaran
+
+Efter att ha följt stegen ovan, bör din enhet vara i programmeringsläge. Du kan programmera enheten med hjälp av den [manuella metoden](/docs/getting-started/flashing-firmware/esp32/cli-script)
+
+Efter att ha programmerat enheten, återställ enheten (via RST-knappen om den är tillgänglig).
+Om du har  Meshtastic Python CLI installerat, kan du köra `meshtastic --noproto` för att ansluta enheten igen över adaptern och visa seriell utdata för att bekräfta att Meshtastic-programvaran installerats korrekt.
+![image](https://user-images.githubusercontent.com/9000580/168447159-71a6546a-f487-4bc2-86c1-4c489b2a8975.png)
+
+### Felsökning
+
+Du kan få ett behörighetsfel för COM-porten i de manuella enhetsinstallationsskripten, detta kan vara orsakat av ett antal olika problem.
+
+Du kan behöva köra processen som administratör, säkerställa att annan programvara (som t.ex Cura) inte ansluter till COM-porten eller starta om datorn.
+
+## Anslut och konfigurera enheten
+
+Efter att ha installerat Meshtastic på din enhet, kan du nu gå vidare till de första inställningarna.
+
+<div className="indexCtasBody">
+  <Link
+    className={"button button--outline button--lg cta--button"}
+    to={"/docs/getting-started/initial-config"}
+  >
+    Anslut och konfigurera enhet
+  </Link>
+</div>

@@ -1,0 +1,69 @@
+---
+id: integrations-caltopo
+title: CalTopo / SARTopo
+sidebar_label: CalTopo / SARTopo
+sidebar_position: 1
+---
+
+import ReactPlayer from "react-player";
+
+## CalTopo / SARTopo
+
+Meshtastic lässt sich ganz einfach mit [CalTopo](https://caltopo.com/) Desktop-Edition durch APRS des Produkts über die serielle Funktion integrieren.
+
+<div style={{ maxWidth: "800px", margin: "auto" }}>
+  <ReactPlayer
+    url="https://youtu.be/z_51FAPPl34"
+    controls
+    width="100%"
+    height="400px"
+  />
+</div>
+
+### Konfigurieren des Meshtastic Gerätes
+
+Um unser Meshtastic Gerät für diese Integration zu konfigurieren, haben wir verschiedene Optionen, die beide das [Serielle Modul](/docs/configuration/module/serial) benutzen:
+
+#### Serielle Schnittstelle über den USB Geräteanschluss aktivieren
+
+```shell title="Serial over USB"
+meshtastic --set serial.enabled true --set serial.baud BAUD_9600 --set serial.mode CALTOPO --set serial.override_console_serial_port true
+```
+
+#### Serielle Schnittstelle über USB Adapter aktivieren
+
+```shell title="External serial adapter"
+meshtastic --set serial.enabled true --set serial.baud BAUD_9600 --set serial.mode CALTOPO --set serial.txd = 13 --set serial.rxd = 14
+```
+
+:::info
+Stelle sicher, dass die serielle Baudrate auf `9600` gesetzt ist, sowohl auf dem Meshtastic als auch auf der CalTopo / SARTopo `topo.properties` Konfiguration
+:::
+
+### CalTopo / SARTopo einrichten
+
+Um CalTopo für Meshtastic Integration mittels APRS einzurichten, schauen Sie in die offizielle [Dokumentation](https://training.caltopo.com/all_users/share/live-tracking#aprs).
+
+Beispiel einer `topo.properties` Dateikonfiguration für die Verwendung mit Meshtastic:
+
+![topo.properties](/img/software/integrations/caltopo/properties.webp)
+
+Nach dem Start von CalTopo Desktop sollten alle 10 Sekunden NMEA Wegpunktpositionssätze in die Protokolle des angeschlossenen Meshtastic Gerätes erzeugt werden:
+
+![CalTopo Logs](/img/software/integrations/caltopo/logs.webp)
+
+Aktivieren Sie das Kontrollkästchen **Geteilte Orte** unter **Realtime Data** unten in der Weboberfläche des Computers für Ihre CalTopo Karte. Ihre Knoten sollten als Punkte auf der Karte erscheinen, wenn sie korrekt verbunden sind.
+
+![shared-locations](/img/software/integrations/caltopo/local-stations.webp)
+
+Sie können auf einen oder mehrere Knotenpunkte klicken und im daraus resultierenden Tooltipp **Aufnehmen auf Karte** klicken
+
+![node point](/img/software/integrations/caltopo/click.webp)
+
+Im resultierenden Dialog können Sie Attribute wie ein Label oder eine Farbe dem vom Knoten erstellten Verlauf zuweisen.
+
+![track](/img/software/integrations/caltopo/track.webp)
+
+Wenn Sie die geteilte Karte auf einem anderen Gerät oder Mobiltelefon ansehen, sollten die Knoten auch dort erscheinen, wenn sowohl der Desktop als auch das mobile Gerät eine Internetverbindung haben.
+
+![app](/img/software/integrations/caltopo/app.webp)

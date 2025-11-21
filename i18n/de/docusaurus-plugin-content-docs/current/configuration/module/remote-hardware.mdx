@@ -1,0 +1,276 @@
+---
+id: remote-hardware
+title: Verwendung des Moduls für entfernte Hardware
+sidebar_label: Entfernte Hardware
+description: Das Modul für entfernte Hardware ermöglicht das Lesen, Schreiben und Beobachten von GPIO Pins auf einem abgesetzten Knoten.
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+import { Icon } from "@iconify/react";
+
+Das Modul für entfernte Hardware ermöglicht das Lesen, Schreiben und Beobachten von GPIO Pins auf einem abgesetzten Knoten. Konfigurationsoptionen sind: Aktiviert.
+
+:::info
+
+Für Firmware-Versionen > 2.5.3 erfordert dieses Modul, dass Sie Ihre eigene Firmware kompilieren und das Build-Flag „-DMESHTASTIC_EXCLUDE_REMOTEHARDWARE=1“ in „platformio.ini“ entfernen.
+Darüber hinaus ist die Konfiguration dieses Moduls zwar möglicherweise in Clients verfügbar, das Einstellen und Lesen von GPIOs ist derzeit jedoch nur mit der [Meshtastic Python CLI](/docs/software/python/cli) möglich.
+
+:::
+
+## Einstellung entfernte Hardware
+
+### Aktiviert
+
+Gibt an, ob das Modul aktiviert ist.
+
+## Verfügbarkeit des Moduls entfernte Hardware
+
+<Tabs
+  groupId="settings"
+  defaultValue="apple"
+  values={[
+    {
+      label: (
+        <>
+          <Icon icon="mdi:android" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Android
+        </>
+      ),
+      value: "android",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:apple" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Apple
+        </>
+      ),
+      value: "apple",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:terminal" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Kommandozeile
+        </>
+      ),
+      value: "cli",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:internet" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Web
+        </>
+      ),
+      value: "web",
+    },
+  ]}>
+
+<TabItem value="android">
+
+#### Android
+
+:::info
+All Remote Hardware Module config options are available for Android in app.
+
+1. Öffnen Sie die Meshtastic Applikation
+2. Navigieren Sie zu: **vertikale Ellipse (3 Punkte oben rechts) > Funkkonfiguration > Entfernte Hardware**
+   :::
+
+</TabItem>
+<TabItem value="apple">
+
+#### Apple
+
+:::info
+Alle Konfigurationsoptionen für Remote Hardware Module sind verfügbar in iOS, iPadOS und macOS unter Einstellungen > Modulkonfiguration > Entfernte Hardware
+:::
+
+</TabItem>
+<TabItem value="cli">
+
+#### Kommandozeile
+
+:::info
+
+Alle Einstellungen für das Modul entfernte Hardware sind über die Python Kommandozeile verfügbar.
+
+:::
+
+</TabItem>
+<TabItem value="web">
+
+#### Web
+
+Nicht implementiert.
+
+</TabItem>
+</Tabs>
+
+## Verwendung des Moduls für entfernte Hardware
+
+:::warning
+Der GPIO Zugriff ist grundsätzlich gefährlich, da ungültige Optionen Ihre Hardware physisch beschädigen oder zerstören können. Stellen Sie sicher, dass Sie den Schaltplan für Ihr spezielles Gerät vollständig verstehen, bevor Sie dies versuchen, da wir keine Garantie bieten. Verwendung auf eigene Gefahr!
+:::
+
+### Unterstützte Aktionen
+
+- GPIO setzen
+- GPIO lesen
+- Erhalten Sie eine Benachrichtigung über das Netz, wenn ein GPIO Status geändert wird.
+  Beachten Sie, dass eine schnelle Änderung, wie z.B. Tastendruck, nicht erkannt wird. Schauen Sie dazu stattdessen das [Erkennungssensor Modul](/docs/configuration/module/detection-sensor) an.
+
+Das Ergebnis des Lesens eines GPIO oder Benachrichtigungen über GPIO Änderungen werden auch über MQTT (falls aktiviert) im JSON-Format (falls aktiviert) gesendet.
+
+### Einstellungen
+
+Sie können die neueste Python Kommandozeile/die neueste Python-Bibliothek mit „pip3 install --upgrade meshtastic“ unter Windows/Linux/OS-X erhalten. Weitere Einzelheiten finden Sie im [Python-Abschnitt](/docs/software/python/cli/installation).
+
+Um den Zugriff von nicht vertrauenswürdigen Benutzern zu verhindern, müssen Sie zunächst einen „GPIO“-Kanal erstellen, der für den authentifizierten Zugriff auf diese Funktion verwendet wird. Sie müssen diesen Kanal sowohl auf dem lokalen als auch auf dem entfernten Knoten installieren. Außerdem müssen Sie das Modul auf beiden Geräten aktivieren.
+
+Die Prozedur mit der Python Kommandozeile ist:
+
+1. Lokales Gerät über USB verbinden
+2. Aktivieren Sie das Modul entfernte Hardware:
+   ```shell
+   meshtastic --set remote_hardware.enabled true
+   ```
+3. GPIO-Kanal erstellen:
+   ```shell
+   meshtastic --ch-add gpio
+   ```
+4. Überprüfen Sie, ob der Kanal erstellt wurde, und kopieren Sie die lange „Vollständige URL“, die alle Kanäle auf diesem Gerät enthält:
+   ```shell
+   meshtastic --info
+   ```
+5. Verbinden Sie das Remote-Gerät über USB (oder verwenden Sie die Funktion [Remote-Admin](/docs/configuration/remote-admin), um es über das Mesh zu erreichen).
+6. Aktivieren Sie das Modul für entfernte Hardware:
+   ```shell
+   meshtastic --set remote_hardware.enabled true
+   ```
+7. Stellen Sie es so ein, dass es dem von Ihnen erstellten GPIO-Kanal beitritt:
+   ```shell
+   meshtastic --seturl theurlyoucopiedinstep3
+   ```
+
+Jetzt sollten beide Geräte über den `gpio` Kanal kommunizieren können. Senden Sie zur Bestätigung eine Textnachricht von einem zum anderen. Führen Sie auch `--nodes` aus, um zu überprüfen, ob der zweite Knoten angezeigt wird.
+
+### Masken
+
+Eine Maske wird verwendet, um GPIOs zu kontrollieren. Für GPIO 1 wird Bit 1 der Maske gesetzt (0x2 in Hexadezimal), für GPIO 2 wird Bit 2 der Maske gesetzt (0x4 in Hexadezimal) und so weiter.
+Um die passende Maske für die Pins zu bestimmen, die Sie wissen möchten, kann das folgende Python-Programm (und die Ausgabe) hilfreich sein:
+
+```python
+>>> for i in range(1,45):
+...     print(f'GPIO:{i} mask:{hex(2**i)}')
+...
+GPIO:1 mask:0x2
+GPIO:2 mask:0x4
+GPIO:3 mask:0x8
+GPIO:4 mask:0x10
+GPIO:5 mask:0x20
+GPIO:6 mask:0x40
+GPIO:7 mask:0x80
+GPIO:8 mask:0x100
+GPIO:9 mask:0x200
+GPIO:10 mask:0x400
+GPIO:11 mask:0x800
+GPIO:12 mask:0x1000
+GPIO:13 mask:0x2000
+GPIO:14 mask:0x4000
+GPIO:15 mask:0x8000
+GPIO:16 mask:0x10000
+GPIO:17 mask:0x20000
+GPIO:18 mask:0x40000
+GPIO:19 mask:0x80000
+GPIO:20 mask:0x100000
+GPIO:21 mask:0x200000
+GPIO:22 mask:0x400000
+GPIO:23 mask:0x800000
+GPIO:24 mask:0x1000000
+GPIO:25 mask:0x2000000
+GPIO:26 mask:0x4000000
+GPIO:27 mask:0x8000000
+GPIO:28 mask:0x10000000
+GPIO:29 mask:0x20000000
+GPIO:30 mask:0x40000000
+GPIO:31 mask:0x80000000
+GPIO:32 mask:0x100000000
+GPIO:33 mask:0x200000000
+GPIO:34 mask:0x400000000
+GPIO:35 mask:0x800000000
+GPIO:36 mask:0x1000000000
+GPIO:37 mask:0x2000000000
+GPIO:38 mask:0x4000000000
+GPIO:39 mask:0x8000000000
+GPIO:40 mask:0x10000000000
+GPIO:41 mask:0x20000000000
+GPIO:42 mask:0x40000000000
+GPIO:43 mask:0x80000000000
+GPIO:44 mask:0x100000000000
+```
+
+## Verwenden von GPIOs aus der Python Kommandozeile
+
+:::info
+Sie können auch GPIOs Ihres USB-Anschlussknotens steuern oder ansehen, indem Sie `--dest` auf die lokale Knoten-ID setzen. In diesem Fall wird kein `gpio` Kanal benötigt.
+:::
+
+### Schreiben eines GPIO
+
+```shell title="Example: turning 'on' GPIO4"
+meshtastic --port /dev/ttyUSB0 --gpio-wrb 4 1 --dest 28979058
+# Verbunden mit Radio
+# GPIO-Maske 0x10 mit dem Wert 0x10 nach !28979058 schreiben
+```
+
+### Lesen eines GPIO
+
+```shell title="Example: read GPIO4"
+meshtastic --port /dev/ttyUSB0 --gpio-rd 0x10 --dest 28979058
+# Verbunden mit Radio
+# GPIO-Maske lesen 0x10 von ! 8979058
+# GPIO Leseantwort gpio_value=16
+```
+
+:::note
+Wenn die Maske und der GPIO Wert übereinstimmen, ist der Wert „Ein“. Wenn der GPIO Wert 0 ist, ist der Wert „Aus“.
+:::
+
+### GPIO Änderungen überwachen
+
+```shell title="Example: watching GPIO4 for changes"
+meshtastic --port /dev/ttyUSB0 --gpio-watch 0x10 --dest 28979058
+# Verbunden mit Radio
+# GPIO-Maske 0x10 ansehen! 8979058
+# RemoteHardware typ=GPIOS_CHANGED, gpio_value=16
+# Erhaltene RemoteHardware typ=GPIOS_CHANGED, gpio_value=0
+# Erhaltene RemoteHardware typ=GPIOS_CHANGED, gpio_value=16
+# < drücke Strg-c zum Beenden >
+```
+
+## Testen von GPIO Operationen
+
+Sie können Vorgänge programmgesteuert aus Ihrem eigenen Python-Code ausführen, indem Sie die Meshtastic-Klasse „RemoteHardwareClient“ verwenden. Weitere Einzelheiten finden Sie in der [Python-API](/docs/software/python/cli/installation)-Dokumentation.
+
+Sie können eine einfache LED und einen Widerstand hinzufügen, um zu überprüfen, ob die GPIO-Vorgänge wie erwartet funktionieren. Verwenden Sie [dieses Tutorial](https://www.instructables.com/Slide-Switch-With-Arduino-Uno-R3/) als Leitfaden.
+
+### Voraussetzungen
+
+- (x2) Meshtastic Geräte (ein Gerät könnte sich auf einem lokalen Computer befinden, das andere muss nur mit Strom versorgt werden und ist das mit der LED, die daran angeschlossen werden muss)
+- (x2) Drähte (schwarz und gelb; sie können jede Farbe sein, aber normalerweise schwarz wird für Masse verwendet)
+- (x1) LED
+- (x1) 220 Ohm Widerstand (optional, aber empfohlen)
+- (x1) Lochrasterplatine (optional)
+
+### Vorbereitung
+
+1. Trennen Sie das entfernte Gerät von der Stromversorgung (Batterie/usb)
+2. Verbinden Sie den Widerstand mit dem längeren (positiven) Kabel der LED und das gelbe Kabel mit dem anderen Ende des Widerstands
+3. Verbinden Sie das andere Ende des gelben Kabels mit einem GPIO Pin, der keine Probleme verursacht (z. B. können wir für TLoraV1 GPIO21 verwenden).
+4. Verbinden Sie das schwarze Massekabel vom Masseanschluss am Gerät (z. B. beim TLoraV1 ist es der Endstift neben der RST-Taste) mit dem kürzeren (negativen) Kabel der LED
+5. Das Gerät einschalten
+
+### Überprüfung
+
+Standardmäßig kann der Pin "aus" oder "an" sein. (Er wird höchstwahrscheinlich ausgeschaltet sein) Informationen zum Ausführen von Befehlen finden Sie in den folgenden Schritten. Im Beispiel von GPIO21 wäre die Maske „0x200000“.
+
+![T-Lora v1 mit LED auf GPIO 21](/img/LED_on_TLoraV1.webp)

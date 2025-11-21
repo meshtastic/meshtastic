@@ -1,0 +1,67 @@
+---
+id: drag-n-drop
+title: Drag & Drop nRF52- & RP2040-programvaruuppdateringar
+sidebar_label: Drag & Drop (rekommenderad)
+sidebar_position: 1
+description: Instruktioner för att använda Drag & Drop (rekommenderad) metod för att installera Meshtastic programvara till nRF52 eller RP2040 enheter.
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+import Link from "@docusaurus/Link";
+
+## Installera programvara
+
+:::info
+Du kan nu använda [Meshtastic Web Flasher](https://flasher.meshtastic.org) för att ladda ner och kopiera programvara till din nRF52 eller RP2040-baserade enhet. Alternativt, följ du instruktionerna nedan för att ladda ner och installera programvaran.
+:::
+
+Om du just har utfört en [fabriksåterställning](/docs/getting-started/flashing-firmware/nrf52/nrf52-erase/), kan din enhet automatiskt starta i programmeringsläge, och du kan gå vidare till "Kopiera lämplig programvara" för din enhet nedan:
+
+### nRF52
+
+1. Ladda ner och packa upp den senaste programvaran från [Meshtastic-nedladdningar](https://meshtastic.org/downloads).
+2. Anslut enheten till datorn med en USB-kabel.
+3. Dubbelklicka på återställningsknappen på din enhet (det kommer att sätta den i programmeringsläge).
+4. Notera hur en ny lagringsenhet dyker upp på din dator (Windows, Mac, Linux eller Android).
+5. Om du öppna denna enhet bör du se tre filer: `CURRENT.UF2`, `INDEX.HTM `, och `INFO_UF2.TXT`.
+6. Kopiera lämplig programvarufil ('firmware-DEVICE_NAME-X.X.X-xxxxxxx.uf2') till lagringsenheten.
+7. När filen har kopierats till lagringsenheten kommer den att starta om och installera programvaran Meshtastic.
+
+### RP2040
+
+1. Ladda ner och packa upp den senaste programvaran från [Meshtastic-nedladdningar](https://meshtastic.org/downloads).
+2. Håll ner BOOTSEL-knappen och anslut samtidigt enheten till datorn via en USB-kabel.
+3. Notera hur en ny lagringsenhet dyker upp på din dator (Windows, Mac, Linux eller Android).
+4. Om du öppna denna enhet bör du se två filer: `INDEX.HTM` och `INFO_UF2.TXT`.
+5. Kopiera lämplig programvarufil ('firmware-DEVICE_NAME-X.X.X-xxxxxxx.uf2') till lagringsenheten.
+6. När filen har kopierats till lagringsenheten kommer den att starta om och installera programvaran Meshtastic.
+
+## Anslut och konfigurera enheten
+
+Efter att ha installerat Meshtastic på din enhet, kan du nu gå vidare till de första inställningarna.
+
+<div className="indexCtasBody">
+  <Link
+    className={"button button--outline button--lg cta--button"}
+    to={"/docs/getting-started/initial-config"}
+  >
+    Anslut och konfigurera enhet
+  </Link>
+</div>
+
+### Potentiella installationsproblem
+
+:::info
+
+Innan du installerar programvaran, bekräfta att du har [RAK4631](https://docs.rakwireless.com/product-categories/wisblock/rak4631/overview) och inte [RAK4631-R](https://docs.rakwireless.com/product-categories/wisblock/rak4631-r/overview). Om det skulle vara så är det inte hela världen. Hårdvaran är identisk men kräver att bootloadern ändras. Instruktioner om hur du gör detta finns [här](/docs/getting-started/flashing-firmware/nrf52/convert-rak4631r).
+
+:::
+
+:::info
+
+Äldre versioner av programvaran Meshtastic kan spara gammal data, vilket gör att enheten inte kan starta upp. Om du upplever problem när du uppgraderar din nRF52-enhet från en äldre version av Meshtastic, kan du behöva genomföra en fullständig fabriksåterställning av flashminnet.
+
+Följ guiden [fabriksåterställ din nRF52-enhet](/docs/getting-started/flashing-firmware/nrf52/nrf52-erase) innan du fortsätter till [installera programvara](#flash-firmware).
+
+:::

@@ -1,0 +1,138 @@
+---
+id: client-api
+title: Client-API (Seriell/TCP/BLE)
+sidebar_label: Client API
+sidebar_position: 1
+---
+
+Dieses Dokument beschreibt das Protokoll für externe API Client-Anwendungen, die unsere Geräte verwenden. Wenn Sie Ihren eigenen Code auf dem Gerät selbst ausführen möchten, lesen Sie stattdessen die Dokumentation zur [Modul API](/docs/development/device/module-api).
+
+Die Geräte-API ist so konzipiert, dass sie nur einen einfachen Stream von ToRadio- und FromRadio-Paketen enthält und der gesamte Polymorphismus aus dem flexiblen Satz von Google Protocol Buffers stammt, die über die Leitung gesendet werden. Wir verwenden Protocol Buffer in großem Umfang sowohl für die Bluetooth API als auch für Pakete innerhalb des Mesh oder beim Bereitstellen von Paketen für andere Anwendungen auf dem Telefon.
+
+## Streaming Version
+
+Dieses Protokoll ist **fast** identisch, wenn es über BLE, Seriell/USB oder TCP bereitgestellt wird (unsere drei derzeit unterstützten Transportmöglichkeiten für die Verbindung mit Telefon/PC). Der Großteil dieses Dokuments bezieht sich auf die ursprüngliche BLE-Version, dieser Abschnitt beschreibt jedoch die kleinen Änderungen, wenn diese API über einen Streaming-Transport (kein Datagramm) bereitgestellt wird. Die Streaming-Version weist folgende Änderungen auf:
+
+- Wir gehen davon aus, dass der Stream zuverlässig ist (das Protokoll wird jedoch neu synchronisiert, wenn Bytes verloren gehen oder beschädigt werden). d. h. wir schließen keine CRCs oder Fehlerkorrekturcodes ein.
+- Vor jedem Paket ist immer ein vier Byte langer Header (siehe unten) vorangestellt. Dieser Header stellt Rahmenzeichen und Länge bereit.
+- Der Datenstrom zum Funkgerät besteht nur aus einer Reihe von ToRadio Paketen (mit den zusätzlichen 4-Byte-Headern).
+- Der Stream zum PC ist ein Stream von FromRadio-Paketen (mit den 4-Byte-Headern). Wenn die Zustandsmaschine des Empfängers keine gültigen Header-Bytes erkennt, kann sie diese Bytes (optional) auf der Debug-Konsole vom Radio ausgeben. Dadurch kann das Gerät reguläre serielle Debugmeldungen ausgeben (die von einem Terminalprogramm verstanden werden können), aber auch zu einem strukturierten Satz von Protocol Buffern wechseln, sobald es erkennt, dass der PC-Client ein Protocol Buffer gesendet hat.
+
+Der 4-Byte-Header ist so aufgebaut, dass er sowohl eine Rahmung bietet als auch nicht wie „normales“ 7-Bit-ASCII aussieht.
+
+- Byte 0: START1 (0x94)
+- Byte 1: START2 (0xc3)
+- Byte 2: MSB der Länge des Protocol Buffers
+- Byte 3: LSB der Länge des Protocol Buffers
+
+Der Empfänger überprüft die Länge und geht bei einem Wert >512 davon aus, dass das Paket beschädigt ist, und sucht erneut nach START1. Während der Suche nach START1 werden alle anderen Zeichen als Fehlerprotokoll gedruckt. Ein kleines Beispiel für die Implementierung dieses Lesers finden Sie in der Python Implementierung.
+
+## Bluetooth (MeshBluetoothService)
+
+Dies ist der wichtigste Bluetooth Dienst für das Gerät und stellt die API bereit, die Ihre App verwenden sollte, um Informationen über das Mesh zu erhalten, Pakete zu senden oder das Funkgerät bereitzustellen.
+
+Eine Referenzimplementierung eines Clients, der diesen Dienst verwendet, finden Sie unter [RadioInterfaceService](https://github.com/meshtastic/Meshtastic-Android/blob/master/app/src/main/java/com/geeksville/mesh/repository/radio/RadioInterfaceService.kt).
+
+Der typische Ablauf, wenn ein Telefon eine Verbindung zum Gerät herstellt, sollte wie folgt aussehen (wenn Sie diesen Ablauf von der Python-App aus beobachten möchten, führen Sie einfach `meshtastic --debug --info` aus – der Ablauf über BLE ist identisch):
+
+- Es gibt nur drei relevante Endpunkte (und sie verfügen über eine integrierte BLE-Dokumentation – verwenden Sie also ein BLE-Tool Ihrer Wahl, um sie zu überwachen): FromRadio, FromNum (sendet Benachrichtigungen, wenn neue Daten in FromRadio verfügbar sind) und ToRadio.
+- Setzen Sie MTU Größe auf 512.
+- Schreiben Sie ein ToRadio.startConfig-Protobuf an den Endpunkt „ToRadio“. Dadurch wird dem Funkgerät mitgeteilt, dass es sich um eine neue Verbindung handelt und die gesamte Knotendatenbank gesendet werden muss.
+- Lesen Sie wiederholt vom Endpunkt „FromRadio“. Bei jedem Lesen erhalten Sie ein FromRadio Protocol Buffer zurück (siehe Meshtastic Protocol Buffer). Lesen Sie von diesem Endpunkt aus weiter, bis Sie zurückkommen und den Puffer leeren.
+- Unten finden Sie die erwartete Reihenfolge für Ihren ersten Download.
+- Nach dem ersten Download sollten Sie sich am Endpunkt „FromNum“ für BLE „Notify“ anmelden. Wenn eine Benachrichtigung eintrifft, bedeutet dies, dass nun ein oder mehrere FromRadio Pakete warten. Lesen Sie von FromRadio bis Sie wieder ein leeres Paket erhalten.
+- Jedes Mal, wenn Sie Pakete an das Radio senden wollen, sollten Sie ein Paket in ToRadio schreiben.
+
+Erwartete Sequenz für den ursprünglichen Download:
+
+- Nachdem Sie startConfig gesendet haben, erhalten Sie eine Reihe von FromRadio Paketen. Die Reihenfolge dieser Pakete ist wie folgt (Sie sollten sich jedoch nicht darauf verlassen, sondern stattdessen einfach Ihr Modell für jedes Paket aktualisieren, das Sie erhalten – basierend auf dem Typ).
+- Lesen Sie eine RadioConfig von „radio“ – wird verwendet, um die Kanal- und Funkgeräteeinstellungen abzurufen.
+- Lesen Sie einen Benutzer von „user“, um den Benutzernamen für diesen Knoten zu erhalten.
+- Lesen Sie eine MyNodeInfo von „mynode“, um Informationen zu diesem lokalen Gerät zu erhalten.
+- Lesen Sie eine Reihe von Knoteninformationsnachrichten, um die Kopie der aktuellen Knotendatenbank für das Netzwerk des Telefons zu erstellen.
+- Lesen Sie ein EndConfig Paket, das angibt, dass der gesamte benötigte Status gesendet wurde.
+- Lesen Sie eine Reihe von MeshPackets, bis ein leeres Paket zurückgegeben wird, um alle Nachrichten abzurufen, die für diesen Knoten eingegangen sind, während das Telefon nicht erreichbar war.
+
+Definitionen (und Dokumentation) zu FromRadio, ToRadio, MyNodeInfo, NodeInfo und Benutzer Protocol Buffer finden Sie unter [mesh.proto](https://github.com/meshtastic/protobufs/blob/master/meshtastic/mesh.proto).
+
+UUID für den Dienst: 6ba1b218-15a8-461f-9fa8-5dcae273eafd
+
+Jedes Merkmal ist wie folgt aufgeführt:
+
+UUID
+Eigenschaften
+Beschreibung (einschließlich lesbarem Namen)
+
+2c55e69e-4993-11ed-b878-0242ac120002
+read
+fromradio – enthält ein neu empfangenes FromRadio-Paket für das Telefon (bis zu MAXPACKET Bytes pro Paket).
+Nach dem Lesen legt der ESP32 das nächste Paket in dieses Postfach. Wenn der FIFO leer ist, wird ein leeres Paket in dieses Postfach gelegt.
+
+f75c76d2-129e-4dad-a1dd-7866124401e7
+Schreiben
+toradio – Schreibe ToRadio Protocol Buffer in diese Eigenschaft, um sie zu senden (bis zur maximalen MAXPACKET Länge).
+
+ed9da18c-a800-4f66-a670-aa7547e34453
+Lesen, Benachrichtigen, Schreiben
+fromNum – die aktuelle Paketnummer in der Nachricht, die im fromRadio wartet. Wenn das Telefon diese Benachrichtigung sieht, sollte es Nachrichten lesen,
+bis es diese Nummer erreicht.
+
+5a3d6e49-06e6-4423-9944-e9de8cdf9547
+Benachrichtigen
+Eine Protokollnachricht als LogRecord Protocol Buffer.  Clients werden aufgefordert, auf diese Benachrichtigung zu achten und die Möglichkeit zu haben, diese Debug Meldungen zu protokollieren.
+
+6c6fd238-78fa-436b-aacf-15c5be1ef2e2
+benachrichtigen
+Eine Rohprotokollnachricht als Zeichenfolge (mit Zeilenumbruch).  Diese Eigenschaft ist VERALTET und sollte nicht für neuen Client-Quellcode verwendet werden.
+
+Das Telefon kann in dieses Register schreiben, um bis zu FIXME Paketen zurückzugelangen und den seltenen Fall zu behandeln, dass ein Fromradio-Paket gelöscht wurde, nachdem der ESP32-Rückruf aufgerufen wurde, aber bevor es beim Telefon ankommt. Wenn das Telefon in dieses Register schreibt, verwirft der ESP32 ältere Pakete und fügt das nächste Paket >= Fromnum in Fromradio ein.
+Wenn der ESP32 „fromnum“ hochzählt, verzögert er die Benachrichtigung um 100 ms, in der Hoffnung, dass die Benachrichtigung nie gesendet werden muss, wenn das Telefon bereits von „fromradio“ zieht.
+
+Hinweis: Wenn das Telefon jemals einen Rückgang dieser Zahl feststellt, bedeutet dies, dass der ESP32 neu gestartet wurde.
+
+Warteschlangenverwaltung.
+Nicht alle Nachrichten werden in der FromRadio Warteschlange gespeichert (gefiltert nach Unterpaket):
+
+- Es werden nur die aktuellsten Standort und Benutzernachrichten für einen bestimmten Knoten gespeichert.
+- Alle Datenunterpakete werden behalten.
+- Es werden keine WantNodeNum-/DenyNodeNum-Nachrichten gespeichert.
+- Eine Variable „keepAllPackets“ unterdrückt, wenn sie auf „true“ gesetzt ist, dieses Verhalten und behält stattdessen alles zur Weiterleitung an das Telefon (zum Debuggen).
+
+### Ein Hinweis zu MTU Größen
+
+Dieses Gerät funktioniert mit jeder MTU-Größe, es wird jedoch dringend empfohlen, die „setMTU-Funktion“ Ihres Telefons aufzurufen, um die MTU auf 512 Bytes zu erhöhen, sobald Sie eine Verbindung zu einem Dienst herstellen. Dies verbessert die Leistung beim Lesen/Schreiben von Paketen erheblich.
+
+### Protocol Buffer API
+
+Beim Verbinden sollten Sie ein want_config_id Protocol Buffer an das Gerät senden. Dies führt dazu, dass das Gerät seine Knotendatenbank und Funkkonfiguration über den Endpunkt „FromRadio“ sendet. Nach dem Senden der vollständigen Datenbank sendet das Funkgerät eine Want_Config_ID, um anzuzeigen, dass das Senden der Konfiguration abgeschlossen ist.
+
+### Andere Bluetooth Dienste
+
+Dieses Dokument konzentriert sich auf das Kernprotokoll des Gerätes. Es ist jedoch zu beachten, dass das Gerät auch die folgenden anderen Bluetooth-Dienste bereitstellt.
+
+#### Bluetooth Software Aktualisierung
+
+Der Software Aktualisierungsservice. Eine Beispielfunktion, die mithilfe dieser API ein Softwareupdate durchführt, finden Sie unter [startUpdate](https://github.com/meshtastic/Meshtastic-Android/blob/master/app/src/main/java/com/geeksville/mesh/service/SoftwareUpdateService.kt).
+
+SoftwareUpdateService UUID cb0b9a0b-a84c-4c0d-bdbb-442e3144ee30
+
+Eigenschaften
+
+| UUID                                 | Eigenschaften          | Beschreibung                                                                                                                                             |
+| ------------------------------------ | ---------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| e74dd9c0-a301-4a6f-95a1-f0e1dbea8e1e | schreiben, lesen       | Gesamtbildgröße, 32 Bit, schreiben Sie dies zuerst und lesen Sie es dann erneut, um zu sehen, ob es akzeptabel war (0 bedeutet nicht akzeptiert)         |
+| e272ebac-d463-4b98-bc84-5cc1a39ee517 | schreiben              | Daten, variable Größe, empfohlen 512 Bytes, schreiben Sie eines für jeden Dateiblock                                                                     |
+| 4826129c-c22a-43a3-b066-ce8f0d5bacc6 | schreiben              | CRC32, zuletzt schreiben – durch das Schreiben wird der OTA-Vorgang abgeschlossen, jetzt können Sie das Ergebnis lesen                                   |
+| 5e134862-7411-4424-ac4a-210937432c77 | lesen, benachrichtigen | Ergebniscode, lesbar, benachrichtigt aber, wenn der OTA-Vorgang abgeschlossen ist                                                                        |
+| 5e134862-7411-4424-ac4a-210937432c67 | schreiben              | Legt die Region für die Programmierung fest, derzeit sind nur 0 (App) oder 100 (Spiffs) definiert, wenn nicht festgelegt, wird App angenommen            |
+| GATT_UUID_SW_VERSION_STR/0x2a28      | lesen                  | Wir implementieren auch diese Standard-GATT-Einträge, da sie für die Software Aktualisierung wahrscheinlich erforderlich sind:                           |
+| GATT_UUID_MANU_NAME/0x2a29           | lesen                  |                                                                                                                                                          |
+| GATT_UUID_HW_VERSION_STR/0x2a27      | lesen                  |                                                                                                                                                          |
+
+#### DeviceInformationService
+
+Implementiert den Standard BLE Vertrag für diesen Dienst (verfügt über Softwareversion, Hardwaremodell, Seriennummer usw.).
+
+#### BatteryLevelService
+
+Implementiert den standardmäßigen BLE Dienst und stellt den Batteriestand auf eine Weise bereit, die die meisten Client-Geräte automatisch verstehen sollten (d. h. er sollte automatisch auf der Anzeige des Bluetooth Gerätes angezeigt werden).

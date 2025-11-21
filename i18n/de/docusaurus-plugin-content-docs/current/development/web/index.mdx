@@ -1,0 +1,68 @@
+---
+id: web-interface
+title: Entwicklung der Weboberfläche
+sidebar_label: Weboberfläche
+sidebar_position: 4
+---
+
+## Übersicht
+
+Die Meshtastic Weboberfläche kann von einem Knoten gehostet oder bedient werden.
+
+Die offizielle gehostete Version finden Sie unter [https://client.meshtastic.org](https://client.meshtastic.org).
+
+Auf die von einem Knoten gelieferte Version kann zugegriffen werde, wenn Sie [Ihren Knoten mit Ihrem Netzwerk verbinden](/docs/configuration/radio/network) und dann http://meshtastic.local (oder ihr_node_ip.local) im Browser aufrufen.
+
+## Entwicklung & Erstellen
+
+### Entwicklung
+
+Klonen Sie das [Meshtastic Web Repo](https://github.com/meshtastic/web) Repository
+
+```shell
+git clone https://github.com/meshtastic/web.git
+cd web
+```
+
+Abhängigkeiten installieren.
+
+```bash
+deno i
+```
+
+Entwicklerserver starten:
+
+```bash
+deno task dev
+```
+
+### Bauen und Packen
+
+Projekt erstellen:
+
+```bash
+deno task build
+```
+
+GZip der Ausgabe:
+
+```bash
+deno task package
+```
+
+## Mitmachen
+
+Wir freuen uns über Ihre Mitarbeit. So funktioniert der Bereitstellungsablauf für Pull-
+Anfragen:
+
+- **Vorschau Veröffentlichung:**\
+  Jede Pull-Anforderung generiert automatisch eine Vorschau Veröffentlichung auf Vercel.
+  Dies ermöglicht Ihnen und den Prüfern eine Vorschau der Änderungen vor dem Zusammenführen anzusehen.
+
+- **Staging Environment (`client-test`):**\
+  Sobald Ihr PR zusammengeführt ist, werden Ihre Änderungen auf unserer Staging-Seite verfügbar sein:
+  [client-test.meshtastic.org](https://client-test.meshtastic.org/).
+  Diese Umgebung unterstützt die schnelle Iteration und das Testen von Funktionen, ohne dass die produktive Version zu beeinträchtigt.
+
+- **Produktive Version:**\
+  In regelmäßigen Abständen werden stabile und voll getestete Veröffentlichungen auf [client.meshtastic.org](https://client.meshtastic.org/) veröffentlicht.

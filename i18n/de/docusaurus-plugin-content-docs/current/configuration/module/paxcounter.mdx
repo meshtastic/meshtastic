@@ -1,0 +1,131 @@
+---
+id: paxcounter
+title: Nutzung des Besucherzählermoduls
+sidebar_label: Besucherzähler
+description: Dieses Modul verwendet WLAN und BLE um Personen oder Geräte zu zählen, die an Ihrem Meshtastic Gerät vorbeigehen. Wird im Einzelhandel, Museen usw. verwendet.
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+import { Icon } from "@iconify/react";
+
+Das Besucherzählermodul zählt die Anzahl der Personen, die einen bestimmten Bereich passieren, indem sie nach WLAN und BLE MAC Adressen scannen. Es wird häufig in Einzelhandelsgeschäften, Museen und anderen öffentlichen Räumen verwendet, um den Fußverkehr zu überwachen und wertvolle Daten für die Analyse zu sammeln.
+
+Um dieses Modul nutzen zu können, stellen Sie sicher, dass Ihre Geräte die Firmware Version v2.2.17 oder höher enthalten.
+
+:::info
+Dieses Modul kann nur mit ESP32 Geräten verwendet werden. Um das Besucherzählermodul zu betreiben, ist es zwingend erforderlich, sowohl WLAN als auch Bluetooth in Ihren Netzwerk- und Bluetooth-Einstellungen auszuschalten.
+:::
+
+## Besucherzählermodul Einstellung
+
+### Aktiviert
+
+Gibt an, ob das Modul aktiviert ist.
+
+### Aktualisierungsintervall
+
+Das Intervall in Sekunden, wie oft eine Nachricht an das Netz gesendet wird, wenn eine Statusänderung erkannt wurde.
+
+## Verfügbarkeit des Besucherzählermoduls
+
+<Tabs
+  groupId="settings"
+  defaultValue="apple"
+  values={[
+    {
+      label: (
+        <>
+          <Icon icon="mdi:android" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Android
+        </>
+      ),
+      value: "android",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:apple" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Apple
+        </>
+      ),
+      value: "apple",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:terminal" height="1.5rem" style={{ marginRight: "0.25rem" }} /> CLI
+        </>
+      ),
+      value: "cli",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:internet" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Web
+        </>
+      ),
+      value: "web",
+    },
+  ]}>
+
+<TabItem value="android">
+
+#### Android
+
+:::info
+Paxcounter Config options are available for Android.
+
+1. Öffnen Sie die Meshtastic App
+2. Navigieren Sie zu: **vertikale Ellipse (3 Punkte oben rechts) > Geräteeinstellungen > Besucherzähler**
+
+:::
+
+</TabItem>
+<TabItem value="apple">
+
+#### Apple
+
+:::info
+
+Alle Konfigurationsoptionen für das Besucherzählermoduls sind unter Einstellungen > Modulkonfiguration > Besucherzähler in iOS, iPadOS und macOS verfügbar.
+
+:::
+
+</TabItem>
+<TabItem value="cli">
+
+#### Kommandozeile
+
+:::info
+
+Alle Konfigurationsoptionen des Besucherzählermoduls sind in der Python CLI Version v2.2.16 und höher verfügbar.
+
+:::
+
+Beispielbefehle sind folgende:
+
+```shell title="Enable/Disable the Paxcounter Module"
+meshtastic --set paxcounter.enabled true
+meshtastic --set paxcounter.enabled false
+```
+
+```shell title="Set the Minimum Broadcast Interval to 900 seconds"
+meshtastic --set paxcounter.paxcounter_update_interval 900
+```
+
+```shell title="Get the Paxcounter Module Configuration"
+meshtastic --get paxcounter
+```
+
+</TabItem>
+<TabItem value="web">
+
+#### Web
+
+:::info
+
+Alle Konfigurationsoptionen des Besucherzählermoduls sind in der Web-Oberfläche verfügbar.
+
+:::
+
+</TabItem>
+</Tabs>

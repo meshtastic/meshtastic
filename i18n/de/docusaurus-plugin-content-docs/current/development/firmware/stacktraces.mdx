@@ -1,0 +1,35 @@
+---
+id: stacktraces
+title: Stacktraces
+sidebar_label: Stacktraces
+sidebar_position: 5
+---
+
+## Entschlüsseln von Stacktraces
+
+Möglicherweise stoßen Sie auf eine Situation, in der Ihr Gerät abstürzt und mit einem Stacktrace zurückgelassen wird, unten sind zwei Methoden um diese zu dekodieren.
+
+### Manuell
+
+:::info
+Diese Methode verwendet die `firmware.elf` Datei, die aus deiner neuesten Version generiert wurde, um aktuelle Symbole zu erhalten.
+:::
+
+1. Die Backtrace Zeichenfolge in einer Textdatei speichern:
+
+   ```text title="backtrace.txt"
+   Backtrace: 0x....
+   ```
+
+2. Ausnahmedekoder ausführen:
+   ```shell
+   bin/exception_decoder.py backtrace.txt
+   ```
+
+### In Echtzeit
+
+Um Stacktraces in Echtzeit zu entschlüsseln, starten Sie den folgenden Befehl (ersetzen Sie `DEVICE_PORT` durch den Port ihres Gerätes) in einem Terminal mit dem das Zielgerät verbunden ist:
+
+```shell
+pio device monitor --port DEVICE_PORT -f esp32_exception_decoder
+```

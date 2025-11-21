@@ -1,0 +1,217 @@
+---
+id: network
+title: Configurazione Di Rete
+sidebar_label: Rete
+description: Scopri la configurazione di rete per il tuo dispositivo Meshtastic, inclusi NTP, WiFi, ed Ethernet.
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+import { Icon } from "@iconify/react";
+
+Le opzioni di configurazione di rete sono: Server NTP, WiFi Abilitato, SSID WiFi, WiFi PSK, Ethernet Abilitato, Modalità di rete IPv4, Indirizzo statico rsyslog Server e Flag di protocollo. La configurazione di rete utilizza un messaggio di amministrazione inviando un protobuf `Config.Network`.
+
+:::info
+Abilitando il WiFi si disattiverà il Bluetooth. Solo un metodo di connessione funzionerà alla volta.
+:::
+
+I dispositivi ESP32 hanno la possibilità di connettersi al WiFi come client. La modalità SoftAP non è supportata dal firmware Meshtastic.
+
+## Valori Di Configurazione Di Rete
+
+### Server NTP
+
+Il server NTP usato se la rete IP è disponibile.
+
+Impostato su `meshtastic.pool.ntp.org` per impostazione predefinita. (Lunghezza Massima: 32)
+
+### WiFi abilitato
+
+Abilita o disabilita il WiFi.
+
+Impostato su `false` (Disabilitato) per impostazione predefinita.
+
+### SSID WiFi
+
+Questo è l'SSID della tua rete Wi-Fi.
+
+Vuoto `""` per impostazione predefinita. (Case Sensitive, Lunghezza Massima: 32)
+
+### WiFi PSK
+
+Questa è la password della tua rete Wi-Fi.
+
+Vuoto `""` per impostazione predefinita. (Case Sensitive, Lunghezza Massima: 64)
+
+### Ethernet abilitato
+
+Abilita o disabilita l'Ethernet.
+
+Impostato su `false` (Disabilitato) per impostazione predefinita.
+
+### Modalità Di Rete Ipv4
+
+Impostare su `DHCP` per impostazione predefinita. Cambia in `STATIC` per usare un indirizzo IP statico. Si applica sia a Ethernet che a WiFi.
+
+### Configurazione indirizzo statico IPv4
+
+Contiene IP, Gateway, Subnet e server DNS per una configurazione statica se selezionata in modalità rete.
+
+### Server rsyslog
+
+Per configurare un server e una porta rsyslog. La funzione di registrazione predefinita è `user`.
+
+### Flag del Protocollo
+
+Definisce quali protocolli di rete ausiliari sono utilizzati per inviare pacchetti. I valori sono archiviati come campo binario di opzioni booleane di configurazione (OR binario di ProtocolFlags).
+
+|   Valore      |                 Descrizione                                        |
+| :-----------: | :----------------------------------------------------------------: |
+| NO_BROADCAST  |      Non trasmettere pacchetti su alcun protocollo di rete         |
+| UDP_BROADCAST | Abilita la trasmissione di pacchetti tramite UDP sulla rete locale |
+
+:::tip
+La prima volta che il dispositivo si riavvia dopo aver attivato il WiFi o Ethernet, ci vorranno altri 20-30 secondi per completare l'avvio. Questo è per generare chiavi SSL auto-firmate. Le chiavi verranno salvate per il riutilizzo futuro.
+:::
+
+## Disponibilità Client Di Configurazione Di Rete
+
+<Tabs
+  groupId="settings"
+  defaultValue="apple"
+  values={[
+    {
+      label: (
+        <>
+          <Icon icon="mdi:android" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Android
+        </>
+      ),
+      value: "android",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:apple" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Apple
+        </>
+      ),
+      value: "apple",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:terminal" height="1.5rem" style={{ marginRight: "0.25rem" }} /> CLI
+        </>
+      ),
+      value: "cli",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:internet" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Web
+        </>
+      ),
+      value: "web",
+    },
+  ]}>
+
+<TabItem value="android">
+
+#### Android
+
+:::info
+
+Le opzioni di configurazione di rete sono disponibili per Android.
+
+1. Apri l'applicazione Meshtastic
+2. Vai a: **Menu (3 punti in alto a destra) > Configurazione radio > Rete**
+
+:::
+
+</TabItem>
+
+<TabItem value="apple">
+
+#### Apple
+
+:::info
+
+Tutte le opzioni di configurazione di rete sono disponibili su iOS, iPadOS e macOS in Impostazioni > Configurazione del dispositivo > Rete.
+
+:::
+
+</TabItem>
+
+<TabItem value="cli">
+
+#### CLI
+
+:::info
+
+Tutte le opzioni di configurazione di rete sono disponibili nel CLI python.
+
+:::
+
+|  Impostazione        | Valori Accettabili |    Predefinito            |
+| :------------------: | :----------------: | :-----------------------: |
+|  network.ntp_server  |    stringa         | `meshtastic.pool.ntp.org` |
+| network.wifi_enabled |  `true`, `false`   |      `false`              |
+|  network.wifi_ssid   |    stringa         |      `""`                 |
+|  network.wifi_psk    |    stringa         |      `""`                 |
+| network.eth_enabled  |  `true`, `false`   |      `false`              |
+| network.address_mode |  `DHCP`, `STATIC`  |      `DHCP`               |
+
+:::tip
+
+Poiché il dispositivo si riavvierà dopo che ogni comando viene inviato tramite CLI, si raccomanda quando si impostano più valori in una sezione di configurazione, che i comandi siano concatenati insieme in un unico comando.
+
+```shell title="Example:"
+meshtastic --set network.wifi_enabled true --set network.wifi_ssid "my network" --set network.wifi_psk miapassword
+```
+
+:::
+
+```shell title="Set NTP Server"
+meshtastic --set network.ntp_server "meshtastic.pool.ntp.org"
+```
+
+```shell title="Enable / Disable WiFi"
+meshtastic --set network.wifi_enabled true
+meshtastic --set network.wifi_enabled false
+```
+
+```shell title="Set WiFi SSID"
+
+meshtastic --set network.wifi_ssid mynetwork
+// Se con spazi
+meshtastic --set network.wifi_ssid "my network"
+```
+
+```shell title="Set WiFi password"
+meshtastic --set network.wifi_psk mypassword
+// Se con spazi
+meshtastic --set network.wifi_psk "my password"
+```
+
+</TabItem>
+
+<TabItem value="web">
+
+#### Web
+
+:::info
+Tutte le opzioni di configurazione di rete sono disponibili nell'interfaccia utente web.
+:::
+
+</TabItem>
+
+</Tabs>
+
+## Esempi
+
+### Client WiFi
+
+Con `network.wifi_ssid` & `network.wifi_psk` popolati, il dispositivo saprà connettersi alla tua rete. Assicurati di essere nel raggio di azione del WiFi e che sia una rete a 2.4GHz. Se hai un singolo dispositivo Meshtastic sulla tua rete locale, è facile connetterti al tuo dispositivo con DNS `http://meshtastic.local`. Se si dispone di più dispositivi Meshtastic è necessario connettersi utilizzando i rispettivi indirizzi IP.
+
+### Disabilita WiFi
+
+Per disabilitare completamente il WiFi, imposta `network.wifi_enabled` su `false`.

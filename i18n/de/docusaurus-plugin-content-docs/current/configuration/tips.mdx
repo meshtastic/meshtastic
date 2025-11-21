@@ -1,0 +1,125 @@
+---
+id: tips
+title: Tips für Einstellungen
+description: Tipps und Lösungen, die Ihnen helfen, das Beste aus Ihrem Meshtastic Gerät und Netzwerk herauszuholen.
+sidebar_label: Tips
+sidebar_position: 4
+---
+
+import QRCode from "@site/docs/blocks/_qr-code.mdx";
+
+## Rollen
+
+Es wird dringend empfohlen, die [Rolle](/docs/configuration/radio/device#roles) auf `CLIENT`, `CLIENT_MUTE` oder `CLIENT_BASE` eingestellt zu lassen. Verwenden Sie nur andere Rollen, wenn Sie einen spezifischen, gut verstandenen Grund dafür haben. Lesen Sie unseren [Blog-Beitrag über die Wahl der besten Rolle](/blog/choosing-the-right-device-role/).
+
+### Empfohlene Rollen
+
+- `CLIENT` Knoten empfangen, senden und wiederholen auf intelligente Weise Nachrichten, um das Netzwerk zu unterstützen.
+  - **Dies ist für die meisten Situationen die richtige Wahl.**
+  - Fügt bei der erneuten Übertragung automatisch intelligente Verzögerungen hinzu, um die Netzwerkstabilität aufrechtzuerhalten.
+  - Perfekt für Knoten, die anderen helfen können: Dachinstallationen, gut sichtbare Standorte oder Knoten, die die Netzwerkabdeckung erweitern.
+  - Verwenden Sie es in abgelegenen Gebieten (Wandern, Skifahren, Radfahren), wo jeder Knoten zur Aufrechterhaltung der Verbindung beiträgt.
+
+- `CLIENT_MUTE` Knoten können Nachrichten senden und empfangen, aber niemals weiterleiten.
+  - Verwenden Sie es mit einem persönlichen, tragbaren Gerät, wenn Sie sich in der Nähe eines leistungsstärkeren Knotens (z. B. eines Dachknotens) in einem überlasteten Netzwerk befinden.
+  - Verwenden Sie diese Option, wenn sich mehrere Knoten in unmittelbarer Nähe befinden. Setzen Sie den am besten positionierten Knoten auf `CLIENT` und die anderen auf `CLIENT_MUTE`.
+  - Perfekt für Innenknoten, die nur mit einem Außenknoten kommunizieren – da sie andere Knoten ohnehin nicht erreichen können, würde das Wiederholen von Nachrichten nur Bandbreite verschwenden.
+
+- `CLIENT_BASE` Knoten priorisieren die erneute Übertragung von Nachrichten von Ihren anderen persönlichen Knoten.
+  - Verwenden Sie einen stärkeren oder gut positionierten Knoten als `Basisstation` auf dem Dachboden/Dach, um Nachrichten von Ihren eigenen schwächeren, im Innenbereich oder weniger gut positionierten Knoten aus weiterzuleiten.
+  - Setzen Sie einen Knoten auf „CLIENT_BASE“. Legen Sie Ihre anderen Knoten (normalerweise `CLIENT` oder `CLIENT_MUTE`) als Favoriten auf der `CLIENT_BASE` fest.
+  - Perfekt, um sicherzustellen, dass alle Ihre Knoten in der Nähe Ihren stärkeren, gut positionierten Dachboden-/Dachknoten voll ausnutzen.
+
+![Client Knotenbeispiel](/img/configuration/client.webp)
+_Ein Beispiel für einen 'Client'-Knoten.  Foto Credit: Cully@KBOXLABS_
+
+### Vermeiden Sie `ROUTER`und `REPEATER`
+
+Die Verwendung von `ROUTER` oder `REPEATER` Rollen kann unnötigerweise schwerwiegende Netzwerkprobleme verursachen:
+
+- Erhöhte Gefahr einer Kollision von Paketen.
+- Reduzierte Nachrichtenübertragungsraten.
+- Reduzierte effektive Netzwerkreichweite aufgrund unnötigem Verbrauch der Sprungweite.
+
+Diese Rollen sind für sehr spezielle Anwendungen. Bevor Sie von `CLIENT` wechseln, lesen Sie die [Dokumentation](/docs/configuration/radio/device#roles) sorgfältig durch, um die Auswirkungen zu verstehen. Darüber hinaus sollten Sie dies mit Ihrer örtlichen Gemeinde koordinieren, um sicherzustellen, dass die Auswirkungen eher positiv als negativ sind.
+
+Denken Sie daran: Ein Netzwerk aus `CLIENT` Knoten mit einer kleinen Anzahl gut platzierter `ROUTER` ist normalerweise die effizienteste und stabilste Konfiguration.
+
+![Router Knoten Beispiel](/img/configuration/router.webp)- Ein Beispiel für einen Router-Knoten.  Foto Credit: Cully@KBOXLABS\*
+
+## (Nicht) Ihren Standort teilen
+
+Die Telemetrie wird über Ihren [PRIMÄREN Kanal](/docs/configuration/radio/channels#role) geteilt. Dies bedeutet, dass Ihre Koordinaten über diesen Kanal unter Verwendung der definierten Verschlüsselung (sofern vorhanden) an das Netzwerk gesendet werden, wenn Ihr Knoten GPS Koordinaten von einem integrierten GPS Chip oder von Ihrem Mobilgerät erfasst hat.
+
+Standardmäßig lautet der Name des PRIMÄREN Kanals LongFast mit dem Verschlüsselungsschlüssel `AQ==` (Base64-Äquivalent von Hex 0x01). Wenn dies unverändert bleibt, wird Ihr Standort mit allen Knoten in Reichweite geteilt, die auch den Standardkanal verwenden.
+
+### Standortgenauigkeit
+
+Meshtastic unterstützt jetzt die Möglichkeit, die Genauigkeit der über einen bestimmten Kanal gesendeten Standortdaten zu steuern.
+
+Die Einstellung `position_precision` ermöglicht die Steuerung des Genauigkeitsgrads für Standortdaten, die über einen bestimmten Kanal gesendet werden. Dies kann aus Datenschutzgründen nützlich sein, wenn beim Senden von Standortdaten über bestimmte Kanäle eine Verschleierung des genauen Standorts erwünscht sein kann.
+
+Ausführliche Informationen zu den Einstellungen für die Standortgenauigkeit und deren Konfiguration finden Sie in der [Dokumentation zur Standortgenauigkeit](/docs/configuration/radio/channels/#position-precision).
+
+### Standortfreigabe auf einem privaten Sekundärkanal
+
+> Dies ist eine neue Funktion, die nur mit Firmware 2.7.1+ funktioniert.
+
+Um Ihren Standort auf einem privaten sekundären Kanal freizugeben und gleichzeitig den standardmäßigen primären Kanal unverschlüsselt zu lassen, gehen Sie folgendermaßen vor:
+
+1. Deaktivieren Sie die Standortfreigabe auf dem primären Kanal (Kanal 0), um zu verhindern, dass Ihr Standort an alle Benutzer gesendet wird.
+2. Wählen Sie einen sekundären Kanal aus, auf dem Sie Ihren Standort teilen möchten. Aktivieren Sie die Standortfreigabe und wählen Sie die gewünschte Präzisionsstufe.
+3. Automatische Standortaktualisierungen verstehen:
+   - Nur ein Kanal empfängt Ihre automatischen Live Standortaktualisierungen.
+   - Dies ist der sekundäre Kanal mit dem niedrigsten Index (ausgenommen Kanal 0) mit aktivierter Standortfreigabe.
+   - Wenn für mehrere sekundäre Kanäle die Standortfreigabe aktiviert ist, erhält nur der Kanal mit dem niedrigsten Index automatische Standortübertragungen.
+   - Kanäle, bei denen die Standortfreigabe aktiviert ist, die aber keine automatischen Übertragungen empfangen, können weiterhin für manuelle Standortanfragen verwendet werden.
+
+#### Beispielszenario
+
+Stellen Sie sich vor, Sie benutzen folgende Kanäle:
+
+- Kanal 0: "Jedermann" (Standort AUS)
+- Kanal 1: „CampChat“ (Standort EIN)
+- Kanal 2: „Freunde“ (Standort EIN)
+- Kanal 3: „Tutu Dienstags Gruppe“ (Standort AUS)
+
+##### So funktioniert's
+
+- CampChat (Kanal 1) empfängt Ihre Live- und automatischen Standortaktualisierungen, da es sich dabei um den Kanal mit dem niedrigsten Index und aktivierter Standortfreigabe handelt.
+- Freunde (Kanal 2) können Ihren Standort manuell anfordern, erhalten jedoch keine automatischen Updates.
+- Tutu Dienstags Gruppe (Kanal 3) ermöglicht Kommunikation, gibt aber keine Standortdaten weiter oder empfängt sie.
+
+## Öffentliche Nachrichten erneut aussenden
+
+Meshtastic-Knoten senden alle Pakete erneut, wenn sie die [LoRa Modemeinstellungen](/docs/configuration/radio/lora#lora-config-values) gemeinsam nutzen, unabhängig von der Verschlüsselung (es sei denn, der [Weiterleitungsmodus](/docs/configuration/radio/device#rebroadcast-mode) ist auf „LOCAL_ONLY“ eingestellt).
+
+:::info
+Wenn Sie möchten, dass Ihre Knoten das öffentliche Netzwerk einschließen/erweitern, müssen Sie die Standard-[Modemvoreinstellung](/docs/configuration/radio/lora#modem-preset) `LONG_FAST` verwenden. Wenn Sie den Namen Ihres PRIMÄREN Kanals ändern, müssen Sie den LoRa Kanal manuell auf den Standard für Ihre Region einstellen (siehe oben).
+:::
+
+### Sprungweite
+
+Es wird **dringend** empfohlen, Ihre [Sprungweite](/docs/configuration/radio/lora#max-hops) auf 3 eingestellt zu lassen, es sei denn, Sie sind sicher, dass Sie mehr (oder weniger) benötigen, um Ihren Zielknoten zu erreichen. Unnötig hohe Sprungweiten führen häufig zu Netzwerkproblemen. Wenn Sie die Sprungweite erhöhen müssen, wenden Sie die Änderungen nur auf die Knoten an den Rändern des Netzwerks an, nicht auf die in der Mitte.
+
+![Hop Count Image](/img/configuration/max-hops.webp)
+
+## Nachrichtenkanäle und LoRa Frequenzschlitze
+
+Zuvor verwendete Meshtastic das Wort Kanäle, um zwei verschiedene Konfigurationseigenschaften zu definieren: Nachrichtenkanäle und LoRa Kanalnummern. Dies könnte jedoch zu Verwirrung führen, da der Begriff Kanäle für zwei unterschiedliche Konzepte verwendet wurde. Um die Unterscheidung zu verdeutlichen, wurde beschlossen, LoRa Kanalnummer in LoRa Frequenzschlitz zu ändern.
+
+### Funkkonfiguration: Kanäle
+
+Diese konfigurieren „Nachrichtengruppen“ und umfassen Ihre PRIMÄREN und SEKUNDÄREN Kanäle. Alle SEKUNDÄREN Kanäle verwenden dieselbe LoRa Modemkonfiguration wie Ihr PRIMÄRER Kanal (einschließlich LoRa Frequenzsteckplatz).
+
+Es gibt insgesamt 8 Nachrichtenkanäle. Kanal 0 ist Ihr PRIMÄRER Kanal, wobei die Kanäle 1–7 für private Gruppennachrichten und/oder spezielle Kanäle wie [`admin`](/docs/configuration/remote-admin) verfügbar sind.
+
+### Funkkonfiguration: LoRa Frequenzsteckplatz
+
+Diese Eigenschaft, früher bekannt als LoRa Kanalnummer, konfiguriert die Frequenz, auf die das Funkgerät eingestellt ist. Sehen Sie sich den [Frequenzrechner](/docs/overview/radio-settings#frequency-slot-calculator) an, um die Beziehung zwischen Frequenzschlitz und Sendefrequenz anzuzeigen.
+
+## Bewährte Praktiken
+
+- Wenn Sie Teil eines großen Netzwerkes sind und nicht wissen, was eine Einstellung bewirkt, ändern Sie sie nicht (es sei denn, Sie sind sehr neugierig).
+- TESTEN Sie Ihre Einstellungen und Hardware, bevor Sie sie an schwer zugänglichen Orten installieren.
+- Durch das Verbinden eines Knotens mit dem [öffentlichen MQTT-Server](/docs/configuration/module/mqtt#connect-to-the-default-public-server) werden möglicherweise die Standorte aller Knoten in Ihrem Netzwerk im Internet veröffentlicht.

@@ -1,0 +1,49 @@
+---
+id: buttons
+title: Hardware Tasten der Nano-Serie
+sidebar_label: Tasten
+sidebar_position: 1
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+## Gerät
+
+<Tabs
+groupId="nano-series"
+defaultValue="g1"
+values={[
+{label: 'Nano G1 Explorer', value: 'g1-e'},
+{label: 'Nano G1', value: 'g1'}
+]}>
+
+<TabItem value="g1-e">
+
+### Nano G1 Explorer
+
+#### Tasten
+
+- **Benutzer/Programm Taste:**
+  - **Einfaches Drücken:** Ändert die Informationsseite auf dem Bildschirm des Geräts.
+  - **Doppeltes Drücken:** sendet ein Adhoc-Ping der Position des Geräts an das Netzwerk.
+- **Nachricht Lesetaste:**
+  - **Einfaches Drücken:** Löscht die neue Nachrichten LED.
+
+### Tasten
+
+- **Stromversorgung:**
+  - **Nach oben:** Schaltet das Gerät ein.
+  - **Nach unten:** Schaltet das Gerät aus.
+- **Standort Pin:**
+  - **Nach oben:** Setzt GPS in den Betriebsmodus.
+  - **Nach unten:** Setzt GPS in den Energiesparmodus.
+- **Glocke:**
+  - **Nach oben:** Wählt Summer für die erweiterte Benachrichtigung.
+  - **Nach unten:** Wählt LED für erweiterte Benachrichtigung.
+
+</TabItem>
+<TabItem value="g1">
+
+</TabItem>
+</Tabs>

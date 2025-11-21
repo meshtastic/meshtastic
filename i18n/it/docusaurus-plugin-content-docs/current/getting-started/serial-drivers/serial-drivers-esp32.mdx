@@ -1,0 +1,71 @@
+---
+id: esp32
+title: ESP32 Driver Seriali
+sidebar_label: Driver ESP32
+sidebar_position: 1
+description: Istruzioni per l'installazione dei driver seriali USB ESP32 per interagire con un dispositivo Meshtastic.
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+import { Icon } from "@iconify/react";
+import Link from "@docusaurus/Link";
+
+## Installare driver ESP32 da USB a seriale
+
+Potresti aver bisogno di installare un driver da Silicon Labs per il [CP210X USB to UART bridge](https://www.silabs.com/products/development-tools/software/usb-to-uart-bridge-vcp-drivers)
+
+Alcune schede più recenti potrebbero richiedere il driver CH9102 (CH340/CH341).
+
+[CH9102 Driver - MacOS Download](https://github.com/WCHSoftGroup/ch34xser_macos)
+
+<TabItem value="linux">
+
+#### Linux
+
+- [CP210X USB to UART bridge - Download](https://www.silabs.com/products/development-tools/software/usb-to-uart-bridge-vcp-drivers)
+- [Driver CH9102 - Linux Download](http://www.wch-ic.com/downloads/CH341SER_LINUX_ZIP.html)
+
+</TabItem>
+
+<TabItem value="macos">
+
+#### macOS
+
+- [CP210X USB to UART bridge - Download](https://www.silabs.com/products/development-tools/software/usb-to-uart-bridge-vcp-drivers)
+- [CH9102 Driver - MacOS Download](https://github.com/WCHSoftGroup/ch34xser_macos)
+
+</TabItem>
+
+<TabItem value="windows">
+
+#### Windows
+
+- [CP210X USB to UART bridge - Download](https://www.silabs.com/products/development-tools/software/usb-to-uart-bridge-vcp-drivers)
+- [CH9102 Driver - Windows Download](http://www.wch.cn/downloads/CH343SER_ZIP.html)
+- [CH9102 Driver - Windows Download (Download diretto per Windows 7)](https://github.com/Xinyuan-LilyGO/CH9102_Driver)
+
+</TabItem>
+
+</Tabs>
+
+:::important
+
+Dopo aver installato il driver, assicurarsi di riavviare il computer per completare il processo di installazione.
+
+Puoi anche [testare l'installazione del driver seriale](/docs/getting-started/serial-drivers/test-serial-driver-installation) in questo passaggio se necessario.
+
+:::
+
+### Flash del Firmware
+
+Dopo aver installato i driver seriali, è ora possibile flashare il firmware Meshtastic sul dispositivo. Per procedere, seleziona il tipo di dispositivo appropriato per il tuo dispositivo.
+
+<div className="indexCtasBody">
+  <Link
+    className={"button button--outline button--lg cta--button"}
+    to={"/docs/getting-started/flashing-firmware/esp32/"}
+  >
+    Flash del Firmware ESP32
+  </Link>
+</div>

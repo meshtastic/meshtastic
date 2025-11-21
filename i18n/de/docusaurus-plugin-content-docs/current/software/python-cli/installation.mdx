@@ -1,0 +1,278 @@
+---
+id: installation
+title: Installieren der Meshtastic Python Kommandozeile
+sidebar_label: Installation
+slug: /software/python/cli/installation
+sidebar_position: 1
+description: Diese Seite bietet umfassende Anweisungen zur Installation der Meshtastic Python Kommandozeile auf verschiedenen Betriebssystemen.
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+import { Icon } from "@iconify/react";
+
+## Meshtastic Python Bibliothek
+
+Diese Bibliothek bietet eine Kommandozeilenschnittstelle (CLI) zur Verwaltung der Benutzereinstellungen der Meshtastic Knoten und bietet eine einfache API zum Senden und Empfangen von Nachrichten über diese vernetzten Funkgeräte. Ereignisse werden mit einem Abonnementmodell ausgeliefert, bei dem Sie nur die Nachrichtenarten abonnieren, die Sie interessieren.
+
+Das [Meshtastic Python Repository](https://github.com/meshtastic/Meshtastic-python) ist eine hervorragende Informationsquelle. Wenn Sie den Code sehen möchteen oder zur Entwicklung der Python Bibliothek oder der Kommandozeilenschnittstelle beitragen möchten, dann besuchen Sie bitte die Meshtastic Python [GitHub](https://github.com/meshtastic/Meshtastic-python) Seite.
+
+### Voraussetzungen
+
+Stellen Sie vor der Installation sicher, dass Ihr System die folgenden Anforderungen erfüllt:
+
+- **Serielle Treiber**: Ihr Computer sollte die erforderlichen seriellen Treiber für die [CP210X USB to UART Bridge](https://www.silabs.com/products/development-tools/software/usb-to-uart-bridge-vcp-drivers) oder die [CH9102](http://www.wch.cn/downloads/CH343SER_ZIP.html) installiert haben (für einige neuere Platinen).
+- **Python**: Python 3 sollte auf Ihrem System installiert sein. Prüfen Sie mit `python3 -V` und installieren Sie es, falls nötig.
+- **pip**: Die Python Paketinstallation pip sollte installiert sein. Prüfen Sie mit `pip3 -V` und installieren Sie es, falls nötig.
+
+Wenn Sie sicher sind, dass die Anforderungen erfüllt sind, folgen Sie den Installationsanweisungen für Ihr Betriebssystem in den Registerkarten unten.
+
+### Installationsanweisungen
+
+Um die Meshtastic Kommandozeile zu installieren, wählen Sie die Registerkarte für Ihr Betriebssystem aus und folgen den Schritt-für-Schritt-Anweisungen zur Installation über `pip`. Ausschließlich für Ubuntu können Sie auch alternativ die [eigenständige Version](#standalone-installation-ubuntu-only) installieren, wenn Sie dies vorziehen.
+
+<Tabs
+  groupId="operating-system"
+  queryString="install-python-cli"
+  defaultValue="windows"
+  values={[
+    {
+      label: (
+        <>
+          <Icon icon="mdi:linux" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Linux
+        </>
+      ),
+      value: "linux",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:apple" height="1.5rem" style={{ marginRight: "0.25rem" }} /> macOS
+        </>
+      ),
+      value: "macos",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:microsoft" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Windows
+        </>
+      ),
+      value: "windows",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:terminal" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Termux für Android
+        </>
+      ),
+      value: "termux",
+    },
+  ]}>
+
+<TabItem value="linux">
+
+#### Linux
+
+- Überprüfen Sie, ob auf Ihrem Computer die erforderlichen seriellen Treiber installiert sind.
+
+  - Verbinden Sie Ihr Meshtastic Gerät mit Ihrem USB-Anschluss
+  - Verwenden Sie den Befehl:
+    ```shell
+    lsusb
+    ```
+  - Sie sollten etwas sehen wie:
+    - `ID 10c4:ea60 Silicon Labs CP210x UART Bridge` für CP210X
+    - `ID 1a86:55d4 QinHeng Electronics USB Single Serial` für CH9102
+      - Wenn kein serielles Gerät gezeigt wird, dass dem von Ihnen verwendeten Gerät entspricht, dann überprüfen Sie bitte unsere Seite [serielle Treiber installieren](/docs/getting-started/serial-drivers/), ehe Sie fortfahren.
+
+- Überprüfen Sie, ob Python 3 auf Ihrem Computer installiert ist.
+
+  - Verwenden Sie den Befehl:
+    ```shell
+    python3 -V
+    ```
+  - Falls dies keine Version zurückgibt, installieren Sie Python.
+    ```shell
+    sudo apt-get update
+    sudo apt-get install python3
+    ```
+
+- Pip wird normalerweise installiert, wenn Sie Python 3 mit Version >= 3.4 verwenden.
+
+  - Überprüfen Sie, mit diesem Befehl ob pip installiert ist.
+    ```shell
+    pip3 -V
+    ```
+  - Wenn dies keine Version zurückgibt, installieren Sie pip.
+    ```shell
+    sudo apt-get install python3-pip
+    ```
+
+- Optional: Verwenden Sie eine virtuelle Python Umgebung (ansonsten springen Sie zum Schritt "pytap2 installieren").
+  - Installieren Sie den python-virtualenvwrapper (arch basierte Distribution als Beispiel).
+    ```shell
+    sudo pacman -Syu python-virtualenvwrapper
+    ```
+  - Virtuelle Umgebung erstellen
+    ```shell
+    source /usr/bin/virtualenvwrapper.sh
+    mkvirtualenv meshtastic
+    workon meshtastic
+    ```
+
+- pytap2 installieren
+  ```shell
+  pip3 install --upgrade pytap2
+  ```
+
+- Meshtastic installieren:
+  ```shell
+  pip3 install --upgrade "meshtastic[cli]"
+  ```
+  (das `[cli]` Suffix installiert ein paar optionale Abhängigkeiten die mit älteren Kommandozeilenversionen übereinstimmen)
+  - Verwendung von pipx als Alternative zu pip3, wenn der Fehler `extern verwaltete Umgebung` auftritt.
+    ```shell
+    sudo apt install pipx && pipx install "meshtastic[cli]"
+    ```
+    - Wenn `pipx` verwendet wird, kann es notwendig sein `$PATH` zu aktualisieren, indem Sie folgendes ausführen:
+      ```shell
+      pipx ensurepath
+      ```
+
+</TabItem>
+<TabItem value="macos">
+
+#### macOS
+
+- Überprüfen Sie, ob auf Ihrem Computer die erforderlichen seriellen Treiber installiert sind.
+  - Verbinden Sie Ihr Meshtastic Gerät mit Ihrem USB-Anschluss
+  - Navigieren Sie zu `Apple Menü > Über diesen Mac > Systembericht... > Hardware > USB`
+  - Sie sollten so etwas wie `CP210X USB to UART Bridge Controller` sehen
+    - Wenn kein serielles Gerät gezeigt wird, dass dem von Ihnen verwendeten Gerät entspricht, dann überprüfen Sie bitte unsere Seite [serielle Treiber installieren](/docs/getting-started/serial-drivers/), ehe Sie fortfahren.
+
+- Überprüfen Sie, ob Python 3 auf Ihrem Computer installiert ist.
+  - Verwenden Sie den Befehl:
+    ```shell
+    python3 -V
+    ```
+  - Falls dies keine Version zurückgibt, installieren Sie [Python](https://www.python.org)
+    - Im Folgenden wird Homebrew verwendet, um `python3` zu installieren, welches `pip3` enthält.
+    - Überprüfen Sie, mit dem folgenden Befehl ob Homebrew installiert ist
+      ```shell
+      brew -v
+      ```
+      Wenn es nicht installiert ist, folgen Sie den Anweisungen auf der [Homebrew Website](https://brew.sh) bevor Sie fortfahren.
+    - Python installieren
+      ```shell
+      brew install python3
+      ```
+
+- Pip wird normalerweise installiert, wenn Sie Python 3 mit Version >= 3.4 verwenden.
+
+  - Überprüfen Sie, mit diesem Befehl ob pip installiert ist.
+    ```shell
+    pip3 -V
+    ```
+  - Falls dies keine Version zurückgibt, installieren Sie [pip](https://pip.pypa.io/en/stable/installing)
+
+- pipx installieren
+  ```shell
+  brew install pipx
+  pipx ensurepath
+  ```
+
+- Meshtastic installieren:
+  ```shell
+  pipx install "meshtastic[cli]"
+  ```
+  (das `[cli]` Suffix installiert ein paar optionale Abhängigkeiten die mit älteren Kommandozeilenversionen übereinstimmen)
+
+</TabItem>
+<TabItem value="windows">
+
+#### Windows
+
+- Überprüfen Sie, ob auf Ihrem Computer die erforderlichen seriellen Treiber installiert sind.
+  - Verbinden Sie Ihr Meshtastic Gerät mit Ihrem USB-Anschluss
+  - Öffenen Sie den Gerätemanager
+  - Unter `Anschlüsse (COM & LPT)` sollten Sie so etwas wie `Silicon Labs CP210X USB to UART Bridge (COM5)` sehen
+    - Wenn kein serielles Gerät gezeigt wird, dass dem von Ihnen verwendeten Gerät entspricht, dann überprüfen Sie bitte unsere Seite [serielle Treiber installieren](/docs/getting-started/serial-drivers/), ehe Sie fortfahren.
+- Überprüfen Sie, ob Python 3 auf Ihrem Computer installiert ist.
+  - Verwenden Sie den Befehl:
+    ```powershell
+    py -V
+    ```
+  - Falls dies keine Version zurückgibt, installieren Sie [Python](https://www.python.org)
+
+:::info
+Wenn Sie Python installieren, stellen Sie sicher, dass Sie die Option "Python zum PATH hinzufügen" auswählen oder wählen Sie das Kästchen "Python zu Umgebungsvariablen hinzufügen". Wenn Sie dies während der Installation vergessen haben, können Sie Python nach der Installation manuell zum PATH Ihres Systems hinzufügen. Andernfalls kann es zu Fehlern bei der Verwendung von Python oder pip Befehlen kommen.
+:::
+
+- Pip wird normalerweise installiert, wenn Sie Python 3 mit Version >= 3.4 verwenden.
+  - Überprüfen Sie, mit diesem Befehl ob pip installiert ist.
+    ```powershell
+    pip3 -V
+    ```
+  - Falls dies keine Version zurückgibt, installieren Sie [pip](https://pip.pypa.io/en/stable/installing)
+- pytap2 installieren
+  ```powershell
+  pip3 install --upgrade pytap2
+  ```
+- Meshtastic installieren:
+  ```powershell
+  pip3 install --upgrade "meshtastic[cli]"
+  ```
+  (das `[cli]` Suffix installiert ein paar optionale Abhängigkeiten die mit älteren Kommandozeilenversionen übereinstimmen)
+
+</TabItem>
+<TabItem value="termux">
+
+#### Termux
+
+- Installieren Sie [Termux aus F-Droid](https://f-droid.org/en/packages/com.termux) oder die [Github Veröffentlichung](https://github.com/termux/termux-app/releases). Die Version des Google Play Shops ist veraltet.
+- Laden Sie Termux und aktualisieren Sie die Paketliste
+  ```shell
+  pkg update
+  ```
+- Installierte Pakete aktualisieren
+  ```shell
+  pkg upgrade
+  ```
+- Python installieren
+  ```shell
+  pkg install python
+  ```
+- Pip aktualisieren und Meshtastic und einige seiner Abhängigkeiten installieren
+  ```shell
+  pip install --upgrade pip pygatt pytap2 wheel "meshtastic[cli]"
+  ```
+  (das `[cli]` Suffix installiert ein paar optionale Abhängigkeiten die mit älteren Kommandozeilenversionen übereinstimmen)
+
+:::note
+Beachten Sie, dass die Meshtastic Kommandozeile nicht in der Lage ist, die Knoten über USB durch Termux zu steuern, aber Sie können Geräte über Wifi mit der Option `--host x.x.x.x` steuern unter Verwendung derr Geräte IP Adresse (ESP32 oder Pico W nur). Die Wifi Verbindung befindet sich derzeit in der Entwicklung und funktioniert möglicherweise noch nicht richtig. Wenn Sie eine Rückmeldung geben oder diese Funktion testen möchten, dann treten Sie bitte unserem [Discord Server](https://discord.gg/ktMAKGBnBs) für weitere Informationen bei.
+:::
+
+</TabItem>
+</Tabs>
+
+**Möglicherweise müssen Sie die Kommandozeile schließen und erneut öffnen. Die Pfadvariablen können während der Installation für die aktuelle Sitzung aktualisiert werden.**
+
+### Eigenständige Installation (nur Ubuntu)
+
+1. Lade die ausführbare Datei `meshtastic_ubuntu` von der [Github Veröffentlichung](https://github.com/meshtastic/Meshtastic-python/releases) Seite herunter.
+2. Führen Sie den folgenden Befehl aus, um die Datei ausführbar zu machen und benennen sie `meshtastic` um:
+
+```shell
+chmod +x meshtastic_ubuntu && mv meshtastic_ubuntu meshtastic
+```
+
+3. Um die Kommandozeile auszuführen:
+
+```shell
+./meshtastic
+```
+
+:::tip
+Kopieren (oder verschieben) Sie dieses Binärprogramm irgendwo in Ihren Pfad.
+:::

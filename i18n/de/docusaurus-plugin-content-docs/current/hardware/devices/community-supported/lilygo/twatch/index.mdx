@@ -1,0 +1,61 @@
+---
+id: twatch
+title: LILYGO® T-Watch
+sidebar_label: T-Watch
+sidebar_position: 5
+---
+
+Der T-Watch S3 ist ein kompaktes tragbares Gerät mit einem 1,54-Zoll-IPS-LCD-Touchscreen mit einer Auflösung von 240x240 Pixel. Es beinhaltet haptisches Feedback, integriertes Mikrofon, Lautsprecher, Echtzeituhr und einen Dreiachsen-Beschleunigungsmesser.
+
+## Spezifikationen
+
+- **MCU**
+  - ESP32-S3 (WLAN & Bluetooth 5 LE)
+- **LoRa Sendeempfänger**
+  - Semtech SX1262
+- **Frequenzoptionen**
+  - 915 MHz
+  - 868 MHz
+  - 433 MHz
+- **Antenne**
+  - U.FL/IPEX Antennenanschluss für LoRa
+- **Anschlüsse**
+  - Micro-USB
+
+## Merkmale
+
+- 1,54 Zoll ST7789V TFT LCD (Auflösung: 240 x 240)
+- DRV2605 Haptischer Treiber
+- I2S Lautsprecher/Mikrofon & MAX98357 I2S Verstärker
+- AXP2101 PMU und 400mAh Batterie.
+- BMA423 Dreiachsen-Beschleunigungsmesser
+- Echtzeituhr
+
+## Programmierung
+
+Um ESP32-S3 Geräte wie die T-Watch zu programmieren, müssen Sie sie normalerweise im Espressifs Firmware-Download-Modus platzieren. Benutzen Sie dazu den "1200bps Reset" Knopf im Web-Flasher um dies zu tun. Wenn diese Methode aus irgendeinem Grund nicht funktioniert, können Sie dem manuellen Prozess folgen.
+
+:::warning
+
+Fahren Sie nicht fort, es sei denn, eine Antenne ist angeschlossen, um mögliche Schäden am Funkgerät zu vermeiden.
+
+:::
+
+Der folgende Prozess wird das Gerät manuell im Espressif Firmware Download Modus aktivieren:
+
+1. Stellen Sie sicher, dass das Gerät ausgeschaltet ist, indem Sie die Kronen-Taste drücken und gedrückt halten.
+2. Entfernen Sie die Rückseite des Gerätes.
+3. Suchen und drücken Sie die Boot-Taste.
+
+![T S3 Boot Taste](/img/hardware/T-Watch-S3-BUTTON.webp)
+
+4. Während Sie den Boot-Knopf gedrückt halten, drücken Sie einmal die Krone, um das Gerät einzuschalten.
+5. Nach 2-3 Sekunden lassen Sie die BOOT Taste los.
+
+Mit dem Gerät im Espressif Firmware Download Modus, können Sie mit der Programmierung durch eine der unterstützten Methoden fortfahren. Es wird generell empfohlen, den [Web Flasher](https://flasher.meshtastic.org/) zu benutzen. Sie können "T Watch S3" aus dem Auswahlmenü des Gerätes auswählen.
+
+## Quellen
+
+- Firmware Datei: `firmware-t-watch-X.X.xxxxx.bin`
+
+![T-Watch](/img/hardware/LILYGO-T-Watch-S3.webp)

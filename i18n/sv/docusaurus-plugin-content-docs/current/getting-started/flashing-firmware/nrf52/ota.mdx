@@ -1,0 +1,84 @@
+---
+id: ota
+title: Trådlösa programuppdateringar för nRF52
+sidebar_label: Trådlösa programuppdateringar
+sidebar_position: 2
+description: Instruktioner för att använda trådlös metod (Over-The-Air / OTA) för att installera Meshtastic-programvara till nRF52-enheter.
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+import { Icon } from "@iconify/react";
+
+nRF52 enheter kan ta emot trådlösa OTA-uppdateringar från en mobil enhet över bluetooth. Äldre versioner av den inbyggda programvaran hos T-Echo-enheter har inte OTA-stöd.
+
+:::caution
+
+OTA-uppdateringar löper större risk att misslyckas.. Om uppdateringsprocessen misslyckas, kommer enheten att hamna i ett icke-fungerande tillstånd som kräver fysisk åtkomst för åtgärd.
+
+:::
+
+<Tabs
+  groupId="settings"
+  defaultValue="apple"
+  values={[
+    {
+      label: (
+        <>
+          <Icon icon="mdi:android" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Android
+        </>
+      ),
+      value: "android",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:apple" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Apple
+        </>
+      ),
+      value: "apple",
+    },
+  ]}>
+
+<TabItem value="android">
+
+#### Android
+
+:::info
+När detta skrivs, är den aktuella Android-versionen av nRF DFU-appen (v2.3.0) inte kompatibel med Meshtastic programvaruuppdateringar. Använd instruktionerna nedan för att uppdatera trådlöst via OTA med nRF Connect-appen.
+:::
+
+OTA firmware-uppdateringar är tillgängliga för Android med hjälp av en äldre version av den mer avancerade nRF Connect-appen, **version 4.24.3**, som finns att ladda ner från [Nordic Semiconductors GitHub](https://github.com/NordicSemiconductor/Android-nRF-Connect/releases/tag/v4.24.3).
+
+1. Ladda ner den programvaruversion som du vill installera från [Meshtastics nedladdningar](/downloads) eller [Meshtastics GitHub](https://github.com/meshtastic/firmware/releases).
+2. Packa upp den nedladdade filen med programvaran
+3. Öppna nRF Connect-appen och välj CONNECT på enheten från SCANNER-fliken
+4. Om det övre högra hörnet av gränssnittet visar DISCONNECT, fortsätt till steg 5, om det står CONNECT, välj CONNECT
+5. Välj DFU-ikonen från övre högra hörnet på skärmen
+6. Välj OK efter att ha säkerställt att "Distribution Packet (ZIP)" är markerat
+7. Välj rätt programvarufil för din enhet (avslutas med -ota.zip)
+8. Uppdateringen startar automatiskt (det kommer att gå långsamt)
+9. När uppdateringen är klar, kommer enheten att starta om automatiskt
+
+</TabItem>
+
+<TabItem value="apple">
+
+#### Apple
+
+Trådlösa OTA-programvaruuppdateringar finns tillgängliga på iOS & iPadOS med nRF Device Firmware Update-appen som finns tillgänglig via [Apple App Store](https://apps.apple.com/us/app/nrf-device-firmware-update/id1624454660)
+
+1. Ladda ner den programvaruversion som du vill installera från [Meshtastics nedladdningar](/downloads), [Meshtastic GitHub](https://github.com/meshtastic/firmware/releases), eller via iOS- eller iPadOS-appen.
+2. Packa upp filen med programvaran
+3. Öppna nRF DFU-appen och välj rätt programvarufil för din enhet (avslutas med -ota.zip)
+4. Anslut till din enhet
+5. Ladda upp programvaran
+
+iPhones auto-lås-funktion kan potentiellt avbryta uppladdningen av programvaran. För att undvika detta, tryck ibland på skärmen, eller ställ tillfälligt in auto-låset till "aldrig" under uppladdningsprocessen för att säkerställa att telefonen förblir olåst och att uppladdningen slutförs utan avbrott.
+
+Om uppdateringen misslyckas, kan du försöka att justera inställningarna:
+
+1. I inställningarna, aktivera "**Paket Receipt Notifcation**". 
+2. Ändra "**Number of Packets**" till ett lägre värde. Vissa användare rapporterar framgång med "5" paket. 
+   </TabItem>
+   </Tabs>

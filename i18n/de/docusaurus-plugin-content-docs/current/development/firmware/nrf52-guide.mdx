@@ -1,0 +1,57 @@
+---
+id: nrf52-guide
+title: Entwicklungsanleitung für nRF52
+sidebar_label: NRF52 Anleitung
+sidebar_position: 6
+---
+
+Dieses Dokument ist eine Sammlung von Tipps und bewährten Verfahren zur Entwicklung auf der nRF52 Plattform. Es wurde erstellt, um sich kontinuierlich die neuesten Informationen bereitzustellen. Beiträge sind durch Pull-Requests auf GitHub willkommen.
+
+## NanoDAP USB Debuggingadapter verwenden
+
+Dies ist ein Mini-HOWTO zur Installation der entsprechenden Firmware- und Adapter-Software, es basiert auf [diesem Tutorial von RAK](https://docs.rakwireless.com/product-categories/accessories/rakdap1/quickstart/#rak4600-evaluation-board).
+
+### Erforderliche Bauteile
+
+Der [RAKDAP1/NanoDAP](https://msh.to/rakdap1/) ist ein kostengünstiger USB-basierte Debuggingadapter ($10). Er kann auf vielen ARM-Geräten eingesetzt werden, ist aber besonders für die nRF52 CPU geeignet. Es scheint auf dem ARM [daplink](https://daplink.io/) [Project](https://github.com/ARMmbed/DAPLink) zu basieren. Ein Fork dieses Projekts liegt hier: [nanoDAP](https://github.com/wuxx/nanoDAP). Dieser Fork ist relativ alt im Hinblick auf die neueste daplink Entwicklung, aber ausreichend.
+
+Es gibt viele andere daplink basierte Geräte, wenn Sie einen solchen Adapter kaufen möchten. Es wird vermutet, dass sie größtenteils identisch sind. Wenn Sie einen gut funktionierenden Adapter finden, fügen Sie bitte einen Hinweis zu diesem Dokument hinzu.
+
+### Erforderliche Software
+
+Sie müssen die [pyocd](https://pyocd.io/) Applikation installieren, um VSCode mit dem NanoDAP Adapter zu verbinden. Sie installieren zuerst die Applikation, müssen dann aber die Unterstützungsdateien für die nrf52840 Platform hinzufügen:
+
+````bash
+```
+pip3 install pyocd
+pyocd pack --i nrf52840
+pyocd pack -s
+```
+````
+
+Wenn Sie auf einem Linux System entwickeln, müssen Sie die udev Regeln für das NanoDAP installieren.
+
+Dies geschieht durch Kopieren der Regeldatei aus pyocd in das Verzeichnis der udev rules. [Siehe Anleitung](https://github.com/pyocd/pyOCD/tree/main/udev).
+
+### NanoDAP mit dem nRF52 Gerät verbinden
+
+Der NanoDAP hat einen 10-Pin-Steckverbinder, aber nur drei dieser Pins müssen verbunden werden:
+
+- **Ground**: Verbinden mit Masse der nRF52 Platine.
+- **TMS-IO**: Verbinden mit SWDIO der nRF52 Platine.
+- **TCK-CK**: Verbinden mit SWCLK der nRF52 Platine.
+
+Einige Web-Anweisungen empfehlen die Verbindung der RESET und 3,3V Pins, aber dies ist normalerweise nicht notwendig.
+
+#### Verdrahtungsanleitung
+
+Dieses Bild zeigt eine beispielhafte Verbindung zu einer RAK4630 Platine:
+![RAK4630 DAP Verbindung](/img/RAKDAP1_New_1.webp)
+Foto von [RAKwireless](https://docs.rakwireless.com/assets/images/accessories/rakdap1-flash-and-debug-tool/RAKDAP1_New_1.png).
+
+### Verwendung von NanoDAP mit VSCode
+
+Das Meshtastic Projekt verfügt über eine spezielle Entwicklungsumgebung, die konfiguriert wurde, um mit dem NanoDAP zu arbeiten. Um diese zu verwenden, wählen Sie das Ziel "env:rak3631_dap" über die Kommandopalette oder links unten im VSCode/PlatformIO Fenster. Wenn das Gerät einmal ausgewählt ist, ändern sich zwei Dinge:
+
+- Die Geräteprogrammierung wird nicht mehr über den USB Bootloader durchgeführt. Stattdessen wählen Sie "Upload" und es wird der NanoDAP verwendet, um das Gerät programmieren.
+- Die Schaltfläche "Debug" in VSCode wird aktiviert. Wenn Sie diese Schaltfläche anklicken, wird der ICE unterstützte Debugger gestartet und Sie können Haltepunkte einstellen usw.

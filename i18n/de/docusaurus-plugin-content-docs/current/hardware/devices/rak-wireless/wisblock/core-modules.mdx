@@ -1,0 +1,138 @@
+---
+id: core-module
+title: RAK WisBlock Kernmodule
+sidebar_label: Kernmodule
+sidebar_position: 2
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+import Admonition from "@theme/Admonition";
+
+<Tabs
+groupId="rakcore"
+queryString="rakcore"
+defaultValue="RAK4631"
+values={[
+{label: 'RAK4631', value: 'RAK4631'},
+{label: 'RAK11310', value: 'RAK11310'}
+]}>
+
+<TabItem value="RAK4631">
+
+## RAK4631 - nRF52
+
+:::info
+Bitte beachten Sie den Unterschied zwischen dem RAK4631 (Arduino bootloader) und dem RAK4631-R (RUI3 Bootloader). Meshtastic benötigt den Arduino Bootloader. Falls Sie einen RAK4631-R haben, lesen Sie bitte die [Anweisungen zur Konvertierung des Bootloader](/docs/getting-started/flashing-firmware/nrf52/convert-rak4631r).
+:::
+
+- RAK4631
+  - **MCU**
+    - nRF52840
+      - Bluetooth BLE 5.0
+      - Sehr niedriger Energieverbrauch
+  - **LoRa Sendeempfänger:**
+    - SX1262
+  - **Frequenzoptionen:**
+    - 433 MHz
+    - 470 MHz
+    - 799 MHz
+    - 865 MHz
+    - 868 MHz
+    - 915 MHz
+    - 920 MHz
+    - 923 MHz
+  - **Anschlüsse:**
+    - U.FL/IPEX Antennenanschluss für LoRa
+
+### Quellen
+
+- Firmware Datei: `firmware-rak4631-X.X.X.xxxxx.uf2`
+- Weitere Informationen zum RAK4631 finden Sie im [RAK Dokumentationszentrum](https://docs.rakwireless.com/product-categories/wisblock/rak4631/overview/#product-description).
+- Links zum Direktkauf:
+  - US
+    - [Rokland - US915 Mhz](https://msh.to/rokland-4631)
+  - International
+    - [RAKwireless Shop](https://msh.to/rakwireless-4631)
+    - [RAKwireless AliExpress](https://msh.to/aliexpress-rak4631)
+
+<img
+  alt="RAK4631 Core Module"
+  src="/img/hardware/rak4631.webp"
+  style={{ zoom: "50%" }}
+/>
+
+### GPIO
+
+:::caution Anmerkung
+Es gibt keinen nutzbaren GPIO-Pin auf einer RAK-Basisplatine außer der „großen“ Basisplatine RAK19001, ohne ein RAK13002-IO-Modul oder einen IO-Sensor-Breakout eines Drittanbieters hinzuzufügen.
+:::
+
+Das RAK4631 verwendet symbolische Beschriftungen im Bestückungsaufdruck für die I/O-Pins des Moduls und der Basisplatine. Die folgende Tabelle zeigt die Zuordnung der RAK4631 GPIO Pins zu den entsprechenden Arduino Pins und den MCU Port Nummern.
+
+| RAK Pin | nRF52840 Pin | Arduino GPIO | Bemerkung                                                                                                                            |
+| ------- | ------------ | ------------ | ------------------------------------------------------------------------------------------------------------------------------------ |
+| IO1     | P0.17        | 17           | Wird verwendet, um Spannung auf Zubehörmodule mit der 3V3_S Spannung umzuschalten, nicht verfügbar für Benutzeranwendungen.          |
+| IO2     | P1.02        | 34           | Wird verwendet, um alle Zubehörmodule mit Spannung zu versorgen, nicht verfügbar für Benutzeranwendung.                              |
+| IO3     | P0.21        | 21           |                                                                                                                                      |
+| IO4     | P0.04        | 4            |                                                                                                                                      |
+| IO5     | P0.09        | 9            | Die 'Benutzertaste' ist hier abgebildet.                                                                                             |
+| IO6     | P0.10        | 10           |                                                                                                                                      |
+| IO7     | P0.28        | 28           |                                                                                                                                      |
+| SW1     | P0.01        | 1            |                                                                                                                                      |
+| A0      | P0.04/AIN2   | A2           |                                                                                                                                      |
+| A1      | P0.31/AIN7   | A7           |                                                                                                                                      |
+| SPI_CS  | P0.26        | 26           |                                                                                                                                      |
+
+Beim Konfigurieren der GPIO Pins in den Geräteeinstellungen sollten die Arduino GPIO Nummern verwendet werden.
+
+```shell title="Example"
+meshtastic --set external_notification.output 10
+```
+
+IO6 wird auf einem RAK4631 verwendet
+
+</TabItem>
+
+<TabItem value="RAK11310">
+
+## RAK11310 - RP2040
+
+:::info
+
+**Bitte beachten Sie, dass dieses Kernmodul KEINE BLE/WLAN enthält.**
+
+:::
+
+- **MCU:**
+  - Raspberry Pi RP2040
+    - Doppel M0+ Core
+    - 133MHz CPU Takt
+- **LoRa Sendeempfänger:**
+  - SX1262
+- **Frequenzoptionen:**
+  - 433 MHz
+  - 470 MHz
+  - 864 MHz
+  - 865 MHz
+  - 868 MHz
+  - 915 MHz
+  - 920 MHz
+  - 923 MHz
+- **Anschlüsse:**
+  - U.FL/IPEX Antennenanschluss für LoRa
+
+### Quellen
+
+- Firmware Datei: `firmware-rak11310-X.X.X.xxxxx.uf2`
+- Weitere Informationen zur RAK11310 finden Sie im [RAK Dokumentationszentrum](https://docs.rakwireless.com/product-categories/wisblock/rak11310/overview/#product-description).
+- Links zum Direktkauf:
+  - US
+    - [Rokland](https://msh.to/rokland-rak11310)
+  - International
+    - [RAKwireless WisMesh RP2040 Starter Kit](https://msh.to/rak11310)
+    - [RAKwireless Shop](https://msh.to/rakwireless-rak11310)
+    - [RAKwireless AliExpress](https://msh.to/aliexpress-rak11310)
+
+</TabItem>	
+</Tabs>

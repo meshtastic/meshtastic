@@ -1,0 +1,106 @@
+---
+id: module-api
+title: Modul API
+sidebar_label: Modul API
+sidebar_position: 3
+---
+
+Der Zweck dieses Tutorials ist es, neue Kernmodule zu schreiben, die auf einem Gerät ausgeführt werden können. In den meisten Fällen ist es am besten, mit der Nutzung des seriellen Moduls zu beginnen, anstatt ein neues zu erstellen. Wenn Sie jedoch daran interessiert sind, eine neue Kernfunktionalität von Grund auf neu zu erstellen, bietet sich die Erstellung eines Moduls an.
+
+## Schlüsselkonzepte
+
+Alle Module sollten Unterklassen von MeshModule sein. Durch Erben von dieser Klasse und Erstellen einer Instanz Ihres neuen Moduls wird Ihr Modul automatisch für den Empfang von Paketen registriert.
+
+Nachrichten werden an bestimmte Anschlussnummern gesendet (ähnlich wie im UDP Netzwerk). Ihr neues Modul sollte schließlich seine eigene Anschlussnummer auswählen (siehe unten). Für die Entwicklung können Sie einfach `PRIVATE_APP` verwenden (was die Standardeinstellung ist).
+
+Pakete können auch gesendet und empfangen werden:
+
+1. Rohe Binärstrukturen
+2. [Protocol Buffer](https://developers.google.com/protocol-buffers).
+
+## Klassenhierarchie
+
+Normalerweise möchten Sie entweder von SinglePortModule (wenn Sie nur Rohbytes senden/empfangen) oder ProtobufModule (wenn Sie Protocol Buffer senden/empfangen) erben. Sie implementieren Ihr eigenes handleReceived/handleReceivedProtobuf – wahrscheinlich basierend auf dem Beispielcode.
+
+Die relevanten Teile der Klassenhierarchie sind wie folgt:
+
+### Erstes Level: Netzwerkmodule
+
+- [src/mesh/MeshModule.h](http://github.com/meshtastic/firmware/tree/master/src/mesh/MeshModule.h) - Sie wollen diese Basisklasse wahrscheinlich nicht direkt benutzen.
+
+### Zweite Ebene: Einzelanschlussmodule
+
+- [src/mesh/SinglePortModule.h](http://github.com/meshtastic/firmware/tree/master/src/mesh/SinglePortModule.h) - für Module, die von einer Anschlussnummer senden oder empfangen (normaler Fall).
+
+### Dritte Ebene: Protocol Buffer Module
+
+- [src/mesh/ProtobufModule.h](http://github.com/meshtastic/firmware/tree/master/src/mesh/ProtobufModule.h) - für Module, die einen bestimmten Protocol Buffer Typ senden oder empfangen. Erben Sie davon, wenn Sie Protocol Buffer in Ihrem Modul verwenden.
+
+## Startvorgänge
+
+Wenn Ihr Modul beim Start Vorgänge ausführen muss, können Sie die Methode `setup()` überschreiben und implementieren, um Ihren Code auszuführen.
+
+Wenn Sie ein Paket senden müssen, können Sie `service.sendToMesh` mit Code wie diesem aufrufen (aus den Beispielen):
+
+```cpp
+MeshPacket *p = allocReply();
+p->to = dest;
+
+service.sendToMesh(p);
+```
+
+## Beispielmodule
+
+Eine Reihe von [Schlüsseldiensten](http://github.com/meshtastic/firmware/tree/master/src/modules) werden mithilfe der Modul-API implementiert. Diese Module sind wie folgt:
+
+- [TextMessageModule](http://github.com/meshtastic/firmware/tree/master/src/modules/TextMessageModule.h) – Empfängt Textnachrichten und zeigt sie auf dem LCD-Bildschirm an oder speichert sie in der lokalen Datenbank.
+
+- [NodeInfoModule](http://github.com/meshtastic/firmware/tree/master/src/modules/NodeInfoModule.h) - Empfängt/sendet Benutzerinformationen an andere Knoten, sodass Benutzernamen in den Datenbanken verfügbar sind.
+
+- [GenericThreadModule](https://github.com/meshtastic/firmware/blob/master/src/modules/GenericThreadModule.cpp) - Ein Beispielmodul, das regelmäßig ausgeführt wird, um eine Nachricht an das Netz zu senden.
+
+- [RemoteHardwareModule](http://github.com/meshtastic/firmware/tree/master/src/modules/RemoteHardwareModule.h) - Ein Modul, das einfachen Zugriff auf entfernte/abgesetzte Gerätehardware bietet (z.B. für Dinge wie Ein- oder Ausschalten von GPIOs). Soll ein ausführlicheres Beispiel sein und eine eigene nützliche Funktion bieten. Weitere Einzelheiten finden Sie unter [entfernte Hardware](/docs/configuration/module/remote-hardware).
+
+- [ReplyModule](http://github.com/meshtastic/firmware/tree/master/src/modules/ReplyModule.h) - Ein einfaches Modul, das nur auf jedes empfangene Paket antwortet (stellt einen 'ping'-Dienst zur Verfügung.
+
+## Erste Schritte
+
+Der einfachste Weg zum Einstieg ist:
+
+1. [Erstellen Sie die Firmware](/docs/development/firmware/build) Codebasis.
+2. Kopieren Sie das [ReplyModule](http://github.com/meshtastic/firmware/tree/master/src/modules/ReplyModule.cpp) als Vorlage in „src/modules/“.
+   ```shell
+   cp src/modules/ReplyModule.* src/modules/IhrModul*
+   ```
+3. Ändern Sie die Anschlussnummer von „meshtastic_PortNum_REPLY_APP“ in die Anschlussnummer, die Sie für Ihre Daten verwenden möchten. Um es mit Textnachrichten zu testen, verwenden Sie `meshtastic_PortNum_TEXT_MESSAGE_APP`.
+4. Bearbeiten Sie die Funktion „setupModules()“ unter „modules/Modules.cpp“, um einen Aufruf zum Erstellen einer Instanz Ihres Moduls hinzuzufügen (siehe Kommentar am Anfang dieser Funktion).
+5. Mit Ihrem neuen Modul neu erstellen und auf dem Gerät installieren.
+6. Senden Sie ein Paket mit Ihrer Anschlussnummer an den Knoten, um zu testen, ob Ihr Modul aufgerufen wird. Wenn Sie die Anschlussnummer für Textnachrichten verwendet haben, können Sie mit jeder Client-App eine Textnachricht senden.
+
+### Eine Antwort empfangen
+
+allocReply() von ReplyModule wird nur aufgerufen, wenn das eingehende Paket want_response = true setzt. Intern ruft [MeshModule::sendResponse()](https://github.com/meshtastic/firmware/blob/develop/src/mesh/MeshModule.cpp) die Funktion allocReply() auf. Die meisten Chat Benutzeroberflächen (Android/iOS/Web) setzen dieses Flag nicht, sodass das Kopieren von ReplyModule und das Senden eines normalen Textes keine Antwort von Ihrem Modul auslöst. 
+
+Implementieren Sie für erste Tests die Funktion handleReceived(), damit Ihr Code bei jedem Paket an Ihren Port ausgeführt wird. Um minimale Änderungen am Code der Vorlage vorzunehmen, testen Sie allocReply() mit einem Client, der want_response = true festlegen kann.
+
+## Threading
+
+Es kommt sehr häufig vor, dass Sie möchten, dass Ihr Modul regelmäßig aufgerufen wird.
+Wir verwenden ein einfaches kooperatives Threading System, um dies auf allen unseren unterstützten Plattformen zu ermöglichen. Ein einfaches Beispielmodul, das dies verwendet, ist das [GenericThreadModule](https://github.com/meshtastic/firmware/blob/master/src/modules/GenericThreadModule.cpp) (beachten Sie, dass es durch Entfernen des Makros „MESHTASTIC_EXCLUDE_GENERIC_THREAD_MODULE“ eingefügt werden muss). 
+Andernfalls erben Sie Ihr Modul einfach von OSThread und implementieren Sie `runOnce()`. Weitere Einzelheiten finden Sie in der OSThread-[Dokumentation](http://github.com/meshtastic/firmware/tree/master/src/concurrency/OSThread.h).
+
+## Nachrichten senden
+
+Wenn Sie proaktiv Nachrichten senden möchten (anstatt nur darauf zu antworten), rufen Sie einfach „service.sendToMesh()“ auf. Ein Beispiel hierfür finden Sie unter [NodeInfoModule::sendOurNodeInfo(...)](http://github.com/meshtastic/firmware/tree/master/src/modules/NodeInfoModule.cpp).
+
+## Wählen einer Anschlussnummer
+
+Siehe [Meshtastic Anschlussnummern](/docs/development/firmware/portnum)
+
+## Benutzerdefinierte Protocol Buffer hinzufügen
+
+Wenn Sie Protocol Buffer verwenden möchten, um die Strukturen zu definieren, die Sie über das Mesh senden (empfohlen), erfahren Sie hier, wie das geht.
+
+1. Erstelle eine neue `.proto` Datei im Protos Verzeichnis.
+2. Führen Sie `./bin/regen-protos.sh` aus, um den C-Code für den Zugriff auf die Protocol Buffer neu zu generieren. Wenn Sie nicht über das erforderliche Nanopb Werzeug verfügen, befolgen Sie die Anweisungen im Skript, um es zu erhalten.
+3. Fertig! Sie können Ihr neues Protocol Buffer jetzt genauso verwenden wie alle vorhandenen Protocol Buffer in Meshtastic.

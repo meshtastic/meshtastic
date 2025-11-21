@@ -1,0 +1,51 @@
+---
+id: web-client
+title: Übersicht Weboberfläche
+sidebar_label: Weboberfläche
+sidebar_position: 3
+---
+
+Meshtastic Web ist eine Meshtastic Benutzeroberfläche, die direkt in Ihrem Browser läuft.
+Es gibt zwei Wege, auf die Benutzeroberfläche zuzugreifen:
+
+1. Eine gehostete Version unter [client.meshtastic.org](https://client.meshtastic.org).
+2. Hosten Sie es selbst.
+
+![WebUI](/img/webUI.webp)
+
+## Kompatibilität
+
+Die Anwendung wird in allen gängigen Browsern funktionieren, aber in einigen Fällen ist die spezifische Funktionalität eingeschränkt. Für die beste Erfahrung empfehlen wir einen Chromium-Browser wie [Google Chrome](https://www.google.com/chrome) oder [Microsoft Edge](https://www.microsoft.com/en-us/edge).
+
+### HTTP
+
+Diese Verbindungsmethode ist auf ESP32 Geräte beschränkt.
+
+:::caution
+
+Wenn Sie die [gehostete](https://client.meshtastic.org) Version der Anwendung verwenden, muss der gesamte Datenverkehr über HTTPS erfolgen.
+Meshtastic Knoten erzeugen selbstsignierte Zertifikate, und Sie müssen Ihren Browser darüber informieren, dass Sie dem oben genannten Zertifikat vertrauen möchten.
+Dies kann durch den ersten Zugriff auf deinen Knoten direkt über deinen Browser erreicht werden: `https://NODE_IP_ADDRESS/` ersetzt `NODE_IP_ADDRESS` durch die IP-Adresse deines Knotens.
+Dies kann auf der Anzeige des Gerätes über die DHCP-Leaseseite Ihres Routers oder die serielle Konsole gefunden werden.
+
+:::
+
+Sie können auf Ihr Gerät über HTTP zugreifen, nachdem Sie eine [Netzwerkverbindung](/docs/configuration/radio/network) eingerichtet haben.
+
+### Bluetooth
+
+Bluetooth-Unterstützung wird durch die Verfügbarkeit der [Web Bluetooth API](https://web.dev/bluetooth) geregelt, wie unten dargestellt. Die Unterstützung ist in erster Linie in Chromium Browsern verfügbar.
+
+![Bluetooth Kompatibilitätsmatrix](https://caniuse.bitsofco.de/image/web-bluetooth.png)
+
+### Seriell (USB)
+
+Die Methode mit der geringsten Plattform-Unterstützung, die die [Web Serial API](https://web.dev/serial), erlaubt es uns, direkt mit einem Meshtastic Knoten über USB zu verbinden und direkt von Ihrem Browser aus darauf zuzugreifen.
+
+![Serielle Kompatibilitätsmatrix](https://caniuse.bitsofco.de/image/web-serial.png)
+
+## Selbst gehostet
+
+Der Quellcode für die Weboberfläche kann auf unserem [GitHub](https://github.com/meshtastic/web) gefunden werden.
+
+Anleitungen zum Kompilieren und Betrieb des Projekts finden Sie im Readme des Repositories.

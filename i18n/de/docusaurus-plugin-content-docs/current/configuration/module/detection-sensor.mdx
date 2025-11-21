@@ -1,0 +1,177 @@
+---
+id: detection-sensor
+title: Verwendung des Erkennungssensormoduls
+sidebar_label: Erkennungssensor
+description: Konfigurationsdetails für das Erkennungssensormodul Ihres Meshtastic Gerätes. Wird für Bewegungs-, Reed- und andere offene/geschlossene Torsysteme verwendet.
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+import { Icon } from "@iconify/react";
+
+Mit dem Modul „Erkennungssensor“ können Sie einen GPIO Pin so konfigurieren, dass er auf einen bestimmten High/Low-Status überwacht wird, und Textwarnungen über die Anschlussnummer des Erkennungssensors senden, wenn ein Ereignis erkannt wird. Dies ist besonders nützlich für Bewegungserkennungssensoren, Reed-Schalter und andere Systeme mit offenem/geschlossenem Zustand, bei denen Benachrichtigungen über das Mesh erwünscht sind. Konfigurationsoptionen sind: Aktiviert, Minimaler Übertragungsintervall, Statusübertragungsintervall, Glocke senden, Name, Monitor Pin, Erkennung Logik 1 ausgelöst und Pullup verwenden.
+
+Um dieses Modul zu verwenden, stellen Sie sicher, dass Ihre Geräte über die Firmware-Version 2.2.2 oder höher verfügen.
+
+## Erkennungssensormoduls Konfigurationswerte
+
+### Aktiviert
+
+Gibt an, ob das Modul aktiviert ist.
+
+### Minimaler Übertragungsintervall
+
+Das Intervall in Sekunden, wie oft eine Nachricht an das Netz gesendet wird, wenn eine Statusänderung erkannt wurde.
+
+### Übertragungsintervall
+
+Das Intervall in Sekunden, wie oft wir eine Nachricht mit dem aktuellen Status an das Netzwerk senden sollen, unabhängig von Änderungen. Wenn der Wert auf 0 gesetzt ist, werden nur Statusänderungen gesendet. Funktioniert als eine Art Statuspuls für ein beruhigendes Gefühl.
+
+### Sende Glocke
+
+ASCII-Glocke mit Warnmeldung senden. Nützlich für das Auslösen von externen Benachrichtigung mit Glocke Namen.
+
+### Anzeigename
+
+Wird verwendet, um die Nachricht zu formatieren, die an das Netz gesendet wird. Beispiel: Der Name "Bewegung" würde zu einer Meldung "Bewegung erkannt". Maximale Länge von 20 Zeichen.
+
+### GPIO Pin überwachen
+
+Der GPIO Pin zur Überwachung von Statusänderungen.
+
+### Erkennung Logik 1
+
+Einstellung, ob die GPIO Pin-Erkennung bei Logik 1 oder Logik 0 ausgelöst wird
+
+### Pullup verwenden
+
+Gibt an, ob der INPUT_PULLUP Modus für GPIO Pin verwendet wird oder nicht. Nur anwendbar, wenn die Platine Pullup Widerstände am Pin benutzt.
+
+## Verfügbarkeit des Sensormoduls erkennen
+
+<Tabs
+  groupId="settings"
+  defaultValue="apple"
+  values={[
+    {
+      label: (
+        <>
+          <Icon icon="mdi:android" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Android
+        </>
+      ),
+      value: "android",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:apple" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Apple
+        </>
+      ),
+      value: "apple",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:terminal" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Kommandozeile
+        </>
+      ),
+      value: "cli",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:internet" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Web
+        </>
+      ),
+      value: "web",
+    },
+  ]}>
+
+<TabItem value="android">
+
+#### Android
+
+:::info
+All Detection Sensor Module config options are available for Android in app version 2.2.2 and higher.
+
+1. Öffnen Sie die Meshtastic Applikation
+2. Navigieren Sie zu: **vertikale Ellipse (3 Punkte oben rechts) > Funkkonfiguration > Erkennungssensor**
+   :::
+
+</TabItem>
+<TabItem value="apple">
+
+#### Apple
+
+:::info
+Alle Konfigurationsoptionen für Sensormodule sind auf iOS, iPadOS und macOS app-Versionen 2.2.2 und höher verfügbar unter Einstellungen > Modulkonfiguration > Erkennungsensor
+:::
+
+</TabItem>
+<TabItem value="cli">
+
+#### Kommandozeile
+
+:::info
+
+Alle Konfigurationsoptionen des Erkennungssensormoduls sind in der Python Kommandozeile Version v2.2.2 und höher verfügbar.
+
+:::
+
+Beispieleinstellungen sind folgende:
+
+```shell title="Enable/Disable the Detection Sensor Module"
+meshtastic --set detection_sensor.enabled true
+meshtastic --set detection_sensor.enabled false
+```
+
+```shell title="Set the Minimum Broadcast Interval to 90 seconds"
+meshtastic --set detection_sensor.minimum_broadcast_secs 90
+```
+
+```shell title="Set the State Broadcast Interval to 5 minutes"
+meshtastic --set detection_sensor.state_broadcast_secs 300
+```
+
+```shell title="Enable/Disable Send Bell"
+meshtastic --set detection_sensor.send_bell true
+meshtastic --set detection_sensor.send_bell false
+```
+
+```shell title="Set the friendly name to 'motion'"
+meshtastic --set detection_sensor.name "motion"
+```
+
+```shell title="Set the Monitor Pin to 7"
+meshtastic --set detection_sensor.monitor_pin 7
+```
+
+```shell title="Enable Notifications when the Monitor Pin goes HIGH"
+meshtastic --set detection_sensor.detection_triggered_high true
+```
+
+```shell title="Enable Notifications when the Monitor Pin goes LOW"
+meshtastic --set detection_sensor.detection_triggered_high false
+```
+
+```shell title="Enable the use INPUT_PULLUP mode"
+meshtastic --set detection_sensor.use_pullup true
+```
+
+```shell title="Get the Detection Sensor Module Configuration"
+meshtastic --get detection_sensor
+```
+
+</TabItem>
+<TabItem value="web">
+
+#### Web
+
+:::info
+
+Alle Konfigurationsoptionen des Erkennungssensormoduls sind in der Web-Oberfläche verfügbar.
+
+:::
+
+</TabItem>
+</Tabs>

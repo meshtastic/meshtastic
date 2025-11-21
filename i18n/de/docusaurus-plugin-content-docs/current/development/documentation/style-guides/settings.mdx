@@ -1,0 +1,115 @@
+---
+id: config-pages
+title: Seiten für Einstellung
+sidebar_label: Seiten für Einstellung
+---
+
+## Übersicht
+
+Die Seiten für Einstellungen sollte sich ausschließlich auf die Einstellungen und die Konfiguration des Gerätes beschränken. Hardware ist oft ein verwandtes Thema, aber diese Seiten sollten nicht versuchen, das Anschließen von Zubehör erklären. Erwähnen Sie, dass Zubehör benötigt wird, und verlinken Sie auf die entsprechenden Seiten.
+
+## Darstellung
+
+### Übersicht
+
+Dieser Abschnitt sollte die Gruppe der Einstellungen beschreiben und was sie für das Gerät tun.
+
+### Einstellungen
+
+Dieser Abschnitt beginnt mit einer alphabetisierten Tabelle von Einstellungen, verfügbaren Werten und Standardwerten.
+
+Verfügbare Werte sollten mit den Markierungen \`\` um den Wert aufgelistet werden.
+
+| Art des Werts |      Beispiel               |
+| :-----------: | :-------------------------: |
+|   Boolean     |    `true`, `false`          |
+|    Liste      | `Apfel`, `Banane`, `Orange` |
+|   Bereich     |     `0` - `100`             |
+
+Nach der Tabelle wird jede Einstellung im Detail beschrieben. Wenn die verfügbaren Optionen für eine Einstellung zusätzliche Erläuterungen benötigen, sollte eine Tabelle verwendet werden, um jede verfügbare Option zu beschreiben.
+
+### Details
+
+Wenn weitere Details benötigt werden, kann dieser optionale Abschnitt diese erklären. Dazu gehören Voraussetzungen, Links zu Hardware-Anleitungen usw.
+
+### Beispiele
+
+Dieser optionale Abschnitt kann Beispiele für Konfigurationen enthalten, bei denen mehrere Einstellungen für einen bestimmten Anwendungsfall eingerichtet werden müssen.
+
+## Beispielvorlage
+
+```markdown title="Template for Settings Pages"
+---
+id: eindeutige ID
+title: Titel der Seite
+sidebar_label: Beschriftung der Seitenleiste
+---
+
+<!--- Client spezifische Tabs ermöglichen --->
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+## Übersicht
+
+<!--- Übersichtstext hinzufügen der die Gruppeneinstellung beschreibt --->
+
+## Einstellung
+
+<!--- Tabelle mit Einstellungen in alphabetischer Reihenfolge --->
+
+|            Einstellung         |         Mögliche Werte      | Standard |
+| :----------------------------: | :-------------------------: | :------: |
+| meine_einstellung_mit_optionen | `Apfel`, `Banane`, `Orange` | `Apfel`  |
+
+<!--- H3 für jede Einstellung oben (alphabetisch) --->
+
+### meine_einstellung_mit_optionen
+
+<!--- Beschreiben Sie was die Einstellung vornimmt --->
+
+<!--- Fügen Sie eine Tabelle ein, wenn die viele Optionen hat und beschreiben Sie diese --->
+
+|   Wert   |             Beschreibung           |
+| :------: | :--------------------------------: |
+| `Apfel`  | Beschreibung des Apfels (Standard) |
+| `Banane` |       Beschreibung der Banane      |
+| `Orange` |       Beschreibung der Orange      |
+
+<!--- Client tabs that were imported above --->
+
+<Tabs
+groupId="settings"
+defaultValue="cli"
+values={[
+{label: 'CLI', value: 'cli'},
+{label: 'Android', value: 'android'},
+{label: 'iOS', value: 'iOS'},
+{label: 'Web', value: 'web'},
+]}>
+<TabItem value="cli">
+#### Kommandozeile (Benötigt für Zugänglichkeit)
+Inhalt für die Kommandozeile hier
+</TabItem>
+<TabItem value="android">
+#### Android (Benötigt für Zugänglichkeit)
+Inhalt für Android here
+</TabItem>
+<TabItem value="iOS">
+#### iOS (Benötigt für Zugänglichkeit)
+Inhalt für iOS hier
+</TabItem>
+<TabItem value="web">
+#### Web (Benötigt für Zugänglichkeit)
+Inhalt für die Weboberfläche hier
+</TabItem>
+</Tabs>
+
+## Details
+
+<!--- Zusätzliche Informationen über die oben aufgeführten Einstellungen. Ansonsten diese h2 Kopfzeile entfernen. --->
+
+## Beispiele
+
+<!--- Für Beispiele wo mehrere Einstellungen zur gleichen Zeit vorgenommen werden (WLAN Type/SSID/Passwort in einem einzigen Kommando). Diese h2 Kopzeile löschen wen sie nicht benötigt wird. --->
+```

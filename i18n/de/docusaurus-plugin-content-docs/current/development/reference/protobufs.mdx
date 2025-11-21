@@ -1,0 +1,22 @@
+---
+id: protobufs
+title: Protocol Buffer
+sidebar_label: Protocol Buffer
+sidebar_position: 1
+---
+
+## Übersicht
+
+Protocol Buffer sind ein sprachneutraler, plattformneutraler, erweiterbarer Mechanismus zur Serialisierung strukturierter Daten. Sie werden von Meshtastic Software zum Kodieren und Übermitteln von Daten zwischen App und Gerät sowie zur Kommunikation zwischen Gerät und Gerät verwendet.
+
+Protocol Buffer bieten eine effiziente und leichtgewichtige Möglichkeit, Daten auszutauschen, was sie gut für den Einsatz in ressourcenbeschränkten Umgebungen wie dem Meshtastic Netzwerk geeignet macht. Sie bieten mehrere Vorteile gegenüber herkömmlichen Datenformaten wie XML oder JSON, einschließlich:
+
+- Kleinere serialisierte Größe: Protocol Buffer serialisierte Daten sind typischerweise viel kleiner als XML- oder JSON-Darstellungen der gleichen Daten.
+- Schnellere Serialisierung und Deserialisierung: Protobufs sind so konzipiert, dass sie schnell serialisiert und deserialisiert werden können , was für Anwendungen, die große Datenmengen verarbeiten müssen, wichtig ist.
+- Typsicher und selbstbeschreibend: Protocol Buffer Nachrichten sind typsicher und die Nachrichtenformate sind selbstbeschreibend, was die Arbeit und Pflege der Daten im Laufe der Zeit erleichtert.
+
+## Meshtastic Protocol Buffer
+
+Das Meshtastic Projekt definiert seine eigenen Protocol Buffer Nachrichten für verschiedene Datentypen, die zwischen App-Gerät und Gerät ausgetauscht werden. Diese Nachrichten sind in verschiedenen Modulen organisiert.
+
+Die offizielle Dokumentation für die Meshtastic Protocol Buffer Nachrichten finden Sie in der [Buf Schema Registry (BSR)](https://buf.build/meshtastic/protobufs). Das BSR bietet einen zentralen Standort für die Verwaltung und Dokumentation der Protobuf Schemas des Projektes.

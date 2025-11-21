@@ -1,0 +1,39 @@
+---
+id: http-api
+title: HTTP API
+sidebar_label: HTTP API
+---
+
+:::info
+Laitteen [HTTP API](/docs/development/device/http-api) käyttötavat ja -tyypit viedään
+:::
+
+```typescript
+import {
+  Client,
+  Types,
+  Protobuf,
+  SettingsManager
+} from "@meshtastic/js";
+
+/**
+ * Yhteysmenetelmä
+ */
+
+const client = uusi asiakas();
+SettingsManager. etDebugMode(Protobuf.LogLevelEnum.DEBUG);
+
+const yhteys = client.createHTTPConnection();
+connection.connect("192.168.x.x");
+
+const restartLaite: Promise<void> = yhteys. estartDevice();
+const getStatistics: Promise<void | Types.WebSPIFFSResponse> =
+  connection.getStatistics();
+const getNetworks: Promise<void | Types.WebNetworkResponse> =
+  connection. etNetworks();
+const getSPIFFS: Promise<void | Types.WebSPIFFSResponse> =
+  yhteys. etSPIFFS();
+const deleteSPIFFS: Promise<void | Types.WebSPIFFSResponse> =
+  connection.deleteSPIFFS();
+const blinkLED: Promise<void | any> = connection.blinkLED();
+```
