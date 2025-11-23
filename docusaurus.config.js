@@ -169,7 +169,8 @@ const config = {
   future: {
     v4: {
       useCssCascadeLayers: false,
-    }
+
+    },
   },
 };
 
