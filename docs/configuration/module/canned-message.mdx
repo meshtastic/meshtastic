@@ -15,12 +15,27 @@ The Canned Message Module will allow you to send messages to the mesh network fr
 The canned message module config options are: Enabled, Send Bell, Messages, Input Source, Rotary Encoder Enabled, Up Down Encoder Enabled, Input Broker Pin A, Input Broker Pin B, Input Broker Pin Press, Input Broker Event Clockwise, Input Broker Event Counter Clockwise, and Input Broker Event Press. Canned Message config uses an admin message sending a `ConfigModule.CannedMessage` protobuf.
 
 <div style={{ maxWidth: "800px", margin: "auto" }}>
-  <ReactPlayer
-    url="https://youtu.be/qKQVYUbLLkg"
-    controls
-    width="100%"
-    height="400px"
-  />
+  <div
+    style={{
+      position: "relative",
+      paddingTop: "56.25%", // 16:9 aspect ratio
+    }}
+  >
+    <iframe
+      src="https://www.youtube.com/embed/qKQVYUbLLkg"
+      title="Meshtastic demo"
+      style={{
+        position: "absolute",
+        top: 0,
+        left: 0,
+        width: "100%",
+        height: "100%",
+        border: 0,
+      }}
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowFullScreen
+    />
+  </div>
 </div>
 
 ## Canned Message Module Config Values

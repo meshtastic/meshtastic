@@ -12,7 +12,6 @@ const config = {
   baseUrl: "/",
   trailingSlash: true,
   onBrokenLinks: "throw",
-  onBrokenMarkdownLinks: "warn",
   favicon: "design/web/favicon.ico",
   organizationName: "meshtastic",
   projectName: "meshtastic",

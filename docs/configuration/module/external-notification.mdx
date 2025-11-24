@@ -15,12 +15,27 @@ The External Notification Module will allow you to connect a buzzer, speaker, LE
 The External Notification Module config options are: Enabled, Active, Alert Bell (General),Alert Bell Vibra, Alert Bell Buzzer, Alert Message (General), Alert Message Vibra, Alert Message Buzzer, Output (General), Output Vibra, Output Buzzer, Output Milliseconds, Use PWM, and Nag Timeout. External Notification config uses an admin message sending a `ConfigModule.ExternalNotificationConfig` protobuf.
 
 <div style={{ maxWidth: "800px", margin: "auto" }}>
-  <ReactPlayer
-    url="https://youtu.be/MWt3RHMpifo"
-    controls
-    width="100%"
-    height="400px"
-  />
+  <div
+    style={{
+      position: "relative",
+      paddingTop: "56.25%", // 16:9 aspect ratio
+    }}
+  >
+    <iframe
+      src="https://www.youtube.com/embed/MWt3RHMpifo"
+      title="Meshtastic demo"
+      style={{
+        position: "absolute",
+        top: 0,
+        left: 0,
+        width: "100%",
+        height: "100%",
+        border: 0,
+      }}
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowFullScreen
+    />
+  </div>
 </div>
 
 ## External Notification Module Config Values
