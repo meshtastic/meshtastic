@@ -1,9 +1,8 @@
 ---
 id: inkhud
 title: InkHUD
-slug: /software/inkhud
 sidebar_label: InkHUD
-sidebar_position: 8
+sidebar_position: 3
 description: InkHUD is a user interface for Meshtastic devices which have an E-Ink display. It is designed to give a quick "heads-up", showing important information at a glance.
 ---
 
@@ -17,6 +16,7 @@ InkHUD is a user interface for Meshtastic devices which have an E-Ink display. I
 Under active development since late 2024, the list of features and supported devices will continue to grow.
 
 ## Supported Devices
+
 As of June 2025. Watch this space 👀
 
 - **Complete Devices**
@@ -27,7 +27,7 @@ As of June 2025. Watch this space 👀
   - Heltec Vision Master E213
   - Heltec Vision Master E290
   - Heltec Wireless Paper
-- **DIY Displays** ([custom builds](/docs/software/inkhud/diy-builds/), _for the brave.._)
+- **DIY Displays** ([custom builds](./diy-builds/), _for the brave.._)
   - WeAct Studio 1.54" Black & White
   - WeAct Studio 2.13" Black & White (2025 Revision)
   - WeAct Studio 2.9" Black & White
@@ -39,12 +39,12 @@ InkHUD can be installed on supported devices using the [Meshtastic Web Flasher](
 
 Prebuilt firmware binaries are also available on the [downloads page](/downloads/). The InkHUD versions are identified by the **"-inkhud"** suffix in the filename.
 
-For [DIY InkHUD devices](/docs/software/inkhud/diy-builds/), the firmware must be built manually.
+For [DIY InkHUD devices](./diy-builds/), the firmware must be built manually.
 
 ## Initial Setup
 
-* [Set your LoRa region](/docs/configuration/region-by-country/)
-* [Set your timezone](/docs/configuration/radio/device#tzdef-timezone-definition)
+- [Set your LoRa region](/docs/configuration/region-by-country/)
+- [Set your timezone](/docs/configuration/radio/device#tzdef-timezone-definition)
 
 ## Buttons
 
@@ -54,12 +54,12 @@ InkHUD is designed to be used with just one button. A mixture of short and long 
 
 InkHUD provides a set of applets, each one showing a different set of information. You can choose which applets to enable using the on-screen menu. For in-depth descriptions, see the [List of InkHUD Applets](./applets.mdx).
 
-* **Short-press**: switch to the next applet.
+- **Short-press**: switch to the next applet.
 
 <img
   src="/img/software/inkhud/next-applet.gif"
   alt="animation of cycling though inkhud applets with user button"
-  style={{maxHeight: '256px', width:'auto'}}
+  style={{ maxHeight: "256px", width: "auto" }}
 />
 
 ## On-Screen Menu
@@ -67,30 +67,31 @@ InkHUD provides a set of applets, each one showing a different set of informatio
 InkHUD has a built in menu, with a few basic actions, and options for configuring the device.
 
 To open the on-screen menu, **long-press** the user button.
-* **short-press**: next item
-* **long-press**: select
 
-Only wanted a quick peek at the clock? Long-press a second time to close the menu. 
+- **short-press**: next item
+- **long-press**: select
+
+Only wanted a quick peek at the clock? Long-press a second time to close the menu.
 
 <img
   src="/img/software/inkhud/menu.gif"
   alt="animation of navigating inkhud menu"
-  style={{maxHeight: '256px', width: 'auto'}}
+  style={{ maxHeight: "256px", width: "auto" }}
 />
 
 ### Send
 
 #### Ping
 
-Manually announces the device to other nodes on the mesh. 
+Manually announces the device to other nodes on the mesh.
 
-This is optional, as nodes are discovered automatically, 
+This is optional, as nodes are discovered automatically,
 however sending a ping manually may speed up this process is some situations.
 
 #### Canned Messages
 
-Send predefined text messages to the mesh network from the device without using the phone app. 
-To enable this feature, [set a list of predefined messages](https://meshtastic.org/docs/configuration/module/canned-message/#messages).
+Send predefined text messages to the mesh network from the device without using the phone app.
+To enable this feature, [set a list of predefined messages](/docs/configuration/module/canned-message/#messages).
 No further configuration is required.
 
 To send, select the predefined message in the `Send` menu, then select a destination. The list of possible destinations will include the device's available channels, and nodes marked favorite.
@@ -148,7 +149,7 @@ For most devices, the on-screen menu is used to move between tiles.
 <img
   src="/img/software/inkhud/next-tile.gif"
   alt="animation of changing tiles in inkhud using the menu"
-  style={{maxHeight: '256px', width: 'auto'}}
+  style={{ maxHeight: "256px", width: "auto" }}
 />
 
 #### Using an Extra Button
@@ -158,5 +159,5 @@ Some devices have an extra hardware button, which provides a more convenient met
 <img
   src="/img/software/inkhud/next-tile-aux.gif"
   alt="animation of changing tiles in inkhud using an aux button"
-  style={{maxHeight: '256px', width: 'auto'}}
+  style={{ maxHeight: "256px", width: "auto" }}
 />
