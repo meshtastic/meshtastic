@@ -69,6 +69,10 @@ const config = {
           ],
         },
         {
+          type: "localeDropdown",
+          position: "right",
+        },
+        {
           href: "https://github.com/meshtastic",
           position: "right",
           className: "header-github-link",
@@ -163,7 +167,9 @@ const config = {
   },
   themes: ["@docusaurus/theme-mermaid"],
   future: {
-    experimental_faster: true,
+    v4: {
+      useCssCascadeLayers: false,
+    },
   },
 };
 
