@@ -1,0 +1,59 @@
+---
+id: harbor-scale
+title: Harbor Scale Integration
+sidebar_label: Harbor Scale
+sidebar_position: 5
+---
+
+# Meshtastic Integration
+
+The Meshtastic Integration script allows you to connect your Meshtastic device to Harbor Scale effortlessly. By running this Python code, you can send telemetry data from your Meshtastic device to your Harbor Scale account, where it can be visualized using Grafana.
+
+![Image](https://i.imgur.com/4QWhKBj.png)
+
+
+## Features  
+
+- **Seamless Device Connection**: Easily connect your Meshtastic device via a selected COM port.  
+- **API Key Authentication**: Ensure secure communication using your unique API key.  
+- **Real-Time Data Push**: Continuously stream telemetry data for live monitoring and analysis.  
+- **Grafana Compatibility**: Visualize your Meshtastic device data with rich Grafana dashboards.  
+
+
+## How to Use  
+
+1. **Prepare Your Meshtastic Device**:  
+   - Ensure your Meshtastic device is connected and operational.  
+   - Note the COM port associated with the device.  
+---
+
+2. **Set Up the Script**:  
+   - Clone this repository:  
+     ```bash
+     git clone https://github.com/HarborScale/harbor-meshtastic.git
+     cd harbor-meshtastic
+     ```  
+   - Install required dependencies:  
+     ```bash
+     pip install -r requirements.txt
+     ```  
+---
+3. **Run the Script**:
+    ```bash
+     python app.py
+     ```  
+   - Execute the script and provide the required information:  
+     - **API Normal (NOT BATCH) Endpoint**: Obtain this from your Harbor Scale account.  
+     - **API Key**: Your unique key for secure communication.  
+     - **COM Port**: The port your Meshtastic device is connected to.  
+
+
+---
+4. **Stream Data**:  
+   - The script will push telemetry data from your device to the Harbor Scale API endpoint.  
+---
+5. **Visualize in Grafana**:  
+   - Log in to your Harbor Scale Grafana instance.  
+   - Access pre-configured dashboards to view and analyze your Meshtastic data.
+
+[Repository Link](https://github.com/Harborscale/harbor-meshtastic)
