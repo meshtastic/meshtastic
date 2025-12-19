@@ -121,6 +121,7 @@ const config = {
         },
       };
     },
+    "@docusaurus/plugin-vercel-analytics"
   ],
   scripts: [
     ...(process.env.COOKIEYES_CLIENT_ID
