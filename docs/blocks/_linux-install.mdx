@@ -2,6 +2,7 @@ import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 import { Icon } from "@iconify/react";
 
+<div className="osTabs">
 <Tabs groupId="operating-systems" queryString="os">
   <TabItem value="debian" label={<><Icon icon="mdi:debian" style={{ marginRight: "0.25rem" }} height="1.5rem" /> Debian</>} default>
     Debian packages are provided via [<Icon icon="simple-icons:opensuse"/> OpenSUSE Build Service](https://build.opensuse.org/project/show/network:Meshtastic:beta).
@@ -314,7 +315,24 @@ import { Icon } from "@iconify/react";
     See [Meshtastic on OpenWrt routers](/docs/hardware/devices/openwrt/)
 
   </TabItem>
+  <TabItem value="nixos" label={<><Icon icon="simple-icons:nixos" style={{ marginRight: "0.25rem" }} height="1.5rem" /> NixOS</>}>
+
+    | Feature                  | Status |
+    | ------------------------ | ------ |
+    | 🔌 [USB Radio][USBRadio] | ✅     |
+    | 🕸️ [SPI Radio][SPIRadio] | ✅     |
+    | 📱 [MUI][MUI]            | ✅     |
+    | 🌐 [Web][WebClient]      | ✅     |
+
+    Supported platforms: `x86_64`, `aarch64`
+
+    See `meshtasticd` service on [NixOS](https://search.nixos.org/options?channel=unstable&query=meshtasticd)
+
+    Maintained by [@Pol](https://github.com/drupol) and the Meshtastic community.
+
+  </TabItem>
 </Tabs>
+</div>
 
 [MUI]: /docs/configuration/device-uis/meshtasticui/
 [WebClient]: /docs/software/web-client/
