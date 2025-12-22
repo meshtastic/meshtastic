@@ -7,56 +7,76 @@ sidebar_position: 5
 
 # Harbor Scale Meshtastic Integration
 
-The Meshtastic Integration script allows you to connect your Meshtastic device to Harbor Scale effortlessly. By running this Python code, you can send telemetry data from your Meshtastic device to your Harbor Scale account, where it can be visualized using Grafana.
+The Meshtastic Integration allows you to connect your Meshtastic LoRa mesh to Harbor Scale effortlessly using the **Harbor Lighthouse** agent. Unlike previous methods that required manual Python scripts, the new agent handles device detection, data parsing, and secure transmission automatically.
 
 [To Create an Account - Harbor Scale](https://harborscale.com)
 
 ![Image](https://i.imgur.com/DLqunXx.jpeg)
-![Image](https://i.imgur.com/4QWhKBj.png)
 
+## Features
 
-## Features  
+- **Single Binary Agent**: No Python environments or dependencies to manage.
+- **Mesh Engine**: Automatically decodes packets from the entire mesh, not just the local node.
+- **Auto-Discovery**: Detects connected USB devices automatically.
+- **Resilient**: Buffers data if the internet goes down and reconnects automatically.
+- **Grafana Compatibility**: Visualize battery, SNR, RSSI, and environmental data in rich dashboards.
 
-- **Seamless Device Connection**: Easily connect your Meshtastic device via a selected COM port.  
-- **API Key Authentication**: Ensure secure communication using your unique API key.  
-- **Real-Time Data Push**: Continuously stream telemetry data for live monitoring and analysis.  
-- **Grafana Compatibility**: Visualize your Meshtastic device data with rich Grafana dashboards.  
+## How to Use
 
-
-## How to Use  
-
-1. **Prepare Your Meshtastic Device**:  
-   - Ensure your Meshtastic device is connected and operational.  
-   - Note the COM port associated with the device.  
----
-
-2. **Set Up the Script**:  
-   - Clone this repository:  
-     ```bash
-     git clone https://github.com/HarborScale/harbor-meshtastic.git
-     cd harbor-meshtastic
-     ```  
-   - Install required dependencies:  
-     ```bash
-     pip install -r requirements.txt
-     ```  
----
-3. **Run the Script**:
-    ```bash
-     python app.py
-     ```  
-   - Execute the script and provide the required information:  
-     - **API Normal (NOT BATCH) Endpoint**: Obtain this from your Harbor Scale account.  
-     - **API Key**: Your unique key for secure communication.  
-     - **COM Port**: The port your Meshtastic device is connected to.  
-
+### 1. Prepare Your Meshtastic Device
+* Ensure your Meshtastic device is connected via USB and operational.
+* Note the COM port (optional, as the agent usually auto-detects it).
 
 ---
-4. **Stream Data**:  
-   - The script will push telemetry data from your device to the Harbor Scale API endpoint.  
----
-5. **Visualize in Grafana**:  
-   - Log in to your Harbor Scale Grafana instance.  
-   - Access pre-configured dashboards to view and analyze your Meshtastic data.
 
-[Repository Link](https://github.com/Harborscale/harbor-meshtastic)
+### 2. Install the Agent & Engine
+
+Run the appropriate command for your system. This installs both the main **Lighthouse** agent and the specific **Meshtastic driver**.
+
+**Linux / macOS / Raspberry Pi:**
+```bash
+curl -sL get.harborscale.com | sudo bash && curl -sL get.harborscale.com/meshtastic | sudo bash
+```
+
+> *Requires sudo privileges. You may be asked for a password.*
+
+**Windows (PowerShell Administrator):**
+
+```powershell
+iwr get.harborscale.com | iex; iwr get.harborscale.com/meshtastic | iex
+
+```
+
+---
+
+### 3. Connect the Gateway
+
+Use the `lighthouse` command to start the bridge. Replace the ID and Key with your credentials from the Harbor Scale dashboard.
+
+```bash
+lighthouse --add \
+  --name "meshtastic-gateway" \
+  --harbor-id "YOUR_HARBOR_ID" \
+  --key "YOUR_API_KEY" \
+  --source exec \
+  --param command="mesh_engine --ttl 3600"
+
+```
+
+* **`--ttl 3600`**: (Optional) Drops nodes from the report if they haven't been heard for 1 hour.
+* **`--port`**: (Optional) Add `--port /dev/ttyUSB0` inside the quotes if auto-detection fails.
+
+---
+
+### 4. Stream Data
+
+The agent will now run in the background as a system service. It continuously pushes telemetry data from your mesh to the Harbor Scale API endpoint.
+
+---
+
+### 5. Visualize in Grafana
+
+* Log in to your Harbor Scale Grafana instance.
+* Access pre-configured dashboards to view and analyze your Meshtastic data.
+
+[Repository Link](https://www.google.com/search?q=https://github.com/harborscale/harbor-lighthouse)
