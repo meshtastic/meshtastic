@@ -2,9 +2,8 @@
 id: meshtastic-ui
 title: Meshtastic UI
 hide_title: true
-slug: /software/meshtastic-ui
 sidebar_label: Meshtastic UI
-sidebar_position: 4
+sidebar_position: 2
 description: Meshtastic UI (MUI) is a standalone interface for supported Meshtastic devices, enabling direct interaction without requiring a phone for most functions. It runs alongside the firmware, providing messaging, mapping, and configuration tools.
 image: "/img/software/meshtastic-ui/mui_link_preview.png"
 ---
@@ -111,24 +110,30 @@ For a detailed breakdown of available controls and their functions, refer to the
   </Light>
 </div>
 
-<div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
-  <div style={{ display: 'flex', flexShrink: 0 }}>
+<div style={{ display: "flex", alignItems: "center", gap: "15px" }}>
+  <div style={{ display: "flex", flexShrink: 0 }}>
     <Dark>
       <img
         src="/img/software/meshtastic-ui/sd_dark.svg"
         alt="MUI SD Card Dark"
-        style={{ height: '32px', width: '32px' }}
+        style={{ height: "32px", width: "32px" }}
       />
     </Dark>
     <Light>
       <img
         src="/img/software/meshtastic-ui/sd_light.svg"
         alt="MUI SD Card Light"
-        style={{ height: '32px', width: '32px' }}
+        style={{ height: "32px", width: "32px" }}
       />
     </Light>
   </div>
-  <p style={{ margin: 0, flex: 1 }}>One icon not displayed in the graphic above but visible on standalone devices is the SD Card icon. It indicates the detected SD card's size and format and displays the used storage in both GB and percentage. Tapping the icon will refresh the SD Card status, the firmware may briefly freeze during this process. This is helpful if you have hot swapped the SD Card.</p>
+  <p style={{ margin: 0, flex: 1 }}>
+    One icon not displayed in the graphic above but visible on standalone
+    devices is the SD Card icon. It indicates the detected SD card's size and
+    format and displays the used storage in both GB and percentage. Tapping the
+    icon will refresh the SD Card status, the firmware may briefly freeze during
+    this process. This is helpful if you have hot swapped the SD Card.
+  </p>
 </div>
 
 ### Nodes List
@@ -269,6 +274,7 @@ Inside a chat, messages are threaded:
 The map screen displays map tiles stored on the SD card of the device. No map tiles are included, and must be manually added to the SD card in either a `/map` if using a single style or `/maps/{STYLE}/` directory if using multiple styles. Tiles must be 256x256 PNG images and a 256-color palette with 8-bit color depth is recommended.
 
 A starter set of tiles for zoom levels 1-6 covering the Earth is available, along with instructions for obtaining additional map tiles, at [this link](https://github.com/meshtastic/device-ui/tree/master/maps).
+
 #### Map Controls
 
 The map screen displays the selected map style and provides interactive controls for navigation:
@@ -317,19 +323,19 @@ The map options menu, which can be accessed by long pressing the map icon, provi
   </Light>
 </div>
 
-### Settings & Tools  
+### Settings & Tools
 
-The Settings & Tools screen provides access to device configuration and utility functions. It is divided into two tabs:  
+The Settings & Tools screen provides access to device configuration and utility functions. It is divided into two tabs:
 
-- **Settings** – Allows users to configure various aspects of the device from within MUI.  
-- **Tools** – Provides utilities for network diagnostics and monitoring.  
+- **Settings** – Allows users to configure various aspects of the device from within MUI.
+- **Tools** – Provides utilities for network diagnostics and monitoring.
 
-#### Accessing Settings & Tools  
+#### Accessing Settings & Tools
 
-- **Single tap** on the settings icon opens the Settings & Tools screen.  
-- **Long press** on the settings icon will lock the screen if the lockscreen feature is enabled. If the lockscreen is disabled, this action will put the device to sleep.  
+- **Single tap** on the settings icon opens the Settings & Tools screen.
+- **Long press** on the settings icon will lock the screen if the lockscreen feature is enabled. If the lockscreen is disabled, this action will put the device to sleep.
 
-#### Settings Tab  
+#### Settings Tab
 
 The Settings tab includes various configuration options which can be set within MUI.
 
@@ -346,17 +352,17 @@ The Settings tab includes various configuration options which can be set within 
       alt="MUI Settings Light"
     />
   </Light>
-</div> 
+</div>
 
-#### Tools Tab  
+#### Tools Tab
 
-The Tools tab provides access to various diagnostic utilities, including:  
+The Tools tab provides access to various diagnostic utilities, including:
 
-- **Mesh Detector** – Sends out a nodeinfo request periodically to detect nearby nodes. 
+- **Mesh Detector** – Sends out a nodeinfo request periodically to detect nearby nodes.
 - **Signal Scanner** – Monitors signal strength between selected node to assist with node placement.
-- **Trace Route** – Performs trace route on selected node. 
-- **Statistics** – Breaks down received packets by type, such as telemetry, position updates, trace route data, etc.  
-- **Packet Log** – Displays a log of transmitted and received packets.  
+- **Trace Route** – Performs trace route on selected node.
+- **Statistics** – Breaks down received packets by type, such as telemetry, position updates, trace route data, etc.
+- **Packet Log** – Displays a log of transmitted and received packets.
 
 <div align="center">
   <Dark>
@@ -375,9 +381,9 @@ The Tools tab provides access to various diagnostic utilities, including:
 
 ## Bluetooth Programming Mode
 
-MUI functions as a client, similar to the Android and Apple apps. It runs on one core of the MCU, while the regular Meshtastic firmware runs on the other. MUI communicates with the firmware using the Client API, the same interface used by other Meshtastic clients.  
+MUI functions as a client, similar to the Android and Apple apps. It runs on one core of the MCU, while the regular Meshtastic firmware runs on the other. MUI communicates with the firmware using the Client API, the same interface used by other Meshtastic clients.
 
-The Client API supports only one active connection at a time, which means Bluetooth cannot be used while MUI is running. Since not all settings can be configured within MUI, Bluetooth Programming Mode allows users to temporarily disable MUI, enabling Bluetooth so the device can be configured via another client app.  
+The Client API supports only one active connection at a time, which means Bluetooth cannot be used while MUI is running. Since not all settings can be configured within MUI, Bluetooth Programming Mode allows users to temporarily disable MUI, enabling Bluetooth so the device can be configured via another client app.
 
 ### Accessing Bluetooth Programming Mode
 
@@ -387,21 +393,21 @@ Bluetooth Programming Mode can be enabled in two ways:
 - Press the bluetooth icon in the shutdown/reset menu within settings.
 
 <div align="center">
-    <img
-      src="/img/software/meshtastic-ui/shutdown_screen.webp"
-      alt="Reset/Bluetooth Programming Mode/Shutdown"
-      width="60%"      
-    />
+  <img
+    src="/img/software/meshtastic-ui/shutdown_screen.webp"
+    alt="Reset/Bluetooth Programming Mode/Shutdown"
+    width="60%"
+  />
 </div>
 
 When activated, the device reboots into Bluetooth Programming Mode. While in this mode, the screen will display a randomly generated PIN, which must be entered when connecting via Bluetooth on the client app.
 
 <div align="center">
-    <img
-      src="/img/software/meshtastic-ui/bluetooth_programming_mode.webp"
-      alt="Bluetooth Programming Mode"
-      width="60%"
-    />
+  <img
+    src="/img/software/meshtastic-ui/bluetooth_programming_mode.webp"
+    alt="Bluetooth Programming Mode"
+    width="60%"
+  />
 </div>
 
 ### Exit Bluetooth Programming Mode
