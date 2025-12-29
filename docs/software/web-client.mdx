@@ -5,47 +5,51 @@ sidebar_label: Web Client
 sidebar_position: 3
 ---
 
-Meshtastic Web is a Meshtastic client that runs directly in your browser.
-There are two ways of accessing the app:
+Meshtastic Web is a web-based Meshtastic client that runs directly in your browser.
+There are two ways of accessing the client and four ways to connect to devices from the client:
 
-1. A hosted version located at [client.meshtastic.org](https://client.meshtastic.org).
-2. Hosting it yourself.
+1. An Internet-hosted client located at [client.meshtastic.org](https://client.meshtastic.org) which supports device connections over HTTPS, Bluetooth, and Serial(USB).
+2. A self-hosted client which supports device connections over HTTPS, HTTP, Bluetooth, and Serial(USB).
 
 ![WebUI](/img/webUI.webp)
 
 ## Compatibility
 
-The application will work in all major browsers, but specific functionality is limited in some cases. For the best experience we recommend using a Chromium based browser such as [Google Chrome](https://www.google.com/chrome) or [Microsoft Edge](https://www.microsoft.com/en-us/edge).
+The Meshtastic Web client works in all major browsers, but specific functionality is limited in some browsers. For the best experience, it is recommended to use a Chromium-based browser such as [Google Chrome](https://www.google.com/chrome) or [Microsoft Edge](https://www.microsoft.com/en-us/edge).
 
-### HTTP
+### HTTPS
 
-This method of connecting is limited to esp32 devices.
+This method of device connection is limited to esp32 devices where the [network connection](/docs/configuration/radio/network) has been configured to connect to the local network and where the HTTPS self-signed certificate has been accepted.
 
 :::caution
 
-When using the [hosted](https://client.meshtastic.org) version of the application, all traffic must be served over HTTPS.
-Meshtastic nodes generate self-signed certificates, and you must inform your browser that you wish to trust the aforementioned certificate.
-This can be done by first accessing your node directly via your browser: `https://NODE_IP_ADDRESS/` replacing `NODE_IP_ADDRESS` with the IP address of your node.
-This can be found on the screen of the device, via your router's DHCP lease page or serial console.
+Due to security requirements, the [Internet hosted client](https://client.meshtastic.org) requires traffic to be served over HTTPS.
+Meshtastic device firmware generates a self-signed certificate, and you must inform your browser that you wish to trust the self-signed certificate for each of your devices.
+This can be done by first accessing your device directly via your browser: `https://DEVICE_IP_ADDRESS/` replacing `DEVICE_IP_ADDRESS` with the IP address of your device.
+Your device's IP Address can be found on the screen of the device, via your router's DHCP lease page, or the device's serial console.
 
 :::
 
-You can accessing your device over HTTP after you set up your [Network Connection](/docs/configuration/radio/network)
+### HTTP
+
+This method of device connection is limited to self-hosted Mestastic Web client and esp32 devices where the [network connection](/docs/configuration/radio/network) has been configured to connect to the local network.
+
+It is recommended to run the Meshtastic Web client using OCI compatible images with either Docker or Podman from (ghcr.io/meshtastic/web)[https://ghcr.io/meshtastic/web]. (e.g., `docker run -d -p 8080:8080 --restart always --name Meshtastic-Web ghcr.io/meshtastic/web`).
 
 ### Bluetooth
 
-Bluetooth support is governed by the availability of the [Web Bluetooth API](https://web.dev/bluetooth) as illustrated below. Support is primarily available in Chromium based browsers.
+Bluetooth device connection support is governed by the availability of the [Web Bluetooth API](https://web.dev/bluetooth) as illustrated below. Support is primarily available in Chromium-based browsers.
 
 ![Web Bluetooth compatibility matrix](https://caniuse.bitsofco.de/image/web-bluetooth.png)
 
-### Serial (USB)
+### Serial(USB)
 
-The method with the least platform support, which uses the [Web Serial API](https://web.dev/serial), allows us to connect directly to a Meshtastic node over USB and access it from directly within your browser.
+Serial(USB) device connection support is limited and governed by the availability of the [Web Serial API](https://web.dev/serial) as illustrated below. This connection allows the web client to connect to a local serial port to access the device from your browser.
 
 ![Web Serial compatibility matrix](https://caniuse.bitsofco.de/image/web-serial.png)
 
 ## Self Hosting
 
-The source code for the WebUI can be found on our [GitHub](https://github.com/meshtastic/web)
+The source code for Meshtastiic Web client can be found on [GitHub](https://github.com/meshtastic/web) and the instructions for building and running the project can be found in the (readme)[https://github.com/meshtastic/web/blob/main/packages/web/README.md].
 
-Instructions for building and running the project can be found in the repo's readme.
+OCI compatible images for Docker and Podman are based on Nginx and are available at (ghcr.io/meshtastic/web)[https://ghcr.io/meshtastic/web] with nightly builds available at (ghcr.io/meshtastic/web:nightly)[http://ghcr.io/meshtastic/web:nightly].
