@@ -20,15 +20,17 @@ The device config options are: Role, Rebroadcast Mode, GPIO for User Button, GPI
 | CLIENT         | App connected or stand alone messaging device. Rebroadcasts packets when no other node has done so.                                                              | General use for individuals needing to communicate over the Meshtastic network with support for client applications.                                        |
 | CLIENT_MUTE    | Device that does not forward packets from other devices.                                                                                                         | Situations where a device needs to participate in the network without assisting in packet routing, reducing network load.                                   |
 | CLIENT_HIDDEN  | Device that only broadcasts as needed for stealth or power savings.                                                                                              | Use in stealth/hidden deployments or to reduce airtime/power consumption while still participating in the network.                                          |
+| CLIENT_BASE    | Personal base station: always rebroadcasts packets from or to its favorited nodes. Handles all other packets like CLIENT.                                        | Use for stronger attic/roof “base station” nodes to distribute messages more widely from your own weaker, indoor, or less-well-positioned nodes.            |
 | TRACKER        | Broadcasts GPS position packets as priority.                                                                                                                     | Tracking the location of individuals or assets, especially in scenarios where timely and efficient location updates are critical.                           |
 | LOST_AND_FOUND | Broadcasts location as message to default channel regularly for to assist with device recovery.                                                                  | Used for recovery efforts of a lost device.                                                                                                                 |
 | SENSOR         | Broadcasts telemetry packets as priority.                                                                                                                        | Deploying in scenarios where gathering environmental or other sensor data is crucial, with efficient power usage and frequent updates.                      |
 | TAK            | Optimized for ATAK system communication, reduces routine broadcasts.                                                                                             | Integration with ATAK systems (via the Meshtastic ATAK Plugin) for communication in tactical or coordinated operations.                                     |
 | TAK_TRACKER    | Enables automatic TAK PLI broadcasts and reduces routine broadcasts.                                                                                             | Standalone PLI integration with ATAK systems for communication in tactical or coordinated operations.                                                       |
-| REPEATER       | Infrastructure node for extending network coverage by always rebroadcasting packets once with minimal overhead. Not visible in Nodes list.                       | Best positioned in strategic locations to maximize the network's overall coverage. Device is not shown in topology.                                         |
+| REPEATER [^4] | Infrastructure node for extending network coverage by always rebroadcasting packets once with minimal overhead. Not visible in Nodes list.                       | Best positioned in strategic locations to maximize the network's overall coverage. Device is not shown in topology.                                       |
 | ROUTER         | Infrastructure node for extending network coverage by always rebroadcasting packets once. Visible in Nodes list.                                                 | Best positioned in strategic locations to maximize the network's overall coverage. Device is shown in topology.                                             |
 | ROUTER_LATE    | Infrastructure node that always rebroadcasts packets once but only after all other modes, ensuring additional coverage for local clusters. Visible in Nodes list. | Ideal for covering dead spots or ensuring reliability for a cluster of nodes where placement doesn’t benefit the broader mesh. Device is shown in topology. |
 
+[^4]: This role has been deprecated as of firmware version 2.7.11
 :::tip
 Still not sure which role to use? Check out our blog post: [Choosing the Right Device Role](/blog/choosing-the-right-device-role/)
 :::
@@ -44,6 +46,7 @@ This table shows the **default** values after selecting a preset. As always, ind
 | CLIENT         | Yes             | Yes            | Regular           | Yes            | No                  | Yes                   |
 | CLIENT_MUTE    | Yes             | Yes            | Lowest            | No             | No                  | Yes                   |
 | CLIENT_HIDDEN  | Yes             | Yes            | Lowest            | Local Only     | No                  | No                    |
+| CLIENT_BASE    | Yes             | Yes            | Regular           | Yes            | Favorites Only[^3]  | Yes                   |
 | TRACKER        | Yes             | No             | Regular / Low     | Awake Only[^1] | No                  | Yes                   |
 | LOST_AND_FOUND | Yes             | No             | Regular           | Yes            | No                  | Yes                   |
 | SENSOR         | Yes             | No             | Regular / Low     | Awake Only[^1] | No                  | Yes                   |
@@ -56,6 +59,8 @@ This table shows the **default** values after selecting a preset. As always, ind
 [^1]: **Awake Only** indicates retransmissions will occur normally but not while asleep between transmission intervals.
 
 [^2]: The `ROUTER` role enables [Power Saving](/docs/configuration/radio/power/#power-saving) by default (ESP32 only). When needing to update a `ROUTER` via BLE, it's recommended you utilize an admin channel to temporarily change the role in order to update and then revert when done.
+
+[^3]: **Favorites Only** indicates that the `CLIENT_BASE` will prioritize packets from or to any favorited nodes. From your `CLIENT_BASE`, you should favorite all of your other nodes which are typically within range of the better-positioned `CLIENT_BASE` base station.
 
 ## Notes about Power Saving + Role behavior
 
@@ -163,7 +168,7 @@ If true, disable the default blinking LED (LED_PIN) behavior on the device.
 Device Config is available for Android.
 
 1. Open the Meshtastic App
-2. Navigate to: **Vertical Ellipsis (3 dots top right) > Radio Configuration > Device**
+2. Navigate to: **Settings > Device**
 
 :::
 

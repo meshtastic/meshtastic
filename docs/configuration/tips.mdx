@@ -3,14 +3,14 @@ id: tips
 title: Configuration Tips
 description: Tips and Solutions to help you get the most out of your Meshtastic device and network.
 sidebar_label: Tips
-sidebar_position: 4
+sidebar_position: 5
 ---
 
 import QRCode from "@site/docs/blocks/_qr-code.mdx";
 
 ## Roles
 
-It is strongly recommended to keep your [ROLE](/docs/configuration/radio/device#roles) set to `CLIENT` or `CLIENT_MUTE`. Only use other roles if you have a specific, well-understood reason to do so. Read our [blog post about choosing the best role](/blog/choosing-the-right-device-role/).
+It is strongly recommended to keep your [ROLE](/docs/configuration/radio/device#roles) set to `CLIENT`, `CLIENT_MUTE`, or `CLIENT_BASE`. Only use other roles if you have a specific, well-understood reason to do so. Read our [blog post about choosing the best role](/blog/choosing-the-right-device-role/).
 
 ### Recommended Roles
 
@@ -25,8 +25,13 @@ It is strongly recommended to keep your [ROLE](/docs/configuration/radio/device#
   - Use when multiple nodes are in close proximity. Set the best-positioned node to `CLIENT` and the others to `CLIENT_MUTE`.
   - Perfect for indoor nodes that only talk to one outdoor node - since they can't reach other nodes anyway, repeating messages would just waste bandwidth.
 
+- `CLIENT_BASE` nodes prioritize rebroadcasting messages from your other personal nodes.
+  - Use for a stronger or well-positioned attic/roof “base station” node to distribute messages more widely from your own weaker, indoor, or less-well-positioned nodes.
+  - Set one node to `CLIENT_BASE`. Set your other nodes (typically `CLIENT` or `CLIENT_MUTE`) as favorites on the `CLIENT_BASE`.
+  - Perfect for ensuring all your nearby nodes take full advantage of your stronger, well-positioned attic/roof node.
+
 ![Client Node Example](/img/configuration/client.webp)
-*One example of a 'Client' node.  Photo credit: Cully@KBOXLABS*
+_One example of a 'Client' node. Photo credit: Cully@KBOXLABS_
 
 ### Avoid `ROUTER`and `REPEATER`
 
@@ -41,7 +46,7 @@ These roles are for very specific applications. Before changing from `CLIENT`, c
 Remember: A network of `CLIENT` nodes with a small number of well-placed `ROUTERS` is usually the most efficient and stable configuration.
 
 ![Router Node Example](/img/configuration/router.webp)
-*One example of a 'Router' node.  Photo credit: Cully@KBOXLABS*
+_One example of a 'Router' node. Photo credit: Cully@KBOXLABS_
 
 ## (Not) Sharing Your Location
 
@@ -58,6 +63,7 @@ The `position_precision` setting allows control of the level of precision for lo
 For detailed information on position precision settings and how to configure them, please refer to the [Position Precision documentation](/docs/configuration/radio/channels/#position-precision).
 
 ### Sharing Location on a Private Secondary Channel
+
 > This is a newer feature that only works for firmware 2.7.1+
 
 To share your location on a private secondary channel while keeping the default primary channel unencrypted, follow these steps:
@@ -80,6 +86,7 @@ Imagine you’re in the following channels:
 - Channel 3: “TutuTuesdayGroup” (location OFF)
 
 ##### How It Works
+
 - CampChat (Channel 1) receives your live, automatic location updates because it’s the lowest-indexed channel with location sharing enabled.
 - Friends (Channel 2) can request your location manually, but it won’t receive automatic updates.
 - TutuTuesdayGroup (Channel 3) allows chatting but does not share or receive location data.

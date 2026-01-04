@@ -39,6 +39,7 @@ Acceptable values:
 | `MGRS` | Military Grid Reference System  |
 | `OLC`  | Open Location Code (Plus Codes) |
 | `OSGR` | Ordnance Survey Grid Reference  |
+| `MLS`  |    Maidenhead Locator System    |
 
 ### Preferred Display Units
 
@@ -129,7 +130,7 @@ If false the device will display the time in 24-hour format on screen.  If true,
 Display Config is available for Android.
 
 1. Open the Meshtastic App
-2. Navigate to: **Vertical Ellipsis (3 dots top right) > Radio Configuration > Display**
+2. Navigate to: **Settings >  Display**
 
 :::
 
@@ -139,7 +140,7 @@ Display Config is available for Android.
 #### Apple
 
 :::info
-All display config options are available on iOS, iPadOS and macOS at Settings > Device Configuration > Display.
+Most display config options are available on iOS, iPadOS and macOS at Settings > Device Configuration > Display.
 :::
 
 </TabItem>
@@ -158,7 +159,7 @@ All display config options are available in the python CLI. Example commands are
 | display.auto_screen_carousel_secs | `integer`                                                 | Default of `0` is off.        |
 | display.compass_north_top         | `false`, `true`                                           | `false`                       |
 | display.flip_screen               | `false`, `true`                                           | `false`                       |
-| display.gps_format                | `DEC`, `DMS`, `UTM`, `MGRS`, `OLC`, `OSGR`                | `DEC`                         |
+| display.gps_format                | `DEC`, `DMS`, `UTM`, `MGRS`, `OLC`, `OSGR`, `MLS`         | `DEC`                         |
 | display.oled                      | `OLED_AUTO`, `OLED_SSD1306`, `OLED_SH1106`, `OLED_SH1107` | `OLED_AUTO`                   |
 | display.screen_on_secs            | `integer`                                                 | Default of `0` is 10 minutes. |
 | display.units                     | `METRIC`, `IMPERIAL`                                      | `METRIC`                      |

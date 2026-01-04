@@ -2,6 +2,7 @@ import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 import { Icon } from "@iconify/react";
 
+<div className="osTabs">
 <Tabs groupId="operating-systems" queryString="os">
   <TabItem value="debian" label={<><Icon icon="mdi:debian" style={{ marginRight: "0.25rem" }} height="1.5rem" /> Debian</>} default>
     Debian packages are provided via [<Icon icon="simple-icons:opensuse"/> OpenSUSE Build Service](https://build.opensuse.org/project/show/network:Meshtastic:beta).
@@ -18,6 +19,7 @@ import { Icon } from "@iconify/react";
     **Install - Debian 13 (`trixie`):**
 
     ```shell
+    [[ "$(. /etc/os-release && echo $NAME)" == Raspbian* ]] && echo "ERROR: Raspberry Pi OS (32-bit) detected, please use the Raspbian repos."
     echo 'deb http://download.opensuse.org/repositories/network:/Meshtastic:/beta/Debian_13/ /' | sudo tee /etc/apt/sources.list.d/network:Meshtastic:beta.list
     curl -fsSL https://download.opensuse.org/repositories/network:Meshtastic:beta/Debian_13/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/network_Meshtastic_beta.gpg > /dev/null
     sudo apt update
@@ -27,6 +29,7 @@ import { Icon } from "@iconify/react";
     **Install - Debian 12 (`bookworm`):**
 
     ```shell
+    [[ "$(. /etc/os-release && echo $NAME)" == Raspbian* ]] && echo "ERROR: Raspberry Pi OS (32-bit) detected, please use the Raspbian repos."
     echo 'deb http://download.opensuse.org/repositories/network:/Meshtastic:/beta/Debian_12/ /' | sudo tee /etc/apt/sources.list.d/network:Meshtastic:beta.list
     curl -fsSL https://download.opensuse.org/repositories/network:Meshtastic:beta/Debian_12/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/network_Meshtastic_beta.gpg > /dev/null
     sudo apt update
@@ -76,11 +79,22 @@ import { Icon } from "@iconify/react";
     | 📱 [MUI][MUI]            | ✅     |
     | 🌐 [Web][WebClient]      | ✅     |
 
-    Supported: `bookworm` (12)
+    Supported: `trixie` (13), `bookworm` (12)
+
+    **Install - Raspbian 13 (`trixie`):**
+
+    ```shell
+    [[ "$(. /etc/os-release && echo $NAME)" != Raspbian* ]] && echo "ERROR: Raspberry Pi OS (32-bit) not detected, please use the Debian repos."
+    echo 'deb http://download.opensuse.org/repositories/network:/Meshtastic:/beta/Raspbian_13/ /' | sudo tee /etc/apt/sources.list.d/network:Meshtastic:beta.list
+    curl -fsSL https://download.opensuse.org/repositories/network:Meshtastic:beta/Raspbian_13/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/network_Meshtastic_beta.gpg > /dev/null
+    sudo apt update
+    sudo apt install meshtasticd
+    ```
 
     **Install - Raspbian 12 (`bookworm`):**
 
     ```shell
+    [[ "$(. /etc/os-release && echo $NAME)" != Raspbian* ]] && echo "ERROR: Raspberry Pi OS (32-bit) not detected, please use the Debian repos."
     echo 'deb http://download.opensuse.org/repositories/network:/Meshtastic:/beta/Raspbian_12/ /' | sudo tee /etc/apt/sources.list.d/network:Meshtastic:beta.list
     curl -fsSL https://download.opensuse.org/repositories/network:Meshtastic:beta/Raspbian_12/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/network_Meshtastic_beta.gpg > /dev/null
     sudo apt update
@@ -301,9 +315,26 @@ import { Icon } from "@iconify/react";
     See [Meshtastic on OpenWrt routers](/docs/hardware/devices/openwrt/)
 
   </TabItem>
-</Tabs>
+  <TabItem value="nixos" label={<><Icon icon="simple-icons:nixos" style={{ marginRight: "0.25rem" }} height="1.5rem" /> NixOS</>}>
 
-[MUI]: /docs/software/meshtastic-ui/
+    | Feature                  | Status |
+    | ------------------------ | ------ |
+    | 🔌 [USB Radio][USBRadio] | ✅     |
+    | 🕸️ [SPI Radio][SPIRadio] | ✅     |
+    | 📱 [MUI][MUI]            | ✅     |
+    | 🌐 [Web][WebClient]      | ✅     |
+
+    Supported platforms: `x86_64`, `aarch64`
+
+    See `meshtasticd` service on [NixOS](https://search.nixos.org/options?channel=unstable&query=meshtasticd)
+
+    Maintained by [@Pol](https://github.com/drupol) and the Meshtastic community.
+
+  </TabItem>
+</Tabs>
+</div>
+
+[MUI]: /docs/configuration/device-uis/meshtasticui/
 [WebClient]: /docs/software/web-client/
 [USBRadio]: /docs/hardware/devices/linux-native-hardware/
 [SPIRadio]: /docs/hardware/devices/linux-native-hardware/
