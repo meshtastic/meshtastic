@@ -121,6 +121,7 @@ const config = {
         },
       };
     },
+    "@docusaurus/plugin-vercel-analytics",
   ],
   scripts: [
     ...(process.env.COOKIEYES_CLIENT_ID
@@ -167,7 +168,9 @@ const config = {
   },
   themes: ["@docusaurus/theme-mermaid"],
   future: {
-    experimental_faster: true,
+    v4: {
+      useCssCascadeLayers: false,
+    },
   },
 };
 
