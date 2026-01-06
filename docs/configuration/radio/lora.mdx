@@ -116,6 +116,10 @@ This setting controls the actual hardware frequency at which the radio transmits
 
 For testing it is useful sometimes to force a node to never listen to particular other nodes (simulating radio out of range). All nodenums listed in the ignore_incoming array will have packets they send dropped on receive (by router.cpp)
 
+:::note
+This option is **deprecated** in the client apps.  To ignore nodes, long-press on (or click for web client) a node and mark it as ignored. This acts the same as the ignore list (blocking packets from the ignore node from being received or relayed), with the added benefit of being able to ignore more than three nodes.
+:::
+
 ### Ignore MQTT
 
 Setting this to option to 'true' means the device will ignore any messages it receives via LoRa that came via MQTT somewhere along the path towards the device. Note this only works when your device and the MQTT node are running at least firmware version 2.2.19.
@@ -192,7 +196,7 @@ If true, disable the built-in PA FAN using pin define in RF95_FAN_EN.
 LoRa Config options are available on Android.
 
 1. Open the Meshtastic App
-2. Navigate to: **Vertical Ellipsis (3 dots top right) > Radio Configuration > LoRa**
+2. Navigate to: **Settings >  LoRa**
 
 :::
 
