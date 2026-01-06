@@ -15,7 +15,7 @@ The Neighbor Info Module is for sending information on each node's 0-hop neighbo
 Neighbor Info is informative only and does not affect the routing behavior of the mesh network. It is therefore optional and disabled by default.
 :::
 
-In order to save bandwidth, Meshtastic does not keep track of the route a packet is taking to get to the destination, except when using Traceroute. When enabling this module and enabling "Transmit Over LoRa", your node will periodically send out a packet with a list of its direct neighbors and the quality (SNR) of the corresponding link. If you enable this on all nodes, you can build up a graph of the full network to see how it is connected. At the time of writing, there are no clients visualizing it for you, but you can use e.g. MQTT to gather all the data.
+In order to save bandwidth, Meshtastic does not keep track of the route that a packet is taking to get to the destination, except when using Traceroute. When enabling this module and enabling "Transmit Over LoRa", your node will periodically send out a packet with a list of its direct neighbors and the quality (SNR) of the corresponding link. If you enable this on all nodes, you can build up a graph of the full network to see how it is connected. At the time of writing, there are no clients visualizing it for you, but you can use e.g. MQTT to gather all the data.
 
 In order to use it, make sure your devices use firmware version 2.2.0 or higher. From 2.3.2 on, the module can detect neighbors even if other nodes do not have the module enabled.
 
