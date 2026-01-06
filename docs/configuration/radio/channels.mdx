@@ -121,7 +121,7 @@ The `position_precision` value is an integer between 0 and 32:
 - A value of 0 means that location data is never sent over the given channel.
 - A value of 32 means that location data is sent with full precision.
 - Values in between indicate the number of bits of precision to be sent, which correspond to a position precision from the table below.
-- The public MQTT server filters out precise positions, see [here](https://meshtastic.org/docs/software/integrations/mqtt/#location-precision-filtering) for more information.
+- The public MQTT server [filters out precise positions](https://meshtastic.org/docs/software/integrations/mqtt/#location-precision-filtering).
 
 <PositionPrecisionBits />
 
