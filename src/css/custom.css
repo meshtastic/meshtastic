@@ -159,6 +159,10 @@ a + .navbar__link > svg {
   margin-bottom: auto;
 }
 
+.navbar__item--flasher svg {
+  display: none;
+}
+
 @layer base {
   .markdown {
     @apply prose prose-lg;
@@ -292,4 +296,14 @@ p {
 .markdown img {
   margin-bottom: 0;
   display: block;
+}
+
+.navbar__item--flasher {
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .navbar__item--flasher {
+    display: none !important;
+  }
 }
