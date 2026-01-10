@@ -43,6 +43,12 @@ const config = {
           to: "downloads",
         },
         {
+          label: "Flasher",
+          href: "https://flasher.meshtastic.org",
+          target: "_self",
+          className: "navbar__item--flasher",
+        },
+        {
           label: "About",
           position: "right",
           items: [
@@ -121,6 +127,7 @@ const config = {
         },
       };
     },
+    "@docusaurus/plugin-vercel-analytics",
   ],
   scripts: [
     ...(process.env.COOKIEYES_CLIENT_ID
