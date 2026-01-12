@@ -51,7 +51,7 @@ Each channel is assigned one of 3 roles:
 1. `PRIMARY` or `1`
    - This is the first channel that is created for you on initial setup.
    - Only one primary channel can exist and can not be disabled.
-   - Periodic broadcasts like position and telemetry are only sent over this channel.
+   - By default, periodic broadcasts like position and telemetry are sent over this channel.
 2. `SECONDARY` or `2`
    - Can modify the encryption key (PSK).
 3. `DISABLED` or `0`
@@ -191,31 +191,12 @@ The client applications have implemented different levels of precision giving th
 #### Android
 
 :::info
-Channel Config options are available on Android.
+All Channel config options are available for Android.
+
+1. Open the Meshtastic App
+2. Navigate to: **Settings > Channels**
+
 :::
-![Android Menu Tabs](/img/android/android-menu-channel.webp)
-
-The Radio Configuration tab can be used for common tasks:
-
-1. View your current channel configuration QR code and URL.[^1]
-2. Quickly create or modify your primary channel.
-3. Select a modem preset for all your channels i.e. `Long Range / Fast`.
-
-[^1]:
-    <QRCode />
-
-See [Android App Usage](/docs/software/android/usage#setup-a-channel) for more further instruction on setting up your primary channel.
-
-[![Channel Editor](/img/android/android-channel-edit-sm.webp)](/img/android/android-channel-edit.webp)
-
-Tap "Edit" to access the Channel Menu:
-
-1. Add, remove, or modify secondary channels
-2. Create or modify encryption keys
-3. Enable uplink and downlink for individual channels
-4. Position enabled
-5. Precise location (if position is enabled)
-6. Position precision (if precise location is disabled)
 
 </TabItem>
 
