@@ -11,8 +11,9 @@ import TabItem from "@theme/TabItem";
 <Tabs
 groupId="heltec"
 queryString="heltec"
-defaultValue="v3"
+defaultValue="v4"
 values={[
+{label: 'LoRa32 V4', value:'v4'},
 {label: 'LoRa32 V3/V3.1', value:'v3'},
 {label: 'Wireless Stick Lite V3', value:'Wireless Stick Lite V3'},
 {label: 'Wireless Tracker v1.0', value: 'tracker-v1.0'},
@@ -20,6 +21,49 @@ values={[
 {label: 'Wireless Paper v1.0', value: 'paper-v1.0'},
 {label: 'Wireless Paper v1.1', value: 'paper-v1.1'}
 ]}>
+
+<TabItem value="v4">
+
+## V4
+
+- **MCU:**
+  - ESP32-S3R2 (WiFi & Bluetooth)
+- **LoRa Transceiver:**
+  - Semtech SX1262
+- **Frequency Options:**
+  - 863 - 870 MHz
+  - 902 - 928 MHz
+- **Connectors:**
+  - USB-C
+  - Antenna:
+    - Integrated antenna for WiFi/Bluetooth
+    - U.FL/IPEX antenna connector for LoRa
+
+### Features
+
+- Built in 0.96 inch OLED display
+- High power option: 28±1dBm
+- Optimized lithium battery management
+- Form factor and pin compatibility with V3/V3.1
+- 1.25-2Pin solar interface
+- 1.25-8Pin GNSS interface
+
+### Pin Map
+
+![Heltec V4 Pin Map](/img/hardware/heltec/V4-pinmap.webp)
+
+### Resources
+
+- Firmware file: `firmware-heltec-v4-X.X.X.xxxxxxx.bin`
+- Purchase links
+  - US
+    - [Rokland](https://store.rokland.com/products/heltec-wifi-lora-32v4-esp32s3-sx1262-lora-node-meshtastic-lorawan)
+  - International
+    - [Heltec](https://msh.to/heltec-v4/)
+
+![Hletec LoRa32 V4](/img/hardware/heltec/heltec-V4.webp)
+
+</TabItem>
 
 <TabItem value="v3">
 
@@ -260,8 +304,8 @@ With the device now in the Espressif Firmware Download mode, you can proceed wit
 
 ### Meshtastic I2C Definitions
 
-- SDA: GPIO41
-- SCL: GPIO42
+- SDA: GPIO45
+- SCL: GPIO46
 
 ### Pin Map
 
