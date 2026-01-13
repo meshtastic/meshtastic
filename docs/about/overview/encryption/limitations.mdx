@@ -30,7 +30,7 @@ This issue is compounded by the limited memory for storing nodes on a Meshtastic
 
 The combination of the TOFU model and constrained hardware leads to a problem. When a node rolls off the NodeDB, the Meshtastic firmware has no way to confirm that a future User packet isn’t a spoof of that Node Number, with a different public key. This problem is made worse by the possibility that an attacker on the channel can quickly create fake nodes, and cause legitimate nodes to roll off the NodeDB sooner.
 
-This attack was anticipated when the DM system was designed, and accepted as an inevitable result of building an ad-hoc, decentralized mesh. Again, there is no central authority to sign keys. As a result, multiple mitigations were built in to the system to minimize the actual usefulness of this attack.
+This attack was anticipated when the DM system was designed, and accepted as an inevitable result of building an ad-hoc, decentralized mesh. Again, there is no central authority to sign keys. As a result, multiple mitigations were built into the system to minimize the actual usefulness of this attack.
 
 ## Intended Behavior
 
