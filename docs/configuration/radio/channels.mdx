@@ -65,7 +65,7 @@ To ensure devices with different PRIMARY channel name transmit on the same frequ
 
 ## Channel Settings Values
 
-The Channel Settings options are: Name, PSK, Downlink Enabled, and Uplink Enabled. Channel settings are embedded in the `Channel` protobuf as a `ChannelSettings` protobuf and sent as an admin message.
+The Channel Settings options are: Name, PSK, Downlink Enabled, Uplink Enabled and Mute. Channel settings are embedded in the `Channel` protobuf as a `ChannelSettings` protobuf and sent as an admin message.
 
 ### Name
 
@@ -108,9 +108,24 @@ If enabled, messages from the mesh will be sent to the **public** internet throu
 
 Set to `false` by default for all channels.
 
+## Channel Config Client Availability
+
 ## Channel Module Settings
 
-The channel module settings options are: position precision. Channel module settings are embedded in the Channel protobuf as a ModuleSettings protobuf and sent as an admin message.
+The channel module settings options are: Is muted and position precision. Channel module settings are embedded in the Channel protobuf as a ModuleSettings protobuf and sent as an admin message.
+
+### Is Muted
+If enabled, the `is_muted` setting silences invocation of the `ExternalNotificationModule` when messages are received over the specified channel(s). UI notifications such as `"New Message From []"` are also blocked from popup.
+
+Set to `false` by default for all channels.
+
+Control the channel's notification behaviour.
+
+```shell title="Toggle is_muted on the PRIMARY channel"
+meshtastic --ch-set module_settings.is_muted true --ch-index 0
+meshtastic --ch-set module_settings.is_muted false --ch-index 0
+```
+
 
 ### Position Precision
 
@@ -126,8 +141,6 @@ The `position_precision` value is an integer between 0 and 32:
 <PositionPrecisionBits />
 
 The client applications have implemented different levels of precision giving the user a practical range to choose from. Setting across the full range of integers can be done via the Python CLI. See [Setting Position Precision](/docs/configuration/radio/channels/#setting-position-precision) for examples on setting different levels of precision using CLI.
-
-## Channel Config Client Availability
 
 <Tabs
   groupId="settings"
