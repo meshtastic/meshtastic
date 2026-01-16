@@ -8,7 +8,12 @@ sidebar_position: 5
 
 import QRCode from "@site/docs/blocks/_qr-code.mdx";
 
-The python pip package installs a "meshtastic" command line executable, which displays packets sent over the network as JSON and lets you see serial debugging information from the meshtastic devices. This command is not run inside of python, you run it from your operating system shell prompt directly. If when you type "meshtastic" it doesn't find the command and you are using Windows: Check that the python "scripts" directory is in your path.
+The python pip package installs a "meshtastic" command line executable, which displays packets sent over the network as JSON and lets you see serial debugging information from the meshtastic devices.
+```pip3 install --upgrade "meshtastic[cli]"```
+
+The mesthastic command runs from your operating system shell prompt directly. If when you type "meshtastic" it doesn't find the command: Check that the python "scripts" directory is in your path.
+If you're not familiar with pip or have problems, there are detailed [installation instructions](/docs/software/python/cli/installation).
+
 
 :::tip
 For a more complete list of options, run:
