@@ -238,7 +238,7 @@ const modemPresets = new Map<
     Protobuf.Config.Config_LoRaConfig_ModemPreset.SHORT_FAST,
     {
       bw: 250,
-      cr: 8,
+      cr: 5,
       sf: 7,
     },
   ],
@@ -246,7 +246,7 @@ const modemPresets = new Map<
     Protobuf.Config.Config_LoRaConfig_ModemPreset.SHORT_SLOW,
     {
       bw: 250,
-      cr: 8,
+      cr: 5,
       sf: 8,
     },
   ],
@@ -254,7 +254,7 @@ const modemPresets = new Map<
     Protobuf.Config.Config_LoRaConfig_ModemPreset.MEDIUM_FAST,
     {
       bw: 250,
-      cr: 8,
+      cr: 5,
       sf: 9,
     },
   ],
@@ -262,7 +262,7 @@ const modemPresets = new Map<
     Protobuf.Config.Config_LoRaConfig_ModemPreset.MEDIUM_SLOW,
     {
       bw: 250,
-      cr: 8,
+      cr: 5,
       sf: 10,
     },
   ],
@@ -270,6 +270,14 @@ const modemPresets = new Map<
     Protobuf.Config.Config_LoRaConfig_ModemPreset.LONG_FAST,
     {
       bw: 250,
+      cr: 5,
+      sf: 11,
+    },
+  ],
+  [
+    Protobuf.Config.Config_LoRaConfig_ModemPreset.LONG_TURBO,
+    {
+      bw: 500,
       cr: 8,
       sf: 11,
     },
