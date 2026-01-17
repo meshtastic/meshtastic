@@ -27,7 +27,7 @@ The Channels config options are: Index, Roles, and Settings. Channel config uses
 
 The channel index begins at 0 and ends at 7.
 
-_Indexing_ can not be modified.
+_Indexing_ cannot be modified.
 
 | Index | Channel | Default Role |          Purpose          |
 | :---: | :-----: | :----------: | :-----------------------: |
@@ -50,8 +50,8 @@ Each channel is assigned one of 3 roles:
 
 1. `PRIMARY` or `1`
    - This is the first channel that is created for you on initial setup.
-   - Only one primary channel can exist and can not be disabled.
-   - Periodic broadcasts like position and telemetry are only sent over this channel.
+   - Only one primary channel can exist and cannot be disabled.
+   - By default, periodic broadcasts like position and telemetry are sent over this channel.
 2. `SECONDARY` or `2`
    - Can modify the encryption key (PSK).
 3. `DISABLED` or `0`
@@ -65,7 +65,7 @@ To ensure devices with different PRIMARY channel name transmit on the same frequ
 
 ## Channel Settings Values
 
-The Channel Settings options are: Name, PSK, Downlink Enabled, and Uplink Enabled. Channel settings are embedded in the `Channel` protobuf as a `ChannelSettings` protobuf and sent as an admin message.
+The Channel Settings options are: Name, PSK, Downlink Enabled, Uplink Enabled and Mute. Channel settings are embedded in the `Channel` protobuf as a `ChannelSettings` protobuf and sent as an admin message.
 
 ### Name
 
@@ -74,7 +74,7 @@ A short identifier for the channel. _(< 12 bytes)_
 | Reserved Name  |                                                                                                                 Purpose                                                                                                                  |
 | :------------: | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
 | `""` (default) |                                                                               If left empty on the Primary channel, this designates the `default` channel.                                                                               |
-|    `admin`     | On Secondary channels, the name `admin` (case sensitive) designates the `admin` channel used to administer nodes over the mesh. Note that this is a Legacy feature, see [Remote Admin](docs/configuration/remote-admin.mdx) for details. |
+|    `admin`     | On Secondary channels, the name `admin` (case-sensitive) designates the `admin` channel used to administer nodes over the mesh. Note that this is a Legacy feature, see [Remote Admin](docs/configuration/remote-admin.mdx) for details. |
 
 :::note
 
@@ -108,9 +108,24 @@ If enabled, messages from the mesh will be sent to the **public** internet throu
 
 Set to `false` by default for all channels.
 
+## Channel Config Client Availability
+
 ## Channel Module Settings
 
-The channel module settings options are: position precision. Channel module settings are embedded in the Channel protobuf as a ModuleSettings protobuf and sent as an admin message.
+The channel module settings options are: Is muted and position precision. Channel module settings are embedded in the Channel protobuf as a ModuleSettings protobuf and sent as an admin message.
+
+### Is Muted
+If enabled, the `is_muted` setting silences invocation of the `ExternalNotificationModule` when messages are received over the specified channel(s). UI notifications such as `"New Message From []"` are also blocked from popup.
+
+Set to `false` by default for all channels.
+
+Control the channel's notification behaviour.
+
+```shell title="Toggle is_muted on the PRIMARY channel"
+meshtastic --ch-set module_settings.is_muted true --ch-index 0
+meshtastic --ch-set module_settings.is_muted false --ch-index 0
+```
+
 
 ### Position Precision
 
@@ -126,8 +141,6 @@ The `position_precision` value is an integer between 0 and 32:
 <PositionPrecisionBits />
 
 The client applications have implemented different levels of precision giving the user a practical range to choose from. Setting across the full range of integers can be done via the Python CLI. See [Setting Position Precision](/docs/configuration/radio/channels/#setting-position-precision) for examples on setting different levels of precision using CLI.
-
-## Channel Config Client Availability
 
 <Tabs
   groupId="settings"
@@ -172,31 +185,12 @@ The client applications have implemented different levels of precision giving th
 #### Android
 
 :::info
-Channel Config options are available on Android.
+All Channel config options are available for Android.
+
+1. Open the Meshtastic App
+2. Navigate to: **Settings > Channels**
+
 :::
-![Android Menu Tabs](/img/android/android-menu-channel.webp)
-
-The Radio Configuration tab can be used for common tasks:
-
-1. View your current channel configuration QR code and URL.[^1]
-2. Quickly create or modify your primary channel.
-3. Select a modem preset for all your channels i.e. `Long Range / Fast`.
-
-[^1]:
-    <QRCode />
-
-See [Android App Usage](/docs/software/android/usage#setup-a-channel) for more further instruction on setting up your primary channel.
-
-[![Channel Editor](/img/android/android-channel-edit-sm.webp)](/img/android/android-channel-edit.webp)
-
-Tap "Edit" to access the Channel Menu:
-
-1. Add, remove, or modify secondary channels
-2. Create or modify encryption keys
-3. Enable uplink and downlink for individual channels
-4. Position enabled
-5. Precise location (if position is enabled)
-6. Position precision (if precise location is disabled)
 
 </TabItem>
 

@@ -194,7 +194,7 @@ Bluetooth is currently unsupported and not functional on Linux Native devices. T
 
 ### Enabling the systemd service
 
-To configure the device to start and stop meshtasticd as a service using systemctl you can setup the service unit using the instructions below.
+To configure the device to start and stop meshtasticd as a service using systemctl you can set up the service unit using the instructions below.
 
 <details>
   <summary>Create the systemd service (only for manual installs)</summary>
@@ -214,15 +214,19 @@ Add the following content to the file:
 
 ```plaintext
 [Unit]
-Description=Meshtastic Daemon
-After=network.target
+Description=Meshtastic Native Daemon
+After=network-online.target
+StartLimitInterval=200
+StartLimitBurst=5
 
 [Service]
-ExecStart=/usr/sbin/meshtasticd
-Restart=always
+AmbientCapabilities=CAP_NET_BIND_SERVICE
 User=root
 Group=root
 Type=simple
+ExecStart=/usr/bin/meshtasticd
+Restart=always
+RestartSec=3
 
 [Install]
 WantedBy=multi-user.target

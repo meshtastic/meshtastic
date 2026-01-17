@@ -43,6 +43,12 @@ const config = {
           to: "downloads",
         },
         {
+          label: "Flasher",
+          href: "https://flasher.meshtastic.org",
+          target: "_self",
+          className: "navbar__item--flasher",
+        },
+        {
           label: "About",
           position: "right",
           items: [
@@ -67,6 +73,10 @@ const config = {
               to: "docs/faq",
             },
           ],
+        },
+        {
+          type: "localeDropdown",
+          position: "right",
         },
         {
           href: "https://github.com/meshtastic",
@@ -117,6 +127,7 @@ const config = {
         },
       };
     },
+    "@docusaurus/plugin-vercel-analytics",
   ],
   scripts: [
     ...(process.env.COOKIEYES_CLIENT_ID
@@ -163,7 +174,9 @@ const config = {
   },
   themes: ["@docusaurus/theme-mermaid"],
   future: {
-    experimental_faster: true,
+    v4: {
+      useCssCascadeLayers: false,
+    },
   },
 };
 

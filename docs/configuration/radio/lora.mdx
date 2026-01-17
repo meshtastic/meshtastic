@@ -116,6 +116,10 @@ This setting controls the actual hardware frequency at which the radio transmits
 
 For testing it is useful sometimes to force a node to never listen to particular other nodes (simulating radio out of range). All nodenums listed in the ignore_incoming array will have packets they send dropped on receive (by router.cpp)
 
+:::note
+This option is **deprecated** in the client apps.  To ignore nodes, long-press on (or click for web client) a node and mark it as ignored. This acts the same as the ignore list (blocking packets from the ignore node from being received or relayed), with the added benefit of being able to ignore more than three nodes.
+:::
+
 ### Ignore MQTT
 
 Setting this to option to 'true' means the device will ignore any messages it receives via LoRa that came via MQTT somewhere along the path towards the device. Note this only works when your device and the MQTT node are running at least firmware version 2.2.19.
@@ -192,7 +196,7 @@ If true, disable the built-in PA FAN using pin define in RF95_FAN_EN.
 LoRa Config options are available on Android.
 
 1. Open the Meshtastic App
-2. Navigate to: **Vertical Ellipsis (3 dots top right) > Radio Configuration > LoRa**
+2. Navigate to: **Settings >  LoRa**
 
 :::
 
@@ -220,7 +224,7 @@ LoRa config commands are available in the python CLI. Example commands are below
 | :-------------------------: | :-------------------------------------------------------------------------------------------------------------------------------------------------------: | :---------: |
 |      lora.modem_preset      |                    `LONG_FAST`, `LONG_SLOW`, `VERY_LONG_SLOW`, `MEDIUM_SLOW`, `MEDIUM_FAST`, `SHORT_SLOW`, `SHORT_FAST`, `SHORT_TURBO`                    | `LONG_FAST` |
 |       lora.use_preset       |                                                                      `false`, `true`                                                                      |   `false`   |
-|         lora.region         | `UNSET`, `US`, `EU_433`, `EU_868`, `CN`, `JP`, `ANZ`, `ANZ_433`, `KR`, `TW`, `RU` ,`IN`, `NZ_865`, `TH`, `LORA_24`, `UA_433`, `UA_868`, `MY_433`, `MY_919`, `SG_923` |   `UNSET`   |
+|        lora.region         | `UNSET`, `US`, `EU_433`, `EU_868`, `CN`, `JP`, `ANZ`, `ANZ_433`, `KR`, `TW`, `RU` ,`IN`, `NZ_865`, `TH`, `LORA_24`, `UA_433`, `UA_868`, `MY_433`, `MY_919`, `SG_923`, `KZ_433`, `KZ_863`, `BR_902`, `NP_865` |   `UNSET`   |
 |       lora.bandwidth        |                                                              `31`, `62`, `125`, `250`, `500`                                                              |    `250`    |
 |     lora.spread_factor      |                                                              `7`, `8`, `9`, `10`, `11`, `12`                                                              |    `12`     |
 |      lora.coding_rate       |                                                                    `5`, `6`, `7`, `8`                                                                     |     `8`     |
