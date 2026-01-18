@@ -9,7 +9,7 @@ const config = {
   tagline:
     "An open source, off-grid, decentralized, mesh network built to run on affordable, low-power devices",
   url: "https://docs.dand.app",
-  baseUrl: "/docs",
+  baseUrl: "/",
   trailingSlash: true,
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "warn",
