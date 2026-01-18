@@ -8,8 +8,8 @@ const config = {
   title: "Meshtastic",
   tagline:
     "An open source, off-grid, decentralized, mesh network built to run on affordable, low-power devices",
-  url: "https://meshtastic.org",
-  baseUrl: "/",
+  url: "https://docs.dand.app",
+  baseUrl: "/docs",
   trailingSlash: true,
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "warn",
