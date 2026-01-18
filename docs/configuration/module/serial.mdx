@@ -48,6 +48,10 @@ Available Values:
 - `NMEA` will output a NMEA 0183 Data stream containing the internal GPS or fixed position and other node locations as Waypoints (WPL).
 - `CALTOPO` will output NMEA 0183 Waypoints (WPL) every 10 seconds for all valid node locations, to be consumed by [CalTopo / SARTopo](/docs/software/integrations/caltopo.mdx).
 - `WS85` will parse and compute wind speed data received over serial from the Ecowitt WS85. Transmits values via telemetry packet every 5 minutes. Modification of the WS85 weather sensor is required (https://hackaday.io/project/196990-meshtastic-ultrasonic-anemometer-wx-station). If option is not available in app then enable with cli command "meshtastic --set serial.mode 6"
+- `VE_DIRECT` VE.Direct is a serial protocol used by Victron Energy products. See [this guide](https://beta.ivc.no/wiki/index.php/Victron_VE_Direct_DIY_Cable)
+- `MS_CONFIG` is used to configure and view some parameters of [MeshSolar](https://heltec.org/project/meshsolar/)
+- `LOG` will output a short, formatted log of packets sent or recieved by the node, including text, and telemetry packets.
+- `LOGTEXT` will output a short, formatted log of every text packet sent or recieved by the node.
 
 :::tip
 `PROTO` mode will show no obvious output when passively observed by a serial monitor. When testing, consider using the [Python CLI](https://github.com/meshtastic/python) with the `--listen` option, to view the stream of protobufs.
