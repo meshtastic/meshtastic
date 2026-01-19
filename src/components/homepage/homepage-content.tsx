@@ -1,23 +1,15 @@
 import React from "react";
-import useBaseUrl from "@docusaurus/useBaseUrl";
 import { NetworkMapBackground } from "@/components/homepage/network-map-background";
 import { DeviceMockup } from "@/components/homepage/device-mockup";
 import { EcosystemStats } from "@/components/homepage/ecosystem-stats";
 import { HomepageDownloads } from "@/components/homepage/homepage-downloads";
 import { HomepageFeatures } from "@/components/homepage/homepage-features";
+import { HomepageHeader } from "@/components/homepage/homepage-header";
 import { Sponsors } from "@/components/homepage/sponsors";
 import { SocialSidebar } from "@/components/homepage/social-sidebar";
-import { LanguageSelector } from "@/components/homepage/language-selector";
 import { Button } from "@/components/ui/button";
 import { Link } from "@/components/ui/link";
-import {
-  ArrowRight,
-  Download,
-  FileText,
-  Heart,
-  LinkIcon,
-  GithubIcon,
-} from "lucide-react";
+import { ArrowRight, Download, FileText } from "lucide-react";
 import links from "@/data/links.json";
 
 export function HomePageContent() {
@@ -32,53 +24,7 @@ export function HomePageContent() {
       </aside>
 
       <div className="relative z-10">
-        <header className="border-b border-border/50 bg-overlay backdrop-blur-md">
-          <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-            <div className="flex items-center gap-2">
-              <img
-                src={useBaseUrl("design/logo/svg/Mesh_Logo_Green.svg")}
-                alt="Meshtastic"
-                className="h-11 rounded-lg w-auto"
-              />
-              <h1 className="font-semibold text-lg font-mono text-foreground">
-                Meshtastic
-              </h1>
-            </div>
-            <div className="hidden items-center gap-8 md:flex">
-              <Link href={links.docs}>Documentation</Link>
-              <Link href={links.downloads}>Downloads</Link>
-              <Link href={links.webFlasher} className="flex items-center gap-2">
-                <LinkIcon className="h-4 w-4" />
-                Web Flasher
-              </Link>
-            </div>
-            <div className="flex items-center gap-3">
-              {/* <LanguageSelector /> */}
-              <Button
-                variant="default"
-                size="sm"
-                className="border-primary/50 bg-primary/15 p-5 text-primary shadow-none transition-colors hover:bg-primary/20 hover:text-primary"
-                asChild
-              >
-                <Link href={links.donate}>
-                  <Heart className="mr-2 h-4 w-4" />
-                  Donate
-                </Link>
-              </Button>
-              <Button
-                variant="default"
-                size="sm"
-                className="border-primary/50 bg-primary/15 p-5 text-primary shadow-none transition-colors hover:bg-primary/20 hover:text-primary"
-                asChild
-              >
-                <Link href={links.github}>
-                  <GithubIcon className="mr-2 h-4 w-4" />
-                  GitHub
-                </Link>
-              </Button>
-            </div>
-          </nav>
-        </header>
+        <HomepageHeader />
         <main className="mx-auto max-w-7xl px-6 py-16 lg:py-24">
           <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
             <div className="text-center lg:text-left">

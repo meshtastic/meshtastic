@@ -1,4 +1,4 @@
-import { HomePageContent } from "../components/homepage/HomePageContent";
+import { HomePageContent } from "../components/homepage/homepage-content";
 import Head from "@docusaurus/Head";
 import useBaseUrl from "@docusaurus/useBaseUrl";
 import Layout from "@theme/Layout";
