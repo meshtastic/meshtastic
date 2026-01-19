@@ -1,14 +1,13 @@
-// @ts-check
-
 require("dotenv").config();
 import remarkDefList from "remark-deflist";
+import path from "path";
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: "Meshtastic",
   tagline:
     "An open source, off-grid, decentralized, mesh network built to run on affordable, low-power devices",
-  url: "https://docs.dand.app",
+  url: "https://meshtastic.org",
   baseUrl: "/",
   trailingSlash: true,
   onBrokenLinks: "throw",
@@ -124,6 +123,20 @@ const config = {
           postcssOptions.plugins.push(require("tailwindcss"));
           postcssOptions.plugins.push(require("autoprefixer"));
           return postcssOptions;
+        },
+      };
+    },
+    () => {
+      return {
+        name: "docusaurus-webpack-alias",
+        configureWebpack() {
+          return {
+            resolve: {
+              alias: {
+                "@": path.resolve(__dirname, "src"),
+              },
+            },
+          };
         },
       };
     },

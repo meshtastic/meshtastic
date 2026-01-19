@@ -1,4 +1,5 @@
 import { FaAndroid, FaApple } from "react-icons/fa";
+import React, { JSX } from "react";
 import useSwr from "swr";
 
 import {
