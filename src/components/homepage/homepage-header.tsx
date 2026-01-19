@@ -1,8 +1,7 @@
-import React from "react";
 import { Button } from "@/components/ui/button";
 import { Link } from "@/components/ui/link";
-import { Heart, LinkIcon, GithubIcon } from "lucide-react";
 import links from "@/data/links.json";
+import { GithubIcon, Heart, LinkIcon } from "lucide-react";
 
 export function HomepageHeader() {
   return (
@@ -32,7 +31,7 @@ export function HomepageHeader() {
             variant="default"
             size="sm"
             className="border-primary/50 bg-primary/15 p-5 text-primary shadow-none transition-colors hover:bg-primary/20 hover:text-primary"
-            asChild
+            asChild={true}
           >
             <Link href={links.donate}>
               <Heart className="mr-2 h-4 w-4" />
@@ -43,7 +42,7 @@ export function HomepageHeader() {
             variant="default"
             size="sm"
             className="border-primary/50 bg-primary/15 p-5 text-primary shadow-none transition-colors hover:bg-primary/20 hover:text-primary"
-            asChild
+            asChild={true}
           >
             <Link href={links.github}>
               <GithubIcon className="mr-2 h-4 w-4" />

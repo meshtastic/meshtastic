@@ -1,14 +1,14 @@
-import React from "react";
-import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
-import { useLocation } from "@docusaurus/router";
+import { Button } from "@/components/ui/button";
 import {
   Popover,
-  PopoverTrigger,
   PopoverContent,
+  PopoverTrigger,
 } from "@/components/ui/popover";
-import { Button } from "@/components/ui/button";
-import { Languages, Check } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useLocation } from "@docusaurus/router";
+import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
+import { Check, Languages } from "lucide-react";
+import React from "react";
 
 const LOCALE_LABELS: Record<string, string> = {
   en: "English",
@@ -52,7 +52,7 @@ export function LanguageSelector() {
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger asChild>
+      <PopoverTrigger asChild={true}>
         <Button
           variant="ghost"
           size="sm"
@@ -74,7 +74,7 @@ export function LanguageSelector() {
                     "flex w-full items-center justify-between rounded-md px-3 py-2 text-sm transition-colors hover:bg-primary/10",
                     locale === currentLocale
                       ? "bg-primary/15 text-primary"
-                      : "text-foreground"
+                      : "text-foreground",
                   )}
                   onClick={() => setOpen(false)}
                 >

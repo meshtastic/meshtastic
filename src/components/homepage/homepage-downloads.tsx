@@ -1,7 +1,6 @@
-import React from "react";
-import { ArrowRight, Smartphone, Globe, Terminal } from "lucide-react";
 import { Link } from "@/components/ui/link";
 import links from "@/data/links.json";
+import { ArrowRight, Globe, Smartphone, Terminal } from "lucide-react";
 
 export function HomepageDownloads() {
   return (
@@ -11,9 +10,8 @@ export function HomepageDownloads() {
           Get Connected
         </h2>
         <p className="mt-4 text-lg text-muted-foreground max-w-3xl">
-          Connect and control your Meshtastic devices through various
-          platforms. Choose the client that best fits your needs and
-          device ecosystem.
+          Connect and control your Meshtastic devices through various platforms.
+          Choose the client that best fits your needs and device ecosystem.
         </p>
       </div>
 
@@ -28,8 +26,7 @@ export function HomepageDownloads() {
             </div>
           </div>
           <p className="text-muted-foreground leading-relaxed mb-6">
-            Manage your Meshtastic network on-the-go with our iOS
-            application.
+            Manage your Meshtastic network on-the-go with our iOS application.
           </p>
           <Link
             href={links.ios}
@@ -72,8 +69,8 @@ export function HomepageDownloads() {
             </div>
           </div>
           <p className="text-muted-foreground leading-relaxed mb-6">
-            Access your Meshtastic network from any device with our
-            web-based client.
+            Access your Meshtastic network from any device with our web-based
+            client.
           </p>
           <a
             href="https://client.meshtastic.org/"

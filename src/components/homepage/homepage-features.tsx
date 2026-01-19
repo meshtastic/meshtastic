@@ -1,9 +1,8 @@
-import React from "react";
-
 const features = [
   {
     title: "Long Range",
-    description: "LoRa technology enables communication over several kilometers",
+    description:
+      "LoRa technology enables communication over several kilometers",
   },
   {
     title: "Encrypted",

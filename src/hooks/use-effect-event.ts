@@ -10,12 +10,14 @@ import { useCallback, useInsertionEffect, useRef } from "react";
  * Based on the React RFC for useEffectEvent (formerly useEvent).
  * @see https://react.dev/learn/separating-events-from-effects#declaring-an-effect-event
  */
-export function useEffectEvent<T extends (...args: never[]) => unknown>(fn: T): T {
-	const ref = useRef<T>(fn);
+export function useEffectEvent<T extends (...args: never[]) => unknown>(
+  fn: T,
+): T {
+  const ref = useRef<T>(fn);
 
-	useInsertionEffect(() => {
-		ref.current = fn;
-	});
+  useInsertionEffect(() => {
+    ref.current = fn;
+  });
 
-	return useCallback((...args: Parameters<T>) => ref.current(...args), []) as T;
+  return useCallback((...args: Parameters<T>) => ref.current(...args), []) as T;
 }

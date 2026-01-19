@@ -1,17 +1,16 @@
-import React from "react";
-import { NetworkMapBackground } from "@/components/homepage/network-map-background";
 import { DeviceMockup } from "@/components/homepage/device-mockup";
 import { EcosystemStats } from "@/components/homepage/ecosystem-stats";
 import { HomepageDownloads } from "@/components/homepage/homepage-downloads";
 import { HomepageFeatures } from "@/components/homepage/homepage-features";
 import { HomepageFooter } from "@/components/homepage/homepage-footer";
 import { HomepageHeader } from "@/components/homepage/homepage-header";
-import { Sponsors } from "@/components/homepage/sponsors";
+import { NetworkMapBackground } from "@/components/homepage/network-map-background";
 import { SocialSidebar } from "@/components/homepage/social-sidebar";
+import { Sponsors } from "@/components/homepage/sponsors";
 import { Button } from "@/components/ui/button";
 import { Link } from "@/components/ui/link";
-import { ArrowRight, Download, FileText } from "lucide-react";
 import links from "@/data/links.json";
+import { ArrowRight, Download, FileText } from "lucide-react";
 
 export function HomePageContent() {
   return (

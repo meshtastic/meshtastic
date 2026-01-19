@@ -6,30 +6,30 @@ interface SeeedStudioProps {
   isHovered?: boolean; // External hover state
 }
 
-export default function SeeedStudio({ 
-  useCurrentColor = true, 
+export default function SeeedStudio({
+  useCurrentColor = true,
   enableHoverEffect = false,
-  isHovered
+  isHovered,
 }: SeeedStudioProps) {
   const { resolvedTheme } = useTheme();
 
-  const shouldUseCurrentColor = useCurrentColor && !(enableHoverEffect && isHovered);
+  const shouldUseCurrentColor =
+    useCurrentColor && !(enableHoverEffect && isHovered);
 
   const colors = {
     light: {
       primary: "#8dc21f",
-      secondary: "#003a4a"
+      secondary: "#003a4a",
     },
     dark: {
       primary: "#8dc21f",
-      secondary: "#8dc21f"
-    }
+      secondary: "#8dc21f",
+    },
   };
 
   const isDarkMode = resolvedTheme === "dark";
   const color1 = isDarkMode ? colors.dark.primary : colors.light.primary;
   const color2 = isDarkMode ? colors.dark.secondary : colors.light.secondary;
-
 
   return (
     <svg
@@ -39,6 +39,7 @@ export default function SeeedStudio({
       id="seeedstudio-logo"
       xmlns="http://www.w3.org/2000/svg"
     >
+      <title>Seeed Studio</title>
       <path
         id="path204"
         fill={shouldUseCurrentColor ? "currentColor" : color1}

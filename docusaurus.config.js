@@ -1,6 +1,6 @@
 require("dotenv").config();
+import path from "node:path";
 import remarkDefList from "remark-deflist";
-import path from "path";
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {

@@ -1,5 +1,5 @@
+import type { JSX } from "react";
 import { FaAndroid, FaApple } from "react-icons/fa";
-import React, { JSX } from "react";
 import useSwr from "swr";
 
 import {
@@ -7,7 +7,6 @@ import {
   BoltIcon,
   ComputerDesktopIcon,
   CpuChipIcon,
-  DocumentIcon,
   GlobeAltIcon,
 } from "@heroicons/react/24/solid";
 import Layout from "@theme/Layout";

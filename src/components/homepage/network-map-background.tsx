@@ -262,12 +262,12 @@ export function NetworkMapBackground() {
           wave.radius * 0.8,
           wave.x,
           wave.y,
-          wave.radius
+          wave.radius,
         );
         gradient.addColorStop(0, `rgba(${pc.r}, ${pc.g}, ${pc.b}, 0)`);
         gradient.addColorStop(
           0.5,
-          `rgba(${pc.r}, ${pc.g}, ${pc.b}, ${wave.alpha})`
+          `rgba(${pc.r}, ${pc.g}, ${pc.b}, ${wave.alpha})`,
         );
         gradient.addColorStop(1, `rgba(${pc.r}, ${pc.g}, ${pc.b}, 0)`);
 
@@ -285,7 +285,7 @@ export function NetworkMapBackground() {
 
             const nodePos = getNodePosition(node);
             const distance = Math.sqrt(
-              (nodePos.x - wave.x) ** 2 + (nodePos.y - wave.y) ** 2
+              (nodePos.x - wave.x) ** 2 + (nodePos.y - wave.y) ** 2,
             );
 
             if (
@@ -322,7 +322,7 @@ export function NetworkMapBackground() {
                     floodId: wave.floodId,
                   });
                 },
-                150 + Math.random() * 100
+                150 + Math.random() * 100,
               );
             }
           }
@@ -356,12 +356,16 @@ export function NetworkMapBackground() {
 
         switch (state) {
           case "transmitting":
-            glowColor = `rgba(${pc.r}, ${pc.g}, ${pc.b}, ${0.6 + intensity * 0.4})`;
+            glowColor = `rgba(${pc.r}, ${pc.g}, ${pc.b}, ${
+              0.6 + intensity * 0.4
+            })`;
             glowRadius = 20 + intensity * 15;
             nodeColor = `rgb(${pc.r}, ${pc.g}, ${pc.b})`;
             break;
           case "receiving":
-            glowColor = `rgba(${pc.r}, ${pc.g}, ${pc.b}, ${0.5 + intensity * 0.5})`;
+            glowColor = `rgba(${pc.r}, ${pc.g}, ${pc.b}, ${
+              0.5 + intensity * 0.5
+            })`;
             glowRadius = 15 + intensity * 10;
             nodeColor = `rgb(${pc.r}, ${pc.g}, ${pc.b})`;
             break;
@@ -382,7 +386,7 @@ export function NetworkMapBackground() {
           0,
           pos.x,
           pos.y,
-          glowRadius
+          glowRadius,
         );
         gradient.addColorStop(0, glowColor);
         gradient.addColorStop(1, colors.glowFadeTarget);
@@ -460,7 +464,7 @@ export function NetworkMapBackground() {
         0,
         canvas.width / 2,
         canvas.height / 2,
-        canvas.width * 0.7
+        canvas.width * 0.7,
       );
       bgGradient.addColorStop(0, colors.bgCenter);
       bgGradient.addColorStop(1, colors.bgEdge);

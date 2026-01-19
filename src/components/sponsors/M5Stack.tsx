@@ -6,30 +6,30 @@ interface M5StackProps {
   isHovered?: boolean; // External hover state
 }
 
-export default function M5Stack({ 
-  useCurrentColor = true, 
+export default function M5Stack({
+  useCurrentColor = true,
   enableHoverEffect = false,
-  isHovered
+  isHovered,
 }: M5StackProps) {
   const { resolvedTheme } = useTheme();
 
-  const shouldUseCurrentColor = useCurrentColor && !(enableHoverEffect && isHovered);
+  const shouldUseCurrentColor =
+    useCurrentColor && !(enableHoverEffect && isHovered);
 
   const colors = {
     light: {
       primary: "#0077C8",
-      secondary: "#332B24"
+      secondary: "#332B24",
     },
     dark: {
       primary: "#0077C8",
-      secondary: "currentColor"
-    }
+      secondary: "currentColor",
+    },
   };
 
   const isDarkMode = resolvedTheme === "dark";
   const color1 = isDarkMode ? colors.dark.primary : colors.light.primary;
   const color2 = isDarkMode ? colors.dark.secondary : colors.light.secondary;
-
 
   return (
     <svg
@@ -39,6 +39,7 @@ export default function M5Stack({
       id="m5stack-logo"
       xmlns="http://www.w3.org/2000/svg"
     >
+      <title>M5Stack</title>
       <path
         fillRule="evenodd"
         fill={shouldUseCurrentColor ? "currentColor" : color2}
