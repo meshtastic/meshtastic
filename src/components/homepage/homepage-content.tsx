@@ -4,6 +4,7 @@ import { DeviceMockup } from "@/components/homepage/device-mockup";
 import { EcosystemStats } from "@/components/homepage/ecosystem-stats";
 import { HomepageDownloads } from "@/components/homepage/homepage-downloads";
 import { HomepageFeatures } from "@/components/homepage/homepage-features";
+import { HomepageFooter } from "@/components/homepage/homepage-footer";
 import { HomepageHeader } from "@/components/homepage/homepage-header";
 import { Sponsors } from "@/components/homepage/sponsors";
 import { SocialSidebar } from "@/components/homepage/social-sidebar";
@@ -14,7 +15,7 @@ import links from "@/data/links.json";
 
 export function HomePageContent() {
   return (
-    <div className="relative min-h-screen overflow-hidden pb-20 lg:pb-0">
+    <div className="relative min-h-screen overflow-hidden">
       <div aria-hidden="true">
         <NetworkMapBackground />
       </div>
@@ -23,9 +24,9 @@ export function HomePageContent() {
         <SocialSidebar />
       </aside>
 
-      <div className="relative z-10">
+      <div className="relative z-10 flex min-h-screen flex-col">
         <HomepageHeader />
-        <main className="mx-auto max-w-7xl px-6 py-16 lg:py-24">
+        <main className="mx-auto max-w-7xl flex-1 px-6 py-16 lg:py-24">
           <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
             <div className="text-center lg:text-left">
               <h2 className="[text-wrap:balance] font-mono text-4xl font-bold tracking-tight text-foreground md:text-5xl lg:text-6xl">
@@ -86,37 +87,7 @@ export function HomePageContent() {
           </section>
         </main>
 
-        <footer className="border-t border-border/50 bg-card/80 backdrop-blur-sm">
-          <div className="mx-auto max-w-7xl px-6 py-6">
-            <div className="flex flex-col items-center justify-center gap-2 text-center text-base text-muted-foreground md:flex-row md:gap-1">
-              <Link href={links.vercel} className="flex items-center gap-2">
-                Powered by
-                <span className="inline-flex items-center gap-1 font-semibold text-foreground">
-                  <svg
-                    className="h-4 w-4"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                  >
-                    <title>Vercel Logo</title>
-                    <path d="M12 0L24 24H0L12 0z" />
-                  </svg>
-                  Vercel
-                </span>
-              </Link>
-              <span className="hidden md:inline">|</span>
-              <span>
-                Meshtastic® is a registered trademark of Meshtastic LLC.
-              </span>
-              <span className="hidden md:inline">|</span>
-              <Link
-                href={links.legal}
-                className="text-muted-foreground hover:opacity-80 transition-opacity"
-              >
-                Legal Information
-              </Link>
-            </div>
-          </div>
-        </footer>
+        <HomepageFooter />
       </div>
     </div>
   );

@@ -20,9 +20,10 @@ export default function Home() {
         <meta name="twitter:card" content="summary_large_image" />
         <style>{`
           .navbar { display: none !important; }
+          .footer { display: none !important; }
         `}</style>
       </Head>
-      <HomePageContent />;
+      <HomePageContent />
     </Layout>
   );
 }
