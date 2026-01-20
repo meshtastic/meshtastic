@@ -1,9 +1,9 @@
-import { formatTime, pickRandom } from "@/lib/utils";
-import type { BuiltMessage, User } from "@/types/conversation.types";
 import type React from "react";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { useEffectEvent } from "./use-effect-event";
-import { useInterval } from "./use-interval";
+import { formatTime, pickRandom } from "@/lib/utils.ts";
+import type { BuiltMessage, User } from "@/types/conversation.types.ts";
+import { useEffectEvent } from "./use-effect-event.ts";
+import { useInterval } from "./use-interval.ts";
 
 // Promise that resolves after `ms` milliseconds, abortable via signal
 function delay(ms: number, signal: AbortSignal): Promise<void> {
@@ -113,7 +113,9 @@ export function useDeviceMockup({
 
   // Initialize with first N messages from timeline (newest first for flex-col-reverse)
   useEffect(() => {
-    if (timeline.length === 0) return;
+    if (timeline.length === 0) {
+      return;
+    }
 
     const now = new Date();
     const initialMessages = timeline
@@ -161,7 +163,9 @@ export function useDeviceMockup({
   const toggleReaction = useCallback((messageId: number, emoji: string) => {
     setMessages((prev) =>
       prev.map((msg) => {
-        if (msg.id !== messageId) return msg;
+        if (msg.id !== messageId) {
+          return msg;
+        }
         const reactions = msg.reactions ?? [];
         const hasReaction = reactions.includes(emoji);
         return {
@@ -184,7 +188,9 @@ export function useDeviceMockup({
   });
 
   useEffect(() => {
-    if (timeline.length === 0) return;
+    if (timeline.length === 0) {
+      return;
+    }
 
     const controller = new AbortController();
 
@@ -200,7 +206,7 @@ export function useDeviceMockup({
         }
       } catch (e) {
         // Ignore abort errors, re-throw others
-        if (e instanceof DOMException && e.name === "AbortError") return;
+        if (e instanceof DOMException && e.name === "AbortError") { return; }
         throw e;
       }
     })();
@@ -210,7 +216,7 @@ export function useDeviceMockup({
 
   // Auto-response for user messages picks random user from pool
   const onAutoResponse = useEffectEvent(() => {
-    if (users.length === 0) return;
+    if (users.length === 0) { return; }
 
     const responder = pickRandom(users);
     const msg: BuiltMessage = {
@@ -233,7 +239,9 @@ export function useDeviceMockup({
 
   const handleSendMessage = useCallback(() => {
     const text = inputValue.trim();
-    if (!text) return;
+    if (!text) {
+      return;
+    }
 
     const outgoing: BuiltMessage = {
       id: Date.now(),
@@ -253,7 +261,9 @@ export function useDeviceMockup({
 
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent) => {
-      if (e.key !== "Enter") return;
+      if (e.key !== "Enter") {
+        return;
+      }
       e.preventDefault();
       handleSendMessage();
     },

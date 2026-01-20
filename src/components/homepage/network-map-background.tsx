@@ -135,10 +135,10 @@ export function NetworkMapBackground() {
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    if (!canvas) return;
+    if (!canvas) { return; }
 
     const ctx = canvas.getContext("2d");
-    if (!ctx) return;
+    if (!ctx) { return; }
 
     for (const node of nodes) {
       nodeStatusRef.current.set(node.id, {
@@ -254,7 +254,7 @@ export function NetworkMapBackground() {
         const generationFade = Math.max(0.2, 1 - wave.generation * 0.15);
         wave.alpha = (1 - expansionRatio) * 0.6 * generationFade;
 
-        if (wave.alpha <= 0.02) return false;
+        if (wave.alpha <= 0.02) { return false; }
 
         const gradient = ctx.createRadialGradient(
           wave.x,
@@ -280,8 +280,8 @@ export function NetworkMapBackground() {
         const seenNodes = floodSeenNodesRef.current.get(wave.floodId);
         if (seenNodes && wave.generation < 6) {
           for (const node of nodes) {
-            if (node.id === wave.originNodeId) continue;
-            if (seenNodes.has(node.id)) continue;
+            if (node.id === wave.originNodeId) { continue; }
+            if (seenNodes.has(node.id)) { continue; }
 
             const nodePos = getNodePosition(node);
             const distance = Math.sqrt(

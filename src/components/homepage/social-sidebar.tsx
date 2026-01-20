@@ -16,7 +16,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import socialsData from "@/data/socials.json";
-import React from "react";
+import type React from "react";
 import { useEffect, useState } from "react";
 
 const iconComponents: Record<string, React.FC> = {
@@ -54,7 +54,7 @@ export function SocialSidebar() {
     return (
       <Link
         href={social.href}
-        class="group flex h-10 w-10 lg:h-12 lg:w-12 items-center justify-center rounded-lg text-muted-foreground transition-all hover:bg-muted hover:text-foreground [&_svg]:h-6 [&_svg]:w-6"
+        className="group flex h-10 w-10 lg:h-12 lg:w-12 items-center justify-center rounded-lg text-muted-foreground transition-all hover:bg-muted hover:text-foreground [&_svg]:h-5 [&_svg]:w-5"
         aria-label={social.name}
       >
         <Icon />
@@ -81,8 +81,8 @@ export function SocialSidebar() {
 
   return (
     <TooltipProvider>
-      <div class="fixed bottom-4 left-1/2 z-20 -translate-x-1/2 lg:hidden">
-        <div class="flex flex-row gap-1 rounded-xl border border-border/50 bg-card/60 p-2 backdrop-blur-md">
+      <div className="fixed bottom-14 left-1/2 z-20 -translate-x-1/2 lg:hidden">
+        <div className="flex flex-row gap-4 rounded-xl border border-border/50 bg-card/60 p-4 backdrop-blur-md">
           {socials.map((social) => (
             <SocialLink key={social.name} social={social} />
           ))}
@@ -90,12 +90,12 @@ export function SocialSidebar() {
       </div>
 
       <div
-        class="fixed top-1/2 z-20 hidden -translate-y-1/2 -translate-x-full lg:block"
+        className="fixed top-1/2 z-20 hidden -translate-y-1/2 -translate-x-full lg:block"
         style={{
           left: "max(1rem, calc((100vw - min(80rem, 100vw - 3rem)) / 2 - 1rem))",
         }}
       >
-        <div class="flex flex-col gap-4 rounded-2xl border border-border/50 bg-card/60 p-3 backdrop-blur-md">
+        <div className="flex flex-col gap-4 rounded-2xl border border-border/50 bg-card/60 p-2 backdrop-blur-md">
           {socials.map((social) => (
             <SocialLinkWithTooltip key={social.name} social={social} />
           ))}

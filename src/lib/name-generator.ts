@@ -194,7 +194,7 @@ export function generateLongName(style: LongNameStyle = "random"): string {
 }
 
 export function toShortName(name: string): string {
-  if (name.length <= 4) return name;
+  if (name.length <= 4) { return name; }
 
   const words = name.split(/[\s\-_:]+/).filter(Boolean);
 

@@ -12,7 +12,7 @@ const config = {
   trailingSlash: true,
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "warn",
-  favicon: "design/web/favicon.ico",
+  favicon: "img/logo.svg",
   organizationName: "meshtastic",
   projectName: "meshtastic",
   themeConfig: /** @type {import('@docusaurus/preset-classic').ThemeConfig} */ {
@@ -25,16 +25,12 @@ const config = {
       hideOnScroll: true,
       logo: {
         alt: "Meshtastic Logo",
-        src: "design/logo/svg/Mesh_Logo_Black.svg",
-        srcDark: "design/logo/svg/Mesh_Logo_White.svg",
+        src: "img/logo.svg",
+        srcDark: "img/logo.svg",
       },
       items: [
         {
-          label: "Blog",
-          to: "blog",
-        },
-        {
-          label: "Docs",
+          label: "Documentation",
           to: "docs/introduction",
         },
         {

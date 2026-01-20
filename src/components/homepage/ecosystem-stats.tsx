@@ -16,7 +16,7 @@ function StatItem({ icon, value, label, suffix, countUp }: StatItemProps) {
   const finalValue = countUp ? displayValue : value;
 
   return (
-    <div className="group relative overflow-hidden rounded-xl border border-primary/20 bg-card/60 p-4 backdrop-blur-sm transition-all hover:border-primary/30 hover:bg-card/80">
+    <div className="group relative overflow-hidden rounded-xl border border-accent bg-card/60 p-4 backdrop-blur-sm transition-all hover:bg-card/80">
       <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
 
       <div className="relative">
@@ -35,7 +35,7 @@ function StatItem({ icon, value, label, suffix, countUp }: StatItemProps) {
 
 export function EcosystemStats() {
   return (
-    <div className="grid grid-cols-2 gap-4">
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1 xl:grid-cols-2 gap-4">
       <StatItem
         icon={<SmartphoneIcon className="size-6" />}
         value={stats.communityDevices}

@@ -1,3 +1,4 @@
+
 import { Rabbit } from "@/components/icons/rabbit";
 import {
   Popover,
@@ -265,7 +266,7 @@ export function DeviceMockup() {
 
   return (
     <div className="relative">
-      <div className="relative w-[25rem] rounded-[2.5rem] bg-gradient-to-b from-gray-800 to-gray-900 p-4 shadow-2xl shadow-black/50 ring-1 ring-gray-600/50">
+      <div className="relative w-[23rem] lg:w-[25rem] rounded-[2.5rem] bg-gradient-to-b from-gray-800 to-gray-900 p-4 shadow-2xl shadow-black/50 ring-1 ring-gray-600/50">
         <div className="rounded-[2rem] bg-gray-900 p-2.5">
           <div className="relative overflow-hidden rounded-[1.75rem] bg-gray-950">
             <div className="flex items-center justify-between bg-gray-900/80 px-5 py-3 text-base text-primary">

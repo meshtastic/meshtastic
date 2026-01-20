@@ -17,10 +17,6 @@ export default function Home() {
         />
         <meta property="og:url" content="https://meshtastic.org/" />
         <meta name="twitter:card" content="summary_large_image" />
-        <style>{`
-          .navbar { display: none !important; }
-          .footer { display: none !important; }
-        `}</style>
       </Head>
       <HomePageContent />
     </Layout>

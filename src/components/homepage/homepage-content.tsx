@@ -1,11 +1,9 @@
+
 import { DeviceMockup } from "@/components/homepage/device-mockup";
 import { EcosystemStats } from "@/components/homepage/ecosystem-stats";
 import { HomepageDownloads } from "@/components/homepage/homepage-downloads";
 import { HomepageFeatures } from "@/components/homepage/homepage-features";
-import { HomepageFooter } from "@/components/homepage/homepage-footer";
-import { HomepageHeader } from "@/components/homepage/homepage-header";
 import { NetworkMapBackground } from "@/components/homepage/network-map-background";
-import { SocialSidebar } from "@/components/homepage/social-sidebar";
 import { Sponsors } from "@/components/homepage/sponsors";
 import { Button } from "@/components/ui/button";
 import { Link } from "@/components/ui/link";
@@ -19,15 +17,14 @@ export function HomePageContent() {
         <NetworkMapBackground />
       </div>
 
-      <aside aria-label="Social links">
+      {/* <aside aria-label="Social links">
         <SocialSidebar />
-      </aside>
+      </aside> */}
 
       <div className="relative z-10 flex min-h-screen flex-col">
-        <HomepageHeader />
-        <main className="mx-auto max-w-7xl flex-1 px-6 py-16 lg:py-24">
-          <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
-            <div className="text-center lg:text-left">
+        <main className="mx-auto max-w-7xl flex-1 px-4 sm:px-6 py-16 lg:py-24">
+          <div className="flex flex-row gap-8 md:gap-8  lg:gap-16">
+            <div className="">
               <h2 className="[text-wrap:balance] font-mono text-4xl font-bold tracking-tight text-foreground md:text-5xl lg:text-6xl">
                 Off-Grid
                 <br />
@@ -36,15 +33,15 @@ export function HomePageContent() {
                 For Everyone
               </h2>
 
-              <div className="mt-6 rounded-xl border border-border/50 bg-card/95 p-6 backdrop-blur-xl">
-                <p className="max-w-lg text-lg m-auto text-center lg:text-left text-foreground lg:max-w-none">
+              <div className="mt-6 rounded-xl border border-border/50 bg-card/95 py-6 md:p-6 backdrop-blur-xl">
+                <p className="max-w-lg text-lg m-auto text-foreground lg:max-w-none">
                   An open source, off-grid, decentralized mesh network built to
                   run on affordable, low-power devices. No cell towers. No
                   internet. Just pure peer-to-peer connectivity.
                 </p>
               </div>
 
-              <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row lg:justify-start">
+              <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center lg:justify-start">
                 <Link href={links.getStarted}>
                   <Button
                     size="lg"
@@ -73,7 +70,7 @@ export function HomePageContent() {
               </div>
             </div>
 
-            <div className="hidden lg:flex lg:justify-end">
+            <div className="hidden md:flex shrink-0 justify-center lg:justify-end">
               <DeviceMockup />
             </div>
           </div>
@@ -85,8 +82,6 @@ export function HomePageContent() {
             <Sponsors />
           </section>
         </main>
-
-        <HomepageFooter />
       </div>
     </div>
   );

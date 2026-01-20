@@ -1,3 +1,5 @@
+
+
 const features = [
   {
     title: "Long Range",
@@ -18,9 +20,9 @@ export function HomepageFeatures() {
   return (
     <section aria-label="Features" className="mt-16">
       <h2 className="sr-only">Key Features</h2>
-      <div className="grid gap-6 md:grid-cols-3">
+      <div className="grid gap-4 sm:gap-6 grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
         {features.map((feature) => (
-          <div
+          <article
             key={feature.title}
             className="rounded-xl border border-border/50 border-l-4 border-l-primary bg-card p-6 shadow-lg shadow-foreground/5 backdrop-blur-md hover:border-primary/30 hover:opacity-90 transition-all"
           >
@@ -30,7 +32,7 @@ export function HomepageFeatures() {
             <p className="mt-2 text-base text-muted-foreground">
               {feature.description}
             </p>
-          </div>
+          </article>
         ))}
       </div>
     </section>

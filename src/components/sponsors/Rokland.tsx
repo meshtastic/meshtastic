@@ -1,4 +1,4 @@
-import { rokland } from "./rokland-base64";
+import { rokland } from "./rokland-base64.ts";
 
 export default function Rokland() {
   return (

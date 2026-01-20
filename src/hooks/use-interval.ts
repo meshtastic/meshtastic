@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useEffectEvent } from "./use-effect-event";
+import { useEffectEvent } from "./use-effect-event.ts";
 
 export function useInterval(
   onTick: (tick: number) => void,
