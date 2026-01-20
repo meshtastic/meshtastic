@@ -81,7 +81,7 @@ export function SocialSidebar() {
 
   return (
     <TooltipProvider>
-      <div className="fixed z-10 bottom-14 left-1/2 -translate-x-1/2 lg:hidden">
+      <div className="fixed z-10 bottom-20 md:bottom-14  left-1/2 -translate-x-1/2 lg:hidden">
         <div className="flex flex-row gap-4 rounded-xl border border-border/50 bg-card/60 p-4 backdrop-blur-md">
           {socials.map((social) => (
             <SocialLink key={social.name} social={social} />
