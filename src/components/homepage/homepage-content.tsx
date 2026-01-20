@@ -18,9 +18,9 @@ export function HomePageContent() {
         <NetworkMapBackground />
       </div>
 
-      {/* <aside aria-label="Social links">
+      <aside aria-label="Social links">
         <SocialSidebar />
-      </aside> */}
+      </aside>
 
       <div className="relative flex min-h-screen flex-col">
         <main className="mx-auto max-w-7xl flex-1 px-4 sm:px-6 py-16 lg:py-24">
