@@ -62,8 +62,8 @@ interface MarqueeProps {
 function Marquee({ children, reverse }: MarqueeProps) {
   return (
     <div className="relative mt-6 md:mt-8 w-full overflow-hidden py-4 md:py-8">
-      <div className="pointer-events-none absolute left-0 top-0 z-10 h-full w-12 md:w-24 bg-gradient-to-r from-card to-transparent" />
-      <div className="pointer-events-none absolute right-0 top-0 z-10 h-full w-12 md:w-24 bg-gradient-to-l from-card to-transparent" />
+      <div className="pointer-events-none absolute left-0 top-0 h-full w-12 md:w-24 bg-gradient-to-r from-card to-transparent" />
+      <div className="pointer-events-none absolute right-0 top-0 h-full w-12 md:w-24 bg-gradient-to-l from-card to-transparent" />
 
       <div
         className="marquee-track flex w-max items-center"

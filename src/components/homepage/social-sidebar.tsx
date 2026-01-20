@@ -1,3 +1,5 @@
+import type React from "react";
+import { useEffect, useState } from "react";
 import {
   DiscordIcon,
   FacebookIcon,
@@ -16,8 +18,6 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import socialsData from "@/data/socials.json";
-import type React from "react";
-import { useEffect, useState } from "react";
 
 const iconComponents: Record<string, React.FC> = {
   Discord: DiscordIcon,
@@ -81,7 +81,7 @@ export function SocialSidebar() {
 
   return (
     <TooltipProvider>
-      <div className="fixed bottom-14 left-1/2 z-20 -translate-x-1/2 lg:hidden">
+      <div className="fixed z-10 bottom-14 left-1/2 -translate-x-1/2 lg:hidden">
         <div className="flex flex-row gap-4 rounded-xl border border-border/50 bg-card/60 p-4 backdrop-blur-md">
           {socials.map((social) => (
             <SocialLink key={social.name} social={social} />
@@ -90,7 +90,7 @@ export function SocialSidebar() {
       </div>
 
       <div
-        className="fixed top-1/2 z-20 hidden -translate-y-1/2 -translate-x-full lg:block"
+        className="fixed  top-1/2 hidden -translate-y-1/2 -translate-x-full lg:block"
         style={{
           left: "max(1rem, calc((100vw - min(80rem, 100vw - 3rem)) / 2 - 1rem))",
         }}

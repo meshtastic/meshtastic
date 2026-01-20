@@ -26,13 +26,13 @@ import {
   Smile,
   Wifi,
 } from "lucide-react";
-import { Fragment, useMemo, useState } from "react";
+import React from "react";
 
 const { reactions } = emojisData;
 const keyboardLayout = keyboardData.rows;
 
 export function DeviceMockup() {
-  const { users, timeline } = useMemo(() => {
+  const { users, timeline } = React.useMemo(() => {
     const users = hydrateUsers(usersData.users);
     const timeline = buildTimeline(users, conversationsData);
     return { users, timeline };
@@ -84,7 +84,7 @@ export function DeviceMockup() {
   );
 
   const OutgoingBubble = ({ msg }: { msg: BuiltMessage }) => {
-    const [pickerOpen, setPickerOpen] = useState(false);
+    const [pickerOpen, setPickerOpen] = React.useState(false);
 
     return (
       <div
@@ -148,7 +148,7 @@ export function DeviceMockup() {
   };
 
   const IncomingBubble = ({ msg }: { msg: BuiltMessage }) => {
-    const [pickerOpen, setPickerOpen] = useState(false);
+    const [pickerOpen, setPickerOpen] = React.useState(false);
     const isEmojiAvatar = isEmoji(msg.shortName);
 
     return (
@@ -299,13 +299,13 @@ export function DeviceMockup() {
               className="h-[17.5rem] flex flex-col-reverse gap-2 overflow-y-auto p-3 [&::-webkit-scrollbar]:w-2.5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-border"
             >
               {messages.map((msg) => (
-                <Fragment key={msg.id}>
+                <React.Fragment key={msg.id}>
                   {msg.isOutgoing ? (
                     <OutgoingBubble msg={msg} />
                   ) : (
                     <IncomingBubble msg={msg} />
                   )}
-                </Fragment>
+                </React.Fragment>
               ))}
             </div>
 
@@ -345,7 +345,7 @@ export function DeviceMockup() {
                   className="flex justify-center gap-1"
                 >
                   {row.map((key) => (
-                    <Fragment key={key}>
+                    <React.Fragment key={key}>
                       {key === "😊" ? (
                         <Popover>
                           <PopoverTrigger asChild={true}>
@@ -385,7 +385,7 @@ export function DeviceMockup() {
                           {key === "space" ? "" : key}
                         </button>
                       )}
-                    </Fragment>
+                    </React.Fragment>
                   ))}
                 </div>
               ))}
@@ -393,7 +393,7 @@ export function DeviceMockup() {
           </div>
         </div>
 
-        <div className="absolute -inset-4 -z-10 rounded-[3rem] bg-primary/10 blur-2xl" />
+        <div className="absolute -inset-4 -z-[1] rounded-[3rem] bg-primary/10 blur-2xl" />
       </div>
     </div>
   );

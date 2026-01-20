@@ -1,7 +1,8 @@
+import { HomePageContent } from "@/components/homepage/homepage-content";
 import Head from "@docusaurus/Head";
 import useBaseUrl from "@docusaurus/useBaseUrl";
 import Layout from "@theme/Layout";
-import { HomePageContent } from "../components/homepage/homepage-content";
+import React from "react";
 
 export default function Home() {
   return (

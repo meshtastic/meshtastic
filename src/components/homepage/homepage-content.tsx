@@ -1,4 +1,5 @@
-
+import { ArrowRight, Download, FileText } from "lucide-react";
+import React from "react";
 import { DeviceMockup } from "@/components/homepage/device-mockup";
 import { EcosystemStats } from "@/components/homepage/ecosystem-stats";
 import { HomepageDownloads } from "@/components/homepage/homepage-downloads";
@@ -8,7 +9,7 @@ import { Sponsors } from "@/components/homepage/sponsors";
 import { Button } from "@/components/ui/button";
 import { Link } from "@/components/ui/link";
 import links from "@/data/links.json";
-import { ArrowRight, Download, FileText } from "lucide-react";
+import { SocialSidebar } from "./social-sidebar";
 
 export function HomePageContent() {
   return (
@@ -21,7 +22,7 @@ export function HomePageContent() {
         <SocialSidebar />
       </aside> */}
 
-      <div className="relative z-10 flex min-h-screen flex-col">
+      <div className="relative flex min-h-screen flex-col">
         <main className="mx-auto max-w-7xl flex-1 px-4 sm:px-6 py-16 lg:py-24">
           <div className="flex flex-row gap-8 md:gap-8  lg:gap-16">
             <div className="">

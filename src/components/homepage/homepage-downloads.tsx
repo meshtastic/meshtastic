@@ -1,14 +1,13 @@
-
-import { Link } from "@/components/ui/link";
-import apps from "@/data/apps.json";
-import links from "@/data/links.json";
 import {
   ArrowRight,
   Globe,
+  type LucideIcon,
   Smartphone,
   Terminal,
-  type LucideIcon,
 } from "lucide-react";
+import { Link } from "@/components/ui/link";
+import apps from "@/data/apps.json";
+import links from "@/data/links.json";
 
 const iconMap: Record<string, LucideIcon> = {
   smartphone: Smartphone,

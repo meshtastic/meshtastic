@@ -111,7 +111,7 @@ export function useDeviceMockup({
   const messagesContainerRef = useRef<HTMLDivElement>(null);
   const [newMessageIds, setNewMessageIds] = useState<Set<number>>(new Set());
 
-  // Initialize with first N messages from timeline (newest first for flex-col-reverse)
+  // Initialize with first X messages from timeline (newest first since we're using flex-col-reverse)
   useEffect(() => {
     if (timeline.length === 0) {
       return;
@@ -122,7 +122,7 @@ export function useDeviceMockup({
       .slice(0, INITIAL_MESSAGE_COUNT)
       .map((msg, i) => ({
         ...msg,
-        // Update times to be relative to now (older messages get earlier times)
+        // Update times to be relative to now (older messages shown with earlier times)
         time: formatTime(
           new Date(
             now.getTime() -
@@ -133,7 +133,7 @@ export function useDeviceMockup({
           ),
         ),
       }))
-      .reverse(); // Newest first so flex-col-reverse shows newest at bottom
+      .reverse(); // we revese the array to have newest messages last which will appear at the bottom
 
     setMessages(initialMessages);
     setCurrentTime(formatTime(now));
@@ -178,7 +178,7 @@ export function useDeviceMockup({
     );
   }, []);
 
-  // Time updates
+  // Keep the time accurate on the device-mockup
   useInterval(() => {
     setCurrentTime(formatTime(new Date()));
   }, TIME_UPDATE_INTERVAL_MS);
@@ -205,8 +205,9 @@ export function useDeviceMockup({
           onTimelineMessage(msg);
         }
       } catch (e) {
-        // Ignore abort errors, re-throw others
-        if (e instanceof DOMException && e.name === "AbortError") { return; }
+        if (e instanceof DOMException && e.name === "AbortError") {
+          return;
+        }
         throw e;
       }
     })();
@@ -214,9 +215,11 @@ export function useDeviceMockup({
     return () => controller.abort();
   }, [timeline, onTimelineMessage]);
 
-  // Auto-response for user messages picks random user from pool
+  // Grab random user from pool
   const onAutoResponse = useEffectEvent(() => {
-    if (users.length === 0) { return; }
+    if (users.length === 0) {
+      return;
+    }
 
     const responder = pickRandom(users);
     const msg: BuiltMessage = {

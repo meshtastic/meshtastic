@@ -1,13 +1,13 @@
-import React from "react";
-import { useNavbarMobileSidebar } from "@docusaurus/theme-common/internal";
 import { useColorMode } from "@docusaurus/theme-common";
+import { useNavbarMobileSidebar } from "@docusaurus/theme-common/internal";
 import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
-import SearchBar from "@theme/SearchBar";
 import NavbarMobileSidebar from "@theme/Navbar/MobileSidebar";
 import LocaleDropdownNavbarItem from "@theme/NavbarItem/LocaleDropdownNavbarItem";
+import SearchBar from "@theme/SearchBar";
+import { ChevronDown, GithubIcon, Heart, LinkIcon, Menu } from "lucide-react";
+import React from "react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { Heart, GithubIcon, LinkIcon, Menu, ChevronDown } from "lucide-react";
 
 interface NavbarItem {
   label?: string;
@@ -66,7 +66,7 @@ function DropdownNavItem({ item }: { item: NavbarItem }) {
         <ChevronDown className="h-4 w-4" />
       </button>
       {isOpen && item.items && (
-        <div className="absolute top-full left-0 z-50 mt-1 min-w-[160px] rounded-md border border-border bg-background py-1 shadow-lg">
+        <div className="absolute top-full left-0 z-[1] mt-1 min-w-[160px] rounded-md border border-border bg-background py-1 shadow-lg">
           {item.items.map((subItem) => (
             <a
               key={subItem.label}
@@ -91,7 +91,7 @@ function MobileMenuButton() {
   return (
     <button
       type="button"
-      className="flex items-center justify-center p-2 text-muted-foreground md:hidden"
+      className="flex rounded-lg shadow-none border-none h-9 w-9 items-center justify-center p-2 text-muted-foreground md:hidden"
       onClick={() => mobileSidebar.toggle()}
       aria-label="Toggle mobile menu"
     >
@@ -103,7 +103,6 @@ function MobileMenuButton() {
 export default function Navbar(): React.ReactElement {
   const { siteConfig } = useDocusaurusContext();
 
-  // Get navbar config
   const themeConfig = siteConfig.themeConfig as {
     navbar?: { items?: NavbarItem[]; logo?: NavbarLogo };
   };
@@ -113,7 +112,6 @@ export default function Navbar(): React.ReactElement {
   const logoSrc =
     colorMode === "dark" && logo?.srcDark ? logo.srcDark : logo?.src;
 
-  // Filter items by position and type
   const leftItems = navbarItems.filter(
     (item) =>
       item.position !== "right" &&
@@ -128,11 +126,10 @@ export default function Navbar(): React.ReactElement {
   return (
     <>
       <header
-        className="sticky top-0 z-50 border-b border-border/50 backdrop-blur-xl"
+        className="sticky top-0 border-b border-border/50 backdrop-blur-xl"
         style={{ backgroundColor: "lch(3% 3% 267deg / 0.8)" }}
       >
         <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-          {/* Left side - Logo from config */}
           <div className="flex items-center gap-2">
             <a href="/" className="flex items-center gap-2">
               {logoSrc && (
@@ -148,15 +145,12 @@ export default function Navbar(): React.ReactElement {
             </a>
           </div>
 
-          {/* Center - Nav links from config (hidden on mobile) */}
           <div className="hidden items-center gap-8 md:flex">
             {leftItems.map((item) => {
-              // Dropdown items
               if (item.items && item.items.length > 0) {
                 return <DropdownNavItem key={item.label} item={item} />;
               }
 
-              // Regular links
               const href = item.to ?? item.href ?? "#";
               const isFlasher = item.className?.includes("flasher");
 

@@ -135,10 +135,14 @@ export function NetworkMapBackground() {
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    if (!canvas) { return; }
+    if (!canvas) {
+      return;
+    }
 
     const ctx = canvas.getContext("2d");
-    if (!ctx) { return; }
+    if (!ctx) {
+      return;
+    }
 
     for (const node of nodes) {
       nodeStatusRef.current.set(node.id, {
@@ -254,7 +258,9 @@ export function NetworkMapBackground() {
         const generationFade = Math.max(0.2, 1 - wave.generation * 0.15);
         wave.alpha = (1 - expansionRatio) * 0.6 * generationFade;
 
-        if (wave.alpha <= 0.02) { return false; }
+        if (wave.alpha <= 0.02) {
+          return false;
+        }
 
         const gradient = ctx.createRadialGradient(
           wave.x,
@@ -280,8 +286,12 @@ export function NetworkMapBackground() {
         const seenNodes = floodSeenNodesRef.current.get(wave.floodId);
         if (seenNodes && wave.generation < 6) {
           for (const node of nodes) {
-            if (node.id === wave.originNodeId) { continue; }
-            if (seenNodes.has(node.id)) { continue; }
+            if (node.id === wave.originNodeId) {
+              continue;
+            }
+            if (seenNodes.has(node.id)) {
+              continue;
+            }
 
             const nodePos = getNodePosition(node);
             const distance = Math.sqrt(
@@ -356,16 +366,14 @@ export function NetworkMapBackground() {
 
         switch (state) {
           case "transmitting":
-            glowColor = `rgba(${pc.r}, ${pc.g}, ${pc.b}, ${
-              0.6 + intensity * 0.4
-            })`;
+            glowColor = `rgba(${pc.r}, ${pc.g}, ${pc.b}, ${0.6 + intensity * 0.4
+              })`;
             glowRadius = 20 + intensity * 15;
             nodeColor = `rgb(${pc.r}, ${pc.g}, ${pc.b})`;
             break;
           case "receiving":
-            glowColor = `rgba(${pc.r}, ${pc.g}, ${pc.b}, ${
-              0.5 + intensity * 0.5
-            })`;
+            glowColor = `rgba(${pc.r}, ${pc.g}, ${pc.b}, ${0.5 + intensity * 0.5
+              })`;
             glowRadius = 15 + intensity * 10;
             nodeColor = `rgb(${pc.r}, ${pc.g}, ${pc.b})`;
             break;
@@ -489,5 +497,5 @@ export function NetworkMapBackground() {
     };
   }, []);
 
-  return <canvas ref={canvasRef} className="fixed inset-0 -z-10" />;
+  return <canvas ref={canvasRef} className="fixed inset-0 -z-[1]" />;
 }
