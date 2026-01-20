@@ -1,3 +1,5 @@
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import { useColorMode } from "@docusaurus/theme-common";
 import { useNavbarMobileSidebar } from "@docusaurus/theme-common/internal";
 import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
@@ -6,8 +8,6 @@ import LocaleDropdownNavbarItem from "@theme/NavbarItem/LocaleDropdownNavbarItem
 import SearchBar from "@theme/SearchBar";
 import { ChevronDown, GithubIcon, Heart, LinkIcon, Menu } from "lucide-react";
 import React from "react";
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
 
 interface NavbarItem {
   label?: string;

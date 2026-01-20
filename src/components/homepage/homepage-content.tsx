@@ -1,5 +1,3 @@
-import { ArrowRight, Download, FileText } from "lucide-react";
-import React from "react";
 import { DeviceMockup } from "@/components/homepage/device-mockup";
 import { EcosystemStats } from "@/components/homepage/ecosystem-stats";
 import { HomepageDownloads } from "@/components/homepage/homepage-downloads";
@@ -9,6 +7,8 @@ import { Sponsors } from "@/components/homepage/sponsors";
 import { Button } from "@/components/ui/button";
 import { Link } from "@/components/ui/link";
 import links from "@/data/links.json";
+import { ArrowRight, Download, FileText } from "lucide-react";
+import React from "react";
 import { SocialSidebar } from "./social-sidebar";
 
 export function HomePageContent() {

@@ -1,5 +1,3 @@
-
-
 const features = [
   {
     title: "Long Range",

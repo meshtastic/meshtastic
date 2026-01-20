@@ -366,14 +366,16 @@ export function NetworkMapBackground() {
 
         switch (state) {
           case "transmitting":
-            glowColor = `rgba(${pc.r}, ${pc.g}, ${pc.b}, ${0.6 + intensity * 0.4
-              })`;
+            glowColor = `rgba(${pc.r}, ${pc.g}, ${pc.b}, ${
+              0.6 + intensity * 0.4
+            })`;
             glowRadius = 20 + intensity * 15;
             nodeColor = `rgb(${pc.r}, ${pc.g}, ${pc.b})`;
             break;
           case "receiving":
-            glowColor = `rgba(${pc.r}, ${pc.g}, ${pc.b}, ${0.5 + intensity * 0.5
-              })`;
+            glowColor = `rgba(${pc.r}, ${pc.g}, ${pc.b}, ${
+              0.5 + intensity * 0.5
+            })`;
             glowRadius = 15 + intensity * 10;
             nodeColor = `rgb(${pc.r}, ${pc.g}, ${pc.b})`;
             break;

@@ -1,9 +1,9 @@
+import { Link } from "@/components/ui/link";
 import { useNavbarMobileSidebar } from "@docusaurus/theme-common/internal";
 import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
 import { ChevronDown, Github, Heart, LinkIcon, X } from "lucide-react";
 import type React from "react";
 import { useEffect, useState } from "react";
-import { Link } from "@/components/ui/link";
 
 interface NavbarItem {
   label?: string;
@@ -117,8 +117,9 @@ export default function NavbarMobileSidebar(): React.ReactElement | null {
   return (
     <>
       <div
-        className={`fixed inset-0 z-[200] backdrop-blur-sm transition-colors duration-300 ${isAnimating ? "bg-black/60" : "bg-black/0"
-          }`}
+        className={`fixed inset-0 z-[200] backdrop-blur-sm transition-colors duration-300 ${
+          isAnimating ? "bg-black/60" : "bg-black/0"
+        }`}
         onClick={handleClose}
         onKeyDown={(e) => e.key === "Escape" && handleClose()}
         role="button"
@@ -127,8 +128,9 @@ export default function NavbarMobileSidebar(): React.ReactElement | null {
       />
 
       <div
-        className={`fixed inset-y-0 left-0 z-[201] w-[80vw] max-w-[320px] overflow-y-auto bg-background p-6 transition-transform duration-300 ease-out ${isAnimating ? "translate-x-0" : "-translate-x-full"
-          }`}
+        className={`fixed inset-y-0 left-0 z-[201] w-[80vw] max-w-[320px] overflow-y-auto bg-background p-6 transition-transform duration-300 ease-out ${
+          isAnimating ? "translate-x-0" : "-translate-x-full"
+        }`}
       >
         <div className="mb-6 flex items-center justify-between">
           <span className="font-mono text-lg font-semibold text-foreground">

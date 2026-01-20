@@ -1,5 +1,3 @@
-import type React from "react";
-import { useEffect, useState } from "react";
 import {
   DiscordIcon,
   FacebookIcon,
@@ -18,6 +16,8 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import socialsData from "@/data/socials.json";
+import type React from "react";
+import { useEffect, useState } from "react";
 
 const iconComponents: Record<string, React.FC> = {
   Discord: DiscordIcon,
