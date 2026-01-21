@@ -7,13 +7,12 @@ import NavbarMobileSidebar from "@theme/Navbar/MobileSidebar";
 import LocaleDropdownNavbarItem from "@theme/NavbarItem/LocaleDropdownNavbarItem";
 import SearchBar from "@theme/SearchBar";
 import { ChevronDown, GithubIcon, Heart, LinkIcon, Menu } from "lucide-react";
-import React from "react";
+import type React from "react";
 
 interface NavbarItem {
   label?: string;
   to?: string;
   href?: string;
-  position?: "left" | "right";
   type?: string;
   className?: string;
   items?: NavbarItem[];
@@ -50,23 +49,18 @@ function NavLink({
 }
 
 function DropdownNavItem({ item }: { item: NavbarItem }) {
-  const [isOpen, setIsOpen] = React.useState(false);
-
   return (
-    <div
-      className="relative"
-      onMouseEnter={() => setIsOpen(true)}
-      onMouseLeave={() => setIsOpen(false)}
-    >
+    <div className="group relative">
       <button
         type="button"
         className="flex items-center gap-1 text-base text-muted-foreground transition-opacity hover:opacity-80"
+        aria-haspopup="true"
       >
         {item.label}
-        <ChevronDown className="h-4 w-4" />
+        <ChevronDown className="h-4 w-4 transition-transform group-hover:rotate-180 group-focus-within:rotate-180" />
       </button>
-      {isOpen && item.items && (
-        <div className="absolute top-full left-0 z-[1] mt-1 min-w-[160px] rounded-md border border-border bg-background py-1 shadow-lg">
+      {item.items && (
+        <div className="absolute top-full left-0 z-[1] mt-1 hidden min-w-[160px] rounded-md border border-border bg-background py-1 shadow-lg group-hover:block group-focus-within:block">
           {item.items.map((subItem) => (
             <a
               key={subItem.label}
@@ -114,7 +108,6 @@ export default function Navbar(): React.ReactElement {
 
   const leftItems = navbarItems.filter(
     (item) =>
-      item.position !== "right" &&
       item.type !== "localeDropdown" &&
       !item.className?.includes("header-github-link"),
   );
@@ -122,6 +115,8 @@ export default function Navbar(): React.ReactElement {
   const githubItem = navbarItems.find((item) =>
     item.className?.includes("header-github-link"),
   );
+
+  console.log(leftItems);
 
   return (
     <>

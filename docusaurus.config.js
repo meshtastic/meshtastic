@@ -1,4 +1,5 @@
 require("dotenv").config();
+
 import path from "node:path";
 import remarkDefList from "remark-deflist";
 
@@ -31,7 +32,7 @@ const config = {
       items: [
         {
           label: "Documentation",
-          to: "docs/introduction",
+          to: "docs/introduction/",
         },
         {
           label: "Downloads",
@@ -40,42 +41,36 @@ const config = {
         {
           label: "Flasher",
           href: "https://flasher.meshtastic.org",
-          target: "_self",
           className: "navbar__item--flasher",
         },
-        {
-          label: "About",
-          position: "right",
-          items: [
-            {
-              label: "Introduction",
-              to: "docs/introduction",
-            },
-            {
-              label: "Getting Started",
-              to: "docs/getting-started",
-            },
-            {
-              label: "Contributing",
-              to: "docs/contributing",
-            },
-            {
-              label: "Legal",
-              to: "docs/legal",
-            },
-            {
-              label: "FAQs",
-              to: "docs/faq",
-            },
-          ],
-        },
-        {
-          type: "localeDropdown",
-          position: "right",
-        },
+        // // {
+        // //   label: "About",
+        // //   position: "right",
+        // //   items: [
+        // //     {
+        // //       label: "Introduction",
+        // //       to: "docs/introduction",
+        // //     },
+        // //     {
+        // //       label: "Getting Started",
+        // //       to: "docs/getting-started",
+        // //     },
+        // //     {
+        // //       label: "Contributing",
+        // //       to: "docs/contributing",
+        // //     },
+        // //     {
+        // //       label: "Legal",
+        // //       to: "docs/legal",
+        // //     },
+        // //     {
+        // //       label: "FAQs",
+        // //       to: "docs/faq",
+        // //     },
+        // //   ],
+        // // },
         {
           href: "https://github.com/meshtastic",
-          position: "right",
           className: "header-github-link",
           "aria-label": "GitHub repository",
         },
