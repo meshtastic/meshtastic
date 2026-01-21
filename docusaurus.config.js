@@ -32,11 +32,11 @@ const config = {
       items: [
         {
           label: "Documentation",
-          to: "docs/introduction/",
+          to: "/docs/introduction/",
         },
         {
           label: "Downloads",
-          to: "downloads/",
+          to: "/downloads/",
         },
         {
           label: "Flasher",

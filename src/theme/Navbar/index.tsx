@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import Link from "@docusaurus/Link";
 import { useColorMode } from "@docusaurus/theme-common";
 import { useNavbarMobileSidebar } from "@docusaurus/theme-common/internal";
 import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
@@ -25,26 +26,24 @@ interface NavbarLogo {
 }
 
 function NavLink({
-  href,
+  to,
   children,
   className,
 }: {
-  href: string;
+  to: string;
   children: React.ReactNode;
   className?: string;
 }) {
-  const isExternal = href.startsWith("http");
   return (
-    <a
-      href={href}
+    <Link
+      to={to}
       className={cn(
         "text-base text-muted-foreground transition-opacity hover:opacity-80",
         className,
       )}
-      {...(isExternal && { target: "_blank", rel: "noopener noreferrer" })}
     >
       {children}
-    </a>
+    </Link>
   );
 }
 
@@ -62,17 +61,13 @@ function DropdownNavItem({ item }: { item: NavbarItem }) {
       {item.items && (
         <div className="absolute top-full left-0 z-[1] mt-1 hidden min-w-[160px] rounded-md border border-border bg-background py-1 shadow-lg group-hover:block group-focus-within:block">
           {item.items.map((subItem) => (
-            <a
+            <Link
               key={subItem.label}
-              href={subItem.to ?? subItem.href}
+              to={subItem.to ?? subItem.href ?? "#"}
               className="block px-4 py-2 text-sm text-muted-foreground hover:bg-muted hover:text-foreground"
-              {...(subItem.href?.startsWith("http") && {
-                target: "_blank",
-                rel: "noopener noreferrer",
-              })}
             >
               {subItem.label}
-            </a>
+            </Link>
           ))}
         </div>
       )}
@@ -126,7 +121,7 @@ export default function Navbar(): React.ReactElement {
       >
         <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
           <div className="flex items-center gap-2">
-            <a href="/" className="flex items-center gap-2">
+            <Link to="/" className="flex items-center gap-2">
               {logoSrc && (
                 <img
                   src={`/${logoSrc}`}
@@ -137,7 +132,7 @@ export default function Navbar(): React.ReactElement {
               <span className="font-semibold text-lg font-mono text-foreground leading-none">
                 {siteConfig.title}
               </span>
-            </a>
+            </Link>
           </div>
 
           <div className="hidden items-center gap-8 md:flex">
@@ -152,7 +147,7 @@ export default function Navbar(): React.ReactElement {
               return (
                 <NavLink
                   key={item.label}
-                  href={href}
+                  to={href}
                   className={isFlasher ? "flex items-center gap-2" : undefined}
                 >
                   {isFlasher && <LinkIcon className="h-4 w-4" />}

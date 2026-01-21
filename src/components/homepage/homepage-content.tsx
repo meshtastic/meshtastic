@@ -5,8 +5,8 @@ import { HomepageFeatures } from "@/components/homepage/homepage-features";
 import { NetworkMapBackground } from "@/components/homepage/network-map-background";
 import { Sponsors } from "@/components/homepage/sponsors";
 import { Button } from "@/components/ui/button";
-import { Link } from "@/components/ui/link";
 import links from "@/data/links.json";
+import Link from "@docusaurus/Link";
 import { ArrowRight, Download, FileText } from "lucide-react";
 import React from "react";
 import { SocialSidebar } from "./social-sidebar";
@@ -43,7 +43,7 @@ export function HomePageContent() {
               </div>
 
               <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center lg:justify-start">
-                <Link href={links.getStarted}>
+                <Link to={links.getStarted}>
                   <Button
                     size="lg"
                     variant={"default"}
@@ -54,7 +54,7 @@ export function HomePageContent() {
                     <ArrowRight className="ml-2 size-6" />
                   </Button>
                 </Link>
-                <Link href={links.docs}>
+                <Link to={links.docs}>
                   <Button
                     size="lg"
                     variant="ghost"

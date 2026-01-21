@@ -1,6 +1,6 @@
-import { Link } from "@/components/ui/link";
 import apps from "@/data/apps.json";
 import links from "@/data/links.json";
+import Link from "@docusaurus/Link";
 import {
   ArrowRight,
   Globe,
@@ -47,7 +47,7 @@ function DownloadCard({
         {description}
       </p>
       <Link
-        href={url ?? "#"}
+        to={url ?? "#"}
         className="inline-flex items-center gap-2 font-medium text-primary transition-colors hover:text-primary/80 group-hover:gap-3"
       >
         Try it out

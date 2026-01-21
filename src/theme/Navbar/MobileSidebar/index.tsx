@@ -1,4 +1,4 @@
-import { Link } from "@/components/ui/link";
+import Link from "@docusaurus/Link";
 import { useNavbarMobileSidebar } from "@docusaurus/theme-common/internal";
 import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
 import { ChevronDown, Github, Heart, LinkIcon, X } from "lucide-react";
@@ -16,24 +16,21 @@ interface NavbarItem {
 }
 
 function MobileNavLink({
-  href,
+  to,
   children,
   onClick,
   className,
 }: {
-  href: string;
+  to: string;
   children: React.ReactNode;
   onClick?: () => void;
   className?: string;
 }) {
-  const isExternal = href.startsWith("http");
   return (
     <Link
-      href={href}
+      to={to}
       onClick={onClick}
       className={`block py-3 text-lg text-foreground transition-colors hover:text-primary ${className ?? ""}`}
-      target={isExternal ? "_blank" : undefined}
-      rel={isExternal ? "noopener noreferrer" : undefined}
     >
       {children}
     </Link>
@@ -66,7 +63,7 @@ function MobileDropdownItem({
           {item.items.map((subItem) => (
             <MobileNavLink
               key={subItem.label}
-              href={subItem.to ?? subItem.href ?? "#"}
+              to={subItem.to ?? subItem.href ?? "#"}
               onClick={onClose}
               className="py-2 text-base text-muted-foreground"
             >
@@ -162,7 +159,7 @@ export default function NavbarMobileSidebar(): React.ReactElement | null {
             const isFlasher = item.className?.includes("flasher");
 
             return (
-              <MobileNavLink key={item.label} href={href} onClick={handleClose}>
+              <MobileNavLink key={item.label} to={href} onClick={handleClose}>
                 {isFlasher && <LinkIcon className="mr-2 inline h-4 w-4" />}
                 {item.label}
               </MobileNavLink>
@@ -172,7 +169,7 @@ export default function NavbarMobileSidebar(): React.ReactElement | null {
 
         <div className="mt-8 flex flex-col gap-3 border-t border-border pt-6">
           <Link
-            href="https://opencollective.com/meshtastic"
+            to="https://opencollective.com/meshtastic"
             onClick={handleClose}
             className="flex items-center gap-2 rounded-lg bg-primary/15 px-4 py-3 text-primary transition-colors hover:bg-primary/20"
           >
@@ -182,7 +179,7 @@ export default function NavbarMobileSidebar(): React.ReactElement | null {
 
           {githubItem?.href && (
             <Link
-              href={githubItem.href}
+              to={githubItem.href}
               onClick={handleClose}
               className="flex items-center gap-2 rounded-lg bg-primary/15 px-4 py-3 text-primary transition-colors hover:bg-primary/20"
             >

@@ -8,7 +8,6 @@ import {
   XIcon,
   YouTubeIcon,
 } from "@/components/icons/socials";
-import { Link } from "@/components/ui/link";
 import {
   Tooltip,
   TooltipContent,
@@ -16,6 +15,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import socialsData from "@/data/socials.json";
+import Link from "@docusaurus/Link";
 import type React from "react";
 import { useEffect, useState } from "react";
 
@@ -53,7 +53,7 @@ export function SocialSidebar() {
     const Icon = social.icon;
     return (
       <Link
-        href={social.href}
+        to={social.href}
         className="group flex h-10 w-10 lg:h-12 lg:w-12 items-center justify-center rounded-lg text-muted-foreground transition-all hover:bg-muted hover:text-foreground [&_svg]:h-5 [&_svg]:w-5"
         aria-label={social.name}
       >
