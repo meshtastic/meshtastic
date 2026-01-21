@@ -1,3 +1,5 @@
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import Link from "@docusaurus/Link";
 import { useColorMode } from "@docusaurus/theme-common";
 import { useNavbarMobileSidebar } from "@docusaurus/theme-common/internal";
@@ -8,8 +10,6 @@ import LocaleDropdownNavbarItem from "@theme/NavbarItem/LocaleDropdownNavbarItem
 import SearchBar from "@theme/SearchBar";
 import { ChevronDown, GithubIcon, Heart, LinkIcon, Menu } from "lucide-react";
 import type React from "react";
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
 
 interface NavbarItem {
   label?: string;
@@ -114,9 +114,7 @@ export default function Navbar(): React.ReactElement {
 
   return (
     <>
-      <header
-        className="sticky top-0 border-b border-border/50 bg-[hsl(var(--navbar-bg))] backdrop-blur-xl z-10"
-      >
+      <header className="sticky top-0 border-b border-border/50 bg-[hsl(var(--navbar-bg))] backdrop-blur-xl z-10">
         <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
           <div className="flex items-center gap-2">
             <Link to="/" className="flex items-center gap-2">
@@ -168,10 +166,7 @@ export default function Navbar(): React.ReactElement {
               <SearchBar />
             </div>
 
-            <ColorModeToggle
-              value={colorMode}
-              onChange={setColorMode}
-            />
+            <ColorModeToggle value={colorMode} onChange={setColorMode} />
 
             <Button
               variant="default"

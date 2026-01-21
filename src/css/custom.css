@@ -15,19 +15,14 @@ html {
   color-scheme: dark;
 }
 
-/* Mobile social bar gutter */
-@media (max-width: 1023px) {
+/* social bar gutter */
+@media (max-width: 1279px) {
   :root {
-    --social-bar-height: 10dvh;
-  }
-
-  body,
-  #__docusaurus {
-    height: 100dvh;
+    --social-bar-height: 4.5rem;
   }
 
   #__docusaurus {
-    overflow-y: auto;
+    padding-bottom: var(--social-bar-height);
   }
 }
 
@@ -42,7 +37,6 @@ html {
 }
 
 @media (prefers-reduced-motion: reduce) {
-
   ::view-transition-old(root),
   ::view-transition-new(root) {
     animation: none;
@@ -128,8 +122,8 @@ html {
   --card-foreground: 0 0% 98%;
   --popover: 222 20% 10%;
   --popover-foreground: 0 0% 98%;
-  --btn-primary: 132 84% 68%;
-  --btn-primary-hover: 132 84% 60%;
+  --btn-primary: 144 80% 65%;
+  --btn-primary-hover: 144 80% 57%;
   --btn-primary-foreground: 132 84% 20%;
   --primary-foreground: 222 20% 10%;
   --surface-alt: 222 15% 18%;
@@ -245,11 +239,11 @@ html[data-theme="dark"] .header-github-link::before {
 }
 
 /* Navbar link styling */
-a+.navbar__link {
+a + .navbar__link {
   display: flex;
   gap: 2px;
 
-  >svg {
+  > svg {
     margin-block: auto;
   }
 }
@@ -303,7 +297,8 @@ a+.navbar__link {
 }
 
 .markdown :where(li):not(:where([class~="not-prose"] *)),
-.markdown :where(ul ul, ul ol, ol ul, ol ol):not(:where([class~="not-prose"] *)) {
+.markdown
+  :where(ul ul, ul ol, ol ul, ol ol):not(:where([class~="not-prose"] *)) {
   margin-block: 0;
   line-height: 1.6;
 }
@@ -318,13 +313,12 @@ td {
 }
 
 @media print {
-
   ul.tabs,
   .no-print {
     display: none;
   }
 
-  .tabs-container div>div,
+  .tabs-container div > div,
   .accordion__panel {
     display: block !important;
   }
@@ -350,7 +344,7 @@ td {
   }
 }
 
-@media (width <=80rem) {
+@media (width <= 80rem) {
   .osTabs .tabs {
     flex-direction: column;
     align-items: stretch;

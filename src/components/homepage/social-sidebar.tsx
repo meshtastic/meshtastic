@@ -1,6 +1,3 @@
-import Link from "@docusaurus/Link";
-import type React from "react";
-import { useEffect, useState } from "react";
 import {
   DiscordIcon,
   FacebookIcon,
@@ -19,6 +16,9 @@ import {
 } from "@/components/ui/tooltip";
 import socialsData from "@/data/socials.json";
 import { cn } from "@/lib/utils";
+import Link from "@docusaurus/Link";
+import type React from "react";
+import { useEffect, useState } from "react";
 
 const iconComponents: Record<string, React.FC> = {
   Discord: DiscordIcon,
@@ -48,7 +48,10 @@ interface SocialSidebarProps {
   variant?: "mobile" | "desktop" | "both";
 }
 
-export function SocialSidebar({ className, variant = "both" }: SocialSidebarProps) {
+export function SocialSidebar({
+  className,
+  variant = "both",
+}: SocialSidebarProps) {
   const [isTouchDevice, setIsTouchDevice] = useState(false);
 
   useEffect(() => {
@@ -60,7 +63,7 @@ export function SocialSidebar({ className, variant = "both" }: SocialSidebarProp
     return (
       <Link
         to={social.href}
-        className="group flex h-10 w-10 lg:h-12 lg:w-12 items-center justify-center rounded-lg text-muted-foreground transition-all hover:bg-muted hover:text-foreground [&_svg]:h-5 [&_svg]:w-5"
+        className="group flex h-11 w-11 xl:h-12 xl:w-12 items-center justify-center rounded-lg text-muted-foreground transition-all hover:bg-muted hover:text-foreground [&_svg]:h-5 [&_svg]:w-5 xl:[&_svg]:h-6 xl:[&_svg]:w-6"
         aria-label={social.name}
       >
         <Icon />
@@ -90,12 +93,15 @@ export function SocialSidebar({ className, variant = "both" }: SocialSidebarProp
 
   return (
     <TooltipProvider>
-      {/* Mobile horizontal bar - iOS-style bottom navigation */}
+      {/* sidebar */}
       {showMobile && (
         <div
-          className={cn("fixed bottom-0 left-0 right-0 z-50 flex h-[4dvh] items-center justify-center bg-background/95 backdrop-blur-md border-t border-border/50 lg:hidden", className)}
+          className={cn(
+            "fixed bottom-0 left-0 right-0 z-50 flex h-[var(--social-bar-height)] items-center justify-center bg-background/95 backdrop-blur-md border-t border-border/50 xl:hidden",
+            className,
+          )}
         >
-          <div className="flex flex-row gap-4">
+          <div className="flex flex-row gap-6">
             {socials.map((social) => (
               <SocialLink key={social.name} social={social} />
             ))}
@@ -103,11 +109,11 @@ export function SocialSidebar({ className, variant = "both" }: SocialSidebarProp
         </div>
       )}
 
-      {/* Desktop fixed sidebar */}
+      {/* Desktop sidebar */}
       {showDesktop && (
         <div
           className={cn(
-            "fixed z-10 top-1/2 hidden -translate-y-1/2 -translate-x-full lg:block left-[max(1rem,calc((100vw-min(80rem,100vw-3rem))/2-1rem))]",
+            "fixed z-10 top-1/2 hidden -translate-y-1/2 -translate-x-full xl:block left-[max(1rem,calc((100vw-min(80rem,100vw-3rem))/2-1rem))]",
             className,
           )}
         >

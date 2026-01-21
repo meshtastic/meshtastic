@@ -98,7 +98,9 @@ export function DeviceMockup() {
             {msg.longName}
           </span>
           <div className="flex items-center gap-1">
-            <span className="font-mono text-xs text-stone-500 dark:text-gray-400">{msg.time}</span>
+            <span className="font-mono text-xs text-stone-500 dark:text-gray-400">
+              {msg.time}
+            </span>
             <Popover open={pickerOpen} onOpenChange={setPickerOpen}>
               <PopoverTrigger asChild={true}>
                 <button
@@ -124,7 +126,9 @@ export function DeviceMockup() {
             </Popover>
           </div>
         </div>
-        <p className="mt-0.5 font-mono text-base text-stone-700 dark:text-gray-200">{msg.text}</p>
+        <p className="mt-0.5 font-mono text-base text-stone-700 dark:text-gray-200">
+          {msg.text}
+        </p>
         <p className="mt-1 text-right font-mono text-[12px] text-stone-500 dark:text-gray-400">
           This is only a demo
         </p>
@@ -160,7 +164,9 @@ export function DeviceMockup() {
       >
         <div
           className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full ${
-            isEmojiAvatar ? "text-2xl bg-stone-200 dark:bg-gray-800" : "text-xs font-bold"
+            isEmojiAvatar
+              ? "text-2xl bg-stone-200 dark:bg-gray-800"
+              : "text-xs font-bold"
           }`}
           style={
             isEmojiAvatar
@@ -230,7 +236,9 @@ export function DeviceMockup() {
             </div>
           </div>
 
-          <p className="mt-0.5 font-mono text-base text-stone-700 dark:text-gray-200">{msg.text}</p>
+          <p className="mt-0.5 font-mono text-base text-stone-700 dark:text-gray-200">
+            {msg.text}
+          </p>
 
           <div className="mt-1 flex items-center justify-between">
             <div className="flex items-center gap-1.5">

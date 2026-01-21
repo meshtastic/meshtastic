@@ -1,7 +1,7 @@
-import type { Props } from "@theme/Layout";
-import OriginalLayout from "@theme-original/Layout";
-import type React from "react";
 import { SocialSidebar } from "@/components/homepage/social-sidebar";
+import OriginalLayout from "@theme-original/Layout";
+import type { Props } from "@theme/Layout";
+import type React from "react";
 
 export default function Layout(props: Props): React.ReactElement {
   return (

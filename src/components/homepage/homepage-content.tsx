@@ -29,7 +29,9 @@ export function HomePageContent() {
               <h2 className="[text-wrap:balance] font-mono text-4xl font-bold tracking-tight text-foreground md:text-5xl lg:text-6xl">
                 Off-Grid
                 <br />
-                <span className="text-primary">Communication</span>
+                <span className="text-primary dark:text-[hsl(var(--btn-primary))]">
+                  Communication
+                </span>
                 <br />
                 For Everyone
               </h2>
