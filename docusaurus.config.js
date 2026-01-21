@@ -36,7 +36,7 @@ const config = {
         },
         {
           label: "Downloads",
-          to: "downloads",
+          to: "downloads/",
         },
         {
           label: "Flasher",
