@@ -14,8 +14,8 @@ export default {
       colors: {
         accent: "var(--accent)",
         base: "var(--base)",
-        primary: "hsl(var(--hp-primary))",
-        secondary: "hsl(var(--hp-secondary))",
+        primary: "hsl(var(--btn-primary))",
+        secondary: "hsl(var(--surface-alt))",
         tertiary: "var(--tertiary)",
         mute: "var(--mute)",
         primaryInv: "var(--primaryInv)",

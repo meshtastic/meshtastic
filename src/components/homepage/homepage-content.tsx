@@ -19,7 +19,7 @@ export function HomePageContent() {
       </div>
 
       <aside aria-label="Social links">
-        <SocialSidebar />
+        <SocialSidebar variant="desktop" />
       </aside>
 
       <div className="relative flex min-h-screen flex-col">
@@ -47,7 +47,7 @@ export function HomePageContent() {
                   <Button
                     size="lg"
                     variant={"default"}
-                    className="w-full border-0 bg-primary p-5 font-mono text-base shadow-none transition-all hover:brightness-110 sm:w-auto"
+                    className="w-full border-0 bg-[hsl(var(--btn-primary))] p-5 font-mono text-base text-[hsl(var(--btn-primary-foreground))] shadow-none transition-colors hover:bg-[hsl(var(--btn-primary-hover))] sm:w-auto"
                   >
                     <Download className="mr-2 size-6" />
                     Get Started
@@ -58,7 +58,7 @@ export function HomePageContent() {
                   <Button
                     size="lg"
                     variant="ghost"
-                    className="w-full border-0 bg-transparent p-5 font-mono text-base text-white !shadow-none transition-colors hover:bg-primary/20 hover:text-primary sm:w-auto"
+                    className="w-full border-0 bg-transparent p-5 font-mono text-base text-foreground !shadow-none transition-colors hover:bg-[hsl(var(--btn-primary)/0.2)] hover:text-[hsl(var(--btn-primary))] sm:w-auto"
                   >
                     <FileText className="mr-2 size-6" />
                     Read Docs

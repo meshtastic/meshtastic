@@ -1,3 +1,6 @@
+import Link from "@docusaurus/Link";
+import type React from "react";
+import { useEffect, useState } from "react";
 import {
   DiscordIcon,
   FacebookIcon,
@@ -15,9 +18,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import socialsData from "@/data/socials.json";
-import Link from "@docusaurus/Link";
-import type React from "react";
-import { useEffect, useState } from "react";
+import { cn } from "@/lib/utils";
 
 const iconComponents: Record<string, React.FC> = {
   Discord: DiscordIcon,
@@ -42,7 +43,12 @@ const socials: Social[] = socialsData.socials.map((s) => ({
   icon: iconComponents[s.name],
 }));
 
-export function SocialSidebar() {
+interface SocialSidebarProps {
+  className?: string;
+  variant?: "mobile" | "desktop" | "both";
+}
+
+export function SocialSidebar({ className, variant = "both" }: SocialSidebarProps) {
   const [isTouchDevice, setIsTouchDevice] = useState(false);
 
   useEffect(() => {
@@ -79,23 +85,39 @@ export function SocialSidebar() {
     );
   };
 
+  const showMobile = variant === "mobile" || variant === "both";
+  const showDesktop = variant === "desktop" || variant === "both";
+
   return (
     <TooltipProvider>
-      <div className="fixed z-10 bottom-20 md:bottom-14  left-1/2 -translate-x-1/2 xl:hidden">
-        <div className="flex flex-row gap-4 rounded-xl border border-border/50 bg-card/60 p-4 backdrop-blur-md">
-          {socials.map((social) => (
-            <SocialLink key={social.name} social={social} />
-          ))}
+      {/* Mobile horizontal bar - iOS-style bottom navigation */}
+      {showMobile && (
+        <div
+          className={cn("fixed bottom-0 left-0 right-0 z-50 flex h-[4dvh] items-center justify-center bg-background/95 backdrop-blur-md border-t border-border/50 lg:hidden", className)}
+        >
+          <div className="flex flex-row gap-4">
+            {socials.map((social) => (
+              <SocialLink key={social.name} social={social} />
+            ))}
+          </div>
         </div>
-      </div>
+      )}
 
-      <div className="fixed z-10 top-1/2 hidden -translate-y-1/2 -translate-x-full lg:block left-[max(1rem,calc((100vw-min(80rem,100vw-3rem))/2-1rem))]">
-        <div className="flex flex-col gap-4 rounded-2xl border border-border/50 bg-card/60 p-2 backdrop-blur-md">
-          {socials.map((social) => (
-            <SocialLinkWithTooltip key={social.name} social={social} />
-          ))}
+      {/* Desktop fixed sidebar */}
+      {showDesktop && (
+        <div
+          className={cn(
+            "fixed z-10 top-1/2 hidden -translate-y-1/2 -translate-x-full lg:block left-[max(1rem,calc((100vw-min(80rem,100vw-3rem))/2-1rem))]",
+            className,
+          )}
+        >
+          <div className="flex flex-col gap-4 rounded-2xl border border-border/50 bg-card/60 p-2 backdrop-blur-md">
+            {socials.map((social) => (
+              <SocialLinkWithTooltip key={social.name} social={social} />
+            ))}
+          </div>
         </div>
-      </div>
+      )}
     </TooltipProvider>
   );
 }

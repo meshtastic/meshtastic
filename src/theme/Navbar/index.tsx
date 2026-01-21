@@ -2,6 +2,7 @@ import Link from "@docusaurus/Link";
 import { useColorMode } from "@docusaurus/theme-common";
 import { useNavbarMobileSidebar } from "@docusaurus/theme-common/internal";
 import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
+import ColorModeToggle from "@theme/ColorModeToggle";
 import NavbarMobileSidebar from "@theme/Navbar/MobileSidebar";
 import LocaleDropdownNavbarItem from "@theme/NavbarItem/LocaleDropdownNavbarItem";
 import SearchBar from "@theme/SearchBar";
@@ -97,7 +98,7 @@ export default function Navbar(): React.ReactElement {
   };
   const navbarItems = themeConfig.navbar?.items ?? [];
   const logo = themeConfig.navbar?.logo;
-  const { colorMode } = useColorMode();
+  const { colorMode, setColorMode } = useColorMode();
   const logoSrc =
     colorMode === "dark" && logo?.srcDark ? logo.srcDark : logo?.src;
 
@@ -114,8 +115,7 @@ export default function Navbar(): React.ReactElement {
   return (
     <>
       <header
-        className="sticky top-0 border-b border-border/50 backdrop-blur-xl"
-        style={{ backgroundColor: "lch(3% 3% 267deg / 0.8)" }}
+        className="sticky top-0 border-b border-border/50 bg-[hsl(var(--navbar-bg))] backdrop-blur-xl z-10"
       >
         <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
           <div className="flex items-center gap-2">
@@ -168,10 +168,15 @@ export default function Navbar(): React.ReactElement {
               <SearchBar />
             </div>
 
+            <ColorModeToggle
+              value={colorMode}
+              onChange={setColorMode}
+            />
+
             <Button
               variant="default"
               size="sm"
-              className="hidden border-primary/50 bg-primary/15 p-5 text-primary shadow-none transition-colors hover:bg-primary/20 hover:text-primary lg:inline-flex"
+              className="hidden bg-[hsl(var(--btn-primary))] p-5 text-[hsl(var(--btn-primary-foreground))] shadow-none transition-colors hover:bg-[hsl(var(--btn-primary-hover))] hover:text-[hsl(var(--btn-primary-foreground))] lg:inline-flex"
               asChild
             >
               <a
@@ -188,7 +193,7 @@ export default function Navbar(): React.ReactElement {
               <Button
                 variant="default"
                 size="sm"
-                className="hidden border-primary/50 bg-primary/15 p-5 text-primary shadow-none transition-colors hover:bg-primary/20 hover:text-primary lg:inline-flex"
+                className="hidden bg-[hsl(var(--btn-primary))] p-5 text-[hsl(var(--btn-primary-foreground))] shadow-none transition-colors hover:bg-[hsl(var(--btn-primary-hover))] hover:text-[hsl(var(--btn-primary-foreground))] lg:inline-flex"
                 asChild
               >
                 <a

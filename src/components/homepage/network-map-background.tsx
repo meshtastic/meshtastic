@@ -42,14 +42,14 @@ const THEME_COLORS = {
   },
   light: {
     primaryColor: { r: 34, g: 140, b: 80 },
-    bgCenter: "#f5f7f9",
-    bgEdge: "#e8ecf0",
-    mapStroke: 0.25,
-    mapFill: 0.08,
-    rangeIndicator: 0.12,
-    glowFadeTarget: "rgba(255, 255, 255, 0)",
-    nodeIdleAlpha: 0.7,
-    nodeSeenAlpha: 0.85,
+    bgCenter: "#f7f5f2",
+    bgEdge: "#ebe8e4",
+    mapStroke: 0.3,
+    mapFill: 0.1,
+    rangeIndicator: 0.15,
+    glowFadeTarget: "rgba(247, 245, 242, 0)",
+    nodeIdleAlpha: 0.75,
+    nodeSeenAlpha: 0.9,
   },
 };
 

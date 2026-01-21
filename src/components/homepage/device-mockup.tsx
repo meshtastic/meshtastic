@@ -66,7 +66,7 @@ export function DeviceMockup() {
     cols?: number;
   }) => (
     <div
-      className="grid max-h-32 gap-1 overflow-y-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+      className="grid gap-1"
       style={{ gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))` }}
     >
       {reactions.map((emoji) => (
@@ -74,7 +74,7 @@ export function DeviceMockup() {
           key={emoji}
           type="button"
           onClick={() => onSelect(emoji)}
-          className="rounded-md p-1 text-xl transition-colors hover:bg-primary/20"
+          className="rounded-md border-0 p-1 text-xl shadow-none transition-colors hover:bg-primary/20"
         >
           {emoji}
         </button>
@@ -98,7 +98,7 @@ export function DeviceMockup() {
             {msg.longName}
           </span>
           <div className="flex items-center gap-1">
-            <span className="font-mono text-xs text-gray-400">{msg.time}</span>
+            <span className="font-mono text-xs text-stone-500 dark:text-gray-400">{msg.time}</span>
             <Popover open={pickerOpen} onOpenChange={setPickerOpen}>
               <PopoverTrigger asChild={true}>
                 <button
@@ -110,7 +110,7 @@ export function DeviceMockup() {
                 </button>
               </PopoverTrigger>
               <PopoverContent
-                className="w-auto border-gray-700 bg-gray-800 p-2"
+                className="w-auto border-stone-300 dark:border-gray-700 bg-stone-100 dark:bg-gray-800 p-2"
                 align="end"
                 sideOffset={8}
               >
@@ -124,8 +124,8 @@ export function DeviceMockup() {
             </Popover>
           </div>
         </div>
-        <p className="mt-0.5 font-mono text-base text-gray-200">{msg.text}</p>
-        <p className="mt-1 text-right font-mono text-[12px] text-gray-400">
+        <p className="mt-0.5 font-mono text-base text-stone-700 dark:text-gray-200">{msg.text}</p>
+        <p className="mt-1 text-right font-mono text-[12px] text-stone-500 dark:text-gray-400">
           This is only a demo
         </p>
         {msg.reactions && msg.reactions.length > 0 && (
@@ -135,7 +135,7 @@ export function DeviceMockup() {
                 key={emoji}
                 type="button"
                 onClick={() => toggleReaction(msg.id, emoji)}
-                className="rounded-full bg-gray-700/50 px-1.5 py-0.5 text-base transition-colors hover:bg-gray-600/50"
+                className="rounded-full bg-stone-300/50 dark:bg-gray-700/50 px-1.5 py-0.5 text-base transition-colors hover:bg-stone-400/50 dark:hover:bg-gray-600/50"
               >
                 {emoji}
               </button>
@@ -152,7 +152,7 @@ export function DeviceMockup() {
 
     return (
       <div
-        className={`message-bubble group relative flex gap-2 rounded-lg bg-gray-800/50 p-2 ${
+        className={`message-bubble group relative flex gap-2 rounded-lg bg-stone-200/50 dark:bg-gray-800/50 p-2 ${
           isNewMessage(msg.id)
             ? "animate-in slide-in-from-bottom-4 fade-in duration-300"
             : ""
@@ -160,11 +160,11 @@ export function DeviceMockup() {
       >
         <div
           className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full ${
-            isEmojiAvatar ? "text-2xl" : "text-xs font-bold"
+            isEmojiAvatar ? "text-2xl bg-stone-200 dark:bg-gray-800" : "text-xs font-bold"
           }`}
           style={
             isEmojiAvatar
-              ? { backgroundColor: "rgb(31, 41, 55)" }
+              ? undefined
               : {
                   backgroundColor: getAvatarColor(msg.shortName),
                   color: getAvatarTextColor(getAvatarColor(msg.shortName)),
@@ -177,19 +177,21 @@ export function DeviceMockup() {
         <div className="min-w-0 flex-1">
           <div className="flex items-center justify-between gap-2">
             <span
-              className="truncate font-mono text-base font-semibold"
+              className={`truncate font-mono text-base font-semibold ${
+                isEmojiAvatar ? "text-stone-700 dark:text-gray-200" : ""
+              }`}
               title={msg.longName}
-              style={{
-                color: isEmojiAvatar
-                  ? "rgb(229, 231, 235)"
-                  : getAvatarColor(msg.shortName),
-              }}
+              style={
+                isEmojiAvatar
+                  ? undefined
+                  : { color: getAvatarColor(msg.shortName) }
+              }
             >
               {msg.longName}
             </span>
 
             <div className="flex shrink-0 items-center gap-1">
-              <span className="font-mono text-sm text-gray-400">
+              <span className="font-mono text-sm text-stone-500 dark:text-gray-400">
                 {msg.time}
               </span>
 
@@ -213,7 +215,7 @@ export function DeviceMockup() {
                   </button>
                 </PopoverTrigger>
                 <PopoverContent
-                  className="w-auto border-gray-700 bg-gray-800 p-2"
+                  className="w-auto border-stone-300 dark:border-gray-700 bg-stone-100 dark:bg-gray-800 p-2"
                   align="end"
                   sideOffset={8}
                 >
@@ -228,7 +230,7 @@ export function DeviceMockup() {
             </div>
           </div>
 
-          <p className="mt-0.5 font-mono text-base text-gray-200">{msg.text}</p>
+          <p className="mt-0.5 font-mono text-base text-stone-700 dark:text-gray-200">{msg.text}</p>
 
           <div className="mt-1 flex items-center justify-between">
             <div className="flex items-center gap-1.5">
@@ -250,7 +252,7 @@ export function DeviceMockup() {
                     key={emoji}
                     type="button"
                     onClick={() => toggleReaction(msg.id, emoji)}
-                    className="rounded-full bg-gray-700/50 px-1.5 py-0.5 text-base transition-colors hover:bg-gray-600/50"
+                    className="rounded-full bg-stone-300/50 dark:bg-gray-700/50 px-1.5 py-0.5 text-base transition-colors hover:bg-stone-400/50 dark:hover:bg-gray-600/50"
                   >
                     {emoji}
                   </button>
@@ -265,10 +267,10 @@ export function DeviceMockup() {
 
   return (
     <div className="relative">
-      <div className="relative w-[23rem] lg:w-[25rem] rounded-[2.5rem] bg-gradient-to-b from-gray-800 to-gray-900 p-4 shadow-2xl shadow-black/50 ring-1 ring-gray-600/50">
-        <div className="rounded-[2rem] bg-gray-900 p-2.5">
-          <div className="relative overflow-hidden rounded-[1.75rem] bg-gray-950">
-            <div className="flex items-center justify-between bg-gray-900/80 px-5 py-3 text-base text-primary">
+      <div className="relative w-[23rem] lg:w-[25rem] rounded-[2.5rem] bg-gradient-to-b from-stone-300 to-stone-400 dark:from-gray-800 dark:to-gray-900 p-4 shadow-2xl shadow-stone-500/40 dark:shadow-black/50 ring-1 ring-stone-400 dark:ring-gray-600/50">
+        <div className="rounded-[2rem] bg-stone-100 dark:bg-gray-900 p-2.5">
+          <div className="relative overflow-hidden rounded-[1.75rem] bg-stone-50 dark:bg-gray-950">
+            <div className="flex items-center justify-between bg-stone-200/80 dark:bg-gray-900/80 px-5 py-3 text-base text-primary">
               <span className="font-mono">{currentTime}</span>
               <div className="flex items-center gap-2.5">
                 <Signal className="h-4 w-4" />
@@ -277,7 +279,7 @@ export function DeviceMockup() {
               </div>
             </div>
 
-            <div className="border-b border-primary/20 bg-gray-900/50 px-5 py-4">
+            <div className="border-b border-primary/20 bg-stone-100/50 dark:bg-gray-900/50 px-5 py-4">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="font-mono text-base font-bold text-primary">
@@ -295,7 +297,7 @@ export function DeviceMockup() {
 
             <div
               ref={messagesContainerRef}
-              className="h-[17.5rem] flex flex-col-reverse gap-2 overflow-y-auto p-3 [&::-webkit-scrollbar]:w-2.5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-border"
+              className="h-[17.5rem] flex flex-col-reverse gap-2 overflow-y-auto p-3 bg-stone-50 dark:bg-transparent [&::-webkit-scrollbar]:w-2.5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-border"
             >
               {messages.map((msg) => (
                 <React.Fragment key={msg.id}>
@@ -308,8 +310,8 @@ export function DeviceMockup() {
               ))}
             </div>
 
-            <div className="bg-gray-900/50 px-4 pb-3 pt-4">
-              <div className="flex items-center gap-2 rounded-full border-0 bg-gray-800 px-4 py-2.5 shadow-none">
+            <div className="bg-stone-100/50 dark:bg-gray-900/50 px-4 pb-3 pt-4">
+              <div className="flex items-center gap-2 rounded-full border-0 bg-stone-200 dark:bg-gray-800 px-4 py-2.5 shadow-none">
                 <input
                   ref={inputRef}
                   type="text"
@@ -320,14 +322,14 @@ export function DeviceMockup() {
                   onChange={(e) => setInputValue(e.target.value)}
                   onKeyDown={handleKeyDown}
                   placeholder="Type message..."
-                  className="flex-1 border-0 bg-transparent font-mono text-base text-gray-200 placeholder-gray-500 shadow-none outline-none caret-primary"
+                  className="flex-1 border-0 bg-transparent font-mono text-base text-stone-800 dark:text-gray-200 placeholder-stone-400 dark:placeholder-gray-500 shadow-none outline-none caret-primary"
                 />
                 <button
                   type="button"
                   onClick={handleSendMessage}
                   className={`flex h-7 w-7 items-center justify-center rounded-full border-0 shadow-none transition-colors ${
                     inputValue.trim()
-                      ? "bg-primary text-gray-900 hover:bg-primary/80"
+                      ? "bg-primary text-white dark:text-gray-900 hover:bg-primary/80"
                       : "bg-primary/30 text-primary/60 hover:bg-primary/50 hover:text-primary"
                   }`}
                 >
@@ -337,7 +339,7 @@ export function DeviceMockup() {
               </div>
             </div>
 
-            <div className="relative space-y-1.5 bg-gray-900/50 px-3 pb-3 pt-2">
+            <div className="relative space-y-1.5 bg-stone-100/50 dark:bg-gray-900/50 px-3 pb-3 pt-2">
               {keyboardLayout.map((row, rowIndex) => (
                 <div
                   key={`row-${row[rowIndex]}`}
@@ -350,21 +352,20 @@ export function DeviceMockup() {
                           <PopoverTrigger asChild={true}>
                             <button
                               type="button"
-                              className="flex h-7 w-10 items-center justify-center rounded border-0 bg-gray-800/50 text-base font-medium text-gray-200 shadow-none transition-colors hover:bg-primary hover:text-gray-900 active:scale-95"
+                              className="flex h-7 w-10 items-center justify-center rounded border-0 bg-stone-200/80 dark:bg-gray-800/50 text-base font-medium text-stone-700 dark:text-gray-200 shadow-none transition-colors hover:bg-primary hover:text-white dark:hover:text-gray-900 active:scale-95"
                             >
                               <span className="sr-only">emoji picker</span>
                               <Smile className="h-4 w-4" />
                             </button>
                           </PopoverTrigger>
                           <PopoverContent
-                            className="w-auto border-gray-700 bg-gray-800 p-2"
+                            className="w-auto border-stone-300 dark:border-gray-700 bg-stone-100 dark:bg-gray-800 p-2"
                             side="top"
                             align="center"
                             sideOffset={8}
                           >
                             <EmojiPickerContent
                               onSelect={(emoji) => addEmojiToInput(emoji)}
-                              cols={8}
                             />
                           </PopoverContent>
                         </Popover>
@@ -372,11 +373,11 @@ export function DeviceMockup() {
                         <button
                           type="button"
                           onClick={() => handleKeyPress(key)}
-                          className={`flex items-center justify-center rounded border-0 bg-gray-800/50 font-mono text-xs font-medium text-gray-200 shadow-none transition-colors hover:bg-primary hover:text-gray-900 active:scale-95 ${
+                          className={`flex items-center justify-center rounded border-0 bg-stone-200/80 dark:bg-gray-800/50 font-mono text-xs font-medium text-stone-700 dark:text-gray-200 shadow-none transition-colors hover:bg-primary hover:text-white dark:hover:text-gray-900 active:scale-95 ${
                             key === "space"
                               ? "h-7 flex-1"
                               : key === "↵"
-                                ? "h-7 w-14 bg-primary/90 text-gray-900 hover:bg-primary"
+                                ? "h-7 w-14"
                                 : "h-7 w-7"
                           }`}
                         >
