@@ -389,6 +389,7 @@ export const FrequencyCalculator = (): JSX.Element => {
         calculatedNumChannels,
       );
       setDefaultSlot(defaultSlot);
+      setChannel(defaultSlot);
     }
   }, [modemPreset, region]);
 
