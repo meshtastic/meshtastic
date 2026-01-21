@@ -1,5 +1,3 @@
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
 import Link from "@docusaurus/Link";
 import { useColorMode } from "@docusaurus/theme-common";
 import { useNavbarMobileSidebar } from "@docusaurus/theme-common/internal";
@@ -9,6 +7,8 @@ import LocaleDropdownNavbarItem from "@theme/NavbarItem/LocaleDropdownNavbarItem
 import SearchBar from "@theme/SearchBar";
 import { ChevronDown, GithubIcon, Heart, LinkIcon, Menu } from "lucide-react";
 import type React from "react";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 interface NavbarItem {
   label?: string;
@@ -110,8 +110,6 @@ export default function Navbar(): React.ReactElement {
   const githubItem = navbarItems.find((item) =>
     item.className?.includes("header-github-link"),
   );
-
-  console.log(leftItems);
 
   return (
     <>
