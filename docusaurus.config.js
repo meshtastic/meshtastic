@@ -17,6 +17,7 @@ const config = {
   organizationName: "meshtastic",
   projectName: "meshtastic",
   themeConfig: /** @type {import('@docusaurus/preset-classic').ThemeConfig} */ {
+    respectPrefersColorScheme: true,
     docs: {
       sidebar: {
         autoCollapseCategories: true,

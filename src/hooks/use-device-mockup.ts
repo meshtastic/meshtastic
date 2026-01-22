@@ -168,6 +168,9 @@ export function useDeviceMockup({
         }
         const reactions = msg.reactions ?? [];
         const hasReaction = reactions.includes(emoji);
+        if (!hasReaction && reactions.length >= 3) {
+          return msg;
+        }
         return {
           ...msg,
           reactions: hasReaction

@@ -1,4 +1,5 @@
 import { Rabbit } from "@/components/icons/rabbit";
+import { Button } from "@/components/ui/button";
 import {
   Popover,
   PopoverContent,
@@ -74,7 +75,7 @@ export function DeviceMockup() {
           key={emoji}
           type="button"
           onClick={() => onSelect(emoji)}
-          className="rounded-md border-0 p-1 text-xl shadow-none transition-colors hover:bg-primary/20"
+          className="rounded-md border-0 bg-transparent p-1 text-xl shadow-none transition-colors hover:bg-primary/20"
         >
           {emoji}
         </button>
@@ -112,7 +113,7 @@ export function DeviceMockup() {
                 </button>
               </PopoverTrigger>
               <PopoverContent
-                className="w-auto border-stone-300 dark:border-gray-700 bg-stone-100 dark:bg-gray-800 p-2"
+                className="w-auto border-stone-300 dark:border-gray-700 bg-stone-200 dark:bg-gray-800 p-2"
                 align="end"
                 sideOffset={8}
               >
@@ -139,7 +140,7 @@ export function DeviceMockup() {
                 key={emoji}
                 type="button"
                 onClick={() => toggleReaction(msg.id, emoji)}
-                className="rounded-full bg-stone-300/50 dark:bg-gray-700/50 px-1.5 py-0.5 text-base transition-colors hover:bg-stone-400/50 dark:hover:bg-gray-600/50"
+                className="rounded-full border-0 bg-stone-300/50 px-1.5 py-0.5 text-base transition-colors hover:bg-stone-400/50 dark:bg-gray-600/50 dark:hover:bg-gray-500/50"
               >
                 {emoji}
               </button>
@@ -221,7 +222,7 @@ export function DeviceMockup() {
                   </button>
                 </PopoverTrigger>
                 <PopoverContent
-                  className="w-auto border-stone-300 dark:border-gray-700 bg-stone-100 dark:bg-gray-800 p-2"
+                  className="w-auto border-stone-300 dark:border-gray-700 bg-stone-200 dark:bg-gray-800 p-2"
                   align="end"
                   sideOffset={8}
                 >
@@ -260,7 +261,7 @@ export function DeviceMockup() {
                     key={emoji}
                     type="button"
                     onClick={() => toggleReaction(msg.id, emoji)}
-                    className="rounded-full bg-stone-300/50 dark:bg-gray-700/50 px-1.5 py-0.5 text-base transition-colors hover:bg-stone-400/50 dark:hover:bg-gray-600/50"
+                    className="rounded-full border-0 bg-stone-300/50 px-1.5 py-0.5 text-base transition-colors hover:bg-stone-400/50 dark:bg-gray-600/50 dark:hover:bg-gray-500/50"
                   >
                     {emoji}
                   </button>
@@ -367,7 +368,7 @@ export function DeviceMockup() {
                             </button>
                           </PopoverTrigger>
                           <PopoverContent
-                            className="w-auto border-stone-300 dark:border-gray-700 bg-stone-100 dark:bg-gray-800 p-2"
+                            className="w-auto border-stone-300 dark:border-gray-700 bg-stone-200 dark:bg-gray-800 p-2"
                             side="top"
                             align="center"
                             sideOffset={8}
