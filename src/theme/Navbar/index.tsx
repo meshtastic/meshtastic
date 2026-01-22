@@ -122,7 +122,7 @@ export default function Navbar(): React.ReactElement {
                 <img
                   src={`/${logoSrc}`}
                   alt={logo?.alt ?? siteConfig.title}
-                  className="h-11 w-auto rounded-lg"
+                  className="h-11 w-auto"
                 />
               )}
               <span className="font-semibold text-lg font-mono text-foreground leading-none">
