@@ -19,8 +19,21 @@ jobs:
           config: .oxlintrc.json
           deny-warnings: true
 
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: latest
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+
+      - name: Install Dependencies
+        run: pnpm install
+
       - name: Check formatting
-        run: npm run format:fix
+        run: pnpm run format:fix
   build:
     runs-on: ubuntu-latest
     steps:
