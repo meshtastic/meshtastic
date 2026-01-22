@@ -13,13 +13,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Biome
-        uses: biomejs/setup-biome@v1
+      - name: Run oxlint
+        uses: oxc-project/oxlint-action@v0
         with:
-          version: latest
+          config: .oxlintrc.json
+          deny-warnings: true
 
-      - name: Run Biome
-        run: biome ci . --diagnostic-level=error
+      - name: Check formatting
+        run: npm run format:fix
   build:
     runs-on: ubuntu-latest
     steps:

@@ -13,7 +13,12 @@
     "pdf": "npx docusaurus-prince-pdf -u http://localhost:3000/docs/about/ --dest ./static/documents/pdf --output ./static/documents/pdf/Meshtastic-Documentation.pdf",
     "write-translations": "docusaurus write-translations",
     "crowdin": "crowdin",
-    "crowdin:sync": "docusaurus write-translations && crowdin upload && crowdin download"
+    "crowdin:sync": "docusaurus write-translations && crowdin upload && crowdin download",
+    "prepare": "husky",
+    "lint": "oxlint",
+    "lint:fix": "oxlint --fix",
+    "format:fix": "oxfmt --write .",
+    "format": "oxfmt --check ."
   },
   "dependencies": {
     "@algolia/client-search": "^5.44.0",
@@ -50,7 +55,6 @@
     "tailwindcss": "^3.4.17"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.3.6",
     "@docusaurus/module-type-aliases": "3.9.2",
     "@tailwindcss/typography": "^0.5.19",
     "@tsconfig/docusaurus": "^2.0.7",
@@ -58,7 +62,17 @@
     "@types/react": "^19.2.6",
     "@types/react-dom": "^19.2.3",
     "docusaurus-prince-pdf": "^1.2.1",
+    "husky": "^9.1.0",
+    "lint-staged": "^16.0.0",
+    "oxfmt": "^0.16.0",
+    "oxlint": "^1.31.0",
     "typescript": "^5.9.3"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "oxlint",
+      "oxfmt --write"
+    ]
   },
   "pnpm": {
     "overrides": {
@@ -67,7 +81,6 @@
       "prismjs": "^1.30.0"
     },
     "ignoredBuiltDependencies": [
-      "@biomejs/biome",
       "core-js",
       "core-js-pure"
     ]
