@@ -11,13 +11,19 @@ description: "Understand Meshtastic's encryption: optional network-wide AES256 s
 
 Meshtastic provides AES256-CTR encryption for the payload of each packet when sending via LoRa, with a different key for each [channel](/docs/configuration/radio/channels/). The [packet header](/docs/overview/mesh-algo/#layer-1-unreliable-zero-hop-messaging) is always sent unencrypted, which allows nodes to relay packets they can't decrypt as well. One can disable this by setting a different [rebroadcast mode](/docs/configuration/radio/device#rebroadcast-mode).
 
-By default, you have one primary channel, which is encrypted with a simple known key ("AQ=="), so to use proper encryption, you **must change** this key first, or create a new channel and share it with the ones you want to communicate with. However, without a channel using the default key, communication with devices still using it will not be possible.
+By default, you have one primary channel, which is encrypted with a [known key](#shared-default-key), so to use proper encryption, you **must change** this key first, or create a new channel and share it with the ones you want to communicate with. However, without a channel using the default key, communication with devices still using it will not be possible.
 
 Direct messages to a specific node are now encrypted using Public Key Cryptography (PKC). Each node is equipped with a unique public/private key pair, and direct messages are encrypted with the recipient's public key. This ensures that only the recipient can decrypt the message using their private key. Additionally, messages are signed with the sender's private key, allowing the recipient to verify the sender's identity and ensuring the message's integrity.
 
 All periodic broadcasts (position, telemetry, traceroutes, etc.) the device sends out itself are sent over the primary channel and thus encrypted with that key.
 
 The device will decrypt the payload before sending it to a client app via BLE, serial, Wi-Fi/Ethernet. For MQTT, you can [specify](/docs/configuration/module/mqtt#encryption-enabled) whether you want to send an encrypted or unencrypted payload.
+
+### Shared Default Key
+
+The default Meshtastic primary channel uses a fixed, well-known AES128 key that is distributed to all Meshtastic devices. This channel exists to allow zero-configuration interoperability between new or unconfigured nodes. This shared key also allows devices to receive and broadcast node info, position, device telemetry, and information from [other modules](/docs/configuration/module/). This public information enriches your client software's understanding of the local mesh and sharing it contributes to the quality of the mesh for other users. If you choose not to use the default channel, your device will participate in the mesh as a relay node, but you will not be able to access public broadcasts or benefit from applications that require intermediate decryption.
+
+The shared key is shown in client applications as `"AQ=="`. This is an alias of the real 16 byte key and is **not** the actual AES key. Using this alias instructs the firmware to use the built-in public channel key. The actual AES128 key used for the public channel is `"1PG7OiApB1nwvP+rz05pAQ=="` (base64 encoded). This key is constant, non-secret, and published in the firmware source and elsewhere. As a result, anyone following local traffic or monitoring via [MQTT](docs/configuration/module/mqtt/) can decrypt messages on this channel.
 
 ## Is it as secure as Wi-Fi WPA3, HTTPS TLS1.3, or Signal?
 
