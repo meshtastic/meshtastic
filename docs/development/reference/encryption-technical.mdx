@@ -76,3 +76,14 @@ Below is a detailed overview of how PSK, PKC, and Session IDs are integrated int
 ## Conclusion
 
 PSKs and the expanded use of PKC and session IDs across different MCU architectures—ESP32, nRF52, and ARM—demonstrates a tailored approach to security that balances performance, power consumption, and memory management. Each architecture's strengths are leveraged to ensure that secure communications are maintained without compromising the efficiency or scalability of the system. This approach provides robust security for a wide range of applications, from low-power wearable devices to more powerful, feature-rich systems.
+
+## Implementation Pitfalls:
+
+### One byte long PSK
+
+Meshtastic supports 1, 16 and 32 byte long AES PSKs.
+The last two select between AES-128 and AES-256 respectively.
+
+However for the one byte long PSKs such as the default `AQ==`, it actually replaces it with a hardcoded [AES-128 or AES-256 key](https://github.com/meshtastic/firmware/blob/0157a769c350a7430079f5a8000b0008b1b11053/src/mesh/Channels.h#L143-L149) based on the settings.
+
+Then it [modifies the last byte of the wellknown hardcoded key according to `+= key[0] - 1`](https://github.com/meshtastic/firmware/blob/0157a769c350a7430079f5a8000b0008b1b11053/src/mesh/Channels.cpp#L227-L239) where `key` is the one byte long key.
