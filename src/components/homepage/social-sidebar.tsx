@@ -4,6 +4,7 @@ import {
   InstagramIcon,
   MastodonIcon,
   RedditIcon,
+  BlueSkyIcon,
   TelegramIcon,
   XIcon,
   YouTubeIcon,
@@ -27,6 +28,7 @@ const iconComponents: Record<string, React.FC> = {
   Instagram: InstagramIcon,
   YouTube: YouTubeIcon,
   Reddit: RedditIcon,
+  BlueSky: BlueSkyIcon,
   Mastodon: MastodonIcon,
   Telegram: TelegramIcon,
 };
