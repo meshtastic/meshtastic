@@ -110,9 +110,6 @@ export default function NavbarMobileSidebar(): React.ReactElement | null {
           }`}
         onClick={handleClose}
         onKeyDown={(e) => e.key === "Escape" && handleClose()}
-        role="button"
-        tabIndex={0}
-        aria-label="Close menu"
       />
 
       <div
