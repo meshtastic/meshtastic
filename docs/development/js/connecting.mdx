@@ -5,20 +5,13 @@ sidebar_label: Connecting
 ---
 
 ```tsx
-import type React from "React";
+import { MeshDevice } from "@meshtastic/core";
+import { TransportHTTP } from "@meshtastic/transport-http";
 
-import { IHTTPConnection } from "@meshtastic/js";
-
-export const Connection = (): JSX.Element => {
-  const connection = new IHTTPConnection();
-
-  const connect = (): void => {
-    void connection.connect({
-      address: "10.0.0.10",
-      fetchInterval: 3000
-    });
-  };
-
-  return <button onClick={connect}>Connect Bluetooth</button>;
-};
+// Enter the IP address of your Meshtastic device. By default they
+// are discoverable also as 'meshtastic.local'
+const connection = await TransportHTTP.create("meshtastic.local");
+const device = new MeshDevice(connection);
+await device.configure();
+// After the configure step the device connection is ready
 ```

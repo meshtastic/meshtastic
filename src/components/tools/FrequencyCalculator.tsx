@@ -1,6 +1,6 @@
 import type { Types } from "@meshtastic/core";
 import * as Protobuf from "@meshtastic/protobufs";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 interface Region {
   freqStart: number;
@@ -238,7 +238,7 @@ const modemPresets = new Map<
     Protobuf.Config.Config_LoRaConfig_ModemPreset.SHORT_FAST,
     {
       bw: 250,
-      cr: 8,
+      cr: 5,
       sf: 7,
     },
   ],
@@ -246,7 +246,7 @@ const modemPresets = new Map<
     Protobuf.Config.Config_LoRaConfig_ModemPreset.SHORT_SLOW,
     {
       bw: 250,
-      cr: 8,
+      cr: 5,
       sf: 8,
     },
   ],
@@ -254,7 +254,7 @@ const modemPresets = new Map<
     Protobuf.Config.Config_LoRaConfig_ModemPreset.MEDIUM_FAST,
     {
       bw: 250,
-      cr: 8,
+      cr: 5,
       sf: 9,
     },
   ],
@@ -262,7 +262,7 @@ const modemPresets = new Map<
     Protobuf.Config.Config_LoRaConfig_ModemPreset.MEDIUM_SLOW,
     {
       bw: 250,
-      cr: 8,
+      cr: 5,
       sf: 10,
     },
   ],
@@ -270,6 +270,14 @@ const modemPresets = new Map<
     Protobuf.Config.Config_LoRaConfig_ModemPreset.LONG_FAST,
     {
       bw: 250,
+      cr: 5,
+      sf: 11,
+    },
+  ],
+  [
+    Protobuf.Config.Config_LoRaConfig_ModemPreset.LONG_TURBO,
+    {
+      bw: 500,
       cr: 8,
       sf: 11,
     },
@@ -381,6 +389,7 @@ export const FrequencyCalculator = (): JSX.Element => {
         calculatedNumChannels,
       );
       setDefaultSlot(defaultSlot);
+      setChannel(defaultSlot);
     }
   }, [modemPreset, region]);
 
@@ -399,9 +408,9 @@ export const FrequencyCalculator = (): JSX.Element => {
   }, [channel, modemPreset, region]);
 
   return (
-    <div class="flex flex-col border-l-[5px] shadow-md my-4 border-accent rounded-lg p-4 bg-secondary gap-2">
-      <div class="flex gap-2">
-        <label for="modemPreset">Modem Preset:</label>
+    <div className="flex flex-col border-l-[5px] shadow-md my-4 border-accent rounded-lg p-4 bg-secondary gap-2">
+      <div className="flex gap-2">
+        <label htmlFor="modemPreset">Modem Preset:</label>
         <select
           id="modemPreset"
           value={modemPreset}
@@ -420,8 +429,8 @@ export const FrequencyCalculator = (): JSX.Element => {
           ))}
         </select>
       </div>
-      <div class="flex gap-2">
-        <label for="region">Region:</label>
+      <div className="flex gap-2">
+        <label htmlFor="region">Region:</label>
         <select
           id="region"
           value={region}
@@ -434,8 +443,8 @@ export const FrequencyCalculator = (): JSX.Element => {
           ))}
         </select>
       </div>
-      <div class="flex gap-2">
-        <label for="defaultSlot" class="font-semibold">
+      <div className="flex gap-2">
+        <label htmlFor="defaultSlot" className="font-semibold">
           Default Frequency Slot:
         </label>
         <input
@@ -445,8 +454,8 @@ export const FrequencyCalculator = (): JSX.Element => {
           value={defaultSlot + 1} // Display as 1-based index
         />
       </div>
-      <div class="flex gap-2 mb-4">
-        <label for="numSlots" class="font-semibold">
+      <div className="flex gap-2 mb-4">
+        <label htmlFor="numSlots" className="font-semibold">
           Number of slots:
         </label>
         <input
@@ -456,8 +465,8 @@ export const FrequencyCalculator = (): JSX.Element => {
           value={numChannels}
         />
       </div>
-      <div class="flex gap-2">
-        <label for="frequencySlot">Frequency Slot:</label>
+      <div className="flex gap-2">
+        <label htmlFor="frequencySlot">Frequency Slot:</label>
         <select
           id="frequencySlot"
           value={channel}
@@ -470,8 +479,8 @@ export const FrequencyCalculator = (): JSX.Element => {
           ))}
         </select>
       </div>
-      <div class="flex gap-2">
-        <label for="slotFrequency" class="font-semibold">
+      <div className="flex gap-2">
+        <label htmlFor="slotFrequency" className="font-semibold">
           Frequency of slot:
         </label>
         <input

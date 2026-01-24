@@ -13,13 +13,27 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Biome
-        uses: biomejs/setup-biome@v1
+      - name: Run oxlint
+        uses: oxc-project/oxlint-action@v0
+        with:
+          config: .oxlintrc.json
+          deny-warnings: true
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
         with:
           version: latest
 
-      - name: Run Biome
-        run: biome ci . --diagnostic-level=error
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+
+      - name: Install Dependencies
+        run: pnpm install
+
+      - name: Check formatting
+        run: pnpm run format
   build:
     runs-on: ubuntu-latest
     steps:

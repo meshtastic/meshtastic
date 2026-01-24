@@ -2,12 +2,12 @@ import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 import { Icon } from "@iconify/react";
 
-The following libraries must be installed before building `meshtasticd`:
+The following libraries must be installed before building `meshtasticd` or `native-mui`:
 <Tabs groupId="operating-systems" queryString="os">
   <TabItem value="debian" label={<><Icon icon="mdi:debian" style={{ marginRight: "0.25rem" }} height="1.5rem" /> Debian</>} default>
   ```shell
   # Base dependencies
-  sudo apt install libgpiod-dev libyaml-cpp-dev libbluetooth-dev libusb-1.0-0-dev libi2c-dev libuv1-dev libxkbcommon-dev libinput-dev
+  sudo apt install libgpiod-dev libyaml-cpp-dev libbluetooth-dev libusb-1.0-0-dev libi2c-dev libuv1-dev libxkbcommon-dev libinput-dev libsqlite3-dev
   # Optional dependencies for web server support
   sudo apt install openssl libssl-dev libulfius-dev liborcania-dev
   # Optional dependencies for sdl support
