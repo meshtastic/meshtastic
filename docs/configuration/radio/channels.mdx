@@ -27,7 +27,7 @@ The Channels config options are: Index, Roles, and Settings. Channel config uses
 
 The channel index begins at 0 and ends at 7.
 
-_Indexing_ can not be modified.
+_Indexing_ cannot be modified.
 
 | Index | Channel | Default Role |          Purpose          |
 | :---: | :-----: | :----------: | :-----------------------: |
@@ -50,7 +50,7 @@ Each channel is assigned one of 3 roles:
 
 1. `PRIMARY` or `1`
    - This is the first channel that is created for you on initial setup.
-   - Only one primary channel can exist and can not be disabled.
+   - Only one primary channel can exist and cannot be disabled.
    - By default, periodic broadcasts like position and telemetry are sent over this channel.
 2. `SECONDARY` or `2`
    - Can modify the encryption key (PSK).
@@ -74,7 +74,7 @@ A short identifier for the channel. _(< 12 bytes)_
 | Reserved Name  |                                                                                                                 Purpose                                                                                                                  |
 | :------------: | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
 | `""` (default) |                                                                               If left empty on the Primary channel, this designates the `default` channel.                                                                               |
-|    `admin`     | On Secondary channels, the name `admin` (case sensitive) designates the `admin` channel used to administer nodes over the mesh. Note that this is a Legacy feature, see [Remote Admin](docs/configuration/remote-admin.mdx) for details. |
+|    `admin`     | On Secondary channels, the name `admin` (case-sensitive) designates the `admin` channel used to administer nodes over the mesh. Note that this is a Legacy feature, see [Remote Admin](docs/configuration/remote-admin.mdx) for details. |
 
 :::note
 

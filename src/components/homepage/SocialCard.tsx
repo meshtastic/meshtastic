@@ -1,4 +1,5 @@
 import type React from "react";
+import type { JSX } from "react";
 import { FiExternalLink } from "react-icons/fi";
 
 export interface SocialCardProps {
@@ -16,7 +17,7 @@ export const SocialCard = ({
 }: SocialCardProps): JSX.Element => {
   return (
     <div
-      className={`group relative flex h-20 w-28 min-w-max flex-shrink-0 rounded-lg shadow-lg ${color} m-1`}
+      className={`group relative flex h-20 w-28 flex-shrink-0 rounded-lg shadow-lg ${color} m-1`}
     >
       {children}
       <a
