@@ -410,7 +410,7 @@ export const FrequencyCalculator = (): JSX.Element => {
   return (
     <div className="flex flex-col border-l-[5px] shadow-md my-4 border-accent rounded-lg p-4 bg-secondary gap-2">
       <div className="flex gap-2">
-        <label for="modemPreset">Modem Preset:</label>
+        <label htmlFor="modemPreset">Modem Preset:</label>
         <select
           id="modemPreset"
           value={modemPreset}
@@ -430,7 +430,7 @@ export const FrequencyCalculator = (): JSX.Element => {
         </select>
       </div>
       <div className="flex gap-2">
-        <label for="region">Region:</label>
+        <label htmlFor="region">Region:</label>
         <select
           id="region"
           value={region}
@@ -444,7 +444,7 @@ export const FrequencyCalculator = (): JSX.Element => {
         </select>
       </div>
       <div className="flex gap-2">
-        <label for="defaultSlot" className="font-semibold">
+        <label htmlFor="defaultSlot" className="font-semibold">
           Default Frequency Slot:
         </label>
         <input
@@ -455,7 +455,7 @@ export const FrequencyCalculator = (): JSX.Element => {
         />
       </div>
       <div className="flex gap-2 mb-4">
-        <label for="numSlots" className="font-semibold">
+        <label htmlFor="numSlots" className="font-semibold">
           Number of slots:
         </label>
         <input
@@ -466,7 +466,7 @@ export const FrequencyCalculator = (): JSX.Element => {
         />
       </div>
       <div className="flex gap-2">
-        <label for="frequencySlot">Frequency Slot:</label>
+        <label htmlFor="frequencySlot">Frequency Slot:</label>
         <select
           id="frequencySlot"
           value={channel}
@@ -480,7 +480,7 @@ export const FrequencyCalculator = (): JSX.Element => {
         </select>
       </div>
       <div className="flex gap-2">
-        <label for="slotFrequency" className="font-semibold">
+        <label htmlFor="slotFrequency" className="font-semibold">
           Frequency of slot:
         </label>
         <input
