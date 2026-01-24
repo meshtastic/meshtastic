@@ -379,18 +379,18 @@ The Tools tab provides access to various diagnostic utilities, including:
   </Light>
 </div>
 
-## Bluetooth Programming Mode
+## Accessing the Client API
 
 MUI functions as a client, similar to the Android and Apple apps. It runs on one core of the MCU, while the regular Meshtastic firmware runs on the other. MUI communicates with the firmware using the Client API, the same interface used by other Meshtastic clients.
 
-The Client API supports only one active connection at a time, which means Bluetooth cannot be used while MUI is running. Since not all settings can be configured within MUI, Bluetooth Programming Mode allows users to temporarily disable MUI, enabling Bluetooth so the device can be configured via another client app. This mode also supports configuration by serial connections over USB or USB OTG.
+The Client API supports only one active connection at a time, which means other clients cannot be used while MUI is running. Since not all settings can be configured within MUI, you may wish to boot into Bluetooth Programming Mode or [BaseUI](../baseui/). This frees up the API so client apps can use the Bluetooth or serial connection.
 
-### Accessing Bluetooth Programming Mode
+### Bluetooth Programming Mode
 
 Bluetooth Programming Mode can be enabled in two ways:
 
 - During boot – Press and hold the Meshtastic logo on the boot screen.
-- Press the bluetooth icon in the shutdown/reset menu within settings.
+- Press the Bluetooth icon in the shutdown/reset menu within settings.
 
 <div align="center">
   <img
@@ -410,6 +410,12 @@ When activated, the device reboots into Bluetooth Programming Mode. While in thi
   />
 </div>
 
-### Exit Bluetooth Programming Mode
+To exit Bluetooth Programming Mode, press and hold the Bluetooth icon.  The device will reboot back into MUI.
 
-Press and hold the Bluetooth icon to reboot the device back into MUI.
+### Booting into BaseUI
+
+Since the introduction of Unified Firmware for TFT devices in version 2.7, you may easily switch between Meshtastic UI and BaseUI without reinstalling firmware. Booting into BaseUI also frees up the Client API connection for other clients.
+
+From the Bluetooth Programming Mode screen, press and hold the Bluetooth icon to reboot into BaseUI.
+
+To swich back to Meshtastic UI from Base UI, navigate to the System Window, then long-press until the System Action dialog is displayed.  Select `Reboot/Shutdown`, then `Switch to MUI`.
