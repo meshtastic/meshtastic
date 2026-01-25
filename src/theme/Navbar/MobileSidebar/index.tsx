@@ -1,18 +1,22 @@
+import navData from "@/data/nav.json";
 import Link from "@docusaurus/Link";
 import { useNavbarMobileSidebar } from "@docusaurus/theme-common/internal";
-import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
-import { ChevronDown, Github, Heart, LinkIcon, X } from "lucide-react";
+import { ChevronDown, Github, Heart, X } from "lucide-react";
 import type React from "react";
 import { useEffect, useState } from "react";
 
-interface NavbarItem {
-  label?: string;
+interface NavItem {
+  label: string;
   to?: string;
   href?: string;
-  position?: "left" | "right";
-  type?: string;
-  className?: string;
-  items?: NavbarItem[];
+  external?: boolean;
+  items?: NavItem[];
+}
+
+interface NavAction {
+  label: string;
+  href: string;
+  icon: string;
 }
 
 function MobileNavLink({
@@ -41,7 +45,7 @@ function MobileDropdownItem({
   item,
   onClose,
 }: {
-  item: NavbarItem;
+  item: NavItem;
   onClose: () => void;
 }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -78,7 +82,6 @@ function MobileDropdownItem({
 
 export default function NavbarMobileSidebar(): React.ReactElement | null {
   const mobileSidebar = useNavbarMobileSidebar();
-  const { siteConfig } = useDocusaurusContext();
   const [isAnimating, setIsAnimating] = useState(false);
 
   useEffect(() => {
@@ -93,47 +96,34 @@ export default function NavbarMobileSidebar(): React.ReactElement | null {
     return null;
   }
 
-  const themeConfig = siteConfig.themeConfig as {
-    navbar?: { items?: NavbarItem[] };
-  };
-  const navbarItems = themeConfig.navbar?.items ?? [];
-
-  const leftItems = navbarItems.filter(
-    (item) =>
-      item.position !== "right" &&
-      item.type !== "localeDropdown" &&
-      !item.className?.includes("header-github-link"),
-  );
-
-  const githubItem = navbarItems.find((item) =>
-    item.className?.includes("header-github-link"),
-  );
+  const navItems = navData.items as NavItem[];
+  const navActions = navData.actions as NavAction[];
+  const donateAction = navActions.find((a) => a.icon === "heart");
+  const githubAction = navActions.find((a) => a.icon === "github");
 
   const handleClose = () => mobileSidebar.toggle();
 
   return (
     <>
       <div
-        className={`fixed inset-0 z-[200] backdrop-blur-sm transition-colors duration-300 ${
-          isAnimating ? "bg-black/60" : "bg-black/0"
-        }`}
+        className={`fixed inset-0 z-[200] backdrop-blur-sm transition-colors duration-300 ${isAnimating ? "bg-black/60" : "bg-black/0"
+          }`}
         onClick={handleClose}
         onKeyDown={(e) => e.key === "Escape" && handleClose()}
       />
 
       <div
-        className={`fixed inset-y-0 left-0 z-[201] w-[80vw] max-w-[320px] overflow-y-auto bg-background p-6 transition-transform duration-300 ease-out ${
-          isAnimating ? "translate-x-0" : "-translate-x-full"
-        }`}
+        className={`fixed inset-y-0 left-0 z-[201] w-[80vw] max-w-[320px] overflow-y-auto bg-background p-6 transition-transform duration-300 ease-out ${isAnimating ? "translate-x-0" : "-translate-x-full"
+          }`}
       >
         <div className="mb-6 flex items-center justify-between">
           <span className="font-mono text-lg font-semibold text-foreground">
-            Menu
+            Navigation
           </span>
           <button
             type="button"
             onClick={handleClose}
-            className="rounded-lg p-2 text-muted-foreground hover:bg-muted"
+            className="flex items-center rounded-lg p-2 text-muted-foreground hover:bg-muted"
             aria-label="Close menu"
           >
             <X className="h-6 w-6" />
@@ -141,7 +131,7 @@ export default function NavbarMobileSidebar(): React.ReactElement | null {
         </div>
 
         <nav className="flex flex-col gap-1">
-          {leftItems.map((item) => {
+          {navItems.map((item) => {
             if (item.items && item.items.length > 0) {
               return (
                 <MobileDropdownItem
@@ -153,11 +143,9 @@ export default function NavbarMobileSidebar(): React.ReactElement | null {
             }
 
             const href = item.to ?? item.href ?? "#";
-            const isFlasher = item.className?.includes("flasher");
 
             return (
               <MobileNavLink key={item.label} to={href} onClick={handleClose}>
-                {isFlasher && <LinkIcon className="mr-2 inline h-4 w-4" />}
                 {item.label}
               </MobileNavLink>
             );
@@ -165,23 +153,25 @@ export default function NavbarMobileSidebar(): React.ReactElement | null {
         </nav>
 
         <div className="mt-8 flex flex-col gap-3 border-t border-border pt-6">
-          <Link
-            to="https://opencollective.com/meshtastic"
-            onClick={handleClose}
-            className="flex items-center gap-2 rounded-lg bg-primary/15 px-4 py-3 text-primary transition-colors hover:bg-primary/20"
-          >
-            <Heart className="h-5 w-5" />
-            Donate
-          </Link>
-
-          {githubItem?.href && (
+          {donateAction && (
             <Link
-              to={githubItem.href}
+              to={donateAction.href}
+              onClick={handleClose}
+              className="flex items-center gap-2 rounded-lg bg-primary/15 px-4 py-3 text-primary transition-colors hover:bg-primary/20"
+            >
+              <Heart className="h-5 w-5" />
+              {donateAction.label}
+            </Link>
+          )}
+
+          {githubAction && (
+            <Link
+              to={githubAction.href}
               onClick={handleClose}
               className="flex items-center gap-2 rounded-lg bg-primary/15 px-4 py-3 text-primary transition-colors hover:bg-primary/20"
             >
               <Github className="h-5 w-5" />
-              GitHub
+              {githubAction.label}
             </Link>
           )}
         </div>

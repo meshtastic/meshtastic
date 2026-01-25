@@ -20,7 +20,7 @@ export default function ColorModeToggle({
       type="button"
       onClick={() => onChange(isDark ? "light" : "dark")}
       className={cn(
-        "flex h-9 w-9 items-center justify-center rounded-md border border-border bg-background text-muted-foreground transition-colors hover:bg-muted hover:text-foreground",
+        "flex h-9 w-9 items-center justify-center rounded-md border border-border bg-background text-muted-foreground transition-colors hover:bg-muted shadow-none",
         className,
       )}
       aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}

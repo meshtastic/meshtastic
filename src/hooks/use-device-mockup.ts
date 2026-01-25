@@ -216,7 +216,7 @@ export function useDeviceMockup({
     })();
 
     return () => controller.abort();
-  }, [timeline, onTimelineMessage]);
+  }, [timeline]);
 
   // Grab random user from pool
   const onAutoResponse = useEffectEvent(() => {
@@ -241,7 +241,7 @@ export function useDeviceMockup({
     const delay =
       MIN_AUTO_RESPONSE_DELAY_MS + Math.random() * AUTO_RESPONSE_VARIANCE_MS;
     setTimeout(() => onAutoResponse(), delay);
-  }, [onAutoResponse]);
+  }, []);
 
   const handleSendMessage = useCallback(() => {
     const text = inputValue.trim();
