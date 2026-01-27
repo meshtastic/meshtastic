@@ -86,4 +86,4 @@ The last two select between AES-128 and AES-256 respectively.
 
 However for the one byte long PSKs such as the default `AQ==`, it actually replaces it with a hardcoded [AES-128 or AES-256 key](https://github.com/meshtastic/firmware/blob/0157a769c350a7430079f5a8000b0008b1b11053/src/mesh/Channels.h#L143-L149) based on the settings.
 
-Then it [modifies the last byte of the wellknown hardcoded key according to `+= key[0] - 1`](https://github.com/meshtastic/firmware/blob/0157a769c350a7430079f5a8000b0008b1b11053/src/mesh/Channels.cpp#L227-L239) where `key` is the one byte long key.
+It then [modifies the last byte](https://github.com/meshtastic/firmware/blob/0157a769c350a7430079f5a8000b0008b1b11053/src/mesh/Channels.cpp#L227-L239) of that well-known key using the operation `+= key[0] - 1`, where `key` is the provided 1-byte key.
