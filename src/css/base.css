@@ -1,0 +1,124 @@
+@tailwind base;
+
+html {
+  scrollbar-gutter: stable;
+  color-scheme: light dark;
+}
+
+:root {
+  color-scheme: light;
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+}
+
+@media (max-width: 1279px) {
+  :root {
+    --social-bar-height: 4.5rem;
+  }
+
+  #__docusaurus {
+    padding-bottom: var(--social-bar-height);
+  }
+}
+
+@view-transition {
+  navigation: auto;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.2s;
+  animation-timing-function: ease-in-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none;
+  }
+}
+
+@layer base {
+  * {
+    border-color: hsl(var(--border));
+  }
+
+  button {
+    border-style: solid;
+    border-width: 0;
+  }
+
+  .markdown {
+    @apply prose prose-lg;
+
+    img {
+      @apply rounded-lg mx-auto mb-0 block;
+    }
+  }
+
+  [data-theme="dark"] {
+    .markdown {
+      @apply prose-invert;
+    }
+
+    .hideDark {
+      @apply hidden;
+    }
+
+    .hideLight {
+      @apply block;
+    }
+  }
+
+  .hideLight {
+    @apply hidden;
+  }
+
+  .hideDark {
+    @apply block;
+  }
+}
+
+p {
+  line-height: 1.6;
+}
+
+th,
+td {
+  padding-inline: 10px !important;
+}
+
+@media print {
+  ul.tabs,
+  .no-print {
+    display: none;
+  }
+
+  .tabs-container div>div,
+  .accordion__panel {
+    display: block !important;
+  }
+}
+
+.docusaurus-highlight-code-line {
+  background-color: rgb(72, 77, 91);
+  display: block;
+  margin: 0 calc(-1 * var(--ifm-pre-padding));
+  padding: 0 var(--ifm-pre-padding);
+}
+
+.markdown :where(li):not(:where([class~="not-prose"] *)),
+.markdown :where(ul ul, ul ol, ol ul, ol ol):not(:where([class~="not-prose"] *)) {
+  margin-block: 0;
+  line-height: 1.6;
+}
+
+.theme-doc-markdown {
+  max-width: none;
+}
+
+.theme-doc-sidebar-container img {
+  display: none !important;
+}
