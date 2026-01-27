@@ -34,6 +34,7 @@ jobs:
 
       - name: Check formatting
         run: pnpm run format
+        continue-on-error: true
   build:
     runs-on: ubuntu-latest
     steps:

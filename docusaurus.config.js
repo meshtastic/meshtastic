@@ -30,52 +30,6 @@ const config = {
         src: "img/logo.svg",
         srcDark: "img/logo.svg",
       },
-      items: [
-        {
-          label: "Docs",
-          to: "/docs/introduction/",
-        },
-        {
-          label: "Downloads",
-          to: "/downloads/",
-        },
-        {
-          label: "Flasher",
-          href: "https://flasher.meshtastic.org",
-          className: "navbar__item--flasher",
-        },
-        // // {
-        // //   label: "About",
-        // //   position: "right",
-        // //   items: [
-        // //     {
-        // //       label: "Introduction",
-        // //       to: "docs/introduction",
-        // //     },
-        // //     {
-        // //       label: "Getting Started",
-        // //       to: "docs/getting-started",
-        // //     },
-        // //     {
-        // //       label: "Contributing",
-        // //       to: "docs/contributing",
-        // //     },
-        // //     {
-        // //       label: "Legal",
-        // //       to: "docs/legal",
-        // //     },
-        // //     {
-        // //       label: "FAQs",
-        // //       to: "docs/faq",
-        // //     },
-        // //   ],
-        // // },
-        {
-          href: "https://github.com/meshtastic",
-          className: "header-github-link",
-          "aria-label": "GitHub repository",
-        },
-      ],
     },
     footer: {
       copyright: `<a href="https://vercel.com/?utm_source=meshtastic&utm_campaign=oss">Powered by ▲ Vercel</a> | Meshtastic® is a registered trademark of Meshtastic LLC. | <a href="/docs/legal">Legal Information</a>.`,

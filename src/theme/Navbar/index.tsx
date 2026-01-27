@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import navData from "@/data/nav.json";
 import { cn } from "@/lib/utils";
 import Link from "@docusaurus/Link";
 import { useColorMode } from "@docusaurus/theme-common";
@@ -8,16 +9,21 @@ import ColorModeToggle from "@theme/ColorModeToggle";
 import NavbarMobileSidebar from "@theme/Navbar/MobileSidebar";
 import LocaleDropdownNavbarItem from "@theme/NavbarItem/LocaleDropdownNavbarItem";
 import SearchBar from "@theme/SearchBar";
-import { ChevronDown, GithubIcon, Heart, LinkIcon, Menu } from "lucide-react";
+import { ChevronDown, GithubIcon, Heart, Menu } from "lucide-react";
 import type React from "react";
 
-interface NavbarItem {
-  label?: string;
+interface NavItem {
+  label: string;
   to?: string;
   href?: string;
-  type?: string;
-  className?: string;
-  items?: NavbarItem[];
+  external?: boolean;
+  items?: NavItem[];
+}
+
+interface NavAction {
+  label: string;
+  href: string;
+  icon: string;
 }
 
 interface NavbarLogo {
@@ -48,7 +54,7 @@ function NavLink({
   );
 }
 
-function DropdownNavItem({ item }: { item: NavbarItem }) {
+function DropdownNavItem({ item }: { item: NavItem }) {
   return (
     <div className="group relative">
       <button
@@ -81,11 +87,11 @@ function MobileMenuButton() {
   return (
     <button
       type="button"
-      className="flex rounded-lg shadow-none border-none h-9 w-9 items-center justify-center p-2 text-muted-foreground md:hidden"
+      className="flex h-9 w-9 items-center justify-center rounded-md border border-border bg-background text-muted-foreground transition-colors hover:bg-muted shadow-none md:hidden"
       onClick={() => mobileSidebar.toggle()}
       aria-label="Toggle mobile menu"
     >
-      <Menu className="h-6 w-6" />
+      <Menu className="h-5 w-5" />
     </button>
   );
 }
@@ -94,23 +100,17 @@ export default function Navbar(): React.ReactElement {
   const { siteConfig } = useDocusaurusContext();
 
   const themeConfig = siteConfig.themeConfig as {
-    navbar?: { items?: NavbarItem[]; logo?: NavbarLogo };
+    navbar?: { logo?: NavbarLogo };
   };
-  const navbarItems = themeConfig.navbar?.items ?? [];
   const logo = themeConfig.navbar?.logo;
   const { colorMode, setColorMode } = useColorMode();
   const logoSrc =
     colorMode === "dark" && logo?.srcDark ? logo.srcDark : logo?.src;
 
-  const leftItems = navbarItems.filter(
-    (item) =>
-      item.type !== "localeDropdown" &&
-      !item.className?.includes("header-github-link"),
-  );
-
-  const githubItem = navbarItems.find((item) =>
-    item.className?.includes("header-github-link"),
-  );
+  const navItems = navData.items as NavItem[];
+  const navActions = navData.actions as NavAction[];
+  const donateAction = navActions.find((a) => a.icon === "heart");
+  const githubAction = navActions.find((a) => a.icon === "github");
 
   return (
     <>
@@ -132,21 +132,15 @@ export default function Navbar(): React.ReactElement {
           </div>
 
           <div className="hidden items-center gap-8 md:flex">
-            {leftItems.map((item) => {
+            {navItems.map((item) => {
               if (item.items && item.items.length > 0) {
                 return <DropdownNavItem key={item.label} item={item} />;
               }
 
               const href = item.to ?? item.href ?? "#";
-              const isFlasher = item.className?.includes("flasher");
 
               return (
-                <NavLink
-                  key={item.label}
-                  to={href}
-                  className={isFlasher ? "flex items-center gap-2" : undefined}
-                >
-                  {isFlasher && <LinkIcon className="h-4 w-4" />}
+                <NavLink key={item.label} to={href}>
                   {item.label}
                 </NavLink>
               );
@@ -168,23 +162,7 @@ export default function Navbar(): React.ReactElement {
 
             <ColorModeToggle value={colorMode} onChange={setColorMode} />
 
-            <Button
-              variant="default"
-              size="sm"
-              className="hidden bg-[hsl(var(--btn-primary))] p-5 text-[hsl(var(--btn-primary-foreground))] shadow-none transition-colors hover:bg-[hsl(var(--btn-primary-hover))] hover:text-[hsl(var(--btn-primary-foreground))] lg:inline-flex"
-              asChild
-            >
-              <a
-                href="https://opencollective.com/meshtastic"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <Heart className="mr-2 h-4 w-4" />
-                Donate
-              </a>
-            </Button>
-
-            {githubItem && (
+            {donateAction && (
               <Button
                 variant="default"
                 size="sm"
@@ -192,12 +170,30 @@ export default function Navbar(): React.ReactElement {
                 asChild
               >
                 <a
-                  href={githubItem.href}
+                  href={donateAction.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Heart className="mr-2 h-4 w-4" />
+                  {donateAction.label}
+                </a>
+              </Button>
+            )}
+
+            {githubAction && (
+              <Button
+                variant="default"
+                size="sm"
+                className="hidden bg-[hsl(var(--btn-primary))] p-5 text-[hsl(var(--btn-primary-foreground))] shadow-none transition-colors hover:bg-[hsl(var(--btn-primary-hover))] hover:text-[hsl(var(--btn-primary-foreground))] lg:inline-flex"
+                asChild
+              >
+                <a
+                  href={githubAction.href}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
                   <GithubIcon className="mr-2 h-4 w-4" />
-                  GitHub
+                  {githubAction.label}
                 </a>
               </Button>
             )}

@@ -1,5 +1,4 @@
 import { Rabbit } from "@/components/icons/rabbit";
-import { Button } from "@/components/ui/button";
 import {
   Popover,
   PopoverContent,
