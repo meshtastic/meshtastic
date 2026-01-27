@@ -82,7 +82,6 @@ PSKs and the expanded use of PKC and session IDs across different MCU architectu
 ### One byte long PSK
 
 Meshtastic supports 1, 16 and 32 byte long AES PSKs.
-The last two select between AES-128 and AES-256 respectively.
 
 However, for single-byte PSKs, such as the default `AQ==`, the system actually replaces the input with a hardcoded [AES-128 or AES-256 key](https://github.com/meshtastic/firmware/blob/0157a769c350a7430079f5a8000b0008b1b11053/src/mesh/Channels.h#L143-L149) based on the settings.
 
