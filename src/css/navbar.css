@@ -82,10 +82,15 @@ a+.navbar__link {
   gap: 0.5rem;
   padding: 0.5rem 1rem;
   background: hsl(var(--btn-primary));
-  color: hsl(var(--navbar-bg-solid));
+  color: hsl(var(--btn-primary-foreground));
   border-radius: 0.5rem;
   font-weight: 500;
-  transition: opacity 0.2s;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background: hsl(var(--btn-primary-hover));
+    opacity: 1;
+  }
 }
 
 .navbar__link[href*="opencollective"]::before {
