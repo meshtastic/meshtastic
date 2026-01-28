@@ -13,7 +13,6 @@ html {
   color-scheme: dark;
 }
 
-
 @view-transition {
   navigation: auto;
 }
@@ -28,7 +27,6 @@ html {
     animation: none;
   }
 }
-
 
 @media (width < 1280px) {
   :root {
@@ -53,7 +51,8 @@ html {
     line-height: 1.6;
   }
 
-  :is(th, td) {
+  th,
+  td {
     padding-inline: 10px !important;
   }
 
@@ -79,18 +78,16 @@ html {
     @apply block;
   }
 
-  [data-theme="dark"] {
-    & .markdown {
-      @apply prose-invert;
-    }
+  [data-theme="dark"] .markdown {
+    @apply prose-invert;
+  }
 
-    & .hideDark {
-      @apply hidden;
-    }
+  [data-theme="dark"] .hideDark {
+    @apply hidden;
+  }
 
-    & .hideLight {
-      @apply block;
-    }
+  [data-theme="dark"] .hideLight {
+    @apply block;
   }
 }
 
@@ -101,7 +98,6 @@ html {
   background-color: rgb(72 77 91);
 }
 
-
 .theme-doc-markdown {
   max-inline-size: none;
 }
@@ -110,13 +106,15 @@ html {
   display: none !important;
 }
 
-
 @media print {
-  :is(ul.tabs, .no-print) {
+
+  ul.tabs,
+  .no-print {
     display: none;
   }
 
-  :is(.tabs-container div > div, .accordion__panel) {
+  .tabs-container div>div,
+  .accordion__panel {
     display: block !important;
   }
 }

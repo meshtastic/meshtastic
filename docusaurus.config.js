@@ -24,7 +24,7 @@ const config = {
       },
     },
     navbar: {
-      hideOnScroll: true,
+      hideOnScroll: false,
       title: "Meshtastic",
       logo: {
         alt: "Meshtastic Logo",

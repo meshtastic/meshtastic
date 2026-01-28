@@ -41,24 +41,25 @@
   }
 }
 
+
 .tabs {
   padding-left: 0;
+}
 
-  &__item {
-    border-bottom-color: var(--ifm-tabs-color-inactive-border);
+.tabs__item {
+  border-bottom-color: var(--ifm-tabs-color-inactive-border);
+  border-radius: 0;
+  margin-right: 4px;
+  padding-inline: 12px;
+
+  &:hover {
+    background-color: var(--ifm-hover-overlay);
     border-radius: 0;
-    margin-right: 4px;
-    padding-inline: 12px;
-
-    &--active {
-      border-bottom-color: var(--ifm-tabs-color-active-border);
-    }
-
-    &:hover {
-      background-color: var(--ifm-hover-overlay);
-      border-radius: 0;
-    }
   }
+}
+
+.tabs__item--active {
+  border-bottom-color: var(--ifm-tabs-color-active-border);
 }
 
 @media (width <=80rem) {
@@ -71,6 +72,7 @@
     justify-content: flex-start;
   }
 }
+
 
 .marquee-track {
   animation: marquee-scroll var(--duration, 35s) linear infinite;
@@ -103,6 +105,7 @@
   }
 }
 
+
 .DocSearch-Button {
   background: hsl(var(--subtle));
   border: 1px solid hsl(var(--border));
@@ -119,7 +122,7 @@
   }
 
   &:hover .DocSearch-Search-Icon {
-    color: hsl(var(--background));
+    color: currentColor;
   }
 
   &:focus {
@@ -128,33 +131,39 @@
     outline: none;
   }
 
-  .DocSearch-Search-Icon {
+  & .DocSearch-Search-Icon {
     color: hsl(var(--background));
-  }
-
-  [data-theme="dark"] & {
-    background: var(--search-bg);
-    color: hsl(var(--muted-foreground));
-
-    &:hover {
-      background: var(--search-bg);
-    }
-
-    .DocSearch-Search-Icon {
-      color: hsl(var(--muted-foreground));
-    }
-  }
-
-  &-Keys {
-    display: none;
   }
 
   @media (max-width: 768px) {
     padding: 0.5rem;
+  }
+}
 
-    &-Placeholder {
-      display: none;
-    }
+.DocSearch-Button-Keys {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .DocSearch-Button-Placeholder {
+    display: none;
+  }
+}
+
+[data-theme="dark"] .DocSearch-Button {
+  background: var(--search-bg);
+  color: hsl(var(--muted-foreground));
+
+  &:hover {
+    background: var(--search-bg);
+  }
+
+  & .DocSearch-Search-Icon {
+    color: hsl(var(--muted-foreground));
+  }
+
+  &:hover .DocSearch-Search-Icon {
+    color: hsl(var(--muted-foreground));
   }
 }
 
@@ -163,23 +172,24 @@
   z-index: 9999 !important;
 }
 
+
 .footer {
   background-color: hsl(var(--footer-bg));
   color: hsl(var(--foreground));
+}
 
-  &__title {
-    color: hsl(var(--foreground));
+.footer__title {
+  color: hsl(var(--foreground));
+}
+
+.footer__link-item {
+  color: hsl(var(--muted-foreground));
+
+  &:hover {
+    color: hsl(var(--btn-primary));
   }
+}
 
-  &__link-item {
-    color: hsl(var(--muted-foreground));
-
-    &:hover {
-      color: hsl(var(--btn-primary));
-    }
-  }
-
-  &__copyright {
-    color: hsl(var(--foreground));
-  }
+.footer__copyright {
+  color: hsl(var(--foreground));
 }
