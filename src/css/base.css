@@ -1,0 +1,120 @@
+@tailwind base;
+
+html {
+  scrollbar-gutter: stable;
+  color-scheme: light dark;
+}
+
+:root {
+  color-scheme: light;
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+}
+
+@view-transition {
+  navigation: auto;
+}
+
+::view-transition-group(root) {
+  animation-duration: 0.2s;
+  animation-timing-function: ease-in-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(root) {
+    animation: none;
+  }
+}
+
+@media (width < 1280px) {
+  :root {
+    --social-bar-height: 4.5rem;
+  }
+
+  #__docusaurus {
+    padding-block-end: var(--social-bar-height);
+  }
+}
+
+@layer base {
+  * {
+    border-color: hsl(var(--border));
+  }
+
+  button {
+    border: 0 solid;
+  }
+
+  p {
+    line-height: 1.6;
+  }
+
+  th,
+  td {
+    padding-inline: 10px !important;
+  }
+
+  /* Markdown prose styling */
+  .markdown {
+    @apply prose prose-lg;
+
+    & img {
+      @apply mx-auto mb-0 block rounded-lg;
+    }
+
+    & :where(li, ul ul, ul ol, ol ul, ol ol):not(:where([class~="not-prose"] *)) {
+      margin-block: 0;
+      line-height: 1.6;
+    }
+  }
+
+  .hideLight {
+    @apply hidden;
+  }
+
+  .hideDark {
+    @apply block;
+  }
+
+  [data-theme="dark"] .markdown {
+    @apply prose-invert;
+  }
+
+  [data-theme="dark"] .hideDark {
+    @apply hidden;
+  }
+
+  [data-theme="dark"] .hideLight {
+    @apply block;
+  }
+}
+
+.docusaurus-highlight-code-line {
+  display: block;
+  margin-inline: calc(-1 * var(--ifm-pre-padding));
+  padding-inline: var(--ifm-pre-padding);
+  background-color: rgb(72 77 91);
+}
+
+.theme-doc-markdown {
+  max-inline-size: none;
+}
+
+.theme-doc-sidebar-container img {
+  display: none !important;
+}
+
+@media print {
+
+  ul.tabs,
+  .no-print {
+    display: none;
+  }
+
+  .tabs-container div>div,
+  .accordion__panel {
+    display: block !important;
+  }
+}
