@@ -24,12 +24,53 @@ const config = {
       },
     },
     navbar: {
-      hideOnScroll: true,
+      hideOnScroll: false,
+      title: "Meshtastic",
       logo: {
         alt: "Meshtastic Logo",
         src: "img/logo.svg",
         srcDark: "img/logo.svg",
       },
+      items: [
+        {
+          label: "Docs",
+          to: "/docs/introduction/",
+          position: "left",
+        },
+        {
+          label: "Blog",
+          to: "/blog/",
+          position: "left",
+        },
+        {
+          label: "Downloads",
+          to: "/downloads/",
+          position: "left",
+        },
+        {
+          label: "Flasher",
+          href: "https://flasher.meshtastic.org",
+          position: "left",
+        },
+        {
+          type: "localeDropdown",
+          position: "right",
+        },
+        {
+          type: "search",
+          position: "right",
+        },
+        {
+          label: "Donate",
+          href: "https://opencollective.com/meshtastic",
+          position: "right",
+        },
+        {
+          label: "GitHub",
+          href: "https://github.com/meshtastic",
+          position: "right",
+        },
+      ],
     },
     footer: {
       copyright: `<a href="https://vercel.com/?utm_source=meshtastic&utm_campaign=oss">Powered by ▲ Vercel</a> | Meshtastic® is a registered trademark of Meshtastic LLC. | <a href="/docs/legal">Legal Information</a>.`,

@@ -99,7 +99,7 @@ export function SocialSidebar({
       {showMobile && (
         <div
           className={cn(
-            "fixed bottom-0 left-0 right-0 z-50 flex h-[var(--social-bar-height)] items-center justify-center bg-background/95 backdrop-blur-md border-t border-border/50 xl:hidden",
+            "fixed bottom-0 left-0 z-10 right-0 flex h-[var(--social-bar-height)] items-center justify-center bg-background/95 backdrop-blur-md border-t border-border/50 xl:hidden",
             className,
           )}
         >

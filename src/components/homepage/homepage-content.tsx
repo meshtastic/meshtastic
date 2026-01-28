@@ -49,7 +49,7 @@ export function HomePageContent() {
                   <Button
                     size="lg"
                     variant={"default"}
-                    className="w-full border-0 bg-[hsl(var(--btn-primary))] p-5 font-mono text-base text-[hsl(var(--btn-primary-foreground))] shadow-none transition-colors hover:bg-[hsl(var(--btn-primary-hover))] sm:w-auto"
+                    className="w-full border-0 bg-[hsl(var(--btn-primary))] p-5 font-mono text-base text-white dark:text-black shadow-none transition-colors hover:bg-[hsl(var(--btn-primary-hover))] sm:w-auto"
                   >
                     <Download className="mr-2 size-6" />
                     Get Started
