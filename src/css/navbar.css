@@ -1,3 +1,5 @@
+/* Modern CSS refactor - Docusaurus compatible */
+
 .main-wrapper,
 [class*="docMainContainer"],
 [class*="docPage"],
@@ -8,34 +10,47 @@
 }
 
 .navbar {
-  background: hsl(var(--navbar-bg));
-  border-bottom: 1px solid hsl(var(--border) / 0.5);
-  padding: 0;
-  box-shadow: none;
   --ifm-navbar-background-color: transparent;
-  padding-bottom: 5rem;
-}
 
-@media (min-width: 997px) {
-  .navbar {
+  background: hsl(var(--navbar-bg));
+  border-block-end: 1px solid hsl(var(--border) / 0.5);
+  padding: 0;
+  padding-block-end: 5rem;
+  box-shadow: none;
+
+  @media (width >=997px) {
     backdrop-filter: blur(12px);
   }
 }
 
+/* Color mode toggle & other toggle buttons - expanded to avoid :is() polyfill issues */
+.navbar [class*="colorModeToggle"] button,
+.navbar [class*="toggle_"] {
+  color: hsl(var(--muted-foreground));
+  background: transparent;
+  border: none;
+}
+
+.navbar [class*="colorModeToggle"] button:hover,
+.navbar [class*="toggle_"]:hover {
+  background: hsl(var(--muted));
+  border-radius: 0.375rem;
+}
+
 .navbar__inner {
-  max-width: 80rem;
-  margin: 0 auto;
+  max-inline-size: 80rem;
+  margin-inline: auto;
   padding: 1rem 1.5rem;
 }
 
 .navbar__logo {
-  height: 2.75rem;
-  margin-right: 0.5rem;
-}
+  block-size: 2.75rem;
+  margin-inline-end: 0.5rem;
 
-.navbar__logo img {
-  height: 100%;
-  width: auto;
+  & img {
+    block-size: 100%;
+    inline-size: auto;
+  }
 }
 
 .navbar__title {
@@ -50,31 +65,33 @@
   font-size: 1rem;
   font-weight: 400;
   transition: opacity 0.2s;
+
+  &:hover {
+    color: hsl(var(--muted-foreground));
+    opacity: 0.8;
+  }
+
+  &--active {
+    color: hsl(var(--foreground));
+  }
+
+  /* Hide external link icons */
+  & svg[class*="iconExternalLink"] {
+    display: none;
+  }
 }
 
-.navbar__link:hover {
-  color: hsl(var(--muted-foreground));
-  opacity: 0.8;
-}
-
-.navbar__link--active {
-  color: hsl(var(--foreground));
-}
-
-.navbar__link svg[class*="iconExternalLink"],
-.menu__link svg[class*="iconExternalLink"] {
-  display: none;
-}
-
+/* Adjacent link with icon */
 a+.navbar__link {
   display: flex;
   gap: 2px;
 
-  >svg {
+  &>svg {
     margin-block: auto;
   }
 }
 
+/* CTA buttons - expanded to avoid :is() polyfill issues */
 .navbar__link[href*="opencollective"],
 .navbar__link[href*="github.com/meshtastic"] {
   display: inline-flex;
@@ -91,46 +108,53 @@ a+.navbar__link {
     background: hsl(var(--btn-primary-hover));
     opacity: 1;
   }
+
+  /* Shared icon styles */
+  &::before {
+    content: "";
+    display: block;
+    inline-size: 1.125rem;
+    block-size: 1.125rem;
+    background: currentColor;
+  }
 }
 
+/* Heart icon for OpenCollective */
 .navbar__link[href*="opencollective"]::before {
-  content: "";
-  display: block;
-  width: 1.125rem;
-  height: 1.125rem;
-  background: currentColor;
-  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z'/%3E%3C/svg%3E") center/contain no-repeat;
-  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z'/%3E%3C/svg%3E") center/contain no-repeat;
+  --icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z'/%3E%3C/svg%3E");
+  mask: var(--icon) center/contain no-repeat;
+  -webkit-mask: var(--icon) center/contain no-repeat;
 }
 
+/* GitHub icon */
 .navbar__link[href*="github.com/meshtastic"]::before {
-  content: "";
-  display: block;
-  width: 1.125rem;
-  height: 1.125rem;
-  background: currentColor;
-  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4'/%3E%3Cpath d='M9 18c-4.51 2-5-2-7-2'/%3E%3C/svg%3E") center/contain no-repeat;
-  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4'/%3E%3Cpath d='M9 18c-4.51 2-5-2-7-2'/%3E%3C/svg%3E") center/contain no-repeat;
+  --icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4'/%3E%3Cpath d='M9 18c-4.51 2-5-2-7-2'/%3E%3C/svg%3E");
+  mask: var(--icon) center/contain no-repeat;
+  -webkit-mask: var(--icon) center/contain no-repeat;
 }
 
 .navbar__toggle {
-  margin-right: 0.75rem;
+  margin-inline-end: 0.75rem;
   color: hsl(var(--muted-foreground));
 }
 
-.navbar__items--left {
-  gap: 2rem;
+.navbar__items {
+  &--left {
+    gap: 2rem;
+  }
+
+  &--right {
+    gap: 0.75rem;
+  }
 }
 
-.navbar__items--right {
-  gap: 0.75rem;
-}
-
-@media (max-width: 996px) {
-  .navbar__items--left>.navbar__item:not(.navbar__toggle):not(.navbar__brand) {
+/* Tablet breakpoint */
+@media (width < 997px) {
+  .navbar__items--left .navbar__link:not(.navbar__brand) {
     display: none !important;
   }
 
+  /* Expanded selectors to avoid :is() polyfill issues */
   .navbar__items--right>.navbar__item:not([class*="search"]):not([class*="Search"]) {
     display: none !important;
   }
@@ -141,90 +165,91 @@ a+.navbar__link {
   }
 }
 
-.navbar [class*="colorModeToggle"] button,
-.navbar [class*="toggle_"] {
-  color: hsl(var(--muted-foreground));
-  background: transparent;
-  border: none;
+/* Mobile breakpoint */
+@media (width < 600px) {
+  .navbar__link {
+    display: none !important;
+  }
 }
 
-.navbar [class*="colorModeToggle"] button:hover,
-.navbar [class*="toggle_"]:hover {
-  background: hsl(var(--muted));
-  border-radius: 0.375rem;
-}
-
+/* Sidebar */
 .navbar-sidebar {
+  --ifm-navbar-sidebar-width: min(80vw, 320px);
+
   background: hsl(var(--background));
-  --ifm-navbar-sidebar-width: 80vw;
-  max-width: 320px;
   z-index: 200;
-}
 
-.navbar-sidebar__backdrop {
-  background: rgba(0, 0, 0, 0.6);
-  z-index: 199;
-}
+  &__backdrop {
+    background: rgb(0 0 0 / 0.6);
+    z-index: 199;
+  }
 
-.navbar-sidebar__brand {
-  background: hsl(var(--navbar-bg));
-  padding: 1rem 1.5rem;
-  height: auto;
-}
+  &__brand {
+    background: hsl(var(--navbar-bg));
+    padding: 1rem 1.5rem;
+    block-size: auto;
+  }
 
-.navbar-sidebar__close {
-  background: transparent;
-  border: 1px solid hsl(var(--border));
-  border-radius: 0.5rem;
-  color: hsl(var(--muted-foreground));
-  width: 2rem;
-  height: 2rem;
-  padding: .5em;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+  &__close {
+    background: transparent;
+    border: 1px solid hsl(var(--border));
+    border-radius: 0.5rem;
+    color: hsl(var(--muted-foreground));
+    inline-size: 2rem;
+    block-size: 2rem;
+    padding: 0.5em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-.navbar-sidebar__close:hover {
-  background: hsl(var(--muted));
-  color: hsl(var(--foreground));
-}
+    &:hover {
+      background: hsl(var(--muted));
+      color: hsl(var(--foreground));
+    }
 
-.navbar-sidebar__close svg {
-  width: 1.25rem;
-  height: 1.25rem;
-}
+    & svg {
+      inline-size: 1.25rem;
+      block-size: 1.25rem;
+    }
+  }
 
-.navbar-sidebar__items {
-  background: hsl(var(--background));
-}
+  &__items {
+    background: hsl(var(--background));
+  }
 
-.navbar-sidebar .navbar-sidebar__item {
-  width: 100%;
-}
+  & .navbar-sidebar__item {
+    inline-size: 100%;
+  }
 
-.navbar-sidebar .menu__link {
-  color: hsl(var(--foreground));
-  padding: 0.75rem 1rem;
-  border-radius: 0.5rem;
-  font-size: 1rem;
-}
+  /* Menu links inside sidebar */
+  & .menu__link {
+    color: hsl(var(--foreground));
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    font-size: 1rem;
 
-.navbar-sidebar .menu__link:hover {
-  background: hsl(var(--muted));
-  color: hsl(var(--foreground));
-}
+    &:hover {
+      background: hsl(var(--muted));
+      color: hsl(var(--foreground));
+    }
 
-.navbar-sidebar .menu__link--active {
-  background: hsl(var(--muted));
-  color: hsl(var(--btn-primary));
-}
+    &--active {
+      background: hsl(var(--muted));
+      color: hsl(var(--btn-primary));
+    }
 
-.navbar-sidebar .menu__caret {
-  padding: var(--ifm-menu-link-padding-vertical) var(--ifm-menu-link-padding-horizontal);
-}
+    /* Hide external link icons in menu too */
+    & svg[class*="iconExternalLink"] {
+      display: none;
+    }
+  }
 
-.navbar-sidebar .menu__list-item-collapsible {
-  display: flex;
-  flex-wrap: wrap;
+  & .menu__caret {
+    padding: var(--ifm-menu-link-padding-vertical) var(--ifm-menu-link-padding-horizontal);
+  }
+
+  & .menu__list-item-collapsible {
+    display: flex;
+    flex-wrap: wrap;
+  }
 }

@@ -1,4 +1,5 @@
 :root {
+  /* Infima Framework Overrides */
   --ifm-color-primary: #1a8a50;
   --ifm-color-primary-dark: #167a47;
   --ifm-color-primary-darker: #146d3f;
@@ -10,38 +11,59 @@
   --ifm-code-font-size: 95%;
   --ifm-z-index-fixed: 100;
 
+  /* Base */
   --background: 40 15% 96%;
   --foreground: 40 10% 12%;
+  --radius: 0.625rem;
+
+  /* Surfaces */
+  --surface: 40 15% 93%;
+  --surface-foreground: 40 10% 15%;
+  --surface-alt: 40 12% 90%;
+
+  /* Cards & Popovers */
   --card: 40 20% 98%;
   --card-foreground: 40 10% 12%;
   --popover: 40 20% 98%;
   --popover-foreground: 40 10% 12%;
+
+  /* Buttons */
   --btn-primary: 152 75% 28%;
   --btn-primary-hover: 152 75% 22%;
   --btn-primary-foreground: 0 0% 100%;
-  --primary-foreground: 0 0% 100%;
-  --surface-alt: 40 12% 90%;
-  --secondary-foreground: 40 10% 12%;
-  --muted: 40 12% 90%;
-  --muted-foreground: 40 10% 0%;
+
+  /* Accent & Primary */
   --accent-primary: 152 75% 28%;
   --accent-foreground: 40 10% 12%;
+  --primary-foreground: 0 0% 100%;
+  --secondary-foreground: 40 10% 12%;
+
+  /* Muted & Subtle */
+  --muted: 40 12% 90%;
+  --muted-foreground: 40 10% 0%;
+  --subtle: 40 10% 30%;
+
+  /* Destructive */
   --destructive: 0 84% 60%;
   --destructive-foreground: 0 0% 98%;
+
+  /* Forms */
   --border: 40 12% 82%;
   --input: 40 12% 90%;
   --ring: 152 75% 28%;
-  --radius: 0.625rem;
-  --surface: 40 15% 93%;
-  --surface-foreground: 40 10% 15%;
+
+  /* Layout */
   --overlay: 40 15% 96% / 0.9;
-  --subtle: 40 10% 30%;
   --navbar-bg: 40 20% 97% / 0.9;
   --navbar-bg-solid: 40 20% 97%;
   --footer-bg: 40 12% 90%;
+
+  /* Search */
+  --search-bg: lch(75% 2% 276);
 }
 
 [data-theme="dark"] {
+  /* Infima Framework Overrides */
   --ifm-color-primary: #67ea94;
   --ifm-color-primary-dark: #4de57f;
   --ifm-color-primary-darker: #33e06a;
@@ -50,32 +72,53 @@
   --ifm-color-primary-lighter: #9bf4be;
   --ifm-color-primary-lightest: #b5f9d3;
 
+
+  /* Base */
   --background: 222 20% 7%;
   --foreground: 0 0% 98%;
+
+  /* Surfaces */
+  --surface: 222 20% 10%;
+  --surface-foreground: 0 0% 85%;
+  --surface-alt: 222 15% 18%;
+
+  /* Cards & Popovers */
   --card: 210 44% 4%;
   --card-foreground: 0 0% 98%;
   --popover: 222 20% 10%;
   --popover-foreground: 0 0% 98%;
+
+  /* Buttons */
   --btn-primary: 144 80% 65%;
   --btn-primary-hover: 144 80% 57%;
   --btn-primary-foreground: 132 84% 20%;
-  --primary-foreground: 222 20% 10%;
-  --surface-alt: 222 15% 18%;
-  --secondary-foreground: 0 0% 98%;
-  --muted: 222 15% 18%;
-  --muted-foreground: 220 10% 65%;
+
+  /* Accent & Primary */
   --accent-primary: 132 84% 68%;
   --accent-foreground: 222 20% 10%;
+  --primary-foreground: 222 20% 10%;
+  --secondary-foreground: 0 0% 98%;
+
+  /* Muted & Subtle */
+  --muted: 222 15% 18%;
+  --muted-foreground: 220 10% 65%;
+  --subtle: 0 0% 75%;
+
+  /* Destructive */
   --destructive: 0 84% 60%;
   --destructive-foreground: 0 84% 60%;
+
+  /* Forms */
   --border: 222 15% 22%;
   --input: 222 15% 18%;
   --ring: 132 84% 68%;
-  --surface: 222 20% 10%;
-  --surface-foreground: 0 0% 85%;
+
+  /* Layout */
   --overlay: 222 20% 7% / 0.8;
-  --subtle: 0 0% 75%;
   --navbar-bg: 222 20% 5% / 0.85;
   --navbar-bg-solid: 222 20% 5%;
   --footer-bg: 222 20% 5%;
+
+  /* Search */
+  --search-bg: lch(4% 6% 276);
 }

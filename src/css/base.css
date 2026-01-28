@@ -13,30 +13,30 @@ html {
   color-scheme: dark;
 }
 
-@media (max-width: 1279px) {
-  :root {
-    --social-bar-height: 4.5rem;
-  }
-
-  #__docusaurus {
-    padding-bottom: var(--social-bar-height);
-  }
-}
 
 @view-transition {
   navigation: auto;
 }
 
-::view-transition-old(root),
-::view-transition-new(root) {
+::view-transition-group(root) {
   animation-duration: 0.2s;
   animation-timing-function: ease-in-out;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  ::view-transition-old(root),
-  ::view-transition-new(root) {
+  ::view-transition-group(root) {
     animation: none;
+  }
+}
+
+
+@media (width < 1280px) {
+  :root {
+    --social-bar-height: 4.5rem;
+  }
+
+  #__docusaurus {
+    padding-block-end: var(--social-bar-height);
   }
 }
 
@@ -46,29 +46,28 @@ html {
   }
 
   button {
-    border-style: solid;
-    border-width: 0;
+    border: 0 solid;
   }
 
+  p {
+    line-height: 1.6;
+  }
+
+  :is(th, td) {
+    padding-inline: 10px !important;
+  }
+
+  /* Markdown prose styling */
   .markdown {
     @apply prose prose-lg;
 
-    img {
-      @apply rounded-lg mx-auto mb-0 block;
-    }
-  }
-
-  [data-theme="dark"] {
-    .markdown {
-      @apply prose-invert;
+    & img {
+      @apply mx-auto mb-0 block rounded-lg;
     }
 
-    .hideDark {
-      @apply hidden;
-    }
-
-    .hideLight {
-      @apply block;
+    & :where(li, ul ul, ul ol, ol ul, ol ol):not(:where([class~="not-prose"] *)) {
+      margin-block: 0;
+      line-height: 1.6;
     }
   }
 
@@ -79,46 +78,45 @@ html {
   .hideDark {
     @apply block;
   }
-}
 
-p {
-  line-height: 1.6;
-}
+  [data-theme="dark"] {
+    & .markdown {
+      @apply prose-invert;
+    }
 
-th,
-td {
-  padding-inline: 10px !important;
-}
+    & .hideDark {
+      @apply hidden;
+    }
 
-@media print {
-  ul.tabs,
-  .no-print {
-    display: none;
-  }
-
-  .tabs-container div>div,
-  .accordion__panel {
-    display: block !important;
+    & .hideLight {
+      @apply block;
+    }
   }
 }
 
 .docusaurus-highlight-code-line {
-  background-color: rgb(72, 77, 91);
   display: block;
-  margin: 0 calc(-1 * var(--ifm-pre-padding));
-  padding: 0 var(--ifm-pre-padding);
+  margin-inline: calc(-1 * var(--ifm-pre-padding));
+  padding-inline: var(--ifm-pre-padding);
+  background-color: rgb(72 77 91);
 }
 
-.markdown :where(li):not(:where([class~="not-prose"] *)),
-.markdown :where(ul ul, ul ol, ol ul, ol ol):not(:where([class~="not-prose"] *)) {
-  margin-block: 0;
-  line-height: 1.6;
-}
 
 .theme-doc-markdown {
-  max-width: none;
+  max-inline-size: none;
 }
 
 .theme-doc-sidebar-container img {
   display: none !important;
+}
+
+
+@media print {
+  :is(ul.tabs, .no-print) {
+    display: none;
+  }
+
+  :is(.tabs-container div > div, .accordion__panel) {
+    display: block !important;
+  }
 }

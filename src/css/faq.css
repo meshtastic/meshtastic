@@ -1,46 +1,48 @@
 .accordion {
-  border-radius: 2px;
   border: 1px solid var(--ifm-color-emphasis-200);
-}
+  border-radius: 2px;
 
-.accordion__item + .accordion__item {
-  border-top: 1px solid var(--ifm-color-emphasis-200);
-}
+  &__item+&__item {
+    border-block-start: 1px solid var(--ifm-color-emphasis-200);
+  }
 
-.accordion__button {
-  background-color: var(--ifm-footer-background-color);
-  border: none;
-  cursor: pointer;
-  padding: calc(var(--ifm-pre-padding) / 1.5);
-  text-align: left;
-  width: 100%;
-}
+  &__button {
+    background-color: var(--ifm-footer-background-color);
+    border: none;
+    cursor: pointer;
+    padding: calc(var(--ifm-pre-padding) / 1.5);
+    text-align: start;
+    inline-size: 100%;
 
-.accordion__button:hover {
-  background-color: var(--ifm-background-surface-color);
-}
+    &:hover {
+      background-color: var(--ifm-background-surface-color);
+    }
 
-.accordion__button:before {
-  border-bottom: 2px solid currentColor;
-  border-right: 2px solid currentColor;
-  content: "";
-  display: inline-block;
-  height: 10px;
-  margin-right: 12px;
-  transform: rotate(-45deg);
-  width: 10px;
-}
+    &::before {
+      content: "";
+      display: inline-block;
+      inline-size: 10px;
+      block-size: 10px;
+      margin-inline-end: 12px;
+      border-block-end: 2px solid currentColor;
+      border-inline-end: 2px solid currentColor;
+      transform: rotate(-45deg);
+    }
 
-.accordion__button[aria-expanded="true"]::before,
-.accordion__button[aria-selected="true"]::before {
-  transform: rotate(45deg);
+    &[aria-expanded="true"],
+    &[aria-selected="true"] {
+      &::before {
+        transform: rotate(45deg);
+      }
+    }
+  }
+
+  &__panel {
+    background: var(--ifm-background-color);
+    padding: var(--ifm-pre-padding);
+  }
 }
 
 [hidden] {
   display: none;
-}
-
-.accordion__panel {
-  background: var(--ifm-background-color);
-  padding: var(--ifm-pre-padding);
 }
