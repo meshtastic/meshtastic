@@ -11,6 +11,9 @@ export default {
   darkMode: ["class", '[data-theme="dark"]'],
   theme: {
     extend: {
+      screens: {
+        sidebar: "1000px",
+      },
       colors: {
         accent: "var(--accent)",
         base: "var(--base)",
