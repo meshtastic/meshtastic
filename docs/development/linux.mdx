@@ -6,7 +6,9 @@ sidebar_position: 2
 description: Building and packaging Meshtastic for Linux.
 ---
 
-import NativeLibraries from "@site/docs/blocks/_native-libraries.mdx";
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+import { Icon } from "@iconify/react";
 
 The device software can also run on a native Linux machine thanks to the [Portduino framework](https://github.com/meshtastic/framework-portduino).
 
@@ -15,13 +17,54 @@ Device firmware from 1.3.42 and on even allows you to simulate the LoRa chip by 
 In this way, you can let multiple instances of the application communicate with each other as if they did via LoRa.
 For instructions on how to use it, see the [interactive simulator](https://github.com/GUVWAF/Meshtasticator/blob/master/INTERACTIVE_SIM.md) that also emulates a wireless environment using simulated positions of the nodes.
 
-<NativeLibraries />
+The following libraries must be installed before building `meshtasticd` or `native-mui`:
+<Tabs groupId="operating-systems" queryString="os">
+  <TabItem value="debian" label={<><Icon icon="mdi:debian" style={{ marginRight: "0.25rem" }} height="1.5rem" /> Debian</>} default>
+  ```shell
+  # Base dependencies
+  sudo apt install libgpiod-dev libyaml-cpp-dev libbluetooth-dev libusb-1.0-0-dev libi2c-dev libuv1-dev libxkbcommon-dev libinput-dev libsqlite3-dev
+  # Optional dependencies for web server support
+  sudo apt install openssl libssl-dev libulfius-dev liborcania-dev
+  # Optional dependencies for sdl support
+  sudo apt install libsdl2-dev
+  ```
+  </TabItem>
 
-## Building
+  <TabItem value="fedora" label={<><Icon icon="mdi:fedora" style={{ marginRight: "0.25rem" }} height="1.5rem" /> Fedora</>}>
+  ```shell
+  # Enable the Meshtastic build tools COPR repository
+  sudo dnf copr enable @meshtastic/build-tools
+  # Base dependencies
+  sudo dnf install gcc-c++ pkgconfig(yaml-cpp) pkgconfig(libgpiod) pkgconfig(bluez) pkgconfig(libusb-1.0) libi2c-devel pkgconfig(libuv)
+  # Optional dependencies for web server support
+  sudo dnf install pkgconfig(openssl) pkgconfig(liborcania) pkgconfig(libyder) pkgconfig(libulfius)
+  # Optional dependencies for sdl support
+  sudo dnf install sdl2-compat-dev
+  ```
+  </TabItem>
+</Tabs>
+
+
+## Building With VS Code
 
 The easiest way of building the native application is using Visual Studio Code with the PlatformIO extension.
 See the [instructions for creating such a building environment](/docs/development/firmware/build).
 
 Then after opening the firmware repository in Visual Studio Code, simply click on the PlatformIO extension in the left bar, select `native` and click on 'Build'.
+This will generate the binary file 'meshtasticd' which you can find in `.pio/build/native/`.
+Once in this directory or when you copied the file to your current directory, launch the application with `./meshtasticd`.
+
+## Building in the Command line
+
+To manually install and build with PIO:
+```shell
+python3 -m venv venv
+source venv/bin/activate
+git clone https://github.com/meshtastic/firmware.git
+cd firmware; git submodule init; git submodule update
+pip install platformio
+pio run -e native;
+```
+
 This will generate the binary file 'meshtasticd' which you can find in `.pio/build/native/`.
 Once in this directory or when you copied the file to your current directory, launch the application with `./meshtasticd`.
