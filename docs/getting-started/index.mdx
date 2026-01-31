@@ -11,46 +11,98 @@ import Link from "@docusaurus/Link";
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 
-## Identify Hardware
+Before you begin, it's important to determine which kind of hardware you're using. Meshtastic works closely with our Partners and Backers who produce officially supported hardware. These devices are tested, documented, and recommended for the best Meshtastic experience. 
 
-:::note
+There is also a wide range of [community supported hardware](/docs/hardware/devices/community-supported/) available; however, these devices are not officially supported by Meshtastic. Please reach out to the community via [Discord](https://msh.to/discord) for assistance.
 
-This guide assumes that you have already purchased the devices you will be using with Meshtastic. If you haven't, you can check out our list of [supported hardware](/docs/hardware/devices/index.mdx)
-to see your options.
-:::
+Below you'll find examples of supported hardware organized by MCU type. Once you've identified your device, we'll walk you through verifying your data cable, flashing the firmware, and connecting and configuring your device.
 
-Before you begin, it's important to determine which kind of hardware you're using. Meshtastic works with devices that have these types of Micro-Controller Units (MCU):
+## ESP32
 
-### ESP32
+The ESP32 chip is equipped with both WiFi and Bluetooth, making it ideal for devices that need web interface access or WiFi-based configuration. ESP32-S3 variants offer improved performance.
 
-The ESP32 chip is older and consumes more power than the nRF52 chip, but is equipped with both WiFi and Bluetooth. Supported ESP32 devices include:
+### Partner Hardware
 
-- LILYGO® TTGO T-Beam (>V1.1 recommended)
-- LILYGO® TTGO Lora (>V2.1 recommended)
-- Nano G1
-- Station G1
-- Heltec V3 and Wireless Stick Lite V3
-- RAK11200 Core module for RAK WisBlock modular boards
+#### Seeed Studio
 
-### nRF52
+- [SenseCAP Indicator](/docs/hardware/devices/seeed-studio/sensecap/indicator/) — 4" touchscreen driven by ESP32-S3 and RP2040 Dual-MCU
 
-The nRF52 chip is much more power efficient than the ESP32 chip and easier to update, but is only equipped with Bluetooth. Supported nRF52 devices include:
+#### RAK Wireless
 
-- RAK4631 Core module for RAK WisBlock modular boards
-- LILYGO® TTGO T-Echo
+- [RAK3312 Core module](/docs/hardware/devices/rak-wireless/wisblock/core-module?rakcore=RAK3312) — ESP32-S3-based WisBlock modular core
 
-### RP2040
+#### Elecrow
 
-The RP2040 is a dual-core ARM chip developed by Raspberry Pi. Supported RP2040 devices include:
+- [ThinkNode M2](/docs/hardware/devices/elecrow/thinknode/?thinknode-series=m2) — Portable ESP32-S3 device built for outdoor use
 
- - Raspberry Pi Pico + Waveshare LoRa Module (Note: **Bluetooth on the Pico W is not yet supported by Meshtastic**)
- - RAK11310 Core module for RAK WisBlock modular boards
+### Backer Hardware
+
+#### LILYGO®
+
+- [T-Deck / T-Deck Plus / T-Deck Pro](/docs/hardware/devices/lilygo/tdeck/) — Standalone devices with screen and keyboard
+
+#### B&Q Consulting 
+
+- [Station G2](/docs/hardware/devices/community-supported/b-and-q-consulting/station-series/) — High power LoRa transceiver for licensed ham operation
+
+### Community Supported
+
+- [Xiao ESP32-S3 Kit](/docs/hardware/devices/community-supported/seeed-studio/wio-series/wio-sx1262s/?wio-sx1262=esp32-s3) — Compact LoRa dev kit
+
+## nRF52
+
+The nRF52 chip is much more power efficient than the ESP32 chip and easier to update via UF2 bootloader, but is only equipped with Bluetooth (no WiFi). Ideal for battery-powered and solar deployments.
+
+### Partner Hardware
+
+#### Seeed Studio
+
+- [Card Tracker T1000-E](/docs/hardware/devices/seeed-studio/sensecap/card-tracker/) — IP65-rated card-sized tracker with GPS
+
+#### RAK Wireless
+
+- [WisMesh Tag](/docs/hardware/devices/rak-wireless/wismesh/tag) — Portable location tracker with IP66 rating
+
+#### Elecrow
+
+- [ThinkNode M3](/docs/hardware/devices/elecrow/thinknode/?thinknode-series=m3) — nRF52840 with LR1110 radio and GPS
+
+### Backer Hardware
+
+#### LILYGO®
+
+- [T-Echo](/docs/hardware/devices/lilygo/techo/) — All-in-one unit with E-Ink screen, GPS, and battery in injection-molded case
+
+#### muzi ᴡᴏʀᴋꜱ
+
+- [R1 Neo](/docs/hardware/devices/muziworks/r1-neo) — Custom-designed nRF52840 device with GPS
+
+### Community Supported
+
+- [CanaryOne](/docs/hardware/devices/community-supported/canary) — Complete solution with battery, screen, case, and antenna
+
+## RP2040
+
+The RP2040 is a dual-core ARM chip developed by Raspberry Pi. Cost-effective option for DIY projects.
+
+### Partner Hardware
+
+#### RAK Wireless
+
+- [RAK11310 Core module](/docs/hardware/devices/rak-wireless/wisblock/core-module?rakcore=RAK11310) — RP2040-based WisBlock modular core with SX1262
+
+### Community Supported
+
+- Raspberry Pi Pico + Waveshare LoRa Module (Note: **Bluetooth on the Pico W is not yet supported by Meshtastic**)
 
 :::info
 
 If your device is not listed above, please review our [supported devices](/docs/hardware/devices/index.mdx) to determine which MCU your device has or contact us in [Discord](https://discord.gg/ktMAKGBnBs) with any questions.
 
 :::
+
+
+## Verify Data Cable
 
 :::danger STOP! Put The Power Cable Down!
 
@@ -60,11 +112,9 @@ Never power on the radio without attaching an antenna as doing so could damage t
 
 Prior to connecting your Meshtastic device to the computer, you should perform the following basic checks.
 
-### Verify Data Cable
-
 Some cables only provide _charging_, verify that your cable is also capable of _transferring data_ before proceeding. To check if your cable can also transfer data, try connecting it to another device (like a phone) and see if you can copy a file to or from it. If the file transfer works, then your cable is also able to transfer data and you can continue.
 
-### Install Serial Drivers
+## Install Serial Drivers
 
 :::caution
 
@@ -96,7 +146,7 @@ If you require serial drivers installed on your computer, please choose one of t
   </div>
 </div>
 
-### Flash Firmware
+## Flash Firmware
 
 After completing the previous steps, you can now flash the Meshtastic firmware onto your device. To proceed, select the appropriate device type for your device.
 
@@ -122,7 +172,7 @@ After completing the previous steps, you can now flash the Meshtastic firmware o
   </div>
 </div>
 
-### Connect and Configure Device
+## Connect and Configure Device
 
 After flashing the Meshtastic firmware onto your device, you can now move on to initial configuration.
 
