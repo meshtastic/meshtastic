@@ -56,7 +56,6 @@ html {
     padding-inline: 10px !important;
   }
 
-  /* Markdown prose styling */
   .markdown {
     @apply prose prose-lg;
 
@@ -88,6 +87,29 @@ html {
 
   [data-theme="dark"] .hideLight {
     @apply block;
+  }
+}
+
+.markdown a.button,
+.markdown a.cta--button {
+  display: inline-block;
+  padding: calc(var(--ifm-button-padding-vertical) * var(--ifm-button-size-multiplier, 1)) calc(var(--ifm-button-padding-horizontal) * var(--ifm-button-size-multiplier, 1));
+  border: 1px solid var(--ifm-color-primary);
+  border-radius: var(--ifm-button-border-radius);
+  background: transparent;
+  color: var(--ifm-color-primary);
+  font-size: calc(0.875rem * var(--ifm-button-size-multiplier, 1));
+  text-decoration: none;
+  text-decoration-line: none;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+
+  &:hover {
+    background: var(--ifm-color-primary);
+    color: #000;
+    text-decoration: none;
+    text-decoration-line: none;
   }
 }
 
