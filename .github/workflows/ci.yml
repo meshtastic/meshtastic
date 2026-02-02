@@ -35,6 +35,9 @@ jobs:
       - name: Check formatting
         run: pnpm run format
         continue-on-error: true
+
+      - name: Lint MDX files
+        run: pnpm run lint:mdx
   build:
     runs-on: ubuntu-latest
     steps:
