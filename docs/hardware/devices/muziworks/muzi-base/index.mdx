@@ -1,0 +1,136 @@
+---
+id: muzi-base
+title: muzi ᴡᴏʀᴋꜱ BASE System
+sidebar_label: BASE System
+sidebar_position: 2
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+The BASE System is muzi ᴡᴏʀᴋꜱ' modular Meshtastic development platform, designed for performance, reliability, and ultimate flexibility. Built from experience developing thousands of devices, the BASE System features custom core modules optimized for efficiency, next-gen base boards with extensive IO, and expandability via the IO board system. Both Base Uno and Base Duo are fully supported by Meshtastic through the Backer Program.
+
+<Tabs
+groupId="muzi-base"
+queryString="base-system"
+defaultValue="base-uno"
+values={[
+{label: 'Base Uno', value: 'base-uno'},
+{label: 'Base Duo', value:'base-duo'}
+]}>
+
+<TabItem value="base-uno">
+
+## Base Uno
+
+The Base Uno is the entry-level board in the BASE System, featuring the Elecrow nRFLR1262 module with the Semtech SX1262 LoRa transceiver. It provides all the core functionality of the BASE System at an affordable price point.
+
+### Specifications
+
+- **MCU**
+  - nRF52840 (Bluetooth 5 LE)
+- **LoRa Transceiver**
+  - Semtech SX1262
+- **QSPI Flash**
+  - 2MB
+- **Frequency Options**
+  - 868 MHz
+  - 915 MHz
+- **Connectors**
+  - USB-C (charging and data)
+  - QWIIC / STEMMA QT (I2C)
+  - 25 header pins (0.1" spacing)
+  - 3-pin Molex PicoBlade (1.25mm) battery connector
+- **Buttons**
+  - User button
+  - Reset button
+- **Dimensions**
+  - 42 x 32mm
+  - Weight: 10g
+
+### Features
+
+- Flexible power options (Solar, USB, or Battery)
+- Advanced battery management with BQ28185 charger IC
+- Li-ion/LiPo and LFP (LiFePO4) battery support
+- Powerpath with VDPM (Voltage and Dynamic Power Management)
+- Voltage and thermal protection
+- 8 GPIO + 2 PWR IO + UART + I2C
+- Standardized M2 mounting holes
+- Open source case design available
+
+### Expandability
+
+Unlock the full potential of your Base Duo with the [Super IO](./super-io) expansion board, adding GPS, display support, and standalone capabilities.
+
+### Resources
+
+- Firmware file: `firmware-muzi-base-X.X.X.xxxxxxx.uf2`
+- [User Guide](https://muzi.works/pages/base-system-user-guide)
+- Purchase Links:
+  - US
+    - [muzi ᴡᴏʀᴋꜱ](https://msh.to/muzi-base-uno)
+
+![muzi ᴡᴏʀᴋꜱ Base Uno](/img/hardware/muzi/base-uno.webp)
+
+</TabItem>
+
+<TabItem value="base-duo">
+
+## Base Duo
+
+The Base Duo is the advanced board in the BASE System, featuring the Elecrow nRFLR1121 module with the Semtech LR1121 LoRa transceiver. It offers 2.4GHz LoRa support for worldwide compatibility and hardware support for increased data rates up to 12 times faster than current Short Turbo presets.
+
+### Specifications
+
+- **MCU**
+  - nRF52840 (Bluetooth 5 LE)
+- **LoRa Transceiver**
+  - Semtech LR1121 (Sub-GHz and 2.4GHz)
+- **QSPI Flash**
+  - 8MB
+- **Frequency Options**
+  - 868 MHz
+  - 915 MHz
+  - 2.4 GHz (worldwide)
+- **Connectors**
+  - USB-C (charging and data)
+  - QWIIC / STEMMA QT (I2C)
+  - 25 header pins (0.1" spacing)
+  - 3-pin Molex PicoBlade (1.25mm) battery connector
+- **Buttons**
+  - User button
+  - Reset button
+- **Dimensions**
+  - 42 x 32mm
+  - Weight: 10g
+
+### Features
+
+- 2.4GHz LoRa support for worldwide compatibility
+- Hardware support for high-speed data rates
+- Flexible power options (Solar, USB, or Battery)
+- Advanced battery management with BQ28185 charger IC
+- Li-ion/LiPo and LFP (LiFePO4) battery support
+- Powerpath with VDPM (Voltage and Dynamic Power Management)
+- Voltage and thermal protection
+- 8 GPIO + 2 PWR IO + UART + I2C
+
+
+### Expandability
+
+Unlock the full potential of your Base Duo with the [Super IO](./super-io) expansion board, adding GPS, display support, and standalone capabilities.
+
+### Resources
+
+- Firmware file: `firmware-muzi-base-X.X.X.xxxxxxx.uf2`
+- [User Guide](https://muzi.works/pages/base-system-user-guide)
+- Purchase Links:
+  - US
+    - [muzi ᴡᴏʀᴋꜱ](https://msh.to/muzi-base-duo)
+
+![muzi ᴡᴏʀᴋꜱ Base Duo](/img/hardware/muzi/base-duo.webp)
+
+</TabItem>
+
+</Tabs>
