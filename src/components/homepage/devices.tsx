@@ -3,7 +3,7 @@ import devicesData from "@/data/devices.json";
 import { shuffle } from "@/lib/utils";
 import Link from "@docusaurus/Link";
 import { ArrowRight, Radio } from "lucide-react";
-import React, { useEffect, useState } from "react";
+import React, { useMemo } from "react";
 
 interface Device {
   name: string;
@@ -17,10 +17,12 @@ const { devices, imageBaseUrl, callToAction } = devicesData;
 
 function DeviceCard({ device }: { device: Device }) {
   const imageUrl = `${imageBaseUrl}${device.image}`;
+  const isExternal = device.url.startsWith("http");
 
   return (
     <Link
       to={device.url}
+      {...(isExternal && { target: "_blank", rel: "noopener noreferrer" })}
       className="group relative flex w-[calc(50%-0.5rem)] flex-col items-center rounded-xl border border-border/50 bg-card/80 p-4 backdrop-blur-sm transition-all hover:border-primary/50 hover:shadow-lg hover:shadow-primary/5 no-underline sm:w-[calc(33.333%-0.67rem)] md:w-[calc(25%-0.75rem)]"
     >
       <div className="relative h-32 w-32 flex items-center justify-center">
@@ -52,11 +54,7 @@ function DeviceCard({ device }: { device: Device }) {
 }
 
 export function Devices() {
-  const [shuffledDevices, setShuffledDevices] = useState(devices as Device[]);
-
-  useEffect(() => {
-    setShuffledDevices(shuffle(devices as Device[]));
-  }, []);
+  const shuffledDevices = useMemo(() => shuffle(devices as Device[]), []);
 
   return (
     <section aria-label="Partner Devices">

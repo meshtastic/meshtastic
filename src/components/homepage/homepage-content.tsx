@@ -123,15 +123,14 @@ export function HomePageContent() {
           aria-modal="true"
           aria-label="Devices"
           className="fixed inset-0 z-[100] flex items-center justify-center p-4 pt-20"
-          onClick={() => setShowDevices(false)}
-          onKeyDown={(e) => e.key === "Escape" && setShowDevices(false)}
         >
-          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
+          <div
+            className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+            aria-hidden="true"
+          />
           <div
             role="document"
             className="relative z-10 max-h-[calc(90vh-4rem)] w-full max-w-5xl overflow-y-auto rounded-2xl border border-border/50 bg-card/95 p-6 pt-12 shadow-2xl backdrop-blur-xl animate-in fade-in zoom-in-95 duration-200"
-            onClick={(e) => e.stopPropagation()}
-            onKeyDown={(e) => e.stopPropagation()}
           >
             <button
               type="button"
