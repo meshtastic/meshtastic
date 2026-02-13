@@ -525,6 +525,7 @@ export function MeshTopology() {
                     <button
                       type="button"
                       onClick={handleSendMessage}
+                      aria-label="Send message"
                       className={`flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full border-0 transition-colors ${
                         inputValue.trim()
                           ? "bg-primary text-white dark:text-gray-900"
