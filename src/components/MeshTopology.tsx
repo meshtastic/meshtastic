@@ -453,7 +453,8 @@ export function MeshTopology() {
 
     // Trigger BT animation
     setBtActive(true);
-    setTimeout(() => setBtActive(false), 1500);
+    const btTimeoutId = window.setTimeout(() => setBtActive(false), 1500);
+    timeoutIdsRef.current.push(btTimeoutId);
 
     // Reset auto-interval and trigger from phone's connected node (node 6 with BT)
     if (intervalRef.current) clearInterval(intervalRef.current);
