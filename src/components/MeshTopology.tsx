@@ -120,11 +120,25 @@ const MeshNode = ({
             className={`absolute top-1/2 -translate-y-1/2 ${iconPosition} z-20`}
           >
             {connection === "bt" && (
-              <Bluetooth className="w-5 h-5 text-[#0082FC]" />
+              <Bluetooth
+                className="w-5 h-5 text-[#0082FC]"
+                aria-label="Bluetooth connection"
+                role="img"
+              />
             )}
-            {connection === "wifi" && <Wifi className="w-5 h-5 text-primary" />}
+            {connection === "wifi" && (
+              <Wifi
+                className="w-5 h-5 text-primary"
+                aria-label="WiFi connection"
+                role="img"
+              />
+            )}
             {connection === "usb" && (
-              <Usb className="w-5 h-5 text-muted-foreground" />
+              <Usb
+                className="w-5 h-5 text-muted-foreground"
+                aria-label="USB connection"
+                role="img"
+              />
             )}
           </div>
         )}
