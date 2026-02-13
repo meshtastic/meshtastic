@@ -708,22 +708,21 @@ export function MeshTopology() {
           {/* Aspect ratio container */}
           <div className="relative pt-[75%]">
             {/* Nodes */}
-            {NODES.map((node) => (
-              <MeshNode
-                key={node.id}
-                node={node}
-                isActive={activeNodes.includes(node.id)}
-                connection={
-                  node.id === 1
-                    ? "wifi"
-                    : node.id === 5
-                      ? "usb"
-                      : node.id === 6
-                        ? "bt"
-                        : undefined
-                }
-              />
-            ))}
+            {NODES.map((node) => {
+              const connectionMap: Record<number, "wifi" | "usb" | "bt"> = {
+                3: "wifi",
+                5: "usb",
+                6: "bt",
+              };
+              return (
+                <MeshNode
+                  key={node.id}
+                  node={node}
+                  isActive={activeNodes.includes(node.id)}
+                  connection={connectionMap[node.id]}
+                />
+              );
+            })}
           </div>
         </div>
       </div>
