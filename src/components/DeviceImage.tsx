@@ -15,10 +15,10 @@ interface DeviceImageProps {
    */
   className?: string;
   /**
-   * Size preset: 'sm' (80px), 'md' (120px), 'lg' (160px), 'xl' (200px)
+   * Size preset: 'xs' (50px), 'sm' (80px), 'md' (120px), 'lg' (160px), 'xl' (200px)
    * @default 'md'
    */
-  size?: "sm" | "md" | "lg" | "xl";
+  size?: "xs" | "sm" | "md" | "lg" | "xl";
   /**
    * Whether to center the image
    * @default false
@@ -31,6 +31,7 @@ interface DeviceImageProps {
 }
 
 const sizeMap = {
+  xs: "50px",
   sm: "80px",
   md: "120px",
   lg: "160px",
