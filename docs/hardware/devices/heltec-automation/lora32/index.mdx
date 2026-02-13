@@ -7,6 +7,7 @@ sidebar_position: 1
 
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
+import { DeviceImage } from "/src/components/DeviceImage";
 
 <Tabs
 groupId="heltec"
@@ -25,6 +26,8 @@ values={[
 <TabItem value="v4">
 
 ## V4
+
+<DeviceImage device="heltec_v4.svg" alt="Heltec LoRa32 V4" size="lg" center />
 
 - **MCU:**
   - ESP32-S3R2 (WiFi & Bluetooth)
@@ -68,6 +71,8 @@ values={[
 <TabItem value="v3">
 
 ## V3/V3.1
+
+<DeviceImage device="heltec-v3.svg" alt="Heltec LoRa32 V3" size="lg" center />
 
 ::::info
 This device may have issues charging a connected battery if utilizing a USB-C to USB-C cable. It's recommended to use a USB-A to USB-C cable.
