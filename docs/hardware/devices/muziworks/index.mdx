@@ -6,6 +6,7 @@ hide_title: true
 ---
 
 import { Dark, Light } from "/src/components/ColorMode";
+import { DeviceSection } from "/src/components/DeviceImage";
 
 <div style={{ textAlign: "center", margin: "2rem 0" }}>
   <a href="https://muzi.works" target="_blank" rel="noopener noreferrer">
@@ -36,11 +37,17 @@ muzi ᴡᴏʀᴋꜱ also curates compatible hardware and accessories from a vari
 
 ## Supported Devices
 
+<DeviceSection device="muzi_r1_neo.svg" />
+
 ### R1 Neo
 
 | Name               | MCU      | Radio  | WiFi | BT  | GPS |
 | :----------------- | :------- | :----- | :--: | :-: | :-: |
 | [R1 Neo](./r1-neo) | nRF52840 | SX1262 |  NO  | 5.0 | YES |
+
+<div style={{ clear: "both" }} />
+
+<DeviceSection device="muzi_base.svg" />
 
 ### BASE System
 
@@ -50,3 +57,5 @@ muzi ᴡᴏʀᴋꜱ also curates compatible hardware and accessories from a vari
 | [Base Duo](./muzi-base?base-system=base-duo)      | nRF52840 | LR1121 |  NO  | 5.0 | Optional\* |
 
 \* GPS available via [Super IO](./muzi-base/super-io) expansion board
+
+<div style={{ clear: "both" }} />
