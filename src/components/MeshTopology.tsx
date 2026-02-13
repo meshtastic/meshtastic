@@ -170,10 +170,15 @@ export function MeshTopology() {
   );
   const [inputValue, setInputValue] = useState("");
   const [messages, setMessages] = useState<Message[]>([]);
+  const [terminalMessages, setTerminalMessages] = useState<Message[]>([]);
   const [btActive, setBtActive] = useState(false);
   const [btIncoming, setBtIncoming] = useState(false);
+  const [usbIncoming, setUsbIncoming] = useState(false);
   const cannedIndexRef = useRef(0);
   const pendingIncomingMsgRef = useRef<{ text: string; nodeId: number } | null>(
+    null,
+  );
+  const pendingUsbMsgRef = useRef<{ text: string; nodeId: number } | null>(
     null,
   );
   const [currentTime, setCurrentTime] = useState(() => {
@@ -202,182 +207,225 @@ export function MeshTopology() {
     return () => clearInterval(clockInterval);
   }, []);
 
-  const startMessage = useCallback((fromNodeId?: number) => {
-    // Clear previous timeouts
-    timeoutIdsRef.current.forEach((id) => clearTimeout(id));
-    timeoutIdsRef.current = [];
+  const startMessage = useCallback(
+    (fromNodeId?: number, messageText?: string) => {
+      // Clear previous timeouts
+      timeoutIdsRef.current.forEach((id) => clearTimeout(id));
+      timeoutIdsRef.current = [];
 
-    // Use provided node or pick random client
-    let senderId: number;
-    const isFromPhone = fromNodeId === 6;
-    if (fromNodeId !== undefined) {
-      senderId = fromNodeId;
-    } else {
-      // Pick a random client that isn't node 6 (the phone-connected one)
-      const clientNodes = NODES.filter(
-        (n) => n.label === "Client" && n.id !== 6,
-      ).map((n) => n.id);
-      const senderIdx = Math.floor(Math.random() * clientNodes.length);
-      senderId = clientNodes[senderIdx];
+      // Use provided node or pick random client
+      let senderId: number;
+      const isFromPhone = fromNodeId === 6;
 
-      // Store pending message - will be delivered when flood reaches node 6
-      const incomingMsg =
-        CANNED_MESSAGES[cannedIndexRef.current % CANNED_MESSAGES.length];
-      cannedIndexRef.current++;
-      pendingIncomingMsgRef.current = { text: incomingMsg, nodeId: senderId };
-    }
+      if (fromNodeId !== undefined) {
+        senderId = fromNodeId;
+        // Store for USB delivery (phone message going to terminal)
+        pendingUsbMsgRef.current = {
+          text: messageText || "Hello mesh!",
+          nodeId: senderId,
+        };
+      } else {
+        // Pick a random client that isn't node 6 (the phone-connected one)
+        const clientNodes = NODES.filter(
+          (n) => n.label === "Client" && n.id !== 6,
+        ).map((n) => n.id);
+        const senderIdx = Math.floor(Math.random() * clientNodes.length);
+        senderId = clientNodes[senderIdx];
 
-    // Helper to trigger BT incoming animation when node 6 receives the message
-    const triggerBtIncoming = (delay: number) => {
-      if (isFromPhone || !pendingIncomingMsgRef.current) return;
-      const msg = pendingIncomingMsgRef.current;
-      pendingIncomingMsgRef.current = null;
-
-      const btDelay = setTimeout(() => {
-        setBtIncoming(true);
-        // Show message after BT animation completes
-        const msgDelay = setTimeout(() => {
-          setMessages((prev) => [
-            ...prev.slice(-4),
-            { text: msg.text, from: "mesh", nodeId: msg.nodeId },
-          ]);
-          setBtIncoming(false);
-        }, 800);
-        timeoutIdsRef.current.push(msgDelay);
-      }, delay);
-      timeoutIdsRef.current.push(btDelay);
-    };
-
-    // Track nodes that have "heard" the message to avoid duplicate broadcasts
-    const heardMessage = new Set<number>([senderId]);
-
-    // Highlight sender
-    setActiveNodes([senderId]);
-
-    // Step 1: Sender broadcasts to ALL its neighbors (true mesh flood)
-    let wave1Receivers: number[] = [];
-    const tid1 = setTimeout(() => {
-      const senderNeighbors = ADJACENCY.get(senderId) || [];
-      const wave1Connections = new Map<number, number>();
-
-      senderNeighbors.forEach((neighbor) => {
-        const connIdx = getConnectionIndex(senderId, neighbor);
-        if (connIdx !== -1) {
-          wave1Connections.set(connIdx, senderId);
-          wave1Receivers.push(neighbor);
-          heardMessage.add(neighbor);
-        }
-      });
-
-      setActiveConnections(wave1Connections);
-      setActiveNodes([senderId, ...wave1Receivers]);
-      setActivatedConnections((prev) => {
-        const updated = new Set(prev);
-        wave1Connections.forEach((_, idx) => updated.add(idx));
-        return updated;
-      });
-
-      // Check if node 6 received in this wave
-      if (wave1Receivers.includes(6)) {
-        triggerBtIncoming(1000);
+        // Store pending message - will be delivered when flood reaches node 6
+        const incomingMsg =
+          CANNED_MESSAGES[cannedIndexRef.current % CANNED_MESSAGES.length];
+        cannedIndexRef.current++;
+        pendingIncomingMsgRef.current = { text: incomingMsg, nodeId: senderId };
+        // Also store for USB delivery
+        pendingUsbMsgRef.current = { text: incomingMsg, nodeId: senderId };
       }
-    }, 500);
-    timeoutIdsRef.current.push(tid1);
 
-    // Step 2: Wave 1 receivers rebroadcast to their neighbors
-    let wave2Receivers: number[] = [];
-    let wave2Senders: number[] = [];
-    const tid2 = setTimeout(() => {
-      const wave2Connections = new Map<number, number>();
+      // Helper to trigger BT incoming animation when node 6 receives the message
+      const triggerBtIncoming = (delay: number) => {
+        if (isFromPhone || !pendingIncomingMsgRef.current) return;
+        const msg = pendingIncomingMsgRef.current;
+        pendingIncomingMsgRef.current = null;
 
-      // Each receiver from wave 1 rebroadcasts
-      wave1Receivers.forEach((relayNode) => {
-        const neighbors = ADJACENCY.get(relayNode) || [];
-        neighbors.forEach((neighbor) => {
-          if (!heardMessage.has(neighbor)) {
-            const connIdx = getConnectionIndex(relayNode, neighbor);
-            if (connIdx !== -1 && !wave2Connections.has(connIdx)) {
-              wave2Connections.set(connIdx, relayNode);
-              wave2Receivers.push(neighbor);
-              heardMessage.add(neighbor);
-              if (!wave2Senders.includes(relayNode)) {
-                wave2Senders.push(relayNode);
-              }
-            }
+        const btDelay = setTimeout(() => {
+          setBtIncoming(true);
+          // Show message after BT animation completes
+          const msgDelay = setTimeout(() => {
+            setMessages((prev) => [
+              ...prev.slice(-4),
+              { text: msg.text, from: "mesh", nodeId: msg.nodeId },
+            ]);
+            setBtIncoming(false);
+          }, 800);
+          timeoutIdsRef.current.push(msgDelay);
+        }, delay);
+        timeoutIdsRef.current.push(btDelay);
+      };
+
+      // Helper to trigger USB incoming animation when node 5 receives the message
+      const triggerUsbIncoming = (delay: number) => {
+        if (!pendingUsbMsgRef.current) return;
+        const msg = pendingUsbMsgRef.current;
+        pendingUsbMsgRef.current = null;
+
+        const usbDelay = setTimeout(() => {
+          setUsbIncoming(true);
+          const hideDelay = setTimeout(() => {
+            setTerminalMessages((prev) => [
+              ...prev.slice(-5),
+              { text: msg.text, from: "mesh", nodeId: msg.nodeId },
+            ]);
+            setUsbIncoming(false);
+          }, 800);
+          timeoutIdsRef.current.push(hideDelay);
+        }, delay);
+        timeoutIdsRef.current.push(usbDelay);
+      };
+
+      // Track nodes that have "heard" the message to avoid duplicate broadcasts
+      const heardMessage = new Set<number>([senderId]);
+
+      // Highlight sender
+      setActiveNodes([senderId]);
+
+      // Step 1: Sender broadcasts to ALL its neighbors (true mesh flood)
+      let wave1Receivers: number[] = [];
+      const tid1 = setTimeout(() => {
+        const senderNeighbors = ADJACENCY.get(senderId) || [];
+        const wave1Connections = new Map<number, number>();
+
+        senderNeighbors.forEach((neighbor) => {
+          const connIdx = getConnectionIndex(senderId, neighbor);
+          if (connIdx !== -1) {
+            wave1Connections.set(connIdx, senderId);
+            wave1Receivers.push(neighbor);
+            heardMessage.add(neighbor);
           }
         });
-      });
 
-      if (wave2Connections.size > 0) {
-        setActiveConnections(wave2Connections);
-        setActiveNodes([...wave2Senders, ...wave2Receivers]);
+        setActiveConnections(wave1Connections);
+        setActiveNodes([senderId, ...wave1Receivers]);
         setActivatedConnections((prev) => {
           const updated = new Set(prev);
-          wave2Connections.forEach((_, idx) => updated.add(idx));
+          wave1Connections.forEach((_, idx) => updated.add(idx));
           return updated;
         });
 
         // Check if node 6 received in this wave
-        if (wave2Receivers.includes(6)) {
+        if (wave1Receivers.includes(6)) {
           triggerBtIncoming(1000);
         }
-      } else {
-        setActiveConnections(new Map());
-        setActiveNodes([]);
-      }
-    }, 2000);
-    timeoutIdsRef.current.push(tid2);
+        // Check if node 5 received in this wave
+        if (wave1Receivers.includes(5)) {
+          triggerUsbIncoming(1000);
+        }
+      }, 500);
+      timeoutIdsRef.current.push(tid1);
 
-    // Step 3: Wave 2 receivers rebroadcast (if any nodes left)
-    const tid3 = setTimeout(() => {
-      const wave3Connections = new Map<number, number>();
-      const wave3Receivers: number[] = [];
-      const wave3Senders: number[] = [];
+      // Step 2: Wave 1 receivers rebroadcast to their neighbors
+      let wave2Receivers: number[] = [];
+      let wave2Senders: number[] = [];
+      const tid2 = setTimeout(() => {
+        const wave2Connections = new Map<number, number>();
 
-      wave2Receivers.forEach((relayNode) => {
-        const neighbors = ADJACENCY.get(relayNode) || [];
-        neighbors.forEach((neighbor) => {
-          if (!heardMessage.has(neighbor)) {
-            const connIdx = getConnectionIndex(relayNode, neighbor);
-            if (connIdx !== -1 && !wave3Connections.has(connIdx)) {
-              wave3Connections.set(connIdx, relayNode);
-              wave3Receivers.push(neighbor);
-              heardMessage.add(neighbor);
-              if (!wave3Senders.includes(relayNode)) {
-                wave3Senders.push(relayNode);
+        // Each receiver from wave 1 rebroadcasts
+        wave1Receivers.forEach((relayNode) => {
+          const neighbors = ADJACENCY.get(relayNode) || [];
+          neighbors.forEach((neighbor) => {
+            if (!heardMessage.has(neighbor)) {
+              const connIdx = getConnectionIndex(relayNode, neighbor);
+              if (connIdx !== -1 && !wave2Connections.has(connIdx)) {
+                wave2Connections.set(connIdx, relayNode);
+                wave2Receivers.push(neighbor);
+                heardMessage.add(neighbor);
+                if (!wave2Senders.includes(relayNode)) {
+                  wave2Senders.push(relayNode);
+                }
               }
             }
+          });
+        });
+
+        if (wave2Connections.size > 0) {
+          setActiveConnections(wave2Connections);
+          setActiveNodes([...wave2Senders, ...wave2Receivers]);
+          setActivatedConnections((prev) => {
+            const updated = new Set(prev);
+            wave2Connections.forEach((_, idx) => updated.add(idx));
+            return updated;
+          });
+
+          // Check if node 6 received in this wave
+          if (wave2Receivers.includes(6)) {
+            triggerBtIncoming(1000);
           }
-        });
-      });
-
-      if (wave3Connections.size > 0) {
-        setActiveConnections(wave3Connections);
-        setActiveNodes([...wave3Senders, ...wave3Receivers]);
-        setActivatedConnections((prev) => {
-          const updated = new Set(prev);
-          wave3Connections.forEach((_, idx) => updated.add(idx));
-          return updated;
-        });
-
-        // Check if node 6 received in this wave
-        if (wave3Receivers.includes(6)) {
-          triggerBtIncoming(1000);
+          // Check if node 5 received in this wave
+          if (wave2Receivers.includes(5)) {
+            triggerUsbIncoming(1000);
+          }
+        } else {
+          setActiveConnections(new Map());
+          setActiveNodes([]);
         }
-      } else {
+      }, 2000);
+      timeoutIdsRef.current.push(tid2);
+
+      // Step 3: Wave 2 receivers rebroadcast (if any nodes left)
+      const tid3 = setTimeout(() => {
+        const wave3Connections = new Map<number, number>();
+        const wave3Receivers: number[] = [];
+        const wave3Senders: number[] = [];
+
+        wave2Receivers.forEach((relayNode) => {
+          const neighbors = ADJACENCY.get(relayNode) || [];
+          neighbors.forEach((neighbor) => {
+            if (!heardMessage.has(neighbor)) {
+              const connIdx = getConnectionIndex(relayNode, neighbor);
+              if (connIdx !== -1 && !wave3Connections.has(connIdx)) {
+                wave3Connections.set(connIdx, relayNode);
+                wave3Receivers.push(neighbor);
+                heardMessage.add(neighbor);
+                if (!wave3Senders.includes(relayNode)) {
+                  wave3Senders.push(relayNode);
+                }
+              }
+            }
+          });
+        });
+
+        if (wave3Connections.size > 0) {
+          setActiveConnections(wave3Connections);
+          setActiveNodes([...wave3Senders, ...wave3Receivers]);
+          setActivatedConnections((prev) => {
+            const updated = new Set(prev);
+            wave3Connections.forEach((_, idx) => updated.add(idx));
+            return updated;
+          });
+
+          // Check if node 6 received in this wave
+          if (wave3Receivers.includes(6)) {
+            triggerBtIncoming(1000);
+          }
+          // Check if node 5 received in this wave
+          if (wave3Receivers.includes(5)) {
+            triggerUsbIncoming(1000);
+          }
+        } else {
+          setActiveConnections(new Map());
+          setActiveNodes([]);
+        }
+      }, 3500);
+      timeoutIdsRef.current.push(tid3);
+
+      // Step 4: Clear active state
+      const tid4 = setTimeout(() => {
         setActiveConnections(new Map());
         setActiveNodes([]);
-      }
-    }, 3500);
-    timeoutIdsRef.current.push(tid3);
-
-    // Step 4: Clear active state
-    const tid4 = setTimeout(() => {
-      setActiveConnections(new Map());
-      setActiveNodes([]);
-    }, 5000);
-    timeoutIdsRef.current.push(tid4);
-  }, []);
+      }, 5000);
+      timeoutIdsRef.current.push(tid4);
+    },
+    [],
+  );
 
   // Auto-run animation periodically
   useEffect(() => {
@@ -397,11 +445,10 @@ export function MeshTopology() {
   const handleSendMessage = () => {
     if (!inputValue.trim()) return;
 
+    const msgToSend = inputValue;
+
     // Add message to sent list
-    setMessages((prev) => [
-      ...prev.slice(-4),
-      { text: inputValue, from: "me" },
-    ]);
+    setMessages((prev) => [...prev.slice(-4), { text: msgToSend, from: "me" }]);
     setInputValue("");
 
     // Trigger BT animation
@@ -410,7 +457,7 @@ export function MeshTopology() {
 
     // Reset auto-interval and trigger from phone's connected node (node 6 with BT)
     if (intervalRef.current) clearInterval(intervalRef.current);
-    startMessage(6); // Node 6 has BT connection to phone
+    startMessage(6, msgToSend); // Node 6 has BT connection to phone
     intervalRef.current = setInterval(() => startMessage(), 8000);
   };
 
@@ -718,6 +765,50 @@ export function MeshTopology() {
                 />
               </g>
             )}
+
+            {/* USB connection line - computer to node 5 */}
+            {usbIncoming && (
+              <g>
+                <defs>
+                  <filter
+                    id="usb-line-glow-in"
+                    x="-50%"
+                    y="-50%"
+                    width="200%"
+                    height="200%"
+                  >
+                    <feGaussianBlur stdDeviation="1" result="blur" />
+                    <feMerge>
+                      <feMergeNode in="blur" />
+                      <feMergeNode in="SourceGraphic" />
+                    </feMerge>
+                  </filter>
+                </defs>
+                <line
+                  x1="100"
+                  y1="65"
+                  x2={NODES[5].x + 3}
+                  y2={NODES[5].y}
+                  stroke="#888888"
+                  strokeWidth="0.5"
+                  filter="url(#usb-line-glow-in)"
+                  strokeDasharray="2 1"
+                  style={{
+                    animation: "bt-pulse 0.5s ease-out forwards",
+                  }}
+                />
+                {/* Traveling dot - node to computer */}
+                <circle
+                  r="1.5"
+                  fill="#888888"
+                  filter="url(#usb-line-glow-in)"
+                  style={{
+                    offsetPath: `path('M ${NODES[5].x + 3} ${NODES[5].y} L 100 65')`,
+                    animation: "ping-travel 0.8s ease-out forwards",
+                  }}
+                />
+              </g>
+            )}
           </svg>
 
           {/* Aspect ratio container */}
@@ -738,6 +829,51 @@ export function MeshTopology() {
                 />
               );
             })}
+          </div>
+        </div>
+
+        {/* Mini Computer Mockup */}
+        <div className="hidden xl:block flex-shrink-0 w-48">
+          <div className="rounded-lg bg-gradient-to-b from-stone-400 to-stone-500 dark:from-gray-700 dark:to-gray-800 p-1.5 shadow-xl ring-1 ring-stone-500 dark:ring-gray-600/50">
+            {/* Screen */}
+            <div className="rounded bg-stone-900 dark:bg-gray-950 p-1">
+              <div className="rounded-sm bg-stone-950 dark:bg-black overflow-hidden">
+                {/* Terminal header */}
+                <div className="flex items-center gap-1 bg-stone-800 dark:bg-gray-900 px-2 py-0.5">
+                  <div className="flex gap-1">
+                    <div className="w-1.5 h-1.5 rounded-full bg-red-500/80" />
+                    <div className="w-1.5 h-1.5 rounded-full bg-yellow-500/80" />
+                    <div className="w-1.5 h-1.5 rounded-full bg-green-500/80" />
+                  </div>
+                  <span className="flex-1 text-center font-mono text-[6px] text-stone-400">
+                    meshtastic-cli
+                  </span>
+                </div>
+
+                {/* Terminal content */}
+                <div className="p-1.5 h-20 overflow-hidden font-mono text-[6px] leading-relaxed flex flex-col justify-end">
+                  {terminalMessages.length === 0 ? (
+                    <>
+                      <p className="text-green-400">$ meshtastic --listen</p>
+                      <p className="text-stone-500">
+                        Listening for messages...
+                      </p>
+                    </>
+                  ) : (
+                    terminalMessages.slice(-6).map((msg) => (
+                      <p
+                        key={`cli-${msg.from}-${msg.nodeId ?? "me"}-${msg.text.slice(0, 8)}`}
+                        className="text-cyan-400"
+                      >
+                        [Node {msg.nodeId}]: {msg.text}
+                      </p>
+                    ))
+                  )}
+                </div>
+              </div>
+            </div>
+            {/* Keyboard/base */}
+            <div className="mt-1 h-2 rounded-sm bg-gradient-to-b from-stone-300 to-stone-400 dark:from-gray-600 dark:to-gray-700" />
           </div>
         </div>
       </div>
