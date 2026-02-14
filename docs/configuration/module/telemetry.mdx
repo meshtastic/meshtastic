@@ -55,6 +55,9 @@ Supported sensors connected to the I2C bus of the device will be automatically d
 |   LTR390UV   |          0x53          |                              UV Light intensity                               |
 |   RCWL9620   |          0x57          |                          Ultrasonic Distance Sensor                           |
 |   PMSA003I   |          0x12          |            Concentration units by size and particle counts by size            |
+|    SEN5X     |          0x69          | Particulate Matter by size, optional temperature, humidity, NOx and VOC index |
+|    SCD4X     |          0x62          |                         CO2, temperature and humidity                         |
+|    SFA30     |          0x5D          |                     Formaldehyde, temperature and humidity                    |
 | DFROBOT_LARK |          0x42          |    Temperature, barometric pressure, humidity, wind direction, wind speed     |
 | DFROBOT_RAIN |          0x1d          |                            Tip Bucket Rain counter                            |
 |   RadSens    |          0x66          |                                Radio Dosimeter                                |
@@ -102,6 +105,12 @@ Default is `false`.
 ### Air Quality Enabled
 
 This option is used to enable/disable the sending of air quality metrics from an attached supported sensor over the mesh network.
+
+Default is `false`.
+
+### Air Quality Screen Enabled
+
+Show the air quality telemetry data on the device display.
 
 Default is `false`.
 
@@ -217,6 +226,7 @@ All telemetry module config options are available in the python CLI. Example com
 |   telemetry.environment_screen_enabled    |   `true`, `false`   |                  `false`                   |
 |   telemetry.environment_update_interval   | `integer` (seconds) | Default `0` is 30 minutes(`1800` seconds). |
 |       telemetry.air_quality_enabled       |   `true`, `false`   |                  `false`                   |
+|  telemetry.air_quality_screen_enabled     |   `true`, `false`   |                  `false`                   |
 |      telemetry.air_quality_interval       | `integer` (seconds) | Default `0` is 30 minutes(`1800` seconds). |
 |    telemetry.power_measurement_enabled    |   `true`, `false`   |                  `false`                   |
 |      telemetry.power_update_interval      | `integer` (seconds) | Default `0` is 30 minutes(`1800` seconds). |
