@@ -23,7 +23,7 @@ Be sure to turn off the module or disable sending when not in use. This will use
 
 :::
 
-The range test module config options are: Enabled, Sender, and Save. Range Test Module config uses an admin message sending a `ModuleConfig.RangeTestConfig` protobuf.
+The range test module config options are: `enabled`, `sender`, `save` and `clear_on_reboot`. Range Test Module config uses an admin message sending a `ModuleConfig.RangeTestConfig` protobuf.
 
 ## Range Test Module Config Values
 
@@ -57,6 +57,10 @@ If enabled, all received messages are saved to the device's flash memory in a fi
 To access this file, first turn on the WiFi on your device and connect to your network. Once you can connect to your device, navigate to `meshtastic.local/rangetest.csv` (or your_device_ip/rangetest.csv) and the file will be downloaded automatically. This file will only be created after receiving initial messages.
 
 To prevent filling up the storage, the device will abort writing if there is less than 50kb of space on the filesystem.
+
+### Remove CSV file
+
+When enabled, any previously created `rangetest.csv` file is removed from the device whenever a reboot is invoked; effectively deleting any past test results.
 
 ## Range Test Module Config Client Availability
 
@@ -106,11 +110,12 @@ Range Test module config options are available in the python CLI. Example comman
 
 :::
 
-|      Setting       |  Acceptable Values  | Default |
-| :----------------: | :-----------------: | :-----: |
-| range_test.enabled |   `true`, `false`   | `false` |
-|  range_test.save   |   `true`, `false`   | `false` |
-| range_test.sender  | `integer` (Seconds) |   `0`   |
+|           Setting           |  Acceptable Values  | Default |
+| :-------------------------: | :-----------------: | :-----: |
+| range_test.enabled          |   `true`, `false`   | `false` |
+| range_test.save             |   `true`, `false`   | `false` |
+| range_test.clear_on_reboot  |   `true`, `false`   | `false` |
+| range_test.sender           | `integer` (Seconds) |   `0`   |
 
 :::tip
 
