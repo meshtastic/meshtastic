@@ -1,0 +1,227 @@
+---
+id: definining-a-variant
+title: Defining a Meshtastic Variant
+sidebar_label: Defining a Variant
+sidebar_position: 7
+---
+Meshtastic-powered supports several different microcontrollers (MCU), which we refer
+to as *arch*, or 'architecture'. The most common are the ESP32 and NRF52-series.
+Architectures are defined in `/arch`.
+
+Manufacturers then use a given architecture to create a *board*. Boards are defined in `/boards`
+and set the most basic information about hardware - CPU, memory, flash information.
+
+It is typical for a manufacturer to use their investment in a board to create several
+different products. We refer to an specific product as a `variant`. In Meshtastic, variants
+are where all of the ancilliary components around a microcontroller are defined. This includes
+sensors, buttons, leds, displays, radios, GPS, keyboards, buzzers, and more. Variants are created
+in `/variants`, and each variant has a `platformio.ini` to integrate it with our build system and
+`variant.h`.
+
+`variant.h` is the file used to define a variant, assigning pins to particular
+meshtastic functions and setting flags to drive which parts of the core code is
+enabled. Meshtastic is highly flexible, and there are hundreds of options to
+select. This guide breaks those options down by module and highlights the most
+efficient path to making your variant reality.
+
+
+## Audio
+Meshtastic supports audio chips that communicate through I2S. Support is experimental and only
+works on the 2.4Ghz band due to low bandwidth on other lora frequencies.
+
+If your device has an I2S audio chip, define:
+
+`HAS_I2S`
+
+and the following pins:
+
+
+|||
+|-|-|
+|`DAC_I2S_BCK`|Pin to use for the I2S Bitclock signal|
+|`DAC_I2S_DOUT`|Pin to use for the I2S Data Out signal|
+|`DAC_I2S_WS`|Pin to use for the I2S Word Select signal|
+
+If your device does not have a I2S audio chip, simply don’t define any audio-related variables.
+
+## Buttons
+TBC
+
+## Display
+TBC
+
+## Filesystem
+TBC
+
+## GPS
+Meshtastic supports GPS chips that communicate through UART.
+Chips are automatically detected if supported, and configured to deliver NMEA messages.
+Baud rates are also automatically determined.
+
+If your device has a GPS, define:
+
+`HAS_GPS`
+
+and the following pins:
+
+|||
+|-|-|
+|`PIN_GPS_EN`|Pin to enable the GPS|
+|`GPS_RX_PIN`|UART Serial RX (bits from CPU)|
+|`GPS_TX_PIN`|UART Serial TX (bits toward CPU)|
+|`PIN_GPS_PPS`|(optional) If your GPS provides a pulse-per-second pin, set it|
+|`PIN_GPS_RESET`|(optional) Reset GPS|
+|`PIN_GPS_STANDBY`|(optional) Put GPS into standby mode|
+
+
+If your device does not have a GPS, simply don’t define any GPS-related variables.
+If your device is tight on memory, you can exclude GPS functionality from the build with
+`MESHTASTIC_EXCLUDE_GPS`. However, consider that your users may add after-market GPS chips. 
+
+If you are adding a chip that is not yet supported, add the relevant model number to
+`GnssModel_t` in `gps/GPS.h` and add the related code to `gps/GPS.cpp` branching in the style of other `GNSS_MODELs`.
+
+There are also several lesser used variables you may need to set depending on your device:
+
+|||
+|-|-|
+|`GPS_BAUDRATE`|If your GPS has a specific baud rate at which it always communicates, or if it is sensitive to commands being sent at the wrong baudrate, set the baudrate. Default: 9600|
+|`GPS_EN_ACTIVE`|Change if your `PIN_GPS_EN` needs to be set low to enable the GPS. Default: High|
+|`GPS_RESET_MODE`|Change if your PIN_GPS_RESET needs to go low to reset. Default: High|
+|`GPS_THREAD_INTERVAL`|How often to check in with the GPS, in milliseconds. Default: 5000|
+|`PIN_GPS_REINIT`|(optional) A pin that must be set low for 100ms before performing a factory settings reset.
+|`PIN_GPS_STANDBY_INVERTED`| (optional) Changes the behaviour of the standby pin, normally active HIGH for awake.|
+
+## External Notification
+Meshtastic supports an optional module to take action (“notify”) on messages,
+ including pulsing a buzzer and triggering a GPIO pin. If your board has a
+buzzer or other devices that need to take action on messages, set these
+optional parameters.
+
+|||
+|-|-|
+|`PIN_BUZZER`|(optional) GPIO pin to enable a buzzer|
+|`EXT_NOTIFY_OUT`|(optional) GPIO pin to raise high on notification|
+|`BUZZER_EN_PIN`|(optional) GPIO pin to manage voltage to buzzer circuit - will be turned off during sleep to save power.|
+
+
+## I2C/Wire
+TBC
+
+## Keyboards and Trackballs
+Meshtastic supports three different kinds of keyboards - I2C, Matrix and Serial, as well as trackballs.
+If your device does not have any of these, you can ignore this section.
+
+I2C-based keyboards, such as the BBQ10 and CardKB are automatically detected. If you are adding
+support for a new keyboard, you should add the relevant code in `src/detect/ScanI2CTwoWire.cpp`.
+
+Otherwise, follow the instructions below for non-I2C devices.
+
+Data from Serial keyboards is read over a serial interface. If your keyboard connects using the serial protocol, define
+`INPUTBROKER_SERIAL_TYPE 1`
+
+
+|||
+|-|-|
+|`KB_CLK`|Serial Clock pin|
+|`KB_DATA`|Serial Data pin|
+|`KB_LOAD`|Serial Load pin|
+
+Data from Matrix keyboards is determined based on changes to GPIO pins. If you use a Matrix-type keyboards, define
+
+`INPUTBROKER_MATRIX_TYPE 1`
+
+and specify 
+
+|||
+|-|-|
+|`KEYS_COLS`|List of pins to monitor for press|
+|`KEYS_ROWS`|List of pins to monitor for press|
+
+
+If your keyboard requires a certain pin to be HIGH in order to be powered, specify that with:
+`KB_POWERON`
+
+
+For trackballs, define:
+`HAS_TRACKBALL`
+
+and specify the following pins:
+
+|||
+|-|-|
+|`TB_DOWN`|Pin for down movement|
+|`TB_LEFT`|Pin for left movement|
+|`TB_PRESS`|Pin for press|
+|`TB_RIGHT`|Pin for right movement|
+|`TB_UP`|Pin for up movement|
+
+## LED
+TBC
+
+## Network
+TBC
+
+## Power Management
+TBC
+
+## Radios
+Meshtastic supports Lora radio chips that communicate through SPI.
+
+The firmware will attempt to detect and setup the appropriate radio based on the
+pins defined in your variant. If you use the same board with different lora radios
+in different markets, you are able to create one variant by defining pinouts for
+both chips at the same time. Meshtastic will determine which chip is actually
+present and configure that.
+
+Meshtastic currently supports the following series: LLCC68, LR11x0, STM32WL,
+SX126X, SX127X, SX128X, RFM9X. Radio support is based on RadioLib, so radios
+supported in that project are generally fairly easy to integrate with Meshtastic. 
+
+First, fill out the appropriate definition for your board’s radio, then
+adjust general settings including the SPI interface used for the lora chip.
+
+### General Settings
+
+|||
+|-|-|
+|**`LORA_SCK`**|SPI Interface for LORA chip, SCK PIN|
+|**`LORA_MISO`**|SPI Interface for LORA chip, MISO PIN|
+|**`LORA_MOSI`**|SPI Interface for LORA chip, MOSI PIN|
+|**`LORA_CS`**|SPI Interface for LORA chip, CS PIN|
+|`LORA_RESET`|(optional) reset pin to manipulate coming in/out of sleep|
+|`LORA_DIO1`|Pin to monitor for wakeup from sleep due to lora packet|
+|`REGULATORY_GAIN_LORA`| If you use a power amp, set to the dBm gain of the power amp. This value will be added to the _MAX_POWER when calculating the maximum power limit for a given jurisdiction.|
+|`LORA_DISABLE_SENDING`|To disable transmission from the radios if needed.|
+
+### LLCC68
+TBC
+
+### LR11x0
+TBC
+
+### STM32WL
+TBC
+
+### SX126X
+TBC
+
+### SX127X
+TBC
+
+### SX128X
+TBC
+
+### RFM9X
+TBC
+
+## Sensors
+
+## Real Time Clock
+TBC
+
+## Device-Specific
+TBC
+
+## Development
+TBC
