@@ -22,7 +22,9 @@
     "lint:mdx": "bash scripts/lint-mdx.sh",
     "lint:mdx:strict": "eslint --no-warn-ignored 'docs/**/*.mdx' 'i18n/**/*.mdx'",
     "format:fix": "oxfmt .",
-    "format": "oxfmt --check ."
+    "format": "oxfmt --check .",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui"
   },
   "dependencies": {
     "@algolia/client-search": "^5.44.0",
@@ -67,6 +69,7 @@
   },
   "devDependencies": {
     "@docusaurus/module-type-aliases": "3.9.2",
+    "@playwright/test": "^1.58.1",
     "@tailwindcss/typography": "^0.5.19",
     "@tsconfig/docusaurus": "^2.0.7",
     "@types/node": "^24.10.1",
