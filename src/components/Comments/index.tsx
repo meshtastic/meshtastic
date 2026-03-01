@@ -1,6 +1,5 @@
 import { useColorMode } from "@docusaurus/theme-common";
 import Giscus from "@giscus/react";
-import React from "react";
 
 export default function Comments(): JSX.Element {
   const { colorMode } = useColorMode();
@@ -22,7 +21,7 @@ export default function Comments(): JSX.Element {
         lang="en"
         loading="lazy"
         crossorigin="anonymous"
-        async
+        async={true}
       />
     </div>
   );

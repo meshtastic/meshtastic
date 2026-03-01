@@ -1,6 +1,6 @@
-// @ts-check
-
 require("dotenv").config();
+
+import path from "node:path";
 import remarkDefList from "remark-deflist";
 
 /** @type {import('@docusaurus/types').Config} */
@@ -13,76 +13,62 @@ const config = {
   trailingSlash: true,
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "warn",
-  favicon: "design/web/favicon.ico",
+  favicon: "img/logo.svg",
   organizationName: "meshtastic",
   projectName: "meshtastic",
   themeConfig: /** @type {import('@docusaurus/preset-classic').ThemeConfig} */ {
+    respectPrefersColorScheme: true,
     docs: {
       sidebar: {
         autoCollapseCategories: true,
       },
     },
     navbar: {
-      hideOnScroll: true,
+      hideOnScroll: false,
+      title: "Meshtastic",
       logo: {
         alt: "Meshtastic Logo",
-        src: "design/logo/svg/Mesh_Logo_Black.svg",
-        srcDark: "design/logo/svg/Mesh_Logo_White.svg",
+        src: "img/logo.svg",
+        srcDark: "img/logo.svg",
       },
       items: [
         {
-          label: "Blog",
-          to: "blog",
+          label: "Docs",
+          to: "/docs/introduction/",
+          position: "left",
         },
         {
-          label: "Docs",
-          to: "docs/introduction",
+          label: "Blog",
+          to: "/blog/",
+          position: "left",
         },
         {
           label: "Downloads",
-          to: "downloads",
+          to: "/downloads/",
+          position: "left",
         },
         {
           label: "Flasher",
           href: "https://flasher.meshtastic.org",
-          target: "_self",
-          className: "navbar__item--flasher",
-        },
-        {
-          label: "About",
-          position: "right",
-          items: [
-            {
-              label: "Introduction",
-              to: "docs/introduction",
-            },
-            {
-              label: "Getting Started",
-              to: "docs/getting-started",
-            },
-            {
-              label: "Contributing",
-              to: "docs/contributing",
-            },
-            {
-              label: "Legal",
-              to: "docs/legal",
-            },
-            {
-              label: "FAQs",
-              to: "docs/faq",
-            },
-          ],
+          position: "left",
         },
         {
           type: "localeDropdown",
           position: "right",
         },
         {
+          type: "search",
+          position: "right",
+        },
+        {
+          label: "Donate",
+          href: "https://opencollective.com/meshtastic",
+          position: "right",
+        },
+        {
+          label: "GitHub",
           href: "https://github.com/meshtastic",
           position: "right",
-          className: "header-github-link",
-          "aria-label": "GitHub repository",
         },
       ],
     },
@@ -104,7 +90,7 @@ const config = {
       options: {
         themeVariables: {
           primaryColor: "#67EA94",
-          primaryTextColor: "var(--tw-prose-headings)",
+          primaryTextColor: "#1a1a1a",
           primaryBorderColor: "#4D4D4D",
           lineColor: "#EAD667",
           secondaryColor: "#EA67BD",
@@ -124,6 +110,20 @@ const config = {
           postcssOptions.plugins.push(require("tailwindcss"));
           postcssOptions.plugins.push(require("autoprefixer"));
           return postcssOptions;
+        },
+      };
+    },
+    () => {
+      return {
+        name: "docusaurus-webpack-alias",
+        configureWebpack() {
+          return {
+            resolve: {
+              alias: {
+                "@": path.resolve(__dirname, "src"),
+              },
+            },
+          };
         },
       };
     },

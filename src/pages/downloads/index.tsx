@@ -1,3 +1,4 @@
+import type { JSX } from "react";
 import { FaAndroid, FaApple } from "react-icons/fa";
 import useSwr from "swr";
 
@@ -6,17 +7,16 @@ import {
   BoltIcon,
   ComputerDesktopIcon,
   CpuChipIcon,
-  DocumentIcon,
   GlobeAltIcon,
 } from "@heroicons/react/24/solid";
 import Layout from "@theme/Layout";
 
-import type { FirmwareReleases } from "../../utils/apiTypes";
-import { fetcher } from "../../utils/swr";
+import type { FirmwareReleases } from "../../utils/apiTypes.ts";
+import { fetcher } from "../../utils/swr.ts";
 import {
   FirmwareCard,
   PlaceholderFirmwareCard,
-} from "./_components/FirmwareCard";
+} from "./_components/FirmwareCard.tsx";
 
 const Firmware = (): JSX.Element => {
   const { data, error } = useSwr<FirmwareReleases>(

@@ -1,4 +1,4 @@
-import type { DeviceFirmwareResource } from "../../../utils/apiTypes";
+import type { DeviceFirmwareResource } from "../../../utils/apiTypes.ts";
 
 export interface releaseCardProps {
   variant: string;
