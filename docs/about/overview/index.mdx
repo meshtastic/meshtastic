@@ -45,7 +45,7 @@ A complete Meshtastic LoRa packet on the air consists of:
 2. **Sync Word**  
    A specific chirp pattern that helps distinguish between different LoRa networks sharing the same frequency band. For Meshtastic, it is set to `0x2B`.
 
-3. **Physical Header**  
+3. **Header**  
    - Payload length  
    - Coding rate  
    - CRC presence flag  
@@ -53,7 +53,7 @@ A complete Meshtastic LoRa packet on the air consists of:
 4. **Payload**  
    The actual user data (for example, a Meshtastic packet). The payload is encoded using Forward Error Correction (FEC) according to the configured coding rate.
 
-5. **Payload CRC (optional)**  
+5. **Payload CRC**  
    A CRC that protects the payload if enabled.
 
 Each of these components is transmitted as a sequence of chirps. The spreading factor determines how long each chirp lasts, and the bandwidth determines how wide the frequency sweep is. Higher spreading factors increase range and robustness but reduce data rate.
