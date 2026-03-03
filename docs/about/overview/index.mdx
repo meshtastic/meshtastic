@@ -26,3 +26,136 @@ Sitting on top of this radio mesh are Channels. A logical mesh is formed by a Ch
 
 Nodes can belong to a maximum of 8 Channels in the radio mesh. A custom Channel can be created for use by a specific group. Only nodes configured with the same Channel name and encryption key will be able to read and display messages on that Channel. However, all nodes in the radio mesh will receive and may retransmit messages (depending on their Role) regardless of the Channel settings for the message.
 
+## The Lora Chirp
+
+<img src="/img/about/lora_chirp.webp" alt="Lora Chirp" />
+
+At the physical layer, LoRa uses a modulation technique called Chirp Spread Spectrum (CSS). A "chirp" is a signal that sweeps in frequency over time, either upward (up-chirp) or downward (down-chirp) across the configured bandwidth.
+
+Each LoRa symbol is encoded as a frequency-shifted chirp. The amount of shift represents the symbol value. The number of possible symbol values is determined by the Spreading Factor (SF). For example:
+
+- SF7 → 2^7 = 128 possible symbols  
+- SF12 → 2^12 = 4096 possible symbols  
+
+A complete Meshtastic LoRa packet on the air consists of:
+
+1. **Preamble**  
+   A series of 16 up-chirps used for synchronization. This allows receiving radios to detect the signal and align timing.
+
+2. **Sync Word**  
+   A specific chirp pattern that helps distinguish between different LoRa networks sharing the same frequency band. For Meshtastic, it is set to `0x2B`.
+
+3. **Physical Header**  
+   - Payload length  
+   - Coding rate  
+   - CRC presence flag  
+
+4. **Payload**  
+   The actual user data (for example, a Meshtastic packet). The payload is encoded using Forward Error Correction (FEC) according to the configured coding rate.
+
+5. **Payload CRC (optional)**  
+   A CRC that protects the payload if enabled.
+
+Each of these components is transmitted as a sequence of chirps. The spreading factor determines how long each chirp lasts, and the bandwidth determines how wide the frequency sweep is. Higher spreading factors increase range and robustness but reduce data rate.
+
+In Meshtastic, the LoRa chirp carries an encrypted protobuf packet inside the payload section, which includes routing metadata such as hop limit, packet ID, and channel information.
+
+
+## The MeshPacket
+
+The MeshPacket is the primary application-layer structure used by Meshtastic to transport data across the radio mesh. It is serialized using Protocol Buffers (protobuf). Only the application payload is encrypted before transmission. The routing fields—such as from, to, packet ID, hop limit, and channel index remain unencrypted so nodes can correctly forward the packet across the mesh.
+
+A MeshPacket contains both routing metadata and the actual message content. At a high level, it includes:
+
+1. **Packet ID**  
+   A unique identifier used to detect and suppress duplicate rebroadcasts.
+
+2. **From (Sender Node ID)**  
+   The numeric ID of the originating node.
+
+3. **To (Destination Node ID)**  
+   The destination node ID. This may be a specific node, or a broadcast address (4294967295).
+
+4. **Hop Limit**  
+   The maximum number of times the packet may be rebroadcast. Each node that retransmits the packet decrements this value. When it reaches zero, the packet is no longer forwarded.
+
+5. **Channel**  
+   Indicates which configured Channel the packet belongs to. This determines which encryption key is used.  This channel number is created by using a hash of the channel name and it's PSK and does not correlate with the client channel idexes.
+
+6. **Payload (Encrypted)**  
+   The actual application data. This may be:
+   - A text message
+   - Position information (GPS)
+   - Telemetry data (battery, voltage, etc.)
+   - Node info updates
+   - Administrative messages
+
+Before transmission, the MeshPacket payload is encrypted using the Channel’s shared key. Only nodes with the same Channel name and encryption key can decrypt and interpret the contents.
+
+On reception, a node:
+- Verifies it has not seen the Packet ID before
+- Decrypts the payload (if it has the correct Channel key)
+- Delivers the decoded message to the connected client app
+- Rebroadcasts the packet if the hop limit allows
+
+### Example MeshPacket Fields
+
+Below is a real-world example of a MeshPacket as seen by a client:
+
+```
+from: 2125894122
+to: 4294967295
+channel: 8
+id: 3034765096
+hop_limit: 2
+hop_start: 3
+priority: DEFAULT
+relay_node: 121
+rx_time: 1772514955
+rx_snr: -1.5
+rx_rssi: -105
+decoded {
+   portnum: POSITION_APP
+   payload: "latitude_i: 377700280 longitude_i: -1224469570 altitude: 0 time: 1772514893 location_source: LOC_MANUAL precision_bits: 15"
+   bitfield: 1
+}
+```
+
+In addition to the core routing fields described above, this example shows several important metadata fields:
+
+- **hop_start**  
+  The original hop limit when the packet was first transmitted. This allows clients to determine how many hops the packet has already traveled.
+
+- **priority**  
+  Indicates transmission priority. Higher-priority packets may be transmitted sooner than lower-priority ones.
+
+- **relay_node**  
+  The last byte of the node ID that most recently rebroadcast (relayed) the packet before it was received.
+
+- **rx_time**  
+  The local timestamp (epoch time) when this node received the packet.
+
+- **rx_snr**  
+  Signal-to-noise ratio measured at reception. Higher values indicate a cleaner signal.
+
+- **rx_rssi**  
+  Received Signal Strength Indicator in dBm.
+
+- **decoded.portnum**  
+  Identifies the application port (for example, `POSITION_APP`, `TEXT_MESSAGE_APP`, etc.). This determines how the payload should be interpreted.
+
+- **decoded.bitfield**  
+  A bitmask of flags defined in the Meshtastic firmware. Each bit represents a boolean attribute about the packet.
+
+  - **Bit 0 (`OK_TO_MQTT`)** – This packet is allowed to be forwarded to MQTT.
+  - **Bit 1 (`WANT_RESPONSE`)** – The sender is requesting a response.
+
+  The numeric value represents one or more of these flags combined using bitwise OR. For example:
+
+  - `bitfield = 1` → OK_TO_MQTT
+  - `bitfield = 2` → WANT_RESPONSE
+  - `bitfield = 3` → Both flags set
+
+Together, these fields show both how the packet moved through the network and what the radio conditions were when it was received. This makes it easier to understand range, reliability, and how messages are flowing across the mesh.
+
+Meshtastic works without any central server. Each node simply receives packets, checks them, and rebroadcasts them when appropriate, allowing the network to extend itself automatically.
