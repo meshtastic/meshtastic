@@ -54,7 +54,7 @@ A complete Meshtastic LoRa packet on the air consists of:
    The actual user data (for example, a Meshtastic packet). The payload is encoded using Forward Error Correction (FEC) according to the configured coding rate.
 
 5. **Payload CRC**  
-   A CRC that protects the payload if enabled.
+   A Cyclic Redundancy Check to detect transmission errors.
 
 Each of these components is transmitted as a sequence of chirps. The spreading factor determines how long each chirp lasts, and the bandwidth determines how wide the frequency sweep is. Higher spreading factors increase range and robustness but reduce data rate.
 
