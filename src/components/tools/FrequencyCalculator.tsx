@@ -319,6 +319,8 @@ const getChannelName = (
       return "LongSlow";
     case Protobuf.Config.Config_LoRaConfig_ModemPreset.LONG_FAST:
       return "LongFast";
+    case Protobuf.Config.Config_LoRaConfig_ModemPreset.LONG_TURBO:
+      return "LongTurbo";
     case Protobuf.Config.Config_LoRaConfig_ModemPreset.LONG_MODERATE:
       return "LongMod";
     default:
