@@ -39,6 +39,12 @@ to:
 /etc/meshtasticd/config.d/
 ```
 
+To edit your default configuration file, simply open it with your text editor of choice, make desired changes and save.  Then restart the daemon.
+
+```shell
+sudo nano /etc/meshtasticd/config.yaml
+sudo systemctl restart meshtasicd
+```
 
 ## meshtasticd CLI options
 
@@ -52,10 +58,10 @@ The daemon accepts several command‑line arguments that control how it starts a
 
 ### Example CLI usage
 
-Run `meshtasticd` locally with a configuration file and a directory for the virtual filesystem on port 4404:
+Run `meshtasticd` (as user meshtasticd) locally with a configuration file and a directory for the virtual filesystem on port 4404:
 
 ```shell
-meshtasticd -c config.yaml -d ./data -p 4404
+sudo -u meshtasticd meshtasticd -c config.yaml -d ./data -p 4404
 ```
 
 This example:
@@ -100,6 +106,12 @@ systemctl status meshtasticd
 sudo systemctl restart meshtasticd
 ```
 
+### Stop or start the service
+```shell
+sudo systemctl stop meshtasticd
+sudo systemctl start meshtasticd
+```
+
 ### Running multiple meshtasticd instances
 
 You can run multiple `meshtasticd` instances using the systemd template service. This is useful when attaching bots to different client APIs or when running multiple radios on a single Linux machine. If UDP networking is enabled (`network.enabled_protocols 1`), the instances can communicate with each other as if they were connected via RF.
@@ -118,7 +130,7 @@ You can run multiple `meshtasticd` instances using the systemd template service.
 
 Add `APIPort` under the `General` section and specify a non‑default port (the default is `4403`):
 
-```
+```text
 General:
   APIPort: 4404
   MaxNodes: 200
@@ -127,6 +139,13 @@ General:
   AvailableDirectory: /etc/meshtasticd/available.d/
 #  MACAddress: AA:BB:CC:DD:EE:FF
 #  MACAddressSource: eth0
+```
+
+You may wish to run meshtasticd in simulation mode if you do not have a physical radio attached:
+
+```text
+Lora:
+  Module: sim
 ```
 
 2. Start the corresponding systemd instance:
