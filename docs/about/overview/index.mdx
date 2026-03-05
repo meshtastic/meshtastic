@@ -26,13 +26,13 @@ Sitting on top of this radio mesh are Channels. A logical mesh is formed by a Ch
 
 Nodes can belong to a maximum of 8 Channels in the radio mesh. A custom Channel can be created for use by a specific group. Only nodes configured with the same Channel name and encryption key will be able to read and display messages on that Channel. However, all nodes in the radio mesh will receive and may retransmit messages (depending on their Role) regardless of the Channel settings for the message.
 
-## The Lora Chirp
+## Meshtastic Lora Chirp
 
 <img src="/img/about/lora_chirp.webp" alt="Lora Chirp" />
 
 At the physical layer, LoRa uses a modulation technique called Chirp Spread Spectrum (CSS). A "chirp" is a signal that sweeps in frequency over time, either upward (up-chirp) or downward (down-chirp) across the configured bandwidth.
 
-Each LoRa symbol is encoded as a frequency-shifted chirp. The amount of shift represents the symbol value. The number of possible symbol values is determined by the Spreading Factor (SF). For example:
+Each LoRa symbol is encoded as a frequency-shifted chirp. The amount of shift represents the symbol value. The number of possible symbol values is determined by the Spreading Factor. For example:
 
 - SF7 → 2^7 = 128 possible symbols  
 - SF12 → 2^12 = 4096 possible symbols  
@@ -45,62 +45,108 @@ A complete Meshtastic LoRa packet on the air consists of:
 2. **Sync Word**  
    A specific chirp pattern that helps distinguish between different LoRa networks sharing the same frequency band. For Meshtastic, it is set to `0x2B`.
 
-3. **Header**  
+3. **LoRa Header**  
    - Payload length  
    - Coding rate  
-   - CRC presence flag  
+   - CRC presence flag
+   - Header CRC
 
-4. **Payload**  
-   The actual user data (for example, a Meshtastic packet). The payload is encoded using Forward Error Correction (FEC) according to the configured coding rate.
+4. **LoRa Payload**  
+   The LoRa payload contains a Meshtastic packet. This packet includes a Meshtastic routing header and an encrypted application payload. The payload is encoded using Forward Error Correction (FEC) according to the configured coding rate.
 
 5. **Payload CRC**  
-   A Cyclic Redundancy Check to detect transmission errors.
+   A Cyclic Redundancy Check used to detect transmission errors.
 
-Each of these components is transmitted as a sequence of chirps. The spreading factor determines how long each chirp lasts, and the bandwidth determines how wide the frequency sweep is. Higher spreading factors increase range and robustness but reduce data rate.
+All of these parts are transmitted as a continuous sequence of chirps. The spreading factor controls how long each chirp lasts, while the bandwidth controls how wide the frequency sweep is. Higher spreading factors increase range and reliability but reduce data rate.
 
-In Meshtastic, the LoRa chirp carries an encrypted protobuf packet inside the payload section, which includes routing metadata such as hop limit, packet ID, and channel information.
+Radios must use the same frequency, bandwidth and spreading factor to communicate but they can still receive packets sent with different coding rates.
 
+## A Meshtastic Packet Over the Air
 
-## The MeshPacket
+A Meshtastic packet contains unencrypted routing metadata and the encrypted application message. Only the packet's application message is encrypted and encoded as a Protocol Buffer (protobuf). Except for Text Messages, message payloads are additionally encoded using their respective protobuf types.
 
-The MeshPacket is the primary application-layer structure used by Meshtastic to transport data across the radio mesh. It is serialized using Protocol Buffers (protobuf). Only the application payload is encrypted before transmission. The routing fields—such as from, to, packet ID, hop limit, and channel index remain unencrypted so nodes can correctly forward the packet across the mesh.
+The components of the Meshtastic specific portion of a LoRa chirp are:
 
-A MeshPacket contains both routing metadata and the actual message content. At a high level, it includes:
+1. **To (Destination Node Number)** — 4 bytes  
+   The destination node number. This may be a specific node, or the broadcast address `4294967295`.
 
-1. **Packet ID**  
-   A unique identifier used to detect and suppress duplicate rebroadcasts.
-
-2. **From (Sender Node ID)**  
+2. **From (Sender Node Number)** — 4 bytes  
    The numeric ID of the originating node.
 
-3. **To (Destination Node ID)**  
-   The destination node ID. This may be a specific node, or a broadcast address (4294967295).
+3. **Packet ID** — 4 bytes  
+   A unique identifier used to detect duplicate packets and to reference this packet when sending replies.
 
-4. **Hop Limit**  
+4. **Packet Flags** - 1 byte
+
+   - **Hop Limit** -  3 bits  
    The maximum number of times the packet may be rebroadcast. Each node that retransmits the packet decrements this value. When it reaches zero, the packet is no longer forwarded.
 
-5. **Channel**  
-   Indicates which configured Channel the packet belongs to. This determines which encryption key is used.  This channel number is created by using a hash of the channel name and it's PSK and does not correlate with the client channel idexes.
+   - **Want Ack** — 1 bit  
+     Indicates if the sender is requesting an acknowledgement from the destination node.
 
-6. **Payload (Encrypted)**  
-   The actual application data. This may be:
-   - A text message
-   - Position information (GPS)
-   - Telemetry data (battery, voltage, etc.)
-   - Node info updates
-   - Administrative messages
+   - **Via MQTT** — 1 bit  
+     Indicates the packet entered the mesh through an MQTT gateway rather than directly over LoRa.
 
-Before transmission, the MeshPacket payload is encrypted using the Channel’s shared key. Only nodes with the same Channel name and encryption key can decrypt and interpret the contents.
+   - **Hop Start** - 3 bits  
+   The original hop limit when the packet was first transmitted. This allows clients to determine how many hops the packet has already traveled.
+
+5. **Channel Hash** - 1 byte  
+   Indicates which configured Channel the packet belongs to and determines which encryption key is used.  This channel number derived from a hash of the channel name and it's PSK and does not correlate with the client channel idexes.  The default LongFast channel with default psk will hash to `channel = 8`
+
+6. **Next Hop** - 1 byte  
+   Used during routing to indicate the next intended relay node. When present, it helps guide the packet toward a specific node rather than being blindly rebroadcast.
+
+7. **Relay Node** - 1 byte  
+   The last byte of the node ID that most recently relayed the packet before it was received.
+
+8. **Payload (Encrypted)** - max 239 bytes  
+   Consists of:  
+
+   - **Portnum** - 1 byte  
+   Identifies the application port (for example, `POSITION_APP`, `TEXT_MESSAGE_APP`, etc.). This determines how the payload should be interpreted.
+
+   - **Want Response** - 1 bit  
+   Determines if the message is requesting a response from the receipient
+
+   - **Reply ID**. - 4 bytes  
+   The ID of the message this message is replying to
+
+   - **Emoji Flag** - 1 bit  
+   If the payload should be treated as an emoji, for example "hearting" a message.
+
+   - **Application Payload**. - up to ~200 bytes  
+      The actual application data. This may be:
+      - A text message
+      - Position information (GPS)
+      - Telemetry data (battery, voltage, etc.)
+      - Node info updates
+      - Administrative and routing messages
+
+   - **Bitfield** - 1 byte  
+   A bitmask of flags defined in the Meshtastic firmware. Each bit represents a boolean attribute about the packet.
+
+      - **Bit 0 (`OK_TO_MQTT`)** – This packet is allowed to be forwarded to MQTT.
+      - **Bit 1 (`WANT_RESPONSE`)** – The sender is requesting a response.
+
+      The numeric value represents one or more of these flags combined using bitwise OR. For example:
+
+      - `bitfield = 1` → OK_TO_MQTT  
+      - `bitfield = 2` → WANT_RESPONSE
+      - `bitfield = 3` → Both flags set
+
+Before transmission, the Meshtastic payload is encrypted using the Channel’s shared key. Only nodes with the same Channel name and encryption key can decrypt and interpret the contents.
 
 On reception, a node:
 - Verifies it has not seen the Packet ID before
 - Decrypts the payload (if it has the correct Channel key)
 - Delivers the decoded message to the connected client app
-- Rebroadcasts the packet if the hop limit allows
+- Rebroadcasts the packet if the hop limit allows and the node configuration permits it.
 
-### Example MeshPacket Fields
+## The MeshPacket
 
-Below is a real-world example of a MeshPacket as seen by a client:
+For convenience, Meshtastic packet data is wrapped in a MeshPacket protobuf for transport to clients, mqtt, and UPD. Over the air, part of this data is split out into a more space-efficient but less flexible header. 
+
+Below is a real-world example of a MeshPacket as seen by a client.  Note that fields set to default are not included, i.e. emoji = false:
 
 ```
 from: 2125894122
@@ -121,40 +167,20 @@ decoded {
 }
 ```
 
-In addition to the core routing fields described above, this example shows several important metadata fields:
+In addition to the core routing fields described above, this example shows several additional metadata fields which are added to the MeshPacket by the reciving node:
 
-- **hop_start**  
-  The original hop limit when the packet was first transmitted. This allows clients to determine how many hops the packet has already traveled.
-
-- **priority**  
+- **Priority**  
   Indicates transmission priority. Higher-priority packets may be transmitted sooner than lower-priority ones.
 
-- **relay_node**  
-  The last byte of the node ID that most recently rebroadcast (relayed) the packet before it was received.
-
-- **rx_time**  
+- **RX Time**  
   The local timestamp (epoch time) when this node received the packet.
 
-- **rx_snr**  
+- **RX SNR**  
   Signal-to-noise ratio measured at reception. Higher values indicate a cleaner signal.
 
-- **rx_rssi**  
-  Received Signal Strength Indicator in dBm.
+- **RX RSSI**  
+  Received Signal Strength Indicator in dBm. Higher values indicate a stronger signal.
 
-- **decoded.portnum**  
-  Identifies the application port (for example, `POSITION_APP`, `TEXT_MESSAGE_APP`, etc.). This determines how the payload should be interpreted.
-
-- **decoded.bitfield**  
-  A bitmask of flags defined in the Meshtastic firmware. Each bit represents a boolean attribute about the packet.
-
-  - **Bit 0 (`OK_TO_MQTT`)** – This packet is allowed to be forwarded to MQTT.
-  - **Bit 1 (`WANT_RESPONSE`)** – The sender is requesting a response.
-
-  The numeric value represents one or more of these flags combined using bitwise OR. For example:
-
-  - `bitfield = 1` → OK_TO_MQTT
-  - `bitfield = 2` → WANT_RESPONSE
-  - `bitfield = 3` → Both flags set
 
 Together, these fields show both how the packet moved through the network and what the radio conditions were when it was received. This makes it easier to understand range, reliability, and how messages are flowing across the mesh.
 
