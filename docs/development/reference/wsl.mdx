@@ -11,21 +11,21 @@ This guide will walk you through how to run meshtasticd under WSL, the Windows S
 
 ## Requirements
 
-To run meshtasticd on Windows via the Windows Subsytem Layer (WSL), your computer must have the following satisfied:
+To run meshtasticd on Windows via the Windows Subsystem Layer (WSL), your computer must have the following satisfied:
 
 - Windows 10 (64-bit), version 1809 or newer
 - A WSL Linux distribution with a kernel version greater than 5.10.60.1.
-- A WSL Linux distrubiton under WSL 2
+- A WSL Linux distribution under WSL 2
 - USBIP Device Host [usbipd-win](https://github.com/dorssel/usbipd-win) version 4.0.0 or newer installed
 - _(optional)_ [wsl-usb-manager](https://github.com/nickbeth/wsl-usb-manager) downloaded
 
 :::tip
 
-This guide was written using Ubuntu on WSL in mind. Minor adjustments to the commands excecuted within Linux may be needed depending on your distro.
+This guide was written using Ubuntu on WSL in mind. Minor adjustments to the commands executed within Linux may be needed depending on your distro.
 
 :::
 
-## Verifying pre-requisites
+## Verifying prerequisites
 
 1. Verify your WSL Linux distirbution is greater than 5.10.60.1. 
     -   Do this by executing `uname -r` in the WSL terminal.
@@ -33,7 +33,7 @@ This guide was written using Ubuntu on WSL in mind. Minor adjustments to the com
 2. Verify your WSL Linux installation is a WSL2 installation.
     -   Do this by executing `wsl --list --verbose`
 3. Ensure USBIP-Win is installed and configured.
-    - In a commmand prompt or PowerShell window, run `usbipd list` to enumerate your USB devices.
+    - In a command prompt or PowerShell window, run `usbipd list` to enumerate your USB devices.
     - If you do not have `usbip-win` installed, you may install it via the .msi installer provided on [their GitHub](https://github.com/dorssel/usbipd-win), or by running `winget install usbipd` to install via the Windows Package Manager. You will need to relaunch your command prompt or PowerShell window, as this installation updates your PATH.
 
 ## Connecting your Meshtastic-compatible LoRA USB modem to WSL
@@ -64,7 +64,7 @@ Refer to [Linux install instructions](https://meshtastic.org/docs/software/linux
 
 :::
 
-After installing meshtasticd, run `sudo meshtastic`. Verify it runs, the terminate the process for now.
+After installing meshtasticd, run `sudo meshtastic`. Verify it runs, then terminate the process for now.
 
 ## Configuring your meshtastic node
 
@@ -91,7 +91,7 @@ You may configigure your Meshtastic node via the command-line interface, or by t
 ### Convert WSL1 to WSL2
 In the case where you already have WSL1 installed, you will need to upgrade it to WSL2.
 
-Running `wsl --set-version <distro> 2`, where `<distro>` is the name of the WSL installation from `wsl --list --verbose`, may convert your WSL1 installtion to WSL2.
+Running `wsl --set-version <distro> 2`, where `<distro>` is the name of the WSL installation from `wsl --list --verbose`, may convert your WSL1 installation to WSL2.
 
 However, if you are unable to do so, it may mean that your WSL installation on Windows is much older and will require upgrading. Follow this [guide](https://learn.microsoft.com/en-us/windows/wsl/install-manual#step-4---download-the-linux-kernel-update-package) from Microsoft to do so.
 

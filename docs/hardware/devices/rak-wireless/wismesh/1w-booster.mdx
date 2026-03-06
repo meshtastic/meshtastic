@@ -1,0 +1,59 @@
+---
+id: 1w-booster
+title: RAK WisMesh 1W Booster Starter Kit
+sidebar_label: 1W Booster Starter Kit
+sidebar_position: 7
+---
+
+The WisMesh 1W Booster Starter Kit is a high-power Meshtastic solution designed for extended mesh range. Powered by the RAK3401 WisBlock Core module with the Nordic nRF52840 MCU and the RAK13302 1W LoRa transceiver module, this kit delivers up to 1W (30 dBm) transmit power with enhanced receiver sensitivity for reliable long-range communication.
+
+Unlike common high-power solutions that boost TX but degrade RX, the RAK13302 integrates a dedicated RF filter stage with the SKY66122 power amplifier, significantly enhancing both transmission power and receiver sensitivity for longer range, more stable links, and stronger mesh reliability.
+
+### Specifications
+
+- **Base Board**
+  - [RAK19007](/docs/hardware/devices/rak-wireless/wisblock/base-board?rakbase=RAK19007)
+- **MCU**
+  - RAK3401 (nRF52840)
+    - ARM Cortex-M4F
+    - 1MB Flash and 348KB SRAM
+    - Bluetooth BLE 5.0
+    - Very low power consumption
+- **LoRa Transceiver:**
+  - RAK13302 1W LoRa Module
+    - Semtech SX1262 transceiver
+    - SKY66122 power amplifier (1W / 30 dBm)
+    - Integrated SAW filter for enhanced reception
+    - Additional LNA for improved receiver sensitivity
+- **Frequency Options:**
+  - 900 MHz band (US915, AU915, etc.)
+- **Connectors:**
+  - USB-C
+  - IPEX to SMA for LoRa antenna
+  - JST PHR-2 connector for 3.7v LiPo battery
+  - JST ZHR-2 connector for 5v solar panel
+
+### Features
+
+- 1W (30 dBm) transmit power for extended range
+- Enhanced receiver sensitivity with integrated LNA and SAW filter
+- Full WisBlock ecosystem compatibility (sensors, displays, etc.)
+- 4 sensor slots for WisBlock Sensor Modules
+- Multiple power options: USB, battery, or solar
+
+### Power Requirements
+
+:::caution
+The 1W RF stage in the RAK13302 requires a stable 5V supply. The 3.3V rail cannot deliver the surge current required for high-power LoRa transmission. For reliable operation, power the module through USB, a regulated 5V adapter, or the WisBlock Base Board's battery system.
+:::
+
+
+### Resources
+
+- Firmware file: `firmware-rak3401-1watt-X.X.X.xxxxxxx.uf2`
+- Further information on the WisMesh 1W Booster Starter Kit can be found on the [RAK Documentation Center](https://docs.rakwireless.com/product-categories/meshtastic/wismesh-starter-kit-rak3401/).
+- Purchase Links:
+  - International
+    - [RAKwireless Store](https://msh.to/rak3401-1watt/)
+
+![RAK WisMesh 1W Booster Starter Kit](/img/hardware/rak/wismesh-rak3401-1watt-booster-starter-kit.webp)

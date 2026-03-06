@@ -41,9 +41,9 @@ This layer is conventional non-reliable LoRa packet transmission. A packet gener
 
 | Offset |                  Length                  |  Type   | Usage                                                                                                   |
 | :----: | :--------------------------------------: | :-----: | :------------------------------------------------------------------------------------------------------ |
-|  0x00  |                 4 bytes                  | Integer | Packet Header: Destination. The destination's unique NodeID. `0xFFFFFFFF` for broadcast. Little Endian. |
-|  0x04  |                 4 bytes                  | Integer | Packet Header: Sender. The sender's unique NodeID. Little Endian.                                       |
-|  0x08  |                 4 bytes                  | Integer | Packet Header: The sending node's unique packet ID for this packet. Little Endian.                      |
+|  0x00  |                 4 bytes                  | Integer | Packet Header: Destination. The destination's unique NodeID. `0xFFFFFFFF` for broadcast. Little-endian. |
+|  0x04  |                 4 bytes                  | Integer | Packet Header: Sender. The sender's unique NodeID. Little-endian.                                       |
+|  0x08  |                 4 bytes                  | Integer | Packet Header: The sending node's unique packet ID for this packet. Little-endian.                      |
 |  0x0C  |                  1 byte                  |  Bits   | Packet Header: Flags. See the [header flags](#packet-header-flags) for usage.                           |
 |  0x0D  |                  1 byte                  |  Bits   | Packet Header: Channel hash. Used as hint for decryption for the receiver.                              |
 |  0x0E  |                  1 byte                  |  Bytes  | Packet Header: Next-hop used for relaying.                                                              |

@@ -96,7 +96,7 @@ make slow
 
 ## Wire encoding
 
-When sending protobuf packets over serial or TCP each packet is preceded by uint32 sent in network byte order (big endian).
+When sending protobuf packets over serial or TCP each packet is preceded by uint32 sent in network byte order (big-endian).
 The upper 16 bits must be 0x94C3. The lower 16 bits are packet length (this encoding gives room to eventually allow quite large packets).
 
 Implementations validate length against the maximum possible size of a BLE packet (our lowest common denominator) of 512 bytes. If the

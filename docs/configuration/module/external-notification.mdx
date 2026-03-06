@@ -48,10 +48,10 @@ Specifies if an alert should be triggered when receiving an incoming message.
 ### GPIO Pins (general / LED, Vibra and Buzzer)
 
 Specifies the GPIO that your external circuit is attached to on the device. On devices that have a PWM buzzer, you can use the buzzer for notifications by setting the use_pwm property to TRUE. The Buzzer Pin will be ignored and the device.buzzer_gpio is used instead. If you enable PWM mode, the device will use
-so-called RTTTL ring tones for notification. You can find examples of RTTTL ring tones [here](https://www.laub-home.de/wiki/RTTTL_Songs) and upload them to the device via a client application.
+so-called RTTTL ring tones for notification. You can find [examples of RTTTL ring tones](https://lhlab.wiki/wiki/RTTTL_Songs) and upload them to the device via a client application.
 
 :::info
-On ESP32 based boards, GPIOs 34 to 39 are GPIs – input only pins. These pins do not have internal pull-up or pull-down resistors. They can not be used as outputs, so you can NOT use these pins as outputs.
+On ESP32 based boards, GPIOs 34 to 39 are GPIs – input only pins. These pins do not have internal pull-up or pull-down resistors. They cannot be used as outputs, so you can NOT use these pins as outputs.
 :::
 
 ### How long monitored GPIO is triggered

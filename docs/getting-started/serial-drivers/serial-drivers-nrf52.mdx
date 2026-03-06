@@ -1,7 +1,7 @@
 ---
 id: nrf52
-title: nRF52/RP2040 Serial Drivers
-sidebar_label: nRF52/RP2040 Drivers
+title: nRF52/RP2040/RP2350 Serial Drivers
+sidebar_label: nRF52/RP2040/RP2350 Drivers
 sidebar_position: 2
 description: Instructions for installing nRF52 and RP2040 USB serial drivers to interact with a Meshtastic device.
 ---
@@ -11,11 +11,11 @@ import TabItem from "@theme/TabItem";
 import { Icon } from "@iconify/react";
 import Link from "@docusaurus/Link";
 
-## Install nRF52/RP2040 USB to Serial Drivers
+## Install nRF52/RP2040/RP2350 USB to Serial Drivers
 
 :::caution
 
-nRF52/RP2040 devices typically do not require serial drivers. They use the UF2 bootloader which makes the devices appear as flash drives. Do _NOT_ download the USB device drivers unless required to install UF2 support.
+nRF52/RP2040/RP2350 devices typically do not require serial drivers. They use the UF2 bootloader which makes the devices appear as flash drives. Do _NOT_ download the USB device drivers unless required to install UF2 support.
 
 :::
 
@@ -63,7 +63,7 @@ nRF52/RP2040 devices typically do not require serial drivers. They use the UF2 b
 
 :::info
 
-With the latest versions of MacOS, the USB Serial driver is built-in. If you downloaded/installed any already, please remove them.
+With the latest versions of macOS, the USB Serial driver is built-in. If you downloaded/installed any already, please remove them.
 
 :::
 
@@ -111,6 +111,6 @@ After installing the serial drivers, you can now flash the Meshtastic firmware o
     className={"button button--outline button--lg cta--button"}
     to={"/docs/getting-started/flashing-firmware/nrf52/"}
   >
-    Flash nRF52/RP2040 Firmware
+    Flash nRF52/RP2040/RP2350 Firmware
   </Link>
 </div>

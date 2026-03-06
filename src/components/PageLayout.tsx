@@ -1,6 +1,5 @@
-import type React from "react";
-
 import Layout from "@theme/Layout";
+import type React from "react";
 
 export interface PageLayoutProps {
   title: string;
@@ -12,7 +11,7 @@ export const PageLayout = ({
   title,
   description,
   children,
-}: PageLayoutProps): JSX.Element => {
+}: PageLayoutProps) => {
   return (
     <Layout title={title} description={description}>
       {children}
