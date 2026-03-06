@@ -125,7 +125,7 @@ You can run multiple `meshtasticd` instances using the systemd template service.
 `<instance>` can be any name you choose to identify that instance. For example:
 
 ```
-sudo cp /etc/meshtasticd/config.yaml /etc/meshtasticd/config-mediumfast.yaml
+sudo cp /etc/meshtasticd/config.yaml /etc/meshtasticd/config.d/config-mediumfast.yaml
 ```
 
 Add `APIPort` under the `General` section and specify a non‑default port (the default is `4403`):
