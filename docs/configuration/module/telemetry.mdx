@@ -54,11 +54,11 @@ Supported sensors connected to the I2C bus of the device will be automatically d
 |   TSL2591    |          0x29          |                                Light intensity                                |
 |   LTR390UV   |          0x53          |                              UV Light intensity                               |
 |   RCWL9620   |          0x57          |                          Ultrasonic Distance Sensor                           |
-|   PMSA003I   |          0x12          |            Concentration units by size and particle counts by size            |
-|    SEN5X     |          0x69          | Particulate Matter by size, optional temperature, humidity, NOx and VOC index |
-|    SCD4X     |          0x62          |                         CO2, temperature and humidity                         |
-|    SCD30     |          0x61          |                         CO2, temperature and humidity                         |
-|    SFA30     |          0x5D          |                     Formaldehyde, temperature and humidity                    |
+|   PMSA003I*   |          0x12          |            Concentration units by size and particle counts by size            |
+|    SEN5X*    |          0x69          | Particulate Matter by size, optional temperature, humidity, NOx and VOC index |
+|    SCD4X*    |          0x62          |                         CO2, temperature and humidity                         |
+|    SCD30*    |          0x61          |                         CO2, temperature and humidity                         |
+|    SFA30*    |          0x5D          |                     Formaldehyde, temperature and humidity                    |
 | DFROBOT_LARK |          0x42          |    Temperature, barometric pressure, humidity, wind direction, wind speed     |
 | DFROBOT_RAIN |          0x1d          |                            Tip Bucket Rain counter                            |
 |   RadSens    |          0x66          |                                Radio Dosimeter                                |
@@ -66,6 +66,12 @@ Supported sensors connected to the I2C bus of the device will be automatically d
 |   MLX90614   |          0x5A          |                  Body temperature                   |
 |   MLX90632   |          0x3A          |                  Body temperature                   |
 |   NAU7802    |          0x2A          |                 24-Bit differential ADC for Wheatstone bridge                 |
+
+:::info
+
+Note that some of the sensors listed above require I2C speeds that are not compatible with a screen. ESP32 based modules can re-clock the I2C bus, while other modules such as NRF variants can't, making some of these sensors not available in such configurations (marked with `*` in the table). See the [limitations](#limitations) section below for more information.
+
+:::
 
 ## Module Config Values
 
@@ -321,17 +327,14 @@ And examine the serial logs for Telemetry diagnostic information.
 
 ## Supporting Additional Sensors
 
-### Environment Metrics
+### Environment / Air Quality Metrics
 
-The environment metrics in the telemetry module supports a limited amount of fields as they are stored in memory on the device. Support for sensors that provide one or more of the following fields can potentially be added to the main firmware provided there is a GPL licensed library for us to include to support it, and the library size is not prohibitive.
-
-- Temperature
-- Relative Humidity
-- Barometric Pressure
-- Gas Resistance (AQI)
-- Voltage
-- Current
+The environment and air quality metrics in the telemetry module support a variety of sensors, but limitations apply. Support for I2C sensors that provide fields that are not included in the list above can potentially be added to the main firmware provided there is a GPL licensed library for us to include to support it, and the library size is not prohibitive. Since data is stored in the `nodedb` of the device, the telemetry module supports a limited amount of fields.
 
 ### Supporting Other Sensor types
 
-For other interesting sensor types and use cases we need to add a portnum for more generic telemetry packets and a second MCU will be required to interact with the sensor and process the data to be sent over the mesh. This data will not be stored in the nodedb on the device.
+For other interesting sensor types and use cases we need to add a portnum for more generic telemetry packets and a second MCU will be required to interact with the sensor and process the data to be sent over the mesh. This data will not be stored in the `nodedb` on the device.
+
+## Limitations
+
+Currently, the majority of the sensors supported in the firmware are I2C sensors. Many of these sensors have a limit in the I2C Clock speed they can support, and may not be compatible with a screen if the MCU can't reclock its I2C bus (since screens use higher clock speeds than these sensors support). Reclocking the I2C bus is currently only possible on ESP32-based configurations. Other variants, will not be compatible with these sensors if the variant is compiled with `HAS_SCREEN=1`. If your variant doesn't use a screen, the firmware can be compiled with `HAS_SCREEN=0` to support additional sensors.
