@@ -1,17 +1,17 @@
 ---
 id: nrf52-erase
-title: Flash nRF52/RP2040 Factory Erase
+title: Flash nRF52/RP2040/RP2350 Factory Erase
 sidebar_label: Factory Erase
 sidebar_position: 3
-description: Instructions for factory erasing an nRF52 or RP2040 device.
+description: Instructions for factory erasing an nRF52, RP2040, or RP2350 device.
 ---
 
 import Link from "@docusaurus/Link";
 
-Meshtastic uses the [littlefs](https://github.com/littlefs-project/littlefs) library to store configuration, logs, and other data in the internal flash of nRF52 & RP2040 devices. Updating the firmware does _not_ erase this additional data, which can cause issues when the format and location of data changes between releases.
+Meshtastic uses the [littlefs](https://github.com/littlefs-project/littlefs) library to store configuration, logs, and other data in the internal flash of nRF52, RP2040, & RP2350 devices. Updating the firmware does _not_ erase this additional data, which can cause issues when the format and location of data changes between releases.
 
 :::info
-You may now use the [Meshtastic Web Flasher](https://flasher.meshtastic.org) to Factory Erase your nRF52 or RP2040-based devices. Visit the flasher, select your board, and click the trash can icon to the right of the Flash button. This will open a dialogue to begin the erase procedure.
+You may now use the [Meshtastic Web Flasher](https://flasher.meshtastic.org) to Factory Erase your nRF52, RP2040, or RP2350-based devices. Visit the flasher, select your board, and click the trash can icon to the right of the Flash button. This will open a dialogue to begin the erase procedure.
 
 Alternatively, follow the instructions below.
 :::
@@ -49,6 +49,6 @@ Once the device has been erased, you can proceed to install the latest Meshtasti
     className={"button button--outline button--lg cta--button"}
     to={"/docs/getting-started/flashing-firmware/nrf52/"}
   >
-    Flash nRF52/RP2040 Firmware
+    Flash nRF52/RP2040/RP2350 Firmware
   </Link>
 </div>

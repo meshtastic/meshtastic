@@ -5,16 +5,43 @@ sidebar_label: Raspberry Pi
 sidebar_position: 9
 ---
 
-### [Raspberry Pi Pico](./pico/)
+### [Raspberry Pi Pico / Pico 2](./pico/)
 
-Fast versatile boards using the RP2040/RP2350.
+Fast versatile boards using the RP2040 and RP2350 microcontrollers.
 
-| Name                         | MCU           | Radio  |       WiFi       |      BT       | GPS |
-| :--------------------------- | :------------ | :----- | :--------------: | :-----------: | :-: |
-| [Raspberry Pi Pico](./pico/) | RP2040/RP2350 | SX1262 | 2.4GHz b/g/n[^1] | not supported | NO  |
+| Name                               | MCU      | LoRa (external module required) | WiFi | BT | GPS |
+| :--------------------------------- | :------- | :------------------------------ | :--: | :-: | :-: |
+| [Raspberry Pi Pico](./pico/)       | RP2040   | SX1276 / SX1262 (external)     | NO  | NO | ADD-ON[^3] |
+| [Raspberry Pi Pico W](./pico/)     | RP2040   | SX1276 / SX1262 (external)     | YES[^1] | NO[^2] | ADD-ON[^3] |
+| [Raspberry Pi Pico 2](./pico/)     | RP2350   | SX1276 / SX1262 (external)     | NO  | NO | ADD-ON[^3] |
+| [Raspberry Pi Pico 2 W](./pico/)   | RP2350   | SX1276 / SX1262 (external)     | YES[^1] | NO[^2] | ADD-ON[^3] |
 
-[^1]: 2.4GHz b/g/n WiFi support is available on the Raspberry Pi Pico **W** variant.
+[^1]: 2.4GHz 802.11 b/g/n WiFi is available only on the **W variants** (Pico W and Pico 2 W). Meshtastic supports WiFi on Pico W and Pico 2 W (no web server or HTTP API).
 
-### [Raspberry Pi Zero/Zero2/3/4/400/5](/docs/hardware/devices/linux-native-hardware/)
+[^2]: Pico W and Pico 2 W include Bluetooth hardware (Bluetooth 5.2 on Pico 2 W), but BLE is not currently supported by Meshtastic.
 
-Meshtastic offers support for Raspberry Pi devices through our Linux native platform, meshtasticd. For full information, please see our [Linux Native Hardware](/docs/hardware/devices/linux-native-hardware/) documentation.
+[^3]: Meshtastic supports external UART GPS modules. Examples of tested modules are listed in the [Meshtastic GPS compatibility spreadsheet](https://docs.google.com/spreadsheets/d/1-f9z5zx2VCYqE6ivYXm-XqtLeVZSGMKpC3G3wma6-vw/edit).
+
+### [Raspberry Pi Zero/Zero 2/3/4/400/5](/docs/hardware/devices/linux-native-hardware/)
+
+Meshtastic supports Raspberry Pi devices through the **Linux native platform** using the `meshtasticd` service.
+
+In this configuration, the Raspberry Pi acts as a Meshtastic node by connecting to a compatible LoRa radio via USB or UART. This allows the device to operate as a gateway, router node, or integration platform for services such as MQTT, automation, or data logging.
+
+Supported Raspberry Pi models include:
+
+- Raspberry Pi Zero / Zero 2 W  
+- Raspberry Pi 3  
+- Raspberry Pi 4  
+- Raspberry Pi 400  
+- Raspberry Pi 5
+
+Typical use cases include:
+
+- Always-on base stations
+- Network gateways
+- MQTT bridges
+- Integration with home automation systems
+- Remote monitoring nodes
+
+For installation instructions and supported hardware configurations, see the [Linux Native Hardware documentation](/docs/hardware/devices/linux-native-hardware/).
