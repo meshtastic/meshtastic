@@ -15,9 +15,9 @@ Traffic Management requires firmware version 2.7.21 or later.
 
 ## Overview
 
-Previous traffic reduction efforts in Meshtastic configure client nodes to send less frequently. While effective when every node cooperates, a single misconfigured node broadcasting its position every 30 seconds or many undecryptable packets can still burden an entire mesh. Traffic Management moves enforcement to routers so meshes can protect shared airtime.
+Previous traffic reduction efforts in Meshtastic configure client nodes to send automated packets less frequently. While effective when every node cooperates, a single misconfigured node broadcasting its position every 30 seconds or many undecryptable packets can still burden an entire mesh. Traffic Management moves enforcement to routers so meshes can protect shared airtime.
 
-The Traffic Management module provides server-side packet inspection and traffic shaping for Meshtastic routers and clients. It reduces channel utilization by filtering duplicate position broadcasts, rate-limiting chatty nodes, dropping excess undecryptable packets, responding to NodeInfo requests from a cache, and controlling hop propagation for telemetry and position data.
+The Traffic Management module provides server-side packet inspection and traffic shaping for Meshtastic routers and clients. It reduces channel utilization by filtering duplicate position broadcasts, rate-limiting chatty nodes, dropping excess undecryptable packets, responding to NodeInfo requests from the local nodeinfo cache, and controlling hop propagation for telemetry and position data.
 
 :::info
 Traffic Management must be enabled at both compile time (via `HAS_TRAFFIC_MANAGEMENT=1` in the device's `variant.h`) and at runtime (via the `enabled` config flag). Currently enabled on the Heltec V4, Station G2, Tracker T1000-E, and Native/Portduino. Other devices require custom firmware builds at this time.
