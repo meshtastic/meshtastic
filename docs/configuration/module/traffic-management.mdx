@@ -1,8 +1,8 @@
 ---
 id: traffic-management
-title: Traffic Management Module Settings
+title: Traffic Management Module Configuration
 sidebar_label: Traffic Management
-description: Configure traffic shaping, caching, and rebroadcast controls for busy Meshtastic deployments.
+description: Packet inspection and traffic shaping to reduce mesh congestion from redundant positions, chatty nodes, and unknown packets.
 ---
 
 import Tabs from "@theme/Tabs";
@@ -11,154 +11,124 @@ import { Icon } from "@iconify/react";
 
 ## Overview
 
-The Traffic Management module gives a node more control over how it handles repeated or low-value traffic on the mesh. It can reduce duplicate position broadcasts, apply per-node rate limits, answer nearby NodeInfo requests from cache, optionally suppress unknown traffic, and shape how some rebroadcasts consume hop budget.
+Previous traffic reduction efforts in Meshtastic have mostly been client-side: configure nodes to send less frequently. While effective when every node cooperates, a single misconfigured node broadcasting its position every 30 seconds or hundreds of undecryptable packets from nodes on a different channel can still burden an entire mesh. Traffic Management moves enforcement to the router level so infrastructure operators can protect shared airtime.
 
-Traffic Management is available in firmware `2.7.21 alpha` for testing and feedback.
+The Traffic Management module provides server-side packet inspection and traffic shaping for Meshtastic routers and nodes. It reduces channel utilization by filtering duplicate position broadcasts, rate-limiting chatty nodes, dropping undecryptable packets, responding to NodeInfo requests from a cache, and controlling hop propagation for telemetry and position data.
 
-:::warning
-This module is intended for careful tuning, especially on infrastructure nodes. Start conservatively, observe the effect on your mesh, and adjust only the settings that solve a real problem for your deployment.
+:::info
+Traffic Management must be enabled at both compile time (via `HAS_TRAFFIC_MANAGEMENT=1` in the device's `variant.h`) and at runtime (via the `enabled` config flag). Other devices require custom firmware builds.
 :::
 
-## Why This Exists
+The module uses a per-node cache to track position fingerprints, packet counts, and timestamps. Each entry is 10 bytes. On ESP32 devices with PSRAM, the cache is allocated in PSRAM to preserve heap for other uses.
 
-Meshtastic has already seen a number of client-side improvements aimed at reducing unnecessary traffic, but this is the first configurable mesh-side toolset focused on shaping how a node handles traffic after it has already reached the mesh.
+| Platform | Cache Entries | Memory |
+| :------: | :-----------: | :----: |
+| ESP32 (with PSRAM), Native | 2048 | ~20 KB (PSRAM) |
+| nRF52 | 1024 | ~10 KB (heap) |
 
-Different meshes need different priorities. Some care most about location sharing. Others want telemetry to stay local. Others want faster answers for NodeInfo requests, or need a way to protect the mesh from one noisy or misconfigured node that is consuming too much airtime.
 
-This module is meant to help with that without imposing one universal policy on every network. It gives each mesh a way to decide what traffic is worth preserving, what traffic can be deduplicated, and when a node should answer from cache instead of letting the same requests keep traveling through the network.
+## Traffic Management Module Config Values
 
-It is also an early step toward caching data that changes rarely. A well-placed router or nearby helper node may already know the answer to a NodeInfo request. Instead of having that request keep spreading through the mesh, a better-sited node can answer directly and reduce repeated discovery traffic.
+### Enabled
 
-## Settings
+Master enable for the Traffic Management module. When disabled, all traffic management features are inactive and packets pass through unmodified. Default: `false`.
 
-|                    Setting                     | Acceptable Values | Default  |
-| :--------------------------------------------: | :---------------: | :------: |
-|  traffic_management.drop_unknown_enabled       |  `true`, `false`  | `false`  |
-|       traffic_management.enabled               |  `true`, `false`  | `false`  |
-|  traffic_management.exhaust_hop_position       |  `true`, `false`  | `false`  |
-| traffic_management.exhaust_hop_telemetry       |  `true`, `false`  | `false`  |
-| traffic_management.nodeinfo_direct_response    |  `true`, `false`  | `false`  |
-| traffic_management.nodeinfo_direct_response_max_hops | `integer`    |   `0`    |
-| traffic_management.position_dedup_enabled      |  `true`, `false`  | `false`  |
-| traffic_management.position_min_interval_secs  |     `integer`     | `86400`  |
-| traffic_management.position_precision_bits     |      `0`-`32`     |   `24`   |
-| traffic_management.rate_limit_enabled          |  `true`, `false`  | `false`  |
-| traffic_management.rate_limit_max_packets      |     `integer`     |   `0`    |
-| traffic_management.rate_limit_window_secs      |     `integer`     |   `0`    |
-| traffic_management.router_preserve_hops        |  `true`, `false`  | `false`  |
-| traffic_management.unknown_packet_threshold    |     `integer`     |   `0`    |
+### Position Dedup Enabled
 
-### traffic_management.drop_unknown_enabled
+When enabled, the module tracks position broadcasts from each node and drops duplicate position packets that fall within the same grid cell and time window. This prevents nodes that repeatedly broadcast the same location from consuming airtime. Default: `false`.
 
-If enabled, the node tracks unknown or undecryptable packets and can start dropping them once the configured threshold is reached.
+### Position Precision Bits
 
-This is useful on noisy meshes where a small amount of traffic cannot be decoded, but repeated unknown traffic from the same source should not keep consuming resources forever.
+Number of bits of precision (0-32) used to truncate latitude and longitude for position deduplication comparison. Lower values create larger grid cells, meaning positions farther apart are considered "the same."
 
-### traffic_management.enabled
+Default: `24` (~10m grid cells).
 
-Master enable for the Traffic Management module.
+| Bits | Approximate Grid Size | Use Case |
+| :--: | :-------------------: | :------: |
+| 32 | ~1 cm | No truncation |
+| 24 | ~10 m | Default (pedestrian/general) |
+| 20 | ~40 m | Vehicle |
+| 16 | ~600 m | City block |
+| 12 | ~10 km | Regional |
 
-If this is `false`, none of the other settings on this page take effect.
+### Position Min Interval Secs
 
-### traffic_management.exhaust_hop_position
+Minimum time in seconds between position broadcasts from the same node at the same truncated location before a new position is accepted. If a node sends a position that maps to the same grid cell within this window, the duplicate is dropped.
 
-If enabled, relayed position broadcasts from other nodes are sent onward with `hop_limit = 0`.
+Default: `86400` (1 day). Set to `0` to disable the time-based check.
 
-This is useful when you want position packets to remain very local after they have already been relayed once by a node using this feature. It takes precedence over `traffic_management.router_preserve_hops` for position packets.
+### NodeInfo Direct Response
 
-### traffic_management.exhaust_hop_telemetry
+When enabled, the node responds directly to NodeInfo requests using cached user data from the local NodeDB. The response is sent as a single-hop reply (`hop_limit=0`) instead of allowing the request to propagate further through the mesh. This is particularly useful on well-placed routers that already have a large NodeDB from hearing traffic across the mesh. A node that might be 2-3 hops from the requestor can answer immediately from cache rather than letting the request ripple outward.
 
-If enabled, relayed telemetry broadcasts from other nodes are sent onward with `hop_limit = 0`.
+Default: `false`.
 
-This is useful when telemetry should stay close to the node or infrastructure area that first receives it. It takes precedence over `traffic_management.router_preserve_hops` for telemetry packets.
+### NodeInfo Direct Response Max Hops
 
-### traffic_management.nodeinfo_direct_response
+Maximum hop distance from the requestor at which this node will respond to NodeInfo requests. The effective value is clamped based on the device role:
 
-If enabled, the node may answer NodeInfo requests directly from its local cache instead of letting the request continue deeper into the mesh.
+| Device Role | Maximum Allowed | Behavior |
+| :---------: | :-------------: | :------: |
+| `ROUTER`, `ROUTER_LATE`, `CLIENT_BASE` | 3 | Responds to nodes within configured hops (up to 3) |
+| All other roles (clients) | 0 | Responds to direct neighbors only |
 
-This works best on nearby routers or helper nodes that already have recent NodeInfo for much of the local mesh.
+When set to `0`, the role-based maximum is used (3 for routers, 0 for clients). For routers, setting this to `2` limits responses to nodes within 2 hops. Values above the role limit are clamped down.
 
-### traffic_management.nodeinfo_direct_response_max_hops
+Default: `0` (use role-based limit).
 
-Controls how far away the requester may be before this node answers a NodeInfo request from cache.
+### Rate Limit Enabled
 
-This value is role-clamped:
+Enable per-node rate limiting. When enabled, the module tracks packet counts per node within a sliding time window and drops packets from nodes that exceed the configured threshold. Routing and admin packets are exempt from rate limiting
 
-|               Role Type               | Effective Maximum |
-| :-----------------------------------: | :---------------: |
-| `ROUTER`, `ROUTER_LATE`, `CLIENT_BASE` |       `3`         |
-| Regular clients                       |       `0`         |
+Default: `false`.
 
-That means a well-placed router can help nodes that are a few hops away, while a regular client is limited to direct neighbors only.
+### Rate Limit Window Secs
 
-### traffic_management.position_dedup_enabled
+Time window in seconds for rate limiting calculations. Each node's packet count resets after this window expires. This window is also used by unknown packet filtering if `drop_unknown_enabled` is active (falls back to 60 seconds if this value is `0`).
 
-If enabled, the node compares repeated position broadcasts from the same node and drops duplicates when the position has not meaningfully changed within the configured interval.
+Default: `0`.
 
-This helps cut down repeated location updates that are not adding useful information.
+### Rate Limit Max Packets
 
-### traffic_management.position_min_interval_secs
+Maximum number of packets allowed from a single node within the rate limit window. Packets beyond this count are dropped.
 
-Defines how long a repeated position remains eligible for deduplication.
+Default: `0`.
 
-The default is `86400` seconds, which is one day. If the same node sends the same effective position again inside that interval, the duplicate may be dropped when position deduplication is enabled.
+### Drop Unknown Enabled
 
-### traffic_management.position_precision_bits
+When enabled, tracks packets that cannot be decrypted (from nodes on different channels or using different encryption keys) and drops them after the threshold is reached. The counter resets after the rate limit window or 60 seconds if no rate limit window is configured.
 
-Controls how precisely a position is compared for deduplication.
+Default: `false`.
 
-Higher values keep more precision and are less aggressive. Lower values compare larger position cells and are more aggressive. The default of `24` is a reasonable starting point for filtering repeated position broadcasts without treating every tiny movement as unique.
+### Unknown Packet Threshold
 
-### traffic_management.rate_limit_enabled
+Number of undecryptable packets from a single node before subsequent packets from that node are dropped.
 
-If enabled, the node can rate limit traffic from individual nodes.
+Default: `0`.
 
-This is especially useful when one misconfigured or overly chatty node is consuming too much airtime or rebroadcast budget.
+### Exhaust Hop Telemetry
 
-### traffic_management.rate_limit_max_packets
+When enabled, forces `hop_limit=0` on relayed telemetry broadcasts from other nodes, preventing them from propagating beyond the immediate neighbors of this node. The node's own telemetry packets are unaffected.
 
-The maximum number of packets allowed from a node during the configured rate limit window.
+Default: `false`.
 
-This only takes effect when both `traffic_management.rate_limit_enabled` is enabled and `traffic_management.rate_limit_window_secs` is greater than `0`.
+### Exhaust Hop Position
 
-### traffic_management.rate_limit_window_secs
+When enabled, forces `hop_limit=0` on relayed position broadcasts from other nodes, preventing them from propagating beyond the immediate neighbors of this node. The node's own position packets are unaffected.
 
-The length of the rate limit window in seconds.
+Default: `false`.
 
-Rate limiting only becomes active when both this value and `traffic_management.rate_limit_max_packets` are set to non-zero values.
+### Router Preserve Hops
 
-### traffic_management.router_preserve_hops
+When enabled, preserves the hop limit for router-to-router traffic instead of decrementing it. Only applies when the local device has a router role (`ROUTER`, `ROUTER_LATE`, or `CLIENT_BASE`). Position and telemetry packets are always excluded from hop preservation (they have their own `exhaust_hop` controls). This extends effective mesh range through infrastructure routers for messages, NodeInfo, and other non-position/telemetry traffic, similar to Zero-Cost Hops but without requiring the favorite node mechanism.
 
-If enabled, router-role devices can preserve hop budget for some decoded packets when rebroadcasting.
-
-This applies to router-role nodes only and is separate from favorite-router zero-cost hops. Position and telemetry traffic still follow the `exhaust_hop_*` settings when those are enabled.
-
-### traffic_management.unknown_packet_threshold
-
-Sets how many unknown or undecryptable packets from the same source are tolerated before they start being dropped.
-
-This only takes effect when `traffic_management.drop_unknown_enabled` is enabled.
-
-## Client vs Router Behavior
-
-Traffic Management is configurable on both clients and infrastructure nodes, but the most useful settings differ depending on the role a node plays on the mesh.
-
-|                Behavior                | Regular Client | `ROUTER` / `ROUTER_LATE` / `CLIENT_BASE` |
-| :------------------------------------: | :------------: | :--------------------------------------: |
-| `nodeinfo_direct_response_max_hops`    | Clamped to `0` |              Clamped to `3`              |
-| `router_preserve_hops`                 | No effect      | Can preserve hop budget for eligible traffic |
-| `exhaust_hop_position` / `telemetry`   | Usually low value | Most useful on rebroadcasting infrastructure |
-| Position dedup / rate limiting / unknown-packet suppression | Supported | Supported |
-
-For a regular client, Traffic Management is usually about being a better local participant. It can deduplicate positions, avoid forwarding too much low-value traffic, or help direct neighbors with cached NodeInfo.
-
-For an infrastructure node, Traffic Management becomes much more useful. A request might take `2-3` hops to reach a well-placed router, but that same router may already have the requested NodeInfo cached. Because it is often better sited, higher up, or just heard by more of the mesh, it can answer directly to the requester and reduce repeated discovery traffic. This is still mesh-side behavior from a better-sited node, not a centralized Internet-style server.
+Default: `false`.
 
 ## Traffic Management Module Client Availability
 
 <Tabs
   groupId="settings"
-  defaultValue="apple"
+  defaultValue="cli"
   values={[
     {
       label: (
@@ -198,7 +168,7 @@ For an infrastructure node, Traffic Management becomes much more useful. A reque
 
 #### Android
 
-Traffic Management module settings are not yet implemented in the Android app.
+Not yet implemented.
 
 </TabItem>
 
@@ -206,7 +176,7 @@ Traffic Management module settings are not yet implemented in the Android app.
 
 #### Apple
 
-Traffic Management module settings are not yet implemented on iOS, iPadOS, or macOS.
+Not yet implemented.
 
 </TabItem>
 
@@ -214,33 +184,80 @@ Traffic Management module settings are not yet implemented on iOS, iPadOS, or ma
 
 #### CLI
 
-Traffic Management settings are available in the CLI for firmware `2.7.21 alpha` testing.
+:::info
 
-|                    Setting                     | Acceptable Values | Default  |
-| :--------------------------------------------: | :---------------: | :------: |
-|  traffic_management.drop_unknown_enabled       |  `true`, `false`  | `false`  |
-|       traffic_management.enabled               |  `true`, `false`  | `false`  |
-|  traffic_management.exhaust_hop_position       |  `true`, `false`  | `false`  |
-| traffic_management.exhaust_hop_telemetry       |  `true`, `false`  | `false`  |
-| traffic_management.nodeinfo_direct_response    |  `true`, `false`  | `false`  |
-| traffic_management.nodeinfo_direct_response_max_hops | `integer`    |   `0`    |
-| traffic_management.position_dedup_enabled      |  `true`, `false`  | `false`  |
-| traffic_management.position_min_interval_secs  |     `integer`     | `86400`  |
-| traffic_management.position_precision_bits     |      `0`-`32`     |   `24`   |
-| traffic_management.rate_limit_enabled          |  `true`, `false`  | `false`  |
-| traffic_management.rate_limit_max_packets      |     `integer`     |   `0`    |
-| traffic_management.rate_limit_window_secs      |     `integer`     |   `0`    |
-| traffic_management.router_preserve_hops        |  `true`, `false`  | `false`  |
-| traffic_management.unknown_packet_threshold    |     `integer`     |   `0`    |
+All Traffic Management Module config options are available in the Python CLI.
+
+:::
+
+|                    Setting                     |   Acceptable Values   |        Default         |
+| :--------------------------------------------: | :-------------------: | :--------------------: |
+|        traffic_management.enabled               |   `true`, `false`     |        `false`         |
+| traffic_management.position_dedup_enabled       |   `true`, `false`     |        `false`         |
+| traffic_management.position_precision_bits      | `integer` (0-32)      |      `24` (~10m)       |
+| traffic_management.position_min_interval_secs   |      `integer`        |    `86400` (1 day)     |
+| traffic_management.nodeinfo_direct_response     |   `true`, `false`     |        `false`         |
+| traffic_management.nodeinfo_direct_response_max_hops | `integer` (0-3) |  `0` (role default)    |
+|     traffic_management.rate_limit_enabled       |   `true`, `false`     |        `false`         |
+|    traffic_management.rate_limit_window_secs    |      `integer`        |          `0`           |
+|    traffic_management.rate_limit_max_packets    |      `integer`        |          `0`           |
+|     traffic_management.drop_unknown_enabled     |   `true`, `false`     |        `false`         |
+|   traffic_management.unknown_packet_threshold   |      `integer`        |          `0`           |
+|    traffic_management.exhaust_hop_telemetry     |   `true`, `false`     |        `false`         |
+|     traffic_management.exhaust_hop_position     |   `true`, `false`     |        `false`         |
+|    traffic_management.router_preserve_hops      |   `true`, `false`     |        `false`         |
 
 :::tip
-Because the device will reboot after each command is sent via CLI, it is recommended when setting multiple values in this section that commands be chained together as one.
+
+Because the device will reboot after each command is sent via CLI, it is recommended when setting multiple values in a config section that commands be chained together as one.
 
 ```shell title="Example:"
-meshtastic --set traffic_management.enabled true --set traffic_management.position_dedup_enabled true
+meshtastic --set traffic_management.enabled true --set traffic_management.position_dedup_enabled true --set traffic_management.position_precision_bits 24
 ```
 
 :::
+
+##### Examples of CLI Usage
+
+```shell title="Enable the module"
+meshtastic --set traffic_management.enabled true
+```
+
+```shell title="Disable the module"
+meshtastic --set traffic_management.enabled false
+```
+
+```shell title="Enable position deduplication with 16-bit precision (~600m grid)"
+meshtastic --set traffic_management.position_dedup_enabled true --set traffic_management.position_precision_bits 16
+```
+
+```shell title="Set minimum position interval to 1 hour"
+meshtastic --set traffic_management.position_min_interval_secs 3600
+```
+
+```shell title="Enable NodeInfo direct response on a router (responds up to 2 hops away)"
+meshtastic --set traffic_management.nodeinfo_direct_response true --set traffic_management.nodeinfo_direct_response_max_hops 2
+```
+
+```shell title="Enable rate limiting: max 10 packets per node per 60 seconds"
+meshtastic --set traffic_management.rate_limit_enabled true --set traffic_management.rate_limit_window_secs 60 --set traffic_management.rate_limit_max_packets 10
+```
+
+```shell title="Drop undecryptable packets after 5 from the same node"
+meshtastic --set traffic_management.drop_unknown_enabled true --set traffic_management.unknown_packet_threshold 5
+```
+
+```shell title="Exhaust hops on relayed telemetry and position broadcasts"
+meshtastic --set traffic_management.exhaust_hop_telemetry true --set traffic_management.exhaust_hop_position true
+```
+
+```shell title="Enable router hop preservation"
+meshtastic --set traffic_management.router_preserve_hops true
+```
+
+```shell title="Get the Traffic Management Module Configuration"
+meshtastic --get traffic_management
+```
 
 </TabItem>
 
@@ -248,79 +265,7 @@ meshtastic --set traffic_management.enabled true --set traffic_management.positi
 
 #### Web
 
-Traffic Management module settings are not yet implemented in the Web UI.
+Not yet implemented.
 
 </TabItem>
 </Tabs>
-
-## Details
-
-Traffic Management is not meant to replace good mesh design. It is a tool for handling edge cases and busy deployments more gracefully.
-
-Some settings are best thought of as protective controls:
-
-- Position deduplication helps when location reports are repeated without useful change.
-- Rate limiting helps when one node is sending too much traffic for the rest of the mesh to absorb cleanly.
-- Unknown-packet suppression helps when a node repeatedly hears traffic it cannot use.
-- NodeInfo direct response helps cut down repeated requests for data that changes rarely.
-
-Some settings are more infrastructure-oriented:
-
-- `router_preserve_hops` helps infrastructure nodes save hop budget for higher-value traffic.
-- `exhaust_hop_position` and `traffic_management.exhaust_hop_telemetry` help contain traffic that you do not want spreading much farther once it reaches a certain point in the mesh.
-
-These controls are especially worth testing on meshes where routers are elevated, strategically placed, or serve as common waypoints for many users.
-
-## Examples
-
-```shell title="Get the Traffic Management configuration"
-meshtastic --get traffic_management
-```
-
-```shell title="Enable the Traffic Management module"
-meshtastic --set traffic_management.enabled true
-```
-
-```shell title="Enable position deduplication with default interval behavior"
-meshtastic --set traffic_management.enabled true --set traffic_management.position_dedup_enabled true
-```
-
-```shell title="Enable nearby NodeInfo direct responses"
-meshtastic --set traffic_management.enabled true --set traffic_management.nodeinfo_direct_response true --set traffic_management.nodeinfo_direct_response_max_hops 2
-```
-
-```shell title="Enable rate limiting"
-meshtastic --set traffic_management.enabled true --set traffic_management.rate_limit_enabled true --set traffic_management.rate_limit_window_secs 60 --set traffic_management.rate_limit_max_packets 10
-```
-
-```shell title="Enable unknown-packet suppression"
-meshtastic --set traffic_management.enabled true --set traffic_management.drop_unknown_enabled true --set traffic_management.unknown_packet_threshold 5
-```
-
-```shell title="Contain relayed telemetry and position traffic"
-meshtastic --set traffic_management.enabled true --set traffic_management.exhaust_hop_telemetry true --set traffic_management.exhaust_hop_position true
-```
-
-```shell title="Enable router hop preservation"
-meshtastic --set traffic_management.enabled true --set traffic_management.router_preserve_hops true
-```
-
-### Client / nearby helper node
-
-Use a conservative profile when a regular client or nearby helper node sees enough traffic to be useful, but should not behave like infrastructure:
-
-```shell title="Conservative helper profile"
-meshtastic --set traffic_management.enabled true --set traffic_management.position_dedup_enabled true --set traffic_management.nodeinfo_direct_response true --set traffic_management.nodeinfo_direct_response_max_hops 0
-```
-
-This keeps NodeInfo direct responses effectively limited to direct neighbors and does not enable router hop preservation.
-
-### Infrastructure router
-
-Use a more infrastructure-focused profile when a router is well placed and sees enough of the mesh to answer nearby requests or protect the local airtime budget:
-
-```shell title="Infrastructure router profile"
-meshtastic --set traffic_management.enabled true --set traffic_management.nodeinfo_direct_response true --set traffic_management.nodeinfo_direct_response_max_hops 3 --set traffic_management.router_preserve_hops true --set traffic_management.exhaust_hop_telemetry true
-```
-
-This setup lets a nearby router answer cached NodeInfo requests, preserve hop budget for eligible traffic, and optionally contain low-value telemetry rebroadcasts once they reach infrastructure.
