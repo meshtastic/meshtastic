@@ -9,14 +9,18 @@ import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 import { Icon } from "@iconify/react";
 
+:::info
+Traffic Management requires firmware version 2.7.21 or later.
+:::
+
 ## Overview
 
-Previous traffic reduction efforts in Meshtastic have mostly been client-side: configure nodes to send less frequently. While effective when every node cooperates, a single misconfigured node broadcasting its position every 30 seconds or hundreds of undecryptable packets from nodes on a different channel can still burden an entire mesh. Traffic Management moves enforcement to the router level so infrastructure operators can protect shared airtime.
+Previous traffic reduction efforts in Meshtastic configure client nodes to send less frequently. While effective when every node cooperates, a single misconfigured node broadcasting its position every 30 seconds or many undecryptable packets can still burden an entire mesh. Traffic Management moves enforcement to routers so meshes can protect shared airtime.
 
-The Traffic Management module provides server-side packet inspection and traffic shaping for Meshtastic routers and nodes. It reduces channel utilization by filtering duplicate position broadcasts, rate-limiting chatty nodes, dropping undecryptable packets, responding to NodeInfo requests from a cache, and controlling hop propagation for telemetry and position data.
+The Traffic Management module provides server-side packet inspection and traffic shaping for Meshtastic routers and clients. It reduces channel utilization by filtering duplicate position broadcasts, rate-limiting chatty nodes, dropping excess undecryptable packets, responding to NodeInfo requests from a cache, and controlling hop propagation for telemetry and position data.
 
 :::info
-Traffic Management must be enabled at both compile time (via `HAS_TRAFFIC_MANAGEMENT=1` in the device's `variant.h`) and at runtime (via the `enabled` config flag). Other devices require custom firmware builds.
+Traffic Management must be enabled at both compile time (via `HAS_TRAFFIC_MANAGEMENT=1` in the device's `variant.h`) and at runtime (via the `enabled` config flag). Currently enabled on the Heltec V4, Station G2, Tracker T1000-E, and Native/Portduino. Other devices require custom firmware builds at this time.
 :::
 
 The module uses a per-node cache to track position fingerprints, packet counts, and timestamps. Each entry is 10 bytes. On ESP32 devices with PSRAM, the cache is allocated in PSRAM to preserve heap for other uses.
@@ -75,6 +79,10 @@ Maximum hop distance from the requestor at which this node will respond to NodeI
 When set to `0`, the role-based maximum is used (3 for routers, 0 for clients). For routers, setting this to `2` limits responses to nodes within 2 hops. Values above the role limit are clamped down.
 
 Default: `0` (use role-based limit).
+
+:::note
+The cached response is always sent with `hop_limit=0`, meaning it is delivered directly to the requestor without being relayed through intermediate nodes.
+:::
 
 ### Rate Limit Enabled
 
