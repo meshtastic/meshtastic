@@ -45,6 +45,17 @@ Before proceeding with the setup, ensure the device meets the following requirem
 
 ### Hardware Compatibility
 
+#### Commercial Options
+  
+- [RAK6421 - WisBlock HAT for Raspberry Pi](https://store.rakwireless.com/products/wisblock-adapter-board-raspberry-pi-rak6421) with [RAK13300 LoRa Module](https://store.rakwireless.com/products/rak13300-wisblock-lpwan)
+- [MeshTadpole](https://www.elecrow.com/meshtadpole-sx1262-usb-stick.html) SX1262 USB Stick
+
+#### DIY Options
+
+- Tested USB devices include the [MeshStick](https://github.com/markbirss/MESHSTICK) and Pinedio CH341 USB adapter.
+- Tested Raspberry Pi LoRa hats include the [MeshAdv-Pi v1.1](https://github.com/chrismyers2000/MeshAdv-Pi-Hat), Adafruit RFM9x, and Elecrow Lora RFM95 IOT.
+- Support for I²C displays, SPI displays, and keyboard input has been confirmed. It is necessary to be aware of potential pin conflicts when stacking hats.
+
 :::caution Warning
 
 - **UART** HATs and SX1302/SX1303 chip-based HATs are not supported. Only hats that use a SPI radio can work with Meshtastic.
@@ -53,10 +64,6 @@ Before proceeding with the setup, ensure the device meets the following requirem
 
 See: [The Meshtastic CRC Problem](https://www.youtube.com/watch?v=PND1GlMSrEM)
 :::
-
-- Tested USB devices include the [MeshStick](https://github.com/markbirss/MESHSTICK) and Pinedio CH341 USB adapter.
-- Tested Raspberry Pi LoRa hats include the [MeshAdv-Pi v1.1](https://github.com/chrismyers2000/MeshAdv-Pi-Hat), Adafruit RFM9x, and Elecrow Lora RFM95 IOT.
-- Support for I²C displays, SPI displays, and keyboard input has been confirmed. It is necessary to be aware of potential pin conflicts when stacking hats.
 
 ### System Requirements
 
