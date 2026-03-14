@@ -26,7 +26,7 @@ Power limits will generally be lifted in the software if `is_licensed` is set to
 
 ## Europe Frequency Bands
 
-EU countries will generally be covered by the Radio Equipment Directive ([2014/53/EU](http://data.europa.eu/eli/dir/2014/53/2023-10-01)) and subsequent amendments, which is then enacted in local laws. Useful information on this is located [here](https://single-market-economy.ec.europa.eu/single-market/european-standards/harmonised-standards/radio-equipment_en).
+EU countries will generally be covered by the [Radio Equipment Directive (2014/53/EU)](https://eur-lex.europa.eu/eli/dir/2014/53/2023-10-01) and subsequent amendments, which is then enacted in local laws. See [additional information about Radio equipment Directive 2014/53/EU](https://single-market-economy.ec.europa.eu/single-market/goods/european-standards/harmonised-standards/radio-equipment_en).
 The bands below were selected based on the maximum power and the duty cycle available. It may be possible to use other frequency bands for specific applications, but these are not currently supported "out of the box".
 
 ### 433 MHz
@@ -66,6 +66,7 @@ Various data-rate options are available when configuring a frequency slot and ar
 - **Spreading Factor (SF)** - How much we "spread" our data over time.
   - Each step up in Spreading Factor doubles the airtime to transmit.
   - Each step up in Spreading Factor adds about 2.5db extra link budget.
+  - **Note:** Spreading Factors 5 and 6 are only supported on 2nd generation LoRa chips (SX126x, LR11xx, SX128x). 1st generation chips (SX127x / RF95) are limited to SF7-SF12. If you select SF5/6 on an unsupported device, the firmware will automatically clamp it to SF11.
 - **Bandwidth** - How big of a slice of the spectrum we use.
   - Each doubling of the bandwidth is almost 3db less link budget.
   - Bandwidths less than 31 may be unstable unless you have a high quality Crystal Oscillator.

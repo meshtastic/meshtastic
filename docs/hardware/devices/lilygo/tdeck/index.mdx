@@ -7,6 +7,7 @@ sidebar_position: 4
 
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
+import { DeviceImage } from "/src/components/DeviceImage";
 
 The T-Deck series is a family of compact handheld keyboard devices that pair a physical keyboard with different touchscreen displays. Variants include the original LCD T-Deck (and Plus) with support for MUI, and the new T-Deck Pro e-ink model for low-power, sunlight-readable operation.
 
@@ -20,6 +21,8 @@ values={[
 ]}>
 
 <TabItem value = "t-deck">
+
+<DeviceImage device="t-deck.svg" alt="LILYGO T-Deck" size="lg" center />
 
 The T-Deck is a compact device featuring a 2.8-inch IPS LCD touch screen with a resolution of 320x240 pixels, integrated with a small keyboard, trackball, microphone and speaker running on an ESP32-S3 dual-core processor. A secondary ESP32-C3 MCU is used to manage the keyboard.
 
@@ -101,6 +104,8 @@ With the device now in the Espressif Firmware Download mode, you can proceed wit
 </TabItem>
 
 <TabItem value = "t-deck-pro">
+
+<DeviceImage device="tdeck_pro.svg" alt="LILYGO T-Deck Pro" size="lg" center />
 
 The T-Deck Pro is a compact handheld device that pairs a 3.1 inch e-ink touchscreen with a physical keyboard, microphone, speaker, integrated 1400 mAH battery in a sleek case. It is available in two main variants: A7682E (4G) and PCM5102A (Voice).
 
