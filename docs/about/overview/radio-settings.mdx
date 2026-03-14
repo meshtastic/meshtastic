@@ -66,6 +66,7 @@ Various data-rate options are available when configuring a frequency slot and ar
 - **Spreading Factor (SF)** - How much we "spread" our data over time.
   - Each step up in Spreading Factor doubles the airtime to transmit.
   - Each step up in Spreading Factor adds about 2.5db extra link budget.
+  - **Note:** Spreading Factors 5 and 6 are only supported on 2nd generation LoRa chips (SX126x, LR11xx, SX128x). 1st generation chips (SX127x / RF95) are limited to SF7-SF12. If you select SF5/6 on an unsupported device, the firmware will automatically clamp it to SF11.
 - **Bandwidth** - How big of a slice of the spectrum we use.
   - Each doubling of the bandwidth is almost 3db less link budget.
   - Bandwidths less than 31 may be unstable unless you have a high quality Crystal Oscillator.
