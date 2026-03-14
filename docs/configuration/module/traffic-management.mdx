@@ -20,15 +20,15 @@ Previous traffic reduction efforts in Meshtastic configure client nodes to send 
 The Traffic Management module provides server-side packet inspection and traffic shaping for Meshtastic routers and clients. It reduces channel utilization by filtering duplicate position broadcasts, rate-limiting chatty nodes, dropping excess undecryptable packets, responding to NodeInfo requests from the local nodeinfo cache, and controlling hop propagation for telemetry and position data.
 
 :::info
-Traffic Management must be enabled at both compile time (via `HAS_TRAFFIC_MANAGEMENT=1` in the device's `variant.h`) and at runtime (via the `enabled` config flag). Currently enabled on the Heltec V4, Station G2, Tracker T1000-E, and Native/Portduino. Other devices require custom firmware builds at this time.
+Traffic Managementnow ships by default on all ESP32 and nRF52 builds, plus Native/Portduino. Custom variants can still override `HAS_TRAFFIC_MANAGEMENT` or `TRAFFIC_MANAGEMENT_CACHE_SIZE` if needed.
 :::
 
 The module uses a per-node cache to track position fingerprints, packet counts, and timestamps. Each entry is 10 bytes. On ESP32 devices with PSRAM, the cache is allocated in PSRAM to preserve heap for other uses.
 
 | Platform | Cache Entries | Memory |
 | :------: | :-----------: | :----: |
-| ESP32 (with PSRAM), Native | 2048 | ~20 KB (PSRAM) |
-| nRF52 | 1024 | ~10 KB (heap) |
+| ESP32 (without PSRAM), nRF52 | 1024 | ~10 KB (heap) |
+| ESP32 (with PSRAM), Native | 2048 | ~20 KB (PSRAM when available, otherwise heap) |
 
 
 ## Traffic Management Module Config Values
