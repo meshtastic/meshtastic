@@ -1,0 +1,164 @@
+---
+title: "Taming chutil: Server-Side Traffic Management for Meshtastic"
+description: "The Traffic Management module brings server-side packet inspection and limits to Meshtastic routers, giving mesh operators control over congestion."
+slug: traffic-management-module
+authors: H3lix
+tags: ["Meshtastic", "traffic management", "routing", "infrastructure", "mesh optimization"]
+date: 2026-03-14T09:00
+hide_table_of_contents: false
+---
+
+Every growing mesh eventually meets the same villain... that one node that is just a little too enthusiastic.
+
+Maybe it is sending repeated position updates. Maybe it is flinging telemetry around like confetti. Maybe it is simply configured in a way that makes sense to one person, but not on a real shared mesh with real airtime limits. Whatever the cause, one (or a few) noisy nodes can burn far more shared resources than it should.
+
+Maybe there should be a way to handle this excess traffic in the mesh.
+
+Welcome to the new Traffic Management module.
+
+{/* truncate */}
+
+## TL;DR
+
+Traffic Management is the first server-side traffic shaping module for Meshtastic. It runs on intermediate nodes and inspects every passing packet, deduplicating positions, rate-limiting chatty nodes, caching NodeInfo responses, filtering undecryptable noise, and controlling hop propagation. Everything is opt-in and configurable to match the needs of each particular mesh or area.
+
+## The Problem: Death by a Thousand Broadcasts
+
+If you've operated a mesh with hundreds of nodes, you've probably seen it: channel utilization creeping up, packets getting delayed/dropped, and the general feeling that your mesh is working harder than it should.
+
+Here's what's often going on under the hood:
+
+- **Duplicate positions everywhere.** A node sitting on a desk or roof broadcasts the same coordinates every few minutes. Multiply that by 50 nodes and that's a lot of airtime spent saying "yep, still right here."
+- **NodeInfo fan-out.** When a new node asks "who is node X?", that request ripples across the entire mesh. Every hop costs airtime, even if a nearby router already knows the answer.
+- **Rate-limit undecryptable noise.** Nodes on a different channel or encryption key generate packets your mesh node can't read but still faithfully relays. That's airtime you'll never get back.
+- **One bad apple.** A sensor node misconfigured to send telemetry every few seconds, or a node stuck in a reboot loop, can single-handedly push channel utilization through the roof (or the noise floor).
+
+Until now, traffic management in Meshtastic has been entirely client-side. We've made great progress asking client nodes to behave nicely: longer intervals, smaller payloads, smarter timing. And it works, when everyone cooperates. But one node that didn't get the memo or firmware update can undo all of that.
+
+Traffic Management flips the script. Instead of asking node owners nicely, the mesh can now enforce limits. Think of it as air traffic control for your mesh: keeping things flowing smoothly so every packet gets where it needs to go.
+
+## The Five Levers
+
+### 1. Position Deduplication: "We Heard You the First Time"
+
+The module truncates GPS coordinates to a configurable precision grid and remembers the last position from each node. If a node sends the same position (within that grid cell) inside the configured time window, the duplicate is quietly dropped.
+
+How big is a grid cell? That depends on the precision bits you choose:
+
+| Bits | Grid Size | Good For |
+| :--: | :-------: | :------: |
+| 32 | ~1 cm | No truncation |
+| 24 | ~10 m | Pedestrian / general (default) |
+| 20 | ~40 m | Vehicles |
+| 16 | ~600 m | City-level |
+| 12 | ~10 km | Regional |
+
+**Real-world example:** Node X is parked in a lot and broadcasts the same position 48 times a day. With position dedup at the default 24-bit precision and a 1-day interval, the router forwards the first one and drops the other 47. That's 47 fewer packets rattling through your mesh.
+
+### 2. NodeInfo Cache: "Let Me Save You a Trip"
+
+NodeInfo requests are one of the most common sources of mesh chatter. A node wants to know the long name or hardware info for another node, and that request fans out hop by hop across the mesh. But here's the thing: your router probably already knows the answer. It's been sitting there listening to traffic and has a full NodeDB.
+
+With NodeInfo Direct Response enabled, when a request arrives, the router checks its local cache. If it has the answer, it sends a single-hop reply right back. No need for the request to travel 5 more hops to find the original node.
+
+This is where well-placed infrastructure really shines. A request might need 2-3 hops to reach the node being asked about, but a strategically positioned router can return cached results directly. It's like having a librarian who already has the book you want instead of requesting the only copy from another library 3 cities away.
+
+**How far will a router reach?** That depends on the device role:
+
+| Device Role | Max Response Distance |
+| :---------: | :-------------------: |
+| `ROUTER`, `ROUTER_LATE`, `CLIENT_BASE` | Up to 3 hops |
+| All other roles | Direct neighbors only |
+
+Routers answer wider reach because they should be in favorable locations. Clients stay conservative, answering only their immediate neighbors.
+
+### 3. Rate Limiting: "Slow Down There"
+
+Sometimes a node just sends too much. Maybe it's a misconfigured sensor, maybe it's a firmware bug, maybe someone set their position interval to 5 seconds "to test something" and forgot about it. Whatever the reason, per-node rate limiting lets your router say "that's enough for now."
+
+You configure a time window and a maximum packet count. If a node exceeds the limit, additional packets are dropped until the window resets. Routing and admin packets are always exempt so the mesh can still manage itself.
+
+**Example:** With a 60-second window and a 5-packet limit, a node can send up to 5 packets per minute. That's plenty for normal operation, but it stops a runaway node from flooding the channel.
+
+### 4. Unknown Packet Handling: "If I Can't Read It, Why Forward It?"
+
+In areas where multiple Meshtastic meshes overlap, or where nodes are using different encryption keys, your router ends up relaying packets it can't even decrypt. They consume airtime when it might not be available.
+
+With unknown packet filtering enabled, the module counts undecryptable packets per source node. Once a node exceeds the threshold, subsequent packets from that node are dropped until the counter resets.
+
+This is particularly valuable in large meshes. Your router stops being an unconditional relay for this traffic. One example is a private channel shared by a small group that is spamming a ton of position packets. The routers don't know what this traffic is, but it's taking a lot of airtime.
+
+### 5. Hop Control: "How Far Should This Travel?"
+
+The final set of controls governs how far packets propagate through your router:
+
+- **Exhaust Hop Telemetry / Position:** Forces `hop_limit=0` on relayed telemetry or position broadcasts from other nodes. Your own packets are unaffected. This keeps neighborhood telemetry and position data local, freeing up airtime for messages that actually need to travel far.
+
+- **Router Preserve Hops:** The flip side. When enabled on a router, hop limits are preserved for router-to-router traffic instead of being decremented. This applies to messages, NodeInfo, and other non-position/telemetry traffic. Position and telemetry are always excluded from hop preservation since they have their own exhaust controls. This extends effective mesh range through infrastructure nodes, similar to Zero-Cost Hops but without requiring the favorites mechanism.
+
+These two features are independent controls: exhaust hops to keep position and telemetry data local, and preserve hops to extend your infrastructure backbone for everything else.
+
+## Client vs Router: Who Gets What?
+
+Traffic Management treats routers and clients differently by design due to function. 
+
+| Capability | Router Roles | Client Roles |
+| :--------: | :----------: | :----------: |
+| NodeInfo response range | Up to 3 hops | Direct neighbors only |
+| Router hop preservation | Active | Not applicable |
+| Position dedup | Full | Full |
+| Rate limiting | Full | Full |
+| Unknown packet filtering | Full | Full |
+| Hop exhaustion | Full | Full |
+
+Router roles include `ROUTER`, `ROUTER_LATE`, and `CLIENT_BASE`. All other roles are treated as clients for traffic management purposes.
+
+## Quick Start: A Sensible Baseline
+
+Here's a reasonable starting configuration for a community mesh router. Tune the values to match your mesh size and traffic patterns:
+
+```shell title="Sensible baseline for a router"
+meshtastic --set traffic_management.enabled true \
+  --set traffic_management.position_dedup_enabled true \
+  --set traffic_management.position_precision_bits 24 \
+  --set traffic_management.position_min_interval_secs 21600 \
+  --set traffic_management.nodeinfo_direct_response true \
+  --set traffic_management.rate_limit_enabled true \
+  --set traffic_management.rate_limit_window_secs 60 \
+  --set traffic_management.rate_limit_max_packets 10 \
+  --set traffic_management.exhaust_hop_position true \
+  --set traffic_management.exhaust_hop_telemetry true
+```
+
+What this does:
+- **Position dedup at ~10m precision, 1 hour window** -- nodes that don't move won't flood the mesh, but genuine movement still gets through promptly.
+- **NodeInfo direct response** -- your router answers NodeInfo requests from cache, saving hops and airtime.
+- **Rate limit at 10 packets per minute per node** -- plenty for normal use, but stops runaway nodes.
+- **Exhausts hops for position and telemetry** -- Router will broadcast the position or telemetry to the area, but eliminates further hops.
+
+From there, you might add unknown packet filtering if you find these types of packets taking more than their fair share of air time.
+
+## FAQ
+
+**Does this affect my text messages?**
+No. Traffic management does not inspect or drop text message content. Rate limiting applies per-node across most packet types, but with sensible thresholds, normal messaging is unaffected. Routing and admin packets are always exempt.
+
+**Which devices support this?**
+This is currently enabled on almost all Meshtastic nodes. (ESP32, NRF52, and Native/Portduino)
+
+**Can a router drop my packets unfairly?**
+Every feature is opt-in and configurable by node owners. Rate limits, thresholds, and intervals are all tunable as needed. At that point, it treats all nodes the same way without favoritism.
+
+**Does this replace Zero-Cost Hops?**
+Not yet, but eventually. Zero-Cost Hops preserves hop budget between favorited routers using the `relay_node` field. Traffic Management's `router_preserve_hops` provides a similar benefit without requiring favorites, and also extends to `ROTUER_LATE` roles as requested by a few meshers.
+
+**What about Android and iOS settings?**
+Client app integration is in progress. For now, configuration is available through the Python CLI. See the [module configuration docs](/docs/configuration/module/traffic-management) for the full settings reference. This allows for more testing before releasing the configuration to everyone. 
+
+## Looking Ahead
+
+This module is a first step into server-side mesh management. It's also the beginning of caching rarely-changed data on infrastructure nodes. Today it's NodeInfo, but the possibility exists for more. As meshes grow from dozens to hundreds to thousands of nodes, having smart routers that can make local decisions about what to forward becomes increasingly important.
+
+The goal isn't to lock things down. It's to give mesh operators the tools to keep their networks healthy so everyone gets a better experience, even with a node that's misconfigured. Especially that node, because now the network can be configured to handle the situation automatically instead of the whole mesh suffering.
+
+Happy meshing. May your channel utilization stay low and your (healthy) packets always find their way.
