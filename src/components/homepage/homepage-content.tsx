@@ -3,15 +3,35 @@ import { EcosystemStats } from "@/components/homepage/ecosystem-stats";
 import { HomepageDownloads } from "@/components/homepage/homepage-downloads";
 import { HomepageFeatures } from "@/components/homepage/homepage-features";
 import { NetworkMapBackground } from "@/components/homepage/network-map-background";
+import { Devices } from "@/components/homepage/devices";
 import { Sponsors } from "@/components/homepage/sponsors";
 import { Button } from "@/components/ui/button";
 import links from "@/data/links.json";
 import Link from "@docusaurus/Link";
-import { ArrowRight, Download, FileText } from "lucide-react";
-import React from "react";
+import { ArrowRight, Download, FileText, Radio, X } from "lucide-react";
+import React, { useEffect, useState } from "react";
 import { SocialSidebar } from "./social-sidebar";
 
 export function HomePageContent() {
+  const [showDevices, setShowDevices] = useState(false);
+
+  useEffect(() => {
+    if (showDevices) {
+      document.body.style.overflow = "hidden";
+      const handleEscape = (e: KeyboardEvent) => {
+        if (e.key === "Escape") setShowDevices(false);
+      };
+      document.addEventListener("keydown", handleEscape);
+      return () => {
+        document.body.style.overflow = "";
+        document.removeEventListener("keydown", handleEscape);
+      };
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [showDevices]);
+
   return (
     <div className="relative min-h-screen overflow-hidden">
       <div aria-hidden="true">
@@ -44,7 +64,7 @@ export function HomePageContent() {
                 </p>
               </div>
 
-              <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center lg:justify-start">
+              <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center lg:justify-start flex-wrap">
                 <Link to={links.getStarted}>
                   <Button
                     size="lg"
@@ -56,6 +76,15 @@ export function HomePageContent() {
                     <ArrowRight className="ml-2 size-6" />
                   </Button>
                 </Link>
+                <Button
+                  size="lg"
+                  variant="ghost"
+                  onClick={() => setShowDevices(true)}
+                  className="w-full border-0 bg-transparent p-5 font-mono text-base text-foreground !shadow-none transition-colors hover:bg-[hsl(var(--btn-primary)/0.2)] hover:text-[hsl(var(--btn-primary))] sm:w-auto"
+                >
+                  <Radio className="mr-2 size-6" />
+                  Need Hardware?
+                </Button>
                 <Link to={links.docs}>
                   <Button
                     size="lg"
@@ -63,7 +92,7 @@ export function HomePageContent() {
                     className="w-full border-0 bg-transparent p-5 font-mono text-base text-foreground !shadow-none transition-colors hover:bg-[hsl(var(--btn-primary)/0.2)] hover:text-[hsl(var(--btn-primary))] sm:w-auto"
                   >
                     <FileText className="mr-2 size-6" />
-                    Read Docs
+                    Read the Docs
                   </Button>
                 </Link>
               </div>
@@ -86,6 +115,35 @@ export function HomePageContent() {
           </section>
         </main>
       </div>
+
+      {/* Devices Overlay */}
+      {showDevices && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-label="Devices"
+          className="fixed inset-0 z-[100] flex items-center justify-center p-4 pt-20"
+        >
+          <div
+            className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+            aria-hidden="true"
+          />
+          <div
+            role="document"
+            className="relative z-10 max-h-[calc(90vh-4rem)] w-full max-w-5xl overflow-y-auto rounded-2xl border border-border/50 bg-card/95 p-6 pt-12 shadow-2xl backdrop-blur-xl animate-in fade-in zoom-in-95 duration-200"
+          >
+            <button
+              type="button"
+              onClick={() => setShowDevices(false)}
+              className="absolute right-4 top-4 z-20 rounded-lg p-2 text-muted-foreground transition-colors hover:bg-primary/10 hover:text-foreground"
+              aria-label="Close"
+            >
+              <X className="size-6" />
+            </button>
+            <Devices />
+          </div>
+        </div>
+      )}
     </div>
   );
 }

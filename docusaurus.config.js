@@ -90,7 +90,7 @@ const config = {
       options: {
         themeVariables: {
           primaryColor: "#67EA94",
-          primaryTextColor: "var(--tw-prose-headings)",
+          primaryTextColor: "#1a1a1a",
           primaryBorderColor: "#4D4D4D",
           lineColor: "#EAD667",
           secondaryColor: "#EA67BD",
