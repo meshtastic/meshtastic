@@ -36,6 +36,26 @@ import { Icon } from "@iconify/react";
     sudo apt install meshtasticd
     ```
 
+    **Install using Debian extrepo:**
+
+    extrepo is a tool that helps configuring external repositories on Debian in a secure manner. As a pre-requisite for installation using this method, extrepo should be installed in your Debian machine.
+
+    1) Install extrepo if it is not installed previously:
+    ```shell
+    sudo apt install extrepo
+    ```
+
+    2) Enable the Meshtastic repository with extrepo:
+    ```shell
+    extrepo enable meshtastic
+    ```
+
+    3) Install Meshtastic:
+    ```shell
+    sudo apt update
+    sudo apt install meshtasticd
+    ```
+
     <details>
       <summary>Experimental builds</summary>
 
