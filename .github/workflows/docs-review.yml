@@ -134,7 +134,7 @@ jobs:
             let body = `### 🤖 Docs Review (rcarteraz style)\n\n`;
             body += `Hey @${prAuthor}! Thanks for the ${hasBlogChanges ? "blog post" : "docs"} contribution! Here's a quick review:\n\n`;
 
-            if (suggestions.length === 0 && praises.length >= 0) {
+            if (suggestions.length === 0) {
               body += `Looks good! `;
               if (hasBlogChanges) {
                 body += `Nice blog post. `;
