@@ -1,0 +1,198 @@
+name: Docs Review (@rcarteraz style)
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+    paths:
+      - "docs/**"
+      - "blog/**"
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  docs-review:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Review docs changes
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { owner, repo } = context.repo;
+            const prNumber = context.payload.pull_request.number;
+            const prAuthor = context.payload.pull_request.user.login;
+
+            // Get the list of changed files
+            const { data: files } = await github.rest.pulls.listFiles({
+              owner,
+              repo,
+              pull_number: prNumber,
+              per_page: 100,
+            });
+
+            const suggestions = [];
+            const praises = [];
+            let hasBlogChanges = false;
+            let hasDocsChanges = false;
+
+            for (const file of files) {
+              const filename = file.filename;
+              const patch = file.patch || "";
+
+              // Track what kind of changes we have
+              if (filename.startsWith("blog/")) hasBlogChanges = true;
+              if (filename.startsWith("docs/")) hasDocsChanges = true;
+
+              // Check for non-webp images being added
+              if (
+                file.status === "added" &&
+                /\.(png|jpg|jpeg|gif)$/i.test(filename) &&
+                !filename.includes("meshtastic_logo")
+              ) {
+                suggestions.push(
+                  `📸 **${filename}** — Could you convert this to \`.webp\`? We try to keep images in webp format to reduce file sizes. Thanks!`
+                );
+              }
+
+              // Check for images in wrong directories
+              if (
+                file.status === "added" &&
+                /\.(png|jpg|jpeg|gif|webp|svg)$/i.test(filename) &&
+                !filename.startsWith("static/") &&
+                !filename.startsWith(".github/")
+              ) {
+                suggestions.push(
+                  `📁 **${filename}** — Looks like this image might belong in the \`static/img/\` directory. Could you move it there? Linking would then be \`/img/${filename.split("/").pop()}\`.`
+                );
+              }
+
+              // Check blog posts for missing frontmatter image field
+              if (
+                filename.startsWith("blog/") &&
+                filename.endsWith(".mdx") &&
+                file.status === "added"
+              ) {
+                if (patch && !patch.includes("image:")) {
+                  suggestions.push(
+                    `🖼️ **${filename}** — This blog post looks like it's missing an \`image\` field in the frontmatter for social media previews. Stupidly the preview image has to be a PNG — for some reason it never works with webp. Also for the best experience the preview image should be 1200 x 630.`
+                  );
+                }
+              }
+
+              // Check for inconsistent import paths in MDX files
+              if (filename.endsWith(".mdx") && patch) {
+                const hasRelativeImport =
+                  /from\s+["']\/src\//.test(patch) ||
+                  /from\s+["']\.\.\//.test(patch);
+                const hasSiteImport = /from\s+["']@site\/src\//.test(patch);
+
+                if (hasRelativeImport && !hasSiteImport) {
+                  suggestions.push(
+                    `🔗 **${filename}** — Looks like this uses a relative import path. Could you use the \`@site/src/\` alias instead? It's the canonical Docusaurus alias and is more explicit about the import source.`
+                  );
+                }
+              }
+
+              // Check for large video files without preload hints
+              if (filename.endsWith(".mdx") && patch) {
+                if (
+                  patch.includes("<video") &&
+                  !patch.includes('preload="metadata"') &&
+                  !patch.includes('preload="none"')
+                ) {
+                  suggestions.push(
+                    `🎬 **${filename}** — The video embed could benefit from \`preload="metadata"\` to avoid unnecessary bandwidth usage, especially on mobile.`
+                  );
+                }
+              }
+
+              // Praise good practices
+              if (
+                filename.endsWith(".mdx") &&
+                patch &&
+                patch.includes("@site/src/")
+              ) {
+                praises.push(
+                  `Using the \`@site/\` import alias in **${filename}**`
+                );
+              }
+              if (
+                file.status === "added" &&
+                filename.endsWith(".webp")
+              ) {
+                praises.push(
+                  `Image already in webp format — **${filename}**`
+                );
+              }
+            }
+
+            // Build the review comment
+            let body = `### 🤖 Docs Review (rcarteraz style)\n\n`;
+            body += `Hey @${prAuthor}! Thanks for the ${hasBlogChanges ? "blog post" : "docs"} contribution! Here's a quick review:\n\n`;
+
+            if (suggestions.length === 0 && praises.length >= 0) {
+              body += `Looks good! `;
+              if (hasBlogChanges) {
+                body += `Nice blog post. `;
+              }
+              if (hasDocsChanges) {
+                body += `Thanks for helping improve the docs. `;
+              }
+              body += `👍\n`;
+            }
+
+            if (praises.length > 0) {
+              body += `**Nice work on:**\n`;
+              for (const praise of praises) {
+                body += `- ✅ ${praise}\n`;
+              }
+              body += `\n`;
+            }
+
+            if (suggestions.length > 0) {
+              body += `**A few things to check:**\n\n`;
+              for (const suggestion of suggestions) {
+                body += `${suggestion}\n\n`;
+              }
+              body += `No rush — just some things that would help keep the docs consistent. Let me know if you have any questions!\n`;
+            }
+
+            body += `\n---\n*This is an automated review based on docs contribution guidelines.*`;
+
+            // Post or update the review comment
+            const botCommentIdentifier =
+              "### 🤖 Docs Review (rcarteraz style)";
+
+            // Check for existing bot comment
+            const { data: comments } = await github.rest.issues.listComments({
+              owner,
+              repo,
+              issue_number: prNumber,
+            });
+
+            const existingComment = comments.find(
+              (c) =>
+                c.body && c.body.startsWith(botCommentIdentifier)
+            );
+
+            if (existingComment) {
+              await github.rest.issues.updateComment({
+                owner,
+                repo,
+                comment_id: existingComment.id,
+                body,
+              });
+              console.log("Updated existing review comment");
+            } else {
+              await github.rest.issues.createComment({
+                owner,
+                repo,
+                issue_number: prNumber,
+                body,
+              });
+              console.log("Created new review comment");
+            }
