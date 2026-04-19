@@ -1,0 +1,40 @@
+---
+id: linux
+title: Meshtastic on Linux
+hide_title: true
+sidebar_label: Linux
+sidebar_position: 7
+description: Set up and configure Meshtastic on Linux-native devices using the meshtasticd binary.
+---
+import { Dark, Light } from "/src/components/ColorMode";
+
+<Dark>
+  <img
+    src="/img/meshtasticd/Meshtasticd-Terminal-Long_Dark.svg"
+    alt="Meshtasticd Terminal Dark"
+  />
+</Dark>
+<Light>
+  <img
+    src="/img/meshtasticd/Meshtasticd-Terminal-Long_Light.svg"
+    alt="Meshtasticd Terminal Light"
+  />
+</Light>
+
+**meshtasticd** is the Linux-native binary for running Meshtastic on devices with SPI or USB radios.
+
+With `meshtasticd`, your Linux computer is transformed into a Meshtastic node, enabling it to send and receive messages, share location data, and interact with other Meshtastic devices over LoRa or UDP.
+
+Features include:
+- Lightweight! `meshtasticd` is built on the same core as the Meshtastic firmware.
+- Supports SPI and USB radios.
+- Packaged for most popular Linux distributions.
+- Easy yaml-based configurations.
+- Premade pinouts for popular [boards](hardware/boards).
+
+Typical use cases:
+- Always-on base stations
+- Network gateways
+- MQTT bridges
+- Integration with home automation systems
+- Remote monitoring nodes
