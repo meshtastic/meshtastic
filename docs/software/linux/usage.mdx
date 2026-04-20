@@ -1,20 +1,116 @@
 ---
 id: usage
-title: Usage - meshtasticd
+title: Using meshtasticd on Linux
 description: Usage of the Meshtastic daemon on Linux systems.
 sidebar_label: Usage
 sidebar_position: 2
 ---
 
+This page explains how to run and manage the `meshtasticd` daemon on Linux, including command-line usage, systemd service management, and Docker deployment.
+
+## Default installation locations
+
+When installed via the Linux packages, `meshtasticd` uses the following default paths:
+
+- **Daemon binary**  
+  `/usr/bin/meshtasticd`
+
+- **systemd service file**  
+  `/usr/lib/systemd/system/meshtasticd.service`
+
+- **Default virtual filesystem (VFS)**  
+  `/var/lib/meshtasticd/.portduino/default`
+
+- **Primary configuration file**  
+  `/etc/meshtasticd/config.yaml`
+
+- **Additional configuration overrides**  
+  `/etc/meshtasticd/config.d/`
+
+Device-specific configuration templates can be enabled by moving them from:
+
+```
+/etc/meshtasticd/available.d/
+```
+
+to:
+
+```
+/etc/meshtasticd/config.d/
+```
+
+To edit your default configuration file, simply open it with your text editor of choice, make desired changes and save.  Then restart the daemon.
+
+```shell
+sudo nano /etc/meshtasticd/config.yaml
+sudo systemctl restart meshtasicd
+```
+
 ## meshtasticd CLI options
 
-Additional arguments can be given to the program, which are listed as follows:
+The daemon accepts several command‑line arguments that control how it starts and where it stores its data:
 
-- `-c CONFIG_FILE`: The configuration file to use.
-- `-d DIRECTORY`: The directory to use as the virtual filesystem (VFS).
-- `-e`: Erase the virtual filesystem before use.
-- `-h MAC_ADDRESS`: The MAC address to assign to this virtual machine.
-- `-p TCP_PORT`: The local TCP port to use for running the Meshtastic API.
+- `-c CONFIG_FILE` – Path to the configuration file to load.
+- `-d DIRECTORY` – Directory used as the virtual filesystem (VFS) where node data and state are stored.
+- `-e` – Erase the virtual filesystem before starting the daemon.
+- `-h MAC_ADDRESS` – MAC address to assign to this virtual node instance.
+- `-p TCP_PORT` – TCP port used to expose the Meshtastic API server.
+
+### Example CLI usage
+
+Run `meshtasticd` (as user meshtasticd) locally with a configuration file and a directory for the virtual filesystem on port 4404:
+
+```shell
+sudo -u meshtasticd meshtasticd -c config.yaml -d ./data -p 4404
+```
+
+This example:
+
+- Loads configuration from `config.yaml`
+- Stores node data in the `./data` directory
+- Exposes the Meshtastic TCP API on a non-default port `4404`
+
+The TCP API can then be accessed by clients such as the Python CLI:
+
+```shell
+meshtastic --host localhost:4404 --info
+```
+
+## Monitoring and troubleshooting
+
+These commands can help when troubleshooting or monitoring a running `meshtasticd` instance.
+
+### View service logs (systemd)
+
+If `meshtasticd` is running as a systemd service, you can view logs with:
+
+```shell
+journalctl -u meshtasticd
+```
+
+Follow logs in real time:
+
+```shell
+journalctl -u meshtasticd -f
+```
+
+### Check service status
+
+```shell
+systemctl status meshtasticd
+```
+
+### Restart the service
+
+```shell
+sudo systemctl restart meshtasticd
+```
+
+### Stop or start the service
+```shell
+sudo systemctl stop meshtasticd
+sudo systemctl start meshtasticd
+```
 
 ## Usage with Docker
 
