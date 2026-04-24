@@ -1,0 +1,42 @@
+---
+id: linux-native-hardware
+title: Linux Hardware
+sidebar_label: Hardware
+sidebar_position: 3
+description: Set up and configure Meshtastic on Linux-native devices using the meshtasticd binary.
+---
+
+## LoRa Radio Interfaces
+
+### SPI
+
+Supported [boards](boards) can be paired with SPI radio hats, such as the RAK6421.
+
+### USB
+
+Any Linux device with a USB port can use a CH341-based USB radio.
+
+USB support via the **CH341** was added in Meshtastic 2.5.18.
+
+Note that in order for Linux to recognize multiple CH341-USB devices, an EEPROM must be included onboard, burned with a unique serial number.
+Devices like the Pine64 Pinedio v1 do not include this.
+
+## Hardware Compatibility
+
+:::caution Warning
+
+- **UART** HATs and SX1302/SX1303 chip-based HATs are not supported. Only hats that use a SPI radio can work with Meshtastic.
+- The Waveshare SX1262 LoRaWAN Hat for Raspberry Pi is not recommended for deployment. It has known hardware limitations that may affect longer messages. If you must use it, please use the **CLIENT_MUTE** role to avoid rebroadcasting.
+- The Pine64 Pinedio is also not recommended for deployment, as it suffers from similar hardware limitations as the Waveshare SX1262 LoRaWAN Hat.
+
+See: [The Meshtastic CRC Problem](https://www.youtube.com/watch?v=PND1GlMSrEM)
+:::
+
+- Tested USB devices include the [MeshStick](https://github.com/markbirss/MESHSTICK) and Pinedio CH341 USB adapter.
+- Tested Raspberry Pi LoRa hats include the [MeshAdv-Pi v1.1](https://github.com/chrismyers2000/MeshAdv-Pi-Hat), Adafruit RFM9x, and Elecrow Lora RFM95 IOT.
+- Support for I²C displays, SPI displays, and keyboard input has been confirmed. It is necessary to be aware of potential pin conflicts when stacking hats.
+
+### System Requirements
+
+- The Meshtastic binary, `meshtasticd`, necessitates root access or a user with permissions to access GPIO, SPI, and other interfaces.
+- A Linux distribution compatible with the Meshtastic installation packages.
