@@ -1,0 +1,278 @@
+---
+id: usage
+title: Usage - meshtasticd
+description: Usage of the Meshtastic daemon on Linux systems.
+sidebar_label: Usage
+sidebar_position: 2
+---
+
+## Configuration
+
+### Meshtasticd Configuration
+
+- The meshtasticd configuration is at `/etc/meshtasticd/config.yaml` by default. If a `config.yaml` is found in the current directory, that takes precedence. And a config file specified with the `-c/--config` option has the highest precedence.
+
+To enable a LoRa radio connected to your device, first locate it's configuration in the presets, then copy to `config.d`.
+
+```shell
+# First, locate your radio hardware
+ls /etc/meshtasticd/available.d
+# Ex: display-waveshare-2.8.yaml  lora-MeshAdv-900M30S.yaml  lora-meshstick-1262.yaml
+
+# Then, copy desired config to `config.d`
+# Example:
+cp /etc/meshtasticd/available.d/lora-MeshAdv-900M30S.yaml /etc/meshtasticd/config.d/
+```
+
+:::info
+The `config.yaml` file is sensitive to spacing, so ensure that the indentation and spacing are correct.
+:::
+
+### meshtasticd CLI options
+
+Additional arguments can be given to the program, which are listed as follows:
+
+- `-c CONFIG_FILE`: The configuration file to use.
+- `-d DIRECTORY`: The directory to use as the virtual filesystem (VFS).
+- `-e`: Erase the virtual filesystem before use.
+- `-h MAC_ADDRESS`: The MAC address to assign to this virtual machine.
+- `-p TCP_PORT`: The local TCP port to use for running the Meshtastic API.
+
+### Web Server
+
+`meshtasticd` has web server support starting with release `2.3.0`.
+
+To enable this:
+
+```yaml
+Webserver:
+  Port: 9443 # Port for Webserver & Webservices
+  RootPath: /usr/share/meshtasticd/web # Root Dir of WebServer
+```
+
+### Bluetooth Support
+
+Bluetooth is currently unsupported and not functional on Linux Native devices. This may change in the future.
+
+### Persistence
+
+- The persistent .proto db files of the portduino version of meshtasticd are stored under: `/var/lib/meshtasticd/.portduino/default/prefs/`.
+
+## CLI Configuration
+
+Interaction with Meshtastic can be conducted via the command line:
+
+```plaintext
+meshtastic --host localhost ...
+```
+
+See:
+
+- [CLI Installation](/docs/software/python/cli/installation/)
+- [CLI Usage](/docs/software/python/cli/usage/)
+
+## Usage with Docker
+
+If you do not own a Linux machine, or you just want to separate things, you might want
+to run the application inside a docker container.
+
+### Usage
+
+First, [Pull the image](/docs/linux/installation/?os=docker)
+
+To run a container, type
+
+```shell
+docker run -p 4403:4403 --restart unless-stopped --name meshtasticd meshtastic/meshtasticd:beta
+```
+
+or, to get an interactive shell on the docker created container:
+
+```shell
+docker run -it -p 4403:4403 --restart unless-stopped --name meshtasticd meshtastic/meshtasticd:beta bash
+```
+
+### CH341 USB
+
+If you want to use a `CH341` USB adapter (MeshStick), you need to pass the `bus` device to the container with the `--device` flag:
+
+First, locate the USB device with `lsusb`:
+
+```shell
+lsusb
+```
+
+You should see something like this:
+
+```plaintext
+Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+Bus 001 Device 002: ID 1199:9091 Sierra Wireless, Inc. EM7565-9
+Bus 001 Device 003: ID 8087:0032 Intel Corp. AX210 Bluetooth
+Bus 001 Device 004: ID 13d3:56b2 IMC Networks Integrated Camera
+Bus 001 Device 005: ID 06cb:009a Synaptics, Inc. Metallica MIS Touch Fingerprint Reader
+Bus 001 Device 006: ID 1a86:5512 QinHeng Electronics CH341 in EPP/MEM/I2C mode, EPP/I2C adapter
+```
+
+Locate the `CH341` device and take note of the **Bus** and **Device** numbers. In this example: `001/006`.
+
+Then, run the container with the `--device` flag,
+additionally mounting a local configuration file:
+
+```shell
+docker run -it -p 4403:4403 --restart unless-stopped --name meshtasticd --device=/dev/bus/usb/001/006 -v ./config.yaml:/etc/meshtasticd/config.yaml:ro meshtastic/meshtasticd:beta
+```
+
+### Executing the application interactively
+
+To use Python CLI against exposed TCP port 4403,
+type this in the host machine:
+
+```shell
+meshtastic --info --host localhost
+```
+
+You can interact with the container in the same way as a normal device using a client that supports TCP connections.
+
+### Stop the container
+
+If started with the `--name meshtasticd` arg, you can stop the container with the following command:
+
+```shell
+docker kill meshtasticd
+```
+
+Else, run this to get the ID:
+
+```shell
+docker ps
+```
+
+Then, stop the container with command:
+
+```shell
+docker kill <id>
+```
+
+> Tip: you can just use the first few characters of the ID in docker commands
+
+## Advanced Setup and Troubleshooting
+
+### Enabling the systemd service
+
+To configure the device to start and stop meshtasticd as a service using systemctl you can set up the service unit using the instructions below.
+
+<details>
+  <summary>Create the systemd service (only for manual installs)</summary>
+
+The `meshtasticd` systemd service is automatically installed when using the official Meshtastic packages.
+These instructions are only needed when installing manually.
+
+Create the service unit file:
+
+Create a new file in the /etc/systemd/system/ directory with a name like meshtasticd.service.
+
+```shell
+sudo nano /etc/systemd/system/meshtasticd.service
+```
+
+Add the following content to the file:
+
+```plaintext
+[Unit]
+Description=Meshtastic Native Daemon
+After=network-online.target
+StartLimitInterval=200
+StartLimitBurst=5
+
+[Service]
+AmbientCapabilities=CAP_NET_BIND_SERVICE
+User=root
+Group=root
+Type=simple
+ExecStart=/usr/bin/meshtasticd
+Restart=always
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target
+```
+
+Reload systemd to recognize the new service:
+
+```shell
+sudo systemctl daemon-reload
+```
+
+</details>
+
+Enable the service to start on boot:
+
+```shell
+sudo systemctl enable meshtasticd
+```
+
+#### Starting and Stopping the Service
+
+Start the service:
+
+```shell
+sudo systemctl start meshtasticd
+```
+
+Check the status of the service:
+
+```shell
+sudo systemctl status meshtasticd
+```
+
+This will give you a detailed view of the service status and any potential errors.
+
+Stop the service:
+
+```shell
+sudo systemctl stop meshtasticd
+```
+
+By following these steps, you set up a systemd service for meshtasticd that will start automatically at boot and restart if it crashes. You can manage it using the standard systemctl commands (start, stop, restart, status, etc.).
+
+### View Logs of Meshtastic
+
+To view the log output of the meshtasticd service, use the below command to read them out of the system journal.
+
+```shell
+journalctl -u meshtasticd -b
+```
+
+### Avahi setup
+
+This will allow the Android client to auto-discover your Linux Native device.
+
+- Install avahi-daemon (debian/ubuntu)
+
+```shell
+sudo apt install avahi-daemon
+```
+
+- Configure Avahi to advertise the node
+
+Create the service file:
+
+```shell
+sudo nano /etc/avahi/services/meshtastic.service
+```
+
+And paste the following:
+
+```xml
+<?xml version="1.0" standalone="no"?><!--*-nxml-*-->
+<!DOCTYPE service-group SYSTEM "avahi-service.dtd">
+<service-group>
+    <name>Meshtastic</name>
+    <service protocol="ipv4">
+        <type>_meshtastic._tcp</type>
+        <port>4403</port>
+    </service>
+</service-group>
+```
+
+Then save and exit.

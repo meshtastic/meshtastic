@@ -12,7 +12,6 @@ const config = {
   baseUrl: "/",
   trailingSlash: true,
   onBrokenLinks: "throw",
-  onBrokenMarkdownLinks: "warn",
   favicon: "img/logo.svg",
   organizationName: "meshtastic",
   projectName: "meshtastic",
@@ -171,6 +170,9 @@ const config = {
   },
   markdown: {
     mermaid: true,
+    hooks: {
+        onBrokenMarkdownLinks: "warn"
+    },
   },
   themes: ["@docusaurus/theme-mermaid"],
   future: {
