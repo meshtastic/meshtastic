@@ -11,11 +11,16 @@ import TabItem from "@theme/TabItem";
 import { Icon } from "@iconify/react";
 import Link from "@docusaurus/Link";
 
-## Install ESP32 USB to Serial Drivers
+ESP32 devices connect to your computer through a USB-to-serial chip. You may need to install a driver for this chip before your computer can communicate with the device.
 
-You may need to install a driver from Silicon Labs for the [CP210X USB to UART bridge](https://www.silabs.com/products/development-tools/software/usb-to-uart-bridge-vcp-drivers)
+## Which Driver Do You Need?
 
-Some newer boards may require the CH9102 (CH340/CH341) Driver.
+Most ESP32 devices use one of two USB-to-serial chips:
+
+- **CP210X** (Silicon Labs) — Common on older and many current devices
+- **CH9102 / CH340 / CH341** (WCH) — Found on some newer boards
+
+If you're not sure which chip your device uses, try installing the **CP210X** driver first. If your device still isn't detected, install the CH driver as well.
 
 <Tabs
   groupId="operating-system"
@@ -49,45 +54,37 @@ Some newer boards may require the CH9102 (CH340/CH341) Driver.
 
 <TabItem value="linux">
 
-#### Linux
-
-- [CP210X USB to UART bridge - Download](https://www.silabs.com/products/development-tools/software/usb-to-uart-bridge-vcp-drivers)
-- [CH9102 Driver - Linux Download](http://www.wch-ic.com/downloads/CH341SER_LINUX_ZIP.html)
+- [CP210X Driver](https://www.silabs.com/products/development-tools/software/usb-to-uart-bridge-vcp-drivers)
+- [CH341 Driver](http://www.wch-ic.com/downloads/CH341SER_LINUX_ZIP.html)
 
 </TabItem>
 
 <TabItem value="macos">
 
-#### macOS
-
-- [CP210X USB to UART bridge - Download](https://www.silabs.com/products/development-tools/software/usb-to-uart-bridge-vcp-drivers)
-- [CH9102 Driver - macOS Download](https://github.com/WCHSoftGroup/ch34xser_macos)
+- [CP210X Driver](https://www.silabs.com/products/development-tools/software/usb-to-uart-bridge-vcp-drivers)
+- [CH9102/CH340 Driver](https://github.com/WCHSoftGroup/ch34xser_macos)
 
 </TabItem>
 
 <TabItem value="windows">
 
-#### Windows
-
-- [CP210X USB to UART bridge - Download](https://www.silabs.com/products/development-tools/software/usb-to-uart-bridge-vcp-drivers)
-- [CH9102 Driver - Windows Download](http://www.wch.cn/downloads/CH343SER_ZIP.html)
-- [CH9102 Driver - Windows Download (Direct Download for Windows 7)](https://github.com/Xinyuan-LilyGO/CH9102_Driver)
+- [CP210X Driver](https://www.silabs.com/products/development-tools/software/usb-to-uart-bridge-vcp-drivers)
+- [CH9102/CH343 Driver](http://www.wch.cn/downloads/CH343SER_ZIP.html)
+- [CH9102 Driver for Windows 7](https://github.com/Xinyuan-LilyGO/CH9102_Driver) (direct download)
 
 </TabItem>
 
 </Tabs>
 
-:::important
+:::important Reboot after installing
 
-After installing the driver, make sure to reboot your computer to finish the installation process.
+After installing any driver, **restart your computer** to complete the installation.
 
-You can also [test your serial driver installation](/docs/getting-started/serial-drivers/test-serial-driver-installation) at this step if required.
+You can [test your serial driver installation](/docs/getting-started/serial-drivers/test-serial-driver-installation) to confirm everything is working.
 
 :::
 
-### Flash Firmware
-
-After installing the serial drivers, you can now flash the Meshtastic firmware onto your device. To proceed, select the appropriate device type for your device.
+## Next: Flash Firmware
 
 <div className="indexCtasBody">
   <Link

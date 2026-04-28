@@ -8,41 +8,42 @@ description: Instructions for factory erasing an nRF52, RP2040, or RP2350 device
 
 import Link from "@docusaurus/Link";
 
-Meshtastic uses the [littlefs](https://github.com/littlefs-project/littlefs) library to store configuration, logs, and other data in the internal flash of nRF52, RP2040, & RP2350 devices. Updating the firmware does _not_ erase this additional data, which can cause issues when the format and location of data changes between releases.
+A factory erase clears all stored configuration, logs, and data from your device's internal flash. This is useful when upgrading between major firmware versions, since the data format may change and cause issues like crash loops.
 
-:::info
-You may now use the [Meshtastic Web Flasher](https://flasher.meshtastic.org) to Factory Erase your nRF52, RP2040, or RP2350-based devices. Visit the flasher, select your board, and click the trash can icon to the right of the Flash button. This will open a dialogue to begin the erase procedure.
+:::tip Web Flasher Alternative
 
-Alternatively, follow the instructions below.
+You can also factory erase using the [Meshtastic Web Flasher](https://flasher.meshtastic.org): select your board, then click the **trash can icon** next to the Flash button.
+
 :::
 
-### nRF52
-
-To reset the flash storage on your nRF52 board:
+## nRF52 Devices
 
 1. Download and unzip the latest firmware from [Meshtastic Downloads](https://meshtastic.org/downloads).
 2. Connect your device to your computer with a USB data cable.
-3. Double click the reset button on your device (this will put it into bootloader mode)
-4. Notice a new drive will be mounted on your computer (Windows, Mac, or Linux)
-5. Open this drive and you should see three files: `CURRENT.UF2`, `INDEX.HTM`, and `INFO_UF2.TXT`
-6. Open the `INFO_UF2.TXT` file with a text editor and note the `SoftDevice` value.
-7. Find the file included in the downloaded firmware matching your softdevice major version number (7.x.x or 6.x.x). Either use `Meshtastic_nRF52_factory_erase_v3_S140_7.3.0.uf2` or `Meshtastic_nRF52_factory_erase_v3_S140_6.1.0.uf2` and copy it onto the new drive. The device should reboot.
-8. With the [Meshtastic CLI](/docs/software/python/cli/) installed, open your Terminal/Console and enter the command: `meshtastic --noproto`.
-9. You should see the message: `Formatting... Done`.
+3. **Double-click the reset button** to enter bootloader mode.
+4. A new USB drive will appear on your computer.
+5. Open the drive and look at the file `INFO_UF2.TXT` — note the **SoftDevice** version number.
+6. From the downloaded firmware, find the erase file that matches your SoftDevice version:
+   - SoftDevice **7.x.x** → use `Meshtastic_nRF52_factory_erase_v3_S140_7.3.0.uf2`
+   - SoftDevice **6.x.x** → use `Meshtastic_nRF52_factory_erase_v3_S140_6.1.0.uf2`
+7. Copy the matching erase file onto the USB drive. The device will reboot.
+8. To confirm the erase worked, install the [Meshtastic CLI](/docs/software/python/cli/) and run:
+   ```shell
+   meshtastic --noproto
+   ```
+   You should see the message: `Formatting... Done`.
 
-Once the device has been erased, you can proceed to install the latest Meshtastic firmware on a clean storage filesystem by clicking the link below.
-
-### RP2040
-
-To reset the flash storage on your RP2040 board:
+## RP2040 Devices
 
 1. Download [flash_nuke.uf2](https://datasheets.raspberrypi.com/soft/flash_nuke.uf2) to your computer.
-2. Press the BOOTSEL button and while keeping it pressed, connect it to your computer via a USB cable.
-3. The board should now appear as a mass storage device on your computer with the label RPI-RP2.
-4. Copy the flash_nuke.uf2 file to the device.
-5. The board will now restart and the flash memory will be erased.
+2. **Hold the BOOTSEL button** and connect the device to your computer via USB while still holding.
+3. The board will appear as a USB drive labeled **RPI-RP2**.
+4. Copy `flash_nuke.uf2` to the drive.
+5. The board will restart and the flash memory will be erased.
 
-Once the device has been erased, you can proceed to install the latest Meshtastic firmware on a clean storage filesystem by clicking the link below.
+## Next: Re-flash Firmware
+
+After erasing, install fresh firmware:
 
 <div className="indexCtasBody">
   <Link

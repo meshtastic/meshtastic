@@ -6,21 +6,20 @@ sidebar_position: 2
 description: Instructions to flash Meshtastic firmware to nRF52 or RP2040 chipset devices.
 ---
 
-## Flashing Methods for nRF52, RP2040, and RP2350 Devices
+## Choose a Flashing Method
 
-nRF52, RP2040, and RP2350 based devices have the easiest firmware upgrade process. No driver or software install is required on any platform.
+nRF52, RP2040, and RP2350 devices are the easiest to update — no drivers or special software required. The device appears as a USB drive and you simply copy a file to it.
 
-### Drag & Drop
-nRF52, RP2040, and RP2350 devices use the [Drag & Drop](/docs/getting-started/flashing-firmware/nrf52/drag-n-drop) installation method to install firmware releases.
+| Method | Best For | Difficulty |
+|---|---|---|
+| [**Drag & Drop**](/docs/getting-started/flashing-firmware/nrf52/drag-n-drop) (recommended) | Everyone — simplest method | Easy |
+| [**Over-The-Air (OTA)**](/docs/getting-started/flashing-firmware/nrf52/ota) | Updating nRF52 devices wirelessly via Bluetooth | Moderate |
 
-### Over-The-Air (OTA)
-nRF52 devices are able to accept [OTA firmware updates](/docs/getting-started/flashing-firmware/nrf52/ota) from a mobile device over bluetooth.
+### Troubleshooting & Advanced Options
 
-### nRF Factory Erase
-You may wish to perform a [Factory Erase](/docs/getting-started/flashing-firmware/nrf52/nrf52-erase) prior to installing firmware to clear data that may change format and location between releases.
+If you run into issues, these guides can help:
 
-### Convert RAK4631-R to RAK4631
-If your device did not come with the Arduino bootloader you will need to [perform the conversion](/docs/getting-started/flashing-firmware/nrf52/convert-rak4631r).
-
-### Use Raspberry Pi as a SWDIO Flash Tool
-If your device can't be flashed through USB or Bluetooth, another option might be a [direct SWDIO connection](/docs/getting-started/flashing-firmware/nrf52/swdio).
+- [**Factory Erase**](/docs/getting-started/flashing-firmware/nrf52/nrf52-erase) — Clear stored data when upgrading between major firmware versions.
+- [**Convert RAK4631-R**](/docs/getting-started/flashing-firmware/nrf52/convert-rak4631r) — Required if your RAK device shipped with the RUI3 bootloader instead of Arduino.
+- [**Update Bootloader**](/docs/getting-started/flashing-firmware/nrf52/update-bootloader) — Fix issues caused by an outdated bootloader.
+- [**SWDIO with Raspberry Pi**](/docs/getting-started/flashing-firmware/nrf52/swdio) — Flash via a direct debug connection when USB and Bluetooth aren't working.

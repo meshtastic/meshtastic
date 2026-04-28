@@ -10,67 +10,64 @@ import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 import Link from "@docusaurus/Link";
 
-:::info
-This information will likely only be helpful if you've already attempted to go through the prerequisites and processes outlined in [manually flashing](/docs/getting-started/flashing-firmware/esp32/cli-script)
+This is a last-resort method for when normal USB flashing doesn't work. Only use this if you've already tried the [Web Flasher](/docs/getting-started/flashing-firmware/esp32/web-flasher) and [CLI Script](/docs/getting-started/flashing-firmware/esp32/cli-script) without success.
+
+:::danger Antenna Required!
+
+**Never power on your radio without an antenna attached.** This can permanently damage the radio chip.
+
 :::
 
-:::caution
-Make sure not to power the radio on without first attaching the antenna! You could damage the radio chip!
-:::
+## When You Might Need This
 
-## Background
+- Your device has a defective or non-standard USB-to-serial chip.
+- Your device doesn't have a built-in USB-to-serial chip (e.g., some DIY builds like the [Hydra](https://github.com/Hydra-Designs/project-hydra-meshtastic-pcb)).
+- The built-in USB connection isn't being recognized by your computer despite correct drivers.
 
-Situations that may require using an external USB to Serial Adapter:
+## What You Need
 
-- Due to the chip shortage, recently purchased devices such as the TTGO T-Beam may come with legacy or non-standard USB to Serial adapter chips that are unreliable in some cases.
-- Certain devices might have defective USB to Serial chip.
-- Certain devices, such as the [Hydra](https://github.com/Hydra-Designs/project-hydra-meshtastic-pcb) (Meshtastic-DIY target).
+A USB-to-serial adapter — we recommend one with a **Silicon Labs CP2102** chip, which is a reliable industry standard. These are widely available online.
 
-### USB Serial Adapters
+## Setup Instructions
 
-There are many options on the marketplace. It is recommended to purchase an adapter featuring the Silicon Labs CP2102 chip, as it is a reliable industry standard.
+**Before connecting anything, unplug the adapter from your computer.**
 
-The adapter featured in this document can be purchased from:
-https://www.amazon.com/gp/product/B078W5L8W1/
+1. Connect the **RX** pin of the adapter → **TX** pin of the device.
+2. Connect the **TX** pin of the adapter → **RX** pin of the device.
+3. Connect a **GND** pin of the adapter → **GND** pin of the device.
+4. Connect **5V** (or 3.3V) of the adapter → matching voltage pin on the device.
+5. **Bridge GPIO 0 to GND** on the device using a jumper wire. This puts the device into flash mode on the next power-up.
 
-Plug the adapter into your computer without connecting it to any devices yet. Ensure that your computer has drivers installed for the adapter. On Windows, the correct drivers should install automatically.
-![image](https://user-images.githubusercontent.com/9000580/168445869-f73667f5-0169-46fd-ae13-15c3abad31aa.png)
+   Example wiring with a T-Beam:
+   ![Wiring example](https://user-images.githubusercontent.com/9000580/168446438-d14f34a0-b92d-4716-87fd-e0c2927a35fd.png)
 
-### Connecting Adapter to the Device
+6. **Plug the adapter into your computer** via USB.
+7. **Remove the jumper** from GPIO 0 to GND.
 
-:::info
-There are multiple ways to connect the pins of the adapter to the target device: pressing jumpers against contacts, using pogo pin jigs, etc. This tutorial features offset dupont headers soldered onto the operative GPIO pins and connected via jumpers.
-:::
-Disconnect your USB to Serial Adapter from the computer before starting this process.
+   ![Entering flash mode](https://user-images.githubusercontent.com/9000580/168446974-c31d3e9c-3397-4cb1-90a4-91ef2e4d5fac.gif)
 
-1. Connect the RX pin of the adapter to the TX pin of the devices
-2. Connect the TX pin of the adapter to the RX pin of the device
-3. Connect a GND pin of the adapter to the GND pin of the device
-4. Connect either the 5V pin of the adapter to the 5V pin of the device (illustrated) or the 3.3V pin of the adapter to the 3.3V pin of device.
-5. Bridge GPIO 0 to GND on the device with a jumper. (This places the device into flash mode when the device is powered up)
-   Example wiring featuring a T-Beam
-   ![image](https://user-images.githubusercontent.com/9000580/168446438-d14f34a0-b92d-4716-87fd-e0c2927a35fd.png)
-6. Connect the device to a USB port on the computer
-7. Remove the jumper bridging GPIO 0 to GND
-   ![enter-flash-mode](https://user-images.githubusercontent.com/9000580/168446974-c31d3e9c-3397-4cb1-90a4-91ef2e4d5fac.gif)
+## Flash the Firmware
 
-### Flashing
+Your device is now in flash mode. Follow the [CLI Script instructions](/docs/getting-started/flashing-firmware/esp32/cli-script) to flash the firmware using `esptool`.
 
-After following the steps above, your device should be in flash mode. You can flash your device using the [manual method](/docs/getting-started/flashing-firmware/esp32/cli-script)
+After flashing is complete, press the **RST** (reset) button on the device if available.
 
-After flashing the device is complete, reset your device (via the RST button if available).
-If you have the Meshtastic Python CLI installed, you can run `meshtastic --noproto` to connect the device again over the adapter and view the serial output to confirm Meshtastic installed correctly.
-![image](https://user-images.githubusercontent.com/9000580/168447159-71a6546a-f487-4bc2-86c1-4c489b2a8975.png)
+To verify the flash was successful, you can connect using the Meshtastic Python CLI:
 
-### Troubleshooting
+```shell
+meshtastic --noproto
+```
 
-You might receive an error for COM port permission in the manual device install scripts, this can be caused by a number of different issues.
+![Serial output confirmation](https://user-images.githubusercontent.com/9000580/168447159-71a6546a-f487-4bc2-86c1-4c489b2a8975.png)
 
-You might need to run the process as an administrator, check to ensure software like Cura isn't monopolizing COM ports, or reboot.
+## Troubleshooting
 
-## Connect and Configure Device
+- **COM port permission errors**: Try running your terminal as administrator, or check that no other software (like Cura or Arduino IDE) is using the port.
+- **Device not detected**: Verify your adapter's drivers are installed. On Windows, they usually install automatically — check Device Manager to confirm.
+  ![Device Manager showing adapter](https://user-images.githubusercontent.com/9000580/168445869-f73667f5-0169-46fd-ae13-15c3abad31aa.png)
+- **Still not working**: Try rebooting your computer, or use a different USB port.
 
-After flashing the Meshtastic firmware to the device, you can proceed with the initial configuration.
+## Next Step: Connect and Configure
 
 <div className="indexCtasBody">
   <Link

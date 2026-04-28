@@ -11,9 +11,11 @@ import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 import { Icon } from "@iconify/react";
 
-### Test Serial Driver Installation
+## Verify Your Connection
 
-You can verify that you have a proper data cable (rather than a charge-only type cable) and that the appropriate drivers for your system are installed by performing the following test:
+This test confirms that your USB cable supports data transfer and that the correct serial drivers are installed.
+
+**Before you start:** Connect your Meshtastic device to your computer with a USB cable.
 
 <Tabs
   groupId="operating-system"
@@ -47,66 +49,63 @@ You can verify that you have a proper data cable (rather than a charge-only type
 
 <TabItem value="linux">
 
-#### Linux
+Open a terminal and run:
 
-1. Connect your Meshtastic device to your USB port
-2. Open a **Terminal** and enter the following command:
+```shell
+lsusb
+```
 
-   ```shell
-   lsusb
-   ```
+Look for an entry like one of these:
 
-3. You should see something like:
+```
+ID xxxx:xxxx Silicon Labs CP210x UART Bridge
+ID xxxx:xxxx QinHeng Electronics USB Single Serial
+ID xxxx:xxxx Adafruit WisCore RAK4631 Board
+```
 
-   ```shell
-   ID xxxx:xxxx Silicon Labs CP210x UART Bridge
-   # or
-   ID xxxx:xxxx QinHeng Electronics USB Single Serial
-   # or
-   ID xxxx:xxxx Adafruit WisCore RAK4631 Board
-   ```
+If your device appears in the list, the driver is working correctly. ✅
 
 </TabItem>
 <TabItem value="macos">
 
-#### macOS
+Go to **Apple Menu  > About This Mac > More Info > System Report... > Hardware > USB**.
 
-1. Navigate to `Apple Menu  > About This Mac > More Info > System Report... > Hardware > USB`.
-2. You should see similar to one of the following entries:
+Look for an entry like one of these:
 
 - `CP210X USB to UART Bridge Controller`
 - `CH9102 USB to UART Bridge Controller`
 - `WisCore RAK4631 Board`
 - `USB Single Serial`
 
+If your device appears, the driver is working correctly. ✅
+
 </TabItem>
 <TabItem value="windows">
 
-#### Windows
+Open **Device Manager** and expand **Ports (COM & LPT)**.
 
-1. Navigate to `Device Manager > Ports (COM & LPT)`
-2. You should see similar to one of the following entries:
+Look for an entry like one of these:
 
 - `Silicon Labs CP210X USB to UART Bridge (COM5)`
 - `Silicon Labs CH9102 USB to UART Bridge (COM5)`
 - `USB-Enhanced-SERIAL CH9102 (COM5)`
 - `USB Serial Device (COM5)`
 
+If your device appears with a COM port number, the driver is working correctly. ✅
+
 </TabItem>
 </Tabs>
 
-:::info
+## Troubleshooting
 
-If you are unable to see your device:
+If your device doesn't appear:
 
-- Make sure that your cable is not only for charging but also for [data transfer](/docs/getting-started#verify-data-cable).
-- It's possible that you need to [reinstall the USB serial driver](/docs/getting-started/serial-drivers).
+1. **Check your cable** — Many USB cables are charge-only and don't support data transfer. Try a different cable, or test yours by connecting it to a phone and copying a file.
+2. **Try a different USB port** — Some ports may not provide enough power or have connection issues.
+3. **Reinstall drivers** — Go back to the [serial driver installation page](/docs/getting-started/serial-drivers) and try installing a different driver.
+4. **Reboot your computer** — Drivers may not take effect until after a restart.
 
-:::
-
-## Flash Firmware
-
-After completing the previous steps, you can now flash the Meshtastic firmware onto your device. To proceed, select the appropriate device type for your device.
+## Next: Flash Firmware
 
 <div className="indexCtasBody">
   <div className="split-container">
@@ -118,8 +117,7 @@ After completing the previous steps, you can now flash the Meshtastic firmware o
         Flash ESP32 Firmware
       </Link>
     </div>
-
-  <div className="split-item">
+    <div className="split-item">
       <Link
         className={"button button--outline button--lg cta--button"}
         to={"/docs/getting-started/flashing-firmware/nrf52/"}

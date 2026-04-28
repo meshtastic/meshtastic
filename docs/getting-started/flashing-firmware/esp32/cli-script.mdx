@@ -11,21 +11,17 @@ import TabItem from "@theme/TabItem";
 import { Icon } from "@iconify/react";
 import Link from "@docusaurus/Link";
 
-:::caution
-Make sure not to power the radio on without first attaching the antenna! You could damage the radio chip!
+This guide walks you through flashing ESP32 firmware using command-line tools. Most users should use the [Web Flasher](/docs/getting-started/flashing-firmware/esp32/web-flasher) instead — it's faster and easier.
+
+:::danger Antenna Required!
+
+**Never power on your radio without an antenna attached.** This can permanently damage the radio chip.
+
 :::
 
-Before you flash your device start by verifying connectivity with the device being flashed. Outlined below are steps that can be taken to verify connectivity and, if necessary, to install the appropriate drivers. If you end up needing to install drivers be sure to reboot your computer afterwards to verify the installation is complete.
+## Prerequisites
 
-:::note
-The [T-Beam 0.7](/docs/hardware/devices/lilygo/tbeam/?t-beam=0.7) board is an earlier version of the T-Beam board, and due to changes in the design in subsequent iterations this board uses a specific firmware file different from the other T-Beam boards.
-
-`firmware-tbeam0.7-X.X.X.xxxxxxx.bin` is the correct firmware. `firmware-tbeam-X.X.X.xxxxxxx.bin` is incompatible. For all other [T-Beam](/docs/hardware/devices/lilygo/tbeam) boards review the resources section for the correct selection.
-:::
-
-## Command Line Interface Instructions
-
-### Install Prerequisite Software
+You need **Python 3** and **pip** installed on your computer.
 
 <Tabs
   groupId="operating-system"
@@ -59,166 +55,68 @@ The [T-Beam 0.7](/docs/hardware/devices/lilygo/tbeam/?t-beam=0.7) board is an ea
 
 <TabItem value="linux">
 
-#### Linux
-
-Check if you have `python3` and `pip` installed with the following command
+Check if Python 3 and pip are already installed:
 
 ```shell
 python3 --version
 pip3 --version
 ```
 
-If `python3` is not installed, install with
+If not installed:
 
 ```shell
 sudo apt-get update
-sudo apt-get install python3
-```
-
-If `pip` is not installed, install with
-
-```shell
-sudo apt-get install python3-pip
+sudo apt-get install python3 python3-pip
 ```
 
   </TabItem>
   <TabItem value="macos">
 
-#### macOS
-
-macOS comes with `Python 2.7` installed, but not `pip`. The following uses Homebrew to install `python3` which includes `pip3`. On macOS you will use `pip3` instead > of `pip`.
-
-:::note
-Check if you have Homebrew installed with the following command
+Install Python 3 using [Homebrew](https://brew.sh) (if you don't have Homebrew, install it first from [brew.sh](https://brew.sh)):
 
 ```shell
-brew -v
+brew install python3
 ```
 
-If it's not installed, follow the instructions on the [Homebrew website](https://brew.sh) before continuing.
-:::
-
-Check if you have `python3` and `pip` installed with the following command
+Verify the installation:
 
 ```shell
 python3 --version
 pip3 --version
 ```
 
-If `python3` is not installed, install with
-Install Python3
-
-```shell
-brew install python3
-```
-
-Confirm `pip3` was installed alongside `python3`
-
-```shell
-pip3 -v
-```
-
   </TabItem>
   <TabItem value="windows">
 
-#### Windows
+1. Download and install [Python](https://www.python.org) — **check "Add Python to PATH"** during installation.
+2. Download and install [Git Bash](https://gitforwindows.org) and use it for all commands below.
 
-- Download and install [Python](https://www.python.org). When installing, make sure to click `Add Python X.Y to PATH`.
-- Download and install [Gitbash](https://gitforwindows.org) (or other appropriate shell) and run all subsequent commands from that shell.
-
-:::note
-Confirm installation of `python` & `pip` with the following commands.
+Verify the installation:
 
 ```shell
 py --version
-```
-
-```shell
 pip --version
 ```
-
-:::
 
   </TabItem>
 </Tabs>
 
-### Install `esptool`
+Then install `esptool`:
 
 ```shell
 pip3 install --upgrade esptool
 ```
 
-### Confirm Communication With Chip
+## Step 1: Verify Device Connection
 
-<Tabs
-  groupId="operating-system"
-  defaultValue="windows"
-  values={[
-    {
-      label: (
-        <>
-          <Icon icon="mdi:tux" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Linux
-        </>
-      ),
-      value: "linux",
-    },
-    {
-      label: (
-        <>
-          <Icon icon="mdi:apple" height="1.5rem" style={{ marginRight: "0.25rem" }} /> macOS
-        </>
-      ),
-      value: "macos",
-    },
-    {
-      label: (
-        <>
-          <Icon icon="mdi:microsoft" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Windows
-        </>
-      ),
-      value: "windows",
-    },
-  ]}>
-
-<TabItem value="linux">
-
-#### Linux
-
-:::important
-On Linux, you may need to explicitly declare esptool as a .py script. Use `esptool.py chip_id`.
-:::
-
-</TabItem>
-<TabItem value="macos">
-
-#### macOS
-
-:::important
-On macOS, you may need to explicitly declare esptool as a .py script. Use `esptool.py chip_id`.
-:::
-
-</TabItem>
-<TabItem value="windows">
-
-#### Windows
-
-:::important
-On Windows, you must explicitly declare esptool as a .py script. Use `esptool.py chip_id`.
-:::
-
-  </TabItem>
-</Tabs>
-
-Connect the radio to your computer using a data USB cable. Confirm your device is talking to your computer using the following command:
+Connect your device to your computer with a USB data cable, then confirm it's detected:
 
 ```shell title="Command"
 esptool chip-id
 ```
 
 ```shell title="Expected Output"
-# You should see a result similar to this:
-mydir$ esptool chip-id
-esptool.py v2.6
+esptool.py v4.x
 Found 2 serial ports
 Serial port /dev/ttyUSB0
 Connecting....
@@ -226,44 +124,50 @@ Detecting chip type... ESP32
 Chip is ESP32D0WDQ6 (revision 1)
 Features: WiFi, BT, Dual Core, 240MHz, VRef calibration in efuse, Coding Scheme None
 MAC: 24:6f:28:b5:36:71
-Uploading stub...
-Running stub...
-Stub running...
-Warning: ESP32 has no Chip ID. Reading MAC instead.
-MAC: 24:6f:28:b5:36:71
-Hard resetting via RTS pin...
 ```
 
-### Download Firmware
+:::tip esptool not found?
 
-1. Head to the [Meshtastic Downloads Page](/downloads) to download the latest firmware.
-2. Scroll down to the **Firmware** section and select one of the following, depending on your preferences:
+On Linux and macOS, you may need to use `esptool.py` instead of `esptool`.
 
-- **Download Stable**: For stable, well-tested releases.
-- **Download Alpha**: For newer, experimental releases with the latest features.
+:::
 
-3. Once redirected to the GitHub release page, scroll down to the "Assets" section and expand it. Identify the correct firmware for your device by its architecture (e.g., `firmware-esp32s3` for ESP32-S3-based devices like the Heltec V3).
-4. Download the file and take note of the download location on your system (usually in your `~/Downloads` folder).
+If the command fails, check that:
+- You're using a data cable (not charge-only)
+- [Serial drivers](/docs/getting-started/serial-drivers/esp32) are installed
+- You've rebooted after installing drivers
 
-### Navigate to Firmware Directory
+## Step 2: Download Firmware
 
-1. Open a terminal and navigate (`cd`) to the directory where your firmware was downloaded. The folder name typically matches the architecture and firmware version from the zip file. For example:
+1. Go to the [Meshtastic Downloads](/downloads) page.
+2. Choose **Download Stable** (recommended) or **Download Alpha** (experimental).
+3. On the GitHub releases page, expand the **Assets** section.
+4. Download the firmware zip file that matches your device architecture (e.g., `firmware-esp32s3` for ESP32-S3 devices like the Heltec V3).
+5. Unzip the downloaded file.
+
+## Step 3: Flash the Firmware
+
+Open a terminal and navigate to the unzipped firmware folder:
 
 ```shell title="Example"
 cd ~/Downloads/firmware-esp32s3-X.X.X.xxxxxxx/
 ```
 
 :::note
-Make sure to replace `esp32s3` and the version number with those corresponding to the file you downloaded.
+Replace `esp32s3` and the version number with those matching your downloaded file.
 :::
 
-### Install/Update Firmware
+:::caution Flash the correct firmware for your board
 
-Now, proceed with the instructions below for your operating system to install or update the firmware for your specific board:
+Using the wrong firmware file can leave your device unresponsive with a blank screen. For example:
+- The **T-Beam** requires `firmware-tbeam`, **not** `firmware-tlora` (that's a different board).
+- The older [T-Beam 0.7](/docs/hardware/devices/lilygo/tbeam/?t-beam=0.7) requires `firmware-tbeam0.7`, which is different from other T-Beam firmware.
 
-:::caution
-Be very careful to install the correct firmware file for your board. In particular, the popular 'T-BEAM' radio from TTGO is not called 'TTGO-Lora' (that is a different board). So don't install the 'TTGO-Lora' build on a TBEAM, it won't work correctly. If you flash the incorrect device firmware, it may appear to successfully complete, yet the device will usually become unresponsive, displaying a blank screen (if equipped). Attempt to flash the correct version. Please note, while these devices are quite resilient and damage is not always likely, there is a possibility of onboard radio and peripheral damage due to incorrect GPIO pin direction
+Check the [hardware section](/docs/hardware/devices/) to confirm the correct firmware for your device.
+
 :::
+
+Now run the install or update script:
 
 <Tabs
   groupId="operating-system"
@@ -297,15 +201,13 @@ Be very careful to install the correct firmware file for your board. In particul
 
 <TabItem value="linux">
 
-#### Linux
-
-##### Install
+**Fresh install** (erases all data):
 
 ```shell title="Command"
 ./device-install.sh -f firmware-BOARD-VERSION.bin
 ```
 
-##### Update
+**Update** (keeps your settings):
 
 ```shell title="Command"
 ./device-update.sh -f firmware-BOARD-VERSION-update.bin
@@ -314,15 +216,13 @@ Be very careful to install the correct firmware file for your board. In particul
   </TabItem>
   <TabItem value="macos">
 
-#### macOS
-
-##### Install
+**Fresh install** (erases all data):
 
 ```shell title="Command"
 ./device-install.sh -f firmware-BOARD-VERSION.bin
 ```
 
-##### Update
+**Update** (keeps your settings):
 
 ```shell title="Command"
 ./device-update.sh -f firmware-BOARD-VERSION-update.bin
@@ -331,15 +231,13 @@ Be very careful to install the correct firmware file for your board. In particul
   </TabItem>
   <TabItem value="windows">
 
-#### Windows
-
-##### Install
+**Fresh install** (erases all data):
 
 ```shell title="Command"
 device-install.bat -f firmware-BOARD-VERSION.bin
 ```
 
-##### Update
+**Update** (keeps your settings):
 
 ```shell title="Command"
 device-update.bat -f firmware-BOARD-VERSION-update.bin
@@ -348,11 +246,9 @@ device-update.bat -f firmware-BOARD-VERSION-update.bin
   </TabItem>
 </Tabs>
 
-Use the `--web` option to include the embedded [Web Client](/docs/software/web-client/) during installation of the firmware.
+Add the `--web` flag to include the embedded [Web Client](/docs/software/web-client/) during a fresh install.
 
-## Connect and Configure Device
-
-After flashing the Meshtastic firmware to the device, you can proceed with the initial configuration.
+## Next Step: Connect and Configure
 
 <div className="indexCtasBody">
   <Link
