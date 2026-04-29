@@ -1,5 +1,17 @@
+---
+id: index
+title: Installation - meshtasticd
+description: Install the Meshtastic daemon on Linux and macOS systems.
+sidebar_label: Overview
+sidebar_position: 0
+---
+
 import { Icon } from "@iconify/react";
 import Link from "@docusaurus/Link";
+
+This page outlines the setup of Meshtastic on Linux-native devices, utilizing portduino to run the Meshtastic firmware under Linux.
+
+Select your distribution or platform below to get started:
 
 export const InstallCard = ({ icon, title, description, to }) => (
   <Link
@@ -24,8 +36,6 @@ export const InstallCard = ({ icon, title, description, to }) => (
   </Link>
 );
 
-Select your distribution or platform below to get started:
-
 <div
   style={{
     display: "grid",
@@ -47,4 +57,22 @@ Select your distribution or platform below to get started:
   <InstallCard icon="mdi:apple" title="macOS" description="Coming soon" to="/docs/linux/installation/macos" />
 </div>
 
-See [Installation Overview](/docs/linux/installation/) for a full feature comparison table.
+### Feature Support Overview
+
+| Distribution | USB Radio | SPI Radio | MUI | Web |
+| --- | --- | --- | --- | --- |
+| [Debian](/docs/linux/installation/debian) | ✅ | ✅ | ✅ | ✅ |
+| [Raspbian](/docs/linux/installation/raspbian) | ✅ | ✅ | ✅ | ✅ |
+| [Ubuntu](/docs/linux/installation/ubuntu) | ✅ | ✅ | ✅ | ✅ |
+| [Fedora](/docs/linux/installation/fedora) | ✅ | ✅ | ✅ | ✅ |
+| [Red Hat (EPEL)](/docs/linux/installation/epel) | ✅ | ✅ | ✅ | ✅ |
+| [Docker](/docs/linux/installation/docker) | ✅ | ✅ | ❌ | ✅/❌ |
+| [Flatpak](/docs/linux/installation/flatpak) | ✅ | ❌ | ✅ | ❌ |
+| [OpenWrt](/docs/linux/installation/openwrt) | ✅ | ⏸️ | ❌ | ✅ |
+| [NixOS](/docs/linux/installation/nixos) | ✅ | ✅ | ✅ | ✅ |
+| [macOS](/docs/linux/installation/macos) | 🚧 | ❌ | 🚧 | 🚧 |
+
+See Also:
+- [Linux Hardware](/docs/linux/hardware)
+- [Linux Usage](/docs/linux/usage)
+- [Linux Development](/docs/development/linux)
