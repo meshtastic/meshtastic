@@ -45,6 +45,7 @@ export const InstallCard = ({ icon, title, description, to }) => (
     marginBottom: "1.5rem",
   }}
 >
+  <InstallCard icon="mdi:apple" title="macOS" description="Homebrew" to="/docs/meshtasticd/installation/macos" />
   <InstallCard icon="mdi:debian" title="Debian" description="Debian 12, 13" to="/docs/meshtasticd/installation/debian" />
   <InstallCard icon="cib:raspberry-pi" title="Raspbian" description="32-bit RPi OS" to="/docs/meshtasticd/installation/raspbian" />
   <InstallCard icon="mdi:ubuntu" title="Ubuntu" description="22.04+, PPA" to="/docs/meshtasticd/installation/ubuntu" />
@@ -54,13 +55,13 @@ export const InstallCard = ({ icon, title, description, to }) => (
   <InstallCard icon="simple-icons:flatpak" title="Flatpak" description="via FlatHub" to="/docs/meshtasticd/installation/flatpak" />
   <InstallCard icon="simple-icons:openwrt" title="OpenWrt" description="Routers" to="/docs/meshtasticd/installation/openwrt" />
   <InstallCard icon="simple-icons:nixos" title="NixOS" description="x86_64, aarch64" to="/docs/meshtasticd/installation/nixos" />
-  <InstallCard icon="mdi:apple" title="macOS" description="Homebrew" to="/docs/meshtasticd/installation/macos" />
 </div>
 
 ### Feature Support Overview
 
 | Distribution | USB Radio | SPI Radio | MUI | Web |
 | --- | --- | --- | --- | --- |
+| [macOS](/docs/meshtasticd/installation/macos) | ✅ | ❌ | ❌ | ❌ |
 | [Debian](/docs/meshtasticd/installation/debian) | ✅ | ✅ | ✅ | ✅ |
 | [Raspbian](/docs/meshtasticd/installation/raspbian) | ✅ | ✅ | ✅ | ✅ |
 | [Ubuntu](/docs/meshtasticd/installation/ubuntu) | ✅ | ✅ | ✅ | ✅ |
@@ -70,7 +71,6 @@ export const InstallCard = ({ icon, title, description, to }) => (
 | [Flatpak](/docs/meshtasticd/installation/flatpak) | ✅ | ❌ | ✅ | ❌ |
 | [OpenWrt](/docs/meshtasticd/installation/openwrt) | ✅ | ⏸️ | ❌ | ✅ |
 | [NixOS](/docs/meshtasticd/installation/nixos) | ✅ | ✅ | ✅ | ✅ |
-| [macOS](/docs/meshtasticd/installation/macos) | ✅ | ❌ | ❌ | ❌ |
 
 See Also:
 - [meshtasticd Hardware](/docs/meshtasticd/hardware)
