@@ -1,7 +1,7 @@
 name: Docs Review (@rcarteraz style)
 
 on:
-  pull_request:
+  pull_request_target:
     types: [opened, synchronize]
     paths:
       - "docs/**"
@@ -15,9 +15,6 @@ jobs:
   docs-review:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
       - name: Review docs changes
         uses: actions/github-script@v7
         with:
