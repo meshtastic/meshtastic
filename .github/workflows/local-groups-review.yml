@@ -1,0 +1,176 @@
+name: Local Groups Trademark Review
+
+on:
+  pull_request_target:
+    types: [opened]
+    paths:
+      - "docs/community/local-groups.mdx"
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  trademark-review:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Review local groups changes
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { owner, repo } = context.repo;
+            const prNumber = context.payload.pull_request.number;
+            const prAuthor = context.payload.pull_request.user.login;
+
+            // Get the diff for this PR
+            const { data: files } = await github.rest.pulls.listFiles({
+              owner,
+              repo,
+              pull_number: prNumber,
+              per_page: 100,
+            });
+
+            const localGroupsFile = files.find(
+              (f) => f.filename === "docs/community/local-groups.mdx"
+            );
+
+            if (!localGroupsFile || !localGroupsFile.patch) {
+              console.log("No changes to local-groups.mdx found");
+              return;
+            }
+
+            const patch = localGroupsFile.patch;
+
+            // Extract only added lines from the diff
+            const addedLines = patch
+              .split("\n")
+              .filter((line) => line.startsWith("+") && !line.startsWith("+++"))
+              .map((line) => line.substring(1).trim())
+              .filter((line) => line.length > 0);
+
+            // Parse added entries: look for markdown link patterns like - [Name](URL)
+            const linkPattern = /^-\s*\[([^\]]+)\]\(([^)]+)\)/;
+            const issues = [];
+
+            for (const line of addedLines) {
+              const match = line.match(linkPattern);
+              if (!match) continue;
+
+              const groupName = match[1];
+              const url = match[2];
+
+              // --- Check 1: Group name compliance ---
+              // "Meshtastic [Location]" alone is not permitted.
+              // Acceptable: "Meshtastic [Location] Users Group", "Meshtastic [Location] Community",
+              //             "[Location] Meshtastic Club", etc.
+              // Not acceptable: "Meshtastic UK", "Meshtastic Canada", "Meshtastic"
+              const nameTrimmed = groupName.trim();
+              const meshtasticOnlyPattern = /^Meshtastic$/i;
+              // Matches "Meshtastic" + 1-2 capitalized words only (excludes prepositions like "in")
+              const meshtasticLocationPattern =
+                /^Meshtastic\s+(?!in\b)[A-Z\u00C0-\u024F][\w\u00C0-\u024F-]*(\s+[A-Z\u00C0-\u024F][\w\u00C0-\u024F-]*)?$/i;
+              const hasDescriptor =
+                /\b(community|group|users?\s*group|club|association|network|chat|server|forum|society|coalition|enthusiasts|node\s*runners|mesh\s*net(work)?)\b/i;
+
+              const isNameViolation =
+                meshtasticOnlyPattern.test(nameTrimmed) ||
+                (meshtasticLocationPattern.test(nameTrimmed) && !hasDescriptor.test(nameTrimmed));
+
+              if (isNameViolation) {
+                const location = nameTrimmed.replace(/^Meshtastic\s*/i, "").trim();
+                const locationExample = location || "Your City";
+                issues.push(
+                  `❌ **Group name "${groupName}"** appears to use the format "Meshtastic [Location]" without a descriptor. ` +
+                    `Per our [Trademark Guidelines](https://meshtastic.org/docs/legal/licensing-and-trademark/#social-media), ` +
+                    `names like "Meshtastic UK" or "Meshtastic Canada" are **not permitted** as they may imply official sponsorship. ` +
+                    `Please add a descriptor such as "Users Group", "Community", "Club", etc. ` +
+                    `For example: "Meshtastic ${locationExample} Community" or "${locationExample} Meshtastic Users Group".`
+                );
+              }
+
+              // --- Check 2: Domain name compliance ---
+              // "meshtastic" must not appear in the domain name
+              try {
+                const parsedUrl = new URL(url);
+                const hostname = parsedUrl.hostname.toLowerCase();
+                if (hostname.includes("meshtastic")) {
+                  issues.push(
+                    `❌ **Domain "${hostname}"** in the link for "${groupName}" contains "meshtastic" in the domain name. ` +
+                      `Per our [Trademark Guidelines](https://meshtastic.org/docs/legal/licensing-and-trademark/#domain-names), ` +
+                      `using "meshtastic" in a domain name is **not permitted**. ` +
+                      `Many community groups have found success using alternative domain names. Examples include: ` +
+                      `\`bayme.sh\`, \`austinmesh.org\`, \`meshhessen.de\`.`
+                  );
+                }
+              } catch {
+                // URL parsing failed, skip domain check
+              }
+            }
+
+            // Build the review comment
+            const botCommentIdentifier =
+              "### 🔍 Local Groups Trademark Review";
+
+            let body = `${botCommentIdentifier}\n\n`;
+            body += `Hey @${prAuthor}! Thanks for submitting your community group! `;
+
+            if (issues.length === 0) {
+              body += `Your submission looks good from a trademark perspective. ✅\n\n`;
+              body += `A maintainer will review and merge your PR shortly. Thanks for following our [Trademark Guidelines](https://meshtastic.org/docs/legal/licensing-and-trademark/#social-media)!\n`;
+            } else {
+              body += `I found some potential trademark compliance issues that need to be addressed before this can be merged:\n\n`;
+              for (const issue of issues) {
+                body += `${issue}\n\n`;
+              }
+              body += `Please review our [Trademark Guidelines](https://meshtastic.org/docs/legal/licensing-and-trademark/#social-media) and update your submission. `;
+              body += `We look forward to adding your group once these items are resolved!\n`;
+            }
+
+            // Logo usage reminder — included in every comment regardless of pass/fail
+            body += `\n#### 🎨 A note about logo usage\n\n`;
+            body += `Our maintainers will also check that the Meshtastic logo is being used appropriately on your group's site or social media. `;
+            body += `Per our [Trademark Guidelines](https://meshtastic.org/docs/legal/licensing-and-trademark/#social-media), the Meshtastic logo may only be used in a **secondary position** to your group's own primary branding.\n\n`;
+            body += `If you're unsure whether your use of the logo is compliant, we recommend using the **[M-Powered / M-PWRD logo](https://meshtastic.org/docs/legal/licensing-and-trademark/#community-project-logos-m-powered--m-pwrd)** instead — it's specifically designed for community projects and **does not require a trademark grant**. `;
+            body += `Design files are available in the [Meshtastic Design repository](https://github.com/meshtastic/design/tree/master/Meshtastic%20Powered%20Logo). 🙂\n`;
+
+            body += `\n---\n*This is an automated review based on the Meshtastic [Trademark Guidelines](https://meshtastic.org/docs/legal/licensing-and-trademark/).*`;
+
+            // Check for existing bot comment (should not exist since we only run on opened, but just in case)
+            const { data: comments } = await github.rest.issues.listComments({
+              owner,
+              repo,
+              issue_number: prNumber,
+            });
+
+            const existingComment = comments.find(
+              (c) => c.body && c.body.startsWith(botCommentIdentifier)
+            );
+
+            if (existingComment) {
+              console.log(
+                "Review comment already exists, skipping to avoid duplicates"
+              );
+              return;
+            }
+
+            await github.rest.issues.createComment({
+              owner,
+              repo,
+              issue_number: prNumber,
+              body,
+            });
+
+            console.log("Created trademark review comment");
+
+            // If there are issues, request changes
+            if (issues.length > 0) {
+              await github.rest.pulls.createReview({
+                owner,
+                repo,
+                pull_number: prNumber,
+                event: "REQUEST_CHANGES",
+                body:
+                  "This submission has trademark compliance issues that need to be addressed. Please see the review comment for details.",
+              });
+              console.log("Requested changes due to trademark issues");
+            }
