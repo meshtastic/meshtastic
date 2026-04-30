@@ -9,6 +9,8 @@ pagination_prev: meshtasticd/installation/index
 ---
 
 import { Icon } from "@iconify/react";
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
 
 # <Icon icon="mdi:fedora" style={{ marginRight: "0.5rem" }} height="2rem" /> Fedora
 
@@ -23,14 +25,33 @@ Fedora packages are provided via [<Icon icon="mdi:fedora"/> Fedora COPR](https:/
 
 Supported: Fedora `44`, Fedora `43`
 
-**Install:**
-
-```shell
-# Add Meshtastic COPR repo
-sudo dnf copr enable @meshtastic/beta
-# Install meshtasticd
-sudo dnf install meshtasticd
-```
+## Install
+<Tabs groupId="release_channel" queryString="channel">
+  <TabItem value="beta" label="Beta" default>
+  ```shell
+  # Add Meshtastic COPR repo
+  sudo dnf copr enable @meshtastic/beta
+  # Install meshtasticd
+  sudo dnf install meshtasticd
+  ```
+  </TabItem>
+  <TabItem value="alpha" label="Alpha">
+  ```shell
+  # Add Meshtastic COPR repo
+  sudo dnf copr enable @meshtastic/alpha
+  # Install meshtasticd
+  sudo dnf install meshtasticd
+  ```
+  </TabItem>
+  <TabItem value="daily" label="Daily">
+  ```shell
+  # Add Meshtastic COPR repo
+  sudo dnf copr enable @meshtastic/daily
+  # Install meshtasticd
+  sudo dnf install meshtasticd
+  ```
+  </TabItem>
+</Tabs>
 
 [MUI]: /docs/configuration/device-uis/meshtasticui/
 [WebClient]: /docs/software/web-client/

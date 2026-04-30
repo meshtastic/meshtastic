@@ -9,6 +9,8 @@ pagination_prev: meshtasticd/installation/index
 ---
 
 import { Icon } from "@iconify/react";
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
 
 # <Icon icon="mdi:ubuntu" style={{ marginRight: "0.5rem" }} height="2rem" /> Ubuntu
 
@@ -23,16 +25,39 @@ Ubuntu packages are provided via [<Icon icon="simple-icons:launchpad"/> Canonica
 
 Supported: `resolute` (26.04 LTS), `questing` (25.10), `noble` (24.04 LTS), `jammy` (22.04 LTS)
 
-**Install:**
-
-```shell
-# Install requirements for add-apt-repository
-sudo apt install software-properties-common
-# Add Meshtastic repo
-sudo add-apt-repository ppa:meshtastic/beta
-# Install meshtasticd
-sudo apt install meshtasticd
-```
+## Install
+<Tabs groupId="release_channel" queryString="channel">
+  <TabItem value="beta" label="Beta" default>
+  ```shell
+  # Install requirements for add-apt-repository
+  sudo apt install software-properties-common
+  # Add Meshtastic repo
+  sudo add-apt-repository ppa:meshtastic/beta
+  # Install meshtasticd
+  sudo apt install meshtasticd
+  ```
+  </TabItem>
+  <TabItem value="alpha" label="Alpha">
+  ```shell
+  # Install requirements for add-apt-repository
+  sudo apt install software-properties-common
+  # Add Meshtastic repo
+  sudo add-apt-repository ppa:meshtastic/alpha
+  # Install meshtasticd
+  sudo apt install meshtasticd
+  ```
+  </TabItem>
+  <TabItem value="daily" label="Daily">
+  ```shell
+  # Install requirements for add-apt-repository
+  sudo apt install software-properties-common
+  # Add Meshtastic repo
+  sudo add-apt-repository ppa:meshtastic/daily
+  # Install meshtasticd
+  sudo apt install meshtasticd
+  ```
+  </TabItem>
+</Tabs>
 
 [MUI]: /docs/configuration/device-uis/meshtasticui/
 [WebClient]: /docs/software/web-client/
