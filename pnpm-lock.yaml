@@ -18,8 +18,8 @@ importers:
         specifier: ^5.51.0
         version: 5.51.0
       '@crowdin/cli':
-        specifier: ^4.14.1
-        version: 4.14.1
+        specifier: ^4.14.2
+        version: 4.14.2
       '@docusaurus/core':
         specifier: 3.10.0
         version: 3.10.0(@docusaurus/faster@3.10.0(@docusaurus/types@3.10.0(@swc/core@1.15.30)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)))(@mdx-js/react@3.1.1(@types/react@19.2.14)(react@19.2.5))(@rspack/core@1.7.11)(@swc/core@1.15.30)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(typescript@6.0.3)
@@ -888,8 +888,8 @@ packages:
     resolution: {integrity: sha512-ooWCrlZP11i8GImSjTHYHLkvFDP48nS4+204nGb1RiX/WXYHmJA2III9/e2DWVabCESdW7hBAEzHRqUn9OUVvQ==}
     engines: {node: '>=0.1.90'}
 
-  '@crowdin/cli@4.14.1':
-    resolution: {integrity: sha512-kPhXW4Cw8feITgN1ymH9UPScKoFj5IwIL3PbKSeF/UhQW9jjVsjlGVO5WM0QYy5kZYJWQ+4e81ciXFr5vyflqQ==}
+  '@crowdin/cli@4.14.2':
+    resolution: {integrity: sha512-JRrHvitc0w+r/h6XXSOq917HxsjRoxPEtyNYSmylKirjiPNrRx84VKtqFlOIWIFCOZI5BoXg6hNpE0Zq7CwVBA==}
     hasBin: true
 
   '@csstools/cascade-layer-name-parser@2.0.5':
@@ -7642,6 +7642,7 @@ packages:
 
   uuid@8.3.2:
     resolution: {integrity: sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==}
+    deprecated: uuid@10 and below is no longer supported.  For ESM codebases, update to uuid@latest.  For CommonJS codebases, use uuid@11 (but be aware this version will likely be deprecated in 2028).
     hasBin: true
 
   uvu@0.5.6:
@@ -8866,7 +8867,7 @@ snapshots:
   '@colors/colors@1.5.0':
     optional: true
 
-  '@crowdin/cli@4.14.1':
+  '@crowdin/cli@4.14.2':
     dependencies:
       command-exists-promise: 2.0.2
       node-fetch: 2.7.0
