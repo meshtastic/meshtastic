@@ -9,26 +9,6 @@ import {
   CpuChipIcon,
   GlobeAltIcon,
 } from "@heroicons/react/24/solid";
-import Layout from "@theme/Layout";
-
-import type { FirmwareReleases } from "../../utils/apiTypes.ts";
-import { fetcher } from "../../utils/swr.ts";
-import {
-  FirmwareCard,
-  PlaceholderFirmwareCard,
-} from "./_components/FirmwareCard.tsx";
-
-import type { JSX } from "react";
-import { FaAndroid, FaApple } from "react-icons/fa";
-import useSwr from "swr";
-
-import {
-  ArrowTopRightOnSquareIcon,
-  BoltIcon,
-  ComputerDesktopIcon,
-  CpuChipIcon,
-  GlobeAltIcon,
-} from "@heroicons/react/24/solid";
 import Translate, { translate } from "@docusaurus/Translate";
 import Layout from "@theme/Layout";
 
