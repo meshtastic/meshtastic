@@ -67,7 +67,7 @@ const Firmware = (): JSX.Element => {
             </div>
             <div className="card m-4 border-2 border-secondary w-full">
               <div className="card__header">
-                <h3><Translate id="downloads.flasher.dragAndDrop">nRF52/RP2040/RP2350 Drag &amp; Drop</Translate></h3>
+                <h3><Translate id="downloads.flasher.dragAndDrop">nRF52/RP2040/RP2350 Drag & Drop</Translate></h3>
               </div>
               <div className="card__body">
                 <p>
