@@ -1,0 +1,50 @@
+import { Icon } from "@iconify/react";
+import Link from "@docusaurus/Link";
+
+export const InstallCard = ({ icon, title, description, to }) => (
+  <Link
+    to={to}
+    className="card"
+    style={{
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      padding: "1.25rem",
+      textDecoration: "none",
+      color: "inherit",
+    }}
+  >
+    <Icon icon={icon} height="2.5rem" style={{ marginBottom: "0.5rem" }} />
+    <strong>{title}</strong>
+    {description && (
+      <span style={{ fontSize: "0.85rem", opacity: 0.75, textAlign: "center" }}>
+        {description}
+      </span>
+    )}
+  </Link>
+);
+
+Select your distribution or platform below to get started:
+
+<div
+  style={{
+    display: "grid",
+    gridTemplateColumns: "repeat(auto-fill, minmax(160px, 1fr))",
+    gap: "1rem",
+    marginTop: "1.5rem",
+    marginBottom: "1.5rem",
+  }}
+>
+  <InstallCard icon="mdi:debian" title="Debian" description="Debian 12, 13" to="/docs/meshtasticd/installation/debian" />
+  <InstallCard icon="cib:raspberry-pi" title="Raspbian" description="32-bit RPi OS" to="/docs/meshtasticd/installation/raspbian" />
+  <InstallCard icon="mdi:ubuntu" title="Ubuntu" description="22.04+, PPA" to="/docs/meshtasticd/installation/ubuntu" />
+  <InstallCard icon="mdi:fedora" title="Fedora" description="Fedora 42, 43" to="/docs/meshtasticd/installation/fedora" />
+  <InstallCard icon="mdi:redhat" title="Red Hat (EPEL)" description="EPEL 9, 10" to="/docs/meshtasticd/installation/epel" />
+  <InstallCard icon="mdi:docker" title="Docker" description="amd64, arm64, armv7" to="/docs/meshtasticd/installation/docker" />
+  <InstallCard icon="simple-icons:flatpak" title="Flatpak" description="via FlatHub" to="/docs/meshtasticd/installation/flatpak" />
+  <InstallCard icon="simple-icons:openwrt" title="OpenWrt" description="Routers" to="/docs/meshtasticd/installation/openwrt" />
+  <InstallCard icon="simple-icons:nixos" title="NixOS" description="x86_64, aarch64" to="/docs/meshtasticd/installation/nixos" />
+  <InstallCard icon="mdi:apple" title="macOS" description="Homebrew" to="/docs/meshtasticd/installation/macos" />
+</div>
+
+See [Installation Overview](/docs/meshtasticd/installation/) for a full feature comparison table.

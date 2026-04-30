@@ -1,0 +1,50 @@
+---
+id: fedora
+title: Fedora - meshtasticd
+description: Install meshtasticd on Fedora Linux.
+sidebar_label: Fedora
+sidebar_position: 5
+pagination_next: meshtasticd/usage
+pagination_prev: meshtasticd/installation/index
+---
+
+import { Icon } from "@iconify/react";
+
+# <Icon icon="mdi:fedora" style={{ marginRight: "0.5rem" }} height="2rem" /> Fedora
+
+Fedora packages are provided via [<Icon icon="mdi:fedora"/> Fedora COPR](https://copr.fedorainfracloud.org/coprs/g/meshtastic/beta/).
+
+| Feature                  | Status |
+| ------------------------ | ------ |
+| 🔌 [USB Radio][USBRadio] | ✅     |
+| 🕸️ [SPI Radio][SPIRadio] | ✅     |
+| 📱 [MUI][MUI]            | ✅     |
+| 🌐 [Web][WebClient]      | ✅     |
+
+Supported: Fedora `43`, Fedora `42`
+
+**Install:**
+
+```shell
+# Add Meshtastic COPR repo
+sudo dnf copr enable @meshtastic/beta
+# Install meshtasticd
+sudo dnf install meshtasticd
+```
+
+<details>
+  <summary>Experimental builds</summary>
+
+  These builds are provided without support, please **do not file issues** relating to Experimental builds.
+
+  Experimental Support: Fedora `44`
+
+  **Install:**
+
+  > Install via the instructions above.
+</details>
+
+[MUI]: /docs/configuration/device-uis/meshtasticui/
+[WebClient]: /docs/software/web-client/
+[USBRadio]: /docs/meshtasticd/hardware/
+[SPIRadio]: /docs/meshtasticd/hardware/

@@ -1,0 +1,80 @@
+---
+id: index
+title: Installation - meshtasticd
+description: Install the Meshtastic daemon on Linux and macOS systems.
+sidebar_label: Installation
+sidebar_position: 0
+pagination_next: meshtasticd/usage
+---
+
+import { Icon } from "@iconify/react";
+import Link from "@docusaurus/Link";
+
+This page outlines the setup of MeshtasticD, utilizing portduino to run the Meshtastic node 'firmware' on Linux/MacOS devices.
+
+Select your distribution or platform below to get started:
+
+export const InstallCard = ({ icon, title, description, to }) => (
+  <Link
+    to={to}
+    className="card"
+    style={{
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      padding: "1.25rem",
+      textDecoration: "none",
+      color: "inherit",
+      textAlign: "center",
+    }}
+  >
+    <Icon icon={icon} height="2.5rem" style={{ marginBottom: "0.5rem" }} />
+    <strong>{title}</strong>
+    {description && (
+      <span style={{ fontSize: "0.85rem", opacity: 0.75, textAlign: "center" }}>
+        {description}
+      </span>
+    )}
+  </Link>
+);
+
+<div
+  style={{
+    display: "grid",
+    gridTemplateColumns: "repeat(auto-fill, minmax(160px, 1fr))",
+    gap: "1rem",
+    marginTop: "1.5rem",
+    marginBottom: "1.5rem",
+  }}
+>
+  <InstallCard icon="mdi:apple" title="macOS" description="Homebrew" to="/docs/meshtasticd/installation/macos" />
+  <InstallCard icon="mdi:debian" title="Debian" description="Debian 12, 13" to="/docs/meshtasticd/installation/debian" />
+  <InstallCard icon="cib:raspberry-pi" title="Raspbian" description="32-bit RPi OS" to="/docs/meshtasticd/installation/raspbian" />
+  <InstallCard icon="mdi:ubuntu" title="Ubuntu" description="22.04+, PPA" to="/docs/meshtasticd/installation/ubuntu" />
+  <InstallCard icon="mdi:fedora" title="Fedora" description="Fedora 42, 43" to="/docs/meshtasticd/installation/fedora" />
+  <InstallCard icon="mdi:redhat" title="Red Hat (EPEL)" description="EPEL 9, 10" to="/docs/meshtasticd/installation/epel" />
+  <InstallCard icon="mdi:docker" title="Docker" description="amd64, arm64, armv7" to="/docs/meshtasticd/installation/docker" />
+  <InstallCard icon="simple-icons:flatpak" title="Flatpak" description="via FlatHub" to="/docs/meshtasticd/installation/flatpak" />
+  <InstallCard icon="simple-icons:openwrt" title="OpenWrt" description="Routers" to="/docs/meshtasticd/installation/openwrt" />
+  <InstallCard icon="simple-icons:nixos" title="NixOS" description="x86_64, aarch64" to="/docs/meshtasticd/installation/nixos" />
+</div>
+
+### Feature Support Overview
+
+| Distribution | USB Radio | SPI Radio | MUI | Web |
+| --- | --- | --- | --- | --- |
+| [macOS](/docs/meshtasticd/installation/macos) | ✅ | ❌ | ❌ | ❌ |
+| [Debian](/docs/meshtasticd/installation/debian) | ✅ | ✅ | ✅ | ✅ |
+| [Raspbian](/docs/meshtasticd/installation/raspbian) | ✅ | ✅ | ✅ | ✅ |
+| [Ubuntu](/docs/meshtasticd/installation/ubuntu) | ✅ | ✅ | ✅ | ✅ |
+| [Fedora](/docs/meshtasticd/installation/fedora) | ✅ | ✅ | ✅ | ✅ |
+| [Red Hat (EPEL)](/docs/meshtasticd/installation/epel) | ✅ | ✅ | ✅ | ✅ |
+| [Docker](/docs/meshtasticd/installation/docker) | ✅ | ✅ | ❌ | ✅/❌ |
+| [Flatpak](/docs/meshtasticd/installation/flatpak) | ✅ | ❌ | ✅ | ❌ |
+| [OpenWrt](/docs/meshtasticd/installation/openwrt) | ✅ | ⏸️ | ❌ | ✅ |
+| [NixOS](/docs/meshtasticd/installation/nixos) | ✅ | ✅ | ✅ | ✅ |
+
+See Also:
+- [meshtasticd Hardware](/docs/meshtasticd/hardware)
+- [meshtasticd Usage](/docs/meshtasticd/usage)
+- [meshtasticd Development](/docs/development/linux)
