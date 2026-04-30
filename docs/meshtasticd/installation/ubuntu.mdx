@@ -1,0 +1,52 @@
+---
+id: ubuntu
+title: Ubuntu - meshtasticd
+description: Install meshtasticd on Ubuntu Linux.
+sidebar_label: Ubuntu
+sidebar_position: 4
+pagination_next: meshtasticd/usage
+pagination_prev: meshtasticd/installation/index
+---
+
+import { Icon } from "@iconify/react";
+
+# <Icon icon="mdi:ubuntu" style={{ marginRight: "0.5rem" }} height="2rem" /> Ubuntu
+
+Ubuntu packages are provided via [<Icon icon="simple-icons:launchpad"/> Canonical Launchpad](https://launchpad.net/~meshtastic/+archive/ubuntu/beta).
+
+| Feature                  | Status |
+| ------------------------ | ------ |
+| 🔌 [USB Radio][USBRadio] | ✅     |
+| 🕸️ [SPI Radio][SPIRadio] | ✅     |
+| 📱 [MUI][MUI]            | ✅     |
+| 🌐 [Web][WebClient]      | ✅     |
+
+Supported: `questing` (25.10), `noble` (24.04 LTS), `jammy` (22.04 LTS)
+
+**Install:**
+
+```shell
+# Install requirements for add-apt-repository
+sudo apt install software-properties-common
+# Add Meshtastic repo
+sudo add-apt-repository ppa:meshtastic/beta
+# Install meshtasticd
+sudo apt install meshtasticd
+```
+
+<details>
+  <summary>Experimental builds</summary>
+
+  These builds are provided without support, please **do not file issues** relating to Experimental builds.
+
+  Experimental Support: `resolute` (26.04 LTS)
+
+  **Install:**
+
+  > Install via the instructions above.
+</details>
+
+[MUI]: /docs/configuration/device-uis/meshtasticui/
+[WebClient]: /docs/software/web-client/
+[USBRadio]: /docs/meshtasticd/hardware/
+[SPIRadio]: /docs/meshtasticd/hardware/

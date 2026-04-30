@@ -1,0 +1,101 @@
+---
+id: raspberry-pi
+title: Raspberry Pi (Linux)
+sidebar_label: Raspberry Pi
+sidebar_position: 1
+description: Raspberry Pi
+---
+
+`meshtasticd` is supported on *all* Raspberry Pi models.
+
+<div style={{display: 'flex', gap: '1rem', flexWrap: 'wrap'}}>
+<div>
+**armhf** 32-bit
+| Chipset | Models |
+|---------|--------|
+| BCM2835 | Pi 1, Pi Zero 1 |
+| BCM2836 | Pi 2 v1.0, Pi 2 v1.1 |
+</div>
+<div>
+**arm64** 64-bit
+| Chipset | Models |
+|---------|--------|
+| BCM2837 | Pi 3, Pi Zero 2, CM3, Pi 2 v1.2 |
+| BCM2711 | Pi 4, Pi 400, CM4 |
+| BCM2712 | Pi 5, Pi 500, CM5 |
+</div>
+</div>
+
+## Configuration
+
+This page provides instructions for configuring a Raspberry Pi to work with Meshtastic, including enabling SPI, I²C, and UART interfaces.
+
+### SPI
+
+Enable SPI support for LoRa Radio
+
+- This can be done by running the below commands on a Raspberry Pi (2-5)
+
+```shell
+sudo raspi-config nonint set_config_var dtparam=spi on /boot/firmware/config.txt # Enable SPI
+
+# Ensure dtoverlay=spi0-0cs is set in /boot/firmware/config.txt without altering dtoverlay=vc4-kms-v3d or dtparam=uart0
+sudo sed -i -e '/^\s*#\?\s*dtoverlay\s*=\s*vc4-kms-v3d/! s/^\s*#\?\s*(dtoverlay|dtparam\s*=\s*uart0)\s*=.*/dtoverlay=spi0-0cs/' /boot/firmware/config.txt
+
+# Insert dtoverlay=spi0-0cs after dtparam=spi=on if not already present
+if ! sudo grep -q '^\s*dtoverlay=spi0-0cs' /boot/firmware/config.txt; then
+    sudo sed -i '/^\s*dtparam=spi=on/a dtoverlay=spi0-0cs' /boot/firmware/config.txt
+fi
+```
+
+- Or this can be accomplished by manually enabling SPI support in `/boot/firmware/config.txt`:
+
+```plaintext
+dtparam=spi=on
+dtoverlay=spi0-0cs
+```
+
+### I²C
+
+Enable I²C support
+
+Enabled with:
+
+```shell
+sudo raspi-config nonint set_config_var dtparam=i2c_arm on /boot/firmware/config.txt # Enable i2c_arm
+```
+
+Or manually enabled in `/boot/firmware/config.txt`:
+
+```plaintext
+dtparam=i2c_arm=on
+```
+
+### UART
+
+Enable UART support for GPS
+
+- You can enable UART by running the below commands (which additionally will disable serial console tty)
+
+```shell
+sudo raspi-config nonint do_serial_hw 0 # Enable Serial Port (enable_uart=1)
+sudo raspi-config nonint do_serial_cons 1 # Disable Serial Console
+```
+
+- Or you can manually enable UART for GPS hats by making modifications in `/boot/firmware/config.txt`:
+
+```plaintext
+# Needed for all Pi device.
+enable_uart=1
+
+# Needed for the Pi 5 only.
+dtoverlay=uart0
+```
+
+- The correct port for UART GPS on the Pi 5 after a reboot is `/dev/ttyAMA0`.
+- The correct port for UART GPS on earlier Pi versions after a reboot is `/dev/ttyS0`.
+- You may need to disable the serial console on a Pi and then reboot
+
+```shell
+sudo raspi-config nonint do_serial_cons 1 # Disable Serial Console
+```
