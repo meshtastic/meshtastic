@@ -126,6 +126,13 @@ jobs:
               body += `We look forward to adding your group once these items are resolved!\n`;
             }
 
+            // Logo usage reminder — included in every comment regardless of pass/fail
+            body += `\n#### 🎨 A note about logo usage\n\n`;
+            body += `Our maintainers will also check that the Meshtastic logo is being used appropriately on your group's site or social media. `;
+            body += `Per our [Trademark Guidelines](https://meshtastic.org/docs/legal/licensing-and-trademark/#social-media), the Meshtastic logo may only be used in a **secondary position** to your group's own primary branding.\n\n`;
+            body += `If you're unsure whether your use of the logo is compliant, we recommend using the **[M-Powered / M-PWRD logo](https://meshtastic.org/docs/legal/licensing-and-trademark/#community-project-logos-m-powered--m-pwrd)** instead — it's specifically designed for community projects and **does not require a trademark grant**. `;
+            body += `Design files are available in the [Meshtastic Design repository](https://github.com/meshtastic/design/tree/master/Meshtastic%20Powered%20Logo). 🙂\n`;
+
             body += `\n---\n*This is an automated review based on the Meshtastic [Trademark Guidelines](https://meshtastic.org/docs/legal/licensing-and-trademark/).*`;
 
             // Check for existing bot comment (should not exist since we only run on opened, but just in case)
