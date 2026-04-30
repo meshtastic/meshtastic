@@ -1,0 +1,50 @@
+---
+id: docker
+title: Docker - meshtasticd
+description: Run meshtasticd in a Docker container.
+sidebar_label: Docker
+sidebar_position: 7
+pagination_next: meshtasticd/usage
+pagination_prev: meshtasticd/installation/index
+---
+
+import { Icon } from "@iconify/react";
+
+# <Icon icon="mdi:docker" style={{ marginRight: "0.5rem" }} height="2rem" /> Docker
+
+Docker containers are provided via [<Icon icon="mdi:docker"/> DockerHub](https://hub.docker.com/r/meshtastic/meshtasticd).
+
+Supported platforms: `linux/amd64`, `linux/arm64`, `linux/arm/v7`
+
+**Debian:**
+
+| Feature                  | Status |
+| ------------------------ | ------ |
+| 🔌 [USB Radio][USBRadio] | ✅     |
+| 🕸️ [SPI Radio][SPIRadio] | ✅     |
+| 📱 [MUI][MUI]            | ❌     |
+| 🌐 [Web][WebClient]      | ✅     |
+
+```shell
+docker pull meshtastic/meshtasticd:beta-debian
+```
+
+**Alpine:**
+
+| Feature                  | Status |
+| ------------------------ | ------ |
+| 🔌 [USB Radio][USBRadio] | ✅     |
+| 🕸️ [SPI Radio][SPIRadio] | ✅     |
+| 📱 [MUI][MUI]            | ❌     |
+| 🌐 [Web][WebClient]      | ❌     |
+
+```shell
+docker pull meshtastic/meshtasticd:beta-alpine
+```
+
+See: [Docker Usage](/docs/meshtasticd/usage/#usage-with-docker)
+
+[MUI]: /docs/configuration/device-uis/meshtasticui/
+[WebClient]: /docs/software/web-client/
+[USBRadio]: /docs/meshtasticd/hardware/
+[SPIRadio]: /docs/meshtasticd/hardware/

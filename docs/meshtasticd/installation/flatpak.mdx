@@ -1,0 +1,43 @@
+---
+id: flatpak
+title: Flatpak - meshtasticd
+description: Install meshtasticd via Flatpak from FlatHub.
+sidebar_label: Flatpak
+sidebar_position: 8
+pagination_next: meshtasticd/usage
+pagination_prev: meshtasticd/installation/index
+---
+
+import { Icon } from "@iconify/react";
+
+# <Icon icon="simple-icons:flatpak" style={{ marginRight: "0.5rem" }} height="2rem" /> Flatpak
+
+Flatpaks are provided via [<Icon icon="simple-icons:flathub"/> FlatHub](https://flathub.org/apps/org.meshtastic.meshtasticd).
+
+| Feature                  | Status |
+| ------------------------ | ------ |
+| 🔌 [USB Radio][USBRadio] | ✅     |
+| 🕸️ [SPI Radio][SPIRadio] | ❌     |
+| 📱 [MUI][MUI]            | ✅     |
+| 🌐 [Web][WebClient]      | ❌     |
+
+Supported platforms: `x86_64`, `aarch64`
+
+Many distros support Flatpaks, see [FlatHub Setup](https://flathub.org/setup) for help getting started.
+
+**Install:**
+
+```shell
+flatpak install flathub org.meshtastic.meshtasticd
+```
+
+**Run:**
+
+```shell
+flatpak run org.meshtastic.meshtasticd
+```
+
+[MUI]: /docs/configuration/device-uis/meshtasticui/
+[WebClient]: /docs/software/web-client/
+[USBRadio]: /docs/meshtasticd/hardware/
+[SPIRadio]: /docs/meshtasticd/hardware/
