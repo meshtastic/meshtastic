@@ -1,0 +1,55 @@
+---
+id: raspbian
+title: Raspbian (32-bit) - meshtasticd
+description: Install meshtasticd on Raspbian (Raspberry Pi OS 32-bit).
+sidebar_label: Raspbian (32-bit)
+sidebar_position: 3
+pagination_next: meshtasticd/usage
+pagination_prev: meshtasticd/installation/index
+---
+
+import { Icon } from "@iconify/react";
+
+# <Icon icon="cib:raspberry-pi" style={{ marginRight: "0.5rem" }} height="2rem" /> Raspbian (32-bit)
+
+Raspbian (Raspberry Pi OS) packages are provided via [<Icon icon="simple-icons:opensuse"/> OpenSUSE Build Service](https://build.opensuse.org/project/show/network:Meshtastic:beta).
+
+:::warning
+These builds are only suitable for 32-bit *armhf* Raspberry Pi OS installations.
+
+For **64-bit** Raspberry Pi OS installations, please use the [<Icon icon="mdi:debian"/> Debian](/docs/meshtasticd/installation/debian) packages.
+:::
+
+| Feature                  | Status |
+| ------------------------ | ------ |
+| 🔌 [USB Radio][USBRadio] | ✅     |
+| 🕸️ [SPI Radio][SPIRadio] | ✅     |
+| 📱 [MUI][MUI]            | ✅     |
+| 🌐 [Web][WebClient]      | ✅     |
+
+Supported: `trixie` (13), `bookworm` (12)
+
+**Install - Raspbian 13 (`trixie`):**
+
+```shell
+[[ "$(. /etc/os-release && echo $NAME)" != Raspbian* ]] && echo "ERROR: Raspberry Pi OS (32-bit) not detected, please use the Debian repos."
+echo 'deb http://download.opensuse.org/repositories/network:/Meshtastic:/beta/Raspbian_13/ /' | sudo tee /etc/apt/sources.list.d/network:Meshtastic:beta.list
+curl -fsSL https://download.opensuse.org/repositories/network:Meshtastic:beta/Raspbian_13/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/network_Meshtastic_beta.gpg > /dev/null
+sudo apt update
+sudo apt install meshtasticd
+```
+
+**Install - Raspbian 12 (`bookworm`):**
+
+```shell
+[[ "$(. /etc/os-release && echo $NAME)" != Raspbian* ]] && echo "ERROR: Raspberry Pi OS (32-bit) not detected, please use the Debian repos."
+echo 'deb http://download.opensuse.org/repositories/network:/Meshtastic:/beta/Raspbian_12/ /' | sudo tee /etc/apt/sources.list.d/network:Meshtastic:beta.list
+curl -fsSL https://download.opensuse.org/repositories/network:Meshtastic:beta/Raspbian_12/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/network_Meshtastic_beta.gpg > /dev/null
+sudo apt update
+sudo apt install meshtasticd
+```
+
+[MUI]: /docs/configuration/device-uis/meshtasticui/
+[WebClient]: /docs/software/web-client/
+[USBRadio]: /docs/meshtasticd/hardware/
+[SPIRadio]: /docs/meshtasticd/hardware/
