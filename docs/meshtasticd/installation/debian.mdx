@@ -9,6 +9,8 @@ pagination_prev: meshtasticd/installation/index
 ---
 
 import { Icon } from "@iconify/react";
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
 
 # <Icon icon="mdi:debian" style={{ marginRight: "0.5rem" }} height="2rem" /> Debian
 
@@ -23,25 +25,73 @@ Debian packages are provided via [<Icon icon="simple-icons:opensuse"/> OpenSUSE 
 
 Supported: `trixie` (13), `bookworm` (12)
 
-**Install - Debian 13 (`trixie`):**
+## Install
+<Tabs groupId="release_channel" queryString="channel">
+  <TabItem value="beta" label="Beta" default>
+  **Debian 13 (`trixie`):**
 
-```shell
-[[ "$(. /etc/os-release && echo $NAME)" == Raspbian* ]] && echo "ERROR: Raspberry Pi OS (32-bit) detected, please use the Raspbian repos."
-echo 'deb http://download.opensuse.org/repositories/network:/Meshtastic:/beta/Debian_13/ /' | sudo tee /etc/apt/sources.list.d/network:Meshtastic:beta.list
-curl -fsSL https://download.opensuse.org/repositories/network:Meshtastic:beta/Debian_13/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/network_Meshtastic_beta.gpg > /dev/null
-sudo apt update
-sudo apt install meshtasticd
-```
+  ```shell
+  [[ "$(. /etc/os-release && echo $NAME)" == Raspbian* ]] && echo "ERROR: Raspberry Pi OS (32-bit) detected, please use the Raspbian repos."
+  echo 'deb http://download.opensuse.org/repositories/network:/Meshtastic:/beta/Debian_13/ /' | sudo tee /etc/apt/sources.list.d/network:Meshtastic:beta.list
+  curl -fsSL https://download.opensuse.org/repositories/network:Meshtastic:beta/Debian_13/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/network_Meshtastic_beta.gpg > /dev/null
+  sudo apt update
+  sudo apt install meshtasticd
+  ```
 
-**Install - Debian 12 (`bookworm`):**
+  **Debian 12 (`bookworm`):**
 
-```shell
-[[ "$(. /etc/os-release && echo $NAME)" == Raspbian* ]] && echo "ERROR: Raspberry Pi OS (32-bit) detected, please use the Raspbian repos."
-echo 'deb http://download.opensuse.org/repositories/network:/Meshtastic:/beta/Debian_12/ /' | sudo tee /etc/apt/sources.list.d/network:Meshtastic:beta.list
-curl -fsSL https://download.opensuse.org/repositories/network:Meshtastic:beta/Debian_12/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/network_Meshtastic_beta.gpg > /dev/null
-sudo apt update
-sudo apt install meshtasticd
-```
+  ```shell
+  [[ "$(. /etc/os-release && echo $NAME)" == Raspbian* ]] && echo "ERROR: Raspberry Pi OS (32-bit) detected, please use the Raspbian repos."
+  echo 'deb http://download.opensuse.org/repositories/network:/Meshtastic:/beta/Debian_12/ /' | sudo tee /etc/apt/sources.list.d/network:Meshtastic:beta.list
+  curl -fsSL https://download.opensuse.org/repositories/network:Meshtastic:beta/Debian_12/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/network_Meshtastic_beta.gpg > /dev/null
+  sudo apt update
+  sudo apt install meshtasticd
+  ```
+
+  </TabItem>
+  <TabItem value="alpha" label="Alpha">
+  **Debian 13 (`trixie`):**
+
+  ```shell
+  [[ "$(. /etc/os-release && echo $NAME)" == Raspbian* ]] && echo "ERROR: Raspberry Pi OS (32-bit) detected, please use the Raspbian repos."
+  echo 'deb http://download.opensuse.org/repositories/network:/Meshtastic:/alpha/Debian_13/ /' | sudo tee /etc/apt/sources.list.d/network:Meshtastic:alpha.list
+  curl -fsSL https://download.opensuse.org/repositories/network:Meshtastic:alpha/Debian_13/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/network_Meshtastic_alpha.gpg > /dev/null
+  sudo apt update
+  sudo apt install meshtasticd
+  ```
+
+  **Debian 12 (`bookworm`):**
+
+  ```shell
+  [[ "$(. /etc/os-release && echo $NAME)" == Raspbian* ]] && echo "ERROR: Raspberry Pi OS (32-bit) detected, please use the Raspbian repos."
+  echo 'deb http://download.opensuse.org/repositories/network:/Meshtastic:/alpha/Debian_12/ /' | sudo tee /etc/apt/sources.list.d/network:Meshtastic:alpha.list
+  curl -fsSL https://download.opensuse.org/repositories/network:Meshtastic:alpha/Debian_12/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/network_Meshtastic_alpha.gpg > /dev/null
+  sudo apt update
+  sudo apt install meshtasticd
+  ```
+  </TabItem>
+  <TabItem value="daily" label="Daily">
+  **Debian 13 (`trixie`):**
+
+  ```shell
+  [[ "$(. /etc/os-release && echo $NAME)" == Raspbian* ]] && echo "ERROR: Raspberry Pi OS (32-bit) detected, please use the Raspbian repos."
+  echo 'deb http://download.opensuse.org/repositories/network:/Meshtastic:/daily/Debian_13/ /' | sudo tee /etc/apt/sources.list.d/network:Meshtastic:daily.list
+  curl -fsSL https://download.opensuse.org/repositories/network:Meshtastic:daily/Debian_13/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/network_Meshtastic_daily.gpg > /dev/null
+  sudo apt update
+  sudo apt install meshtasticd
+  ```
+
+  **Debian 12 (`bookworm`):**
+
+  ```shell
+  [[ "$(. /etc/os-release && echo $NAME)" == Raspbian* ]] && echo "ERROR: Raspberry Pi OS (32-bit) detected, please use the Raspbian repos."
+  echo 'deb http://download.opensuse.org/repositories/network:/Meshtastic:/daily/Debian_12/ /' | sudo tee /etc/apt/sources.list.d/network:Meshtastic:daily.list
+  curl -fsSL https://download.opensuse.org/repositories/network:Meshtastic:daily/Debian_12/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/network_Meshtastic_daily.gpg > /dev/null
+  sudo apt update
+  sudo apt install meshtasticd
+  ```
+  </TabItem>
+</Tabs>
 
 <details>
   <summary>Experimental builds</summary>
@@ -50,7 +100,7 @@ sudo apt install meshtasticd
 
   Experimental Support: `forky` (testing), `sid` (unstable)
 
-  **Install - Debian 14 (`forky`):**
+  **Install Debian 14 (`forky`):**
 
   ```shell
   echo 'deb http://download.opensuse.org/repositories/network:/Meshtastic:/beta/Debian_Testing/ /' | sudo tee /etc/apt/sources.list.d/network:Meshtastic:beta.list
@@ -59,7 +109,7 @@ sudo apt install meshtasticd
   sudo apt install meshtasticd
   ```
 
-  **Install - Debian unstable (`sid`):**
+  **Install Debian unstable (`sid`):**
 
   ```shell
   echo 'deb http://download.opensuse.org/repositories/network:/Meshtastic:/beta/Debian_Unstable/ /' | sudo tee /etc/apt/sources.list.d/network:Meshtastic:beta.list
