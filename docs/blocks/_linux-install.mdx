@@ -69,7 +69,7 @@ import { Icon } from "@iconify/react";
     :::warning
     These builds are only suitable for 32-bit *armhf* Raspberry Pi OS installations.
 
-    For **64-bit** Raspberry Pi OS installations, please use the [<Icon icon="mdi:debian"/> Debian](/docs/software/linux/installation/?os=debian) packages.
+    For **64-bit** Raspberry Pi OS installations, please use the [<Icon icon="mdi:debian"/> Debian](/docs/linux/installation/?os=debian) packages.
     :::
 
     | Feature                  | Status |
@@ -112,7 +112,7 @@ import { Icon } from "@iconify/react";
     | 📱 [MUI][MUI]            | ✅     |
     | 🌐 [Web][WebClient]      | ✅     |
 
-    Supported: `plucky` (25.04), `noble` (24.04 LTS), `jammy` (22.04 LTS)
+    Supported: `questing` (25.10), `noble` (24.04 LTS), `jammy` (22.04 LTS)
 
     **Install:**
 
@@ -130,7 +130,7 @@ import { Icon } from "@iconify/react";
 
       These builds are provided without support, please **do not file issues** relating to Experimental builds.
 
-      Experimental Support: `questing` (25.10)
+      Experimental Support: `resolute` (26.04 LTS)
 
       **Install:**
 
@@ -148,7 +148,7 @@ import { Icon } from "@iconify/react";
     | 📱 [MUI][MUI]            | ✅     |
     | 🌐 [Web][WebClient]      | ✅     |
 
-    Supported: Fedora `42`, Fedora `41`
+    Supported: Fedora `43`, Fedora `42`
 
     **Install:**
 
@@ -164,7 +164,7 @@ import { Icon } from "@iconify/react";
 
       These builds are provided without support, please **do not file issues** relating to Experimental builds.
 
-      Experimental Support: Fedora `43`
+      Experimental Support: Fedora `44`
 
       **Install:**
 
@@ -230,7 +230,7 @@ import { Icon } from "@iconify/react";
     docker pull meshtastic/meshtasticd:beta-alpine
     ```
 
-    See: [Docker Usage](/docs/software/linux/usage/#usage-with-docker)
+    See: [Docker Usage](/docs/linux/usage/#usage-with-docker)
 
   </TabItem>
   <TabItem value="flatpak" label={<><Icon icon="simple-icons:flatpak" style={{ marginRight: "0.25rem" }} height="1.5rem" /> Flatpak</>}>
@@ -269,7 +269,7 @@ import { Icon } from "@iconify/react";
     | 📱 [MUI][MUI]            | ❌                                                   |
     | 🌐 [Web][WebClient]      | ✅                                                   |
 
-    Supported OpenWrt Versions: `SNAPSHOT`, `24.10`, `23.05`, `22.03`
+    Supported OpenWrt Versions: `SNAPSHOT`, `25.12`, `24.10`, `23.05`, `22.03`
 
     Supported platforms:
     <details>
@@ -312,7 +312,7 @@ import { Icon } from "@iconify/react";
       - x86_64
     </details>
 
-    See [Meshtastic on OpenWrt routers](/docs/hardware/devices/openwrt/)
+    See [Meshtastic on OpenWrt routers](/docs/linux/openwrt/)
 
   </TabItem>
   <TabItem value="nixos" label={<><Icon icon="simple-icons:nixos" style={{ marginRight: "0.25rem" }} height="1.5rem" /> NixOS</>}>
@@ -336,5 +336,5 @@ import { Icon } from "@iconify/react";
 
 [MUI]: /docs/configuration/device-uis/meshtasticui/
 [WebClient]: /docs/software/web-client/
-[USBRadio]: /docs/hardware/devices/linux-native-hardware/
-[SPIRadio]: /docs/hardware/devices/linux-native-hardware/
+[USBRadio]: /docs/linux/hardware/
+[SPIRadio]: /docs/linux/hardware/

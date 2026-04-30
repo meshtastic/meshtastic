@@ -44,9 +44,14 @@ Unlike common high-power solutions that boost TX but degrade RX, the RAK13302 in
 ### Power Requirements
 
 :::caution
-The 1W RF stage in the RAK13302 requires a stable 5V supply. The 3.3V rail cannot deliver the surge current required for high-power LoRa transmission. For reliable operation, power the module through USB, a regulated 5V adapter, or the WisBlock Base Board's battery system.
-:::
+The RAK13302's 1W RF stage requires a stable 5V supply. The 3.3V rail cannot deliver the surge current needed during 1W LoRa transmission, so the module must be powered either by a battery or an external 5V source. Power source selection is handled via the 3-pin jumper on the RAK13302:
 
+- **IN_5V:** Powered through the RAK19007 Base Board. A Li-Ion battery must always be connected, paired with one of the following:
+  - USB + Li-Ion battery
+  - Solar panel + Li-Ion battery
+  - 5V via solar connector + Li-Ion battery
+- **EX_5V (Recommended):** Accepts a regulated 5V/1.5A supply directly through the connector on the RAK13302, powering the entire stack including the Base Board, Core module, and 1W transceiver. A connected battery will also be charged in this mode.
+:::
 
 ### Resources
 
