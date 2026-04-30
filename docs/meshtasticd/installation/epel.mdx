@@ -9,6 +9,8 @@ pagination_prev: meshtasticd/installation/index
 ---
 
 import { Icon } from "@iconify/react";
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
 
 # <Icon icon="mdi:redhat" style={{ marginRight: "0.5rem" }} height="2rem" /> Red Hat (EPEL)
 
@@ -26,16 +28,39 @@ Supported: EPEL `10`, EPEL `9`
 
 CentOS Stream, Red Hat Enterprise Linux, AlmaLinux, Rocky Linux, and other [EPEL-supported](https://docs.fedoraproject.org/en-US/epel/getting-started/) distributions.
 
-**Install:**
-
-```shell
-# Add Meshtastic COPR repos
-sudo dnf config-manager --set-enabled crb
-sudo dnf install epel-release
-sudo dnf copr enable @meshtastic/beta
-# Install meshtasticd
-sudo dnf install meshtasticd
-```
+## Install
+<Tabs groupId="release_channel" queryString="channel">
+  <TabItem value="beta" label="Beta" default>
+  ```shell
+  # Add Meshtastic COPR repos
+  sudo dnf config-manager --set-enabled crb
+  sudo dnf install epel-release
+  sudo dnf copr enable @meshtastic/beta
+  # Install meshtasticd
+  sudo dnf install meshtasticd
+  ```
+  </TabItem>
+  <TabItem value="alpha" label="Alpha">
+  ```shell
+  # Add Meshtastic COPR repos
+  sudo dnf config-manager --set-enabled crb
+  sudo dnf install epel-release
+  sudo dnf copr enable @meshtastic/alpha
+  # Install meshtasticd
+  sudo dnf install meshtasticd
+  ```
+  </TabItem>
+  <TabItem value="daily" label="Daily">
+  ```shell
+  # Add Meshtastic COPR repos
+  sudo dnf config-manager --set-enabled crb
+  sudo dnf install epel-release
+  sudo dnf copr enable @meshtastic/daily
+  # Install meshtasticd
+  sudo dnf install meshtasticd
+  ```
+  </TabItem>
+</Tabs>
 
 [MUI]: /docs/configuration/device-uis/meshtasticui/
 [WebClient]: /docs/software/web-client/
