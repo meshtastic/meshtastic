@@ -25,6 +25,13 @@ ls /etc/meshtasticd/available.d
 cp /etc/meshtasticd/available.d/lora-MeshAdv-900M30S.yaml /etc/meshtasticd/config.d/
 ```
 
+To edit your default configuration file, simply open it with your text editor of choice, make desired changes and save. Then restart the daemon.
+
+```shell
+sudo nano /etc/meshtasticd/config.yaml
+sudo systemctl restart meshtasticd
+```
+
 :::info
 The `config.yaml` file is sensitive to spacing, so ensure that the indentation and spacing are correct.
 :::
@@ -38,6 +45,26 @@ Additional arguments can be given to the program, which are listed as follows:
 - `-e`: Erase the virtual filesystem before use.
 - `-h MAC_ADDRESS`: The MAC address to assign to this virtual machine.
 - `-p TCP_PORT`: The local TCP port to use for running the Meshtastic API.
+
+#### Example CLI usage
+
+Run `meshtasticd` (as user meshtasticd) locally with a custom configuration file and directory for the virtual filesystem on API port 4404:
+
+```shell
+sudo -u meshtasticd meshtasticd -c config.yaml -d ./data -p 4404
+```
+
+This example:
+
+- Loads configuration from `config.yaml`
+- Stores node data in the `./data` directory
+- Exposes the Meshtastic API on a non-default port `4404`
+
+The API can then be accessed by clients such as the Python CLI:
+
+```shell
+meshtastic --host localhost:4404 --info
+```
 
 ### Web Server
 
@@ -53,7 +80,7 @@ Webserver:
 
 ### Bluetooth Support
 
-Bluetooth is currently unsupported and not functional on MeshtasticD devices. This may change in the future.
+Bluetooth is currently unsupported and not functional on MeshtasticD devices.
 
 ### Persistence
 

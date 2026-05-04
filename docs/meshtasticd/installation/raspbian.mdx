@@ -9,6 +9,8 @@ pagination_prev: meshtasticd/installation/index
 ---
 
 import { Icon } from "@iconify/react";
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
 
 # <Icon icon="cib:raspberry-pi" style={{ marginRight: "0.5rem" }} height="2rem" /> Raspbian (32-bit)
 
@@ -29,25 +31,75 @@ For **64-bit** Raspberry Pi OS installations, please use the [<Icon icon="mdi:de
 
 Supported: `trixie` (13), `bookworm` (12)
 
-**Install - Raspbian 13 (`trixie`):**
+## Install
+<Tabs groupId="release_channel" queryString="channel">
+  <TabItem value="beta" label="Beta" default>
+  **Raspbian 13 (`trixie`):**
 
-```shell
-[[ "$(. /etc/os-release && echo $NAME)" != Raspbian* ]] && echo "ERROR: Raspberry Pi OS (32-bit) not detected, please use the Debian repos."
-echo 'deb http://download.opensuse.org/repositories/network:/Meshtastic:/beta/Raspbian_13/ /' | sudo tee /etc/apt/sources.list.d/network:Meshtastic:beta.list
-curl -fsSL https://download.opensuse.org/repositories/network:Meshtastic:beta/Raspbian_13/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/network_Meshtastic_beta.gpg > /dev/null
-sudo apt update
-sudo apt install meshtasticd
-```
+  ```shell
+  [[ "$(. /etc/os-release && echo $NAME)" != Raspbian* ]] && echo "ERROR: Raspberry Pi OS (32-bit) not detected, please use the Debian repos."
+  echo 'deb http://download.opensuse.org/repositories/network:/Meshtastic:/beta/Raspbian_13/ /' | sudo tee /etc/apt/sources.list.d/network:Meshtastic:beta.list
+  curl -fsSL https://download.opensuse.org/repositories/network:Meshtastic:beta/Raspbian_13/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/network_Meshtastic_beta.gpg > /dev/null
+  sudo apt update
+  sudo apt install meshtasticd
+  ```
 
-**Install - Raspbian 12 (`bookworm`):**
+  **Raspbian 12 (`bookworm`):**
 
-```shell
-[[ "$(. /etc/os-release && echo $NAME)" != Raspbian* ]] && echo "ERROR: Raspberry Pi OS (32-bit) not detected, please use the Debian repos."
-echo 'deb http://download.opensuse.org/repositories/network:/Meshtastic:/beta/Raspbian_12/ /' | sudo tee /etc/apt/sources.list.d/network:Meshtastic:beta.list
-curl -fsSL https://download.opensuse.org/repositories/network:Meshtastic:beta/Raspbian_12/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/network_Meshtastic_beta.gpg > /dev/null
-sudo apt update
-sudo apt install meshtasticd
-```
+  ```shell
+  [[ "$(. /etc/os-release && echo $NAME)" != Raspbian* ]] && echo "ERROR: Raspberry Pi OS (32-bit) not detected, please use the Debian repos."
+  echo 'deb http://download.opensuse.org/repositories/network:/Meshtastic:/beta/Raspbian_12/ /' | sudo tee /etc/apt/sources.list.d/network:Meshtastic:beta.list
+  curl -fsSL https://download.opensuse.org/repositories/network:Meshtastic:beta/Raspbian_12/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/network_Meshtastic_beta.gpg > /dev/null
+  sudo apt update
+  sudo apt install meshtasticd
+  ```
+
+  </TabItem>
+  <TabItem value="alpha" label="Alpha">
+  **Raspbian 13 (`trixie`):**
+
+  ```shell
+  [[ "$(. /etc/os-release && echo $NAME)" != Raspbian* ]] && echo "ERROR: Raspberry Pi OS (32-bit) not detected, please use the Debian repos."
+  echo 'deb http://download.opensuse.org/repositories/network:/Meshtastic:/alpha/Raspbian_13/ /' | sudo tee /etc/apt/sources.list.d/network:Meshtastic:alpha.list
+  curl -fsSL https://download.opensuse.org/repositories/network:Meshtastic:alpha/Raspbian_13/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/network_Meshtastic_alpha.gpg > /dev/null
+  sudo apt update
+  sudo apt install meshtasticd
+  ```
+
+  **Raspbian 12 (`bookworm`):**
+
+  ```shell
+  [[ "$(. /etc/os-release && echo $NAME)" != Raspbian* ]] && echo "ERROR: Raspberry Pi OS (32-bit) not detected, please use the Debian repos."
+  echo 'deb http://download.opensuse.org/repositories/network:/Meshtastic:/alpha/Raspbian_12/ /' | sudo tee /etc/apt/sources.list.d/network:Meshtastic:alpha.list
+  curl -fsSL https://download.opensuse.org/repositories/network:Meshtastic:alpha/Raspbian_12/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/network_Meshtastic_alpha.gpg > /dev/null
+  sudo apt update
+  sudo apt install meshtasticd
+  ```
+
+  </TabItem>
+  <TabItem value="daily" label="Daily">
+  **Raspbian 13 (`trixie`):**
+
+  ```shell
+  [[ "$(. /etc/os-release && echo $NAME)" != Raspbian* ]] && echo "ERROR: Raspberry Pi OS (32-bit) not detected, please use the Debian repos."
+  echo 'deb http://download.opensuse.org/repositories/network:/Meshtastic:/daily/Raspbian_13/ /' | sudo tee /etc/apt/sources.list.d/network:Meshtastic:daily.list
+  curl -fsSL https://download.opensuse.org/repositories/network:Meshtastic:daily/Raspbian_13/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/network_Meshtastic_daily.gpg > /dev/null
+  sudo apt update
+  sudo apt install meshtasticd
+  ```
+
+  **Raspbian 12 (`bookworm`):**
+
+  ```shell
+  [[ "$(. /etc/os-release && echo $NAME)" != Raspbian* ]] && echo "ERROR: Raspberry Pi OS (32-bit) not detected, please use the Debian repos."
+  echo 'deb http://download.opensuse.org/repositories/network:/Meshtastic:/daily/Raspbian_12/ /' | sudo tee /etc/apt/sources.list.d/network:Meshtastic:daily.list
+  curl -fsSL https://download.opensuse.org/repositories/network:Meshtastic:daily/Raspbian_12/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/network_Meshtastic_daily.gpg > /dev/null
+  sudo apt update
+  sudo apt install meshtasticd
+  ```
+
+  </TabItem>
+</Tabs>
 
 [MUI]: /docs/configuration/device-uis/meshtasticui/
 [WebClient]: /docs/software/web-client/
