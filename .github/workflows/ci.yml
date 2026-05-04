@@ -15,7 +15,21 @@ jobs:
         with:
           submodules: true
 
+      - name: Check for JS/TS file changes
+        id: js-filter
+        uses: dorny/paths-filter@v4
+        with:
+          filters: |
+            js:
+              - '**/*.js'
+              - '**/*.cjs'
+              - '**/*.mjs'
+              - '**/*.ts'
+              - '**/*.tsx'
+              - '**/*.jsx'
+
       - name: Run oxlint
+        if: steps.js-filter.outputs.js == 'true'
         uses: oxc-project/oxlint-action@v3.0.0
         with:
           config: .oxlintrc.json
