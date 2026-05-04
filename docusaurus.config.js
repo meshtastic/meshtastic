@@ -166,7 +166,7 @@ const config = {
   },
   i18n: {
     defaultLocale: "en",
-    locales: ["en", "cs-CZ", "de", "pl-PL", "sk-SK", "tr-TR", "zh-CN", "zh-TW"],
+    locales: ["en"],
   },
   markdown: {
     mermaid: true,
