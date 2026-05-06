@@ -11,27 +11,21 @@ import { Icon } from "@iconify/react";
 
 The User Config options are: Long Name, Short Name, Is Licensed, and Is Unmessageable. User config uses an admin message sending a `User` protobuf.
 
-In all the names below, #### represents the last four digits of the MAC adress, and each emoji consumes four bytes of the string.
-
 ## User Config Values
 
 ### Short Name
 
 The short name for your device.
 
-Defaults to `Meshtastic ####`. Can be changed to any four-byte value or a single emoji (since emojis consume four characters).
+Defaults to `####`, where `####` is the last four characters of the device's MAC address. This can be changed to any four-byte value or a single emoji (since emojis consume four characters).
 
 ### Long Name
 
 A personalized identifier for your device.
 
-Defaults to the `ShortName`. This can be changed to any string, including emoji, up to 36 bytes.
+Defaults to the `Meshtastic_####` where `####` is the last four characters of the device's MAC address. This can be changed to any string up to 36 bytes. Emojis may be added - each counts for four bytes.
 
 If you are a licensed ham operator and have enabled `IsLicensed`, you should set the Long Name to your ham operator call sign.
-
-### BLE Connection Name
-
-The name assigned to the Bluetooth connection. Always set to `ShortName_####`
 
 ### Is Licensed (ham)
 
