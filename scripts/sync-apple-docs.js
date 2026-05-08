@@ -261,7 +261,17 @@ function rewriteInternalDocLinks(content, dRelPath, knownDestMdPaths) {
       // Strip any fragment for the lookup
       const targetFile = withMd.split("#")[0];
       if (knownDestMdPaths && knownDestMdPaths.has(`${subdir}/${targetFile}`)) {
-        // Known sibling — leave as-is; Docusaurus resolves sibling links correctly.
+        // Known sibling.  Docusaurus only resolves links with a .md extension
+        // relative to the *file* path; extension-less links are resolved
+        // relative to the *page URL* and break.  Ensure .md is present.
+        if (!target.endsWith(".md")) {
+          // Preserve any fragment: "deep-links#foo" → "deep-links.md#foo"
+          const hashIdx = target.indexOf("#");
+          if (hashIdx !== -1) {
+            return target.slice(0, hashIdx) + ".md" + target.slice(hashIdx);
+          }
+          return `${target}.md`;
+        }
         return target;
       }
       return `../${target}`;
