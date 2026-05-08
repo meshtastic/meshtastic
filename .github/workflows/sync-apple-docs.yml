@@ -25,8 +25,11 @@ jobs:
         with:
           node-version-file: ".nvmrc"
 
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
       - name: Install fs-extra
-        run: npm install --no-save fs-extra
+        run: pnpm add --no-save fs-extra
 
       - name: Run sync script
         run: node scripts/sync-apple-docs.js /tmp/Meshtastic-Apple
