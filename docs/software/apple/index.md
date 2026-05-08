@@ -1,6 +1,6 @@
 ---
-title: Home
-sidebar_position: 0
+title: Apple Apps
+sidebar_position: 2
 ---
 
 # Meshtastic Apple App Documentation
