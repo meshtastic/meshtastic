@@ -6,7 +6,7 @@
 
 "use strict";
 
-const fs = require("fs-extra");
+const fs = require("fs");
 const path = require("path");
 
 // ── Configuration ────────────────────────────────────────────────────────────
@@ -78,6 +78,71 @@ function rewriteImagePaths(content) {
 }
 
 /**
+ * Convert Jekyll/kramdown-specific syntax to Docusaurus-compatible equivalents.
+ *
+ * Handles:
+ * - `{: .tip }` class markers followed by blockquotes → Docusaurus `:::tip` admonitions
+ * - Unescaped `<` characters in table cells (e.g. `<1013 hPa`, `< ⅓ mile`)
+ *   that would be misread as JSX tags by the MDX parser
+ */
+function sanitizeForDocusaurus(content) {
+  // Convert Jekyll-style {: .tip } + blockquote to Docusaurus admonitions.
+  // Pattern: a standalone `{: .<type> }` line followed by a blockquote
+  // whose first line is `> **Tip/Note/Warning — Title**`.
+  content = content.replace(
+    /^\{: \.(\w+) \}\n((?:^>.*\n?)+)/gm,
+    (match, type, blockquote) => {
+      // Map Jekyll class names to Docusaurus admonition types.
+      const typeMap = {
+        tip: "tip",
+        note: "note",
+        warning: "warning",
+        warn: "warning",
+        danger: "danger",
+        info: "info",
+      };
+      const admonitionType = typeMap[type.toLowerCase()] || "note";
+
+      // Strip the leading `> ` from each blockquote line.
+      const lines = blockquote
+        .split("\n")
+        .filter((l) => l.trim() !== "")
+        .map((l) => l.replace(/^>\s?/, ""));
+
+      // If the first line matches `**Tip — Title**` or `**Type — Title**`,
+      // extract the title and use it as the admonition title.
+      // Handles em dash (—), en dash (–), and hyphen (-) separators.
+      const titleMatch = lines[0] && lines[0].match(/^\*\*[^—–\-*]+[—–-]\s*(.+?)\*\*$/);
+      const title = titleMatch ? titleMatch[1].trim() : null;
+      const bodyLines = title ? lines.slice(1) : lines;
+      const body = bodyLines.join("\n").trim();
+
+      if (title) {
+        return `:::${admonitionType} ${title}\n${body}\n:::\n`;
+      }
+      return `:::${admonitionType}\n${body}\n:::\n`;
+    },
+  );
+
+  // Escape bare `<` characters outside code blocks that are clearly comparison
+  // operators (followed by a digit, whitespace, or vulgar-fraction Unicode chars)
+  // to prevent MDX from misinterpreting them as JSX element starts.
+  // Split on fenced and inline code spans so their content is left untouched.
+  const segments = content.split(/(```[\s\S]*?```|`[^`]+`)/);
+  content = segments
+    .map((seg, i) => {
+      if (i % 2 === 1) return seg; // inside a code span/block — leave as-is
+      return seg.replace(
+        /<(?=[0-9\s\u00BC-\u00BE\u2150-\u215F])/g,
+        "&lt;",
+      );
+    })
+    .join("");
+
+  return content;
+}
+
+/**
  * Ensure Jekyll / generic frontmatter is Docusaurus-compatible.
  * - If there is no `title` field, derive one from the filename.
  * - `layout` is harmless in Docusaurus but we leave it; callers can strip it
@@ -123,8 +188,8 @@ async function main() {
     process.exit(1);
   }
 
-  fs.ensureDirSync(DEST_DOCS_DIR);
-  fs.ensureDirSync(DEST_IMAGES_DIR);
+  fs.mkdirSync(DEST_DOCS_DIR, { recursive: true });
+  fs.mkdirSync(DEST_IMAGES_DIR, { recursive: true });
 
   const sourceFiles = collectFiles(SRC_DOCS_DIR);
 
@@ -166,15 +231,18 @@ async function main() {
     let content = fs.readFileSync(srcFile, "utf8");
     content = ensureFrontmatter(content, relPath);
     content = rewriteImagePaths(content);
+    content = sanitizeForDocusaurus(content);
 
     const exists = fs.existsSync(destFile);
     const existingContent = exists ? fs.readFileSync(destFile, "utf8") : null;
 
     if (!exists) {
-      fs.outputFileSync(destFile, content);
+      fs.mkdirSync(path.dirname(destFile), { recursive: true });
+      fs.writeFileSync(destFile, content);
       console.log(`[ADD]    docs: ${path.basename(relPath)}`);
     } else if (existingContent !== content) {
-      fs.outputFileSync(destFile, content);
+      fs.mkdirSync(path.dirname(destFile), { recursive: true });
+      fs.writeFileSync(destFile, content);
       console.log(`[UPDATE] docs: ${path.basename(relPath)}`);
     } else {
       console.log(`[SKIP]   docs: ${path.basename(relPath)} (unchanged)`);
@@ -189,13 +257,14 @@ async function main() {
 
     const exists = fs.existsSync(destFile);
     if (!exists) {
-      fs.copySync(srcFile, destFile);
+      fs.mkdirSync(path.dirname(destFile), { recursive: true });
+      fs.copyFileSync(srcFile, destFile);
       console.log(`[ADD]    img: ${path.basename(relPath)}`);
     } else {
       const srcBuf = fs.readFileSync(srcFile);
       const destBuf = fs.readFileSync(destFile);
       if (!srcBuf.equals(destBuf)) {
-        fs.copySync(srcFile, destFile);
+        fs.copyFileSync(srcFile, destFile);
         console.log(`[UPDATE] img: ${path.basename(relPath)}`);
       } else {
         console.log(`[SKIP]   img: ${path.basename(relPath)} (unchanged)`);
@@ -213,7 +282,7 @@ async function main() {
   for (const file of existingMdFiles) {
     const basename = path.basename(file);
     if (!sourceMdBasenames.has(basename)) {
-      fs.removeSync(path.join(DEST_DOCS_DIR, file));
+      fs.unlinkSync(path.join(DEST_DOCS_DIR, file));
       console.log(`[REMOVE] docs: ${basename}`);
     }
   }
@@ -226,7 +295,7 @@ async function main() {
   for (const file of existingImageFiles) {
     const basename = path.basename(file);
     if (!sourceImageBasenames.has(basename)) {
-      fs.removeSync(path.join(DEST_IMAGES_DIR, file));
+      fs.unlinkSync(path.join(DEST_IMAGES_DIR, file));
       console.log(`[REMOVE] img: ${basename}`);
     }
   }
