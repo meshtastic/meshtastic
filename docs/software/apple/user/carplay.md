@@ -10,7 +10,7 @@ The app supports Apple CarPlay for **hands-free mesh messaging** while driving. 
 
 ## Requirements
 
-- iPhone running iOS 16 or later
+- iPhone running iOS 18 or later
 - A supported CarPlay head unit or the CarPlay Simulator in Xcode
 - A Meshtastic device connected via Bluetooth, TCP, or serial
 - Siri enabled — the app requests Siri authorization during onboarding and again on subsequent launches
@@ -78,5 +78,5 @@ When a Meshtastic device connects during a CarPlay session, a **Dynamic Island /
 
 The Live Activity ends automatically when CarPlay disconnects.
 
-> **Tip —** For implementation details and component architecture, see the [CarPlay Developer Guide](../../developer/carplay).
+> **Tip —** For implementation details and component architecture, see the [CarPlay Developer Guide](../../developer/carplay.md).
 

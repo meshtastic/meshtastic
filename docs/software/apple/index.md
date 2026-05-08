@@ -5,7 +5,7 @@ sidebar_position: 0
 
 # Meshtastic Apple App Documentation
 
-User and developer documentation for the Meshtastic iOS, iPadOS, and macOS app.
+User and developer documentation for the Meshtastic iOS, iPadOS, macOS, watchOS, and visionOS app.
 
 Use the sidebar navigation to browse the **User Guide** for app features and the **Developer Guide** for contributing to the project.
 
