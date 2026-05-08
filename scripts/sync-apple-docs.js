@@ -2,21 +2,31 @@
 // scripts/sync-apple-docs.js
 // Synchronizes docs and images from meshtastic/Meshtastic-Apple into this repo.
 //
-// Usage:  node scripts/sync-apple-docs.js <path-to-cloned-apple-repo>
+// Usage:  node scripts/sync-apple-docs.js <path-to-cloned-apple-repo> [--convert-webp]
+//
+// --convert-webp  Convert PNG/JPG/JPEG/GIF images to WebP via cwebp and rewrite
+//                 all image references in Markdown to use the .webp extension.
+//                 SVGs are always kept as-is.  Requires cwebp to be on PATH.
 
 "use strict";
 
 const fs = require("fs");
 const path = require("path");
+const { execSync } = require("child_process");
 
 // ── Configuration ────────────────────────────────────────────────────────────
 
-const APPLE_REPO_PATH = process.argv[2];
+const args = process.argv.slice(2);
+const APPLE_REPO_PATH = args.find((a) => !a.startsWith("--"));
+const CONVERT_WEBP = args.includes("--convert-webp");
 
 if (!APPLE_REPO_PATH) {
-  console.error("Usage: node scripts/sync-apple-docs.js <apple-repo-path>");
+  console.error("Usage: node scripts/sync-apple-docs.js <apple-repo-path> [--convert-webp]");
   process.exit(1);
 }
+
+// Extensions that will be converted to WebP when --convert-webp is set.
+const WEBP_CONVERTIBLE = new Set([".png", ".jpg", ".jpeg", ".gif"]);
 
 const REPO_ROOT = path.resolve(__dirname, "..");
 
@@ -24,7 +34,7 @@ const SRC_DOCS_DIR = path.join(APPLE_REPO_PATH, "docs");
 const DEST_DOCS_DIR = path.join(REPO_ROOT, "docs", "software", "apple");
 const DEST_IMAGES_DIR = path.join(REPO_ROOT, "static", "img", "apple");
 
-const IMAGE_EXTENSIONS = new Set([".png", ".jpg", ".jpeg", ".gif", ".svg"]);
+const IMAGE_EXTENSIONS = new Set([".png", ".jpg", ".jpeg", ".gif", ".svg", ".webp"]);
 const MD_EXTENSIONS = new Set([".md"]);
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
@@ -51,8 +61,18 @@ function collectFiles(dir) {
 /**
  * Rewrite image references inside a Markdown string so that bare filenames
  * (or relative paths) point to the Docusaurus static path `/img/apple/<file>`.
+ * When CONVERT_WEBP is enabled, convertible extensions are changed to .webp.
  */
 function rewriteImagePaths(content) {
+  function destBasename(imgPath) {
+    const base = path.basename(imgPath);
+    const ext = path.extname(base).toLowerCase();
+    if (CONVERT_WEBP && WEBP_CONVERTIBLE.has(ext)) {
+      return base.slice(0, -ext.length) + ".webp";
+    }
+    return base;
+  }
+
   // Match Markdown image syntax: ![alt](path)
   // and HTML img tags: <img src="path" …>
   // Only rewrite paths that are NOT already absolute URLs or /img/… paths.
@@ -60,28 +80,25 @@ function rewriteImagePaths(content) {
     .replace(
       /!\[([^\]]*)\]\((?!https?:\/\/)(?!\/img\/)([^)]+)\)/g,
       (match, alt, imgPath) => {
-        const basename = path.basename(imgPath);
-        const ext = path.extname(basename).toLowerCase();
+        const ext = path.extname(path.basename(imgPath)).toLowerCase();
         if (!IMAGE_EXTENSIONS.has(ext)) return match;
-        return `![${alt}](/img/apple/${basename})`;
+        return `![${alt}](/img/apple/${destBasename(imgPath)})`;
       },
     )
     .replace(
       /<img\s+([^>]*?)src=["'](?!https?:\/\/)(?!\/img\/)([^"']+)["']([^>]*)>/gi,
       (match, before, imgPath, after) => {
-        const basename = path.basename(imgPath);
-        const ext = path.extname(basename).toLowerCase();
+        const ext = path.extname(path.basename(imgPath)).toLowerCase();
         if (!IMAGE_EXTENSIONS.has(ext)) return match;
-        return `<img ${before}src="/img/apple/${basename}"${after}>`;
+        return `<img ${before}src="/img/apple/${destBasename(imgPath)}"${after}>`;
       },
     )
     .replace(
       /<source\s+([^>]*?)srcset=["'](?!https?:\/\/)(?!\/img\/)([^"']+)["']([^>]*)>/gi,
       (match, before, imgPath, after) => {
-        const basename = path.basename(imgPath);
-        const ext = path.extname(basename).toLowerCase();
+        const ext = path.extname(path.basename(imgPath)).toLowerCase();
         if (!IMAGE_EXTENSIONS.has(ext)) return match;
-        return `<source ${before}srcset="/img/apple/${basename}"${after}>`;
+        return `<source ${before}srcset="/img/apple/${destBasename(imgPath)}"${after}>`;
       },
     );
 }
@@ -354,8 +371,18 @@ async function main() {
   warnCollisions(sourceMdFiles, "docs");
   warnCollisions(sourceImageFiles, "img");
 
+  // When converting to WebP, the dest basename differs from the source basename
+  // for convertible extensions.  Build a map: src basename → dest basename.
+  function toDestBasename(srcBasename) {
+    const ext = path.extname(srcBasename).toLowerCase();
+    if (CONVERT_WEBP && WEBP_CONVERTIBLE.has(ext)) {
+      return srcBasename.slice(0, -ext.length) + ".webp";
+    }
+    return srcBasename;
+  }
+
   const sourceImageBasenames = new Set(
-    sourceImageFiles.map((f) => path.basename(f)),
+    sourceImageFiles.map((f) => toDestBasename(path.basename(f))),
   );
 
   // Landing pages from the Apple repo root are remapped to become the Docusaurus
@@ -415,21 +442,41 @@ async function main() {
 
   for (const relPath of sourceImageFiles) {
     const srcFile = path.join(SRC_DOCS_DIR, relPath);
-    const destFile = path.join(DEST_IMAGES_DIR, path.basename(relPath));
+    const srcBasename = path.basename(relPath);
+    const destBasename = toDestBasename(srcBasename);
+    const destFile = path.join(DEST_IMAGES_DIR, destBasename);
+    const srcExt = path.extname(srcBasename).toLowerCase();
+    const shouldConvert = CONVERT_WEBP && WEBP_CONVERTIBLE.has(srcExt);
 
     const exists = fs.existsSync(destFile);
     if (!exists) {
       fs.mkdirSync(path.dirname(destFile), { recursive: true });
-      fs.copyFileSync(srcFile, destFile);
-      console.log(`[ADD]    img: ${path.basename(relPath)}`);
-    } else {
-      const srcBuf = fs.readFileSync(srcFile);
-      const destBuf = fs.readFileSync(destFile);
-      if (!srcBuf.equals(destBuf)) {
-        fs.copyFileSync(srcFile, destFile);
-        console.log(`[UPDATE] img: ${path.basename(relPath)}`);
+      if (shouldConvert) {
+        execSync(`cwebp -quiet "${srcFile}" -o "${destFile}"`);
       } else {
-        console.log(`[SKIP]   img: ${path.basename(relPath)} (unchanged)`);
+        fs.copyFileSync(srcFile, destFile);
+      }
+      console.log(`[ADD]    img: ${destBasename}`);
+    } else {
+      // For converted images, compare source mtime to dest mtime to detect changes;
+      // for copied images, do a byte-level comparison.
+      let changed = false;
+      if (shouldConvert) {
+        const srcMtime = fs.statSync(srcFile).mtimeMs;
+        const destMtime = fs.statSync(destFile).mtimeMs;
+        changed = srcMtime > destMtime;
+      } else {
+        changed = !fs.readFileSync(srcFile).equals(fs.readFileSync(destFile));
+      }
+      if (changed) {
+        if (shouldConvert) {
+          execSync(`cwebp -quiet "${srcFile}" -o "${destFile}"`);
+        } else {
+          fs.copyFileSync(srcFile, destFile);
+        }
+        console.log(`[UPDATE] img: ${destBasename}`);
+      } else {
+        console.log(`[SKIP]   img: ${destBasename} (unchanged)`);
       }
     }
   }
