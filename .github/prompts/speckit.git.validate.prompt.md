@@ -1,3 +1,0 @@
----
-agent: speckit.git.validate
----

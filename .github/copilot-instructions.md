@@ -76,8 +76,3 @@ import { DeviceImage } from "@site/src/components/DeviceImage";
 2. **Use Playwright MCP** to visually confirm changes when available
 3. **Client-side rendering**: In dev mode, `curl` requests only return the HTML shell—actual content renders in the browser
 4. **Clear caches** if changes don't appear: `rm -rf .docusaurus node_modules/.cache`
-
-<!-- SPECKIT START -->
-For additional context about technologies to be used, project structure,
-shell commands, and other important information, read the current plan
-<!-- SPECKIT END -->
