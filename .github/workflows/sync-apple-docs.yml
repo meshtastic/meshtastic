@@ -31,7 +31,7 @@ jobs:
           version: latest
 
       - name: Install fs-extra
-        run: pnpm add fs-extra
+        run: pnpm add --ignore-scripts fs-extra
 
       - name: Run sync script
         run: node scripts/sync-apple-docs.js /tmp/Meshtastic-Apple
