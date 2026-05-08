@@ -249,19 +249,31 @@ function rewriteInternalDocLinks(content, dRelPath, knownDestMdPaths) {
     }
 
     // Bare relative links (no leading "../", "./", or "/"):
-    // these are sibling-file links.  Prepend "../" so the URL resolves to
-    // the parent `user/` or `developer/` slug, not deeper inside the page.
+    // In the source repo these are sibling links within the same subdir.
+    // Docusaurus resolves them relative to the page URL rather than the file
+    // path, so a bare `codebase` from `developer/adding-features` would resolve
+    // to …/adding-features/codebase/ — wrong.  We need `../codebase`.
+    // EXCEPTION: if the bare target resolves to a known sibling file in the
+    // same subdir, the Docusaurus URL-relative resolution already works correctly
+    // and we should NOT prepend `../`.
     if (!/^(\.\.\/|\.\/)/.test(target)) {
+      const withMd = target.endsWith(".md") ? target : `${target}.md`;
+      // Strip any fragment for the lookup
+      const targetFile = withMd.split("#")[0];
+      if (knownDestMdPaths && knownDestMdPaths.has(`${subdir}/${targetFile}`)) {
+        // Known sibling — leave as-is; Docusaurus resolves sibling links correctly.
+        return target;
+      }
       return `../${target}`;
     }
 
-    // `../foo.md` (or `../foo`) where `{subdir}/foo.md` exists in the dest:
-    // the source wrote the link relative to an old flat layout, but the file
-    // was synced into the same subdir.  Strip the `../` to make it a sibling link.
+    // `../foo.md` (or `../foo`) that doesn't match the cross-subdir pattern above:
+    // check if the target is actually a sibling (source used old flat-layout paths).
     if (/^\.\.\//.test(target)) {
       const withoutParent = target.slice(3);
       const withMd = withoutParent.endsWith(".md") ? withoutParent : `${withoutParent}.md`;
-      if (knownDestMdPaths && knownDestMdPaths.has(`${subdir}/${withMd}`)) {
+      const targetFile = withMd.split("#")[0];
+      if (knownDestMdPaths && knownDestMdPaths.has(`${subdir}/${targetFile}`)) {
         return withoutParent;
       }
     }
