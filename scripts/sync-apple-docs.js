@@ -74,6 +74,15 @@ function rewriteImagePaths(content) {
         if (!IMAGE_EXTENSIONS.has(ext)) return match;
         return `<img ${before}src="/img/apple/${basename}"${after}>`;
       },
+    )
+    .replace(
+      /<source\s+([^>]*?)srcset=["'](?!https?:\/\/)(?!\/img\/)([^"']+)["']([^>]*)>/gi,
+      (match, before, imgPath, after) => {
+        const basename = path.basename(imgPath);
+        const ext = path.extname(basename).toLowerCase();
+        if (!IMAGE_EXTENSIONS.has(ext)) return match;
+        return `<source ${before}srcset="/img/apple/${basename}"${after}>`;
+      },
     );
 }
 
