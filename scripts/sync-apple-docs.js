@@ -111,7 +111,8 @@ function sanitizeForDocusaurus(content) {
 
       // If the first line matches `**Tip — Title**` or `**Type — Title**`,
       // extract the title and use it as the admonition title.
-      const titleMatch = lines[0] && lines[0].match(/^\*\*[^—*]+—\s*(.+?)\*\*$/);
+      // Handles em dash (—), en dash (–), and hyphen (-) separators.
+      const titleMatch = lines[0] && lines[0].match(/^\*\*[^—–\-*]+[—–-]\s*(.+?)\*\*$/);
       const title = titleMatch ? titleMatch[1].trim() : null;
       const bodyLines = title ? lines.slice(1) : lines;
       const body = bodyLines.join("\n").trim();
@@ -123,15 +124,20 @@ function sanitizeForDocusaurus(content) {
     },
   );
 
-  // Escape bare `<` characters in table cells that are clearly not HTML/JSX tags
-  // (i.e. followed by a digit, space, or Unicode non-identifier character).
-  // This prevents MDX from misinterpreting them as the start of a JSX element.
-  content = content.replace(
-    /\|([^|\n]*)<([0-9\s\u00C0-\uFFFF])([^|\n]*)\|/g,
-    (match, before, afterLt, rest) => {
-      return `|${before}&lt;${afterLt}${rest}|`;
-    },
-  );
+  // Escape bare `<` characters outside code blocks that are clearly comparison
+  // operators (followed by a digit, whitespace, or vulgar-fraction Unicode chars)
+  // to prevent MDX from misinterpreting them as JSX element starts.
+  // Split on fenced and inline code spans so their content is left untouched.
+  const segments = content.split(/(```[\s\S]*?```|`[^`]+`)/);
+  content = segments
+    .map((seg, i) => {
+      if (i % 2 === 1) return seg; // inside a code span/block — leave as-is
+      return seg.replace(
+        /<(?=[0-9\s\u00BC-\u00BE\u2150-\u215F])/g,
+        "&lt;",
+      );
+    })
+    .join("");
 
   return content;
 }
