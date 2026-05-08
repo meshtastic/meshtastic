@@ -6,7 +6,7 @@
 
 "use strict";
 
-const fs = require("fs-extra");
+const fs = require("fs");
 const path = require("path");
 
 // ── Configuration ────────────────────────────────────────────────────────────
@@ -123,8 +123,8 @@ async function main() {
     process.exit(1);
   }
 
-  fs.ensureDirSync(DEST_DOCS_DIR);
-  fs.ensureDirSync(DEST_IMAGES_DIR);
+  fs.mkdirSync(DEST_DOCS_DIR, { recursive: true });
+  fs.mkdirSync(DEST_IMAGES_DIR, { recursive: true });
 
   const sourceFiles = collectFiles(SRC_DOCS_DIR);
 
@@ -171,10 +171,12 @@ async function main() {
     const existingContent = exists ? fs.readFileSync(destFile, "utf8") : null;
 
     if (!exists) {
-      fs.outputFileSync(destFile, content);
+      fs.mkdirSync(path.dirname(destFile), { recursive: true });
+      fs.writeFileSync(destFile, content);
       console.log(`[ADD]    docs: ${path.basename(relPath)}`);
     } else if (existingContent !== content) {
-      fs.outputFileSync(destFile, content);
+      fs.mkdirSync(path.dirname(destFile), { recursive: true });
+      fs.writeFileSync(destFile, content);
       console.log(`[UPDATE] docs: ${path.basename(relPath)}`);
     } else {
       console.log(`[SKIP]   docs: ${path.basename(relPath)} (unchanged)`);
@@ -189,13 +191,14 @@ async function main() {
 
     const exists = fs.existsSync(destFile);
     if (!exists) {
-      fs.copySync(srcFile, destFile);
+      fs.mkdirSync(path.dirname(destFile), { recursive: true });
+      fs.copyFileSync(srcFile, destFile);
       console.log(`[ADD]    img: ${path.basename(relPath)}`);
     } else {
       const srcBuf = fs.readFileSync(srcFile);
       const destBuf = fs.readFileSync(destFile);
       if (!srcBuf.equals(destBuf)) {
-        fs.copySync(srcFile, destFile);
+        fs.copyFileSync(srcFile, destFile);
         console.log(`[UPDATE] img: ${path.basename(relPath)}`);
       } else {
         console.log(`[SKIP]   img: ${path.basename(relPath)} (unchanged)`);
@@ -213,7 +216,7 @@ async function main() {
   for (const file of existingMdFiles) {
     const basename = path.basename(file);
     if (!sourceMdBasenames.has(basename)) {
-      fs.removeSync(path.join(DEST_DOCS_DIR, file));
+      fs.unlinkSync(path.join(DEST_DOCS_DIR, file));
       console.log(`[REMOVE] docs: ${basename}`);
     }
   }
@@ -226,7 +229,7 @@ async function main() {
   for (const file of existingImageFiles) {
     const basename = path.basename(file);
     if (!sourceImageBasenames.has(basename)) {
-      fs.removeSync(path.join(DEST_IMAGES_DIR, file));
+      fs.unlinkSync(path.join(DEST_IMAGES_DIR, file));
       console.log(`[REMOVE] img: ${basename}`);
     }
   }
