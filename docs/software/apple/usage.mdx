@@ -1,0 +1,180 @@
+---
+id: usage
+title: Apple Application Usage
+sidebar_label: Usage
+sidebar_position: 2
+---
+
+## Shortcuts and Siri
+
+The Meshtastic app includes integrations with Siri and Shortcuts, allowing you to perform actions like sending waypoints or rebooting a node hands free or through automated workflows.
+
+### Shortcuts
+
+You can create a shortcut by opening the Shortcuts app, creating a new shortcut and looking for actions listed under the Meshtastic app
+
+All Shortcuts:
+
+- Add Contact
+    - Takes a Meshtastic contact URL and saves it to the nodes database
+- Send a Direct Message
+    - Send a message to a certain meshtastic node
+- Send a Waypoint
+- Send a Group Message
+    - Send a message to a certain meshtastic channel
+- Get Node Position
+    - Fetch the latest position of a certain node
+- Shut Down
+    - Send a shutdown to the node you are connected to
+- Restart
+    - Restart to the node you are connected to
+- Factory Reset
+    - Perform a factory reset on the node you are connected to
+- Save Channel Settings
+    - Takes a Meshtastic channel URL and saves the channel settings
+- Disconnect Node
+    - Disconnect the currently connected node
+
+### Siri
+
+You can perform the following Siri actions by speaking the phrase after activating Siri.
+
+---
+
+#### Shut Down Node
+
+Phrases:
+- Shut down Meshtastic node
+- Shut down my Meshtastic node
+- Turn off Meshtastic node
+- Power down Meshtastic node
+- Deactivate Meshtastic node
+
+---
+
+#### Restart Node
+
+Phrases:
+- Restart Meshtastic node
+- Restart my Meshtastic node
+- Reboot Meshtastic node
+- Reboot my Meshtastic node
+
+---
+
+#### Group Message
+
+Phrases:
+- Message a Meshtastic channel
+- Send a Meshtastic group message
+
+---
+
+#### Disconnect Node
+
+Phrases:
+- Disconnect Meshtastic node
+- Disconnect my Meshtastic node
+- Disconnect from Meshtastic
+- Disconnect Meshtastic
+
+## Deep Links
+
+The app supports deep links using the `meshtastic:///` URL scheme, for use with Shortcuts, Siri Intents, and web pages.
+
+### Messages
+
+| URL | Description |
+|-----|-------------|
+| `meshtastic:///messages` | Messages tab |
+| `meshtastic:///messages?channelId={channelId}&messageId={messageId}` | Channel messages (`messageId` is optional) |
+| `meshtastic:///messages?userNum={userNum}&messageId={messageId}` | Direct messages (`messageId` is optional) |
+
+### Connect
+
+| URL | Description |
+|-----|-------------|
+| `meshtastic:///connect` | Connect tab |
+
+### Nodes
+
+| URL | Description |
+|-----|-------------|
+| `meshtastic:///nodes` | Nodes tab |
+| `meshtastic:///nodes?nodenum={nodenum}` | Selected node |
+
+### Mesh Map
+
+| URL | Description |
+|-----|-------------|
+| `meshtastic:///map` | Map tab |
+| `meshtastic:///map?nodenum={nodenum}` | Node on map |
+| `meshtastic:///map?waypointId={waypointId}` | Waypoint on map |
+
+### Settings
+
+Each settings item has an associated deep link. No parameters are supported for settings URLs.
+
+| URL | Description |
+|-----|-------------|
+| `meshtastic:///settings/about` | About Meshtastic |
+| `meshtastic:///settings/appSettings` | App Settings |
+| `meshtastic:///settings/routes` | Routes |
+| `meshtastic:///settings/routeRecorder` | Route Recorder |
+
+**Radio Config**
+
+| URL | Description |
+|-----|-------------|
+| `meshtastic:///settings/lora` | LoRa Config |
+| `meshtastic:///settings/channels` | Channels |
+| `meshtastic:///settings/security` | Security Config |
+| `meshtastic:///settings/shareQRCode` | Share QR Code |
+
+**Device Config**
+
+| URL | Description |
+|-----|-------------|
+| `meshtastic:///settings/user` | User Config |
+| `meshtastic:///settings/bluetooth` | Bluetooth Config |
+| `meshtastic:///settings/device` | Device Config |
+| `meshtastic:///settings/display` | Display Config |
+| `meshtastic:///settings/network` | Network Config |
+| `meshtastic:///settings/position` | Position Config |
+| `meshtastic:///settings/power` | Power Config |
+
+**Module Config**
+
+| URL | Description |
+|-----|-------------|
+| `meshtastic:///settings/ambientLighting` | Ambient Lighting |
+| `meshtastic:///settings/cannedMessages` | Canned Messages |
+| `meshtastic:///settings/detectionSensor` | Detection Sensor |
+| `meshtastic:///settings/externalNotification` | External Notification |
+| `meshtastic:///settings/mqtt` | MQTT |
+| `meshtastic:///settings/paxCounter` | Pax Counter |
+| `meshtastic:///settings/rangeTest` | Range Test |
+| `meshtastic:///settings/ringtone` | Ringtone |
+| `meshtastic:///settings/serial` | Serial |
+| `meshtastic:///settings/storeAndForward` | Store & Forward |
+| `meshtastic:///settings/telemetry` | Telemetry |
+
+**TAK**
+
+| URL | Description |
+|-----|-------------|
+| `meshtastic:///settings/tak` | TAK Config |
+
+**Logging**
+
+| URL | Description |
+|-----|-------------|
+| `meshtastic:///settings/debugLogs` | Debug Logs |
+
+**Developers**
+
+| URL | Description |
+|-----|-------------|
+| `meshtastic:///settings/appFiles` | App Files |
+| `meshtastic:///settings/firmwareUpdates` | Firmware Updates |
+
