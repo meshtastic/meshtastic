@@ -243,9 +243,18 @@ function rewriteInternalDocLinks(content, dRelPath, knownDestMdPaths) {
     // ── Non-landing subdir file rules ─────────────────────────────────────
 
     // Cross-subdir links written as "../user/…" or "../developer/…":
-    // add one more "../" so they escape the current subdir in the URL.
+    // The relative path relationship is preserved in the destination layout
+    // (both user/ and developer/ live under docs/software/apple/), so these
+    // links resolve correctly as-is.  Just ensure .md extension is present.
     if (/^\.\.\/(user|developer)\//.test(target)) {
-      return `../${target}`;
+      if (!target.endsWith(".md")) {
+        const hashIdx = target.indexOf("#");
+        if (hashIdx !== -1) {
+          return target.slice(0, hashIdx) + ".md" + target.slice(hashIdx);
+        }
+        return `${target}.md`;
+      }
+      return target;
     }
 
     // Bare relative links (no leading "../", "./", or "/"):
