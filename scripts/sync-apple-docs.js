@@ -78,6 +78,65 @@ function rewriteImagePaths(content) {
 }
 
 /**
+ * Convert Jekyll/kramdown-specific syntax to Docusaurus-compatible equivalents.
+ *
+ * Handles:
+ * - `{: .tip }` class markers followed by blockquotes → Docusaurus `:::tip` admonitions
+ * - Unescaped `<` characters in table cells (e.g. `<1013 hPa`, `< ⅓ mile`)
+ *   that would be misread as JSX tags by the MDX parser
+ */
+function sanitizeForDocusaurus(content) {
+  // Convert Jekyll-style {: .tip } + blockquote to Docusaurus admonitions.
+  // Pattern: a standalone `{: .<type> }` line followed by a blockquote
+  // whose first line is `> **Tip/Note/Warning — Title**`.
+  content = content.replace(
+    /^\{: \.(\w+) \}\n((?:^>.*\n?)+)/gm,
+    (match, type, blockquote) => {
+      // Map Jekyll class names to Docusaurus admonition types.
+      const typeMap = {
+        tip: "tip",
+        note: "note",
+        warning: "warning",
+        warn: "warning",
+        danger: "danger",
+        info: "info",
+      };
+      const admonitionType = typeMap[type.toLowerCase()] || "note";
+
+      // Strip the leading `> ` from each blockquote line.
+      const lines = blockquote
+        .split("\n")
+        .filter((l) => l.trim() !== "")
+        .map((l) => l.replace(/^>\s?/, ""));
+
+      // If the first line matches `**Tip — Title**` or `**Type — Title**`,
+      // extract the title and use it as the admonition title.
+      const titleMatch = lines[0] && lines[0].match(/^\*\*[^—*]+—\s*(.+?)\*\*$/);
+      const title = titleMatch ? titleMatch[1].trim() : null;
+      const bodyLines = title ? lines.slice(1) : lines;
+      const body = bodyLines.join("\n").trim();
+
+      if (title) {
+        return `:::${admonitionType} ${title}\n${body}\n:::\n`;
+      }
+      return `:::${admonitionType}\n${body}\n:::\n`;
+    },
+  );
+
+  // Escape bare `<` characters in table cells that are clearly not HTML/JSX tags
+  // (i.e. followed by a digit, space, or Unicode non-identifier character).
+  // This prevents MDX from misinterpreting them as the start of a JSX element.
+  content = content.replace(
+    /\|([^|\n]*)<([0-9\s\u00C0-\uFFFF])([^|\n]*)\|/g,
+    (match, before, afterLt, rest) => {
+      return `|${before}&lt;${afterLt}${rest}|`;
+    },
+  );
+
+  return content;
+}
+
+/**
  * Ensure Jekyll / generic frontmatter is Docusaurus-compatible.
  * - If there is no `title` field, derive one from the filename.
  * - `layout` is harmless in Docusaurus but we leave it; callers can strip it
@@ -166,6 +225,7 @@ async function main() {
     let content = fs.readFileSync(srcFile, "utf8");
     content = ensureFrontmatter(content, relPath);
     content = rewriteImagePaths(content);
+    content = sanitizeForDocusaurus(content);
 
     const exists = fs.existsSync(destFile);
     const existingContent = exists ? fs.readFileSync(destFile, "utf8") : null;

@@ -54,6 +54,6 @@ You can pair multiple radios but only one is active at a time. Switch between th
 
 ---
 
-{: .tip }
-> **Tip — Connected Radio**
-> Swipe left to disconnect. Long press to start the Live Activity.
+:::tip Connected Radio
+Swipe left to disconnect. Long press to start the Live Activity.
+:::

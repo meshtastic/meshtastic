@@ -28,17 +28,17 @@ Meshtastic uses a channel system for group broadcasts and direct messages for pr
 
 ---
 
-{: .tip }
-> **Tip — Share Channels**
-> A QR code contains the LoRa config and channels needed for radios to communicate. Use **Replace Channels** to overwrite or **Add Channels** to append to existing channels.
+:::tip Share Channels
+A QR code contains the LoRa config and channels needed for radios to communicate. Use **Replace Channels** to overwrite or **Add Channels** to append to existing channels.
+:::
 
-{: .tip }
-> **Tip — Manage Channels**
-> The primary channel handles broadcast traffic. Add secondary channels for separate messaging groups, each secured by their own key.
+:::tip Manage Channels
+The primary channel handles broadcast traffic. Add secondary channels for separate messaging groups, each secured by their own key.
+:::
 
-{: .tip }
-> **Tip — Administration Enabled**
-> Select a node from the drop-down to manage connected or remote devices.
+:::tip Administration Enabled
+Select a node from the drop-down to manage connected or remote devices.
+:::
 
 ---
 
@@ -61,9 +61,9 @@ Meshtastic uses a channel system for group broadcasts and direct messages for pr
 
 ---
 
-{: .tip }
-> **Tip — Messages**
-> Send channel broadcasts and direct messages. Long press any message for actions like copy, reply, tapback, and delivery details.
+:::tip Messages
+Send channel broadcasts and direct messages. Long press any message for actions like copy, reply, tapback, and delivery details.
+:::
 
 ---
 

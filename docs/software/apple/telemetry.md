@@ -44,7 +44,7 @@ The Indoor Air Quality scale shows category bands from Excellent (green) through
 | ![Humidity with dew point](/img/apple/humidityWithDew.png) | Humidity (with dew point) | Relative humidity percentage and calculated dew point temperature. |
 | ![Humidity without dew point](/img/apple/humidityNoDew.png) | Humidity | Relative humidity percentage only. |
 | ![Pressure high](/img/apple/pressureHigh.png) | High pressure | Barometric pressure above normal (≥1013 hPa). |
-| ![Pressure low](/img/apple/pressureLow.png) | Low pressure | Barometric pressure below normal (<1013 hPa). |
+| ![Pressure low](/img/apple/pressureLow.png) | Low pressure | Barometric pressure below normal (&lt;1013 hPa). |
 
 ## Viewing Telemetry
 

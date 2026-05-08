@@ -57,7 +57,7 @@ The compass points toward the selected node using your Watch's heading sensor. I
 |--------|----------|
 | Red | Far (> ⅔ of ½ mile) |
 | Yellow | Mid-range (⅓ – ⅔ of ½ mile) |
-| Green | Close (< ⅓ of ½ mile) |
+| Green | Close (&lt; ⅓ of ½ mile) |
 
 **Haptic feedback:** The Watch taps your wrist when you are facing within 10° of the target node's bearing — useful when you can't look at the screen.
 

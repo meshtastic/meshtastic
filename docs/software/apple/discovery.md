@@ -40,6 +40,6 @@ Tap a result row and then **Apply Setting** to configure your connected radio to
 
 ---
 
-{: .tip }
-> **Tip — What does this do?**
-> This tool scans your local area to find nearby Meshtastic radios on different frequency settings. It switches between settings automatically, listens for a few minutes on each one, and then shows you which setting works best for your location based on how many radios it finds and how busy the airwaves are. On supported devices, local on-device AI will analyse your scan results and recommend the best setting — no internet connection required.
+:::tip What does this do?
+This tool scans your local area to find nearby Meshtastic radios on different frequency settings. It switches between settings automatically, listens for a few minutes on each one, and then shows you which setting works best for your location based on how many radios it finds and how busy the airwaves are. On supported devices, local on-device AI will analyse your scan results and recommend the best setting — no internet connection required.
+:::
