@@ -274,12 +274,12 @@ function rewriteInternalDocLinks(content, dRelPath, knownDestMdPaths) {
         // relative to the *file* path; extension-less links are resolved
         // relative to the *page URL* and break.  Ensure .md is present.
         if (!target.endsWith(".md")) {
-          // Preserve any fragment: "deep-links#foo" → "deep-links.md#foo"
+          // Preserve any fragment: "deep-links#foo" → "./deep-links.md#foo"
           const hashIdx = target.indexOf("#");
           if (hashIdx !== -1) {
-            return target.slice(0, hashIdx) + ".md" + target.slice(hashIdx);
+            return "./" + target.slice(0, hashIdx) + ".md" + target.slice(hashIdx);
           }
-          return `${target}.md`;
+          return `./${target}.md`;
         }
         return target;
       }

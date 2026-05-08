@@ -32,7 +32,7 @@ Router
     └── SettingsNavigationState   (tab 3)
 ```
 
-Deep links use the `meshtastic:///` URL scheme. `Router.route(url:)` parses the path and sets the appropriate navigation state. See [Deep Links](deep-links) for the full URL reference.
+Deep links use the `meshtastic:///` URL scheme. `Router.route(url:)` parses the path and sets the appropriate navigation state. See [Deep Links](./deep-links.md) for the full URL reference.
 
 ## AppState
 
