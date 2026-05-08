@@ -32,7 +32,7 @@ jobs:
         run: node scripts/sync-apple-docs.js /tmp/Meshtastic-Apple
 
       - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v7
+        uses: peter-evans/create-pull-request@v8
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           commit-message: "docs: sync latest Apple app documentation"
