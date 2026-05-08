@@ -181,15 +181,22 @@ function sanitizeForDocusaurus(content) {
  *     It should be                               …/user/carplay/
  *     Fix: prepend another `../`  →  `../../user/carplay`
  *
+ *   - A link `../codebase.md` from `developer/adding-features.md` where
+ *     `developer/codebase.md` exists: source wrote the link relative to an old
+ *     flat layout, but the file is a sibling after sync.
+ *     Fix: strip the `../`  →  `codebase.md`
+ *
  * For the category landing pages (user/index.md, developer/index.md):
  *   - A link `user/signal-meter`    resolves to …/user/user/signal-meter/   ✗
  *     Fix: strip the same-subdir prefix  →  `signal-meter`
  *
- * @param {string} content    Markdown source.
- * @param {string} dRelPath   Dest-relative path, e.g. "user/carplay.md" or
- *                            "developer/index.md".  Uses forward slashes.
+ * @param {string} content           Markdown source.
+ * @param {string} dRelPath          Dest-relative path, e.g. "user/carplay.md" or
+ *                                   "developer/index.md".  Uses forward slashes.
+ * @param {Set<string>} knownDestMdPaths  All dest-relative .md paths; used to detect
+ *                                       sibling `../foo.md` links.
  */
-function rewriteInternalDocLinks(content, dRelPath) {
+function rewriteInternalDocLinks(content, dRelPath, knownDestMdPaths) {
   const normalised = dRelPath.split(path.sep).join("/");
   const parts = normalised.split("/");
   const subdir = parts.length >= 2 ? parts[0] : null; // "user" | "developer" | null
@@ -229,6 +236,17 @@ function rewriteInternalDocLinks(content, dRelPath) {
     // the parent `user/` or `developer/` slug, not deeper inside the page.
     if (!/^(\.\.\/|\.\/)/.test(target)) {
       return `../${target}`;
+    }
+
+    // `../foo.md` (or `../foo`) where `{subdir}/foo.md` exists in the dest:
+    // the source wrote the link relative to an old flat layout, but the file
+    // was synced into the same subdir.  Strip the `../` to make it a sibling link.
+    if (/^\.\.\//.test(target)) {
+      const withoutParent = target.slice(3);
+      const withMd = withoutParent.endsWith(".md") ? withoutParent : `${withoutParent}.md`;
+      if (knownDestMdPaths && knownDestMdPaths.has(`${subdir}/${withMd}`)) {
+        return withoutParent;
+      }
     }
 
     return target;
@@ -375,7 +393,7 @@ async function main() {
     content = ensureFrontmatter(content, relPath);
     content = rewriteImagePaths(content);
     content = sanitizeForDocusaurus(content);
-    content = rewriteInternalDocLinks(content, dRelPath.split(path.sep).join("/"));
+    content = rewriteInternalDocLinks(content, dRelPath.split(path.sep).join("/"), expectedDestMdPaths);
 
     const exists = fs.existsSync(destFile);
     const existingContent = exists ? fs.readFileSync(destFile, "utf8") : null;
