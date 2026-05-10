@@ -31,9 +31,8 @@ Waypoints are named points of interest you can share across the mesh.
 ### Creating a Waypoint
 
 1. Long press anywhere on the map.
-2. Tap **Add Waypoint**.
-3. Enter a name, optional description, and lock icon (to limit editing to the creator).
-4. Tap **Save** — the waypoint broadcasts to all nodes on the primary channel.
+2. Enter a name, optional description, and lock icon (to limit editing to the creator).
+3. Tap **Save** — the waypoint broadcasts to all nodes on the primary channel.
 
 ### Editing a Waypoint
 

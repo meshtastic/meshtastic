@@ -18,7 +18,7 @@ The app registers the `meshtastic:///` URL scheme. Use `Router.route(url:)` to h
 
 | URL | Description |
 |-----|-------------|
-| `meshtastic:///messages` | Messages tab |
+| [`meshtastic:///messages`](../meshtastic:///messages) | Messages tab |
 | `meshtastic:///messages?channelId={channelId}&messageId={messageId}` | Channel messages (`messageId` is optional) |
 | `meshtastic:///messages?userNum={userNum}&messageId={messageId}` | Direct messages (`messageId` is optional) |
 
@@ -26,20 +26,20 @@ The app registers the `meshtastic:///` URL scheme. Use `Router.route(url:)` to h
 
 | URL | Description |
 |-----|-------------|
-| `meshtastic:///connect` | Connect tab |
+| [`meshtastic:///connect`](../meshtastic:///connect) | Connect tab |
 
 ## Nodes
 
 | URL | Description |
 |-----|-------------|
-| `meshtastic:///nodes` | Nodes tab |
+| [`meshtastic:///nodes`](../meshtastic:///nodes) | Nodes tab |
 | `meshtastic:///nodes?nodenum={nodenum}` | Selected node |
 
 ## Mesh Map
 
 | URL | Description |
 |-----|-------------|
-| `meshtastic:///map` | Map tab |
+| [`meshtastic:///map`](../meshtastic:///map) | Map tab |
 | `meshtastic:///map?nodenum={nodenum}` | Node on map |
 | `meshtastic:///map?waypointId={waypointId}` | Waypoint on map |
 
@@ -49,40 +49,42 @@ No parameters are supported for settings URLs.
 
 | URL | Description |
 |-----|-------------|
-| `meshtastic:///settings/about` | About Meshtastic |
-| `meshtastic:///settings/appSettings` | App Settings |
-| `meshtastic:///settings/helpDocs` | Help & Documentation |
-| `meshtastic:///settings/routes` | Routes |
-| `meshtastic:///settings/routeRecorder` | Route Recorder |
+| [`meshtastic:///settings/about`](../meshtastic:///settings/about) | About Meshtastic |
+| [`meshtastic:///settings/appSettings`](../meshtastic:///settings/appSettings) | App Settings |
+| [`meshtastic:///settings/helpDocs`](../meshtastic:///settings/helpDocs) | Help & Documentation |
+| [`meshtastic:///settings/routes`](../meshtastic:///settings/routes) | Routes |
+| [`meshtastic:///settings/routeRecorder`](../meshtastic:///settings/routeRecorder) | Route Recorder |
 | **Radio Config** | |
-| `meshtastic:///settings/lora` | LoRa Config |
-| `meshtastic:///settings/channels` | Channels |
-| `meshtastic:///settings/security` | Security Config |
-| `meshtastic:///settings/shareQRCode` | Share QR Code |
+| [`meshtastic:///settings/lora`](../meshtastic:///settings/lora) | LoRa Config |
+| [`meshtastic:///settings/channels`](../meshtastic:///settings/channels) | Channels |
+| [`meshtastic:///settings/security`](../meshtastic:///settings/security) | Security Config |
+| [`meshtastic:///settings/shareQRCode`](../meshtastic:///settings/shareQRCode) | Share QR Code |
 | **Device Config** | |
-| `meshtastic:///settings/user` | User Config |
-| `meshtastic:///settings/bluetooth` | Bluetooth Config |
-| `meshtastic:///settings/device` | Device Config |
-| `meshtastic:///settings/display` | Display Config |
-| `meshtastic:///settings/network` | Network Config |
-| `meshtastic:///settings/position` | Position Config |
-| `meshtastic:///settings/power` | Power Config |
+| [`meshtastic:///settings/user`](../meshtastic:///settings/user) | User Config |
+| [`meshtastic:///settings/bluetooth`](../meshtastic:///settings/bluetooth) | Bluetooth Config |
+| [`meshtastic:///settings/device`](../meshtastic:///settings/device) | Device Config |
+| [`meshtastic:///settings/display`](../meshtastic:///settings/display) | Display Config |
+| [`meshtastic:///settings/network`](../meshtastic:///settings/network) | Network Config |
+| [`meshtastic:///settings/position`](../meshtastic:///settings/position) | Position Config |
+| [`meshtastic:///settings/power`](../meshtastic:///settings/power) | Power Config |
 | **Module Config** | |
-| `meshtastic:///settings/ambientLighting` | Ambient Lighting |
-| `meshtastic:///settings/cannedMessages` | Canned Messages |
-| `meshtastic:///settings/detectionSensor` | Detection Sensor |
-| `meshtastic:///settings/externalNotification` | External Notification |
-| `meshtastic:///settings/mqtt` | MQTT |
-| `meshtastic:///settings/paxCounter` | Pax Counter |
-| `meshtastic:///settings/rangeTest` | Range Test |
-| `meshtastic:///settings/ringtone` | Ringtone |
-| `meshtastic:///settings/serial` | Serial |
-| `meshtastic:///settings/storeAndForward` | Store & Forward |
-| `meshtastic:///settings/telemetry` | Telemetry |
+| [`meshtastic:///settings/ambientLighting`](../meshtastic:///settings/ambientLighting) | Ambient Lighting |
+| [`meshtastic:///settings/cannedMessages`](../meshtastic:///settings/cannedMessages) | Canned Messages |
+| [`meshtastic:///settings/detectionSensor`](../meshtastic:///settings/detectionSensor) | Detection Sensor |
+| [`meshtastic:///settings/externalNotification`](../meshtastic:///settings/externalNotification) | External Notification |
+| [`meshtastic:///settings/mqtt`](../meshtastic:///settings/mqtt) | MQTT |
+| [`meshtastic:///settings/paxCounter`](../meshtastic:///settings/paxCounter) | Pax Counter |
+| [`meshtastic:///settings/rangeTest`](../meshtastic:///settings/rangeTest) | Range Test |
+| [`meshtastic:///settings/ringtone`](../meshtastic:///settings/ringtone) | Ringtone |
+| [`meshtastic:///settings/serial`](../meshtastic:///settings/serial) | Serial |
+| [`meshtastic:///settings/storeAndForward`](../meshtastic:///settings/storeAndForward) | Store & Forward |
+| [`meshtastic:///settings/telemetry`](../meshtastic:///settings/telemetry) | Telemetry |
 | **TAK** | |
-| `meshtastic:///settings/tak` | TAK Config |
+| [`meshtastic:///settings/tak`](../meshtastic:///settings/tak) | TAK Config |
 | **Logging** | |
-| `meshtastic:///settings/debugLogs` | Debug Logs |
+| [`meshtastic:///settings/debugLogs`](../meshtastic:///settings/debugLogs) | Debug Logs |
 | **Developers** | |
-| `meshtastic:///settings/appFiles` | App Files |
-| `meshtastic:///settings/firmwareUpdates` | Firmware Updates |
+| [`meshtastic:///settings/appFiles`](../meshtastic:///settings/appFiles) | App Files |
+| [`meshtastic:///settings/tools`](../meshtastic:///settings/tools) | Tools (iOS 18+) |
+| [`meshtastic:///settings/coreDataBrowser`](../meshtastic:///settings/coreDataBrowser) | Data Browser (DEBUG only) |
+| [`meshtastic:///settings/firmwareUpdates`](../meshtastic:///settings/firmwareUpdates) | Firmware Updates |

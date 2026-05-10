@@ -18,13 +18,14 @@ Run `./scripts/setup-hooks.sh` once after cloning to install the pre-commit Swif
 
 ## Documentation
 
-The app ships a built-in Help & Documentation browser and a Jekyll site on GitHub Pages.
+The app ships a built-in Help & Documentation browser, a Jekyll site on GitHub Pages, and documentation is also published to the main [meshtastic.org](https://meshtastic.org) site.
 
 | Resource | Location |
 |----------|----------|
-| GitHub Pages | https://meshtastic.github.io/Meshtastic-Apple/ |
+| Meshtastic.org | [meshtastic.org/docs/category/apple-apps](https://meshtastic.org/docs/category/apple-apps/) |
+| GitHub Pages | [meshtastic.github.io/Meshtastic-Apple](https://meshtastic.github.io/Meshtastic-Apple/) |
 | In-app | Settings → Help & Documentation |
-| Deep link | `meshtastic:///settings/helpDocs` |
+| Deep link | [`meshtastic:///settings/helpDocs`](../meshtastic:///settings/helpDocs) |
 
 Source markdown lives under `docs/user/` and `docs/developer/`. To rebuild the bundled HTML after editing any markdown:
 

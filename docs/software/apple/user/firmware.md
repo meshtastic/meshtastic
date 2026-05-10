@@ -47,6 +47,8 @@ Select the update channel in **Settings → App Settings → Firmware Channel**.
 
 ![Incompatible firmware version warning](/img/apple/invalidVersion.webp)
 
+![Security update recommended](/img/apple/securityVersionNag.webp)
+
 **Radio not appearing in firmware list**
 - The firmware update feature requires a connected radio (BLE or TCP).
 - Some older radios do not support OTA updates. Check the [hardware compatibility list](https://meshtastic.org/docs/hardware/).
