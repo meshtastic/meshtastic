@@ -47,8 +47,9 @@ Snapshot tests for SwiftUI views live in `MeshtasticTests/SwiftUIViewSnapshotTes
 ### How Snapshots Work
 
 1. A `renderImage` helper renders a SwiftUI view to a `UIImage` using `UIHostingController` + `drawHierarchy(in:afterScreenUpdates:true)`.
-2. On first run, the PNG is saved to `MeshtasticTests/__Snapshots__/SwiftUIViewSnapshotTests/` as a reference.
+2. On first run, the PNG is saved as a reference. Snapshots with `forDocs: true` are saved to `docs/assets/screenshots/` (shared with the documentation site); test-only snapshots are saved to `MeshtasticTests/__Snapshots__/`.
 3. On subsequent runs, the rendered image is compared pixel-by-pixel to the reference using `CGImage` dimensions.
+4. `copy-snapshots.sh` copies only doc-referenced PNGs into the app bundle — test-only snapshots are never bundled.
 
 ### Writing a Snapshot Test
 
