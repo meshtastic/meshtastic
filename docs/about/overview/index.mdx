@@ -106,7 +106,7 @@ The components of the Meshtastic specific portion of a LoRa chirp are:
    Identifies the application port (for example, `POSITION_APP`, `TEXT_MESSAGE_APP`, etc.). This determines how the payload should be interpreted.
 
    - **Want Response** - 1 bit  
-   Determines if the message is requesting a response from the receipient
+   Determines if the message is requesting a response from the recipient
 
    - **Reply ID**. - 4 bytes  
    The ID of the message this message is replying to
@@ -167,7 +167,7 @@ decoded {
 }
 ```
 
-In addition to the core routing fields described above, this example shows several additional metadata fields which are added to the MeshPacket by the reciving node:
+In addition to the core routing fields described above, this example shows several additional metadata fields which are added to the MeshPacket by the receiving node:
 
 - **Priority**  
   Indicates transmission priority. Higher-priority packets may be transmitted sooner than lower-priority ones.
