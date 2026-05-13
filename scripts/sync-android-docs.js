@@ -130,8 +130,6 @@ function rewriteImagePaths(content) {
  */
 function rewriteSiblingLinks(content, section) {
     const slugs = section === "user" ? KNOWN_USER_SLUGS : KNOWN_DEV_SLUGS;
-    const otherSection = section === "user" ? "developer" : "user";
-    const otherSlugs = section === "user" ? KNOWN_DEV_SLUGS : KNOWN_USER_SLUGS;
 
     // Match [text](link) where link is NOT an absolute URL, NOT an anchor, NOT already .md
     return content.replace(
