@@ -1,0 +1,44 @@
+---
+id: macos
+title: macOS - meshtasticd
+description: Install meshtasticd on macOS via Homebrew.
+sidebar_label: macOS
+sidebar_position: 1
+pagination_next: meshtasticd/usage
+pagination_prev: meshtasticd/installation/index
+---
+
+import { Icon } from "@iconify/react";
+
+# <Icon icon="mdi:apple" style={{ marginRight: "0.5rem" }} height="2rem" /> macOS
+
+MacOS packages are installed via [<Icon icon="simple-icons:homebrew"/> Homebrew](https://brew.sh/).
+
+| Feature                  | Status |
+| ------------------------ | ------ |
+| 🔌 [USB Radio][USBRadio] | ✅     |
+| 🕸️ [SPI Radio][SPIRadio] | ❌     |
+| 📱 [MUI][MUI]            | ❌     |
+| 🌐 [Web][WebClient]      | ❌     |
+
+Supported MacOS: 26 `tahoe`, 15 `sequoia`
+
+## Install
+
+```shell
+brew tap meshtastic/tap
+brew install meshtasticd
+brew services start meshtasticd
+```
+
+## macOS paths
+
+- configuration : `/opt/homebrew/etc/meshtasticd`
+- log : `/opt/homebrew/var/log/meshtasticd.log`
+
+
+[MUI]: /docs/configuration/device-uis/meshtasticui/
+[WebClient]: /docs/software/web-client/
+[USBRadio]: /docs/meshtasticd/hardware/
+[SPIRadio]: /docs/meshtasticd/hardware/
+
