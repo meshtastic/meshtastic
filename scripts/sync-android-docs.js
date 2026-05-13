@@ -14,7 +14,7 @@
 //   docs/software/android/user/*.md
 //   docs/software/android/developer/*.md
 //   docs/software/android/index.md
-//   static/img/android/*.webp (or .png/.svg if not converting)
+//   static/img/android/docs/*.webp (or .png/.svg if not converting)
 
 "use strict";
 
@@ -47,7 +47,7 @@ if (!fs.existsSync(SRC_DOCS_DIR)) {
 
 // Output directories (relative to CWD, which should be the meshtastic/meshtastic repo)
 const DEST_DOCS_DIR = path.join("docs", "software", "android");
-const DEST_IMAGES_DIR = path.join("static", "img", "android");
+const DEST_IMAGES_DIR = path.join("static", "img", "android", "docs");
 
 // Known sibling page slugs for link resolution
 const KNOWN_USER_SLUGS = new Set([
@@ -91,7 +91,7 @@ function copyFile(src, dest) {
 }
 
 /**
- * Rewrite image references in markdown to point to /img/android/<file>.
+ * Rewrite image references in markdown to point to /img/android/docs/<file>.
  * When --convert-webp, convertible extensions become .webp.
  */
 function rewriteImagePaths(content) {
@@ -110,7 +110,7 @@ function rewriteImagePaths(content) {
             (match, alt, imgPath) => {
                 const ext = path.extname(path.basename(imgPath)).toLowerCase();
                 if (!IMAGE_EXTENSIONS.has(ext)) return match;
-                return `![${alt}](/img/android/${destBasename(imgPath)})`;
+                return `![${alt}](/img/android/docs/${destBasename(imgPath)})`;
             },
         )
         .replace(
@@ -118,7 +118,7 @@ function rewriteImagePaths(content) {
             (match, before, imgPath, after) => {
                 const ext = path.extname(path.basename(imgPath)).toLowerCase();
                 if (!IMAGE_EXTENSIONS.has(ext)) return match;
-                return `<img ${before}src="/img/android/${destBasename(imgPath)}"${after}>`;
+                return `<img ${before}src="/img/android/docs/${destBasename(imgPath)}"${after}>`;
             },
         );
 }
