@@ -1,4 +1,4 @@
-name: Docs Review (@rcarteraz style)
+name: Docs Review
 
 on:
   pull_request_target:
@@ -128,7 +128,7 @@ jobs:
             }
 
             // Build the review comment
-            let body = `### 🤖 Docs Review (rcarteraz style)\n\n`;
+            let body = `### 🤖 Docs Review\n\n`;
             body += `Hey @${prAuthor}! Thanks for the ${hasBlogChanges ? "blog post" : "docs"} contribution! Here's a quick review:\n\n`;
 
             if (suggestions.length === 0) {
@@ -162,7 +162,7 @@ jobs:
 
             // Post or update the review comment
             const botCommentIdentifier =
-              "### 🤖 Docs Review (rcarteraz style)";
+              "### 🤖 Docs Review";
 
             // Check for existing bot comment
             const { data: comments } = await github.rest.issues.listComments({
