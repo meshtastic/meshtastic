@@ -133,13 +133,9 @@ How long to wait before turning off BLE in no Bluetooth states
 
 ### Super Deep Sleep Interval
 
-:::warning Not currently functional as a scheduled timer
-The `sds_secs` configuration field exists in the firmware and is configurable, but the power management state machine does **not** currently implement a timed transition to super deep sleep. The setting only controls the sleep duration when the device is forced into deep sleep due to a critically low battery event.
-
-Scheduled (periodic) super deep sleep — where the device would sleep for a configured duration, wake to perform tasks, and sleep again — is **not implemented** in the current firmware. See [meshtastic/meshtastic#2361](https://github.com/meshtastic/meshtastic/issues/2361) for more context.
-:::
-
 Super deep sleep (SDS) is the deepest sleep mode available. In this state the CPU and LoRa radio are fully powered down.
+
+Note that scheduled (periodic) super deep sleep — where the device sleeps for a configured duration, wakes to perform tasks, then sleeps again — is not currently implemented in the firmware. The `sds_secs` value only controls the sleep duration when the device enters deep sleep due to a critically low battery.
 
 `0` for default of one year (effectively disabled)
 
@@ -250,7 +246,7 @@ All Power config options are available in the python CLI.
 | power.on_battery_shutdown_after_secs |        `integer` (seconds)         |        Default of `0` is off        |
 |    power.adc_multiplier_override     |    `2-4` (floating point value)    | Default of `0` uses firmware values |
 |      power.wait_bluetooth_secs       |        `integer` (seconds)         |     Default of `0` is 1 minute      |
-|            power.sds_secs            |        `integer` (seconds)         |   Default of `0` is one year — see warning above   |
+|            power.sds_secs            |        `integer` (seconds)         |     Default of `0` is one year      |
 |            power.ls_secs             |        `integer` (seconds)         |     Default of `0` is 5 minutes     |
 |         power.min_wake_secs          |        `integer` (seconds)         |    Default of `0` is 10 seconds     |
 |   power.device_battery_ina_address   | `integer` (I2C address as decimal) |  Default of `0` is no address set   |
