@@ -1,14 +1,25 @@
 project_id_env: CROWDIN_PROJECT_ID
 api_token_env: CROWDIN_PERSONAL_TOKEN
 preserve_hierarchy: true
-"base_url": "https://meshtastic.crowdin.com"
+base_url: "https://meshtastic.crowdin.com"
 files:
-  # JSON translation files
-   - source: /i18n/en/**/*
-     translation: /i18n/%two_letters_code%/**/%original_file_name%
-  # Docs Markdown files
-   - source: /docs/**/*
-     translation: /i18n/%two_letters_code%/docusaurus-plugin-content-docs/current/**/%original_file_name%
-  # Pages Markdown files
-  # - source: /pages/**/*
-  #  translation: /i18n/%two_letters_code%/docusaurus-plugin-content-pages/**/%original_file_name%
+  # JSON translation files (UI strings extracted by Docusaurus)
+  - source: /i18n/en/**/*
+    translation: /i18n/%two_letters_code%/**/%original_file_name%
+
+  # Docs Markdown/MDX files
+  - source: /docs/**/*
+    translation: /i18n/%two_letters_code%/docusaurus-plugin-content-docs/current/**/%original_file_name%
+    type: mdx
+    translate_content: true
+    translate_attributes: false
+    content_segmentation: false
+    ignore:
+      - /docs/**/*.png
+      - /docs/**/*.jpg
+      - /docs/**/*.jpeg
+      - /docs/**/*.gif
+      - /docs/**/*.svg
+      - /docs/**/*.webp
+      - /docs/**/*.mp4
+      - /docs/**/*.webm

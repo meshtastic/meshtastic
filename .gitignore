@@ -9,6 +9,11 @@ build
 .pnpm-debug.log
 static/documents/pdf
 
+# Crowdin downloaded translations (managed via CI)
+# Keep i18n/en/ as the source of truth
+i18n/*/
+!i18n/en/
+
 # macOS
 .DS_Store
 
