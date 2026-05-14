@@ -121,14 +121,13 @@ export function HomePageContent() {
 
       {/* Devices Overlay */}
       {showDevices && (
-        <div
-          role="dialog"
-          aria-modal="true"
+        <dialog
+          open
           aria-label={translate({
             id: "homepage.devices.ariaLabel",
             message: "Devices",
           })}
-          className="fixed inset-0 z-[100] flex items-center justify-center p-4 pt-20"
+          className="fixed inset-0 z-[100] flex items-center justify-center p-4 pt-20 bg-transparent m-0 max-w-none max-h-none w-full h-full"
         >
           <div
             className="absolute inset-0 bg-black/60 backdrop-blur-sm"
@@ -151,7 +150,7 @@ export function HomePageContent() {
             </button>
             <Devices />
           </div>
-        </div>
+        </dialog>
       )}
     </div>
   );
