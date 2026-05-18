@@ -1,6 +1,7 @@
 import apps from "@/data/apps.json";
 import links from "@/data/links.json";
 import Link from "@docusaurus/Link";
+import Translate, { translate } from "@docusaurus/Translate";
 import {
   ArrowRight,
   Globe,
@@ -50,7 +51,7 @@ function DownloadCard({
         to={url ?? "#"}
         className="inline-flex items-center gap-2 font-medium text-primary transition-colors hover:text-primary/80 group-hover:gap-3"
       >
-        Try it out
+        <Translate id="homepage.downloads.tryItOut">Try it out</Translate>
         <ArrowRight className="size-4" />
       </Link>
     </div>
@@ -59,14 +60,22 @@ function DownloadCard({
 
 export function HomepageDownloads() {
   return (
-    <section aria-label="Download clients" className="mt-16">
+    <section
+      aria-label={translate({
+        id: "homepage.downloads.ariaLabel",
+        message: "Download clients",
+      })}
+      className="mt-16"
+    >
       <div className="mb-12 text-left">
         <h2 className="font-mono text-3xl font-bold text-foreground [text-wrap:balance] md:text-4xl">
-          Get Connected
+          <Translate id="homepage.downloads.heading">Get Connected</Translate>
         </h2>
         <p className="mt-4 max-w-3xl text-lg text-muted-foreground">
-          Connect and control your Meshtastic devices through various platforms.
-          Choose the client that best fits your needs and device ecosystem.
+          <Translate id="homepage.downloads.description">
+            Connect and control your Meshtastic devices through various platforms.
+            Choose the client that best fits your needs and device ecosystem.
+          </Translate>
         </p>
       </div>
 
