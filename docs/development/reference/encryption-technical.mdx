@@ -73,6 +73,30 @@ Below is a detailed overview of how PSK, PKC, and Session IDs are integrated int
   - **Efficient Use of Resources:** PKC for DMs leverages asymmetric encryption for secure communication, while PSKs for Chat Channels and session IDs for admin messages optimize resource consumption on the platform.
   - **Memory Management:** The selective use of PKC, PSKs, and session IDs ensures that memory and computational resources are effectively managed, allowing the system to scale while maintaining high security.
 
+## Trust Model and Operational Security
+
+The cryptographic protections described above (PSK, PKC, Session IDs) defend messages as they traverse the LoRa mesh. They sit on top of two assumptions that operators should understand: the link between a node and a directly connected client is trusted, and node identity is established via Trust On First Use rather than a signing authority.
+
+### Local Trust Boundary
+
+A client connected to a node over Bluetooth, USB serial, WiFi, or Ethernet has full local API access. From that local connection, a client can read decrypted channel traffic, send messages as the node, change configuration (subject to [managed mode](/docs/configuration/radio/security/#managed-mode)), and read the node's private key for backup. The on-air cryptography does not extend below this boundary — anything inside scope of the local trust relationship (a shared LAN, a USB cable to an untrusted host, a phone paired over Bluetooth) should be treated as an extension of the node itself.
+
+### Node Identity: Trust On First Use (TOFU)
+
+Meshtastic uses a Trust On First Use (TOFU) model for node identity. There is no central authority that signs node keys, so the first public key a node hears for a given NodeNum is the one it binds to that NodeNum going forward. This is a hard requirement of operating as a decentralized ad-hoc mesh.
+
+Client applications and the firmware include mitigations for the consequences of TOFU — favoriting nodes to prevent NodeDB rolloff and surfacing public-key changes in the UI. Firmware 2.8.X further strengthens node identity claims and message authenticity by adding XEdDSA packet signing, which reuses each node's existing X25519 key pair to sign User packets and other short packets so receivers can verify that a packet came from the holder of the bound public key. For the detailed discussion of NodeDB limits, spoofing edge cases, and the XEdDSA design, see [Known Limitations and Future Plans of Meshtastic's Encryption](/docs/about/overview/encryption/limitations).
+
+### Local Administration Over WiFi
+
+:::warning
+Administering a Meshtastic node over an untrusted WiFi network — including setting WiFi credentials on an ESP32 — is not recommended. All local admin traffic, not just the initial credential write, is exposed to that network.
+:::
+
+When a client reaches a node over WiFi or Ethernet, that connection is part of the trust boundary described above. If the underlying network is untrusted (open WiFi, a network shared with parties you do not control), config writes, key reads, decrypted message traffic, and the WiFi PSK itself during provisioning are all exposed on that network. Setting [`network.wifi_ssid` and `network.wifi_psk`](/docs/configuration/radio/network/) over an untrusted WiFi connection is a common case of this exposure but not the only one.
+
+The recommended pattern is to provision and administer nodes over a trusted channel: Bluetooth from a phone, USB serial to a trusted host, or [Remote Administration](/docs/configuration/remote-admin/) over the mesh itself. There is no current roadmap item to secure local administration over untrusted WiFi; it may be addressed in a future release.
+
 ## Conclusion
 
-PSKs and the expanded use of PKC and session IDs across different MCU architectures—ESP32, nRF52, and ARM—demonstrates a tailored approach to security that balances performance, power consumption, and memory management. Each architecture's strengths are leveraged to ensure that secure communications are maintained without compromising the efficiency or scalability of the system. This approach provides robust security for a wide range of applications, from low-power wearable devices to more powerful, feature-rich systems.
+PSKs and the expanded use of PKC and session IDs across different MCU architectures—ESP32, nRF52, and ARM—demonstrates a tailored approach to security that balances performance, power consumption, and memory management. Each architecture's strengths are leveraged to ensure that secure communications are maintained without compromising the efficiency or scalability of the system. This approach provides robust security for a wide range of applications, from low-power wearable devices to more powerful, feature-rich systems. These cryptographic mechanisms operate within the trust and identity model described above — protections on the air do not extend to the local API surface, and node identity rests on TOFU rather than a signing authority.
