@@ -49,7 +49,7 @@ A few weaknesses of the Meshtastic system can be addressed by adding a message s
 
 There has been an additional suggestion repeatedly made, that the nodeNum should be derived from the publicKey, to minimize the ability of an attacker to spoof a User packet from an existing nodenum with a new public key. While the Meshtastic security team has generally agreed with the wisdom of this suggestion, it has been impractical to implement as a breaking change to the mesh. The addition of signed messages actually presents an opportunity to enforce this new nodenum source, while still remaining backwards compatible with the older system. 
 
-XEdDSA packet signing is being added in firmware 2.8.X to further secure node identity claims and the authenticity of subsequent messages. It uses the XEdDSA system from Signal to take existing X25519 key pairs and produce ED25519 signatures from them, so nodes do not need to manage a second key pair. While this significantly improves the security assurances of the Meshtastic system, these signatures are 64 bytes long, which is significant given the LoRa message size.
+XEdDSA packet signing is being added in firmware 2.8.X to further secure node identity claims and the authenticity of subsequent messages. It uses the XEdDSA system from Signal to take existing X25519 key pairs and produce ED25519 signatures from them, so nodes do not need to manage a second key pair. These signatures are 64 bytes long, which is a significant cost given the 256 byte LoRa packet limit.
 
 Once a node has successfully signed a User message with this scheme, the HAS_XEDDSA_SIGNED bit is set on the NodeInfoLite bitfield, which is translated to the has_xeddsa_signed bool on a NodeInfo message.
 
