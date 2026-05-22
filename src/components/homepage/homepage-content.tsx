@@ -8,6 +8,7 @@ import { Sponsors } from "@/components/homepage/sponsors";
 import { Button } from "@/components/ui/button";
 import links from "@/data/links.json";
 import Link from "@docusaurus/Link";
+import Translate, { translate } from "@docusaurus/Translate";
 import { ArrowRight, Download, FileText, Radio, X } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { SocialSidebar } from "./social-sidebar";
@@ -47,20 +48,22 @@ export function HomePageContent() {
           <div className="flex flex-row gap-8 md:gap-8  lg:gap-16">
             <div className="">
               <h2 className="[text-wrap:balance] font-mono text-4xl font-bold tracking-tight text-foreground md:text-5xl lg:text-6xl">
-                Off-Grid
+                <Translate id="homepage.hero.offGrid">Off-Grid</Translate>
                 <br />
                 <span className="text-primary dark:text-[hsl(var(--btn-primary))]">
-                  Communication
+                  <Translate id="homepage.hero.communication">Communication</Translate>
                 </span>
                 <br />
-                For Everyone
+                <Translate id="homepage.hero.forEveryone">For Everyone</Translate>
               </h2>
 
               <div className="mt-6 rounded-xl border border-border/50 bg-card/95 py-6 md:p-6 backdrop-blur-xl">
                 <p className="max-w-lg text-lg m-auto text-foreground lg:max-w-none">
-                  An open source, off-grid, decentralized mesh network built to
-                  run on affordable, low-power devices. No cell towers. No
-                  internet. Just pure peer-to-peer connectivity.
+                  <Translate id="homepage.hero.tagline">
+                    An open source, off-grid, decentralized mesh network built to
+                    run on affordable, low-power devices. No cell towers. No
+                    internet. Just pure peer-to-peer connectivity.
+                  </Translate>
                 </p>
               </div>
 
@@ -72,7 +75,7 @@ export function HomePageContent() {
                     className="w-full border-0 bg-[hsl(var(--btn-primary))] p-5 font-mono text-base text-white dark:text-black shadow-none transition-colors hover:bg-[hsl(var(--btn-primary-hover))] sm:w-auto"
                   >
                     <Download className="mr-2 size-6" />
-                    Get Started
+                    <Translate id="homepage.hero.getStarted">Get Started</Translate>
                     <ArrowRight className="ml-2 size-6" />
                   </Button>
                 </Link>
@@ -83,7 +86,7 @@ export function HomePageContent() {
                   className="w-full border-0 bg-transparent p-5 font-mono text-base text-foreground !shadow-none transition-colors hover:bg-[hsl(var(--btn-primary)/0.2)] hover:text-[hsl(var(--btn-primary))] sm:w-auto"
                 >
                   <Radio className="mr-2 size-6" />
-                  Need Hardware?
+                  <Translate id="homepage.hero.needHardware">Need Hardware?</Translate>
                 </Button>
                 <Link to={links.docs}>
                   <Button
@@ -92,7 +95,7 @@ export function HomePageContent() {
                     className="w-full border-0 bg-transparent p-5 font-mono text-base text-foreground !shadow-none transition-colors hover:bg-[hsl(var(--btn-primary)/0.2)] hover:text-[hsl(var(--btn-primary))] sm:w-auto"
                   >
                     <FileText className="mr-2 size-6" />
-                    Read the Docs
+                    <Translate id="homepage.hero.readTheDocs">Read the Docs</Translate>
                   </Button>
                 </Link>
               </div>
@@ -118,11 +121,13 @@ export function HomePageContent() {
 
       {/* Devices Overlay */}
       {showDevices && (
-        <div
-          role="dialog"
-          aria-modal="true"
-          aria-label="Devices"
-          className="fixed inset-0 z-[100] flex items-center justify-center p-4 pt-20"
+        <dialog
+          open
+          aria-label={translate({
+            id: "homepage.devices.ariaLabel",
+            message: "Devices",
+          })}
+          className="fixed inset-0 z-[100] flex items-center justify-center p-4 pt-20 bg-transparent m-0 max-w-none max-h-none w-full h-full"
         >
           <div
             className="absolute inset-0 bg-black/60 backdrop-blur-sm"
@@ -136,13 +141,16 @@ export function HomePageContent() {
               type="button"
               onClick={() => setShowDevices(false)}
               className="absolute right-4 top-4 z-20 rounded-lg p-2 text-muted-foreground transition-colors hover:bg-primary/10 hover:text-foreground"
-              aria-label="Close"
+              aria-label={translate({
+                id: "homepage.devices.close",
+                message: "Close",
+              })}
             >
               <X className="size-6" />
             </button>
             <Devices />
           </div>
-        </div>
+        </dialog>
       )}
     </div>
   );
