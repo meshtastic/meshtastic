@@ -10,25 +10,32 @@ import TabItem from "@theme/TabItem";
 import { Icon } from "@iconify/react";
 
 :::info
-Traffic Management requires firmware version 2.7.21 or later and the latest Meshtastic CLI
+Traffic Management requires firmware version 2.8.0 or later and the latest Meshtastic CLI.
+:::
+
+:::warning
+This is an advanced module and should only be enabled for large meshes.
 :::
 
 ## Overview
 
 Previous traffic reduction efforts in Meshtastic configure client nodes to send automated packets less frequently. While effective when every node cooperates, a single misconfigured node broadcasting its position every 30 seconds or many undecryptable packets can still burden an entire mesh. Traffic Management moves enforcement to routers so meshes can protect shared airtime.
 
-The Traffic Management module provides server-side packet inspection and traffic shaping for Meshtastic routers and clients. It reduces channel utilization by filtering duplicate position broadcasts, rate-limiting chatty nodes, dropping excess undecryptable packets, responding to NodeInfo requests from the local nodeinfo cache, and controlling hop propagation for telemetry and position data.
+The Traffic Management module provides server-side packet inspection and traffic shaping for Meshtastic routers and clients. It reduces channel utilization by filtering duplicate position broadcasts, rate-limiting chatty nodes, dropping excess undecryptable packets, responding to NodeInfo requests from the local NodeInfo cache, and controlling hop propagation for telemetry and position data.
 
 :::info
-Traffic Managementnow ships by default on all ESP32 and nRF52 builds, plus Native/Portduino. Custom variants can still override `HAS_TRAFFIC_MANAGEMENT` or `TRAFFIC_MANAGEMENT_CACHE_SIZE` if needed.
+Traffic Management now ships by default on all ESP32 and nRF52 builds, plus Native/Portduino. Custom variants can still override `HAS_TRAFFIC_MANAGEMENT` or `TRAFFIC_MANAGEMENT_CACHE_SIZE` if needed.
 :::
 
-The module uses a per-node cache to track position fingerprints, packet counts, and timestamps. Each entry is 10 bytes. On ESP32 devices with PSRAM, the cache is allocated in PSRAM to preserve heap for other uses.
+The module uses a unified per-node cache to track position fingerprints, packet counts, and timestamps. Each unified cache entry is 10 bytes, and the configured cache size is rounded up to the next power of two.
 
-| Platform | Cache Entries | Memory |
-| :------: | :-----------: | :----: |
-| ESP32 (without PSRAM), nRF52 | 1024 | ~10 KB (heap) |
-| ESP32 (with PSRAM), Native | 2048 | ~20 KB (PSRAM when available, otherwise heap) |
+On ESP32 devices with PSRAM, Traffic Management also stores cached NodeInfo payloads in PSRAM. The NodeInfo index is kept in DRAM, not PSRAM.
+
+| Config | Unified Cache | NodeInfo Payload | NodeInfo Index | PSRAM Total | RAM/DRAM Total | Total Memory |
+| :----- | :-----------: | :--------------: | :------------: | ----------: | -------------: | -----------: |
+| ESP32 + PSRAM | 20,480 B PSRAM | 256,740 B PSRAM | 3,072 B DRAM | 277,220 B | 3,072 B | 280,292 B |
+| ESP32 no PSRAM | 10,240 B RAM | Uses existing NodeInfo DB | 0 B | 0 B | 10,240 B | 10,240 B |
+| nRF52 | 10,240 B RAM | Uses existing NodeInfo DB | 0 B | 0 B | 10,240 B | 10,240 B |
 
 
 ## Traffic Management Module Config Values
@@ -63,7 +70,7 @@ Default: `86400` (1 day). Set to `0` to disable the time-based check.
 
 ### NodeInfo Direct Response
 
-When enabled, the node responds directly to NodeInfo requests using cached user data from the local NodeDB. The response is sent as a single-hop reply (`hop_limit=0`) instead of allowing the request to propagate further through the mesh. This is particularly useful on well-placed routers that already have a large NodeDB from hearing traffic across the mesh. A node that might be 2-3 hops from the requestor can answer immediately from cache rather than letting the request ripple outward.
+When enabled, the node responds directly to NodeInfo requests using cached user data from the local NodeDB. The response is sent as a single-hop reply (`hop_limit=0`) instead of being relayed through intermediate nodes, so the requestor must be within direct radio range to receive the cached reply. This is particularly useful on well-placed routers that already have a large NodeDB from hearing traffic across the mesh. A requested node that might otherwise be 2-3 hops away can be answered from cache by a router that hears the requestor directly.
 
 Default: `false`.
 
@@ -81,12 +88,12 @@ When set to `0`, the role-based maximum is used (3 for routers, 0 for clients). 
 Default: `0` (use role-based limit).
 
 :::note
-The cached response is always sent with `hop_limit=0`, meaning it is delivered directly to the requestor without being relayed through intermediate nodes.
+The cached response is always sent with `hop_limit=0`, so it is not relayed through intermediate nodes. It reaches the requestor only when the requestor is also within direct radio range of this node.
 :::
 
 ### Rate Limit Enabled
 
-Enable per-node rate limiting. When enabled, the module tracks packet counts per node within a sliding time window and drops packets from nodes that exceed the configured threshold. Routing and admin packets are exempt from rate limiting
+Enable per-node rate limiting. When enabled, the module tracks packet counts per node within a sliding time window and drops packets from nodes that exceed the configured threshold. Routing and admin packets are exempt from rate limiting.
 
 Default: `false`.
 
