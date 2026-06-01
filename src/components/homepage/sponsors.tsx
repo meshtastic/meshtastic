@@ -1,6 +1,7 @@
 import type React from "react";
 import { type ReactNode, useEffect, useState } from "react";
 
+import Translate from "@docusaurus/Translate";
 import bqConsulting from "@/components/sponsors/BQ Consulting";
 import Datadog from "@/components/sponsors/Datadog";
 import Elecrow from "@/components/sponsors/Elecrow";
@@ -88,7 +89,7 @@ export function Sponsors() {
     <div className="relative max-w-full overflow-hidden rounded-2xl border border-border/50 bg-card/40 p-4 md:p-8 backdrop-blur-sm [contain:inline-size]">
       <div>
         <h4 className="[text-wrap:balance] font-mono text-2xl font-bold text-foreground sm:text-3xl md:text-4xl">
-          Supported By
+          <Translate id="homepage.sponsors.supportedBy">Supported By</Translate>
         </h4>
 
         <Marquee>
@@ -114,7 +115,7 @@ export function Sponsors() {
 
       <div>
         <h4 className="[text-wrap:balance] font-mono text-2xl font-bold text-foreground sm:text-3xl md:text-4xl">
-          Sponsored By
+          <Translate id="homepage.sponsors.sponsoredBy">Sponsored By</Translate>
         </h4>
 
         <Marquee reverse={true}>
