@@ -15,6 +15,8 @@ This is where the new Traffic Management module (TMM) in Meshtastic v2.8 is inte
 
 {/* truncate */}
 
+![Traffic Management module concept showing Meshtastic network traffic flow in San Francisco](/img/blog/TrafficManagementCars.png)
+
 ## TL;DR
 
 Traffic Management is the first server-side traffic shaping module for Meshtastic. It runs on intermediate nodes and inspects every passing packet, deduplicating positions, caching NodeInfo responses, rate-limiting chatty nodes, filtering undecryptable packets more granularly, and controlling hop propagation where node owners have not. Everything is opt-in and configurable to match the needs of each particular mesh or area.
@@ -141,13 +143,12 @@ From there, you might add unknown packet filtering if you find these types of pa
 Not directly. Traffic management does not inspect text message contents, but text message packets are still subject to the per-node rate limit along with most other packet types. With sensible thresholds, normal messaging should be unaffected, while routing and admin packets remain exempt.
 
 **Which devices support this?**
-Currently Linux Native, Station G2, Heltec V4, and t1000e nodes are supported. Other nodes will be added as they are tested.
-
+Almost all devices. If a node supports PSRAM, additional memory will be allocated for NodeInfo cache.
 **Can a router drop my packets unfairly?**
 Every feature is opt-in and configurable by node owners. Rate limits, thresholds, and intervals are all tunable as needed. At that point, it treats all nodes the same way without favoritism.
 
 **Does this replace Zero-Cost Hops?**
-Not yet, but eventually. Zero-Cost Hops preserves hop budget between favorited routers using the `relay_node` field. Traffic Management's `router_preserve_hops` provides a similar benefit without requiring favorites, and also extends to `ROUTER_LATE` roles as requested by a few meshers.
+If enabled, yes. Zero-Cost Hops preserves hop budget between favorited routers using the `relay_node` field. Traffic Management's `router_preserve_hops` provides a similar benefit without requiring favorites, and also extends to `ROUTER_LATE` roles as requested by a few meshers.
 
 **What about Android and iOS settings?**
 Client app integration is in progress. For now, configuration is available through the Python CLI. See the [module configuration docs](/docs/configuration/module/traffic-management) for the full settings reference. This allows for more testing before releasing the configuration to everyone.
