@@ -150,7 +150,7 @@ This is currently enabled on almost all Meshtastic nodes. (ESP32, NRF52, and Nat
 Every feature is opt-in and configurable by node owners. Rate limits, thresholds, and intervals are all tunable as needed. At that point, it treats all nodes the same way without favoritism.
 
 **Does this replace Zero-Cost Hops?**
-Not yet, but eventually. Zero-Cost Hops preserves hop budget between favorited routers using the `relay_node` field. Traffic Management's `router_preserve_hops` provides a similar benefit without requiring favorites, and also extends to `ROTUER_LATE` roles as requested by a few meshers.
+Not yet, but eventually. Zero-Cost Hops preserves hop budget between favorited routers using the `relay_node` field. Traffic Management's `router_preserve_hops` provides a similar benefit without requiring favorites, and also extends to `ROUTER_LATE` roles as requested by a few meshers.
 
 **What about Android and iOS settings?**
 Client app integration is in progress. For now, configuration is available through the Python CLI. See the [module configuration docs](/docs/configuration/module/traffic-management) for the full settings reference. This allows for more testing before releasing the configuration to everyone. 
