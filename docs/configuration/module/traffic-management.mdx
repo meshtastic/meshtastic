@@ -10,7 +10,11 @@ import TabItem from "@theme/TabItem";
 import { Icon } from "@iconify/react";
 
 :::info
-Traffic Management requires firmware version 2.7.21 or later and the latest Meshtastic CLI.
+Traffic Management requires firmware version 2.8.0 or later and the latest Meshtastic CLI.
+:::
+
+:::warning
+This is an advanced module and should only be enabled for large meshes.
 :::
 
 ## Overview
@@ -23,12 +27,15 @@ The Traffic Management module provides server-side packet inspection and traffic
 Traffic Management now ships by default on all ESP32 and nRF52 builds, plus Native/Portduino. Custom variants can still override `HAS_TRAFFIC_MANAGEMENT` or `TRAFFIC_MANAGEMENT_CACHE_SIZE` if needed.
 :::
 
-The module uses a per-node cache to track position fingerprints, packet counts, and timestamps. Each entry is 10 bytes. On ESP32 devices with PSRAM, the cache is allocated in PSRAM to preserve heap for other uses.
+The module uses a unified per-node cache to track position fingerprints, packet counts, and timestamps. Each unified cache entry is 10 bytes, and the configured cache size is rounded up to the next power of two.
 
-| Platform | Cache Entries | Memory |
-| :------: | :-----------: | :----: |
-| ESP32 (without PSRAM), nRF52 | 1024 | ~10 KB (heap) |
-| ESP32 (with PSRAM), Native | 2048 | ~20 KB (PSRAM when available, otherwise heap) |
+On ESP32 devices with PSRAM, Traffic Management also stores cached NodeInfo payloads in PSRAM. The NodeInfo index is kept in DRAM, not PSRAM.
+
+| Config | Unified Cache | NodeInfo Payload | NodeInfo Index | PSRAM Total | RAM/DRAM Total | Total Memory |
+| :----- | :-----------: | :--------------: | :------------: | ----------: | -------------: | -----------: |
+| ESP32 + PSRAM | 20,480 B PSRAM | 256,740 B PSRAM | 3,072 B DRAM | 277,220 B | 3,072 B | 280,292 B |
+| ESP32 no PSRAM | 10,240 B RAM | Uses existing NodeInfo DB | 0 B | 0 B | 10,240 B | 10,240 B |
+| nRF52 | 10,240 B RAM | Uses existing NodeInfo DB | 0 B | 0 B | 10,240 B | 10,240 B |
 
 
 ## Traffic Management Module Config Values
