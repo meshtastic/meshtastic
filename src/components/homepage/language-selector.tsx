@@ -6,6 +6,7 @@ import {
 } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
 import { useLocation } from "@docusaurus/router";
+import { translate } from "@docusaurus/Translate";
 import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
 import { Check, Languages } from "lucide-react";
 import React from "react";
@@ -57,14 +58,22 @@ export function LanguageSelector() {
           variant="ghost"
           size="sm"
           className="border-0 bg-transparent p-5 text-foreground !shadow-none ring-0 outline-none transition-colors hover:bg-transparent hover:text-foreground/80 focus-visible:ring-0"
-          aria-label="Select language"
+          aria-label={translate({
+            id: "homepage.languageSelector.ariaLabel",
+            message: "Select language",
+          })}
         >
           <Languages className="mr-2 h-4 w-4" />
           {LOCALE_LABELS[currentLocale] ?? currentLocale}
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-48 p-2" align="end">
-        <nav aria-label="Language selection">
+        <nav
+          aria-label={translate({
+            id: "homepage.languageSelector.navAriaLabel",
+            message: "Language selection",
+          })}
+        >
           <ul className="list-none flex flex-col gap-1 m-0 p-0">
             {locales.map((locale) => (
               <li key={locale}>

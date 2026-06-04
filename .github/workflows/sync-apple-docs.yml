@@ -1,0 +1,51 @@
+name: Sync Apple App Documentation
+
+on:
+  schedule:
+    - cron: "0 0 * * 0" # Every Sunday at midnight UTC
+  workflow_dispatch:
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - name: Checkout meshtastic/meshtastic
+        uses: actions/checkout@v4
+
+      - name: Clone meshtastic/Meshtastic-Apple
+        run: |
+          git clone --depth=1 --branch main https://github.com/meshtastic/Meshtastic-Apple.git /tmp/Meshtastic-Apple
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: ".nvmrc"
+
+      - name: Install fs-extra
+        run: npm install --no-save fs-extra
+
+      - name: Run sync script
+        run: node scripts/sync-apple-docs.js /tmp/Meshtastic-Apple
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "docs: sync latest Apple app documentation"
+          branch: sync/apple-docs
+          delete-branch: true
+          title: "docs: sync latest Apple app documentation"
+          body: |
+            This PR was automatically created by the [sync-apple-docs](../.github/workflows/sync-apple-docs.yml) workflow.
+
+            It synchronizes Markdown documentation and images from [meshtastic/Meshtastic-Apple](https://github.com/meshtastic/Meshtastic-Apple) into this repository:
+
+            - Markdown files → `docs/software/apple/`
+            - Image files → `static/img/apple/`
+
+            Image paths in Markdown are rewritten to use the Docusaurus `/img/apple/` static path.
+            Files that no longer exist in the source are removed automatically.

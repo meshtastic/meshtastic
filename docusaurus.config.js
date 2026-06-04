@@ -12,7 +12,6 @@ const config = {
   baseUrl: "/",
   trailingSlash: true,
   onBrokenLinks: "throw",
-  onBrokenMarkdownLinks: "warn",
   favicon: "img/logo.svg",
   organizationName: "meshtastic",
   projectName: "meshtastic",
@@ -167,10 +166,13 @@ const config = {
   },
   i18n: {
     defaultLocale: "en",
-    locales: ["en", "cs-CZ", "de", "pl-PL", "sk-SK", "tr-TR", "zh-CN", "zh-TW"],
+    locales: ["en"],
   },
   markdown: {
     mermaid: true,
+    hooks: {
+        onBrokenMarkdownLinks: "warn"
+    },
   },
   themes: ["@docusaurus/theme-mermaid"],
   future: {
