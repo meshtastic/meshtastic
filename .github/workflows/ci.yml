@@ -30,7 +30,7 @@ jobs:
 
       - name: Run oxlint
         if: steps.js-filter.outputs.js == 'true'
-        uses: oxc-project/oxlint-action@v3.0.0
+        uses: oxc-project/oxlint-action@v3.1.0
         with:
           config: .oxlintrc.json
           deny-warnings: true
