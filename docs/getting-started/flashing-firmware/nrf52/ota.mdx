@@ -3,24 +3,24 @@ id: ota
 title: nRF52 OTA Firmware Updates
 sidebar_label: Over-The-Air
 sidebar_position: 2
-description: Instructions for using the Over-The-Air(OTA) method to flash Meshtastic firmware to nRF52 chipset devices.
+description: Instructions for using the Over-The-Air (OTA) method to flash Meshtastic firmware to nRF52 chipset devices.
 ---
 
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 import { Icon } from "@iconify/react";
 
-nRF52 devices from RAK are able to accept OTA firmware updates from a mobile device over bluetooth. Older T-Echo bootloaders do not have OTA support.
+Over-The-Air (OTA) updates let you flash firmware to nRF52 devices wirelessly via Bluetooth from a phone. This works for most RAK-based nRF52 devices. Older T-Echo bootloaders do not support OTA.
 
-:::caution
+:::caution Higher risk than USB
 
-OTA firmware updates come with an increased risk of failure. If the update process fails, your device will be left in a non-working state and require physical access for intervention.
+OTA updates are more likely to fail than USB-based methods. If an OTA update fails, the device may become unresponsive and you'll need physical USB access to recover it. When possible, use [Drag & Drop](/docs/getting-started/flashing-firmware/nrf52/drag-n-drop) instead.
 
 :::
 
 <Tabs
   groupId="settings"
-  defaultValue="apple"
+  defaultValue="android"
   values={[
     {
       label: (
@@ -42,43 +42,43 @@ OTA firmware updates come with an increased risk of failure. If the update proce
 
 <TabItem value="android">
 
-#### Android
+:::caution Specific app version required
 
-:::info
-As of this writing, the current Android release of the nRF DFU app (v2.3.0) is not compatible with Meshtastic firmware updates. Please use the instructions below for updating via OTA with the nRF Connect App.
+The current nRF DFU app (v2.3.0) is **not compatible** with Meshtastic. You must use the older **nRF Connect App version 4.24.3**, available from the [Nordic Semiconductor GitHub page](https://github.com/NordicSemiconductor/Android-nRF-Connect/releases/tag/v4.24.3). Newer versions of nRF Connect will not work.
+
 :::
 
-OTA firmware updates are available for Android using an older release of the more advanced nRF Connect App **version 4.24.3** which is available for download from the [Nordic Semiconductor GitHub page](https://github.com/NordicSemiconductor/Android-nRF-Connect/releases/tag/v4.24.3).
-
-1. Download the firmware release you wish to install from the [Meshtastic Download Page](/downloads) or [Meshtastic GitHub](https://github.com/meshtastic/firmware/releases).
-2. Unzip the firmware folder
-3. Open the nRF Connect App and select CONNECT on your device from the SCANNER tab
-4. If the top right corner of the interface that is shown says DISCONNECT, proceed to step 5, if it says CONNECT, select CONNECT
-5. Select the DFU icon from the top-right of the screen
-6. Select OK after verifying that "Distribution Packet (ZIP)" is selected
-7. Select the correct device firmware file (will end with -ota.zip)
-8. The update will start automatically (this will be slow)
-9. Once the update is complete, the device will reboot automatically
+1. Download the firmware from the [Meshtastic Downloads](/downloads) page or [GitHub Releases](https://github.com/meshtastic/firmware/releases).
+2. Unzip the firmware folder on your phone.
+3. Install and open the **nRF Connect App v4.24.3**.
+4. In the **Scanner** tab, find your device and tap **Connect**.
+5. Tap the **DFU** icon in the top-right corner.
+6. Confirm that **Distribution Packet (ZIP)** is selected and tap **OK**.
+7. Select the correct firmware file (the one ending in `-ota.zip`).
+8. The update will start automatically. **This will be slow** — be patient.
+9. When complete, the device will reboot automatically.
 
 </TabItem>
 
 <TabItem value="apple">
 
-#### Apple
+OTA updates on iOS and iPadOS use the **nRF Device Firmware Update** app, available from the [App Store](https://apps.apple.com/us/app/nrf-device-firmware-update/id1624454660).
 
-OTA firmware updates are available on iOS & iPadOS using the nRF Device Firmware Update App available through the [Apple App Store](https://apps.apple.com/us/app/nrf-device-firmware-update/id1624454660)
+1. Download the firmware from the [Meshtastic Downloads](/downloads) page, [GitHub Releases](https://github.com/meshtastic/firmware/releases), or from within the Meshtastic iOS app.
+2. Unzip the firmware folder.
+3. Open the **nRF DFU** app and select the firmware file ending in `-ota.zip`.
+4. Connect to your device.
+5. Start the upload.
 
-1. Download the firmware release you wish to install from the [Meshtastic Download Page](/downloads), [Meshtastic GitHub](https://github.com/meshtastic/firmware/releases), or via the iOS or iPadOS app.
-2. Unzip the firmware folder
-3. Open the nRF DFU App and select the correct device firmware file (will end with -ota.zip)
-4. Connect to your device
-5. Upload the firmware
+:::tip Prevent screen lock interruptions
 
-The iPhone's auto-lock feature could potentially interrupt the Bluetooth firmware upload. To avoid this, occasionally tap on your screen, or temporarily set the auto-lock to "Never" during the upload process to ensure that the phone stays awake and the upload completes without interruption.
+Your iPhone's auto-lock can interrupt the Bluetooth upload. Either tap the screen periodically during the upload, or temporarily set **Settings > Display & Brightness > Auto-Lock** to **Never**.
 
-If the update fails, you may find that adjusting the packet settings can help:
+:::
 
-1. In settings, enable "**Packets Receipt Notification**". 
-2. Change "**Number of Packets**" to a lower value. Some users report success with "5". 
+**If the upload fails**, try adjusting the packet settings in the nRF DFU app:
+1. In the app settings, enable **Packets Receipt Notification**.
+2. Change **Number of Packets** to a lower value (try **5**).
+
 </TabItem>
 </Tabs>

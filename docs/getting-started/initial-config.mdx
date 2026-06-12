@@ -13,22 +13,16 @@ import { Icon } from "@iconify/react";
 import LoRaRegions from "../blocks/_lora-regions.mdx";
 import Link from "@docusaurus/Link";
 
-## Supported Clients per Connection Type
+Now that your device has firmware installed, you need to connect it to a client app and set your region before you can communicate over the mesh.
 
-Depending on your connection, some configuration options are not fully supported. Find out which client is best for your type of connection.
+## Step 1: Choose a Client App
+
+Meshtastic offers several client apps. Which ones you can use depends on how you connect to your device:
 
 <Tabs
 groupId="settings"
 defaultValue="ble"
 values={[
-    {
-      label: (
-        <>
-          <Icon icon="mdi:serial-port" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Serial
-        </>
-      ),
-      value: "serial",
-    },
     {
       label: (
         <>
@@ -40,53 +34,64 @@ values={[
     {
       label: (
         <>
-          <Icon icon="mdi:internet" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Network
+          <Icon icon="mdi:serial-port" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Serial (USB)
         </>
       ),
-      value: "windows",
+      value: "serial",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:internet" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Network (WiFi)
+        </>
+      ),
+      value: "network",
     },
   ]}>
 
-<TabItem value="serial">
-
-#### Serial
-
-- [Python CLI](/docs/software/python/cli/)
-- [Web Client](https://client.meshtastic.org)
-- [Android App](/docs/category/android-app)
-
-</TabItem>
 <TabItem value="ble">
 
-#### Bluetooth
+**Bluetooth** is the most common way to connect. Available on most devices.
 
-- [Android App](/docs/category/android-app)
-- [Web Client](https://client.meshtastic.org)
+- [Android App](/docs/category/android-app) — Full-featured, recommended for most users
+- [iOS / Apple App](/docs/category/apple-apps) — Available on iPhone, iPad, and Mac
+- [Web Client](https://client.meshtastic.org) — Works in Chrome/Edge browsers with Web Bluetooth
+
+</TabItem>
+<TabItem value="serial">
+
+**USB Serial** connects your device directly to a computer via cable.
+
+- [Web Client](https://client.meshtastic.org) — Works in Chrome/Edge browsers
+- [Python CLI](/docs/software/python/cli/) — Command-line interface for advanced users
+- [Android App](/docs/category/android-app) — Supports USB serial on Android
 
 </TabItem>
 <TabItem value="network">
 
-#### Network
+**Network (WiFi)** is only available on **ESP32 devices**.
 
-:::info
-Connecting over network is only supported on ESP32 devices.
-:::
-
-- [Web Client](https://client.meshtastic.org)
+- [Web Client](https://client.meshtastic.org) — Connect by entering your device's IP address
 - [Android App](/docs/category/android-app)
-- [iOS App](/docs/category/apple-apps)
+- [iOS / Apple App](/docs/category/apple-apps)
 - [Python CLI](/docs/software/python/cli/)
 
 </TabItem>
 </Tabs>
 
-## Set Regional Settings
+## Step 2: Set Your Region
 
-In order to start communicating over the mesh, you must set your region. This setting controls which frequency range your device uses and should be set according to your regional location.
+Before your device can communicate over the mesh, you **must** set your LoRa region. This controls which radio frequency your device uses and must match your geographic location.
+
+:::caution
+
+Your device will not transmit until a region is set. Choose the correct region for where you are located — using the wrong region may violate local radio regulations.
+
+:::
 
 <Tabs
   groupId="settings"
-  defaultValue="apple"
+  defaultValue="android"
   values={[
     {
       label: (
@@ -107,63 +112,56 @@ In order to start communicating over the mesh, you must set your region. This se
     {
       label: (
         <>
-          <Icon icon="mdi:terminal" height="1.5rem" style={{ marginRight: "0.25rem" }} /> CLI
-        </>
-      ),
-      value: "cli",
-    },
-    {
-      label: (
-        <>
           <Icon icon="mdi:internet" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Web
         </>
       ),
       value: "web",
     },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:terminal" height="1.5rem" style={{ marginRight: "0.25rem" }} /> CLI
+        </>
+      ),
+      value: "cli",
+    },
   ]}>
 
 <TabItem value="android">
 
-#### Android
-
-1. Follow the [installation](/docs/software/android/installation) and [usage](/docs/software/android/usage/) instructions for [Meshtastic Android](/docs/category/android-app).
-2. Open the app, connect to the device from your phone over USB Serial or Bluetooth.
-3. Once paired and connected, Click **SET YOUR REGION** under the connected device card. or navigate to **Settings > LoRa**.
-4. Select the region from the list according to your regional location. Click **Send**
+1. Install the [Meshtastic Android app](/docs/software/android/installation).
+2. Open the app and connect to your device via Bluetooth or USB.
+3. On the device card, tap **SET YOUR REGION**, or go to **Settings > LoRa**.
+4. Select your region from the list and tap **Send**.
 
 </TabItem>
 <TabItem value="apple">
 
-#### Apple
-
-:::info
-Configuration of Region, Modem Preset and Hop Limit is available on iOS, iPadOS and macOS at Settings > Radio Configuration > LoRa.
-:::
-
-</TabItem>
-<TabItem value="cli">
-
-#### CLI
-
-1. Install [Meshtastic PythonCLI](/docs/software/python/cli/installation)
-   ```sh
-   pip3 install --upgrade pytap2
-   pip3 install --upgrade meshtastic
-   ```
-2. Run the following command, replacing `<REGION-CODE>` with the region code listed above according to your regional location.
-   ```sh
-   meshtastic --set lora.region <REGION-CODE>
-   ```
+1. Install the Meshtastic app from the App Store.
+2. Open the app and connect to your device via Bluetooth.
+3. Go to **Settings > Radio Configuration > LoRa**.
+4. Set your **Region** and save.
 
 </TabItem>
 <TabItem value="web">
 
-#### Web
+1. Open [client.meshtastic.org](https://client.meshtastic.org) in Chrome or Edge.
+2. Connect to your device (via Serial or Bluetooth).
+3. Go to the **LoRa** settings page.
+4. Under **Regional Settings**, select your **Region**.
+5. Click **Save**.
 
-1. Open the Meshtastic Web interface: [client.meshtastic.org](https://client.meshtastic.org)
-2. Navigate to the **LoRa** menu.
-3. Under **Regional Settings**, set your **Region** according to your regional location.
-4. Click **Save**.
+</TabItem>
+<TabItem value="cli">
+
+1. Install the [Meshtastic Python CLI](/docs/software/python/cli/installation):
+   ```sh
+   pip3 install --upgrade meshtastic
+   ```
+2. Connect your device via USB and run the following command, replacing `US` with your region code from the table below:
+   ```sh
+   meshtastic --set lora.region US
+   ```
 
 </TabItem>
 </Tabs>
@@ -172,17 +170,17 @@ Configuration of Region, Modem Preset and Hop Limit is available on iOS, iPadOS 
 
 <LoRaRegions />
 
-Refer to [LoRa Region by Country](/docs/configuration/region-by-country) for a more comprehensive list.
+For a full list by country, see [LoRa Region by Country](/docs/configuration/region-by-country).
 
-## Continue Configuration
+## Next Steps
 
-Now that you have set the LoRa region on your device, you can continue with configuring any additional configs to suit your needs.
+Your device is now on the mesh! You can continue customizing your setup:
 
 <div className="indexCtasBody">
   <Link
     className={"button button--outline button--lg cta--button"}
     to={"/docs/configuration/"}
   >
-    Device Configuration
+    Explore Device Configuration
   </Link>
 </div>

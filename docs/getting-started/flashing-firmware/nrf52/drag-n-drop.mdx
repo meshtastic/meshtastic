@@ -3,42 +3,43 @@ id: drag-n-drop
 title: Drag & Drop nRF52, RP2040, & RP2350 Firmware Updates
 sidebar_label: Drag & Drop (recommended)
 sidebar_position: 1
-description: Instructions for using the Drag & Drop(recommended) file method to flash Meshtastic firmware to nRF52, RP2040, or RP2350 chipset devices.
+description: Instructions for using the Drag & Drop (recommended) file method to flash Meshtastic firmware to nRF52, RP2040, or RP2350 chipset devices.
 ---
 
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 import Link from "@docusaurus/Link";
 
-## Flash Firmware
+Drag & drop is the simplest way to flash Meshtastic firmware on nRF52, RP2040, and RP2350 devices. The device appears as a USB drive and you copy a file to it — no special software needed.
 
-:::info
-You may now use the [Meshtastic Web Flasher](https://flasher.meshtastic.org) to download and copy firmware to your nRF52, RP2040, or RP2350-based devices. Alternatively, follow the instructions below to download and install firmware.
+:::tip Web Flasher Alternative
+
+You can also use the [Meshtastic Web Flasher](https://flasher.meshtastic.org) to flash these devices directly from your browser.
+
 :::
 
-If you have just performed a [Factory Erase](/docs/getting-started/flashing-firmware/nrf52/nrf52-erase/), your device may automatically startup in bootloader mode, and you may skip to "Copy the appropriate firmware..." for your respective device below:
+## Flash Firmware
 
-### nRF52
+### nRF52 Devices
 
 1. Download and unzip the latest firmware from [Meshtastic Downloads](https://meshtastic.org/downloads).
 2. Connect your device to your computer with a USB data cable.
-3. Double click the reset button on your device (this will put it into bootloader mode).
-4. Notice a new drive will be mounted on your computer (Windows, Mac, Linux, or Android).
-5. Open this drive and you should see three files: `CURRENT.UF2`, `INDEX.HTM`, and `INFO_UF2.TXT`.
-6. Copy the appropriate firmware file (`firmware-DEVICE_NAME-X.X.X-xxxxxxx.uf2`) from the release onto this drive.
-7. Once the file has finished copying onto the drive, the device will reboot and install the Meshtastic firmware.
+3. **Double-click the reset button** on your device to enter bootloader mode.
+4. A new USB drive will appear on your computer (Windows, Mac, Linux, or Android).
+5. Open the drive — you should see files like `CURRENT.UF2`, `INDEX.HTM`, and `INFO_UF2.TXT`.
+6. **Copy the correct `.uf2` firmware file** (e.g., `firmware-rak4631-X.X.X-xxxxxxx.uf2`) to this drive.
+7. The device will automatically reboot and install the firmware once the file finishes copying.
 
-### RP2040
+### RP2040/RP2350 Devices
+
 1. Download and unzip the latest firmware from [Meshtastic Downloads](https://meshtastic.org/downloads).
-2. Press the BOOTSEL button and while keeping it pressed, connect the device to your computer via a USB cable.
-3. Notice a new drive will be mounted on your computer (Windows, Mac, Linux, or Android).
-4. Open this drive and you should see two files: `INDEX.HTM` and `INFO_UF2.TXT`.
-5. Copy the appropriate firmware file (`firmware-DEVICE_NAME-X.X.X-xxxxxxx.uf2`) from the release onto this drive.
-6. Once the file has finished copying onto the drive, the device will reboot and install the Meshtastic firmware.
+2. **Hold the BOOTSEL button** on your device, then connect it to your computer via USB while still holding the button.
+3. A new USB drive will appear on your computer.
+4. Open the drive — you should see `INDEX.HTM` and `INFO_UF2.TXT`.
+5. **Copy the correct `.uf2` firmware file** to this drive.
+6. The device will automatically reboot and install the firmware once the file finishes copying.
 
-## Connect and Configure Device
-
-After flashing the Meshtastic firmware to the device, you can proceed with the initial configuration.
+## Next Step: Connect and Configure
 
 <div className="indexCtasBody">
   <Link
@@ -49,18 +50,16 @@ After flashing the Meshtastic firmware to the device, you can proceed with the i
   </Link>
 </div>
 
-### Potential Flashing Edge Cases
+## Common Issues
 
-:::info
+:::info RAK4631 vs RAK4631-R
 
-Before flashing confirm that you have [RAK4631](https://docs.rakwireless.com/product-categories/wisblock/rak4631/overview) and not a [RAK4631-R](https://docs.rakwireless.com/product-categories/wisblock/rak4631-r/overview) If this is not the case, fear not. The hardware is identical but requires [changing the bootloader](/docs/getting-started/flashing-firmware/nrf52/convert-rak4631r).
+Before flashing, confirm whether you have a [RAK4631](https://docs.rakwireless.com/product-categories/wisblock/rak4631/overview) or a [RAK4631-R](https://docs.rakwireless.com/product-categories/wisblock/rak4631-r/overview). They look identical, but the RAK4631-R uses a different bootloader. If you have the -R variant, you'll need to [convert the bootloader](/docs/getting-started/flashing-firmware/nrf52/convert-rak4631r) first.
 
 :::
 
-:::info
+:::info Device stuck in a crash loop?
 
-Previous versions of the Meshtastic firmware may save stale data, causing devices to get stuck in a crash loop during startup. If you experience issues when upgrading your nRF52 device from a previous version of Meshtastic, you may need to perform a full factory reset of the internal flash memory.
-
-Follow the guide to [factory erase your nRF52](/docs/getting-started/flashing-firmware/nrf52/nrf52-erase) device before continuing to [flash firmware](#flash-firmware).
+Older versions of Meshtastic may leave stale data that causes problems after upgrading. If your device won't start after flashing, try a [factory erase](/docs/getting-started/flashing-firmware/nrf52/nrf52-erase) and then re-flash.
 
 :::

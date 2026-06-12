@@ -6,92 +6,75 @@ sidebar_position: 6
 description: Instructions for uploading firmware through SWDIO by using a Raspberry Pi.
 ---
 
-Most Meshtastic devices can be flashed simply using USB.
-However, some (eg Seeed WM1110 Dev Kit) require the use of an external device that can connect via "SWDIO".
-There are dedicated devices such as the [RAKDAP1](https://msh.to/rakdap1/) that can do this work, and there are also other devices such as the [Segger J-Link](https://msh.to/segger-jlink) or [ST-Link](https://msh.to/st-link) that can be used.
-that can do this work. However, for many people a Raspberry Pi is more convenient.
+Some Meshtastic devices (e.g., the Seeed WM1110 Dev Kit) can't be flashed via USB and require a direct debug connection using SWDIO. While dedicated tools like the [RAKDAP1](https://msh.to/rakdap1/), [Segger J-Link](https://msh.to/segger-jlink), or [ST-Link](https://msh.to/st-link) work well, a Raspberry Pi can also serve as a SWDIO flash tool.
 
-This article provides instructions on how use a Raspberry Pi as a SWDIO Flash Tool.
+## Step 1: Wire the Connection
 
-## Set up Wiring
+Connect two wires between your Raspberry Pi and the SWDIO ports on your nRF52-based device:
 
-The first step is to connect two wires between your Raspberry Pi and the SWDIO ports on your NRF52-based device.
+| Raspberry Pi | Meshtastic Device |
+|---|---|
+| GPIO 11 | CLK (Clock) |
+| GPIO 8 | DIO (Data) |
 
-Connect GPIO pin 11 on your Raspberry Pi to the CLK pin on the Meshtastic Device.
-Connect GPIO pin 8 on your Raspberry Pi to the DIO pin on the Meshtastic Device.
+:::caution
+Double-check the GPIO pin numbers — incorrect wiring will prevent the connection from working.
+:::
 
-Ensure you get the GPIO numbers correct.
+Power on both the Raspberry Pi (via USB) and the Meshtastic device.
 
-Plug in your Raspberry Pi to USB power.
-Plug in the Meshtastic Device to power.
+## Step 2: Install OpenOCD
 
-## Install OpenOCD
+OpenOCD manages the SWDIO connection. Install it on your Raspberry Pi:
 
-You can use OpenOCD to manage the SWDIO connection with the Meshtastic Device.
-Install it on your Raspberry Pi.
-
-```
-$ sudo apt update
-$ sudo apt install libtool autoconf automake texinfo telnet gdb-multiarch git
-$ git clone git://repo.or.cz/openocd.git
-$ cd openocd/
-$ ./bootstrap
-$ ./configure --enable-bcm2835gpio
-$ make -j4
-$ sudo make install
+```shell
+sudo apt update
+sudo apt install libtool autoconf automake texinfo telnet gdb-multiarch git
+git clone git://repo.or.cz/openocd.git
+cd openocd/
+./bootstrap
+./configure --enable-bcm2835gpio
+make -j4
+sudo make install
 ```
 
-## Check connection
+## Step 3: Test the Connection
 
-Let's try connecting to the NRF52-based device with SWDIO before we do anything with firmware.
-All the configuration you need is in the openocd repository.
+Before flashing, verify that OpenOCD can communicate with the device:
 
+```shell
+openocd -f ./openocd/tcl/interface/raspberrypi-native.cfg -c "transport select swd" -f openocd/tcl/target/nrf52.cfg -s tcl
 ```
-$ openocd -f ./openocd/tcl/interface/raspberrypi-native.cfg -c "transport select swd" -f openocd/tcl/target/nrf52.cfg -s tcl
-```
 
-The first flag selects the Raspberry Pi as your host machine, the transport is SWDIO, and the last flag says you are connecting to a nRF52-based chip.
-You should see something like this:
+You should see output like:
 
 ```
 Open On-Chip Debugger 0.12.0+dev-00633-gad87fbd1c
 Licensed under GNU GPL v2
-For bug reports, read
-    http://openocd.org/doc/doxygen/bugs.html
-srst_only separate srst_gates_jtag srst_push_pull connect_deassert_srst
-swd
-Info : Listening on port 6666 for tcl connections
-Info : Listening on port 4444 for telnet connections
-Info : BCM2835 GPIO JTAG/SWD bitbang driver
-Info : clock speed 100 kHz
+...
 Info : SWD DPIDR 0x2ba01477
 Info : [nrf52.cpu] Cortex-M4 r0p1 processor detected
 Info : [nrf52.cpu] target has 6 breakpoints, 4 watchpoints
-Info : [nrf52.cpu] Examination succeed
-Info : [nrf52.cpu] starting gdb server on 3333
-Info : Listening on port 3333 for gdb connections
-Info : accepting 'telnet' connection on tcp/4444
+Info : Listening on port 4444 for telnet connections
 ```
 
-If you see “Error connecting DP: cannot read IDR”, then you've probably connected the wires to the wrong place.
+If you see `Error connecting DP: cannot read IDR`, the wires are likely connected to the wrong pins.
 
-## Obtaining Firmware
+## Step 4: Get the Firmware
 
-Check the instructions for your [hardware](/docs/hardware/devices) to find the correct firmware for your device.
-For most devices following this guide, a .hex file is required.
-Then, copy the firmware file to your Raspberry Pi.
+Check the instructions for your [hardware](/docs/hardware/devices) to find the correct firmware file. For most devices following this guide, you need a `.hex` file. Copy it to your Raspberry Pi.
 
-## Flashing Firmware
+## Step 5: Flash the Firmware
 
-Once you have openocd running, you can connect to your Meshtastic device using telnet.
-Flashing is as simple as running a few commands inside the telnet session:
+With OpenOCD still running, open a new terminal and connect via telnet:
+
+```shell
+telnet 127.0.0.1 4444
+```
+
+Then run these commands in the telnet session:
 
 ```
-$ telnet 127.0.0.1 4444
-Trying 127.0.0.1...
-Connected to 127.0.0.1.
-Escape character is '^]'.
-Open On-Chip Debugger
 > init
 > reset init
 > halt
@@ -101,8 +84,8 @@ Open On-Chip Debugger
 > exit 0
 ```
 
-Unplug the power and plug it back in after flashing.
+After flashing, unplug and re-plug the power to the Meshtastic device.
 
-## Connecting
+## Done!
 
-Congratulations, you should now be able to connect to your device through Bluetooth in the Meshtastic app.
+Your device should now be running Meshtastic firmware. Connect to it via Bluetooth using the [Meshtastic app](/docs/getting-started/initial-config) to complete setup.

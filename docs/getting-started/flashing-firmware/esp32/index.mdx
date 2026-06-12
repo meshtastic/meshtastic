@@ -6,18 +6,18 @@ sidebar_position: 2
 description: Instructions to flash Meshtastic firmware to an ESP32 chipset device.
 ---
 
-:::info
-The recommended method for firmware flashing is the [Web Flasher.](https://flasher.meshtastic.org)
-:::
+## Choose a Flashing Method
 
-## Flashing Method for ESP32 Devices
+There are three ways to flash firmware onto an ESP32 device. For most users, the **Web Flasher is the best choice** — it's fast, simple, and requires no software installation.
 
-1. The [Web Flasher](/docs/getting-started/flashing-firmware/esp32/web-flasher.mdx) requires either Chrome or Edge browsers but is an excellent choice for quickly flashing devices. **This method is highly recommended for firmware flashing, especially for new users of the project, as it is easy to use.**
-2. The [CLI Script](/docs/getting-started/flashing-firmware/esp32/cli-script) is considered the "manual process" for flashing firmware.
-3. Flashing your device using an [external serial adapter](/docs/getting-started/flashing-firmware/esp32/external-serial-adapter) should only be attempted as a last resort if no other method has been successful.
+| Method | Best For | Difficulty |
+|---|---|---|
+| [**Web Flasher**](/docs/getting-started/flashing-firmware/esp32/web-flasher.mdx) (recommended) | Everyone, especially new users | Easy |
+| [**CLI Script**](/docs/getting-started/flashing-firmware/esp32/cli-script) | Advanced users who prefer the command line | Intermediate |
+| [**External Serial Adapter**](/docs/getting-started/flashing-firmware/esp32/external-serial-adapter) | Recovering devices that can't be flashed via USB | Advanced |
 
-:::info note
+:::info Web Client Note
 
-The [web client](/docs/software/web-client) at meshtastic.local is only updated with a full wipe and reinstall of the device. If you choose a reinstall, you will get the latest (bundled) web interface.  To preserve your settings, you may [export your configuration](/docs/software/python/cli#--export-config) prior to a reinstall and load them back after.
+The [web client](/docs/software/web-client) at meshtastic.local is only updated when you do a full reinstall (not an update). To preserve your settings during a reinstall, [export your configuration](/docs/software/python/cli#--export-config) first and load it back after.
 
 :::
