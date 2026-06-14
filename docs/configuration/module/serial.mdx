@@ -10,9 +10,7 @@ import TabItem from "@theme/TabItem";
 import { Icon } from "@iconify/react";
 import ReactPlayer from "react-player";
 
-The serial module config options are: Enabled, Echo, Mode, Receive GPIO, Transmit GPIO, Baud Rate, Timeout, and Override Console Serial Port. Serial Module config uses an admin message sending a `ConfigModule.Serial` protobuf.
-
-This is an interface to talk to and control your Meshtastic device over a serial port. The module can be set to different [modes](#mode), each fulfilling a different use-case.
+The serial module lets you talk to and control your Meshtastic device over a UART serial port. Set the [mode](#mode) to match your use-case — from plain text bridging to raw binary tunnels, NMEA output, and packet logging.
 
 ![image](/img/modules/Serial/jet.webp)
 
@@ -33,61 +31,49 @@ Enables the serial module.
 
 ### Echo
 
-If set, any packets you send will be echoed back to your device.
+If set, any packets you send will be echoed back to your device. Useful for confirming transmissions in TEXTMSG mode.
 
 ### Mode
 
-Defaults to 'Simple'.
+Defaults to `SIMPLE`.
 
-Available Values:
-
-- `DEFAULT` equals `SIMPLE`.
-- `SIMPLE` operates as a dumb UART tunnel. What goes in will come out, requires a channel named 'serial'.
-- `PROTO` exposes the Protobuf Client API on this serial port. You can use this to connect from another device, see the [Arduino client library](https://github.com/meshtastic/Meshtastic-arduino) and the [API Reference](/docs/development/device/client-api).
-- `TEXTMSG` will allow you to send a string over the serial port to the device, which will be broadcasted as a text message to the default channel. Any text message received from the mesh will be sent to the serial port as follows: `<Short Name>: <text>`.
-- `NMEA` will output a NMEA 0183 Data stream containing the internal GPS or fixed position and other node locations as Waypoints (WPL).
-- `CALTOPO` will output NMEA 0183 Waypoints (WPL) every 10 seconds for all valid node locations, to be consumed by [CalTopo / SARTopo](/docs/software/integrations/caltopo.mdx).
-- `WS85` will parse and compute wind speed data received over serial from the Ecowitt WS85. Transmits values via telemetry packet every 5 minutes. Modification of the WS85 weather sensor is required (https://hackaday.io/project/196990-meshtastic-ultrasonic-anemometer-wx-station). If option is not available in app then enable with cli command "meshtastic --set serial.mode 6"
-- `VE_DIRECT` VE.Direct is a serial protocol used by Victron Energy products. See [this guide](https://beta.ivc.no/wiki/index.php/Victron_VE_Direct_DIY_Cable)
-- `MS_CONFIG` is used to configure and view some parameters of [MeshSolar](https://heltec.org/project/meshsolar/)
-- `LOG` will output a short, formatted log of packets sent or received by the node, including text, and telemetry packets.
-- `LOGTEXT` will output a short, formatted log of every text packet sent or received by the node.
-
-:::tip
-`PROTO` mode will show no obvious output when passively observed by a serial monitor. When testing, consider using the [Python CLI](https://github.com/meshtastic/python) with the `--listen` option, to view the stream of protobufs.
-:::
+| Mode | Description |
+| :--- | :---------- |
+| `DEFAULT` | Alias for `SIMPLE`. |
+| `SIMPLE` | Raw binary pass-through. Bytes in are sent as a mesh packet on a channel named **serial**; received packets are written back as raw bytes. |
+| `PROTO` | Exposes the [Meshtastic Protobuf Client API](/docs/development/device/client-api) on the serial port — the same protocol used by phone apps and the Python CLI. Produces no human-readable output; use `meshtastic --port <FTDI_PORT> --listen` to observe the stream. |
+| `TEXTMSG` | Any string sent to the serial port is broadcast as a text message on the default channel. Received messages are printed as `<ShortName>: <text>`. |
+| `NMEA` | Outputs NMEA 0183 sentences every 2 seconds: one `$GNGGA` sentence for the device's own position, plus `$GPWPL` sentences for each mesh node with a valid position. |
+| `CALTOPO` | Sends NMEA `$GPWPL` Waypoint sentences every 10 seconds for all nodes with valid positions, for use with [CalTopo / SARTopo](/docs/software/integrations/caltopo.mdx). |
+| `WS85` | Parses wind speed data from an [Ecowitt WS85](https://hackaday.io/project/196990-meshtastic-ultrasonic-anemometer-wx-station) connected over serial and transmits telemetry every 5 minutes. Requires hardware modification of the WS85. |
+| `VE_DIRECT` | Receives the VE.Direct protocol from [Victron Energy](https://beta.ivc.no/wiki/index.php/Victron_VE_Direct_DIY_Cable) products. |
+| `MS_CONFIG` | Configures and views parameters of [MeshSolar](https://heltec.org/project/meshsolar/). |
+| `LOG` | Outputs a formatted log line for every packet sent or received by the node, including text, telemetry, and position packets. |
+| `LOGTEXT` | Logs only text packets (channel messages and direct messages) sent or received by the node. |
 
 ### Receive GPIO Pin
 
-Set the GPIO pin to the RXD pin you have set up.
+The GPIO pin connected to the RX line of your serial adapter.
 
 :::tip
-With the RAK4631 on the RAK19007 and some versions of the RAK19003 baseboards, the default pins are TXD1 (16) and RXD1 (15). For this device, setting [GPS Mode](/docs/configuration/radio/position/#gps-mode) to `Not_Present` is necessary. For other versions of the RAK19003 baseboard, the pins TXD0 (20) and RXD0 (19) are accessible.
+On the RAK4631 with the RAK19007 or some RAK19003 baseboards, use TXD1 (16) and RXD1 (15). Set [GPS Mode](/docs/configuration/radio/position/#gps-mode) to `Not_Present` for this combination. On other RAK19003 variants, use TXD0 (20) and RXD0 (19).
 :::
 
 ### Transmit GPIO Pin
 
-Set the GPIO pin to the TXD pin you have set up.
-
-:::tip
-Connect the TX pin to the other device's RX pin, and vice versa. Connect their grounds to each other (not necessary if they're both plugged into the same USB power source.)
-:::
+The GPIO pin connected to the TX line of your serial adapter. Always cross-connect: device TX → adapter RX, and device RX → adapter TX.
 
 ### Baud Rate
 
-The serial baud rate.
+The serial baud rate. `BAUD_DEFAULT` is 38400.
 
 ### Timeout
 
-The amount of time to wait before we consider your packet as "done".
+How long the module waits after the last received byte before treating the accumulated data as a complete packet. Only relevant in `SIMPLE` mode. Default (`0`) corresponds to 250 ms.
 
 ### Override Console Serial Port
 
-If set to true, this will allow Serial Module to control (set baud rate) and use the primary USB serial bus for output. This is only useful for NMEA and CalTopo modes and may behave strangely or not work at all in other modes. Setting TX/RX pins in the Serial Module config will cause this setting to be ignored.
-
-:::tip
-Once module settings are changed, a **reset** is required for them to take effect.
-:::
+When enabled, redirects the primary USB serial port to serial module output instead of the debug console. **Only valid with `NMEA` and `CALTOPO` modes** — using it with any other mode will produce a configuration error and the module will not start. Has no effect if TX/RX GPIO pins are also configured (pogo-pin output takes precedence).
 
 ## Serial Module Config Client Availability
 
@@ -157,7 +143,7 @@ All serial module config options are available on iOS, iPadOS and macOS at Setti
 
 :::info
 
-All serial module config options are available in the python CLI. Example commands are below:
+All serial module config options are available in the Python CLI. Chaining multiple `--set` flags in one command is recommended — the device reboots after each write.
 
 :::
 
@@ -165,22 +151,12 @@ All serial module config options are available in the python CLI. Example comman
 | :---------------------------------: | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :----------------------------------: |
 |           serial.enabled            |                                                                                               `true`, `false`                                                                                                |               `false`                |
 |             serial.echo             |                                                                                               `true`, `false`                                                                                                |               `false`                |
-|             serial.mode             |                                                                           `DEFAULT` `SIMPLE` `PROTO` `TEXTMSG`, `NMEA`, `CALTOPO`                                                                            |              `DEFAULT`               |
+|             serial.mode             |                                        `DEFAULT` `SIMPLE` `PROTO` `TEXTMSG` `NMEA` `CALTOPO` `WS85` `VE_DIRECT` `MS_CONFIG` `9` (LOG) `10` (LOGTEXT)                                        |              `DEFAULT`               |
 |             serial.rxd              |                                                                                             GPIO Pin Number 1-39                                                                                             |       Default of `0` is Unset        |
 |             serial.txd              |                                                                                             GPIO Pin Number 1-33                                                                                             |       Default of `0` is Unset        |
 |             serial.baud             | `BAUD_DEFAULT` `BAUD_110` `BAUD_300` `BAUD_600` `BAUD_1200` `BAUD_2400` `BAUD_4800` `BAUD_9600` `BAUD_19200` `BAUD_38400` `BAUD_57600` `BAUD_115200` `BAUD_230400` `BAUD_460800` `BAUD_576000` `BAUD_921600` |        `BAUD_DEFAULT` (38400)        |
-|           serial.timeout            |                                                                                          `integer` (milli seconds)                                                                                           | Default of `0` corresponds to 250 ms |
+|           serial.timeout            |                                                                                          `integer` (milliseconds)                                                                                           | Default of `0` corresponds to 250 ms |
 | serial.override_console_serial_port |                                                                                               `true`, `false`                                                                                                |               `false`                |
-
-:::tip
-
-Because the device will reboot after each command is sent via CLI, it is recommended when setting multiple values in a config section that commands be chained together as one.
-
-```shell title="Example:"
-meshtastic --set serial.enabled true --set serial.echo true
-```
-
-:::
 
 ```shell title="Enable / Disable Module"
 meshtastic --set serial.enabled true
@@ -193,24 +169,24 @@ meshtastic --set serial.echo false
 ```
 
 ```shell title="Set Mode"
-meshtastic --set serial.mode DEFAULT
-meshtastic --set serial.mode PROTO
+meshtastic --set serial.mode TEXTMSG
+meshtastic --set serial.mode NMEA
 ```
 
-```shell title="Set RXD to GPIO pin number 7"
+```shell title="Set RXD to GPIO pin 7"
 meshtastic --set serial.rxd 7
 ```
 
-```shell title="Set TXD to GPIO pin number 28"
+```shell title="Set TXD to GPIO pin 28"
 meshtastic --set serial.txd 28
 ```
 
 ```shell title="Set Baud Rate"
 meshtastic --set serial.baud BAUD_DEFAULT
-meshtastic --set serial.baud BAUD_576000
+meshtastic --set serial.baud BAUD_115200
 ```
 
-```shell title="Set Timeout to 15 milli seconds"
+```shell title="Set Timeout to 15 milliseconds"
 meshtastic --set serial.timeout 15
 ```
 
@@ -226,15 +202,9 @@ All serial module config options are available in the Web UI.
 </TabItem>
 </Tabs>
 
-:::warning
-GPIO access is fundamentally dangerous because invalid options can physically damage or destroy your hardware. Ensure that you fully understand the schematic for your particular device before trying this as we do not offer a warranty. Use at your own risk.
-
-This module requires attaching a peripheral accessory to your device. It will not work without one.
-:::
-
 ## SenseCAP T1000-E Serial Setup
 
-The [SenseCAP Card Tracker T1000-E](/docs/hardware/devices/seeed-studio/sensecap/card-tracker) is a credit-card-sized Meshtastic tracker running a Nordic nRF52840. It fully supports the serial module via two connection methods described below.
+The [SenseCAP Card Tracker T1000-E](/docs/hardware/devices/seeed-studio/sensecap/card-tracker) is a credit-card-sized Meshtastic tracker running a Nordic nRF52840. It supports the serial module via two connection methods.
 
 ### Pogo Pin Connection (TEXTMSG, SIMPLE, LOG, LOGTEXT modes)
 
@@ -248,10 +218,10 @@ The T1000-E exposes its debug UART (Serial2) on the four pogo pins at the bottom
 | 3V3              | *(do not connect — device is self-powered)* |
 
 :::tip
-Always cross-connect TX → RX and RX → TX between the two devices. Use a 3.3 V logic-level adapter; do **not** use a 5 V adapter, as it will damage the nRF52840.
+Use a 3.3 V logic-level adapter. A 5 V adapter will damage the nRF52840.
 :::
 
-Once wired, configure the module using the T1000-E's USB CDC port (the magnetic charging cable) and set the GPIO pins to the pogo-pin UART:
+Once wired, configure the module using the T1000-E's USB CDC port (the magnetic charging cable):
 
 ```shell title="T1000-E TEXTMSG mode — one-shot config"
 meshtastic --port <USB_PORT> \
@@ -266,7 +236,7 @@ After the device reboots, open the **FTDI adapter port** at `38400 8N1` to send 
 
 ### USB-Direct Connection (NMEA and CalTopo modes only)
 
-For NMEA and CalTopo output modes, the T1000-E can stream data over its built-in USB CDC port without any extra hardware. Set `override_console_serial_port` to redirect output to the console USB port:
+For NMEA and CalTopo output modes, the T1000-E can stream data over its built-in USB CDC port without any extra hardware:
 
 ```shell title="T1000-E NMEA mode via USB"
 meshtastic --port <USB_PORT> \
@@ -275,15 +245,9 @@ meshtastic --port <USB_PORT> \
   --set serial.mode NMEA
 ```
 
-Then open the **same USB port** at `38400 8N1` to receive NMEA 0183 sentences.
-
-:::caution
-`override_console_serial_port` is **only** valid with `NMEA` and `CALTOPO` modes. Using it with `SIMPLE`, `TEXTMSG`, `PROTO`, `LOG`, or `LOGTEXT` will produce a configuration error and the serial module will not start.
-:::
+After the device reboots, open the **same USB port** at `38400 8N1` to receive NMEA sentences.
 
 ## Finding Your Serial Port
-
-Identify the correct port for your T1000-E before running any commands.
 
 <Tabs
   groupId="os"
@@ -309,27 +273,23 @@ ls /dev/cu.usbserial-* /dev/cu.SLAB_USBtoUART 2>/dev/null
 # Example output: /dev/cu.usbserial-A10KMFPL
 ```
 
-Use the full path (e.g., `/dev/cu.usbmodem0000001`) as `<USB_PORT>` or `<FTDI_PORT>` in all commands below.
-
 </TabItem>
 <TabItem value="windows">
 
 Open **Device Manager → Ports (COM & LPT)**.
 
-- The T1000-E USB CDC port typically appears as **USB Serial Device (COMx)**.
+- The T1000-E USB CDC port appears as **USB Serial Device (COMx)**.
 - An FTDI or CP2102 pogo-pin adapter appears as **USB Serial Port (COMx)** after its driver is installed.
-
-You can also list all ports with Python:
-
-```shell
-python -m serial.tools.list_ports --verbose
-```
-
-Use the port label (e.g., `COM3`) as `<USB_PORT>` or `<FTDI_PORT>` in all commands below.
 
 :::tip
 Install the [CP210x driver](https://www.silabs.com/developers/usb-to-uart-bridge-vcp-drivers) for Silicon Labs adapters or the [FTDI VCP driver](https://ftdichip.com/drivers/vcp-drivers/) for FTDI adapters if the port does not appear.
 :::
+
+You can also list ports with Python:
+
+```shell
+python -m serial.tools.list_ports --verbose
+```
 
 </TabItem>
 <TabItem value="linux">
@@ -363,7 +323,7 @@ sudo usermod -a -G dialout $USER
 
 `TEXTMSG` mode bridges the serial port to the Meshtastic text message channel. Any string sent to the serial port is broadcast as a text message; any received text message is printed as `<ShortName>: <message>`.
 
-**Step 1 — Configure the T1000-E** (replace `<USB_PORT>` with your device port):
+**Step 1 — Configure the T1000-E:**
 
 ```shell title="Configure TEXTMSG mode"
 meshtastic --port <USB_PORT> \
@@ -374,7 +334,7 @@ meshtastic --port <USB_PORT> \
   --set serial.baud BAUD_DEFAULT
 ```
 
-**Step 2 — Open the pogo-pin UART** (`<FTDI_PORT>`) with a terminal at `38400 8N1`:
+**Step 2 — Open the pogo-pin UART** (`<FTDI_PORT>`) at `38400 8N1`:
 
 <Tabs
   groupId="os"
@@ -399,7 +359,7 @@ screen <FTDI_PORT> 38400
 </TabItem>
 <TabItem value="windows">
 
-Use **PuTTY** → Connection type: **Serial** → Speed: `38400` → Serial line: `COM3` (your port) → Open.
+Use **PuTTY** → Connection type: **Serial** → Speed: `38400` → Serial line: `COM3` → Open.
 
 Or with Python pyserial:
 
@@ -412,7 +372,7 @@ python -m serial.tools.miniterm <FTDI_PORT> 38400
 <TabItem value="linux">
 
 ```shell title="tio (recommended)"
-sudo apt install tio   # or: sudo dnf install tio
+sudo apt install tio
 tio -b 38400 -e <FTDI_PORT>
 ```
 
@@ -439,10 +399,10 @@ Enable echo to confirm your own transmissions: `meshtastic --port <USB_PORT> --s
 
 ### SIMPLE — Transparent UART Tunnel
 
-`SIMPLE` mode (also the default `DEFAULT`) is a raw binary pass-through. Bytes written to the serial port are sent as a mesh packet on a channel named **serial**; received packets on that channel are written as raw bytes back to the serial port.
+`SIMPLE` mode is a raw binary pass-through. Bytes written to the serial port are sent as a mesh packet on a channel named **serial**; received packets on that channel are written as raw bytes back to the serial port.
 
 :::note
-A channel named `serial` must exist on your device. Create one with:
+A channel named `serial` must exist on the device. Create one with:
 ```shell
 meshtastic --port <USB_PORT> --ch-add serial
 ```
@@ -458,13 +418,13 @@ meshtastic --port <USB_PORT> \
   --set serial.timeout 250
 ```
 
-Connect at `38400 8N1` and send up to **237 bytes** per packet. The module treats the end of a packet as a `serial.timeout` millisecond gap in the byte stream (default 250 ms).
+Connect at `38400 8N1` and send up to **237 bytes** per packet. The module frames a packet by detecting a gap of `serial.timeout` milliseconds in the byte stream (default 250 ms).
 
 ---
 
 ### PROTO — Protobuf Client API
 
-`PROTO` mode exposes the full [Meshtastic Protobuf Client API](/docs/development/device/client-api) on the serial port. This is the same protocol used by the phone apps and Python CLI. It produces no human-readable output — use the [Python CLI](https://github.com/meshtastic/python) with `--listen` to observe the stream:
+`PROTO` mode exposes the full [Meshtastic Protobuf Client API](/docs/development/device/client-api) on the serial port — the same protocol used by phone apps and the Python CLI. It produces no human-readable output.
 
 ```shell title="Configure PROTO mode"
 meshtastic --port <USB_PORT> \
@@ -484,7 +444,7 @@ For embedded integration, use the [Meshtastic Arduino client library](https://gi
 
 ### NMEA — GPS Position Stream (USB or Pogo Pins)
 
-`NMEA` mode outputs NMEA 0183 sentences on the serial port every 2 seconds: a `$GPGGA` sentence for the device's own GPS position, plus `$GPWPL` (Waypoint Location) sentences for each node in the mesh that has a valid position.
+`NMEA` mode outputs NMEA 0183 sentences every 2 seconds: a `$GNGGA` sentence for the device's own position, plus `$GPWPL` sentences for each mesh node with a valid position. Position is zero until the device acquires a GNSS fix.
 
 **Option A — USB direct (recommended for T1000-E)**:
 
@@ -522,11 +482,7 @@ meshtastic --port <USB_PORT> \
 <TabItem value="macos">
 
 ```shell
-# Read raw NMEA sentences
 tio -b 38400 <PORT>
-
-# Or pipe into gpsd / GPSD client
-cat <(tio -b 38400 <PORT>) | gpspipe -r
 ```
 
 Compatible with [GPSBabel](https://www.gpsbabel.org), [OpenCPN](https://opencpn.org), and any app that accepts a serial NMEA feed.
@@ -536,22 +492,24 @@ Compatible with [GPSBabel](https://www.gpsbabel.org), [OpenCPN](https://opencpn.
 
 Open PuTTY at `38400 8N1` on the port to view raw sentences. To feed into navigation software, use a virtual COM port splitter such as [com0com](https://com0com.sourceforge.net) or configure the software to read directly from the COM port.
 
-Example output you will see:
+Example output:
 ```
-$GPGGA,123519.00,4807.038,N,01131.000,E,1,04,0.9,545.4,M,46.9,M,,*47
-$GPWPL,4807.038,N,01131.000,E,NODENAME*XX
+$GNGGA,232843.00,4761.234,N,12208.123,W,1,08,1.2,88.0,M,,,, *XX
+$GPWPL,4761.234,N,12208.123,W,NODENAME*XX
 ```
 
 </TabItem>
 <TabItem value="linux">
 
 ```shell
-# Read raw sentences
 cat <PORT>
+```
 
-# Feed into gpsd
+To feed into gpsd:
+
+```shell
 sudo gpsd -N -n <PORT>
-cgps -s   # view in terminal
+cgps -s
 ```
 
 </TabItem>
@@ -561,7 +519,7 @@ cgps -s   # view in terminal
 
 ### CALTOPO — Search and Rescue Mapping
 
-`CALTOPO` mode sends NMEA `$GPWPL` Waypoint Location sentences every 10 seconds for **all** nodes in the mesh that have a valid position. This is designed for [CalTopo / SARTopo](/docs/software/integrations/caltopo.mdx) to display mesh nodes on a rescue map in real time.
+`CALTOPO` mode sends NMEA `$GPWPL` Waypoint sentences every 10 seconds for all nodes in the mesh with a valid position. Designed for [CalTopo / SARTopo](/docs/software/integrations/caltopo.mdx) to display mesh nodes on a rescue map in real time.
 
 ```shell title="Configure CalTopo mode via USB"
 meshtastic --port <USB_PORT> \
@@ -571,13 +529,13 @@ meshtastic --port <USB_PORT> \
   --set serial.baud BAUD_DEFAULT
 ```
 
-Open `<USB_PORT>` in CalTopo's GPS input at `38400 8N1`. Each node with a position will appear as a waypoint, refreshed every 10 seconds.
+Open `<USB_PORT>` in CalTopo's GPS input at `38400 8N1`. Each node with a position appears as a waypoint, refreshed every 10 seconds.
 
 ---
 
 ### LOG — Mesh Packet Activity Logger
 
-`LOG` mode outputs a formatted log line for every packet the node sends or receives — text messages, telemetry, position, and more. This is ideal for **logging mesh activity to a serial data logger** such as a [SparkFun OpenLog](https://www.sparkfun.com/sparkfun-openlog.html) connected to the T1000-E pogo pins.
+`LOG` mode outputs a formatted log line for every packet the node sends or receives — text, telemetry, position, and more. Ideal for logging mesh activity to a data logger such as a [SparkFun OpenLog](https://www.sparkfun.com/sparkfun-openlog.html) connected to the T1000-E pogo pins.
 
 ```shell title="Configure LOG mode"
 meshtastic --port <USB_PORT> \
@@ -588,7 +546,11 @@ meshtastic --port <USB_PORT> \
   --set serial.baud BAUD_DEFAULT
 ```
 
-Open the **FTDI port** at `38400 8N1` to watch the stream. Example output:
+:::tip
+If your CLI reports that `LOG` is not a valid enum value, use the numeric form instead: `--set serial.mode 9`. This occurs with CLI versions older than 2.7.10.
+:::
+
+Open the FTDI port at `38400 8N1` to watch the stream. Example output:
 
 ```
 [TX] TEXT  ch=0  from=!deadbeef  to=!ffffffff  "Hello mesh!"
@@ -600,7 +562,7 @@ Open the **FTDI port** at `38400 8N1` to watch the stream. Example output:
 
 ### LOGTEXT — Text Message Logger
 
-`LOGTEXT` mode logs only text messages (channel messages and direct messages) sent or received by the node. Useful when you only care about human-readable chat traffic:
+`LOGTEXT` mode logs only text packets (channel messages and direct messages) sent or received by the node.
 
 ```shell title="Configure LOGTEXT mode"
 meshtastic --port <USB_PORT> \
@@ -611,13 +573,17 @@ meshtastic --port <USB_PORT> \
   --set serial.baud BAUD_DEFAULT
 ```
 
-Output format mirrors TEXTMSG receive output: `<ShortName>: <message>`.
+:::tip
+If your CLI reports that `LOGTEXT` is not a valid enum value, use the numeric form instead: `--set serial.mode 10`. This occurs with CLI versions older than 2.7.10.
+:::
+
+Output format: `<ShortName>: <message>`.
 
 ---
 
 ## Python Scripting Examples
 
-The [Meshtastic Python package](https://github.com/meshtastic/python) can configure and interact with the serial module programmatically. Install it first:
+The [Meshtastic Python package](https://github.com/meshtastic/python) can configure and interact with the serial module programmatically:
 
 ```shell
 pip install meshtastic
@@ -629,15 +595,13 @@ pip install meshtastic
 import meshtastic
 import meshtastic.serial_interface
 
-# Connect to T1000-E via USB CDC port
 iface = meshtastic.serial_interface.SerialInterface(devPath="<USB_PORT>")
 
-# Configure serial module for TEXTMSG mode via pogo pins
 iface.localNode.moduleConfig.serial.enabled = True
-iface.localNode.moduleConfig.serial.txd = 16       # P0.16 pogo-pin TX
-iface.localNode.moduleConfig.serial.rxd = 17       # P0.17 pogo-pin RX
-iface.localNode.moduleConfig.serial.mode = 3       # TEXTMSG = 3
-iface.localNode.moduleConfig.serial.baud = 0       # BAUD_DEFAULT = 38400
+iface.localNode.moduleConfig.serial.txd = 16
+iface.localNode.moduleConfig.serial.rxd = 17
+iface.localNode.moduleConfig.serial.mode = 3
+iface.localNode.moduleConfig.serial.baud = 0
 
 iface.localNode.writeConfig("serial")
 print("Serial module configured. Device will reboot.")
@@ -646,13 +610,10 @@ iface.close()
 
 ### Send a Text Message via Serial (TEXTMSG mode)
 
-Once the module is configured and the FTDI pogo-pin adapter is connected:
-
 ```python title="send_via_serial.py"
 import serial
 import time
 
-# Open the FTDI pogo-pin adapter port (NOT the USB CDC port)
 with serial.Serial("<FTDI_PORT>", baudrate=38400, timeout=1) as ser:
     message = "Hello from serial module!\n"
     ser.write(message.encode("ascii"))
@@ -665,7 +626,6 @@ with serial.Serial("<FTDI_PORT>", baudrate=38400, timeout=1) as ser:
 ```python title="receive_via_serial.py"
 import serial
 
-# Open the FTDI pogo-pin adapter port
 with serial.Serial("<FTDI_PORT>", baudrate=38400, timeout=5) as ser:
     print("Listening for mesh messages... (Ctrl-C to stop)")
     while True:
@@ -679,19 +639,21 @@ with serial.Serial("<FTDI_PORT>", baudrate=38400, timeout=5) as ser:
 ```python title="read_nmea.py"
 import serial
 
-# For USB-direct NMEA mode, open the USB CDC port
-# For pogo-pin NMEA mode, open the FTDI port
 with serial.Serial("<PORT>", baudrate=38400, timeout=2) as ser:
     print("Reading NMEA sentences... (Ctrl-C to stop)")
     while True:
         line = ser.readline().decode("ascii", errors="replace").strip()
-        if line.startswith("$GPGGA") or line.startswith("$GPWPL"):
+        if line.startswith("$GN") or line.startswith("$GP"):
             print(line)
 ```
 
 ---
 
 ## Device GPIO Pin Reference
+
+:::warning
+Incorrect GPIO configuration can physically damage your hardware. Verify the schematic for your specific device before wiring anything up.
+:::
 
 | Device                    | Architecture | Serial Module TXD | Serial Module RXD | Notes                          |
 | :------------------------ | :----------: | :---------------: | :---------------: | :----------------------------- |
@@ -701,15 +663,11 @@ with serial.Serial("<PORT>", baudrate=38400, timeout=2) as ser:
 | RAK4631 (RAK19007)        | nRF52840     | 16 (TXD1)         | 15 (RXD1)         | Set GPS Mode to `Not_Present`  |
 | RAK4631 (RAK19003 v2)     | nRF52840     | 20 (TXD0)         | 19 (RXD0)         |                                |
 
-:::warning
-GPIO access is fundamentally dangerous because invalid options can physically damage or destroy your hardware. Ensure that you fully understand the schematic for your particular device before trying this as we do not offer a warranty. Use at your own risk.
-:::
-
 ---
 
 ## Interfacing PIR Sensor With External Microcontroller
 
-The following are examples of connecting a Raspberry Pi Pico or Arduino Mini Pro to a PIR motion sensor. When motion is detected, a message is sent via serial to the device. The device transmits the message as text over the default channel using the serial module in `TEXTMSG` mode.
+The following examples connect a Raspberry Pi Pico or Arduino Mini Pro to a PIR motion sensor. When motion is detected, the microcontroller sends a message over serial and the device broadcasts it as a text message using `TEXTMSG` mode.
 
 ### T1000-E Configuration
 
@@ -750,23 +708,21 @@ import board
 import busio
 import digitalio
 
-# Setup PIR sensor on GP28
 pir = digitalio.DigitalInOut(board.GP28)
 pir.direction = digitalio.Direction.INPUT
 
-# Setup serial UART — TX=GP0, RX=GP1 (cross-connect to device RX/TX)
 uart = busio.UART(board.GP0, board.GP1, baudrate=38400, timeout=0)
 
 while True:
     if pir.value:
         uart.write(bytes("Motion Detected\n", "ascii"))
-        time.sleep(30)  # debounce — wait 30s before next alert
+        time.sleep(30)
     time.sleep(0.5)
 ```
 
 ### Arduino Mini Pro BOM
 
-- An Arduino Mini Pro with example sketch uploaded
+- An Arduino Pro Mini **3.3V/8MHz** variant (required for T1000-E — 5V variant outputs 5V on TX which will damage the nRF52840 pogo pins)
 - SenseCAP T1000-E (or T-Beam V1.1) running Meshtastic
 - PIR Sensor ([Adafruit Breadboard Model](https://www.adafruit.com/product/4871))
 
@@ -793,12 +749,9 @@ PIR sensor connections (both boards):
 ### Arduino Sketch
 
 ```cpp title="pir_to_mesh.ino"
-// Send a text message over serial when PIR detects motion
-// Baud rate must match Meshtastic serial module config (default 38400)
-
 const int PIR_PIN = 2;
 unsigned long lastTrigger = 0;
-const unsigned long DEBOUNCE_MS = 30000; // 30s between alerts
+const unsigned long DEBOUNCE_MS = 30000;
 
 void setup() {
   Serial.begin(38400);
