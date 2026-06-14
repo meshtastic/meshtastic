@@ -24,6 +24,8 @@ This enables two mesh networks in different physical locations to appear as one 
 
 Go to **Settings → MQTT**:
 
+![MQTT Config](/img/apple/mqttConfig.webp)
+
 | Setting | Description |
 |---------|-------------|
 | MQTT Server | Hostname or IP of your MQTT broker (e.g., `mqtt.meshtastic.org` for the public broker). |

@@ -29,6 +29,14 @@ Long press a connected radio row to start a Live Activity (iOS 16.2+). The Live 
 
 You can pair multiple radios but only one is active at a time. Switch between them by tapping a different device in the Connect view.
 
+## BLE Signal Strength
+
+The app displays the Bluetooth signal strength of nearby devices during scanning:
+
+![BLE Signal Strength](/img/apple/bleSignalStrength.webp)
+
+![BLE signal bars — strong, normal, weak](/img/apple/signalBLE_all.webp)
+
 ## Connection Status Icons
 
 | Icon | Meaning |

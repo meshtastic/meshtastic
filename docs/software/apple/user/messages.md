@@ -10,12 +10,22 @@ Meshtastic uses a channel system for group broadcasts and direct messages for pr
 
 ## Channels
 
+### Message History
+
+Channel conversations load the most recent **50 messages** by default. Scroll to the top and tap **Load More** to fetch the next batch. This keeps the app responsive on channels with thousands of messages.
+
 ### Channel Index
 
 | Symbol | Meaning |
 |--------|---------|
 | **0** (primary circle) | Primary channel — broadcast packets are sent here. Location data is broadcast from the first channel where it is enabled (firmware 2.7+). |
 | **1–7** | Secondary channels — separate messaging groups, each secured by their own key. |
+
+### Channel Configuration
+
+![Channel form](/img/apple/channelForm_primary.webp)
+
+The channel form lets you configure the channel name, encryption key, role, position sharing, and MQTT uplink/downlink settings.
 
 ### Channel Security
 
@@ -53,11 +63,21 @@ Select a node from the drop-down to manage connected or remote devices.
 
 ### Encryption
 
+![Encryption legend](/img/apple/lockLegend.webp)
+
 | Icon | Meaning |
 |------|---------|
 | ![Shared Key](/img/apple/lockOpen.webp) | **Shared Key** — direct messages are using the shared key for the channel. |
 | ![Public Key Encryption](/img/apple/lockClosed.webp) | **Public Key Encryption** — direct messages use the public key infrastructure for encryption. Requires firmware 2.5 or later. |
 | ![PKI Mismatch](/img/apple/keySlash.webp) | **Public Key Mismatch** — the most recent public key for this node does not match the previously recorded key. Verify who you are messaging with by comparing public keys in person or over the phone. |
+
+---
+
+### Tapback Reactions
+
+Long press any message and tap **Tapback** to send an emoji reaction.
+
+![Tapback input](/img/apple/tapbackInput.webp)
 
 ---
 
@@ -68,6 +88,8 @@ Send channel broadcasts and direct messages. Long press any message for actions 
 ---
 
 ## Message Status
+
+![Message status reference](/img/apple/ackErrors.webp)
 
 | Colour | Meaning |
 |--------|---------|
