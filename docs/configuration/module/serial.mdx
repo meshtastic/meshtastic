@@ -232,58 +232,519 @@ GPIO access is fundamentally dangerous because invalid options can physically da
 This module requires attaching a peripheral accessory to your device. It will not work without one.
 :::
 
-## Examples
+## SenseCAP T1000-E Serial Setup
 
-Default is to use RX GPIO 16 and TX GPIO 17.
+The [SenseCAP Card Tracker T1000-E](/docs/hardware/devices/seeed-studio/sensecap/card-tracker) is a credit-card-sized Meshtastic tracker running a Nordic nRF52840. It fully supports the serial module via two connection methods described below.
 
-### Basic Usage
+### Pogo Pin Connection (TEXTMSG, SIMPLE, LOG, LOGTEXT modes)
 
-1. Enable the module by setting `serial.enabled` to `1`.
-2. Set the pins (`serial.rxd` / `serial.txd`) for your preferred RX and TX GPIO pins. On tbeam boards it is recommended to use:
-   - RXD 13
-   - TXD 14
-3. Set `serial.timeout` to the amount of time to wait before we consider your packet as "done".
-4. (Optional) set serial.mode to `TEXTMSG` if you want to send messages to/from the general text message channel. For more specific control, use the `PROTO` mode, e.g. in combination with the [Arduino client library](https://github.com/meshtastic/Meshtastic-arduino/blob/master/examples/SendReceiveClient/SendReceiveClient.ino).
-5. Connect to your device over the serial interface at `38400 8N1`.
+The T1000-E exposes its debug UART (Serial2) on the four pogo pins at the bottom edge of the device. Connect a **USB-to-UART adapter** (FTDI FT232, CP2102, CH340, or similar — 3.3 V logic level) using the following wiring:
 
-   With [tio](https://github.com/tio/tio) &ndash; `tio -e -b 38400 -f none /dev/myserialport`
+| T1000-E Pogo Pin | USB-UART Adapter |
+| :--------------: | :--------------: |
+| GND              | GND              |
+| TX (P0.16)       | RX               |
+| RX (P0.17)       | TX               |
+| 3V3              | *(do not connect — device is self-powered)* |
 
-6. Send a packet up to 237 bytes in length. This will get broadcasted over the default channel.
-7. (Optional) Set `serial.echo` to `1` and any message you send out will be echoed back to your device.
+:::tip
+Always cross-connect TX → RX and RX → TX between the two devices. Use a 3.3 V logic-level adapter; do **not** use a 5 V adapter, as it will damage the nRF52840.
+:::
 
-### Interfacing PIR Sensor With External Microcontroller
+Once wired, configure the module using the T1000-E's USB CDC port (the magnetic charging cable) and set the GPIO pins to the pogo-pin UART:
 
-The following are examples of using either a Raspberry Pi Pico or Arduino Mini Pro connected to a PIR sensor to detect motion. When motion is detected, a message is sent via serial to the T-Beam. The T-Beam transmits the message as text over the default channel by utilizing the serial module in TXTMSG mode.
+```shell title="T1000-E TEXTMSG mode — one-shot config"
+meshtastic --port <USB_PORT> \
+  --set serial.enabled true \
+  --set serial.txd 16 \
+  --set serial.rxd 17 \
+  --set serial.mode TEXTMSG \
+  --set serial.baud BAUD_DEFAULT
+```
 
-#### Meshtastic Software Configuration
+After the device reboots, open the **FTDI adapter port** at `38400 8N1` to send and receive messages.
 
-- Serial module enabled, mode: TEXTMSG
-- GPIO Pins (For T-Beam) RX 13, TX 14
-- 38400 Baud
+### USB-Direct Connection (NMEA and CalTopo modes only)
 
-#### Raspberry Pi Pico BOM
+For NMEA and CalTopo output modes, the T1000-E can stream data over its built-in USB CDC port without any extra hardware. Set `override_console_serial_port` to redirect output to the console USB port:
+
+```shell title="T1000-E NMEA mode via USB"
+meshtastic --port <USB_PORT> \
+  --set serial.enabled true \
+  --set serial.override_console_serial_port true \
+  --set serial.mode NMEA
+```
+
+Then open the **same USB port** at `38400 8N1` to receive NMEA 0183 sentences.
+
+:::caution
+`override_console_serial_port` is **only** valid with `NMEA` and `CALTOPO` modes. Using it with `SIMPLE`, `TEXTMSG`, `PROTO`, `LOG`, or `LOGTEXT` will produce a configuration error and the serial module will not start.
+:::
+
+## Finding Your Serial Port
+
+Identify the correct port for your T1000-E before running any commands.
+
+<Tabs
+  groupId="os"
+  defaultValue="macos"
+  values={[
+    { label: "macOS", value: "macos" },
+    { label: "Windows", value: "windows" },
+    { label: "Linux", value: "linux" },
+  ]}>
+<TabItem value="macos">
+
+**USB CDC port (magnetic charging cable):**
+
+```shell
+ls /dev/cu.usbmodem*
+# Example output: /dev/cu.usbmodem0000001
+```
+
+**FTDI / CP2102 pogo-pin adapter:**
+
+```shell
+ls /dev/cu.usbserial-* /dev/cu.SLAB_USBtoUART 2>/dev/null
+# Example output: /dev/cu.usbserial-A10KMFPL
+```
+
+Use the full path (e.g., `/dev/cu.usbmodem0000001`) as `<USB_PORT>` or `<FTDI_PORT>` in all commands below.
+
+</TabItem>
+<TabItem value="windows">
+
+Open **Device Manager → Ports (COM & LPT)**.
+
+- The T1000-E USB CDC port typically appears as **USB Serial Device (COMx)**.
+- An FTDI or CP2102 pogo-pin adapter appears as **USB Serial Port (COMx)** after its driver is installed.
+
+You can also list all ports with Python:
+
+```shell
+python -m serial.tools.list_ports --verbose
+```
+
+Use the port label (e.g., `COM3`) as `<USB_PORT>` or `<FTDI_PORT>` in all commands below.
+
+:::tip
+Install the [CP210x driver](https://www.silabs.com/developers/usb-to-uart-bridge-vcp-drivers) for Silicon Labs adapters or the [FTDI VCP driver](https://ftdichip.com/drivers/vcp-drivers/) for FTDI adapters if the port does not appear.
+:::
+
+</TabItem>
+<TabItem value="linux">
+
+**USB CDC port:**
+
+```shell
+ls /dev/ttyACM*
+# Example output: /dev/ttyACM0
+```
+
+**FTDI / CP2102 pogo-pin adapter:**
+
+```shell
+ls /dev/ttyUSB*
+# Example output: /dev/ttyUSB0
+```
+
+If you get a **Permission denied** error, add your user to the `dialout` group and log out/in:
+
+```shell
+sudo usermod -a -G dialout $USER
+```
+
+</TabItem>
+</Tabs>
+
+## Mode Examples
+
+### TEXTMSG — Send and Receive Text Messages
+
+`TEXTMSG` mode bridges the serial port to the Meshtastic text message channel. Any string sent to the serial port is broadcast as a text message; any received text message is printed as `<ShortName>: <message>`.
+
+**Step 1 — Configure the T1000-E** (replace `<USB_PORT>` with your device port):
+
+```shell title="Configure TEXTMSG mode"
+meshtastic --port <USB_PORT> \
+  --set serial.enabled true \
+  --set serial.txd 16 \
+  --set serial.rxd 17 \
+  --set serial.mode TEXTMSG \
+  --set serial.baud BAUD_DEFAULT
+```
+
+**Step 2 — Open the pogo-pin UART** (`<FTDI_PORT>`) with a terminal at `38400 8N1`:
+
+<Tabs
+  groupId="os"
+  defaultValue="macos"
+  values={[
+    { label: "macOS", value: "macos" },
+    { label: "Windows", value: "windows" },
+    { label: "Linux", value: "linux" },
+  ]}>
+<TabItem value="macos">
+
+```shell title="tio (recommended)"
+brew install tio
+tio -b 38400 -e <FTDI_PORT>
+```
+
+```shell title="screen (built-in)"
+screen <FTDI_PORT> 38400
+# Exit with Ctrl-A, then k, then y
+```
+
+</TabItem>
+<TabItem value="windows">
+
+Use **PuTTY** → Connection type: **Serial** → Speed: `38400` → Serial line: `COM3` (your port) → Open.
+
+Or with Python pyserial:
+
+```shell
+pip install pyserial
+python -m serial.tools.miniterm <FTDI_PORT> 38400
+```
+
+</TabItem>
+<TabItem value="linux">
+
+```shell title="tio (recommended)"
+sudo apt install tio   # or: sudo dnf install tio
+tio -b 38400 -e <FTDI_PORT>
+```
+
+```shell title="minicom"
+sudo apt install minicom
+minicom -b 38400 -D <FTDI_PORT>
+# Exit with Ctrl-A, then x
+```
+
+</TabItem>
+</Tabs>
+
+**Step 3 — Type a message and press Enter.** It is broadcast over the mesh. Incoming messages appear as:
+
+```
+CALLSIGN: Hello from the mesh!
+```
+
+:::tip
+Enable echo to confirm your own transmissions: `meshtastic --port <USB_PORT> --set serial.echo true`
+:::
+
+---
+
+### SIMPLE — Transparent UART Tunnel
+
+`SIMPLE` mode (also the default `DEFAULT`) is a raw binary pass-through. Bytes written to the serial port are sent as a mesh packet on a channel named **serial**; received packets on that channel are written as raw bytes back to the serial port.
+
+:::note
+A channel named `serial` must exist on your device. Create one with:
+```shell
+meshtastic --port <USB_PORT> --ch-add serial
+```
+:::
+
+```shell title="Configure SIMPLE mode"
+meshtastic --port <USB_PORT> \
+  --set serial.enabled true \
+  --set serial.txd 16 \
+  --set serial.rxd 17 \
+  --set serial.mode SIMPLE \
+  --set serial.baud BAUD_DEFAULT \
+  --set serial.timeout 250
+```
+
+Connect at `38400 8N1` and send up to **237 bytes** per packet. The module treats the end of a packet as a `serial.timeout` millisecond gap in the byte stream (default 250 ms).
+
+---
+
+### PROTO — Protobuf Client API
+
+`PROTO` mode exposes the full [Meshtastic Protobuf Client API](/docs/development/device/client-api) on the serial port. This is the same protocol used by the phone apps and Python CLI. It produces no human-readable output — use the [Python CLI](https://github.com/meshtastic/python) with `--listen` to observe the stream:
+
+```shell title="Configure PROTO mode"
+meshtastic --port <USB_PORT> \
+  --set serial.enabled true \
+  --set serial.txd 16 \
+  --set serial.rxd 17 \
+  --set serial.mode PROTO
+```
+
+```shell title="Listen to protobuf stream on FTDI port"
+meshtastic --port <FTDI_PORT> --listen
+```
+
+For embedded integration, use the [Meshtastic Arduino client library](https://github.com/meshtastic/Meshtastic-arduino).
+
+---
+
+### NMEA — GPS Position Stream (USB or Pogo Pins)
+
+`NMEA` mode outputs NMEA 0183 sentences on the serial port every 2 seconds: a `$GPGGA` sentence for the device's own GPS position, plus `$GPWPL` (Waypoint Location) sentences for each node in the mesh that has a valid position.
+
+**Option A — USB direct (recommended for T1000-E)**:
+
+```shell title="Configure NMEA mode via USB"
+meshtastic --port <USB_PORT> \
+  --set serial.enabled true \
+  --set serial.override_console_serial_port true \
+  --set serial.mode NMEA \
+  --set serial.baud BAUD_DEFAULT
+```
+
+After the device reboots, open `<USB_PORT>` at `38400 8N1` to read the stream.
+
+**Option B — Via pogo pins**:
+
+```shell title="Configure NMEA mode via pogo pins"
+meshtastic --port <USB_PORT> \
+  --set serial.enabled true \
+  --set serial.txd 16 \
+  --set serial.rxd 17 \
+  --set serial.mode NMEA \
+  --set serial.baud BAUD_DEFAULT
+```
+
+**Reading NMEA output:**
+
+<Tabs
+  groupId="os"
+  defaultValue="macos"
+  values={[
+    { label: "macOS", value: "macos" },
+    { label: "Windows", value: "windows" },
+    { label: "Linux", value: "linux" },
+  ]}>
+<TabItem value="macos">
+
+```shell
+# Read raw NMEA sentences
+tio -b 38400 <PORT>
+
+# Or pipe into gpsd / GPSD client
+cat <(tio -b 38400 <PORT>) | gpspipe -r
+```
+
+Compatible with [GPSBabel](https://www.gpsbabel.org), [OpenCPN](https://opencpn.org), and any app that accepts a serial NMEA feed.
+
+</TabItem>
+<TabItem value="windows">
+
+Open PuTTY at `38400 8N1` on the port to view raw sentences. To feed into navigation software, use a virtual COM port splitter such as [com0com](https://com0com.sourceforge.net) or configure the software to read directly from the COM port.
+
+Example output you will see:
+```
+$GPGGA,123519.00,4807.038,N,01131.000,E,1,04,0.9,545.4,M,46.9,M,,*47
+$GPWPL,4807.038,N,01131.000,E,NODENAME*XX
+```
+
+</TabItem>
+<TabItem value="linux">
+
+```shell
+# Read raw sentences
+cat <PORT>
+
+# Feed into gpsd
+sudo gpsd -N -n <PORT>
+cgps -s   # view in terminal
+```
+
+</TabItem>
+</Tabs>
+
+---
+
+### CALTOPO — Search and Rescue Mapping
+
+`CALTOPO` mode sends NMEA `$GPWPL` Waypoint Location sentences every 10 seconds for **all** nodes in the mesh that have a valid position. This is designed for [CalTopo / SARTopo](/docs/software/integrations/caltopo.mdx) to display mesh nodes on a rescue map in real time.
+
+```shell title="Configure CalTopo mode via USB"
+meshtastic --port <USB_PORT> \
+  --set serial.enabled true \
+  --set serial.override_console_serial_port true \
+  --set serial.mode CALTOPO \
+  --set serial.baud BAUD_DEFAULT
+```
+
+Open `<USB_PORT>` in CalTopo's GPS input at `38400 8N1`. Each node with a position will appear as a waypoint, refreshed every 10 seconds.
+
+---
+
+### LOG — Mesh Packet Activity Logger
+
+`LOG` mode outputs a formatted log line for every packet the node sends or receives — text messages, telemetry, position, and more. This is ideal for **logging mesh activity to a serial data logger** such as a [SparkFun OpenLog](https://www.sparkfun.com/sparkfun-openlog.html) connected to the T1000-E pogo pins.
+
+```shell title="Configure LOG mode"
+meshtastic --port <USB_PORT> \
+  --set serial.enabled true \
+  --set serial.txd 16 \
+  --set serial.rxd 17 \
+  --set serial.mode LOG \
+  --set serial.baud BAUD_DEFAULT
+```
+
+Open the **FTDI port** at `38400 8N1` to watch the stream. Example output:
+
+```
+[TX] TEXT  ch=0  from=!deadbeef  to=!ffffffff  "Hello mesh!"
+[RX] POSN  ch=0  from=!cafebabe  to=!ffffffff  lat=47.6062 lon=-122.3321
+[RX] TELE  ch=0  from=!cafebabe  bat=87%  temp=22.3C
+```
+
+---
+
+### LOGTEXT — Text Message Logger
+
+`LOGTEXT` mode logs only text messages (channel messages and direct messages) sent or received by the node. Useful when you only care about human-readable chat traffic:
+
+```shell title="Configure LOGTEXT mode"
+meshtastic --port <USB_PORT> \
+  --set serial.enabled true \
+  --set serial.txd 16 \
+  --set serial.rxd 17 \
+  --set serial.mode LOGTEXT \
+  --set serial.baud BAUD_DEFAULT
+```
+
+Output format mirrors TEXTMSG receive output: `<ShortName>: <message>`.
+
+---
+
+## Python Scripting Examples
+
+The [Meshtastic Python package](https://github.com/meshtastic/python) can configure and interact with the serial module programmatically. Install it first:
+
+```shell
+pip install meshtastic
+```
+
+### Configure Serial Module via Python
+
+```python title="configure_serial.py"
+import meshtastic
+import meshtastic.serial_interface
+
+# Connect to T1000-E via USB CDC port
+iface = meshtastic.serial_interface.SerialInterface(devPath="<USB_PORT>")
+
+# Configure serial module for TEXTMSG mode via pogo pins
+iface.localNode.moduleConfig.serial.enabled = True
+iface.localNode.moduleConfig.serial.txd = 16       # P0.16 pogo-pin TX
+iface.localNode.moduleConfig.serial.rxd = 17       # P0.17 pogo-pin RX
+iface.localNode.moduleConfig.serial.mode = 3       # TEXTMSG = 3
+iface.localNode.moduleConfig.serial.baud = 0       # BAUD_DEFAULT = 38400
+
+iface.localNode.writeConfig("serial")
+print("Serial module configured. Device will reboot.")
+iface.close()
+```
+
+### Send a Text Message via Serial (TEXTMSG mode)
+
+Once the module is configured and the FTDI pogo-pin adapter is connected:
+
+```python title="send_via_serial.py"
+import serial
+import time
+
+# Open the FTDI pogo-pin adapter port (NOT the USB CDC port)
+with serial.Serial("<FTDI_PORT>", baudrate=38400, timeout=1) as ser:
+    message = "Hello from serial module!\n"
+    ser.write(message.encode("ascii"))
+    print(f"Sent: {message.strip()}")
+    time.sleep(0.5)
+```
+
+### Receive Text Messages via Serial (TEXTMSG mode)
+
+```python title="receive_via_serial.py"
+import serial
+
+# Open the FTDI pogo-pin adapter port
+with serial.Serial("<FTDI_PORT>", baudrate=38400, timeout=5) as ser:
+    print("Listening for mesh messages... (Ctrl-C to stop)")
+    while True:
+        line = ser.readline().decode("ascii", errors="replace").strip()
+        if line:
+            print(f"Received: {line}")
+```
+
+### Read NMEA Stream and Parse Positions
+
+```python title="read_nmea.py"
+import serial
+
+# For USB-direct NMEA mode, open the USB CDC port
+# For pogo-pin NMEA mode, open the FTDI port
+with serial.Serial("<PORT>", baudrate=38400, timeout=2) as ser:
+    print("Reading NMEA sentences... (Ctrl-C to stop)")
+    while True:
+        line = ser.readline().decode("ascii", errors="replace").strip()
+        if line.startswith("$GPGGA") or line.startswith("$GPWPL"):
+            print(line)
+```
+
+---
+
+## Device GPIO Pin Reference
+
+| Device                    | Architecture | Serial Module TXD | Serial Module RXD | Notes                          |
+| :------------------------ | :----------: | :---------------: | :---------------: | :----------------------------- |
+| **SenseCAP T1000-E**      | nRF52840     | **16** (P0.16)    | **17** (P0.17)    | Pogo-pin debug UART            |
+| T-Beam v1.1               | ESP32        | 15                | 35                | GPIO header                    |
+| T-Beam v1.1 (recommended) | ESP32        | 14                | 13                | Alternative GPIO header        |
+| RAK4631 (RAK19007)        | nRF52840     | 16 (TXD1)         | 15 (RXD1)         | Set GPS Mode to `Not_Present`  |
+| RAK4631 (RAK19003 v2)     | nRF52840     | 20 (TXD0)         | 19 (RXD0)         |                                |
+
+:::warning
+GPIO access is fundamentally dangerous because invalid options can physically damage or destroy your hardware. Ensure that you fully understand the schematic for your particular device before trying this as we do not offer a warranty. Use at your own risk.
+:::
+
+---
+
+## Interfacing PIR Sensor With External Microcontroller
+
+The following are examples of connecting a Raspberry Pi Pico or Arduino Mini Pro to a PIR motion sensor. When motion is detected, a message is sent via serial to the device. The device transmits the message as text over the default channel using the serial module in `TEXTMSG` mode.
+
+### T1000-E Configuration
+
+- Serial module enabled, mode: `TEXTMSG`
+- GPIO Pins: TXD 16, RXD 17 (pogo-pin UART)
+- Baud: 38400
+
+### Raspberry Pi Pico BOM
 
 - A Raspberry Pi Pico running [CircuitPython](https://learn.adafruit.com/getting-started-with-raspberry-pi-pico-circuitpython)
-- T-Beam V1.1 running Meshtastic
+- SenseCAP T1000-E (or T-Beam V1.1) running Meshtastic
 - PIR Sensor ([Adafruit Breadboard Model](https://www.adafruit.com/product/4871))
 
-#### Raspberry Pi Pico Wiring
+### Raspberry Pi Pico Wiring
 
 ![image](/img/modules/Serial/pico-pir-wiring.webp)
 
-- TX pin 14 on the T-Beam to RX pin 2 on the Pico
-- RX pin 13 on the T-Beam to TX pin 1 on the Pico
-- PIR sensor Vcc and GND pins to Vcc/GND on breadboard respectively
-- PIR sensor trigger line to Pico GPIO28 (Pico pin 34)
-- GND pin on T-Beam to GND pin 38 on the Pico
-- GND pin 38 on the Pico to breadboard ground rail
-- 3V3 pin 36 on the Pico to the breadboard positive voltage rail
-- Optional, to power the Pico off of the T-Beam instead of USB:
-  - Connect 5V pin on T-Beam to Vbus pin 40 on the Pico
+**For T1000-E (pogo-pin UART):**
+- TX pogo pin (P0.16) → RX (GP1) on the Pico
+- RX pogo pin (P0.17) → TX (GP0) on the Pico
+- GND pogo pin → GND pin 38 on the Pico
 
-#### Circuit Python Code
+**For T-Beam V1.1 (GPIO header):**
+- TX pin 14 on the T-Beam → RX pin 2 on the Pico
+- RX pin 13 on the T-Beam → TX pin 1 on the Pico
+- GND pin on T-Beam → GND pin 38 on the Pico
 
-```python
+PIR sensor connections (both boards):
+- PIR Vcc → Pico 3V3 (pin 36)
+- PIR GND → Pico GND (pin 38)
+- PIR trigger → Pico GPIO28 (pin 34)
+
+### CircuitPython Code
+
+```python title="pir_to_mesh.py"
 import time
 import board
 import busio
@@ -293,62 +754,65 @@ import digitalio
 pir = digitalio.DigitalInOut(board.GP28)
 pir.direction = digitalio.Direction.INPUT
 
-# Setup serial UART connection TX/RX on (GP0/GP1)
+# Setup serial UART — TX=GP0, RX=GP1 (cross-connect to device RX/TX)
 uart = busio.UART(board.GP0, board.GP1, baudrate=38400, timeout=0)
 
 while True:
-    if(pir.value == True):
-        uart.write(bytes("Motion Detected", "ascii"))
-        time.sleep(30)
+    if pir.value:
+        uart.write(bytes("Motion Detected\n", "ascii"))
+        time.sleep(30)  # debounce — wait 30s before next alert
     time.sleep(0.5)
 ```
 
-#### Arduino Mini Pro BOM
+### Arduino Mini Pro BOM
 
-- An Arduino Mini Pro with example sketch from below uploaded to it.
-- T-Beam V1.1 running Meshtastic
+- An Arduino Mini Pro with example sketch uploaded
+- SenseCAP T1000-E (or T-Beam V1.1) running Meshtastic
 - PIR Sensor ([Adafruit Breadboard Model](https://www.adafruit.com/product/4871))
 
-#### Arduino Mini Pro Wiring
+### Arduino Mini Pro Wiring
 
 ![image](/img/modules/Serial/arduino-mini-pro-pir-wiring.webp)
 
-- T-BEAM RX PIN 13 to TX PIN on the ARDUINO MINI
-- T-BEAM TX PIN 14 to RX PINon the ARDUINO MINI
-- T-BEAM PIN 3.3V to 3.3V PIN on the ARDUINO MINI
-- T-BEAM PIN GND to GND PIN on the ARDUINO MINI
-- ARDUINO MINI PIN 2 to OUT PIN on the PIR SENSOR
-- ARDUINO MINI PIN 3.3V to 3.3V on the PIR SENSOR
-- ARDUINO MINI PIN GND to GND PIN on the PIR SENSOR
+**For T1000-E (pogo-pin UART):**
+- TX pogo pin (P0.16) → RX pin on the Arduino Mini Pro
+- RX pogo pin (P0.17) → TX pin on the Arduino Mini Pro
+- GND pogo pin → GND on the Arduino Mini Pro
 
-#### Arduino Mini Pro Code
+**For T-Beam V1.1 (GPIO header):**
+- T-Beam RX (pin 13) → TX on the Arduino Mini Pro
+- T-Beam TX (pin 14) → RX on the Arduino Mini Pro
+- T-Beam 3.3V → 3.3V on the Arduino Mini Pro
+- T-Beam GND → GND on the Arduino Mini Pro
 
-```cpp
-int LED = 13; // the pin to which the LED is connected
-int PIR = 2;  // the pin to which the sensor is connected
-int previousState = LOW; // previous state of the sensor
+PIR sensor connections (both boards):
+- Arduino Mini Pro pin 2 → PIR OUT
+- PIR Vcc → 3.3V rail
+- PIR GND → GND rail
 
+### Arduino Sketch
+
+```cpp title="pir_to_mesh.ino"
+// Send a text message over serial when PIR detects motion
+// Baud rate must match Meshtastic serial module config (default 38400)
+
+const int PIR_PIN = 2;
+unsigned long lastTrigger = 0;
+const unsigned long DEBOUNCE_MS = 30000; // 30s between alerts
 
 void setup() {
-pinMode(LED, OUTPUT); // initialize the LED as an output
-pinMode(PIR, INPUT);  // initialize the sensor as an input
-Serial.begin(9600);   // initialize serial communication
+  Serial.begin(38400);
+  pinMode(PIR_PIN, INPUT);
 }
 
-void loop(){
-   int currentState = digitalRead(PIR); // read the current state of the sensor
-  if (currentState != previousState) { // check if the state has changed
-    if (currentState == HIGH) { // check if there is motion
-      digitalWrite(LED, HIGH);  // turn the LED on
+void loop() {
+  if (digitalRead(PIR_PIN) == HIGH) {
+    unsigned long now = millis();
+    if (now - lastTrigger > DEBOUNCE_MS) {
+      lastTrigger = now;
       Serial.println("Motion Detected");
-}
-    else {
-      digitalWrite(LED, LOW);  // turn the LED off
-      Serial.println("No Motion");
     }
-previousState = currentState; // update the previous state
   }
-  delay(100); // small delay to avoid false sensor readings
-
+  delay(500);
 }
 ```
