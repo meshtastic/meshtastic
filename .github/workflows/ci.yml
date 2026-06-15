@@ -30,15 +30,13 @@ jobs:
 
       - name: Run oxlint
         if: steps.js-filter.outputs.js == 'true'
-        uses: oxc-project/oxlint-action@v3.0.0
+        uses: oxc-project/oxlint-action@v3.1.0
         with:
           config: .oxlintrc.json
           deny-warnings: true
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v6
-        with:
-          version: 10
 
       - name: Setup Node.js
         uses: actions/setup-node@v6
@@ -64,8 +62,6 @@ jobs:
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v6
-        with:
-          version: 10
 
       - name: Setup Node.js
         uses: actions/setup-node@v6
@@ -96,8 +92,6 @@ jobs:
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v6
-        with:
-          version: 10
 
       - name: Setup Node.js
         uses: actions/setup-node@v6

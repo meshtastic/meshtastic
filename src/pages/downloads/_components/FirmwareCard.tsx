@@ -1,3 +1,4 @@
+import Translate, { translate } from "@docusaurus/Translate";
 import type { DeviceFirmwareResource } from "../../../utils/apiTypes.ts";
 
 export interface releaseCardProps {
@@ -27,7 +28,9 @@ export const FirmwareCard = ({
       <div className="card__footer mt-auto">
         <div className="margin-top--sm">
           <details>
-            <summary>Older Versions</summary>
+            <summary>
+              <Translate id="downloads.firmware.olderVersions">Older Versions</Translate>
+            </summary>
             {release.slice(1, 6).map((release) => {
               return (
                 <div key={release.id}>
@@ -45,7 +48,13 @@ export const FirmwareCard = ({
               href={release[0].page_url}
               className="button button--secondary button--block margin-top--sm"
             >
-              Download {variant}
+              {translate(
+                {
+                  id: "downloads.firmware.downloadVariant",
+                  message: "Download {variant}",
+                },
+                { variant },
+              )}
             </a>
           </>
         ) : (
@@ -54,7 +63,7 @@ export const FirmwareCard = ({
             disabled={true}
             className="button button--secondary button--block"
           >
-            Loading...
+            <Translate id="downloads.firmware.loading">Loading...</Translate>
           </button>
         )}
       </div>

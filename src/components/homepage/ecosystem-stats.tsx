@@ -1,5 +1,6 @@
 import stats from "@/data/ecosystem-stats.json";
 import { useNumberAnimation } from "@/hooks/use-number-animation";
+import { translate } from "@docusaurus/Translate";
 import { GlobeIcon, SmartphoneIcon, UserIcon, UsersIcon } from "lucide-react";
 import type React from "react";
 
@@ -39,26 +40,38 @@ export function EcosystemStats() {
       <StatItem
         icon={<SmartphoneIcon className="size-6" />}
         value={stats.communityDevices}
-        label="Community Supported Devices"
+        label={translate({
+          id: "homepage.stats.communityDevices",
+          message: "Community Supported Devices",
+        })}
         suffix="+"
         countUp={true}
       />
       <StatItem
         icon={<UserIcon className="size-6" />}
         value={stats.contributors}
-        label="Code Contributors Worldwide"
+        label={translate({
+          id: "homepage.stats.contributors",
+          message: "Code Contributors Worldwide",
+        })}
         suffix="+"
         countUp={true}
       />
       <StatItem
         icon={<GlobeIcon className="size-6" />}
         value={stats.regions}
-        label="LoRa Regions"
+        label={translate({
+          id: "homepage.stats.regions",
+          message: "LoRa Regions",
+        })}
       />
       <StatItem
         icon={<UsersIcon className="size-6" />}
         value={stats.languages}
-        label="Languages Available"
+        label={translate({
+          id: "homepage.stats.languages",
+          message: "Languages Available",
+        })}
       />
     </div>
   );
