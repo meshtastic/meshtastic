@@ -232,8 +232,8 @@ function rewriteInternalDocLinks(content, dRelPath, knownDestMdPaths) {
    */
   function fixLink(target) {
     if (!target) return target;
-    // Leave absolute URLs, absolute paths, fragment-only, and mailto links.
-    if (/^(https?:|mailto:|\/|#)/.test(target)) return target;
+    // Leave absolute URLs (any scheme), absolute paths, and fragment-only links.
+    if (/^([a-zA-Z][a-zA-Z0-9+\-.]*:|\/|#)/.test(target)) return target;
 
     // ── Landing page rules ────────────────────────────────────────────────
     if (isLandingPage) {
