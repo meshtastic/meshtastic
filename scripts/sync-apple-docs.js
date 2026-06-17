@@ -150,6 +150,10 @@ function sanitizeForDocusaurus(content) {
     },
   );
 
+  // Strip any remaining standalone Jekyll class lines (e.g. `{: .fs-6 }`)
+  // that weren't consumed by the admonition conversion above.
+  content = content.replace(/^\{:[^}\n]+\}\n?/gm, "");
+
   // Self-close void HTML elements (img, source) so MDX doesn't complain about
   // mismatched tags. e.g. <img src="…"> → <img src="…" />
   // Split on fenced and inline code spans to leave their content untouched.

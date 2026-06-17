@@ -6,7 +6,6 @@ sidebar_position: 9
 
 # Units, Measurement & Locale
 
-{: .fs-6 }
 The Meshtastic app automatically displays temperatures, distances, speeds, and times in the units your device is configured to use — no settings to change inside the app.
 
 ---
