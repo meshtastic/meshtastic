@@ -382,10 +382,14 @@ async function main() {
 
   const sourceFiles = collectFiles(SRC_DOCS_DIR);
 
+  // Root-level source files that are NOT synced — the _category_.yml
+  // generated-index replaces the need for a hand-written home page.
+  const SKIP_SOURCE_ROOT_FILES = new Set(["index.md"]);
+
   // Split source files by type.
-  const sourceMdFiles = sourceFiles.filter((f) =>
-    MD_EXTENSIONS.has(path.extname(f).toLowerCase()),
-  );
+  const sourceMdFiles = sourceFiles
+    .filter((f) => MD_EXTENSIONS.has(path.extname(f).toLowerCase()))
+    .filter((f) => !(path.dirname(f) === "." && SKIP_SOURCE_ROOT_FILES.has(path.basename(f))));
   const sourceImageFiles = sourceFiles.filter((f) =>
     IMAGE_EXTENSIONS.has(path.extname(f).toLowerCase()),
   );
