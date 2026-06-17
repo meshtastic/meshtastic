@@ -25,7 +25,7 @@ The app ships a built-in Help & Documentation browser, a Jekyll site on GitHub P
 | Meshtastic.org | [meshtastic.org/docs/category/apple-apps](https://meshtastic.org/docs/category/apple-apps/) |
 | GitHub Pages | [meshtastic.github.io/Meshtastic-Apple](https://meshtastic.github.io/Meshtastic-Apple/) |
 | In-app | Settings → Help & Documentation |
-| Deep link | [`meshtastic:///settings/helpDocs`](../meshtastic:///settings/helpDocs) |
+| Deep link | [`meshtastic:///settings/helpDocs`](meshtastic:///settings/helpDocs) |
 
 Source markdown lives under `docs/user/` and `docs/developer/`. To rebuild the bundled HTML after editing any markdown:
 
