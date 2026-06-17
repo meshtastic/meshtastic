@@ -234,6 +234,10 @@ function rewriteInternalDocLinks(content, dRelPath, knownDestMdPaths) {
     if (!target) return target;
     // Leave absolute URLs (any scheme), absolute paths, and fragment-only links.
     if (/^([a-zA-Z][a-zA-Z0-9+\-.]*:|\/|#)/.test(target)) return target;
+    // Strip a spurious relative prefix from a custom URL scheme.
+    // e.g. "../meshtastic:///messages" → "meshtastic:///messages"
+    const stripped = target.replace(/^(\.\.\/|\.\/)+/, "");
+    if (/^[a-zA-Z][a-zA-Z0-9+\-.]*:/.test(stripped)) return stripped;
 
     // ── Landing page rules ────────────────────────────────────────────────
     if (isLandingPage) {
