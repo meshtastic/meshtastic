@@ -92,7 +92,7 @@ The `TAK Routes` folder is created the first time a route arrives. If you don't 
 
 You don't need to configure anything: the app automatically picks the best TAK wire format your radio supports. Firmware 2.8.0+ uses the new V2 format with zstd-dictionary compression for richer message types and shorter LoRa transmissions. Older firmware keeps using the legacy V1 format, which carries PLI and GeoChat between any two nodes plus a richer Apple-to-Apple fallback for shapes, markers, and routes.
 
-Developers and curious users can read the full protocol detail in [TAK Protocol](../developer/tak-protocol.html.md).
+Developers and curious users can read the full protocol detail in [TAK Protocol](../developer/tak-protocol.md).
 
 ## Troubleshooting
 

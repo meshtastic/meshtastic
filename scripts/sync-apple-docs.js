@@ -239,6 +239,11 @@ function rewriteInternalDocLinks(content, dRelPath, knownDestMdPaths) {
     const stripped = target.replace(/^(\.\.\/|\.\/)+/, "");
     if (/^[a-zA-Z][a-zA-Z0-9+\-.]*:/.test(stripped)) return stripped;
 
+    // Normalize Jekyll .html extension links → .md.
+    // Apple source links to sibling pages as foo.html (Jekyll outputs .html from .md);
+    // Docusaurus needs .md (or no extension) to resolve them correctly.
+    target = target.replace(/\.html(#|$)/, ".md$1");
+
     // ── Landing page rules ────────────────────────────────────────────────
     if (isLandingPage) {
       // Strip same-subdir prefix: "user/foo" → "foo", "developer/foo" → "foo"
