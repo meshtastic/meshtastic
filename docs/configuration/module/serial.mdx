@@ -458,6 +458,10 @@ meshtastic --port <USB_PORT> \
 
 After the device reboots, open `<USB_PORT>` at `38400 8N1` to read the stream.
 
+:::caution[macOS — USB re-enumeration]
+On macOS with the T1000-E, after the device reboots into NMEA override mode the USB CDC port (`/dev/cu.usbmodem*`) may drop and not automatically re-appear. If the port disappears, **unplug and replug the magnetic charging cable** and the port will re-enumerate. This is a known nRF52840 USB CDC behavior.
+:::
+
 **Option B — Via pogo pins**:
 
 ```shell title="Configure NMEA mode via pogo pins"
@@ -528,6 +532,10 @@ meshtastic --port <USB_PORT> \
   --set serial.mode CALTOPO \
   --set serial.baud BAUD_DEFAULT
 ```
+
+:::caution[macOS — USB re-enumeration]
+After applying this config the T1000-E reboots. On macOS the port may disappear — **unplug and replug the magnetic charging cable** to bring it back.
+:::
 
 Open `<USB_PORT>` in CalTopo's GPS input at `38400 8N1`. Each node with a position appears as a waypoint, refreshed every 10 seconds.
 
