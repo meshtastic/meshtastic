@@ -44,13 +44,12 @@ Once connected, the app shows nearby nodes in the **Nodes** tab. Tap any node to
 
 Send your first message by tapping the **Messages** tab and selecting the primary channel.
 
+> **Tip — Quick navigation**
+> Tap the currently active tab icon to jump back to the top-level view from anywhere in that tab.
+
 ## Step 5: Check Your Settings
 
 Visit **Settings → LoRa** to verify your region code matches your location. Using the wrong region is illegal and will prevent communication with other nodes in your area.
-
-## About Meshtastic
-
-![About Meshtastic](/img/apple/aboutMeshtastic.webp)
 
 ## Next Steps
 

@@ -29,13 +29,13 @@ Long press a connected radio row to start a Live Activity (iOS 16.2+). The Live 
 
 You can pair multiple radios but only one is active at a time. Switch between them by tapping a different device in the Connect view.
 
+When you switch radios, the app restores the last saved local database for that radio if one exists, then reconnects and resumes syncing with the newly active device. After the new radio finishes its initial config handshake, the app first reapplies the bundled Meshtastic hardware catalog that ships with the app, then refreshes the same catalog from the Meshtastic API in the background so hardware names, images, and firmware-target metadata stay current.
+
 ## BLE Signal Strength
 
 The app displays the Bluetooth signal strength of nearby devices during scanning:
 
 ![BLE Signal Strength](/img/apple/bleSignalStrength.webp)
-
-![BLE signal bars — strong, normal, weak](/img/apple/signalBLE_all.webp)
 
 ## Connection Status Icons
 
@@ -52,6 +52,7 @@ The app displays the Bluetooth signal strength of nearby devices during scanning
 - Ensure Bluetooth is enabled in iOS Settings → Bluetooth.
 - Move within 10 metres of the radio.
 - Restart the radio.
+- The app continuously listens for BLE advertisements — nearby radios should appear within a few seconds. If a device disappears from the list, it will reappear automatically when next heard.
 
 **Connection drops repeatedly**
 - Check battery level on the radio.

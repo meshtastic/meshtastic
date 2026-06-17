@@ -23,10 +23,7 @@ To understand the meter, you need to understand the two measurements the LoRa ra
 * **RSSI (Received Signal Strength Indicator):** This is the **loudness** of the raw power hitting your antenna.
 * **SNR (Signal-to-Noise Ratio):** This is the **clarity** of the signal compared to the background static.
 
-> **Tip — The Analogy:** Imagine you are trying to hear a friend talking to you.
-> * **RSSI** is how loud their voice is.
-> * **The Noise Floor** is the background noise in the room (air conditioning, other people talking, traffic).
-> * **SNR** is how easily you can distinguish your friend's voice from the background noise.
+Think of it like hearing a friend talk: **RSSI** is how loud their voice is, **the noise floor** is the background noise in the room, and **SNR** is how easily you can distinguish their voice from that noise.
 
 If your friend shouts at you at a deafening rock concert, the signal is incredibly loud (High RSSI), but you still can't understand them because the background noise is louder (Bad SNR). Conversely, if your friend whispers to you in a dead-silent library, the signal is very weak (Low RSSI), but you can understand them perfectly (Great SNR).
 

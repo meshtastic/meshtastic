@@ -77,8 +77,6 @@ Select a node from the drop-down to manage connected or remote devices.
 
 Long press any message and tap **Tapback** to send an emoji reaction.
 
-![Tapback input](/img/apple/tapbackInput.webp)
-
 ---
 
 :::tip Messages
@@ -113,3 +111,72 @@ The following errors may appear on a message bubble (red unless noted):
 | Not Authorized | The destination node refused the request due to permissions. |
 
 > Grey indicates successful delivery. Orange indicates a retryable error. Red indicates a permanent failure that will not succeed on retry.
+
+---
+
+## Link Appearance
+
+Links in message bubbles — including URLs, Meshtastic channel links, and markdown `[text](../url)` links — are styled with an underline and the design standards Link color (Blue 400). This makes links visually distinct from regular message text in both light and dark mode. Tapping a link opens it in the browser, or for Meshtastic channel/contact URLs, opens the appropriate in-app handler.
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="/img/apple/messageText_link_dark.webp" />
+  <img src="/img/apple/messageText_link.webp" alt="Message bubble with styled link" />
+</picture>
+
+---
+
+## Message Formatting (iOS 18+)
+
+On iOS 18 and later, formatting buttons appear in the compact toolbar below the compose field after you have typed at least 3 characters. The formatting buttons share the toolbar row with the Alert bell, Position pin, and byte counter — all rendered as compact icons. The toolbar scrolls horizontally if it exceeds the screen width.
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="/img/apple/composeArea_formatting_dark.webp" />
+  <img src="/img/apple/composeArea_formatting.webp" alt="Compose area with formatting toolbar and live preview" />
+</picture>
+
+### Supported Styles
+
+| Button | Style | Markdown Syntax |
+|--------|-------|-----------------|
+| Bold SF Symbol | Bold | `**text**` |
+| Italic SF Symbol | Italic | `*text*` |
+| Strikethrough SF Symbol | Strikethrough | `~~text~~` |
+| Code SF Symbol | Code | `` `text` `` |
+
+### How to Format Text
+
+1. **Select text and tap a button** — select a word or phrase in the compose field, then tap a formatting button. The appropriate markdown delimiters are inserted around the selection. Any existing markdown delimiters within the selection are stripped first to prevent overlapping syntax. Whitespace at the edges of the selection is moved outside the delimiters so markdown renders correctly.
+2. **Tap a button first, then type** — with the cursor placed (no selection), tap a formatting button. Delimiters are inserted and the cursor is placed between them so you can type formatted text immediately.
+3. **Toggle off** — select text that is already wrapped with delimiters and tap the same formatting button to remove the delimiters.
+
+### Live Preview
+
+When the compose field contains markdown syntax, a preview bubble appears above the compose field showing how the message will look when sent. The preview updates in real time as you type. When no markdown is present, the preview is hidden.
+
+Markdown formatting is also rendered in the channel and user message list previews, so you can see formatted text at a glance.
+
+| Example | Description |
+|---------|-------------|
+| ![Bold preview](/img/apple/messagePreview_bold.webp) | Preview showing **bold** formatting applied to text. |
+| ![Mixed preview](/img/apple/messagePreview_mixed.webp) | Preview showing **bold**, *italic*, ~~strikethrough~~, and `code` formatting combined. |
+
+### Switching Styles
+
+When you select text that already contains markdown delimiters and apply a different style, the existing delimiters are stripped and replaced with the new style. For example, selecting `**bold**` and tapping Strikethrough produces `~~bold~~`.
+
+After applying a style, the selection expands to include the delimiters (e.g., selecting `dolphin` and tapping Bold selects `**dolphin**`), making it easy to toggle off or switch to a different style immediately.
+
+### Selection Safety
+
+If your selection partially overlaps existing delimiters, the selection automatically expands to include the full delimiter run before formatting. Any orphaned (unpaired) delimiter characters left elsewhere in the text are cleaned up automatically. This prevents garbled markdown like `th***~~~~~~e~~`.
+
+### iOS 17 Users
+
+The formatting toolbar is only available on iOS 18 and later. Users on iOS 17.x see the standard compose field with no changes to their experience.
+
+### Mac Catalyst
+
+On Mac Catalyst, pressing **Enter** sends the message. Press **Shift+Enter** to insert a line break. The character palette button remains available alongside the formatting buttons.
+
+> **Tip — Message Limit**
+> Messages are limited to 200 bytes. Markdown delimiters count toward this limit (e.g., `**bold**` uses 4 extra bytes for the `**` pairs). The byte counter in the toolbar shows remaining space.

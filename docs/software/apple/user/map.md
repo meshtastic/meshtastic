@@ -14,6 +14,24 @@ Each node that has reported a GPS position appears as a coloured circle pin on t
 
 Pins update automatically when a new position packet is received from the mesh.
 
+## Filtering Nodes on the Map
+
+Tap the **filter button** (funnel icon, `line.3.horizontal.decrease.circle`) in the bottom-right toolbar to open the Map Filters sheet. When any filter is active, the icon appears **filled** to indicate filtering is in effect.
+
+| Filter | Description |
+|--------|-------------|
+| Via LoRa | Show only nodes heard directly over LoRa radio |
+| Via MQTT | Show only nodes bridged through MQTT |
+| Online | Show only nodes heard within the last 2 hours |
+| Encrypted | Show only nodes using PKI encryption |
+| Favorites | Show only nodes you have starred as favourites |
+| Distance | Limit to nodes within a chosen radius of your current location |
+| Hops Away | Slider from **All** to **7** — restricts by hop count (0 = direct only) |
+| Roles | Filter by one or more device roles (e.g. Router, Client, Repeater) |
+
+> **Tip — Checking LoRa range**
+> Enable the **Via LoRa** filter and disable **Via MQTT** to see only nodes reachable directly over radio, which is useful for assessing whether a direct LoRa link is feasible.
+
 ## Map Layers
 
 Tap the layer icon (top-right) to switch between:
