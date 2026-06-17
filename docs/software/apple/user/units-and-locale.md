@@ -27,7 +27,8 @@ The **Language & Region** screen controls how the Meshtastic app displays temper
 | **Date Format** | Date ordering throughout the app |
 | **Number Format** | Decimal separators and digit grouping |
 
-> **Tip — You never need to toggle units inside the app.** Change your system measurement preferences and every screen in Meshtastic updates automatically — node details, telemetry charts, weather, altitude, and more.
+> **Tip — No need to switch units**
+> Change your system measurement preferences and every screen in Meshtastic updates automatically — node details, telemetry charts, weather, altitude, and more.
 
 ## Temperature
 
@@ -133,4 +134,5 @@ Your measurement system (metric vs imperial) is tied to your region setting. To 
 
 The Meshtastic app picks up the change immediately — no restart needed.
 
-> **Tip — UK vs US imperial.** The UK measurement system uses miles for distance but stones for body weight and Celsius for temperature. The US system uses Fahrenheit and pounds. The app respects these distinctions automatically.
+> **Tip — UK vs US imperial**
+> The UK measurement system uses miles for distance but stones for body weight and Celsius for temperature. The US system uses Fahrenheit and pounds. The app respects these distinctions automatically.

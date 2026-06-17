@@ -91,6 +91,17 @@ The full node row shows the circle avatar, battery level, encryption status, las
   <img src="/img/apple/compact_mqtt.webp" alt="MQTT-bridged node" />
 </picture>
 
+## Context Menu Actions
+
+Long-press any node in the list to access quick actions:
+
+- **Add to favorites / Remove from favorites** — star important nodes so they appear at the top of the list
+- **Mute notifications / Unmute** — silence alerts from this node
+- **Message** — open a direct message conversation with this node
+- **Trace Route** — discover the path messages take to reach this node
+- **Ignore / Remove from ignored** — hide this node from normal views
+- **Remove** — remove the node from your local database
+
 ## Additional Icons
 
 Tap a node and scroll to the Logs section for detailed metrics:
@@ -105,10 +116,42 @@ Tap a node and scroll to the Logs section for detailed metrics:
 | ![Detection Sensor](/img/apple/logDetectionSensor.webp) | Motion or door open/close alerts from the node. |
 | ![Trace Routes](/img/apple/logTraceRoutes.webp) | Recorded trace route paths showing the hops a message took through the mesh. |
 
+## Local Stats and Noise Floor
+
+Local Stats show radio diagnostics reported by a node, including packets received, packets transmitted, duplicate packets, relayed packets, bad receives, canceled packets, online node count, total node count, and noise floor.
+
+Noise floor is displayed in dBm when the node reports it. Treat it as a directional diagnostic instead of an absolute site score: readings can vary quickly, and external filters can lower or skew the displayed value because of insertion loss or in-band interference.
+
 ## Node Detail View
 
 Tap any node to see the full detail view with hardware info, signal metrics, environment sensors, and log navigation:
 
 ![Node Detail](/img/apple/nodeDetail.webp)
+
+### Hardware Info
+
+The hardware section shows information about the physical device running the node. The section title reflects the device's support status:
+
+| Status | Meaning |
+|--------|---------|
+| **Supported Hardware** | Device is actively supported with firmware updates. |
+| **Discontinued Hardware** | Device is no longer supported and does not receive firmware updates. |
+
+For supported devices, the support tier is shown below the hardware name:
+
+| Tier | Description |
+|------|-------------|
+| Flagship | Recommended device with full feature support and active development. |
+| Niche | Supported device with active firmware updates and a specialised form factor. |
+| Legacy | Older device that still receives firmware updates but may lack some features. |
+
+### Where to Buy
+
+For devices with known purchase links, an **I want one** section appears below the hardware info. It shows the official vendor link and regional marketplace options (Amazon, Rokland, AliExpress, and others) sourced from [msh.to](https://msh.to).
+
+Marketplace links are filtered to your device region, so only stores that ship to your area are shown. Vendor links (directly from the device manufacturer) are always shown regardless of region.
+
+> **Tip — No purchase links shown**
+> Purchase links require an internet connection on first launch and after clearing app data. Connect the app to update the device catalog.
 
 [Device Configuration Docs →](https://meshtastic.org/docs/configuration/radio/device/)

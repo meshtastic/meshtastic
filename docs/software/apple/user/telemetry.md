@@ -13,6 +13,7 @@ Meshtastic nodes can report sensor data across the mesh, giving you visibility i
 | Type | Data |
 |------|------|
 | Device Metrics | Battery level, battery voltage, channel utilisation, airtime fraction |
+| Local Stats | Packets received/transmitted, relayed packets, duplicate packets, bad receives, node counts, noise floor |
 | Environment | Temperature (°C/°F), relative humidity (%), barometric pressure (hPa) |
 | Air Quality | PM1.0, PM2.5, PM10 particulate counts (µg/m³) |
 | Power | Voltage and current readings from power monitoring sensors |
@@ -26,6 +27,12 @@ Meshtastic nodes can report sensor data across the mesh, giving you visibility i
 | ![Battery charging](/img/apple/batteryCharging.webp) | Charging | Node is plugged in and fully charged. |
 | ![Battery unknown](/img/apple/batteryNil.webp) | Unknown | Battery level not reported by this node. |
 | ![Battery plugged in](/img/apple/batteryPluggedIn.webp) | Plugged In | Node is powered via USB/external power. |
+
+### Local Stats
+
+Local Stats are radio diagnostics reported by the node itself. They help diagnose mesh traffic and receiver conditions with counters for received packets, transmitted packets, relayed packets, duplicate packets, bad receives, canceled packets, online nodes, total nodes, and noise floor.
+
+Noise floor readings are shown in dBm when available. They can change quickly and should be interpreted with context: antenna direction, nearby interference, and external filters can all affect the displayed value.
 
 ### Air Quality
 
@@ -77,7 +84,8 @@ Go to **Settings → Telemetry** to enable telemetry modules and set reporting i
 |---------|-------------|
 | Device Metrics Interval | How often (seconds) the node broadcasts battery and utilisation data. |
 | Environment Interval | How often environment sensor data is broadcast. |
-| Air Quality Interval | How often air quality sensor data is broadcast. |
+| Air Quality Metrics Enabled | Enable or disable air quality sensor reporting. When enabled, the interval picker appears. |
+| Air Quality Interval | How often air quality sensor data is broadcast. Default is 30 minutes. |
 | Environment Screen | Show environment data on the device screen. |
 | Telemetry on Admin Channel | Restrict telemetry to the admin channel instead of broadcast. |
 

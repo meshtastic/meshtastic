@@ -66,6 +66,8 @@ When CarPlay is connected and **Announce Notifications** is enabled in iOS Setti
 
 Up to 50 unread messages that arrived before the CarPlay session started are donated to Siri at connection time so they can be read back on demand.
 
+After Siri reads messages aloud, they are automatically marked as read so they no longer appear as unread in the app or in future CarPlay sessions.
+
 ## Live Activity
 
 When a Meshtastic device connects during a CarPlay session, a **Dynamic Island / Lock Screen Live Activity** starts automatically (iOS only, not available on macOS). It displays:

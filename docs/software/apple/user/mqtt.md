@@ -35,7 +35,7 @@ Go to **Settings → MQTT**:
 | Root Topic | The topic prefix for all published messages (default: `msh`). |
 | Enabled | Toggle MQTT bridging on/off. |
 | Encryption Enabled | Encrypt packets before publishing. Recommended — prevents the broker from reading message content. |
-| JSON Enabled | Publish decoded JSON packets in addition to the binary protobuf format. Useful for home automation integrations. |
+| JSON Enabled | Removed. JSON packet support was deprecated and removed in firmware. |
 | TLS Enabled | Use TLS for the MQTT connection. Requires a broker with TLS support. |
 | Proxy to Client | Route MQTT traffic through the phone app rather than directly from the radio. Useful for radios without Wi-Fi. |
 
