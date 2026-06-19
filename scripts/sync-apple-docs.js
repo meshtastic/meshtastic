@@ -391,9 +391,9 @@ async function main() {
 
   const sourceFiles = collectFiles(SRC_DOCS_DIR);
 
-  // Root-level source files that are NOT synced — the _category_.yml
-  // generated-index replaces the need for a hand-written home page.
-  const SKIP_SOURCE_ROOT_FILES = new Set(["index.md"]);
+  // Root-level source files that are NOT synced.
+  // index.md is synced and used as the Apple App section landing page.
+  const SKIP_SOURCE_ROOT_FILES = new Set();
 
   // Split source files by type.
   const sourceMdFiles = sourceFiles
@@ -464,7 +464,7 @@ async function main() {
   const CATEGORY_FILES = [
     {
       file: path.join(DEST_DOCS_DIR, "_category_.yml"),
-      content: "label: Apple App\ncollapsible: true\nposition: 2\nlink:\n  type: generated-index\n  title: Apple App\n",
+      content: "label: Apple App\ncollapsible: true\nposition: 2\nlink:\n  type: doc\n  id: software/apple/index\n",
     },
     {
       file: path.join(DEST_DOCS_DIR, "user", "_category_.yml"),
