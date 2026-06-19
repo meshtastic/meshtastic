@@ -14,6 +14,10 @@ Recent user-facing changes from roughly the last 12 months. Newest at the top.
 Show roughly the last 12 months of changes; archive entries older than a year by removing them.
 -->
 
+**Jun 2026** — [Nodes](nodes.md) — Persistent node filters: online, favorites, distance, hops, roles, and connection-type filters are now remembered between launches and shared across the Nodes list, Messages contacts, and map. Search text still clears on relaunch.
+
+**Jun 2026** — [Getting Started](getting-started.md) — Redesigned first-launch setup: a clearer guided flow for Bluetooth, Local Network, Notifications, Location, and Siri permissions with colored icons and per-notification toggles.
+
 **Jun 2026** — [MQTT](mqtt.md) — MQTT client proxy improvements: per-channel downlink subscriptions, zero-hop injection to prevent RF re-broadcast, password masking, and removal of the deprecated JSON mode toggle.
 
 **Jun 2026** — [Settings](settings.md) — Packet Stream: watch mesh packets cross the network live in the Debug Logs view, paced for readability, with collapsible Categories and Log Levels filters.

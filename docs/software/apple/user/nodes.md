@@ -102,6 +102,23 @@ Long-press any node in the list to access quick actions:
 - **Ignore / Remove from ignored** — hide this node from normal views
 - **Remove** — remove the node from your local database
 
+## Filtering & Search
+
+Tap the filter icon above the list to narrow which nodes are shown. Filters apply across the Nodes list, the contacts picker in Messages, and the map, so a filter set in one place takes effect everywhere.
+
+| Filter | What it shows |
+|--------|---------------|
+| **Online** | Only nodes heard in the last two hours. |
+| **Favorites** | Only nodes you have starred. |
+| **Public Key Encryption** | Only nodes using PKI-encrypted direct messages. |
+| **Environment** | Only nodes reporting environment telemetry (temperature, humidity, pressure). |
+| **Hops Away** | Limit to nodes within a chosen number of hops, including direct (0-hop) only. |
+| **Distance** | Limit to nodes within a chosen radius of your location. Falls back to the connected device's last position when phone location is unavailable. |
+| **Roles** | Show only the device roles you select. |
+| **Connection** | Show nodes reachable via LoRa, via MQTT, or both. At least one is always kept on. |
+
+Filters are **remembered between launches** — the app reopens with the same filters applied. Search text is the exception: it is intentionally cleared on relaunch so you never reopen into a stale search that hides most of your nodes. Use the **reset** affordance to clear every filter and the search text at once.
+
 ## Additional Icons
 
 Tap a node and scroll to the Logs section for detailed metrics:

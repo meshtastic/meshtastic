@@ -10,7 +10,9 @@ Local Mesh Discovery scans your area to find nearby Meshtastic radios operating 
 
 ## What It Does
 
-The scanner switches through a series of LoRa modem presets and frequency slots, listens for a set period on each, and records how many nodes it hears and how busy the airwaves are (channel utilisation). It then presents a ranked list of settings ordered by activity.
+The scanner switches through a series of LoRa modem presets, listens for a set period on each, and records how many nodes it hears and how busy the airwaves are (channel utilisation). It then presents a ranked list of settings ordered by activity.
+
+Each preset is scanned on the **default frequency slot** so the radio listens on the same frequency the public mesh uses. If your radio is set to a custom frequency slot, the scan temporarily uses the default slot while it runs and restores your original LoRa configuration — including your frequency slot — automatically when the scan finishes.
 
 On supported devices running iOS 26+, the on-device AI assistant analyses the scan results and recommends the best configuration for your location — no internet connection required.
 

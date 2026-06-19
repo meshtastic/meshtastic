@@ -30,7 +30,7 @@ The app ships a built-in Help & Documentation browser, a Jekyll site on GitHub P
 Source markdown lives under `docs/user/` and `docs/developer/`. To rebuild the bundled HTML after editing any markdown:
 
 ```sh
-bash scripts/build-docs.sh --output Meshtastic/Resources/docs --beta
+bash scripts/build-docs.sh --output Meshtastic/Resources/docs
 ```
 
 Commit the regenerated files under `Meshtastic/Resources/docs/` with your PR.
