@@ -29,6 +29,30 @@ The connection indicator turns green when the radio is paired and communicating.
 
 > **Tip:** If your device does not appear, make sure Bluetooth is enabled in iOS Settings and that the radio is within range (roughly 10 metres for initial pairing).
 
+### First-Launch Setup
+
+The first time you open the app, a short guided setup walks you through the permissions Meshtastic uses, in order. Each screen explains what the permission is for, and you can change any of these later in iOS Settings. Granting a permission or tapping **Continue** advances to the next step.
+
+**1. Bluetooth** — required to discover and connect to your radio.
+
+![Bluetooth permission screen](/img/apple/onboarding_bluetooth.webp)
+
+**2. Local Network** — lets the app find radios connected over WiFi or Ethernet.
+
+![Local Network permission screen](/img/apple/onboarding_localNetwork.webp)
+
+**3. Notifications** — toggle which alerts you want before granting permission: incoming messages, new nodes, low battery, and critical alerts that bypass silent mode and Do Not Disturb.
+
+![Notifications permission screen](/img/apple/onboarding_notifications.webp)
+
+**4. Location** — optional; lets your phone supply position to the mesh and keep the map updated in the background. This step is skipped if you have already granted location access.
+
+![Location permission screen](/img/apple/onboarding_location.webp)
+
+**5. Siri & Shortcuts** — optional; enables voice commands and CarPlay messaging.
+
+![Siri and Shortcuts permission screen](/img/apple/onboarding_siri.webp)
+
 ## Step 3: Set Your Name and Short ID
 
 1. Go to **Settings → User**.

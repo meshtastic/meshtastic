@@ -30,7 +30,7 @@ Each transport conforms to a `MeshTransport` protocol that exposes `connect()`, 
 | `+FromRadio` | `handleFromRadio(_:)`, `handleMeshPacket(_:)` |
 | `+Position` | `startLocationUpdates()`, `sendPosition(_:)` |
 | `+MQTT` | `connectMQTT()`, `publishPacket(_:)`, `mqttClient(_:didReceiveMessage:)` |
-| `+TAK` | `handleATAKPluginPacket(_:)`, `handleATAKPluginV2Packet(_:)`, `handleATAKForwarderPacket(_:)`, `sendTAKPacket(_:channel:)`, `sendTAKV2Packet(_:channel:)`, `sendCoTToMeshV2(_:channel:)`. See [TAK Protocol](./tak-protocol.md) for the V1/V2 wire format detail. |
+| `+TAK` | `handleATAKPluginPacket(_:)`, `handleATAKPluginV2Packet(_:)`, `handleATAKForwarderPacket(_:)`, `sendTAKPacket(_:channel:)`, `sendTAKV2Packet(_:channel:)`, `sendCoTToMeshV2(_:channel:)`. See [TAK Protocol](tak-protocol.md) for the V1/V2 wire format detail. |
 
 ## Packet Flow (Inbound)
 
