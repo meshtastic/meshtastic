@@ -121,4 +121,4 @@ Use this property (rather than parsing the firmware version inline) anywhere a V
 - `Meshtastic/Helpers/TAK/RouteDataPackageGenerator.swift` — KML data package writer.
 - `Meshtastic/Views/Settings/TAKServerConfig.swift` — combined TAK Server settings screen with the embedded `TAKIdentitySection`.
 
-See also [Transport Layer](./transport.md) for the AccessoryManager extension map.
+See also [Transport Layer](transport.md) for the AccessoryManager extension map.
