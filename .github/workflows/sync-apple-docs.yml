@@ -14,22 +14,29 @@ jobs:
 
     steps:
       - name: Checkout meshtastic/meshtastic
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
-      - name: Clone meshtastic/Meshtastic-Apple
+      - name: Fetch latest Meshtastic-Apple docs release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          git clone --depth=1 --branch main https://github.com/meshtastic/Meshtastic-Apple.git /tmp/Meshtastic-Apple
+          mkdir -p /tmp/Meshtastic-Apple
+          # Pin to the latest tagged release's docs bundle instead of live main, so the
+          # synced docs only change when a new app version ships (not on every commit).
+          gh release download --repo meshtastic/Meshtastic-Apple \
+            --pattern 'meshtastic-apple-docs-*.tar.gz' --dir /tmp
+          tar -xzf /tmp/meshtastic-apple-docs-*.tar.gz -C /tmp/Meshtastic-Apple
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version-file: ".nvmrc"
 
-      - name: Install fs-extra
-        run: npm install --no-save fs-extra
+      - name: Install cwebp
+        run: sudo apt-get install -y webp
 
       - name: Run sync script
-        run: node scripts/sync-apple-docs.js /tmp/Meshtastic-Apple
+        run: node scripts/sync-apple-docs.js /tmp/Meshtastic-Apple --convert-webp
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v7
