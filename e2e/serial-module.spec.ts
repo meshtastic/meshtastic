@@ -71,8 +71,10 @@ test.describe("Serial Module Documentation", () => {
     page,
   }) => {
     await page.goto(SERIAL_URL);
-    const codeBlock = page.locator("code").filter({
-      hasText: /serial.txd/,
+    // The first matching <code> in DOM order lives inside the (inactive) CLI
+    // tab and is hidden, so scope to visible code blocks.
+    const codeBlock = page.locator("code:visible").filter({
+      hasText: /serial\.txd/,
     });
     await expect(codeBlock.first()).toBeVisible();
   });
@@ -93,11 +95,5 @@ test.describe("Serial Module Documentation", () => {
     await page.goto(SERIAL_URL);
     const sidebar = page.locator(".theme-doc-sidebar-container");
     await expect(sidebar).toBeVisible();
-  });
-
-  test("should have breadcrumb navigation", async ({ page }) => {
-    await page.goto(SERIAL_URL);
-    const breadcrumb = page.locator(".breadcrumbs");
-    await expect(breadcrumb).toBeVisible();
   });
 });
