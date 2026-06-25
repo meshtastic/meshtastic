@@ -16,6 +16,7 @@ import {
 } from "@/lib/avatar-color";
 import { buildTimeline, hydrateUsers } from "@/lib/build-timeline";
 import type { BuiltMessage } from "@/types/conversation.types";
+import { translate } from "@docusaurus/Translate";
 import {
   BatteryFull,
   MessageSquare,
@@ -106,7 +107,10 @@ export function DeviceMockup() {
                 <button
                   type="button"
                   className="rounded-md border-0 bg-transparent p-1 shadow-none text-primary/60 hover:bg-primary/20 hover:text-primary will-change-[background-color]"
-                  title="React"
+                  title={translate({
+                    id: "homepage.deviceMockup.react",
+                    message: "React",
+                  })}
                 >
                   <Smile className="h-5 w-5" />
                 </button>
@@ -130,7 +134,10 @@ export function DeviceMockup() {
           {msg.text}
         </p>
         <p className="mt-1 text-right font-mono text-[12px] text-stone-500 dark:text-gray-400">
-          This is only a demo
+          {translate({
+            id: "homepage.deviceMockup.demoDisclaimer",
+            message: "This is only a demo",
+          })}
         </p>
         {msg.reactions && msg.reactions.length > 0 && (
           <div className="mt-1 flex justify-end gap-1">
@@ -205,7 +212,10 @@ export function DeviceMockup() {
                 type="button"
                 onClick={() => handleReply(msg)}
                 className="rounded-md border-0 bg-transparent p-1 shadow-none text-primary/60 hover:bg-primary/20 hover:text-primary will-change-[background-color]"
-                title="Reply"
+                title={translate({
+                  id: "homepage.deviceMockup.reply",
+                  message: "Reply",
+                })}
               >
                 <Reply className="h-5 w-5" />
               </button>
@@ -215,7 +225,10 @@ export function DeviceMockup() {
                   <button
                     type="button"
                     className="rounded-md border-0 bg-transparent p-1 shadow-none text-primary/60 hover:bg-primary/20 hover:text-primary will-change-[background-color]"
-                    title="React"
+                    title={translate({
+                      id: "homepage.deviceMockup.react",
+                      message: "React",
+                    })}
                   >
                     <Smile className="h-5 w-5" />
                   </button>
@@ -291,10 +304,16 @@ export function DeviceMockup() {
               <div className="flex items-center justify-between">
                 <div>
                   <p className="font-mono text-base font-bold text-primary">
-                    MESHTASTIC DEMO
+                    {translate({
+                      id: "homepage.deviceMockup.channelName",
+                      message: "MESHTASTIC DEMO",
+                    })}
                   </p>
                   <p className="font-mono text-xs text-primary/90">
-                    Primary Channel
+                    {translate({
+                      id: "homepage.deviceMockup.primaryChannel",
+                      message: "Primary Channel",
+                    })}
                   </p>
                 </div>
                 <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/20">
@@ -329,7 +348,10 @@ export function DeviceMockup() {
                   value={inputValue}
                   onChange={(e) => setInputValue(e.target.value)}
                   onKeyDown={handleKeyDown}
-                  placeholder="Type message..."
+                  placeholder={translate({
+                    id: "homepage.deviceMockup.placeholder",
+                    message: "Type message...",
+                  })}
                   className="flex-1 border-0 bg-transparent font-mono text-base text-stone-800 dark:text-gray-200 placeholder-stone-400 dark:placeholder-gray-500 shadow-none outline-none caret-primary"
                 />
                 <button

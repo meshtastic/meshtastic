@@ -8,3 +8,11 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
+    cooldown:
+      default-days: 6 # 1 day after pnpm's cutoff, prevent a race
+    groups:
+      react-ecosystem:
+        patterns:
+          - react
+          - react-dom
+          - "@types/react*"
