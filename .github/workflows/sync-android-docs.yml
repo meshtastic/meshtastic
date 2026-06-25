@@ -7,20 +7,29 @@ on:
 
 jobs:
   sync:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-latest
     permissions:
       contents: write
       pull-requests: write
 
     steps:
       - name: Checkout meshtastic/meshtastic
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 1
+        uses: actions/checkout@v7
 
-      - name: Clone meshtastic/Meshtastic-Android
+      - name: Clone Meshtastic-Android at its latest full release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          git clone --depth=1 --branch main https://github.com/meshtastic/Meshtastic-Android.git /tmp/Meshtastic-Android
+          set -euo pipefail
+          # Pin to the latest full (non-prerelease) release tag instead of live main, so the
+          # synced docs only change when a new app version ships — not on every commit. This
+          # mirrors the Apple sync, which pulls a version-pinned docs bundle from the latest
+          # release. `gh release view` with no tag resolves the latest published release,
+          # excluding drafts and pre-releases.
+          tag="$(gh release view --repo meshtastic/Meshtastic-Android --json tagName --jq .tagName)"
+          echo "Syncing Android docs from release ${tag}"
+          git clone --depth=1 --branch "${tag}" \
+            https://github.com/meshtastic/Meshtastic-Android.git /tmp/Meshtastic-Android
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
