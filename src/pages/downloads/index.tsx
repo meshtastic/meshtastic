@@ -140,7 +140,7 @@ const Firmware = (): JSX.Element => {
                 <a
                   target="_blank"
                   rel="noopener noreferrer"
-                  href="https://meshtastic.org/docs/software/android/installation"
+                  href="https://f-droid.org/packages/com.geeksville.mesh/"
                   className="m-auto flex rounded-lg border-4 border-transparent bg-accent p-1 font-semibold text-black shadow-md hover:text-black hover:brightness-110 active:border-green-200"
                 >
                   <Translate id="downloads.apps.fdroid">F-Droid</Translate>
