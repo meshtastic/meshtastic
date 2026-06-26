@@ -98,7 +98,7 @@ Nodes with particulate matter or CO₂ sensors report air quality data:
 | PM10 | µg/m³ | Coarse particulate matter |
 | CO₂ | ppm | Carbon dioxide concentration |
 
-The CO₂ reading is color-coded by severity (Good → Stuffy → Poor → Unsafe → Evacuate). See [Node Metrics — Air Quality](node-metrics#air-quality-metrics) for the exact ppm bands and colors.
+The CO₂ reading is color-coded by severity (Good → Stuffy → Poor → Unsafe → Evacuate). See [Node Metrics — Air Quality](node-metrics.md#air-quality-metrics) for the exact ppm bands and colors.
 
 Air quality data can be viewed as info cards on the node detail screen, charted over time, and exported to CSV.
 
