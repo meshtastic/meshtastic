@@ -57,7 +57,11 @@ Before updating:
 
 ## Post-Update
 
-After a successful update:
+After the firmware is written, the app verifies the update and waits for the device to come back online:
+
+![Verifying update and waiting for the device to reconnect](/img/android/docs/firmware_verifying.webp)
+
+Once the update succeeds:
 - The radio will reboot automatically
 - Bluetooth connection will re-establish
 - Verify your settings are intact
