@@ -4,4 +4,4 @@ title: Meshtastic URL
 sidebar_label: c
 ---
 
-Please go to [Android Usage](/docs/software/android/usage#join-a-channel) for more information.
+Please go to [Messages & Channels](/docs/software/android/user/messages-and-channels/) for more information.
