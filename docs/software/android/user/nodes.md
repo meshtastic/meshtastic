@@ -1,7 +1,7 @@
 ---
 title: Nodes
 sidebar_position: 4
-last_updated: 2026-06-25
+last_updated: 2026-05-20
 description: Browse, filter, and sort mesh nodes — view details, signal quality, roles, and quick actions.
 parent: User Guide
 ---
@@ -24,11 +24,10 @@ The node list shows every node your radio has heard, including:
 
 | Badge | Meaning |
 |-------|---------|
-| 🟢 Online | Node heard within the last 2 hours |
-| ⚪ Offline | Node not heard for over 2 hours |
+| 🟢 Online | Node heard within the last 15 minutes |
+| 🟡 Away | Node heard within the last 2 hours |
+| 🔴 Offline | Node not heard for over 2 hours |
 | ⭐ Favorite | Node marked as favorite by the user |
-
-A node is considered **online** if it was heard within the last 2 hours, and **offline** otherwise — there is no separate "away" tier.
 
 ### Node Roles
 
@@ -98,7 +97,7 @@ Type in the search field to filter nodes by name or short name. The filter updat
 
 | Filter | Description |
 |--------|-------------|
-| **Only online** | Show only nodes heard within the last 2 hours |
+| **Only online** | Show only nodes heard within the last 15 minutes |
 | **Only direct** | Show only nodes with direct (non-relayed) connections |
 | **Include unknown** | Show nodes that haven't sent user info yet |
 | **Exclude infrastructure** | Hide infrastructure-role nodes (Router, Repeater, Router Late, Client Base) |
@@ -136,12 +135,6 @@ Inline status indicators show key metrics at a glance:
 | Hop count | ![Hops](/img/android/docs/nodes_hops_info.webp) |
 | Last heard | ![Last heard](/img/android/docs/nodes_last_heard.webp) |
 | Distance | ![Distance](/img/android/docs/nodes_distance_info.webp) |
-
-### Device Links ("I want one")
-
-When a node's hardware is recognized, the detail view shows a collapsible **"I want one"** section linking to places to buy or learn more about that device: the vendor's product page, product variants, and regional marketplace listings (such as AliExpress, Amazon, and supported retailers), filtered to your country. Each link opens through the `msh.to` redirect service. Devices with no matching links don't show the section.
-
-A full, browsable directory of every link is also available under **Settings → Device Links**.
 
 ## Related Topics
 

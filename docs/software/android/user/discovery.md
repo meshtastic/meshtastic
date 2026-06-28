@@ -1,8 +1,8 @@
 ---
 title: Discovery
 sidebar_position: 12
-last_updated: 2026-06-11
-description: Explore your mesh network — the Local Mesh Discovery scanner, traceroute paths, neighbor maps, and node discovery tools.
+last_updated: 2026-05-13
+description: Explore your mesh network — traceroute paths, neighbor maps, and node discovery tools.
 parent: User Guide
 ---
 
@@ -10,82 +10,9 @@ parent: User Guide
 
 Discovery tools help you understand **how** your mesh network is connected — which nodes can hear each other, what paths messages take, and where bottlenecks or weak links exist.
 
-The app offers two complementary approaches:
-
-- **Local Mesh Discovery (Scanner)** — an automated mode that cycles your connected radio through different LoRa presets, listens on each, and ranks which preset performs best at your location.
-- **Manual exploration** — traceroute, Neighbor Info, and the node list, which you can use at any time to investigate specific paths and topology.
+> 💡 **Tip:** You don't need a dedicated "discovery mode" to start exploring your mesh. The tools below are available right now from the node list and node detail screens.
 
 ---
-
-## Local Mesh Discovery (Scanner)
-
-Local Mesh Discovery is a dedicated scanning mode that helps you find the best LoRa modem preset for your location and see which nodes are active on each preset. It cycles your connected radio through one or more presets you choose, listens (or "dwells") on each one for a set time to collect packets, then analyzes and ranks the results.
-
-Open it from **Settings → Local Mesh Discovery**.
-
-> ⚠️ **Note:** Discovery temporarily changes your radio's LoRa settings while it scans, then restores your original configuration when it finishes. Your device must be connected to run a scan.
-
-### Setting Up a Scan
-
-Before starting, configure these controls:
-
-| Control | Description |
-|---------|-------------|
-| **LoRa preset picker** | Select one or more presets to scan. Discovery dwells on each selected preset in turn. |
-| **Dwell time** | Time to listen on each preset. Choose from 1, 5, 15, 30, 45, 60, 90, 120, or 180 minutes. Longer dwell times collect more packets and give a clearer picture, but take longer. |
-| **Keep screen awake** | Optional toggle that prevents the screen from sleeping during a long scan. |
-
-The **Start** button stays disabled — with an explanation of why — until the scan can run. Common reasons it's disabled:
-
-- The device is **not connected**.
-- The current channel is using the **default channel key** (use a unique key first — see [Messages & Channels](messages-and-channels.md)).
-- **No presets** have been selected to scan.
-- The selected preset uses **2.4 GHz**, which your hardware doesn't support.
-
-### Live Progress
-
-While a scan runs, Discovery shows its current stage:
-
-| Stage | What's happening |
-|-------|------------------|
-| **Preparing** | Saving your current configuration and getting ready to scan. |
-| **Shifting to \<preset\>** | Switching the radio to the next preset to test. |
-| **Reconnecting** | Re-establishing the connection after the preset change. |
-| **Dwell** | Listening on the current preset to collect packets, with a countdown to the next step. |
-| **Analysis** | Processing the collected packets and ranking the presets. |
-| **Restoring** | Putting your original LoRa configuration back. |
-
-![Dwell countdown showing time remaining on the current preset](/img/android/docs/discovery_dwell_progress.webp)
-
-### Reading the Results
-
-When the scan completes, Discovery presents a per-preset result card for each preset it tested, plus an overall summary.
-
-![Per-preset result card with ranking and collected metrics](/img/android/docs/discovery_preset_result.webp)
-
-Metrics include:
-
-| Metric | What it tells you |
-|--------|-------------------|
-| RF health | Overall quality of the radio environment on that preset. |
-| Channel utilization | How busy the airwaves were during the dwell. |
-| Airtime | Transmission time observed. |
-| Direct vs. relayed nodes | How many mesh nodes were heard directly versus via a relay. |
-| Bad / duplicate packets | Counts of corrupt and repeated packets, indicating congestion or interference. |
-
-Additional features available from the results:
-
-- **Scan History** — saved sessions you can revisit; view or delete past scans.
-- **Discovery Map** — a map of the nodes found during the scan.
-- **Report export** — export a report as a PDF on Android, or as text on other platforms.
-
-> 💡 **Tip:** On Android, Discovery can generate an on-device AI summary (Gemini Nano) of your results. If the on-device model isn't available, an algorithmic summary is used instead — so you always get a readable interpretation of the scan.
-
----
-
-## Manual Exploration
-
-The tools below are available at any time from the node list and node detail screens. Use them to investigate specific paths and build a topology picture, alongside or instead of a full scan.
 
 ## Traceroute
 
