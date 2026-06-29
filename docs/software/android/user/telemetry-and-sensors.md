@@ -87,21 +87,6 @@ Useful for monitoring solar charging or battery health on remote nodes.
 
 > ⚠️ **Note:** Shorter intervals increase airtime usage and battery drain across the mesh.
 
-## Air Quality Metrics
-
-Nodes with particulate matter or CO₂ sensors report air quality data:
-
-| Metric | Unit | Description |
-|--------|------|-------------|
-| PM1.0 | µg/m³ | Ultrafine particulate matter |
-| PM2.5 | µg/m³ | Fine particulate matter |
-| PM10 | µg/m³ | Coarse particulate matter |
-| CO₂ | ppm | Carbon dioxide concentration |
-
-The CO₂ reading is color-coded by severity (Good → Stuffy → Poor → Unsafe → Evacuate). See [Node Metrics — Air Quality](node-metrics.md#air-quality-metrics) for the exact ppm bands and colors.
-
-Air quality data can be viewed as info cards on the node detail screen, charted over time, and exported to CSV.
-
 ## Viewing Telemetry
 
 1. Navigate to **Nodes** and select a node.
@@ -109,7 +94,6 @@ Air quality data can be viewed as info cards on the node detail screen, charted 
    - Device Metrics (always available)
    - Environment Metrics (if sensors present)
    - Power Metrics (if INA sensor present)
-   - Air Quality Metrics (if PM/CO₂ sensor present)
 3. Historical graphs show trends over time.
 
 ![Telemetry actions](/img/android/docs/node-metrics_telemetric_actions.webp)
