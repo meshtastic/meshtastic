@@ -11,20 +11,32 @@ jobs:
       contents: read
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           submodules: true
 
+      - name: Check for JS/TS file changes
+        id: js-filter
+        uses: dorny/paths-filter@v4
+        with:
+          filters: |
+            js:
+              - '**/*.js'
+              - '**/*.cjs'
+              - '**/*.mjs'
+              - '**/*.ts'
+              - '**/*.tsx'
+              - '**/*.jsx'
+
       - name: Run oxlint
-        uses: oxc-project/oxlint-action@v3.0.0
+        if: steps.js-filter.outputs.js == 'true'
+        uses: oxc-project/oxlint-action@v3.1.0
         with:
           config: .oxlintrc.json
           deny-warnings: true
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v6
-        with:
-          version: latest
 
       - name: Setup Node.js
         uses: actions/setup-node@v6
@@ -44,14 +56,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           submodules: true
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v6
-        with:
-          version: latest
 
       - name: Setup Node.js
         uses: actions/setup-node@v6
@@ -76,14 +86,12 @@ jobs:
     needs: build
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           submodules: true
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v6
-        with:
-          version: latest
 
       - name: Setup Node.js
         uses: actions/setup-node@v6

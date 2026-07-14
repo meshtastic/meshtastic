@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import devicesData from "@/data/devices.json";
 import { shuffle } from "@/lib/utils";
 import Link from "@docusaurus/Link";
+import Translate, { translate } from "@docusaurus/Translate";
 import { ArrowRight, Radio } from "lucide-react";
 import React, { useMemo } from "react";
 
@@ -57,7 +58,12 @@ export function Devices() {
   const shuffledDevices = useMemo(() => shuffle(devices as Device[]), []);
 
   return (
-    <section aria-label="Partner Devices">
+    <section
+      aria-label={translate({
+        id: "homepage.devices.partnerDevices",
+        message: "Partner Devices",
+      })}
+    >
       <div className="mb-4 flex flex-col items-center text-center md:flex-row md:justify-between md:text-left">
         <div>
           <h3 className="font-mono text-2xl font-bold text-foreground sm:text-3xl">
@@ -86,14 +92,14 @@ export function Devices() {
       </div>
 
       <p className="mt-6 text-center text-sm text-muted-foreground">
-        View all{" "}
+        <Translate id="homepage.devices.viewAll">View all</Translate>{" "}
         <Link
           to="/docs/hardware/devices/"
           className="text-primary hover:underline"
         >
-          supported devices
+          <Translate id="homepage.devices.supportedDevices">supported devices</Translate>
         </Link>{" "}
-        or visit our partners directly
+        <Translate id="homepage.devices.orVisitPartners">or visit our partners directly</Translate>
       </p>
     </section>
   );
