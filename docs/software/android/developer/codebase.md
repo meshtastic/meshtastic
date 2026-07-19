@@ -1,7 +1,7 @@
 ---
 title: Codebase
 sidebar_position: 2
-last_updated: 2026-06-11
+last_updated: 2026-05-20
 parent: Developer Guide
 ---
 
@@ -28,10 +28,9 @@ Meshtastic-Android/
 │   ├── firmware/
 │   ├── docs/
 │   ├── wifi-provision/
-│   ├── widget/
-│   ├── discovery/
-│   └── car/
+│   └── widget/
 ├── core/                   # Core infrastructure modules (KMP)
+│   ├── api/
 │   ├── barcode/
 │   ├── ble/
 │   ├── common/
@@ -45,15 +44,13 @@ Meshtastic-Android/
 │   ├── network/
 │   ├── nfc/
 │   ├── prefs/
+│   ├── proto/
 │   ├── repository/
 │   ├── resources/
 │   ├── service/
 │   ├── takserver/
 │   ├── testing/
 │   └── ui/
-├── baselineprofile/        # Baseline Profile generation for :androidApp
-├── screenshot-tests/       # Compose Preview screenshot tests (visual-regression gate)
-├── docs-screenshots/       # Doc-framed composition screenshots (generate-only, not CI-gated)
 ├── build-logic/            # Convention plugins and build helpers
 │   ├── convention/
 │   └── flatpak/
