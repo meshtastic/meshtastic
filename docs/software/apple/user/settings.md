@@ -74,7 +74,7 @@ Controls which direction the on-device compass points when the screen is at rest
 
 ### Network
 
-Wi-Fi SSID/password for TCP connection, NTP server, and Ethernet (supported hardware only).
+WiFi SSID/password for TCP connection, NTP server, and Ethernet (supported hardware only).
 
 ### Position
 
@@ -98,7 +98,7 @@ Optional feature modules. Only available when your connected node supports the m
 | MQTT | Uplink/downlink messages to an MQTT broker for internet bridging. |
 | Neighbor Info | Periodically broadcasts information about directly-heard neighbors to help visualise mesh topology. Update interval ranges from 4 hours (default) to 72 hours. Enable **Transmit over LoRa** to share neighbour data over the radio in addition to MQTT and PhoneAPI. |
 | Range Test | Automated range testing with position logging. |
-| Pax Counter | Anonymised foot-traffic counting via Bluetooth/Wi-Fi probe detection. Configure WiFi Threshold (dBm) and BLE Threshold (dBm) to control the RSSI sensitivity for device counting — default is −80 dBm for both. |
+| Pax Counter | Anonymised foot-traffic counting via Bluetooth/WiFi probe detection. Configure WiFi Threshold (dBm) and BLE Threshold (dBm) to control the RSSI sensitivity for device counting — default is −80 dBm for both. |
 | Ringtone | Custom RTTTL melodies for notification tones. |
 | Store & Forward | Store packets for nodes that are temporarily offline. |
 | Serial | UART serial output for integration with other hardware. |
