@@ -568,6 +568,7 @@ export function MeshTopology() {
                       onChange={(e) => setInputValue(e.target.value)}
                       onKeyDown={handleKeyDown}
                       placeholder="Type..."
+                      aria-label="Message to send"
                       className="flex-1 w-full min-w-0 border-0 bg-transparent font-mono text-[10px] text-stone-800 dark:text-gray-200 placeholder-stone-400 dark:placeholder-gray-500 outline-none"
                     />
                     <button

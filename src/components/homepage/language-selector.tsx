@@ -57,7 +57,7 @@ export function LanguageSelector() {
         <Button
           variant="ghost"
           size="sm"
-          className="border-0 bg-transparent p-5 text-foreground !shadow-none ring-0 outline-none transition-colors hover:bg-transparent hover:text-foreground/80 focus-visible:ring-0"
+          className="border-0 bg-transparent p-5 text-foreground !shadow-none transition-colors hover:bg-transparent hover:text-foreground/80"
           aria-label={translate({
             id: "homepage.languageSelector.ariaLabel",
             message: "Select language",
