@@ -70,8 +70,10 @@ fi
 echo ""
 echo "=== Checking for images missing alt text ==="
 ALT_ISSUES=0
-if rg -n '<img\b[^>]*>' $SEARCH_PATH $RG_MDX 2>/dev/null | rg -v 'alt\s*=' | rg -v '`<img' >/tmp/mdx-img-noalt.txt 2>/dev/null && [ -s /tmp/mdx-img-noalt.txt ]; then
-  cat /tmp/mdx-img-noalt.txt
+NOALT_TMP="$(mktemp)"
+trap 'rm -f "$NOALT_TMP"' EXIT
+if rg -n '<img\b[^>]*>' $SEARCH_PATH $RG_MDX 2>/dev/null | rg -v 'alt\s*=' | rg -v '`<img' >"$NOALT_TMP" 2>/dev/null && [ -s "$NOALT_TMP" ]; then
+  cat "$NOALT_TMP"
   echo "WARNING: Found <img> tags without an alt attribute. Add alt=\"...\" (or alt=\"\" if purely decorative)."
   ALT_ISSUES=1
 fi
@@ -79,7 +81,7 @@ if rg -n '!\[\]\(' $SEARCH_PATH $RG_MDX 2>/dev/null; then
   echo "WARNING: Found markdown images with empty alt text ![](...). Describe the image or use it only if decorative."
   ALT_ISSUES=1
 fi
-rm -f /tmp/mdx-img-noalt.txt
+rm -f "$NOALT_TMP"
 if [ $ALT_ISSUES -eq 0 ]; then
   echo "✓ No images missing alt text found"
 fi
