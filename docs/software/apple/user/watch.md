@@ -31,9 +31,9 @@ Each row shows:
 
 | Element | Meaning |
 |---------|---------|
-| Coloured circle | Node short name, colour derived from node number |
+| Colored circle | Node short name, color derived from node number |
 | Name | Node long name |
-| Distance | Distance from your current location, colour-coded by proximity |
+| Distance | Distance from your current location, color-coded by proximity |
 | Arrow | Mini bearing arrow pointing toward the node, rotates with your heading |
 
 Tap any row to open the **Foxhunt Compass** for that node.
@@ -46,14 +46,14 @@ The compass points toward the selected node using your Watch's heading sensor. I
 |---------|---------|
 | Rotating dial | Cardinal directions (N/NE/E…) rotate with your physical heading |
 | Orange triangle | Fixed north indicator at the top of the ring |
-| Coloured arrow | Bearing arrow pointing toward the target node |
+| Colored arrow | Bearing arrow pointing toward the target node |
 | Direction cone | Translucent wedge highlighting the target direction |
-| Centre circle | Current heading in degrees, bearing to target, and distance |
+| Center circle | Current heading in degrees, bearing to target, and distance |
 | Node circle | Short name badge of the target node |
 
-**Distance colour coding:**
+**Distance color coding:**
 
-| Colour | Distance |
+| Color | Distance |
 |--------|----------|
 | Red | Far (> ⅔ of ½ mile) |
 | Yellow | Mid-range (⅓ – ⅔ of ½ mile) |

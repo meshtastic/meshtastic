@@ -12,7 +12,7 @@ The Nodes tab shows every device your radio has heard on the mesh. Tap any node 
 
 | Element | Meaning |
 |---------|---------|
-| ![Node circle](/img/apple/circleTextDefault.webp) | **Short Name & Long Name** — each node has a short name (up to 4 bytes) shown in the coloured circle and a long name displayed next to it. The circle colour is derived from the node number. The short name can be an emoji or initials. |
+| ![Node circle](/img/apple/circleTextDefault.webp) | **Short Name & Long Name** — each node has a short name (up to 4 bytes) shown in the colored circle and a long name displayed next to it. The circle color is derived from the node number. The short name can be an emoji or initials. |
 | ![Online](/img/apple/nodeOnline.webp) | **Online** — the node has been heard recently and is considered online. |
 | ![Idle / Sleeping](/img/apple/nodeIdle.webp) | **Idle / Sleeping** — the node has not been heard from recently and may be asleep or out of range. |
 | ![Hops Away](/img/apple/hopsAway.webp) | **Hops Away** — the number of intermediate nodes relaying messages between you and this node. No hops means direct communication. |
@@ -96,11 +96,18 @@ The full node row shows the circle avatar, battery level, encryption status, las
 Long-press any node in the list to access quick actions:
 
 - **Add to favorites / Remove from favorites** — star important nodes so they appear at the top of the list
+- **Display name** — give a node a local nickname (see Display Names below)
 - **Mute notifications / Unmute** — silence alerts from this node
 - **Message** — open a direct message conversation with this node
 - **Trace Route** — discover the path messages take to reach this node
 - **Ignore / Remove from ignored** — hide this node from normal views
 - **Remove** — remove the node from your local database
+
+## Display Names
+
+You can give any node a local nickname that's shown throughout the app instead of its device long name — in the node list, node details, and messages. Set it from the node's long-press menu ("Display name") or from the **Name** row in Node Detail. The avatar circle always shows the node's actual short code, unaffected by the nickname.
+
+Display names are stored only on this device and are never sent over the mesh, shared, or exported — they don't change the node's real identity, so QR codes and contact sharing still use the device's actual name.
 
 ## Filtering & Search
 
@@ -118,6 +125,8 @@ Tap the filter icon above the list to narrow which nodes are shown. Filters appl
 | **Connection** | Show nodes reachable via LoRa, via MQTT, or both. At least one is always kept on. |
 
 Filters are **remembered between launches** — the app reopens with the same filters applied. Search text is the exception: it is intentionally cleared on relaunch so you never reopen into a stale search that hides most of your nodes. Use the **reset** affordance to clear every filter and the search text at once.
+
+The map has one additional filter of its own — **Precise Locations Only**, which hides nodes reporting an approximate (reduced-precision) location. See [Map & Waypoints](map.md) for details.
 
 ## Additional Icons
 
@@ -144,6 +153,12 @@ Noise floor is displayed in dBm when the node reports it. Treat it as a directio
 Tap any node to see the full detail view with hardware info, signal metrics, environment sensors, and log navigation:
 
 ![Node Detail](/img/apple/nodeDetail.webp)
+
+### Signed Node
+
+If a node signs its broadcast packets, a green shield (🛡️) **Signed node** row appears in the detail view, marked **Verified automatically**. This means the radio has cryptographically verified an XEdDSA signature from this node (firmware 2.8 or later). Because a node's identity broadcast is itself signed, its name and identity are verified by extension.
+
+This is *automatic* trust observed from the radio — distinct from manually verifying a contact's public key out-of-band, which is a separate, user-asserted action. The row only ever affirms the good state; nodes that don't sign simply show no shield, which is not a warning.
 
 ### Hardware Info
 

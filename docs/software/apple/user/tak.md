@@ -29,7 +29,7 @@ The full TAK V2 wire format (shapes, routes, markers, casevac, emergency) requir
 
 ## TAK Server Screen
 
-**Settings → TAK Server** is the single destination for everything TAK-related. The screen is organised top-to-bottom so you can configure your identity, start the server, and pair an ATAK / iTAK client in one pass.
+**Settings → TAK Server** is the single destination for everything TAK-related. The screen is organized top-to-bottom so you can configure your identity, start the server, and pair an ATAK / iTAK client in one pass.
 
 ### TAK Identity
 

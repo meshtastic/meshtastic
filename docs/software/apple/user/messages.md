@@ -27,6 +27,12 @@ Channel conversations load the most recent **50 messages** by default. Scroll to
 
 The channel form lets you configure the channel name, encryption key, role, position sharing, and MQTT uplink/downlink settings.
 
+### Channel QR Codes
+
+Use **Share QR Code** from Settings to choose which configured channels to share. The generated Meshtastic channel link includes the selected channel settings and the LoRa config needed for another radio to communicate on the same mesh.
+
+When you open or scan a Meshtastic channel link, review the listed channels and choose whether to **Replace Channels** or **Add Channels**. Replace mode overwrites the current radio channel set, while add mode appends the incoming channels when there are free slots and no duplicate channel names.
+
 ### Channel Security
 
 | Icon | Meaning |
@@ -73,6 +79,15 @@ Select a node from the drop-down to manage connected or remote devices.
 
 ---
 
+### Signing
+
+A green shield (🛡️) on a broadcast message bubble means the message is **signed and verified** — the radio cryptographically verified an XEdDSA signature over the sender's identity key (firmware 2.8 or later). The shield answers a different question from the encryption lock: the **lock** means a direct message is *private*, while the **shield** means a broadcast is *authentic* (you know who really sent it).
+
+- The shield appears only on broadcast/channel messages, never on direct messages, and only when verification succeeded. Long-press a signed message to see **Signed · verified** in the context menu, then open **Message Details** for "Verified with the sender's key."
+- Unsigned messages show nothing — there is no warning. Direct messages, oversized broadcasts, and traffic from older firmware are all legitimately unsigned, so the absence of a shield does not indicate a problem. The radio drops broadcasts whose signature fails verification before they ever reach the app, so a shown signed message is verified by construction.
+
+---
+
 ### Tapback Reactions
 
 Long press any message and tap **Tapback** to send an emoji reaction.
@@ -89,9 +104,9 @@ Send channel broadcasts and direct messages. Long press any message for actions 
 
 ![Message status reference](/img/apple/ackErrors.webp)
 
-| Colour | Meaning |
+| Color | Meaning |
 |--------|---------|
-| Grey | Successful delivery. |
+| Gray | Successful delivery. |
 | Orange bubble | **Acknowledged by another node** — message was relayed but not confirmed by the final recipient. |
 
 The following errors may appear on a message bubble (red unless noted):
@@ -110,7 +125,7 @@ The following errors may appear on a message bubble (red unless noted):
 | Bad Request | Malformed packet rejected by the destination. |
 | Not Authorized | The destination node refused the request due to permissions. |
 
-> Grey indicates successful delivery. Orange indicates a retryable error. Red indicates a permanent failure that will not succeed on retry.
+> Gray indicates successful delivery. Orange indicates the message was relayed but not confirmed by the final recipient. Red indicates a permanent failure that will not succeed on retry.
 
 ---
 
