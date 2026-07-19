@@ -93,20 +93,20 @@ https://flows.nodered.org/node/node-red-contrib-protobuf
 
 Drag, drop, and wire the nodes like this. For this example, I ran Node-RED on a Windows machine. Note that file paths might be specified differently on different platforms. MQTT server wild cards are usually the same. A "+" is a single level wildcard for a specific topic level. A "#" is a multiple level wildcard that can be used at the end of a topic filter. The debug messages shown are what happens when the inject button sends a JSON message with a topic designed to be picked up by the specified Meshtastic device and then having it rebroadcast the message.
 
-[<img src="/documents/mqtt/NodeRedTwo.webp" style={{zoom:'50%'}} />](/documents/mqtt/NodeRedTwo.webp)
-[<img src="/documents/mqtt/NodeRedThree.webp" style={{zoom:'50%'}} />](/documents/mqtt/NodeRedThree.webp)
-[<img src="/documents/mqtt/NR_nodes.webp" style={{zoom:'50%'}} />](/documents/mqtt/NR_nodes.webp)
+[<img src="/documents/mqtt/NodeRedTwo.webp" alt="Node-RED flow wiring the MQTT and Meshtastic nodes" style={{zoom:'50%'}} />](/documents/mqtt/NodeRedTwo.webp)
+[<img src="/documents/mqtt/NodeRedThree.webp" alt="Node-RED debug output from the wired flow" style={{zoom:'50%'}} />](/documents/mqtt/NodeRedThree.webp)
+[<img src="/documents/mqtt/NR_nodes.webp" alt="Node-RED node palette for the Meshtastic flow" style={{zoom:'50%'}} />](/documents/mqtt/NR_nodes.webp)
 
 The aedes broker must be set up on the same flow as the other nodes. By activating the Publish debug node, you can see all the published messages.
-[<img src="/documents/mqtt/Broker1.webp" style={{zoom:'50%'}} />](/documents/mqtt/Broker1.webp)
+[<img src="/documents/mqtt/Broker1.webp" alt="Node-RED aedes MQTT broker node with publish debug output" style={{zoom:'50%'}} />](/documents/mqtt/Broker1.webp)
 Receiving a json mqtt message is very simple.
-[<img src="/documents/mqtt/Consume.webp" style={{zoom:'50%'}} />](/documents/mqtt/Consume.webp)
+[<img src="/documents/mqtt/Consume.webp" alt="Node-RED flow consuming a JSON MQTT message" style={{zoom:'50%'}} />](/documents/mqtt/Consume.webp)
 Injecting a json message to be sent by a device is also very simple. You do need the correct envelope.
-[<img src="/documents/mqtt/Inject.webp" style={{zoom:'50%'}} />](/documents/mqtt/Inject.webp)
+[<img src="/documents/mqtt/Inject.webp" alt="Node-RED inject node sending a JSON message to a device" style={{zoom:'50%'}} />](/documents/mqtt/Inject.webp)
 Forwarding a text message from one device, through a broker, to another broker/device/channel would look like this.
-[<img src="/documents/mqtt/Forward.webp" style={{zoom:'50%'}} />](/documents/mqtt/Forward.webp)
+[<img src="/documents/mqtt/Forward.webp" alt="Node-RED flow forwarding a text message between brokers" style={{zoom:'50%'}} />](/documents/mqtt/Forward.webp)
 If you want to decode text and position messages without json, it gets complicated:
-[<img src="/documents/mqtt/DecodeNewest.webp" style={{zoom:'50%'}} />](/documents/mqtt/DecodeNewest.webp)
+[<img src="/documents/mqtt/DecodeNewest.webp" alt="Node-RED flow decoding text and position messages without JSON" style={{zoom:'50%'}} />](/documents/mqtt/DecodeNewest.webp)
 If you are interested in my flow for this it is here:
 
 ```json
@@ -671,10 +671,10 @@ If you are interested in my flow for this it is here:
 (documents/mqtt/Flow.txt)
 
 Node-red can rapidly (minutes vs days) put together some pretty impressive output when paired with meshtastic. Here is the output of that flow geofencing and mapping via mqtt data.
-[<img src="/documents/mqtt/Mapping.webp" style={{zoom:'50%'}} />](/documents/mqtt/Mapping.webp)
+[<img src="/documents/mqtt/Mapping.webp" alt="Node-RED geofencing and mapping output from MQTT data" style={{zoom:'50%'}} />](/documents/mqtt/Mapping.webp)
 
 Advanced use, such as encoding Position and sending it to a device via MQTT without using JSON can get a little complicated. An example of how it can be done is below.
-[<img src="/documents/mqtt/EncodingPosition.webp" style={{zoom:'50%'}} />](/documents/mqtt/EncodingPosition.webp)
+[<img src="/documents/mqtt/EncodingPosition.webp" alt="Node-RED flow encoding a position and sending it over MQTT" style={{zoom:'50%'}} />](/documents/mqtt/EncodingPosition.webp)
 The flow is:
 
 ```json
@@ -1003,4 +1003,4 @@ Sending a position to a device for broadcast to the mesh is much easier with JSO
 ```
 
 An example of doing this in node-red:
-[<img src="/documents/mqtt/PosJSON.webp" style={{zoom:'50%'}} />](/documents/mqtt/PosJSON.webp)
+[<img src="/documents/mqtt/PosJSON.webp" alt="Node-RED flow building a position JSON message" style={{zoom:'50%'}} />](/documents/mqtt/PosJSON.webp)

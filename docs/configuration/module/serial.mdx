@@ -12,7 +12,7 @@ import ReactPlayer from "react-player";
 
 The serial module lets you talk to and control your Meshtastic device over a UART serial port. Set the [mode](#mode) to match your use-case — from plain text bridging to raw binary tunnels, NMEA output, and packet logging.
 
-![image](/img/modules/Serial/jet.webp)
+![Serial console showing text messages bridged over the Meshtastic serial module](/img/modules/Serial/jet.webp)
 
 <div style={{ maxWidth: "800px", margin: "auto" }}>
   <ReactPlayer
@@ -116,7 +116,7 @@ When enabled, redirects the primary USB serial port to serial module output inst
   ]}>
 <TabItem value="android">
 
-#### Android
+### Android
 
 :::info
 
@@ -130,7 +130,7 @@ Serial Module Config options are available for Android.
 </TabItem>
 <TabItem value="apple">
 
-#### Apple
+### Apple
 
 :::info
 All serial module config options are available on iOS, iPadOS and macOS at Settings > Module Configuration > Serial.
@@ -139,7 +139,7 @@ All serial module config options are available on iOS, iPadOS and macOS at Setti
 </TabItem>
 <TabItem value="cli">
 
-#### CLI
+### CLI
 
 :::info
 
@@ -193,7 +193,7 @@ meshtastic --set serial.timeout 15
 </TabItem>
 <TabItem value="web">
 
-#### Web
+### Web
 
 :::info
 All serial module config options are available in the Web UI.
@@ -691,7 +691,7 @@ The following examples connect a Raspberry Pi Pico or Arduino Mini Pro to a PIR 
 
 ### Raspberry Pi Pico Wiring
 
-![image](/img/modules/Serial/pico-pir-wiring.webp)
+![Wiring diagram: PIR sensor connected to a Raspberry Pi Pico for the serial module](/img/modules/Serial/pico-pir-wiring.webp)
 
 **For T1000-E (pogo-pin UART):**
 - TX pogo pin (P0.16) → RX (GP1) on the Pico
@@ -736,7 +736,7 @@ while True:
 
 ### Arduino Mini Pro Wiring
 
-![image](/img/modules/Serial/arduino-mini-pro-pir-wiring.webp)
+![Wiring diagram: PIR sensor connected to an Arduino Pro Mini for the serial module](/img/modules/Serial/arduino-mini-pro-pir-wiring.webp)
 
 **For T1000-E (pogo-pin UART):**
 - TX pogo pin (P0.16) → RX pin on the Arduino Mini Pro

@@ -63,6 +63,27 @@ if rg -n '<(img|br|hr|input|meta|link)\s+[^/]*[^/]>' $SEARCH_PATH $RG_MDX 2>/dev
   echo "WARNING: Found potentially unclosed self-closing tags (may be false positives)"
 fi
 
+# Pattern 6: Accessibility — images missing alt text
+# Single-line <img> tags without an alt attribute, and empty markdown alt ![]().
+# Warning-level: multi-line <img> tags (alt on a following line) and <img> inside
+# inline code are not fully parseable here; use a JSX-aware linter for strict checks.
+echo ""
+echo "=== Checking for images missing alt text ==="
+ALT_ISSUES=0
+if rg -n '<img\b[^>]*>' $SEARCH_PATH $RG_MDX 2>/dev/null | rg -v 'alt\s*=' | rg -v '`<img' >/tmp/mdx-img-noalt.txt 2>/dev/null && [ -s /tmp/mdx-img-noalt.txt ]; then
+  cat /tmp/mdx-img-noalt.txt
+  echo "WARNING: Found <img> tags without an alt attribute. Add alt=\"...\" (or alt=\"\" if purely decorative)."
+  ALT_ISSUES=1
+fi
+if rg -n '!\[\]\(' $SEARCH_PATH $RG_MDX 2>/dev/null; then
+  echo "WARNING: Found markdown images with empty alt text ![](...). Describe the image or use it only if decorative."
+  ALT_ISSUES=1
+fi
+rm -f /tmp/mdx-img-noalt.txt
+if [ $ALT_ISSUES -eq 0 ]; then
+  echo "✓ No images missing alt text found"
+fi
+
 echo ""
 if [ $EXIT_CODE -eq 0 ]; then
   echo "✅ MDX lint passed!"

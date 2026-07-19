@@ -133,6 +133,24 @@ This option is used to configure the interval (in seconds) that should be used t
 
 Default is `1800` seconds (30 minutes).
 
+## Settings
+
+|                  Setting                  |  Acceptable Values  |                  Default                   |
+| :---------------------------------------: | :-----------------: | :----------------------------------------: |
+|    telemetry.device_telemetry_enabled     |   `true`, `false`   |                  `false`                   |
+|     telemetry.device_update_interval      | `integer` (seconds) | Default `0` is 30 minutes(`1800` seconds). |
+| telemetry.environment_display_fahrenheit  |   `true`, `false`   |                  `false`                   |
+| telemetry.environment_measurement_enabled |   `true`, `false`   |                  `false`                   |
+|   telemetry.environment_screen_enabled    |   `true`, `false`   |                  `false`                   |
+|   telemetry.environment_update_interval   | `integer` (seconds) | Default `0` is 30 minutes(`1800` seconds). |
+|       telemetry.air_quality_enabled       |   `true`, `false`   |                  `false`                   |
+|      telemetry.air_quality_interval       | `integer` (seconds) | Default `0` is 30 minutes(`1800` seconds). |
+|    telemetry.power_measurement_enabled    |   `true`, `false`   |                  `false`                   |
+|      telemetry.power_update_interval      | `integer` (seconds) | Default `0` is 30 minutes(`1800` seconds). |
+|   telemetry.health_measurement_enabled    |   `true`, `false`   |                  `false`                   |
+|     telemetry.health_update_interval      | `integer` (seconds) | Default `0` is 30 minutes(`1800` seconds). |
+|      telemetry.health_screen_enabled      |   `true`, `false`   |                  `false`                   |
+
 ## Telemetry Config Client Availability
 
 <Tabs
@@ -174,7 +192,7 @@ Default is `1800` seconds (30 minutes).
   ]}>
 <TabItem value="android">
 
-#### Android
+### Android
 
 :::info
 
@@ -188,7 +206,7 @@ Telemetry Config options are available for Android.
 </TabItem>
 <TabItem value="apple">
 
-#### Apple
+### Apple
 
 :::info
 All telemetry module config options are available on iOS, iPadOS and macOS at Settings > Module Configuration > Telemetry (Sensors).
@@ -198,31 +216,13 @@ All telemetry module config options are available on iOS, iPadOS and macOS at Se
 </TabItem>
 <TabItem value="cli">
 
-#### CLI
+### CLI
 
 :::info
 
 All telemetry module config options are available in the python CLI. Example commands are below:
 
 :::
-
-## Settings
-
-|                  Setting                  |  Acceptable Values  |                  Default                   |
-| :---------------------------------------: | :-----------------: | :----------------------------------------: |
-|    telemetry.device_telemetry_enabled     |   `true`, `false`   |                  `false`                   |
-|     telemetry.device_update_interval      | `integer` (seconds) | Default `0` is 30 minutes(`1800` seconds). |
-| telemetry.environment_display_fahrenheit  |   `true`, `false`   |                  `false`                   |
-| telemetry.environment_measurement_enabled |   `true`, `false`   |                  `false`                   |
-|   telemetry.environment_screen_enabled    |   `true`, `false`   |                  `false`                   |
-|   telemetry.environment_update_interval   | `integer` (seconds) | Default `0` is 30 minutes(`1800` seconds). |
-|       telemetry.air_quality_enabled       |   `true`, `false`   |                  `false`                   |
-|      telemetry.air_quality_interval       | `integer` (seconds) | Default `0` is 30 minutes(`1800` seconds). |
-|    telemetry.power_measurement_enabled    |   `true`, `false`   |                  `false`                   |
-|      telemetry.power_update_interval      | `integer` (seconds) | Default `0` is 30 minutes(`1800` seconds). |
-|   telemetry.health_measurement_enabled    |   `true`, `false`   |                  `false`                   |
-|     telemetry.health_update_interval      | `integer` (seconds) | Default `0` is 30 minutes(`1800` seconds). |
-|      telemetry.health_screen_enabled      |   `true`, `false`   |                  `false`                   |
 
 :::tip
 
@@ -260,7 +260,7 @@ meshtastic --set telemetry.environment_display_fahrenheit false
 </TabItem>
 <TabItem value="web">
 
-#### Web
+### Web
 
 :::info
 
@@ -277,7 +277,7 @@ All telemetry module config options are available in the Web UI.
 
 Setup of a RAK 4631 with Environment Sensor
 
-[<img src="RAK4631_with_EnvSensor" src="/img/hardware/rak/RAK4631_with_EnvSensor.webp" style={{zoom:'25%'}} />](/img/hardware/rak/RAK4631_with_EnvSensor.webp)
+[<img src="/img/hardware/rak/RAK4631_with_EnvSensor.webp" alt="RAK4631 wired to an environment sensor" style={{zoom:'25%'}} />](/img/hardware/rak/RAK4631_with_EnvSensor.webp)
 
 Requirements:
 
