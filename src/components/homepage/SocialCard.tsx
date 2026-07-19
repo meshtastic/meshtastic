@@ -23,7 +23,7 @@ export const SocialCard = ({
     >
       {children}
       <a
-        className="absolute inset-0 hidden rounded-lg border border-accent bg-secondary bg-opacity-95 text-2xl shadow-xl group-hover:flex group-focus-within:flex"
+        className="absolute inset-0 flex rounded-lg border border-accent bg-secondary bg-opacity-95 text-2xl opacity-0 shadow-xl transition-opacity group-hover:opacity-100 group-focus-within:opacity-100 focus-visible:opacity-100"
         aria-label={ariaLabel}
         href={link}
         rel={isMeLink ? "me noreferrer" : "noreferrer"}
