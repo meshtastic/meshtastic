@@ -37,9 +37,9 @@ const Firmware = (): JSX.Element => {
       })}
     >
       <div className="container mt-8 flex flex-col gap-3">
-        <h1 className="m-2">
+        <h2 className="m-2">
           <Translate id="downloads.flasher.heading">Flasher</Translate>
-        </h1>
+        </h2>
         <div className="flex w-full overflow-hidden rounded-xl">
           <div className="flex w-1/5 bg-gradient-to-r from-green-500 to-primary">
             <BoltIcon className="m-auto h-20" />

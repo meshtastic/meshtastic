@@ -7,6 +7,7 @@ export interface SocialCardProps {
   color: string;
   link: string;
   isMeLink?: boolean;
+  ariaLabel?: string;
 }
 
 export const SocialCard = ({
@@ -14,6 +15,7 @@ export const SocialCard = ({
   color,
   link,
   isMeLink = false,
+  ariaLabel = "Open link",
 }: SocialCardProps): JSX.Element => {
   return (
     <div
@@ -22,7 +24,7 @@ export const SocialCard = ({
       {children}
       <a
         className="absolute inset-0 hidden rounded-lg border border-accent bg-secondary bg-opacity-95 text-2xl shadow-xl group-hover:flex group-focus-within:flex"
-        aria-label="Open link"
+        aria-label={ariaLabel}
         href={link}
         rel={isMeLink ? "me noreferrer" : "noreferrer"}
         target="_blank"
