@@ -161,16 +161,6 @@ const RegionData = new Map<
     },
   ],
   [
-    Protobuf.Config.Config_LoRaConfig_RegionCode.UA_868,
-    {
-      freqStart: 868.0,
-      freqEnd: 868.6,
-      dutyCycle: 1,
-      spacing: 0,
-      powerLimit: 14,
-    },
-  ],
-  [
     Protobuf.Config.Config_LoRaConfig_RegionCode.MY_433,
     {
       freqStart: 433.0,
