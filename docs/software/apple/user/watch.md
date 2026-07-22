@@ -17,7 +17,7 @@ Node data is pushed to the Watch automatically whenever the iPhone app is in ran
 | Apple Watch | watchOS paired with iPhone |
 | iPhone app | Meshtastic iPhone app open and connected to a radio |
 | Location | Watch Location Services enabled for direction-finding |
-| Proximity | Watch and iPhone within normal Bluetooth/Wi-Fi range of each other |
+| Proximity | Watch and iPhone within normal Bluetooth/WiFi range of each other |
 
 ## Tabs
 

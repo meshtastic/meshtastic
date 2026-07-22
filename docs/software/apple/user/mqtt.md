@@ -37,7 +37,7 @@ Go to **Settings → MQTT**:
 | Encryption Enabled | Encrypt packets before publishing. Recommended — prevents the broker from reading message content. |
 | JSON Enabled | Removed. JSON packet support was deprecated and removed in firmware. |
 | TLS Enabled | Use TLS for the MQTT connection. Requires a broker with TLS support. |
-| Proxy to Client | Route MQTT traffic through the phone app rather than directly from the radio. Useful for radios without Wi-Fi. |
+| Proxy to Client | Route MQTT traffic through the phone app rather than directly from the radio. Useful for radios without WiFi. |
 
 ## Topic Structure
 

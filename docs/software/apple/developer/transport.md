@@ -15,7 +15,7 @@ Transports live in `Meshtastic/Accessory/Transports/`:
 | File | Protocol | Notes |
 |------|----------|-------|
 | `BLETransport.swift` | CoreBluetooth | Standard BLE connection to radios |
-| `TCPTransport.swift` | Network.framework | Wi-Fi / TCP/IP to radios with networking |
+| `TCPTransport.swift` | Network.framework | WiFi / TCP/IP to radios with networking |
 | `SerialTransport.swift` | IOKit serial | macOS only; USB-serial adapters |
 
 Each transport conforms to a `MeshTransport` protocol that exposes `connect()`, `disconnect()`, `send(data:)`, and a `received` publisher.
