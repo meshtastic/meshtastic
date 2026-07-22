@@ -19,7 +19,8 @@ queryString="t-beam"
 defaultValue="supreme"
 values={[
 {label: 'S3-Core', value: 's3core'},
-{label: 'Supreme', value: 'supreme'}
+{label: 'Supreme', value: 'supreme'},
+{label: '1W', value: '1W'}
 ]}>
 
 <TabItem value = "s3core">
@@ -123,6 +124,68 @@ With the device now in the Espressif Firmware Download mode, you can proceed wit
     - [Rokland Quectel L76K](https://store.rokland.com/products/lilygo-t-beam-supreme-esp32-s3-lora-development-board-sx1262-915mhz-gps-l76k-or-u-blox?variant=41051191345235)
 
 ![T-Beam Supreme](/img/hardware/T-BEAM-S3-Supreme.webp)
+
+</TabItem>
+
+<TabItem value = "1W">
+
+## T-Beam 1W
+
+<DeviceImage device="tbeam.svg" alt="LILYGO T-Beam Supreme" size="lg" center />
+
+- **MCU**
+- ESP32-S3 (WiFi & Bluetooth 5LE)
+- **LoRa Transceiver**
+  - **Semtech SX1262 + 1W PA XY16P35 module** (improved performance)
+- **Frequency options**
+  - 868 MHz
+  - 915 MHz
+- **Navigation Module**
+  - **Quectel L76K - (supports GPS, Beidou, GLONASS)**
+- **Connectors**
+  - USB-C
+  - Antenna: U.FL antenna connector
+
+### Features
+
+- Includes T-Beam S3-Core Module
+- SoftRF preinstalled (flashing to Meshtastic required)
+- Power, Boot and Reset switches
+- 1.3" OLED included
+- BME280 Air pressure sensor
+- QMI8658 IMU
+- QMC6310 Magnetometer
+- PCF8563 RTC
+- Micro-SD reader (not implemented in Meshtastic)
+
+### Flashing
+
+To flash ESP32-S3 devices like the T-Beam !W, you typically need to place them in Espressif's firmware download mode. Use the "1200bps reset" button in the web flasher to do this. If this method does not work for any reason, you can follow the manual process below.
+
+:::warning
+
+Do not proceed unless an antenna is connected to avoid possible damage to the device's radio.
+
+:::
+
+The following process will manually place the device into the Espressif Firmware Download mode:
+
+1. Unplug the device.
+2. Press and hold the BOOT button.
+3. Plug device in.
+4. After 2-3 seconds, release the BOOT button.
+
+With the device now in the Espressif Firmware Download mode, you can proceed with flashing using one of the supported flashing methods. It's generally recommended to use the [Web Flasher](https://flasher.meshtastic.org/). You can select "Tbeam S3 Core from the device drop-down.
+
+### Resources
+
+- Firmware file: `firmware-t-beam-1w-X.X.X.xxxxxxx.bin`
+- Purchase Links:
+  - International
+    - [LilyGO Store](https://lilygo.cc/products/t-beam-1w)
+
+
+![T-Beam 1W](/img/hardware/T-BEAM-S3-1W.webp)
 
 </TabItem>
 
