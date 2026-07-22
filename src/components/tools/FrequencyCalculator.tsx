@@ -37,7 +37,7 @@ const RegionData = new Map<
       freqEnd: 434.0,
       dutyCycle: 10,
       spacing: 0,
-      powerLimit: 12,
+      powerLimit: 10,
     },
   ],
   [
@@ -63,11 +63,11 @@ const RegionData = new Map<
   [
     Protobuf.Config.Config_LoRaConfig_RegionCode.JP,
     {
-      freqStart: 920.8,
-      freqEnd: 927.8,
+      freqStart: 920.5,
+      freqEnd: 923.5,
       dutyCycle: 100,
       spacing: 0,
-      powerLimit: 16,
+      powerLimit: 13,
     },
   ],
   [
@@ -107,7 +107,7 @@ const RegionData = new Map<
       freqEnd: 923.0,
       dutyCycle: 100,
       spacing: 0,
-      powerLimit: 0,
+      powerLimit: 23,
     },
   ],
   [
@@ -117,7 +117,7 @@ const RegionData = new Map<
       freqEnd: 925.0,
       dutyCycle: 100,
       spacing: 0,
-      powerLimit: 0,
+      powerLimit: 27,
     },
   ],
   [
@@ -145,9 +145,9 @@ const RegionData = new Map<
     {
       freqStart: 920.0,
       freqEnd: 925.0,
-      dutyCycle: 100,
+      dutyCycle: 10,
       spacing: 0,
-      powerLimit: 16,
+      powerLimit: 27,
     },
   ],
   [
@@ -158,16 +158,6 @@ const RegionData = new Map<
       dutyCycle: 10,
       spacing: 0,
       powerLimit: 10,
-    },
-  ],
-  [
-    Protobuf.Config.Config_LoRaConfig_RegionCode.UA_868,
-    {
-      freqStart: 868.0,
-      freqEnd: 868.6,
-      dutyCycle: 1,
-      spacing: 0,
-      powerLimit: 14,
     },
   ],
   [
@@ -198,6 +188,76 @@ const RegionData = new Map<
       dutyCycle: 100,
       spacing: 0,
       powerLimit: 20,
+    },
+  ],
+  [
+    Protobuf.Config.Config_LoRaConfig_RegionCode.PH_433,
+    {
+      freqStart: 433.0,
+      freqEnd: 434.7,
+      dutyCycle: 100,
+      spacing: 0,
+      powerLimit: 10,
+    },
+  ],
+  [
+    Protobuf.Config.Config_LoRaConfig_RegionCode.PH_868,
+    {
+      freqStart: 868.0,
+      freqEnd: 869.4,
+      dutyCycle: 100,
+      spacing: 0,
+      powerLimit: 14,
+    },
+  ],
+  [
+    Protobuf.Config.Config_LoRaConfig_RegionCode.PH_915,
+    {
+      freqStart: 915.0,
+      freqEnd: 918.0,
+      dutyCycle: 100,
+      spacing: 0,
+      powerLimit: 24,
+    },
+  ],
+  [
+    Protobuf.Config.Config_LoRaConfig_RegionCode.KZ_433,
+    {
+      freqStart: 433.075,
+      freqEnd: 434.775,
+      dutyCycle: 100,
+      spacing: 0,
+      powerLimit: 10,
+    },
+  ],
+  [
+    Protobuf.Config.Config_LoRaConfig_RegionCode.KZ_863,
+    {
+      freqStart: 863.0,
+      freqEnd: 868.0,
+      dutyCycle: 100,
+      spacing: 0,
+      powerLimit: 30,
+    },
+  ],
+  [
+    Protobuf.Config.Config_LoRaConfig_RegionCode.NP_865,
+    {
+      freqStart: 865.0,
+      freqEnd: 868.0,
+      dutyCycle: 100,
+      spacing: 0,
+      powerLimit: 30,
+    },
+  ],
+  [
+    Protobuf.Config.Config_LoRaConfig_RegionCode.BR_902,
+    {
+      freqStart: 902.0,
+      freqEnd: 907.5,
+      dutyCycle: 100,
+      spacing: 0,
+      powerLimit: 30,
     },
   ],
   [
