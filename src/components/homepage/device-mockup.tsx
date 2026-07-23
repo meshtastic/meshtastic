@@ -352,6 +352,10 @@ export function DeviceMockup() {
                     id: "homepage.deviceMockup.placeholder",
                     message: "Type message...",
                   })}
+                  aria-label={translate({
+                    id: "homepage.deviceMockup.placeholder",
+                    message: "Type message...",
+                  })}
                   className="flex-1 border-0 bg-transparent font-mono text-base text-stone-800 dark:text-gray-200 placeholder-stone-400 dark:placeholder-gray-500 shadow-none outline-none caret-primary"
                 />
                 <button

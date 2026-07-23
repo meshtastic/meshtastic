@@ -72,7 +72,10 @@ function Marquee({ children, reverse }: MarqueeProps) {
         data-reverse={reverse || undefined}
       >
         {children}
-        {children}
+        {/* Visual duplicate for the seamless marquee loop; hidden from assistive tech to avoid announcing every logo twice. */}
+        <span aria-hidden="true" style={{ display: "contents" }}>
+          {children}
+        </span>
       </div>
     </div>
   );
@@ -101,6 +104,7 @@ export function Sponsors() {
                 href={supporter.url}
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label={supporter.name}
                 className="flex h-8 shrink-0 items-center px-4 transition-transform hover:scale-110 md:h-12 md:px-8"
                 style={{ color: LOGO_COLOR }}
               >
@@ -127,6 +131,7 @@ export function Sponsors() {
                 href={sponsor.url}
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label={sponsor.name}
                 className="flex h-6 shrink-0 items-center px-6 transition-transform hover:scale-110 md:h-10 md:px-12"
                 style={{ color: LOGO_COLOR }}
               >

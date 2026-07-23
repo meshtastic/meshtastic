@@ -15,7 +15,7 @@ export default {
         sidebar: "1000px",
       },
       colors: {
-        accent: "var(--accent)",
+        accent: "hsl(var(--accent))",
         base: "var(--base)",
         primary: "hsl(var(--btn-primary))",
         secondary: "hsl(var(--surface-alt))",

@@ -123,6 +123,7 @@ const MeshNode = ({
               <Bluetooth
                 className="w-5 h-5 text-[#0082FC]"
                 aria-label="Bluetooth connection"
+                // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role -- role="img" on svg is the correct accessible-icon pattern, not a role that maps to a real <img> tag
                 role="img"
               />
             )}
@@ -130,6 +131,7 @@ const MeshNode = ({
               <Wifi
                 className="w-5 h-5 text-primary"
                 aria-label="WiFi connection"
+                // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role -- role="img" on svg is the correct accessible-icon pattern, not a role that maps to a real <img> tag
                 role="img"
               />
             )}
@@ -137,6 +139,7 @@ const MeshNode = ({
               <Usb
                 className="w-5 h-5 text-muted-foreground"
                 aria-label="USB connection"
+                // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role -- role="img" on svg is the correct accessible-icon pattern, not a role that maps to a real <img> tag
                 role="img"
               />
             )}
@@ -568,6 +571,7 @@ export function MeshTopology() {
                       onChange={(e) => setInputValue(e.target.value)}
                       onKeyDown={handleKeyDown}
                       placeholder="Type..."
+                      aria-label="Message to send"
                       className="flex-1 w-full min-w-0 border-0 bg-transparent font-mono text-[10px] text-stone-800 dark:text-gray-200 placeholder-stone-400 dark:placeholder-gray-500 outline-none"
                     />
                     <button
@@ -596,6 +600,7 @@ export function MeshTopology() {
             className="absolute inset-0 w-full h-full overflow-visible"
             viewBox="0 0 100 100"
             preserveAspectRatio="none"
+            // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role -- role="img" on svg is the correct accessible-icon pattern, not a role that maps to a real <img> tag
             role="img"
             aria-label="Mesh network connections"
           >
