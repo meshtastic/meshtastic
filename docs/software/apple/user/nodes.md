@@ -31,17 +31,17 @@ Each node is configured with a role that determines how it behaves on the mesh. 
 
 | Icon | Role | Description |
 |------|------|-------------|
-| ![](/img/apple/roleClient.webp) | Client | Standard end-user device. Sends and receives messages, shares position. |
-| ![](/img/apple/roleClientMute.webp) | Client Mute | Like Client but does not forward packets from other devices. Reduces mesh traffic near congested areas. |
-| ![](/img/apple/roleClientHidden.webp) | Client Hidden | Only broadcasts as needed for stealth or power savings. |
-| ![](/img/apple/roleClientBase.webp) | Client Base | Rooftop node that distributes messages widely from nearby Client Mute nodes. |
-| ![](/img/apple/roleRouter.webp) | Router | Dedicated infrastructure node — prioritises packet forwarding. Not for rooftops or mobile nodes. |
-| ![](/img/apple/roleRouterLate.webp) | Router Late | Like Router but rebroadcasts once after all other nodes. Better suited to rooftop deployments. |
-| ![](/img/apple/roleTracker.webp) | Tracker | Broadcasts GPS position packets as priority. Optimised for frequent location reporting. |
-| ![](/img/apple/roleSensor.webp) | Sensor | Broadcasts telemetry packets as priority. Optimised for sensor data. |
-| ![](/img/apple/roleTak.webp) | TAK | Optimised for ATAK system communication. Reduces routine broadcasts. |
-| ![](/img/apple/roleTakTracker.webp) | TAK Tracker | Enables automatic TAK PLI broadcasts. Reduces routine broadcasts. |
-| ![](/img/apple/roleLostAndFound.webp) | Lost and Found | Broadcasts location as a message to the default channel to assist with device recovery. |
+| ![Client role icon](/img/apple/roleClient.webp) | Client | Standard end-user device. Sends and receives messages, shares position. |
+| ![Client Mute role icon](/img/apple/roleClientMute.webp) | Client Mute | Like Client but does not forward packets from other devices. Reduces mesh traffic near congested areas. |
+| ![Client Hidden role icon](/img/apple/roleClientHidden.webp) | Client Hidden | Only broadcasts as needed for stealth or power savings. |
+| ![Client Base role icon](/img/apple/roleClientBase.webp) | Client Base | Rooftop node that distributes messages widely from nearby Client Mute nodes. |
+| ![Router role icon](/img/apple/roleRouter.webp) | Router | Dedicated infrastructure node — prioritises packet forwarding. Not for rooftops or mobile nodes. |
+| ![Router Late role icon](/img/apple/roleRouterLate.webp) | Router Late | Like Router but rebroadcasts once after all other nodes. Better suited to rooftop deployments. |
+| ![Tracker role icon](/img/apple/roleTracker.webp) | Tracker | Broadcasts GPS position packets as priority. Optimised for frequent location reporting. |
+| ![Sensor role icon](/img/apple/roleSensor.webp) | Sensor | Broadcasts telemetry packets as priority. Optimised for sensor data. |
+| ![TAK role icon](/img/apple/roleTak.webp) | TAK | Optimised for ATAK system communication. Reduces routine broadcasts. |
+| ![TAK Tracker role icon](/img/apple/roleTakTracker.webp) | TAK Tracker | Enables automatic TAK PLI broadcasts. Reduces routine broadcasts. |
+| ![Lost and Found role icon](/img/apple/roleLostAndFound.webp) | Lost and Found | Broadcasts location as a message to the default channel to assist with device recovery. |
 
 [Choosing the Right Device Role →](https://meshtastic.org/blog/choosing-the-right-device-role/)
 

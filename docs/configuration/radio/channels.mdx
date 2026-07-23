@@ -182,7 +182,7 @@ The client applications have implemented different levels of precision giving th
 
 <TabItem value="android">
 
-#### Android
+### Android
 
 :::info
 All Channel config options are available for Android.
@@ -196,7 +196,7 @@ All Channel config options are available for Android.
 
 <TabItem value="apple">
 
-#### Apple
+### Apple
 
 :::info
 
@@ -208,7 +208,7 @@ A channel editor is available on the iOS, iPadOS and macOS applications at Setti
 
 <TabItem value="cli">
 
-#### CLI
+### CLI
 
 :::info
 All Channel config options are available in the python CLI. Example commands are below:
@@ -224,7 +224,7 @@ meshtastic --ch-set name "My Channel" --ch-set psk random --ch-set uplink_enable
 
 :::
 
-##### Name
+#### Name
 
 ```shell title="Set channel name for the PRIMARY channel"
 # without spaces
@@ -233,7 +233,7 @@ meshtastic --ch-set name MyChannel --ch-index 0
 meshtastic --ch-set name "My Channel" --ch-index 0
 ```
 
-##### PSK
+#### PSK
 
 If you use Meshtastic for exchanging messages you don't want other people to see, `random` is the setting you should use. Selecting `default` or any of the `simple` values from the following table will use publicly known encryption keys. They're shipped with Meshtastic source code and thus, anyone can listen to messages encrypted by them. They're great for testing and public channels.
 
@@ -272,7 +272,7 @@ Use this to copy and paste the `base64` encoded (single channel) key from the me
 meshtastic --ch-set psk none --ch-index 0
 ```
 
-##### Uplink / Downlink
+#### Uplink / Downlink
 
 For configuring gateways, please see [MQTT](/docs/configuration/module/mqtt)
 
@@ -306,7 +306,7 @@ meshtastic --ch-set module_settings.position_precision 32 --ch-index 1
 
 <TabItem value="web">
 
-#### Web
+### Web
 
 :::info
 All Channel config options are available in the Web UI.
