@@ -14,6 +14,24 @@ Recent user-facing changes from roughly the last 12 months. Newest at the top.
 Show roughly the last 12 months of changes; archive entries older than a year by removing them.
 -->
 
+**Jul 2026** — [Map & Waypoints](map.md) — Precise locations only: a new Map Options toggle hides nodes that broadcast an approximate (reduced-precision) location — the ones drawn with a translucent precision circle — so the mesh map shows only nodes reporting an exact position.
+
+**Jul 2026** — [Lockdown Mode](lockdown.md) — Support for hardened lockdown-firmware radios: set or enter the device passphrase in a full-screen prompt, with per-radio Keychain passphrase storage and silent re-unlock, optional session limits (boots, hours, per-boot cap), and Lock Now / Forget Stored Passphrase in Security settings.
+
+**Jun 2026** — [Map & Waypoints](map.md) — Waypoint geofences: give a waypoint a circular radius and/or a bounding box and get a local alert when nodes enter or leave it, optionally limited to your favorites.
+
+**Jun 2026** — [Nodes](nodes.md) — Local display names: give any node a local nickname shown in place of its long name across the node list, node detail, and messages. Set it from the long-press menu or the Name row in Node Detail — local-only, never sent over the mesh.
+
+**Jun 2026** — [Map & Waypoints](map.md) — Trace routes on the map: signal-colored, directional outbound/return lines (green→red by hop SNR) with a guided 3D satellite flyover and speed control, opened with Show on Map.
+
+**Jun 2026** — [Messages](messages.md) — Packet signing (firmware 2.8+): verified, signed broadcast messages now show a green shield, and Message Details reveals "Signed · verified". The encryption lock (private DMs) is unchanged; unsigned traffic is never flagged.
+
+**Jun 2026** — [Nodes](nodes.md) — Signed node: nodes that sign their broadcasts show a green shield "Signed node — Verified automatically" row in the detail view (firmware 2.8+), reflecting automatic, radio-observed trust.
+
+**Jun 2026** — [Settings](settings.md) — LoRa region/preset compatibility (firmware 2.8+): the Presets picker is filtered to those legal for the selected region, switches to the region default when needed, and warns on licensed amateur (ham) bands. The new 2.8 ham/narrow regions and presets are hidden on 2.7.x and earlier radios.
+
+**Jun 2026** — [Settings](settings.md) — Traffic Management updated for the 2.8 firmware schema: features are now enabled implicitly by a non-zero value; the precision-bits and hop-management options were removed.
+
 **Jun 2026** — [Nodes](nodes.md) — Persistent node filters: online, favorites, distance, hops, roles, and connection-type filters are now remembered between launches and shared across the Nodes list, Messages contacts, and map. Search text still clears on relaunch.
 
 **Jun 2026** — [Getting Started](getting-started.md) — Redesigned first-launch setup: a clearer guided flow for Bluetooth, Local Network, Notifications, Location, and Siri permissions with colored icons and per-notification toggles.

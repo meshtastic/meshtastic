@@ -8,11 +8,11 @@ sidebar_position: 14
 
 ## Automatic documentation translation
 
-On devices running iOS 26 or later, the in-app documentation is automatically translated into your device language when you open **Help & Docs**.
+On devices running iOS 26 or later, the in-app documentation is automatically translated into your device language when you open **Help & Documentation**.
 
 **Here's how it works:** The very first person to use a particular language + app version combination translates all pages on-device and automatically contributes their translations back to the community. Every user after them gets those translations instantly — no waiting for on-device translation.
 
-1. You open **Help & Docs** in a non-English language.
+1. You open **Help & Documentation** in a non-English language.
 2. If community translations already exist for your language and app version, they're downloaded instantly.
 3. If not, Apple's Translation framework translates every page on-device (~10 seconds per page).
 4. Your translations are anonymously uploaded to the [meshtastic/translations](https://github.com/meshtastic/translations) repository.

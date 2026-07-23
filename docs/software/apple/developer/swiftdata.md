@@ -160,7 +160,7 @@ Prefer these helpers over direct queries to keep logic consistent.
 
 To prevent unbounded database growth, the app enforces per-node caps when inserting new records. Older rows beyond the cap are deleted in the same transaction:
 
-| Relationship | Cap | Behaviour |
+| Relationship | Cap | Behavior |
 |-------------|-----|-----------|
 | `NodeInfoEntity.positions` | 5 000 | Oldest positions deleted when exceeded |
 | `NodeInfoEntity.telemetries` | 5 000 per metrics type | Oldest telemetry of that type deleted |
