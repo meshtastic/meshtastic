@@ -1,7 +1,7 @@
 ---
 title: Map & Waypoints
 sidebar_position: 6
-last_updated: 2026-06-25
+last_updated: 2026-05-13
 description: View node positions on the map, create and share waypoints, and manage position sharing and privacy.
 parent: User Guide
 ---
@@ -19,7 +19,13 @@ The map displays:
 
 ### Node Markers
 
-Each node that reports a position is shown as a **node chip** marker displaying the node's short name. The chip is colored by the node's own identity color (a stable color derived from its node number) — the same chip used in the node list, so a node looks the same everywhere. Marker color does **not** encode online/offline status. When a node's position updates live, its marker briefly pulses. Nearby markers are clustered as you zoom out.
+Node markers on the map indicate:
+| Color | Meaning |
+|-------|---------|
+| Green | Online (heard recently) |
+| Yellow | Away (heard within 2 hours) |
+| Gray | Offline (stale position) |
+| Blue | Your own node |
 
 ### Map Controls
 

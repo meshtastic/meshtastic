@@ -50,8 +50,6 @@ After modifying settings, tap **Save** to write the configuration to your radio.
 
 ### Modem Presets
 
-> 💡 **Tip:** The **SNR Limit** values are negative on purpose. LoRa can decode signals *below* the noise floor, so a more-negative limit means the preset tolerates a weaker, noisier signal (more range). See [How the Signal Meter Works](signal-meter.md) for the full explanation.
-
 | Preset | Range | Speed | SNR Limit | Best For |
 |--------|-------|-------|-----------|----------|
 | Short Turbo | ~1 km | 21.9 kbps | −5 dB | Dense urban with line-of-sight; data-heavy applications |

@@ -1,7 +1,7 @@
 ---
 title: Persistence
 sidebar_position: 6
-last_updated: 2026-06-11
+last_updated: 2026-05-13
 parent: Developer Guide
 ---
 
@@ -26,7 +26,6 @@ The primary structured data store:
 - Migrations managed through Room's built-in migration system
 - DAO interfaces live in `core:database`
 - Repository layer in `core:repository` provides the public API
-- Full-text message search is backed by an FTS5 content table (`PacketFts`) over `Packet`, kept in sync by Room-managed triggers
 
 ### What's Stored in Room
 
@@ -35,7 +34,6 @@ The primary structured data store:
 | `NodeEntity` | All known mesh nodes and their metadata |
 | `MyNodeEntity` | The local node's own info |
 | `Packet` | Message history (channel and direct), waypoints, and telemetry data |
-| `PacketFts` | FTS5 virtual table mirroring `Packet.messageText` for full-text message search (Room-managed INSERT/UPDATE/DELETE triggers keep it in sync) |
 | `ContactSettings` | Per-contact mute and read-state |
 | `ReactionEntity` | Emoji reactions on messages |
 | `MeshLog` | Raw mesh protocol logs |

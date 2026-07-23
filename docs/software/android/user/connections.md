@@ -1,7 +1,7 @@
 ---
 title: Connections
 sidebar_position: 2
-last_updated: 2026-06-25
+last_updated: 2026-05-20
 description: Connect your phone or desktop to a Meshtastic radio via Bluetooth, USB, or TCP/IP.
 parent: User Guide
 ---
@@ -22,7 +22,7 @@ Bluetooth Low Energy is the default and most common connection method on Android
 4. Select your device from the list.
 5. Accept the Bluetooth pairing prompt if shown.
 
-![Scanning for Bluetooth devices, with a discovered radio in the list](/img/android/docs/connections_bluetooth_scan.webp)
+![Device list item](/img/android/docs/connections_bluetooth_scan.webp)
 
 You can filter devices by transport type using the filter chips at the top:
 
@@ -65,20 +65,26 @@ USB connections provide a wired alternative, useful for desktop or when Bluetoot
 
 > ⚠️ **Note:** USB connections require OTG support on Android devices.
 
-## TCP/IP (Network)
+## TCP/IP (WiFi)
 
-Some Meshtastic radios support WiFi/Ethernet connectivity, allowing TCP-based connections over your local network. Get the radio onto your network first — using the radio's own WiFi settings (via the firmware web interface or another connection) — then connect to it from the app.
+Some Meshtastic radios support WiFi connectivity, allowing TCP-based connections.
 
-### Connecting over the Network
+### Configuration
 
-1. Make sure the radio is on the same local network as your phone/desktop.
-2. On the Connect screen, select the **Network** transport filter.
-3. Choose the radio one of two ways:
-   - **Scan Network Devices** — toggle this on to auto-discover radios that advertise themselves on the local network (mDNS / `_meshtastic._tcp`). Discovered devices appear in the list; tap one to connect.
-   - **Add Network Device Manually** — enter the radio's IP address (or hostname) and port (default: `4403`).
-4. Previously-used network addresses are remembered under **Recent Network Devices** for quick reconnection (long-press to remove one).
+1. Connect your radio to a WiFi network via the radio's web interface or settings.
+2. In the app, go to **Connect → TCP**.
+3. Enter the radio's IP address and port (default: 4403).
+4. Tap **Connect**.
 
-> 💡 **Tip:** Network discovery uses mDNS, which only works when both devices are on the same subnet. On Android 17+ the app needs the local-network permission for scanning; if discovery finds nothing, add the device manually by IP.
+![WiFi scanning for devices](/img/android/docs/connections_wifi_scanning.webp)
+
+When a device is found, it appears in the connection list:
+
+![WiFi device found](/img/android/docs/connections_wifi_device_found.webp)
+
+A successful connection is confirmed with a status indicator:
+
+![WiFi connection success](/img/android/docs/connections_wifi_success.webp)
 
 ### When to Use TCP
 
