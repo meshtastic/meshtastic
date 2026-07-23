@@ -91,7 +91,8 @@ Modular hardware system with Base, Core and Peripheral modules including the low
 | [WisMesh Pocket V2](./rak-wireless/wismesh/pocket/?pocket=pocketv2)                       | nRF52840 | SX1262      |  NO  | 5.0 |  YES   |
 | [WisMesh Pocket Mini](./rak-wireless/wismesh/pocket/?pocket=pocket-mini)                  | nRF52840 | SX1262      |  NO  | 5.0 |   NO   |
 | [WisMesh Tag](./rak-wireless/wismesh/tag.mdx)                                             | nRF52840 | SX1262      |  NO  | 5.0 |  YES   |
-| [WisMesh TAP](./rak-wireless/wismesh/tap.mdx)                                             | nRF52840 | SX1262      |  NO  | 5.0 |  YES   |
+| [WisMesh TAP](./rak-wireless/wismesh/tap/?tap=v1)                                         | nRF52840 | SX1262      |  NO  | 5.0 |  YES   |
+| [WisMesh Tap V2](./rak-wireless/wismesh/tap/?tap=v2)                                      | ESP32-S3 | SX1262      | YES  | 5.0 |  YES   |
 | [WisMesh Board ONE](./rak-wireless/wismesh/board-one.mdx)                                 | nRF52840 | SX1262      |  NO  | 5.0 | ADD-ON |
 | [WisMesh 1W Booster](./rak-wireless/wismesh/1w-booster)                                   | nRF52840 | SX1262 (1W) |  NO  | 5.0 | ADD-ON |
 | [WisMesh Repeater](./rak-wireless/wismesh/repeater/?repeater=repeater)                    | nRF52840 | SX1262      |  NO  | 5.0 | ADD-ON |
@@ -110,6 +111,7 @@ Boards complete with GPS, 18650 battery holder, and optional screen.
 | :---------------------------------------------- | :------- | :----- | :----------: | :-: | :-: |
 | [T-Beam S3-Core](./lilygo/tbeam/?t-beam=s3core) | ESP32-S3 | SX1262 | 2.4GHz b/g/n | 5.0 | YES |
 | [T-BeamSUPREME](./lilygo/tbeam/?t-beam=supreme) | ESP32-S3 | SX1262 | 2.4GHz b/g/n | 5.0 | YES |
+| [T-Beam 1W](./lilygo/tbeam/?t-beam=t-beam-1w)   | ESP32-S3 | SX1262 (1W) | 2.4GHz b/g/n | 5.0 | YES |
 
 <DeviceSection device="t-echo.svg" size="md" />
 
@@ -117,9 +119,10 @@ Boards complete with GPS, 18650 battery holder, and optional screen.
 
 All-in-one unit with E-Ink screen, GPS and battery in injection-molded case. Features the low-power nRF52840 for long battery life.
 
-| Name                      | MCU      | Radio  | WiFi | BT  | GPS |
-| :------------------------ | :------- | :----- | :--: | :-: | :-: |
-| [T-Echo](./lilygo/techo/) | nRF52840 | SX1262 |  NO  | 5.0 | YES |
+| Name                                     | MCU      | Radio  | WiFi | BT  | GPS |
+| :--------------------------------------- | :------- | :----- | :--: | :-: | :-: |
+| [T-Echo](./lilygo/techo/?techo=techo)    | nRF52840 | SX1262 |  NO  | 5.0 | YES |
+| [T-Echo Plus](./lilygo/techo/?techo=plus) | nRF52840 | SX1262 |  NO  | 5.0 | YES |
 
 <DeviceSection device="tlora-t3s3-v1.svg" size="md" />
 
@@ -130,6 +133,7 @@ Inexpensive basic ESP32-based boards.
 | Name                                             | MCU      | Radio                                   |     WiFi     | BT  | GPS |
 | :----------------------------------------------- | :------- | :-------------------------------------- | :----------: | :-: | :-: |
 | [LoRa32 T3-S3 V1.0](./lilygo/lora/?t-lora=S3-v1) | ESP32-S3 | SX1262<br/>SX1276<br/>SX1280<br/>LR1121 | 2.4GHz b/g/n | 5.0 | NO  |
+| [LoRa32 T3-S3 E-Paper](./lilygo/lora/?t-lora=S3-epaper) | ESP32-S3 | SX1262 | 2.4GHz b/g/n | 5.0 | NO  |
 
 <DeviceSection device="t-deck.svg" size="md" />
 
@@ -168,6 +172,7 @@ Inexpensive basic ESP32-based boards.
 | [Wireless Stick Lite V3](./heltec-automation/lora32/?heltec=Wireless+Stick+Lite+V3) | ESP32-S3FN8 | SX1262 | 2.4GHz b/g/n | 5.0 | NO  |
 | [Wireless Tracker v1.0](./heltec-automation/lora32/?heltec=tracker-v1.0)            | ESP32-S3FN8 | SX1262 | 2.4GHz b/g/n | 5.0 | YES |
 | [Wireless Tracker v1.1](./heltec-automation/lora32/?heltec=tracker-v1.1)            | ESP32-S3FN8 | SX1262 | 2.4GHz b/g/n | 5.0 | YES |
+| [Wireless Tracker V2](./heltec-automation/lora32/?heltec=tracker-v2)                | ESP32-S3FN8 | SX1262 | 2.4GHz b/g/n | 5.0 | YES |
 | [Wireless Paper v1.0](./heltec-automation/lora32/?heltec=paper-v1.0)                | ESP32-S3FN8 | SX1262 | 2.4GHz b/g/n | 5.0 | NO  |
 | [Wireless Paper v1.1](./heltec-automation/lora32/?heltec=paper-v1.1)                | ESP32-S3FN8 | SX1262 | 2.4GHz b/g/n | 5.0 | NO  |
 
@@ -189,7 +194,9 @@ Versatile ESP32-S3-based boards E-Ink development boards.
 
 | Name                                                            | MCU      | Radio  | WiFi | BT  |   GPS    |
 | --------------------------------------------------------------- | :------- | :----- | :--- | :-: | :------: |
-| [Mesh Node T114](./heltec-automation/mesh-node/?mesh_node_t114) | nRF52840 | SX1262 | NO   | 5.0 | OPTIONAL |
+| [Mesh Node T114](./heltec-automation/mesh-node/?heltec=mesh_node_t114) | nRF52840 | SX1262 | NO   | 5.0 | OPTIONAL |
+| [Mesh Node T096](./heltec-automation/mesh-node/?heltec=t096) | nRF52840 | SX1262 | NO   | 5.0 | YES |
+| [Mesh Node T1](./heltec-automation/mesh-node/?heltec=t1) | nRF52840 | SX1262 | NO   | 5.0 | YES |
 
 <DeviceSection device="heltec_mesh_pocket.svg" size="md" />
 
@@ -200,6 +207,16 @@ Compact device with QI2 wireless charging and integrated Meshtastic.
 | Name                                                     | MCU      | Radio  | WiFi | BT  | GPS |
 | :------------------------------------------------------- | :------- | :----- | :--: | :-: | :-: |
 | [MeshPocket](./heltec-automation/meshpocket/) | nRF52840 | SX1262 |  NO  | 5.0 | NO  |
+
+<DeviceSection device="heltec-ht62-esp32c3-sx1262.svg" size="xs" />
+
+### [HT-CT62](./heltec-automation/ht62/)
+
+Tiny ESP32-C3 + SX1262 surface-mount module for DIY Meshtastic nodes.
+
+| Name                                   | MCU      | Radio  |     WiFi     | BT  | GPS |
+| :------------------------------------- | :------- | :----- | :----------: | :-: | :-: |
+| [HT-CT62](./heltec-automation/ht62/)   | ESP32-C3 | SX1262 | 2.4GHz b/g/n | 5.0 | NO  |
 
 ## Seeed Studio
 
@@ -225,6 +242,7 @@ A lineup of development boards and modules for hobbyists and prototyping, with a
 | :------------------------------------------------------------------------------------------- | :------- | :--------- | :--: | :-: | :------: |
 | [Wio Tracker L1](./seeed-studio/wio-series/tracker-l1)                                       | nRF52840 | SX1262     |  NO  | 5.0 |   YES    |
 | [XIAO nRF52840 & Wio-SX1262 Kit](./seeed-studio/wio-series/wio-sx1262s/?wio-sx1262=nrf52840) | nRF52840 | Wio-SX1262 |  NO  | 5.0 | OPTIONAL |
+| [XIAO ESP32-S3 & Wio-SX1262 Kit](./seeed-studio/wio-series/wio-sx1262s/?wio-sx1262=esp32s3)  | ESP32-S3 | Wio-SX1262 | 2.4GHz b/g/n | 5.0 | OPTIONAL |
 
 ## [B&Q Consulting](./b-and-q-consulting/)
 
@@ -259,6 +277,10 @@ High power LoRa transceiver designed for Meshtastic licensed ham operation.
 | [ThinkNode M1](./elecrow/thinknode/?thinknode-series=m1) | NRF52840 | SX1262 |      NO      | 5.0 | YES |
 | [ThinkNode M2](./elecrow/thinknode/?thinknode-series=m2) | ESP32-S3 | SX1262 | 2.4GHz b/g/n | 5.0 | NO  |
 | [ThinkNode M3](./elecrow/thinknode/?thinknode-series=m3) | NRF52840 | LR1110 |      NO      | 5.0 | YES |
+| [ThinkNode M4](./elecrow/thinknode/?thinknode-series=m4) | NRF52840 | LR1110 |      NO      | 5.0 | YES |
+| [ThinkNode M5](./elecrow/thinknode/?thinknode-series=m5) | ESP32-S3 | SX1262 | 2.4GHz b/g/n | 5.0 | YES |
+| [ThinkNode M6](./elecrow/thinknode/?thinknode-series=m6) | NRF52840 | SX1262 |      NO      | 5.0 | YES |
+| [ThinkNode M7](./elecrow/thinknode/?thinknode-series=m7) | ESP32-S3 | LR1110 | 2.4GHz b/g/n | 5.0 | NO  |
 
 <DeviceSection device="crowpanel_5_0.svg" size="md" />
 
@@ -290,6 +312,27 @@ Modular development platform with custom core modules and expandable IO.
 | :------------------------------------------------------ | :------- | :----- | :--: | :-: | :-: |
 | [Base Uno](./muziworks/muzi-base/?base-system=base-uno) | nRF52840 | SX1262 |  NO  | 5.0 |  NO |
 | [Base Duo](./muziworks/muzi-base/?base-system=base-duo) | nRF52840 | LR1121 |  NO  | 5.0 |  NO |
+
+## [M5Stack](./m5stack/)
+
+<DeviceSection device="m5stack_cardputer.svg" size="md" />
+
+Compact, ready-to-use LoRa nodes from M5Stack.
+
+| Name                                       | MCU      | Radio  |     WiFi     | BT  | GPS |
+| :----------------------------------------- | :------- | :----- | :----------: | :-: | :-: |
+| [Unit C6L](./m5stack/unit-c6l/)            | ESP32-C6 | SX1262 | 2.4GHz b/g/n | 5.0 | NO  |
+| [Cardputer Mesh Kit](./m5stack/cardputer/) | ESP32-S3 | SX1262 | 2.4GHz b/g/n | 5.0 | YES |
+
+## [NomadStar](./nomadstar/)
+
+<DeviceSection device="meteor_pro.svg" size="md" />
+
+A RAK4631-based nRF52840 Meshtastic device from the Swiss vendor NomadStar.
+
+| Name                                  | MCU      | Radio  | WiFi | BT  |   GPS    |
+| :------------------------------------ | :------- | :----- | :--: | :-: | :------: |
+| [Meteor Pro](./nomadstar/meteor-pro/) | nRF52840 | SX1262 |  NO  | 5.0 | ADD-ON   |
 
 ## [Raspberry Pi](./raspberrypi/)
 

@@ -5,7 +5,22 @@ sidebar_label: T-Echo
 sidebar_position: 3
 ---
 
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
 import { DeviceImage } from "/src/components/DeviceImage";
+
+<Tabs
+groupId="techo"
+queryString="techo"
+defaultValue="techo"
+values={[
+{label: 'T-Echo', value: 'techo'},
+{label: 'T-Echo Plus', value: 'plus'},
+]}>
+
+<TabItem value="techo">
+
+## T-Echo
 
 <DeviceImage device="t-echo.svg" alt="LILYGO T-Echo" size="lg" center />
 
@@ -13,7 +28,7 @@ The T-Echo by LILYGO® supports a low power consumption micro-controller and an 
 
 Further information on the LILYGO® T-Echo devices can be found on LILYGO®'s [GitHub page](https://github.com/Xinyuan-LilyGO/LilyGO-T-Echo).
 
-## Specifications
+### Specifications
 
 - **MCU**
   - nRF52840 (Bluetooth BLE 5.0 & NFC)
@@ -28,14 +43,14 @@ Further information on the LILYGO® T-Echo devices can be found on LILYGO®'s [G
 - **Connectors**
   - U.FL antenna connector
 
-## Features
+### Features
 
 - Reset, Program and capacitive touch buttons
 - 1.54" eInk display
 - Optional BME280 - Humidity and Pressure Sensor
 - Comes with a case and battery
 
-## Resources
+### Resources
 
 - Firmware file: `firmware-t-echo-2.x.x.uf2`
 - Purchase Links:
@@ -46,3 +61,50 @@ Further information on the LILYGO® T-Echo devices can be found on LILYGO®'s [G
     - [LilyGO](https://msh.to/t-echo/)
 
 ![LILYGO T-Echo](/img/hardware/t-echo.svg)
+
+</TabItem>
+
+<TabItem value="plus">
+
+## T-Echo Plus
+
+<DeviceImage device="t-echo_plus.svg" alt="LILYGO T-Echo Plus" size="lg" center />
+
+The T-Echo Plus is an enhanced version of the T-Echo, built on the nRF52840 with an E-Ink display, GNSS, a 6-axis sensor hub, and alerting hardware (buzzer and vibration motor).
+
+### Specifications
+
+- **MCU**
+  - nRF52840 (Bluetooth BLE 5.0 & NFC)
+- **LoRa Transceiver**
+  - Semtech SX1262 (+22 dBm, -139 dBm sensitivity)
+- **Frequency options**
+  - 433 MHz
+  - 868 MHz
+  - 915 MHz
+- **Navigation Module**
+  - L76K GNSS receiver (Supports GPS, BeiDou, GLONASS & QZSS)
+- **Sensors**
+  - BHI260AP 6-axis IMU sensor hub
+- **Connectors**
+  - USB-C
+  - U.FL antenna connector
+
+### Features
+
+- 1.54" E-Ink display
+- Buzzer and vibration motor for alerts
+- Li-Po battery with onboard charging
+- Reset, Program and capacitive touch buttons
+- Optional BME280 (temperature, humidity, pressure) variant available
+
+### Resources
+
+- Firmware file: `firmware-t-echo-plus-X.X.X.xxxxxxx.uf2`
+- Purchase Links:
+  - International
+    - [LilyGO Wiki](https://wiki.lilygo.cc/products/t-echo-series/t-echo-plus/)
+
+</TabItem>
+
+</Tabs>
