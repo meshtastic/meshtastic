@@ -26,7 +26,7 @@ Contributing translations helps make Meshtastic accessible to a wider audience. 
 
 ## How to Contribute
 
-1. **Visit the Crowdin project.** Open the [Meshtastic Android Crowdin project](https://crowdin.com/project/meshtastic-android) and sign in or create a free account.
+1. **Visit the Crowdin project.** Open the [Meshtastic Android Crowdin project](https://meshtastic.crowdin.com/android) and sign in or create a free account.
 2. **Choose your language.** Select an existing language or request a new one by opening a [GitHub issue](https://github.com/meshtastic/Meshtastic-Android/issues/new).
 3. **Translate strings.** Crowdin shows the English source on the left and your translation on the right. Translate each string and save.
 4. **Review context.** Many strings include screenshots or context comments — check these to understand where the text appears in the app.
