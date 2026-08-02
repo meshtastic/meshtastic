@@ -14,6 +14,10 @@ Recent architectural and procedural changes from roughly the last 12 months. New
 Show roughly the last 12 months of changes; archive entries older than a year by removing them.
 -->
 
+**Jun 2026** — [LoRa Region Presets](lora-region-presets.md) — New page documenting the 2.8 `FromRadio.region_presets` map: decode/flatten into `RegionPresetInfo`, storage on `AccessoryManager`, the `selectable(supports2_8:)` firmware gating, and the LoRa config UI integration.
+
+**Jun 2026** — [Architecture](architecture.md) — Protobufs synced to 2.8: new `meshBeaconApp` PortNum handled; `ModuleConfig.TrafficManagementConfig` reworked to implicit-enable integer fields (the boolean/precision/hop-management fields were removed) across the entity mapping and config view.
+
 **May 2026** — [Deep Links](deep-links.md) — Added `audio` and `neighborInfo` deep links for new module config screens.
 
 **May 2026** — [Architecture](architecture.md) — Audio, Neighbor Info module config screens; Pax Counter threshold fields; Compass Orientation picker; `IntervalConfiguration.neighborInfo` enum case for update interval picker.

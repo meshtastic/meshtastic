@@ -50,7 +50,7 @@ Distances between nodes and GPS altitudes are transmitted as **meters** and auto
 | Metric | 350 m | 2.5 km | 1,200 m |
 | Imperial (US) | 1,148 ft | 1.6 mi | 3,937 ft |
 
-The app uses natural scaling — short distances stay in meters or feet, while longer distances switch to kilometres or miles automatically.
+The app uses natural scaling — short distances stay in meters or feet, while longer distances switch to kilometers or miles automatically.
 
 ### Where these appear
 

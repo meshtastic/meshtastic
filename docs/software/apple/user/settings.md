@@ -10,7 +10,7 @@ The Settings tab lets you configure the app and your connected Meshtastic radio.
 
 ## App Settings
 
-General app preferences including map style, notification behaviour, and theme. These affect only the app — not the radio.
+General app preferences including map style, notification behavior, and theme. These affect only the app — not the radio.
 
 ### Data Management
 
@@ -28,10 +28,12 @@ LoRa settings control how your radio communicates on the mesh:
 
 | Setting | Description |
 |---------|-------------|
-| Region | Your geographical region. **Must be set correctly** — using the wrong region is illegal and prevents communication with local nodes. Available regions include the standard set plus Nepal 865MHz, Brazil 902MHz, ITU Region 1 Amateur 2m, ITU Region 2/3 Amateur 2m, and the EU 866 / 874 / 917 / 868-narrow bands. |
-| Modem Preset | Speed/range trade-off. Most users should use Long Fast or Long Slow. |
+| Region | Your geographical region. **Must be set correctly** — using the wrong region is illegal and prevents communication with local nodes. The standard regions are always available; the amateur (ham) 2m / 70cm / 1.25m bands and the EU 866 / narrow bands require firmware **2.8.0 or later** and only appear when your connected radio supports them. |
+| Modem Preset | Speed/range trade-off. Most users should use Long Fast or Long Slow. On firmware 2.8+, the preset list is filtered to those that are legal for the selected region (see below). |
 | Hop Limit | The number of times a message is repeated by other nodes. Higher values increase range but also mesh traffic. |
 | Frequency Slot | Fine-tune the exact frequency within your region. |
+
+On firmware **2.8.0 or later**, the radio tells the app which modem presets are legal in each region. When you pick a region, the Presets list narrows to the compatible set, and if your current preset isn't allowed there the app switches you to that region's default. Setting the region to **US** on a newly flashed node defaults the preset to **Long Turbo**. Amateur (ham) bands such as the Tiny and Narrow presets are marked **licensed** — the app shows a warning, and you should enable **Licensed Operator** (and set your call sign) in **User** config before transmitting. On older firmware the full preset list is shown unchanged.
 
 ### Channels
 
@@ -40,6 +42,8 @@ Manage up to 8 channels (0–7). Channel 0 is the primary broadcast channel. Add
 ### Security
 
 Configure PKI (Public Key Infrastructure) encryption for direct messages. Requires firmware 2.5+.
+
+On hardened lockdown-firmware radios, this page also shows a **Lockdown** section with the session status, a **Lock Now** button, and a **Forget Stored Passphrase** button. See [Lockdown Mode](lockdown.md).
 
 ### User
 
@@ -104,33 +108,28 @@ Optional feature modules. Only available when your connected node supports the m
 | Serial | UART serial output for integration with other hardware. |
 | Status Message | Set a custom status message broadcast to the mesh. |
 | Telemetry | Device, environment, and air-quality sensor reporting. |
-| Traffic Management | Mesh traffic optimisation — deduplication, rate limiting, and hop management. Requires firmware 2.8.0+. |
+| Traffic Management | Mesh traffic optimisation — position deduplication, rate limiting, and unknown-packet filtering. Requires firmware 2.8.0+. |
 
 ### Traffic Management
 
-The Traffic Management module helps reduce unnecessary mesh traffic and improve network efficiency. It is available on nodes running firmware **2.8.0 or later**.
+The Traffic Management module helps reduce unnecessary mesh traffic and improve network efficiency. It is available on nodes running firmware **2.8.0 or later**. Each feature is enabled implicitly by a non-zero value — turning a section's toggle off (or the master **Enabled** switch) clears its values and disables that feature on the radio.
 
 | Setting | Description |
 |---------|-------------|
 | Enabled | Master enable for the traffic management module. |
 | **Position Deduplication** | |
 | Position Dedup | Drop redundant position broadcasts from the same node. |
-| Precision Bits | Number of bits of precision for position deduplication (0–32). Lower values merge more positions. |
 | Min Interval (s) | Minimum seconds between position updates from the same node. |
 | **NodeInfo Direct Response** | |
 | Direct Response | Respond to NodeInfo requests directly from local cache instead of flooding the mesh. |
-| Max Hops | Minimum hop distance from requestor before responding to NodeInfo requests. |
+| Max Hops | Maximum hop distance from the requestor at which direct NodeInfo responses are served from the local cache. |
 | **Rate Limiting** | |
 | Rate Limiting | Enable per-node rate limiting to throttle chatty nodes. |
 | Window (s) | Time window in seconds for rate limiting calculations. |
 | Max Packets | Maximum packets allowed per node within the rate limit window. |
 | **Unknown Packet Handling** | |
 | Drop Unknown | Enable dropping of unknown/undecryptable packets. |
-| Threshold | Number of unknown packets received from a node before dropping. |
-| **Hop Management** | |
-| Exhaust Hop Telemetry | Set hop_limit to 0 for relayed telemetry broadcasts (own packets unaffected). |
-| Exhaust Hop Position | Set hop_limit to 0 for relayed position broadcasts (own packets unaffected). |
-| Router Preserve Hops | Preserve hop_limit for router-to-router traffic. |
+| Threshold | Maximum unknown/undecryptable packets per rate window before the source is dropped. |
 
 ## Firmware Updates
 

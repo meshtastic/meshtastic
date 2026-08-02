@@ -42,7 +42,7 @@ Select the update channel in **Settings → App Settings → Firmware Channel**.
 ## Troubleshooting
 
 **Update fails mid-way**
-- Keep the radio within 1–2 metres of your phone during the update.
+- Keep the radio within 1–2 meters of your phone during the update.
 - If the radio appears bricked after a failed update, it can usually be recovered using the [Meshtastic Flasher](https://flasher.meshtastic.org/) on a computer.
 
 ![Incompatible firmware version warning](/img/apple/invalidVersion.webp)
