@@ -358,6 +358,20 @@ const modemPresets = new Map<
       sf: 12,
     },
   ],
+  [
+    Protobuf.Config.Config_LoRaConfig_ModemPreset.NARROW_FAST,
+    {
+      bw: 62.5,
+      cr: 8,
+      sf: 11 },
+  ],
+  [
+    Protobuf.Config.Config_LoRaConfig_ModemPreset.NARROW_SLOW,
+    {
+      bw: 62.5,
+      cr: 8,
+      sf: 12 },
+  ],
 ]);
 
 // Helper function to get the formatted channel name based on the modem preset
@@ -383,6 +397,10 @@ const getChannelName = (
       return "LongTurbo";
     case Protobuf.Config.Config_LoRaConfig_ModemPreset.LONG_MODERATE:
       return "LongMod";
+    case Protobuf.Config.Config_LoRaConfig_ModemPreset.NARROW_FAST:
+      return "NarrowFast";
+    case Protobuf.Config.Config_LoRaConfig_ModemPreset.NARROW_SLOW:
+      return "NarrowSlow";
     default:
       return "Invalid";
   }

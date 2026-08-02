@@ -79,7 +79,7 @@ Various data-rate options are available when configuring a frequency slot and ar
 
 ### Presets
 
-We have eight primary LoRa radio presets. These are the most common settings and have been proven to work well:
+We have ten primary LoRa radio presets. These are the most common settings and have been proven to work well:
 
 |    Radio Preset          | Alt Preset Name  | Data-Rate  | SF / Symbols | Coding Rate |  Bandwidth   | Link Budget |
 | :--------------------:   | :--------------: | :--------: | :----------: | :---------: | :----------: | :---------: |
@@ -92,6 +92,8 @@ We have eight primary LoRa radio presets. These are the most common settings and
 |    Long Range / Fast     |    Long Fast     | 1.07 kbps  |  11 / 2048   |     4/5     |    250 kHz   |    153dB    |
 |  Long Range / Moderate   |  Long Moderate   | 0.34 kbps  |  11 / 2048   |     4/8     |    125 kHz   |    156dB    |
 | Long Range / Slow (depr.)|    Long Slow     | 0.18 kbps  |  12 / 4096   |     4/8     |    125 kHz   |   158.5dB   |
+|   Narrow Range / Fast    |   Narrow Fast    | 0.17 kbps  |  11 / 2048   |     4/8     |    62.5 kHz  |    159dB    |
+|   Narrow Range / Slow    |   Narrow Slow    | 0.09 kbps  |  12 / 4096   |     4/8     |    62.5 kHz  |   161.5dB   |
 
 :::note
 The link budget used by these calculations assumes a transmit power of 22dBm and an antenna with 0dB gain. Adjust your link budget assumptions based on your actual devices. Data-rate in this table is the theoretical max but doesn't account for packet headers, hops and re-transmissions. Calculations based on data from the official [Semtech LoRa calculator](https://www.semtech.com/design-support/lora-calculator).
