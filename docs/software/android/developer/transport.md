@@ -1,7 +1,7 @@
 ---
 title: Transport
 sidebar_position: 5
-last_updated: 2026-05-13
+last_updated: 2026-07-07
 parent: Developer Guide
 ---
 
@@ -11,7 +11,7 @@ Meshtastic communicates between the app and radio hardware through multiple tran
 
 ## Transport Abstraction
 
-The transport layer is abstracted through interfaces in `core/network` and `core/ble`, allowing the app to work identically regardless of the underlying connection type.
+The transport layer is abstracted through interfaces defined in `core:repository` (`RadioTransport`, `RadioTransportFactory`, `RadioInterfaceService`), with the concrete transports implemented in `core:network` (`BleRadioTransport`, TCP, mock/replay) and `core:ble`. This lets the app work identically regardless of the underlying connection type.
 
 ```
 App ← RadioController → Transport (BLE | Serial | TCP)
@@ -52,7 +52,7 @@ Serial communication over USB:
 ## TCP/IP
 
 **Module:** `core:network`  
-**Platforms:** Android, Desktop, iOS
+**Platforms:** Android, Desktop (iOS: code compiles, but there's no iOS app target or `RadioTransportFactory` yet — see Transport Factory below)
 
 Network-based transport for WiFi-enabled radios:
 - TCP socket connection to radio's IP address

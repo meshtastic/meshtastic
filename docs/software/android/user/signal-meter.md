@@ -1,7 +1,7 @@
 ---
 title: How the Meshtastic Signal Meter Works
 sidebar_position: 15
-last_updated: 2026-06-25
+last_updated: 2026-07-08
 description: How the signal meter rates quality from SNR relative to the LoRa modem preset — spread spectrum, presets, and what the bars really mean.
 parent: User Guide
 ---
@@ -49,8 +49,8 @@ Because the rating is relative to the preset limit, the *same* SNR can rate diff
 | Level | Bars | Criteria | Meaning |
 |-------|------|----------|---------|
 | Good | 3 | SNR **above** the preset's `limit` | Signal is comfortably above the demodulation floor — healthy connection. |
-| Fair | 2 | within `5.5 dB` below the `limit` | Decodable, but getting close to the floor. |
-| Bad | 1 | within `7.5 dB` below the `limit` | At the very edge of what the preset can recover. |
+| Fair | 2 | less than `5.5 dB` below the `limit` | Decodable, but getting close to the floor. |
+| Bad | 1 | `5.5 dB` to `7.5 dB` below the `limit` | At the very edge of what the preset can recover. |
 | None | 0 | more than `7.5 dB` below the `limit` | Below the floor — transmission lost to noise. |
 
 > **Note:** The fixed SNR thresholds you may have seen elsewhere (`-7 dB` / `-15 dB`) are now only used for coloring individual hops in traceroute results — not for the per-node signal meter described here.

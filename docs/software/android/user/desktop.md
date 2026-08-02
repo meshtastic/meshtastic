@@ -1,7 +1,7 @@
 ---
 title: Desktop App
 sidebar_position: 14
-last_updated: 2026-06-11
+last_updated: 2026-07-07
 description: Install and use the Meshtastic Desktop app on Linux, macOS, and Windows — connections, feature parity, and keyboard shortcuts.
 parent: User Guide
 ---
@@ -58,10 +58,10 @@ Bluetooth Low Energy is supported on Desktop via the [Kable](https://github.com/
 |---------|---------|---------|-------|
 | Messaging | ✓ | ✓ | Full parity |
 | Node List | ✓ | ✓ | Full parity |
-| Map | ✓ | ✓ | Full parity |
+| Map | ✓ | ◐ | Map tab exists on desktop, but the interactive map view is Android-only |
 | Settings | ✓ | ✓ | Full parity |
 | Bluetooth (BLE) | ✓ | ✓ | Via Kable on desktop |
-| Firmware Update OTA | ✓ | ✗ | Use web flasher |
+| Firmware Update | ✓ | ✓ | In-app USB, BLE, and Wi-Fi (ESP32) update all work the same as Android |
 | Notifications | ✓ | ✓ | Native OS notifications |
 | Widgets | ✓ | ✗ | Android-only |
 | Android Auto | ✓ | ✗ | Android-only — not available on Desktop or iOS |
@@ -78,14 +78,17 @@ The Desktop app uses the same Compose Multiplatform UI with adaptations for larg
 
 ### Keyboard Shortcuts
 
+Shortcuts use **⌘** (Command) on macOS and **Ctrl** on Windows and Linux. (The Super / Windows key is not bound.)
+
 | Shortcut | Action |
 |----------|--------|
-| **⌘Q** / **Ctrl+Q** | Quit the application |
-| **⌘,** / **Ctrl+,** | Open Settings |
-| **⌘1** / **Ctrl+1** | Switch to Messages tab |
-| **⌘2** / **Ctrl+2** | Switch to Nodes tab |
-| **⌘3** / **Ctrl+3** | Switch to Map tab |
-| **⌘4** / **Ctrl+4** | Switch to Connect tab |
+| **⌘/Ctrl+Q** | Quit the application |
+| **⌘/Ctrl+,** | Open Settings |
+| **⌘/Ctrl+1** | Switch to Messages tab |
+| **⌘/Ctrl+2** | Switch to Nodes tab |
+| **⌘/Ctrl+3** | Switch to Map tab |
+| **⌘/Ctrl+4** | Switch to Connect tab |
+| **⌘/Ctrl+/** | Open About |
 
 ### Window & System Tray
 
@@ -117,7 +120,6 @@ Individual doc pages render with full formatting:
 ```bash
 git clone https://github.com/meshtastic/Meshtastic-Android.git
 cd Meshtastic-Android
-git submodule update --init
 ./gradlew :desktopApp:run
 ```
 
@@ -127,7 +129,7 @@ Requirements:
 
 ## Known Limitations
 
-- No OTA firmware updates (use web flasher)
+- The interactive map view is Android-only — the Map tab is present but does not render a map on desktop
 - Some Android-specific features (widgets, specific notification channels) are unavailable
 - Performance may vary on low-spec hardware running Compose Desktop
 - BLE bonding is not yet supported on desktop (pairing works without bonding)
@@ -135,7 +137,7 @@ Requirements:
 ## Related Topics
 
 - [Connections](connections.md) — connection methods overview
-- [Firmware Updates](firmware.md) — use the [Web Flasher](https://flasher.meshtastic.org) for desktop firmware updates
+- [Firmware Updates](firmware.md) — USB, BLE, and Wi-Fi update all work the same as on Android
 
 ---
 

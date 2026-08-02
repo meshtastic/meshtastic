@@ -1,7 +1,7 @@
 ---
 title: TAK Integration
 sidebar_position: 10
-last_updated: 2026-05-13
+last_updated: 2026-07-08
 description: Interoperate with ATAK and WinTAK — CoT position sharing, TAK roles, and plugin setup.
 parent: User Guide
 ---
@@ -46,11 +46,11 @@ The TAK module allows Meshtastic nodes to:
 
 ### Local TAK Server
 
-The app can also run a **local TAK server** so ATAK/iTAK clients on the same device or network can connect directly, without a remote TAK server. Open **Settings → Module Config → TAK → TAK Server**:
+The app can also run a **local TAK server** so ATAK/iTAK on the **same device** can connect directly, without a remote TAK server. The server binds to localhost only (`127.0.0.1:8089`) and uses TLS with mutual certificate authentication (mTLS), so it is not reachable from other devices on the network. Open **Settings → Module Config → TAK → TAK Server**:
 
 ![Local TAK Server settings with enable toggle and export option](/img/android/docs/tak_server_enabled.webp)
 
-- **Enable Local TAK Server** — starts a local TLS server on port **8089** for ATAK/iTAK connections.
+- **Enable Local TAK Server** — starts the loopback-only mTLS server on port **8089** for ATAK/iTAK connections from the same device.
 - **Export TAK Data Package** — generates a `.zip` data package that ATAK/iTAK can import to connect to this server.
 
 ## TAK Roles
@@ -74,24 +74,23 @@ When using TAK roles, your node broadcasts identity information that appears on 
 
 | Setting | Description |
 |---------|-------------|
-| Team | Your team color on the TAK map (e.g., Blue, Red, Cyan, Green) |
-| Role | Your operational role (Team Member, Team Lead, HQ, Medic, RTO, etc.) |
-| Callsign | Your TAK callsign (defaults to your Meshtastic long name) |
+| Team Color | Your team color on the TAK map (e.g., Blue, Red, Cyan, Green) |
+| Member Role | Your operational role (Team Member, Team Lead, HQ, Medic, RTO, etc.) |
 
-These settings appear in **Settings → Module Config → TAK** when the TAK module is enabled.
+These settings appear in **Settings → Module Config → TAK** when the TAK module is enabled. Your TAK callsign isn't a separate setting — it's derived automatically from your Meshtastic node name.
 
 > 💡 **Tip:** Team/role colors are the standard TAK affiliation colors. Coordinate with your TAK team to use consistent team assignments.
 
 ## Wire Format (V1 / V2)
 
-Meshtastic supports two TAK wire formats:
+Meshtastic supports two TAK wire formats, chosen automatically based on the connected radio's firmware — no manual configuration needed:
 
 | Format | Compatibility | Features |
 |--------|--------------|----------|
-| V1 (Legacy) | ATAK Plugin v1.x, older firmware | Basic CoT position sharing only |
-| V2 (Current) | ATAK Plugin v2.x, firmware 2.3+ | Full CoT support including chat, routes, zstd compression |
+| V1 (Legacy) | Firmware 2.7.x and older | Bare protobuf encoding on port 72. Supports position sharing (PLI) and chat (GeoChat) only — shapes, markers, routes, and other typed CoT events are dropped |
+| V2 (Current) | Firmware 2.8.0+ | Compact, zstd-compressed encoding on port 78. Adds shapes, markers, routes, aircraft, casevac, emergency, and task CoT types on top of everything V1 supports |
 
-The app automatically selects V2 when both sides support it. No manual configuration needed — the TAK module negotiates format based on firmware capabilities.
+A node still relays legacy V1 packets from older nodes even while running V2 itself, so mixed-firmware meshes keep working.
 
 ## Usage with ATAK
 
@@ -110,7 +109,7 @@ Once configured:
 | Node doesn't appear on ATAK map | TAK module disabled or wrong role | Verify TAK module is enabled and node role is TAK or TAK Tracker |
 | Position updates are stale | GPS fix lost or interval too long | Check GPS status; reduce position broadcast interval in Position Config |
 | ATAK plugin shows "disconnected" | BLE connection lost or plugin crashed | Reconnect Bluetooth in Meshtastic app, then restart ATAK plugin |
-| Chat messages not bridging | V1 format doesn't support chat | Ensure both nodes run firmware 2.3+ for V2 wire format |
+| Shapes, markers, or routes not bridging | Sending node is on legacy V1 (firmware 2.7.x or older) | Update the sending node's firmware to 2.8.0+ for V2 wire format |
 | CoT data not flowing | Channel mismatch | All TAK nodes must be on the same channel with matching encryption |
 
 ## Security Considerations
@@ -124,7 +123,7 @@ Once configured:
 - [Settings — Modules & Admin](settings-module-admin.md) — TAK module configuration
 - [Nodes](nodes.md) — TAK and TAK Tracker roles in the node list
 - [Map & Waypoints](map-and-waypoints.md) — node positions on the map
-- [ATAK plugin guide](https://meshtastic.org/docs/software/integrations/atak-plugin) — detailed ATAK setup on meshtastic.org
+- [ATAK plugin guide](https://meshtastic.org/docs/software/integrations/integrations-atak-plugin/) — detailed ATAK setup on meshtastic.org
 
 ---
 
