@@ -1,8 +1,8 @@
 ---
 title: Firmware Updates
 sidebar_position: 13
-last_updated: 2026-05-13
-description: Update your radio firmware over Bluetooth — OTA process, version channels, pre-flight checks, and recovery.
+last_updated: 2026-07-07
+description: Update your radio firmware over Bluetooth or USB — OTA process, version channels, pre-flight checks, and recovery.
 parent: User Guide
 ---
 
@@ -12,7 +12,7 @@ Keep your Meshtastic radio up to date with the latest firmware for new features,
 
 ## Checking for Updates
 
-1. Navigate to **Settings → Firmware Update** or tap the firmware notification if shown.
+1. Open the connected radio's configuration and, under **Advanced**, tap **Firmware Update**. The entry appears only for OTA-capable devices.
 2. The app checks for available firmware versions.
 3. Available updates show the version number and changelog summary.
 
@@ -34,9 +34,15 @@ The most common update method for Android users:
 
 ![Firmware disclaimer](/img/android/docs/firmware_disclaimer.webp)
 
-### USB Flashing
+### In-App USB Update
 
-For recovery or when OTA is unavailable:
+When your radio is connected over **USB/serial** (rather than Bluetooth), the Firmware Update screen offers **USB File Transfer**. The app reboots the device into DFU mode, then prompts you to save the `.uf2` file to the device's DFU drive using the system file picker. This option appears only on a USB/serial connection — it is not available over Bluetooth.
+
+> ℹ️ **nRF bootloader note:** Some devices (e.g. RAK WisBlock RAK4631) need their bootloader flashed with the vendor's serial DFU tool (such as `adafruit-nrfutil`) — copying the `.uf2` alone won't update the bootloader. The app surfaces a hint when this applies.
+
+### Other Flashing Options
+
+For recovery or when neither OTA nor in-app USB is available:
 - Use the [Meshtastic Web Flasher](https://flasher.meshtastic.org)
 - Or the [Meshtastic CLI tool](https://meshtastic.org/docs/getting-started/flashing-firmware) on desktop
 
@@ -46,6 +52,7 @@ For recovery or when OTA is unavailable:
 |---------|-------------|
 | Stable | Recommended for most users; tested releases |
 | Alpha | Preview releases; may contain bugs |
+| Local File | Flash a firmware file you select yourself, instead of a downloaded release |
 
 ## Pre-Update Checklist
 
@@ -65,7 +72,7 @@ Once the update succeeds:
 - The radio will reboot automatically
 - Bluetooth connection will re-establish
 - Verify your settings are intact
-- Check the firmware version in **Settings → About**
+- Confirm the new version under **Currently Installed** on the Firmware Update screen — it's also shown on the node's detail page and the Connections screen
 
 ![Firmware update success](/img/android/docs/firmware_success.webp)
 
@@ -102,7 +109,7 @@ The app may show warnings when:
 - [Connections](connections.md) — reconnecting after a firmware update
 - [Flashing firmware guide](https://meshtastic.org/docs/getting-started/flashing-firmware) — full firmware flashing walkthrough on meshtastic.org
 - [Supported devices](https://meshtastic.org/docs/hardware/devices) — check firmware compatibility by device
-- [FAQ](https://meshtastic.org/docs/about/faq) — common questions on meshtastic.org
+- [FAQ](https://meshtastic.org/docs/faq/) — common questions on meshtastic.org
 
 ---
 

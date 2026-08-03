@@ -98,7 +98,9 @@ Nodes with particulate matter or CO₂ sensors report air quality data:
 | PM10 | µg/m³ | Coarse particulate matter |
 | CO₂ | ppm | Carbon dioxide concentration |
 
-The CO₂ reading is color-coded by severity (Good → Stuffy → Poor → Unsafe → Evacuate). See [Node Metrics — Air Quality](node-metrics.md#air-quality-metrics) for the exact ppm bands and colors.
+CO₂ sensors such as the SCD4x also report their own temperature and humidity, which appear alongside the readings above. From PM2.5 history the app additionally derives an **EPA NowCast AQI** value.
+
+The CO₂ reading is color-coded by severity (Good → Stuffy → Poor → Unsafe → Evacuate). See [Node Metrics — Air Quality](node-metrics.md#air-quality-metrics) for the exact ppm bands, colors, and AQI detail.
 
 Air quality data can be viewed as info cards on the node detail screen, charted over time, and exported to CSV.
 
