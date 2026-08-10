@@ -1,7 +1,7 @@
 ---
 title: Settings — Radio & User
 sidebar_position: 7
-last_updated: 2026-05-20
+last_updated: 2026-07-27
 description: Configure your radio hardware, LoRa presets, user profile, position sharing, power management, and security.
 parent: User Guide
 ---
@@ -24,7 +24,7 @@ Configure your radio hardware and user identity parameters.
 
 After modifying settings, tap **Save** to write the configuration to your radio. The device may reboot to apply changes.
 
-## Radio Configuration
+## Configuration
 
 ### Device Config
 
@@ -54,20 +54,22 @@ After modifying settings, tap **Save** to write the configuration to your radio.
 
 | Preset | Range | Speed | SNR Limit | Best For |
 |--------|-------|-------|-----------|----------|
-| Short Turbo | ~1 km | 21.9 kbps | −5 dB | Dense urban with line-of-sight; data-heavy applications |
+| Short Turbo | ~1 km | 21.9 kbps | −7.5 dB | Dense urban with line-of-sight; data-heavy applications |
 | Short Fast | ~3 km | 10.9 kbps | −7.5 dB | Urban neighborhoods; buildings within a few blocks |
 | Short Slow | ~5 km | 5.5 kbps | −10 dB | Suburban short-range; moderate building density |
-| Medium Fast | ~5 km | 5.5 kbps | −10 dB | Suburban areas; moderate building density |
-| Medium Slow | ~8 km | 1.1 kbps | −12.5 dB | Suburban/rural; moderate range with slower speed |
-| Long Turbo | ~10 km | 4.4 kbps | −10 dB | Similar range to Long Fast but with 500 kHz bandwidth; faster throughput |
-| Long Fast | ~10 km | 1.1 kbps | −12.5 dB | **General use (default)** — balanced range and speed |
-| Long Moderate | ~20 km | 0.34 kbps | −15 dB | Rural with some terrain; occasional use |
-| Lite Fast | ~5 km | 5.5 kbps | −10 dB | EU 866 MHz SRD band (125 kHz BW); comparable to Medium Fast |
-| Lite Slow | ~10 km | 1.1 kbps | −12.5 dB | EU 866 MHz SRD band (125 kHz BW); comparable to Long Fast |
+| Medium Fast | ~5 km | 5.5 kbps | −12.5 dB | Suburban areas; moderate building density |
+| Medium Slow | ~8 km | 1.1 kbps | −15 dB | Suburban/rural; moderate range with slower speed |
+| Long Turbo | ~10 km | 4.4 kbps | −12.5 dB | Similar range to Long Fast but with 500 kHz bandwidth; faster throughput |
+| Long Fast | ~10 km | 1.1 kbps | −17.5 dB | **General use (default)** — balanced range and speed |
+| Long Moderate | ~20 km | 0.34 kbps | −17.5 dB | Rural with some terrain; occasional use |
+| Lite Fast | ~5 km | 5.5 kbps | −12.5 dB | EU 866 MHz SRD band (125 kHz BW); comparable to Medium Fast |
+| Lite Slow | ~10 km | 1.1 kbps | −15 dB | EU 866 MHz SRD band (125 kHz BW); comparable to Long Fast |
 | Narrow Fast | ~5 km | 2.7 kbps | −10 dB | EU 868 MHz band (62.5 kHz BW); avoids interference with other devices |
 | Narrow Slow | ~10 km | 1.1 kbps | −12.5 dB | EU 868 MHz band (62.5 kHz BW); comparable to Long Fast |
-| ~~Long Slow~~ | ~30 km | 0.18 kbps | −17.5 dB | ⚠️ **Deprecated** — still selectable but may be removed in a future firmware release |
+| ~~Long Slow~~ | ~30 km | 0.18 kbps | −20 dB | ⚠️ **Deprecated** — still selectable but may be removed in a future firmware release |
 | ~~Very Long Slow~~ | ~40+ km | 0.09 kbps | −20 dB | ⚠️ **Deprecated** — still selectable but may be removed in a future firmware release |
+
+> ℹ️ **Note:** This table uses the common short names. In the app's preset dropdown they read as **Short Range - Fast**, **Long Range - Fast**, **Lite - Fast**, **Narrow - Fast**, and so on.
 
 #### Choosing a Modem Preset
 
@@ -149,6 +151,10 @@ The modem preset controls the fundamental tradeoff between **range** and **data 
 | Debug Log | Output live debug logging over serial/bluetooth | 
 | Serial Enabled | Enable serial console access (moved from Device Config) |
 | Managed Mode | Restrict non-admin channel changes |
+| Backup Keys | Save an encrypted backup of the node's keys on this device (Android only) |
+| Restore Keys | Write the backed-up keys back to the node (available once a backup exists) |
+| Delete Key Backup | Remove the stored key backup from this device |
+| Protection Level | Packet authenticity — how unsigned or relayed packets are treated: **Strict**, **Balanced**, or **Compatible** (requires supporting firmware; Strict asks for confirmation) |
 
 ![Password field](/img/android/docs/settings_password_field.webp)
 
