@@ -2,6 +2,10 @@ packages:
   - "."
 
 minimumReleaseAge: 7200 # 5 Days
+# Exclude @meshtastic packages (maintained by us) from minimumReleaseAge.
+minimumReleaseAgeExclude:
+  - "@meshtastic/*"
+  - "@jsr/meshtastic__*"
 
 overrides:
   path-to-regexp: "^3.3.0"

@@ -5,7 +5,22 @@ sidebar_label: Tap
 sidebar_position: 2
 ---
 
-import { DeviceImage } from "/src/components/DeviceImage";
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+import { DeviceImage } from "@site/src/components/DeviceImage";
+
+<Tabs
+groupId="tap"
+queryString="tap"
+defaultValue="v1"
+values={[
+{label: 'WisMesh Tap', value: 'v1'},
+{label: 'WisMesh Tap V2', value: 'v2'},
+]}>
+
+<TabItem value="v1">
+
+## WisMesh Tap
 
 <DeviceImage device="rak-wismeshtap.svg" alt="RAK WisMesh Tap" size="lg" center />
 
@@ -49,3 +64,48 @@ The WisMesh TAP is a Meshtastic device equipped with a touch screen featuring an
     - [RAKwireless AliExpress](https://msh.to/aliexpress-wismesh-tap/)
 
 ![RAK WisMesh Tap](/img/hardware/rak/wismesh-tap.webp)
+
+</TabItem>
+
+<TabItem value="v2">
+
+## WisMesh Tap V2
+
+<DeviceImage device="rak-wismesh-tap-v2.svg" alt="RAK WisMesh Tap V2" size="lg" center />
+
+The WisMesh Tap V2 is the ESP32-S3 successor to the WisMesh Tap, built on the RAK3312 WisBlock Core module. It keeps the 320 x 240 TFT touchscreen and on-screen keyboard of the original while adding support for the Meshtastic UI (MUI), an SD-card map function, a buzzer, and an onboard accelerometer for a fully standalone, phone-free experience.
+
+- **MCU**
+  - [RAK3312 (ESP32-S3)](/docs/hardware/devices/rak-wireless/wisblock/core-module?rakcore=RAK3312)
+    - 2.4GHz Wi-Fi b/g/n
+    - Bluetooth BLE
+- **LoRa Transceiver:**
+  - Semtech SX1262
+- **Frequency Options:**
+  - 868 MHz
+  - 915 MHz
+- **Connectors:**
+  - USB-C
+  - SMA
+
+### Features
+
+- 320 x 240 TFT touch screen with on-screen keyboard
+- Meshtastic UI (MUI) support
+- microSD card slot (used for the MUI map function)
+- Buzzer for incoming-message notifications
+- Onboard GNSS location module and 3-axis accelerometer
+- 3200 mAh rechargeable battery
+- IP65-rated enclosure
+
+### Resources
+
+- Firmware file: `firmware-rak_wismesh_tap_v2-X.X.X.xxxxxxx.bin`
+- Further information on the WisMesh Tap V2 can be found on the [RAK Documentation Center](https://docs.rakwireless.com/product-categories/meshtastic/wismesh-tap-v2/overview/).
+- Purchase Links:
+  - International
+    - [RAKwireless Store](https://msh.to/rak_wismesh_tap_v2/)
+
+</TabItem>
+
+</Tabs>

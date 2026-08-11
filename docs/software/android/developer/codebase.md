@@ -1,7 +1,7 @@
 ---
 title: Codebase
 sidebar_position: 2
-last_updated: 2026-06-11
+last_updated: 2026-07-08
 parent: Developer Guide
 ---
 
@@ -40,6 +40,7 @@ Meshtastic-Android/
 │   ├── datastore/
 │   ├── di/
 │   ├── domain/
+│   ├── konsist/
 │   ├── model/
 │   ├── navigation/
 │   ├── network/
@@ -55,11 +56,11 @@ Meshtastic-Android/
 ├── screenshot-tests/       # Compose Preview screenshot tests (visual-regression gate)
 ├── docs-screenshots/       # Doc-framed composition screenshots (generate-only, not CI-gated)
 ├── build-logic/            # Convention plugins and build helpers
-│   ├── convention/
-│   └── flatpak/
+│   └── convention/
 ├── docs/                   # Documentation source (markdown)
-│   ├── user/
-│   └── developer/
+│   └── en/                 # English source; other locales live under docs/<locale>/user/
+│       ├── user/
+│       └── developer/
 ├── gradle/                 # Gradle wrapper and version catalog
 │   └── libs.versions.toml
 ├── specs/                  # Feature specifications
@@ -90,7 +91,7 @@ All build files use Kotlin DSL (`.gradle.kts`). Configuration:
 
 ### Convention Plugins
 
-Located in `build-logic/convention/src/main/kotlin/org/meshtastic/buildlogic/`:
+Located in `build-logic/convention/src/main/kotlin/`:
 
 | Plugin | Purpose |
 |--------|---------|
@@ -122,6 +123,12 @@ Located in `build-logic/convention/src/main/kotlin/org/meshtastic/buildlogic/`:
 
 # Desktop run
 ./gradlew :desktopApp:run
+
+# Desktop native installers for the current OS (DMG / MSI+EXE / DEB+RPM+AppImage)
+./gradlew :desktopApp:packageReleaseDistributionForCurrentOS
+
+# API reference (Dokka HTML → build/dokka/html)
+./gradlew dokkaGeneratePublicationHtml
 ```
 
 ## Version Catalog Highlights

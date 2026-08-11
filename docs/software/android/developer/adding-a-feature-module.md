@@ -1,7 +1,7 @@
 ---
 title: Adding a Feature Module
 sidebar_position: 3
-last_updated: 2026-05-13
+last_updated: 2026-07-08
 parent: Developer Guide
 ---
 
@@ -23,7 +23,7 @@ plugins {
 }
 
 kotlin {
-    androidLibrary { withHostTest { } }
+    android { withHostTest { isIncludeAndroidResources = true } }
 
     sourceSets {
         commonMain.dependencies {
@@ -97,9 +97,11 @@ sealed interface MyFeatureRoute : Route {
 package org.meshtastic.feature.myfeature.navigation
 
 import androidx.navigation3.runtime.EntryProviderScope
+import androidx.navigation3.runtime.NavBackStack
+import androidx.navigation3.runtime.NavKey
 import org.meshtastic.core.navigation.MyFeatureRoute
 
-fun EntryProviderScope<*>.myFeatureEntries() {
+fun EntryProviderScope<NavKey>.myFeatureGraph(backStack: NavBackStack<NavKey>) {
     entry<MyFeatureRoute.MyFeatureHome> {
         MyFeatureScreen()
     }
