@@ -121,7 +121,7 @@ How often we should publish the map report to the MQTT server in seconds. Defaul
   ]}>
 <TabItem value="android">
 
-#### Android
+### Android
 
 :::info
 
@@ -135,7 +135,7 @@ MQTT Config options are available for Android.
 </TabItem>
 <TabItem value="apple">
 
-#### Apple
+### Apple
 
 :::info
 
@@ -146,7 +146,7 @@ All MQTT config options are available on iOS, iPadOS and macOS at Settings > Mod
 </TabItem>
 <TabItem value="cli">
 
-#### CLI
+### CLI
 
 :::info
 
@@ -190,7 +190,7 @@ meshtastic --set mqtt.json_enabled false
 </TabItem>
 <TabItem value="web">
 
-#### Web
+### Web
 
 :::info
 All MQTT module config options are available for the Web UI.
@@ -245,9 +245,9 @@ The default channel (LongFast) on the public server usually has a lot of traffic
 
 <TabItem value="android">
 
-#### Android
+### Android
 
-##### 1. Enable the MQTT Module
+#### 1. Enable the MQTT Module
 
 Navigate to: Settings >  MQTT: Turn on the slider for **MQTT enabled** and tap **Send**.
 
@@ -257,13 +257,13 @@ _Optional:_ To use your phone's internet connection to send and receive packets 
 
 [![Client Proxy](/img/modules/mqtt/android_mqtt_proxy_sm.webp)](/img/modules/mqtt/android_mqtt_proxy_encryption.webp)
 
-##### 2. Enable Channel Uplink & Downlink
+#### 2. Enable Channel Uplink & Downlink
 
 Navigate to: Settings >  Channels > LongFast: Turn on the sliders for **Uplink enabled** and **Downlink enabled**, then tap **Save** and tap **Send**.
 
 [![Channel Settings](/img/modules/mqtt/android_channel_sm.webp)](/img/modules/mqtt/android_channel.webp)
 
-##### 3. Configure Network Settings
+#### 3. Configure Network Settings
 
 Navigate to: Settings >  Network: Turn on the slider for **WiFi enabled**, Enter the **SSID** and **PSK** for your network, then tap **Send**.
 
@@ -272,9 +272,9 @@ Navigate to: Settings >  Network: Turn on the slider for **WiFi enabled**, Enter
 </TabItem>
 <TabItem value="apple">
 
-#### Apple
+### Apple
 
-##### 1. Enable the MQTT Module
+#### 1. Enable the MQTT Module
 
 Navigate to Settings > MQTT: Turn on the slider for MQTT enabled and tap **Save**
 
@@ -285,13 +285,13 @@ _Optional:_ To use your phone's internet connection to send and receive packets 
 
 [![Client Proxy](/img/modules/mqtt/apple_mqtt_1_proxy_sm.webp)](/img/modules/mqtt/apple_mqtt_1_proxy_encryption.webp)
 
-##### 2. Enable Channel Uplink & Downlink
+#### 2. Enable Channel Uplink & Downlink
 
 Navigate to Settings > Channels > Primary Channel: Turn on the sliders for **Uplink enabled** and **Downlink enabled** - Tap **Save**
 
 [![Channel Settings](/img/modules/mqtt/apple_channel_sm.webp)](/img/modules/mqtt/apple_channel.webp)
 
-##### 3. Configure Network Settings
+#### 3. Configure Network Settings
 
 Navigate to Settings > Network: Turn on the slider for **WiFi enabled** - Enter your **SSID** and **PSK** for your network - Tap **Save**
 
@@ -300,15 +300,15 @@ Navigate to Settings > Network: Turn on the slider for **WiFi enabled** - Enter 
 </TabItem>
 <TabItem value="cli">
 
-#### CLI
+### CLI
 
-##### 1. Enable the MQTT Module
+#### 1. Enable the MQTT Module
 
 ```shell
 meshtastic --set mqtt.enabled true
 ```
 
-##### 2. Enable Channel Uplink & Downlink
+#### 2. Enable Channel Uplink & Downlink
 
 ```shell
 meshtastic --ch-set uplink_enabled true --ch-index 0
@@ -321,7 +321,7 @@ or chained together:
 meshtastic --ch-set uplink_enabled true --ch-index 0 --ch-set downlink_enabled true --ch-index 0
 ```
 
-##### 3. Configure Network Settings
+#### 3. Configure Network Settings
 
 ```shell
 meshtastic --set network.wifi_enabled true
@@ -338,9 +338,9 @@ meshtastic --set network.wifi_enabled true --set network.wifi_ssid "your network
 </TabItem>
 <TabItem value="web">
 
-#### Web
+### Web
 
-##### 1. Enable the MQTT Module
+#### 1. Enable the MQTT Module
 
 Navigate to Config > Module Config > MQTT - Turn on the slider for MQTT enabled - Click the **Save** icon.
 
@@ -356,13 +356,13 @@ Though this option may be visible in your UI, Client Proxy is not yet functional
 
 :::
 
-##### 2. Enable Channel Uplink & Downlink
+#### 2. Enable Channel Uplink & Downlink
 
 Navigate to Channels > Primary: Turn on the sliders for **Uplink Enabled** and **Downlink Enabled** - Click the **Save** icon.
 
 [![Channel Settings](/img/modules/mqtt/web_channel_sm.webp)](/img/modules/mqtt/web_channel.webp)
 
-##### 3. Configure Network Settings
+#### 3. Configure Network Settings
 
 Navigate to Radio Config > Device > Network: Turn on the slider for **Enabled** - Enter your **SSID** and **PSK** for your network - Click the **Save** icon.
 

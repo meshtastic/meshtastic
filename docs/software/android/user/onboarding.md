@@ -1,7 +1,7 @@
 ---
 title: Getting Started
 sidebar_position: 1
-last_updated: 2026-05-13
+last_updated: 2026-07-08
 description: First-launch setup — permissions, onboarding flow, and next steps after connecting your radio.
 parent: User Guide
 ---
@@ -56,10 +56,10 @@ If denied, Bluetooth scanning will not function and your node will not report a 
 
 Notifications alert you to:
 - Incoming messages from channels and direct messages
-- Connection status changes (connected, disconnected, reconnecting)
-- Firmware update availability
+- New nodes joining the mesh
+- Low battery on a remote node
 
-> 💡 **Tip:** You can fine-tune notification preferences later in Android system settings. The app creates separate notification channels for messages, connection events, and background service status.
+> 💡 **Tip:** You can fine-tune notification preferences later in Android system settings — the app creates a separate notification channel per category (plus a few internal ones, like the background service), so you can enable or silence them individually.
 
 ### Critical Alerts Permission
 

@@ -1,7 +1,7 @@
 ---
 title: Discovery
 sidebar_position: 12
-last_updated: 2026-06-11
+last_updated: 2026-07-27
 description: Explore your mesh network — the Local Mesh Discovery scanner, traceroute paths, neighbor maps, and node discovery tools.
 parent: User Guide
 ---
@@ -21,7 +21,7 @@ The app offers two complementary approaches:
 
 Local Mesh Discovery is a dedicated scanning mode that helps you find the best LoRa modem preset for your location and see which nodes are active on each preset. It cycles your connected radio through one or more presets you choose, listens (or "dwells") on each one for a set time to collect packets, then analyzes and ranks the results.
 
-Open it from **Settings → Local Mesh Discovery**.
+Open it from **Settings → Advanced → Local Mesh Discovery**. On desktop, it has its own **Settings → Local Mesh Discovery** entry.
 
 > ⚠️ **Note:** Discovery temporarily changes your radio's LoRa settings while it scans, then restores your original configuration when it finishes. Your device must be connected to run a scan.
 
@@ -38,7 +38,6 @@ Before starting, configure these controls:
 The **Start** button stays disabled — with an explanation of why — until the scan can run. Common reasons it's disabled:
 
 - The device is **not connected**.
-- The current channel is using the **default channel key** (use a unique key first — see [Messages & Channels](messages-and-channels.md)).
 - **No presets** have been selected to scan.
 - The selected preset uses **2.4 GHz**, which your hardware doesn't support.
 
@@ -83,6 +82,25 @@ Additional features available from the results:
 
 ---
 
+## Mesh Beacon
+
+Mesh Beacon lets nodes invite others to join their mesh. A beaconing node periodically broadcasts an invitation — optionally advertising a channel, region, and modem preset — that nearby devices can hear even before they share a configuration.
+
+Configure it under **Settings → Module Config → Mesh Beacon**:
+
+- **Listen for beacons** — receive invitations broadcast by other nodes.
+- **Broadcast beacon** — send your own invitation at a set interval, with an optional message and an offered channel.
+
+Received invitations appear as **Mesh invitations** cards on the Discovery screen. Each card shows the sender's message plus the offered channel, region, preset, and signal quality, with these actions:
+
+- **Join** — switch to the offered channel and preset (retunes the radio and reboots). When the offer matches your current frequency slot, an **Add channel** action adds it without a reboot.
+- **Discover** — seed a Discovery scan with the offered preset so you can survey that mesh before joining (shown only when the beacon offers a preset).
+- **Dismiss** — ignore the invitation.
+
+Channels advertised by beacons also show up in the scan setup as **Beacon channels** — select one to include it as a scan target.
+
+---
+
 ## Manual Exploration
 
 The tools below are available at any time from the node list and node detail screens. Use them to investigate specific paths and build a topology picture, alongside or instead of a full scan.
@@ -110,8 +128,8 @@ Each hop represents a relay node that forwarded the message. The SNR and RSSI va
 
 | What to look for | What it means |
 |------------------|---------------|
-| All hops show Good SNR (> 5 dB) | Healthy path — messages flow reliably |
-| One hop shows Bad SNR (< 0 dB) | Weak link — this relay segment is fragile |
+| All hops show Good SNR (≥ −7 dB, green) | Healthy path — messages flow reliably |
+| One hop shows Bad SNR (< −15 dB, red) | Weak link — this relay segment is fragile |
 | Many hops (4+) | Long path — consider repositioning a node to shorten it |
 | Different path on retry | Mesh is adapting — multiple routes exist (this is good!) |
 
@@ -164,7 +182,7 @@ The node list itself is a powerful discovery tool when you use its filtering and
 
 ### Infrastructure Audit
 
-- Disable **Exclude infrastructure** to see Router, Repeater, Router Late, and Client Base nodes.
+- Disable **Exclude infrastructure** to see Router, Router Late, and Client Base nodes.
 - Check their signal quality and last-heard times to verify your infrastructure nodes are healthy.
 
 See [Nodes](nodes.md) for full details on filtering and sorting options.
