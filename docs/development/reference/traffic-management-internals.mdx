@@ -6,6 +6,10 @@ sidebar_position: 7
 description: How the Traffic Management Module serves NodeInfo requests on another node's behalf, the throttle that bounds it, and the tick clocks behind its per-node counters.
 ---
 
+:::info Firmware versions
+Describes firmware **2.8.0**. The module itself first shipped in 2.7.20, but the reflector throttle, the NodeInfo payload cache and the key-provenance gate described here arrived in 2.8.0 ([#10706](https://github.com/meshtastic/firmware/pull/10706), [#10745](https://github.com/meshtastic/firmware/pull/10745)). On 2.7.20 to 2.7.26, direct-serve is bounded by a single 30 second stamp rather than the per-requester and per-target tables below.
+:::
+
 This page documents the internals of the Traffic Management Module (TMM): the NodeInfo **direct-serve** path, the throttle that bounds it, and the modular tick clocks its caches use. For the settings themselves, see [Traffic Management Module Usage](/docs/configuration/module/traffic-management). For the stores this path reads from, see [NodeInfo Stores](/docs/development/reference/node-info-stores).
 
 Sources of truth: [TrafficManagementModule.h / .cpp](https://github.com/meshtastic/firmware/tree/master/src/modules), with defaults in [Default.h](https://github.com/meshtastic/firmware/tree/master/src/mesh/Default.h).

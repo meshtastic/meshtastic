@@ -9,8 +9,8 @@ import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 import { Icon } from "@iconify/react";
 
-:::info
-Traffic Management requires firmware version 2.8.0 or later.
+:::info Firmware versions
+The Traffic Management module first shipped in firmware **2.7.20**. **The settings on this page are the 2.8.0 surface.** Firmware 2.7.20 to 2.7.26 exposed a different set - see [Settings on 2.7.x](#settings-on-27x) if that is what your device is running.
 :::
 
 ## Overview
@@ -19,9 +19,9 @@ Earlier traffic-reduction work in Meshtastic asked client nodes to send automate
 
 The module shapes **transit** traffic: it filters or answers packets passing through your node before they are rebroadcast. It never filters packets addressed to you, and it never changes what your own node sends.
 
-On supported targets the module **ships enabled**, with position deduplication running at its 11 hour default. Every other feature defaults to off, so the module is on out of the box but opt-in per feature. It was introduced in [meshtastic/firmware#9358](https://github.com/meshtastic/firmware/pull/9358).
+From 2.8.0, on supported targets the module **ships enabled**, with position deduplication running at its 11 hour default. Every other feature defaults to off, so the module is on out of the box but opt-in per feature. It was introduced in [meshtastic/firmware#9358](https://github.com/meshtastic/firmware/pull/9358).
 
-There are no separate on/off switches. **Each feature is enabled by giving its setting a non-zero value**, and disabled by setting it back to `0`.
+From 2.8.0 there are also no separate on/off switches. **Each feature is enabled by giving its setting a non-zero value**, and disabled by setting it back to `0`.
 
 Per-node state lives in a flat 10-byte-per-node cache that is rebuilt from traffic and never persisted, so nothing here survives a reboot. Capacity is 2048 entries on ESP32 with PSRAM, 500 or 400 on other ESP32 parts, and 250 on nRF52840. The direct-response feature additionally reads a cache of full NodeInfo payloads on ESP32 builds with PSRAM. Both are described in [NodeInfo Stores](/docs/development/reference/node-info-stores).
 
@@ -85,11 +85,20 @@ Drops undecryptable traffic from a sender - a node on a different channel, or us
 
 Independently of the settings above, the module truncates the coordinates of relayed position packets to the channel's `position_precision` ceiling, or to the 19-bit firmware default when the channel does not set one. This is driven by channel configuration rather than by a module setting.
 
-### Settings you may have seen elsewhere
+### Settings on 2.7.x
 
-Earlier drafts of this module carried a master `enabled` switch, per-feature booleans (`position_dedup_enabled`, `nodeinfo_direct_response`, `rate_limit_enabled`, `drop_unknown_enabled`), a `position_precision_bits` field, and three hop controls (`exhaust_hop_telemetry`, `exhaust_hop_position`, `router_preserve_hops`).
+Firmware **2.7.20 through 2.7.26** shipped a larger set of fields, which 2.8.0 removes. If your device is on one of those releases, this is what it has:
 
-**None of these exist.** The booleans were replaced by the "non-zero means enabled" convention on the settings above; `position_precision_bits` was removed because precision now comes from the channel's own `position_precision`; and the three hop controls were removed from the configuration and shelved in the firmware until the right heuristics are settled. None of those fields ever shipped in a stable release, so no device carries them and no client should offer them.
+| 2.7.x field                                                                        | What replaced it in 2.8.0                                                       |
+| :--------------------------------------------------------------------------------- | :------------------------------------------------------------------------------ |
+| `enabled`                                                                           | Removed. The module is gated by whether the config block is present at all.       |
+| `position_dedup_enabled`, `nodeinfo_direct_response`, `rate_limit_enabled`, `drop_unknown_enabled` | Removed. A non-zero value on the companion setting is what enables each feature. |
+| `position_precision_bits`                                                           | Removed. Precision comes from the channel's own `position_precision`.             |
+| `exhaust_hop_telemetry`, `exhaust_hop_position`, `router_preserve_hops`              | Removed from the configuration and shelved in the firmware pending better heuristics. |
+
+Defaults changed too: on 2.7.x `position_min_interval_secs` defaulted to one day, and the module was off until `enabled` was set. From 2.8.0 the interval defaults to 11 hours and the module ships enabled with position deduplication running.
+
+A client that writes the 2.7.x fields to a 2.8.0 device is writing fields the device no longer has; a client that writes the 2.8.0 fields to a 2.7.x device will not enable anything, because the boolean switches will still be off.
 
 ## Traffic Management Module Client Availability
 

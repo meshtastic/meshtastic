@@ -9,6 +9,10 @@ import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 import { Icon } from "@iconify/react";
 
+:::info Firmware versions
+The Mesh Beacon module requires firmware **2.8.0 or later** ([#10618](https://github.com/meshtastic/firmware/pull/10618)). It does not exist in 2.7.26 or earlier - a node on an older release cannot broadcast or receive beacons, though see [Legacy split](#legacy-split) for making your beacons visible to those nodes.
+:::
+
 ## Overview
 
 The Mesh Beacon Module lets a node periodically **advertise the existence of a mesh** to nodes that are not on it yet. A beacon carries a short human-readable message plus an optional "join offer": a channel, a region, and a modem preset.
