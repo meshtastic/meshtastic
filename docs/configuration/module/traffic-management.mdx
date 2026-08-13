@@ -21,7 +21,7 @@ From 2.8.0, on supported targets the module **ships enabled**, with position ded
 
 From 2.8.0 there are also no separate on/off switches. **Each feature is enabled by giving its setting a non-zero value**, and disabled by setting it back to `0`.
 
-Per-node state lives in a flat 10-byte-per-node cache that is rebuilt from traffic and never persisted, so nothing here survives a reboot. Capacity is 2048 entries on ESP32 with PSRAM, 500 or 400 on other ESP32 parts, and 250 on nRF52840. The direct-response feature additionally reads a cache of full NodeInfo payloads on ESP32 builds with PSRAM. Both are described in [NodeInfo Stores](/docs/development/reference/node-info-stores).
+The module keeps a small amount of information about each node it has heard from recently - enough to spot a repeated position or an unusually chatty sender. This is rebuilt from traffic as it arrives and is not saved, so it starts empty after a reboot. How many nodes it can track at once depends on the device, from a couple of hundred on smaller boards to a couple of thousand on the roomiest. For the exact figures and how the stores relate, see [NodeInfo Stores](/docs/development/reference/node-info-stores).
 
 ## Settings
 
@@ -35,31 +35,33 @@ Per-node state lives in a flat 10-byte-per-node cache that is rebuilt from traff
 
 ### nodeinfo_direct_response_max_hops
 
-The maximum hop distance from a requester at which this node will answer a NodeInfo request **on the target node's behalf**, from cache, instead of letting the request travel to the target and back.
+When another node asks "who is node X?", your node can answer from what it already knows about X, instead of letting the question travel all the way to X and back. This setting controls how far away the asker may be for your node to do that.
 
-Two separate checks apply, in this order:
+Two things decide the answer, in this order:
 
-1. **The configured value switches the feature on.** `0` disables direct responses entirely, on every role. Any non-zero value turns them on.
-2. **The device role then caps how far they reach.** The configured value is clamped down to the role's ceiling; it can never be raised above it.
+1. **Your setting turns the feature on or off.** `0` means your node never answers on anyone else's behalf. Any other value turns it on.
+2. **Your device role then limits how far it reaches.** If your setting is higher than your role allows, the role wins.
 
-| Device role                            | Role ceiling | Effective reach with a non-zero setting               |
-| :------------------------------------- | :----------- | :---------------------------------------------------- |
-| `ROUTER`, `ROUTER_LATE`, `CLIENT_BASE` | 3            | The configured value, capped at 3 hops                |
-| All other roles                        | 0            | Clamped to 0 - answers direct neighbours only         |
+| Device role                            | Role allows | How far it actually reaches            |
+| :------------------------------------- | :---------- | :-------------------------------------- |
+| `ROUTER`, `ROUTER_LATE`, `CLIENT_BASE` | up to 3     | Your setting, up to 3 hops away        |
+| All other roles                        | 0           | Only nodes in direct range of yours    |
 
-The distinction matters because `0` appears in both columns meaning different things. A **configured** `0` means no direct responses at all. An **effective** `0` produced by the role clamp still answers, but only requesters at zero hops away. So setting `2` on a `CLIENT` does not disable the feature - it enables it, then clamps the reach to direct neighbours.
+Watch out for the two different meanings of `0` here. Setting it to `0` yourself switches the feature off completely. But a role that "allows 0" has not switched it off - it still answers, just only for nodes it can hear directly. So putting `2` on a `CLIENT` does not disable anything; it turns the feature on and the role then trims its reach back to direct neighbours.
 
-A requester whose hop distance cannot be determined is never answered.
+If your node cannot tell how far away the asker is, it does not answer.
 
-**Note:** the cached reply is always sent with `hop_limit = 0`, so it is never relayed. It reaches the requester only if the requester is within direct radio range of this node.
+**Note:** the reply is sent zero-hop, so it is never relayed onward and only arrives if the asker is in direct radio range of your node.
 
-This is the module's most security-sensitive feature: the reply carries the target's node number as `from`, and both that and the requester's address are unauthenticated. The firmware therefore also gates the reply on identity provenance and recency, and throttles it. See [Traffic Management Internals](/docs/development/reference/traffic-management-internals).
+This is the module's most security-sensitive feature, because the reply goes out under the other node's name and nothing in the exchange is verified. The firmware is careful about it: it only answers for nodes whose identity it has good reason to trust and has genuinely heard from recently, and it limits how often it will answer at all. See [Traffic Management Internals](/docs/development/reference/traffic-management-internals) if you want the specifics.
 
 ### position_min_interval_secs
 
-The minimum time between position broadcasts from the same node **at the same location** before another is relayed. A position counts as a duplicate when it falls in the same cell of the channel's `position_precision` grid - the firmware default is 19-bit, roughly 90 m cells - as the last one seen from that sender. The default is 11 hours (`39600`); `0` disables it.
+The minimum time between position broadcasts from the same node **at the same location** before another is relayed. The default is 11 hours (`39600`); `0` disables it.
 
-Grid size is taken from the channel, not from a module setting. Device roles only ever **shorten** this interval, never lengthen it:
+"Same location" is deliberately approximate: positions are compared against a grid rather than exactly, so a node that has only drifted a little still counts as not having moved. By default that grid is around 90 m across. Its size comes from the channel's `position_precision`, not from a module setting.
+
+Device roles only ever **shorten** this interval, never lengthen it:
 
 | Role                 | Effective interval |
 | :------------------- | :----------------- |
@@ -84,9 +86,19 @@ Drops undecryptable traffic from a sender - a node on a different channel, or us
 
 ## Details
 
-### Position precision clamping
+### How precise relayed positions are
 
-Independently of the settings above, the module truncates the coordinates of relayed position packets to the channel's `position_precision` ceiling, or to the 19-bit firmware default when the channel does not set one. This is driven by channel configuration rather than by a module setting.
+Separately from the settings above, your node can round off the coordinates in **other nodes'** position broadcasts before passing them on, so it never forwards a position that is more precise than the channel is meant to carry. The limit comes from the channel's own `position_precision`, not from a module setting.
+
+This only happens when all of the following are true:
+
+- Your node is **not** in licensed (amateur radio) mode. Licensed operators are exempt.
+- The packet is a position broadcast.
+- It arrived on one of the well-known public channels. Private channels are left alone, unless the firmware was specifically built to include them.
+- **The channel actually sets a precision.** If position sharing is switched off for that channel, nothing is rounded and the packet passes through untouched.
+- The position is more precise than that limit. Anything already coarse enough is left alone.
+
+**Note:** this is not the same as the grid used for duplicate detection above. Duplicate detection falls back to a roughly 90 m grid when a channel sets no precision of its own; this rounding has no such fallback - it simply does nothing.
 
 ### Settings on 2.7.x
 
@@ -206,5 +218,5 @@ meshtastic --get traffic_management
 
 ## See also
 
-- [Traffic Management Internals](/docs/development/reference/traffic-management-internals) - the direct-response serve gates, the throttle that bounds them, and the tick clocks behind the counters.
-- [NodeInfo Stores](/docs/development/reference/node-info-stores) - the hot store, warm tier and TMM caches the direct-response path reads from, and their trust and provenance model.
+- [Traffic Management Internals](/docs/development/reference/traffic-management-internals) - the direct-response serve gates, the throttle that bounds them, the exact conditions under which relayed positions get rounded, and the tick clocks behind the counters.
+- [NodeInfo Stores](/docs/development/reference/node-info-stores) - where a node keeps what it knows about other nodes, how much of it survives a reboot, and how it decides which of that is trustworthy enough to answer with.

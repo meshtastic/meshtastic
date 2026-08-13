@@ -37,12 +37,12 @@ Beacons are **zero-hop**: the mesh never rebroadcasts them, so only nodes in dir
 
 ## Settings
 
-The three on/off toggles are bits in a single `flags` value rather than separate switches. To change one, read the current value, set or clear the bit, and write the whole value back.
+Listening, broadcasting and legacy split are three separate options, but they share one `flags` setting rather than having a switch each. You turn them on by adding their numbers together - so listening (`1`) plus broadcasting (`2`) is `3`. To change one option, work out the new total and write that.
 
 | Setting                   | Acceptable Values                                     | Default |
 | :------------------------ | :---------------------------------------------------- | :------ |
 | `broadcast_interval_secs` | `3600` or greater (`0` = default)                     | `3600`  |
-| `broadcast_message`       | string, up to 100 bytes                               | `""`    |
+| `broadcast_message`       | text, up to 100 characters                            | `""`    |
 | `broadcast_offer_channel` | channel settings (name, PSK, slot)                    | unset   |
 | `broadcast_offer_preset`  | modem preset                                          | unset   |
 | `broadcast_offer_region`  | region code                                           | `UNSET` |
@@ -50,7 +50,7 @@ The three on/off toggles are bits in a single `flags` value rather than separate
 | `broadcast_on_preset`     | modem preset                                          | unset   |
 | `broadcast_on_region`     | region code                                           | `UNSET` |
 | `broadcast_targets`       | up to 4 target entries                                | empty   |
-| `flags`                   | `1` listen, `2` broadcast, `4` legacy split (OR them) | `0`     |
+| `flags`                   | `1` listen, `2` broadcast, `4` legacy split (add them) | `0`     |
 
 ### broadcast_interval_secs
 
@@ -58,7 +58,7 @@ How often a beacon is transmitted. The floor is **3600 seconds (1 hour)**; `0` m
 
 ### broadcast_message
 
-The text carried in each broadcast, **capped at 100 bytes** and truncated if longer.
+The text carried in each broadcast, **capped at 100 characters** and truncated if longer.
 
 ### broadcast_offer_channel, broadcast_offer_preset, broadcast_offer_region
 
@@ -86,14 +86,24 @@ Each entry names a preset, a region, and a **channel slot from your own channel 
 
 ### flags
 
-A single bitfield. OR the values together:
+One setting holds three independent options. Add together the numbers for the ones you want:
 
-| Bit value | Name                     | Meaning                                                                                 |
-| :-------- | :----------------------- | :-------------------------------------------------------------------------------------- |
-| `0`       | `FLAG_NONE`              | Nothing enabled.                                                                        |
-| `1`       | `FLAG_LISTEN_ENABLED`    | Receive beacons. Without this, incoming beacons are dropped before your client sees them. |
-| `2`       | `FLAG_BROADCAST_ENABLED` | Broadcast beacons from this node.                                                        |
-| `4`       | `FLAG_LEGACY_SPLIT`      | Compatibility with older firmware. See below.                                             |
+| Value | Option                   | What it does                                                                              |
+| :---- | :----------------------- | :---------------------------------------------------------------------------------------- |
+| `0`   | `FLAG_NONE`              | Nothing enabled.                                                                          |
+| `1`   | `FLAG_LISTEN_ENABLED`    | Receive beacons. Without this, incoming beacons are dropped before your client sees them. |
+| `2`   | `FLAG_BROADCAST_ENABLED` | Broadcast beacons from this node.                                                         |
+| `4`   | `FLAG_LEGACY_SPLIT`      | Compatibility with older firmware. See below.                                             |
+
+So the value to set is just the total:
+
+| What you want                        | Set `flags` to |
+| :----------------------------------- | :------------- |
+| Listen only                          | `1`            |
+| Broadcast only                       | `2`            |
+| Listen and broadcast                 | `3`            |
+| Broadcast, reaching older nodes too  | `6`            |
+| Everything                           | `7`            |
 
 ## Details
 
@@ -125,11 +135,11 @@ Accepting an offered region or preset **changes your node's own radio and will d
 A multi-region invitation beacon:
 
 ```text
-flags                   = FLAG_BROADCAST_ENABLED | FLAG_LEGACY_SPLIT
+flags                   = 6                       # broadcast (2) + legacy split (4)
 broadcast_message       = "Join us on NarrowSlow!"
 broadcast_offer_preset  = NARROW_SLOW
 broadcast_offer_region  = EU_N_868
-broadcast_offer_channel = { name: "MyChannel", psk: <32-byte key> }
+broadcast_offer_channel = { name: "MyChannel", psk: <the channel's key> }
 broadcast_interval_secs = 3600
 broadcast_targets = [
   { preset: LONG_FAST,   region: EU_868,   channel_index: 0 },
