@@ -9,9 +9,7 @@ description: How the firmware estimates mesh size from a 512-byte sampled histog
 import ThemedImage from "@theme/ThemedImage";
 import useBaseUrl from "@docusaurus/useBaseUrl";
 
-:::info Firmware versions
-Describes firmware **2.8.0**. Hop scaling first shipped in 2.7.24 ([#10176](https://github.com/meshtastic/firmware/pull/10176)).
-:::
+**Firmware 2.8.0.** Hop scaling first shipped in 2.7.24 ([#10176](https://github.com/meshtastic/firmware/pull/10176)).
 
 Every routine Meshtastic broadcast carries a `hop_limit` that controls how many times the mesh relays it. Many devices are set to a hop limit of 7 so that text messages can cross a large mesh. That same setting is expensive for routine broadcasts - position, telemetry, nodeinfo and neighborinfo - because in a dense mesh, relaying each of them out to 7 hops burns airtime for no benefit. In a sparse or chain-like mesh, those hops are still needed.
 
@@ -208,9 +206,7 @@ The primary source of truth, written at the end of `rollHour()`:
 
 Finally, `Router::send()` logs a `[HOPSCALE] hop_limit X -> Y for portnum N` line each time it actually lowers a packet's hop limit.
 
-:::note Reading the numbers back
-Everything except `entries`, `counted` and `nodes perHop` is already scaled by `filt`, so at `filt=1/4` every per-hour, trend and scaled-perHop figure is necessarily a **multiple of 4**. A value that is not is a misread line, not a rare state. The example above is internally consistent: `83 × 4 = 332`, the raw per-hop array sums to 83, its scaled counterpart sums to 332, and `new + returning = 320` equals the `h0` bucket.
-:::
+**Note:** everything except `entries`, `counted` and `nodes perHop` is already scaled by `filt`, so at `filt=1/4` every per-hour, trend and scaled-perHop figure is necessarily a **multiple of 4**. A value that is not is a misread line, not a rare state. The example above is internally consistent: `83 × 4 = 332`, the raw per-hop array sums to 83, its scaled counterpart sums to 332, and `new + returning = 320` equals the `h0` bucket.
 
 ## Worked scenarios
 

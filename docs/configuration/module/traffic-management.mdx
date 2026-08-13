@@ -9,9 +9,7 @@ import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 import { Icon } from "@iconify/react";
 
-:::info Firmware versions
-The Traffic Management module first shipped in firmware **2.7.20**. **The settings on this page are the 2.8.0 surface.** Firmware 2.7.20 to 2.7.26 exposed a different set - see [Settings on 2.7.x](#settings-on-27x) if that is what your device is running.
-:::
+**Firmware 2.8.0.** The module first shipped in 2.7.20, but the settings on this page are the 2.8.0 surface. Firmware 2.7.20 to 2.7.26 exposed a different set - see [Settings on 2.7.x](#settings-on-27x) if that is what your device is running.
 
 ## Overview
 
@@ -53,9 +51,7 @@ The distinction matters because `0` appears in both columns meaning different th
 
 A requester whose hop distance cannot be determined is never answered.
 
-:::note
-The cached reply is always sent with `hop_limit = 0`, so it is never relayed. It reaches the requester only if the requester is within direct radio range of this node.
-:::
+**Note:** the cached reply is always sent with `hop_limit = 0`, so it is never relayed. It reaches the requester only if the requester is within direct radio range of this node.
 
 This is the module's most security-sensitive feature: the reply carries the target's node number as `from`, and both that and the requester's address are unauthenticated. The firmware therefore also gates the reply on identity provenance and recency, and throttles it. See [Traffic Management Internals](/docs/development/reference/traffic-management-internals).
 
@@ -159,9 +155,7 @@ Available under module settings - see [Apple client settings](/docs/software/app
 
 #### CLI
 
-:::info
 All Traffic Management settings are available in the Python CLI.
-:::
 
 |                     Setting                          | Acceptable Values   | Default |
 | :--------------------------------------------------- | :------------------ | :------ |
