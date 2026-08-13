@@ -8,7 +8,7 @@ description: How the Traffic Management Module serves NodeInfo requests on anoth
 
 **Firmware 2.8.0.** The module itself first shipped in 2.7.20, but the reflector throttle, the NodeInfo payload cache and the key-provenance gate described here arrived in 2.8.0 ([#10706](https://github.com/meshtastic/firmware/pull/10706), [#10745](https://github.com/meshtastic/firmware/pull/10745)). On 2.7.20 to 2.7.26, direct-serve is bounded by a single 30-second stamp rather than the per-requester and per-target tables below.
 
-This page documents the internals of the Traffic Management Module (TMM): the NodeInfo **direct-serve** path, the throttle that bounds it, and the modular tick clocks its caches use. For the settings themselves, see [Traffic Management Module Usage](/docs/configuration/module/traffic-management). For the stores this path reads from, see [NodeInfo Stores](/docs/development/reference/node-info-stores).
+This page documents the internals of the Traffic Management Module (TMM): the NodeInfo **direct-serve** path, the throttle that bounds it, the relayed-position precision clamp, and the modular tick clocks its caches use. For the settings themselves, see [Traffic Management Module Usage](/docs/configuration/module/traffic-management). For the stores this path reads from, see [NodeInfo Stores](/docs/development/reference/node-info-stores).
 
 Sources of truth: [TrafficManagementModule.h / .cpp](https://github.com/meshtastic/firmware/tree/master/src/modules), with defaults in [Default.h](https://github.com/meshtastic/firmware/tree/master/src/mesh/Default.h).
 
@@ -52,6 +52,29 @@ A direct reply is addressed to the requesting packet's `from` and spoofs the req
 **When a table fills.** For an unseen key with no free slot, the **least-recently-used** entry is evicted and the new key admitted. The LRU victim is by construction the entry closest to expiring anyway, so eviction is the lowest-cost choice. An attacker who cycles more than 8 distinct requesters or targets - easy, since both are unauthenticated - evicts entries and defeats *per-key* throttling for the cycled keys. That is expected, and it is why the **global 1-second floor is the hard backstop**: it is a single stamp, it cannot fill, and it caps total spoofed replies at roughly one per second no matter what. Per-key throttling degrades gracefully to the floor under pressure.
 
 **Throttled is not dropped.** A throttled request lets `handleReceived()` return `CONTINUE`, so the request forwards toward the genuine target, which can answer itself, rather than being black-holed. A requester whose first reply was lost on a noisy link would otherwise get silence for the whole window; repeats of the same packet id are already absorbed by the router's duplicate detection.
+
+## Relayed-position precision clamp
+
+TMM is the one place in the firmware that **rewrites another node's payload in transit**. `Router::send()` deliberately does not: its position-precision policy is originator-only, gated on `isFromUs(p)`, with an explicit comment that relays keep `p->from` as the original sender and so must not touch a relayed `POSITION_APP` payload. TMM's clamp is the considered exception, on the grounds that a node relaying someone else's over-precise position on a public channel is a privacy problem the relay is in a position to fix.
+
+It lives in `alterReceived()`, not `handleReceived()`. `MeshModule` calls the two in sequence, `alterReceived()` second, so the clamp runs **after** the routing verdict and mutates `mp` in place - the rebroadcast then carries the rewritten payload. Nothing about the accept/drop decision depends on it.
+
+Six conditions gate it, and all must hold:
+
+| Gate                                     | Condition                                                  | Why                                                                     |
+| :--------------------------------------- | :---------------------------------------------------------- | :----------------------------------------------------------------------- |
+| Module enabled, decoded, not ours         | `alterReceived()` preamble, incl. `!isFromUs()`             | Transit traffic only; your own sends are Router's business              |
+| Licence                                   | `!owner.is_licensed`                                        | Amateur operators are exempt; lost-and-found roles are **not**          |
+| Port and addressing                       | `POSITION_APP` and `isBroadcast(mp.to)`                     | Unicast positions are left alone                                        |
+| Channel class                             | `channels.isWellKnownChannel(mp.channel)`                   | Public default channels only - see below                                |
+| Channel sets a precision                  | `chanPrec > 0`                                              | **No fallback.** Precision 0 means sharing is off, and the clamp skips  |
+| Packet is finer than the channel          | `packetPrec > chanPrec`, absent `precision_bits` reading 32 | Already-coarse positions are not re-encoded                             |
+
+When all six hold, `applyPositionPrecision(pos, chanPrec)` truncates, the payload is re-encoded in place, and the action is logged as `clamp`/`precision`.
+
+**The `chanPrec > 0` gate is the one to remember.** It is easy to read the clamp as "positions are never relayed finer than ~90 m", but the ~90 m default (`default_traffic_mgmt_position_precision_bits`, 19) belongs to the **dedup fingerprint** path, which falls back to it via `sanitizePositionPrecision()` when a channel sets nothing. The clamp has no such fallback: a channel with no configured precision gets no clamping at all, and full-precision coordinates relay untouched. The two paths read the same channel field and then diverge.
+
+**Channel class is a build-time policy.** `isWellKnownChannel()` is true only for a channel whose PSK is absent or a single well-known key byte *and* whose name matches a modem preset - the default public channels. Private channels are skipped unless the firmware is compiled with `USERPREFS_TMM_APPLY_TO_PRIVATE_CHANNELS`, which extends the clamp to everything. The reasoning is that a private channel's membership is already controlled, so its precision is the operator's business rather than a relay's.
 
 ## Tick clocks and wrap safety
 
