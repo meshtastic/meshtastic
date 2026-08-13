@@ -6,6 +6,10 @@ sidebar_position: 6
 description: How the firmware declares which modem presets are legal in which LoRa region, and how a client app should decode and apply that map in its config UI.
 ---
 
+:::info Firmware versions
+`FromRadio.region_presets` is sent by firmware **2.8.0 or later** ([#10736](https://github.com/meshtastic/firmware/pull/10736)). Firmware 2.7.26 and earlier never sends it, so a client must treat its absence as "no constraints" - see [rule 2](#semantics-and-rules).
+:::
+
 Not every modem preset is legal in every LoRa region. Narrow EU SRD bands, the EU 868 "narrow" band, amateur bands and the 2.4 GHz band each accept only a specific subset of presets. The firmware enforces this internally - it clamps or rejects illegal combinations - but a client had no way to *know* the rules, so a user could pick an illegal region and preset pair in the UI and only discover the problem after the device silently corrected it.
 
 From 2.8 the firmware **declares the legal region-to-preset combinations** to the client during the `want_config` handshake, so a client can constrain its preset picker to the valid set for the selected region and warn about licensed-only bands. It is purely advisory metadata: the firmware remains the source of truth and still validates and clamps on its own.

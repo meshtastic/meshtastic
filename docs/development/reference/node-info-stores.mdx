@@ -6,6 +6,10 @@ sidebar_position: 8
 description: The four node-identity and traffic-state stores in the firmware - the NodeDB hot store, the warm tier, and the two Traffic Management caches - with their capacities, trust model and lookup order.
 ---
 
+:::info Firmware versions
+Describes firmware **2.8.0**, which is where the three-tier arrangement arrives. The persistent warm tier landed in [#10705](https://github.com/meshtastic/firmware/pull/10705) and the TMM NodeInfo payload cache in [#10745](https://github.com/meshtastic/firmware/pull/10745); neither exists in 2.7.26 or earlier, where the hot store and the TMM unified cache are the only node stores.
+:::
+
 This page is an overview of the node-identity and traffic-state databases that the Traffic Management Module (TMM) either owns or leans on. There are four stores in play, but only three form the identity lookup chain:
 
 1. **NodeDB hot store** - the authoritative `NodeInfoLite` array (identity tier 1).
