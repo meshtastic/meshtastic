@@ -9,9 +9,16 @@ import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 import { Icon } from "@iconify/react";
 
-:::info Firmware versions
-The Mesh Beacon module requires firmware **2.8.0 or later** ([#10618](https://github.com/meshtastic/firmware/pull/10618)). It does not exist in 2.7.26 or earlier - a node on an older release cannot broadcast or receive beacons, though see [Legacy split](#legacy-split) for making your beacons visible to those nodes.
-:::
+## In short
+
+Mesh Beacon requires firmware **2.8.0 or later** ([#10618](https://github.com/meshtastic/firmware/pull/10618)); older nodes can't broadcast or receive beacons - see [Legacy split](#legacy-split) for making them visible anyway.
+
+It's purely **advisory**. The firmware never auto-joins a channel or switches preset or region. It just hands your client app an invitation, and nothing happens until you accept. Note that accepting does change your node's own radio and drops it off its current mesh, so a good client should warn you first.
+
+Two more things:
+
+- **The advertised PSK isn't secret.** It's a public join token, broadcast in the clear. For real privacy, share the PSK out of band and leave `broadcast_offer_channel` unset.
+- **Licensed regions are enforced.** An unlicensed node will drop rather than transmit a beacon into an amateur-only region.
 
 ## Overview
 
@@ -25,10 +32,6 @@ A node can broadcast, listen, or both:
 | :-------------- | :------------------------- | :------------------------------------------------------------------------------ |
 | **Broadcaster** | `FLAG_BROADCAST_ENABLED`   | Periodically transmits beacons.                                                  |
 | **Listener**    | `FLAG_LISTEN_ENABLED`      | Receives beacons and passes them to your client app, which shows the invitation. |
-
-:::info
-The module is deliberately **advisory**. The firmware never joins an advertised channel and never switches preset or region on its own. It hands the invitation to your client app, and nothing happens unless you accept it.
-:::
 
 Beacons are **zero-hop**: the mesh never rebroadcasts them, so only nodes in direct radio range hear yours. That is what keeps the feature from becoming a source of mesh-wide spam.
 
@@ -63,9 +66,7 @@ The **join offer** - what your beacon advertises. Together these say *"there is 
 
 An unknown region is cleared, and a preset that is not legal for that region is cleared.
 
-:::warning
-The advertised PSK is **not a secret**. It is a public join token, broadcast in the clear for anyone in range to read. If you want a genuinely private channel, share its PSK out of band and leave `broadcast_offer_channel` unset.
-:::
+**Note:** setting `broadcast_offer_channel` publishes that channel's PSK in the clear, to anyone in range. Leave it unset for a channel that is meant to stay private.
 
 ### broadcast_on_channel, broadcast_on_preset, broadcast_on_region
 
@@ -73,9 +74,7 @@ The radio settings your beacon is **transmitted on**. Leave them unset and the b
 
 If the preset is not legal for the target region, both it and `broadcast_on_channel` are cleared.
 
-:::warning
-An unlicensed node will never transmit on a licensed-only (amateur) region. If you configure one, the beacon is dropped rather than sent - the firmware will not key up outside your licence.
-:::
+**Note:** if you point these at a licensed-only (amateur) region and your node is not licensed, the beacon is dropped rather than sent - the firmware will not key up outside your licence.
 
 ### broadcast_targets
 
@@ -83,9 +82,7 @@ A list of up to four destinations, for advertising to several meshes at once. Wh
 
 Each entry names a preset, a region, and a **channel slot from your own channel table** - so that channel has to exist on your node first, because your node needs its key to encrypt the beacon. Configure the channels, then write the beacon settings pointing at their slot numbers. Duplicate entries cost no extra airtime; they are skipped.
 
-:::note
-If an entry points at a slot you have not configured, nothing errors - the beacon simply goes out on your **current primary channel** instead, on that entry's preset and region. So a mistyped slot number silently advertises the wrong channel. Well-behaved client apps check this for you and warn.
-:::
+**Note:** if an entry points at a slot you have not configured, nothing errors - the beacon simply goes out on your **current primary channel** instead, on that entry's preset and region. So a mistyped slot number silently advertises the wrong channel. Well-behaved client apps check this for you and warn.
 
 ### flags
 
@@ -113,9 +110,7 @@ Setting this flag makes your beacons usable by nodes running firmware older than
 - When a beacon has **both** text and an offer, it is sent as **two packets** - one carrying the offer, one an ordinary text message carrying the text - so that clients which do not understand beacons still display the text.
 - Every beacon is stamped so that firmware older than 2.7.20 accepts it rather than discarding it. Beacons remain zero-hop.
 
-:::note
-A side effect of the second point: a legacy-split beacon appears to be **1 hop away** even though it arrived over direct radio. Do not read a beacon's hop count as a distance.
-:::
+**Note:** a side effect of the second point is that a legacy-split beacon appears to be **1 hop away** even though it arrived over direct radio. Do not read a beacon's hop count as a distance.
 
 ### What happens when you receive one
 

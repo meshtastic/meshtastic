@@ -6,9 +6,7 @@ sidebar_position: 6
 description: How the firmware declares which modem presets are legal in which LoRa region, and how a client app should decode and apply that map in its config UI.
 ---
 
-:::info Firmware versions
-`FromRadio.region_presets` is sent by firmware **2.8.0 or later** ([#10736](https://github.com/meshtastic/firmware/pull/10736)). Firmware 2.7.26 and earlier never sends it, so a client must treat its absence as "no constraints" - see [rule 2](#semantics-and-rules).
-:::
+**Firmware 2.8.0 or later** ([#10736](https://github.com/meshtastic/firmware/pull/10736)) sends `FromRadio.region_presets`. Firmware 2.7.26 and earlier never sends it, so a client must treat its absence as "no constraints" - see [rule 2](#semantics-and-rules).
 
 Not every modem preset is legal in every LoRa region. Narrow EU SRD bands, the EU 868 "narrow" band, amateur bands and the 2.4 GHz band each accept only a specific subset of presets. The firmware enforces this internally - it clamps or rejects illegal combinations - but a client had no way to *know* the rules, so a user could pick an illegal region and preset pair in the UI and only discover the problem after the device silently corrected it.
 
@@ -105,9 +103,7 @@ These are what keep the UX correct across firmware versions. Implement all of th
 
 ## Platform notes
 
-:::note
-These describe how each client repository consumes the protobufs, not durable file paths. Both repos have been refactored away from older layouts - re-pin against a specific commit if you need exact locations.
-:::
+**Note:** these describe how each client repository consumes the protobufs, not durable file paths. Both repos have been refactored away from older layouts - re-pin against a specific commit if you need exact locations.
 
 ### Android
 
@@ -158,10 +154,8 @@ Region to group index:
 | 4     | ITU1_2M, ITU2_2M, ITU3_2M                                                                                                                                     |
 | 5     | ITU2_125CM                                                                                                                                                    |
 
-:::note
-Several groups carry overlapping preset lists but stay distinct: groups 1, 2 and 3 share the EU 86x superset yet differ in default, and group 5 shares the narrow presets with group 3 but differs in licensing. **Decoders must key on the group, not on the preset list**, to preserve the default and the licensing flag.
+**Note:** several groups carry overlapping preset lists but stay distinct: groups 1, 2 and 3 share the EU 86x superset yet differ in default, and group 5 shares the narrow presets with group 3 but differs in licensing. **Decoders must key on the group, not on the preset list**, to preserve the default and the licensing flag.
 
 Regions absent from the table, and therefore unconstrained: `EU_874`, `EU_917`, `ITU1_70CM`, `ITU2_70CM`, `ITU3_70CM`.
-:::
 
 This table is generated from the firmware's region table at runtime. Treat the firmware as authoritative and these values as the expected snapshot for the 2.8 table.

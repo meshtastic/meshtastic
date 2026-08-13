@@ -6,9 +6,7 @@ sidebar_position: 5
 description: What a client app needs to integrate with the Mesh Beacon module - capability detection, config read/write and sanitisation rules, receiving beacons, and the offer trust model.
 ---
 
-:::info Firmware versions
-Requires firmware **2.8.0 or later** ([#10618](https://github.com/meshtastic/firmware/pull/10618)). Detect support at runtime as described under [Capability detection](#capability-detection) rather than by version number - the module is also build-flag optional, so a 2.8.0 device may still not carry it.
-:::
+**Firmware 2.8.0 or later** ([#10618](https://github.com/meshtastic/firmware/pull/10618)). Detect support at runtime as described under [Capability detection](#capability-detection) rather than by version number - the module is also build-flag optional, so a 2.8.0 device may still not carry it.
 
 This page is the client-side specification for the Mesh Beacon module. Everything goes through the **standard admin, ToRadio and FromRadio protocol** - there is no bespoke transport. For what the module does and how it is configured from a user's point of view, see [Mesh Beacon Module Usage](/docs/configuration/module/mesh-beacon).
 
