@@ -1,0 +1,87 @@
+---
+id: mesh-beacon-internals
+title: Mesh Beacon Internals
+sidebar_label: Mesh Beacon Internals
+sidebar_position: 9
+description: How the Mesh Beacon module transmits - the two module roles, zero-hop stamping, per-packet radio switching and its safety guards, legacy-split behaviour, and the reception path.
+---
+
+This page documents how the Mesh Beacon module behaves inside the firmware. For the settings, see [Mesh Beacon Module Usage](/docs/configuration/module/mesh-beacon); for the protocol a client speaks, see [Mesh Beacon Client Interface](/docs/development/device/mesh-beacon-client-interface).
+
+Source: [MeshBeaconModule](https://github.com/meshtastic/firmware/tree/master/src/modules) in the firmware tree.
+
+## Two roles in one module
+
+| Role            | Class                       | Active when              | What it does                                                                                     |
+| :-------------- | :-------------------------- | :----------------------- | :----------------------------------------------------------------------------------------------- |
+| **Broadcaster** | `MeshBeaconBroadcastModule` | `FLAG_BROADCAST_ENABLED` | Periodically transmits beacon packets on the configured radio settings.                            |
+| **Listener**    | `MeshBeaconListenerModule`  | `FLAG_LISTEN_ENABLED`    | Receives beacon packets and caches the offer. The packet itself flows on to the client unchanged.  |
+
+Both toggles live in one `flags` bitfield, so broadcasting and listening are independent on the same node. The whole module compiles out under a build exclusion flag.
+
+## Transmission
+
+Every outgoing beacon is stamped uniformly: broadcast destination, `from` the local node, `hop_limit = 0`, background priority, and no ACK request. `hop_start` is normally `0` as well - legacy split is the exception, below.
+
+Zero-hop is the module's primary spam control: nothing on the mesh rebroadcasts a beacon, so only direct RF neighbours ever hear one.
+
+Broadcasting is additionally gated at runtime by airtime utilisation, and by device role - a `CLIENT_HIDDEN` node never broadcasts.
+
+### Reboot-safe cadence
+
+Each broadcast's time is persisted to flash through the transmit-history store, keyed by the beacon port number, and read back on boot. A node that reboots - or crash-loops - therefore does not re-broadcast until a full interval has elapsed since its last real send, rather than firing shortly after every boot. The timestamp is written **before** the transmit, so a brown-out during the high-current transmission still counts as sent. This mirrors the NodeInfo and Position modules.
+
+The configured interval has a floor of 3600 seconds, applied both when the config is written and again at runtime.
+
+### Per-packet radio switching
+
+A beacon's whole point is often to reach a mesh on a *different* preset, region or channel than the broadcaster runs on. Before transmitting a beacon tagged with target radio settings, the module reconfigures the radio, sends, and then restores the previous configuration.
+
+Per-packet target settings are held in an 8-entry **sidecar table keyed by packet ID**, chosen so that the `MeshPacket` protobuf carries no extra per-packet radio fields and ordinary traffic is never touched.
+
+Two guards run before any switch:
+
+1. **An unlicensed node never keys up on a licensed-only (amateur) region.** The reverse - a licensed node operating in a non-amateur region - is allowed. The switch only touches preset, region and channel, never the operator's licensed flag.
+2. **The preset must be valid for the target region.**
+
+If either fails the radio is **not** switched and the radio driver **drops** the packet, rather than letting it fall through onto the current configuration.
+
+### Encryption on an override channel
+
+Encryption keys off the **primary** channel slot, and the radio-thread channel switch happens *after* encryption. So when a beacon goes out on an override channel with a different name and PSK, the module installs the beacon channel into the primary slot for the synchronous duration of the send, then restores it. That guarantees the packet is encrypted with the beacon channel's key and stamped with its hash rather than the primary's. Meshtastic threading is cooperative, so nothing can preempt between swap and restore.
+
+### Multi-target dispatch
+
+When the target list is non-empty it takes over from the scalar single-target fields, and the broadcaster sends **one copy per entry**. Within a cycle, entries resolving to the same effective preset, region and channel are de-duplicated, so a repeated entry costs no extra airtime.
+
+A target names its channel by index into the node's own channel table rather than embedding channel settings, because embedding a full `ChannelSettings` in every one of the up-to-four targets would push `ModuleConfig` past the BLE `FromRadio` size limit. The advertised offer channel is always inline, since it is the advertisement payload and must carry the real name and PSK.
+
+A `channel_index` that is out of range or points at a blank slot is **not** an error: the beacon falls back to the node's current primary channel - name, PSK and slot - on the target preset and region. The channel name only defaults to the preset's display name when the primary channel itself is unnamed, so the fallback is "broadcast on my home channel", not a synthesised default-PSK channel for that preset. Validating that a referenced channel exists is the client's job.
+
+## Legacy split
+
+One flag controls two independent compatibility behaviours.
+
+**Text and offer split into two packets.** A combined beacon carries both, but firmware predating the module only decodes text messages and would never show the text. With the flag set **and both text and offer present**, the broadcaster emits two packets on the same beacon radio settings: one beacon packet with the offer only, and one ordinary text message with the text only. This is an independent two-packet decision, not an either/or - offer-only and text-only payloads still go out as a single packet in their respective cases.
+
+**`hop_start = 1` on every beacon it sends.** Firmware before 2.7.20 drops packets whose `hop_start` is `0` in a pre-decryption check, before it can read the bitfield, so stamping `1` lets those nodes accept the beacon. It stays genuinely zero-hop, because `hop_limit` remains `0`.
+
+The side effect is that receivers compute `hops_away = hop_start - hop_limit = 1`, so a legacy-split beacon reads as **1 hop away** despite arriving over direct RF. Without legacy split it reads as direct. A beacon's hop distance is therefore not a reliable proximity signal.
+
+## Reception
+
+With listening **off**, the router drops incoming beacon packets up front - the same pattern as a disabled Neighbor Info module - so they reach neither the on-device modules nor the phone. The node still physically receives the RF.
+
+With listening **on**, the packet flows normally and the listener accepts it. On a valid beacon:
+
+1. **The offer is cached** - sender, channel, region, preset and a received-at time - in a single static slot holding the last received offer. That time is `0` when the node has no clock fix yet, so consumers must not treat `0` as a valid timestamp.
+2. **It is never auto-applied.** The firmware does not switch channel, preset or region from a received offer. Acting on it belongs to the client.
+3. The handler returns `CONTINUE`, so the original packet **flows to the client unchanged** through the normal FromRadio path. The client reads the message text from that packet; there is no separate copy.
+
+The firmware deliberately does **not** unwrap a combined beacon's text into a synthesised text message, and does **not** raise a message-received event: a beacon is an advisory broadcast, not a personal message, so it must neither duplicate the text nor wake the device from sleep. A broadcaster that needs non-beacon-aware clients to see the text uses legacy split, which sends a real text message over RF.
+
+## Send-as-node, currently disabled
+
+The configuration reserves a field to send beacons *as* another node ID. **Its application in the firmware is commented out pending review**, so beacons always go out as the local node today. The access-control rule is already enforced and should be treated as canonical: a remote administrator may only set it to **their own** node ID, and any other value is rejected and reset to the stored value.
+
+Design note for whenever it is re-enabled: it is a *node-ID* spoof only. It rewrites `from` but forges no signature, and once `from` is not us the packet is no longer considered locally originated, so the router skips signing it - receivers get an unsigned packet attributed to another node.

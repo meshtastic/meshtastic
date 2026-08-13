@@ -1,0 +1,200 @@
+---
+id: traffic-management
+title: Traffic Management Module Usage
+sidebar_label: Traffic Management
+description: Shape transit traffic on busy meshes - position deduplication, per-sender rate limiting, unknown-packet filtering and NodeInfo direct responses.
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+import { Icon } from "@iconify/react";
+
+:::info
+Traffic Management requires firmware version 2.8.0 or later.
+:::
+
+## Overview
+
+Earlier traffic-reduction work in Meshtastic asked client nodes to send automated packets less often. That works while every node cooperates, but a single misconfigured node broadcasting its position every 30 seconds - or flooding undecryptable packets - can still burden a whole mesh. Traffic Management moves enforcement to the nodes that relay, so a mesh can protect its shared airtime regardless of how its members are configured.
+
+The module shapes **transit** traffic: it filters or answers packets passing through your node before they are rebroadcast. It never filters packets addressed to you, and it never changes what your own node sends.
+
+On supported targets the module **ships enabled**, with position deduplication running at its 11 hour default. Every other feature defaults to off, so the module is on out of the box but opt-in per feature. It was introduced in [meshtastic/firmware#9358](https://github.com/meshtastic/firmware/pull/9358).
+
+There are no separate on/off switches. **Each feature is enabled by giving its setting a non-zero value**, and disabled by setting it back to `0`.
+
+Per-node state lives in a flat 10-byte-per-node cache that is rebuilt from traffic and never persisted, so nothing here survives a reboot. Capacity is 2048 entries on ESP32 with PSRAM, 500 or 400 on other ESP32 parts, and 250 on nRF52840. The direct-response feature additionally reads a cache of full NodeInfo payloads on ESP32 builds with PSRAM. Both are described in [NodeInfo Stores](/docs/development/reference/node-info-stores).
+
+## Settings
+
+| Setting                             | Acceptable Values   | Default |
+| :---------------------------------- | :------------------ | :------ |
+| `nodeinfo_direct_response_max_hops` | `0`-`3` (`0` = off) | `0`     |
+| `position_min_interval_secs`        | seconds (`0` = off) | `39600` |
+| `rate_limit_max_packets`            | packets (`0` = off) | `0`     |
+| `rate_limit_window_secs`            | seconds (`0` = off) | `0`     |
+| `unknown_packet_threshold`          | packets (`0` = off) | `0`     |
+
+### nodeinfo_direct_response_max_hops
+
+The maximum hop distance from a requester at which this node will answer a NodeInfo request **on the target node's behalf**, from cache, instead of letting the request travel to the target and back. `0` disables the behaviour.
+
+The effective value is clamped by device role:
+
+| Device role                              | Maximum allowed | Behaviour                                    |
+| :--------------------------------------- | :-------------- | :------------------------------------------- |
+| `ROUTER`, `ROUTER_LATE`, `CLIENT_BASE`   | 3               | Answers requesters within the configured hops |
+| All other roles                          | 0               | Answers direct neighbours only                |
+
+:::note
+The cached reply is always sent with `hop_limit = 0`, so it is never relayed. It reaches the requester only if the requester is within direct radio range of this node.
+:::
+
+This is the module's most security-sensitive feature: the reply carries the target's node number as `from`, and both that and the requester's address are unauthenticated. The firmware therefore also gates the reply on identity provenance and recency, and throttles it. See [Traffic Management Internals](/docs/development/reference/traffic-management-internals).
+
+### position_min_interval_secs
+
+The minimum time between position broadcasts from the same node **at the same location** before another is relayed. A position counts as a duplicate when it falls in the same cell of the channel's `position_precision` grid - the firmware default is 19-bit, roughly 90 m cells - as the last one seen from that sender. The default is 11 hours (`39600`); `0` disables it.
+
+Grid size is taken from the channel, not from a module setting. Device roles only ever **shorten** this interval, never lengthen it:
+
+| Role                 | Effective interval |
+| :------------------- | :----------------- |
+| Tracker, TAK Tracker | 1 hour             |
+| Lost and Found       | 15 minutes         |
+
+These role caps are firmware constants and are not configurable.
+
+### rate_limit_max_packets
+
+The number of transit packets one sender may spend per window. Once a sender exceeds the budget, its transit packets are dropped for the rest of the window. Both this and `rate_limit_window_secs` must be non-zero for rate limiting to run.
+
+Routing and admin packets are **exempt** - rate limiting never drops them.
+
+### rate_limit_window_secs
+
+The window over which `rate_limit_max_packets` is counted. Either value at `0` disables rate limiting.
+
+### unknown_packet_threshold
+
+Drops undecryptable traffic from a sender - a node on a different channel, or using a different key - once it passes this many packets. The counter resets after `rate_limit_window_secs`, or after 60 seconds when no rate-limit window is set. `0` disables the filter.
+
+## Details
+
+### Position precision clamping
+
+Independently of the settings above, the module truncates the coordinates of relayed position packets to the channel's `position_precision` ceiling, or to the 19-bit firmware default when the channel does not set one. This is driven by channel configuration rather than by a module setting.
+
+### Settings you may have seen elsewhere
+
+Earlier drafts of this module carried a master `enabled` switch, per-feature booleans (`position_dedup_enabled`, `nodeinfo_direct_response`, `rate_limit_enabled`, `drop_unknown_enabled`), a `position_precision_bits` field, and three hop controls (`exhaust_hop_telemetry`, `exhaust_hop_position`, `router_preserve_hops`).
+
+**None of these exist.** The booleans were replaced by the "non-zero means enabled" convention on the settings above; `position_precision_bits` was removed because precision now comes from the channel's own `position_precision`; and the three hop controls were removed from the configuration and shelved in the firmware until the right heuristics are settled. None of those fields ever shipped in a stable release, so no device carries them and no client should offer them.
+
+## Traffic Management Module Client Availability
+
+<Tabs
+  groupId="settings"
+  defaultValue="cli"
+  values={[
+    {
+      label: (
+        <>
+          <Icon icon="mdi:android" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Android
+        </>
+      ),
+      value: "android",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:apple" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Apple
+        </>
+      ),
+      value: "apple",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:terminal" height="1.5rem" style={{ marginRight: "0.25rem" }} /> CLI
+        </>
+      ),
+      value: "cli",
+    },
+  ]}>
+
+<TabItem value="android">
+
+#### Android
+
+Not yet implemented.
+
+</TabItem>
+
+<TabItem value="apple">
+
+#### Apple
+
+Available under module settings - see [Apple client settings](/docs/software/apple/user/settings).
+
+</TabItem>
+
+<TabItem value="cli">
+
+#### CLI
+
+:::info
+All Traffic Management settings are available in the Python CLI.
+:::
+
+|                     Setting                          | Acceptable Values   | Default |
+| :--------------------------------------------------- | :------------------ | :------ |
+| traffic_management.nodeinfo_direct_response_max_hops  | `0`-`3` (`0` = off) | `0`     |
+| traffic_management.position_min_interval_secs         | `integer` (`0` = off) | `39600` |
+| traffic_management.rate_limit_max_packets             | `integer` (`0` = off) | `0`     |
+| traffic_management.rate_limit_window_secs             | `integer` (`0` = off) | `0`     |
+| traffic_management.unknown_packet_threshold           | `integer` (`0` = off) | `0`     |
+
+:::tip
+Because the device reboots after each command sent via CLI, chain commands together when setting several values in one config section.
+
+```shell title="Example:"
+meshtastic --set traffic_management.rate_limit_window_secs 60 --set traffic_management.rate_limit_max_packets 10
+```
+
+:::
+
+##### Examples of CLI Usage
+
+```shell title="Deduplicate identical positions no more than once an hour"
+meshtastic --set traffic_management.position_min_interval_secs 3600
+```
+
+```shell title="Turn position deduplication off"
+meshtastic --set traffic_management.position_min_interval_secs 0
+```
+
+```shell title="Rate limit: at most 10 transit packets per node per 60 seconds"
+meshtastic --set traffic_management.rate_limit_window_secs 60 --set traffic_management.rate_limit_max_packets 10
+```
+
+```shell title="Drop undecryptable packets after 5 from the same node"
+meshtastic --set traffic_management.unknown_packet_threshold 5
+```
+
+```shell title="Answer NodeInfo requests from cache for requesters up to 2 hops away (routers)"
+meshtastic --set traffic_management.nodeinfo_direct_response_max_hops 2
+```
+
+```shell title="Get the Traffic Management Module configuration"
+meshtastic --get traffic_management
+```
+
+</TabItem>
+
+</Tabs>
+
+## See also
+
+- [Traffic Management Internals](/docs/development/reference/traffic-management-internals) - the direct-response serve gates, the throttle that bounds them, and the tick clocks behind the counters.
+- [NodeInfo Stores](/docs/development/reference/node-info-stores) - the hot store, warm tier and TMM caches the direct-response path reads from, and their trust and provenance model.
