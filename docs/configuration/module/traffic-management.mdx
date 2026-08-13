@@ -19,7 +19,7 @@ Earlier traffic-reduction work in Meshtastic asked client nodes to send automate
 
 The module shapes **transit** traffic: it filters or answers packets passing through your node before they are rebroadcast. It never filters packets addressed to you, and it never changes what your own node sends.
 
-From 2.8.0, on supported targets the module **ships enabled**, with position deduplication running at its 11 hour default. Every other feature defaults to off, so the module is on out of the box but opt-in per feature. It was introduced in [meshtastic/firmware#9358](https://github.com/meshtastic/firmware/pull/9358).
+From 2.8.0, on supported targets the module **ships enabled**, with position deduplication running at its 11-hour default. Every other feature defaults to off, so the module is on out of the box but opt-in per feature. It was introduced in [meshtastic/firmware#9358](https://github.com/meshtastic/firmware/pull/9358).
 
 From 2.8.0 there are also no separate on/off switches. **Each feature is enabled by giving its setting a non-zero value**, and disabled by setting it back to `0`.
 
@@ -37,14 +37,21 @@ Per-node state lives in a flat 10-byte-per-node cache that is rebuilt from traff
 
 ### nodeinfo_direct_response_max_hops
 
-The maximum hop distance from a requester at which this node will answer a NodeInfo request **on the target node's behalf**, from cache, instead of letting the request travel to the target and back. `0` disables the behaviour.
+The maximum hop distance from a requester at which this node will answer a NodeInfo request **on the target node's behalf**, from cache, instead of letting the request travel to the target and back.
 
-The effective value is clamped by device role:
+Two separate checks apply, in this order:
 
-| Device role                              | Maximum allowed | Behaviour                                    |
-| :--------------------------------------- | :-------------- | :------------------------------------------- |
-| `ROUTER`, `ROUTER_LATE`, `CLIENT_BASE`   | 3               | Answers requesters within the configured hops |
-| All other roles                          | 0               | Answers direct neighbours only                |
+1. **The configured value switches the feature on.** `0` disables direct responses entirely, on every role. Any non-zero value turns them on.
+2. **The device role then caps how far they reach.** The configured value is clamped down to the role's ceiling; it can never be raised above it.
+
+| Device role                            | Role ceiling | Effective reach with a non-zero setting               |
+| :------------------------------------- | :----------- | :---------------------------------------------------- |
+| `ROUTER`, `ROUTER_LATE`, `CLIENT_BASE` | 3            | The configured value, capped at 3 hops                |
+| All other roles                        | 0            | Clamped to 0 - answers direct neighbours only         |
+
+The distinction matters because `0` appears in both columns meaning different things. A **configured** `0` means no direct responses at all. An **effective** `0` produced by the role clamp still answers, but only requesters at zero hops away. So setting `2` on a `CLIENT` does not disable the feature - it enables it, then clamps the reach to direct neighbours.
+
+A requester whose hop distance cannot be determined is never answered.
 
 :::note
 The cached reply is always sent with `hop_limit = 0`, so it is never relayed. It reaches the requester only if the requester is within direct radio range of this node.

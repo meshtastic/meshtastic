@@ -7,7 +7,7 @@ description: How the Traffic Management Module serves NodeInfo requests on anoth
 ---
 
 :::info Firmware versions
-Describes firmware **2.8.0**. The module itself first shipped in 2.7.20, but the reflector throttle, the NodeInfo payload cache and the key-provenance gate described here arrived in 2.8.0 ([#10706](https://github.com/meshtastic/firmware/pull/10706), [#10745](https://github.com/meshtastic/firmware/pull/10745)). On 2.7.20 to 2.7.26, direct-serve is bounded by a single 30 second stamp rather than the per-requester and per-target tables below.
+Describes firmware **2.8.0**. The module itself first shipped in 2.7.20, but the reflector throttle, the NodeInfo payload cache and the key-provenance gate described here arrived in 2.8.0 ([#10706](https://github.com/meshtastic/firmware/pull/10706), [#10745](https://github.com/meshtastic/firmware/pull/10745)). On 2.7.20 to 2.7.26, direct-serve is bounded by a single 30-second stamp rather than the per-requester and per-target tables below.
 :::
 
 This page documents the internals of the Traffic Management Module (TMM): the NodeInfo **direct-serve** path, the throttle that bounds it, and the modular tick clocks its caches use. For the settings themselves, see [Traffic Management Module Usage](/docs/configuration/module/traffic-management). For the stores this path reads from, see [NodeInfo Stores](/docs/development/reference/node-info-stores).
@@ -51,7 +51,7 @@ A direct reply is addressed to the requesting packet's `from` and spoofs the req
 
 **Mechanism.** The two per-key bounds are fixed **8-slot LRU tables in internal RAM** - not in the NodeInfo cache - so they behave identically with and without PSRAM, on the cache path and the NodeDB-fallback path alike. Timestamps are full 32-bit milliseconds compared by wrap-safe subtraction, so there is no tick clock and no maintenance sweep to keep them honest. A slot is resolved in *both* tables before either is stamped, so a reply that one axis throttles never consumes the other axis's budget. The global floor is a single stamp, checked first as the cheap common case.
 
-**When a table fills.** For an unseen key with no free slot, the **least-recently-used** entry is evicted and the new key admitted. The LRU victim is by construction the entry closest to expiring anyway, so eviction is the lowest-cost choice. An attacker who cycles more than 8 distinct requesters or targets - easy, since both are unauthenticated - evicts entries and defeats *per-key* throttling for the cycled keys. That is expected, and it is why the **global 1 second floor is the hard backstop**: it is a single stamp, it cannot fill, and it caps total spoofed replies at roughly one per second no matter what. Per-key throttling degrades gracefully to the floor under pressure.
+**When a table fills.** For an unseen key with no free slot, the **least-recently-used** entry is evicted and the new key admitted. The LRU victim is by construction the entry closest to expiring anyway, so eviction is the lowest-cost choice. An attacker who cycles more than 8 distinct requesters or targets - easy, since both are unauthenticated - evicts entries and defeats *per-key* throttling for the cycled keys. That is expected, and it is why the **global 1-second floor is the hard backstop**: it is a single stamp, it cannot fill, and it caps total spoofed replies at roughly one per second no matter what. Per-key throttling degrades gracefully to the floor under pressure.
 
 **Throttled is not dropped.** A throttled request lets `handleReceived()` return `CONTINUE`, so the request forwards toward the genuine target, which can answer itself, rather than being black-holed. A requester whose first reply was lost on a noisy link would otherwise get silence for the whole window; repeats of the same packet id are already absorbed by the router's duplicate detection.
 
@@ -66,7 +66,7 @@ Every per-node timestamp in TMM's caches is a free-running modular tick - a byte
 | Unknown            | 1 min / 16 min | 12 ticks          | sweep plus read-time window reset                     |
 | NodeInfo `obsTick` | 3 min / 12.8 h | 120 ticks (6 h)   | sweep only                                            |
 
-`obsTick` is the sharp case: the maintenance sweep clearing the observed flag is the *sole* guarantee that the 6 hour serve gate never reads an aliased stamp. That makes the sweep a compile-time invariant - guarded by the NodeInfo-cache capability flag **alone**, never by the cache size, which a variant may zero independently.
+`obsTick` is the sharp case: the maintenance sweep clearing the observed flag is the *sole* guarantee that the 6-hour serve gate never reads an aliased stamp. That makes the sweep a compile-time invariant - guarded by the NodeInfo-cache capability flag **alone**, never by the cache size, which a variant may zero independently.
 
 The warm tier is different by design: its `last_heard` is an **absolute** Unix-seconds timestamp, quantised to about 128 seconds, so it cannot wrap until 2106 and needs no sweep. The TMM caches chose 1-byte ticks instead to stay at 10 bytes per entry across up to 2048 entries.
 

@@ -77,7 +77,18 @@ This requires `FLAG_LISTEN_ENABLED`. With listening disabled the firmware drops 
 
 For a beacon-aware client the text is **simply the `message` field of the beacon packet** you already decode for the offer. One packet, one field: the firmware does not inject a separate text-message copy, so there is nothing to deduplicate.
 
-The only time a beacon's text arrives as a separate `TEXT_MESSAGE_APP` is when the broadcaster set legacy split. In that mode the beacon packet carries the offer only, with an empty message, and the text is sent as an ordinary text message over RF so that non-beacon-aware clients can display it. The two cases are mutually exclusive - a given beacon's text appears exactly once - so a client never needs to deduplicate. Render whichever it receives.
+Splitting happens only when a beacon has **both** text and offer content and the broadcaster set `FLAG_LEGACY_SPLIT`. In that one case the broadcaster emits two packets on the same radio settings: a `MESH_BEACON_APP` packet carrying the offer with an empty message, and an ordinary `TEXT_MESSAGE_APP` packet carrying the text, so that non-beacon-aware clients can still display it.
+
+What the broadcaster emits, in full:
+
+| Beacon content   | `FLAG_LEGACY_SPLIT` | Packets sent                                              |
+| :--------------- | :------------------ | :-------------------------------------------------------- |
+| Offer + text     | Not set             | One `MESH_BEACON_APP` carrying both offer and `message`   |
+| Offer + text     | Set                 | Two: `MESH_BEACON_APP` (offer only) + `TEXT_MESSAGE_APP`  |
+| Offer only       | Either              | One `MESH_BEACON_APP`, `message` empty                    |
+| Text only        | Either              | One `TEXT_MESSAGE_APP` - no beacon packet at all          |
+
+Two consequences for a client. First, a given beacon's text always appears exactly once, so there is never anything to deduplicate - render whichever form arrives. Second, a text-only beacon is indistinguishable from an ordinary text message on the wire: the broadcaster sends no `MESH_BEACON_APP` packet, so there is no `MeshBeacon.message` to read and no beacon for the client to attribute it to.
 
 Note that a legacy-split beacon is stamped `hop_start = 1` with `hop_limit = 0`, so it computes as 1 hop away despite arriving over direct RF. Do not treat a beacon's hop distance as a proximity signal.
 
