@@ -73,7 +73,7 @@ This requires `FLAG_LISTEN_ENABLED`. With listening disabled the firmware drops 
 
 ### Reading the text, without duplication
 
-For a beacon-aware client the text is **simply the `message` field of the beacon packet** you already decode for the offer. One packet, one field: the firmware does not inject a separate text-message copy, so there is nothing to deduplicate.
+For a beacon-aware client the text is **the `message` field of the beacon packet** you already decode for the offer. One packet, one field: the firmware does not inject a separate text-message copy, so there is nothing to deduplicate.
 
 Splitting happens only when a beacon has **both** text and offer content and the broadcaster set `FLAG_LEGACY_SPLIT`. In that one case the broadcaster emits two packets on the same radio settings: a `MESH_BEACON_APP` packet carrying the offer with an empty message, and an ordinary `TEXT_MESSAGE_APP` packet carrying the text, so that non-beacon-aware clients can still display it.
 

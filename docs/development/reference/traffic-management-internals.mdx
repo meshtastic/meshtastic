@@ -10,7 +10,7 @@ description: How the Traffic Management Module serves NodeInfo requests on anoth
 
 This page documents the internals of the Traffic Management Module (TMM): the NodeInfo **direct-serve** path, the throttle that bounds it, the relayed-position precision clamp, and the modular tick clocks its caches use. For the settings themselves, see [Traffic Management Module Usage](/docs/configuration/module/traffic-management). For the stores this path reads from, see [NodeInfo Stores](/docs/development/reference/node-info-stores).
 
-Sources of truth: [TrafficManagementModule.h / .cpp](https://github.com/meshtastic/firmware/tree/master/src/modules), with defaults in [Default.h](https://github.com/meshtastic/firmware/tree/master/src/mesh/Default.h).
+Sources of truth, on `develop` - this module's 2.8.0 behaviour is not on `master`: [TrafficManagementModule.h](https://github.com/meshtastic/firmware/blob/develop/src/modules/TrafficManagementModule.h) and [TrafficManagementModule.cpp](https://github.com/meshtastic/firmware/blob/develop/src/modules/TrafficManagementModule.cpp), with defaults in [Default.h](https://github.com/meshtastic/firmware/blob/develop/src/mesh/Default.h).
 
 ## How the module runs
 
@@ -26,7 +26,7 @@ Normally a unicast NodeInfo request travels all the way to the target and the re
 
 **Decision pipeline**, in order. Any failure leaves the request to propagate normally:
 
-1. **Eligibility.** `nodeinfo_direct_response_max_hops` above `0`, the NodeInfo port number, `want_response` set, and the packet is unicast, not to us, and not from us.
+1. **Eligibility.** `nodeinfo_direct_response_max_hops` above `0`, the NodeInfo port number, `want_response` set, and the packet is unicast, neither addressed to this node nor sent by it.
 2. **Hop clamp.** Respond only when the requester is within the role-clamped hop ceiling: routers up to 3 hops (may be lowered by config), clients direct-only at 0 hops.
 3. **Identity lookup.** A NodeInfo cache hit, or the NodeDB fallback.
 4. **Staleness gate, 6 hours.** Never vouch for a node not genuinely *heard* within the serve window. Only a real observed frame stamps the recency bit - seeding and write-through are knowledge, not observation, so a silent node can never look alive to this path.
@@ -41,10 +41,10 @@ A direct reply is addressed to the requesting packet's `from` and spoofs the req
 
 **Three bounds**, all evaluated under the cache lock:
 
-| Bound                | Window | Bounds                                             |
-| :------------------- | :----- | :------------------------------------------------- |
-| Per requester        | 60 s   | how much any single node can be made to receive     |
-| Per target           | 60 s   | how often we vouch for the same identity            |
+| Bound                | Window | Bounds                                                |
+| :------------------- | :----- | :---------------------------------------------------- |
+| Per requester        | 60 s   | how much any single node can be made to receive       |
+| Per target           | 60 s   | how often this node vouches for the same identity     |
 | Global airtime floor | 1 s    | total spoofed transmissions, regardless of key spread |
 
 **Mechanism.** The two per-key bounds are fixed **8-slot LRU tables in internal RAM** - not in the NodeInfo cache - so they behave identically with and without PSRAM, on the cache path and the NodeDB-fallback path alike. Timestamps are full 32-bit milliseconds compared by wrap-safe subtraction, so there is no tick clock and no maintenance sweep to keep them honest. A slot is resolved in *both* tables before either is stamped, so a reply that one axis throttles never consumes the other axis's budget. The global floor is a single stamp, checked first as the cheap common case.

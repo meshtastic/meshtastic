@@ -15,7 +15,7 @@ Every routine Meshtastic broadcast carries a `hop_limit` that controls how many 
 
 Hop scaling resolves the tension by estimating how many nodes are reached at each hop distance and choosing the smallest hop limit that still covers enough of the active mesh. **The configured hop limit becomes an upper bound rather than a fixed value applied to every packet type.**
 
-Source of truth: [HopScalingModule.h / .cpp](https://github.com/meshtastic/firmware/tree/master/src/modules), with the sampling hook in [NodeDB.cpp](https://github.com/meshtastic/firmware/tree/master/src/mesh/NodeDB.cpp) and the application point in [Router.cpp](https://github.com/meshtastic/firmware/tree/master/src/mesh/Router.cpp).
+Sources of truth, on `develop` - the module is not on `master`: [HopScalingModule.h](https://github.com/meshtastic/firmware/blob/develop/src/modules/HopScalingModule.h) and [HopScalingModule.cpp](https://github.com/meshtastic/firmware/blob/develop/src/modules/HopScalingModule.cpp), with the sampling hook in [NodeDB.cpp](https://github.com/meshtastic/firmware/blob/develop/src/mesh/NodeDB.cpp) and the application point in [Router.cpp](https://github.com/meshtastic/firmware/blob/develop/src/mesh/Router.cpp).
 
 ## What is affected
 
@@ -75,7 +75,7 @@ When the histogram fills past 80 percent, `trimIfNeeded()` first evicts entries 
 
 ### Why two denominators
 
-The estimate itself does not need two. Because `passesFilter` is a uniform hash-space subsample, for any two powers of two `D ≤ F` exactly `D/F` of the D-sampled entries also pass F, so `raw_count × F` equals `total × D` either way.
+The estimate itself does not need two. `passesFilter` is a uniform hash-space subsample and the two masks nest: for powers of two `D ≤ F`, every entry that passes `F` also passes `D`, and on average `D/F` of the entries admitted at `D` go on to be counted at `F`. Each counted entry therefore stands for `F` nodes, so `raw_count × F` estimates the population regardless of which denominator admitted the entries - which is exactly what the code computes, `counts.total × filteringDenominator`.
 
 The second denominator exists for **stability**, not accuracy. Scale-up must take effect at once, but scale-down must not immediately reinterpret older samples as though they had been collected at the new denominator, and newly admitted nodes have not yet accumulated enough `seenHoursAgo` history to be reliable. So:
 
@@ -99,6 +99,7 @@ The module ticks every 5 minutes and performs a rollover every 12th tick.
 2. Compute the activity ratio and pick a politeness regime.
      recent = h0 + h1
      older  = h1 + h2
+     ratio  = recent / older
 
 3. Scale and cache trend data.
      per-hour totals use denominatorHistory[h]
@@ -122,7 +123,17 @@ The hop decision is made entirely from the filtered sample the histogram holds -
 
 ### Politeness regimes
 
-The activity ratio decides how far past the 40-node floor the algorithm may go. The limit is an interpolation between a floor of 40 nodes and a ceiling of 80:
+The activity ratio compares a two-hour recent window against a two-hour older one, both taken from the per-hour seen counts:
+
+```text
+recent = h0 + h1
+older  = h1 + h2
+ratio  = recent / older
+```
+
+Two details are easy to miss. The windows **overlap on `h1`**, so the ratio measures the slope across three hours rather than two disjoint periods; and both terms are the **raw** per-slot counts, before the `denominatorHistory[h]` scaling applied to the reported per-hour figures, so a denominator change part-way through those three hours tilts the ratio slightly.
+
+The comparison is done in integers to avoid floating point - `recent × 10` against `older × 9` and `older × 12` - which is where the 0.9 and 1.2 boundaries come from. The ratio then decides how far past the 40-node floor the algorithm may go, as an interpolation between a floor of 40 nodes and a ceiling of 80:
 
 ```text
 politeLimit = 40 + (80 - 40) × politenessNumerator / 4
@@ -136,11 +147,16 @@ politeLimit = 40 + (80 - 40) × politenessNumerator / 4
 
 If either the recent or the older window has a count of 1 or less, the regime falls back to Default rather than reading noise as a trend.
 
-The extension rule looks exactly one hop beyond the base hop:
+The extension rule looks exactly one hop beyond the base hop, and only when there is a hop to look at:
 
 ```text
-if (cumulative + perHop[baseHop + 1]) <= politeLimit, extend by one hop
+if baseHop < 7:                                        # no hop-8 bucket exists
+    atNext = perHop[baseHop + 1] * filteringDenominator
+    if (cumulative + atNext) <= politeLimit:
+        baseHop += 1
 ```
+
+The guard matters: the walk falls through to hop 7 whenever no bucket reaches the floor, and `perHop` has buckets 0 to 7 only. Note also that `atNext` is scaled by `filteringDenominator`, exactly as the cumulative count in the walk is - both sides of the comparison are estimated populations, not raw entry counts. The firmware evaluates the whole comparison multiplied through by the politeness denominator, so the interpolation stays in integer arithmetic.
 
 That gives a practical reach envelope of roughly 50 to 80 nodes in larger meshes while preserving 40 as the floor.
 
@@ -160,13 +176,13 @@ The final recommendation is `max(suggestedHop, roleFloor)`, so a tracker on a de
 
 Each rollover also emits a small set of trend counters, all scaled to estimated full-mesh population:
 
-| Counter               | Meaning                                                        |
-| :-------------------- | :------------------------------------------------------------- |
-| `newThisHour`         | Seen only in the just-completed hour, with no prior history    |
-| `returningThisHour`   | Seen this hour and in at least one older hour                  |
-| `lapsedSinceLastHour` | Seen last hour but not this hour                               |
-| `olderThan4h`         | Absent from the last 4 hours but present in hours 5 to 13      |
-| `agingOut`            | Only bit 12 remains; disappears entirely at the next rollover  |
+| Counter               | Meaning                                                          |
+| :-------------------- | :--------------------------------------------------------------- |
+| `newThisHour`         | Seen only in the just-completed hour, with no prior history      |
+| `returningThisHour`   | Seen this hour and in at least one older hour                    |
+| `lapsedSinceLastHour` | Seen last hour but not this hour                                 |
+| `olderThan4h`         | Absent from hours 0 to 3, but present somewhere in hours 4 to 12 |
+| `agingOut`            | Only bit 12 remains; disappears entirely at the next rollover    |
 
 These do not feed the hop decision. They are a compact way to observe whether the sampled mesh is growing, stable, fading or aging out.
 

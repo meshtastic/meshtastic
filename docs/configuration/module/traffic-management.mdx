@@ -98,7 +98,7 @@ This only happens when all of the following are true:
 - **The channel actually sets a precision.** If position sharing is switched off for that channel, nothing is rounded and the packet passes through untouched.
 - The position is more precise than that limit. Anything already coarse enough is left alone.
 
-**Note:** this is not the same as the grid used for duplicate detection above. Duplicate detection falls back to a roughly 90 m grid when a channel sets no precision of its own; this rounding has no such fallback - it simply does nothing.
+**Note:** this is not the same as the grid used for duplicate detection above. Duplicate detection falls back to a roughly 90 m grid when a channel sets no precision of its own; this rounding has no such fallback - it does nothing at all.
 
 ### Settings on 2.7.x
 
@@ -149,7 +149,7 @@ A client that writes the 2.7.x fields to a 2.8.0 device is writing fields the de
 
 <TabItem value="android">
 
-#### Android
+### Android
 
 Not yet implemented.
 
@@ -157,7 +157,7 @@ Not yet implemented.
 
 <TabItem value="apple">
 
-#### Apple
+### Apple
 
 Available under module settings - see [Apple client settings](/docs/software/apple/user/settings).
 
@@ -165,7 +165,7 @@ Available under module settings - see [Apple client settings](/docs/software/app
 
 <TabItem value="cli">
 
-#### CLI
+### CLI
 
 All Traffic Management settings are available in the Python CLI.
 
@@ -186,7 +186,7 @@ meshtastic --set traffic_management.rate_limit_window_secs 60 --set traffic_mana
 
 :::
 
-##### Examples of CLI Usage
+#### Examples of CLI Usage
 
 ```shell title="Deduplicate identical positions no more than once an hour"
 meshtastic --set traffic_management.position_min_interval_secs 3600

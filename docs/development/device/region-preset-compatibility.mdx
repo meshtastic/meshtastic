@@ -99,7 +99,7 @@ These are what keep the UX correct across firmware versions. Implement all of th
 
 - **Old clients, new firmware:** an unknown `FromRadio` payload variant is ignored by protobuf decoders, and the relative ordering of the known messages is unchanged, so existing apps are unaffected.
 - **New clients, old firmware:** the message never arrives, which the rules above already treat as "no constraints".
-- **Enum growth:** new region and preset values may appear over time. Decoders should pass unknown enum values through rather than failing; an unknown region in `region_groups` is harmless - the client simply has no localised name for it.
+- **Enum growth:** new region and preset values may appear over time. Decoders should pass unknown enum values through rather than failing; an unknown region in `region_groups` is harmless - the client just has no localised name for it.
 
 ## Platform notes
 

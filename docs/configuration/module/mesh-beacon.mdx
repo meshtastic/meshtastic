@@ -82,7 +82,7 @@ A list of up to four destinations, for advertising to several meshes at once. Wh
 
 Each entry names a preset, a region, and a **channel slot from your own channel table** - so that channel has to exist on your node first, because your node needs its key to encrypt the beacon. Configure the channels, then write the beacon settings pointing at their slot numbers. Duplicate entries cost no extra airtime; they are skipped.
 
-**Note:** if an entry points at a slot you have not configured, nothing errors - the beacon simply goes out on your **current primary channel** instead, on that entry's preset and region. So a mistyped slot number silently advertises the wrong channel. Well-behaved client apps check this for you and warn.
+**Note:** if an entry points at a slot you have not configured, nothing errors - the beacon goes out on your **current primary channel** instead, on that entry's preset and region. So a mistyped slot number silently advertises the wrong channel. Well-behaved client apps check this for you and warn.
 
 ### flags
 
@@ -124,7 +124,9 @@ Setting this flag makes your beacons usable by nodes running firmware older than
 
 ### What happens when you receive one
 
-With listening enabled, an incoming beacon is passed to your client app, which decides how to present it. The firmware caches the most recent offer but never acts on it, and deliberately does not turn a beacon's text into a normal message - a beacon is an announcement, not a message addressed to you, so it will not wake your device or appear in a conversation.
+With listening enabled, an incoming beacon packet is passed to your client app, which decides how to present it. The firmware caches the most recent offer but never acts on it, and deliberately does not turn that packet's text into a normal message - a beacon is an announcement, not a message addressed to you, so it will not wake your device or appear in a conversation.
+
+There is one case where you do see an ordinary message, and it is not an exception to that rule so much as a different packet. A broadcaster who sets a message but offers no channel, preset or region has nothing to put in a beacon, so the firmware sends a plain text message instead - and the same happens to the text half of a [legacy split](#legacy-split). Those really are text messages: they will notify you and appear in a conversation like any other. What they will not do is spread. Every packet the module sends goes out zero-hop, so a text sent this way reaches only nodes already in direct radio range of the broadcaster and is never relayed onward - unlike a text message you send yourself, which the mesh will carry.
 
 :::danger
 Accepting an offered region or preset **changes your node's own radio and will drop it off its current mesh.** A good client app makes that consequence clear before you confirm.
@@ -175,7 +177,7 @@ The same settings can be baked in at build time through `userPrefs.jsonc`, inclu
 
 <TabItem value="android">
 
-#### Android
+### Android
 
 Available under **Settings → Module Config → Mesh Beacon**, with received invitations surfaced in Discovery - see [Discovery](/docs/software/android/user/discovery).
 
@@ -183,7 +185,7 @@ Available under **Settings → Module Config → Mesh Beacon**, with received in
 
 <TabItem value="apple">
 
-#### Apple
+### Apple
 
 Not yet implemented.
 
