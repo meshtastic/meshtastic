@@ -16,7 +16,7 @@ This page is an overview of the node-identity and traffic-state databases that t
 
 The fourth store, the **TMM unified cache** - flat 10-byte-per-node traffic-shaping state - is not part of that chain. It sits beside it, keyed by the same node number, and only its 4-bit cached role acts as a final fallback when all three identity tiers miss.
 
-Sources of truth: [NodeDB.h / .cpp](https://github.com/meshtastic/firmware/tree/master/src/mesh), [WarmNodeStore.h](https://github.com/meshtastic/firmware/tree/master/src/mesh/WarmNodeStore.h), [TrafficManagementModule.h / .cpp](https://github.com/meshtastic/firmware/tree/master/src/modules), with sizing in [mesh-pb-constants.h](https://github.com/meshtastic/firmware/tree/master/src/mesh/mesh-pb-constants.h).
+Sources of truth, on `develop` - the warm tier and the NodeInfo cache do not exist on `master`: [NodeDB.h](https://github.com/meshtastic/firmware/blob/develop/src/mesh/NodeDB.h) and [NodeDB.cpp](https://github.com/meshtastic/firmware/blob/develop/src/mesh/NodeDB.cpp), [WarmNodeStore.h](https://github.com/meshtastic/firmware/blob/develop/src/mesh/WarmNodeStore.h) and [WarmNodeStore.cpp](https://github.com/meshtastic/firmware/blob/develop/src/mesh/WarmNodeStore.cpp), [TrafficManagementModule.h](https://github.com/meshtastic/firmware/blob/develop/src/modules/TrafficManagementModule.h) and [TrafficManagementModule.cpp](https://github.com/meshtastic/firmware/blob/develop/src/modules/TrafficManagementModule.cpp), with sizing in [mesh-pb-constants.h](https://github.com/meshtastic/firmware/blob/develop/src/mesh/mesh-pb-constants.h).
 
 ## Memory classes
 
@@ -112,9 +112,9 @@ Not class-tiered - the array is either compiled or it is not. Linear scan in eve
 
 ### Trust and provenance model
 
-- **Key pin, three layers deep.** An incoming NodeInfo key is checked against `copyPublicKeyAuthoritative()` (hot then warm, the same coverage as NodeDB's own pin) and, failing NodeDB knowledge, against the cache's **own previously cached key** - a trust-on-first-use pin. Mismatches are dropped, never overwritten. A frame advertising *our own* key is dropped outright as impersonation.
+- **Key pin, three layers deep.** An incoming NodeInfo key is checked against `copyPublicKeyAuthoritative()` (hot then warm, the same coverage as NodeDB's own pin) and, failing NodeDB knowledge, against the cache's **own previously cached key** - a trust-on-first-use pin. Mismatches are dropped, never overwritten. A frame advertising *this node's own* key is dropped outright as impersonation.
 - **Key provenance.** The XEdDSA-signed bit is set when a frame's signature was router-verified, or when NodeDB already knew the node as a signer **for the same key**. The manually-verified bit is set when the user confirmed possession out-of-band by QR code or fingerprint, and is re-seeded from the hot store's own flag at reconcile. Either bit makes the key *proven*, which is the predicate the replay gate, eviction tiering and pubkey-pool callers use. Both are monotonic per slot; a changed key resets both.
-- **Unsigned-identity gate.** A NodeInfo arriving *unsigned* from a node we have ever verified as a signer - across hot **and** warm tiers - drives no cache, role or identity write. Warm coverage matters: a signer evicted to the warm tier would otherwise be forgeable with its own public key until re-heard. The same rule guards the router's unsigned-broadcast drop.
+- **Unsigned-identity gate.** A NodeInfo arriving *unsigned* from a node the firmware has ever verified as a signer - across hot **and** warm tiers - drives no cache, role or identity write. Warm coverage matters: a signer evicted to the warm tier would otherwise be forgeable with its own public key until re-heard. The same rule guards the router's unsigned-broadcast drop.
 - **Serve-gate honesty.** Only a genuinely *heard* NodeInfo frame stamps the recency flag - seeding and write-through do not - so a silent node never looks alive to the replay path. The sweep clears that flag to enforce the 6-hour serve window.
 
 ### Consistency with NodeDB (anti-entropy)
@@ -156,7 +156,7 @@ Side-by-side view of what each store actually holds; "-" means not held.
 | Direct-reply metadata      | -                                  | -                              | source channel, decoded bitfield   | -                               |
 | Traffic-shaping counters   | -                                  | -                              | -                                  | rate and unknown counts         |
 | Entry size                 | largest (full struct)              | 40 B exact                     | `sizeof(User)` + 8, padded         | 10 B exact                      |
-| Capacity (entries)         | 250/200/120/100/10 (native 200\*)  | 2000/150/150/100/100/0         | 2000                               | 2048/500/400/250/0              |
+| Capacity (entries)         | 250/200/120/100/10 (native 200\*)  | 2000/150/150/100/100/0         | 2000, or not compiled              | 2048/500/400/250/0              |
 | Persistence (durable)      | LittleFS (node DB)                 | flash ring (nRF52840) / LittleFS | none (rebuilt)                   | none                            |
 | Storage (runtime)          | heap                               | heap / PSRAM (ESP32)           | PSRAM (hardware) / heap (test)     | PSRAM / heap                    |
 
@@ -170,7 +170,7 @@ There is no single fallback chain. Every lookup starts at the hot store and then
 
 ```text
  copyPublicKeyAuthoritative()      copyPublicKey()               copyPublicKeyForDecrypt()
- "the pin reference"               "who can we encrypt to?"      "who can we verify?"
+ "the pin reference"               "the outbound key"            "the decrypt-side key"
         │                                  │                              │
         ▼                                  ▼                              ▼
  1. hot store                       1. hot store                   1. hot store
