@@ -39,10 +39,25 @@ scripts/                        # Build and utility scripts
 specs/                          # Feature specs (speckit workflow)
 ```
 
+## Project Generation
+
+`Meshtastic.xcodeproj` is generated from `project.yml` by [XcodeGen](https://github.com/yonaskolb/XcodeGen) rather than hand-maintained. `project.yml` is the source of truth for targets, build settings, and schemes; the generated `.xcodeproj` is still committed so the repo builds without installing XcodeGen first.
+
+Most source directories — including `Meshtastic/Views/`, `Meshtastic/Model/`, `Meshtastic/Accessory/`, `MeshtasticTests/`, `Shared/`, and `Widgets/` — are configured as `type: syncedFolder` (Xcode 16 synchronized groups). A new file added under one of these directories is picked up automatically; there is no membership checkbox or pbxproj entry to add.
+
+If you change `project.yml` (or `.xcodegen-version`), regenerate the project and commit the result:
+
+```bash
+xcodegen generate
+```
+
+The `xcodegen-drift.yml` CI check regenerates the project on every PR that touches `project.yml`, `.xcodegen-version`, `Meshtastic.xcodeproj/**`, or any `.swift` file, and fails if the committed project doesn't exactly match — this is what keeps the generated project honest as the source of truth stays in `project.yml`. XcodeGen's output is version-sensitive, so `.xcodegen-version` pins an exact release; install that exact version (not whatever Homebrew currently carries) before regenerating locally.
+
 ## Key Files
 
 | File | Purpose |
 |------|---------|
+| `project.yml` | XcodeGen project specification — the source of truth for `Meshtastic.xcodeproj` |
 | `Router/Router.swift` | Central navigation controller (`@MainActor`) |
 | `Router/NavigationState.swift` | Per-tab navigation state enums |
 | `Extensions/Logger.swift` | Typed OSLog loggers for all subsystems |

@@ -64,6 +64,10 @@ struct MyView: View {
 
 Use `@Query` for data that drives the view. Use `context.insert(_:)` / `context.delete(_:)` for mutations. Mutations on the main context are safe on the main actor.
 
+### Snapshot liveness
+
+Views that intentionally keep a throttled `@State` snapshot instead of a live `@Query` must treat the snapshot as invalid after a node-database reset or a context teardown. Before reading persisted properties from a `NodeInfoEntity` held in such a snapshot, require both `modelContext != nil` and `!isDeleted`. `NodeInfoEntity.adminPickerOrder(_:)` applies this rule for the Settings node picker, so deleted or detached nodes cannot be selected or rendered from a stale snapshot.
+
 ## Background Writes
 
 For writes triggered by incoming radio packets (off the main thread), use the `MeshPackets` `@ModelActor`:
@@ -95,13 +99,35 @@ Key model types:
 | `NodeInfoEntity` | A node heard on the mesh |
 | `MessageEntity` | A channel or direct message |
 | `PositionEntity` | A GPS position update |
-| `TelemetryEntity` | Device/environment sensor data |
+| `TelemetryEntity` | Device, environment, power, air-quality (PM), and local-stats sensor data, discriminated by `metricsType` |
 | `TraceRouteEntity` | A recorded trace route |
 | `WaypointEntity` | A shared map waypoint |
+| `EventFirmwareEntity` | Cached off-device event-firmware branding/lifecycle metadata |
+
+### `EventFirmwareEntity` — off-device event branding cache
+
+`EventFirmwareEntity` is a **runtime cache**, not user data. A device only reports *which*
+event edition it runs via the `MyNodeInfo.firmwareEdition` proto enum (mapped to the
+`FirmwareEditions` Swift enum); the display data for each edition — name, welcome message,
+dates, IANA time zone, accent color, links, theme, and the event's own firmware build — lives
+off-device at `https://api.meshtastic.org/resource/eventFirmware` (version 2). `MeshtasticAPI`
+seeds the cache from the bundled `event_firmware.json` at launch (offline-first) and then
+refreshes it from the live endpoint in the background. The `edition` proto-enum name (e.g.
+`"DEFCON"`) is the unique join key against the connected device's reported edition. Because it
+is a rebuildable cache, a failed/empty refresh is a **no-op** that leaves existing rows intact
+(it never wipes the cache), and the row lives in the unreleased **V1** schema — adding it
+required no new `VersionedSchema`/`MigrationStage` (see below).
 
 ## Schema Migrations
 
 When you add, rename, or remove properties on a `@Model` type, you must provide a migration. Schema files live in `Meshtastic/Model/Schema/`.
+
+> **Note — V1 is unreleased.** While `MeshtasticSchemaV1` remains the initial, unshipped version, additive `@Model` changes go **directly into V1** rather than a new versioned schema + stage (see the comment in `MeshtasticMigrationPlan.swift`). For example, the air-quality particulate-matter fields on `TelemetryEntity` (`pm10/25/100Standard`, `pm10/25/100Environmental`) were added in place, as were `SecurityConfigEntity.packetSignaturePolicy` and `DeviceMetadataEntity.hasXeddsa` for the packet authenticity policy. Start adding `VersionedSchema` versions and migration stages only once V1 has shipped.
+
+Give an added property a default that matches what an absent value means on the wire, so a row
+written before the property existed and a device that never reported it agree. `packetSignaturePolicy`
+defaults to `0` because `PACKET_SIGNATURE_POLICY_COMPATIBLE` is the protobuf zero value, so an
+unconfigured row is not silently treated as running a stricter receive policy than the radio is.
 
 ### Adding a New Schema Version
 
@@ -140,6 +166,19 @@ static let migrateV1toV2 = MigrationStage.custom(
 
 > **Warning — Never delete a `VersionedSchema`.** Migration history must be preserved or the migration plan will fail on devices that skipped intermediate versions.
 
+### Deprecated Properties
+
+When a proto field is deprecated upstream and the app stops using it, **do not remove the corresponding `@Model` property** — deleting a stored property is a schema change that would require a migration, and while V1 is unreleased there is nowhere to migrate from. Instead, retain the property as-is so:
+
+- the SwiftData schema is unchanged, and
+- any values already persisted on-device remain readable.
+
+The field simply stops being surfaced in the UI, read, or actively written by app code. Mark it with a doc comment noting the deprecation and the tracking issue. Current examples:
+
+| Model | Property | Notes |
+|-------|----------|-------|
+| `CannedMessageConfigEntity` | `enabled` | #2021 — no successor; retained for schema/value compatibility, no longer read or written |
+
 ## Query Helpers
 
 `QuerySwiftData.swift` contains helper functions for common fetches:
@@ -160,7 +199,7 @@ Prefer these helpers over direct queries to keep logic consistent.
 
 To prevent unbounded database growth, the app enforces per-node caps when inserting new records. Older rows beyond the cap are deleted in the same transaction:
 
-| Relationship | Cap | Behaviour |
+| Relationship | Cap | Behavior |
 |-------------|-----|-----------|
 | `NodeInfoEntity.positions` | 5 000 | Oldest positions deleted when exceeded |
 | `NodeInfoEntity.telemetries` | 5 000 per metrics type | Oldest telemetry of that type deleted |

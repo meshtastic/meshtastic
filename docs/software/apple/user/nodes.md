@@ -12,7 +12,7 @@ The Nodes tab shows every device your radio has heard on the mesh. Tap any node 
 
 | Element | Meaning |
 |---------|---------|
-| ![Node circle](/img/apple/circleTextDefault.webp) | **Short Name & Long Name** — each node has a short name (up to 4 bytes) shown in the coloured circle and a long name displayed next to it. The circle colour is derived from the node number. The short name can be an emoji or initials. |
+| ![Node circle](/img/apple/circleTextDefault.webp) | **Short Name & Long Name** — each node has a short name (up to 4 bytes) shown in the colored circle and a long name displayed next to it. The circle color is derived from the node number. The short name can be an emoji or initials. |
 | ![Online](/img/apple/nodeOnline.webp) | **Online** — the node has been heard recently and is considered online. |
 | ![Idle / Sleeping](/img/apple/nodeIdle.webp) | **Idle / Sleeping** — the node has not been heard from recently and may be asleep or out of range. |
 | ![Hops Away](/img/apple/hopsAway.webp) | **Hops Away** — the number of intermediate nodes relaying messages between you and this node. No hops means direct communication. |
@@ -31,23 +31,25 @@ Each node is configured with a role that determines how it behaves on the mesh. 
 
 | Icon | Role | Description |
 |------|------|-------------|
-| ![Client role icon](/img/apple/roleClient.webp) | Client | Standard end-user device. Sends and receives messages, shares position. |
-| ![Client Mute role icon](/img/apple/roleClientMute.webp) | Client Mute | Like Client but does not forward packets from other devices. Reduces mesh traffic near congested areas. |
-| ![Client Hidden role icon](/img/apple/roleClientHidden.webp) | Client Hidden | Only broadcasts as needed for stealth or power savings. |
-| ![Client Base role icon](/img/apple/roleClientBase.webp) | Client Base | Rooftop node that distributes messages widely from nearby Client Mute nodes. |
-| ![Router role icon](/img/apple/roleRouter.webp) | Router | Dedicated infrastructure node — prioritises packet forwarding. Not for rooftops or mobile nodes. |
-| ![Router Late role icon](/img/apple/roleRouterLate.webp) | Router Late | Like Router but rebroadcasts once after all other nodes. Better suited to rooftop deployments. |
-| ![Tracker role icon](/img/apple/roleTracker.webp) | Tracker | Broadcasts GPS position packets as priority. Optimised for frequent location reporting. |
-| ![Sensor role icon](/img/apple/roleSensor.webp) | Sensor | Broadcasts telemetry packets as priority. Optimised for sensor data. |
-| ![TAK role icon](/img/apple/roleTak.webp) | TAK | Optimised for ATAK system communication. Reduces routine broadcasts. |
-| ![TAK Tracker role icon](/img/apple/roleTakTracker.webp) | TAK Tracker | Enables automatic TAK PLI broadcasts. Reduces routine broadcasts. |
-| ![Lost and Found role icon](/img/apple/roleLostAndFound.webp) | Lost and Found | Broadcasts location as a message to the default channel to assist with device recovery. |
+| ![](/img/apple/roleClient.webp) | Client | Standard end-user device. Sends and receives messages, shares position. |
+| ![](/img/apple/roleClientMute.webp) | Client Mute | Like Client but does not forward packets from other devices. Reduces mesh traffic near congested areas. |
+| ![](/img/apple/roleClientHidden.webp) | Client Hidden | Only broadcasts as needed for stealth or power savings. |
+| ![](/img/apple/roleClientBase.webp) | Client Base | Rooftop node that distributes messages widely from nearby Client Mute nodes. |
+| ![](/img/apple/roleRouter.webp) | Router | Dedicated infrastructure node — prioritises packet forwarding. Not for rooftops or mobile nodes. |
+| ![](/img/apple/roleRouterLate.webp) | Router Late | Like Router but rebroadcasts once after all other nodes. Better suited to rooftop deployments. |
+| ![](/img/apple/roleTracker.webp) | Tracker | Broadcasts GPS position packets as priority. Optimised for frequent location reporting. |
+| ![](/img/apple/roleSensor.webp) | Sensor | Broadcasts telemetry packets as priority. Optimised for sensor data. |
+| ![](/img/apple/roleTak.webp) | TAK | Optimised for ATAK system communication. Reduces routine broadcasts. |
+| ![](/img/apple/roleTakTracker.webp) | TAK Tracker | Enables automatic TAK PLI broadcasts. Reduces routine broadcasts. |
+| ![](/img/apple/roleLostAndFound.webp) | Lost and Found | Broadcasts location as a message to the default channel to assist with device recovery. |
 
 [Choosing the Right Device Role →](https://meshtastic.org/blog/choosing-the-right-device-role/)
 
 ## Complete Node Row Examples
 
 The full node row shows the circle avatar, battery level, encryption status, last-heard time, device role, signal strength, and log indicators all at once.
+
+The signal meter shown here (and on a node's detail screen) rates link quality from SNR relative to your radio preset — using your radio's recently reported noise floor when available — and the strength bar and the SNR text color always reflect the same rating. See [Signal Meter](signal-meter.md) for how it works.
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="/img/apple/standard_directConnected_dark.webp" />
@@ -96,11 +98,18 @@ The full node row shows the circle avatar, battery level, encryption status, las
 Long-press any node in the list to access quick actions:
 
 - **Add to favorites / Remove from favorites** — star important nodes so they appear at the top of the list
+- **Display name** — give a node a local nickname (see Display Names below)
 - **Mute notifications / Unmute** — silence alerts from this node
 - **Message** — open a direct message conversation with this node
 - **Trace Route** — discover the path messages take to reach this node
 - **Ignore / Remove from ignored** — hide this node from normal views
 - **Remove** — remove the node from your local database
+
+## Display Names
+
+You can give any node a local nickname that's shown throughout the app instead of its device long name — in the node list, node details, and messages. Set it from the node's long-press menu ("Display name") or from the **Name** row in Node Detail. The avatar circle always shows the node's actual short code, unaffected by the nickname.
+
+Display names are stored only on this device and are never sent over the mesh, shared, or exported — they don't change the node's real identity, so QR codes and contact sharing still use the device's actual name.
 
 ## Filtering & Search
 
@@ -119,6 +128,8 @@ Tap the filter icon above the list to narrow which nodes are shown. Filters appl
 
 Filters are **remembered between launches** — the app reopens with the same filters applied. Search text is the exception: it is intentionally cleared on relaunch so you never reopen into a stale search that hides most of your nodes. Use the **reset** affordance to clear every filter and the search text at once.
 
+The map has one additional filter of its own — **Precise Locations Only**, which hides nodes reporting an approximate (reduced-precision) location. See [Map & Waypoints](map.md) for details.
+
 ## Additional Icons
 
 Tap a node and scroll to the Logs section for detailed metrics:
@@ -133,6 +144,8 @@ Tap a node and scroll to the Logs section for detailed metrics:
 | ![Detection Sensor](/img/apple/logDetectionSensor.webp) | Motion or door open/close alerts from the node. |
 | ![Trace Routes](/img/apple/logTraceRoutes.webp) | Recorded trace route paths showing the hops a message took through the mesh. |
 
+When a node has a known position, the Logs section also offers **Estimate Coverage** (`cellularbars`). It switches to the Map tab and opens the Site Planner coverage-estimate form prefilled from that node. See [Coverage Estimate (Site Planner)](map.md) on the Map page for the full flow.
+
 ## Local Stats and Noise Floor
 
 Local Stats show radio diagnostics reported by a node, including packets received, packets transmitted, duplicate packets, relayed packets, bad receives, canceled packets, online node count, total node count, and noise floor.
@@ -144,6 +157,36 @@ Noise floor is displayed in dBm when the node reports it. Treat it as a directio
 Tap any node to see the full detail view with hardware info, signal metrics, environment sensors, and log navigation:
 
 ![Node Detail](/img/apple/nodeDetail.webp)
+
+For messageable nodes, use **Actions > Share Contact QR** to show a Meshtastic contact link and QR code that another device can scan.
+
+### Share Connected Node
+
+When a radio is connected, a **Share Connected Node** button appears in the node list toolbar. It opens the same share sheet as **Share Contact QR**, pre-filled with your own node — a quick way to hand someone your contact without finding yourself in the list.
+
+### Write a Contact to an NFC Tag
+
+On iPhones with NFC hardware (iOS 18 or later), the contact share sheet also offers **Write to NFC Tag**. Hold a writable NFC tag near the top of your iPhone and the contact link is saved to it, replacing whatever the tag held before. Anyone can then tap that tag with their phone to open the contact in Meshtastic — the tag carries exactly the same link the QR code encodes.
+
+### Importing a Shared Contact
+
+Opening a Meshtastic contact link — by scanning a QR code, tapping a shared link, or tapping an NFC tag — presents a confirmation sheet before anything is added. The sheet shows the node's colored initials, its long name, and an explanation that adding the contact saves their name and public key to your connected node. Choose **Add Contact** to import, or **Cancel** to dismiss.
+
+If the import fails — most often because the radio disconnected — the sheet stays open and shows the reason so you can reconnect and tap **Add Contact** again. It closes only once the contact has actually been sent to your node. A link that is damaged or truncated is reported as an invalid format instead of being imported.
+
+Importing a contact requires firmware 2.6.9 or later on the connected node.
+
+### Air Quality
+
+Nodes with a particulate-matter sensor — reporting the firmware's Air Quality telemetry — show an **Air Quality** section with the latest PM2.5, PM1.0, and PM10 readings in µg/m³.
+
+An **Air Quality Metrics Log** entry appears under the node's logs, with a seven-day chart and table of the particulate-matter readings (configurable columns), a **Clear** action to delete stored readings, and **CSV export**.
+
+### Signed Node
+
+If a node signs its broadcast packets, a green shield (🛡️) **Signed node** row appears in the detail view, marked **Verified automatically**. This means the radio has cryptographically verified an XEdDSA signature from this node (firmware 2.8 or later). Because a node's identity broadcast is itself signed, its name and identity are verified by extension.
+
+This is *automatic* trust observed from the radio — distinct from manually verifying a contact's public key out-of-band, which is a separate, user-asserted action. The row only ever affirms the good state; nodes that don't sign simply show no shield, which is not a warning.
 
 ### Hardware Info
 
