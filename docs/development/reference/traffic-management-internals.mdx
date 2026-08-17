@@ -1,0 +1,96 @@
+---
+id: traffic-management-internals
+title: Traffic Management Internals
+sidebar_label: Traffic Management Internals
+sidebar_position: 7
+description: How the Traffic Management Module serves NodeInfo requests on another node's behalf, the throttle that bounds it, and the tick clocks behind its per-node counters.
+---
+
+**Firmware 2.8.0.** The module itself first shipped in 2.7.20, but the reflector throttle, the NodeInfo payload cache and the key-provenance gate described here arrived in 2.8.0 ([#10706](https://github.com/meshtastic/firmware/pull/10706), [#10745](https://github.com/meshtastic/firmware/pull/10745)). On 2.7.20 to 2.7.26, direct-serve is bounded by a single 30-second stamp rather than the per-requester and per-target tables below.
+
+This page documents the internals of the Traffic Management Module (TMM): the NodeInfo **direct-serve** path, the throttle that bounds it, the relayed-position precision clamp, and the modular tick clocks its caches use. For the settings themselves, see [Traffic Management Module Usage](/docs/configuration/module/traffic-management). For the stores this path reads from, see [NodeInfo Stores](/docs/development/reference/node-info-stores).
+
+Sources of truth, on `develop` - this module's 2.8.0 behaviour is not on `master`: [TrafficManagementModule.h](https://github.com/meshtastic/firmware/blob/develop/src/modules/TrafficManagementModule.h) and [TrafficManagementModule.cpp](https://github.com/meshtastic/firmware/blob/develop/src/modules/TrafficManagementModule.cpp), with defaults in [Default.h](https://github.com/meshtastic/firmware/blob/develop/src/mesh/Default.h).
+
+## How the module runs
+
+- **Enablement is three-gated.** A compile-time capability flag (with a build exclusion to compile the module out), then the runtime module-config presence flag. While the runtime gate is off, the packet path, the maintenance sweep, the NodeDB write-through hooks and the cache accessors all no-op - content, maintenance and reads are keyed to the same condition.
+- **It runs before the routing module.** Returning `STOP` from `handleReceived()` fully consumes a packet, so it is never rebroadcast; `CONTINUE` lets it proceed through normal relay handling.
+- **State is cheap.** Per-node traffic-shaping counters live in a flat 10-byte `UnifiedCacheEntry` array - position fingerprint, rate and unknown counters, modular tick stamps, a next-hop hint, and a 4-bit role fallback. Direct-serve additionally reads the NodeInfo payload cache, or the NodeDB fallback where that cache is absent.
+
+## NodeInfo direct response (direct-serve)
+
+Normally a unicast NodeInfo request travels all the way to the target and the reply travels all the way back. On a large mesh that is several hops of airtime per lookup. When `nodeinfo_direct_response_max_hops` is above `0`, a neighbour that already holds the target's identity answers **on the target's behalf** with a spoofed reply, cutting the round trip to one hop.
+
+**Data source.** The reply payload comes from the TMM NodeInfo payload cache - the full cached `User` plus provenance metadata - or, on builds without that cache, from the NodeDB fallback. Both are described in [NodeInfo Stores](/docs/development/reference/node-info-stores); this feature is a consumer of them.
+
+**Decision pipeline**, in order. Any failure leaves the request to propagate normally:
+
+1. **Eligibility.** `nodeinfo_direct_response_max_hops` above `0`, the NodeInfo port number, `want_response` set, and the packet is unicast, neither addressed to this node nor sent by it.
+2. **Hop clamp.** Respond only when the requester is within the role-clamped hop ceiling: routers up to 3 hops (may be lowered by config), clients direct-only at 0 hops.
+3. **Identity lookup.** A NodeInfo cache hit, or the NodeDB fallback.
+4. **Staleness gate, 6 hours.** Never vouch for a node not genuinely *heard* within the serve window. Only a real observed frame stamps the recency bit - seeding and write-through are knowledge, not observation, so a silent node can never look alive to this path.
+5. **Key-provenance gate**, on by default. Vouch only for an identity whose key is proven: XEdDSA-verified, directly or inherited from NodeDB, **or** manually verified out-of-band. Both the cache path and the NodeDB fallback path honour both channels. A trust-on-first-use identity is left for the genuine node - or another cache-holder that *has* proof - to answer. The gate is bypassed when PKI is compiled out.
+6. **Throttle.** See the next section.
+
+**The spoofed reply.** On success TMM emits a NodeInfo reply with `from` set to the *target*, so the requester sees a valid answer; `to` the requester; `hop_limit` of `0`, so it travels one hop only; `request_id` set to the original packet id; and the OK\_TO\_MQTT bit taken from local policy. The requester's own identity claim in the request is **not** written back to NodeDB - a unicast NodeInfo is unsigned, so treating it as an identity update would be unauthenticated. The cache-hit counter counts only replies actually sent.
+
+## Throttling direct responses
+
+A direct reply is addressed to the requesting packet's `from` and spoofs the requested target - and **both fields are unauthenticated header data**. Without a bound, an attacker crafts requests carrying a victim's address as `from`, and every neighbour holding the target transmits at the victim: a reflector-amplification primitive. The throttle is the security core of this feature. It is checked immediately before a reply would go out, so requests declined for other reasons never consume the budget.
+
+**Three bounds**, all evaluated under the cache lock:
+
+| Bound                | Window | Bounds                                                |
+| :------------------- | :----- | :---------------------------------------------------- |
+| Per requester        | 60 s   | how much any single node can be made to receive       |
+| Per target           | 60 s   | how often this node vouches for the same identity     |
+| Global airtime floor | 1 s    | total spoofed transmissions, regardless of key spread |
+
+**Mechanism.** The two per-key bounds are fixed **8-slot LRU tables in internal RAM** - not in the NodeInfo cache - so they behave identically with and without PSRAM, on the cache path and the NodeDB-fallback path alike. Timestamps are full 32-bit milliseconds compared by wrap-safe subtraction, so there is no tick clock and no maintenance sweep to keep them honest. A slot is resolved in *both* tables before either is stamped, so a reply that one axis throttles never consumes the other axis's budget. The global floor is a single stamp, checked first as the cheap common case.
+
+**When a table fills.** For an unseen key with no free slot, the **least-recently-used** entry is evicted and the new key admitted. The LRU victim is by construction the entry closest to expiring anyway, so eviction is the lowest-cost choice. An attacker who cycles more than 8 distinct requesters or targets - easy, since both are unauthenticated - evicts entries and defeats *per-key* throttling for the cycled keys. That is expected, and it is why the **global 1-second floor is the hard backstop**: it is a single stamp, it cannot fill, and it caps total spoofed replies at roughly one per second no matter what. Per-key throttling degrades gracefully to the floor under pressure.
+
+**Throttled is not dropped.** A throttled request lets `handleReceived()` return `CONTINUE`, so the request forwards toward the genuine target, which can answer itself, rather than being black-holed. A requester whose first reply was lost on a noisy link would otherwise get silence for the whole window; repeats of the same packet id are already absorbed by the router's duplicate detection.
+
+## Relayed-position precision clamp
+
+TMM is the one place in the firmware that **rewrites another node's payload in transit**. `Router::send()` deliberately does not: its position-precision policy is originator-only, gated on `isFromUs(p)`, with an explicit comment that relays keep `p->from` as the original sender and so must not touch a relayed `POSITION_APP` payload. TMM's clamp is the considered exception, on the grounds that a node relaying someone else's over-precise position on a public channel is a privacy problem the relay is in a position to fix.
+
+It lives in `alterReceived()`, not `handleReceived()`. `MeshModule` calls the two in sequence, `alterReceived()` second, so the clamp runs **after** the routing verdict and mutates `mp` in place - the rebroadcast then carries the rewritten payload. Nothing about the accept/drop decision depends on it.
+
+Six conditions gate it, and all must hold:
+
+| Gate                                     | Condition                                                  | Why                                                                     |
+| :--------------------------------------- | :---------------------------------------------------------- | :----------------------------------------------------------------------- |
+| Module enabled, decoded, not ours         | `alterReceived()` preamble, incl. `!isFromUs()`             | Transit traffic only; your own sends are Router's business              |
+| Licence                                   | `!owner.is_licensed`                                        | Amateur operators are exempt; lost-and-found roles are **not**          |
+| Port and addressing                       | `POSITION_APP` and `isBroadcast(mp.to)`                     | Unicast positions are left alone                                        |
+| Channel class                             | `channels.isWellKnownChannel(mp.channel)`                   | Public default channels only - see below                                |
+| Channel sets a precision                  | `chanPrec > 0`                                              | **No fallback.** Precision 0 means sharing is off, and the clamp skips  |
+| Packet is finer than the channel          | `packetPrec > chanPrec`, absent `precision_bits` reading 32 | Already-coarse positions are not re-encoded                             |
+
+When all six hold, `applyPositionPrecision(pos, chanPrec)` truncates, the payload is re-encoded in place, and the action is logged as `clamp`/`precision`.
+
+**The `chanPrec > 0` gate is the one to remember.** It is easy to read the clamp as "positions are never relayed finer than ~90 m", but the ~90 m default (`default_traffic_mgmt_position_precision_bits`, 19) belongs to the **dedup fingerprint** path, which falls back to it via `sanitizePositionPrecision()` when a channel sets nothing. The clamp has no such fallback: a channel with no configured precision gets no clamping at all, and full-precision coordinates relay untouched. The two paths read the same channel field and then diverge.
+
+**Channel class is a build-time policy.** `isWellKnownChannel()` is true only for a channel whose PSK is absent or a single well-known key byte *and* whose name matches a modem preset - the default public channels. Private channels are skipped unless the firmware is compiled with `USERPREFS_TMM_APPLY_TO_PRIVATE_CHANNELS`, which extends the clamp to everything. The reasoning is that a private channel's membership is already controlled, so its precision is the operator's business rather than a relay's.
+
+## Tick clocks and wrap safety
+
+Every per-node timestamp in TMM's caches is a free-running modular tick - a byte or a nibble - never an absolute time. That is what keeps `UnifiedCacheEntry` at 10 bytes across up to 2048 entries. The cost is that modular subtraction is only correct while the true age stays below the counter's period, so every clock needs something to clear expired state before it aliases. The direct-serve throttle above is the deliberate exception: full 32-bit milliseconds compared by wrap-safe subtraction, hence no tick and no sweep.
+
+| Clock              | Tick / period  | Window            | Kept honest by                                        |
+| :----------------- | :------------- | :---------------- | :---------------------------------------------------- |
+| Position           | 6 min / 25.6 h | up to 255 ticks   | 60 s sweep, margin as low as 1 tick at the clamp      |
+| Rate               | 5 min / 80 min | up to 15 ticks    | sweep plus read-time window reset                     |
+| Unknown            | 1 min / 16 min | 12 ticks          | sweep plus read-time window reset                     |
+| NodeInfo `obsTick` | 3 min / 12.8 h | 120 ticks (6 h)   | sweep only                                            |
+
+`obsTick` is the sharp case: the maintenance sweep clearing the observed flag is the *sole* guarantee that the 6-hour serve gate never reads an aliased stamp. That makes the sweep a compile-time invariant - guarded by the NodeInfo-cache capability flag **alone**, never by the cache size, which a variant may zero independently.
+
+The warm tier is different by design: its `last_heard` is an **absolute** Unix-seconds timestamp, quantised to about 128 seconds, so it cannot wrap until 2106 and needs no sweep. The TMM caches chose 1-byte ticks instead to stay at 10 bytes per entry across up to 2048 entries.
+
+## Firmware constants, not configuration
+
+Two related sets of knobs are compiled in rather than configurable: the role-based position caps (1 hour for trackers, 15 minutes for lost-and-found) and the direct-serve throttle windows above.
