@@ -27,6 +27,12 @@ Channel conversations load the most recent **50 messages** by default. Scroll to
 
 The channel form lets you configure the channel name, encryption key, role, position sharing, and MQTT uplink/downlink settings.
 
+### Channel QR Codes
+
+Use **Share QR Code** from Settings to choose which configured channels to share. The generated Meshtastic channel link includes the selected channel settings and the LoRa config needed for another radio to communicate on the same mesh.
+
+When you open or scan a Meshtastic channel link, review the listed channels and choose whether to **Replace Channels** or **Add Channels**. Replace mode overwrites the current radio channel set, while add mode appends the incoming channels when there are free slots and no duplicate channel names.
+
 ### Channel Security
 
 | Icon | Meaning |
@@ -73,9 +79,20 @@ Select a node from the drop-down to manage connected or remote devices.
 
 ---
 
+### Signing
+
+A green shield (🛡️) on a broadcast message bubble means the message is **signed and verified** — the radio cryptographically verified an XEdDSA signature over the sender's identity key (firmware 2.8 or later). The shield answers a different question from the encryption lock: the **lock** means a direct message is *private*, while the **shield** means a broadcast is *authentic* (you know who really sent it).
+
+- The shield appears only on broadcast/channel messages, never on direct messages, and only when verification succeeded. Long-press a signed message to see **Signed · verified** in the context menu, then open **Message Details** for "Verified with the sender's key."
+- Unsigned messages show nothing — there is no warning. Direct messages, oversized broadcasts, and traffic from older firmware are all legitimately unsigned, so the absence of a shield does not indicate a problem. The radio drops broadcasts whose signature fails verification before they ever reach the app, so a shown signed message is verified by construction.
+
+---
+
 ### Tapback Reactions
 
 Long press any message and tap **Tapback** to send an emoji reaction.
+
+When someone reacts to a message, you get a notification such as **Alice reacted 👍 to "See you soon"** — unless the sender (for a direct message) or the channel is muted. Reactions notify **without** adding to the conversation's unread badge. If your radio hasn't seen the message that was reacted to, the reaction is saved but no notification is shown (there'd be nothing to display it against).
 
 ---
 
@@ -85,38 +102,50 @@ Send channel broadcasts and direct messages. Long press any message for actions 
 
 ---
 
+## Find in Conversation
+
+Tap the **Find in conversation** search field below the title of any channel or direct-message conversation, then type to search that conversation's message text.
+
+- Matching is **case- and accent-insensitive**, and searches the **entire conversation history** — not just the messages currently on screen.
+- A results bar shows your position in the matches (e.g. **2 of 7**); use the **up/down chevrons** to jump to the previous or next match, wrapping around at the ends. The current match is highlighted and scrolled into view, loading older messages automatically if needed.
+- Tap **Cancel** (or clear the field) to dismiss the search and return to the conversation.
+
+Search covers the text of channel broadcasts and direct messages, matching exactly the messages each conversation shows. Emoji reactions aren't matched.
+
+---
+
 ## Message Status
 
 ![Message status reference](/img/apple/ackErrors.webp)
 
-| Colour | Meaning |
-|--------|---------|
-| Grey | Successful delivery. |
-| Orange bubble | **Acknowledged by another node** — message was relayed but not confirmed by the final recipient. |
+The message status row combines a short label, SF Symbol icon, and color. Color reinforces the text; it is not the only signal.
 
-The following errors may appear on a message bubble (red unless noted):
-
-| Status | Description |
-|--------|-------------|
-| No Route | No route was found to the destination node. |
-| Got NAK | The destination node explicitly rejected the message. |
-| Timeout | The message timed out waiting for acknowledgement. |
-| No Interface | The radio interface is unavailable. |
-| Max Retransmit | Maximum retransmission attempts reached without success. |
-| No Channel | The specified channel does not exist on the destination. |
-| Too Large | The packet exceeds the maximum allowed size. |
-| No Response | No response received from the destination. |
-| PKI Failed | Public key infrastructure encryption/decryption failed. |
-| Bad Request | Malformed packet rejected by the destination. |
-| Not Authorized | The destination node refused the request due to permissions. |
-
-> Grey indicates successful delivery. Orange indicates a retryable error. Red indicates a permanent failure that will not succeed on retry.
+| Icon | Color | Status | Description |
+|------|-------|--------|-------------|
+| `clock` | Orange | Sending... | Waiting for the mesh to acknowledge this message. |
+| `checkmark.circle.fill` | Gray | Delivered to mesh | A node on the mesh confirmed this channel message. |
+| `checkmark.circle.fill` | Gray | Delivered to recipient | The direct-message recipient confirmed this message. |
+| `exclamationmark.circle.fill` | Orange | Relayed, not confirmed by recipient | A node relayed this direct message, but the recipient has not confirmed it. Retry is available. |
+| `exclamationmark.circle.fill` | Orange | Failed to deliver to mesh | Delivery was not confirmed after retries, timeout, or an explicit negative acknowledgement. Retry is available. |
+| `xmark.circle.fill` | Red | Channel/key mismatch | The sender or recipient could not use a matching channel/key for this message. |
+| `xmark.circle.fill` | Red | Message is too large to send | The encoded packet exceeds the LoRa message size limit. Shorten the message before sending again. |
+| `exclamationmark.circle.fill` | Orange | No radio interface | The sender has no usable radio interface for this message. Retry is available. |
+| `exclamationmark.circle.fill` | Orange | Duty cycle limit | Local airtime limits are temporarily blocking sends. Retry is available after waiting. |
+| `exclamationmark.circle.fill` | Orange | Rate limited | Messages are being sent too quickly. Retry is available after waiting. |
+| `exclamationmark.circle.fill` | Orange | No app response | The destination received the request, but no app or module responded. Retry is available. |
+| `xmark.circle.fill` | Red | Invalid request | The destination rejected the request as invalid. |
+| `xmark.circle.fill` | Red | Not authorized | The destination refused this request because it is not authorized. |
+| `exclamationmark.circle.fill` | Orange | Could not send encrypted message | The encrypted PKI send path could not be used. Retry is available after node info or keys sync. |
+| `exclamationmark.circle.fill` | Orange | Recipient needs your key | The recipient does not know your public key yet. Retry is available after node info syncs. |
+| `exclamationmark.circle.fill` | Orange | Recipient key unavailable | Your node does not have the recipient's public key yet. Retry is available after node info syncs. |
+| `exclamationmark.circle.fill` | Orange | Admin session expired | The admin session key is missing, expired, or invalid. Retry is available after requesting a new session. |
+| `xmark.circle.fill` | Red | Admin key not authorized | The remote node does not authorize your admin key. |
 
 ---
 
 ## Link Appearance
 
-Links in message bubbles — including URLs, Meshtastic channel links, and markdown `[text](../url)` links — are styled with an underline and the design standards Link color (Blue 400). This makes links visually distinct from regular message text in both light and dark mode. Tapping a link opens it in the browser, or for Meshtastic channel/contact URLs, opens the appropriate in-app handler.
+Links in message bubbles — including URLs, Meshtastic channel links, and markdown `[text](../url)` links — are styled with an underline and the design standards Link color (Blue 400). This makes links visually distinct from regular message text in both light and dark mode. Tapping a link opens it in the system browser (Safari on the standard/default setup), except for Meshtastic channel links and contact links in the exact `meshtastic.org/v/#...` or `www.meshtastic.org/v/#...` form, which open the appropriate in-app import flow. Meshtastic documentation links, including `meshtastic.org/docs/...`, continue to open in the system browser.
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="/img/apple/messageText_link_dark.webp" />
