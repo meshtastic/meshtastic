@@ -1,7 +1,7 @@
 ---
 title: Measurement & Formatting
 sidebar_position: 9
-last_updated: 2026-05-13
+last_updated: 2026-07-07
 parent: Developer Guide
 ---
 
@@ -38,8 +38,8 @@ object MetricFormatter {
     fun pressure(hPa: Float, decimalPlaces: Int = 1): String
     fun snr(value: Float, decimalPlaces: Int = 1): String
     fun rssi(value: Int): String
-    fun windSpeed(metersPerSecond: Float, decimalPlaces: Int = 1): String
-    fun rainfall(millimeters: Float, decimalPlaces: Int = 1): String
+    fun windSpeed(metersPerSecond: Float, isImperial: Boolean, decimalPlaces: Int = 1): String
+    fun rainfall(millimeters: Float, isImperial: Boolean, decimalPlaces: Int = 1): String
 }
 ```
 
@@ -57,8 +57,10 @@ MetricFormatter.rssi(-97)     // "-97 dBm"
 // Environment
 MetricFormatter.pressure(1013.25f)  // "1013.3 hPa"
 MetricFormatter.humidity(65.0f)     // "65%"
-MetricFormatter.windSpeed(3.7f)     // "3.7 m/s"
-MetricFormatter.rainfall(12.3f)     // "12.3 mm"
+MetricFormatter.windSpeed(3.7f, isImperial = false)  // "3.7 m/s"
+MetricFormatter.windSpeed(3.7f, isImperial = true)   // "8.3 mph"
+MetricFormatter.rainfall(12.3f, isImperial = false)  // "12.3 mm"
+MetricFormatter.rainfall(12.3f, isImperial = true)   // "0.5 in"
 
 // Power
 MetricFormatter.voltage(3.95f)      // "3.95 V"
@@ -82,15 +84,17 @@ object NumberFormatter {
 
 ---
 
-## Temperature Conversion
+## Unit Conversion
 
-Temperature is the only measurement that performs a unit conversion. The `isFahrenheit` flag is typically sourced from the user's device locale or preferences:
+Three measurements convert away from metric for display, each gated by a boolean flag sourced from the user's device locale or preferences:
 
-```
-°F = °C × 1.8 + 32
-```
+| Measurement | Flag | Conversion |
+|---|---|---|
+| `temperature` | `isFahrenheit` | `°F = °C × 1.8 + 32` |
+| `windSpeed` | `isImperial` | m/s × 2.23694 → mph |
+| `rainfall` | `isImperial` | mm ÷ 25.4 → in |
 
-All other measurements display in their native metric units. The user-facing `units-and-locale.md` page explains what end users see.
+Everything else (voltage, current, pressure, SNR, RSSI, humidity, percent) displays in its native metric units. The user-facing [Units & Locale](../user/units-and-locale.md) page explains what end users see.
 
 ---
 
@@ -130,7 +134,7 @@ To add a new measurement formatter:
 
 ## DateFormatter
 
-Date and time formatting uses the `DateFormatter` interface with platform-specific implementations:
+Date and time formatting uses the `DateFormatter` `expect object` with platform-specific `actual` implementations:
 
 | Function | Output Example |
 |---|---|
@@ -140,8 +144,9 @@ Date and time formatting uses the `DateFormatter` interface with platform-specif
 | `formatTime()` | "2:30 PM" |
 | `formatTimeWithSeconds()` | "2:30:45 PM" |
 | `formatDate()` | "2026-05-13" |
+| `formatDateTimeShort()` | "5/13/26 2:30 PM" |
 
-Unlike `MetricFormatter`, `DateFormatter` is an **interface** with platform `expect`/`actual` implementations because date formatting inherently depends on platform locale APIs.
+Unlike `MetricFormatter`, `DateFormatter` is declared with `expect`/`actual` (an `expect object` in `commonMain`, an `actual object` per platform) because date formatting inherently depends on platform locale APIs.
 
 ---
 
@@ -151,13 +156,13 @@ Unlike `MetricFormatter`, `DateFormatter` is an **interface** with platform `exp
 |---|---|
 | Locale-independent decimal separator (`.`) | Mesh data shared between nodes must be consistent |
 | Pure arithmetic formatting (no `DecimalFormat`) | Works identically on JVM, Native, and JS targets |
-| Temperature is the only converted unit | All other metric units are universally understood in their native form |
+| Only temperature, wind speed, and rainfall convert | The remaining metric units are universally understood in their native form |
 | `object` singleton pattern | Stateless utility — no instance management needed |
 
 ---
 
 ## Related
 
-- **User-facing docs**: `docs/user/units-and-locale.md` explains what end users see
+- **User-facing docs**: [Units & Locale](../user/units-and-locale.md) explains what end users see
 - **Source code**: `core/common/src/commonMain/kotlin/org/meshtastic/core/common/util/MetricFormatter.kt`
 - **Tests**: `core/common/src/commonTest/kotlin/org/meshtastic/core/common/util/MetricFormatterTest.kt`

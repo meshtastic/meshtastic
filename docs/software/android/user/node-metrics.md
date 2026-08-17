@@ -1,7 +1,7 @@
 ---
 title: Node Metrics
 sidebar_position: 5
-last_updated: 2026-06-25
+last_updated: 2026-07-08
 description: Telemetry dashboards for each mesh node — device health, environment sensors, air quality, signal quality, power, traceroute, and position history.
 parent: User Guide
 ---
@@ -55,7 +55,10 @@ Air Quality is a dedicated metrics view for nodes equipped with a particulate-ma
 | PM1.0 | µg/m³ | Particulate matter up to 1.0 micron |
 | PM2.5 | µg/m³ | Particulate matter up to 2.5 microns |
 | PM10 | µg/m³ | Particulate matter up to 10 microns |
+| AQI | EPA index | EPA **NowCast** AQI computed from your recent PM2.5 history, with a color-coded severity label. Shown next to PM2.5 once enough readings have accumulated. |
 | CO₂ | ppm | Carbon dioxide concentration |
+| CO₂ temperature | °C / °F | Temperature reported by the CO₂ sensor itself (e.g. SCD4x) |
+| CO₂ humidity | % | Relative humidity reported by the CO₂ sensor |
 
 CO₂ readings are color-coded by severity to make air quality easy to read at a glance:
 
@@ -96,8 +99,8 @@ Signal quality is rated from **SNR relative to the active LoRa modem preset's de
 | Quality | Criteria |
 |---------|----------|
 | Good | SNR above the preset's limit |
-| Fair | within 5.5 dB below the limit |
-| Bad | within 7.5 dB below the limit |
+| Fair | less than 5.5 dB below the limit |
+| Bad | 5.5 dB to 7.5 dB below the limit |
 | None | more than 7.5 dB below the limit |
 
 See [Understanding the Signal Meter](signal-meter.md) for the full explanation.

@@ -16,8 +16,8 @@ Contributing translations helps make Meshtastic accessible to a wider audience. 
 
 | Resource | Source Location | Notes |
 |---|---|---|
-| UI strings | `composeResources/values/strings.xml` | Buttons, labels, messages, and all user-visible text |
-| User Guide pages | `docs/user/*.md` | In-app documentation shown in Help & Documentation |
+| UI strings | `core/resources/src/commonMain/composeResources/values/strings.xml` | Buttons, labels, messages, and all user-visible text |
+| User Guide pages | `docs/en/user/*.md` | In-app documentation shown in Help & Documentation |
 | Fastlane metadata | `fastlane/metadata/android/en-US/` | App Store listing title, description, and changelogs |
 
 > ⚠️ **Note:** Developer Guide pages are English-only. Code-focused documentation targeting contributors is not translated.
@@ -93,6 +93,6 @@ The app automatically selects the correct locale based on your device's **Langua
 
 ## Questions?
 
-If you have questions about a specific string's context or need help getting started, open a discussion on the [Meshtastic GitHub Discussions](https://github.com/meshtastic/Meshtastic-Android/discussions) page.
+If you have questions about a specific string's context or need help getting started, open a discussion on the [Meshtastic GitHub Discussions](https://github.com/orgs/meshtastic/discussions) page.
 
 Thank you for helping expand the reach of Meshtastic!
