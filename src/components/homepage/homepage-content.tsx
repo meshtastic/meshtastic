@@ -8,19 +8,43 @@ import { Sponsors } from "@/components/homepage/sponsors";
 import { Button } from "@/components/ui/button";
 import links from "@/data/links.json";
 import Link from "@docusaurus/Link";
+import { useHistory, useLocation } from "@docusaurus/router";
 import Translate, { translate } from "@docusaurus/Translate";
 import { ArrowRight, Download, FileText, Radio, X } from "lucide-react";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { SocialSidebar } from "./social-sidebar";
+
+// Deep link for the devices overlay, e.g. https://meshtastic.org/#hardware
+const HARDWARE_HASH = "#hardware";
 
 export function HomePageContent() {
   const [showDevices, setShowDevices] = useState(false);
+  const history = useHistory();
+  const location = useLocation();
+
+  // Keep the overlay in sync with the URL hash so it can be opened via a
+  // direct link and closed with the browser back button.
+  useEffect(() => {
+    setShowDevices(location.hash === HARDWARE_HASH);
+  }, [location.hash]);
+
+  const openDevices = () => {
+    history.push({ ...location, hash: HARDWARE_HASH });
+  };
+
+  const closeDevices = useCallback(() => {
+    if (location.hash === HARDWARE_HASH) {
+      history.replace({ ...location, hash: "" });
+    } else {
+      setShowDevices(false);
+    }
+  }, [history, location]);
 
   useEffect(() => {
     if (showDevices) {
       document.body.style.overflow = "hidden";
       const handleEscape = (e: KeyboardEvent) => {
-        if (e.key === "Escape") setShowDevices(false);
+        if (e.key === "Escape") closeDevices();
       };
       document.addEventListener("keydown", handleEscape);
       return () => {
@@ -31,7 +55,7 @@ export function HomePageContent() {
     return () => {
       document.body.style.overflow = "";
     };
-  }, [showDevices]);
+  }, [showDevices, closeDevices]);
 
   return (
     <div className="relative min-h-screen overflow-hidden">
@@ -51,17 +75,21 @@ export function HomePageContent() {
                 <Translate id="homepage.hero.offGrid">Off-Grid</Translate>
                 <br />
                 <span className="text-primary dark:text-[hsl(var(--btn-primary))]">
-                  <Translate id="homepage.hero.communication">Communication</Translate>
+                  <Translate id="homepage.hero.communication">
+                    Communication
+                  </Translate>
                 </span>
                 <br />
-                <Translate id="homepage.hero.forEveryone">For Everyone</Translate>
+                <Translate id="homepage.hero.forEveryone">
+                  For Everyone
+                </Translate>
               </h2>
 
               <div className="mt-6 rounded-xl border border-border/50 bg-card/95 py-6 md:p-6 backdrop-blur-xl">
                 <p className="max-w-lg text-lg m-auto text-foreground lg:max-w-none">
                   <Translate id="homepage.hero.tagline">
-                    An open source, off-grid, decentralized mesh network built to
-                    run on affordable, low-power devices. No cell towers. No
+                    An open source, off-grid, decentralized mesh network built
+                    to run on affordable, low-power devices. No cell towers. No
                     internet. Just pure peer-to-peer connectivity.
                   </Translate>
                 </p>
@@ -75,18 +103,22 @@ export function HomePageContent() {
                     className="w-full border-0 bg-[hsl(var(--btn-primary))] p-5 font-mono text-base text-white dark:text-black shadow-none transition-colors hover:bg-[hsl(var(--btn-primary-hover))] sm:w-auto"
                   >
                     <Download className="mr-2 size-6" />
-                    <Translate id="homepage.hero.getStarted">Get Started</Translate>
+                    <Translate id="homepage.hero.getStarted">
+                      Get Started
+                    </Translate>
                     <ArrowRight className="ml-2 size-6" />
                   </Button>
                 </Link>
                 <Button
                   size="lg"
                   variant="ghost"
-                  onClick={() => setShowDevices(true)}
+                  onClick={openDevices}
                   className="w-full border-0 bg-transparent p-5 font-mono text-base text-foreground !shadow-none transition-colors hover:bg-[hsl(var(--btn-primary)/0.2)] hover:text-[hsl(var(--btn-primary))] sm:w-auto"
                 >
                   <Radio className="mr-2 size-6" />
-                  <Translate id="homepage.hero.needHardware">Need Hardware?</Translate>
+                  <Translate id="homepage.hero.needHardware">
+                    Need Hardware?
+                  </Translate>
                 </Button>
                 <Link to={links.docs}>
                   <Button
@@ -95,7 +127,9 @@ export function HomePageContent() {
                     className="w-full border-0 bg-transparent p-5 font-mono text-base text-foreground !shadow-none transition-colors hover:bg-[hsl(var(--btn-primary)/0.2)] hover:text-[hsl(var(--btn-primary))] sm:w-auto"
                   >
                     <FileText className="mr-2 size-6" />
-                    <Translate id="homepage.hero.readTheDocs">Read the Docs</Translate>
+                    <Translate id="homepage.hero.readTheDocs">
+                      Read the Docs
+                    </Translate>
                   </Button>
                 </Link>
               </div>
@@ -139,7 +173,7 @@ export function HomePageContent() {
           >
             <button
               type="button"
-              onClick={() => setShowDevices(false)}
+              onClick={closeDevices}
               className="absolute right-4 top-4 z-20 rounded-lg p-2 text-muted-foreground transition-colors hover:bg-primary/10 hover:text-foreground"
               aria-label={translate({
                 id: "homepage.devices.close",
