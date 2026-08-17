@@ -20,7 +20,7 @@ export default function PrimaryMenu(): React.ReactNode {
   return (
     <>
       {secondaryMenu.content}
-      <div className="mt-2 border-t border-[var(--ifm-toc-border-color)] px-[var(--ifm-menu-link-padding-horizontal)] pt-3 text-md font-bold uppercase tracking-wide text-[var(--ifm-color-emphasis-600)]">
+      <div className="mt-2 border-t border-[var(--ifm-toc-border-color)] px-[var(--ifm-menu-link-padding-horizontal)] pt-3 text-sm font-bold uppercase tracking-wide text-[var(--ifm-color-emphasis-600)]">
         Navigation
       </div>
       <ul className="menu__list">
