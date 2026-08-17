@@ -74,6 +74,51 @@ test.describe("Homepage", () => {
     await expect(sentMessage).toBeVisible();
   });
 
+  test("should open devices modal from Need Hardware button and update URL", async ({
+    page,
+  }) => {
+    await page.goto("/");
+    await page.getByRole("button", { name: /need hardware/i }).click();
+
+    const dialog = page.getByRole("dialog", { name: "Devices" });
+    await expect(dialog).toBeVisible();
+    await expect(page).toHaveURL(/#hardware$/);
+  });
+
+  test("should open devices modal directly via #hardware deep link", async ({
+    page,
+  }) => {
+    await page.goto("/#hardware");
+    const dialog = page.getByRole("dialog", { name: "Devices" });
+    await expect(dialog).toBeVisible();
+  });
+
+  test("should close devices modal and remove hash when dismissed", async ({
+    page,
+  }) => {
+    await page.goto("/#hardware");
+    const dialog = page.getByRole("dialog", { name: "Devices" });
+    await expect(dialog).toBeVisible();
+
+    await page.getByRole("button", { name: "Close" }).click();
+    await expect(dialog).not.toBeVisible();
+    await expect(page).not.toHaveURL(/#hardware/);
+  });
+
+  test("should close devices modal with browser back button", async ({
+    page,
+  }) => {
+    await page.goto("/");
+    await page.getByRole("button", { name: /need hardware/i }).click();
+
+    const dialog = page.getByRole("dialog", { name: "Devices" });
+    await expect(dialog).toBeVisible();
+
+    await page.goBack();
+    await expect(dialog).not.toBeVisible();
+    await expect(page).not.toHaveURL(/#hardware/);
+  });
+
   test("should add emoji reaction to a message", async ({ page }) => {
     // Device mockup is only visible on md and above screens
     await page.setViewportSize({ width: 1280, height: 800 });
