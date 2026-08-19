@@ -27,7 +27,7 @@ For boards OTAFIX supports, the Meshtastic Android app can flash the bootloader 
 1. Connect the radio over **USB/serial** (not Bluetooth).
 2. Open the connected radio's configuration and go to **Advanced → Firmware Update**.
 3. If an upgraded bootloader is published for your board, select **Upgrade bootloader**.
-4. The app reads `INFO_UF2.TXT` from the device's update drive first to confirm the board, then asks you to select the update drive to write the image.
+4. The app reads `INFO_UF2.TXT` from the update drive to confirm the board, then writes the bootloader image. It then asks you to select the update drive again to write the firmware image — two drive selections in total.
 
 See the app's [Firmware Updates guide](https://github.com/meshtastic/Meshtastic-Android/blob/main/docs/en/user/firmware.md) for the full flow. If your board isn't listed yet, or you're not on Android, use one of the manual methods below.
 
