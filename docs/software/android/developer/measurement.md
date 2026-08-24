@@ -1,7 +1,7 @@
 ---
 title: Measurement & Formatting
 sidebar_position: 9
-last_updated: 2026-07-07
+last_updated: 2026-08-19
 parent: Developer Guide
 ---
 
@@ -88,11 +88,13 @@ object NumberFormatter {
 
 Three measurements convert away from metric for display, each gated by a boolean flag sourced from the user's device locale or preferences:
 
-| Measurement | Flag | Conversion |
-|---|---|---|
-| `temperature` | `isFahrenheit` | `°F = °C × 1.8 + 32` |
-| `windSpeed` | `isImperial` | m/s × 2.23694 → mph |
-| `rainfall` | `isImperial` | mm ÷ 25.4 → in |
+| Measurement | Flag | Source | Conversion |
+|---|---|---|---|
+| `temperature` | `isFahrenheit` | `getSystemTemperatureUnit()` | `°F = °C × 1.8 + 32` |
+| `windSpeed` | `isImperial` | `getSystemMeasurementSystem()` | m/s × 2.23694 → mph |
+| `rainfall` | `isImperial` | `getSystemMeasurementSystem()` | mm ÷ 25.4 → in |
+
+The two source functions (in `core/common/.../util/MeasurementSystem.kt`) are deliberately separate: some locales mix systems (the UK uses miles for distance but Celsius for temperature), so temperature must never be derived from the distance unit. On Android, `getSystemTemperatureUnit()` delegates to `androidx.core.text.util.LocalePreferences`, which resolves CLDR locale data and honors the Android 14+ Regional preferences temperature override.
 
 Everything else (voltage, current, pressure, SNR, RSSI, humidity, percent) displays in its native metric units. The user-facing [Units & Locale](../user/units-and-locale.md) page explains what end users see.
 
