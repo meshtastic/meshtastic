@@ -73,13 +73,13 @@ When a message fails to deliver, the error indicator shows what went wrong:
 | No Route | No path exists to the destination node | The recipient may be offline or out of mesh range. Try later or move closer. |
 | Got NAK | The next-hop node refused to relay | The relay node may be congested. Wait and retry. |
 | Timeout | No acknowledgment within retry window | The recipient may be just out of range. Try increasing hop limit or moving to a better position. |
-| No Interface | No radio interface available to send | Check that your radio is connected and the channel is configured. |
-| Max Retransmit | All retry attempts exhausted | The mesh path is unreliable. Try a different channel or wait for conditions to improve. |
-| No Channel | The destination channel doesn't exist | Verify both nodes share the same channel configuration. |
-| Too Large | Message exceeds maximum payload size | Shorten your message (max ~200 characters). |
-| No Response | Node received message but didn't respond | The recipient's radio may be busy or in low-power sleep mode. |
-| Duty Cycle Limit | Regional airtime limit reached | Your radio has used its allowed transmit time. Wait for the duty cycle window to reset (typically 1 hour in EU regions). |
-| Bad Request | Malformed or invalid message | This usually indicates a software bug. Try restarting the app. |
+| No radio interface | No radio interface available to send | Check that your radio is connected and available. |
+| Failed to deliver to mesh | All retry attempts exhausted | Move closer, improve signal, or wait for mesh conditions to improve. |
+| Channel/key mismatch | Destination channel/key does not match | Verify both nodes share the same channel and PSK. |
+| Message is too large to send | Message exceeds maximum payload size | Shorten the message and try again. |
+| No app response | App or plugin did not respond to the request | Retry or check the destination app or module state. |
+| Duty cycle limit | Regional airtime limit reached | Wait for the duty cycle window to reset. |
+| Invalid request | Malformed or invalid request | Retry after updating or restarting the app if this persists. |
 
 > 💡 **Tip:** Most delivery errors resolve themselves. If a node is intermittently reachable, the mesh will retry. For persistent "No Route" errors, check that intermediate Router nodes are online.
 
