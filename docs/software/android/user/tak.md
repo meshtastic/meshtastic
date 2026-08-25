@@ -1,7 +1,7 @@
 ---
 title: TAK Integration
 sidebar_position: 10
-last_updated: 2026-07-08
+last_updated: 2026-08-19
 description: Interoperate with ATAK and WinTAK — CoT position sharing, TAK roles, and plugin setup.
 parent: User Guide
 ---
@@ -51,6 +51,7 @@ The app can also run a **local TAK server** so ATAK/iTAK on the **same device** 
 ![Local TAK Server settings with enable toggle and export option](/img/android/docs/tak_server_enabled.webp)
 
 - **Enable Local TAK Server** — starts the loopback-only mTLS server on port **8089** for ATAK/iTAK connections from the same device.
+- **TAK Mesh Channel** — selects which Meshtastic channel outgoing TAK traffic is sent on (default: the primary channel, index 0). Incoming TAK traffic is accepted from any channel. Matches the equivalent setting on iOS and in the legacy ATAK plugin.
 - **Export TAK Data Package** — generates a `.zip` data package that ATAK/iTAK can import to connect to this server.
 
 ## TAK Roles
