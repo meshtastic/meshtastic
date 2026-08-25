@@ -35,6 +35,8 @@ Things that trip up first-time contributors — check these before requesting re
 Keep the last 5–8 entries and trim older ones from the bottom.
 -->
 
+**July 2026** — [Test Builds & Obtainium](test-builds.md) — New page, replacing the root `obtainium-test-builds.md`. Distributable Obtainium configurations now live in `obtainium/` (importable export, one-tap link generator, config-site submission).
+
 **July 2026** — Map layer stack (`MapLayer.kt`, `MapLayersManager`, GeoJSON/KML import, Site Planner) extracted from the Google flavor into shared `androidApp/src/main` source (#6148) — F-Droid now renders imported overlays via a new OSMdroid-based renderer, so both flavors compile one implementation.
 
 **July 2026** — [Persistence](persistence.md) — Local Mesh Discovery sessions and cached `msh.to` device links now persist to Room (`DiscoverySessionEntity`, `DiscoveryPresetResultEntity`, `DiscoveredNodeEntity`, `DeviceLinkEntity`).

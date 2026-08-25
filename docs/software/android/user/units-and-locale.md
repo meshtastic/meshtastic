@@ -1,7 +1,7 @@
 ---
 title: Units, Measurement & Locale
 sidebar_position: 16
-last_updated: 2026-07-08
+last_updated: 2026-08-19
 description: How the app formats temperature, distance, speed, and other measurements based on your device locale.
 parent: User Guide
 ---
@@ -34,6 +34,8 @@ Temperature values from environment sensors are transmitted as **°C** and displ
 | Fahrenheit | 72°F |
 
 This affects all temperature displays throughout the app: node environment telemetry, soil temperature, dew point, and telemetry chart axes.
+
+Temperature follows your locale's **temperature preference**, independent of the distance system. Locales that mix systems work correctly — a UK phone shows miles for distance but **°C** for temperature. On Android 14+, the **Temperature** regional preference (Settings → System → Languages → Regional preferences) overrides the locale default.
 
 ## Distance & Altitude
 
@@ -113,7 +115,8 @@ On Android, your measurement system (metric vs imperial) is tied to your region 
 
 1. Open **Android Settings → System → Language & Region**
 2. Change your **Region** or **Measurement units** preference
-3. Return to Meshtastic — values update immediately
+3. On Android 14+, temperature can be overridden on its own under **Regional preferences → Temperature**
+4. Return to Meshtastic — values update immediately
 
 > 💡 **Tip:** All measurement formatting is handled centrally and respects your platform's locale, so units stay consistent everywhere in the app.
 
