@@ -43,8 +43,8 @@ A direct reply is addressed to the requesting packet's `from` and spoofs the req
 
 | Bound                | Window | Bounds                                                |
 | :------------------- | :----- | :---------------------------------------------------- |
-| Per requester        | 60 s   | how much any single node can be made to receive       |
-| Per target           | 60 s   | how often this node vouches for the same identity     |
+| Per requester        | 60 s   | how many replies use one claimed requester address    |
+| Per target           | 60 s   | how many replies use one claimed target address       |
 | Global airtime floor | 1 s    | total spoofed transmissions, regardless of key spread |
 
 **Mechanism.** The two per-key bounds are fixed **8-slot LRU tables in internal RAM** - not in the NodeInfo cache - so they behave identically with and without PSRAM, on the cache path and the NodeDB-fallback path alike. Timestamps are full 32-bit milliseconds compared by wrap-safe subtraction, so there is no tick clock and no maintenance sweep to keep them honest. A slot is resolved in *both* tables before either is stamped, so a reply that one axis throttles never consumes the other axis's budget. The global floor is a single stamp, checked first as the cheap common case.

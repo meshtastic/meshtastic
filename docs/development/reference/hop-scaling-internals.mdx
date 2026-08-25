@@ -178,7 +178,7 @@ Each rollover also emits a small set of trend counters, all scaled to estimated 
 
 | Counter               | Meaning                                                          |
 | :-------------------- | :--------------------------------------------------------------- |
-| `newThisHour`         | Seen only in the just-completed hour, with no prior history      |
+| `newThisHour`         | Seen only in the just-completed hour, with no prior history in the retained 13-hour bitmap |
 | `returningThisHour`   | Seen this hour and in at least one older hour                    |
 | `lapsedSinceLastHour` | Seen last hour but not this hour                                 |
 | `olderThan4h`         | Absent from hours 0 to 3, but present somewhere in hours 4 to 12 |
