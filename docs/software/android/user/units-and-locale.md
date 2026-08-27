@@ -1,7 +1,7 @@
 ---
 title: Units, Measurement & Locale
 sidebar_position: 16
-last_updated: 2026-08-26
+last_updated: 2026-08-19
 description: How the app formats temperature, distance, speed, and other measurements based on your device locale.
 parent: User Guide
 ---
@@ -21,12 +21,6 @@ On Android, your measurement preferences are determined by your system **Languag
 > 💡 **Tip:** You never need to toggle units inside the app. Change your system measurement preferences and every screen in Meshtastic updates automatically — node details, telemetry charts, weather, altitude, and more.
 
 ---
-
-## The Radio's Own Screen Is Separate
-
-**Device → Display → Units** configures the screen on the radio, not the app. So do **Use 12-Hour Clock** and **Always Point North** — all three apply to the node's display only. Temperature on that screen has its own setting, **Telemetry → Environment Display Fahrenheit**.
-
-If your node list shows miles while the radio's screen shows kilometres, this is why: the two are set in different places. Changing the device setting will never alter what the app displays. See [Display Config](/docs/configuration/radio/display) for the device-side options.
 
 ## Temperature
 
@@ -124,10 +118,6 @@ On Android, your measurement system (metric vs imperial) is tied to your region 
 3. On Android 14+, temperature can be overridden on its own under **Regional preferences → Temperature**
 4. Return to Meshtastic — values update immediately
 
-Not every English region is fully metric. **English (United Kingdom)** uses miles and feet for distance, so the node list shows miles and altitude in feet. For metric distances, choose a fully metric region such as English (Canada), English (Ireland), or English (New Zealand).
-
-Some phones do not offer the **Regional preferences** menu at all and list only English (United States). On those devices there is currently no way to select metric units for the app.
-
 > 💡 **Tip:** All measurement formatting is handled centrally and respects your platform's locale, so units stay consistent everywhere in the app.
 
 ## Related Topics
@@ -136,7 +126,6 @@ Some phones do not offer the **Regional preferences** menu at all and list only 
 - [Telemetry & Sensors](telemetry-and-sensors.md) — the sensors that produce these measurements
 - [Measurement & Formatting](../developer/measurement.md) — developer reference for the formatting utilities
 - [Settings — Radio & User](settings-radio-user.md) — region setting that drives unit selection
-- [Display Config](/docs/configuration/radio/display) — units, clock, and compass settings for the radio's own screen
 
 ---
 
