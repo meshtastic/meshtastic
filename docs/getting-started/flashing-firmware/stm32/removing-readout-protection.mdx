@@ -15,15 +15,15 @@ it but erases the whole chip, including the factory firmware.
 :::warning
 
 Removing RDP resets the MCU. Connect **under reset** (`mode=UR`, or **Connect
-Under Reset** in the GUI) so the board drops back into the bootloader afterward
-&mdash; on boards without a BOOT0 pin there is no other way to reach it again.
+Under Reset** in the GUI) so the programmer keeps control of the board afterward
+&mdash; on a board without a BOOT0 pin there is no other way to reach it again.
 
 :::
 
 **GUI &mdash; STM32CubeProgrammer**
 
-1. Connect over SWD, or over UART with the board in
-   [bootloader mode](/docs/getting-started/flashing-firmware/stm32/entering-bootloader-mode).
+1. Connect over SWD, or over UART with the board in the
+   [ROM bootloader](/docs/getting-started/flashing-firmware/stm32/entering-bootloader-mode).
 2. Choose **Read Unprotect (MCU)** from the target menu.
 3. Wait for the mass erase to finish, then reconnect.
 4. Flash the Meshtastic firmware as described in

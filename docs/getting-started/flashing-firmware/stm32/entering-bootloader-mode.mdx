@@ -1,16 +1,24 @@
 ---
 id: entering-bootloader-mode
-title: Entering STM32 Bootloader Mode
-sidebar_label: Entering Bootloader Mode
+title: Getting an STM32 Device Ready to Flash
+sidebar_label: Getting Ready to Flash
 sidebar_position: 1
-description: How to put an STM32WL device into its ROM bootloader for flashing.
+description: Prepare an STM32WL device for flashing by entering the ROM bootloader or connecting an SWD programmer.
 ---
 
-Three ways to enter the ROM bootloader, most convenient first:
+Both flashing methods need the board in the right state before you can write
+firmware. The three methods below are ordered most convenient first:
+
+- **Meshtastic Client** and **BOOT0** enter the ROM bootloader, which a
+  [UART flash](/docs/getting-started/flashing-firmware/stm32/flashing-over-uart)
+  needs.
+- **SWD** resets the MCU and connects to it directly for an
+  [SWD flash](/docs/getting-started/flashing-firmware/stm32/flashing-over-swd);
+  it does not use the ROM bootloader.
 
 ## Meshtastic Client
 
-Once Meshtastic firmware is installed, the board can be rebooted into the
+Once Meshtastic firmware is installed, the board can be rebooted into the ROM
 bootloader without touching the hardware:
 
 1. Connect to the node over USB (or BLE).
@@ -41,10 +49,11 @@ Some boards, such as the Wio-E5, do not expose the BOOT0 pin; use another method
 ## SWD
 
 An SWD programmer such as an
-[ST-LINK](https://www.st.com/en/development-tools/st-link-v2.html) is always able
-to reset to bootloader over the SWD pins. This makes it the only choice for
-boards that are not already running Meshtastic firmware while the BOOT0 pin is
-not reachable. Continue at
+[ST-LINK](https://www.st.com/en/development-tools/st-link-v2.html) writes firmware
+straight to flash over the SWD pins. It resets and halts the MCU to do this, so
+it never uses the ROM bootloader and needs neither BOOT0 nor a working Meshtastic
+client. That makes it the only option for a board that is not already running
+Meshtastic firmware and has no reachable BOOT0 pin. Continue at
 [Flashing over SWD](/docs/getting-started/flashing-firmware/stm32/flashing-over-swd).
 
 For the BOOT0 pin location, UART pins, and any board-specific steps, see the

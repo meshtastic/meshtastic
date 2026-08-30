@@ -7,8 +7,9 @@ description: Flash Meshtastic firmware to an STM32WL device over SWD with an ST-
 ---
 
 An SWD programmer such as an
-[ST-LINK](https://www.st.com/en/development-tools/st-link-v2.html) flashes the
-board over the SWD pins and does not need BOOT0 or the ROM bootloader UART.
+[ST-LINK](https://www.st.com/en/development-tools/st-link-v2.html) writes firmware
+straight to flash over the SWD pins. It does not use the ROM bootloader, so BOOT0
+and the bootloader UART are not involved.
 
 **GUI &mdash; STM32CubeProgrammer**
 

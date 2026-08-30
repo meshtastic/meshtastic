@@ -7,8 +7,8 @@ description: Flash Meshtastic firmware to an STM32WL device over UART with a USB
 ---
 
 A USB-TTL serial adapter can flash STM32WL without an SWD programmer, once the
-board is in
-[bootloader mode](/docs/getting-started/flashing-firmware/stm32/entering-bootloader-mode).
+board is in the
+[ROM bootloader](/docs/getting-started/flashing-firmware/stm32/entering-bootloader-mode).
 
 The ROM bootloader listens on:
 
@@ -22,8 +22,8 @@ with a common ground.
 
 1. Launch [STM32CubeProgrammer](https://www.st.com/en/development-tools/stm32cubeprog.html).
 2. Select the **UART** connection and the serial port of your USB-TTL adapter.
-3. Put the board in
-   [bootloader mode](/docs/getting-started/flashing-firmware/stm32/entering-bootloader-mode).
+3. Put the board in the
+   [ROM bootloader](/docs/getting-started/flashing-firmware/stm32/entering-bootloader-mode).
 4. Click **Connect**.
 5. Open the `firmware-<target>-X.X.X.xxxxxxx.bin` file and confirm the start address is `0x08000000` (the default).
 6. Click **Download**.
