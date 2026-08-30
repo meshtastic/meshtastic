@@ -1,0 +1,51 @@
+---
+id: entering-bootloader-mode
+title: Entering STM32 Bootloader Mode
+sidebar_label: Entering Bootloader Mode
+sidebar_position: 1
+description: How to put an STM32WL device into its ROM bootloader for flashing.
+---
+
+Three ways to enter the ROM bootloader, most convenient first:
+
+## Meshtastic Client
+
+Once Meshtastic firmware is installed, the board can be rebooted into the
+bootloader without touching the hardware:
+
+1. Connect to the node over USB (or BLE).
+2. Run `meshtastic --enter-dfu`, or select the equivalent option in the app.
+
+On boards whose USB serial port connects to the ROM bootloader UART, this allows
+firmware upgrades over
+[UART](/docs/getting-started/flashing-firmware/stm32/flashing-over-uart) with no
+extra wiring.
+
+## BOOT0
+
+On boards that route the BOOT0 pin to a pad, jumper, or switch:
+
+1. Tie BOOT0 high (to 3V3).
+2. Reset or power-cycle the board. It comes out of reset in the ROM bootloader.
+3. Flash the firmware over
+   [UART](/docs/getting-started/flashing-firmware/stm32/flashing-over-uart).
+4. Return BOOT0 to ground (or let it float if the board has a pull-down) and
+   reset again to run the firmware.
+
+:::note
+
+Some boards, such as the Wio-E5, do not expose the BOOT0 pin; use another method.
+
+:::
+
+## SWD
+
+An SWD programmer such as an
+[ST-LINK](https://www.st.com/en/development-tools/st-link-v2.html) is always able
+to reset to bootloader over the SWD pins. This makes it the only choice for
+boards that are not already running Meshtastic firmware while the BOOT0 pin is
+not reachable. Continue at
+[Flashing over SWD](/docs/getting-started/flashing-firmware/stm32/flashing-over-swd).
+
+For the BOOT0 pin location, UART pins, and any board-specific steps, see the
+documentation for your board.

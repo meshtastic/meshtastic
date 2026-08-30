@@ -1,0 +1,46 @@
+---
+id: removing-readout-protection
+title: Removing STM32 Readout Protection
+sidebar_label: Removing Readout Protection
+sidebar_position: 4
+description: Clear flash readout protection (RDP level 1) on an STM32WL device so Meshtastic firmware can be flashed.
+---
+
+Some boards, such as the Wio-E5, ship with flash readout protection (RDP level 1)
+enabled.
+[STM32CubeProgrammer](https://www.st.com/en/development-tools/stm32cubeprog.html)
+connects but cannot read, verify, or write flash. Removing the protection clears
+it but erases the whole chip, including the factory firmware.
+
+:::warning
+
+Removing RDP resets the MCU. Connect **under reset** (`mode=UR`, or **Connect
+Under Reset** in the GUI) so the board drops back into the bootloader afterward
+&mdash; on boards without a BOOT0 pin there is no other way to reach it again.
+
+:::
+
+**GUI &mdash; STM32CubeProgrammer**
+
+1. Connect over SWD, or over UART with the board in
+   [bootloader mode](/docs/getting-started/flashing-firmware/stm32/entering-bootloader-mode).
+2. Choose **Read Unprotect (MCU)** from the target menu.
+3. Wait for the mass erase to finish, then reconnect.
+4. Flash the Meshtastic firmware as described in
+   [Flashing over UART](/docs/getting-started/flashing-firmware/stm32/flashing-over-uart)
+   or [Flashing over SWD](/docs/getting-started/flashing-firmware/stm32/flashing-over-swd).
+
+**CLI**
+
+STM32CubeProgrammer's `-rdu` (read unprotect) removes RDP and mass-erases the
+chip. Over SWD:
+
+```shell
+STM32_Programmer_CLI -c port=SWD mode=UR -rdu
+```
+
+or over the UART bootloader:
+
+```shell
+STM32_Programmer_CLI -c port=/dev/ttyUSB0 br=115200 -rdu
+```
