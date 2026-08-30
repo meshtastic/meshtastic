@@ -1,0 +1,60 @@
+---
+id: nucleo-wl55jc
+title: STMicroelectronics® Nucleo-WL55JC
+sidebar_label: Nucleo-WL55JC
+sidebar_position: 1
+---
+
+The [ST Nucleo-WL55JC](https://www.st.com/en/evaluation-tools/nucleo-wl55jc.html) (board reference MB1389) is STMicroelectronics' official evaluation board for the STM32WL. `NUCLEO-WL55JC1` is built for the high frequency band (approximately 865&ndash;928 MHz) and `NUCLEO-WL55JC2` for the low band (approximately 433&ndash;510 MHz). The two share a board design but wire out different RF paths and matching networks, so they are not interchangeable. It carries an onboard ST-LINK, so no external programmer is needed.
+
+## Specifications
+
+- **MCU**
+  - STM32WL55JC (Arm Cortex-M4 application core, 256 kB flash, 64 kB RAM)
+- **LoRa Transceiver**
+  - Semtech SX1262 (integrated into the STM32WL), 32 MHz TCXO
+- **Frequency options**
+  - `NUCLEO-WL55JC1`: high band (~865&ndash;928 MHz)
+  - `NUCLEO-WL55JC2`: low band (~433&ndash;510 MHz)
+- **Antenna**
+  - Single band-specific SMA connector
+- **Connectors**
+  - USB Micro-B (ST-LINK)
+  - Arduino UNO V3 headers
+  - ST morpho headers
+- **Debug**
+  - Onboard STLINK-V3E: SWD debug, Virtual COM Port, and drag-and-drop mass-storage programming
+- **Controls**
+  - 3 user LEDs (green/blue/red)
+  - 3 user buttons (B1/B2/B3) and a reset button
+  - BOOT0 button
+
+## Meshtastic pin mapping
+
+Taken from the Meshtastic `nucleo_wl55jc` firmware variant. The Arduino UNO V3 headers (CN5 / CN8 / CN9) bring out a subset of the MCU pins; the ST morpho headers (CN7 / CN10) bring out every MCU pin.
+
+| Function   | Pin(s)                                                    | Arduino | Morpho | Meshtastic role                                                                                |
+| ---------- | --------------------------------------------------------- | :-----: | :----: | ---------------------------------------------------------------------------------------------- |
+| Console    | ST-LINK Virtual COM Port (PA2 / PA3)                      |    -    |    -   | Default `Serial` (debug output and CLI)                                                        |
+| GPS UART   | PB6 (TX), PB7 (RX) &mdash; D1 / D0                        |   ✅    |   ✅   | `Serial2` (`GPS_SERIAL_PORT=Serial2`)                                                          |
+| I2C        | PA11 (SDA), PA12 (SCL) &mdash; D14 / D15                  |   ✅    |   ✅   | Sensors                                                                                        |
+| SPI        | PA7 (MOSI), PA6 (MISO), PA5 (SCK) &mdash; D11 / D12 / D13 |   ✅    |   ✅   | Spare SPI bus                                                                                  |
+| Green LED  | PB9                                                       |    -    |   ✅   | `LED_POWER`                                                                                    |
+| Red LED    | PB11                                                      |    -    |   ✅   | LoRa activity                                                                                  |
+| Blue LED   | PB15                                                      |    -    |   ✅   | Notification                                                                                   |
+| Button B1  | PA0 (WKUP-capable)                                        |    -    |   ✅   | Main button                                                                                    |
+| Button B2  | PA1                                                       |    -    |   ✅   | Alternate button                                                                               |
+| Button B3  | PC6                                                       |    -    |   ✅   | Cancel button                                                                                  |
+| VBAT sense | AVBAT (internal ADC channel)                              |    -    |    -   | `BATTERY_PIN`, but VBAT is tied to 3V3 by default (SB21) so this reads the rail, not a battery |
+
+## Flashing
+
+Everything runs through the onboard ST-LINK, including drag-and-drop of `firmware-nucleo_wl55jc-X.X.X.xxxxxxx.bin` onto the board's USB mass-storage drive.
+
+- [Flashing over SWD](/docs/getting-started/flashing-firmware/stm32/flashing-over-swd)
+
+## Resources
+
+- Firmware file: `firmware-nucleo_wl55jc-X.X.X.xxxxxxx.bin`
+- [NUCLEO-WL55JC product page](https://www.st.com/en/evaluation-tools/nucleo-wl55jc.html)
+- [UM2592: STM32WL Nucleo-64 board (MB1389) user manual](https://www.st.com/resource/en/user_manual/um2592-stm32wl-nucleo64-board-mb1389-stmicroelectronics.pdf)
