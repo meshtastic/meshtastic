@@ -5,9 +5,99 @@ sidebar_label: WisBlock
 sidebar_position: 1
 ---
 
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+<Tabs
+groupId="rakcore"
+queryString="rakcore"
+defaultValue="RAK3172"
+values={[
+{label: 'RAK3172/RAK3372', value: 'RAK3172'},
+{label: 'RAK11200', value: 'RAK11200'}
+]}>
+
+<TabItem value="RAK3172">
+
+## RAK3172/RAK3372 - STM32WLE5
+
+:::info
+
+**This core module does not include BLE or Wi-Fi.**
+
+:::
+
+- **MCU:**
+  - STM32WLE5CCU6
+    - Arm Cortex-M4, 256 kB flash, 64 kB RAM
+- **LoRa Transceiver:**
+  - SX1262 (integrated into the STM32WL)
+- **Frequency Options:**
+  - 433 MHz
+  - 470 MHz
+  - 868 MHz
+  - 915 MHz
+  - 923 MHz
+- **Connectors:**
+  - U.FL/IPEX (MHF1) antenna connector for LoRa
+  - On `-SM-NI` modules the connector is replaced by an RF solder pad
+
+The **RAK3172** is a castellated SMD module for embedding an STM32WL node into a product. The **RAK3372** is the same module on a WisBlock Core form factor, and requires a [base board](/docs/hardware/devices/rak-wireless/wisblock/base-board/).
+
+### Ordering information
+
+RAK3172 part numbers follow the pattern `RAK3172[-T | -TE | -F]-<band>-SM-<I | NI>`.
+
+| Field      | Value    | Meaning                                         |
+| ---------- | -------- | ----------------------------------------------- |
+| Oscillator | _(none)_ | 32 MHz crystal only                             |
+|            | `-T`     | ±2.5 ppm TCXO, wider temperature range          |
+|            | `-TE`    | ±0.5 ppm TCXO                                   |
+|            | `-F`     | TCXO plus 512 kB external SPI flash             |
+| Band       | `-8`     | EU868, RU864, IN865                             |
+|            | `-9`     | US915, AU915, KR920, AS923                      |
+|            | `-43`    | EU433                                           |
+|            | `-47`    | CN470                                           |
+| Antenna    | `-SM-I`  | U.FL/IPEX (MHF1) connector                      |
+|            | `-SM-NI` | RF solder pad only                              |
+
+Representative orderable variants:
+
+| Part number       | Band  | Oscillator    | Antenna    |
+| ----------------- | ----- | ------------- | ---------- |
+| RAK3172-8-SM-I    | EU868 | Crystal       | IPEX       |
+| RAK3172-9-SM-I    | US915 | Crystal       | IPEX       |
+| RAK3172-T-8-SM-I  | EU868 | ±2.5 ppm TCXO | IPEX       |
+| RAK3172-T-9-SM-NI | US915 | ±2.5 ppm TCXO | Solder pad |
+| RAK3172-TE-8-SM-I | EU868 | ±0.5 ppm TCXO | IPEX       |
+| RAK3172-43-SM-I   | EU433 | Crystal       | IPEX       |
+
+Meshtastic builds with `TCXO_OPTIONAL`, so both TCXO (`-T`/`-TE`/`-F`) and crystal-only modules work. Whether a module ships with RAK's RUI3 firmware or bare LoRaWAN firmware does not matter once Meshtastic is flashed.
+
+### Flashing
+
+- [Flashing over SWD](/docs/getting-started/flashing-firmware/stm32/flashing-over-swd)
+- [Flashing over UART](/docs/getting-started/flashing-firmware/stm32/flashing-over-uart)
+
+### Resources
+
+- Firmware file: `firmware-rak3172-X.X.X.xxxxxxx.bin` (the RAK3372 uses the same `rak3172` firmware)
+- Further information on the RAK3172 can be found on the [RAK Documentation Center](https://docs.rakwireless.com/product-categories/wisduo/rak3172-module/).
+- Purchase Links:
+  - International
+    - [RAKwireless Store](https://store.rakwireless.com/products/wisduo-lpwan-module-rak3172)
+
+</TabItem>
+
+<TabItem value="RAK11200">
+
 ## RAK11200 - ESP32
 
-The RAK11200 does not contain a LoRa transceiver, and thus needs to be added separately in the form of the [RAK13300 LPWAN module](https://msh.to/rak13300). This occupies the IO Port of the base board.
+:::info
+
+**This core module does not contain a LoRa transceiver**, which needs to be added separately in the form of the [RAK13300 LPWAN module](https://msh.to/rak13300). This occupies the IO Port of the base board.
+
+:::
 
 - RAK11200
   - **MCU:**
@@ -31,7 +121,7 @@ The following process will manually place the device into Espressif Firmware Dow
 1. Ensure the device is powered on and connected via USB.
 2. Locate the **BOOT** pin on the J10 header of the WisBlock Base Board ([RAK19007](/docs/hardware/devices/rak-wireless/wisblock/base-board/?rakbase=RAK19007) / [RAK5005-O](/docs/hardware/devices/rak-wireless/wisblock/base-board/?rakbase=RAK5005-O)).
 3. Connect **BOOT** to **GND** (the GND pin is adjacent to BOOT on the J10 header).
-   <div class="no-print">
+   <div className="no-print">
      <details>
        <summary>Diagram</summary>
        <div>
@@ -62,3 +152,7 @@ If the device does not enter download mode, double-check the BOOT to GND connect
   src="/img/hardware/rak11200.webp"
   style={{ zoom: "50%" }}
 />
+
+</TabItem>
+
+</Tabs>
