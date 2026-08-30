@@ -798,22 +798,6 @@ export const FrequencyCalculator = (): JSX.Element => {
   return (
     <div className="flex flex-col border-l-[5px] shadow-md my-4 border-accent rounded-lg p-4 bg-secondary gap-2">
       <div className="flex gap-2">
-        <label htmlFor="modemPreset">Modem Preset:</label>
-        <select
-          id="modemPreset"
-          value={modemPreset}
-          onChange={(e) =>
-            onModemPresetChange(Number.parseInt(e.target.value) as ModemPreset)
-          }
-        >
-          {getSelectablePresets(region).map((key) => (
-            <option key={key} value={key}>
-              {Preset[key]}
-            </option>
-          ))}
-        </select>
-      </div>
-      <div className="flex gap-2">
         <label htmlFor="region">Region:</label>
         <select
           id="region"
@@ -825,6 +809,22 @@ export const FrequencyCalculator = (): JSX.Element => {
           {selectableRegions.map((key) => (
             <option key={key} value={key}>
               {Region[key]}
+            </option>
+          ))}
+        </select>
+      </div>
+      <div className="flex gap-2">
+        <label htmlFor="modemPreset">Modem Preset:</label>
+        <select
+          id="modemPreset"
+          value={modemPreset}
+          onChange={(e) =>
+            onModemPresetChange(Number.parseInt(e.target.value) as ModemPreset)
+          }
+        >
+          {getSelectablePresets(region).map((key) => (
+            <option key={key} value={key}>
+              {Preset[key]}
             </option>
           ))}
         </select>
