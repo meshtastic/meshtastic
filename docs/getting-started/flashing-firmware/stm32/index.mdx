@@ -46,9 +46,10 @@ without using BOOT0 or the ROM bootloader.
 STM32WL has no USB peripheral, so there is no USB DFU mode. A UART flash (through
 the ROM bootloader) and an SWD flash are the only options.
 
-Any USB port which connects to an internal USB-to-UART bridge and can be used
-for UART flashing, unless that bridge is not wired to a bootloader UART (as on
-the Wio-E5).
+Any USB port connects to an internal USB-to-UART bridge and can be used for UART
+flashing, unless that bridge is not wired to a bootloader UART. On the Wio-E5 it
+is not, though two jumper wires can bridge it to one; see the
+[Wio-E5 page](/docs/hardware/devices/community-supported/seeed-studio/wio-series/seeed-wio-e5?e5=wio-e5-dev).
 
 ### Removing Readout Protection
 
