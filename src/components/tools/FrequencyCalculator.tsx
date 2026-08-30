@@ -607,6 +607,13 @@ const modemPresets = new Map<ModemPreset, Modem>([
 ]);
 
 const UNSET_REGION = RegionData.get(Region.UNSET) as RegionInfo;
+
+// The regions the picker offers. UNSET means "no region chosen yet" rather than a band
+// plan, so it isn't a choice a user makes here; the firmware leaves it out of the region
+// list it advertises to clients too. It stays in RegionData as the fallback.
+const selectableRegions = Array.from(RegionData.keys()).filter(
+  (code) => code !== Region.UNSET,
+);
 const DEFAULT_MODEM = modemPresets.get(Preset.LONG_FAST) as Modem;
 
 // Helper function to get the display name of a modem preset. An unnamed (default) channel
@@ -815,7 +822,7 @@ export const FrequencyCalculator = (): JSX.Element => {
             onRegionChange(Number.parseInt(e.target.value) as RegionCode)
           }
         >
-          {Array.from(RegionData.keys()).map((key) => (
+          {selectableRegions.map((key) => (
             <option key={key} value={key}>
               {Region[key]}
             </option>
