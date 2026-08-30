@@ -40,7 +40,7 @@ STM32_Programmer_CLI -c port=SWD mode=UR -w firmware-<target>-X.X.X.xxxxxxx.bin 
 ### STM32CubeProgrammer, nRST not connected
 
 ```shell
-STM32_Programmer_CLI -c port=HOTPLUG mode=UR -w firmware-<target>-X.X.X.xxxxxxx.bin 0x08000000 -v -rst
+STM32_Programmer_CLI -c port=SWD mode=HOTPLUG -w firmware-<target>-X.X.X.xxxxxxx.bin 0x08000000 -v -rst
 ```
 
 ### [OpenOCD](https://openocd.org/)
