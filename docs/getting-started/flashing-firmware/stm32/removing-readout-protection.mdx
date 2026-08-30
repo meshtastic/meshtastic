@@ -23,7 +23,7 @@ BOOT0 pin, nothing can re-enter the ROM bootloader for a UART connection.
 
 :::
 
-**GUI &mdash; STM32CubeProgrammer**
+## GUI &mdash; STM32CubeProgrammer
 
 1. Connect over SWD with **Connect Under Reset**. Only on a board that exposes
    BOOT0 can you instead connect over UART with the board in the
@@ -35,7 +35,7 @@ BOOT0 pin, nothing can re-enter the ROM bootloader for a UART connection.
    or [Flashing over UART](/docs/getting-started/flashing-firmware/stm32/flashing-over-uart)
    after re-entering the ROM bootloader with BOOT0.
 
-**CLI**
+## CLI &mdash; STM32CubeProgrammer
 
 STM32CubeProgrammer's `-rdu` (read unprotect) removes RDP and mass-erases the
 chip. Over SWD, connecting under reset:

@@ -18,7 +18,7 @@ The ROM bootloader listens on:
 Connect the adapter's RX to the MCU's TX and the adapter's TX to the MCU's RX,
 with a common ground.
 
-**GUI &mdash; STM32CubeProgrammer**
+## GUI &mdash; STM32CubeProgrammer
 
 1. Launch [STM32CubeProgrammer](https://www.st.com/en/development-tools/stm32cubeprog.html).
 2. Select the **UART** connection and the serial port of your USB-TTL adapter.
@@ -28,9 +28,7 @@ with a common ground.
 5. Open the `firmware-<target>-X.X.X.xxxxxxx.bin` file and confirm the start address is `0x08000000` (the default).
 6. Click **Download**.
 
-**CLI**
-
-STM32CubeProgrammer:
+## CLI &mdash; STM32CubeProgrammer
 
 ```shell
 STM32_Programmer_CLI -c port=/dev/ttyUSB0 br=115200 -w firmware-<target>-X.X.X.xxxxxxx.bin 0x08000000 -v -g 0x08000000

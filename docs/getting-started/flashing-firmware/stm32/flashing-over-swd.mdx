@@ -11,7 +11,7 @@ An SWD programmer such as an
 straight to flash over the SWD pins. It does not use the ROM bootloader, so BOOT0
 and the bootloader UART are not involved.
 
-**GUI &mdash; STM32CubeProgrammer**
+## GUI &mdash; STM32CubeProgrammer
 
 1. Launch [STM32CubeProgrammer](https://www.st.com/en/development-tools/stm32cubeprog.html).
 2. Select the **ST-LINK** connection.
@@ -21,15 +21,15 @@ and the bootloader UART are not involved.
 
 :::note
 
-If your ST-LINK's nRST pin is not wired to the board's nRST, set **Reset mode**
-to **Software reset** or **Core reset** instead of **Hardware reset** in the
-ST-LINK settings.
+If your ST-LINK's nRST pin is not connected to the board's nRST, set
+**Reset mode** to **Software reset** or **Core reset** instead of
+**Hardware reset** in the ST-LINK settings.
 
 :::
 
-**CLI**
+## CLI
 
-STM32CubeProgrammer:
+### STM32CubeProgrammer, nRST connected
 
 ```shell
 STM32_Programmer_CLI -c port=SWD mode=UR -w firmware-<target>-X.X.X.xxxxxxx.bin 0x08000000 -v -rst
@@ -37,16 +37,14 @@ STM32_Programmer_CLI -c port=SWD mode=UR -w firmware-<target>-X.X.X.xxxxxxx.bin 
 
 `-v` verifies the write and `-rst` restarts the board into the new firmware.
 
-[OpenOCD](https://openocd.org/):
+### STM32CubeProgrammer, nRST not connected
+
+```shell
+STM32_Programmer_CLI -c port=HOTPLUG mode=UR -w firmware-<target>-X.X.X.xxxxxxx.bin 0x08000000 -v -rst
+```
+
+### [OpenOCD](https://openocd.org/)
 
 ```shell
 openocd -f interface/stlink.cfg -f target/stm32wlx.cfg -c "program firmware-<target>-X.X.X.xxxxxxx.bin 0x08000000 verify reset exit"
 ```
-
-:::note
-
-`mode=UR` holds the board in reset while connecting and needs the programmer's
-nRST line wired to the board. If it is not, use `mode=HOTPLUG` instead. The
-OpenOCD command works either way.
-
-:::
