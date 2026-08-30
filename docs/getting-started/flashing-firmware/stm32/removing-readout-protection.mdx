@@ -14,32 +14,41 @@ it but erases the whole chip, including the factory firmware.
 
 :::warning
 
-Removing RDP resets the MCU. Connect **under reset** (`mode=UR`, or **Connect
-Under Reset** in the GUI) so the programmer keeps control of the board afterward
-&mdash; on a board without a BOOT0 pin there is no other way to reach it again.
+Removing RDP mass-erases the chip and resets the MCU. On a board whose BOOT0 pin
+is not reachable, such as the Wio-E5, remove RDP
+[over SWD](/docs/getting-started/flashing-firmware/stm32/flashing-over-swd),
+connecting **under reset** (`mode=UR`, or **Connect Under Reset** in the GUI) so
+the programmer keeps control after the erase. With the firmware erased and no
+BOOT0 pin, nothing can re-enter the ROM bootloader for a UART connection.
 
 :::
 
 **GUI &mdash; STM32CubeProgrammer**
 
-1. Connect over SWD, or over UART with the board in the
+1. Connect over SWD with **Connect Under Reset**. Only on a board that exposes
+   BOOT0 can you instead connect over UART with the board in the
    [ROM bootloader](/docs/getting-started/flashing-firmware/stm32/entering-bootloader-mode).
 2. Choose **Read Unprotect (MCU)** from the target menu.
 3. Wait for the mass erase to finish, then reconnect.
 4. Flash the Meshtastic firmware as described in
-   [Flashing over UART](/docs/getting-started/flashing-firmware/stm32/flashing-over-uart)
-   or [Flashing over SWD](/docs/getting-started/flashing-firmware/stm32/flashing-over-swd).
+   [Flashing over SWD](/docs/getting-started/flashing-firmware/stm32/flashing-over-swd),
+   or [Flashing over UART](/docs/getting-started/flashing-firmware/stm32/flashing-over-uart)
+   after re-entering the ROM bootloader with BOOT0.
 
 **CLI**
 
 STM32CubeProgrammer's `-rdu` (read unprotect) removes RDP and mass-erases the
-chip. Over SWD:
+chip. Over SWD, connecting under reset:
 
 ```shell
 STM32_Programmer_CLI -c port=SWD mode=UR -rdu
 ```
 
-or over the UART bootloader:
+`mode=UR` needs the programmer's nRST line wired to the board; see
+[Flashing over SWD](/docs/getting-started/flashing-firmware/stm32/flashing-over-swd)
+for the `mode=HOTPLUG` fallback. On a board that exposes BOOT0, you can instead
+run `-rdu` over the UART bootloader, then use BOOT0 to re-enter the bootloader
+and flash firmware:
 
 ```shell
 STM32_Programmer_CLI -c port=/dev/ttyUSB0 br=115200 -rdu
