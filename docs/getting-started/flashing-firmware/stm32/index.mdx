@@ -1,0 +1,57 @@
+---
+id: flashing-stm32-devices
+title: Flash STM32 Devices
+sidebar_label: STM32 Device
+sidebar_position: 2
+description: Instructions to flash Meshtastic firmware to STM32 chipset devices.
+---
+
+## Flashing Methods for STM32 Devices
+
+Flashing an STM32WL board takes two steps: get the board ready to flash, then
+write the firmware. A UART flash uses the chip's built-in ROM bootloader; an SWD
+programmer writes to flash directly. Meshtastic firmware for STM32WL targets is
+distributed as `firmware-<target>-X.X.X.xxxxxxx.bin` and flashed to `0x08000000`;
+the `.elf` in the same release also works with
+[STM32CubeProgrammer](https://www.st.com/en/development-tools/stm32cubeprog.html).
+
+For the BOOT0 pin location, UART pins, and any board-specific steps, see the
+documentation for your board.
+
+### Getting the Board Ready to Flash
+
+STM32WL has no USB DFU mode. For a UART flash, the
+[ROM bootloader can be entered](/docs/getting-started/flashing-firmware/stm32/entering-bootloader-mode)
+from a Meshtastic client or with the BOOT0 pin. For an SWD flash, the programmer
+resets and connects to the board itself.
+
+### Flashing from Web Flasher
+
+Browser-based flashing is a work-in-progress and not available for STM32 targets yet.
+
+### Flashing over UART
+
+A USB-TTL serial adapter can
+[flash STM32WL over UART](/docs/getting-started/flashing-firmware/stm32/flashing-over-uart)
+without an SWD programmer, once the board is in the ROM bootloader.
+
+### Flashing over SWD
+
+An SWD programmer such as an ST-LINK
+[writes firmware straight to flash over the SWD pins](/docs/getting-started/flashing-firmware/stm32/flashing-over-swd),
+without using BOOT0 or the ROM bootloader.
+
+### Flashing over USB
+
+STM32WL has no USB peripheral, so there is no USB DFU mode. A UART flash (through
+the ROM bootloader) and an SWD flash are the only options.
+
+Any USB port which connects to an internal USB-to-UART bridge and can be used
+for UART flashing, unless that bridge is not wired to a bootloader UART (as on
+the Wio-E5).
+
+### Removing Readout Protection
+
+Some boards, such as the Wio-E5, ship with flash readout protection enabled.
+STM32CubeProgrammer connects but cannot read or write flash until
+[readout protection is removed](/docs/getting-started/flashing-firmware/stm32/removing-readout-protection).
