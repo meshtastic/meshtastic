@@ -45,13 +45,17 @@ The app registers the `meshtastic:///` URL scheme. Use `Router.route(url:)` to h
 
 ## Settings
 
-No parameters are supported for settings URLs.
+Settings URLs take no query parameters. The only path variant is
+`localMeshDiscovery/history`, which opens Local Mesh Discovery directly to its
+history view.
 
 | URL | Description |
 |-----|-------------|
 | [`meshtastic:///settings/about`](meshtastic:///settings/about) | About Meshtastic |
 | [`meshtastic:///settings/appSettings`](meshtastic:///settings/appSettings) | App Settings |
 | [`meshtastic:///settings/helpDocs`](meshtastic:///settings/helpDocs) | Help & Documentation |
+| [`meshtastic:///settings/localMeshDiscovery`](meshtastic:///settings/localMeshDiscovery) | Local Mesh Discovery |
+| [`meshtastic:///settings/localMeshDiscovery/history`](meshtastic:///settings/localMeshDiscovery/history) | Local Mesh Discovery (history view) |
 | [`meshtastic:///settings/routes`](meshtastic:///settings/routes) | Routes |
 | [`meshtastic:///settings/routeRecorder`](meshtastic:///settings/routeRecorder) | Route Recorder |
 | **Radio Config** | |
@@ -79,15 +83,18 @@ No parameters are supported for settings URLs.
 | [`meshtastic:///settings/rangeTest`](meshtastic:///settings/rangeTest) | Range Test |
 | [`meshtastic:///settings/ringtone`](meshtastic:///settings/ringtone) | Ringtone |
 | [`meshtastic:///settings/serial`](meshtastic:///settings/serial) | Serial |
-| [`meshtastic:///settings/statusMessage`](meshtastic:///settings/statusMessage) | Status Message |
 | [`meshtastic:///settings/storeAndForward`](meshtastic:///settings/storeAndForward) | Store & Forward |
 | [`meshtastic:///settings/telemetry`](meshtastic:///settings/telemetry) | Telemetry |
+| [`meshtastic:///settings/trafficManagement`](meshtastic:///settings/trafficManagement) | Traffic Management |
 | **TAK** | |
-| [`meshtastic:///settings/tak`](meshtastic:///settings/tak) | TAK Config |
+| [`meshtastic:///settings/tak`](meshtastic:///settings/tak) | TAK Server |
+| [`meshtastic:///settings/takConfig`](meshtastic:///settings/takConfig) | TAK Module Config |
 | **Logging** | |
 | [`meshtastic:///settings/debugLogs`](meshtastic:///settings/debugLogs) | Debug Logs |
 | **Developers** | |
+| [`meshtastic:///settings/backupManagement`](meshtastic:///settings/backupManagement) | Backup Management |
+| [`meshtastic:///settings/coreDataBrowser`](meshtastic:///settings/coreDataBrowser) | Data Browser (DEBUG only) |
+| [`meshtastic:///settings/deviceLinks`](meshtastic:///settings/deviceLinks) | Device Links |
 | [`meshtastic:///settings/appFiles`](meshtastic:///settings/appFiles) | App Files |
 | [`meshtastic:///settings/tools`](meshtastic:///settings/tools) | Tools (iOS 18+) |
-| [`meshtastic:///settings/coreDataBrowser`](meshtastic:///settings/coreDataBrowser) | Data Browser (DEBUG only) |
 | [`meshtastic:///settings/firmwareUpdates`](meshtastic:///settings/firmwareUpdates) | Firmware Updates |
