@@ -104,13 +104,13 @@ The pipeline:
 
 ## Capabilities
 
-`AccessoryManager.supportsTAKv2` is the canonical gate:
+`AccessoryManager.supportsTAKv2` is the canonical gate. It enables V2 only when the active radio reports a supported, well-formed version; an unavailable, malformed, or older version uses V1.
 
 ```swift
-var supportsTAKv2: Bool { checkIsVersionSupported(forVersion: "2.8.0") }
+var supportsTAKv2: Bool { Self.isTAKv2Supported(firmwareVersion: connectedVersion) }
 ```
 
-Use this property (rather than parsing the firmware version inline) anywhere a V1/V2 decision is needed. Future TAK SDK features that require a higher firmware version should add a sibling property with a clear cut-off so the bridge stays declarative.
+The capability parser accepts numeric `major.minor.patch` versions and an optional hexadecimal build suffix, such as `2.8.0.3a0c08b`. Use this property (rather than parsing the firmware version inline) anywhere a V1/V2 decision is needed. Future TAK SDK features that require a higher firmware version should add a sibling property with a clear cut-off so the bridge stays declarative.
 
 ## Related Files
 

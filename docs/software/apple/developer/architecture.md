@@ -60,6 +60,12 @@ SwiftData is the sole persistence layer. `PersistenceController.shared` owns the
 
 Model types are defined with `@Model` in `Meshtastic/Model/`. Schema evolution uses `VersionedSchema` and `SchemaMigrationPlan` in `MeshtasticSchema.swift`.
 
+`EventFirmwareEntity` is a global, rebuildable display cache seeded from the app bundle and
+refreshed from the event-firmware API. It persists event identity, lifecycle text, links, and
+theme values, including primary, secondary, and accent colors. Per-device database clears
+preserve it; a full app-data reset removes it. Executable OTA artifact URLs are deliberately
+outside this model and require the separate signed event OTA contract.
+
 ## Services
 
 Application services that are not tied to radio connectivity live in `Meshtastic/Services/`.
