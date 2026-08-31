@@ -161,6 +161,35 @@ The RP2040 and RP2350 are dual-core chips developed by Raspberry Pi. Cost-effect
 
 - Raspberry Pi Pico + Waveshare LoRa Module (Note: **Bluetooth on the Pico W is not yet supported by Meshtastic**)
 
+## STM32
+
+The STM32WL from STMicroelectronics puts an Arm Cortex-M4 and a Semtech SX126x radio on one chip &mdash; the lowest part count and power draw of any Meshtastic target, with no WiFi or Bluetooth.
+
+Due to low flash memory and RAM, a number of features have been excluded from STM32WL firmware by default (specific variants may re-enable specific features).
+
+<details>
+  <summary>Features excluded from STM32WL firmware by default</summary>
+
+- ATAK/TAK forwarding
+- Codec2 audio
+- MQTT
+- Remote Hardware module
+- Waypoints
+- On-device display and menu UI
+- Input peripherals (rotary encoders, trackballs, buttons/keyboards) and buzzer
+- Power monitoring and power-metrics telemetry
+- Timezone database
+- RTTTL ringtones
+- Signed-packet authenticity policy
+
+</details>
+
+### Community Supported
+
+- [RAK3172/RAK3372 Core module](/docs/hardware/devices/community-supported/rakwireless/wisblock/?rakcore=RAK3172) — STM32WLE5 WisBlock module for embedding into custom hardware
+- [Seeed Wio-E5](/docs/hardware/devices/community-supported/seeed-studio/wio-series/seeed-wio-e5/) — STM32WLE5 wireless module, mini dev board, and dev kit
+- [STMicroelectronics Nucleo-WL55JC](/docs/hardware/devices/community-supported/stmicroelectronics/nucleo-wl55jc) — Official STM32WL evaluation board with onboard ST-LINK
+
 :::info
 
 If your device is not listed above, please review our [supported devices](/docs/hardware/devices/index.mdx) to determine which MCU your device has or contact us in [Discord](https://discord.gg/ktMAKGBnBs) with any questions.
