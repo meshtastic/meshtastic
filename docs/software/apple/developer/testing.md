@@ -72,7 +72,7 @@ struct MyViewSnapshotTests {
 
 ### Embedding Dark/Light Snapshot Pairs in Docs
 
-When a view is snapshotted in both colour schemes (e.g. `foo_light.png` + `foo_dark.png`), embedding both `![]()` tags side-by-side causes both images to appear simultaneously on the Jekyll site and in the in-app viewer. Use an HTML `<picture>` element instead:
+When a view is snapshotted in both color schemes (e.g. `foo_light.png` + `foo_dark.png`), embedding both `![]()` tags side-by-side causes both images to appear simultaneously on the Jekyll site and in the in-app viewer. Use an HTML `<picture>` element instead:
 
 ```html
 <picture>
