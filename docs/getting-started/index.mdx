@@ -57,7 +57,13 @@ The ESP32 chip is equipped with both WiFi and Bluetooth, making it ideal for dev
 
 <div style={{ clear: "both" }} />
 
-### Backer Hardware
+<DeviceImage device="heltec_v4.svg" float="right" size="xs" />
+
+#### HELTEC®
+
+[LoRa32 V4](/docs/hardware/devices/heltec-automation/lora32/?heltec=v4) — ESP32-S3 board with built-in 0.96 inch OLED display
+
+<div style={{ clear: "both" }} />
 
 <DeviceImage device="t-deck.svg" float="right" size="sm" />
 
@@ -67,11 +73,21 @@ The ESP32 chip is equipped with both WiFi and Bluetooth, making it ideal for dev
 
 <div style={{ clear: "both" }} />
 
+### Backer Hardware
+
 <DeviceImage device="station-g2.svg" float="right" size="sm" />
 
 #### B&Q Consulting
 
 [Station G2](/docs/hardware/devices/community-supported/b-and-q-consulting/station-series/) — High power LoRa transceiver for licensed ham operation
+
+<div style={{ clear: "both" }} />
+
+<DeviceImage device="m5stack_cardputer.svg" float="right" size="sm" />
+
+#### M5Stack
+
+[Cardputer Mesh Kit](/docs/hardware/devices/m5stack/cardputer/) — Pocket messaging terminal with keyboard, LoRa cap, and GNSS
 
 <div style={{ clear: "both" }} />
 
@@ -105,7 +121,13 @@ The nRF52 chip is much more power efficient than the ESP32 chip and easier to up
 
 <div style={{ clear: "both" }} />
 
-### Backer Hardware
+<DeviceImage device="heltec-t096.svg" float="right" size="xs" />
+
+#### HELTEC®
+
+[Mesh Node T096](/docs/hardware/devices/heltec-automation/mesh-node/?heltec=t096) — Ultra-low-power nRF52840 node with color TFT display and GNSS
+
+<div style={{ clear: "both" }} />
 
 <DeviceImage device="t-echo.svg" float="right" size="sm" />
 
@@ -114,6 +136,8 @@ The nRF52 chip is much more power efficient than the ESP32 chip and easier to up
 [T-Echo](/docs/hardware/devices/lilygo/techo/) — All-in-one unit with E-Ink screen, GPS, and battery in injection-molded case
 
 <div style={{ clear: "both" }} />
+
+### Backer Hardware
 
 <DeviceImage device="muzi_r1_neo.svg" float="right" size="md" />
 
@@ -136,6 +160,35 @@ The RP2040 and RP2350 are dual-core chips developed by Raspberry Pi. Cost-effect
 ### Community Supported
 
 - Raspberry Pi Pico + Waveshare LoRa Module (Note: **Bluetooth on the Pico W is not yet supported by Meshtastic**)
+
+## STM32
+
+The STM32WL from STMicroelectronics puts an Arm Cortex-M4 and a Semtech SX126x radio on one chip &mdash; the lowest part count and power draw of any Meshtastic target, with no WiFi or Bluetooth.
+
+Due to low flash memory and RAM, a number of features have been excluded from STM32WL firmware by default (specific variants may re-enable specific features).
+
+<details>
+  <summary>Features excluded from STM32WL firmware by default</summary>
+
+- ATAK/TAK forwarding
+- Codec2 audio
+- MQTT
+- Remote Hardware module
+- Waypoints
+- On-device display and menu UI
+- Input peripherals (rotary encoders, trackballs, buttons/keyboards) and buzzer
+- Power monitoring and power-metrics telemetry
+- Timezone database
+- RTTTL ringtones
+- Signed-packet authenticity policy
+
+</details>
+
+### Community Supported
+
+- [RAK3172/RAK3372 Core module](/docs/hardware/devices/community-supported/rakwireless/wisblock/?rakcore=RAK3172) — STM32WLE5 WisBlock module for embedding into custom hardware
+- [Seeed Wio-E5](/docs/hardware/devices/community-supported/seeed-studio/wio-series/seeed-wio-e5/) — STM32WLE5 wireless module, mini dev board, and dev kit
+- [STMicroelectronics Nucleo-WL55JC](/docs/hardware/devices/community-supported/stmicroelectronics/nucleo-wl55jc) — Official STM32WL evaluation board with onboard ST-LINK
 
 :::info
 
@@ -182,7 +235,7 @@ If you require serial drivers installed on your computer, please choose one of t
         className={'button button--outline button--lg cta--button'}
         to={'/docs/getting-started/serial-drivers/nrf52'}
       >
-        Install nRF52/RP2040/RP2350 Drivers
+        Install nRF52/<wbr />RP2040/<wbr />RP2350 Drivers
       </Link>
     </div>
   </div>
@@ -203,12 +256,21 @@ After completing the previous steps, you can now flash the Meshtastic firmware o
       </Link>
     </div>
 
-  <div className="split-item">
+    <div className="split-item">
       <Link
         className={"button button--outline button--lg cta--button"}
         to={"/docs/getting-started/flashing-firmware/nrf52/"}
       >
-        Flash nRF52/RP2040/RP2350 Firmware
+        Flash nRF52/<wbr />RP2040/<wbr />RP2350 Firmware
+      </Link>
+    </div>
+
+    <div className="split-item">
+      <Link
+        className={"button button--outline button--lg cta--button"}
+        to={"/docs/getting-started/flashing-firmware/stm32/"}
+      >
+        Flash STM32 Firmware
       </Link>
     </div>
   </div>

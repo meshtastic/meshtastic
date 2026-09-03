@@ -42,6 +42,8 @@ struct MyNewFeatureView: View {
 
 Keep view files focused. If the view grows beyond ~400 lines (SwiftLint warning), split into subviews or extension files.
 
+No Xcode project changes are needed — `Meshtastic/Views/` is a synchronized folder, so the new file is picked up automatically. See [Project Generation](codebase.md#project-generation) if you're touching `project.yml` itself (e.g. adding a new target).
+
 ## 3. Wire up Settings Navigation
 
 Open `Meshtastic/Views/Settings/Settings.swift` and find the `navigationDestination(for:)` switch. Add your case:
