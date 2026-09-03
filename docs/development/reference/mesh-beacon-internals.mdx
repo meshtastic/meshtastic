@@ -74,9 +74,9 @@ A channel named by value is placed into the channel table when the config is wri
 
 Placement order: a live slot holding that identity is reused and nothing is written; otherwise a disabled slot is claimed, preferring one that previously held the same identity so a re-added channel recovers its old index; otherwise placement fails. A live channel is never evicted and the primary is never displaced. A write that claims a slot adds the channel table to the save set alongside the module config.
 
-The two by-value fields diverge when placement fails, and the asymmetry is deliberate:
+Both by-value fields are withheld when placement fails - a channel named by value is in the table or it is not used - though for different reasons:
 
-- The **offer** is advertised anyway. An advertisement carries its own name and PSK on the air and needs no local table entry - a full table only means this node cannot also join the mesh it is advertising.
+- The **offer** is withheld and its `broadcast_offer_*` group cleared. An advertisement would travel fine without a local entry, but a node that cannot hold the channel it names cannot verify the invitation it is issuing.
 - The **target** is withheld, and its whole `broadcast_on_*` group is cleared. Without the key there is nothing to transmit with, and re-pointing it at the primary would beacon on a channel nobody named.
 
 ### Dispatch

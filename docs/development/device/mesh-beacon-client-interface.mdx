@@ -180,7 +180,7 @@ The advertised `broadcast_offer_channel` is by value on both paths, because it i
 2. Otherwise the lowest disabled slot is claimed, preferring one that previously held this same name and PSK, so re-adding a deleted channel gets its old index back.
 3. A live channel is **never** overwritten, and the primary is never displaced.
 
-If no slot can be claimed the two fields behave differently. The **offer** is still advertised - an advertisement needs no local channel entry, the node simply cannot also join that mesh. The **target** is withheld and its whole `broadcast_on_*` group is cleared, because without the key there is nothing to transmit with.
+If no slot can be claimed the field is withheld and its whole group cleared - `broadcast_offer_*` for the offer, `broadcast_on_*` for the target. A channel named by value is in the table or it is not used: the target has no key to transmit with, and an offer the node cannot itself hold would invite others onto a channel it cannot verify.
 
 A write that creates a channel this way saves the channel table as well as the module config.
 
