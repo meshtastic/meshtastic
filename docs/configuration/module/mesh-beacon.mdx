@@ -163,7 +163,7 @@ Accepting an offered region or preset **changes your node's own radio and will d
 | :--- | :--- |
 | **Migration notice** — keep reminding whoever has not moved yet. *"The party is on LongTurbo."* | Target the **old** preset and region, so the people still there can hear you; offer the **new** channel, preset and region. |
 | **Advertising a pinned slot** — a mesh that does not sit where its name hashes to. *"NY MediumFast is on slot 48."* | Offer the channel, region and preset, plus `broadcast_offer_frequency_slot`. Without it a listener derives a different frequency and joins nothing. |
-| **Message of the day** — no offer at all. | Set `broadcast_message`, leave every offer field unset. This goes out as an ordinary text message, not a beacon; see [What happens when you receive one](#what-happens-when-you-receive-one). |
+| **Message of the day** — no offer at all. *"Reminder: fire risk remains high"* | Set `broadcast_message`, leave every offer field unset. This goes out as an ordinary text message, not a beacon; see [What happens when you receive one](#what-happens-when-you-receive-one). |
 | **Recruiting to a service mesh** — *"Racers, put your trackers on MediumTurbo."* | Target the mesh your audience is on; offer the service channel, preset and region. Note the limits below on what an offer can carry. |
 | **Cross-band notice** — reach a sibling region you are not on yourself. | One target per audience, each naming its own region, preset and channel; one offer describing where you want them to end up. |
 
