@@ -157,6 +157,35 @@ There is one case where you do see an ordinary message, and it is not an excepti
 Accepting an offered region or preset **changes your node's own radio and will drop it off its current mesh.** A good client app makes that consequence clear before you confirm.
 :::
 
+## What people use this for
+
+| Pattern | How it is configured |
+| :--- | :--- |
+| **Migration notice** — keep reminding whoever has not moved yet. *"The party is on LongTurbo."* | Target the **old** preset and region, so the people still there can hear you; offer the **new** channel, preset and region. |
+| **Advertising a pinned slot** — a mesh that does not sit where its name hashes to. *"NY MediumFast is on slot 48."* | Offer the channel, region and preset, plus `broadcast_offer_frequency_slot`. Without it a listener derives a different frequency and joins nothing. |
+| **Message of the day** — no offer at all. | Set `broadcast_message`, leave every offer field unset. This goes out as an ordinary text message, not a beacon; see [What happens when you receive one](#what-happens-when-you-receive-one). |
+| **Recruiting to a service mesh** — *"Racers, put your trackers on MediumTurbo."* | Target the mesh your audience is on; offer the service channel, preset and region. Note the limits below on what an offer can carry. |
+| **Cross-band notice** — reach a sibling region you are not on yourself. | One target per audience, each naming its own region, preset and channel; one offer describing where you want them to end up. |
+
+The last is the most involved, and shows all three settings groups doing different jobs at once. A router sitting on EU_868 / LongFast, telling LiteFast users on EU_866 to move to NarrowSlow on EU_N_868:
+
+```text
+flags                   = 2                        # broadcast
+broadcast_message       = "LiteFast telemetry is reduced - move to NarrowSlow"
+broadcast_offer_channel = { name: "NarrowNet", psk: <the channel's key> }
+broadcast_offer_preset  = NARROW_SLOW
+broadcast_offer_region  = EU_N_868
+broadcast_targets = [
+  { preset: LITE_FAST, region: EU_866, channel_index: 1 },
+]
+```
+
+The node transmits nothing on its own LongFast mesh here: the single target moves the radio to EU_866 and LiteFast for the transmission, then puts it back. No frequency slot is offered because none is needed — EU_N_868 mandates slot 1, so every listener derives the same answer.
+
+:::note
+An offer carries a **channel name and PSK, a region, a modem preset and a frequency slot** — and nothing else. Position precision, MQTT uplink, mute state, hop limits and every other setting are outside it, because the advertised channel travels as a `ChannelIdentity`, which holds only what is needed to join. Anything further has to be words in the 100-character message, for the user to apply by hand.
+:::
+
 ## Examples
 
 A multi-region invitation beacon, configured from a connected app:
