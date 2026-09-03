@@ -96,7 +96,7 @@ The firmware adjusts values on write, so your value may be silently changed. Aft
 | `broadcast_targets[i].region` not a known region | That entry's region cleared to `UNSET`; transmission falls back to the running config. |
 | `broadcast_targets[i].preset` not a valid preset value | That entry's preset cleared. As above, an unrunnable preset is kept. |
 | `broadcast_targets[i].channel_index` of 8 or more | That entry's channel index cleared. Existence is **not** checked - see below. |
-| A channel named by value is not in the channel table | Added to it - see [Channels named by value are written to the channel table](#channels-named-by-value-are-written-to-the-channel-table). |
+| A channel named by value is not in the channel table | Added to it. If no slot is free, the field is withheld and its whole group cleared - see [Channels named by value are written to the channel table](#channels-named-by-value-are-written-to-the-channel-table). |
 | A channel referenced by a target is deleted afterwards | Targets naming that slot are removed from the config. A by-value offer is untouched. |
 
 ## Receiving beacons
