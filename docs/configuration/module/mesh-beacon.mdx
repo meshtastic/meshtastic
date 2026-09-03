@@ -66,7 +66,7 @@ The text carried in each broadcast, **capped at 100 characters** and truncated i
 
 The **join offer** - what your beacon advertises. Together these say *"there is a reachable mesh on this region and preset, here is the channel to use."* Any subset may be set: a message with no offer is valid, and so is an offer with no message.
 
-The channel is given **by value** - its name and its PSK - not as a slot number from your channel table. Writing one adds it to your channel table if it isn't there already, so your node can also join the mesh it advertises. Nothing live is overwritten: an existing channel with the same name and PSK is reused, otherwise the first unused slot is claimed. If every slot is in use the offer is still advertised, your node simply doesn't join it.
+The channel is given **by value** - its name and its PSK - not as a slot number from your channel table. Writing one adds it to your channel table if it isn't there already, so your node can also join the mesh it advertises. Nothing live is overwritten: an existing channel with the same name and PSK is reused, otherwise the first unused slot is claimed. If every slot is in use the offer is withheld: a channel named by value is in your channel table or it is not advertised, so you are never inviting people onto a channel your own node does not hold.
 
 An unknown region is cleared. A preset is cleared only if it is not a preset at all - one your region cannot run is kept, because the offer describes a mesh somewhere else.
 
