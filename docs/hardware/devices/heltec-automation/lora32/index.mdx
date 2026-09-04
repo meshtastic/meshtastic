@@ -15,6 +15,7 @@ queryString="heltec"
 defaultValue="v4"
 values={[
 {label: 'LoRa32 V4', value:'v4'},
+{label: 'LoRa32 V4-R8', value:'v4-r8'},
 {label: 'LoRa32 V3/V3.1', value:'v3'},
 {label: 'Wireless Stick Lite V3', value:'Wireless Stick Lite V3'},
 {label: 'Wireless Tracker v1.0', value: 'tracker-v1.0'},
@@ -29,6 +30,10 @@ values={[
 ## V4
 
 <DeviceImage device="heltec_v4.svg" alt="Heltec LoRa32 V4" size="lg" center />
+
+:::info
+A newer **V4-R8** variant is also available, which uses the **ESP32-S3R8** chip and has a different pinout and firmware. If your board has the ESP32-S3R8, use the [V4-R8 tab](#v4-r8) instead.
+:::
 
 - **MCU:**
   - ESP32-S3R2 (WiFi & Bluetooth)
@@ -67,6 +72,61 @@ values={[
     - [Hexaspot](https://msh.to/hexaspot-heltec-v4/)
 
 ![Heltec LoRa32 V4](/img/hardware/heltec/heltec-V4.webp)
+
+</TabItem>
+
+<TabItem value="v4-r8">
+
+## V4-R8
+
+<DeviceImage device="heltec_v4.svg" alt="Heltec LoRa32 V4-R8" size="lg" center />
+
+:::caution
+The **V4-R8** is a separate hardware variant from the original V4. It uses the **ESP32-S3R8** chip with a different pinout and requires its own firmware. Do not flash the original `firmware-heltec-v4-*` firmware on a V4-R8 board.
+:::
+
+- **MCU:**
+  - ESP32-S3R8 (WiFi & Bluetooth)
+- **Flash:**
+  - 16 MB external
+- **PSRAM:**
+  - 8 MB
+- **LoRa Transceiver:**
+  - Semtech SX1262
+- **Frequency Options:**
+  - 863 - 870 MHz
+  - 902 - 928 MHz
+- **Connectors:**
+  - USB-C
+  - Antenna:
+    - Integrated antenna for WiFi/Bluetooth
+    - U.FL/IPEX antenna connector for LoRa
+  - SH1.25-2Pin solar panel interface
+  - SH1.25-8Pin GNSS interface
+
+### Features
+
+- Built in 0.96 inch OLED display (OLED variant) or TFT display (TFT variant)
+- High power option: 28±1dBm
+- Optimized lithium battery management
+- 8 MB PSRAM for maps and more complex UI
+- Similar physical form factor to the V4, but the pinout is not compatible
+
+### Pin Map
+
+![Heltec V4-R8 Pin Map](/img/hardware/heltec/V4-R8-pinmap.webp)
+
+Image Source: [Heltec](https://resource.heltec.cn/download/WiFi_LoRa_32_V4-R8/pinmap/lora%20_32_v4-R8%20pinmap.png)
+
+### Resources
+
+- Firmware files:
+  - OLED: `firmware-heltec-v4-r8-X.X.X.xxxxxxx.bin`
+  - TFT: `firmware-heltec-v4-r8-tft-X.X.X.xxxxxxx.bin`
+- Use the latest Meshtastic firmware (2.7.25 or newer). In the [Web Flasher](https://flasher.meshtastic.org/), select **Heltec LoRa32 V4-R8**.
+- Purchase links
+  - International
+    - [Heltec](https://heltec.org/project/wifi-lora-32-v4/)
 
 </TabItem>
 
