@@ -52,7 +52,7 @@ const config = {
           position: "left",
         },
         {
-          type: "localeDropdown",
+          type: "docsVersionDropdown",
           position: "right",
         },
         {
@@ -145,15 +145,31 @@ const config = {
       {
         docs: {
           sidebarPath: require.resolve("./sidebars.js"),
-          editUrl: "https://github.com/meshtastic/meshtastic/edit/master/",
+          // Frozen versions get no "Edit this page" link; only current is editable.
+          editUrl: ({ version, docPath }) =>
+            version === "current"
+              ? `https://github.com/meshtastic/meshtastic/edit/master/docs/${docPath}`
+              : undefined,
           breadcrumbs: false,
           showLastUpdateAuthor: true,
           remarkPlugins: [remarkDefList],
+          lastVersion: "current",
+          versions: {
+            current: { label: "2.8" },
+            2.7: {
+              label: "2.7 and below",
+              path: "2.7",
+              banner: "unmaintained",
+            },
+          },
         },
         blog: {
           blogTitle: "Meshtastic Blog",
           blogDescription:
             "Discover in-depth insights from developers and maintainers, including project updates and changes. Hear from the community about their projects and ideas.",
+        },
+        sitemap: {
+          ignorePatterns: ["/docs/2.7/**"],
         },
         theme: {
           customCss: require.resolve("./src/css/custom.css"),
@@ -171,7 +187,7 @@ const config = {
   markdown: {
     mermaid: true,
     hooks: {
-        onBrokenMarkdownLinks: "warn"
+      onBrokenMarkdownLinks: "warn",
     },
   },
   themes: ["@docusaurus/theme-mermaid"],

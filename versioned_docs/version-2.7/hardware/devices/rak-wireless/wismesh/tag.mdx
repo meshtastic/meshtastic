@@ -1,0 +1,58 @@
+---
+id: tag
+title: RAK WisMesh Tag
+sidebar_label: Tag
+sidebar_position: 6
+---
+
+import { DeviceImage } from "/src/components/DeviceImage";
+
+<DeviceImage device="rak_wismesh_tag.svg" alt="RAK WisMesh Tag" size="lg" center />
+
+The WisMesh Tag is a compact Meshtastic device designed for portable location tracking and mesh messaging. With a 1000mAh battery and IP66 weather resistance, it is built for rugged outdoor use.
+
+## Specifications
+
+- **MCU**
+  - nRF52840
+    - Bluetooth BLE 5.0
+    - Very low power consumption
+- **LoRa Transceiver:**
+  - SX1262
+- **Frequency Options:**
+  - 868-923 MHz
+- **GNSS Module**
+  - AT6558R
+- **Battery Capacity**
+  - Rechargeable lithium battery, 1000mAh
+- **Charging**
+  - USB magnetic charging cable
+
+## Features
+
+- Integrated button for reset and boot mode functionality.
+- Integrated acceleration sensor based on ST LIS2DH.
+- Four pogo pins for USB, DFU, serial logging, and charging.
+- IP66 rated, waterproof and durable for various environments.
+
+## Functionality
+
+- **User/Program Button (face):**
+  - **Long press:** Will signal the device to shutdown after 5 seconds.
+  - **Double press:** Sends an adhoc ping of the device's position to the network.
+  - **Triple press:** Enables/Disables the GPS Module on demand.
+  - **Quadruple press:** Temporarily mute or unmute device.
+
+## Resources
+
+- Firmware file: `firmware-rak_wismeshtag-X.X.X.xxxxxxx.uf2`
+- Further information on the WisMesh Tag can be found on the [RAK Documentation Center](https://docs.rakwireless.com/product-categories/meshtastic/wismesh-tag/overview/).
+- Purchase Links:
+  - US
+    - [Rokland](https://msh.to/rokland-wismesh-tag/)
+  - International
+    - [RAKwireless Store](https://msh.to/rak_wismeshtag/)
+    - [RAKwireless AliExpress](https://msh.to/aliexpress-wismesh-tag/)
+    - [Hexaspot](https://msh.to/hexaspot-wismesh-tag/)
+
+![RAK WisMesh Tag](/img/hardware/rak/wismesh-tag.webp)
