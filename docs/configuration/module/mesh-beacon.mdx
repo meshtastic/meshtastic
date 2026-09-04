@@ -1,0 +1,268 @@
+---
+id: mesh-beacon
+title: Mesh Beacon Module Usage
+sidebar_label: Mesh Beacon
+description: Advertise the existence of your mesh to nodes that are not on it yet - a short message plus an optional channel, region, modem preset and frequency slot to join on.
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+import { Icon } from "@iconify/react";
+
+## In short
+
+Mesh Beacon requires firmware **2.8.0 or later** ([#10618](https://github.com/meshtastic/firmware/pull/10618)); older nodes can't broadcast or receive beacons - see [Legacy split](#legacy-split) for making them visible anyway.
+
+It's purely **advisory**. The firmware never auto-joins a channel or switches preset or region. It just hands your client app an invitation, and nothing happens until you accept. Note that accepting does change your node's own radio and drops it off its current mesh, so a good client should warn you first.
+
+Two more things:
+
+- **The advertised PSK isn't secret.** It's a public join token, broadcast in the clear. For real privacy, share the PSK out of band and leave `broadcast_offer_channel` unset.
+- **Licensed regions are enforced.** An unlicensed node will drop rather than transmit a beacon into an amateur-only region.
+
+## Overview
+
+The Mesh Beacon Module lets a node periodically **advertise the existence of a mesh** to nodes that are not on it yet. A beacon carries a short human-readable message plus an optional "join offer": a channel, a region, a modem preset and, where it cannot be derived, a frequency slot.
+
+This is the mechanism behind invitations like *"Join us on NarrowSlow"*. Because a beacon can be transmitted on radio settings other than your own, a node sitting on one preset and region can invite listeners who are on a different preset and region entirely - people who could not otherwise hear you at all.
+
+A node can broadcast, listen, or both:
+
+| Role            | Enabled by                 | What it does                                                                    |
+| :-------------- | :------------------------- | :------------------------------------------------------------------------------ |
+| **Broadcaster** | `FLAG_BROADCAST_ENABLED`   | Periodically transmits beacons.                                                  |
+| **Listener**    | `FLAG_LISTEN_ENABLED`      | Receives beacons and passes them to your client app, which shows the invitation. |
+
+Beacons are **zero-hop**: the mesh never rebroadcasts them, so only nodes in direct radio range hear yours. That is what keeps the feature from becoming a source of mesh-wide spam.
+
+## Settings
+
+Listening, broadcasting and legacy split are three separate options, but they share one `flags` setting rather than having a switch each. You turn them on by adding their numbers together - so listening (`1`) plus broadcasting (`2`) is `3`. To change one option, work out the new total and write that.
+
+| Setting                          | Acceptable Values                                      | Default |
+| :------------------------------- | :----------------------------------------------------- | :------ |
+| `broadcast_interval_secs`        | `3600` or greater (`0` = default)                      | `3600`  |
+| `broadcast_message`              | text, up to 100 characters                             | `""`    |
+| `broadcast_offer_channel`        | channel name and PSK                                   | unset   |
+| `broadcast_offer_preset`         | modem preset                                           | unset   |
+| `broadcast_offer_region`         | region code                                            | `UNSET` |
+| `broadcast_offer_frequency_slot` | 1-based slot number                                    | unset   |
+| `broadcast_on_channel`           | channel name and PSK                                   | unset   |
+| `broadcast_on_preset`            | modem preset                                           | unset   |
+| `broadcast_on_region`            | region code                                            | `UNSET` |
+| `broadcast_on_frequency_slot`    | 1-based slot number                                    | unset   |
+| `broadcast_targets`              | up to 4 target entries                                 | empty   |
+| `flags`                          | `1` listen, `2` broadcast, `4` legacy split (add them) | `0`     |
+
+### broadcast_interval_secs
+
+How often a beacon is transmitted. The floor is **3600 seconds (1 hour)**; `0` means "use the default", and any lower non-zero value is silently raised. The cadence survives a reboot: a node that restarts will not beacon again until a full interval has passed since its last real transmission.
+
+### broadcast_message
+
+The text carried in each broadcast, **capped at 100 characters** and truncated if longer.
+
+### broadcast_offer_channel, broadcast_offer_preset, broadcast_offer_region, broadcast_offer_frequency_slot
+
+The **join offer** - what your beacon advertises. Together these say *"there is a reachable mesh on this region and preset, here is the channel to use."* Any subset may be set: a message with no offer is valid, and so is an offer with no message.
+
+The channel is given **by value** - its name and its PSK - not as a slot number from your channel table. Writing one adds it to your channel table if it isn't there already, so your node can also join the mesh it advertises. Nothing live is overwritten: an existing channel with the same name and PSK is reused, otherwise the first unused slot is claimed. If every slot is in use the offer is withheld: a channel named by value is in your channel table or it is not advertised, so you are never inviting people onto a channel your own node does not hold.
+
+An unknown region is cleared. A preset is cleared only if it is not a preset at all - one your region cannot run is kept, because the offer describes a mesh somewhere else.
+
+`broadcast_offer_frequency_slot` is for a mesh that sits on a **non-default frequency slot**. Leave it unset and listeners work the slot out for themselves from the region, channel name and preset, which is right for a region that mandates a slot and for any mesh on the default name hash. Set it only when your mesh deliberately deviates. Setting it to `0` is the same as leaving it unset.
+
+**Note:** setting `broadcast_offer_channel` publishes that channel's PSK in the clear, to anyone in range. Leave it unset for a channel that is meant to stay private.
+
+### broadcast_on_channel, broadcast_on_preset, broadcast_on_region, broadcast_on_frequency_slot
+
+The radio settings your beacon is **transmitted on**, for a single destination. Leave them all unset and the beacon goes out on your node's current settings - a plain "message of the day" to whoever is already on your mesh. Set them and the radio is briefly switched to those settings for the transmission, then switched back, which is what lets you invite a mesh you are not on.
+
+As with the offer, the channel is named by value and is added to your channel table on write. Leave `broadcast_on_channel` unset while setting the region, preset or slot and the beacon goes out on your **primary channel**, retuned to those settings.
+
+These are **mutually exclusive with `broadcast_targets`**. See [One destination or several](#one-destination-or-several).
+
+**Note:** if you point these at a licensed-only (amateur) region and your node is not licensed, the beacon is dropped rather than sent - the firmware will not key up outside your licence.
+
+### broadcast_targets
+
+A list of up to four destinations, for advertising to several meshes at once. One beacon is sent per entry.
+
+Each entry names a preset, a region, an optional frequency slot, and a **channel slot from your own channel table** - so that channel has to exist on your node first, because your node needs its key to encrypt the beacon. Configure the channels, then write the beacon settings pointing at their slot numbers. Duplicate entries cost no extra airtime; they are skipped.
+
+**Note:** an entry pointing at a slot you have not configured, or one you have since deleted, is **skipped** - that beacon is simply not sent. It is not redirected to another channel, because broadcasting on a channel nobody asked for is worse than not broadcasting. The entry stays in your config, so re-creating the channel brings it back.
+
+### flags
+
+One setting holds three independent options. Add together the numbers for the ones you want:
+
+| Value | Option                   | What it does                                                                              |
+| :---- | :----------------------- | :---------------------------------------------------------------------------------------- |
+| `0`   | `FLAG_NONE`              | Nothing enabled.                                                                          |
+| `1`   | `FLAG_LISTEN_ENABLED`    | Receive beacons. Without this, incoming beacons are dropped before your client sees them. |
+| `2`   | `FLAG_BROADCAST_ENABLED` | Broadcast beacons from this node.                                                         |
+| `4`   | `FLAG_LEGACY_SPLIT`      | Compatibility with older firmware. See below.                                             |
+
+So the value to set is just the total:
+
+| What you want                        | Set `flags` to |
+| :----------------------------------- | :------------- |
+| Listen only                          | `1`            |
+| Broadcast only                       | `2`            |
+| Listen and broadcast                 | `3`            |
+| Broadcast, reaching older nodes too  | `6`            |
+| Everything                           | `7`            |
+
+## Details
+
+### One destination or several
+
+There are two ways to say where a beacon is transmitted, and a node uses one or the other, never both.
+
+| | `broadcast_on_*` | `broadcast_targets` |
+| :--- | :--- | :--- |
+| Destinations | one | up to four |
+| Names its channel | by value - name and PSK | by index into your channel table |
+| Channel must exist first | no, it is added for you | yes |
+| Suited to | configuring over the mesh, remotely | configuring from a connected app |
+
+The split follows what the configuring client can see. An app connected over Bluetooth can read your channel table, so it can point at a slot. An administrator reaching your node **over the mesh** cannot read it, so an index would mean nothing to them and the channel has to be stated outright.
+
+If a single write somehow contains both, the indexed list wins and the `broadcast_on_*` fields are cleared. Writing one form replaces the other.
+
+Independently of that choice, leaving the radio settings unset beacons on your own current mesh, and setting them reaches a different one. A target list can mix one entry on your current settings with others on different presets and regions.
+
+### Configuring over the mesh
+
+A beacon can be configured by remote administration, but the whole configuration has to fit in one LoRa packet - 233 bytes - so that it can be read back afterwards. A write that is too large is **rejected** with an error rather than half-stored, because a configuration the administrator can never read back is worse than none.
+
+In practice a single by-value destination fits comfortably, including a 128-bit key. What does not fit is naming *both* the offered channel and the transmit channel with full 256-bit keys and a long message. If you need that, configure the node from a connected app instead, where the limit is far higher.
+
+### Legacy split
+
+Setting this flag makes your beacons usable by nodes running firmware older than this module, in two ways:
+
+- When a beacon has **both** text and an offer, it is sent as **two packets** - one carrying the offer, one an ordinary text message carrying the text - so that clients which do not understand beacons still display the text.
+- Every beacon is stamped so that firmware older than 2.7.20 accepts it rather than discarding it. Beacons remain zero-hop.
+
+**Note:** a side effect of the second point is that a legacy-split beacon appears to be **1 hop away** even though it arrived over direct radio. Do not read a beacon's hop count as a distance.
+
+### What happens when you receive one
+
+With listening enabled, an incoming beacon packet is passed to your client app, which decides how to present it. The firmware caches the most recent offer but never acts on it, and deliberately does not turn that packet's text into a normal message - a beacon is an announcement, not a message addressed to you, so it will not wake your device or appear in a conversation.
+
+There is one case where you do see an ordinary message, and it is not an exception to that rule so much as a different packet. A broadcaster who sets a message but offers no channel, preset or region has nothing to put in a beacon, so the firmware sends a plain text message instead - and the same happens to the text half of a [legacy split](#legacy-split). Those really are text messages: they will notify you and appear in a conversation like any other. What they will not do is spread. Every packet the module sends goes out zero-hop, so a text sent this way reaches only nodes already in direct radio range of the broadcaster and is never relayed onward - unlike a text message you send yourself, which the mesh will carry.
+
+:::danger
+Accepting an offered region or preset **changes your node's own radio and will drop it off its current mesh.** A good client app makes that consequence clear before you confirm.
+:::
+
+## What people use this for
+
+| Pattern | How it is configured |
+| :--- | :--- |
+| **Migration notice** — keep reminding whoever has not moved yet. *"The party is on LongTurbo."* | Target the **old** preset and region, so the people still there can hear you; offer the **new** channel, preset and region. |
+| **Advertising a pinned slot** — a mesh that does not sit where its name hashes to. *"NY MediumFast is on slot 48."* | Offer the channel, region and preset, plus `broadcast_offer_frequency_slot`. Without it a listener derives a different frequency and joins nothing. |
+| **Message of the day** — no offer at all. | Set `broadcast_message`, leave every offer field unset. This goes out as an ordinary text message, not a beacon; see [What happens when you receive one](#what-happens-when-you-receive-one). |
+| **Recruiting to a service mesh** — *"Racers, put your trackers on MediumTurbo."* | Target the mesh your audience is on; offer the service channel, preset and region. Note the limits below on what an offer can carry. |
+| **Cross-band notice** — reach a sibling region you are not on yourself. | One target per audience, each naming its own region, preset and channel; one offer describing where you want them to end up. |
+
+The last is the most involved, and shows all three settings groups doing different jobs at once. A router sitting on EU_868 / LongFast, telling LiteFast users on EU_866 to move to NarrowSlow on EU_N_868:
+
+```text
+flags                   = 2                        # broadcast
+broadcast_message       = "LiteFast telemetry is reduced - move to NarrowSlow"
+broadcast_offer_channel = { name: "NarrowNet", psk: <the channel's key> }
+broadcast_offer_preset  = NARROW_SLOW
+broadcast_offer_region  = EU_N_868
+broadcast_targets = [
+  { preset: LITE_FAST, region: EU_866, channel_index: 1 },
+]
+```
+
+The node transmits nothing on its own LongFast mesh here: the single target moves the radio to EU_866 and LiteFast for the transmission, then puts it back. No frequency slot is offered because none is needed — EU_N_868 mandates slot 1, so every listener derives the same answer.
+
+:::note
+An offer carries a **channel name and PSK, a region, a modem preset and a frequency slot** — and nothing else. Position precision, MQTT uplink, mute state, hop limits and every other setting are outside it, because the advertised channel travels as a `ChannelIdentity`, which holds only what is needed to join. Anything further has to be words in the 100-character message, for the user to apply by hand.
+:::
+
+## Examples
+
+A multi-region invitation beacon, configured from a connected app:
+
+```text
+flags                   = 6                       # broadcast (2) + legacy split (4)
+broadcast_message       = "Join us on NarrowSlow!"
+broadcast_offer_channel = { name: "MyChannel", psk: <the channel's key> }
+broadcast_offer_preset  = NARROW_SLOW
+broadcast_offer_region  = EU_N_868
+broadcast_interval_secs = 3600
+broadcast_targets = [
+  { preset: LONG_FAST,   region: EU_868,   channel_index: 0 },
+  { preset: NARROW_SLOW, region: EU_N_868, channel_index: 1 },
+]
+```
+
+The same beacon set up over the mesh, where the transmit channel has to be named by value:
+
+```text
+flags                       = 6
+broadcast_message           = "Join us on NarrowSlow!"
+broadcast_offer_channel     = { name: "MyChannel", psk: <the channel's key> }
+broadcast_offer_preset      = NARROW_SLOW
+broadcast_offer_region      = EU_N_868
+broadcast_on_channel        = { name: "LongFast", psk: <the channel's key> }
+broadcast_on_preset         = LONG_FAST
+broadcast_on_region         = EU_868
+```
+
+Both channels are added to the node's channel table by the write itself.
+
+The same settings can be baked in at build time through `userPrefs.jsonc`, including per-target entries.
+
+## Mesh Beacon Module Client Availability
+
+<Tabs
+  groupId="settings"
+  defaultValue="android"
+  values={[
+    {
+      label: (
+        <>
+          <Icon icon="mdi:android" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Android
+        </>
+      ),
+      value: "android",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:apple" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Apple
+        </>
+      ),
+      value: "apple",
+    },
+  ]}>
+
+<TabItem value="android">
+
+### Android
+
+Available under **Settings → Module Config → Mesh Beacon**, with received invitations surfaced in Discovery - see [Discovery](/docs/software/android/user/discovery).
+
+</TabItem>
+
+<TabItem value="apple">
+
+### Apple
+
+Not yet implemented.
+
+</TabItem>
+
+</Tabs>
+
+## See also
+
+- [Mesh Beacon Internals](/docs/development/reference/mesh-beacon-internals) - how transmission, radio switching, legacy split and reception actually work in the firmware.
+- [Mesh Beacon Client Interface](/docs/development/device/mesh-beacon-client-interface) - the protocol for app developers: config read and write, receiving beacons, and validating an offer before applying it.

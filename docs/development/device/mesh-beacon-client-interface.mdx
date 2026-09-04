@@ -1,0 +1,233 @@
+---
+id: mesh-beacon-client-interface
+title: Mesh Beacon Client Interface
+sidebar_label: Mesh Beacon Client Interface
+sidebar_position: 5
+description: What a client app needs to integrate with the Mesh Beacon module - capability detection, config read/write and sanitisation rules, receiving beacons, and the offer trust model.
+---
+
+**Firmware 2.8.0 or later** ([#10618](https://github.com/meshtastic/firmware/pull/10618)). Detect support at runtime as described under [Capability detection](#capability-detection) rather than by version number - the module is also build-flag optional, so a 2.8.0 device may still not carry it.
+
+This page is the client-side specification for the Mesh Beacon module. Everything goes through the **standard admin, ToRadio and FromRadio protocol** - there is no bespoke transport. For what the module does and how it is configured from a user's point of view, see [Mesh Beacon Module Usage](/docs/configuration/module/mesh-beacon).
+
+## The wire message
+
+Beacons travel on their own port number, `MESH_BEACON_APP = 37`, with a protobuf payload:
+
+```protobuf
+message MeshBeacon {
+  string message                            = 1;  // human-readable text, max 100 bytes
+  ChannelIdentity offer_channel             = 2;  // optional advertised channel (name + PSK)
+  Config.LoRaConfig.RegionCode offer_region = 3;  // optional advertised region (UNSET = none)
+  optional Config.LoRaConfig.ModemPreset offer_preset = 4; // optional advertised preset
+  optional uint32 offer_frequency_slot      = 5;  // 1-based; omitted when derivable
+}
+```
+
+Size caps are enforced both at generation and on send: `message` up to 100 bytes, `offer_channel.name` up to 12, `offer_channel.psk` up to 32.
+
+Every outgoing beacon is stamped uniformly: broadcast destination, `from` the local node, `hop_limit = 0`, background priority, and no ACK request.
+
+### ChannelIdentity
+
+`offer_channel` is a `ChannelIdentity`, the identity half of a `ChannelSettings`:
+
+```protobuf
+message ChannelIdentity {
+  bytes psk   = 2;  // same encoding as ChannelSettings.psk, 1-byte shorthands included
+  string name = 3;  // blank means the modem preset's display name
+}
+```
+
+The tag numbers deliberately match `ChannelSettings`, so the two are wire compatible in both directions. A client built against the 2.8.0 definition, where this tag was a `ChannelSettings`, decodes a `ChannelIdentity` correctly with only the name and PSK populated; going the other way, the extra `ChannelSettings` fields are skipped as unknown. **No client change is required to keep decoding beacons**, and a client that reads only `name` and `psk` from tag 2 works against both.
+
+The fields it does not carry - `id`, `uplink_enabled`, `downlink_enabled`, `module_settings` - describe the advertising node's own posture and were never meaningful to a receiver.
+
+### offer_frequency_slot
+
+Present only when a receiver **could not work the slot out for itself**. Derive it as any node on that channel would: the offered region's override slot if it mandates one, otherwise the hash of `offer_channel.name`, evaluated for the bandwidth that `offer_region` and `offer_preset` imply. An unset `offer_preset` means the region's default preset.
+
+When the field is present, the advertising mesh deliberately sits somewhere other than derivation would put it, so use the value given. Either way, **validate the result against the user's own region before offering to join** - a slot number is only meaningful together with a region and a bandwidth. A `0` is never sent; treat it as absent.
+
+## Capability detection
+
+The module is build-flag optional. Treat it as present when the node's `LocalModuleConfig` contains a `mesh_beacon` sub-message. If it is absent, the firmware was built without the module - hide the beacon UI.
+
+## Reading and writing configuration
+
+Standard module-config flow; there are no new admin messages.
+
+- **Read:** `AdminMessage.get_module_config_request` for the mesh beacon variant. The reply is `get_module_config_response` carrying the `mesh_beacon` payload.
+- **Write:** `AdminMessage.set_module_config { mesh_beacon = … }`.
+
+The on/off toggles are bits in the `flags` field, not separate booleans: `FLAG_LISTEN_ENABLED = 1`, `FLAG_BROADCAST_ENABLED = 2`, `FLAG_LEGACY_SPLIT = 4`. To toggle one bit, read the current `flags`, set or clear the bit, and write the whole config back.
+
+Setting beacon config does **not** trigger a reboot; changes take effect on the next broadcast cycle.
+
+### Size limit on remote writes
+
+A beacon config written **over the mesh** must fit one LoRa payload - `DATA_PAYLOAD_LEN`, 233 bytes - once wrapped in a `ModuleConfig`, an `AdminMessage` and the session passkey. A write that does not fit is refused with `Routing.Error TOO_LARGE` and nothing is stored, including any channel it would have created.
+
+The bound exists because the read-back would truncate to an empty payload, which the sending client sees as a silent success. Refusing is the only outcome that tells the truth.
+
+| Configuration | Encoded |
+| :------------ | ------: |
+| By-value target on the well-known default key | 195 |
+| By-value target with a 128-bit PSK | 223 |
+| Offer plus four indexed targets | 227 |
+| By-value offer **and** target, both 256-bit PSKs | 239 |
+
+Only the last exceeds the limit. The same config written from a locally connected client is accepted, because `MAX_TO_FROM_RADIO_SIZE` is 512 and the read-back is not constrained by the radio.
+
+### Sanitisation rules to mirror client-side
+
+The firmware adjusts values on write, so your value may be silently changed. After a successful write, **re-read** the config and display the effective values.
+
+| Rule | Firmware behaviour |
+| :--- | :----------------- |
+| `broadcast_message` length | Truncated to 100 bytes. |
+| `broadcast_interval_secs` | If non-zero and below 3600, raised to 3600. |
+| `broadcast_on_*` set **and** `broadcast_targets` non-empty | The indexed list is kept; every `broadcast_on_*` field is cleared. |
+| `broadcast_offer_region` / `broadcast_on_region` not a known region | Cleared to `UNSET`, which means "use the running region". |
+| `broadcast_offer_preset` / `broadcast_on_preset` not a valid preset value | Cleared. A preset the region cannot run is **kept** - it describes a mesh elsewhere. |
+| `*_frequency_slot` of `0` | Cleared. `0` is the encoding of "unset". |
+| `*_frequency_slot` out of range, **with** an explicit region and preset | Cleared. That pair fixes the bandwidth, so the slot count cannot move later. |
+| `*_frequency_slot` out of range, without both | **Kept.** The bound would be the running radio's, and a later region change would silently delete a deliberate pin. |
+| `broadcast_targets[i].region` not a known region | That entry's region cleared to `UNSET`; transmission falls back to the running config. |
+| `broadcast_targets[i].preset` not a valid preset value | That entry's preset cleared. As above, an unrunnable preset is kept. |
+| `broadcast_targets[i].channel_index` of 8 or more | That entry's channel index cleared. Existence is **not** checked - see below. |
+| A channel named by value is not in the channel table | Added to it. If no slot is free, the field is withheld and its whole group cleared - see [Channels named by value are written to the channel table](#channels-named-by-value-are-written-to-the-channel-table). |
+| A channel referenced by a target is deleted afterwards | Targets naming that slot are removed from the config. A by-value offer is untouched. |
+
+## Receiving beacons
+
+A received beacon reaches the client as a normal `FromRadio.packet` - the listener does not consume it on-device. To handle beacons:
+
+1. Subscribe to the FromRadio packet stream as usual.
+2. For packets whose `decoded.portnum` is `MESH_BEACON_APP (37)`, decode `decoded.payload` as a `MeshBeacon`.
+3. Read `message`, `offer_channel`, `offer_region`, `offer_preset` and `offer_frequency_slot`, presence-checked.
+4. `packet.from` is the **originating beaconer**; the firmware preserves it.
+
+:::warning
+This requires `FLAG_LISTEN_ENABLED`. With listening disabled the firmware drops received beacon packets in the router - before they reach the phone or any on-device handler - so the client will not see beacons at all, even though the node is physically receiving the RF.
+:::
+
+### Reading the text, without duplication
+
+For a beacon-aware client the text is **the `message` field of the beacon packet** you already decode for the offer. One packet, one field: the firmware does not inject a separate text-message copy, so there is nothing to deduplicate.
+
+Splitting happens only when a beacon has **both** text and offer content and the broadcaster set `FLAG_LEGACY_SPLIT`. In that one case the broadcaster emits two packets on the same radio settings: a `MESH_BEACON_APP` packet carrying the offer with an empty message, and an ordinary `TEXT_MESSAGE_APP` packet carrying the text, so that non-beacon-aware clients can still display it.
+
+What the broadcaster emits, in full:
+
+| Beacon content   | `FLAG_LEGACY_SPLIT` | Packets sent                                              |
+| :--------------- | :------------------ | :-------------------------------------------------------- |
+| Offer + text     | Not set             | One `MESH_BEACON_APP` carrying both offer and `message`   |
+| Offer + text     | Set                 | Two: `MESH_BEACON_APP` (offer only) + `TEXT_MESSAGE_APP`  |
+| Offer only       | Either              | One `MESH_BEACON_APP`, `message` empty                    |
+| Text only        | Either              | One `TEXT_MESSAGE_APP` - no beacon packet at all          |
+
+Two consequences for a client. First, a given beacon's text always appears exactly once, so there is never anything to deduplicate - render whichever form arrives. Second, a text-only beacon is indistinguishable from an ordinary text message on the wire: the broadcaster sends no `MESH_BEACON_APP` packet, so there is no `MeshBeacon.message` to read and no beacon for the client to attribute it to.
+
+Note that a legacy-split beacon is stamped `hop_start = 1` with `hop_limit = 0`, so it computes as 1 hop away despite arriving over direct RF. Do not treat a beacon's hop distance as a proximity signal.
+
+## Acting on an offer
+
+This is the core client responsibility. When a beacon carries offer content, present it as an **invitation** - for example *"Node ⟨from⟩ invites you to join '⟨offer_channel.name⟩' on ⟨preset⟩/⟨region⟩."* Then, only on explicit user confirmation, apply it by writing normal config:
+
+- `offer_channel` becomes an added or replaced `Channel` via `set_channel`, typically as a secondary channel.
+- `offer_region` and `offer_preset` become a `set_config { lora = … }` write with `use_preset` on.
+- `offer_frequency_slot`, or the slot you derived, becomes `lora.channel_num` in that same write.
+
+:::danger
+Applying an offered region or preset **changes the node's own radio and will drop it off its current mesh.** Make that consequence explicit in the UI before the user confirms.
+:::
+
+**The firmware will never do any of this for the user, and there is no silent auto-apply.** The on-device offer cache is a firmware-internal convenience and is not exposed over an admin message - source offers from the live packet stream rather than expecting a "get last offer" call. Note also that the cached timestamp is `0` when the node has no clock fix yet; never treat `0` as a valid time.
+
+### Offer trust model
+
+- **The advertised PSK is not a secret.** It is a public join token sent in the clear inside a broadcast - a convenience, not a security boundary. Surface offered channels to the user as public or open.
+- **Validate before applying.** Reject or warn when the offered preset is not valid for the offered region, when the frequency slot falls outside that region, and **never** apply a licensed-only (amateur) region for a user who is not a licensed operator. Mirror the firmware's own guard.
+- **Treat `from` as informational.** A beacon asserts nothing about the sender's authority.
+
+## Configuring a node as a broadcaster
+
+Write the config with `FLAG_BROADCAST_ENABLED` set and at least one of a non-empty `broadcast_message` or some offer content. With neither, the broadcaster has nothing to send and stays silent.
+
+### Two ways to name a destination
+
+A beacon's destinations are given either by value or by index, never both in the same config.
+
+| | `broadcast_on_*` | `broadcast_targets` |
+| :--- | :--- | :--- |
+| Destinations | one | up to four |
+| Transmit channel | `broadcast_on_channel`, a `ChannelIdentity` | `broadcast_targets[i].channel_index`, an index |
+| Channel must already exist | no, the write creates it | yes |
+| Intended caller | a remote administrator | a locally connected client |
+
+The split follows what the writer can see. A connected client can read the channel table and name a slot in it. A remote administrator over the mesh cannot - there is no way to enumerate the channel table remotely - so an index resolves to nothing they can predict, and the channel has to be stated outright.
+
+If a single write contains both, **the indexed list wins** and the `broadcast_on_*` fields are cleared. An index cannot mutate the channel table and a by-value entry can, so an ambiguous message must not produce channel writes. Write one form or the other; each replaces the other.
+
+The advertised `broadcast_offer_channel` is by value on both paths, because it is the advertisement payload and must carry the real name and PSK.
+
+### Channels named by value are written to the channel table
+
+`broadcast_offer_channel` and `broadcast_on_channel` are **upserted** into the node's channel table when the config is written, because the transmit path needs the channel's key to encrypt. The rules:
+
+1. A live channel with the same name and PSK is reused; nothing is written.
+2. Otherwise the lowest disabled slot is claimed, preferring one that previously held this same name and PSK, so re-adding a deleted channel gets its old index back.
+3. A live channel is **never** overwritten, and the primary is never displaced.
+
+If no slot can be claimed the field is withheld and its whole group cleared - `broadcast_offer_*` for the offer, `broadcast_on_*` for the target. A channel named by value is in the table or it is not used: the target has no key to transmit with, and an offer the node cannot itself hold would invite others onto a channel it cannot verify.
+
+A write that creates a channel this way saves the channel table as well as the module config.
+
+### Indexed targets take two writes, in order
+
+1. **Create each channel** in the node's channel table with the normal channel admin flow:
+
+   ```text
+   AdminMessage.set_channel { index: 1, role: SECONDARY,
+                              settings: { name: "NarrowSlow", psk: <key> } }
+   ```
+
+2. **Write the beacon config**, pointing each target at the slot from step 1:
+
+   ```text
+   AdminMessage.set_module_config { mesh_beacon: {
+       flags = FLAG_BROADCAST_ENABLED
+       broadcast_targets = [ { preset: NARROW_SLOW, region: EU_N_868, channel_index: 1 } ]
+   } }
+   ```
+
+The by-value path needs no separate `set_channel` step, since the channel is created by the same message.
+
+### Validating channel references is the client's job
+
+A target may only reference a channel that already exists locally, because the node needs that channel's key to encrypt the beacon. A `channel_index` that is out of range, or points at a disabled slot, is **not** a write error - only the `0..7` bound is checked, because a client may legitimately write the beacon config before creating the channel.
+
+At transmit time such a target is **skipped**: no beacon is sent for it, and it is not redirected onto another channel. The entry stays in the config, so provisioning the channel later brings the target back without a rewrite. Deleting a channel that a target names removes that target from the config outright.
+
+Before writing, confirm each index maps to a configured channel and warn otherwise, or the user will believe they are advertising a mesh that is never actually broadcast to.
+
+There is also **no automatic deduplication of channels**: two targets may carry the same index, or different indices whose slots hold identical settings, and `set_channel` will happily store two slots with the same name and PSK. The broadcaster skips transmitting a target whose effective settings duplicate an earlier one in the same cycle, so a duplicate wastes no airtime, but it does not rewrite or reject the config. Keeping the target list free of redundant entries is up to the client.
+
+## Quick reference
+
+| Concern                | Value                                                                                    |
+| :--------------------- | :--------------------------------------------------------------------------------------- |
+| Port number            | `MESH_BEACON_APP = 37`                                                                   |
+| Wire message           | `meshtastic.MeshBeacon`                                                                  |
+| Config message         | `ModuleConfig.MeshBeaconConfig`                                                          |
+| On/off toggles         | `flags` bitfield (`MeshBeaconConfig.Flags`)                                              |
+| Local config presence  | `LocalModuleConfig.mesh_beacon`                                                          |
+| Min broadcast interval | 3600 s (1 h)                                                                             |
+| Message max length     | 100 bytes                                                                                |
+| Channel name / PSK max | 12 bytes / 32 bytes                                                                      |
+| Remote write ceiling   | 233 bytes encoded, else `Routing.Error TOO_LARGE`                                        |
+| Frequency slots        | 1-based, matching `Config.LoRaConfig.channel_num`; `0` means unset                       |
+| Hop behaviour          | Zero-hop (`hop_limit = 0`), never rebroadcast; `hop_start = 1` under legacy split         |
+| Auto-apply offers?     | **Never** - the client and user decide                                                   |
+| Offer PSK              | Public join token, not a secret                                                          |
