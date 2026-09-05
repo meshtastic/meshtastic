@@ -1,0 +1,110 @@
+---
+id: gnss-modules
+title: Understanding GNSS Modules
+sidebar_label: GNSS Modules
+sidebar_position: 4
+---
+
+A detailed contribution from community contributor GPSFan which provides an in-depth look at GNSS modules, specifically focusing on u-blox modules, which could be useful for hardware devs designing devices for integrating GPS functionality into Meshtastic hardware projects.
+
+## u-blox Module Types
+### Clones
+- Clones, like Beitian, Goouu Tech, BZGNSS & VKEL, can be functionally equivalent to u-blox parts, and will have their own label on the module. 
+- Sometimes, clones have the proper amount of flash and can be updated as new firmware comes out, sometimes not.
+
+### Counterfeits
+- Counterfeits usually use u-blox chips inside but have a u-blox looking label on the module with substandard circuitry inside.
+
+### Fakes
+- Fakes have a u-blox looking label, but all bets are off as to what's inside, often another Chinese chip or a 6010 with an M8 label.
+
+Beware, most modules seen on Amazon, eBay, Banggood, Temu or AliExpress are in one of the above three categories.
+
+### Genuine u-blox Modules
+Digikey, Mouser, Arrow, u-blox and others sell genuine u-blox parts at premium prices.
+
+## u-blox Chip Series
+### Neo-6 Series
+The Neo-6 is the oldest (although there are older u-blox 4 and 5 parts), most power hungry, least capable and lowest sensitivity module. The 6010 chip supports 50 channels.
+
+### Neo-7 Series  
+The Neo-7 supports SBAS, GLONASS as well as GPS, and has some nice high precision parts (Neo-7P). The 7020 chip supports 56 channels.
+
+### M8 Series
+The M8 supports GPS, SBAS, GLONASS, QZSS, BieDou and Galileo, but can only support 3 major ones concurrently. QZSS and GPS should always be either enabled together or both disabled for M8 & above parts. The 8030 chip supports 72 channels.
+
+### M9 Series
+The M9 supports all the above constellations but can use 4 systems at once (SBAS and QZSS are augmentation systems and don't count in this number). The 9140 chip forms the basis of the M9, D9 and F9 products, the F9P being a very capable L1/L2 or L5 RTK capable product. The 9140 chip supports 92 channels.
+
+### M10 Series
+It is left as an exercise for the reader to read the product briefs for the M10 series. The 10050 chip supports 72 channels.  
+
+### Comparison to Other GNSS Chips
+As a comparison:
+- The Unicore UM980 has 1408 channels
+- The Septentrio mosaic-T has 448 "hardware channels"
+
+## u-blox Chip Configurations
+The u-blox chips have several configurations that can be customized by the module maker:
+- Flash size
+- LNA
+- TCXO
+- SAW filter
+- General circuit layout
+
+## u-blox Firmware and Protocol
+Each chip series supports a different and increasing protocol version. Beginning with 23.01, the legacy CFG commands were replaced with a different config method using the VALSET/VALGET/VALDEL series of commands. However, even up to protocol 34, many of the CFG commands still work. The new config method allows much finer grained configuration at the cost of complexity. Trying to support both legacy and new config methods can be challenging.
+
+### Protocol Specification Levels
+There are 3 levels of protocol specifications:
+
+1. **Internal Use Only**: No one but u-blox employees see these, and they detail the entire firmware command set.
+
+2. **NDA Restricted**: OEMs that buy lots of parts and sign an NDA have access to these. Few if any make it out into the wild, and they detail a subset of the internal specs.
+
+3. **Public**: Can be downloaded by anyone off the u-blox website. These are a subset of the NDA restricted, and often contain errors and omissions.
+
+### Libraries and Hidden Commands
+- All u-blox firmwares support hidden or undocumented commands. 
+- SparkFun has a u-blox config library that uses the new method, it is very complete and very much overkill.
+
+## Future u-blox Chips
+There are new u-blox chips/modules in the pipeline, and in R&D, competing with the Chinese designed and produced parts like the UM980 and UC6580 should produce better and cheaper parts from u-blox (one would hope).
+
+## Common GPS Problems
+
+### Self-inflicted Problems
+#### Attempting Indoor Fix
+- Trying to get a fix indoors is never recommended. 
+- The GNSS signals are very weak, and anything between the antenna and the satellite (even the atmosphere) will degrade the signal. 
+- All indoor locations are not created equally in terms of signal reception.
+
+#### Unrealistic Fix Time Expectations  
+- Expecting a fix immediately after power on is unrealistic. 
+- The time to first fix (TTFF) varies depending on whether it's a cold start (receiver has no time/almanac/ephemeris data), warm start, or hot start. 
+- A good receiver under ideal conditions can take up to 28 seconds for a cold start fix.
+
+#### Impatient Timeout
+Waiting too long for a fix when receiver parameters may have timed out, meaning it will never get a fix after that timeout period.  
+
+#### Using Sub-optimal Constellations
+Using only one or two constellations when the receiver can receive many is a waste of hardware resources.
+
+#### Poor Antenna Placement
+- GNSS antennas are directional and don't have much gain. 
+- Putting the receiver in your pocket or not pointing the antenna towards the sky will reduce effectiveness.
+
+### Other Causes
+#### Hardware Design and Build Quality
+- GNSS receivers operate at microwave frequencies, so signal path impedance and noise management are important. 
+- Using a good external antenna with LNA and SAW filter can reduce locally generated noise. 
+- Proper coaxial cables are also crucial.
+
+#### Cost Cutting 
+An overly aggressive approach to cost reduction can degrade performance incrementally to the point of making the receiver useless.
+
+#### Aggressive Power Management
+Most receivers have aggressive power management modes that can hamper acquisition/tracking if combined with a poor view of the sky.  
+
+#### Incorrect Initialization
+Supporting multi-generational products and different receiver manufacturers makes properly initializing the receiver challenging.

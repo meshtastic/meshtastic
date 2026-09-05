@@ -1,0 +1,50 @@
+---
+id: flashing-over-swd
+title: Flashing STM32 over SWD
+sidebar_label: Flashing over SWD
+sidebar_position: 3
+description: Flash Meshtastic firmware to an STM32WL device over SWD with an ST-LINK or other SWD programmer.
+---
+
+An SWD programmer such as an
+[ST-LINK](https://www.st.com/en/development-tools/st-link-v2.html) writes firmware
+straight to flash over the SWD pins. It does not use the ROM bootloader, so BOOT0
+and the bootloader UART are not involved.
+
+## GUI &mdash; STM32CubeProgrammer
+
+1. Launch [STM32CubeProgrammer](https://www.st.com/en/development-tools/stm32cubeprog.html).
+2. Select the **ST-LINK** connection.
+3. Click **Connect**.
+4. Open the `firmware-<target>-X.X.X.xxxxxxx.bin` file and confirm the start address is `0x08000000` (the default).
+5. Click **Download**.
+
+:::note
+
+If your ST-LINK's nRST pin is not connected to the board's nRST, set
+**Reset mode** to **Software reset** or **Core reset** instead of
+**Hardware reset** in the ST-LINK settings.
+
+:::
+
+## CLI
+
+### STM32CubeProgrammer, nRST connected
+
+```shell
+STM32_Programmer_CLI -c port=SWD mode=UR -w firmware-<target>-X.X.X.xxxxxxx.bin 0x08000000 -v -rst
+```
+
+`-v` verifies the write and `-rst` restarts the board into the new firmware.
+
+### STM32CubeProgrammer, nRST not connected
+
+```shell
+STM32_Programmer_CLI -c port=SWD mode=HOTPLUG -w firmware-<target>-X.X.X.xxxxxxx.bin 0x08000000 -v -rst
+```
+
+### [OpenOCD](https://openocd.org/)
+
+```shell
+openocd -f interface/stlink.cfg -f target/stm32wlx.cfg -c "program firmware-<target>-X.X.X.xxxxxxx.bin 0x08000000 verify reset exit"
+```
