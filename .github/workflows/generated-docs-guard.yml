@@ -85,10 +85,27 @@ jobs:
               per_page: 100,
             });
 
+            // listFiles is capped at 3,000 files. This repo is nowhere near that
+            // (~1.5k tracked files), but if a PR ever exceeds it the list is
+            // silently truncated and an edit past the cap would sail through, so
+            // verify the count and fail closed rather than reporting a false pass.
+            const { data: prDetail } = await github.rest.pulls.get({
+              owner,
+              repo,
+              pull_number: prNumber,
+            });
+            const truncated =
+              typeof prDetail.changed_files === "number" &&
+              files.length < prDetail.changed_files;
+
             const hits = new Map(); // platform -> { info, files: [] }
             for (const file of files) {
+              // Check previous_filename too: renaming a generated file *out* of a
+              // guarded directory would otherwise slip through, and the next sync
+              // would recreate the original path alongside the moved copy.
+              const paths = [file.filename, file.previous_filename].filter(Boolean);
               const match = GUARDED.find((g) =>
-                g.prefixes.some((p) => file.filename.startsWith(p))
+                g.prefixes.some((p) => paths.some((f) => f.startsWith(p)))
               );
               if (!match) continue;
               if (!hits.has(match.platform)) {
@@ -127,6 +144,30 @@ jobs:
               }
             };
 
+            if (truncated) {
+              const body =
+                `${COMMENT_ID}\n### ⚠️ Generated app docs check could not run\n\n` +
+                `This PR changes ${prDetail.changed_files} files, but the GitHub API returned only ` +
+                `${files.length} of them (it caps the file list at 3,000). That means this check ` +
+                `cannot confirm whether generated Android or Apple app documentation was modified, ` +
+                `so it fails rather than reporting a false pass.\n\n` +
+                `Please split this PR into smaller ones, or apply the \`${OVERRIDE_LABEL}\` label ` +
+                `if a maintainer has verified the generated docs are untouched.\n`;
+              await upsert(body);
+              if (overridden) {
+                core.warning(
+                  `File list truncated (${files.length}/${prDetail.changed_files}) — ` +
+                    `allowed by the ${OVERRIDE_LABEL} label.`
+                );
+                return;
+              }
+              core.setFailed(
+                `File list truncated (${files.length}/${prDetail.changed_files}); ` +
+                  `cannot verify generated app docs were left untouched.`
+              );
+              return;
+            }
+
             if (hits.size === 0) {
               core.info("No changes to generated app docs.");
               if (existing) {
@@ -158,7 +199,10 @@ jobs:
               body += `Source of truth: [${info.sourceRepo}](https://github.com/${info.sourceRepo}) `;
               body += `· synced by [\`${info.syncWorkflow}\`](https://github.com/${owner}/${repo}/blob/master/.github/workflows/${info.syncWorkflow})\n\n`;
               for (const f of changed.slice(0, 25)) {
-                body += `- \`${f.filename}\` (${statusWord(f.status)})\n`;
+                body +=
+                  f.status === "renamed" && f.previous_filename
+                    ? `- \`${f.previous_filename}\` → \`${f.filename}\` (renamed)\n`
+                    : `- \`${f.filename}\` (${statusWord(f.status)})\n`;
               }
               if (changed.length > 25) {
                 body += `- …and ${changed.length - 25} more\n`;
