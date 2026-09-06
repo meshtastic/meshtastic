@@ -14,7 +14,9 @@ export default function PrimaryMenu(): React.ReactNode {
 
   const linkItems = navbar.items.filter(
     (item: NavbarItem) =>
-      item.type !== "localeDropdown" && item.type !== "search",
+      item.type !== "localeDropdown" &&
+      item.type !== "search" &&
+      item.type !== "docsVersionDropdown",
   );
 
   return (

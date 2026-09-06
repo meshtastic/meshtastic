@@ -1,0 +1,73 @@
+---
+id: integration-paths
+title: Choosing an Integration Path
+sidebar_label: Integration Paths
+sidebar_position: 7
+---
+
+There is more than one way to get your own code onto a Meshtastic mesh, and the right one depends on where you want the boundary between your code and the firmware to sit. This document compares the options so you can pick before you start building. For the protocol details of each, see the [client API](/docs/2.7/development/device/client-api) and [module API](/docs/2.7/development/device/module-api) documents.
+
+## The four approaches
+
+### Module inside the firmware
+
+You write a `MeshModule` subclass, it is compiled into the firmware, and it receives packets on a port number you choose. This is the deepest integration available and the one to reach for when your feature belongs on the device itself: it can see every packet, send its own, and use anything else the firmware provides.
+
+You ship a firmware build rather than a separate application, and your code follows the firmware release cycle. See the [module API](/docs/2.7/development/device/module-api) document to get started.
+
+### Client running inside the firmware
+
+The client API is not only for external hardware. `PacketAPI` in [src/mesh/api/PacketAPI.h](https://github.com/meshtastic/firmware/blob/master/src/mesh/api/PacketAPI.h) is a `PhoneAPI` subclass that is also an `OSThread`, bound to a shared queue rather than to a UART. Your task exchanges the same ToRadio and FromRadio protobufs with the firmware beside it, on the same processor and with no wire in between.
+
+This is how [device-ui](https://github.com/meshtastic/device-ui) is built. Its `IClientBase` interface is the whole contract your code implements: send a ToRadio, receive a FromRadio. Because the interface also has serial, TCP, Ethernet and Bluetooth implementations, an application written against it runs either inside the firmware or on a second processor wired to a node, without changing.
+
+Nothing is serialized when it runs in process. The queue carries the structure itself.
+
+### External client over the client API
+
+Your code runs on separate hardware, or on a phone or PC, and talks to a node over Serial, TCP or Bluetooth using the [client API](/docs/2.7/development/device/client-api). The node stays on stock firmware, which means no custom build to maintain and no firmware release to track.
+
+Libraries exist for several languages, including [Meshtastic-arduino](https://github.com/meshtastic/Meshtastic-arduino) for microcontroller clients, and the [Python](/docs/2.7/development/python/library), [JavaScript](/docs/2.7/development/js) and [Android](https://github.com/meshtastic/Meshtastic-Android) libraries for larger hosts.
+
+### An independent implementation
+
+Rather than talking to a node, your device can speak the mesh protocol itself. [libmeshtastic-leaf](https://github.com/Meshtastic-Solutions/libmeshtastic-leaf) is one such implementation, built on [RadioLib](https://github.com/jgromes/RadioLib), which puts framing, channel and PKI encryption, the region tables and the transmit policy into a library your sketch drives directly.
+
+There is no Meshtastic firmware anywhere in this arrangement, so there is also nothing to inherit. A leaf node of this kind sends and receives but never relays, and it has no node database, no modules and no configuration UI. Anything the firmware would have provided is yours to write.
+
+:::note
+Only the first three approaches produce a Meshtastic node. An independent implementation participates in the mesh but does not extend it, because it does not rebroadcast for its neighbours.
+:::
+
+## What each approach provides
+
+"Via the node" means the attached or surrounding firmware performs it on your behalf, which is usually what you want, but it also means you take its behaviour as given.
+
+| Capability                            | Firmware module | In-firmware client | External client   | Independent    |
+| ------------------------------------- | --------------- | ------------------ | ----------------- | -------------- |
+| Runs without a second processor       | Yes             | Yes                | No                | Yes            |
+| Runs on stock firmware                | No              | No                 | Yes               | Not applicable |
+| Send on any port number               | Yes             | Yes                | Library dependent | Yes            |
+| Receive on any port number            | Yes             | Yes                | Yes               | Yes            |
+| Signal strength and SNR per packet    | Yes             | Yes                | Library dependent | Yes            |
+| Channel and PKI encryption            | Via the node    | Via the node       | Via the node      | Yours          |
+| Region, duty cycle and carrier sense  | Via the node    | Via the node       | Via the node      | Yours          |
+| Routing and rebroadcast               | Via the node    | Via the node       | Via the node      | No             |
+| Node database                         | Via the node    | Yes                | Yes               | No             |
+| Read and change node configuration    | Direct access   | Admin messages     | Library dependent | Not applicable |
+| Position, telemetry and other modules | Via the node    | Via the node       | Via the node      | No             |
+| Identity and keys                     | The node's      | The node's         | The node's        | Yours          |
+
+## Choosing
+
+Start with a **firmware module** when the feature belongs to the device and you are willing to ship firmware. Most of the functionality shipped with Meshtastic is built this way, and it is the path with the most examples to copy from.
+
+Choose an **in-firmware client** when you are writing a whole application rather than a feature, such as a user interface or a bridge, and you want it to be portable between running on the node and running on a second processor.
+
+Choose an **external client** when the node should stay on stock firmware, when your code belongs on a phone or PC, or when the language you want is not C++.
+
+Choose an **independent implementation** when a whole node is more than the job needs: a sensor that must speak to the mesh on its own, on one processor and one battery, with no second board.
+
+:::note
+Whichever you pick, an application sending its own traffic needs a port number. See [port numbers](/docs/2.7/development/firmware/portnum) before you choose one.
+:::

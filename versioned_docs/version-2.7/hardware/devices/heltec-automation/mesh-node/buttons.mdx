@@ -1,0 +1,17 @@
+---
+id: buttons
+title: Mesh Node Hardware Buttons
+sidebar_label: Buttons
+sidebar_position: 1
+---
+
+## Mesh Node T114
+
+- **RST Button:**
+  - **Single press:** Resets the device.
+  - **Double press:** The device enters download mode.
+- **User Button:**
+  - **Long press:** Will signal the device to shutdown after 5 seconds.
+  - **Single press:** Changes the information page displayed on the device's screen.
+  - **Double press:** Sends an adhoc ping of the device's position to the network.
+  - **Triple press:** Enables/Disables the GPS Module on demand. If an NPN Transistor is added it will cut power to the GPS board. The NPN pin must be configured on the PIN_GPS_EN inside the Position module in the App for this switching to work.
