@@ -128,7 +128,7 @@ reads `accessoryManager.loRaRegionPresets` and applies these rules:
 | `licensed_only` | Ham/amateur band — warn/gate and coordinate with `is_licensed`. |
 | Source of truth | The firmware still validates/clamps; the map is a UI guard, not a correctness boundary. |
 
-Regions with no firmware band table (`EU_874`, `EU_917`, `ITU*_70CM`) are simply absent
+Regions with no firmware band table (`EU_874`, `EU_917`) are simply absent
 from the map and carry no constraint.
 
 ## Files

@@ -41,7 +41,9 @@ The presets are designed to provide further options for optimizing either speed 
 1. A high number of devices exist in the mesh, or messages are sent very frequently. Faster speeds (and therefore lower radio time per device) can help with mesh network congestion.
 2. Maximum range is desired, for long range scenarios where a several second delay in message receipt is acceptable (for instance, attempting to send messages from a town to a distant mountain top).
 
-The Presets available are as follows, and follow a linear pattern of Fastest \<\-\-\> Slowest, and Shortest \<\-\-\> Longest range:
+Not every preset is legal in every band. From firmware 2.8, the device only accepts presets permitted in the selected [Region](#region), and clients filter the preset picker to that list. An illegal preset is clamped back to the region's default.
+
+The general purpose presets are as follows, and follow a linear pattern of Fastest \<\-\-\> Slowest, and Shortest \<\-\-\> Longest range:
 
 1. `SHORT_TURBO` (Fastest, highest bandwidth, lowest airtime, shortest range. It is not legal to use in all regions due to it's 500kHz bandwidth.)
 
@@ -49,17 +51,40 @@ The Presets available are as follows, and follow a linear pattern of Fastest \<\
 
 3. `SHORT_SLOW`
 
-4. `MEDIUM_FAST`
+4. `MEDIUM_TURBO` (500kHz bandwidth, so it carries the same regional restriction as `SHORT_TURBO`.)
 
-5. `MEDIUM_SLOW`
+5. `MEDIUM_FAST`
 
-6. `LONG_FAST` (Default)
+6. `MEDIUM_SLOW`
 
-7. `LONG_MODERATE`
+7. `LONG_TURBO` (Performs similarly to `LONG_FAST`, but with 500kHz bandwidth.)
 
-8. `LONG_SLOW`
+8. `LONG_FAST` (Default)
 
-9. `VERY_LONG_SLOW` (Slowest, lowest bandwidth, highest airtime, longest range. Not recommended for regular usage as does not form meshes well and is unreliable)
+9. `LONG_MODERATE`
+
+
+`EU_868` offers this list without the three Turbo presets, as 500kHz bandwidth is not permitted in the 869.4 - 869.65 MHz band.
+
+#### Narrowband Presets
+
+Firmware 2.8 adds three narrowband preset families for bands that cannot accommodate the presets above. Each family is exclusive to its regions and cannot be selected anywhere else:
+
+|           Presets            | Bandwidth |                          Available in                           |    Default    |
+| :--------------------------: | :-------: | :-------------------------------------------------------------: | :-----------: |
+|   `LITE_FAST`, `LITE_SLOW`   |  125 kHz  |                            `EU_866`                             |  `LITE_FAST`  |
+| `NARROW_FAST`, `NARROW_SLOW` | 62.5 kHz  | `EU_N_868`, `ITU1_70CM`, `ITU2_70CM`, `ITU3_70CM`, `ITU2_125CM` | `NARROW_SLOW` |
+|   `TINY_FAST`, `TINY_SLOW`   | 15.6 kHz  |                 `ITU1_2M`, `ITU2_2M`, `ITU3_2M`                 |  `TINY_FAST`  |
+
+See [Narrowband Presets](/docs/overview/radio-settings#narrowband-presets) for their data rates and link budgets.
+
+:::info
+`EU_868`, `EU_866` and `EU_N_868` share the same regulatory domain, so selecting a Lite or Narrow preset while the region is `EU_868` switches the region to `EU_866` or `EU_N_868` respectively. Selecting one of the general purpose presets switches it back.
+:::
+
+:::warning
+The Tiny presets transmit in only 15.6 kHz of bandwidth. A TCXO with a tolerance of ±5 ppm or better is **required**.
+:::
 
 ### Max Hops
 
@@ -79,14 +104,21 @@ Certain bandwidth numbers are 'special' and will be converted by the device firm
 
 | Special Value | Interpreted As |
 | :-----------: | :------------: |
+|       8       |    7.8 kHz     |
+|      10       |    10.4 kHz    |
+|      16       |    15.6 kHz    |
+|      21       |    20.8 kHz    |
 |      31       |   31.25 kHz    |
+|      42       |    41.7 kHz    |
 |      62       |    62.5 kHz    |
 |      200      |  203.125 kHz   |
 |      400      |   406.25 kHz   |
 |      800      |   812.5 kHz    |
 |     1600      |   1625.0 kHz   |
 
-Please be aware that values < 62.5kHz may require a TCXO on some hardware devices.
+Any other value is used as-is, in kHz.
+
+Please be aware that values < 62.5kHz may require a TCXO on some hardware devices. The `TINY_FAST` and `TINY_SLOW` presets use `16` (15.6 kHz) and require one with a tolerance of ±5 ppm or better.
 
 ### Spread Factor
 
@@ -224,12 +256,12 @@ LoRa config commands are available in the python CLI. Example commands are below
 
 |           Setting           |                                                                     Acceptable Values                                                                     |   Default   |
 | :-------------------------: | :-------------------------------------------------------------------------------------------------------------------------------------------------------: | :---------: |
-|      lora.modem_preset      |                    `LONG_FAST`, `LONG_SLOW`, `VERY_LONG_SLOW`, `MEDIUM_SLOW`, `MEDIUM_FAST`, `SHORT_SLOW`, `SHORT_FAST`, `SHORT_TURBO`                    | `LONG_FAST` |
+|      lora.modem_preset      | `LONG_FAST`, `LONG_MODERATE`, `LONG_TURBO`, `MEDIUM_SLOW`, `MEDIUM_FAST`, `MEDIUM_TURBO`, `SHORT_SLOW`, `SHORT_FAST`, `SHORT_TURBO`, `LITE_FAST`, `LITE_SLOW`, `NARROW_FAST`, `NARROW_SLOW`, `TINY_FAST`, `TINY_SLOW` (availability depends on the selected region) | `LONG_FAST` |
 |       lora.use_preset       |                                                                      `false`, `true`                                                                      |   `false`   |
-|        lora.region         | `UNSET`, `US`, `EU_433`, `EU_868`, `CN`, `JP`, `ANZ`, `ANZ_433`, `KR`, `TW`, `RU` ,`IN`, `NZ_865`, `TH`, `LORA_24`, `UA_433`, `MY_433`, `MY_919`, `SG_923`, `KZ_433`, `KZ_863`, `BR_902`, `NP_865` |   `UNSET`   |
-|       lora.bandwidth        |                                                              `31`, `62`, `125`, `250`, `500`                                                              |    `250`    |
-|     lora.spread_factor      |                                                              `7`, `8`, `9`, `10`, `11`, `12`                                                              |    `12`     |
-|      lora.coding_rate       |                                                                    `5`, `6`, `7`, `8`                                                                     |     `8`     |
+|        lora.region         | `UNSET`, `US`, `EU_433`, `EU_868`, `EU_866`, `EU_N_868`, `CN`, `JP`, `ANZ`, `ANZ_433`, `KR`, `TW`, `RU` ,`IN`, `NZ_865`, `TH`, `LORA_24`, `UA_433`, `MY_433`, `MY_919`, `SG_923`, `KZ_433`, `KZ_863`, `BR_902`, `NP_865`, `PH_433`, `PH_868`, `PH_915`, `ITU1_2M`, `ITU2_2M`, `ITU3_2M`, `ITU2_125CM`, `ITU1_70CM`, `ITU2_70CM`, `ITU3_70CM` |   `UNSET`   |
+|       lora.bandwidth        |                                               `8`, `10`, `16`, `21`, `31`, `42`, `62`, `125`, `250`, `500`                                                |    `250`    |
+|     lora.spread_factor      |                                                         `5` ,`6`, `7`, `8`, `9`, `10`, `11`, `12`                                                         |    `11`     |
+|      lora.coding_rate       |                                                                  `4`, `5`, `6`, `7`, `8`                                                                  |     `5`     |
 |    lora.frequency_offset    |                                                                     `0` to `1000000`                                                                      |     `0`     |
 |       lora.hop_limit        |                                                                `1`,`2`,`3`,`4`,`5`,`6`,`7`                                                                |     `3`     |
 |        lora.tx_power        |                                                                        `0` to `30`                                                                        |     `0`     |

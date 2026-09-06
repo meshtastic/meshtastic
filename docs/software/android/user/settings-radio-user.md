@@ -52,24 +52,27 @@ After modifying settings, tap **Save** to write the configuration to your radio.
 
 > 💡 **Tip:** The **SNR Limit** values are negative on purpose. LoRa can decode signals *below* the noise floor, so a more-negative limit means the preset tolerates a weaker, noisier signal (more range). See [How the Signal Meter Works](signal-meter.md) for the full explanation.
 
-| Preset | Range | Speed | SNR Limit | Best For |
-|--------|-------|-------|-----------|----------|
-| Short Turbo | ~1 km | 21.9 kbps | −7.5 dB | Dense urban with line-of-sight; data-heavy applications |
-| Short Fast | ~3 km | 10.9 kbps | −7.5 dB | Urban neighborhoods; buildings within a few blocks |
-| Short Slow | ~5 km | 5.5 kbps | −10 dB | Suburban short-range; moderate building density |
-| Medium Fast | ~5 km | 5.5 kbps | −12.5 dB | Suburban areas; moderate building density |
-| Medium Slow | ~8 km | 1.1 kbps | −15 dB | Suburban/rural; moderate range with slower speed |
-| Long Turbo | ~10 km | 4.4 kbps | −12.5 dB | Similar range to Long Fast but with 500 kHz bandwidth; faster throughput |
-| Long Fast | ~10 km | 1.1 kbps | −17.5 dB | **General use (default)** — balanced range and speed |
-| Long Moderate | ~20 km | 0.34 kbps | −17.5 dB | Rural with some terrain; occasional use |
-| Lite Fast | ~5 km | 5.5 kbps | −12.5 dB | EU 866 MHz SRD band (125 kHz BW); comparable to Medium Fast |
-| Lite Slow | ~10 km | 1.1 kbps | −15 dB | EU 866 MHz SRD band (125 kHz BW); comparable to Long Fast |
-| Narrow Fast | ~5 km | 2.7 kbps | −10 dB | EU 868 MHz band (62.5 kHz BW); avoids interference with other devices |
-| Narrow Slow | ~10 km | 1.1 kbps | −12.5 dB | EU 868 MHz band (62.5 kHz BW); comparable to Long Fast |
-| ~~Long Slow~~ | ~30 km | 0.18 kbps | −20 dB | ⚠️ **Deprecated** — still selectable but may be removed in a future firmware release |
-| ~~Very Long Slow~~ | ~40+ km | 0.09 kbps | −20 dB | ⚠️ **Deprecated** — still selectable but may be removed in a future firmware release |
+| Preset        | Range  | Speed     | SNR Limit | Best For |
+|---------------|--------|-----------|-----------|----------|
+| Short Turbo   | ~1 km  | 21.9 kbps | −7.5 dB   | Dense urban with line-of-sight; data-heavy applications |
+| Short Fast    | ~3 km  | 10.9 kbps | −7.5 dB   | Urban neighborhoods; buildings within a few blocks |
+| Medium Turbo  | ~5 km  | 7.0 kbps  | −12.5 dB  | Higher throughput than Medium Fast where 500 kHz bandwidth is permitted |
+| Short Slow    | ~5 km  | 6.3 kbps  | −10 dB    | Suburban short-range; moderate building density |
+| Medium Fast   | ~5 km  | 3.5 kbps  | −12.5 dB  | Suburban areas; moderate building density |
+| Narrow Fast   | ~5 km  | 2.3 kbps  | −7.5 dB   | EU 868 MHz narrow band and 70 cm / 1.25 m amateur bands (62.5 kHz BW) |
+| Medium Slow   | ~8 km  | 2.0 kbps  | −15 dB    | Suburban/rural; moderate range with slower speed |
+| Lite Fast     | ~5 km  | 1.8 kbps  | −12.5 dB  | EU 866 MHz SRD band (125 kHz BW); comparable to Medium Fast |
+| Long Turbo    | ~10 km | 1.3 kbps  | −17.5 dB  | Similar range to Long Fast but with 500 kHz bandwidth; faster throughput |
+| Narrow Slow   | ~10 km | 1.3 kbps  | −10 dB    | EU 868 MHz narrow band and 70 cm / 1.25 m amateur bands (62.5 kHz BW) |
+| Long Fast     | ~10 km | 1.1 kbps  | −17.5 dB  | **General use (default)** — balanced range and speed |
+| Lite Slow     | ~10 km | 0.98 kbps | −15 dB    | EU 866 MHz SRD band (125 kHz BW); comparable to Long Fast |
+| Tiny Fast     | ~15 km | 0.68 kbps | −7.5 dB   | 2 m amateur band (15.6 kHz BW); licensed operators only |
+| Long Moderate | ~20 km | 0.34 kbps | −17.5 dB  | Rural with some terrain; occasional use |
+| Tiny Slow     | ~25 km | 0.33 kbps | −10 dB    | 2 m amateur band (15.6 kHz BW); maximum range within the narrow channel |
 
-> ℹ️ **Note:** This table uses the common short names. In the app's preset dropdown they read as **Short Range - Fast**, **Long Range - Fast**, **Lite - Fast**, **Narrow - Fast**, and so on.
+> ℹ️ **Note:** This table uses the common short names. In the app's preset dropdown they read as **Short Range - Fast**, **Long Range - Fast**, **Lite - Fast**, **Narrow - Fast**, **Tiny - Fast**, and so on.
+
+> ⚠️ **Important:** The Lite, Narrow, and Tiny presets are only selectable in the regions they belong to, and the Turbo presets are unavailable in regions that do not permit 500 kHz bandwidth. The app filters the preset list to what the selected region allows.
 
 #### Choosing a Modem Preset
 
@@ -83,12 +86,13 @@ The modem preset controls the fundamental tradeoff between **range** and **data 
 - **Urban mesh (many nodes, short distances):** Use **Long Fast** (default) or **Short Fast**. Higher speed means less airtime congestion when many nodes share the channel.
 - **Rural/sparse mesh (few nodes, long distances):** Use **Long Moderate**. Range matters more than speed when nodes are far apart.
 - **EU 866/868 MHz regulatory compliance:** Use **Lite Fast**, **Lite Slow**, **Narrow Fast**, or **Narrow Slow** — these are optimized for the EU SRD/868 MHz bands with narrower bandwidths.
+- **Amateur (ham) bands:** Use **Tiny Fast** or **Tiny Slow** on 2 m, and **Narrow Fast** or **Narrow Slow** on 70 cm and 1.25 m. These require Licensed Operator to be enabled.
 - **Fixed infrastructure links:** Use **Short Turbo** or **Long Turbo** for dedicated point-to-point links with good antennas and line-of-sight.
 - **Mixed environments:** Stick with **Long Fast** — it's the community default and ensures compatibility with others in your area.
 
 > ⚠️ **Important:** All nodes on the same channel **must** use the same modem preset. Nodes with mismatched presets cannot communicate even if they share the same frequency and encryption key.
 
-> 💡 **Tip:** The range estimates above assume flat terrain and modest antennas. Elevation advantage (hilltop, rooftop) dramatically increases effective range. A well-placed Router with Long Fast can often outperform a ground-level node with Long Slow.
+> 💡 **Tip:** The range estimates above assume flat terrain and modest antennas. Elevation advantage (hilltop, rooftop) dramatically increases effective range. A well-placed Router with Long Fast can often outperform a ground-level node with Long Moderate.
 
 ### Display Config
 
