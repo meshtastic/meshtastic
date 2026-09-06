@@ -40,6 +40,19 @@ jobs:
               const filename = file.filename;
               const patch = file.patch || "";
 
+              // Frozen version snapshots are mechanical copies of docs/ made by
+              // `docusaurus docs:version`, and they follow their own rules: MDX
+              // partials must be imported relative to the snapshot (or via
+              // @site/versioned_docs/...), never @site/docs/, or an archived
+              // page renders the live partial. Nobody hand-edits these files, so
+              // contributor advice on them is noise at best and wrong at worst.
+              if (
+                filename.startsWith("versioned_docs/") ||
+                filename.startsWith("versioned_sidebars/")
+              ) {
+                continue;
+              }
+
               // Track what kind of changes we have
               if (filename.startsWith("blog/")) hasBlogChanges = true;
               if (filename.startsWith("docs/")) hasDocsChanges = true;

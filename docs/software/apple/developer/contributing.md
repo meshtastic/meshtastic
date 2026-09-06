@@ -98,10 +98,30 @@ Explain *what* changed and *why* in the body. Keep subject lines under 72 charac
 
 ## Updating Protobufs
 
-1. `git submodule update --remote protobufs/`
-2. `./scripts/gen_protos.sh`
-3. Build and verify tests pass.
-4. Commit generated changes together with the submodule pointer update.
+`./scripts/gen_protos.sh` bumps the `protobufs/` submodule and regenerates
+`MeshtasticProtobufs/Sources/` in one step — no separate `git submodule update`:
+
+```sh
+./scripts/gen_protos.sh             # pull protobufs origin/master, then regenerate
+./scripts/gen_protos.sh develop     # pull a different branch, tag or commit
+./scripts/gen_protos.sh --no-pull   # regenerate against the currently pinned protos
+```
+
+Only `protoc` needs to be installed (`brew install protobuf`). The script builds
+`protoc-gen-swift` itself, from the swift-protobuf version pinned in
+`MeshtasticProtobufs/Package.resolved` — **never** generate with a Homebrew
+`protoc-gen-swift`. Brew's plugin drifts older than what the project links and
+silently downgrades every generated file, dropping `Sendable`,
+`Swift.CaseIterable`/`allCases` and the `// swiftlint:disable all` header, which
+removes concurrency conformance and makes SwiftLint lint generated code.
+
+After regenerating:
+
+1. Build and verify tests pass.
+2. Mirror any new proto enum cases into the app-side enums that shadow them —
+   `FirmwareEditions`, `RegionCodes`, and friends map by raw value, so an
+   unmapped case silently falls back to a default instead of failing to compile.
+3. Commit the generated changes together with the submodule pointer update.
 
 ## Release Process
 

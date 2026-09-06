@@ -279,20 +279,19 @@ function rewriteInternalDocLinks(content, dRelPath, knownDestMdPaths) {
     // same subdir, the Docusaurus URL-relative resolution already works correctly
     // and we should NOT prepend `../`.
     if (!/^(\.\.\/|\.\/)/.test(target)) {
-      const withMd = target.endsWith(".md") ? target : `${target}.md`;
-      // Strip any fragment for the lookup
-      const targetFile = withMd.split("#")[0];
-      if (knownDestMdPaths && knownDestMdPaths.has(`${subdir}/${targetFile}`)) {
+      // Split the fragment off FIRST — extension checks against the whole target
+      // treated "codebase.md#anchor" as extension-less and appended a second
+      // ".md" ("codebase.md.md#anchor"), breaking every anchored sibling link.
+      const hashIdx = target.indexOf("#");
+      const file = hashIdx === -1 ? target : target.slice(0, hashIdx);
+      const frag = hashIdx === -1 ? "" : target.slice(hashIdx);
+      const withMd = file.endsWith(".md") ? file : `${file}.md`;
+      if (knownDestMdPaths && knownDestMdPaths.has(`${subdir}/${withMd}`)) {
         // Known sibling.  Docusaurus only resolves links with a .md extension
         // relative to the *file* path; extension-less links are resolved
         // relative to the *page URL* and break.  Ensure .md is present.
-        if (!target.endsWith(".md")) {
-          // Preserve any fragment: "deep-links#foo" → "./deep-links.md#foo"
-          const hashIdx = target.indexOf("#");
-          if (hashIdx !== -1) {
-            return "./" + target.slice(0, hashIdx) + ".md" + target.slice(hashIdx);
-          }
-          return `./${target}.md`;
+        if (!file.endsWith(".md")) {
+          return `./${withMd}${frag}`;
         }
         return target;
       }
