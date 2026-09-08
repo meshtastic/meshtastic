@@ -18,6 +18,8 @@ Alternatively, follow the instructions below.
 
 ### nRF52
 
+Every nRF52 device runs a small program called the bootloader before Meshtastic itself starts. It is what shows up as a USB drive when you double-click the reset button, and it installs whatever `.uf2` file you copy onto that drive. Newer Meshtastic bootloaders can factory erase the device by themselves; older ones need a separate erase firmware. The steps below start the same way and then branch depending on which bootloader your device has.
+
 To reset the flash storage on your nRF52 board:
 
 1. Download and unzip the latest firmware from [Meshtastic Downloads](https://meshtastic.org/downloads).
@@ -25,10 +27,29 @@ To reset the flash storage on your nRF52 board:
 3. Double click the reset button on your device (this will put it into bootloader mode)
 4. Notice a new drive will be mounted on your computer (Windows, Mac, or Linux)
 5. Open this drive and you should see three files: `CURRENT.UF2`, `INDEX.HTM`, and `INFO_UF2.TXT`
-6. Open the `INFO_UF2.TXT` file with a text editor and note the `SoftDevice` value.
-7. Find the file included in the downloaded firmware matching your softdevice major version number (7.x.x or 6.x.x). Either use `Meshtastic_nRF52_factory_erase_v3_S140_7.3.0.uf2` or `Meshtastic_nRF52_factory_erase_v3_S140_6.1.0.uf2` and copy it onto the new drive. The device should reboot.
-8. With the [Meshtastic CLI](/docs/software/python/cli/) installed, open your Terminal/Console and enter the command: `meshtastic --noproto`.
-9. You should see the message: `Formatting... Done`.
+6. Open the `INFO_UF2.TXT` file with a text editor. If it contains a line starting with `Factory-Erase:`, continue with [Bootloader factory erase](#bootloader-factory-erase). If there is no such line, continue with [Older bootloaders](#older-bootloaders).
+
+#### Bootloader factory erase
+
+1. Download [meshtastic_factory_erase.uf2](https://github.com/meshtastic/Adafruit_nRF52_Bootloader_OTAFIX/releases/download/0.9.2-OTAFIX2.4/meshtastic_factory_erase.uf2) (attached to every [Meshtastic nRF52 bootloader release](https://github.com/meshtastic/Adafruit_nRF52_Bootloader_OTAFIX/releases) from OTAFIX 2.4 on). One file works for every nRF52 board, so there is no SoftDevice version to match.
+2. Copy it onto the drive.
+3. About half a second after the copy finishes, the drive disappears. A couple of seconds later it comes back. That is the erase done: no serial connection or command line is needed. (If you eject the drive instead, the device resets immediately.)
+4. Either copy the firmware `.uf2` for your device from the firmware you unzipped at the start onto the drive, or just unplug the device. The firmware that was already installed is kept and starts as if the device were brand new.
+
+The erase clears everything Meshtastic stores on the device: its settings, its encryption keys, its Bluetooth pairings, and its node database (the list of other Meshtastic devices, or [nodes](/docs/terms/), it has heard from). The bootloader and the installed firmware are left untouched.
+
+#### Older bootloaders
+
+Bootloaders without a `Factory-Erase:` line in `INFO_UF2.TXT`, which includes every bootloader before OTAFIX 2.4 and the stock bootloaders many boards ship with, silently ignore `meshtastic_factory_erase.uf2`. Use the erase firmware included with each Meshtastic release instead:
+
+1. In `INFO_UF2.TXT`, note the `SoftDevice` value (the version of the device's built-in Bluetooth software).
+2. Find the file included in the downloaded firmware matching your softdevice major version number (7.x.x or 6.x.x). Either use `Meshtastic_nRF52_factory_erase_v3_S140_7.3.0.uf2` or `Meshtastic_nRF52_factory_erase_v3_S140_6.1.0.uf2` and copy it onto the new drive. The device should reboot.
+3. With the [Meshtastic CLI](/docs/software/python/cli/) installed, open your Terminal/Console and enter the command: `meshtastic --noproto`.
+4. You should see the message: `Formatting... Done`.
+
+:::caution
+The erase file must match your SoftDevice version: the wrong one can overwrite part of the SoftDevice and leave the device needing a hardware programmer to recover. If you copied `meshtastic_factory_erase.uf2` and nothing happened, your bootloader does not support it yet: use the steps above, or [update the bootloader](/docs/getting-started/flashing-firmware/nrf52/update-nrf52-bootloader) first and check `INFO_UF2.TXT` again.
+:::
 
 Once the device has been erased, you can proceed to install the latest Meshtastic firmware on a clean storage filesystem by clicking the link below.
 
