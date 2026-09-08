@@ -265,9 +265,7 @@ Navigate to: Settings >  Channels > LongFast: Turn on the sliders for **Uplink e
 
 #### 3. Configure Network Settings
 
-:::note
-This step applies only to nodes with built-in WiFi or Ethernet (for example ESP32-based boards). Devices without a network interface — such as nRF52 and RP2040 boards — have no **Network** section to configure. Connect those nodes to MQTT with **MQTT Client Proxy** instead, which routes MQTT traffic through the internet connection of the connected client app, and skip this step.
-:::
+Requires a node with WiFi or Ethernet. nRF52 and RP2040 boards have no **Network** section — use **MQTT Client Proxy** instead and skip this step.
 
 Navigate to: Settings >  Network: Turn on the slider for **WiFi enabled**, Enter the **SSID** and **PSK** for your network, then tap **Send**.
 
@@ -297,9 +295,7 @@ Navigate to Settings > Channels > Primary Channel: Turn on the sliders for **Upl
 
 #### 3. Configure Network Settings
 
-:::note
-This step applies only to nodes with built-in WiFi or Ethernet (for example ESP32-based boards). Devices without a network interface — such as nRF52 and RP2040 boards — have no **Network** section to configure. Connect those nodes to MQTT with **MQTT Client Proxy** instead, which routes MQTT traffic through the internet connection of the connected client app, and skip this step.
-:::
+Requires a node with WiFi or Ethernet. nRF52 and RP2040 boards have no **Network** section — use **MQTT Client Proxy** instead and skip this step.
 
 Navigate to Settings > Network: Turn on the slider for **WiFi enabled** - Enter your **SSID** and **PSK** for your network - Tap **Save**
 
@@ -331,9 +327,7 @@ meshtastic --ch-set uplink_enabled true --ch-index 0 --ch-set downlink_enabled t
 
 #### 3. Configure Network Settings
 
-:::note
-This step applies only to nodes with built-in WiFi or Ethernet (for example ESP32-based boards). Devices without a network interface — such as nRF52 and RP2040 boards — have no **Network** section to configure. Connect those nodes to MQTT with **MQTT Client Proxy** instead, which routes MQTT traffic through the internet connection of the connected client app, and skip this step.
-:::
+Requires a node with WiFi or Ethernet. nRF52 and RP2040 boards have no **Network** section — use **MQTT Client Proxy** instead and skip this step.
 
 ```shell
 meshtastic --set network.wifi_enabled true
@@ -376,9 +370,7 @@ Navigate to Channels > Primary: Turn on the sliders for **Uplink Enabled** and *
 
 #### 3. Configure Network Settings
 
-:::note
-This step applies only to nodes with built-in WiFi or Ethernet (for example ESP32-based boards). Devices without a network interface — such as nRF52 and RP2040 boards — have no **Network** section to configure. Connect those nodes to MQTT with **MQTT Client Proxy** instead, which routes MQTT traffic through the internet connection of the connected client app, and skip this step.
-:::
+Requires a node with WiFi or Ethernet. nRF52 and RP2040 boards have no **Network** section — use **MQTT Client Proxy** instead and skip this step.
 
 Navigate to Radio Config > Device > Network: Turn on the slider for **Enabled** - Enter your **SSID** and **PSK** for your network - Click the **Save** icon.
 

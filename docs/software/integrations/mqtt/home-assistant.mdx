@@ -178,11 +178,7 @@ sensor:
 
 ### Maps & Device Tracker
 
-To make it possible for your nodes to appear in maps within Home Assistant, you will need to set up a [device_tracker](https://www.home-assistant.io/integrations/device_tracker/) entity. Luckily, Home Assistant allows them to be created ad-hoc, simply by calling the `device_tracker.see` action from a script or automation.
-
-:::warning Deprecated in Home Assistant
-`device_tracker.see` is deprecated and is scheduled for removal in **Home Assistant Core 2027.5**. The example below still works on current releases, but it will need to be migrated before then — see [Device tracker changes in 2027.5](https://community.home-assistant.io/t/device-tracker-changes-in-2027-5-what-to-do/1009691) for the recommended replacements.
-:::
+To make it possible for your nodes to appear in maps within Home Assistant, you will need to set up a [device_tracker](https://www.home-assistant.io/integrations/device_tracker/) entity. Luckily, Home Assistant allows them to be created ad-hoc, simply by calling the `device_tracker.see` action from a script or automation. Note that `device_tracker.see` is deprecated and will be removed in Home Assistant Core 2027.5; see [Device tracker changes in 2027.5](https://community.home-assistant.io/t/device-tracker-changes-in-2027-5-what-to-do/1009691) for replacements.
 
 To do this, create a new automation and use the three-dots menu to change to the "Edit in YAML" mode, and set it up like the following:
 
