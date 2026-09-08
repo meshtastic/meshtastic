@@ -63,7 +63,7 @@ meshtastic --set network.wifi_ssid mywifissid --set network.wifi_psk mywifipsw -
 ```
 
 :::note
-For a full list of preferences which can be set (and their documentation) can be found in the [protobufs](https://buf.build/meshtastic/protobufs/docs/main:meshtastic#meshtastic.User).
+Every setting is documented under [Configuration](/docs/configuration/), which lists the accepted values for each one alongside its CLI name. The underlying field definitions can also be read directly from the [protobufs](https://buf.build/meshtastic/protobufs/docs/main:meshtastic#meshtastic.User).
 :::
 
 ### Changing channel settings
@@ -236,3 +236,26 @@ There is a problem with Big Sur and pyserial. The workaround is to install a new
 ```shell
 pip3 install -U --pre pyserial
 ```
+
+### `[Errno -2] Name or service not known` / `[Errno -3] Temporary failure in name resolution`
+
+Both are DNS failures: the hostname you passed to `--host` could not be resolved. `-2` means the name does not
+resolve, `-3` means the lookup itself failed (no DNS server reachable).
+
+Things to check:
+
+- Confirm the spelling of the hostname, and that the node is powered on and joined to your network.
+- If you are using an mDNS name such as `meshtastic.local`, confirm your platform resolves `.local` names —
+  this often fails on Windows and inside containers. Use the node's IP address instead.
+- Confirm the machine running the CLI has working DNS (`ping example.com`).
+- If the node is reachable by IP but not by name, pass the IP directly: `meshtastic --host 192.168.1.50 --info`.
+
+### `Warning: Error processing received packet: 'NoneType' object has no attribute 'get'`
+
+This warning is emitted when the CLI receives a packet it cannot decode — most commonly a packet encrypted with
+a channel key your node does not have. Internally the decoded payload is `None`, and reading a field from it
+raises this error, which is caught and printed as a warning.
+
+It is **non-fatal**: the packet is skipped and the CLI keeps running. It most often appears while a long-running
+command such as `--sendtext` is waiting, and can normally be ignored. If you see it constantly, it usually means
+nearby traffic is on channels your node cannot decrypt.

@@ -146,6 +146,25 @@ Legacy admin is enabled using the Legacy Admin channel option in [Security Confi
    ```
 6. You may add up to 3 Admin Keys, enabling control from up to 3 different nodes.
 
+:::info Adding, replacing, and removing Admin Keys
+`--set security.admin_key` is **additive** — each use appends a key to the list rather than replacing it. To manage the list:
+
+```bash
+# Add a single key to the existing list
+meshtastic --set security.admin_key "base64:PASTEPUBLICKEYHERE"
+
+# Clear the entire list
+meshtastic --set security.admin_key 0
+
+# Replace the list: clear first, then add, in one command
+meshtastic --set security.admin_key 0 \
+           --set security.admin_key "base64:FIRSTPUBLICKEY" \
+           --set security.admin_key "base64:SECONDPUBLICKEY"
+```
+
+There is no command to remove one individual key — clear the list and re-add the keys you want to keep.
+:::
+
 #### Setting up Remote Admin Using the Legacy Method
 
 To use the legacy method, set up an Admin channel as a secondary channel with the name `admin` by following the instructions in the [Channels](/docs/configuration/radio/channels/) section.
