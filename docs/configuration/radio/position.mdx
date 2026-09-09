@@ -33,7 +33,7 @@ Acceptable values: `true` or `false`
 
 False by default
 
-If set, this node is at a fixed position. The device will generate GPS updates at the regular GPS update interval, but use whatever the last lat/lon/alt it saved for the node. The lat/lon/alt can be set by an internal GPS or with the help of the mobile device's GPS.
+If set, this node is at a fixed position. The device will generate GPS updates at the regular GPS update interval, but use whatever the last lat/lon/alt it saved for the node. The lat/lon/alt can be set by an internal GPS, by the mobile device's GPS, or entered manually.
 
 ### Smart Broadcast
 
@@ -65,7 +65,7 @@ Default of `0` is 15 minutes
 
 If smart broadcast is off we should send our position this often.
 
-The GPS updates will be sent out every broadcast interval, either with the actual GPS location or an empty location if no GPS fix was achieved.
+A position is sent every broadcast interval: the GPS location once a fix is acquired, the saved lat/lon/alt if fixed position is set, otherwise an empty location.
 
 ### Position Flags
 

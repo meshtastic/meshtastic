@@ -62,9 +62,7 @@ Or to configure an ESP32 based board to join a Wifi network as a station:
 meshtastic --set network.wifi_ssid mywifissid --set network.wifi_psk mywifipsw --set network.wifi_enabled 1
 ```
 
-:::note
-For a full list of preferences which can be set (and their documentation) can be found in the [protobufs](https://buf.build/meshtastic/protobufs/docs/main:meshtastic#meshtastic.User).
-:::
+Settings and their accepted values are listed under [Configuration](/docs/configuration/); field definitions are in the [protobufs](https://buf.build/meshtastic/protobufs/docs/main:meshtastic#meshtastic.User).
 
 ### Changing channel settings
 
@@ -236,3 +234,11 @@ There is a problem with Big Sur and pyserial. The workaround is to install a new
 ```shell
 pip3 install -U --pre pyserial
 ```
+
+### `[Errno -2] Name or service not known` / `[Errno -3] Temporary failure in name resolution`
+
+DNS failures: the `--host` name did not resolve (`-2`) or the lookup itself failed (`-3`). `.local` mDNS names often fail on Windows and in containers — use the node's IP instead, for example `meshtastic --host 192.168.1.50 --info`.
+
+### `Warning: Error processing received packet: 'NoneType' object has no attribute 'get'`
+
+A packet the CLI cannot decode, usually one encrypted with a channel key your node does not have. Non-fatal — the packet is skipped and the CLI continues.

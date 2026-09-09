@@ -178,7 +178,7 @@ sensor:
 
 ### Maps & Device Tracker
 
-To make it possible for your nodes to appear in maps within Home Assistant, you will need to set up a [device_tracker](https://www.home-assistant.io/integrations/device_tracker/) entity. Luckily, Home Assistant allows them to be created ad-hoc, simply by calling the `device_tracker.see` service from a script or automation.
+To make it possible for your nodes to appear in maps within Home Assistant, you will need to set up a [device_tracker](https://www.home-assistant.io/integrations/device_tracker/) entity. Luckily, Home Assistant allows them to be created ad-hoc, simply by calling the `device_tracker.see` action from a script or automation. Note that `device_tracker.see` is deprecated and will be removed in Home Assistant Core 2027.5; see [Device tracker changes in 2027.5](https://community.home-assistant.io/t/device-tracker-changes-in-2027-5-what-to-do/1009691) for replacements.
 
 To do this, create a new automation and use the three-dots menu to change to the "Edit in YAML" mode, and set it up like the following:
 
@@ -195,7 +195,7 @@ trigger:
             value_json.payload.longitude_i is defined %}on{% endif %}
 condition: []
 action:
-  - service: device_tracker.see
+  - action: device_tracker.see
     metadata: {}
     data:
       dev_id: node_1
@@ -206,7 +206,7 @@ action:
 mode: single
 ```
 
-The `dev_id` within the service call determines what the `device_tracker` entity will be called, for example `device_tracker.node_1` for the above. Make sure that you have different names in this field for your different nodes, or they will all show up under the same tracker! Meshtastic represents latitude and longitude in integers, which is why they must be multiplied by `1e-7` to produce the real location.
+The `dev_id` within the action determines what the `device_tracker` entity will be called, for example `device_tracker.node_1` for the above. Make sure that you have different names in this field for your different nodes, or they will all show up under the same tracker! Meshtastic represents latitude and longitude in integers, which is why they must be multiplied by `1e-7` to produce the real location.
 
 Device trackers can also support a few different additional fields, but the one most relevant to Meshtastic usage is the battery level, which can be pulled in from the previously-created sensors as shown.
 
