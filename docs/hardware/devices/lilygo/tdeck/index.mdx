@@ -9,7 +9,7 @@ import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 import { DeviceImage } from "/src/components/DeviceImage";
 
-The T-Deck series is a family of compact handheld keyboard devices that pair a physical keyboard with different touchscreen displays. Variants include the original LCD T-Deck (and Plus) with support for MUI, and the new T-Deck Pro e-ink model for low-power, sunlight-readable operation.
+The T-Deck series is a family of compact handheld keyboard devices that pair a physical keyboard with different touchscreen displays. Variants include the original LCD T-Deck (and Plus) with support for [MUI](/docs/configuration/device-uis/meshtasticui/), and the new T-Deck Pro e-ink model for low-power, sunlight-readable operation.
 
 <Tabs
 groupId="t-deck"
@@ -53,19 +53,20 @@ T-Deck Plus variant also comes with a GPS module and a 2000 mAh battery
 
 ## Keyboard Shortcuts
 
-| Shortcut          | Function                                            |
-| ----------------- | --------------------------------------------------- |
-| `alt` & `b`       | Toggle keyboard backlight on/off.                   |
-| `alt` & `c`       | Toggle modifier function. `Fn` displayed on screen. |
-| `alt` & `c` + `m` | Disable/Enable notifications.                       |
-| `alt` & `c` + `q` | Quit/Cancel (message, canned message, etc.)         |
-| `alt` & `c` + `t` | Tab Key (once for dm recipient, twice for channel)  |
-| `alt` & `c` + `i` | Decrease screen brightness.                         |
-| `alt` & `c` + `o` | Increase screen brightness.                         |
-| `alt` & `c` + `g` | Toggle GPS.                                         |
-| `alt` & `c` + `⎵` | Send network ping.                                  |
+These shortcuts belong to [Base UI](/docs/configuration/device-uis/baseui/). Selecting [MUI](/docs/configuration/device-uis/meshtasticui/) replaces the input path, so none of the modifier shortcuts are available there.
 
-As of firmware version 2.3.9, there is a newly added modifier function key combo which allows additional shortcuts to be added. To enable the function key, you will press `alt` and `c` together; a small `Fn` will be displayed in the lower right of the screen. After the function key is enabled, you can press the key for the function you wish to execute. For example, to disable/enable notifications, you would press `alt` and `c` followed by `m`.
+| Shortcut          | [Base UI](/docs/configuration/device-uis/baseui/)   | [MUI](/docs/configuration/device-uis/meshtasticui/) |
+| ----------------- | --------------------------------------------------- | --------------------------------------------------- |
+| `alt` & `b`       | Toggle keyboard backlight on/off.                   | Toggle keyboard backlight on/off.                   |
+| `alt` & `c`       | Toggle the modifier function.                       | Not available.                                      |
+| `alt` & `c` + `m` | Disable/Enable notifications.                       | Not available.                                      |
+| `alt` & `c` + `q` | Quit/Cancel (message, canned message, etc.)         | Not available.                                      |
+| `alt` & `c` + `t` | Tab Key (once for dm recipient, twice for channel)  | Not available.                                      |
+| `alt` & `c` + `g` | Toggle GPS.                                         | Not available.                                      |
+
+`alt` & `b` works under both because the keyboard's own controller handles it. The Meshtastic firmware never sees that combination.
+
+To enable the function key, press `alt` and `c` together. Then press the key for the function to run. For example, to disable or enable notifications, press `alt` and `c` followed by `m`.
 
 ## Flashing
 
