@@ -843,7 +843,46 @@ export const FrequencyCalculator = (): JSX.Element => {
   };
 
   return (
-    <div className="flex flex-col border-l-[5px] shadow-md my-4 border-accent rounded-lg p-4 bg-secondary gap-2 text-[1.125em]">
+    <div className="fsc-root flex flex-col border-l-[5px] shadow-md my-4 border-accent rounded-lg p-4 bg-secondary gap-2 text-[1.125em]">
+      <style>{`
+        .fsc-root { container-type: inline-size; }
+        .fsc-grid {
+          display: grid;
+          grid-template-columns: minmax(0, 1fr);
+          gap: 0.5rem 0.75rem;
+          align-items: start;
+          min-width: 0;
+          max-width: 100%;
+        }
+        .fsc-grid > * { min-width: 0; }
+        .fsc-spacer { display: none; }
+        /* Spanning a row of content-sized columns would otherwise widen them all to fit
+           the notice on one line. Zero width with a full-width floor keeps it out of that
+           sizing pass, so the sentence wraps instead of stretching the widget. */
+        .fsc-notice {
+          grid-column: 1 / -1;
+          min-height: 4.95em;
+          width: 0;
+          min-width: 100%;
+          overflow-wrap: anywhere;
+        }
+        /* One label and control per line. The control may give up a little width before
+           the layout stacks, but never enough to overhang the column. */
+        @container (min-width: 26rem) {
+          .fsc-grid {
+            grid-template-columns: max-content minmax(7rem, max-content);
+            align-items: center;
+          }
+          .fsc-notice { min-height: 1.65em; }
+        }
+        /* Two pairs, once the widget itself is wide enough to hold them */
+        @container (min-width: 52rem) {
+          .fsc-grid {
+            grid-template-columns: max-content minmax(7rem, max-content) minmax(2rem, 1fr) max-content minmax(7rem, max-content);
+          }
+          .fsc-spacer { display: block; }
+        }
+      `}</style>
       <fieldset className="flex flex-wrap gap-2 mb-1 border-0 m-0 p-0 min-w-0">
         <legend className="sr-only">Filter regions</legend>
         {REGION_FILTERS.map(({ id, label }) => (
@@ -862,7 +901,7 @@ export const FrequencyCalculator = (): JSX.Element => {
           </button>
         ))}
       </fieldset>
-      <div className="grid grid-cols-1 sm:grid-cols-[max-content_max-content] xl:grid-cols-[max-content_max-content_minmax(2rem,1fr)_max-content_max-content] gap-x-3 gap-y-2 sm:items-center xl:max-w-4xl">
+      <div className="fsc-grid">
         <label htmlFor="region">Region:</label>
         <select
           id="region"
@@ -878,7 +917,7 @@ export const FrequencyCalculator = (): JSX.Element => {
             </option>
           ))}
         </select>
-        <div aria-hidden="true" className="hidden xl:block" />
+        <div aria-hidden="true" className="fsc-spacer" />
         <label htmlFor="modemPreset">Modem Preset:</label>
         <select
           id="modemPreset"
@@ -895,7 +934,7 @@ export const FrequencyCalculator = (): JSX.Element => {
           ))}
         </select>
         {/* Reserves the lines a notice needs at this width, so it never shifts the rows below */}
-        <output className="col-span-1 sm:col-span-2 xl:col-span-5 block min-h-[4.95em] sm:min-h-[1.65em] text-muted-foreground">
+        <output className="fsc-notice block text-muted-foreground">
           {swapNotice ? <p className="mt-0 mb-0">{swapNotice}</p> : null}
           {selectedRegion.profile.licensedOnly ? (
             <p className="mt-0 mb-0">
@@ -912,7 +951,7 @@ export const FrequencyCalculator = (): JSX.Element => {
           disabled={true}
           value={defaultSlot + 1} // Display as 1-based index
         />
-        <div aria-hidden="true" className="hidden xl:block" />
+        <div aria-hidden="true" className="fsc-spacer" />
         <label htmlFor="frequencySlot">Frequency Slot:</label>
         <select
           id="frequencySlot"
@@ -934,7 +973,7 @@ export const FrequencyCalculator = (): JSX.Element => {
           disabled={true}
           value={numChannels}
         />
-        <div aria-hidden="true" className="hidden xl:block" />
+        <div aria-hidden="true" className="fsc-spacer" />
         <label htmlFor="slotFrequency">Frequency of slot:</label>
         <input
           id="slotFrequency"
