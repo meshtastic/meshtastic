@@ -856,6 +856,28 @@ export const FrequencyCalculator = (): JSX.Element => {
         }
         .fsc-grid > * { min-width: 0; }
         .fsc-spacer { display: none; }
+        /* Secondary controls: they sit above the labels they filter, so they read at a
+           step below the form text and square off to match the tabs used elsewhere. */
+        .fsc-chip {
+          font: inherit;
+          font-size: 0.78em;
+          line-height: 1.5;
+          padding: 0.1em 0.55em;
+          border-radius: 0.25rem;
+          border: 1px solid hsl(var(--border));
+          background: transparent;
+          color: inherit;
+          opacity: 0.75;
+          cursor: pointer;
+          transition: opacity 0.15s ease, background-color 0.15s ease;
+        }
+        .fsc-chip:hover { opacity: 1; }
+        .fsc-chip[aria-pressed="true"] {
+          background: hsl(var(--btn-primary));
+          color: hsl(var(--btn-primary-foreground));
+          border-color: transparent;
+          opacity: 1;
+        }
         /* Spanning a row of content-sized columns would otherwise widen them all to fit
            the notice on one line. Zero width with a full-width floor keeps it out of that
            sizing pass, so the sentence wraps instead of stretching the widget. */
@@ -883,7 +905,7 @@ export const FrequencyCalculator = (): JSX.Element => {
           .fsc-spacer { display: block; }
         }
       `}</style>
-      <fieldset className="flex flex-wrap gap-2 mb-1 border-0 m-0 p-0 min-w-0">
+      <fieldset className="flex flex-wrap gap-1.5 mb-1 border-0 m-0 p-0 min-w-0">
         <legend className="sr-only">Filter regions</legend>
         {REGION_FILTERS.map(({ id, label }) => (
           <button
@@ -891,11 +913,7 @@ export const FrequencyCalculator = (): JSX.Element => {
             type="button"
             aria-pressed={regionFilter === id}
             onClick={() => onRegionFilterChange(id)}
-            className={`[font:inherit] cursor-pointer rounded-full border border-accent px-3 py-0.5 ${
-              regionFilter === id
-                ? "bg-primary [color:hsl(var(--btn-primary-foreground))]"
-                : "bg-transparent [color:inherit]"
-            }`}
+            className="fsc-chip"
           >
             {label}
           </button>
