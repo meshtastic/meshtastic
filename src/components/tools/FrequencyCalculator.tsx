@@ -775,7 +775,13 @@ const regionSwapForPreset = (
 };
 
 export const FrequencyCalculator = (): JSX.Element => {
-  const [modemPreset, setModemPreset] = useState<ModemPreset>(Preset.LONG_FAST);
+  // The widget opens on US, and since 2.8 the BaseUI region chooser installs LongTurbo
+  // when US is the first region picked on a new node, so open on the preset such a node
+  // actually runs. A region that does not offer it falls back to its own default when
+  // selected, which is what onRegionChange does below.
+  const [modemPreset, setModemPreset] = useState<ModemPreset>(
+    Preset.LONG_TURBO,
+  );
   const [region, setRegion] = useState<RegionCode>(Region.US);
   // A slot the user picked by hand, or null to follow the region default
   const [pickedSlot, setPickedSlot] = useState<number | null>(null);
