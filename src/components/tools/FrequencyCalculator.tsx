@@ -862,11 +862,11 @@ export const FrequencyCalculator = (): JSX.Element => {
           </button>
         ))}
       </fieldset>
-      <div className="grid grid-cols-1 sm:grid-cols-[minmax(0,max-content)_minmax(0,max-content)_minmax(2rem,1fr)_minmax(0,max-content)_minmax(0,max-content)] gap-x-3 gap-y-2 sm:items-center max-w-2xl">
+      <div className="grid grid-cols-1 sm:grid-cols-[max-content_max-content] xl:grid-cols-[max-content_max-content_minmax(2rem,1fr)_max-content_max-content] gap-x-3 gap-y-2 sm:items-center xl:max-w-4xl">
         <label htmlFor="region">Region:</label>
         <select
           id="region"
-          className="[font:inherit] [color:inherit] w-full min-w-0 max-w-full"
+          className="[font:inherit] [color:inherit] w-full"
           value={region}
           onChange={(e) =>
             onRegionChange(Number.parseInt(e.target.value) as RegionCode)
@@ -878,11 +878,11 @@ export const FrequencyCalculator = (): JSX.Element => {
             </option>
           ))}
         </select>
-        <div aria-hidden="true" className="hidden sm:block" />
+        <div aria-hidden="true" className="hidden xl:block" />
         <label htmlFor="modemPreset">Modem Preset:</label>
         <select
           id="modemPreset"
-          className="[font:inherit] [color:inherit] w-full min-w-0 max-w-full"
+          className="[font:inherit] [color:inherit] w-full"
           value={modemPreset}
           onChange={(e) =>
             onModemPresetChange(Number.parseInt(e.target.value) as ModemPreset)
@@ -895,7 +895,7 @@ export const FrequencyCalculator = (): JSX.Element => {
           ))}
         </select>
         {/* Reserves the lines a notice needs at this width, so it never shifts the rows below */}
-        <output className="col-span-1 sm:col-span-5 block min-h-[4.95em] sm:min-h-[1.65em] text-muted-foreground">
+        <output className="col-span-1 sm:col-span-2 xl:col-span-5 block min-h-[4.95em] sm:min-h-[1.65em] text-muted-foreground">
           {swapNotice ? <p className="mt-0 mb-0">{swapNotice}</p> : null}
           {selectedRegion.profile.licensedOnly ? (
             <p className="mt-0 mb-0">
@@ -907,16 +907,16 @@ export const FrequencyCalculator = (): JSX.Element => {
         <label htmlFor="defaultSlot">Default Frequency Slot:</label>
         <input
           id="defaultSlot"
-          className="[font:inherit] [color:inherit] w-full min-w-0 max-w-full"
+          className="[font:inherit] [color:inherit] w-full"
           type="number"
           disabled={true}
           value={defaultSlot + 1} // Display as 1-based index
         />
-        <div aria-hidden="true" className="hidden sm:block" />
+        <div aria-hidden="true" className="hidden xl:block" />
         <label htmlFor="frequencySlot">Frequency Slot:</label>
         <select
           id="frequencySlot"
-          className="[font:inherit] [color:inherit] w-full min-w-0 max-w-full"
+          className="[font:inherit] [color:inherit] w-full"
           value={channel}
           onChange={(e) => setPickedSlot(Number.parseInt(e.target.value))}
         >
@@ -929,16 +929,16 @@ export const FrequencyCalculator = (): JSX.Element => {
         <label htmlFor="numSlots">Number of slots:</label>
         <input
           id="numSlots"
-          className="[font:inherit] [color:inherit] w-full min-w-0 max-w-full"
+          className="[font:inherit] [color:inherit] w-full"
           type="number"
           disabled={true}
           value={numChannels}
         />
-        <div aria-hidden="true" className="hidden sm:block" />
+        <div aria-hidden="true" className="hidden xl:block" />
         <label htmlFor="slotFrequency">Frequency of slot:</label>
         <input
           id="slotFrequency"
-          className="[font:inherit] [color:inherit] w-full min-w-0 max-w-full"
+          className="[font:inherit] [color:inherit] w-full"
           type="number"
           disabled={true}
           value={channelFrequency}
