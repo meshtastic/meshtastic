@@ -422,18 +422,27 @@ export const LinkBudgetChart = () => {
           border-radius: 50%; cursor: pointer;
         }
         .lbc-hit:focus-visible { outline: 2px solid var(--lbc-ink); outline-offset: 0; }
+        /* Matches the frequency calculator's chips. That widget sets a larger root font,
+           so 0.875em here lands on the same 14px they render at. */
         .lbc-chip {
-          border-radius: 9999px;
-          border: 1px solid hsl(var(--accent));
-          padding: 0.1rem 0.75rem;
           font: inherit;
-          background: none;
+          font-size: 0.875em;
+          line-height: 1.5;
+          padding: 0.1em 0.55em;
+          border-radius: 0.25rem;
+          border: 1px solid hsl(var(--border));
+          background: transparent;
           color: inherit;
+          opacity: 0.75;
           cursor: pointer;
+          transition: opacity 0.15s ease, background-color 0.15s ease;
         }
+        .lbc-chip:hover { opacity: 1; }
         .lbc-chip[aria-pressed="true"] {
           background: hsl(var(--btn-primary));
           color: hsl(var(--btn-primary-foreground));
+          border-color: transparent;
+          opacity: 1;
         }
       `}</style>
 
@@ -638,7 +647,7 @@ export const LinkBudgetChart = () => {
         ) : null}
       </div>
 
-      <fieldset className="flex flex-wrap gap-2 border-0 m-0 p-0 min-w-0 mt-3">
+      <fieldset className="flex flex-wrap gap-1.5 border-0 m-0 p-0 min-w-0 mt-3">
         <legend className="sr-only">Filter presets</legend>
         {FILTERS.map(({ id, label }) => (
           <button
