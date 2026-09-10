@@ -632,10 +632,16 @@ export const LinkBudgetChart = () => {
 
         {hovered ? (
           <div
-            className="pointer-events-none absolute z-10 rounded-md border border-accent bg-secondary px-2 py-1 text-sm shadow-md"
+            className="pointer-events-none absolute z-10 max-w-[min(16rem,90%)] rounded-md border border-accent bg-secondary px-2 py-1 text-sm shadow-md"
             style={{
-              left: `${((hovered.cx + (hovered.cx > WIDTH * 0.6 ? -150 : 14)) / WIDTH) * 100}%`,
+              left: `${(hovered.cx / WIDTH) * 100}%`,
               top: `${(hovered.cy / HEIGHT) * 100}%`,
+              // Offsetting by the tooltip's own rendered width keeps it on the chart at
+              // any scale; a viewBox-unit guess only holds at one rendered size.
+              transform:
+                hovered.cx > WIDTH * 0.6
+                  ? "translate(calc(-100% - 0.75rem), -50%)"
+                  : "translate(0.75rem, -50%)",
             }}
           >
             <strong>{hovered.name}</strong>
