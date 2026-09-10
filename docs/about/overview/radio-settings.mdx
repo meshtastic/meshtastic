@@ -8,6 +8,7 @@ description: "Maximize your Meshtastic device's potential with detailed radio se
 ---
 
 import { FrequencyCalculator } from "/src/components/tools/FrequencyCalculator";
+import { LinkBudgetChart } from "/src/components/LinkBudgetChart";
 import QRCode from "@site/docs/blocks/_qr-code.mdx";
 
 :::info
@@ -18,7 +19,7 @@ Meshtastic is **not** LoRaWAN, Helium or TTN (TheThingsNetwork). Meshtastic uses
 Power limits will generally be lifted in the software if `is_licensed` is set to `true`. See [Ham Mode](/docs/faq#amateur-radio-ham) for more information.
 :::
 
-<div class="no-print">
+<div className="no-print">
   ## Frequency Slot Calculator
 
   <FrequencyCalculator />
@@ -97,7 +98,7 @@ We have eight primary LoRa radio presets. These are the most common settings and
 The link budget used by these calculations assumes a transmit power of 22dBm and an antenna with 0dB gain. Adjust your link budget assumptions based on your actual devices. Data-rate in this table is the theoretical max but doesn't account for packet headers, hops and re-transmissions. Calculations based on data from the official [Semtech LoRa calculator](https://www.semtech.com/design-support/lora-calculator).
 :::
 
-![link budget vs data rate plot](/img/about/link-budget-vs-data-rate.webp)
+<LinkBudgetChart />
 
 ### Custom Settings
 
