@@ -614,6 +614,33 @@ const UNSET_REGION = RegionData.get(Region.UNSET) as RegionInfo;
 const selectableRegions = Array.from(RegionData.keys()).filter(
   (code) => code !== Region.UNSET,
 );
+type RegionFilter = "all" | "unlicensed" | "ham" | "wide";
+
+const REGION_FILTERS: { id: RegionFilter; label: string }[] = [
+  { id: "all", label: "All" },
+  { id: "unlicensed", label: "Unlicensed" },
+  { id: "ham", label: "Licensed Only" },
+  { id: "wide", label: "2.4 GHz" },
+];
+
+// Ham regions are the licensed-only band plans, wide is the 2.4 GHz (wide LoRa) plan
+const regionMatchesFilter = (
+  code: RegionCode,
+  filter: RegionFilter,
+): boolean => {
+  const info = RegionData.get(code) ?? UNSET_REGION;
+  switch (filter) {
+    case "unlicensed":
+      return !info.profile.licensedOnly;
+    case "ham":
+      return info.profile.licensedOnly;
+    case "wide":
+      return info.wideLora;
+    default:
+      return true;
+  }
+};
+
 const DEFAULT_MODEM = modemPresets.get(Preset.LONG_FAST) as Modem;
 
 // Helper function to get the display name of a modem preset. An unnamed (default) channel
@@ -753,6 +780,11 @@ export const FrequencyCalculator = (): JSX.Element => {
   // A slot the user picked by hand, or null to follow the region default
   const [pickedSlot, setPickedSlot] = useState<number | null>(null);
   const [swapNotice, setSwapNotice] = useState<string | null>(null);
+  const [regionFilter, setRegionFilter] = useState<RegionFilter>("all");
+
+  const visibleRegions = selectableRegions.filter((code) =>
+    regionMatchesFilter(code, regionFilter),
+  );
 
   const selectedRegion = RegionData.get(region) ?? UNSET_REGION;
   const bandwidth = getBandwidth(modemPreset, selectedRegion.wideLora);
@@ -795,28 +827,62 @@ export const FrequencyCalculator = (): JSX.Element => {
     }
   };
 
+  // A filter that excludes the current region moves the picker to the first one it offers
+  const onRegionFilterChange = (nextFilter: RegionFilter) => {
+    setRegionFilter(nextFilter);
+
+    if (regionMatchesFilter(region, nextFilter)) {
+      return;
+    }
+    const firstMatch = selectableRegions.find((code) =>
+      regionMatchesFilter(code, nextFilter),
+    );
+    if (firstMatch !== undefined) {
+      onRegionChange(firstMatch);
+    }
+  };
+
   return (
-    <div className="flex flex-col border-l-[5px] shadow-md my-4 border-accent rounded-lg p-4 bg-secondary gap-2">
-      <div className="flex gap-2">
+    <div className="flex flex-col border-l-[5px] shadow-md my-4 border-accent rounded-lg p-4 bg-secondary gap-2 text-[1.125em]">
+      <fieldset className="flex flex-wrap gap-2 mb-1 border-0 m-0 p-0 min-w-0">
+        <legend className="sr-only">Filter regions</legend>
+        {REGION_FILTERS.map(({ id, label }) => (
+          <button
+            key={id}
+            type="button"
+            aria-pressed={regionFilter === id}
+            onClick={() => onRegionFilterChange(id)}
+            className={`[font:inherit] cursor-pointer rounded-full border border-accent px-3 py-0.5 ${
+              regionFilter === id
+                ? "bg-primary [color:hsl(var(--btn-primary-foreground))]"
+                : "bg-transparent [color:inherit]"
+            }`}
+          >
+            {label}
+          </button>
+        ))}
+      </fieldset>
+      <div className="grid grid-cols-[max-content_1fr] sm:grid-cols-[max-content_max-content_minmax(2rem,1fr)_max-content_max-content] gap-x-3 gap-y-2 items-center max-w-2xl">
         <label htmlFor="region">Region:</label>
         <select
           id="region"
+          className="[font:inherit] [color:inherit] w-full"
           value={region}
           onChange={(e) =>
             onRegionChange(Number.parseInt(e.target.value) as RegionCode)
           }
         >
-          {selectableRegions.map((key) => (
+          {visibleRegions.map((key) => (
             <option key={key} value={key}>
               {Region[key]}
             </option>
           ))}
         </select>
-      </div>
-      <div className="flex gap-2">
+        <div aria-hidden="true" className="hidden sm:block" />
         <label htmlFor="modemPreset">Modem Preset:</label>
         <select
           id="modemPreset"
+          className="[font:inherit] [color:inherit] w-full"
           value={modemPreset}
           onChange={(e) =>
             onModemPresetChange(Number.parseInt(e.target.value) as ModemPreset)
@@ -828,42 +894,29 @@ export const FrequencyCalculator = (): JSX.Element => {
             </option>
           ))}
         </select>
-      </div>
-      {swapNotice ? (
-        <p className="text-sm text-muted-foreground mb-0">{swapNotice}</p>
-      ) : null}
-      {selectedRegion.profile.licensedOnly ? (
-        <p className="text-sm text-muted-foreground mb-0">
-          Amateur radio band: an amateur radio license is required to transmit
-          here.
-        </p>
-      ) : null}
-      <div className="flex gap-2">
-        <label htmlFor="defaultSlot" className="font-semibold">
-          Default Frequency Slot:
-        </label>
+        {/* Holds one line of the theme's 1.65 line-height, so a notice does not shift the rows below */}
+        <output className="col-span-2 sm:col-span-5 block min-h-[1.65em] text-muted-foreground">
+          {swapNotice ? <p className="mt-0 mb-0">{swapNotice}</p> : null}
+          {selectedRegion.profile.licensedOnly ? (
+            <p className="mt-0 mb-0">
+              Amateur radio band: an amateur radio license is required to
+              transmit here.
+            </p>
+          ) : null}
+        </output>
+        <label htmlFor="defaultSlot">Default Frequency Slot:</label>
         <input
           id="defaultSlot"
+          className="[font:inherit] [color:inherit] w-full"
           type="number"
           disabled={true}
           value={defaultSlot + 1} // Display as 1-based index
         />
-      </div>
-      <div className="flex gap-2 mb-4">
-        <label htmlFor="numSlots" className="font-semibold">
-          Number of slots:
-        </label>
-        <input
-          id="numSlots"
-          type="number"
-          disabled={true}
-          value={numChannels}
-        />
-      </div>
-      <div className="flex gap-2">
+        <div aria-hidden="true" className="hidden sm:block" />
         <label htmlFor="frequencySlot">Frequency Slot:</label>
         <select
           id="frequencySlot"
+          className="[font:inherit] [color:inherit] w-full"
           value={channel}
           onChange={(e) => setPickedSlot(Number.parseInt(e.target.value))}
         >
@@ -873,13 +926,19 @@ export const FrequencyCalculator = (): JSX.Element => {
             </option>
           ))}
         </select>
-      </div>
-      <div className="flex gap-2">
-        <label htmlFor="slotFrequency" className="font-semibold">
-          Frequency of slot:
-        </label>
+        <label htmlFor="numSlots">Number of slots:</label>
+        <input
+          id="numSlots"
+          className="[font:inherit] [color:inherit] w-full"
+          type="number"
+          disabled={true}
+          value={numChannels}
+        />
+        <div aria-hidden="true" className="hidden sm:block" />
+        <label htmlFor="slotFrequency">Frequency of slot:</label>
         <input
           id="slotFrequency"
+          className="[font:inherit] [color:inherit] w-full"
           type="number"
           disabled={true}
           value={channelFrequency}
