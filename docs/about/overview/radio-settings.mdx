@@ -79,25 +79,42 @@ Various data-rate options are available when configuring a frequency slot and ar
 
 ### Presets
 
-We have eight primary LoRa radio presets. These are the most common settings and have been proven to work well:
+We have nine general purpose LoRa radio presets. These are the most common settings and have been proven to work well:
 
 |    Radio Preset          | Alt Preset Name  | Data-Rate  | SF / Symbols | Coding Rate |  Bandwidth   | Link Budget |
 | :--------------------:   | :--------------: | :--------: | :----------: | :---------: | :----------: | :---------: |
 |   Short Range / Turbo    |   Short Turbo    | 21.88 kbps |   7 / 128    |     4/5     |  500 kHz[^1] |    140dB    |
 |    Short Range / Fast    |    Short Fast    | 10.94 kbps |   7 / 128    |     4/5     |    250 kHz   |    143dB    |
 |    Short Range / Slow    |    Short Slow    | 6.25 kbps  |   8 / 256    |     4/5     |    250 kHz   |   145.5dB   |
+|   Medium Range / Turbo   |   Medium Turbo   | 7.03 kbps  |   9 / 512    |     4/5     |  500 kHz[^1] |    145dB    |
 |   Medium Range / Fast    |   Medium Fast    | 3.52 kbps  |   9 / 512    |     4/5     |    250 kHz   |    148dB    |
 |   Medium Range / Slow    |   Medium Slow    | 1.95 kbps  |  10 / 1024   |     4/5     |    250 kHz   |   150.5dB   |
-|    Long Range / Turbo    |    Long Turbo    | 1.34 kbps  |  11 / 2048   |     4/8     |    500 kHz   |    150dB    |
+|    Long Range / Turbo    |    Long Turbo    | 1.34 kbps  |  11 / 2048   |     4/8     |  500 kHz[^1] |    150dB    |
 |    Long Range / Fast     |    Long Fast     | 1.07 kbps  |  11 / 2048   |     4/5     |    250 kHz   |    153dB    |
 |  Long Range / Moderate   |  Long Moderate   | 0.34 kbps  |  11 / 2048   |     4/8     |    125 kHz   |    156dB    |
-| Long Range / Slow (depr.)|    Long Slow     | 0.18 kbps  |  12 / 4096   |     4/8     |    125 kHz   |   158.5dB   |
 
 :::note
 The link budget used by these calculations assumes a transmit power of 22dBm and an antenna with 0dB gain. Adjust your link budget assumptions based on your actual devices. Data-rate in this table is the theoretical max but doesn't account for packet headers, hops and re-transmissions. Calculations based on data from the official [Semtech LoRa calculator](https://www.semtech.com/design-support/lora-calculator).
 :::
 
 ![link budget vs data rate plot](/img/about/link-budget-vs-data-rate.webp)
+
+### Narrowband Presets
+
+Firmware 2.8 adds three narrowband preset families for bands where the 250 kHz and 500 kHz presets above are not permitted. Each family belongs to a specific [region](/docs/configuration/region-by-country) and cannot be selected anywhere else:
+
+- **Lite** — `EU_866`, the 865.6 - 867.6 MHz European SRD band.
+- **Narrow** — `EU_N_868`, plus the 70cm and 1.25m amateur regions (`ITU1_70CM`, `ITU2_70CM`, `ITU3_70CM`, `ITU2_125CM`).
+- **Tiny** — the 2m amateur regions (`ITU1_2M`, `ITU2_2M`, `ITU3_2M`), where many administrations cap the occupied bandwidth well below 62.5 kHz.
+
+| Radio Preset  | Alt Preset Name | Data-Rate  | SF / Symbols | Coding Rate | Bandwidth  | Link Budget |
+| :-----------: | :-------------: | :--------: | :----------: | :---------: | :--------: | :---------: |
+|  Lite / Fast  |    Lite Fast    | 1.76 kbps  |   9 / 512    |     4/5     |   125 kHz  |    151dB    |
+|  Lite / Slow  |    Lite Slow    | 0.98 kbps  |  10 / 1024   |     4/5     |   125 kHz  |   153.5dB   |
+| Narrow / Fast |   Narrow Fast   | 2.28 kbps  |   7 / 128    |     4/6     |  62.5 kHz  |    149dB    |
+| Narrow / Slow |   Narrow Slow   | 1.30 kbps  |   8 / 256    |     4/6     |  62.5 kHz  |   151.5dB   |
+|  Tiny / Fast  |    Tiny Fast    | 0.68 kbps  |   7 / 128    |     4/5     |  15.6 kHz  |    155dB    |
+|  Tiny / Slow  |    Tiny Slow    | 0.33 kbps  |   8 / 256    |     4/6     |  15.6 kHz  |   157.5dB   |
 
 ### Custom Settings
 
@@ -131,4 +148,4 @@ These frequency slot settings may not have been tested. Use at your own discreti
 
 The pre-shared key (PSK) used by the devices can be an AES128 or AES256 sequence. Alternatively, encryption can be turned off, which may be useful if you are operating under a ham radio license.
 
-[^1]: Short Turbo is the fastest preset and the only one with 500kHz bandwidth. It is not legal to use in all regions due to this wider bandwidth.
+[^1]: The Turbo presets use 500kHz bandwidth, which is not legal to use in all regions. They are unavailable in `EU_868` and in every narrowband region.
