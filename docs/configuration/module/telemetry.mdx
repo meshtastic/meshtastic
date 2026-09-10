@@ -63,7 +63,7 @@ Supported sensors connected to the I2C bus of the device will be automatically d
 |       MLX90632       |          0x3A          |                            Body temperature                            |
 |       NAU7802        |          0x2A          |             24-Bit differential ADC for Wheatstone bridge              |
 |       ADS1X15        | 0x48, 0x49, 0x4A, 0x4B |    ADC channel voltages (4 channels per device, 8 with two devices)    |
-|        AS3935        |    0x01, 0x02, 0x03    |        Lightning strike count (1h) and estimated storm distance        |
+|   AS3935[^as3935]    |    0x01, 0x02, 0x03    |        Lightning strike count (1h) and estimated storm distance        |
 |        BH1750        |          0x23          |                            Light intensity                             |
 | DS18B20 (via DS2482) |       0x18–0x1F        |                  Temperature (up to 8 1-Wire probes)                   |
 |        HM330X        |          0x40          |                      Concentration units by size                       |
@@ -77,9 +77,7 @@ Supported sensors connected to the I2C bus of the device will be automatically d
 |        SPA06         |       0x76, 0x77       |                    Barometric pressure, Temperature                    |
 |       TSL2561        |          0x29          |                            Light intensity                             |
 
-:::note
-For the AS3935, wiring its IRQ pin and defining `AS3935_IRQ` in the variant avoids polling the sensor over I2C every second.
-:::
+[^as3935]: Wiring the IRQ pin and defining `AS3935_IRQ` in the variant avoids polling the sensor over I2C every second.
 
 [^sen5x]: All SEN5X models report particulate matter by size.
 
