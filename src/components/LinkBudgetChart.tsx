@@ -264,7 +264,7 @@ const Mark = ({
   cx: number;
   cy: number;
   r: number;
-}): JSX.Element => {
+}) => {
   switch (shape) {
     case "square":
       return <rect x={cx - r} y={cy - r} width={r * 2} height={r * 2} />;
@@ -316,7 +316,7 @@ const matchesFilter = (preset: Preset, filter: FilterId): boolean => {
   }
 };
 
-export const LinkBudgetChart = (): JSX.Element => {
+export const LinkBudgetChart = () => {
   const [selected, setSelected] = useState<FilterId[]>([]);
   const [active, setActive] = useState<string | null>(null);
   const titleId = useId();
