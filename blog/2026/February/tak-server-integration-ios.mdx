@@ -9,6 +9,8 @@ hide_table_of_contents: false
 image: "/img/blog/tak_ios_blog_cover.png"
 ---
 
+import useBaseUrl from "@docusaurus/useBaseUrl";
+
 import ReactPlayer from "react-player";
 
 We're excited to announce a major new feature in the Meshtastic iOS app: TAK Server integration. This update bridges two powerful ecosystems—Meshtastic's long-range mesh networking and the Team Awareness Kit (TAK) family of applications such as iTAK and TAK Aware.
@@ -39,7 +41,7 @@ On Android, integrating Meshtastic with ATAK is straightforward. ATAK's plugin a
 iOS tells a different story. Apple's sandboxing and app isolation prevent apps from loading external plugins the way Android/ATAK can. This left iOS users without a path to TAK integration—until now.
 
 <div style={{textAlign: 'center', margin: '2rem 0'}}>
-  <img src="/img/blog/itak-user.png" alt="One does not simply meme" style={{maxWidth: '400px'}} />
+  <img src={useBaseUrl("/img/blog/itak-user.png")} alt="One does not simply meme" style={{maxWidth: '400px'}} />
   <p><em>One does not simply add a plugin to iOS - Boromir</em></p>
 </div>
 

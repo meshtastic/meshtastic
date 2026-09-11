@@ -3,13 +3,18 @@ require("dotenv").config();
 import path from "node:path";
 import remarkDefList from "remark-deflist";
 
+// Raw HTML in the config and in MDX bypasses Docusaurus link handling, so anything
+// built by hand has to prefix this itself. Overridable for builds served under a
+// path rather than at a domain root.
+const baseUrl = process.env.DOCS_BASE_URL ?? "/";
+
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: "Meshtastic",
   tagline:
     "An open source, off-grid, decentralized, mesh network built to run on affordable, low-power devices",
   url: "https://meshtastic.org",
-  baseUrl: "/",
+  baseUrl,
   trailingSlash: true,
   onBrokenLinks: "throw",
   favicon: "img/logo.svg",
@@ -72,7 +77,7 @@ const config = {
       ],
     },
     footer: {
-      copyright: `<a href="https://vercel.com/?utm_source=meshtastic&utm_campaign=oss">Powered by ▲ Vercel</a> | Meshtastic® is a registered trademark of Meshtastic LLC. | <a href="/docs/legal">Legal Information</a>.`,
+      copyright: `<a href="https://vercel.com/?utm_source=meshtastic&utm_campaign=oss">Powered by ▲ Vercel</a> | Meshtastic® is a registered trademark of Meshtastic LLC. | <a href="${baseUrl}docs/legal">Legal Information</a>.`,
     },
     algolia: {
       appId: "IG2GQB8L3V",

@@ -5,6 +5,8 @@ sidebar_label: Screens
 sidebar_position: 2
 ---
 
+import useBaseUrl from "@docusaurus/useBaseUrl";
+
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 
@@ -43,7 +45,7 @@ If pin ordering on the OLED board are swapped, there are some tricks to allow ei
     - [RAKwireless](https://msh.to/rak1921)
     - [RAKwireless AliExpress](https://msh.to/aliexpress-rak1921)
 
-[<img alt="0.96 inch OLED display" src="/img/hardware/screen.webp" style={{zoom:'25%'}} />](/img/hardware/screen.webp)
+[<img alt="0.96 inch OLED display" src={useBaseUrl("/img/hardware/screen.webp")} style={{zoom:'25%'}} />](/img/hardware/screen.webp)
 
 </TabItem>
 <TabItem value="E-Ink">
@@ -72,7 +74,7 @@ Please note only the white-black display is supported at this time, the white-bl
 
 <img
   alt="RAK4631 5005 14000"
-  src="/img/hardware/rak4631_5005_epaper.webp"
+  src={useBaseUrl("/img/hardware/rak4631_5005_epaper.webp")}
   style={{ zoom: "50%" }}
 />
 
