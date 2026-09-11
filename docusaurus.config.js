@@ -2,13 +2,12 @@ require("dotenv").config();
 
 import path from "node:path";
 import remarkDefList from "remark-deflist";
-import glossaryPlugin from "docusaurus-plugin-glossary";
 const remarkBaseUrlAssets = require("./src/remark/base-url-assets.js");
+const remarkGlossaryScope = require("./src/remark/glossary-scope.js");
 
 const glossaryOptions = {
   glossaryPath: "glossary/glossary.json",
   routePath: "/docs/terms/",
-  expandAcronymsOnFirstUse: true,
 };
 
 // Raw HTML in the config and in MDX bypasses Docusaurus link handling, so anything
@@ -170,7 +169,7 @@ const config = {
           remarkPlugins: [
             remarkDefList,
             [remarkBaseUrlAssets, { baseUrl }],
-            [glossaryPlugin.remarkPlugin, { ...glossaryOptions, siteDir: __dirname }],
+            [remarkGlossaryScope, { ...glossaryOptions, siteDir: __dirname }],
           ],
           lastVersion: "current",
           versions: {

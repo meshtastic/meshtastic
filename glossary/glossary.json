@@ -3,15 +3,38 @@
   "description": "Definitions of Meshtastic-specific terminology and common abbreviations.",
   "terms": [
     {
+      "term": "Android",
+      "autoLink": false,
+      "definition": "Google's mobile operating system. Meshtastic provides an Android client that connects to a node over Bluetooth, serial or TCP."
+    },
+    {
       "term": "Application",
       "aliases": ["App", "Client Application"],
       "autoLink": false,
       "definition": "An application that connects to a Meshtastic node, typically for the purpose of sending or receiving data through the mesh network."
     },
     {
+      "term": "ATAK",
+      "abbreviation": "Android Team Awareness Kit",
+      "definition": "The Android TAK client. An official Meshtastic plugin forwards its Cursor on Target traffic over the mesh.",
+      "relatedTerms": ["TAK"]
+    },
+    {
       "term": "Band",
       "autoLink": false,
       "definition": "A range of frequencies used for LoRa, dependent on region. Meshtastic further divides these bands into channels. Sometimes identified by the lower and upper bounds of the range (e.g. 902-928MHz), sometimes identified by a center frequency within the range (e.g. 915MHz), and sometimes only by the region they apply to (e.g. US)."
+    },
+    {
+      "term": "BLE",
+      "abbreviation": "Bluetooth Low Energy",
+      "definition": "The default wireless connection between a node and a phone client.",
+      "relatedTerms": ["Bluetooth"]
+    },
+    {
+      "term": "Bluetooth",
+      "autoLink": false,
+      "definition": "A short-range wireless link. Meshtastic clients use it to pair with a nearby node.",
+      "relatedTerms": ["BLE"]
     },
     {
       "term": "Broadcast",
@@ -47,7 +70,7 @@
     },
     {
       "term": "ESP32",
-      "definition": "A chipset of microcontroller made/designed by Espressif, used by a number of devices. Higher power usage than NRF52, but often cheaper and supports WiFi if desired."
+      "definition": "A chipset of microcontroller made/designed by Espressif, used by a number of devices. Higher power usage than NRF52, but often cheaper and supports Wi-Fi if desired."
     },
     {
       "term": "Firmware",
@@ -66,20 +89,77 @@
       "definition": "A Foreign Mesh is one in which the receiving node does not share any Channels with the transmitting node. When a node receives a message it is unable to decrypt, then the message is said to come from a Foreign Mesh."
     },
     {
+      "term": "GNSS",
+      "abbreviation": "Global Navigation Satellite System",
+      "definition": "A multi-constellation satellite positioning receiver. Hardware listing GNSS support typically receives GPS, BeiDou, GLONASS and QZSS.",
+      "relatedTerms": ["GPS"]
+    },
+    {
       "term": "GPIO",
       "abbreviation": "General Purpose Input/Output",
       "aliases": ["General Purpose Input/Output"],
       "definition": "An uncommitted digital signal pin on a device."
     },
     {
+      "term": "GPS",
+      "abbreviation": "Global Positioning System",
+      "definition": "A satellite positioning system. A node with a GPS module determines its own location and can report that position to the mesh.",
+      "relatedTerms": ["GNSS"]
+    },
+    {
+      "term": "I2C",
+      "aliases": ["I²C"],
+      "definition": "A two-wire bus used to attach peripherals such as sensors and displays to a device."
+    },
+    {
+      "term": "iOS",
+      "autoLink": false,
+      "definition": "Apple's mobile operating system. Meshtastic provides an Apple client for it."
+    },
+    {
+      "term": "IPEX",
+      "aliases": ["U.FL"],
+      "definition": "A miniature coaxial antenna connector found on many boards. The docs write it as U.FL/IPEX, using the two names interchangeably.",
+      "relatedTerms": ["SMA"]
+    },
+    {
+      "term": "JST",
+      "definition": "A small keyed board connector used for battery and solar leads, such as PHR-2 for a LiPo battery and ZHR-2 for solar input."
+    },
+    {
+      "term": "LED",
+      "abbreviation": "Light-Emitting Diode",
+      "definition": "An indicator light on a device. The External Notification module can drive one in response to mesh activity."
+    },
+    {
+      "term": "Linux",
+      "autoLink": false,
+      "definition": "An operating system family. meshtasticd runs Meshtastic natively on Linux with an attached LoRa radio."
+    },
+    {
       "term": "LoRa",
-      "definition": "A low-power, long-range wireless communication technology used by Meshtastic devices to enable communication over distances of several kilometers without the need for cellular, WiFi, or other traditional network infrastructures."
+      "definition": "A low-power, long-range wireless communication technology used by Meshtastic devices to enable communication over distances of several kilometers without the need for cellular, Wi-Fi, or other traditional network infrastructures."
     },
     {
       "term": "LoS",
       "abbreviation": "Line of Sight",
       "aliases": ["Line of Sight"],
       "definition": "A pathway through only air between two points."
+    },
+    {
+      "term": "LR1110",
+      "definition": "A Semtech LoRa transceiver, used in devices such as the Elecrow ThinkNode M3 and M4.",
+      "relatedTerms": ["SX1262"]
+    },
+    {
+      "term": "macOS",
+      "autoLink": false,
+      "definition": "Apple's desktop operating system. It runs the Apple client, and meshtasticd supports it."
+    },
+    {
+      "term": "MCU",
+      "abbreviation": "Microcontroller Unit",
+      "definition": "The microcontroller that runs the firmware on a device. The hardware tables list the MCU for each supported board."
     },
     {
       "term": "Mesh",
@@ -103,10 +183,25 @@
       "definition": "At least two definitions in Meshtastic usage: 1) A software plug-in to expand the capabilities of a Meshtastic device. 2) A hardware component or add-on for a Meshtastic device, such as a temperature sensor or GPS."
     },
     {
+      "term": "MOSFET",
+      "definition": "A transistor used as an electronic switch, for example to control power to a peripheral on a board."
+    },
+    {
       "term": "MQTT",
       "abbreviation": "Message Queuing Telemetry Transport",
       "aliases": ["Message Queuing Telemetry Transport"],
       "definition": "A lightweight messaging protocol designed for small sensors and mobile devices, enabling efficient data transmission in the Meshtastic network for Internet connectivity and integration with IoT platforms. See https://en.wikipedia.org/wiki/MQTT. In Meshtastic, MQTT is used to connect a node to the internet, and can be used to connect multiple meshes to each other."
+    },
+    {
+      "term": "MUI",
+      "abbreviation": "Meshtastic UI",
+      "aliases": ["MeshtasticUI", "Meshtastic UI"],
+      "definition": "An on-device interface for interacting with the mesh and changing most basic settings without a phone client."
+    },
+    {
+      "term": "NFC",
+      "abbreviation": "Near Field Communication",
+      "definition": "A very short-range wireless protocol. Some clients expose NFC-related settings."
     },
     {
       "term": "Node",
@@ -118,15 +213,26 @@
       "definition": "A microcontroller chipset made by Nordic, used by several devices such as the RAK Meshtastic Starter Kit and the Lilygo T-Echo. Lower power usage than ESP32."
     },
     {
+      "term": "OLED",
+      "abbreviation": "Organic Light-Emitting Diode",
+      "definition": "A display type used on many Meshtastic devices. The OLED Type setting selects which panel driver the firmware uses."
+    },
+    {
       "term": "OTA",
       "abbreviation": "Over the Air",
-      "aliases": ["Over the Air"],
       "definition": "Typically used to refer to an OTA update, one that happens over a wireless network."
     },
     {
       "term": "Packet",
       "autoLink": false,
       "definition": "A formatted unit of data sent over the network. In Meshtastic, packets carry messages, GPS locations, and other information through the LoRa mesh network."
+    },
+    {
+      "term": "PKC",
+      "abbreviation": "Public Key Cryptography",
+      "aliases": ["Public Key Cryptography"],
+      "definition": "A cryptographic method introduced in Meshtastic v2.5 for Direct Messages and Admin Messages, where each device uses a unique public and private key pair. The public key, shared with other devices, enables secure message encryption, while the private key allows only the intended recipient to decrypt and authenticate the message. This approach enhances privacy and integrity for both direct device-to-device communication and sensitive admin functions.",
+      "relatedTerms": ["PSK"]
     },
     {
       "term": "Protobuf",
@@ -138,23 +244,34 @@
       "term": "PSK",
       "abbreviation": "Pre-Shared Key",
       "aliases": ["Pre-Shared Key"],
-      "definition": "A secret code or passphrase used in Meshtastic channels for encryption, ensuring that only devices with the matching PSK can communicate within that specific channel."
+      "definition": "A secret code or passphrase used in Meshtastic channels for encryption, ensuring that only devices with the matching PSK can communicate within that specific channel.",
+      "relatedTerms": ["PKC"]
     },
     {
-      "term": "PKC",
-      "abbreviation": "Public Key Cryptography",
-      "aliases": ["Public Key Cryptography"],
-      "definition": "A cryptographic method introduced in Meshtastic v2.5 for Direct Messages and Admin Messages, where each device uses a unique public and private key pair. The public key, shared with other devices, enables secure message encryption, while the private key allows only the intended recipient to decrypt and authenticate the message. This approach enhances privacy and integrity for both direct device-to-device communication and sensitive admin functions."
+      "term": "QR",
+      "definition": "A scannable square code. In Meshtastic it encodes the Channel URL, which carries the channel and LoRa settings needed to join a mesh."
+    },
+    {
+      "term": "Raspberry Pi",
+      "autoLink": false,
+      "definition": "A single-board computer. With an attached LoRa radio it can run meshtasticd as a node."
     },
     {
       "term": "Repeater",
       "autoLink": false,
-      "definition": "Infrastructure node for extending network coverage by relaying messages with minimal overhead. Not visible in Nodes list."
+      "definition": "Infrastructure node for extending network coverage by relaying messages with minimal overhead. Not visible in Nodes list.",
+      "relatedTerms": ["Router"]
+    },
+    {
+      "term": "RF",
+      "abbreviation": "Radio Frequency",
+      "definition": "The radio signal a node transmits and receives over LoRa."
     },
     {
       "term": "Router",
       "autoLink": false,
-      "definition": "Infrastructure node for extending network coverage by relaying messages. Visible in Nodes list."
+      "definition": "Infrastructure node for extending network coverage by relaying messages. Visible in Nodes list.",
+      "relatedTerms": ["Repeater"]
     },
     {
       "term": "rp2040",
@@ -165,10 +282,16 @@
       "definition": "A microcontroller chip developed by Raspberry Pi, featuring dual ARM Cortex-M33 or Hazard3 RISC-V processors."
     },
     {
+      "term": "RSSI",
+      "abbreviation": "Received Signal Strength Indicator",
+      "definition": "The raw power level of a received signal, where a value closer to zero is stronger. Clients rate signal quality from SNR rather than RSSI.",
+      "relatedTerms": ["SNR"]
+    },
+    {
       "term": "RX",
       "abbreviation": "Receive",
-      "aliases": ["Receive"],
-      "definition": "The receiving of data over the radio link."
+      "definition": "The receiving of data over the radio link.",
+      "relatedTerms": ["TX"]
     },
     {
       "term": "Sensor",
@@ -181,16 +304,54 @@
       "definition": "A communication protocol used for the transmission of data between the Meshtastic device and a computer or other devices. Typically over USB or UART."
     },
     {
+      "term": "SMA",
+      "aliases": ["RP-SMA"],
+      "definition": "A threaded coaxial connector for attaching an external antenna. RP-SMA is the reverse-polarity variant, which is not interchangeable with it.",
+      "relatedTerms": ["IPEX"]
+    },
+    {
       "term": "SNR",
       "abbreviation": "Signal-to-Noise Ratio",
       "aliases": ["Signal-to-Noise Ratio"],
-      "definition": "A measure used in communications to quantify the level of a desired signal to the level of background noise. In Meshtastic and other wireless systems, a higher SNR indicates a clearer signal that can enhance the reliability and quality of data transmission."
+      "definition": "A measure used in communications to quantify the level of a desired signal to the level of background noise. In Meshtastic and other wireless systems, a higher SNR indicates a clearer signal that can enhance the reliability and quality of data transmission.",
+      "relatedTerms": ["RSSI"]
+    },
+    {
+      "term": "SPI",
+      "abbreviation": "Serial Peripheral Interface",
+      "definition": "A bus used between the microcontroller and peripherals such as the LoRa radio and the display."
+    },
+    {
+      "term": "SWD",
+      "abbreviation": "Serial Wire Debug",
+      "definition": "A two-pin debug and programming interface, used on STM32 devices to enter bootloader mode and flash firmware."
     },
     {
       "term": "SWR",
       "abbreviation": "Standing Wave Ratio",
       "aliases": ["Standing Wave Ratio"],
       "definition": "A measure of the efficiency of the radio frequency (RF) power transmission from a transmitter through a transmission line to an antenna in Meshtastic devices. It indicates the ratio of the amplitude of a standing wave at maximum to the amplitude at minimum, with an ideal SWR close to 1:1, signifying that most of the power is transmitted to the antenna with minimal reflections."
+    },
+    {
+      "term": "SX1262",
+      "definition": "A Semtech sub-GHz LoRa transceiver, used in most current Meshtastic hardware and recommended over the older SX127x series.",
+      "relatedTerms": ["SX1276", "LR1110"]
+    },
+    {
+      "term": "SX1276",
+      "definition": "A first-generation Semtech LoRa transceiver from the SX127x series, no longer recommended for new purchases.",
+      "relatedTerms": ["SX1262"]
+    },
+    {
+      "term": "TAK",
+      "abbreviation": "Team Awareness Kit",
+      "definition": "A situational awareness ecosystem. Meshtastic bridges to it by converting mesh messages to and from Cursor on Target format.",
+      "relatedTerms": ["ATAK"]
+    },
+    {
+      "term": "TCP",
+      "abbreviation": "Transmission Control Protocol",
+      "definition": "One of the three ways a client reaches a node, alongside serial and Bluetooth. Clients connect over TCP on port 4403."
     },
     {
       "term": "Telemetry",
@@ -210,7 +371,29 @@
     {
       "term": "TX",
       "abbreviation": "Transmit",
-      "definition": "The transmitting of data over the radio link."
+      "definition": "The transmitting of data over the radio link.",
+      "relatedTerms": ["RX"]
+    },
+    {
+      "term": "UART",
+      "abbreviation": "Universal Asynchronous Receiver-Transmitter",
+      "definition": "A serial interface used to communicate with a device over its pins or through a USB-to-serial bridge."
+    },
+    {
+      "term": "USB",
+      "abbreviation": "Universal Serial Bus",
+      "definition": "The wired connection used to power a device, flash firmware onto it, and communicate with it over serial."
+    },
+    {
+      "term": "Wi-Fi",
+      "aliases": ["WiFi"],
+      "autoLink": false,
+      "definition": "A wireless network connection. Devices that support it can join a network to reach MQTT or expose a network API."
+    },
+    {
+      "term": "Windows",
+      "autoLink": false,
+      "definition": "Microsoft's desktop operating system, supported for flashing firmware and for running Meshtastic clients."
     }
   ]
 }

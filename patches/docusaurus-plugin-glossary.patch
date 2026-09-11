@@ -1,0 +1,48 @@
+diff --git a/dist/theme/GlossaryTerm/index.cjs b/dist/theme/GlossaryTerm/index.cjs
+index 88a801adfa97e7c74064ad8113f0cdb31d077b26..e02b4d44fb6f3d2f12754a5dcf2cb037774230b5 100644
+--- a/dist/theme/GlossaryTerm/index.cjs
++++ b/dist/theme/GlossaryTerm/index.cjs
+@@ -56,7 +56,9 @@ function GlossaryTerm({
+     const viewportWidth = window.innerWidth;
+     const viewportHeight = window.innerHeight;
+     const preferredGap = 8;
+-    const hasSpaceAbove = wrapperRect.top >= tooltipRect.height + preferredGap;
++    const stickyHeader = document.querySelector(".navbar");
++    const topBoundary = stickyHeader ? stickyHeader.getBoundingClientRect().bottom : 0;
++    const hasSpaceAbove = wrapperRect.top - topBoundary >= tooltipRect.height + preferredGap;
+     const hasSpaceBelow = viewportHeight - wrapperRect.bottom >= tooltipRect.height + preferredGap;
+     const nextPlacement = hasSpaceAbove || !hasSpaceBelow ? "top" : "bottom";
+     let top;
+@@ -72,7 +74,7 @@ function GlossaryTerm({
+       Math.min(left, viewportWidth - tooltipRect.width - horizontalMargin)
+     );
+     setPlacement(nextPlacement);
+-    setTooltipStyle({ top: Math.max(4, top), left });
++    setTooltipStyle({ top: Math.max(topBoundary + 4, top), left });
+   }, []);
+   (0, import_react.useEffect)(() => {
+     if (!showTooltip) return;
+diff --git a/dist/theme/GlossaryTerm/index.js b/dist/theme/GlossaryTerm/index.js
+index 0eb7ea5e87d149d1165073c0179333e2ca3d1a38..9877bab80985cd1fd04ff882ce6f42af0ed16457 100644
+--- a/dist/theme/GlossaryTerm/index.js
++++ b/dist/theme/GlossaryTerm/index.js
+@@ -22,7 +22,9 @@ function GlossaryTerm({
+     const viewportWidth = window.innerWidth;
+     const viewportHeight = window.innerHeight;
+     const preferredGap = 8;
+-    const hasSpaceAbove = wrapperRect.top >= tooltipRect.height + preferredGap;
++    const stickyHeader = document.querySelector(".navbar");
++    const topBoundary = stickyHeader ? stickyHeader.getBoundingClientRect().bottom : 0;
++    const hasSpaceAbove = wrapperRect.top - topBoundary >= tooltipRect.height + preferredGap;
+     const hasSpaceBelow = viewportHeight - wrapperRect.bottom >= tooltipRect.height + preferredGap;
+     const nextPlacement = hasSpaceAbove || !hasSpaceBelow ? "top" : "bottom";
+     let top;
+@@ -38,7 +40,7 @@ function GlossaryTerm({
+       Math.min(left, viewportWidth - tooltipRect.width - horizontalMargin)
+     );
+     setPlacement(nextPlacement);
+-    setTooltipStyle({ top: Math.max(4, top), left });
++    setTooltipStyle({ top: Math.max(topBoundary + 4, top), left });
+   }, []);
+   useEffect(() => {
+     if (!showTooltip) return;
