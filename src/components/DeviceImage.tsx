@@ -45,7 +45,7 @@ const BASE_URL = "https://flasher.meshtastic.org/img/devices/";
  *
  * @example
  * ```mdx
- * import { DeviceImage } from "/src/components/DeviceImage";
+ * import { DeviceImage } from "@site/src/components/DeviceImage";
  *
  * <DeviceImage device="heltec-v3.svg" alt="Heltec V3" size="lg" />
  * <DeviceImage device="t-deck.svg" alt="LilyGO T-Deck" center />
@@ -95,7 +95,7 @@ export function DeviceImage({
  *
  * @example
  * ```mdx
- * import { DeviceImageRow } from "/src/components/DeviceImage";
+ * import { DeviceImageRow } from "@site/src/components/DeviceImage";
  *
  * <DeviceImageRow
  *   devices={[
@@ -128,7 +128,7 @@ export function DeviceImageRow({
  *
  * @example
  * ```mdx
- * import { DeviceShowcase } from "/src/components/DeviceImage";
+ * import { DeviceShowcase } from "@site/src/components/DeviceImage";
  *
  * <DeviceShowcase
  *   devices={[
@@ -218,7 +218,7 @@ export function DeviceShowcase({
  *
  * @example
  * ```mdx
- * import { DeviceSection } from "/src/components/DeviceImage";
+ * import { DeviceSection } from "@site/src/components/DeviceImage";
  *
  * <DeviceSection device="t-deck.svg" />
  *
