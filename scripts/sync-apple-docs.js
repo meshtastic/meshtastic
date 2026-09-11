@@ -142,22 +142,45 @@ function isRootAbsolute(url) {
 }
 
 /**
- * The JSX value for one rewritten attribute, or null to leave it alone. `srcset` holds
- * a comma-separated candidate list, so each URL is wrapped in turn and the descriptors
- * ("2x", "480w") are carried through untouched.
+ * Split a srcset into its candidates, following the HTML parsing rules: a URL runs to
+ * the next whitespace and may itself contain commas, as a data: URL does, so splitting
+ * on every comma would truncate one.
+ */
+function parseSrcset(value) {
+  const candidates = [];
+  let i = 0;
+  const isSpace = (index) => /\s/.test(value[index]);
+  while (i < value.length) {
+    while (i < value.length && (isSpace(i) || value[i] === ",")) i++;
+    if (i >= value.length) break;
+
+    const urlStart = i;
+    while (i < value.length && !isSpace(i)) i++;
+    let url = value.slice(urlStart, i);
+    let descriptor = "";
+
+    if (url.endsWith(",")) {
+      url = url.replace(/,+$/, "");
+    } else {
+      const descriptorStart = i;
+      while (i < value.length && value[i] !== ",") i++;
+      descriptor = value.slice(descriptorStart, i).trim();
+      if (value[i] === ",") i++;
+    }
+    candidates.push({ url, descriptor });
+  }
+  return candidates;
+}
+
+/**
+ * The JSX value for one rewritten attribute, or null to leave it alone. Each srcset
+ * candidate is wrapped in turn, with its descriptor ("2x", "480w") carried through.
  */
 function baseUrlAttrValue(name, value) {
   if (name.toLowerCase() !== "srcset") {
     return isRootAbsolute(value) ? `{useBaseUrl("${value}")}` : null;
   }
-  const candidates = value
-    .split(",")
-    .map((candidate) => candidate.trim())
-    .filter(Boolean)
-    .map((candidate) => {
-      const [url, ...descriptor] = candidate.split(/\s+/);
-      return { url, descriptor: descriptor.join(" ") };
-    });
+  const candidates = parseSrcset(value);
   if (!candidates.some(({ url }) => isRootAbsolute(url))) return null;
   if (candidates.length === 1 && !candidates[0].descriptor) {
     return `{useBaseUrl("${candidates[0].url}")}`;

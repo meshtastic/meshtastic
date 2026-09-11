@@ -26,6 +26,37 @@ const isRootAbsolute = (url) => url.startsWith("/") && !url.startsWith("//");
 const isHtmlElement = (name) =>
   typeof name === "string" && name[0] === name[0].toLowerCase();
 
+/**
+ * Split a srcset into its candidates, following the HTML parsing rules: a URL runs to
+ * the next whitespace and may itself contain commas, as a data: URL does, so splitting
+ * on every comma would truncate one.
+ */
+function parseSrcset(value) {
+  const candidates = [];
+  let i = 0;
+  const isSpace = (index) => /\s/.test(value[index]);
+  while (i < value.length) {
+    while (i < value.length && (isSpace(i) || value[i] === ",")) i++;
+    if (i >= value.length) break;
+
+    const urlStart = i;
+    while (i < value.length && !isSpace(i)) i++;
+    let url = value.slice(urlStart, i);
+    let descriptor = "";
+
+    if (url.endsWith(",")) {
+      url = url.replace(/,+$/, "");
+    } else {
+      const descriptorStart = i;
+      while (i < value.length && value[i] !== ",") i++;
+      descriptor = value.slice(descriptorStart, i).trim();
+      if (value[i] === ",") i++;
+    }
+    candidates.push({ url, descriptor });
+  }
+  return candidates;
+}
+
 function walk(node, visitor) {
   visitor(node);
   for (const child of node.children ?? []) {
@@ -35,7 +66,8 @@ function walk(node, visitor) {
 
 /** @param {{baseUrl?: string}} options */
 function remarkBaseUrlAssets({ baseUrl = "/" } = {}) {
-  const prefix = baseUrl.endsWith("/") ? baseUrl : `${baseUrl}/`;
+  // Normalised again here so the plugin is correct whatever it is handed.
+  const prefix = `/${baseUrl}/`.replace(/\/{2,}/g, "/");
 
   // At a domain root every path is already correct, so skip the traversal entirely.
   if (prefix === "/") {
@@ -48,23 +80,24 @@ function remarkBaseUrlAssets({ baseUrl = "/" } = {}) {
     return prefix + url.slice(1);
   };
 
-  /** srcset holds comma-separated candidates, each a URL with an optional descriptor. */
   const resolveSrcset = (value) => {
     let touched = false;
-    const candidates = value.split(",").map((candidate) => {
-      const trimmed = candidate.trim();
-      if (!trimmed) return trimmed;
-      const [url, ...descriptor] = trimmed.split(/\s+/);
+    const candidates = parseSrcset(value).map(({ url, descriptor }) => {
       const resolved = resolve(url);
       if (resolved) touched = true;
-      return [resolved ?? url, ...descriptor].join(" ");
+      return descriptor
+        ? `${resolved ?? url} ${descriptor}`
+        : (resolved ?? url);
     });
-    return touched ? candidates.filter(Boolean).join(", ") : null;
+    return touched ? candidates.join(", ") : null;
   };
 
   return (tree) => {
     walk(tree, (node) => {
-      if (node.type === "mdxJsxFlowElement" || node.type === "mdxJsxTextElement") {
+      if (
+        node.type === "mdxJsxFlowElement" ||
+        node.type === "mdxJsxTextElement"
+      ) {
         if (!isHtmlElement(node.name)) return;
         for (const attribute of node.attributes ?? []) {
           // Anything already an expression, such as useBaseUrl(), is left as written.
@@ -81,7 +114,10 @@ function remarkBaseUrlAssets({ baseUrl = "/" } = {}) {
         return;
       }
 
-      if (node.type === "link" && ASSET_PREFIXES.some((p) => node.url.startsWith(p))) {
+      if (
+        node.type === "link" &&
+        ASSET_PREFIXES.some((p) => node.url.startsWith(p))
+      ) {
         const resolved = resolve(node.url);
         if (resolved) node.url = resolved;
       }
