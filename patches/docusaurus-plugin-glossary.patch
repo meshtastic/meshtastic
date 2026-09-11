@@ -22,8 +22,39 @@ index 57169b64d0c4064adcb80ef2a2cbe7d131dff48b..c4c8e5f2c41b64abc0500e0a977d7c73
            const nextChar = afterIndex + 2 < textLower.length ? textLower[afterIndex + 2] : " ";
            if (!/\w/.test(nextChar)) {
              isWordBoundary = true;
+diff --git a/dist/chunk-EQBYCLUI.js b/dist/chunk-EQBYCLUI.js
+index 76c927e1e187095498a2f9d6014c840fa6b5abfc..127ec78925a127e288ebf0efd3a2b66fcb8b9a64 100644
+--- a/dist/chunk-EQBYCLUI.js
++++ b/dist/chunk-EQBYCLUI.js
+@@ -63,14 +63,18 @@ function glossaryPlugin(context, options = {}) {
+           routePath
+         })
+       );
+-      addRoute({
+-        path: routePath,
+-        component: path.join(currentDir, "components/GlossaryPage.js"),
+-        exact: true,
+-        modules: {
+-          glossaryData: glossaryDataPath
+-        }
+-      });
++      // routePath: null lets a site render the glossary itself, in a page of its
++      // own, without this plugin also registering one at the same path.
++      if (routePath !== null) {
++        addRoute({
++          path: routePath,
++          component: path.join(currentDir, "components/GlossaryPage.js"),
++          exact: true,
++          modules: {
++            glossaryData: glossaryDataPath
++          }
++        });
++      }
+       setGlobalData({
+         terms: glossaryContent.terms || [],
+         routePath
 diff --git a/dist/index.cjs b/dist/index.cjs
-index 0428381d07d043b7577a9e846e86c6f1a595c772..5cedb6633f54e2e83f1bb6f91db8e523a9e7c495 100644
+index 0428381d07d043b7577a9e846e86c6f1a595c772..08cedc713828fed2a1754a9c06185d53e36234d4 100644
 --- a/dist/index.cjs
 +++ b/dist/index.cjs
 @@ -205,15 +205,16 @@ function remarkGlossaryTerms({
@@ -46,8 +77,35 @@ index 0428381d07d043b7577a9e846e86c6f1a595c772..5cedb6633f54e2e83f1bb6f91db8e523
            const nextChar = afterIndex + 2 < textLower.length ? textLower[afterIndex + 2] : " ";
            if (!/\w/.test(nextChar)) {
              isWordBoundary = true;
+@@ -710,14 +711,18 @@ function glossaryPlugin(context, options = {}) {
+           routePath
+         })
+       );
+-      addRoute({
+-        path: routePath,
+-        component: import_path2.default.join(currentDir, "components/GlossaryPage.js"),
+-        exact: true,
+-        modules: {
+-          glossaryData: glossaryDataPath
+-        }
+-      });
++      // routePath: null lets a site render the glossary itself, in a page of its
++      // own, without this plugin also registering one at the same path.
++      if (routePath !== null) {
++        addRoute({
++          path: routePath,
++          component: import_path2.default.join(currentDir, "components/GlossaryPage.js"),
++          exact: true,
++          modules: {
++            glossaryData: glossaryDataPath
++          }
++        });
++      }
+       setGlobalData({
+         terms: glossaryContent.terms || [],
+         routePath
 diff --git a/dist/preset.cjs b/dist/preset.cjs
-index 5626528e696fdc5cbd9186d262b246c7c8e32dd0..376c2b0eabe0d285917dcf1b1b983a7cb11e1669 100644
+index 5626528e696fdc5cbd9186d262b246c7c8e32dd0..d9052bd40cc8509869f24bb786ec40fd70271e6e 100644
 --- a/dist/preset.cjs
 +++ b/dist/preset.cjs
 @@ -199,15 +199,16 @@ function remarkGlossaryTerms({
@@ -70,6 +128,33 @@ index 5626528e696fdc5cbd9186d262b246c7c8e32dd0..376c2b0eabe0d285917dcf1b1b983a7c
            const nextChar = afterIndex + 2 < textLower.length ? textLower[afterIndex + 2] : " ";
            if (!/\w/.test(nextChar)) {
              isWordBoundary = true;
+@@ -697,14 +698,18 @@ function glossaryPlugin(context, options = {}) {
+           routePath
+         })
+       );
+-      addRoute({
+-        path: routePath,
+-        component: import_path2.default.join(currentDir, "components/GlossaryPage.js"),
+-        exact: true,
+-        modules: {
+-          glossaryData: glossaryDataPath
+-        }
+-      });
++      // routePath: null lets a site render the glossary itself, in a page of its
++      // own, without this plugin also registering one at the same path.
++      if (routePath !== null) {
++        addRoute({
++          path: routePath,
++          component: import_path2.default.join(currentDir, "components/GlossaryPage.js"),
++          exact: true,
++          modules: {
++            glossaryData: glossaryDataPath
++          }
++        });
++      }
+       setGlobalData({
+         terms: glossaryContent.terms || [],
+         routePath
 diff --git a/dist/remark/glossary-terms.cjs b/dist/remark/glossary-terms.cjs
 index 289d45dbccad081e548d336df2c31745c4f3cdaa..6ddcf07a57705038ae9ecaed6e332d0b93bbedd6 100644
 --- a/dist/remark/glossary-terms.cjs
