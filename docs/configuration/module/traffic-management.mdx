@@ -17,7 +17,7 @@ Earlier traffic-reduction work in Meshtastic asked client nodes to send automate
 
 The module shapes **transit** traffic: it filters or answers packets passing through your node before they are rebroadcast. It never filters packets addressed to you, and it never changes what your own node sends.
 
-From 2.8.0, on supported targets the module **ships enabled**, with position deduplication running at its 11-hour default. Every other feature defaults to off, so the module is on out of the box but opt-in per feature. It was introduced in [meshtastic/firmware#9358](https://github.com/meshtastic/firmware/pull/9358).
+From 2.8.0, on supported targets the module **ships enabled**, with position deduplication running at its 5-hour default. Every other feature defaults to off, so the module is on out of the box but opt-in per feature. It was introduced in [meshtastic/firmware#9358](https://github.com/meshtastic/firmware/pull/9358).
 
 From 2.8.0 there are also no separate on/off switches. **Each feature is enabled by giving its setting a non-zero value**, and disabled by setting it back to `0`.
 
@@ -28,7 +28,7 @@ The module keeps a small amount of information about each node it has heard from
 | Setting                             | Acceptable Values   | Default |
 | :---------------------------------- | :------------------ | :------ |
 | `nodeinfo_direct_response_max_hops` | `0`-`3` (`0` = off) | `0`     |
-| `position_min_interval_secs`        | seconds (`0` = off) | `39600` |
+| `position_min_interval_secs`        | seconds (`0` = off) | `18000` |
 | `rate_limit_max_packets`            | packets (`0` = off) | `0`     |
 | `rate_limit_window_secs`            | seconds (`0` = off) | `0`     |
 | `unknown_packet_threshold`          | packets (`0` = off) | `0`     |
@@ -57,7 +57,7 @@ This is the module's most security-sensitive feature, because the reply goes out
 
 ### position_min_interval_secs
 
-The minimum time between position broadcasts from the same node **at the same location** before another is relayed. The default is 11 hours (`39600`); `0` disables it.
+The minimum time between position broadcasts from the same node **at the same location** before another is relayed. The default is 5 hours (`18000`); `0` disables it.
 
 "Same location" is deliberately approximate: positions are compared against a grid rather than exactly, so a node that has only drifted a little still counts as not having moved. By default that grid is around 90 m across. Its size comes from the channel's `position_precision`, not from a module setting.
 
@@ -111,7 +111,7 @@ Firmware **2.7.20 through 2.7.26** shipped a larger set of fields, which 2.8.0 r
 | `position_precision_bits`                                                           | Removed. Precision comes from the channel's own `position_precision`.             |
 | `exhaust_hop_telemetry`, `exhaust_hop_position`, `router_preserve_hops`              | Removed from the configuration and shelved in the firmware pending better heuristics. |
 
-Defaults changed too: on 2.7.x `position_min_interval_secs` defaulted to one day, and the module was off until `enabled` was set. From 2.8.0 the interval defaults to 11 hours and the module ships enabled with position deduplication running.
+Defaults changed too: on 2.7.x `position_min_interval_secs` defaulted to one day, and the module was off until `enabled` was set. From 2.8.0 the interval defaults to 5 hours and the module ships enabled with position deduplication running.
 
 A client that writes the 2.7.x fields to a 2.8.0 device is writing fields the device no longer has; a client that writes the 2.8.0 fields to a 2.7.x device will not enable anything, because the boolean switches will still be off.
 
@@ -172,7 +172,7 @@ All Traffic Management settings are available in the Python CLI.
 |                     Setting                          | Acceptable Values   | Default |
 | :--------------------------------------------------- | :------------------ | :------ |
 | traffic_management.nodeinfo_direct_response_max_hops  | `0`-`3` (`0` = off) | `0`     |
-| traffic_management.position_min_interval_secs         | `integer` (`0` = off) | `39600` |
+| traffic_management.position_min_interval_secs         | `integer` (`0` = off) | `18000` |
 | traffic_management.rate_limit_max_packets             | `integer` (`0` = off) | `0`     |
 | traffic_management.rate_limit_window_secs             | `integer` (`0` = off) | `0`     |
 | traffic_management.unknown_packet_threshold           | `integer` (`0` = off) | `0`     |
