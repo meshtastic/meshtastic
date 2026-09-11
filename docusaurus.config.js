@@ -192,8 +192,10 @@ const config = {
   },
   themes: ["@docusaurus/theme-mermaid"],
   future: {
+    faster: true,
     v4: {
       useCssCascadeLayers: false,
+      removeLegacyPostBuildHeadAttribute: true,
     },
   },
 };
