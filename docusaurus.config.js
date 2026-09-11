@@ -5,8 +5,12 @@ import remarkDefList from "remark-deflist";
 
 // Raw HTML in the config and in MDX bypasses Docusaurus link handling, so anything
 // built by hand has to prefix this itself. Overridable for builds served under a
-// path rather than at a domain root.
-const baseUrl = process.env.DOCS_BASE_URL ?? "/";
+// path rather than at a domain root. Docusaurus adds the trailing slash to the
+// value it is given, so do the same here or the two disagree.
+const configuredBaseUrl = process.env.DOCS_BASE_URL || "/";
+const baseUrl = configuredBaseUrl.endsWith("/")
+  ? configuredBaseUrl
+  : `${configuredBaseUrl}/`;
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {

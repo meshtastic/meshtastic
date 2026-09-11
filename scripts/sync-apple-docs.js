@@ -121,16 +121,52 @@ function rewriteImagePaths(content) {
  * under a path. These files are generated, so the fix belongs here.
  */
 function useBaseUrlForAssets(content) {
-  const attr = /\b(src|srcset|poster)=["'](\/(?!\/)[^"']*)["']/g;
+  const attr = /\b(src|srcset|poster)=["']([^"']*)["']/g;
   return content
     .split(/(```[\s\S]*?```|`[^`]+`)/)
     .map((seg, i) => {
       if (i % 2 === 1) return seg; // inside a code span/block - leave as-is
       return seg.replace(/<(?:img|source|video|audio)\b[^>]*>/gi, (tag) =>
-        tag.replace(attr, (_m, name, url) => `${name}={useBaseUrl("${url}")}`),
+        tag.replace(attr, (match, name, value) => {
+          const rewritten = baseUrlAttrValue(name, value);
+          return rewritten === null ? match : `${name}=${rewritten}`;
+        }),
       );
     })
     .join("");
+}
+
+/** Root-absolute paths are the ones baseUrl applies to; protocol-relative ones are external. */
+function isRootAbsolute(url) {
+  return url.startsWith("/") && !url.startsWith("//");
+}
+
+/**
+ * The JSX value for one rewritten attribute, or null to leave it alone. `srcset` holds
+ * a comma-separated candidate list, so each URL is wrapped in turn and the descriptors
+ * ("2x", "480w") are carried through untouched.
+ */
+function baseUrlAttrValue(name, value) {
+  if (name.toLowerCase() !== "srcset") {
+    return isRootAbsolute(value) ? `{useBaseUrl("${value}")}` : null;
+  }
+  const candidates = value
+    .split(",")
+    .map((candidate) => candidate.trim())
+    .filter(Boolean)
+    .map((candidate) => {
+      const [url, ...descriptor] = candidate.split(/\s+/);
+      return { url, descriptor: descriptor.join(" ") };
+    });
+  if (!candidates.some(({ url }) => isRootAbsolute(url))) return null;
+  if (candidates.length === 1 && !candidates[0].descriptor) {
+    return `{useBaseUrl("${candidates[0].url}")}`;
+  }
+  const parts = candidates.map(({ url, descriptor }) => {
+    const resolved = isRootAbsolute(url) ? `\${useBaseUrl("${url}")}` : url;
+    return descriptor ? `${resolved} ${descriptor}` : resolved;
+  });
+  return `{\`${parts.join(", ")}\`}`;
 }
 
 /** Add the useBaseUrl import when the page ended up using it. */
