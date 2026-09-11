@@ -38,14 +38,16 @@ export default function Glossary() {
 
   return (
     <div className="glossary">
-      <input
-        type="search"
-        className="glossary__search"
-        placeholder="Search terms..."
-        aria-label="Search glossary terms"
-        value={query}
-        onChange={(e) => setQuery(e.target.value)}
-      />
+      <div className="glossary__search-wrap">
+        <input
+          type="search"
+          className="glossary__search"
+          placeholder="Search terms..."
+          aria-label="Search glossary terms"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+        />
+      </div>
 
       {letters.length === 0 ? (
         <p className="glossary__empty">No terms match “{query}”.</p>
