@@ -9,6 +9,8 @@ hide_table_of_contents: false
 image: "/img/blog/2024_12_emoji_preview.png"
 ---
 
+import useBaseUrl from "@docusaurus/useBaseUrl";
+
 Emojis can add a whole new level of personalization and fun to your Meshtastic devices! From customizing `Short Names` to make your nodes stand out, to marking waypoints on the map, and even displaying expressive messages on OLED screens, emojis offer countless ways to make your Meshtastic setup uniquely yours. Whether you’re adding a practical touch or just having fun, there’s something for everyone in the world of Meshtastic emojis.
 
 {/* truncate */}
@@ -52,7 +54,7 @@ The possibilities are endless. You can pick emojis based on:
 The nodes list becomes much more visually engaging and easier to navigate when each node is represented by a unique emoji. It’s a fun and functional way to distinguish between devices at a glance.
 
 > <img
->   src="/img/blog/2024_12-emoji-image-10.webp"
+>   src={useBaseUrl("/img/blog/2024_12-emoji-image-10.webp")}
 >   alt="Nodes List"
 >   style={{ maxHeight: "400px", width: "auto" }}
 > />
@@ -62,7 +64,7 @@ The nodes list becomes much more visually engaging and easier to navigate when e
 The fun doesn’t stop at the nodes list! On the **Mesh Map**, nodes with emoji `Short Names` stand out, making it easy to quickly identify them at a glance. For nodes without emojis, the alphanumeric `Short Name` will be displayed instead. Check out the example below to see how emoji `Short Names` add a visual pop to the map:
 
 > <img
->   src="/img/blog/2024_12-emoji-image-11.webp"
+>   src={useBaseUrl("/img/blog/2024_12-emoji-image-11.webp")}
 >   alt="Mesh Map with Emoji Short Names"
 >   style={{ maxHeight: "400px", width: "auto" }}
 > />
@@ -85,7 +87,7 @@ The following emojis are supported and will display on the OLED screen when sent
 > Here's an example of how one is displayed on the OLED:
 >
 > <img
->   src="/img/blog/2024_12-emoji-image-5.webp"
+>   src={useBaseUrl("/img/blog/2024_12-emoji-image-5.webp")}
 >   alt="OLED Example"
 >   style={{ maxHeight: "400px", width: "auto" }}
 > />
