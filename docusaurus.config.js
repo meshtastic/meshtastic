@@ -2,9 +2,12 @@ require("dotenv").config();
 
 import path from "node:path";
 import remarkDefList from "remark-deflist";
+import glossaryPlugin from "docusaurus-plugin-glossary";
 const remarkBaseUrlAssets = require("./src/remark/base-url-assets.js");
-const remarkGlossaryScope = require("./src/remark/glossary-scope.js");
 
+// Terms link and show a definition on hover. Acronym expansion stays off: it
+// rewrites authored prose, and its "already expanded" guard misses any wording
+// the author varied, producing "Protocol Buffer (Protocol Buffers (protobuf))".
 const glossaryOptions = {
   glossaryPath: "glossary/glossary.json",
   routePath: "/docs/terms/",
@@ -169,7 +172,7 @@ const config = {
           remarkPlugins: [
             remarkDefList,
             [remarkBaseUrlAssets, { baseUrl }],
-            [remarkGlossaryScope, { ...glossaryOptions, siteDir: __dirname }],
+            [glossaryPlugin.remarkPlugin, { ...glossaryOptions, siteDir: __dirname }],
           ],
           lastVersion: "current",
           versions: {

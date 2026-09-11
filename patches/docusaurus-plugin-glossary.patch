@@ -1,3 +1,99 @@
+diff --git a/dist/chunk-CIAA7XR3.js b/dist/chunk-CIAA7XR3.js
+index 57169b64d0c4064adcb80ef2a2cbe7d131dff48b..c4c8e5f2c41b64abc0500e0a977d7c73656a11fb 100644
+--- a/dist/chunk-CIAA7XR3.js
++++ b/dist/chunk-CIAA7XR3.js
+@@ -153,15 +153,16 @@ function remarkGlossaryTerms({
+         const afterIndex = index + needle.length;
+         const afterChar = afterIndex < textLower.length ? textLower[afterIndex] : " ";
+         let matchLength = needle.length;
+-        let isWordBoundary = !/\w/.test(beforeChar) && !/\w/.test(afterChar);
+-        if (!isWordBoundary && afterChar === "s") {
++        const startsAtBoundary = !/\w/.test(beforeChar);
++        let isWordBoundary = startsAtBoundary && !/\w/.test(afterChar);
++        if (startsAtBoundary && !isWordBoundary && afterChar === "s") {
+           const nextChar = afterIndex + 1 < textLower.length ? textLower[afterIndex + 1] : " ";
+           if (!/\w/.test(nextChar)) {
+             isWordBoundary = true;
+             matchLength = needle.length + 1;
+           }
+         }
+-        if (!isWordBoundary && afterChar === "e" && afterIndex + 1 < textLower.length && textLower[afterIndex + 1] === "s") {
++        if (startsAtBoundary && !isWordBoundary && afterChar === "e" && afterIndex + 1 < textLower.length && textLower[afterIndex + 1] === "s") {
+           const nextChar = afterIndex + 2 < textLower.length ? textLower[afterIndex + 2] : " ";
+           if (!/\w/.test(nextChar)) {
+             isWordBoundary = true;
+diff --git a/dist/index.cjs b/dist/index.cjs
+index 0428381d07d043b7577a9e846e86c6f1a595c772..5cedb6633f54e2e83f1bb6f91db8e523a9e7c495 100644
+--- a/dist/index.cjs
++++ b/dist/index.cjs
+@@ -205,15 +205,16 @@ function remarkGlossaryTerms({
+         const afterIndex = index + needle.length;
+         const afterChar = afterIndex < textLower.length ? textLower[afterIndex] : " ";
+         let matchLength = needle.length;
+-        let isWordBoundary = !/\w/.test(beforeChar) && !/\w/.test(afterChar);
+-        if (!isWordBoundary && afterChar === "s") {
++        const startsAtBoundary = !/\w/.test(beforeChar);
++        let isWordBoundary = startsAtBoundary && !/\w/.test(afterChar);
++        if (startsAtBoundary && !isWordBoundary && afterChar === "s") {
+           const nextChar = afterIndex + 1 < textLower.length ? textLower[afterIndex + 1] : " ";
+           if (!/\w/.test(nextChar)) {
+             isWordBoundary = true;
+             matchLength = needle.length + 1;
+           }
+         }
+-        if (!isWordBoundary && afterChar === "e" && afterIndex + 1 < textLower.length && textLower[afterIndex + 1] === "s") {
++        if (startsAtBoundary && !isWordBoundary && afterChar === "e" && afterIndex + 1 < textLower.length && textLower[afterIndex + 1] === "s") {
+           const nextChar = afterIndex + 2 < textLower.length ? textLower[afterIndex + 2] : " ";
+           if (!/\w/.test(nextChar)) {
+             isWordBoundary = true;
+diff --git a/dist/preset.cjs b/dist/preset.cjs
+index 5626528e696fdc5cbd9186d262b246c7c8e32dd0..376c2b0eabe0d285917dcf1b1b983a7cb11e1669 100644
+--- a/dist/preset.cjs
++++ b/dist/preset.cjs
+@@ -199,15 +199,16 @@ function remarkGlossaryTerms({
+         const afterIndex = index + needle.length;
+         const afterChar = afterIndex < textLower.length ? textLower[afterIndex] : " ";
+         let matchLength = needle.length;
+-        let isWordBoundary = !/\w/.test(beforeChar) && !/\w/.test(afterChar);
+-        if (!isWordBoundary && afterChar === "s") {
++        const startsAtBoundary = !/\w/.test(beforeChar);
++        let isWordBoundary = startsAtBoundary && !/\w/.test(afterChar);
++        if (startsAtBoundary && !isWordBoundary && afterChar === "s") {
+           const nextChar = afterIndex + 1 < textLower.length ? textLower[afterIndex + 1] : " ";
+           if (!/\w/.test(nextChar)) {
+             isWordBoundary = true;
+             matchLength = needle.length + 1;
+           }
+         }
+-        if (!isWordBoundary && afterChar === "e" && afterIndex + 1 < textLower.length && textLower[afterIndex + 1] === "s") {
++        if (startsAtBoundary && !isWordBoundary && afterChar === "e" && afterIndex + 1 < textLower.length && textLower[afterIndex + 1] === "s") {
+           const nextChar = afterIndex + 2 < textLower.length ? textLower[afterIndex + 2] : " ";
+           if (!/\w/.test(nextChar)) {
+             isWordBoundary = true;
+diff --git a/dist/remark/glossary-terms.cjs b/dist/remark/glossary-terms.cjs
+index 289d45dbccad081e548d336df2c31745c4f3cdaa..6ddcf07a57705038ae9ecaed6e332d0b93bbedd6 100644
+--- a/dist/remark/glossary-terms.cjs
++++ b/dist/remark/glossary-terms.cjs
+@@ -188,15 +188,16 @@ function remarkGlossaryTerms({
+         const afterIndex = index + needle.length;
+         const afterChar = afterIndex < textLower.length ? textLower[afterIndex] : " ";
+         let matchLength = needle.length;
+-        let isWordBoundary = !/\w/.test(beforeChar) && !/\w/.test(afterChar);
+-        if (!isWordBoundary && afterChar === "s") {
++        const startsAtBoundary = !/\w/.test(beforeChar);
++        let isWordBoundary = startsAtBoundary && !/\w/.test(afterChar);
++        if (startsAtBoundary && !isWordBoundary && afterChar === "s") {
+           const nextChar = afterIndex + 1 < textLower.length ? textLower[afterIndex + 1] : " ";
+           if (!/\w/.test(nextChar)) {
+             isWordBoundary = true;
+             matchLength = needle.length + 1;
+           }
+         }
+-        if (!isWordBoundary && afterChar === "e" && afterIndex + 1 < textLower.length && textLower[afterIndex + 1] === "s") {
++        if (startsAtBoundary && !isWordBoundary && afterChar === "e" && afterIndex + 1 < textLower.length && textLower[afterIndex + 1] === "s") {
+           const nextChar = afterIndex + 2 < textLower.length ? textLower[afterIndex + 2] : " ";
+           if (!/\w/.test(nextChar)) {
+             isWordBoundary = true;
 diff --git a/dist/theme/GlossaryTerm/index.cjs b/dist/theme/GlossaryTerm/index.cjs
 index 88a801adfa97e7c74064ad8113f0cdb31d077b26..e02b4d44fb6f3d2f12754a5dcf2cb037774230b5 100644
 --- a/dist/theme/GlossaryTerm/index.cjs
