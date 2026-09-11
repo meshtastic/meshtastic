@@ -9,7 +9,7 @@ import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 import { Icon } from "@iconify/react";
 
-If your device is connected to Internet via WiFi or ethernet, you can enable it to forward packets along to an MQTT server. This allows users on the local mesh to communicate with users on the internet. One or more channels must also be enabled as uplink and/or downlink for packets to be transmitted from and/or to your mesh (See [channels](/docs/configuration/radio/channels#downlink-enabled)).
+If your device is connected to Internet via Wi-Fi or ethernet, you can enable it to forward packets along to an MQTT server. This allows users on the local mesh to communicate with users on the internet. One or more channels must also be enabled as uplink and/or downlink for packets to be transmitted from and/or to your mesh (See [channels](/docs/configuration/radio/channels#downlink-enabled)).
 
 The MQTT module config options are: Enabled, Server Address, Username, Password, Encryption Enabled, JSON Enabled, TLS Enabled, Root Topic, Client Proxy Enabled, Map Reporting Enabled (with Position Precision and Publish Interval), and Okay to MQTT. MQTT Module config uses an admin message sending a `ConfigModule.MQTT` protobuf.
 
@@ -265,9 +265,9 @@ Navigate to: Settings >  Channels > LongFast: Turn on the sliders for **Uplink e
 
 #### 3. Configure Network Settings
 
-Requires a node with WiFi or Ethernet. nRF52 and RP2040 boards have no **Network** section — use **MQTT Client Proxy** instead and skip this step.
+Requires a node with Wi-Fi or Ethernet. nRF52 and RP2040 boards have no **Network** section — use **MQTT Client Proxy** instead and skip this step.
 
-Navigate to: Settings >  Network: Turn on the slider for **WiFi enabled**, Enter the **SSID** and **PSK** for your network, then tap **Send**.
+Navigate to: Settings >  Network: Turn on the slider for **Wi-Fi enabled**, Enter the **SSID** and **PSK** for your network, then tap **Send**.
 
 [![Network Settings](/img/modules/mqtt/android_network_sm.webp)](/img/modules/mqtt/android_network.webp)
 
@@ -295,9 +295,9 @@ Navigate to Settings > Channels > Primary Channel: Turn on the sliders for **Upl
 
 #### 3. Configure Network Settings
 
-Requires a node with WiFi or Ethernet. nRF52 and RP2040 boards have no **Network** section — use **MQTT Client Proxy** instead and skip this step.
+Requires a node with Wi-Fi or Ethernet. nRF52 and RP2040 boards have no **Network** section — use **MQTT Client Proxy** instead and skip this step.
 
-Navigate to Settings > Network: Turn on the slider for **WiFi enabled** - Enter your **SSID** and **PSK** for your network - Tap **Save**
+Navigate to Settings > Network: Turn on the slider for **Wi-Fi enabled** - Enter your **SSID** and **PSK** for your network - Tap **Save**
 
 [![Network Settings](/img/modules/mqtt/apple_network_sm.webp)](/img/modules/mqtt/apple_network.webp)
 
@@ -327,7 +327,7 @@ meshtastic --ch-set uplink_enabled true --ch-index 0 --ch-set downlink_enabled t
 
 #### 3. Configure Network Settings
 
-Requires a node with WiFi or Ethernet. nRF52 and RP2040 boards have no **Network** section — use **MQTT Client Proxy** instead and skip this step.
+Requires a node with Wi-Fi or Ethernet. nRF52 and RP2040 boards have no **Network** section — use **MQTT Client Proxy** instead and skip this step.
 
 ```shell
 meshtastic --set network.wifi_enabled true
@@ -370,7 +370,7 @@ Navigate to Channels > Primary: Turn on the sliders for **Uplink Enabled** and *
 
 #### 3. Configure Network Settings
 
-Requires a node with WiFi or Ethernet. nRF52 and RP2040 boards have no **Network** section — use **MQTT Client Proxy** instead and skip this step.
+Requires a node with Wi-Fi or Ethernet. nRF52 and RP2040 boards have no **Network** section — use **MQTT Client Proxy** instead and skip this step.
 
 Navigate to Radio Config > Device > Network: Turn on the slider for **Enabled** - Enter your **SSID** and **PSK** for your network - Click the **Save** icon.
 
