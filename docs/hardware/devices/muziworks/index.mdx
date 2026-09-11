@@ -5,6 +5,8 @@ sidebar_position: 7
 hide_title: true
 ---
 
+import useBaseUrl from "@docusaurus/useBaseUrl";
+
 import { Dark, Light } from "@site/src/components/ColorMode";
 import { DeviceSection } from "@site/src/components/DeviceImage";
 
@@ -12,14 +14,14 @@ import { DeviceSection } from "@site/src/components/DeviceImage";
   <a href="https://muzi.works" target="_blank" rel="noopener noreferrer">
     <Dark>
       <img
-        src="/img/hardware/muzi/muziWORKS.svg"
+        src={useBaseUrl("/img/hardware/muzi/muziWORKS.svg")}
         alt="muzi ᴡᴏʀᴋꜱ Dark"
         style={{ maxWidth: "280px", width: "100%", height: "auto" }}
       />
     </Dark>
     <Light>
       <img
-        src="/img/hardware/muzi/muziWORKS-inverse.svg"
+        src={useBaseUrl("/img/hardware/muzi/muziWORKS-inverse.svg")}
         alt="muzi ᴡᴏʀᴋꜱ Light"
         style={{ maxWidth: "280px", width: "100%", height: "auto" }}
       />
