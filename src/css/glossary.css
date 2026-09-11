@@ -1,0 +1,33 @@
+/* docusaurus-plugin-glossary overrides: align tooltip/term styling with the
+   Meshtastic design standards palette (section 7) instead of the plugin's
+   emphasis-scale defaults. */
+.glossaryTermWrapper .glossaryTerm {
+  border-bottom-color: color-mix(in srgb, var(--ifm-color-primary) 60%, transparent);
+}
+
+.glossaryTermWrapper .glossaryTerm:hover {
+  color: var(--ifm-color-primary);
+}
+
+.glossaryTermWrapper .tooltip {
+  background: hsl(var(--popover));
+  color: hsl(var(--popover-foreground));
+  border-color: hsl(var(--border));
+}
+
+.glossaryTermWrapper .tooltip strong {
+  color: var(--ifm-color-primary);
+}
+
+.glossaryTermWrapper .tooltipTop::after {
+  border-top-color: hsl(var(--popover));
+}
+.glossaryTermWrapper .tooltipTop::before {
+  border-top-color: hsl(var(--border));
+}
+.glossaryTermWrapper .tooltipBottom::after {
+  border-bottom-color: hsl(var(--popover));
+}
+.glossaryTermWrapper .tooltipBottom::before {
+  border-bottom-color: hsl(var(--border));
+}

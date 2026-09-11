@@ -2,7 +2,14 @@ require("dotenv").config();
 
 import path from "node:path";
 import remarkDefList from "remark-deflist";
+import glossaryPlugin from "docusaurus-plugin-glossary";
 const remarkBaseUrlAssets = require("./src/remark/base-url-assets.js");
+
+const glossaryOptions = {
+  glossaryPath: "glossary/glossary.json",
+  routePath: "/docs/terms/",
+  expandAcronymsOnFirstUse: true,
+};
 
 // Raw HTML in the config and in MDX bypasses Docusaurus link handling, so anything
 // built by hand has to prefix this itself. Overridable for builds served under a
@@ -134,6 +141,7 @@ const config = {
       };
     },
     "@docusaurus/plugin-vercel-analytics",
+    ["docusaurus-plugin-glossary", glossaryOptions],
   ],
   scripts: [
     ...(process.env.COOKIEYES_CLIENT_ID
@@ -159,7 +167,11 @@ const config = {
               : undefined,
           breadcrumbs: false,
           showLastUpdateAuthor: true,
-          remarkPlugins: [remarkDefList, [remarkBaseUrlAssets, { baseUrl }]],
+          remarkPlugins: [
+            remarkDefList,
+            [remarkBaseUrlAssets, { baseUrl }],
+            [glossaryPlugin.remarkPlugin, { ...glossaryOptions, siteDir: __dirname }],
+          ],
           lastVersion: "current",
           versions: {
             current: { label: "2.8" },

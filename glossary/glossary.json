@@ -1,0 +1,216 @@
+{
+  "title": "Glossary of Terms",
+  "description": "Definitions of Meshtastic-specific terminology and common abbreviations.",
+  "terms": [
+    {
+      "term": "Application",
+      "aliases": ["App", "Client Application"],
+      "autoLink": false,
+      "definition": "An application that connects to a Meshtastic node, typically for the purpose of sending or receiving data through the mesh network."
+    },
+    {
+      "term": "Band",
+      "autoLink": false,
+      "definition": "A range of frequencies used for LoRa, dependent on region. Meshtastic further divides these bands into channels. Sometimes identified by the lower and upper bounds of the range (e.g. 902-928MHz), sometimes identified by a center frequency within the range (e.g. 915MHz), and sometimes only by the region they apply to (e.g. US)."
+    },
+    {
+      "term": "Broadcast",
+      "autoLink": false,
+      "definition": "Sending a message or data from one device to all other devices within range in the Meshtastic network, rather than to a specific recipient."
+    },
+    {
+      "term": "Channel",
+      "autoLink": false,
+      "definition": "At least two definitions in Meshtastic usage: 1) One of 8 configurable channels in the firmware, each supporting a separate name and encryption, with one set as primary and the rest secondary. 2) A specific frequency within a LoRa band that a device can be configured to use."
+    },
+    {
+      "term": "CLI",
+      "abbreviation": "Command Line Interface",
+      "aliases": ["Command Line Interface"],
+      "definition": "A text-based interface used for interacting with software or devices like Meshtastic."
+    },
+    {
+      "term": "Client",
+      "autoLink": false,
+      "definition": "A device or application that connects to a Meshtastic node, typically for the purpose of sending or receiving data through the mesh network."
+    },
+    {
+      "term": "Device",
+      "autoLink": false,
+      "definition": "A physical piece of hardware that utilizes the Meshtastic software and LoRa (Long Range) radio technology to create a decentralized, long-range mesh network."
+    },
+    {
+      "term": "DFU",
+      "abbreviation": "Device Firmware Update",
+      "aliases": ["Device Firmware Update"],
+      "definition": "A state in which a device is placed into for it to receive a firmware update."
+    },
+    {
+      "term": "ESP32",
+      "definition": "A chipset of microcontroller made/designed by Espressif, used by a number of devices. Higher power usage than NRF52, but often cheaper and supports WiFi if desired."
+    },
+    {
+      "term": "Firmware",
+      "autoLink": false,
+      "definition": "The low-level software programmed onto a Meshtastic device, controlling its hardware functions and enabling it to communicate within the mesh network using LoRa technology."
+    },
+    {
+      "term": "Flash",
+      "aliases": ["Flashing"],
+      "autoLink": false,
+      "definition": "The process of updating or installing firmware on a Meshtastic device. This is typically done using a computer to load new firmware versions or custom software to enhance or modify device functionality."
+    },
+    {
+      "term": "Foreign Mesh",
+      "autoLink": false,
+      "definition": "A Foreign Mesh is one in which the receiving node does not share any Channels with the transmitting node. When a node receives a message it is unable to decrypt, then the message is said to come from a Foreign Mesh."
+    },
+    {
+      "term": "GPIO",
+      "abbreviation": "General Purpose Input/Output",
+      "aliases": ["General Purpose Input/Output"],
+      "definition": "An uncommitted digital signal pin on a device."
+    },
+    {
+      "term": "LoRa",
+      "definition": "A low-power, long-range wireless communication technology used by Meshtastic devices to enable communication over distances of several kilometers without the need for cellular, WiFi, or other traditional network infrastructures."
+    },
+    {
+      "term": "LoS",
+      "abbreviation": "Line of Sight",
+      "aliases": ["Line of Sight"],
+      "definition": "A pathway through only air between two points."
+    },
+    {
+      "term": "Mesh",
+      "autoLink": false,
+      "definition": "In the context of Meshtastic and networking, a mesh refers to a network topology where devices (nodes) are interconnected, allowing them to directly and dynamically communicate with each other. This setup enables data to be relayed across the network, improving coverage and reliability, especially in challenging environments."
+    },
+    {
+      "term": "Message",
+      "autoLink": false,
+      "definition": "A piece of data or text sent between Meshtastic devices over the mesh network, which can include text communications, GPS location updates, and other small data payloads."
+    },
+    {
+      "term": "MHz",
+      "abbreviation": "Megahertz",
+      "aliases": ["Megahertz"],
+      "definition": "A unit of frequency equal to one million hertz (cycles per second), used to specify the operating frequency of LoRa devices in the Meshtastic network, affecting range and data rate."
+    },
+    {
+      "term": "Module",
+      "autoLink": false,
+      "definition": "At least two definitions in Meshtastic usage: 1) A software plug-in to expand the capabilities of a Meshtastic device. 2) A hardware component or add-on for a Meshtastic device, such as a temperature sensor or GPS."
+    },
+    {
+      "term": "MQTT",
+      "abbreviation": "Message Queuing Telemetry Transport",
+      "aliases": ["Message Queuing Telemetry Transport"],
+      "definition": "A lightweight messaging protocol designed for small sensors and mobile devices, enabling efficient data transmission in the Meshtastic network for Internet connectivity and integration with IoT platforms. See https://en.wikipedia.org/wiki/MQTT. In Meshtastic, MQTT is used to connect a node to the internet, and can be used to connect multiple meshes to each other."
+    },
+    {
+      "term": "Node",
+      "autoLink": false,
+      "definition": "A unit within the Meshtastic network that can send, receive, and relay messages, helping to form and extend the mesh network's coverage."
+    },
+    {
+      "term": "NRF52",
+      "definition": "A microcontroller chipset made by Nordic, used by several devices such as the RAK Meshtastic Starter Kit and the Lilygo T-Echo. Lower power usage than ESP32."
+    },
+    {
+      "term": "OTA",
+      "abbreviation": "Over the Air",
+      "aliases": ["Over the Air"],
+      "definition": "Typically used to refer to an OTA update, one that happens over a wireless network."
+    },
+    {
+      "term": "Packet",
+      "autoLink": false,
+      "definition": "A formatted unit of data sent over the network. In Meshtastic, packets carry messages, GPS locations, and other information through the LoRa mesh network."
+    },
+    {
+      "term": "Protobuf",
+      "abbreviation": "Protocol Buffers",
+      "aliases": ["Protocol Buffers"],
+      "definition": "A method developed by Google for serializing structured data, used in Meshtastic for efficient communication protocol between devices."
+    },
+    {
+      "term": "PSK",
+      "abbreviation": "Pre-Shared Key",
+      "aliases": ["Pre-Shared Key"],
+      "definition": "A secret code or passphrase used in Meshtastic channels for encryption, ensuring that only devices with the matching PSK can communicate within that specific channel."
+    },
+    {
+      "term": "PKC",
+      "abbreviation": "Public Key Cryptography",
+      "aliases": ["Public Key Cryptography"],
+      "definition": "A cryptographic method introduced in Meshtastic v2.5 for Direct Messages and Admin Messages, where each device uses a unique public and private key pair. The public key, shared with other devices, enables secure message encryption, while the private key allows only the intended recipient to decrypt and authenticate the message. This approach enhances privacy and integrity for both direct device-to-device communication and sensitive admin functions."
+    },
+    {
+      "term": "Repeater",
+      "autoLink": false,
+      "definition": "Infrastructure node for extending network coverage by relaying messages with minimal overhead. Not visible in Nodes list."
+    },
+    {
+      "term": "Router",
+      "autoLink": false,
+      "definition": "Infrastructure node for extending network coverage by relaying messages. Visible in Nodes list."
+    },
+    {
+      "term": "rp2040",
+      "definition": "A microcontroller chip developed by Raspberry Pi, featuring dual ARM Cortex-M0+ processors."
+    },
+    {
+      "term": "rp2350",
+      "definition": "A microcontroller chip developed by Raspberry Pi, featuring dual ARM Cortex-M33 or Hazard3 RISC-V processors."
+    },
+    {
+      "term": "RX",
+      "abbreviation": "Receive",
+      "aliases": ["Receive"],
+      "definition": "The receiving of data over the radio link."
+    },
+    {
+      "term": "Sensor",
+      "autoLink": false,
+      "definition": "A device component that detects and responds to some type of input from the physical environment. In Meshtastic, sensors can be used to gather environmental data (e.g., temperature, humidity, GPS location) which can then be transmitted over the mesh network for monitoring or other applications."
+    },
+    {
+      "term": "Serial",
+      "autoLink": false,
+      "definition": "A communication protocol used for the transmission of data between the Meshtastic device and a computer or other devices. Typically over USB or UART."
+    },
+    {
+      "term": "SNR",
+      "abbreviation": "Signal-to-Noise Ratio",
+      "aliases": ["Signal-to-Noise Ratio"],
+      "definition": "A measure used in communications to quantify the level of a desired signal to the level of background noise. In Meshtastic and other wireless systems, a higher SNR indicates a clearer signal that can enhance the reliability and quality of data transmission."
+    },
+    {
+      "term": "SWR",
+      "abbreviation": "Standing Wave Ratio",
+      "aliases": ["Standing Wave Ratio"],
+      "definition": "A measure of the efficiency of the radio frequency (RF) power transmission from a transmitter through a transmission line to an antenna in Meshtastic devices. It indicates the ratio of the amplitude of a standing wave at maximum to the amplitude at minimum, with an ideal SWR close to 1:1, signifying that most of the power is transmitted to the antenna with minimal reflections."
+    },
+    {
+      "term": "Telemetry",
+      "autoLink": false,
+      "definition": "The sending of sensor data or system metrics over the mesh network."
+    },
+    {
+      "term": "Transceiver",
+      "autoLink": false,
+      "definition": "A device capable of both transmitting and receiving communications."
+    },
+    {
+      "term": "Transmit",
+      "autoLink": false,
+      "definition": "The act of sending data, such as messages or GPS locations, from one Meshtastic device to another over the LoRa network."
+    },
+    {
+      "term": "TX",
+      "abbreviation": "Transmit",
+      "definition": "The transmitting of data over the radio link."
+    }
+  ]
+}
