@@ -2,6 +2,7 @@ require("dotenv").config();
 
 import path from "node:path";
 import remarkDefList from "remark-deflist";
+const remarkBaseUrlAssets = require("./src/remark/base-url-assets.js");
 
 // Raw HTML in the config and in MDX bypasses Docusaurus link handling, so anything
 // built by hand has to prefix this itself. Overridable for builds served under a
@@ -161,7 +162,7 @@ const config = {
               : undefined,
           breadcrumbs: false,
           showLastUpdateAuthor: true,
-          remarkPlugins: [remarkDefList],
+          remarkPlugins: [remarkDefList, [remarkBaseUrlAssets, { baseUrl }]],
           lastVersion: "current",
           versions: {
             current: { label: "2.8" },
@@ -173,9 +174,13 @@ const config = {
           },
         },
         blog: {
+          remarkPlugins: [[remarkBaseUrlAssets, { baseUrl }]],
           blogTitle: "Meshtastic Blog",
           blogDescription:
             "Discover in-depth insights from developers and maintainers, including project updates and changes. Hear from the community about their projects and ideas.",
+        },
+        pages: {
+          remarkPlugins: [[remarkBaseUrlAssets, { baseUrl }]],
         },
         sitemap: {
           ignorePatterns: ["/docs/2.7/**"],
