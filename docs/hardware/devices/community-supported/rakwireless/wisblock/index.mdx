@@ -5,6 +5,8 @@ sidebar_label: WisBlock
 sidebar_position: 1
 ---
 
+import useBaseUrl from "@docusaurus/useBaseUrl";
+
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 
@@ -126,7 +128,7 @@ The following process will manually place the device into Espressif Firmware Dow
        <summary>Diagram</summary>
        <div>
          <img
-           src="/img/hardware/rak/rak11200_boot_mode.webp"
+           src={useBaseUrl("/img/hardware/rak/rak11200_boot_mode.webp")}
            alt="RAK11200 Boot Mode Connection Diagram"
          />
        </div>
@@ -149,7 +151,7 @@ If the device does not enter download mode, double-check the BOOT to GND connect
 
 <img
   alt="RAK4631 5005 11200"
-  src="/img/hardware/rak11200.webp"
+  src={useBaseUrl("/img/hardware/rak11200.webp")}
   style={{ zoom: "50%" }}
 />
 

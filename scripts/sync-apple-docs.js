@@ -121,16 +121,75 @@ function rewriteImagePaths(content) {
  * under a path. These files are generated, so the fix belongs here.
  */
 function useBaseUrlForAssets(content) {
-  const attr = /\b(src|srcset|poster)=["'](\/(?!\/)[^"']*)["']/g;
+  const attr = /\b(src|srcset|poster)=["']([^"']*)["']/g;
   return content
     .split(/(```[\s\S]*?```|`[^`]+`)/)
     .map((seg, i) => {
       if (i % 2 === 1) return seg; // inside a code span/block - leave as-is
       return seg.replace(/<(?:img|source|video|audio)\b[^>]*>/gi, (tag) =>
-        tag.replace(attr, (_m, name, url) => `${name}={useBaseUrl("${url}")}`),
+        tag.replace(attr, (match, name, value) => {
+          const rewritten = baseUrlAttrValue(name, value);
+          return rewritten === null ? match : `${name}=${rewritten}`;
+        }),
       );
     })
     .join("");
+}
+
+/** Root-absolute paths are the ones baseUrl applies to; protocol-relative ones are external. */
+function isRootAbsolute(url) {
+  return url.startsWith("/") && !url.startsWith("//");
+}
+
+/**
+ * Split a srcset into its candidates, following the HTML parsing rules: a URL runs to
+ * the next whitespace and may itself contain commas, as a data: URL does, so splitting
+ * on every comma would truncate one.
+ */
+function parseSrcset(value) {
+  const candidates = [];
+  let i = 0;
+  const isSpace = (index) => /\s/.test(value[index]);
+  while (i < value.length) {
+    while (i < value.length && (isSpace(i) || value[i] === ",")) i++;
+    if (i >= value.length) break;
+
+    const urlStart = i;
+    while (i < value.length && !isSpace(i)) i++;
+    let url = value.slice(urlStart, i);
+    let descriptor = "";
+
+    if (url.endsWith(",")) {
+      url = url.replace(/,+$/, "");
+    } else {
+      const descriptorStart = i;
+      while (i < value.length && value[i] !== ",") i++;
+      descriptor = value.slice(descriptorStart, i).trim();
+      if (value[i] === ",") i++;
+    }
+    candidates.push({ url, descriptor });
+  }
+  return candidates;
+}
+
+/**
+ * The JSX value for one rewritten attribute, or null to leave it alone. Each srcset
+ * candidate is wrapped in turn, with its descriptor ("2x", "480w") carried through.
+ */
+function baseUrlAttrValue(name, value) {
+  if (name.toLowerCase() !== "srcset") {
+    return isRootAbsolute(value) ? `{useBaseUrl("${value}")}` : null;
+  }
+  const candidates = parseSrcset(value);
+  if (!candidates.some(({ url }) => isRootAbsolute(url))) return null;
+  if (candidates.length === 1 && !candidates[0].descriptor) {
+    return `{useBaseUrl("${candidates[0].url}")}`;
+  }
+  const parts = candidates.map(({ url, descriptor }) => {
+    const resolved = isRootAbsolute(url) ? `\${useBaseUrl("${url}")}` : url;
+    return descriptor ? `${resolved} ${descriptor}` : resolved;
+  });
+  return `{\`${parts.join(", ")}\`}`;
 }
 
 /** Add the useBaseUrl import when the page ended up using it. */
