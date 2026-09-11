@@ -2,11 +2,13 @@ require("dotenv").config();
 
 import path from "node:path";
 import remarkDefList from "remark-deflist";
+const remarkBaseUrlAssets = require("./src/remark/base-url-assets.js");
 
 // Raw HTML in the config and in MDX bypasses Docusaurus link handling, so anything
 // built by hand has to prefix this itself. Overridable for builds served under a
-// path rather than at a domain root.
-const baseUrl = process.env.DOCS_BASE_URL ?? "/";
+// path rather than at a domain root. Docusaurus gives the value it is handed both a
+// leading and a trailing slash, so do the same here or the two disagree.
+const baseUrl = `/${process.env.DOCS_BASE_URL ?? ""}/`.replace(/\/{2,}/g, "/");
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
@@ -157,7 +159,7 @@ const config = {
               : undefined,
           breadcrumbs: false,
           showLastUpdateAuthor: true,
-          remarkPlugins: [remarkDefList],
+          remarkPlugins: [remarkDefList, [remarkBaseUrlAssets, { baseUrl }]],
           lastVersion: "current",
           versions: {
             current: { label: "2.8" },
@@ -169,9 +171,13 @@ const config = {
           },
         },
         blog: {
+          remarkPlugins: [[remarkBaseUrlAssets, { baseUrl }]],
           blogTitle: "Meshtastic Blog",
           blogDescription:
             "Discover in-depth insights from developers and maintainers, including project updates and changes. Hear from the community about their projects and ideas.",
+        },
+        pages: {
+          remarkPlugins: [[remarkBaseUrlAssets, { baseUrl }]],
         },
         sitemap: {
           ignorePatterns: ["/docs/2.7/**"],

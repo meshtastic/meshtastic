@@ -1,0 +1,128 @@
+/**
+ * Prefix root-absolute paths in raw HTML with the site's baseUrl.
+ *
+ * Docusaurus resolves Markdown image and link syntax against baseUrl, but raw HTML
+ * is passed through as written, so `<img src="/img/x.webp">` resolves against the
+ * server root and breaks anywhere the site is served below one. MDX parses raw HTML
+ * into JSX nodes with plain string attributes, so the rewrite belongs here: it reaches
+ * every page, including frozen versioned docs and generated content, without either
+ * having to carry a useBaseUrl import.
+ *
+ * Fenced blocks and code spans parse to `code`/`inlineCode` nodes rather than JSX, so
+ * syntax examples are left literal without any special handling.
+ */
+
+// Attributes that hold a URL. `data` is for <object>, `href` for raw <a>.
+const URL_ATTRIBUTES = new Set(["src", "srcset", "poster", "data", "href"]);
+
+// Markdown links are Docusaurus's job, except ones pointing straight at a static file:
+// it resolves links to pages, but leaves an asset path as written.
+const ASSET_PREFIXES = ["/img/", "/documents/", "/design/"];
+
+const isRootAbsolute = (url) => url.startsWith("/") && !url.startsWith("//");
+
+// Only plain HTML elements. A capitalised name is a component, which may resolve the
+// path itself, and prefixing it here would apply baseUrl twice.
+const isHtmlElement = (name) =>
+  typeof name === "string" && name[0] === name[0].toLowerCase();
+
+/**
+ * Split a srcset into its candidates, following the HTML parsing rules: a URL runs to
+ * the next whitespace and may itself contain commas, as a data: URL does, so splitting
+ * on every comma would truncate one.
+ */
+function parseSrcset(value) {
+  const candidates = [];
+  let i = 0;
+  const isSpace = (index) => /\s/.test(value[index]);
+  while (i < value.length) {
+    while (i < value.length && (isSpace(i) || value[i] === ",")) i++;
+    if (i >= value.length) break;
+
+    const urlStart = i;
+    while (i < value.length && !isSpace(i)) i++;
+    let url = value.slice(urlStart, i);
+    let descriptor = "";
+
+    if (url.endsWith(",")) {
+      url = url.replace(/,+$/, "");
+    } else {
+      const descriptorStart = i;
+      while (i < value.length && value[i] !== ",") i++;
+      descriptor = value.slice(descriptorStart, i).trim();
+      if (value[i] === ",") i++;
+    }
+    candidates.push({ url, descriptor });
+  }
+  return candidates;
+}
+
+function walk(node, visitor) {
+  visitor(node);
+  for (const child of node.children ?? []) {
+    walk(child, visitor);
+  }
+}
+
+/** @param {{baseUrl?: string}} options */
+function remarkBaseUrlAssets({ baseUrl = "/" } = {}) {
+  // Normalised again here so the plugin is correct whatever it is handed.
+  const prefix = `/${baseUrl}/`.replace(/\/{2,}/g, "/");
+
+  // At a domain root every path is already correct, so skip the traversal entirely.
+  if (prefix === "/") {
+    return () => {};
+  }
+
+  /** Returns the prefixed URL, or null when the URL should be left alone. */
+  const resolve = (url) => {
+    if (!isRootAbsolute(url) || url.startsWith(prefix)) return null;
+    return prefix + url.slice(1);
+  };
+
+  const resolveSrcset = (value) => {
+    let touched = false;
+    const candidates = parseSrcset(value).map(({ url, descriptor }) => {
+      const resolved = resolve(url);
+      if (resolved) touched = true;
+      return descriptor
+        ? `${resolved ?? url} ${descriptor}`
+        : (resolved ?? url);
+    });
+    return touched ? candidates.join(", ") : null;
+  };
+
+  return (tree) => {
+    walk(tree, (node) => {
+      if (
+        node.type === "mdxJsxFlowElement" ||
+        node.type === "mdxJsxTextElement"
+      ) {
+        if (!isHtmlElement(node.name)) return;
+        for (const attribute of node.attributes ?? []) {
+          // Anything already an expression, such as useBaseUrl(), is left as written.
+          if (attribute.type !== "mdxJsxAttribute") continue;
+          if (typeof attribute.value !== "string") continue;
+          if (!URL_ATTRIBUTES.has(attribute.name)) continue;
+
+          const resolved =
+            attribute.name === "srcset"
+              ? resolveSrcset(attribute.value)
+              : resolve(attribute.value);
+          if (resolved) attribute.value = resolved;
+        }
+        return;
+      }
+
+      if (
+        node.type === "link" &&
+        ASSET_PREFIXES.some((p) => node.url.startsWith(p))
+      ) {
+        const resolved = resolve(node.url);
+        if (resolved) node.url = resolved;
+      }
+    });
+  };
+}
+
+module.exports = remarkBaseUrlAssets;
