@@ -1,104 +1,132 @@
 ---
 id: local-dev
-title: Serving Docs Locally for Development
+title: Running the site locally
 sidebar_label: Local Development
 sidebar_position: 2
+description: "Set up a local documentation environment, run the development server, and pass the checks CI runs."
 ---
+
+Build and serve the documentation site on your own machine so you can see a change before you propose it.
 
 ## Prerequisites
 
-In order to set up your local environment, you will need to install:
+| Tool                                 | Version                         | Why                                             |
+| ------------------------------------ | ------------------------------- | ----------------------------------------------- |
+| [Node.js](https://nodejs.org)        | The version in `.nvmrc`         | Docusaurus runs on it                           |
+| [nvm](https://github.com/nvm-sh/nvm) | Any                             | Selects the Node.js version the repository pins |
+| [pnpm](https://pnpm.io)              | The version in `packageManager` | The package manager this repository uses        |
+| [Git](https://git-scm.com)           | Any                             | Clones the repository and its submodule         |
 
-- [Node Version Manager](https://github.com/nvm-sh/nvm)
-- [PNPM Package Manager](https://pnpm.io)
+Corepack ships with Node.js and reads the `packageManager` field, so `corepack enable` gives you the pinned pnpm without installing it separately.
 
-## Getting Started
+## Set up a local copy
 
-### Fork the Meshtastic Repository
+Fork [meshtastic/meshtastic](https://github.com/meshtastic/meshtastic) on GitHub, then clone your fork. Replace `<YOUR_GITHUB_USERNAME>` with your own username.
 
-Log into GitHub and create a fork of the [meshtastic/meshtastic](https://github.com/meshtastic/meshtastic) repository.
-
-### Clone your Meshtastic Repository fork
-
-:::note
-Replace `YOUR_GITHUB_USERNAME` with your GitHub username.
-:::
-
-```shell title="Clone your Fork of the Documentation Repository"
-git clone https://github.com/YOUR_GITHUB_USERNAME/meshtastic.git
+```shell
+git clone https://github.com/<YOUR_GITHUB_USERNAME>/meshtastic.git
 ```
 
-### Change directory into your Local Copy
-
-```shell title="Change Directory"
-cd ./meshtastic
+```shell
+cd meshtastic
 ```
 
-### Install Submodules
+The site pulls brand assets from the `meshtastic/design` repository as a submodule, and the build fails without it.
 
-```shell title="Install Submodules"
+```shell
 git submodule update --init --recursive
 ```
 
-### Install Dependencies
+Select the pinned Node.js version and install dependencies.
 
-```shell title="Install Node.js using NVM"
-nvm install && nvm use
+```shell
+nvm install
 ```
 
-```shell title="Install dependencies using pnpm"
-pnpm i
+```shell
+nvm use
 ```
 
-### Run Development Server
+```shell
+pnpm install
+```
 
-```shell title="Run node.js server"
+## Run the development server
+
+```shell
 pnpm start
 ```
 
-:::tip
-Before submitting a pull request, it's helpful to run the following command to ensure there are no broken links or errors:
+The server opens the site in your browser and reloads as you save. Most content edits appear within a second or two.
 
-```shell title="Build Project"
-pnpm build
+Front matter changes, sidebar changes, and anything under `docusaurus.config.js` need a restart. If the site starts behaving oddly after a branch switch, clear the cache and start again.
+
+```shell
+pnpm clear
 ```
 
-:::
+## Checks to run before opening a pull request
 
-## Update Local Repository
+CI runs these, so running them locally saves a round trip.
 
-### Verify Upstream Remote is Set
+```shell
+pnpm run format
+```
 
-```shell title="Check Remote and Upstream Repositories"
+```shell
+pnpm run lint:mdx
+```
+
+```shell
+pnpm run build
+```
+
+`build` is the one that matters most, because broken links fail the build rather than reaching the site. `lint:mdx` catches the JSX and tag corruption that breaks MDX builds, and warns about images with no alt text. Both block a pull request.
+
+`format` checks formatting without changing files, and `pnpm run format:fix` applies it. CI reports formatting but does not fail on it, because much of the repository predates the formatter. Format the files you touched rather than running the fixer across the repository, which would bury your change in unrelated reformatting.
+
+CI also runs `oxlint` when a pull request touches JavaScript or TypeScript, and a Playwright end-to-end suite against the built site. Run that suite locally only if you changed site behavior rather than content.
+
+```shell
+pnpm exec playwright install --with-deps chromium
+```
+
+```shell
+pnpm run test:e2e
+```
+
+## Keep your fork current
+
+Check whether an upstream remote is set.
+
+```shell
 git remote -v
 ```
 
-If it's set, skip to [Align with meshtastic/meshtastic Master branch](#align-with-meshtasticmeshtastic-master-branch)
+If `upstream` is missing, add it.
 
-#### Update/Set Upstream if it isn't configured properly
-
-If upstream exists, set the URL:
-
-```shell title="Update Upstream Repository"
-git remote set-url upstream https://github.com/meshtastic/meshtastic.git
-```
-
-If upstream doesn't exist, add the URL:
-
-```shell title="Add Upstream Repository"
+```shell
 git remote add upstream https://github.com/meshtastic/meshtastic.git
 ```
 
-### Align with meshtastic/meshtastic Master branch
+If it exists but points somewhere else, repoint it.
 
-:::caution
-This will delete any unfinished work. Make sure that you've saved and committed any work you wish to push up to your fork.
-:::
-
-:::info
-The following command assumes the clone of your Meshtastic fork is in the home directory (`~/meshtastic`). Adjust the path to the correct path on your machine.
-:::
-
-```shell title="Rebase local Meshtastic to remote Meshtastic"
-cd ~/meshtastic ; git fetch upstream ; git checkout master ; git rebase upstream/master
+```shell
+git remote set-url upstream https://github.com/meshtastic/meshtastic.git
 ```
+
+Then bring your local `master` up to date. Commit or stash your work first, because a rebase rewrites the branch and uncommitted changes can be lost.
+
+```shell
+git fetch upstream
+```
+
+```shell
+git checkout master
+```
+
+```shell
+git rebase upstream/master
+```
+
+Work on a branch rather than on `master`, so the next rebase stays uneventful.

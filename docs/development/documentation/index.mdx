@@ -1,68 +1,78 @@
 ---
 id: docs
-title: Maintaining Documentation
+title: Maintaining documentation
 slug: /development/docs
 sidebar_label: Docs
 sidebar_position: 9
+description: "How the Meshtastic documentation site is built and organized, and how to contribute to it."
 ---
 
-Meshtastic documentation is an important ingredient to the overall project. We want users to hit the ground running with the information they need right at their finger tips. This section will discuss the documentation software stack, file organization, and style guides.
+Documentation is part of the product. A setting that isn't documented, or that is explained in language the reader can't parse, fails the same goal as a control with no label.
 
-## Software Stack
+This section covers the software stack, how the site is organized, and the rules writing follows.
 
-All of our documentation resides on GitHub. See [instructions for setting up your GitHub account](../reference/github.mdx).
+## Where the rules live
 
-Our documentation is powered by [Docusaurus](https://docusaurus.io) — a documentation platform built on React that utilizes markdown files. Because markdown files are easy to edit, most content changes should be fairly simple.
+Section 11 of the [Meshtastic Client Design Standards](https://github.com/meshtastic/design/tree/master/standards) governs writing across the project, including this site. [Writing style](./style-guides/writing-style.mdx) is the working guide here. Where the two disagree, the standard decides.
 
-Another component that we use is [Vercel](https://vercel.com) — a platform for front-end frameworks and static sites. See [instructions for setting up your instance of Vercel](./publish.mdx#publish-to-vercel).
+## Software stack
 
-## Documentation Organization
+The site is built with [Docusaurus](https://docusaurus.io), a documentation platform built on React that renders MDX. MDX is Markdown that can import and use React components, so most content changes are ordinary Markdown edits.
 
-|         Section          |       File Path        |                                                                                                                          Description                                                                                                                           |
-| :----------------------: | :--------------------: | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
-|     About Meshtastic     |      `docs/about`      |                                                      A high level explanation of Meshtastic plus everything relating to the Meshtastic mesh. This includes radio settings, mesh algorithm and encryption.                                                      |
-|     Getting Started      | `docs/getting-started` |                                                                                            Instructions on how to get the Meshtastic firmware onto a users device.                                                                                             |
-|     Device Settings      |    `docs/settings`     | Details for both the device and module configurations. Details each user setting and offers explanations on their functionalities in addition to guiding the user on how to configure the device using the various clients available (Android, CLI, iOS, Web). |
-|     Hardware Details     |    `docs/hardware`     |                                            Any hardware related content such as officially supported radios and their peripherals such as 3d printed cases, antennas, buttons, chime, rotary encoders, and screens.                                            |
-|   Meshtastic Software    |    `docs/software`     |                                                           An overview of the current software used in conjunction with Meshtastic to include officially supported client and community applications.                                                           |
-| Contribute to Meshtastic |   `docs/developers`    |                                                                 Details of the necessary information needed for developers to start contributing to the development of the Meshtastic project.                                                                 |
-|          Legal           |      `docs/legal`      |                 Any legal information. Most changes here will be handled by developers actually working on the projects that require any legal disclosures. Examples include: the Meshtastic trademark, terms of service, and privacy policy.                  |
+Dependencies are managed with [pnpm](https://pnpm.io), and the repository pins both the Node.js and pnpm versions. Brand assets come from the `meshtastic/design` repository as a Git submodule.
 
-## Quick Start
+All documentation lives on GitHub. Read the [GitHub setup instructions](../reference/github.mdx) if you haven't contributed before.
 
-Assuming you have the [prerequisites installed](./local-dev.mdx#prerequisites), running a local instance of Docusaurus takes three steps:
+## How the site is organized
 
-1.  Fork/Clone the [meshtastic/meshtastic](https://github.com/meshtastic/meshtastic) repository and navigate to the root directory of the project.
+| Section          | Path                   | Contents                                                                    |
+| ---------------- | ---------------------- | --------------------------------------------------------------------------- |
+| About Meshtastic | `docs/about`           | What Meshtastic is, how the mesh works, and the FAQ                         |
+| Getting started  | `docs/getting-started` | Flashing firmware, serial drivers, and initial configuration                |
+| Configuration    | `docs/configuration`   | Radio, module, and device UI settings, with per-client instructions         |
+| Hardware         | `docs/hardware`        | Supported devices, antennas, peripherals, and accessories                   |
+| Software         | `docs/software`        | Clients and integrations, including Android, Apple, Web, and the Python CLI |
+| meshtasticd      | `docs/meshtasticd`     | The Linux native daemon: installation, hardware, and usage                  |
+| Development      | `docs/development`     | Contributing to the firmware, the clients, and this site                    |
+| Community        | `docs/community`       | Community projects, local groups, and enclosures                            |
+| Glossary         | `docs/terms`           | Definitions behind the term tooltips used across the site                   |
+| Legal            | `docs/legal`           | Trademark, licensing, privacy policy, and the code of conduct               |
+| Shared partials  | `docs/blocks`          | Reusable MDX imported by other pages, not published on its own              |
 
-    ```shell title="Clone the project"
-    git clone https://github.com/meshtastic/meshtastic.git
-    ```
+Two directories under `docs/software` are generated. Android and Apple client documentation is written in the client repositories and synced here weekly, and a CI guard rejects pull requests that edit it. Read [Covering every client](./style-guides/writing-style.mdx#covering-every-client) for where those changes belong.
 
-    ```shell title="Clone fork of the project"
-    git clone https://github.com/[username]/meshtastic.git
-    ```
+Documentation for released firmware is frozen under `versioned_docs/`, and `docs/` is the release in development. Read [Versioning](./versioning.mdx) before cutting a snapshot or editing an archived page.
 
-    ```shell title="Change Directory"
-    cd ~/Meshtastic
-    ```
+## Quick start
 
-2.  Install Dependencies
+With the [prerequisites installed](./local-dev.mdx#prerequisites), a local site takes four steps.
 
-    ```shell title="Install dependencies using pnpm"
-    pnpm i
-    ```
+1. Clone your fork of [meshtastic/meshtastic](https://github.com/meshtastic/meshtastic) and change into it.
 
-3.  Run Docusaurus
+   ```shell
+   git clone https://github.com/<YOUR_GITHUB_USERNAME>/meshtastic.git
+   ```
 
-    ```shell title="Run a local documentation server and open it in your browser"
-    pnpm run start
-    ```
+   ```shell
+   cd meshtastic
+   ```
 
-:::tip
-Before submitting a pull request, it's helpful to run the following command to ensure there are no broken links or errors:
+2. Fetch the design submodule, without which the build fails.
 
-```shell title="Build Project"
-pnpm run build
-```
+   ```shell
+   git submodule update --init --recursive
+   ```
 
-:::
+3. Install dependencies.
+
+   ```shell
+   pnpm install
+   ```
+
+4. Start the development server, which opens the site in your browser.
+
+   ```shell
+   pnpm start
+   ```
+
+Run `pnpm run build` before opening a pull request, since broken links fail the build. See [Running the site locally](./local-dev.mdx) for the full set of checks CI runs.
