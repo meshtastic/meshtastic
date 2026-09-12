@@ -1,0 +1,82 @@
+---
+id: versioning
+title: Versioning and frozen snapshots
+sidebar_label: Versioning
+sidebar_position: 3
+description: "How documentation versions are cut, frozen, and served, and when a page should name a version inline."
+---
+
+The site is versioned by firmware release. The `docs/` directory is the release in development, and each older line keeps a frozen snapshot under `versioned_docs/`. The version selector tells a reader which release a page describes, so the page itself rarely needs to.
+
+## What is current and what is frozen
+
+`versions.json` lists the frozen versions. Current state:
+
+| Version       | Source                        | Served at    | Notes                                                          |
+| ------------- | ----------------------------- | ------------ | -------------------------------------------------------------- |
+| 2.8           | `docs/`                       | `/docs/`     | The release in development, and the default the selector opens |
+| 2.7 and below | `versioned_docs/version-2.7/` | `/docs/2.7/` | Frozen, labeled unmaintained, and excluded from the sitemap    |
+
+Edit `docs/`. It becomes the next release.
+
+Frozen snapshots get no "Edit this page" link, because there is nothing useful to edit. They are excluded from the sitemap so search engines send readers to current documentation rather than to an archived copy.
+
+## The snapshot is read-only
+
+CI fails any pull request that modifies, deletes, or renames a file under `versioned_docs/` or `versioned_sidebars/`. Adding files passes, which is what cutting a new version does.
+
+A genuine correction to archived documentation is rare and needs the `version-cut` label on the pull request, which turns the check off. Use it for cutting a version and for the occasional deliberate fix, not to get a red check to go away.
+
+If a snapshot is wrong in a way that matters, consider whether the current documentation is wrong in the same way. Readers on an older line keep their own snapshot, and a removal never strands them.
+
+## Cutting a new version
+
+Run this when a firmware release ships and its documentation should stop changing. Two commands, in this order:
+
+```shell
+pnpm docusaurus docs:version 2.8
+```
+
+```shell
+node scripts/freeze-version-links.mjs 2.8
+```
+
+The first copies `docs/` into `versioned_docs/version-2.8/`, writes a matching sidebar, and adds the version to `versions.json`.
+
+The second repoints links inside the new snapshot at that snapshot. `docs:version` copies pages verbatim, so every root-absolute `/docs/...` link in the copy still resolves to the live version. An archived page then walks the reader into current documentation without warning. Docusaurus cannot warn about it, because the route exists and `onBrokenLinks` stays quiet. The script is safe to re-run and leaves relative links alone, since Docusaurus resolves those per version.
+
+After both commands, update `docusaurus.config.js`: give `current` the new label, and add the newly frozen version with its path and `banner: "unmaintained"`. Add the snapshot to the sitemap `ignorePatterns`. Then build once, because a version cut is the change most likely to surface a broken link.
+
+Label the pull request `version-cut`.
+
+## When a page should name a version
+
+The selector already says which release a page belongs to, so "new in 2.8" on a page inside the 2.8 set says nothing. The same holds for a setting that was removed, a default that changed, and a field that was renamed. Each snapshot describes its own release.
+
+Name a version inline only where the selector cannot express the fact. There are four such cases:
+
+1. The change landed in a patch release, so readers on an earlier patch of the same line do not have it.
+2. Older nodes on the mesh behave differently, such as a field that firmware 2.7 and earlier ignores. That is a fact about other people's devices, and no snapshot carries it.
+3. The requirement is a client app version rather than a firmware version, since the site is versioned by firmware.
+4. The behavior exists only in nightly builds and in no released build of the current line.
+
+Write these in the sentence that needs them, not as a banner at the head of the page. Name the specific version, and keep firmware and app versions distinct.
+
+## Deprecation
+
+Deprecation is the one version fact a snapshot cannot carry, because a removal that hasn't happened yet appears nowhere. Where a setting is on its way out, say so on the page that still documents it and name the replacement. Record the release that removes it once that release is known.
+
+## Moving or renaming a page
+
+A published URL is a promise. Moving or renaming a page breaks inbound links from forums, chat logs, and search results, none of which get updated.
+
+Add a redirect to `vercel.json` in the same pull request:
+
+```json
+{
+  "source": "/docs/old/path/",
+  "destination": "/docs/new/path/"
+}
+```
+
+Use `:path*` to carry a whole subtree, following the entries already in that file.
