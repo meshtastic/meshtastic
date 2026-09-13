@@ -81,7 +81,7 @@ pnpm run lint:mdx
 pnpm run build
 ```
 
-`build` is the one that matters most, because broken links fail the build rather than reaching the site. `lint:mdx` catches the JSX and tag corruption that breaks MDX builds, and warns about images with no alt text. Both block a pull request.
+`build` is the one that matters most, and it is the only status check branch protection requires. A link to a page that doesn't exist fails it rather than reaching the site, while an unresolvable relative Markdown reference is reported and does not. `lint:mdx` fails on the JSX corruption that breaks an MDX build: a malformed closing tag, a duplicated opening tag, or an import with no `from`. Its findings on missing alt text and unbalanced `div` tags are warnings, so they are worth fixing but do not fail the run.
 
 `format` checks formatting without changing files, and `pnpm run format:fix` applies it. CI reports formatting but does not fail on it, because much of the repository predates the formatter. Format the files you touched rather than running the fixer across the repository, which would bury your change in unrelated reformatting.
 

@@ -43,7 +43,7 @@ pnpm install
 pnpm start
 ```
 
-Run the checks before opening a pull request. `build` and `lint:mdx` block a merge, and broken links fail the build rather than reaching the site.
+Run the checks before opening a pull request. `build` is the status check branch protection requires, and a link to a page that doesn't exist fails it rather than reaching the site. `lint:mdx` fails on the JSX corruption that breaks an MDX build, and reports missing alt text as a warning.
 
 ```shell
 pnpm run lint:mdx
