@@ -49,7 +49,8 @@
     {
       "term": "Channel",
       "autoLink": false,
-      "definition": "At least two definitions in Meshtastic usage: 1) One of 8 configurable channels in the firmware, each supporting a separate name and encryption, with one set as primary and the rest secondary. 2) A specific frequency within a LoRa band that a device can be configured to use."
+      "definition": "At least two definitions in Meshtastic usage: 1) One of 8 configurable channels in the firmware, each supporting a separate name and encryption, with one set as primary and the rest secondary. 2) A specific frequency within a LoRa band that a device can be configured to use.",
+      "relatedTerms": ["Frequency Slot"]
     },
     {
       "term": "CLI",
@@ -74,6 +75,11 @@
       "definition": "A state in which a device is placed into for it to receive a firmware update."
     },
     {
+      "term": "Duty Cycle",
+      "definition": "Two definitions in Meshtastic usage: 1) Technical: the percentage of time a radio spends transmitting. Transmitting draws far more current than receiving, so it largely sets a node's power consumption. 2) Legal: the maximum share of each hour a device may transmit in a given band, set by the region's regulations, such as 10% in the European band Meshtastic uses. A node that reaches the limit stops transmitting until the hour allows more, unless the limit is overridden in the LoRa config.",
+      "relatedTerms": ["Band", "TX"]
+    },
+    {
       "term": "ESP32",
       "definition": "A chipset of microcontroller made/designed by Espressif, used by a number of devices. Higher power usage than nRF52, but often cheaper and supports Wi-Fi if desired."
     },
@@ -92,6 +98,12 @@
       "term": "Foreign Mesh",
       "autoLink": false,
       "definition": "A Foreign Mesh is one in which the receiving node does not share any Channels with the transmitting node. When a node receives a message it is unable to decrypt, then the message is said to come from a Foreign Mesh."
+    },
+    {
+      "term": "Frequency Slot",
+      "aliases": ["LoRa Frequency Slot"],
+      "definition": "The numbered position within a region's band that sets the exact frequency a radio transmits on, from 1 to the number of slots the region and modem preset allow. Formerly called the LoRa channel number; renamed to avoid confusion with messaging channels. When left at 0 the slot is chosen by hashing the primary channel's name, so nodes sharing a channel name land on the same frequency.",
+      "relatedTerms": ["Channel", "Band"]
     },
     {
       "term": "GNSS",

@@ -10,15 +10,16 @@ const remarkBaseUrlAssets = require("./src/remark/base-url-assets.js");
 // the author varied, producing "Protocol Buffer (Protocol Buffers (protobuf))".
 const glossaryPath = "glossary/glossary.json";
 
-// Where a term links to. docs/terms/index.mdx renders the glossary itself so the
-// page keeps the docs sidebar, which a plugin-generated route does not get.
-const glossaryRoutePath = "/docs/terms/";
-
 // Raw HTML in the config and in MDX bypasses Docusaurus link handling, so anything
 // built by hand has to prefix this itself. Overridable for builds served under a
 // path rather than at a domain root. Docusaurus gives the value it is handed both a
 // leading and a trailing slash, so do the same here or the two disagree.
 const baseUrl = `/${process.env.DOCS_BASE_URL ?? ""}/`.replace(/\/{2,}/g, "/");
+
+// Where a term links to. docs/terms/index.mdx renders the glossary itself so the
+// page keeps the docs sidebar, which a plugin-generated route does not get. The
+// plugin emits this as a raw href, so it carries baseUrl like the other hand-built paths.
+const glossaryRoutePath = `${baseUrl}docs/terms/`;
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
@@ -177,7 +178,11 @@ const config = {
             [remarkBaseUrlAssets, { baseUrl }],
             [
               glossaryPlugin.remarkPlugin,
-              { glossaryPath, routePath: glossaryRoutePath, siteDir: __dirname },
+              {
+                glossaryPath,
+                routePath: glossaryRoutePath,
+                siteDir: __dirname,
+              },
             ],
           ],
           lastVersion: "current",
