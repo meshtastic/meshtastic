@@ -76,3 +76,19 @@ With the [prerequisites installed](./local-dev.mdx#prerequisites), a local site 
    ```
 
 Run `pnpm run build` before opening a pull request, since broken links fail the build. See [Running the site locally](./local-dev.mdx) for the full set of checks CI runs.
+
+## Proposing a change
+
+Every pull request here links to an issue. The issue is where the problem gets agreed on before anyone writes the fix, and it carries the context a diff can't: which page is wrong, what it should say, and who reported it.
+
+1. Search the [open issues](https://github.com/meshtastic/meshtastic/issues) for the problem you found.
+2. Open a [documentation change request](https://github.com/meshtastic/meshtastic/issues/new/choose) if no issue covers it. Say what the page claims now and what is wrong with it.
+3. Take the issue. Assign it to yourself if the assignee field is available to you, and otherwise comment that you are working on it, since GitHub offers self-assignment only to accounts with write access to the repository. Either way the issue records that the work is claimed, so two people don't write the same page twice.
+4. Branch from `master`, make the change, and run the [checks CI runs](./local-dev.mdx#checks-to-run-before-opening-a-pull-request).
+5. Open a pull request whose description contains `Closes #<ISSUE_NUMBER>`.
+
+`Closes` is what links the two on GitHub. It puts the issue in the pull request's sidebar and closes the issue when the pull request merges. Linking by hand in prose looks similar but does neither.
+
+A typo fix needs an issue too. The issue can be one sentence, and the minute it costs buys a record of what changed and why for a site nobody reads end to end.
+
+Changes to the Android and Apple client pages are the exception, because those pages are generated. Open the issue and the pull request in the client repository instead, as [Covering every client](./style-guides/writing-style.mdx#covering-every-client) describes.
