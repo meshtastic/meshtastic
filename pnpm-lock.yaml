@@ -10,6 +10,9 @@ overrides:
   prismjs: ^1.30.0
   webpack: ~5.105.0
 
+patchedDependencies:
+  docusaurus-plugin-glossary: b8d318a9901b6c4e458b3a897f944cd2006ca221f7bffd846d8b8ba1e69529c8
+
 importers:
 
   .:
@@ -86,6 +89,9 @@ importers:
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
+      docusaurus-plugin-glossary:
+        specifier: 3.3.4
+        version: 3.3.4(patch_hash=b8d318a9901b6c4e458b3a897f944cd2006ca221f7bffd846d8b8ba1e69529c8)(@docusaurus/core@3.10.2(@docusaurus/faster@3.10.2(@docusaurus/types@3.10.2(@swc/core@1.15.43)(@swc/html@1.15.43)(clean-css@5.3.3)(cssnano@6.1.2(postcss@8.5.27))(csso@5.0.5)(html-minifier-terser@7.2.0)(lightningcss@1.32.0)(postcss@8.5.27)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(supports-color@9.4.0))(clean-css@5.3.3)(cssnano@6.1.2(postcss@8.5.27))(csso@5.0.5)(html-minifier-terser@7.2.0)(postcss@8.5.27))(@mdx-js/react@3.1.1(@types/react@19.2.18)(react@19.2.8))(@rspack/core@1.7.12)(@swc/core@1.15.43)(@swc/html@1.15.43)(clean-css@5.3.3)(cssnano@6.1.2(postcss@8.5.27))(csso@5.0.5)(debug@4.4.3(supports-color@9.4.0))(html-minifier-terser@7.2.0)(lightningcss@1.32.0)(postcss@8.5.27)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(supports-color@9.4.0)(typescript@7.0.2))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
       dompurify:
         specifier: ^3.4.14
         version: 3.4.14
@@ -4300,6 +4306,14 @@ packages:
     resolution: {integrity: sha512-l4gcSouhcgIKRvyy99RNVOgxXiicE+2jZoNmaNmZ6JXiGajBOJAesk1OBlJuM5k2c+eudGdLxDqXuPCKIj6kpw==}
     engines: {node: '>=6'}
 
+  docusaurus-plugin-glossary@3.3.4:
+    resolution: {integrity: sha512-3OdOzjcfx14iAJdlmzH3dXWHwLST/F9vErBn0aKnIwrf2OWxdZS/rInMQi7v3belPNFPr2aUZNraYtdfxJLMMw==}
+    engines: {node: '>=20.0'}
+    peerDependencies:
+      '@docusaurus/core': ^3.0.0
+      react: ^18.0.0 || ^19.0.0
+      react-dom: ^18.0.0 || ^19.0.0
+
   docusaurus-prince-pdf@1.2.1:
     resolution: {integrity: sha512-8/ssMwm60bDP9MSsFIlcnKPXVpclLh/VPRA01dosx3/1Pt1OcFfy5fkRSL2WBOSxEoVZcWr+oPzbeimlRJqfNA==}
     hasBin: true
@@ -6170,6 +6184,14 @@ packages:
   path-parse@1.0.7:
     resolution: {integrity: sha512-LDJzPVEEEPR+y48z93A0Ed0yXb8pAByGWo/k5YYdYgpY2/2EsOsksJrq7lOHxryrVOn1ejG6oAp8ahvOIQD8sw==}
 
+  path-root-regex@0.1.2:
+    resolution: {integrity: sha512-4GlJ6rZDhQZFE0DPVKh0e9jmZ5egZfxTkp7bcRDuPlJXbAwhxcl2dINPUAsjLdejqaLsCeg8axcLjIbvBjN4pQ==}
+    engines: {node: '>=0.10.0'}
+
+  path-root@0.1.1:
+    resolution: {integrity: sha512-QLcPegTHF11axjfojBIoDygmS2E3Lf+8+jI6wOVmNVenrKSo3mFdSGiIgdSHenczw3wPtlVMQaFVwGmM7BJdtg==}
+    engines: {node: '>=0.10.0'}
+
   path-scurry@1.11.1:
     resolution: {integrity: sha512-Xa4Nw17FS9ApQFJ9umLiJS4orGjm7ZzwUrwamcGQuHSzDyth9boKDaycYdDcZDuqYATXw4HFXgaqWTctW/v1HA==}
     engines: {node: '>=16 || 14 >=14.18'}
@@ -7001,6 +7023,10 @@ packages:
     resolution: {integrity: sha512-pb/MYmXstAkysRFx8piNI1tGFNQIFA3vkE3Gq4EuA1dF6gHp/+vgZqsCGJapvy8N3Q+4o7FwvquPJcnZ7RYy4g==}
     engines: {node: '>=4'}
 
+  resolve-package-path@4.0.3:
+    resolution: {integrity: sha512-SRpNAPW4kewOaNUt8VPqhJ0UMxawMwzJD8V7m1cJfdSTK9ieZwS6K7Dabsm4bmLFM96Z5Y/UznrpG5kt1im8yA==}
+    engines: {node: '>= 12'}
+
   resolve-pathname@3.0.0:
     resolution: {integrity: sha512-C7rARubxI8bXFNB/hqcp/4iUeIXJhJZvFPFPiSPRnhU5UPxzMFIl+2E6yY6c4k9giDJAhtV+enfA+G89N6Csng==}
 
@@ -7759,6 +7785,10 @@ packages:
   validate-npm-package-name@5.0.1:
     resolution: {integrity: sha512-OljLrQ9SQdOUqTaQxqL5dEfZWrXExyyWsozYlAWFawPVNuD83igl7uJD2RTkNMbniIYgt8l81eCJGIdQF7avLQ==}
     engines: {node: ^14.17.0 || ^16.13.0 || >=18.0.0}
+
+  validate-peer-dependencies@2.2.0:
+    resolution: {integrity: sha512-8X1OWlERjiUY6P6tdeU9E0EwO8RA3bahoOVG7ulOZT5MqgNDUO/BQoVjYiHPcNe+v8glsboZRIw9iToMAA2zAA==}
+    engines: {node: '>= 12'}
 
   value-equal@1.0.1:
     resolution: {integrity: sha512-NOJ6JZCAWr0zlxZt+xqCHNTEKOsrks2HQd4MqhP1qy4z1SkbEP467eNx6TgDKXMvUOb+OENfJCZwM+16n7fRfw==}
@@ -13156,6 +13186,15 @@ snapshots:
     dependencies:
       '@leichtgewicht/ip-codec': 2.0.5
 
+  docusaurus-plugin-glossary@3.3.4(patch_hash=b8d318a9901b6c4e458b3a897f944cd2006ca221f7bffd846d8b8ba1e69529c8)(@docusaurus/core@3.10.2(@docusaurus/faster@3.10.2(@docusaurus/types@3.10.2(@swc/core@1.15.43)(@swc/html@1.15.43)(clean-css@5.3.3)(cssnano@6.1.2(postcss@8.5.27))(csso@5.0.5)(html-minifier-terser@7.2.0)(lightningcss@1.32.0)(postcss@8.5.27)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(supports-color@9.4.0))(clean-css@5.3.3)(cssnano@6.1.2(postcss@8.5.27))(csso@5.0.5)(html-minifier-terser@7.2.0)(postcss@8.5.27))(@mdx-js/react@3.1.1(@types/react@19.2.18)(react@19.2.8))(@rspack/core@1.7.12)(@swc/core@1.15.43)(@swc/html@1.15.43)(clean-css@5.3.3)(cssnano@6.1.2(postcss@8.5.27))(csso@5.0.5)(debug@4.4.3(supports-color@9.4.0))(html-minifier-terser@7.2.0)(lightningcss@1.32.0)(postcss@8.5.27)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(supports-color@9.4.0)(typescript@7.0.2))(react-dom@19.2.8(react@19.2.8))(react@19.2.8):
+    dependencies:
+      '@docusaurus/core': 3.10.2(@docusaurus/faster@3.10.2(@docusaurus/types@3.10.2(@swc/core@1.15.43)(@swc/html@1.15.43)(clean-css@5.3.3)(cssnano@6.1.2(postcss@8.5.27))(csso@5.0.5)(html-minifier-terser@7.2.0)(lightningcss@1.32.0)(postcss@8.5.27)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(supports-color@9.4.0))(clean-css@5.3.3)(cssnano@6.1.2(postcss@8.5.27))(csso@5.0.5)(html-minifier-terser@7.2.0)(postcss@8.5.27))(@mdx-js/react@3.1.1(@types/react@19.2.18)(react@19.2.8))(@rspack/core@1.7.12)(@swc/core@1.15.43)(@swc/html@1.15.43)(clean-css@5.3.3)(cssnano@6.1.2(postcss@8.5.27))(csso@5.0.5)(debug@4.4.3(supports-color@9.4.0))(html-minifier-terser@7.2.0)(lightningcss@1.32.0)(postcss@8.5.27)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(supports-color@9.4.0)(typescript@7.0.2)
+      fs-extra: 11.3.6
+      react: 19.2.8
+      react-dom: 19.2.8(react@19.2.8)
+      unist-util-visit: 5.1.0
+      validate-peer-dependencies: 2.2.0
+
   docusaurus-prince-pdf@1.2.1(supports-color@9.4.0):
     dependencies:
       got: 13.0.0
@@ -15577,6 +15616,12 @@ snapshots:
 
   path-parse@1.0.7: {}
 
+  path-root-regex@0.1.2: {}
+
+  path-root@0.1.1:
+    dependencies:
+      path-root-regex: 0.1.2
+
   path-scurry@1.11.1:
     dependencies:
       lru-cache: 10.4.3
@@ -16536,6 +16581,10 @@ snapshots:
 
   resolve-from@4.0.0: {}
 
+  resolve-package-path@4.0.3:
+    dependencies:
+      path-root: 0.1.1
+
   resolve-pathname@3.0.0: {}
 
   resolve@1.22.12:
@@ -17358,6 +17407,11 @@ snapshots:
       spdx-expression-parse: 3.0.1
 
   validate-npm-package-name@5.0.1: {}
+
+  validate-peer-dependencies@2.2.0:
+    dependencies:
+      resolve-package-path: 4.0.3
+      semver: 7.8.5
 
   value-equal@1.0.1: {}
 

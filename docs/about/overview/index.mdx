@@ -6,6 +6,8 @@ sidebar_position: 2
 description: "Discover the basics of Meshtastic's operation, from sending messages via the companion app to the network's intelligent rebroadcast system for extended reach."
 ---
 
+import useBaseUrl from "@docusaurus/useBaseUrl";
+
 ## How it works
 
 When you send a message on your Meshtastic companion app, it is relayed to the radio using Bluetooth, WiFi/Ethernet or serial connection. That message is then broadcasted by the radio. If it hasn't received a confirmation from any other device after a certain timeout, it will retransmit the message up to three times.
@@ -28,7 +30,7 @@ Nodes can belong to a maximum of 8 Channels in the radio mesh. A custom Channel 
 
 ## Meshtastic LoRa Chirp
 
-<img src="/img/about/lora_chirp.webp" alt="LoRa Chirp" />
+<img src={useBaseUrl("/img/about/lora_chirp.webp")} alt="LoRa Chirp" />
 
 At the physical layer, LoRa uses a modulation technique called Chirp Spread Spectrum (CSS). A "chirp" is a signal that sweeps in frequency over time, either upward (up-chirp) or downward (down-chirp) across the configured bandwidth.
 

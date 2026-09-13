@@ -6,6 +6,7 @@ import {
   AccordionItemPanel,
 } from "react-accessible-accordion";
 import ReactMarkdown from "react-markdown";
+import useBaseUrl from "@docusaurus/useBaseUrl";
 
 import "../css/faq.css";
 
@@ -13,6 +14,27 @@ export interface Faq {
   title: string;
   content: string;
 }
+
+/**
+ * Answers are Markdown strings rendered by react-markdown, so Docusaurus never sees
+ * their links and cannot apply baseUrl to them. Only root-absolute paths are resolved:
+ * useBaseUrl would join a relative one onto baseUrl and turn "../x" into "/../x".
+ * react-markdown also passes the hast node down, which must not reach the DOM.
+ */
+const FaqLink = ({
+  href,
+  children,
+  node: _node,
+  ...props
+}: React.ComponentPropsWithoutRef<"a"> & { node?: unknown }) => {
+  const resolved = useBaseUrl(href ?? "");
+  const isRootAbsolute = href?.startsWith("/") && !href.startsWith("//");
+  return (
+    <a href={isRootAbsolute ? resolved : href} {...props}>
+      {children}
+    </a>
+  );
+};
 
 /**
  * Finds the nearest heading to an element
@@ -89,7 +111,9 @@ export const FaqAccordion = ({ rows }: { rows: Faq[] }): JSX.Element => {
             <AccordionItemButton>{row.title}</AccordionItemButton>
           </AccordionItemHeading>
           <AccordionItemPanel>
-            <ReactMarkdown>{row.content}</ReactMarkdown>
+            <ReactMarkdown components={{ a: FaqLink }}>
+              {row.content}
+            </ReactMarkdown>
           </AccordionItemPanel>
         </AccordionItem>
       ))}

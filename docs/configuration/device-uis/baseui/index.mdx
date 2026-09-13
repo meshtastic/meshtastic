@@ -6,14 +6,16 @@ sidebar_position: 1
 description: BaseUI is a standalone interface for supported Meshtastic devices, enabling direct interaction without requiring a phone for common functions. It runs alongside the firmware, providing messaging and configuration options.
 ---
 
-import { Dark, Light } from "/src/components/ColorMode";
+import useBaseUrl from "@docusaurus/useBaseUrl";
+
+import { Dark, Light } from "@site/src/components/ColorMode";
 
 ## What is BaseUI?
 
 BaseUI is the stock UI interface that's designed to support all devices with screens - making it more intuitive, more capable including new standalone features, and easier to use on a wider range of devices. BaseUI starts a user's journey with Meshtastic and serves as the base or foundation of the experience.
 
 <img
-  src="/img/configuration/baseui/baseui-01-welcome.webp"
+  src={useBaseUrl("/img/configuration/baseui/baseui-01-welcome.webp")}
   alt="BaseUI Welcome Screen"
 />
 
@@ -30,13 +32,13 @@ BaseUI is by default installed on supported devices using the [Meshtastic Web Fl
 - [Set your LoRa region](/docs/configuration/region-by-country/)
   <Light>
     <img
-      src="/img/configuration/baseui/baseui-03-lora-green.webp"
+      src={useBaseUrl("/img/configuration/baseui/baseui-03-lora-green.webp")}
       alt="LoRa Picker Menu"
     />
   </Light>
   <Dark>
     <img
-      src="/img/configuration/baseui/baseui-03-lora-red.webp"
+      src={useBaseUrl("/img/configuration/baseui/baseui-03-lora-red.webp")}
       alt="LoRa Picker Menu"
     />
   </Dark>
@@ -47,13 +49,13 @@ BaseUI is designed to be navigated with as little as one button but support a my
 
 <Light>
   <img
-    src="/img/configuration/baseui/baseui-02-home-green.webp"
+    src={useBaseUrl("/img/configuration/baseui/baseui-02-home-green.webp")}
     alt="Home Screen"
   />
 </Light>
 <Dark>
   <img
-    src="/img/configuration/baseui/baseui-02-home-red.webp"
+    src={useBaseUrl("/img/configuration/baseui/baseui-02-home-red.webp")}
     alt="LHome Screen"
   />
 </Dark>
@@ -69,13 +71,13 @@ To open the action menu, **long-press** the user button.
 
 <Light>
   <img
-    src="/img/configuration/baseui/baseui-05-system-green.webp"
+    src={useBaseUrl("/img/configuration/baseui/baseui-05-system-green.webp")}
     alt="System Action Menu"
   />
 </Light>
 <Dark>
   <img
-    src="/img/configuration/baseui/baseui-05-system-red.webp"
+    src={useBaseUrl("/img/configuration/baseui/baseui-05-system-red.webp")}
     alt="System Action Menu"
   />
 </Dark>
@@ -105,13 +107,13 @@ _**Note**: Certain options described below may only be available depending on sp
 
 <Light>
   <img
-    src="/img/configuration/baseui/baseui-04-node-action-green.webp"
+    src={useBaseUrl("/img/configuration/baseui/baseui-04-node-action-green.webp")}
     alt="Node Action Menu"
   />
 </Light>
 <Dark>
   <img
-    src="/img/configuration/baseui/baseui-04-node-action-red.webp"
+    src={useBaseUrl("/img/configuration/baseui/baseui-04-node-action-red.webp")}
     alt="Node Action Menu"
   />
 </Dark>
@@ -147,13 +149,13 @@ _**Note**: Certain options described below may only be available depending on sp
 
 <Light>
   <img
-    src="/img/configuration/baseui/baseui-06-clock-green.webp"
+    src={useBaseUrl("/img/configuration/baseui/baseui-06-clock-green.webp")}
     alt="Clock Display"
   />
 </Light>
 <Dark>
   <img
-    src="/img/configuration/baseui/baseui-06-clock-red.webp"
+    src={useBaseUrl("/img/configuration/baseui/baseui-06-clock-red.webp")}
     alt="Clock Display"
   />
 </Dark>

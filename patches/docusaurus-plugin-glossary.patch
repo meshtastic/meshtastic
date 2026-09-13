@@ -1,0 +1,229 @@
+diff --git a/dist/chunk-CIAA7XR3.js b/dist/chunk-CIAA7XR3.js
+index 57169b64d0c4064adcb80ef2a2cbe7d131dff48b..c4c8e5f2c41b64abc0500e0a977d7c73656a11fb 100644
+--- a/dist/chunk-CIAA7XR3.js
++++ b/dist/chunk-CIAA7XR3.js
+@@ -153,15 +153,16 @@ function remarkGlossaryTerms({
+         const afterIndex = index + needle.length;
+         const afterChar = afterIndex < textLower.length ? textLower[afterIndex] : " ";
+         let matchLength = needle.length;
+-        let isWordBoundary = !/\w/.test(beforeChar) && !/\w/.test(afterChar);
+-        if (!isWordBoundary && afterChar === "s") {
++        const startsAtBoundary = !/\w/.test(beforeChar);
++        let isWordBoundary = startsAtBoundary && !/\w/.test(afterChar);
++        if (startsAtBoundary && !isWordBoundary && afterChar === "s") {
+           const nextChar = afterIndex + 1 < textLower.length ? textLower[afterIndex + 1] : " ";
+           if (!/\w/.test(nextChar)) {
+             isWordBoundary = true;
+             matchLength = needle.length + 1;
+           }
+         }
+-        if (!isWordBoundary && afterChar === "e" && afterIndex + 1 < textLower.length && textLower[afterIndex + 1] === "s") {
++        if (startsAtBoundary && !isWordBoundary && afterChar === "e" && afterIndex + 1 < textLower.length && textLower[afterIndex + 1] === "s") {
+           const nextChar = afterIndex + 2 < textLower.length ? textLower[afterIndex + 2] : " ";
+           if (!/\w/.test(nextChar)) {
+             isWordBoundary = true;
+diff --git a/dist/chunk-EQBYCLUI.js b/dist/chunk-EQBYCLUI.js
+index 76c927e1e187095498a2f9d6014c840fa6b5abfc..127ec78925a127e288ebf0efd3a2b66fcb8b9a64 100644
+--- a/dist/chunk-EQBYCLUI.js
++++ b/dist/chunk-EQBYCLUI.js
+@@ -63,14 +63,18 @@ function glossaryPlugin(context, options = {}) {
+           routePath
+         })
+       );
+-      addRoute({
+-        path: routePath,
+-        component: path.join(currentDir, "components/GlossaryPage.js"),
+-        exact: true,
+-        modules: {
+-          glossaryData: glossaryDataPath
+-        }
+-      });
++      // routePath: null lets a site render the glossary itself, in a page of its
++      // own, without this plugin also registering one at the same path.
++      if (routePath !== null) {
++        addRoute({
++          path: routePath,
++          component: path.join(currentDir, "components/GlossaryPage.js"),
++          exact: true,
++          modules: {
++            glossaryData: glossaryDataPath
++          }
++        });
++      }
+       setGlobalData({
+         terms: glossaryContent.terms || [],
+         routePath
+diff --git a/dist/index.cjs b/dist/index.cjs
+index 0428381d07d043b7577a9e846e86c6f1a595c772..08cedc713828fed2a1754a9c06185d53e36234d4 100644
+--- a/dist/index.cjs
++++ b/dist/index.cjs
+@@ -205,15 +205,16 @@ function remarkGlossaryTerms({
+         const afterIndex = index + needle.length;
+         const afterChar = afterIndex < textLower.length ? textLower[afterIndex] : " ";
+         let matchLength = needle.length;
+-        let isWordBoundary = !/\w/.test(beforeChar) && !/\w/.test(afterChar);
+-        if (!isWordBoundary && afterChar === "s") {
++        const startsAtBoundary = !/\w/.test(beforeChar);
++        let isWordBoundary = startsAtBoundary && !/\w/.test(afterChar);
++        if (startsAtBoundary && !isWordBoundary && afterChar === "s") {
+           const nextChar = afterIndex + 1 < textLower.length ? textLower[afterIndex + 1] : " ";
+           if (!/\w/.test(nextChar)) {
+             isWordBoundary = true;
+             matchLength = needle.length + 1;
+           }
+         }
+-        if (!isWordBoundary && afterChar === "e" && afterIndex + 1 < textLower.length && textLower[afterIndex + 1] === "s") {
++        if (startsAtBoundary && !isWordBoundary && afterChar === "e" && afterIndex + 1 < textLower.length && textLower[afterIndex + 1] === "s") {
+           const nextChar = afterIndex + 2 < textLower.length ? textLower[afterIndex + 2] : " ";
+           if (!/\w/.test(nextChar)) {
+             isWordBoundary = true;
+@@ -710,14 +711,18 @@ function glossaryPlugin(context, options = {}) {
+           routePath
+         })
+       );
+-      addRoute({
+-        path: routePath,
+-        component: import_path2.default.join(currentDir, "components/GlossaryPage.js"),
+-        exact: true,
+-        modules: {
+-          glossaryData: glossaryDataPath
+-        }
+-      });
++      // routePath: null lets a site render the glossary itself, in a page of its
++      // own, without this plugin also registering one at the same path.
++      if (routePath !== null) {
++        addRoute({
++          path: routePath,
++          component: import_path2.default.join(currentDir, "components/GlossaryPage.js"),
++          exact: true,
++          modules: {
++            glossaryData: glossaryDataPath
++          }
++        });
++      }
+       setGlobalData({
+         terms: glossaryContent.terms || [],
+         routePath
+diff --git a/dist/preset.cjs b/dist/preset.cjs
+index 5626528e696fdc5cbd9186d262b246c7c8e32dd0..d9052bd40cc8509869f24bb786ec40fd70271e6e 100644
+--- a/dist/preset.cjs
++++ b/dist/preset.cjs
+@@ -199,15 +199,16 @@ function remarkGlossaryTerms({
+         const afterIndex = index + needle.length;
+         const afterChar = afterIndex < textLower.length ? textLower[afterIndex] : " ";
+         let matchLength = needle.length;
+-        let isWordBoundary = !/\w/.test(beforeChar) && !/\w/.test(afterChar);
+-        if (!isWordBoundary && afterChar === "s") {
++        const startsAtBoundary = !/\w/.test(beforeChar);
++        let isWordBoundary = startsAtBoundary && !/\w/.test(afterChar);
++        if (startsAtBoundary && !isWordBoundary && afterChar === "s") {
+           const nextChar = afterIndex + 1 < textLower.length ? textLower[afterIndex + 1] : " ";
+           if (!/\w/.test(nextChar)) {
+             isWordBoundary = true;
+             matchLength = needle.length + 1;
+           }
+         }
+-        if (!isWordBoundary && afterChar === "e" && afterIndex + 1 < textLower.length && textLower[afterIndex + 1] === "s") {
++        if (startsAtBoundary && !isWordBoundary && afterChar === "e" && afterIndex + 1 < textLower.length && textLower[afterIndex + 1] === "s") {
+           const nextChar = afterIndex + 2 < textLower.length ? textLower[afterIndex + 2] : " ";
+           if (!/\w/.test(nextChar)) {
+             isWordBoundary = true;
+@@ -697,14 +698,18 @@ function glossaryPlugin(context, options = {}) {
+           routePath
+         })
+       );
+-      addRoute({
+-        path: routePath,
+-        component: import_path2.default.join(currentDir, "components/GlossaryPage.js"),
+-        exact: true,
+-        modules: {
+-          glossaryData: glossaryDataPath
+-        }
+-      });
++      // routePath: null lets a site render the glossary itself, in a page of its
++      // own, without this plugin also registering one at the same path.
++      if (routePath !== null) {
++        addRoute({
++          path: routePath,
++          component: import_path2.default.join(currentDir, "components/GlossaryPage.js"),
++          exact: true,
++          modules: {
++            glossaryData: glossaryDataPath
++          }
++        });
++      }
+       setGlobalData({
+         terms: glossaryContent.terms || [],
+         routePath
+diff --git a/dist/remark/glossary-terms.cjs b/dist/remark/glossary-terms.cjs
+index 289d45dbccad081e548d336df2c31745c4f3cdaa..6ddcf07a57705038ae9ecaed6e332d0b93bbedd6 100644
+--- a/dist/remark/glossary-terms.cjs
++++ b/dist/remark/glossary-terms.cjs
+@@ -188,15 +188,16 @@ function remarkGlossaryTerms({
+         const afterIndex = index + needle.length;
+         const afterChar = afterIndex < textLower.length ? textLower[afterIndex] : " ";
+         let matchLength = needle.length;
+-        let isWordBoundary = !/\w/.test(beforeChar) && !/\w/.test(afterChar);
+-        if (!isWordBoundary && afterChar === "s") {
++        const startsAtBoundary = !/\w/.test(beforeChar);
++        let isWordBoundary = startsAtBoundary && !/\w/.test(afterChar);
++        if (startsAtBoundary && !isWordBoundary && afterChar === "s") {
+           const nextChar = afterIndex + 1 < textLower.length ? textLower[afterIndex + 1] : " ";
+           if (!/\w/.test(nextChar)) {
+             isWordBoundary = true;
+             matchLength = needle.length + 1;
+           }
+         }
+-        if (!isWordBoundary && afterChar === "e" && afterIndex + 1 < textLower.length && textLower[afterIndex + 1] === "s") {
++        if (startsAtBoundary && !isWordBoundary && afterChar === "e" && afterIndex + 1 < textLower.length && textLower[afterIndex + 1] === "s") {
+           const nextChar = afterIndex + 2 < textLower.length ? textLower[afterIndex + 2] : " ";
+           if (!/\w/.test(nextChar)) {
+             isWordBoundary = true;
+diff --git a/dist/theme/GlossaryTerm/index.cjs b/dist/theme/GlossaryTerm/index.cjs
+index 88a801adfa97e7c74064ad8113f0cdb31d077b26..e02b4d44fb6f3d2f12754a5dcf2cb037774230b5 100644
+--- a/dist/theme/GlossaryTerm/index.cjs
++++ b/dist/theme/GlossaryTerm/index.cjs
+@@ -56,7 +56,9 @@ function GlossaryTerm({
+     const viewportWidth = window.innerWidth;
+     const viewportHeight = window.innerHeight;
+     const preferredGap = 8;
+-    const hasSpaceAbove = wrapperRect.top >= tooltipRect.height + preferredGap;
++    const stickyHeader = document.querySelector(".navbar");
++    const topBoundary = stickyHeader ? stickyHeader.getBoundingClientRect().bottom : 0;
++    const hasSpaceAbove = wrapperRect.top - topBoundary >= tooltipRect.height + preferredGap;
+     const hasSpaceBelow = viewportHeight - wrapperRect.bottom >= tooltipRect.height + preferredGap;
+     const nextPlacement = hasSpaceAbove || !hasSpaceBelow ? "top" : "bottom";
+     let top;
+@@ -72,7 +74,7 @@ function GlossaryTerm({
+       Math.min(left, viewportWidth - tooltipRect.width - horizontalMargin)
+     );
+     setPlacement(nextPlacement);
+-    setTooltipStyle({ top: Math.max(4, top), left });
++    setTooltipStyle({ top: Math.max(topBoundary + 4, top), left });
+   }, []);
+   (0, import_react.useEffect)(() => {
+     if (!showTooltip) return;
+diff --git a/dist/theme/GlossaryTerm/index.js b/dist/theme/GlossaryTerm/index.js
+index 0eb7ea5e87d149d1165073c0179333e2ca3d1a38..9877bab80985cd1fd04ff882ce6f42af0ed16457 100644
+--- a/dist/theme/GlossaryTerm/index.js
++++ b/dist/theme/GlossaryTerm/index.js
+@@ -22,7 +22,9 @@ function GlossaryTerm({
+     const viewportWidth = window.innerWidth;
+     const viewportHeight = window.innerHeight;
+     const preferredGap = 8;
+-    const hasSpaceAbove = wrapperRect.top >= tooltipRect.height + preferredGap;
++    const stickyHeader = document.querySelector(".navbar");
++    const topBoundary = stickyHeader ? stickyHeader.getBoundingClientRect().bottom : 0;
++    const hasSpaceAbove = wrapperRect.top - topBoundary >= tooltipRect.height + preferredGap;
+     const hasSpaceBelow = viewportHeight - wrapperRect.bottom >= tooltipRect.height + preferredGap;
+     const nextPlacement = hasSpaceAbove || !hasSpaceBelow ? "top" : "bottom";
+     let top;
+@@ -38,7 +40,7 @@ function GlossaryTerm({
+       Math.min(left, viewportWidth - tooltipRect.width - horizontalMargin)
+     );
+     setPlacement(nextPlacement);
+-    setTooltipStyle({ top: Math.max(4, top), left });
++    setTooltipStyle({ top: Math.max(topBoundary + 4, top), left });
+   }, []);
+   useEffect(() => {
+     if (!showTooltip) return;
