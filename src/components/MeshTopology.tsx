@@ -95,9 +95,10 @@ const MeshNode = ({
   isActive: boolean;
   connection?: "bt" | "wifi" | "usb";
 }) => {
-  // Position icons on outer edge of topology based on node position
+  // The connection icon sits on the device's top corner, on the side its link
+  // line arrives from, so the node's footprint is just the device itself.
   const isLeftSide = node.x < 50;
-  const iconPosition = isLeftSide ? "-left-8" : "-right-8";
+  const iconPosition = isLeftSide ? "mtopo-badge-left" : "mtopo-badge-right";
 
   return (
     <div
@@ -113,15 +114,13 @@ const MeshNode = ({
         <DeviceImg
           device={node.device}
           alt={node.label}
-          className="w-12 h-14 object-contain relative z-10"
+          className="mtopo-device object-contain relative z-10"
         />
         {connection && (
-          <div
-            className={`absolute top-1/2 -translate-y-1/2 ${iconPosition} z-20`}
-          >
+          <div className={`mtopo-badge ${iconPosition} z-20`}>
             {connection === "bt" && (
               <Bluetooth
-                className="w-5 h-5 text-[#0082FC]"
+                className="mtopo-badge-icon text-[#0082FC]"
                 aria-label="Bluetooth connection"
                 // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role -- role="img" on svg is the correct accessible-icon pattern, not a role that maps to a real <img> tag
                 role="img"
@@ -129,7 +128,7 @@ const MeshNode = ({
             )}
             {connection === "wifi" && (
               <Wifi
-                className="w-5 h-5 text-primary"
+                className="mtopo-badge-icon text-primary"
                 aria-label="WiFi connection"
                 // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role -- role="img" on svg is the correct accessible-icon pattern, not a role that maps to a real <img> tag
                 role="img"
@@ -137,7 +136,7 @@ const MeshNode = ({
             )}
             {connection === "usb" && (
               <Usb
-                className="w-5 h-5 text-muted-foreground"
+                className="mtopo-badge-icon text-muted-foreground"
                 aria-label="USB connection"
                 // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role -- role="img" on svg is the correct accessible-icon pattern, not a role that maps to a real <img> tag
                 role="img"
@@ -146,7 +145,7 @@ const MeshNode = ({
           </div>
         )}
       </div>
-      <span className="text-[10px] font-mono text-muted-foreground mt-1">
+      <span className="mtopo-label font-mono text-muted-foreground mt-1">
         {node.label}
       </span>
     </div>
@@ -489,12 +488,89 @@ export function MeshTopology() {
             20% { opacity: 1; }
             100% { opacity: 0.6; }
           }
+
+          /*
+           * The topology lays nodes out in percentages, so every gap between
+           * them shrinks with the canvas. Size the things drawn inside a node
+           * against that same canvas (cqw) so the diagram stays self-similar:
+           * a clearance that holds at the reference width holds at every width.
+           * Values are calibrated to the 496px reference canvas, and clamped so
+           * labels stay legible once the canvas gets very small.
+           */
+          .mtopo-canvas {
+            container-type: inline-size;
+            container-name: mtopo;
+          }
+          .mtopo-device {
+            display: block;
+            margin: 0;
+            width: 48px;
+            height: 56px;
+            width: clamp(29px, 9.68cqw, 48px);
+            height: clamp(34px, 11.29cqw, 56px);
+          }
+          .mtopo-label {
+            font-size: 10px;
+            font-size: clamp(8px, 2.02cqw, 10px);
+            line-height: 1.2;
+          }
+          /*
+           * The connection icon rides on the device's top corner rather than
+           * hanging off its side, so a node never takes more horizontal room
+           * than its own artwork. It carries a filled chip behind it: most
+           * device art is dark, and a bare glyph would disappear into it.
+           */
+          .mtopo-badge {
+            position: absolute;
+            top: 0;
+            display: grid;
+            place-items: center;
+            width: 24px;
+            height: 24px;
+            width: clamp(17px, 4.84cqw, 24px);
+            height: clamp(17px, 4.84cqw, 24px);
+            border-radius: 9999px;
+            background: var(--ifm-background-color);
+            box-shadow: 0 0 0 1px var(--ifm-color-emphasis-200);
+          }
+          .mtopo-badge-left {
+            left: 0;
+            transform: translate(-35%, -35%);
+          }
+          .mtopo-badge-right {
+            right: 0;
+            transform: translate(35%, -35%);
+          }
+          .mtopo-badge-icon {
+            width: 62%;
+            height: 62%;
+          }
+
+          /*
+           * The phone and terminal mockups are a fixed 176px and 192px wide, so
+           * on a narrow row they take their width out of the canvas and leave
+           * the topology cramped. Let them give ground instead of disappearing:
+           * both shrink with the row, down to a floor that keeps their own text
+           * readable, so the canvas keeps a workable width at every size.
+           */
+          .mtopo-row {
+            container-type: inline-size;
+            container-name: mtopo-row;
+          }
+          @container mtopo-row (max-width: 820px) {
+            .mtopo-phone { zoom: 0.88; }
+            .mtopo-terminal { zoom: 0.88; }
+          }
+          @container mtopo-row (max-width: 720px) {
+            .mtopo-phone { zoom: 0.78; }
+            .mtopo-terminal { zoom: 0.78; }
+          }
         `}
       </style>
 
-      <div className="flex items-end gap-4 relative overflow-visible">
+      <div className="mtopo-row flex items-end gap-4 relative overflow-visible">
         {/* Mini Phone Mockup */}
-        <div className="hidden sm:block flex-shrink-0 w-44">
+        <div className="mtopo-phone hidden sm:block flex-shrink-0 w-44">
           <div className="rounded-[1.5rem] bg-gradient-to-b from-stone-300 to-stone-400 dark:from-gray-800 dark:to-gray-900 p-2 shadow-xl ring-1 ring-stone-400 dark:ring-gray-600/50">
             <div className="rounded-[1.25rem] bg-stone-100 dark:bg-gray-900 p-1.5">
               <div className="relative overflow-hidden rounded-[1rem] bg-stone-50 dark:bg-gray-950">
@@ -594,7 +670,7 @@ export function MeshTopology() {
         </div>
 
         {/* Mesh Topology */}
-        <div className="flex-1 relative overflow-visible">
+        <div className="mtopo-canvas flex-1 relative overflow-visible">
           {/* SVG for mesh connections */}
           <svg
             className="absolute inset-0 w-full h-full overflow-visible"
@@ -839,7 +915,7 @@ export function MeshTopology() {
         </div>
 
         {/* Mini Computer Mockup */}
-        <div className="hidden xl:block flex-shrink-0 w-48">
+        <div className="mtopo-terminal hidden xl:block flex-shrink-0 w-48">
           <div className="rounded-lg bg-gradient-to-b from-stone-400 to-stone-500 dark:from-gray-700 dark:to-gray-800 p-1.5 shadow-xl ring-1 ring-stone-500 dark:ring-gray-600/50">
             {/* Screen */}
             <div className="rounded bg-stone-900 dark:bg-gray-950 p-1">
