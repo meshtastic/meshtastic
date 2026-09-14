@@ -89,6 +89,28 @@ This setting defines the device's behavior for how messages are rebroadcasted.
 |        `NONE`        |                                       NONE - Only permitted for SENSOR, TRACKER and TAK_TRACKER roles, this will inhibit all rebroadcasts, not unlike CLIENT_MUTE role.                                       |
 | `CORE_PORTNUMS_ONLY` | CORE_PORTNUMS_ONLY - Ignores packets from non-standard portnums such as: TAK, RangeTest, PaxCounter, etc. Only rebroadcasts packets with standard portnums: NodeInfo, Text, Position, Telemetry, and Routing. |
 
+### Packets the node cannot read
+
+The descriptions above apply to packets the node can decrypt. A node also hears packets it has no key for: direct messages between two other nodes, traffic on channels it does not hold, and anything from a foreign mesh. The port number and the sender's identity are inside the ciphertext, so the only things the node can act on are the fields in the unencrypted header: who the packet is addressed to, its hop limit, and its packet ID.
+
+Rebroadcast mode still decides whether such a packet is carried:
+
+|            Value            | Packets it cannot read                                                                                                   |
+| :-------------------------: | :----------------------------------------------------------------------------------------------------------------------- |
+| `ALL`, `ALL_SKIP_DECODING`  | Rebroadcast.                                                                                                             |
+|    `CORE_PORTNUMS_ONLY`     | Rebroadcast. The port number cannot be read, so it cannot be filtered on.                                                 |
+| `LOCAL_ONLY`, `KNOWN_ONLY`  | Rebroadcast only if the packet is a direct message and either party is in the node's NodeDB. Everything else is ignored.  |
+|           `NONE`            | Nothing is rebroadcast.                                                                                                  |
+
+The same rule decides whether the packet is passed to a connected client app. `NONE` is the exception: it stops rebroadcasts, but the node still shows the client what it heard.
+
+Two consequences worth knowing when choosing a mode:
+
+- A node in `LOCAL_ONLY` or `KNOWN_ONLY` still carries direct messages for nodes it knows, even though it cannot read them. This is what lets encrypted direct messages cross a mesh.
+- A node in any mode other than `NONE` replies to an undecryptable direct message addressed to it, telling the sender its key is unknown so the sender can send its node info. It does not add the sender to its NodeDB on the strength of a packet it could not authenticate.
+
+Nodes in licensed (ham) mode transmit in the clear and never rebroadcast a packet they cannot read, whatever the mode is set to.
+
 ## GPIO for User Button
 
 This is the GPIO pin number that will be used for the user button, if your device does not come with a predefined user button.

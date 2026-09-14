@@ -1,0 +1,65 @@
+---
+id: opaque-packets
+title: Handling of Unreadable Packets
+sidebar_label: Unreadable Packets
+sidebar_position: 7
+description: How a node classifies, relays, reports and uplinks packets it has no key to decrypt
+---
+
+A node hears packets it cannot decrypt: direct messages between two other nodes, traffic on channels it does not hold, and anything from a foreign mesh sharing its modem settings. Such a packet is called opaque. Only the unencrypted [packet header](/docs/overview/mesh-algo/#layer-1-unreliable-zero-hop-messaging) is available, so every decision about it is made from `from`, `to`, `id`, `channel` (a hash, not an index), `hop_limit`, `hop_start` and `next_hop`.
+
+An opaque packet is never admitted to local state. It does not enter the packet history, does not create or update a NodeDB entry, is not offered to modules, and cannot acknowledge or cancel anything in the transmit queue. This is what keeps unauthenticated traffic from influencing routing, acknowledgement or next-hop decisions.
+
+## Classification
+
+A decrypt attempt ends in one of three states that matter here.
+
+| State   | Meaning                                                                                       |
+| ------- | --------------------------------------------------------------------------------------------- |
+| Success | The packet decoded. It follows the normal path and none of this document applies.             |
+| Opaque  | No key material was available to try: no sender key, no pending key, and no matching channel. |
+| Failure | A key or channel was tried and the packet did not decode, or it decoded and was malformed.    |
+
+The distinction between opaque and failure is the verdict of the attempt itself, not a property of the header, and it decides the error a node reports and whether the packet is shown to a client.
+
+Channel hash `0` is the sentinel for public-key direct messages. A node may also hold an ordinary channel whose name happens to hash to `0`; that channel matches every direct message on the mesh and fails to decrypt all of them. A hash-`0` channel match is therefore not treated as evidence about a direct-message-shaped unicast — one addressed to a single node, on channel `0`, and longer than the public-key overhead. For those, only key material decides. Without this rule, one channel name in 256 would change how a node answers every direct message it receives.
+
+## What acts on an opaque packet
+
+Four things can act on an opaque packet, each with its own conditions.
+
+### Rebroadcast
+
+Carried per [rebroadcast mode](/docs/configuration/radio/device#packets-the-node-cannot-read), from the header alone, with the hop limit decremented as usual. A packet addressed to this node, originated by it, with a zero hop limit, with `next_hop` set to another node, or heard by a node in `CLIENT_MUTE`, is not carried. Nodes in licensed (ham) mode never carry one.
+
+### Error reply
+
+An undecryptable unicast addressed to this node that requested an acknowledgement is answered with a routing error:
+
+| Condition                                                  | Error                |
+| ---------------------------------------------------------- | -------------------- |
+| Direct-message-shaped and no key material was available    | `PKI_UNKNOWN_PUBKEY` |
+| A key or channel was tried and failed                      | `NO_CHANNEL`         |
+| On channel `0` but too short to have been a direct message | `NO_CHANNEL`         |
+
+`PKI_UNKNOWN_PUBKEY` tells the sender that this node has no public key for it, so the sender transmits its node info and the direct message can be retried. In `KNOWN_ONLY` that node info is itself refused, so the reply does not lead to recovery in that mode; keys reach a `KNOWN_ONLY` node by configuration instead.
+
+### Delivery to the client app
+
+A packet this node had no way to read, addressed to it or broadcast, is passed to the connected client still encrypted, so the client can see that traffic exists. It follows the same rebroadcast-mode rule as relaying, except that `NONE` still delivers. NodeDB is not touched, and the `channel` field holds the wire hash rather than a channel index — client authors should not read it as an index on an encrypted packet.
+
+### MQTT uplink
+
+A gateway with `encryption_enabled` set uplinks an opaque direct message between two other nodes as ciphertext, marked as public-key encrypted. This is gated by the MQTT settings alone and not by rebroadcast mode, which governs what the node puts back on the air rather than what leaves over IP. A gateway that declines to rebroadcast a stranger's direct message may therefore still uplink it. Broadcasts, packets to or from this node, and packets that arrived via MQTT are not uplinked, and neither is anything to or from a node a licensed station knows to be unlicensed.
+
+## Duplicate suppression
+
+Opaque packets are deduplicated in a small fixed-size ring keyed on the outer `(from, id)` pair, held in RAM and separate from the packet history used for decrypted traffic. A packet heard from three neighbours costs one rebroadcast, one error reply, one client delivery and one uplink rather than three of each.
+
+Two cases are excluded. A packet with `id` `0` is never recorded, because the ring cannot distinguish it from an empty slot, and nothing acts on such a packet — an error reply quoting request ID `0` could not be matched by the sender anyway. Packets no consumer can act on are not recorded either, so they cannot evict live entries.
+
+The originator's own retransmission, recognised by its hop limit still equalling its hop start, is carried again even when the packet has been seen, unless this node's own copy of it is still waiting in the transmit queue. This is the rule the decrypted path applies.
+
+## Licensed (ham) mode
+
+A licensed station transmits without encryption and must not relay ciphertext, so it carries no opaque packet in any rebroadcast mode and uplinks none. It also does not reply to, deliver, or uplink a packet to or from a node it knows to be unlicensed.
