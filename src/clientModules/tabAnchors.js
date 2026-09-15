@@ -32,7 +32,12 @@ function tabButtonsFor(panel) {
 }
 
 async function revealHash(hash) {
-  const id = decodeURIComponent((hash || "").replace(/^#/, ""));
+  let id;
+  try {
+    id = decodeURIComponent((hash || "").replace(/^#/, ""));
+  } catch {
+    return; // Malformed percent-encoding, such as "#%".
+  }
   if (!id) {
     return;
   }

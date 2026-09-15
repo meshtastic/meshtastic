@@ -36,22 +36,27 @@ DEVICE_TREE = "docs/hardware/devices/"
 
 
 def blocks(lines):
-    """Yield (closing line number, [(line, value, has_heading), ...]) per Tabs block."""
-    current = None
+    """Yield (closing line number, [(line, value, has_heading), ...]) per Tabs block.
+
+    Tabs nest, so track a stack and attribute each TabItem to the innermost open
+    block. A single current block would let an inner </Tabs> discard the outer
+    one, and the outer block would then go unchecked.
+    """
+    stack = []
     for index, line in enumerate(lines):
         if TABS_OPEN.search(line):
-            current = []
+            stack.append([])
         match = TAB_ITEM.search(line)
-        if match and current is not None:
+        if match and stack:
             following = index + 1
             while following < len(lines) and not lines[following].strip():
                 following += 1
             first = lines[following].strip() if following < len(lines) else ""
-            current.append((index + 1, match.group(1), bool(HEADING.match(first))))
-        if TABS_CLOSE.search(line) and current is not None:
-            if current:
-                yield index + 1, current
-            current = None
+            stack[-1].append((index + 1, match.group(1), bool(HEADING.match(first))))
+        if TABS_CLOSE.search(line) and stack:
+            block = stack.pop()
+            if block:
+                yield index + 1, block
 
 
 def main(argv):
