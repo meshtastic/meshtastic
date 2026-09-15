@@ -45,6 +45,7 @@ Additional arguments can be given to the program, which are listed as follows:
 - `-e`: Erase the virtual filesystem before use.
 - `-h MAC_ADDRESS`: The MAC address to assign to this virtual machine.
 - `-p TCP_PORT`: The local TCP port to use for running the Meshtastic API.
+- `--raw-modem TCP_PORT`: Serve the LoRa radio as a raw KISS modem on this port instead of running a mesh node. See [Raw modem mode](#raw-modem-mode).
 
 #### Example CLI usage
 
@@ -77,6 +78,78 @@ Webserver:
   Port: 9443 # Port for Webserver & Webservices
   RootPath: /usr/share/meshtasticd/web # Root Dir of WebServer
 ```
+
+### Raw modem mode
+
+Raw modem mode turns `meshtasticd` into a dumb LoRa modem for another program on the host. The mesh node stops using the radio; instead one TCP client gets every frame received on air, can transmit frames, and sets the radio parameters. Use it for software that needs raw frames from the radio `meshtasticd` already drives (an SPI HAT or a CH341 USB stick), instead of a separate board flashed as a modem.
+
+To enable it, set the port in `config.yaml` (or start `meshtasticd` with `--raw-modem PORT`):
+
+```yaml
+General:
+  RawModemPort: 4405 # 1024-65535, and not the API port
+```
+
+While the mode is on:
+
+- Nothing the mesh node would send reaches the radio, and nothing received is handled as mesh traffic. The API port, web server and MQTT keep running, but the node is off the air.
+- One client at a time. A new connection replaces the current one. With no client connected, received frames are dropped.
+- Radio settings from the client (frequency, bandwidth, spreading factor, coding rate, power, sync word, preamble) replace the region and channel settings until `meshtasticd` restarts. The region's power limit and the board's PA gain still apply.
+- The port accepts connections from any address with no authentication, like the API port. Firewall it or bind `meshtasticd` to a private interface.
+
+`meshtasticd --check` reports a `RawModemPort` outside 1024-65535 or equal to the API port, and `meshtasticd` refuses to start with one.
+
+#### Protocol
+
+The client speaks a KISS modem protocol over the TCP connection. All multi-byte integers are little-endian.
+
+**Framing.** Each frame is `0xC0`, a type byte, the payload, `0xC0`. Inside a frame `0xC0` is sent as `0xDB 0xDC` and `0xDB` as `0xDB 0xDD`. Bytes before the first `0xC0` and empty frames are ignored; a frame longer than 512 bytes is discarded.
+
+| Type   | Meaning                                                          |
+| ------ | ---------------------------------------------------------------- |
+| `0x00` | Data: the on-air LoRa frame, up to 255 bytes, in either direction |
+| `0x06` | `SetHardware`: a command byte, then its payload                  |
+
+Other KISS type bytes (`TxDelay`, `Persistence`, `SlotTime`, `TxTail`, `FullDuplex`) are accepted and ignored.
+
+**Commands** are sent as `SetHardware` frames. A query is answered with a `SetHardware` frame whose command byte is the query's with the top bit set (`GetRadio` `0x0B` is answered with `0x8B`); a setting is answered with `OK` or `Error`.
+
+| Command         | Code   | Payload                                                                                                  | Reply                                                    |
+| --------------- | ------ | -------------------------------------------------------------------------------------------------------- | -------------------------------------------------------- |
+| `SetRadio`      | `0x09` | frequency Hz `uint32`, bandwidth Hz `uint32`, spreading factor `uint8` (5-12), coding rate `uint8` (5-8) | `OK` / `Error`                                           |
+| `SetTxPower`    | `0x0A` | dBm `int8`                                                                                               | `OK` / `Error`                                           |
+| `GetRadio`      | `0x0B` |                                                                                                          | the `SetRadio` payload                                   |
+| `GetTxPower`    | `0x0C` |                                                                                                          | dBm `int8`                                               |
+| `IsChannelBusy` | `0x0E` |                                                                                                          | `uint8`: `1` while a packet is being received            |
+| `GetAirtime`    | `0x0F` | frame length `uint8`                                                                                     | airtime ms `uint32` for that length at the current radio |
+| `GetNoiseFloor` | `0x10` |                                                                                                          | dBm `int16`                                              |
+| `GetVersion`    | `0x11` |                                                                                                          | `uint16`: `2`                                            |
+| `GetStats`      | `0x12` |                                                                                                          | received, transmitted, receive errors: three `uint32`    |
+| `GetDeviceName` | `0x16` |                                                                                                          | text: `meshtasticd` and the radio module                 |
+| `Ping`          | `0x17` |                                                                                                          | empty                                                    |
+| `SetSyncWord`   | `0x1B` | LoRa sync word `uint8` (`0x2B` for Meshtastic)                                                           | `OK` / `Error`                                           |
+| `SetPreamble`   | `0x1C` | symbols `uint16`; `0` selects 32 for SF 8 and below, otherwise 16                                        | `OK` / `Error`                                           |
+| `GetPhyExtra`   | `0x1D` |                                                                                                          | sync word `uint8`, preamble symbols `uint16`             |
+
+`SetTxPower`, `SetSyncWord` and `SetPreamble` are stored until `SetRadio` supplies a frequency; from then on every setting is applied to the radio at once. The regional power limit and the board's PA gain still apply to the requested power.
+
+**Replies and events** are `SetHardware` frames from `meshtasticd`:
+
+| Command  | Code   | Payload                                                      |
+| -------- | ------ | ------------------------------------------------------------ |
+| `OK`     | `0xF0` |                                                              |
+| `Error`  | `0xF1` | error code `uint8`, below                                    |
+| `TxDone` | `0xF8` | `uint8`: `1` transmitted, `0` failed                         |
+| `RxMeta` | `0xF9` | SNR `int8` in quarter dB, RSSI `int8` in dBm                 |
+
+| Error code | Meaning                                                            |
+| ---------- | ------------------------------------------------------------------ |
+| `0x01`     | `InvalidLength`: the payload is shorter than the command needs     |
+| `0x02`     | `InvalidParam`: out of range, or the radio rejected the setting    |
+| `0x05`     | `UnknownCmd`                                                       |
+| `0x07`     | `TxBusy`: a transmit is in progress; settings can't change either  |
+
+Every received frame is delivered as a data frame holding the on-air bytes, followed by `RxMeta`. A data frame from the client is transmitted as-is once any packet being received has ended, and answered with `TxDone`; only one transmit is in flight at a time.
 
 ### Bluetooth Support
 
