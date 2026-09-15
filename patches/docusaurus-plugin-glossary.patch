@@ -1,5 +1,5 @@
 diff --git a/dist/chunk-CIAA7XR3.js b/dist/chunk-CIAA7XR3.js
-index 57169b64d0c4064adcb80ef2a2cbe7d131dff48b..c4c8e5f2c41b64abc0500e0a977d7c73656a11fb 100644
+index 57169b64d0c4064adcb80ef2a2cbe7d131dff48b..20a1d7ef3d181ef92fe12f2c34a7e64b05caf8dc 100644
 --- a/dist/chunk-CIAA7XR3.js
 +++ b/dist/chunk-CIAA7XR3.js
 @@ -153,15 +153,16 @@ function remarkGlossaryTerms({
@@ -22,6 +22,23 @@ index 57169b64d0c4064adcb80ef2a2cbe7d131dff48b..c4c8e5f2c41b64abc0500e0a977d7c73
            const nextChar = afterIndex + 2 < textLower.length ? textLower[afterIndex + 2] : " ";
            if (!/\w/.test(nextChar)) {
              isWordBoundary = true;
+@@ -256,6 +257,16 @@ function remarkGlossaryTerms({
+         skip.add(textNode);
+       });
+     });
++    // A glossary tooltip inside a JSX element (a CTA button, a card) puts a
++    // link inside a link: it swallows the click and shows a tooltip where the
++    // page means to offer navigation. The parent type check below only sees a
++    // text node's immediate parent, and MDX wraps JSX child text in a paragraph
++    // first, so nested text slipped through. Skip text under any JSX element.
++    visit(tree, ["mdxJsxFlowElement", "mdxJsxTextElement"], (jsxNode) => {
++      visit(jsxNode, "text", (textNode) => {
++        skip.add(textNode);
++      });
++    });
+     return skip;
+   }
+   const transformer = (tree) => {
 diff --git a/dist/chunk-EQBYCLUI.js b/dist/chunk-EQBYCLUI.js
 index 76c927e1e187095498a2f9d6014c840fa6b5abfc..127ec78925a127e288ebf0efd3a2b66fcb8b9a64 100644
 --- a/dist/chunk-EQBYCLUI.js
@@ -54,7 +71,7 @@ index 76c927e1e187095498a2f9d6014c840fa6b5abfc..127ec78925a127e288ebf0efd3a2b66f
          terms: glossaryContent.terms || [],
          routePath
 diff --git a/dist/index.cjs b/dist/index.cjs
-index 0428381d07d043b7577a9e846e86c6f1a595c772..08cedc713828fed2a1754a9c06185d53e36234d4 100644
+index 0428381d07d043b7577a9e846e86c6f1a595c772..09ecfba89f5b06a3ca562d3c463bf2cc1594df05 100644
 --- a/dist/index.cjs
 +++ b/dist/index.cjs
 @@ -205,15 +205,16 @@ function remarkGlossaryTerms({
@@ -77,7 +94,24 @@ index 0428381d07d043b7577a9e846e86c6f1a595c772..08cedc713828fed2a1754a9c06185d53
            const nextChar = afterIndex + 2 < textLower.length ? textLower[afterIndex + 2] : " ";
            if (!/\w/.test(nextChar)) {
              isWordBoundary = true;
-@@ -710,14 +711,18 @@ function glossaryPlugin(context, options = {}) {
+@@ -308,6 +309,16 @@ function remarkGlossaryTerms({
+         skip.add(textNode);
+       });
+     });
++    // A glossary tooltip inside a JSX element (a CTA button, a card) puts a
++    // link inside a link: it swallows the click and shows a tooltip where the
++    // page means to offer navigation. The parent type check below only sees a
++    // text node's immediate parent, and MDX wraps JSX child text in a paragraph
++    // first, so nested text slipped through. Skip text under any JSX element.
++    (0, import_unist_util_visit.visit)(tree, ["mdxJsxFlowElement", "mdxJsxTextElement"], (jsxNode) => {
++      (0, import_unist_util_visit.visit)(jsxNode, "text", (textNode) => {
++        skip.add(textNode);
++      });
++    });
+     return skip;
+   }
+   const transformer = (tree) => {
+@@ -710,14 +721,18 @@ function glossaryPlugin(context, options = {}) {
            routePath
          })
        );
@@ -105,7 +139,7 @@ index 0428381d07d043b7577a9e846e86c6f1a595c772..08cedc713828fed2a1754a9c06185d53
          terms: glossaryContent.terms || [],
          routePath
 diff --git a/dist/preset.cjs b/dist/preset.cjs
-index 5626528e696fdc5cbd9186d262b246c7c8e32dd0..d9052bd40cc8509869f24bb786ec40fd70271e6e 100644
+index 5626528e696fdc5cbd9186d262b246c7c8e32dd0..311d5c961c036d7754b5a2bbb0e279aa9b3c58f0 100644
 --- a/dist/preset.cjs
 +++ b/dist/preset.cjs
 @@ -199,15 +199,16 @@ function remarkGlossaryTerms({
@@ -128,7 +162,24 @@ index 5626528e696fdc5cbd9186d262b246c7c8e32dd0..d9052bd40cc8509869f24bb786ec40fd
            const nextChar = afterIndex + 2 < textLower.length ? textLower[afterIndex + 2] : " ";
            if (!/\w/.test(nextChar)) {
              isWordBoundary = true;
-@@ -697,14 +698,18 @@ function glossaryPlugin(context, options = {}) {
+@@ -302,6 +303,16 @@ function remarkGlossaryTerms({
+         skip.add(textNode);
+       });
+     });
++    // A glossary tooltip inside a JSX element (a CTA button, a card) puts a
++    // link inside a link: it swallows the click and shows a tooltip where the
++    // page means to offer navigation. The parent type check below only sees a
++    // text node's immediate parent, and MDX wraps JSX child text in a paragraph
++    // first, so nested text slipped through. Skip text under any JSX element.
++    (0, import_unist_util_visit.visit)(tree, ["mdxJsxFlowElement", "mdxJsxTextElement"], (jsxNode) => {
++      (0, import_unist_util_visit.visit)(jsxNode, "text", (textNode) => {
++        skip.add(textNode);
++      });
++    });
+     return skip;
+   }
+   const transformer = (tree) => {
+@@ -697,14 +708,18 @@ function glossaryPlugin(context, options = {}) {
            routePath
          })
        );
@@ -156,7 +207,7 @@ index 5626528e696fdc5cbd9186d262b246c7c8e32dd0..d9052bd40cc8509869f24bb786ec40fd
          terms: glossaryContent.terms || [],
          routePath
 diff --git a/dist/remark/glossary-terms.cjs b/dist/remark/glossary-terms.cjs
-index 289d45dbccad081e548d336df2c31745c4f3cdaa..6ddcf07a57705038ae9ecaed6e332d0b93bbedd6 100644
+index 289d45dbccad081e548d336df2c31745c4f3cdaa..620fa2bed1371cdf85c3c4d2036ba2db98c98457 100644
 --- a/dist/remark/glossary-terms.cjs
 +++ b/dist/remark/glossary-terms.cjs
 @@ -188,15 +188,16 @@ function remarkGlossaryTerms({
@@ -179,6 +230,23 @@ index 289d45dbccad081e548d336df2c31745c4f3cdaa..6ddcf07a57705038ae9ecaed6e332d0b
            const nextChar = afterIndex + 2 < textLower.length ? textLower[afterIndex + 2] : " ";
            if (!/\w/.test(nextChar)) {
              isWordBoundary = true;
+@@ -291,6 +292,16 @@ function remarkGlossaryTerms({
+         skip.add(textNode);
+       });
+     });
++    // A glossary tooltip inside a JSX element (a CTA button, a card) puts a
++    // link inside a link: it swallows the click and shows a tooltip where the
++    // page means to offer navigation. The parent type check below only sees a
++    // text node's immediate parent, and MDX wraps JSX child text in a paragraph
++    // first, so nested text slipped through. Skip text under any JSX element.
++    (0, import_unist_util_visit.visit)(tree, ["mdxJsxFlowElement", "mdxJsxTextElement"], (jsxNode) => {
++      (0, import_unist_util_visit.visit)(jsxNode, "text", (textNode) => {
++        skip.add(textNode);
++      });
++    });
+     return skip;
+   }
+   const transformer = (tree) => {
 diff --git a/dist/theme/GlossaryTerm/index.cjs b/dist/theme/GlossaryTerm/index.cjs
 index 88a801adfa97e7c74064ad8113f0cdb31d077b26..e02b4d44fb6f3d2f12754a5dcf2cb037774230b5 100644
 --- a/dist/theme/GlossaryTerm/index.cjs
