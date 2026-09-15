@@ -60,6 +60,11 @@ def blocks(lines):
 
 
 def main(argv):
+    """Report offending Tabs blocks under each root, defaulting to docs/.
+
+    Returns 1 when anything was reported and 0 otherwise, so a caller can treat
+    the result as a warning without failing a build.
+    """
     roots = argv[1:] or ["docs"]
     found = 0
     for root in roots:
