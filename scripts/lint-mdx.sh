@@ -89,9 +89,11 @@ if rg -n '<img\b[^>]*>' $SEARCH_PATH $RG_MDX 2>/dev/null | rg -v 'alt\s*=' | rg 
   echo "WARNING: Found <img> tags without an alt attribute. Add alt=\"...\" (or alt=\"\" if purely decorative)."
   ALT_ISSUES=1
 fi
-# The lookbehind skips a backticked example, so prose documenting the rule (as
-# the writing style guide does) is not reported as breaking it.
-if rg -n --pcre2 '(?<!`)!\[\]\(' $SEARCH_PATH $RG_MDX 2>/dev/null; then
+# Exempt only a complete inline-code span, so prose documenting the rule (as the
+# writing style guide does) is not reported as breaking it. Requiring a backtick
+# on both sides keeps a real empty-alt image that merely follows inline code,
+# such as `label`![](/img/x.webp), reported.
+if rg -n --pcre2 '(?<!`)!\[\]\(|!\[\]\([^)]*\)(?!`)' $SEARCH_PATH $RG_MDX 2>/dev/null; then
   echo "WARNING: Found markdown images with empty alt text ![](...). Describe the image or use it only if decorative."
   ALT_ISSUES=1
 fi
