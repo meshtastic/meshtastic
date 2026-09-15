@@ -10,6 +10,16 @@ EXIT_CODE=0
 # Define MDX type for ripgrep
 RG_MDX="--type-add=mdx:*.mdx --type=mdx"
 
+# Most checks below are ripgrep patterns whose stderr is discarded, and a
+# missing rg exits 127, which reads as "no matches" and prints a ✓. Without this
+# guard every ripgrep check passes silently on a machine with no ripgrep
+# installed, including a stock GitHub Actions ubuntu runner.
+if ! command -v rg >/dev/null 2>&1; then
+  echo "❌ ripgrep (rg) is not installed, so these checks cannot run."
+  echo "   Install it with 'brew install ripgrep' or 'apt-get install ripgrep'."
+  exit 1
+fi
+
 echo "Checking MDX files for common corruption patterns..."
 
 # Pattern 1: Malformed closing tags with space after < (e.g., "</ TabItem>")
@@ -23,9 +33,11 @@ else
 fi
 
 # Pattern 2: Duplicated opening tags on same line (e.g., "<div...><div...>")
+# The \1 backreference needs PCRE2; ripgrep's default engine rejects it, and the
+# resulting parse error is indistinguishable from a clean result here.
 echo ""
 echo "=== Checking for duplicated opening tags ==="
-if rg -n '<(div|span|a|p)[^>]*><\1[^>]*>' $SEARCH_PATH $RG_MDX 2>/dev/null; then
+if rg -n --pcre2 '<(div|span|a|p)[^>]*><\1[^>]*>' $SEARCH_PATH $RG_MDX 2>/dev/null; then
   echo "ERROR: Found duplicated opening tags. This is likely Crowdin corruption."
   EXIT_CODE=1
 else
@@ -77,7 +89,11 @@ if rg -n '<img\b[^>]*>' $SEARCH_PATH $RG_MDX 2>/dev/null | rg -v 'alt\s*=' | rg 
   echo "WARNING: Found <img> tags without an alt attribute. Add alt=\"...\" (or alt=\"\" if purely decorative)."
   ALT_ISSUES=1
 fi
-if rg -n '!\[\]\(' $SEARCH_PATH $RG_MDX 2>/dev/null; then
+# Exempt only a complete inline-code span, so prose documenting the rule (as the
+# writing style guide does) is not reported as breaking it. Requiring a backtick
+# on both sides keeps a real empty-alt image that merely follows inline code,
+# such as `label`![](/img/x.webp), reported.
+if rg -n --pcre2 '(?<!`)!\[\]\(|!\[\]\([^)]*\)(?!`)' $SEARCH_PATH $RG_MDX 2>/dev/null; then
   echo "WARNING: Found markdown images with empty alt text ![](...). Describe the image or use it only if decorative."
   ALT_ISSUES=1
 fi
