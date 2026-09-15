@@ -2,7 +2,17 @@ require("dotenv").config();
 
 import path from "node:path";
 import remarkDefList from "remark-deflist";
+import glossaryPlugin from "docusaurus-plugin-glossary";
 const remarkBaseUrlAssets = require("./src/remark/base-url-assets.js");
+
+// Terms link and show a definition on hover. Acronym expansion stays off: it
+// rewrites authored prose, and its "already expanded" guard misses any wording
+// the author varied, producing "Protocol Buffer (Protocol Buffers (protobuf))".
+const glossaryPath = "glossary/glossary.json";
+
+// Where a term links to. docs/terms/index.mdx renders the glossary itself so the
+// page keeps the docs sidebar, which a plugin-generated route does not get.
+const glossaryRoutePath = "/docs/terms/";
 
 // Raw HTML in the config and in MDX bypasses Docusaurus link handling, so anything
 // built by hand has to prefix this itself. Overridable for builds served under a
@@ -134,6 +144,9 @@ const config = {
       };
     },
     "@docusaurus/plugin-vercel-analytics",
+    // routePath: null suppresses the plugin's own page; the plugin stays
+    // registered so its term data reaches the tooltips and the glossary page.
+    ["docusaurus-plugin-glossary", { glossaryPath, routePath: null }],
   ],
   scripts: [
     ...(process.env.COOKIEYES_CLIENT_ID
@@ -159,7 +172,14 @@ const config = {
               : undefined,
           breadcrumbs: false,
           showLastUpdateAuthor: true,
-          remarkPlugins: [remarkDefList, [remarkBaseUrlAssets, { baseUrl }]],
+          remarkPlugins: [
+            remarkDefList,
+            [remarkBaseUrlAssets, { baseUrl }],
+            [
+              glossaryPlugin.remarkPlugin,
+              { glossaryPath, routePath: glossaryRoutePath, siteDir: __dirname },
+            ],
+          ],
           lastVersion: "current",
           versions: {
             current: { label: "2.8" },

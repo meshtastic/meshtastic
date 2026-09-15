@@ -1,0 +1,200 @@
+/* docusaurus-plugin-glossary overrides: align tooltip/term styling with the
+   Meshtastic design standards palette (section 7) instead of the plugin's
+   emphasis-scale defaults. */
+.glossaryTermWrapper .glossaryTerm {
+  border-bottom-color: color-mix(in srgb, var(--ifm-color-primary) 60%, transparent);
+}
+
+.glossaryTermWrapper .glossaryTerm:hover {
+  color: var(--ifm-color-primary);
+}
+
+.glossaryTermWrapper .tooltip {
+  background: hsl(var(--popover));
+  color: hsl(var(--popover-foreground));
+  border-color: hsl(var(--border));
+}
+
+.glossaryTermWrapper .tooltip strong {
+  color: var(--ifm-color-primary);
+}
+
+.glossaryTermWrapper .tooltipTop::after {
+  border-top-color: hsl(var(--popover));
+}
+.glossaryTermWrapper .tooltipTop::before {
+  border-top-color: hsl(var(--border));
+}
+.glossaryTermWrapper .tooltipBottom::after {
+  border-bottom-color: hsl(var(--popover));
+}
+.glossaryTermWrapper .tooltipBottom::before {
+  border-bottom-color: hsl(var(--border));
+}
+
+/* The glossary page itself, rendered by src/components/Glossary. These mirror the
+   plugin's own page styling, so the page reads the same now that it is a doc. */
+.glossary__search-wrap {
+  max-width: 500px;
+  margin: 0 auto 2rem;
+}
+
+.glossary__search {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  color: var(--ifm-font-color-base);
+  background: var(--ifm-background-color);
+  border: 2px solid var(--ifm-color-emphasis-300);
+  border-radius: 0.5rem;
+  transition: border-color 0.2s;
+}
+
+.glossary__search:focus {
+  outline: none;
+  border-color: var(--ifm-color-primary);
+}
+
+[data-theme="dark"] .glossary__search {
+  background: var(--ifm-background-surface-color);
+}
+
+.glossary__letters {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 1rem;
+  margin-bottom: 2rem;
+  background: var(--ifm-color-emphasis-100);
+  border-radius: 0.5rem;
+}
+
+.glossary__letters a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  font-weight: bold;
+  color: var(--ifm-color-primary);
+  text-decoration: none;
+  border-radius: 0.25rem;
+  transition: all 0.2s;
+}
+
+.glossary__letters a:hover {
+  background: var(--ifm-color-primary);
+  color: #fff;
+}
+
+.glossary__letter {
+  font-size: 2rem;
+  color: var(--ifm-color-primary);
+  border-bottom: 2px solid var(--ifm-color-emphasis-300);
+  padding-bottom: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.glossary__list {
+  display: grid;
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+}
+
+.glossary__item {
+  padding: 1.5rem;
+  background: var(--ifm-card-background-color);
+  border: 1px solid var(--ifm-color-emphasis-200);
+  border-radius: 0.5rem;
+  transition: all 0.2s;
+  /* clear the sticky navbar when jumping to an anchor */
+  scroll-margin-top: 5rem;
+}
+
+.glossary__item:hover {
+  border-color: var(--ifm-color-primary);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="dark"] .glossary__item {
+  background: var(--ifm-background-surface-color);
+}
+
+.glossary__term {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: var(--ifm-heading-color);
+  margin-bottom: 0.75rem;
+}
+
+.glossary__abbr {
+  font-size: 0.9rem;
+  font-weight: normal;
+  color: var(--ifm-color-emphasis-600);
+}
+
+/* .glossary scopes these so they outrank the theme's `.markdown dl` rules, which
+   otherwise indent the definition away from its term. */
+.glossary .glossary__definition {
+  margin: 0;
+  margin-inline-start: 0;
+  padding-inline-start: 0;
+  line-height: 1.6;
+  color: var(--ifm-color-emphasis-800);
+}
+
+.glossary .glossary__list {
+  margin-bottom: 3rem;
+}
+
+.glossary__related {
+  margin: 1rem 0 0;
+  padding-top: 1rem;
+  border-top: 1px solid var(--ifm-color-emphasis-200);
+  font-size: 0.9rem;
+  color: var(--ifm-color-emphasis-700);
+}
+
+.glossary__related a {
+  color: var(--ifm-color-primary);
+  text-decoration: none;
+}
+
+.glossary__related a:hover {
+  text-decoration: underline;
+}
+
+.glossary__empty {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: var(--ifm-color-emphasis-600);
+}
+
+.glossary__count {
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--ifm-color-emphasis-200);
+  text-align: center;
+  color: var(--ifm-color-emphasis-600);
+}
+
+@media (max-width: 768px) {
+  .glossary__letters {
+    gap: 0.25rem;
+  }
+
+  .glossary__letters a {
+    width: 1.75rem;
+    height: 1.75rem;
+    font-size: 0.9rem;
+  }
+
+  .glossary__item {
+    padding: 1rem;
+  }
+
+  .glossary__term {
+    font-size: 1.1rem;
+  }
+}
