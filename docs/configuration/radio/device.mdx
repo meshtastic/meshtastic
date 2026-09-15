@@ -9,7 +9,7 @@ import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 import { Icon } from "@iconify/react";
 
-The device config options are: Role, Rebroadcast Mode, GPIO for User Button, GPIO for PWM Buzzer, Node Info Broadcast Seconds, Double Tap as Button Press, Disable Triple Click, Timezone Definition, and LED Heartbeat Disabled. Device config uses an admin message sending a `Config.Device` protobuf.
+The device config options are: Role, Rebroadcast Mode, GPIO for User Button, GPIO for PWM Buzzer, Node Info Broadcast Seconds, Double Tap as Button Press, Timezone Definition, and LED Heartbeat Disabled. Device config uses an admin message sending a `Config.Device` protobuf.
 
 ## Device Config Values
 
@@ -105,10 +105,6 @@ This is the number of seconds between NodeInfo message (containing i.a. long and
 
 This option will enable a double tap, when a supported accelerometer is attached to the device, to be treated as a button press.
 
-## Disable Triple Click
-
-Disables the triple-press of user button to enable or disable GPS.
-
 ## TZDEF (Timezone Definition)
 
 The `tzdef` setting allows the local offset to be defined for the device. It uses the TZ Database format to display the correct local time on the device display and in its logs.
@@ -200,7 +196,6 @@ All device config options are available in the python CLI. Example commands are 
 | device.buzzer_gpio                | `0` - `34`                                                         | `0`               |
 | device.node_info_broadcast_secs   | `3600` - `UINT MAX`                                                | `10800` (3 hours) |
 | device.double_tap_as_button_press | `false`, `true`                                                    | `false`           |
-| device.disable_triple_click       | `false`, `true`                                                    | `false`           |
 
 :::tip
 
