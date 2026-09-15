@@ -4,6 +4,8 @@ parent: User Guide
 sidebar_position: 9
 ---
 
+import useBaseUrl from "@docusaurus/useBaseUrl";
+
 # TAK Integration
 
 The Meshtastic app supports Team Awareness Kit (TAK) integration, enabling interoperability with ATAK (Android Team Awareness Kit), iTAK, and other CoT (Cursor-on-Target) compatible systems over LoRa mesh radio — no cellular or internet required.
@@ -41,8 +43,8 @@ The first section, **TAK Identity**, controls the firmware-level team and role i
 | Role | Your TAK role. Choices are Team Member (default), Team Lead, HQ, Sniper, Medic, Forward Observer, RTO, and K9. |
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="/img/apple/takIdentitySection_dark.webp" />
-  <img src="/img/apple/takIdentitySection.webp" alt="TAK Identity section with Team and Role pickers" />
+  <source media="(prefers-color-scheme: dark)" srcset={useBaseUrl("/img/apple/takIdentitySection_dark.webp")} />
+  <img src={useBaseUrl("/img/apple/takIdentitySection.webp")} alt="TAK Identity section with Team and Role pickers" />
 </picture>
 
 A **Save TAK Identity** button appears in the section only when there are unsaved changes. Saving dispatches an admin message to the connected node; you'll see the change reflected in TAK clients on the next position report.

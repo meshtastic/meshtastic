@@ -63,13 +63,13 @@ const Firmware = (): JSX.Element => {
               </div>
               <div className="card__footer mt-auto">
                 <a
-                  href="https://flasher.meshtastic.org/"
-                  className="m-auto flex rounded-lg border-4 border-transparent bg-accent p-1 font-semibold text-black shadow-md hover:text-black hover:brightness-110 active:border-green-200"
+                  href="https://msh.to/flash"
+                  className="button button--secondary button--block"
                 >
                   <Translate id="downloads.flasher.goToWebFlasher">
                     Go to Web Flasher
                   </Translate>
-                  <ArrowTopRightOnSquareIcon className="m-auto ml-2 h-4" />
+                  <ArrowTopRightOnSquareIcon className="ml-2 inline h-4 align-text-bottom" />
                 </a>
               </div>
             </div>
@@ -92,13 +92,13 @@ const Firmware = (): JSX.Element => {
               </div>
               <div className="card__footer mt-auto">
                 <a
-                  href="https://flasher.meshtastic.org/"
-                  className="m-auto flex rounded-lg border-4 border-transparent bg-accent p-1 font-semibold text-black shadow-md hover:text-black hover:brightness-110 active:border-green-200"
+                  href="https://msh.to/flash"
+                  className="button button--secondary button--block"
                 >
                   <Translate id="downloads.flasher.goToFlasher">
                     Go to Flasher
                   </Translate>
-                  <ArrowTopRightOnSquareIcon className="m-auto ml-2 h-4" />
+                  <ArrowTopRightOnSquareIcon className="ml-2 inline h-4 align-text-bottom" />
                 </a>
               </div>
             </div>
@@ -134,11 +134,11 @@ const Firmware = (): JSX.Element => {
                 <a
                   target="_blank"
                   rel="noopener noreferrer"
-                  href="https://itunes.apple.com/WebObjects/MZStore.woa/wa/viewSoftware?id=1586432531"
-                  className="m-auto flex rounded-lg border-4 border-transparent bg-accent p-1 font-semibold text-black shadow-md hover:text-black hover:brightness-110 active:border-green-200"
+                  href="https://msh.to/ios"
+                  className="button button--secondary button--block"
                 >
                   <Translate id="downloads.apps.appStore">App Store</Translate>
-                  <ArrowTopRightOnSquareIcon className="m-auto ml-2 h-4" />
+                  <ArrowTopRightOnSquareIcon className="ml-2 inline h-4 align-text-bottom" />
                 </a>
               </div>
             </div>
@@ -162,22 +162,22 @@ const Firmware = (): JSX.Element => {
                 <a
                   target="_blank"
                   rel="noopener noreferrer"
-                  href="https://f-droid.org/packages/com.geeksville.mesh/"
-                  className="m-auto flex rounded-lg border-4 border-transparent bg-accent p-1 font-semibold text-black shadow-md hover:text-black hover:brightness-110 active:border-green-200"
+                  href="https://msh.to/fdroid"
+                  className="button button--secondary button--block"
                 >
                   <Translate id="downloads.apps.fdroid">F-Droid</Translate>
-                  <ArrowTopRightOnSquareIcon className="m-auto ml-2 h-4" />
+                  <ArrowTopRightOnSquareIcon className="ml-2 inline h-4 align-text-bottom" />
                 </a>
                 <a
                   target="_blank"
                   rel="noopener noreferrer"
-                  href="https://play.google.com/store/apps/details?id=com.geeksville.mesh&referrer=utm_source=downloads-page"
-                  className="mt-4 flex rounded-lg border-4 border-transparent bg-accent p-1 font-semibold text-black shadow-md hover:text-black hover:brightness-110 active:border-green-200"
+                  href="https://msh.to/android"
+                  className="button button--secondary button--block margin-top--sm"
                 >
                   <Translate id="downloads.apps.playStore">
                     Play Store
                   </Translate>
-                  <ArrowTopRightOnSquareIcon className="m-auto ml-2 h-4" />
+                  <ArrowTopRightOnSquareIcon className="ml-2 inline h-4 align-text-bottom" />
                 </a>
               </div>
             </div>
@@ -201,11 +201,11 @@ const Firmware = (): JSX.Element => {
                 <a
                   target="_blank"
                   rel="noopener noreferrer"
-                  href="https://client.meshtastic.org"
-                  className="m-auto flex rounded-lg border-4 border-transparent bg-accent p-1 font-semibold text-black shadow-md hover:text-black hover:brightness-110 active:border-green-200"
+                  href="https://msh.to/web"
+                  className="button button--secondary button--block !px-2"
                 >
                   client.meshtastic.org
-                  <ArrowTopRightOnSquareIcon className="m-auto ml-2 h-4" />
+                  <ArrowTopRightOnSquareIcon className="ml-2 inline h-4 align-text-bottom" />
                 </a>
               </div>
             </div>
@@ -243,27 +243,28 @@ const Firmware = (): JSX.Element => {
                 <div className="card m-4 border-2 border-secondary">
                   <div className="card__header">
                     <h3>
-                      <Translate id="downloads.firmware.bleeding">
-                        Bleeding
+                      <Translate id="downloads.firmware.nightly">
+                        Nightly
                       </Translate>
                     </h3>
                   </div>
                   <div className="card__body">
                     <p>
-                      <Translate id="downloads.firmware.bleedingDescription">
-                        Latest successful CI build. For those who want to break
-                        things.
+                      <Translate id="downloads.firmware.nightlyDescription">
+                        Built each night from the latest development code. For
+                        those who want to break things.
                       </Translate>
                     </p>
                   </div>
                   <div className="card__footer mt-auto">
                     <a
-                      href="https://nightly.link/meshtastic/firmware/workflows/main_matrix/master"
+                      href="https://msh.to/nightly/"
                       className="button button--secondary button--block"
                     >
-                      <Translate id="downloads.firmware.downloadBleeding">
-                        Download Bleeding
+                      <Translate id="downloads.firmware.downloadNightly">
+                        Download Nightly
                       </Translate>
+                      <ArrowTopRightOnSquareIcon className="ml-2 inline h-4 align-text-bottom" />
                     </a>
                   </div>
                 </div>
