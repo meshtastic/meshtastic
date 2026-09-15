@@ -614,6 +614,33 @@ const UNSET_REGION = RegionData.get(Region.UNSET) as RegionInfo;
 const selectableRegions = Array.from(RegionData.keys()).filter(
   (code) => code !== Region.UNSET,
 );
+type RegionFilter = "all" | "unlicensed" | "ham" | "wide";
+
+const REGION_FILTERS: { id: RegionFilter; label: string }[] = [
+  { id: "all", label: "All" },
+  { id: "unlicensed", label: "Unlicensed" },
+  { id: "ham", label: "Licensed Only" },
+  { id: "wide", label: "2.4 GHz" },
+];
+
+// Ham regions are the licensed-only band plans, wide is the 2.4 GHz (wide LoRa) plan
+const regionMatchesFilter = (
+  code: RegionCode,
+  filter: RegionFilter,
+): boolean => {
+  const info = RegionData.get(code) ?? UNSET_REGION;
+  switch (filter) {
+    case "unlicensed":
+      return !info.profile.licensedOnly;
+    case "ham":
+      return info.profile.licensedOnly;
+    case "wide":
+      return info.wideLora;
+    default:
+      return true;
+  }
+};
+
 const DEFAULT_MODEM = modemPresets.get(Preset.LONG_FAST) as Modem;
 
 // Helper function to get the display name of a modem preset. An unnamed (default) channel
@@ -748,11 +775,22 @@ const regionSwapForPreset = (
 };
 
 export const FrequencyCalculator = (): JSX.Element => {
-  const [modemPreset, setModemPreset] = useState<ModemPreset>(Preset.LONG_FAST);
+  // The widget opens on US, and since 2.8 the BaseUI region chooser installs LongTurbo
+  // when US is the first region picked on a new node, so open on the preset such a node
+  // actually runs. A region that does not offer it falls back to its own default when
+  // selected, which is what onRegionChange does below.
+  const [modemPreset, setModemPreset] = useState<ModemPreset>(
+    Preset.LONG_TURBO,
+  );
   const [region, setRegion] = useState<RegionCode>(Region.US);
   // A slot the user picked by hand, or null to follow the region default
   const [pickedSlot, setPickedSlot] = useState<number | null>(null);
   const [swapNotice, setSwapNotice] = useState<string | null>(null);
+  const [regionFilter, setRegionFilter] = useState<RegionFilter>("all");
+
+  const visibleRegions = selectableRegions.filter((code) =>
+    regionMatchesFilter(code, regionFilter),
+  );
 
   const selectedRegion = RegionData.get(region) ?? UNSET_REGION;
   const bandwidth = getBandwidth(modemPreset, selectedRegion.wideLora);
@@ -795,28 +833,119 @@ export const FrequencyCalculator = (): JSX.Element => {
     }
   };
 
+  // A filter that excludes the current region moves the picker to the first one it offers
+  const onRegionFilterChange = (nextFilter: RegionFilter) => {
+    setRegionFilter(nextFilter);
+
+    if (regionMatchesFilter(region, nextFilter)) {
+      return;
+    }
+    const firstMatch = selectableRegions.find((code) =>
+      regionMatchesFilter(code, nextFilter),
+    );
+    if (firstMatch !== undefined) {
+      onRegionChange(firstMatch);
+    }
+  };
+
   return (
-    <div className="flex flex-col border-l-[5px] shadow-md my-4 border-accent rounded-lg p-4 bg-secondary gap-2">
-      <div className="flex gap-2">
+    <div className="fsc-root flex flex-col border-l-[5px] shadow-md my-4 border-accent rounded-lg p-4 bg-secondary gap-2 text-[1.125em]">
+      <style>{`
+        .fsc-root { container-type: inline-size; }
+        .fsc-grid {
+          display: grid;
+          grid-template-columns: minmax(0, 1fr);
+          gap: 0.5rem 0.75rem;
+          align-items: start;
+          min-width: 0;
+          max-width: 100%;
+        }
+        .fsc-grid > * { min-width: 0; }
+        .fsc-spacer { display: none; }
+        /* Secondary controls: they sit above the labels they filter, so they read at a
+           step below the form text and square off to match the tabs used elsewhere. */
+        .fsc-chip {
+          font: inherit;
+          font-size: 0.78em;
+          line-height: 1.5;
+          padding: 0.1em 0.55em;
+          border-radius: 0.25rem;
+          border: 1px solid hsl(var(--border));
+          background: transparent;
+          color: inherit;
+          opacity: 0.75;
+          cursor: pointer;
+          transition: opacity 0.15s ease, background-color 0.15s ease;
+        }
+        .fsc-chip:hover { opacity: 1; }
+        .fsc-chip[aria-pressed="true"] {
+          background: hsl(var(--btn-primary));
+          color: hsl(var(--btn-primary-foreground));
+          border-color: transparent;
+          opacity: 1;
+        }
+        /* Spanning a row of content-sized columns would otherwise widen them all to fit
+           the notice on one line. Zero width with a full-width floor keeps it out of that
+           sizing pass, so the sentence wraps instead of stretching the widget. */
+        .fsc-notice {
+          grid-column: 1 / -1;
+          min-height: 4.95em;
+          width: 0;
+          min-width: 100%;
+          overflow-wrap: anywhere;
+        }
+        /* One label and control per line. The control may give up a little width before
+           the layout stacks, but never enough to overhang the column. */
+        @container (min-width: 26rem) {
+          .fsc-grid {
+            grid-template-columns: max-content minmax(7rem, max-content);
+            align-items: center;
+          }
+          .fsc-notice { min-height: 1.65em; }
+        }
+        /* Two pairs, once the widget itself is wide enough to hold them */
+        @container (min-width: 52rem) {
+          .fsc-grid {
+            grid-template-columns: max-content minmax(7rem, max-content) minmax(2rem, 1fr) max-content minmax(7rem, max-content);
+          }
+          .fsc-spacer { display: block; }
+        }
+      `}</style>
+      <fieldset className="flex flex-wrap gap-1.5 mb-1 border-0 m-0 p-0 min-w-0">
+        <legend className="sr-only">Filter regions</legend>
+        {REGION_FILTERS.map(({ id, label }) => (
+          <button
+            key={id}
+            type="button"
+            aria-pressed={regionFilter === id}
+            onClick={() => onRegionFilterChange(id)}
+            className="fsc-chip"
+          >
+            {label}
+          </button>
+        ))}
+      </fieldset>
+      <div className="fsc-grid">
         <label htmlFor="region">Region:</label>
         <select
           id="region"
+          className="[font:inherit] [color:inherit] w-full"
           value={region}
           onChange={(e) =>
             onRegionChange(Number.parseInt(e.target.value) as RegionCode)
           }
         >
-          {selectableRegions.map((key) => (
+          {visibleRegions.map((key) => (
             <option key={key} value={key}>
               {Region[key]}
             </option>
           ))}
         </select>
-      </div>
-      <div className="flex gap-2">
+        <div aria-hidden="true" className="fsc-spacer" />
         <label htmlFor="modemPreset">Modem Preset:</label>
         <select
           id="modemPreset"
+          className="[font:inherit] [color:inherit] w-full"
           value={modemPreset}
           onChange={(e) =>
             onModemPresetChange(Number.parseInt(e.target.value) as ModemPreset)
@@ -828,42 +957,29 @@ export const FrequencyCalculator = (): JSX.Element => {
             </option>
           ))}
         </select>
-      </div>
-      {swapNotice ? (
-        <p className="text-sm text-muted-foreground mb-0">{swapNotice}</p>
-      ) : null}
-      {selectedRegion.profile.licensedOnly ? (
-        <p className="text-sm text-muted-foreground mb-0">
-          Amateur radio band: an amateur radio license is required to transmit
-          here.
-        </p>
-      ) : null}
-      <div className="flex gap-2">
-        <label htmlFor="defaultSlot" className="font-semibold">
-          Default Frequency Slot:
-        </label>
+        {/* Reserves the lines a notice needs at this width, so it never shifts the rows below */}
+        <output className="fsc-notice block text-muted-foreground">
+          {swapNotice ? <p className="mt-0 mb-0">{swapNotice}</p> : null}
+          {selectedRegion.profile.licensedOnly ? (
+            <p className="mt-0 mb-0">
+              Amateur radio band: an amateur radio license is required to
+              transmit here.
+            </p>
+          ) : null}
+        </output>
+        <label htmlFor="defaultSlot">Default Frequency Slot:</label>
         <input
           id="defaultSlot"
+          className="[font:inherit] [color:inherit] w-full"
           type="number"
           disabled={true}
           value={defaultSlot + 1} // Display as 1-based index
         />
-      </div>
-      <div className="flex gap-2 mb-4">
-        <label htmlFor="numSlots" className="font-semibold">
-          Number of slots:
-        </label>
-        <input
-          id="numSlots"
-          type="number"
-          disabled={true}
-          value={numChannels}
-        />
-      </div>
-      <div className="flex gap-2">
+        <div aria-hidden="true" className="fsc-spacer" />
         <label htmlFor="frequencySlot">Frequency Slot:</label>
         <select
           id="frequencySlot"
+          className="[font:inherit] [color:inherit] w-full"
           value={channel}
           onChange={(e) => setPickedSlot(Number.parseInt(e.target.value))}
         >
@@ -873,13 +989,19 @@ export const FrequencyCalculator = (): JSX.Element => {
             </option>
           ))}
         </select>
-      </div>
-      <div className="flex gap-2">
-        <label htmlFor="slotFrequency" className="font-semibold">
-          Frequency of slot:
-        </label>
+        <label htmlFor="numSlots">Number of slots:</label>
+        <input
+          id="numSlots"
+          className="[font:inherit] [color:inherit] w-full"
+          type="number"
+          disabled={true}
+          value={numChannels}
+        />
+        <div aria-hidden="true" className="fsc-spacer" />
+        <label htmlFor="slotFrequency">Frequency of slot:</label>
         <input
           id="slotFrequency"
+          className="[font:inherit] [color:inherit] w-full"
           type="number"
           disabled={true}
           value={channelFrequency}

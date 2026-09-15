@@ -2,6 +2,23 @@ require("dotenv").config();
 
 import path from "node:path";
 import remarkDefList from "remark-deflist";
+import glossaryPlugin from "docusaurus-plugin-glossary";
+const remarkBaseUrlAssets = require("./src/remark/base-url-assets.js");
+
+// Terms link and show a definition on hover. Acronym expansion stays off: it
+// rewrites authored prose, and its "already expanded" guard misses any wording
+// the author varied, producing "Protocol Buffer (Protocol Buffers (protobuf))".
+const glossaryPath = "glossary/glossary.json";
+
+// Where a term links to. docs/terms/index.mdx renders the glossary itself so the
+// page keeps the docs sidebar, which a plugin-generated route does not get.
+const glossaryRoutePath = "/docs/terms/";
+
+// Raw HTML in the config and in MDX bypasses Docusaurus link handling, so anything
+// built by hand has to prefix this itself. Overridable for builds served under a
+// path rather than at a domain root. Docusaurus gives the value it is handed both a
+// leading and a trailing slash, so do the same here or the two disagree.
+const baseUrl = `/${process.env.DOCS_BASE_URL ?? ""}/`.replace(/\/{2,}/g, "/");
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
@@ -9,7 +26,7 @@ const config = {
   tagline:
     "An open source, off-grid, decentralized, mesh network built to run on affordable, low-power devices",
   url: "https://meshtastic.org",
-  baseUrl: "/",
+  baseUrl,
   trailingSlash: true,
   onBrokenLinks: "throw",
   favicon: "img/logo.svg",
@@ -72,7 +89,7 @@ const config = {
       ],
     },
     footer: {
-      copyright: `<a href="https://vercel.com/?utm_source=meshtastic&utm_campaign=oss">Powered by ▲ Vercel</a> | Meshtastic® is a registered trademark of Meshtastic LLC. | <a href="/docs/legal">Legal Information</a>.`,
+      copyright: `<a href="https://vercel.com/?utm_source=meshtastic&utm_campaign=oss">Powered by ▲ Vercel</a> | Meshtastic® is a registered trademark of Meshtastic LLC. | <a href="${baseUrl}docs/legal">Legal Information</a>.`,
     },
     algolia: {
       appId: "IG2GQB8L3V",
@@ -127,6 +144,9 @@ const config = {
       };
     },
     "@docusaurus/plugin-vercel-analytics",
+    // routePath: null suppresses the plugin's own page; the plugin stays
+    // registered so its term data reaches the tooltips and the glossary page.
+    ["docusaurus-plugin-glossary", { glossaryPath, routePath: null }],
   ],
   scripts: [
     ...(process.env.COOKIEYES_CLIENT_ID
@@ -152,7 +172,14 @@ const config = {
               : undefined,
           breadcrumbs: false,
           showLastUpdateAuthor: true,
-          remarkPlugins: [remarkDefList],
+          remarkPlugins: [
+            remarkDefList,
+            [remarkBaseUrlAssets, { baseUrl }],
+            [
+              glossaryPlugin.remarkPlugin,
+              { glossaryPath, routePath: glossaryRoutePath, siteDir: __dirname },
+            ],
+          ],
           lastVersion: "current",
           versions: {
             current: { label: "2.8" },
@@ -164,9 +191,13 @@ const config = {
           },
         },
         blog: {
+          remarkPlugins: [[remarkBaseUrlAssets, { baseUrl }]],
           blogTitle: "Meshtastic Blog",
           blogDescription:
             "Discover in-depth insights from developers and maintainers, including project updates and changes. Hear from the community about their projects and ideas.",
+        },
+        pages: {
+          remarkPlugins: [[remarkBaseUrlAssets, { baseUrl }]],
         },
         sitemap: {
           ignorePatterns: ["/docs/2.7/**"],
@@ -192,8 +223,10 @@ const config = {
   },
   themes: ["@docusaurus/theme-mermaid"],
   future: {
+    faster: true,
     v4: {
       useCssCascadeLayers: false,
+      removeLegacyPostBuildHeadAttribute: true,
     },
   },
 };

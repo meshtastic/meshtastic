@@ -41,7 +41,7 @@ Looking for ROUTER_CLIENT? This role was deprecated in firmware 2.3.15. Learn mo
 
 This table shows the **default** values after selecting a preset. As always, individual settings can be adjusted after choosing a preset.
 
-| Device Role    | BLE/WiFi/Serial | Screen Enabled | Power Consumption | Retransmit     | Prioritized Routing | Visible in Nodes List |
+| Device Role    | BLE/Wi-Fi/Serial | Screen Enabled | Power Consumption | Retransmit     | Prioritized Routing | Visible in Nodes List |
 | -------------- | --------------- | -------------- | ----------------- | -------------- | ------------------- | --------------------- |
 | CLIENT         | Yes             | Yes            | Regular           | Yes            | No                  | Yes                   |
 | CLIENT_MUTE    | Yes             | Yes            | Lowest            | No             | No                  | Yes                   |
@@ -66,7 +66,7 @@ This table shows the **default** values after selecting a preset. As always, ind
 
 ### ESP32 Platform Only
 
-Every role except for the `TRACKER` and `SENSOR` roles are capable of traditional _sleep_ behavior using the `power.is_power_saving` setting. When a node goes to sleep, in general, the serial console, peripherals, GPS, and WiFi/Bluetooth radio are all shut down to conserve power. The CPU will enter a low power state (light sleep or deep sleep on the ESP32). The LoRA radio will be left on stand-by for receiving any packets which will _wake up_ the device to resume services and respond.
+Every role except for the `TRACKER` and `SENSOR` roles are capable of traditional _sleep_ behavior using the `power.is_power_saving` setting. When a node goes to sleep, in general, the serial console, peripherals, GPS, and Wi-Fi/Bluetooth radio are all shut down to conserve power. The CPU will enter a low power state (light sleep or deep sleep on the ESP32). The LoRA radio will be left on stand-by for receiving any packets which will _wake up_ the device to resume services and respond.
 
 Timeout configurations of `display.screen_on_secs` (Screen timeout), `power.min_wake_secs` (Minimum time till sleep), and `power.wait_bluetooth_secs` (Bluetooth timeout) will delay a node's transition to a sleep state. The timeouts and subsequent transition to sleep states may also be _reset_ by external events or actions such as receiving a packet, pressing a button, or connecting via client through serial or other means.
 
