@@ -79,7 +79,7 @@ The cryptographic protections described above (PSK, PKC, Session IDs) defend mes
 
 ### Local Trust Boundary
 
-A client connected to a node over Bluetooth, USB serial, WiFi, or Ethernet has full local API access. From that local connection, a client can read decrypted channel traffic, send messages as the node, change configuration (subject to [managed mode](/docs/configuration/radio/security/#managed-mode)), and read the node's private key for backup. The on-air cryptography does not extend below this boundary. Anything inside scope of the local trust relationship (a shared LAN, a USB cable to an untrusted host, a phone paired over Bluetooth) should be treated as an extension of the node itself.
+A client connected to a node over Bluetooth, USB serial, Wi-Fi, or Ethernet has full local API access. From that local connection, a client can read decrypted channel traffic, send messages as the node, change configuration (subject to [managed mode](/docs/configuration/radio/security/#managed-mode)), and read the node's private key for backup. The on-air cryptography does not extend below this boundary. Anything inside scope of the local trust relationship (a shared LAN, a USB cable to an untrusted host, a phone paired over Bluetooth) should be treated as an extension of the node itself.
 
 ### Node Identity: Trust On First Use (TOFU)
 
@@ -87,15 +87,15 @@ Meshtastic uses a Trust On First Use (TOFU) model for node identity. There is no
 
 Client applications and the firmware include mitigations for the consequences of TOFU, such as favoriting nodes to prevent NodeDB rolloff and surfacing public-key changes in the UI. Firmware 2.8.X further strengthens node identity claims and message authenticity by adding XEdDSA packet signing, which reuses each node's existing X25519 key pair to sign User packets and other short packets so receivers can verify that a packet came from the holder of the bound public key. For the detailed discussion of NodeDB limits, spoofing edge cases, and the XEdDSA design, see [Known Limitations and Future Plans of Meshtastic's Encryption](/docs/about/overview/encryption/limitations).
 
-### Local Administration Over WiFi
+### Local Administration Over Wi-Fi
 
 :::warning
-Administering a Meshtastic node over an untrusted WiFi network, including setting WiFi credentials on an ESP32, is not recommended. All local admin traffic, not just the initial credential write, is exposed to that network.
+Administering a Meshtastic node over an untrusted Wi-Fi network, including setting Wi-Fi credentials on an ESP32, is not recommended. All local admin traffic, not just the initial credential write, is exposed to that network.
 :::
 
-When a client reaches a node over WiFi or Ethernet, that connection is part of the trust boundary described above. If the underlying network is untrusted (open WiFi, a network shared with parties you do not control), config writes, key reads, decrypted message traffic, and the WiFi PSK itself during provisioning are all exposed on that network. Setting [`network.wifi_ssid` and `network.wifi_psk`](/docs/configuration/radio/network/) over an untrusted WiFi connection is a common case of this exposure but not the only one.
+When a client reaches a node over Wi-Fi or Ethernet, that connection is part of the trust boundary described above. If the underlying network is untrusted (open Wi-Fi, a network shared with parties you do not control), config writes, key reads, decrypted message traffic, and the Wi-Fi PSK itself during provisioning are all exposed on that network. Setting [`network.wifi_ssid` and `network.wifi_psk`](/docs/configuration/radio/network/) over an untrusted Wi-Fi connection is a common case of this exposure but not the only one.
 
-The recommended pattern is to provision and administer nodes over a trusted channel: Bluetooth from a phone, USB serial to a trusted host, or [Remote Administration](/docs/configuration/remote-admin/) over the mesh itself. There is no current roadmap item to secure local administration over untrusted WiFi; it may be addressed in a future release.
+The recommended pattern is to provision and administer nodes over a trusted channel: Bluetooth from a phone, USB serial to a trusted host, or [Remote Administration](/docs/configuration/remote-admin/) over the mesh itself. There is no current roadmap item to secure local administration over untrusted Wi-Fi; it may be addressed in a future release.
 
 ## Conclusion
 
