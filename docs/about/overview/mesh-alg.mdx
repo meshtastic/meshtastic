@@ -31,7 +31,7 @@ need to consider the MeshPacket and Sub-packet message types.
 
 All data is converted into LoRa symbols which are sent to the radio for transmission. The details are described elsewhere, but it is worth noting that in addition to the converted packet bytes described below, there is also a preamble sent at the start of any data packet.
 
-This preamble allows receiving radios to synchronize clocks and start framing. We use a preamble length of 16, which is longer than the minimum preamble length of 8, to let SX126x LoRa receivers sleep for a while, which lowers power consumption.
+This preamble allows receiving radios to synchronize clocks and start framing. Below 1 GHz, Meshtastic uses a preamble length of 16, which is longer than the minimum preamble length of 8, to let SX126x LoRa receivers sleep for a while, which lowers power consumption. Regions in the 2.4 GHz band use a preamble length of 12.
 
 After the preamble comes the LoRa Physical Header, which contains information about the packet length as well as a sync word to distinguish networks. For Meshtastic, it is set to `0x2B`.
 
@@ -84,7 +84,7 @@ The default messaging provided by Layer 1 is extended by setting the `WantAck` f
 > Broadcast messages treat this flag specially: Since ACKs for broadcasts would rapidly flood the channel, the normal ACK behavior is suppressed. Instead, the original sender listens to see if at least one node is rebroadcasting this
 > packet (because naive flooding algorithm). If it hears that, the odds (given typical LoRa topology) are very high that every node should eventually receive the message. So FloodingRouter.cpp generates an implicit ACK which is delivered to the original sender. If after some time we don't hear anyone rebroadcast our packet, we will timeout and re-transmit, using the regular resend logic.
 
-If a transmitting node does not receive an ACK (or NAK) packet after a certain expiration time, it will use Layer 1 to attempt a re-transmission of the sent packet. A reliable packet (at this 'zero hop' level) will be resent a maximum of three times. If no ACK or NAK has been received by then the local node will internally generate a NAK (either for local consumption or use by higher layers of the protocol). The re-transmission expiration time is based on the maximum time it would take to receive an (implicit) ACK, taking the airtime of the sent packet and any processing delay into account.
+If a transmitting node does not receive an ACK (or NAK) packet after a certain expiration time, it will use Layer 1 to attempt a re-transmission of the sent packet. A reliable broadcast is sent a maximum of three times in total, counting the first transmission, and a reliable direct message a maximum of five. If no ACK or NAK has been received by then the local node will internally generate a NAK (either for local consumption or use by higher layers of the protocol). The re-transmission expiration time is based on the maximum time it would take to receive an (implicit) ACK, taking the airtime of the sent packet and any processing delay into account.
 For direct messages, the intended recipient will also send a real ACK all the way back to the original sender, but the device will only retransmit when it received no ACK at all.
 
 ### Layer 3: Multi-Hop Messaging
