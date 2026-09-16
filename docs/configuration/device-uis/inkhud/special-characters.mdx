@@ -50,8 +50,17 @@ build_flags =
 Or pass it on the command line without editing any file:
 
 ```shell
+# Linux / macOS (bash, zsh)
 PLATFORMIO_BUILD_FLAGS="-D OLED_RU=1" pio run -e <environment>
+
+# Windows PowerShell
+$env:PLATFORMIO_BUILD_FLAGS="-D OLED_RU=1"; pio run -e <environment>
+
+# Windows Command Prompt
+set "PLATFORMIO_BUILD_FLAGS=-D OLED_RU=1" && pio run -e <environment>
 ```
+
+On Windows the variable stays set for the rest of the terminal session, so later builds in that window use the same character set.
 
 The LilyGo T5 E-Paper S3 Pro uses larger fonts that exist only in Windows-1253 and ignores these flags.
 
