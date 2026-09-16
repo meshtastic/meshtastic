@@ -22,7 +22,7 @@ Each node that relays a packet decrements its hop limit by one. A node that rece
 
 Direct messages take a different path. Once a node learns which neighbor provides a working route to the destination, it addresses the message to that one relay instead of letting every neighbor rebroadcast, and falls back to flooding if the relay doesn't respond.
 
-A sender that hears no confirmation retransmits. A broadcast is sent up to three times in total and a direct message up to five. The interval between attempts is calculated from the packet's airtime and how busy the channel is, rather than being a fixed value.
+A sender that hears no confirmation retransmits. A broadcast is sent up to three times in total and a direct message up to five. The interval between attempts is calculated from the packet's airtime and how much radio traffic is already on the air, rather than being a fixed value.
 
 A node buffers packets for a client that isn't connected. The buffer holds 8, 16, or 32 packets depending on the node's hardware. When it's full, an incoming text message, range test, or routing packet displaces the oldest entry, and any other kind of packet is dropped instead.
 
