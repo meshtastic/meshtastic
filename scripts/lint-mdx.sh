@@ -102,6 +102,20 @@ if [ $ALT_ISSUES -eq 0 ]; then
   echo "✓ No images missing alt text found"
 fi
 
+# Pattern 7: Tabs blocks whose headings build a wrong table of contents
+# Docusaurus renders inactive tab panels hidden and builds the table of contents
+# from every heading regardless, so a block that heads only some of its tabs
+# lists only some of them. See design standards 11.10 and the script for the
+# full rule, including why platform tabs are deliberately left alone.
+echo ""
+echo "=== Checking tab headings against the table of contents ==="
+if python3 scripts/lint-tabitem-headings.py $SEARCH_PATH; then
+  echo "✓ Tab headings and the table of contents agree"
+else
+  echo "WARNING: The tabs above are missing from the table of contents."
+  echo "Give each one a heading naming the variant as its first line."
+fi
+
 echo ""
 if [ $EXIT_CODE -eq 0 ]; then
   echo "✅ MDX lint passed!"

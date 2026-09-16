@@ -222,6 +222,9 @@ const config = {
     },
   },
   themes: ["@docusaurus/theme-mermaid"],
+  // Opens the owning tab before scrolling, so table-of-contents links to a
+  // heading inside a closed <TabItem> work. See the file for why.
+  clientModules: [require.resolve("./src/clientModules/tabAnchors.js")],
   future: {
     faster: true,
     v4: {
