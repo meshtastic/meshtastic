@@ -1,5 +1,7 @@
 # Project specific
-node_modules/
+# No trailing slash: a git worktree often gets node_modules as a symlink to the
+# main checkout, and "node_modules/" matches only real directories.
+node_modules
 CrowdInTranslations*
 *.Identifier
 .docusaurus
