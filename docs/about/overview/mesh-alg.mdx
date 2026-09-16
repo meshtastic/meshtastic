@@ -48,7 +48,7 @@ This layer is conventional non-reliable LoRa packet transmission. A packet gener
 |  0x0D  |                  1 byte                  |  Bits   | Packet Header: Channel hash. Used as hint for decryption for the receiver.                              |
 |  0x0E  |                  1 byte                  |  Bytes  | Packet Header: Next-hop used for relaying.                                                              |
 |  0x0F  |                  1 byte                  |  Bytes  | Packet Header: Relay node of the current transmission.                                                  |
-|  0x10  | Max. 237 bytes (excl. protobuf overhead) |  Bytes  | Actual packet data. Unused bytes are not transmitted.                                                   |
+|  0x10  | Max. 239 bytes (excl. protobuf overhead) |  Bytes  | Actual packet data. Unused bytes are not transmitted.                                                   |
 
 #### Packet Header Flags
 
