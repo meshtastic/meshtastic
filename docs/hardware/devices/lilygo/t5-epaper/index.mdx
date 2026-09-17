@@ -1,0 +1,123 @@
+---
+id: t5-epaper
+title: LILYGO® T5 E-Paper S3 Pro
+sidebar_label: T5 E-Paper S3 Pro
+sidebar_position: 7
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+import { DeviceImage } from "@site/src/components/DeviceImage";
+
+The T5 E-Paper S3 Pro is a 4.7-inch touch e-ink node built on the ESP32-S3, with 16 grayscale levels, a battery fuel gauge, and a microSD slot.
+
+Two board revisions exist and take different firmware. The board marking tells them apart: **H752** is V1 and **H752-01** is V2. V2 adds a GNSS receiver, which V1 does not have.
+
+<Tabs
+groupId="t5-epaper"
+queryString="t5-epaper"
+defaultValue="v2"
+values={[
+{label: 'T5 E-Paper S3 Pro V2', value: 'v2'},
+{label: 'T5 E-Paper S3 Pro V1', value: 'v1'},
+]}>
+
+<TabItem value="v2">
+
+## T5 E-Paper S3 Pro V2
+
+<DeviceImage device="t5s3_epaper.svg" alt="LILYGO T5 E-Paper S3 Pro" size="lg" center />
+
+V2 carries the board marking H752-01 and adds a GNSS receiver over V1.
+
+### Specifications
+
+- **MCU**
+  - ESP32-S3-WROOM-1
+    - 2.4GHz Wi-Fi, Bluetooth 5 LE
+    - 16 MB flash, 8 MB PSRAM
+- **LoRa Transceiver**
+  - Semtech SX1262 (TCXO)
+- **Frequency options**
+  - 433 MHz
+  - 868 MHz
+  - 915 MHz
+- **Navigation Module**
+  - GNSS receiver
+- **Display**
+  - 4.7" e-ink, 960 x 540, 16 grayscale levels (ED047TC1)
+  - GT911 capacitive touch
+- **Battery Capacity**
+  - 1500 mAh
+- **Connectors**
+  - USB-C
+  - microSD card slot
+
+### Features
+
+- BQ25896 charger and BQ27220 battery fuel gauge.
+- PCF8563 real-time clock.
+- One user button, with additional inputs on a PCA9535 I/O expander.
+- Supports [InkHUD](/docs/configuration/device-uis/inkhud/).
+
+### Flashing
+
+To flash ESP32-S3 devices, place them in Espressif's firmware download mode using the "1200bps reset" button in the web flasher. Where that does not work, follow the manual process in [Flashing ESP32 devices](/docs/getting-started/flashing-firmware/esp32/).
+
+### Resources
+
+- Firmware file: `firmware-t5s3-epaper-v2-X.X.X.xxxxxxx.bin`
+- InkHUD firmware file: `firmware-t5s3_epaper_inkhud-X.X.X.xxxxxxx.bin`
+- Purchase Links:
+  - International
+    - [LilyGO](https://msh.to/t5s3-epaper-v2/)
+
+</TabItem>
+
+<TabItem value="v1">
+
+## T5 E-Paper S3 Pro V1
+
+<DeviceImage device="t5s3_epaper.svg" alt="LILYGO T5 E-Paper S3 Pro" size="lg" center />
+
+V1 carries the board marking H752 and ships without a GNSS receiver. LILYGO® sells V2 in its place, so this tab covers existing boards.
+
+### Specifications
+
+- **MCU**
+  - ESP32-S3-WROOM-1
+    - 2.4GHz Wi-Fi, Bluetooth 5 LE
+    - 16 MB flash, 8 MB PSRAM
+- **LoRa Transceiver**
+  - Semtech SX1262 (TCXO)
+- **Frequency options**
+  - 433 MHz
+  - 868 MHz
+  - 915 MHz
+- **Display**
+  - 4.7" e-ink, 960 x 540, 16 grayscale levels (ED047TC1)
+  - GT911 capacitive touch
+- **Battery Capacity**
+  - 1500 mAh
+- **Connectors**
+  - USB-C
+  - microSD card slot
+
+### Features
+
+- BQ25896 charger and BQ27220 battery fuel gauge.
+- PCF8563 real-time clock.
+- Two user buttons.
+- No GNSS receiver.
+
+### Flashing
+
+To flash ESP32-S3 devices, place them in Espressif's firmware download mode using the "1200bps reset" button in the web flasher. Where that does not work, follow the manual process in [Flashing ESP32 devices](/docs/getting-started/flashing-firmware/esp32/).
+
+### Resources
+
+- Firmware file: `firmware-t5s3-epaper-v1-X.X.X.xxxxxxx.bin`
+
+</TabItem>
+
+</Tabs>
