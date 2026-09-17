@@ -26,9 +26,10 @@ Boards complete with GPS, 18650 battery holder, and optional screen.
 
 All-in-one unit with E-Ink screen, GPS and battery in injection-molded case. Features the low-power nRF52840 for long battery life.
 
-| Name               | MCU      | Radio  | Wi-Fi | BT  | GPS |
-| :----------------- | :------- | :----- | :--: | :-: | :-: |
-| [T-Echo](./techo/) | nRF52840 | SX1262 |  NO  | 5.0 | YES |
+| Name                                     | MCU      | Radio  | Wi-Fi | BT  | GPS |
+| :--------------------------------------- | :------- | :----- | :--: | :-: | :-: |
+| [T-Echo](./techo/?techo=t-echo)          | nRF52840 | SX1262 |  NO  | 5.0 | YES |
+| [T-Echo Plus](./techo/?techo=t-echo-plus) | nRF52840 | SX1262 |  NO  | 5.0 | YES |
 
 <div style={{ clear: "both" }} />
 
@@ -67,5 +68,57 @@ Standalone device with screen and keyboard.
 | Name                                              | MCU      | Radio  | Wi-Fi | BT  | GPS |
 | :------------------------------------------------ | :------- | :----- | :--: | :-: | :-: |
 | [T-Lora Pager](./tpager/?tlora-pager=tlora-pager) | ESP32-S3 | LR1121 | YES  | 5.0 | YES |
+
+<div style={{ clear: "both" }} />
+
+<DeviceSection device="mini-epaper-s3.svg" />
+
+## [Mini ePaper S3](./mini-epaper/)
+
+Compact e-ink node that takes an 18350 cell, supplied without a battery.
+
+| Name                              | MCU      | Radio  |     Wi-Fi     | BT  | GPS |
+| :-------------------------------- | :------- | :----- | :----------: | :-: | :-: |
+| [Mini ePaper S3](./mini-epaper/)  | ESP32-S3 | SX1262 | 2.4GHz b/g/n | 5.0 | NO  |
+
+<div style={{ clear: "both" }} />
+
+<DeviceSection device="t5s3_epaper.svg" />
+
+## [T5 E-Paper S3 Pro](./t5-epaper/)
+
+Large touch e-ink display with 16 grayscale levels. V2 adds a GNSS receiver.
+
+| Name                                             | MCU      | Radio  |     Wi-Fi     | BT  | GPS |
+| :------------------------------------------------ | :------- | :----- | :----------: | :-: | :-: |
+| [T5 E-Paper S3 Pro V2](./t5-epaper/?t5-epaper=v2) | ESP32-S3 | SX1262 | 2.4GHz b/g/n | 5.0 | YES |
+| [T5 E-Paper S3 Pro V1](./t5-epaper/?t5-epaper=v1) | ESP32-S3 | SX1262 | 2.4GHz b/g/n | 5.0 | NO  |
+
+<div style={{ clear: "both" }} />
+
+<DeviceSection device="tlora-c6.svg" />
+
+## [T-LoRa C6](./tlorac6/)
+
+Compact, low-cost board with an internal PCB antenna.
+
+| Name                       | MCU      | Radio  |     Wi-Fi     |  BT   | GPS |
+| :------------------------- | :------- | :----- | :----------: | :---: | :-: |
+| [T-LoRa C6](./tlorac6/)    | ESP32-C6 | SX1262 | 2.4GHz b/g/n | 5.0\* | NO  |
+
+\* The Meshtastic firmware does not support Bluetooth on ESP32-C6 modules.
+
+<div style={{ clear: "both" }} />
+
+<DeviceSection device="t-watch-s3.svg" />
+
+## [T-Watch](./twatch/)
+
+Wearable node with a touch screen, haptics, speaker, and microphone.
+
+| Name                                          | MCU      | Radio  |     Wi-Fi     | BT  | GPS |
+| :--------------------------------------------- | :------- | :----- | :----------: | :-: | :-: |
+| [T-Watch S3 Plus](./twatch/?twatch=t-watch-s3-plus) | ESP32-S3 | SX1262 | 2.4GHz b/g/n | 5.0 | YES |
+| [T-Watch S3](./twatch/?twatch=t-watch-s3)     | ESP32-S3 | SX1262 | 2.4GHz b/g/n | 5.0 | NO  |
 
 <div style={{ clear: "both" }} />
