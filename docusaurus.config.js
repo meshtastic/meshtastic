@@ -30,6 +30,51 @@ const config = {
   trailingSlash: true,
   onBrokenLinks: "throw",
   favicon: "img/logo.svg",
+  // Raster fallbacks for the SVG favicon: Safari tabs, iOS and Android home-screen icons.
+  headTags: [
+    {
+      tagName: "link",
+      attributes: {
+        rel: "icon",
+        type: "image/png",
+        sizes: "32x32",
+        href: `${baseUrl}design/web/favicon-32x32.png`,
+      },
+    },
+    {
+      tagName: "link",
+      attributes: {
+        rel: "icon",
+        type: "image/png",
+        sizes: "16x16",
+        href: `${baseUrl}design/web/favicon-16x16.png`,
+      },
+    },
+    {
+      tagName: "link",
+      attributes: {
+        rel: "apple-touch-icon",
+        sizes: "180x180",
+        href: `${baseUrl}design/web/apple-touch-icon.png`,
+      },
+    },
+    {
+      tagName: "link",
+      attributes: {
+        rel: "mask-icon",
+        href: `${baseUrl}design/web/safari-pinned-tab.svg`,
+        color: "#67ea94",
+      },
+    },
+    {
+      tagName: "link",
+      attributes: { rel: "manifest", href: `${baseUrl}site.webmanifest` },
+    },
+    {
+      tagName: "meta",
+      attributes: { name: "theme-color", content: "#67ea94" },
+    },
+  ],
   organizationName: "meshtastic",
   projectName: "meshtastic",
   themeConfig: /** @type {import('@docusaurus/preset-classic').ThemeConfig} */ {
@@ -177,7 +222,11 @@ const config = {
             [remarkBaseUrlAssets, { baseUrl }],
             [
               glossaryPlugin.remarkPlugin,
-              { glossaryPath, routePath: glossaryRoutePath, siteDir: __dirname },
+              {
+                glossaryPath,
+                routePath: glossaryRoutePath,
+                siteDir: __dirname,
+              },
             ],
           ],
           lastVersion: "current",
