@@ -167,6 +167,8 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
+      # paths-filter reads the pull request's file list on pull_request events.
+      pull-requests: read
     steps:
       - name: Checkout
         uses: actions/checkout@v7

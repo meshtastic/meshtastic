@@ -211,7 +211,9 @@ export function fitRow(devices, opts) {
 
   const slack = available - finalW.reduce((a, b) => a + b, 0);
   let gap = slots ? slack / slots : 0;
-  let justify = "space-between";
+  // A single device has no gaps to distribute, so space-between would pin it to
+  // the left margin.
+  let justify = slots ? "space-between" : "center";
   if (gap > maxGap) {
     gap = maxGap; // stop a short row from spreading to the margins
     justify = "center";

@@ -6,8 +6,9 @@
  *   node scripts/build-hardware-preview.mjs --config scripts/hardware-preview.config.json
  *   node scripts/build-hardware-preview.mjs --cache-dir .cache/device-svg   # offline
  *
- * To swap a device, edit `devices` in the config: the row re-measures, re-scales
- * and re-spaces itself. The canvas stays 1200x630 whatever you put in it.
+ * To add, remove or swap a device, edit src/data/devices.json: the row
+ * re-measures, re-scales and re-spaces itself. The canvas stays 1200x630
+ * whatever you put in it.
  *
  * Device artwork and metadata come from src/data/devices.json — the same source
  * the homepage modal renders from — so the card cannot drift from the site.
