@@ -13,6 +13,10 @@ export default function Hardware(): JSX.Element {
   const previewImage = useBaseUrl("img/preview/hardware-1200x630.png", {
     absolute: true,
   });
+  const previewAlt = translate({
+    id: "hardware.previewAlt",
+    message: "Various Meshtastic devices lined up side by side",
+  });
 
   // The browser tab and search results keep the site suffix; the share card
   // drops it, because every client already shows the domain beside the title.
@@ -27,14 +31,13 @@ export default function Hardware(): JSX.Element {
     >
       <Head>
         <meta property="og:title" content={pageTitle} />
+        {/* themeConfig.image sets og:image and twitter:image together, so
+            overriding only og:image would leave this page still advertising the
+            site-wide card to anything that prefers the twitter tag. */}
         <meta property="og:image" content={previewImage} />
-        <meta
-          property="og:image:alt"
-          content={translate({
-            id: "hardware.previewAlt",
-            message: "Various Meshtastic devices lined up side by side",
-          })}
-        />
+        <meta name="twitter:image" content={previewImage} />
+        <meta property="og:image:alt" content={previewAlt} />
+        <meta name="twitter:image:alt" content={previewAlt} />
       </Head>
       <main className="container margin-vert--lg">
         <Devices headingLevel="h1" />

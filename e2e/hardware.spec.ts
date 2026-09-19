@@ -35,6 +35,13 @@ test.describe("Hardware page", () => {
       "content",
       /.+/,
     );
+
+    // themeConfig.image sets both tags, so a page that overrides only og:image
+    // silently keeps advertising the site-wide card on X.
+    await expect(page.locator('meta[name="twitter:image"]')).toHaveAttribute(
+      "content",
+      /^https:\/\/.*\/img\/preview\/hardware-1200x630\.png$/,
+    );
   });
 
   const VISITS = 5;
