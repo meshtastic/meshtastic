@@ -155,3 +155,44 @@ jobs:
           echo "versioned_docs/ and versioned_sidebars/ are frozen snapshots of released"
           echo "firmware documentation. Edit docs/ instead - it becomes the next release."
           exit 1
+
+  hardware-card:
+    # The share card at static/img/preview/ is generated from devices.json by
+    # `pnpm preview:hardware`. CI does not regenerate it: the vendored fonts make
+    # the typeface reproducible, but Chromium still rasterises text differently
+    # across operating systems, so comparing a Linux render against a committed
+    # macOS one would fail on pixels rather than on content. Checking that the two
+    # changed together catches the mistake that actually happens.
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      # paths-filter reads the pull request's file list on pull_request events.
+      pull-requests: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Check for device list changes
+        id: card-filter
+        uses: dorny/paths-filter@v4
+        with:
+          filters: |
+            devices:
+              - 'src/data/devices.json'
+            card:
+              - 'static/img/preview/hardware-1200x630.png'
+
+      - name: Regenerate the card when the device list changes
+        if: steps.card-filter.outputs.devices == 'true' && steps.card-filter.outputs.card != 'true'
+        run: |
+          echo "::error file=src/data/devices.json::The device list changed but the share card did not."
+          echo "src/data/devices.json changed without static/img/preview/hardware-1200x630.png."
+          echo "The card is generated from that file, so it is now out of date."
+          echo ""
+          echo "  pnpm exec playwright install chromium   # one-time"
+          echo "  pnpm preview:hardware"
+          echo ""
+          echo "Then commit the regenerated PNG alongside your devices.json change."
+          echo "See scripts/README-hardware-preview.md."
+          exit 1

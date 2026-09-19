@@ -33,6 +33,9 @@ const config = {
   organizationName: "meshtastic",
   projectName: "meshtastic",
   themeConfig: /** @type {import('@docusaurus/preset-classic').ThemeConfig} */ {
+    // Default social preview for every page. Docusaurus resolves this against
+    // `url` above, so the emitted og:image is absolute, which Open Graph requires.
+    image: "design/web/social-preview-1200x630.png",
     respectPrefersColorScheme: true,
     docs: {
       sidebar: {
