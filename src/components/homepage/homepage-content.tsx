@@ -183,6 +183,13 @@ export function HomePageContent() {
               <X className="size-6" />
             </button>
             <Devices />
+            <p className="mt-6 text-center text-sm">
+              <Link to="/hardware" className="text-primary hover:underline">
+                <Translate id="homepage.devices.fullPage">
+                  Open the full hardware page
+                </Translate>
+              </Link>
+            </p>
           </div>
         </dialog>
       )}
