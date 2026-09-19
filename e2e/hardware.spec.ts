@@ -28,7 +28,7 @@ test.describe("Hardware page", () => {
     const image = page.locator('meta[property="og:image"]');
     await expect(image).toHaveAttribute(
       "content",
-      /^https?:\/\/.*\/img\/hardware\/social-preview-1200x630\.png$/,
+      /^https?:\/\/.*\/img\/preview\/hardware-1200x630\.png$/,
     );
     await expect(page.locator('meta[property="og:image:alt"]')).toHaveAttribute(
       "content",

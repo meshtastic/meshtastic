@@ -157,7 +157,7 @@ jobs:
           exit 1
 
   hardware-card:
-    # The share card at static/img/hardware/ is generated from devices.json by
+    # The share card at static/img/preview/ is generated from devices.json by
     # `pnpm preview:hardware`. CI does not regenerate it: the vendored fonts make
     # the typeface reproducible, but Chromium still rasterises text differently
     # across operating systems, so comparing a Linux render against a committed
@@ -179,13 +179,13 @@ jobs:
             devices:
               - 'src/data/devices.json'
             card:
-              - 'static/img/hardware/social-preview-1200x630.png'
+              - 'static/img/preview/hardware-1200x630.png'
 
       - name: Regenerate the card when the device list changes
         if: steps.card-filter.outputs.devices == 'true' && steps.card-filter.outputs.card != 'true'
         run: |
           echo "::error file=src/data/devices.json::The device list changed but the share card did not."
-          echo "src/data/devices.json changed without static/img/hardware/social-preview-1200x630.png."
+          echo "src/data/devices.json changed without static/img/preview/hardware-1200x630.png."
           echo "The card is generated from that file, so it is now out of date."
           echo ""
           echo "  pnpm exec playwright install chromium   # one-time"

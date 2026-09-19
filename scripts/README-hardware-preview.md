@@ -1,6 +1,6 @@
 # Hardware preview card
 
-Builds `static/img/hardware/social-preview-1200x630.png`, the card people see when
+Builds `static/img/preview/hardware-1200x630.png`, the card people see when
 `meshtastic.org/hardware` is linked in chat.
 
 ```shell

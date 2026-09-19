@@ -65,7 +65,7 @@ Artwork for a device the flasher does not have yet belongs in
 
 ### The social preview image
 
-`static/img/hardware/social-preview-1200x630.png` is the card people see when
+`static/img/preview/hardware-1200x630.png` is the card people see when
 `/hardware` is linked from chat, and it is generated from this file. After adding,
 removing or swapping a device, rebuild it and commit both together:
 

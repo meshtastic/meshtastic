@@ -10,7 +10,7 @@ import React from "react";
 export default function Hardware(): JSX.Element {
   // `absolute` matters: Open Graph requires a full URL, and unfurlers drop a
   // root-relative one.
-  const previewImage = useBaseUrl("img/hardware/social-preview-1200x630.png", {
+  const previewImage = useBaseUrl("img/preview/hardware-1200x630.png", {
     absolute: true,
   });
 
