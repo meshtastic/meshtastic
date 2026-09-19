@@ -37,7 +37,7 @@ export default function Hardware(): JSX.Element {
         />
       </Head>
       <main className="container margin-vert--lg">
-        <Devices shuffle={false} headingLevel="h1" />
+        <Devices headingLevel="h1" />
       </main>
     </Layout>
   );

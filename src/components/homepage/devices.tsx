@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import devicesData from "@/data/devices.json";
 import { shuffle } from "@/lib/utils";
 import Link from "@docusaurus/Link";
+import useIsBrowser from "@docusaurus/useIsBrowser";
 import Translate, { translate } from "@docusaurus/Translate";
 import { ArrowRight, Radio } from "lucide-react";
 import React, { useMemo } from "react";
@@ -61,27 +62,29 @@ function DeviceCard({
 }
 
 interface DevicesProps {
-  // Randomize card order. Turn this off wherever the list is server-rendered:
-  // shuffling on both sides produces a hydration mismatch.
-  shuffle?: boolean;
   // Where this list sits in the page outline. The call to action uses this
   // level; the cards sit one below it. A page that leads with this list passes
   // "h1", the homepage overlay keeps the default.
   headingLevel?: "h1" | "h2" | "h3";
 }
 
-export function Devices({
-  shuffle: randomize = true,
-  headingLevel: Heading = "h3",
-}: DevicesProps = {}) {
+export function Devices({ headingLevel: Heading = "h3" }: DevicesProps = {}) {
+  // The card order is shuffled on every visit.
+  //
+  // Shuffling during render would make a server-rendered page disagree with its
+  // own hydration, so the order is settled once the browser takes over:
+  // useIsBrowser stays false through the first client render, matching the
+  // server, then flips. The overlay only ever mounts after hydration, so it is
+  // shuffled on its first paint as before.
+  const isBrowser = useIsBrowser();
   // Cards sit one level below the call to action, so no placement skips a level.
   const cardHeadingLevel = { h1: "h2", h2: "h3", h3: "h4" }[Heading] as
     | "h2"
     | "h3"
     | "h4";
   const deviceList = useMemo(
-    () => (randomize ? shuffle(devices as Device[]) : (devices as Device[])),
-    [randomize],
+    () => (isBrowser ? shuffle(devices as Device[]) : (devices as Device[])),
+    [isBrowser],
   );
 
   return (
