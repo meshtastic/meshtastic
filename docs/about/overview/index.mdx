@@ -8,7 +8,19 @@ description: "How Meshtastic moves a message across the mesh: what happens when 
 
 import useBaseUrl from "@docusaurus/useBaseUrl";
 
-Meshtastic carries text messages and position reports across a wireless mesh of nodes, using LoRa and no internet or cellular service. The sections below follow a message from your client to the nodes that relay it, and describe what a packet looks like on the air.
+Meshtastic carries text messages and position reports across a wireless mesh of nodes, using LoRa and no internet or cellular service. The sections below define what a mesh is, follow a message from your client to the nodes that relay it, and describe what a packet looks like on the air.
+
+## What is a mesh?
+
+A mesh is the set of nodes that relay each other's messages. A message reaches a distant node by being repeated from node to node along the way, rather than by either end reaching the other directly.
+
+Which nodes can form one is settled at the LoRa level, by the spreading factor, center frequency, and bandwidth. A node belongs to only one such mesh, and doesn't see or respond to traffic from nodes using different values. For a mesh to form, those values have to match.
+
+These values are grouped into modem presets, which you choose in the LoRa configuration. Presets make it straightforward for nodes to agree on the same radio parameters.
+
+Channels sit on top of that. A channel is a named, encrypted group, and a logical mesh is formed by everyone using a channel with the same name and key. The default channel is channel 0, with a blank name and the well-known key `AQ==`.
+
+A node can hold up to eight channels. A custom channel can be created for a specific group, and only nodes configured with the same channel name and key can read messages on it. Every node in range still receives those packets and may relay them, depending on its role, whether or not it can decrypt them.
 
 ## How it works
 
@@ -25,16 +37,6 @@ Direct messages take a different path. Once a node learns which neighbor provide
 A sender that hears no confirmation retransmits. A broadcast is sent up to three times in total and a direct message up to five. The interval between attempts is calculated from the packet's airtime and how much radio traffic is already on the air, rather than being a fixed value.
 
 A node buffers packets for a client that isn't connected. The buffer holds 8, 16, or 32 packets depending on the node's hardware. When it's full, an incoming text message, range test, or routing packet displaces the oldest entry, and any other kind of packet is dropped instead.
-
-## What is a mesh?
-
-At the LoRa level, a mesh is a set of nodes that share the same spreading factor, center frequency, and bandwidth. A node belongs to only one such mesh, and doesn't see or respond to traffic from nodes using different values. For a mesh to form, those values have to match.
-
-These values are grouped into modem presets, which you choose in the LoRa configuration. Presets make it straightforward for nodes to agree on the same radio parameters.
-
-Channels sit on top of that. A channel is a named, encrypted group, and a logical mesh is formed by everyone using a channel with the same name and key. The default channel is channel 0, with a blank name and the well-known key `AQ==`.
-
-A node can hold up to eight channels. A custom channel can be created for a specific group, and only nodes configured with the same channel name and key can read messages on it. Every node in range still receives those packets and may relay them, depending on its role, whether or not it can decrypt them.
 
 ## Meshtastic LoRa chirp
 
