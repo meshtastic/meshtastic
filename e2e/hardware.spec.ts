@@ -1,4 +1,5 @@
 import { test, expect } from "@playwright/test";
+import devicesData from "../src/data/devices.json";
 
 test.describe("Hardware page", () => {
   test("should load successfully", async ({ page }) => {
@@ -36,24 +37,38 @@ test.describe("Hardware page", () => {
     );
   });
 
-  test("should vary the device order between visits", async ({ page }) => {
-    // The list shuffles on every visit. The order settles after hydration, which
-    // is what would regress if the shuffle were ever moved back into render to
-    // satisfy the server.
-    const seen = new Set<string>();
-    for (let i = 0; i < 5; i++) {
+  const VISITS = 5;
+  // A shuffle can legitimately repeat itself, so requiring the order to vary is
+  // only a sound assertion while that coincidence stays vanishingly unlikely.
+  // Across VISITS draws of n devices the odds of every draw matching are
+  // (1/n!)^(VISITS-1): about 1e-15 at seven devices, but 6% at two. devices.json
+  // is meant to change, so the assertion is skipped below the threshold rather
+  // than left to flake.
+  const SHUFFLE_IS_OBSERVABLE = 4;
+
+  test("should list every device, in a varying order", async ({ page }) => {
+    const expected = devicesData.devices.map((d) => d.name).sort();
+    const orders = new Set<string>();
+
+    for (let i = 0; i < VISITS; i++) {
       await page.goto("/hardware/");
       const names = await page
         .getByRole("region", { name: "Partner Devices" })
         .getByRole("heading", { level: 2 })
         .allInnerTexts();
-      expect(names.length).toBeGreaterThan(1);
-      seen.add(names.join("|"));
+
+      expect(names.slice().sort(), "every device should be listed").toEqual(
+        expected,
+      );
+      orders.add(names.join("|"));
     }
-    expect(
-      seen.size,
-      "device order should not be identical on every visit",
-    ).toBeGreaterThan(1);
+
+    if (devicesData.devices.length >= SHUFFLE_IS_OBSERVABLE) {
+      expect(
+        orders.size,
+        "device order should not be identical on every visit",
+      ).toBeGreaterThan(1);
+    }
   });
 
   test("should be reachable from the homepage devices modal", async ({

@@ -9,35 +9,32 @@ import { Button } from "@/components/ui/button";
 import links from "@/data/links.json";
 import Link from "@docusaurus/Link";
 import { useHistory, useLocation } from "@docusaurus/router";
+import useIsBrowser from "@docusaurus/useIsBrowser";
 import Translate, { translate } from "@docusaurus/Translate";
 import { ArrowRight, Download, FileText, Radio, X } from "lucide-react";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect } from "react";
 import { SocialSidebar } from "./social-sidebar";
 
 // Deep link for the devices overlay, e.g. https://meshtastic.org/#hardware
 const HARDWARE_HASH = "#hardware";
 
 export function HomePageContent() {
-  const [showDevices, setShowDevices] = useState(false);
   const history = useHistory();
   const location = useLocation();
+  const isBrowser = useIsBrowser();
 
-  // Keep the overlay in sync with the URL hash so it can be opened via a
-  // direct link and closed with the browser back button.
-  useEffect(() => {
-    setShowDevices(location.hash === HARDWARE_HASH);
-  }, [location.hash]);
+  // The overlay is derived from the URL hash, so a direct link opens it and the
+  // back button closes it. The hash never reaches the server, so the check waits
+  // for the browser: useIsBrowser is false through the first client render,
+  // matching the server, and the overlay opens once hydration is done.
+  const showDevices = isBrowser && location.hash === HARDWARE_HASH;
 
   const openDevices = () => {
     history.push({ ...location, hash: HARDWARE_HASH });
   };
 
   const closeDevices = useCallback(() => {
-    if (location.hash === HARDWARE_HASH) {
-      history.replace({ ...location, hash: "" });
-    } else {
-      setShowDevices(false);
-    }
+    history.replace({ ...location, hash: "" });
   }, [history, location]);
 
   useEffect(() => {
