@@ -27,7 +27,7 @@ Any bootloader can also be entered from a client, without touching a button. Con
 meshtastic --enter-dfu
 ```
 
-The device reboots into bootloader mode and mounts the drive. The Android client's **USB File Transfer** option on the Firmware Update screen does the same over a USB connection. This is the route for a T1000-E or X1 still on a bootloader before OTAFIX 2.5, where the button doesn't reach the bootloader at all. `INFO_UF2.TXT` on the mounted drive names the bootloader version, and [Update nRF52 Bootloader](/docs/getting-started/flashing-firmware/nrf52/update-nrf52-bootloader/) covers moving to a newer one.
+The device reboots into bootloader mode and mounts the drive. The Android client's **USB File Transfer** option on the Firmware Update screen does the same over a USB connection. This is the route for a T1000-E on an OTAFIX bootloader before 2.5, where the button doesn't reach the bootloader and ejecting the drive doesn't leave it, so copying a firmware file is the only way out. `INFO_UF2.TXT` on the mounted drive names the bootloader version, and [Update nRF52 Bootloader](/docs/getting-started/flashing-firmware/nrf52/update-nrf52-bootloader/) covers moving to a newer one.
 
 ## Flash Firmware
 
