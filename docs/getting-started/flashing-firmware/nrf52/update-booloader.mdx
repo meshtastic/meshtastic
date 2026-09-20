@@ -85,7 +85,7 @@ adafruit-nrfutil --singlebank --touch 1200 --verbose dfu serial --package <downl
 
 5. Once the process finishes, the update is complete. Your device is now running the latest bootloader version and you can proceed with [flashing the firmware](/docs/getting-started/flashing-firmware/nrf52/drag-n-drop/).
 
-On OTAFIX 2.0 or later, flashing the bootloader package this way clears the bootloader's record of the installed firmware, so the device comes back waiting for a Bluetooth OTA update rather than starting the firmware: no USB drive and no serial port appear. That is expected, not a failure. Double-press the reset button for the UF2 drive and copy the firmware across, or complete a [Bluetooth OTA update](/docs/getting-started/flashing-firmware/nrf52/ota/).
+On OTAFIX 2.0 or later, flashing the bootloader package this way clears the bootloader's record of the installed firmware, so the device comes back waiting for a Bluetooth OTA update rather than starting the firmware: no USB drive and no serial port appear. That is expected, not a failure. Put the device into [bootloader mode](/docs/getting-started/flashing-firmware/nrf52/drag-n-drop/#bootloader-mode) for the UF2 drive and copy the firmware across, or complete a [Bluetooth OTA update](/docs/getting-started/flashing-firmware/nrf52/ota/).
 
 ### Method 4: Using a Debugger
 
