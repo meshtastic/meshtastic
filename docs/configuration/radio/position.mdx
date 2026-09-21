@@ -170,7 +170,7 @@ All Position config commands are available in the python CLI. Example commands a
 |                    Setting                     |                                                             Acceptable Values                                                             |           Default            |
 | :--------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------: | :--------------------------: |
 |               position.gps_mode                |                                                   `ENABLED`, `DISABLED`, `NOT_PRESENT`                                                    |  `ENABLED` or `NOT_PRESENT`  |
-|          position.gps_update_interval          |                                                            `integer` (seconds)                                                            |   Default `0` is 2 Minutes   |
+|          position.gps_update_interval          |                                                            `integer` (seconds)                                                            | Default `0` is 2 minutes (1 day for routers) |
 |            position.fixed_position             |                                                              `true`, `false`                                                              |           `false`            |
 |   position.position_broadcast_smart_enabled    |                                                              `true`, `false`                                                              |            `true`            |
 |   position.broadcast_smart_minimum_distance    |                                                            `integer` (meters)                                                             | Default of `0` is 100 Meters |
@@ -216,9 +216,9 @@ meshtastic --set position.position_broadcast_smart_enabled true
 meshtastic --set position.position_broadcast_smart_enabled false
 ```
 
-```shell title="Set Position Broadcast Interval (Default of 0 is 15 minutes)"
-meshtastic --set position.broadcast_secs 0
-meshtastic --set position.broadcast_secs 60
+```shell title="Set Position Broadcast Interval (Default of 0 is 1 hour, or 12 hours for routers)"
+meshtastic --set position.position_broadcast_secs 0
+meshtastic --set position.position_broadcast_secs 60
 ```
 
 :::note
