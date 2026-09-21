@@ -36,14 +36,27 @@ Currently, LR1110 radios are unable to receive Meshtastic packets from the older
 - **Pogo Pins**: Four pins for USB, DFU, serial logging, and charging.
 - **Rugged Build**: IP65 rated, waterproof and durable for various environments.
 
-## Functionality
+### Functionality
 
 - **User/Program Button (face):**
   - **Long press:** Will signal the device to shutdown after 5 seconds.
   - **Double press:** Sends an adhoc ping of the device's position to the network.
   - **Triple press:** Enables/Disables the GPS Module on demand.
   - **Quadruple press:** Temporarily mute or unmute device.
-  - **Hold for 3 seconds while the device starts:** Enters [bootloader mode](/docs/getting-started/flashing-firmware/nrf52/drag-n-drop/#bootloader-mode) on the Meshtastic OTAFIX bootloader 2.5 or later. A hold while the firmware is running doesn't.
+  - **Hold while the device starts:** Enters bootloader mode for a firmware update. See [Flashing](#flashing).
+
+### Flashing
+
+The T1000-E has one button and no reset button, so the double-press that reaches bootloader mode on most nRF52 devices doesn't apply. This needs the [Meshtastic OTAFIX bootloader](https://github.com/meshtastic/Adafruit_nRF52_Bootloader_OTAFIX) 2.5 or later.
+
+1. Connect the device to your computer with a USB data cable.
+2. Press and hold the button to power the device on, and keep holding it for 3 seconds.
+3. The device mounts as a USB drive a few seconds later.
+4. Copy the firmware `.uf2` file onto the drive, as described in [Drag & Drop](/docs/getting-started/flashing-firmware/nrf52/drag-n-drop/).
+
+To leave bootloader mode without flashing, eject the drive.
+
+On an earlier bootloader, or to skip the button entirely, connect the device over USB and run `meshtastic --enter-dfu`. [Entering bootloader mode](/docs/getting-started/flashing-firmware/nrf52/entering-bootloader-mode/) covers every method.
 
 ### Resources
 

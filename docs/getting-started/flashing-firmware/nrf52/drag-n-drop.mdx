@@ -2,32 +2,13 @@
 id: drag-n-drop
 title: Drag & Drop nRF52, RP2040, & RP2350 Firmware Updates
 sidebar_label: Drag & Drop (recommended)
-sidebar_position: 1
+sidebar_position: 2
 description: Instructions for using the Drag & Drop(recommended) file method to flash Meshtastic firmware to nRF52, RP2040, or RP2350 chipset devices.
 ---
 
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 import Link from "@docusaurus/Link";
-
-## Bootloader mode
-
-Every nRF52 device runs a small program called the bootloader before the firmware starts. In bootloader mode, also called DFU mode, the device mounts on your computer as a USB drive and installs whatever `.uf2` file is copied onto it. The gesture that enters it depends on the buttons the device has.
-
-| Device                                                                                                                                                                             | Enter bootloader mode                                                                                                                                                                                                   | Leave without flashing                                                                                                                                                                         |
-| ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Most nRF52 devices                                                                                                                                                                 | Double-press the reset button within about half a second.                                                                                                                                                               | Press the reset button once.                                                                                                                                                                   |
-| SenseCAP Card Tracker T1000-E and SenseCAP MeshTracker X1 on the [Meshtastic OTAFIX bootloader](https://github.com/meshtastic/Adafruit_nRF52_Bootloader_OTAFIX) 2.5 or later | With the USB cable connected, hold the button while the device starts and keep holding it for 3 seconds. The drive appears a few seconds later. Power the device on with the button held, or reboot it from a client while holding the button. | Eject the drive from your computer. Unplugging doesn't leave bootloader mode: the device stays in it on battery, and plugging it back in only mounts the drive again. |
-
-The T1000-E and X1 have one button and no reset button. A short press while the device starts, or a hold while the firmware is running, doesn't enter bootloader mode. On the T1000-E a long press while the firmware runs powers the device off; press and hold the button again to power it on and reach the bootloader.
-
-Any bootloader can also be entered from a client, without touching a button. Connect the device over USB and run:
-
-```shell
-meshtastic --enter-dfu
-```
-
-The device reboots into bootloader mode and mounts the drive. The Android client's **USB File Transfer** option on the Firmware Update screen does the same over a USB connection. This is the route for a T1000-E on an OTAFIX bootloader before 2.5, where the button doesn't reach the bootloader and ejecting the drive doesn't leave it, so copying a firmware file is the only way out. `INFO_UF2.TXT` on the mounted drive names the bootloader version, and [Update nRF52 Bootloader](/docs/getting-started/flashing-firmware/nrf52/update-nrf52-bootloader/) covers moving to a newer one.
 
 ## Flash Firmware
 
@@ -41,7 +22,7 @@ If you have just performed a [Factory Erase](/docs/getting-started/flashing-firm
 
 1. Download and unzip the latest firmware from [Meshtastic Downloads](https://meshtastic.org/downloads).
 2. Connect your device to your computer with a USB data cable.
-3. Put the device into [bootloader mode](#bootloader-mode). On most devices, double-press the reset button.
+3. Put the device into [bootloader mode](/docs/getting-started/flashing-firmware/nrf52/entering-bootloader-mode/). On most devices, double-press the reset button.
 4. Notice a new drive will be mounted on your computer (Windows, Mac, Linux, or Android).
 5. Open this drive and you should see three files: `CURRENT.UF2`, `INDEX.HTM`, and `INFO_UF2.TXT`.
 6. Copy the appropriate firmware file (`firmware-DEVICE_NAME-X.X.X-xxxxxxx.uf2`) from the release onto this drive.
