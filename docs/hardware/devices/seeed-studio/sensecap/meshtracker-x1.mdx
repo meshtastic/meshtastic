@@ -32,8 +32,21 @@ The SenseCAP MeshTracker X1 is a card-sized IP66-rated tracker for Meshtastic, b
 - IP66-rated enclosure.
 - Vibration motor for alerts.
 - Barometric pressure sensor.
-- User button and RGB status LED.
+- User button and RGB status LED. There's no reset button.
 - No screen, so the device is configured from a client.
+
+## Flashing
+
+The MeshTracker X1 has one button and no reset button, so the double-press that reaches bootloader mode on most nRF52 devices doesn't apply. This needs the [Meshtastic OTAFIX bootloader](https://github.com/meshtastic/Adafruit_nRF52_Bootloader_OTAFIX) 2.5 or later.
+
+1. Connect the device to your computer with a USB data cable.
+2. Press and hold the button to power the device on, and keep holding it for 3 seconds.
+3. The device mounts as a USB drive a few seconds later.
+4. Copy the firmware `.uf2` file onto the drive, as described in [Drag & Drop](/docs/getting-started/flashing-firmware/nrf52/drag-n-drop/).
+
+To leave bootloader mode without flashing, eject the drive.
+
+On an earlier bootloader, or to skip the button entirely, connect the device over USB and run `meshtastic --enter-dfu`. [Entering bootloader mode](/docs/getting-started/flashing-firmware/nrf52/entering-bootloader-mode/) covers every method.
 
 ## Resources
 
