@@ -1,0 +1,58 @@
+---
+id: mpwrd-os
+title: mPWRD-OS
+sidebar_label: mPWRD-OS
+sidebar_position: 6
+description: Armbian-based Linux images with meshtasticd and the Meshtastic Python CLI preinstalled.
+---
+
+mPWRD-OS is a Linux distribution for single-board computers that pairs [Armbian](https://armbian.com/) with Meshtastic. Its images are based on Debian 13 `trixie` and ship with [meshtasticd](/docs/meshtasticd) and the [Meshtastic Python CLI](/docs/software/python/cli) already installed, so the node software is ready to configure as soon as the board boots. Images and source are published at [mPWRD-OS/mPWRD-OS](https://github.com/mPWRD-OS/mPWRD-OS).
+
+## What's included
+
+| Component | Purpose |
+| --- | --- |
+| Debian 13 `trixie` | Base system, built with the Armbian userpatches framework |
+| [meshtasticd](/docs/meshtasticd) | Runs the Meshtastic node firmware on the board |
+| [Meshtastic Python CLI](/docs/software/python/cli) | Configures the node from a shell |
+| [contact](https://github.com/pdxlocations/contact) | Terminal client for reading and sending messages |
+| [mpwrd-menu](https://github.com/mPWRD-OS/mpwrd-menu) | Menu-driven setup for system and Meshtastic settings |
+| Wi-Fi provisioning | Sends Wi-Fi credentials to a board that has no network connection yet |
+
+## Supported boards
+
+| Chipset | Board | Status | `meshtasticd` |
+| --- | --- | --- | --- |
+| BCM2711 | [Raspberry Pi (64-bit)](/docs/software/mpwrd-os/board-support#raspberry-pi-64-bit) | Supported | Beta |
+| RK3506G | [EByte ECB41-PGE](/docs/software/mpwrd-os/board-support#ebyte-ecb41-pge) | Supported | Beta |
+| RK3506G | [Luckfox Lyra Plus](/docs/software/mpwrd-os/board-support#luckfox-lyra-plus) | Supported | Beta |
+| RK3506B | [Luckfox Lyra Ultra W](/docs/software/mpwrd-os/board-support#luckfox-lyra-ultra-w) | Supported | Beta |
+| RK3506B | [Luckfox Lyra Zero W](/docs/software/mpwrd-os/board-support#luckfox-lyra-zero-w) | Supported | Beta |
+| RK3506J | [ForLinx OK3506-S12](/docs/software/mpwrd-os/board-support#forlinx-ok3506-s12) | Supported | Beta |
+| RV1106G | [Luckfox Pico Max](/docs/software/mpwrd-os/board-support#luckfox-pico-max) | Supported | Beta |
+| RV1103G | [Luckfox Pico Mini](/docs/software/mpwrd-os/board-support#luckfox-pico-mini) | Supported | Beta |
+| RV1103B | [OnionIOT Omega4](/docs/software/mpwrd-os/board-support#onioniot-omega4) | Planned | |
+| UEFI | [Generic x86_64 UEFI](/docs/software/mpwrd-os/board-support#generic-x86_64-uefi) | In development | Beta |
+
+Several boards ship with onboard storage that has to be cleared before an mPWRD-OS image boots. [Board support](/docs/software/mpwrd-os/board-support) covers the setup method and the preparation each board needs.
+
+## Install and set up
+
+1. Download the image for your board from the [mPWRD-OS releases](https://github.com/mPWRD-OS/mPWRD-OS/releases) page.
+2. Prepare the board if it needs it. Boards with onboard NAND flash or eMMC are handled in [Rockchip flashing](/docs/software/mpwrd-os/rockchip-flashing).
+3. Write the image to a microSD card with [balenaEtcher](https://etcher.balena.io/) or a similar tool, then power on the board. Writing the image erases everything on the card.
+4. Connect to the board. Boards with an Ethernet port are reachable over SSH once they join your network, and boards without one take the Bluetooth or hotspot route described in [Provisioning](/docs/software/mpwrd-os/provisioning).
+5. Log in as `root` with the password `1234`. The first login prompts for a new password.
+6. Run `mpwrd-menu` to set your region, configure the radio, and change system settings.
+
+   ```shell
+   mpwrd-menu
+   ```
+
+## Building your own image
+
+The repository is an Armbian userpatches overlay, so images are compiled by [armbian/build](https://github.com/armbian/build) with mPWRD-OS checked out as `userpatches`. Each board has its own configuration file in the repository. The [repository README](https://github.com/mPWRD-OS/mPWRD-OS#using-this-repo) carries the commands.
+
+## Getting help
+
+Bug reports and feature requests for mPWRD-OS belong in the [project's issue tracker](https://github.com/mPWRD-OS/mPWRD-OS/issues).

@@ -1,0 +1,42 @@
+---
+id: provisioning
+title: mPWRD-OS provisioning
+sidebar_label: Provisioning
+sidebar_position: 2
+description: Send Wi-Fi credentials to an mPWRD-OS board over Bluetooth or over a temporary hotspot during first-time setup.
+---
+
+A board with no Ethernet port needs another way onto the network the first time it boots. mPWRD-OS offers two, and which one applies depends on the board. [Board support](/docs/software/mpwrd-os/board-support) lists the setup methods for each.
+
+## Bluetooth provisioning
+
+Raspberry Pi (64-bit) boards accept Wi-Fi credentials over Bluetooth, handled on the board by [nymea-networkmanager](https://github.com/nymea/nymea-networkmanager).
+
+The [Meshtastic Flasher](https://flasher.meshtastic.org/) sends the credentials. Its Bluetooth entry appears only in a browser that supports Web Bluetooth, which in practice means a Chromium-based browser.
+
+1. Flash the image to your board and power it on.
+2. Open the [Meshtastic Flasher](https://flasher.meshtastic.org/) and select **mPWRD-OS Tools**, then **BLE WiFi Provisioning**.
+
+   ![The Flasher's mPWRD-OS WiFi Provisioning dialog, titled with a Bluetooth icon](/img/software/mpwrd-os/ble-provisioning.webp)
+
+3. Select **Connect to BLE Device** and choose your board.
+4. Select **Scan for Networks**, choose your network under **Available Networks**, and enter its **Password**.
+5. Select **Apply**. The Flasher reports when the credentials have been applied.
+6. Connect to the board over SSH.
+
+## Web provisioning
+
+The Luckfox Lyra Zero W and the Luckfox Lyra Ultra W start a temporary hotspot instead, served by [armbian-web-config](https://github.com/Grippy98/armbian-web-config).
+
+1. Flash the image to your board and power it on.
+2. Connect a Wi-Fi capable device to the `armbiansetup` network, using the password `armbian1234`.
+3. Open `http://10.42.0.1:8080`. The Armbian Setup wizard opens on its first step.
+
+   ![Armbian Setup wizard on step one, Administrator Setup, with root password fields and a progress bar reading Root, User, Locale, Network, Advanced](/img/software/mpwrd-os/armbian-setup.webp)
+
+4. Work through the wizard's five steps: **Root**, **User**, **Locale**, **Network**, and **Advanced**.
+5. Connect to the board over SSH.
+
+The wizard sets the root password at its first step, so the default credentials do not apply to a board set up this way.
+
+The hotspot and its password are the same on every board, so anyone in range can reach a board that has not been set up yet. Complete setup before leaving the board unattended.
