@@ -29,7 +29,8 @@ The Flasher's **Rockchip Flash Tool** connects to a board in Maskrom mode over U
 
 1. Open the [Meshtastic Flasher](https://flasher.meshtastic.org/) and select **mPWRD-OS Tools**, then **Rockchip Flash Tool**.
 2. Select **Connect Rockchip device** and choose your board.
-3. Select the target storage, then erase it or write your image to it.
+3. Check the reported USB ID, active storage, and capacity against the board you meant to connect, and check that your image file matches that board.
+4. Select the target storage, then erase it or write your image to it.
 
 ## rkdeveloptool
 
@@ -65,12 +66,14 @@ The Flasher's **Rockchip Flash Tool** connects to a board in Maskrom mode over U
   </TabItem>
 </Tabs>
 
+These commands reach the board over USB. Unless the RockUSB udev rules are installed, they need `sudo`.
+
 ### List attached devices
 
-Confirm the board is connected and in Maskrom mode before going further.
+Confirm the board is connected and in Maskrom mode before going further. The command reports nothing when the board is not in Maskrom mode, and `rkdeveloptool` cannot choose between two attached boards, so connect one at a time.
 
 ```shell
-rkdeveloptool ld
+sudo rkdeveloptool ld
 ```
 
 ### Erase flash
@@ -83,16 +86,16 @@ sudo rkdeveloptool ef
 
 ### Write an image to eMMC
 
-Supported on the Luckfox Lyra Ultra W.
+Supported on the Luckfox Lyra Ultra W. Check that the image you downloaded is the one built for your board before writing it.
 
 ```shell
-rkdeveloptool wl 0 <IMAGE_FILE>
+sudo rkdeveloptool wl 0 <IMAGE_FILE>
 ```
 
-Replace `<IMAGE_FILE>` with the image you downloaded from the [mPWRD-OS releases](https://github.com/mPWRD-OS/mPWRD-OS/releases) page.
+Replace `<IMAGE_FILE>` with the image you downloaded from the [mPWRD-OS releases](https://github.com/mPWRD-OS/mPWRD-OS/releases) page. Extract it first, because `rkdeveloptool` does not read compressed images.
 
 Reboot the board once the write finishes. Removing power has the same effect.
 
 ```shell
-rkdeveloptool rd
+sudo rkdeveloptool rd
 ```

@@ -40,7 +40,7 @@ Several boards ship with onboard storage that has to be cleared before an mPWRD-
 
 1. Download the image for your board from the [mPWRD-OS releases](https://github.com/mPWRD-OS/mPWRD-OS/releases) page.
 2. Prepare the board if it needs it. Boards with onboard NAND flash or eMMC are handled in [Rockchip flashing](/docs/software/mpwrd-os/rockchip-flashing).
-3. Write the image to a microSD card with [balenaEtcher](https://etcher.balena.io/) or a similar tool, then power on the board. Writing the image erases everything on the card.
+3. Write the image to a microSD card with [balenaEtcher](https://etcher.balena.io/) or a similar tool, then power on the board. Check that the image is the one built for your board and that the selected drive is the card, because writing erases everything on the target.
 4. Connect to the board. Boards with an Ethernet port are reachable over SSH once they join your network, and boards without one take the Bluetooth or hotspot route described in [Provisioning](/docs/software/mpwrd-os/provisioning).
 5. Log in as `root` with the password `1234`. The first login prompts for a new password.
 6. Run `mpwrd-menu` to set your region, configure the radio, and change system settings.
