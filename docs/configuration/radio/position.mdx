@@ -25,7 +25,9 @@ Generally, depending on the device and its configuration, this value will defaul
 
 ### GPS Update Interval
 
-How often we should try to get GPS position (in seconds), or zero for the default of once every 2 minutes, or a very large value (maxint) to update only once at boot.
+How often we should try to get GPS position (in seconds), or zero for the default of once every 2 minutes, or a very large value (maxint) to update only once at boot. The Router and Router Late roles default to once a day instead.
+
+This interval controls how often the node acquires a GPS fix. It does not control how often the node transmits its position, which is set by the broadcast interval.
 
 ### Fixed Position
 
@@ -34,6 +36,8 @@ Acceptable values: `true` or `false`
 False by default
 
 If set, this node is at a fixed position. The device will generate GPS updates at the regular GPS update interval, but use whatever the last lat/lon/alt it saved for the node. The lat/lon/alt can be set by an internal GPS, by the mobile device's GPS, or entered manually.
+
+A fixed position node broadcasts its position no more often than once every 6 hours. Setting a shorter broadcast interval does not override this floor. The same floor applies to any node whose position hasn't changed since its last broadcast.
 
 ### Smart Broadcast
 
@@ -55,15 +59,17 @@ The minimum distance in meters traveled (since the last send) before we can send
 
 ### Smart Broadcast Minimum Interval
 
-Default of `0` is 30 seconds
+Default of `0` is 5 minutes
 
 The minimum number of seconds (since the last send) before we can send a position to the mesh if smart broadcast is enabled.
 
 ### Broadcast Interval
 
-Default of `0` is 15 minutes
+Default of `0` is 1 hour, or 12 hours for the Router and Router Late roles
 
 If smart broadcast is off we should send our position this often.
+
+The firmware scales this interval with the number of online nodes, so a node on a larger mesh broadcasts less often than the configured value. Publishing position on the default channel also raises the interval to at least 1 hour.
 
 A position is sent every broadcast interval: the GPS location once a fix is acquired, the saved lat/lon/alt if fixed position is set, otherwise an empty location.
 
@@ -168,8 +174,8 @@ All Position config commands are available in the python CLI. Example commands a
 |            position.fixed_position             |                                                              `true`, `false`                                                              |           `false`            |
 |   position.position_broadcast_smart_enabled    |                                                              `true`, `false`                                                              |            `true`            |
 |   position.broadcast_smart_minimum_distance    |                                                            `integer` (meters)                                                             | Default of `0` is 100 Meters |
-| position.broadcast_smart_minimum_interval_secs |                                                            `integer` (seconds)                                                            | Default of `0` is 15 Minutes |
-|        position.position_broadcast_secs        |                                                            `integer` (seconds)                                                            | Default of `0` is 15 minutes |
+| position.broadcast_smart_minimum_interval_secs |                                                            `integer` (seconds)                                                            | Default of `0` is 5 minutes  |
+|        position.position_broadcast_secs        |                                                            `integer` (seconds)                                                            | Default of `0` is 1 hour (12 hours for routers) |
 |                 position.flags                 | `UNSET`, `ALTITUDE`, `ALTITUDE_MSL`, `GEOIDAL_SEPARATION`, `DOP`, `HVDOP`, `PDOP`, `SATINVIEW`, `SEQ_NO`, `TIMESTAMP`, `HEADING`, `SPEED` |           `UNSET`            |
 |                position.rx_gpio                |                                                             `integer` (0-39)                                                              |           `UNSET`            |
 |                position.tx_gpio                |                                                             `integer` (0-34)                                                              |           `UNSET`            |
