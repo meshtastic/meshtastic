@@ -77,6 +77,26 @@ With the [prerequisites installed](./local-dev.mdx#prerequisites), a local site 
 
 Run `pnpm run build` before opening a pull request, since broken links fail the build. See [Running the site locally](./local-dev.mdx) for the full set of checks CI runs.
 
+## Regenerating the hardware preview card
+
+The hardware page carries its own social preview image, the picture a chat client shows when someone links it. That image is generated from [`src/data/devices.json`](https://github.com/meshtastic/meshtastic/blob/master/src/data/devices.json), the file behind both the page and the **Need Hardware?** overlay on the home page, so the card and the page cannot disagree about which devices Meshtastic features.
+
+Rebuild the card whenever those devices change, and commit the image with the change that caused it.
+
+1. Install the browser the generator renders with, once per machine. The end-to-end tests use the same one.
+
+   ```shell
+   pnpm exec playwright install chromium
+   ```
+
+2. Rebuild the card, which writes `static/img/preview/hardware-1200x630.png` and prints the size it gave each device.
+
+   ```shell
+   pnpm preview:hardware
+   ```
+
+Adding or removing a device needs no other edit, since the row re-measures and re-spaces itself for whatever it finds. A pull request that edits `devices.json` without the rebuilt image fails CI. [The generator's README](https://github.com/meshtastic/meshtastic/blob/master/scripts/README-hardware-preview.md) covers the layout rules, the optional ordering and sizing keys, and where device artwork comes from.
+
 ## Proposing a change
 
 Every pull request here links to an issue. The issue is where the problem gets agreed on before anyone writes the fix, and it carries the context a diff can't: which page is wrong, what it should say, and who reported it.
