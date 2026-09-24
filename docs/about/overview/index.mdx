@@ -26,7 +26,7 @@ A node can hold up to eight channels. A custom channel can be created for a spec
 
 When you send a message from a Meshtastic client, the client passes it to your node over Bluetooth, Wi-Fi, Ethernet, or serial. Your node then broadcasts it over LoRa.
 
-Each node that receives a packet checks whether it has seen that packet before. A duplicate is discarded. A packet the node hasn't seen, and whose hop limit hasn't reached zero, becomes a candidate for rebroadcast.
+Each node that receives a packet checks whether it has seen that packet before. A duplicate is discarded. A packet the node hasn't seen, and whose hop limit hasn't reached zero, becomes a candidate for rebroadcast. A node configured not to relay stops there.
 
 Nodes don't rebroadcast straight away. Each one waits a short random delay, and a node that hears a neighbor relay the same packet during that delay drops its own copy. The delay is weighted by the signal strength of the packet as received, so distant nodes tend to relay first and carry the message furthest. [Mesh broadcast algorithm](/docs/overview/mesh-algo) describes this behavior, known as managed flooding, in detail.
 
@@ -59,11 +59,11 @@ A complete Meshtastic transmission consists of:
 
 4. **Packet header** — the Meshtastic routing header, sent in the clear so that nodes can relay packets they can't decrypt.
 
-5. **Encrypted payload** — the application message, encoded with forward error correction according to the configured coding rate.
+5. **Encrypted payload** — the application message.
 
 6. **Payload CRC** — a cyclic redundancy check used to detect transmission errors.
 
-All of these are transmitted as a continuous sequence of chirps. The spreading factor controls how long each chirp lasts, and the bandwidth controls how wide the frequency sweep is. Higher spreading factors increase range and reliability but reduce the data rate.
+All of these are transmitted as a continuous sequence of chirps. The coding rate sets the forward error correction for the packet header and the encrypted payload together. The LoRa header always uses a fixed coding rate. The spreading factor controls how long each chirp lasts, and the bandwidth controls how wide the frequency sweep is. Higher spreading factors increase range and reliability but reduce the data rate.
 
 Nodes must use the same frequency, bandwidth, and spreading factor to communicate, though they can still receive packets sent with a different coding rate.
 
