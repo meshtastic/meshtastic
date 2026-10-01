@@ -102,8 +102,6 @@ On firmware 2.8.1 and later, `use_aead` switches the channel from AES-CTR to aut
 
 Every node on the channel must turn it on. Nodes with it on and nodes with it off can't read each other's messages on that channel, even with the same name and PSK. The setting needs a PSK, is experimental, and is off by default.
 
-None of the Android, Apple, or Web clients, or the Python CLI, has a control for this setting.
-
 ### Downlink Enabled
 
 If enabled, messages captured from a **public** internet gateway will be forwarded to the local mesh.
