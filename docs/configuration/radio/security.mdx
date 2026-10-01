@@ -9,7 +9,7 @@ import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 import { Icon } from "@iconify/react";
 
-The security config options are: Public Key, Private Key, Admin Key, Is Managed, Serial Console, Debug Logs, and Admin Channel.
+The security config options are: Public Key, Private Key, Admin Key, Is Managed, Serial Console, Debug Logs, Admin Channel, and Packet Signature Policy.
 
 ## Security Config Values
 
@@ -17,7 +17,7 @@ The security config options are: Public Key, Private Key, Admin Key, Is Managed,
 
 Acceptable values: `bytes`
 
-The public key of the device, shared with other nodes on the mesh to allow them to compute a shared secret key for secure communication.
+The public key of the device, shared with other nodes on the mesh to allow them to compute a shared secret key for secure communication. Other nodes also use it to check the device's packet signatures, and the device's node number is derived from it. The firmware generates the key pair once a LoRa region is set.
 
 ### Private Key
 
@@ -29,13 +29,15 @@ The private key of the device, used to create a shared key with a remote device 
 
 Acceptable values: `repeated bytes`
 
-The public key(s) authorized to send administrative messages to this node. Only messages signed by these keys will be accepted for administrative control.
+The public keys authorized to send administrative messages to this node, up to three. The node accepts a remote admin message only if it arrives encrypted as a direct message from a node whose public key is in this list.
 
 ### Managed Mode
 
 Acceptable values: `true` or `false`
 
 Enabling Managed Mode blocks client applications from writing configurations to a radio(they may be read). Once enabled, radio configurations can only be changed through PKC Remote Admin messages with firmware version 2.5+ or the legacy Admin channel with firmware prior to version 2.5. This setting is **not** required for remote node administration.
+
+Managed Mode requires at least one admin key. If none is set, the firmware turns Managed Mode off and sends a warning to the client.
 
 Before enabling Managed Mode, verify that the node can be controlled via Remote Admin or legacy Admin channel, and that all functions are working properly to prevent being locked out.
 
@@ -56,6 +58,20 @@ By default, logging is disabled when an API client connects to keep the shared s
 Acceptable values: `true` or `false`
 
 Allows incoming device control over the insecure legacy admin channel. Enabling this option permits control messages to be received through the older, less secure admin channel.
+
+### Packet Signature Policy
+
+Acceptable values: `COMPATIBLE`, `BALANCED`, or `STRICT`
+
+Sets what the node does with packets that carry no [signature](/docs/overview/encryption#signed-broadcasts). Under every policy, the node drops a packet whose signature doesn't match the sender's known public key.
+
+- `COMPATIBLE`, the default, accepts unsigned packets.
+- `BALANCED` drops an unsigned broadcast from a node that has signed before, when the broadcast was small enough to carry a signature. It accepts unsigned packets from nodes not known to sign.
+- `STRICT` accepts only packets with a verified signature and packets encrypted as direct messages.
+
+`STRICT` also drops unsigned packets sent to the node on a channel. Acknowledgments normally travel that way, so the node can report a direct message as undelivered when it arrived. Nodes running older firmware, and STM32WL-based nodes, don't sign, so their packets are dropped too.
+
+Firmware builds without packet signing, such as STM32WL builds, always use `COMPATIBLE`.
 
 ## Security Config Client Availability
 
@@ -117,7 +133,7 @@ All Security config options are available on iOS, iPadOS and macOS at Settings >
 
 ### CLI
 
-All Security config options are available in the python CLI. Example commands are below:
+Python CLI 2.7.11 and earlier can't set Packet Signature Policy. The other Security config options are available in the Python CLI. Example commands are below:
 
 | Setting                        | Acceptable Values | Default |
 | ------------------------------ | ----------------- | ------- |
@@ -128,13 +144,14 @@ All Security config options are available in the python CLI. Example commands ar
 | security.serial_enabled        | `true`, `false`   | `true`  |
 | security.debug_log_api_enabled | `true`, `false`   | `false` |
 | security.admin_channel_enabled | `true`, `false`   | `false` |
+| security.packet_signature_policy | `COMPATIBLE`, `BALANCED`, `STRICT` | `COMPATIBLE` |
 
 :::tip
 
 Because the device may reboot after each command is sent via CLI, it is recommended when setting multiple values in a config section that commands be chained together as one.
 
 ```shell title="Example:"
-meshtastic --set security.is_managed false --set device.debug_log_api_enabled true
+meshtastic --set security.is_managed false --set security.debug_log_api_enabled true
 ```
 
 :::
@@ -152,7 +169,7 @@ meshtastic --set security.debug_log_api_enabled true
 
 ### Web
 
-ALL Security config options are available in the Web client, but at present only 1 Remote Admin public key can be set.
+The Web client can't set Packet Signature Policy. The other Security config options are available, but only one admin key can be set.
 
 </TabItem>
 </Tabs>
@@ -161,7 +178,7 @@ ALL Security config options are available in the Web client, but at present only
 
 ### Backup
 
-Public and private keys will be lost and regenerated by performing a firmware erase and reinstall. It is your responsibility to back up your keys to maintain encrypted direct messaging with existing nodes on your mesh.
+Public and private keys will be lost and regenerated by performing a firmware erase and reinstall. A new key also gives the node a new node number, so other nodes see it as a different node. It is your responsibility to back up your keys to maintain encrypted direct messaging with existing nodes on your mesh.
 
 Suggested backup methods:
 

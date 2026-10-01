@@ -65,7 +65,7 @@ To ensure devices with different PRIMARY channel name transmit on the same frequ
 
 ## Channel Settings Values
 
-The Channel Settings options are: Name, PSK, Downlink Enabled, Uplink Enabled and Mute. Channel settings are embedded in the `Channel` protobuf as a `ChannelSettings` protobuf and sent as an admin message.
+The Channel Settings options are: Name, PSK, Use AEAD, Downlink Enabled, Uplink Enabled, and Mute. Channel settings are embedded in the `Channel` protobuf as a `ChannelSettings` protobuf and sent as an admin message.
 
 ### Name
 
@@ -74,7 +74,7 @@ A short identifier for the channel. _(< 12 bytes)_
 | Reserved Name  |                                                                                                                 Purpose                                                                                                                  |
 | :------------: | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
 | `""` (default) |                                                                               If left empty on the Primary channel, this designates the `default` channel.                                                                               |
-|    `admin`     | On Secondary channels, the name `admin` (case-sensitive) designates the `admin` channel used to administer nodes over the mesh. Note that this is a Legacy feature, see [Remote Admin](docs/configuration/remote-admin.mdx) for details. |
+|    `admin`     | On Secondary channels, the name `admin`, in any letter case, designates the `admin` channel used to administer nodes over the mesh. It works only when [Admin Channel Enabled](/docs/configuration/radio/security/#admin-channel-enabled) is on. Note that this is a Legacy feature, see [Remote Admin](docs/configuration/remote-admin.mdx) for details. |
 
 :::note
 
@@ -95,6 +95,14 @@ Must be either 0 bytes (no crypto), 16 bytes (AES128), or 32 bytes (AES256).
 Matching PSKs are required in order to communicate on the same channel with other devices. Example: If your device is using a channel with the default PSK of `AQ==` the device you are attempting to communicate with must also have a matching channel with the same PSK.
 
 :::
+
+### Use AEAD
+
+On firmware 2.8.1 and later, `use_aead` switches the channel from AES-CTR to authenticated encryption, AES-CCM. Each packet carries a 12-byte tag, and nodes reject any packet that was altered or forged by someone without the key.
+
+Every node on the channel must turn it on. Nodes with it on and nodes with it off can't read each other's messages on that channel, even with the same name and PSK. The setting needs a PSK, is experimental, and is off by default.
+
+None of the Android, Apple, or Web clients, or the Python CLI, has a control for this setting.
 
 ### Downlink Enabled
 
@@ -135,6 +143,7 @@ The `position_precision` value is an integer between 0 and 32:
 
 - A value of 0 means that location data is never sent over the given channel.
 - A value of 32 means that location data is sent with full precision.
+- On a channel whose key is public, which means no key, the default key, or any single-byte key, the firmware limits precision to 15 bits.
 - Values in between indicate the number of bits of precision to be sent, which correspond to a position precision from the table below.
 - The public MQTT server [filters out precise positions](https://meshtastic.org/docs/software/integrations/mqtt/#location-precision-filtering).
 
