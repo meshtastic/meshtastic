@@ -2,7 +2,11 @@ name: CI
 
 on:
   push:
+    # The merge_group run covers the queue's own branches.
+    branches-ignore:
+      - "gh-readonly-queue/**"
   pull_request:
+  merge_group:
 
 jobs:
   quality:
