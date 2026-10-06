@@ -93,8 +93,8 @@ importers:
         specifier: 3.3.4
         version: 3.3.4(patch_hash=4e7a24950470698a3c8e0158dde1b37605b49f858e6a044521c803f2d4493c59)(@docusaurus/core@3.10.2(@docusaurus/faster@3.10.2(@docusaurus/types@3.10.2(@swc/core@1.15.43)(@swc/html@1.15.43)(clean-css@5.3.3)(cssnano@6.1.2(postcss@8.5.27))(csso@5.0.5)(html-minifier-terser@7.2.0)(lightningcss@1.32.0)(postcss@8.5.27)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(supports-color@9.4.0))(clean-css@5.3.3)(cssnano@6.1.2(postcss@8.5.27))(csso@5.0.5)(html-minifier-terser@7.2.0)(postcss@8.5.27))(@mdx-js/react@3.1.1(@types/react@19.3.0)(react@19.3.0))(@rspack/core@1.7.12)(@swc/core@1.15.43)(@swc/html@1.15.43)(clean-css@5.3.3)(cssnano@6.1.2(postcss@8.5.27))(csso@5.0.5)(debug@4.4.3(supports-color@9.4.0))(html-minifier-terser@7.2.0)(lightningcss@1.32.0)(postcss@8.5.27)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(supports-color@9.4.0)(typescript@7.0.2))(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
       dompurify:
-        specifier: ^3.4.14
-        version: 3.4.14
+        specifier: ^3.4.16
+        version: 3.4.16
       dotenv:
         specifier: ^17.4.2
         version: 17.4.2
@@ -4345,6 +4345,9 @@ packages:
 
   dompurify@3.4.14:
     resolution: {integrity: sha512-dVoH9z+MY+C9IilgGCk3YfFqjLi3fChm2OiKJMzh6axrJ5qwxqWaZamgmHrpv22CN/KdbZJuGEGgfQoL00LTdg==}
+
+  dompurify@3.4.16:
+    resolution: {integrity: sha512-sqo+pNp3qRhCIpbgRi1y8Tgk27Bo2Ry7w0dC1NBeNTdZChWjz9Xb/KOoZbRP/R6pQZ80Qw8YhXw13hWWBbMRnQ==}
 
   domutils@2.8.0:
     resolution: {integrity: sha512-w96Cjofp72M5IIhpjgobBimYEfoPjx1Vx0BSX9P30WBdZW2WIKU0T1Bd0kz2eNZ9ikjKgHbEyKx8BB6H1L3h3A==}
@@ -13238,6 +13241,10 @@ snapshots:
       domelementtype: 2.3.0
 
   dompurify@3.4.14:
+    optionalDependencies:
+      '@types/trusted-types': 2.0.7
+
+  dompurify@3.4.16:
     optionalDependencies:
       '@types/trusted-types': 2.0.7
 
