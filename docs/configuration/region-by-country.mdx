@@ -12,15 +12,6 @@ If you'd like to contribute information for your country, click the "Edit this p
 
 For the frequency range, duty cycle and power limit behind each region code, see the [LoRa Region](/docs/configuration/radio/lora#region) table.
 
-:::info EU sibling regions
-Firmware 2.8 splits the harmonized European SRD allocation into three sibling regions, so every country listed below as `EU_868` may also use:
-
-- `EU_866` — 865.6 - 867.6 MHz, wider channels with the Lite presets, 2.5% duty cycle (10% for the `ROUTER` and `ROUTER_LATE` roles).
-- `EU_N_868` — the same 869.4 - 869.65 MHz band as `EU_868`, with the Narrow presets.
-
-Each sibling accepts its own exclusive set of modem presets, and selecting a preset belonging to another sibling switches the region to that sibling automatically. They are not listed per-country below, since they apply everywhere `EU_868` does.
-:::
-
 ### A
 
 | Country   | LoRa Region        | Regulatory document                                                                                        |
@@ -202,9 +193,9 @@ Each sibling accepts its own exclusive set of modem presets, and selecting a pre
 | Country | LoRa Region | Regulatory document |
 | ------- | ----------- | ------------------- |
 
-## Amateur Radio (Ham) Regions
+## Amateur radio (ham) regions
 
-Amateur Radio allocations are chosen by ITU region rather than by country, and require [`IsLicensed`](/docs/configuration/radio/user#is-licensed-ham) to be enabled on the device.
+Amateur radio allocations are chosen by ITU region rather than by country, and can only be selected in [licensed mode](/docs/configuration/radio/user#is-licensed-ham).
 
 | ITU Region | Covers                                               | LoRa Regions                                 |
 | ---------- | ---------------------------------------------------- | -------------------------------------------- |
@@ -212,4 +203,4 @@ Amateur Radio allocations are chosen by ITU region rather than by country, and r
 | 2          | The Americas                                         | `ITU2_2M`<br />`ITU2_125CM`<br />`ITU2_70CM` |
 | 3          | Asia and the Pacific                                 | `ITU3_2M`<br />`ITU3_70CM`                   |
 
-Individual administrations do not all allocate the full range each region covers, and power limits for licensed operators vary widely. Check your national bandplan before transmitting.
+Individual administrations do not all allocate the full range each region covers, and power limits for licensed operators vary widely. Check your national band plan before transmitting.

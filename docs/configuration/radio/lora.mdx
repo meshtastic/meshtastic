@@ -36,39 +36,40 @@ When enabled, the `Modem Preset` fields will be adhered to, else the `Bandwidth`
 
 Default is `unset` which equates to `LONG_FAST`. Presets are pre-defined modem settings (Bandwidth, Spread Factor, and Coding Rate) which influence both message speed and range. The default will provide a strong mixture of speed and range, for most users.
 
+A US node whose region is first set from its own screen starts on `LONG_TURBO` instead. `LONG_TURBO` and `LONG_FAST` nodes can't hear each other, so set the preset to `LONG_FAST` to join a mesh that uses it.
+
 The presets are designed to provide further options for optimizing either speed (and reduced network congestion) or range, which can be useful for two real world scenarios:
 
 1. A high number of devices exist in the mesh, or messages are sent very frequently. Faster speeds (and therefore lower radio time per device) can help with mesh network congestion.
 2. Maximum range is desired, for long range scenarios where a several second delay in message receipt is acceptable (for instance, attempting to send messages from a town to a distant mountain top).
 
-Not every preset is legal in every band. From firmware 2.8, the device only accepts presets permitted in the selected [Region](#region), and clients filter the preset picker to that list. An illegal preset is clamped back to the region's default.
+Not every preset is legal in every band. The node accepts only the presets permitted in the selected [Region](#region), and tells connected clients which presets each region allows. A preset the region doesn't permit is replaced with the region's default. When the change comes from remote administration, the whole change is rejected instead.
 
-The general purpose presets are as follows, and follow a linear pattern of Fastest \<\-\-\> Slowest, and Shortest \<\-\-\> Longest range:
+The general-purpose presets are as follows, and follow a linear pattern of Fastest \<\-\-\> Slowest, and Shortest \<\-\-\> Longest range:
 
-1. `SHORT_TURBO` (Fastest, highest bandwidth, lowest airtime, shortest range. It is not legal to use in all regions due to it's 500kHz bandwidth.)
+1. `SHORT_TURBO` (Fastest, highest bandwidth, lowest airtime, shortest range. It is not legal to use in all regions due to its 500 kHz bandwidth.)
 
 2. `SHORT_FAST`
 
 3. `SHORT_SLOW`
 
-4. `MEDIUM_TURBO` (500kHz bandwidth, so it carries the same regional restriction as `SHORT_TURBO`.)
+4. `MEDIUM_TURBO` (500 kHz bandwidth, so it carries the same regional restriction as `SHORT_TURBO`.)
 
 5. `MEDIUM_FAST`
 
 6. `MEDIUM_SLOW`
 
-7. `LONG_TURBO` (Performs similarly to `LONG_FAST`, but with 500kHz bandwidth.)
+7. `LONG_TURBO` (Performs similarly to `LONG_FAST`, but with 500 kHz bandwidth.)
 
 8. `LONG_FAST` (Default)
 
 9. `LONG_MODERATE`
 
+`EU_868` offers this list without the three Turbo presets, as 500 kHz bandwidth is not permitted in the 869.4 - 869.65 MHz band.
 
-`EU_868` offers this list without the three Turbo presets, as 500kHz bandwidth is not permitted in the 869.4 - 869.65 MHz band.
+#### Narrowband presets
 
-#### Narrowband Presets
-
-Firmware 2.8 adds three narrowband preset families for bands that cannot accommodate the presets above. Each family is exclusive to its regions and cannot be selected anywhere else:
+Three narrowband preset families serve bands that can't accommodate the general-purpose presets. Each family is exclusive to its regions and can't be selected anywhere else:
 
 |           Presets            | Bandwidth |                          Available in                           |    Default    |
 | :--------------------------: | :-------: | :-------------------------------------------------------------: | :-----------: |
@@ -76,15 +77,11 @@ Firmware 2.8 adds three narrowband preset families for bands that cannot accommo
 | `NARROW_FAST`, `NARROW_SLOW` | 62.5 kHz  | `EU_N_868`, `ITU1_70CM`, `ITU2_70CM`, `ITU3_70CM`, `ITU2_125CM` | `NARROW_SLOW` |
 |   `TINY_FAST`, `TINY_SLOW`   | 15.6 kHz  |                 `ITU1_2M`, `ITU2_2M`, `ITU3_2M`                 |  `TINY_FAST`  |
 
-See [Narrowband Presets](/docs/overview/radio-settings#narrowband-presets) for their data rates and link budgets.
+See [Narrowband presets](/docs/overview/radio-settings#narrowband-presets) for their data rates and link budgets.
 
-:::info
-`EU_868`, `EU_866` and `EU_N_868` share the same regulatory domain, so selecting a Lite or Narrow preset while the region is `EU_868` switches the region to `EU_866` or `EU_N_868` respectively. Selecting one of the general purpose presets switches it back.
-:::
+`EU_868`, `EU_866`, and `EU_N_868` share the same regulatory domain, so selecting a Lite or Narrow preset while the region is `EU_868` switches the region to `EU_866` or `EU_N_868` respectively. Selecting a general-purpose preset that `EU_868` allows switches it back. The Turbo presets aren't allowed in any of the three.
 
-:::warning
-The Tiny presets transmit in only 15.6 kHz of bandwidth. A TCXO with a tolerance of ±5 ppm or better is **required**.
-:::
+The Tiny presets transmit in only 15.6 kHz of bandwidth, so **they require a TCXO with a tolerance of ±5 ppm or better.** They work only with SX127x and SX126x radios.
 
 ### Max Hops
 
@@ -257,7 +254,7 @@ LoRa config commands are available in the python CLI. Example commands are below
 |           Setting           |                                                                     Acceptable Values                                                                     |   Default   |
 | :-------------------------: | :-------------------------------------------------------------------------------------------------------------------------------------------------------: | :---------: |
 |      lora.modem_preset      | `LONG_FAST`, `LONG_MODERATE`, `LONG_TURBO`, `MEDIUM_SLOW`, `MEDIUM_FAST`, `MEDIUM_TURBO`, `SHORT_SLOW`, `SHORT_FAST`, `SHORT_TURBO`, `LITE_FAST`, `LITE_SLOW`, `NARROW_FAST`, `NARROW_SLOW`, `TINY_FAST`, `TINY_SLOW` (availability depends on the selected region) | `LONG_FAST` |
-|       lora.use_preset       |                                                                      `false`, `true`                                                                      |   `false`   |
+|       lora.use_preset       |                                                                      `false`, `true`                                                                      |   `true`    |
 |        lora.region         | `UNSET`, `US`, `EU_433`, `EU_868`, `EU_866`, `EU_N_868`, `CN`, `JP`, `ANZ`, `ANZ_433`, `KR`, `TW`, `RU` ,`IN`, `NZ_865`, `TH`, `LORA_24`, `UA_433`, `MY_433`, `MY_919`, `SG_923`, `KZ_433`, `KZ_863`, `BR_902`, `NP_865`, `PH_433`, `PH_868`, `PH_915`, `ITU1_2M`, `ITU2_2M`, `ITU3_2M`, `ITU2_125CM`, `ITU1_70CM`, `ITU2_70CM`, `ITU3_70CM` |   `UNSET`   |
 |       lora.bandwidth        |                                               `8`, `10`, `16`, `21`, `31`, `42`, `62`, `125`, `250`, `500`                                                |    `250`    |
 |     lora.spread_factor      |                                                         `5` ,`6`, `7`, `8`, `9`, `10`, `11`, `12`                                                         |    `11`     |
@@ -275,7 +272,7 @@ LoRa config commands are available in the python CLI. Example commands are below
 
 :::tip
 
-Because the device will reboot after each command is sent via CLI, it is recommended when setting multiple values in a config section that commands be chained together as one.
+LoRa settings apply without a reboot. To set several values at once, chain them in one command.
 
 ```shell title="Example:"
 meshtastic --set lora.region US --set lora.modem_preset LONG_FAST
