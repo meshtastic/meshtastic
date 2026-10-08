@@ -21,7 +21,9 @@ const APPLE_REPO_PATH = args.find((a) => !a.startsWith("--"));
 const CONVERT_WEBP = args.includes("--convert-webp");
 
 if (!APPLE_REPO_PATH) {
-  console.error("Usage: node scripts/sync-apple-docs.js <apple-repo-path> [--convert-webp]");
+  console.error(
+    "Usage: node scripts/sync-apple-docs.js <apple-repo-path> [--convert-webp]",
+  );
   process.exit(1);
 }
 
@@ -34,7 +36,14 @@ const SRC_DOCS_DIR = path.join(APPLE_REPO_PATH, "docs");
 const DEST_DOCS_DIR = path.join(REPO_ROOT, "docs", "software", "apple");
 const DEST_IMAGES_DIR = path.join(REPO_ROOT, "static", "img", "apple");
 
-const IMAGE_EXTENSIONS = new Set([".png", ".jpg", ".jpeg", ".gif", ".svg", ".webp"]);
+const IMAGE_EXTENSIONS = new Set([
+  ".png",
+  ".jpg",
+  ".jpeg",
+  ".gif",
+  ".svg",
+  ".webp",
+]);
 const MD_EXTENSIONS = new Set([".md"]);
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
@@ -104,6 +113,102 @@ function rewriteImagePaths(content) {
 }
 
 /**
+ * Point raw HTML asset references at useBaseUrl().
+ *
+ * Docusaurus applies baseUrl to Markdown image syntax, but raw HTML is passed
+ * through untouched, so `<img src="/img/apple/x.webp">` resolves against the server
+ * root and breaks anywhere the site is served below one, such as a preview deployed
+ * under a path. These files are generated, so the fix belongs here.
+ */
+function useBaseUrlForAssets(content) {
+  const attr = /\b(src|srcset|poster)=["']([^"']*)["']/g;
+  return content
+    .split(/(```[\s\S]*?```|`[^`]+`)/)
+    .map((seg, i) => {
+      if (i % 2 === 1) return seg; // inside a code span/block - leave as-is
+      return seg.replace(/<(?:img|source|video|audio)\b[^>]*>/gi, (tag) =>
+        tag.replace(attr, (match, name, value) => {
+          const rewritten = baseUrlAttrValue(name, value);
+          return rewritten === null ? match : `${name}=${rewritten}`;
+        }),
+      );
+    })
+    .join("");
+}
+
+/** Root-absolute paths are the ones baseUrl applies to; protocol-relative ones are external. */
+function isRootAbsolute(url) {
+  return url.startsWith("/") && !url.startsWith("//");
+}
+
+/**
+ * Split a srcset into its candidates, following the HTML parsing rules: a URL runs to
+ * the next whitespace and may itself contain commas, as a data: URL does, so splitting
+ * on every comma would truncate one.
+ */
+function parseSrcset(value) {
+  const candidates = [];
+  let i = 0;
+  const isSpace = (index) => /\s/.test(value[index]);
+  while (i < value.length) {
+    while (i < value.length && (isSpace(i) || value[i] === ",")) i++;
+    if (i >= value.length) break;
+
+    const urlStart = i;
+    while (i < value.length && !isSpace(i)) i++;
+    let url = value.slice(urlStart, i);
+    let descriptor = "";
+
+    if (url.endsWith(",")) {
+      url = url.replace(/,+$/, "");
+    } else {
+      const descriptorStart = i;
+      while (i < value.length && value[i] !== ",") i++;
+      descriptor = value.slice(descriptorStart, i).trim();
+      if (value[i] === ",") i++;
+    }
+    candidates.push({ url, descriptor });
+  }
+  return candidates;
+}
+
+/**
+ * The JSX value for one rewritten attribute, or null to leave it alone. Each srcset
+ * candidate is wrapped in turn, with its descriptor ("2x", "480w") carried through.
+ */
+function baseUrlAttrValue(name, value) {
+  if (name.toLowerCase() !== "srcset") {
+    return isRootAbsolute(value) ? `{useBaseUrl("${value}")}` : null;
+  }
+  const candidates = parseSrcset(value);
+  if (!candidates.some(({ url }) => isRootAbsolute(url))) return null;
+  if (candidates.length === 1 && !candidates[0].descriptor) {
+    return `{useBaseUrl("${candidates[0].url}")}`;
+  }
+  const parts = candidates.map(({ url, descriptor }) => {
+    const resolved = isRootAbsolute(url) ? `\${useBaseUrl("${url}")}` : url;
+    return descriptor ? `${resolved} ${descriptor}` : resolved;
+  });
+  return `{\`${parts.join(", ")}\`}`;
+}
+
+/** Add the useBaseUrl import when the page ended up using it. */
+function ensureUseBaseUrlImport(content) {
+  const statement = 'import useBaseUrl from "@docusaurus/useBaseUrl";';
+  if (!content.includes("useBaseUrl(") || content.includes(statement)) {
+    return content;
+  }
+  const frontmatterRe = /^(---\r?\n[\s\S]*?\r?\n---)\r?\n/;
+  const match = content.match(frontmatterRe);
+  if (match) {
+    return content
+      .replace(frontmatterRe, `${match[1]}\n\n${statement}\n\n`)
+      .replace(/\n{3,}/g, "\n\n");
+  }
+  return `${statement}\n\n${content}`;
+}
+
+/**
  * Convert Jekyll/kramdown-specific syntax to Docusaurus-compatible equivalents.
  *
  * Handles:
@@ -138,7 +243,8 @@ function sanitizeForDocusaurus(content) {
       // If the first line matches `**Tip — Title**` or `**Type — Title**`,
       // extract the title and use it as the admonition title.
       // Handles em dash (—), en dash (–), and hyphen (-) separators.
-      const titleMatch = lines[0] && lines[0].match(/^\*\*[^—–\-*]+[—–-]\s*(.+?)\*\*$/);
+      const titleMatch =
+        lines[0] && lines[0].match(/^\*\*[^—–\-*]+[—–-]\s*(.+?)\*\*$/);
       const title = titleMatch ? titleMatch[1].trim() : null;
       const bodyLines = title ? lines.slice(1) : lines;
       const body = bodyLines.join("\n").trim();
@@ -161,10 +267,13 @@ function sanitizeForDocusaurus(content) {
     .split(/(```[\s\S]*?```|`[^`]+`)/)
     .map((seg, i) => {
       if (i % 2 === 1) return seg; // inside a code span/block — leave as-is
-      return seg.replace(/<(img|source)(\s[^>]*?)?\s*>/gi, (match, tag, attrs = "") => {
-        if (match.endsWith("/>")) return match; // already self-closing
-        return `<${tag}${attrs} />`;
-      });
+      return seg.replace(
+        /<(img|source)(\s[^>]*?)?\s*>/gi,
+        (match, tag, attrs = "") => {
+          if (match.endsWith("/>")) return match; // already self-closing
+          return `<${tag}${attrs} />`;
+        },
+      );
     })
     .join("");
 
@@ -176,10 +285,7 @@ function sanitizeForDocusaurus(content) {
   content = segments
     .map((seg, i) => {
       if (i % 2 === 1) return seg; // inside a code span/block — leave as-is
-      return seg.replace(
-        /<(?=[0-9\s\u00BC-\u00BE\u2150-\u215F])/g,
-        "&lt;",
-      );
+      return seg.replace(/<(?=[0-9\s\u00BC-\u00BE\u2150-\u215F])/g, "&lt;");
     })
     .join("");
 
@@ -302,7 +408,9 @@ function rewriteInternalDocLinks(content, dRelPath, knownDestMdPaths) {
     // check if the target is actually a sibling (source used old flat-layout paths).
     if (/^\.\.\//.test(target)) {
       const withoutParent = target.slice(3);
-      const withMd = withoutParent.endsWith(".md") ? withoutParent : `${withoutParent}.md`;
+      const withMd = withoutParent.endsWith(".md")
+        ? withoutParent
+        : `${withoutParent}.md`;
       const targetFile = withMd.split("#")[0];
       if (knownDestMdPaths && knownDestMdPaths.has(`${subdir}/${targetFile}`)) {
         return withoutParent;
@@ -313,18 +421,15 @@ function rewriteInternalDocLinks(content, dRelPath, knownDestMdPaths) {
   }
 
   // Rewrite Markdown links: [text](target) and [text](target "title")
-  content = content.replace(
-    /\[([^\]]*)\]\(([^)]+)\)/g,
-    (match, text, raw) => {
-      // Split off optional title: "path" or "path \"title\""
-      const titleMatch = raw.match(/^(.*?)\s+"([^"]*)"$/);
-      if (titleMatch) {
-        const fixed = fixLink(titleMatch[1].trim());
-        return `[${text}](${fixed} "${titleMatch[2]}")`;
-      }
-      return `[${text}](${fixLink(raw.trim())})`;
-    },
-  );
+  content = content.replace(/\[([^\]]*)\]\(([^)]+)\)/g, (match, text, raw) => {
+    // Split off optional title: "path" or "path \"title\""
+    const titleMatch = raw.match(/^(.*?)\s+"([^"]*)"$/);
+    if (titleMatch) {
+      const fixed = fixLink(titleMatch[1].trim());
+      return `[${text}](${fixed} "${titleMatch[2]}")`;
+    }
+    return `[${text}](${fixLink(raw.trim())})`;
+  });
 
   return content;
 }
@@ -397,7 +502,13 @@ async function main() {
   // Split source files by type.
   const sourceMdFiles = sourceFiles
     .filter((f) => MD_EXTENSIONS.has(path.extname(f).toLowerCase()))
-    .filter((f) => !(path.dirname(f) === "." && SKIP_SOURCE_ROOT_FILES.has(path.basename(f))));
+    .filter(
+      (f) =>
+        !(
+          path.dirname(f) === "." &&
+          SKIP_SOURCE_ROOT_FILES.has(path.basename(f))
+        ),
+    );
   const sourceImageFiles = sourceFiles.filter((f) =>
     IMAGE_EXTENSIONS.has(path.extname(f).toLowerCase()),
   );
@@ -463,15 +574,18 @@ async function main() {
   const CATEGORY_FILES = [
     {
       file: path.join(DEST_DOCS_DIR, "_category_.yml"),
-      content: "label: Apple App\ncollapsible: true\nposition: 2\nlink:\n  type: doc\n  id: software/apple/index\n",
+      content:
+        "label: Apple App\ncollapsible: true\nposition: 2\nlink:\n  type: doc\n  id: software/apple/index\n",
     },
     {
       file: path.join(DEST_DOCS_DIR, "user", "_category_.yml"),
-      content: "label: User Guide\ncollapsible: true\nposition: 1\nlink:\n  type: doc\n  id: software/apple/user/index\n",
+      content:
+        "label: User Guide\ncollapsible: true\nposition: 1\nlink:\n  type: doc\n  id: software/apple/user/index\n",
     },
     {
       file: path.join(DEST_DOCS_DIR, "developer", "_category_.yml"),
-      content: "label: Developer Guide\ncollapsible: true\nposition: 2\nlink:\n  type: doc\n  id: software/apple/developer/index\n",
+      content:
+        "label: Developer Guide\ncollapsible: true\nposition: 2\nlink:\n  type: doc\n  id: software/apple/developer/index\n",
     },
   ];
 
@@ -480,9 +594,13 @@ async function main() {
     const existing = fs.existsSync(file) ? fs.readFileSync(file, "utf8") : null;
     if (existing !== content) {
       fs.writeFileSync(file, content);
-      console.log(`[${existing ? "UPDATE" : "ADD"}]    category: ${path.relative(REPO_ROOT, file)}`);
+      console.log(
+        `[${existing ? "UPDATE" : "ADD"}]    category: ${path.relative(REPO_ROOT, file)}`,
+      );
     } else {
-      console.log(`[SKIP]   category: ${path.relative(REPO_ROOT, file)} (unchanged)`);
+      console.log(
+        `[SKIP]   category: ${path.relative(REPO_ROOT, file)} (unchanged)`,
+      );
     }
   }
 
@@ -497,7 +615,13 @@ async function main() {
     content = ensureFrontmatter(content, relPath);
     content = rewriteImagePaths(content);
     content = sanitizeForDocusaurus(content);
-    content = rewriteInternalDocLinks(content, dRelPath.split(path.sep).join("/"), expectedDestMdPaths);
+    content = rewriteInternalDocLinks(
+      content,
+      dRelPath.split(path.sep).join("/"),
+      expectedDestMdPaths,
+    );
+    content = useBaseUrlForAssets(content);
+    content = ensureUseBaseUrlImport(content);
 
     const exists = fs.existsSync(destFile);
     const existingContent = exists ? fs.readFileSync(destFile, "utf8") : null;

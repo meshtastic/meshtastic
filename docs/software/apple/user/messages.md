@@ -4,6 +4,8 @@ parent: User Guide
 sidebar_position: 3
 ---
 
+import useBaseUrl from "@docusaurus/useBaseUrl";
+
 # Messages & Channels
 
 Meshtastic uses a channel system for group broadcasts and direct messages for private one-to-one conversations.
@@ -150,8 +152,8 @@ The message status row combines a short label, SF Symbol icon, and color. Color 
 Links in message bubbles — including URLs, Meshtastic channel links, and markdown `[text](../url)` links — are styled with an underline and the design standards Link color (Blue 400). This makes links visually distinct from regular message text in both light and dark mode. Tapping a link opens it in the system browser (Safari on the standard/default setup), except for Meshtastic channel links and contact links in the exact `meshtastic.org/v/#...` or `www.meshtastic.org/v/#...` form, which open the appropriate in-app import flow. Meshtastic documentation links, including `meshtastic.org/docs/...`, continue to open in the system browser.
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="/img/apple/messageText_link_dark.webp" />
-  <img src="/img/apple/messageText_link.webp" alt="Message bubble with styled link" />
+  <source media="(prefers-color-scheme: dark)" srcset={useBaseUrl("/img/apple/messageText_link_dark.webp")} />
+  <img src={useBaseUrl("/img/apple/messageText_link.webp")} alt="Message bubble with styled link" />
 </picture>
 
 ---
@@ -161,8 +163,8 @@ Links in message bubbles — including URLs, Meshtastic channel links, and markd
 On iOS 18 and later, formatting buttons appear in the compact toolbar below the compose field after you have typed at least 3 characters. The formatting buttons share the toolbar row with the Alert bell, Position pin, and byte counter — all rendered as compact icons. The toolbar scrolls horizontally if it exceeds the screen width.
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="/img/apple/composeArea_formatting_dark.webp" />
-  <img src="/img/apple/composeArea_formatting.webp" alt="Compose area with formatting toolbar and live preview" />
+  <source media="(prefers-color-scheme: dark)" srcset={useBaseUrl("/img/apple/composeArea_formatting_dark.webp")} />
+  <img src={useBaseUrl("/img/apple/composeArea_formatting.webp")} alt="Compose area with formatting toolbar and live preview" />
 </picture>
 
 ### Supported Styles

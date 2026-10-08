@@ -4,6 +4,8 @@ parent: User Guide
 sidebar_position: 4
 ---
 
+import useBaseUrl from "@docusaurus/useBaseUrl";
+
 # Nodes List
 
 The Nodes tab shows every device your radio has heard on the mesh. Tap any node for details.
@@ -52,45 +54,45 @@ The full node row shows the circle avatar, battery level, encryption status, las
 The signal meter shown here (and on a node's detail screen) rates link quality from SNR relative to your radio preset — using your radio's recently reported noise floor when available — and the strength bar and the SNR text color always reflect the same rating. See [Signal Meter](signal-meter.md) for how it works.
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="/img/apple/standard_directConnected_dark.webp" />
-  <img src="/img/apple/standard_directConnected.webp" alt="Directly connected node, favorite, with signal meter" />
+  <source media="(prefers-color-scheme: dark)" srcset={useBaseUrl("/img/apple/standard_directConnected_dark.webp")} />
+  <img src={useBaseUrl("/img/apple/standard_directConnected.webp")} alt="Directly connected node, favorite, with signal meter" />
 </picture>
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="/img/apple/standard_multiHop_dark.webp" />
-  <img src="/img/apple/standard_multiHop.webp" alt="Multi-hop node 4 hops away" />
+  <source media="(prefers-color-scheme: dark)" srcset={useBaseUrl("/img/apple/standard_multiHop_dark.webp")} />
+  <img src={useBaseUrl("/img/apple/standard_multiHop.webp")} alt="Multi-hop node 4 hops away" />
 </picture>
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="/img/apple/standard_mqtt_dark.webp" />
-  <img src="/img/apple/standard_mqtt.webp" alt="MQTT-bridged node" />
+  <source media="(prefers-color-scheme: dark)" srcset={useBaseUrl("/img/apple/standard_mqtt_dark.webp")} />
+  <img src={useBaseUrl("/img/apple/standard_mqtt.webp")} alt="MQTT-bridged node" />
 </picture>
 
 ## Compact Node Row Examples
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="/img/apple/compact_directConnected_allInfo_dark.webp" />
-  <img src="/img/apple/compact_directConnected_allInfo.webp" alt="Directly connected node with all telemetry info" />
+  <source media="(prefers-color-scheme: dark)" srcset={useBaseUrl("/img/apple/compact_directConnected_allInfo_dark.webp")} />
+  <img src={useBaseUrl("/img/apple/compact_directConnected_allInfo.webp")} alt="Directly connected node with all telemetry info" />
 </picture>
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="/img/apple/compact_multiHop_dark.webp" />
-  <img src="/img/apple/compact_multiHop.webp" alt="Multi-hop node 7 hops away" />
+  <source media="(prefers-color-scheme: dark)" srcset={useBaseUrl("/img/apple/compact_multiHop_dark.webp")} />
+  <img src={useBaseUrl("/img/apple/compact_multiHop.webp")} alt="Multi-hop node 7 hops away" />
 </picture>
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="/img/apple/compact_withPosition_dark.webp" />
-  <img src="/img/apple/compact_withPosition.webp" alt="Node with position, 1 hop" />
+  <source media="(prefers-color-scheme: dark)" srcset={useBaseUrl("/img/apple/compact_withPosition_dark.webp")} />
+  <img src={useBaseUrl("/img/apple/compact_withPosition.webp")} alt="Node with position, 1 hop" />
 </picture>
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="/img/apple/compact_pkiMismatch_dark.webp" />
-  <img src="/img/apple/compact_pkiMismatch.webp" alt="PKI key mismatch node" />
+  <source media="(prefers-color-scheme: dark)" srcset={useBaseUrl("/img/apple/compact_pkiMismatch_dark.webp")} />
+  <img src={useBaseUrl("/img/apple/compact_pkiMismatch.webp")} alt="PKI key mismatch node" />
 </picture>
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="/img/apple/compact_mqtt_dark.webp" />
-  <img src="/img/apple/compact_mqtt.webp" alt="MQTT-bridged node" />
+  <source media="(prefers-color-scheme: dark)" srcset={useBaseUrl("/img/apple/compact_mqtt_dark.webp")} />
+  <img src={useBaseUrl("/img/apple/compact_mqtt.webp")} alt="MQTT-bridged node" />
 </picture>
 
 ## Context Menu Actions

@@ -6,10 +6,26 @@ sidebar_position: 1
 description: MeshStick
 ---
 
-The diy CH341 USB-TO-SPI SX1262 LoRa Meshstick may be entirely manufactured or partly assembled and finished by just adding the USB 2.0 connector, Waveshare SX1262 TXCO Core LoRa module and SMA anntenna connector.
+import { DeviceImage } from "@site/src/components/DeviceImage";
 
-![meshstick](/img/meshtasticd/hardware/radios/meshstick.webp)
+The MeshStick is a CH341 USB-to-SPI LoRa radio with a Semtech SX1262 transceiver, sold assembled by Elecrow and also published as open hardware you can build yourself.
+
+<DeviceImage device="meshstick_board.svg" alt="MeshStick board, showing the SX1262 module, CH341 bridge, SMA connector, and USB-A plug" size="lg" center />
+
+### Features
+
+- Semtech SX1262 with TCXO, up to 22 dBm
+- Identifies itself over USB, so meshtasticd selects the right configuration automatically
+- USB 2.0 Type-A plug, with an SMA connector for the LoRa antenna
+
+### Configuration
+
+Select `lora-usb-meshstick-1262.yaml` from the available configuration files. Copy it from `/etc/meshtasticd/available.d` into `/etc/meshtasticd/config.d`, as described in [Usage](/docs/meshtasticd/usage/).
+
+### Purchase Links
+
+[Elecrow](https://msh.to/meshstick/)
 
 ### Schematic
 
-MeshStick information and gerbers are available on [GitHub](https://github.com/markbirss/MESHSTICK)
+MeshStick information and gerbers are available on [GitHub](https://github.com/markbirss/MESHSTICK).

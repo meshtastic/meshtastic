@@ -7,22 +7,22 @@ sidebar_position: 1
 
 ## Functionality
 
-### Vision Master E213/E290
+Most device functions are menu items rather than dedicated button presses. Hold the user button to open the menu for the screen currently shown. Short presses move through the menu, and another hold activates an item.
 
-- **RST Button(side):**
-  - **Single press:** Resets the device.
-- **GPIO21 Button(side):**
-  - **Long press:** Will signal the device to shutdown after 5 seconds.
-  - **Single press:** Changes the information page displayed on the device's screen.
-  - **Double press:** Sends an adhoc ping of the device's position to the network.
-  - **Triple press:** Enables/Disables the GPS Module on demand. If an NPN Transistor is added it will cut power to the GPS board. The NPN pin must be configured on the PIN_GPS_EN inside the Position module in the App for this switching to work.
+The Vision Master E213, E290 and T190 all have two user buttons: the BOOT button and a second button on GPIO21.
 
-### Vision Master T190
+- **RST button (side):**
+  - **Short press:** Reset the device.
+- **BOOT button:**
+  - **Short press:** Move to the next screen. With a menu open, move to the next item.
+  - **Hold about half a second:** Open the menu for the current screen. With a menu open, activate the highlighted item.
+  - **Hold about four seconds, then release:** Shut the device down. A rising four-note tone signals that shutdown is arming. This works only more than 30 seconds after boot.
+- **GPIO21 button:**
+  - **Short press:** Move to the previous screen. With a menu open, move the highlight up.
+  - **Hold about half a second:** Close the menu.
 
-- **RST Button(side):**
-  - **Single press:** Resets the device.
-- **BOOT Button(top):**
-  - **Long press:** Will signal the device to shutdown after 5 seconds.
-  - **Single press:** Changes the information page displayed on the device's screen.
-  - **Double press:** Sends an adhoc ping of the device's position to the network.
-  - **Triple press:** Enables/Disables the GPS Module on demand. If an NPN Transistor is added it will cut power to the GPS board. The NPN pin must be configured on the PIN_GPS_EN inside the Position module in the App for this switching to work.
+The BOOT button is also the ESP32 boot strap. Holding it while powering on enters the serial bootloader instead of starting Meshtastic.
+
+### InkHUD firmware
+
+The E213 and E290 also ship an optional InkHUD firmware image. There, a short press moves to the next applet and a hold opens the menu. InkHUD has no shutdown-by-holding gesture.

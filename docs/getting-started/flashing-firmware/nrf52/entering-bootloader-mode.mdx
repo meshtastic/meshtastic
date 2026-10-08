@@ -1,0 +1,35 @@
+---
+id: entering-bootloader-mode
+title: Entering Bootloader Mode on nRF52 Devices
+sidebar_label: Entering Bootloader Mode
+sidebar_position: 1
+description: Put an nRF52 device into bootloader mode so it mounts as a USB drive, and leave it again without flashing.
+---
+
+Every nRF52 device runs a small program called the bootloader before the firmware starts. In bootloader mode, also called DFU mode, the device mounts on your computer as a USB drive and installs whatever `.uf2` file is copied onto it. [Drag & Drop](/docs/getting-started/flashing-firmware/nrf52/drag-n-drop/), [Factory Erase](/docs/getting-started/flashing-firmware/nrf52/nrf52-erase/), and [Update nRF52 Bootloader](/docs/getting-started/flashing-firmware/nrf52/update-nrf52-bootloader/) all start here. The methods are ordered most convenient first.
+
+## Reset button
+
+Most nRF52 devices enter bootloader mode when you double-press the reset button within about half a second. Press the reset button once to leave it without flashing.
+
+## Meshtastic client
+
+Once Meshtastic firmware is installed, the device can be rebooted into bootloader mode from a client without touching a button. Connect the device over USB and run:
+
+```shell
+meshtastic --enter-dfu
+```
+
+The device reboots into bootloader mode and mounts the drive. The Android client's [USB File Transfer](/docs/software/android/user/firmware/#in-app-usb-update) option does the same over a USB connection.
+
+## Devices with a single button
+
+The SenseCAP Card Tracker T1000-E and SenseCAP MeshTracker X1 have one button and no reset button, so the double-press doesn't apply. On the [Meshtastic OTAFIX bootloader](https://github.com/meshtastic/Adafruit_nRF52_Bootloader_OTAFIX) 2.5 or later, connect the USB cable, then hold the button while the device starts and keep holding it for 3 seconds. The drive appears a few seconds later. A short press while the device starts, or a hold while the firmware is running, doesn't reach the bootloader. The steps are on each device page: [Card Tracker T1000-E](/docs/hardware/devices/seeed-studio/sensecap/card-tracker/#flashing) and [MeshTracker X1](/docs/hardware/devices/seeed-studio/sensecap/meshtracker-x1/#flashing).
+
+To leave bootloader mode without flashing, eject the drive. Unplugging doesn't leave bootloader mode: the device stays in it on battery, and plugging it back in only mounts the drive again.
+
+A T1000-E on an OTAFIX bootloader before 2.5 has no button path into the bootloader, and ejecting the drive doesn't leave it, so use the Meshtastic client method and copy a firmware file to get out.
+
+## Checking your bootloader version
+
+`INFO_UF2.TXT` on the mounted drive names the bootloader version, and from OTAFIX 2.4 on carries a `Factory-Erase:` line. [Update nRF52 Bootloader](/docs/getting-started/flashing-firmware/nrf52/update-nrf52-bootloader/) covers moving to a newer one.

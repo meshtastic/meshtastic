@@ -1,4 +1,5 @@
 import Translate from "@docusaurus/Translate";
+import useBaseUrl from "@docusaurus/useBaseUrl";
 import Heading from "@theme/Heading";
 import clsx from "clsx";
 export default function NotFoundContent({ className }) {
@@ -32,7 +33,7 @@ export default function NotFoundContent({ className }) {
             </Translate>
           </p>
           <img
-            src="/design/chirpy/chirpy.png"
+            src={useBaseUrl("/design/chirpy/chirpy.png")}
             alt="Chirpy"
             className={clsx("col col--6 col--offset-3")}
             style={{ maxWidth: "300px" }}

@@ -71,7 +71,7 @@ This layer is conventional non-reliable LoRa packet transmission. A packet gener
 
 #### Carrier-Sense Multiple Access with Collision Avoidance (CSMA/CA)
 
-Meshtastic adopts CSMA/CA, similar as to what is used in WiFi. This means that all transmitters must perform Channel Activity Detection (CAD) before attempting to transmit. If the channel is considered busy, the node will wait until it is not anymore. Since once the channel becomes idle multiple nodes might want to start transmitting, a node has to wait a random multiple of slot times. The slot time is the time needed to reliably perform CAD. The amount of slot times to wait is randomly picked from a contention window (CW), which size depends on the current channel utilization. The contention window is larger for a higher channel utilization, in order to limit the chance of collisions.
+Meshtastic adopts CSMA/CA, similar to what is used in Wi-Fi. This means that all transmitters must perform Channel Activity Detection (CAD) before attempting to transmit. If the channel is considered busy, the node will wait until it is not anymore. Since once the channel becomes idle multiple nodes might want to start transmitting, a node has to wait a random multiple of slot times. The slot time is the time needed to reliably perform CAD. The number of slot times to wait is randomly picked from a contention window (CW), whose size depends on the current channel utilization. The contention window is larger for a higher channel utilization, to limit the chance of collisions.
 
 ### Layer 2: Reliable Zero Hop Messaging
 

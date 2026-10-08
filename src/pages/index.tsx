@@ -1,7 +1,6 @@
 import { HomePageContent } from "@/components/homepage/homepage-content";
 import Head from "@docusaurus/Head";
 import { translate } from "@docusaurus/Translate";
-import useBaseUrl from "@docusaurus/useBaseUrl";
 import Layout from "@theme/Layout";
 import React from "react";
 
@@ -20,12 +19,6 @@ export default function Home() {
     >
       <Head>
         <meta property="og:title" content="Meshtastic" />
-        <meta
-          property="og:image"
-          content={useBaseUrl("design/web/social-preview-1200x630.png")}
-        />
-        <meta property="og:url" content="https://meshtastic.org/" />
-        <meta name="twitter:card" content="summary_large_image" />
       </Head>
       <HomePageContent />
     </Layout>

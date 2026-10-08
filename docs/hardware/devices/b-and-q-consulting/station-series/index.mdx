@@ -7,7 +7,7 @@ sidebar_position: 2
 
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
-import { DeviceImage } from "/src/components/DeviceImage";
+import { DeviceImage } from "@site/src/components/DeviceImage";
 
 The Station series of devices, designed by Neil Hao from B&Q Consulting and powered by Meshtastic, are compact and durable LoRa devices designed for high-performance radio frequency communication. They feature a powerful PA for LoRa communication, a rugged SMA antenna socket, and a variety of external IO interfaces.
 
@@ -23,13 +23,15 @@ values={[
 
 <TabItem value="g2">
 
+## Station G2
+
 <DeviceImage device="station-g2.svg" alt="Station G2" size="lg" center />
 
-## Specifications
+### Specifications
 
 - **MCU**
   - ESP32-S3 WROOM-1
-    - WiFi
+    - Wi-Fi
     - Bluetooth 5.0
 - **LoRa Transceiver**
   - Semtech SX1262
@@ -44,7 +46,7 @@ values={[
 - **Connectors**
   - USB-C (PD Protocol)
 
-## Features
+### Features
 
 - Meshtastic pre-installed
 - User button
@@ -55,7 +57,7 @@ values={[
 - GROVE GPS Socket ( 1x4P Pitch=2mm )
 - IO Extension Socket ( 1x10P Pitch=1.5mm )
 
-## Resources
+### Resources
 
 - Firmware file: `firmware-station-g2-X.X.X.xxxxxxx.bin`
 - [Unit Engineering's Official Wiki](https://wiki.uniteng.com/en/meshtastic/station-g2)

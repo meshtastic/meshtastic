@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import devicesData from "@/data/devices.json";
 import { shuffle } from "@/lib/utils";
 import Link from "@docusaurus/Link";
+import useIsBrowser from "@docusaurus/useIsBrowser";
 import Translate, { translate } from "@docusaurus/Translate";
 import { ArrowRight, Radio } from "lucide-react";
 import React, { useMemo } from "react";
@@ -16,7 +17,13 @@ interface Device {
 
 const { devices, imageBaseUrl, callToAction } = devicesData;
 
-function DeviceCard({ device }: { device: Device }) {
+function DeviceCard({
+  device,
+  headingLevel: Heading,
+}: {
+  device: Device;
+  headingLevel: "h2" | "h3" | "h4";
+}) {
   const imageUrl = `${imageBaseUrl}${device.image}`;
   const isExternal = device.url.startsWith("http");
 
@@ -35,9 +42,9 @@ function DeviceCard({ device }: { device: Device }) {
         />
       </div>
       <div className="mt-4 text-center">
-        <h4 className="font-mono text-sm font-semibold text-foreground group-hover:text-primary transition-colors">
+        <Heading className="font-mono text-sm font-semibold text-foreground group-hover:text-primary transition-colors">
           {device.name}
-        </h4>
+        </Heading>
         <p className="text-xs text-muted-foreground">{device.vendor}</p>
       </div>
       <div className="mt-2 flex flex-wrap justify-center gap-1">
@@ -54,8 +61,31 @@ function DeviceCard({ device }: { device: Device }) {
   );
 }
 
-export function Devices() {
-  const shuffledDevices = useMemo(() => shuffle(devices as Device[]), []);
+interface DevicesProps {
+  // Where this list sits in the page outline. The call to action uses this
+  // level; the cards sit one below it. A page that leads with this list passes
+  // "h1", the homepage overlay keeps the default.
+  headingLevel?: "h1" | "h2" | "h3";
+}
+
+export function Devices({ headingLevel: Heading = "h3" }: DevicesProps = {}) {
+  // The card order is shuffled on every visit.
+  //
+  // Shuffling during render would make a server-rendered page disagree with its
+  // own hydration, so the order is settled once the browser takes over:
+  // useIsBrowser stays false through the first client render, matching the
+  // server, then flips. The overlay only ever mounts after hydration, so it is
+  // shuffled on its first paint as before.
+  const isBrowser = useIsBrowser();
+  // Cards sit one level below the call to action, so no placement skips a level.
+  const cardHeadingLevel = { h1: "h2", h2: "h3", h3: "h4" }[Heading] as
+    | "h2"
+    | "h3"
+    | "h4";
+  const deviceList = useMemo(
+    () => (isBrowser ? shuffle(devices as Device[]) : (devices as Device[])),
+    [isBrowser],
+  );
 
   return (
     <section
@@ -66,9 +96,9 @@ export function Devices() {
     >
       <div className="mb-4 flex flex-col items-center text-center md:flex-row md:justify-between md:text-left">
         <div>
-          <h3 className="font-mono text-2xl font-bold text-foreground sm:text-3xl">
+          <Heading className="font-mono text-2xl font-bold text-foreground sm:text-3xl">
             {callToAction.title}
-          </h3>
+          </Heading>
           <p className="mt-2 max-w-xl text-muted-foreground">
             {callToAction.subtitle}
           </p>
@@ -86,8 +116,12 @@ export function Devices() {
       </div>
 
       <div className="flex flex-wrap justify-center gap-4">
-        {shuffledDevices.map((device) => (
-          <DeviceCard key={device.name} device={device} />
+        {deviceList.map((device) => (
+          <DeviceCard
+            key={device.name}
+            device={device}
+            headingLevel={cardHeadingLevel}
+          />
         ))}
       </div>
 
@@ -97,9 +131,13 @@ export function Devices() {
           to="/docs/hardware/devices/"
           className="text-primary hover:underline"
         >
-          <Translate id="homepage.devices.supportedDevices">supported devices</Translate>
+          <Translate id="homepage.devices.supportedDevices">
+            supported devices
+          </Translate>
         </Link>{" "}
-        <Translate id="homepage.devices.orVisitPartners">or visit our partners directly</Translate>
+        <Translate id="homepage.devices.orVisitPartners">
+          or visit our partners directly
+        </Translate>
       </p>
     </section>
   );

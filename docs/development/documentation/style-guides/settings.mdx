@@ -1,82 +1,89 @@
 ---
 id: config-pages
-title: Config Pages
+title: Configuration pages
 sidebar_label: Config Pages
+sidebar_position: 3
+description: "The shape every configuration page under docs/configuration follows."
 ---
 
-## Overview
+Configuration pages under `docs/configuration` all follow one shape, so a reader who has used any of them can use the rest. This page describes that shape and gives a template.
 
-Setting pages should focus solely on settings and configuring the device. Hardware is often a related topic, however these pages should not attempt to explain attaching hardware. Mention that hardware is required and link to the appropriate page(s).
+A configuration page documents settings. Hardware is often related, but these pages don't explain attaching it. State that hardware is required and link to the page that covers it.
 
-## Layout
+## Page shape
+
+A configuration page has two required sections and two optional ones, in this order.
+
+| Section  | Required | Contents                                             |
+| -------- | -------- | ---------------------------------------------------- |
+| Overview | Yes      | What this group of settings controls                 |
+| Settings | Yes      | A table of every setting, then a description of each |
+| Details  | No       | Prerequisites, hardware requirements, and links out  |
+| Examples | No       | Configurations where several settings work together  |
 
 ### Overview
 
-This section should describe the group of settings and what they do for the device.
+Describe what the group of settings does for the node. Keep it to a short paragraph, and link to the concept pages rather than re-explaining them.
 
 ### Settings
 
-This section starts with an alphabetized table of settings, available values, and default values.
+Open with a table of settings in alphabetical order, giving acceptable values and the default for each. Wrap values in backticks.
 
-Available values should be listed with tick marks `` surrounding the value.
+| Value type | Example                     |
+| ---------- | --------------------------- |
+| Boolean    | `true`, `false`             |
+| List       | `apple`, `banana`, `orange` |
+| Range      | `0`-`100`                   |
 
-| Value Type |           Example           |
-| :--------: | :-------------------------: |
-|  Boolean   |       `true`, `false`       |
-|    List    | `apple`, `banana`, `orange` |
-|   Range    |          `0`-`100`          |
+After the table, describe each setting under its own H3, in the same alphabetical order. Where a setting's options need more than a sentence, add a table describing each option.
 
-After the table each setting is described in brief detail. If the available options for a setting need additional explanation, a table should be used to describe each available option.
+Settings take their protobuf field name as the heading, so the reader can match the page to the CLI and to the protobuf definitions. Use the on-screen label in prose when describing the control a client shows.
 
 ### Details
 
-If additional details are needed, this optional section can explain that. These would include prerequisites, links to hardware guides, etc.
+Optional. Use it for prerequisites, hardware guides, and anything the settings depend on.
 
 ### Examples
 
-This optional section can have examples of configurations needed where multiple settings are required to be set up for a specific use case.
+Optional. Use it where a real task needs several settings set together, such as a Wi-Fi network name and password in one command.
 
-## Example Template
+## Client tabs
 
-```markdown title="Template for Settings Pages"
+Every setting that can be configured from more than one client gets tabs. Keep the tab order identical on every page, with the CLI first. Cover every client that supports the setting, or say plainly which ones don't.
+
+## Template
+
+```markdown title="Template for configuration pages"
 ---
 id: unique-id
-title: Title for Page
-sidebar_label: Label for Sidebar
+title: Title for page
+sidebar_label: Label for sidebar
 ---
-
-<!--- Allows client-specific tabs to be used --->
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
 ## Overview
 
-<!--- Add overview text to describe this group of settings --->
+<!--- What this group of settings controls --->
 
 ## Settings
 
-<!--- Table of settings in alphabetical order --->
+<!--- Every setting, in alphabetical order --->
 
-|         Setting         |      Acceptable Values      | Default |
-| :---------------------: | :-------------------------: | :-----: |  
+| Setting                 | Acceptable values           | Default |
+| :---------------------- | :-------------------------- | :------ |
 | my_setting_with_options | `apple`, `banana`, `orange` | `apple` |
-
-<!--- H3 for each setting above (alphabetized) --->
 
 ### my_setting_with_options
 
-<!--- description for what the setting does --->
+<!--- What the setting does, and what changes if it is wrong --->
 
-<!--- if the setting has many options, insert a table describing what those variables do --->
-
-|  Value   |          Description           |
-| :------: | :----------------------------: |  
+| Value    | Description                    |
+| :------- | :----------------------------- |
 | `apple`  | Description of apple (default) |
-| `banana` |     Description of banana      |
-| `orange` |     Description of orange      |
-
-<!--- Client tabs that were imported above --->
+| `banana` | Description of banana          |
+| `orange` | Description of orange          |
 
 <Tabs
 groupId="settings"
@@ -88,28 +95,38 @@ values={[
 {label: 'Web', value: 'web'},
 ]}>
 <TabItem value="cli">
-#### CLI (Required for accessibility)
+
+#### CLI
+
 CLI content here
 </TabItem>
 <TabItem value="android">
-#### Android (Required for accessibility)
+
+#### Android
+
 Android content here
 </TabItem>
 <TabItem value="iOS">
-#### iOS (Required for accessibility)
+
+#### iOS
+
 iOS content here
 </TabItem>
 <TabItem value="web">
-#### Web (Required for accessibility)
+
+#### Web
+
 Web content here
 </TabItem>
 </Tabs>
 
 ## Details
 
-<!--- Additional details about the settings IF NEEDED otherwise delete this h2 header --->
+<!--- Prerequisites and links out, or delete this heading --->
 
 ## Examples
 
-<!--- Meant for examples where multiple settings are configured at the same time (WiFi type/SSID/password in a single command). If not needed, delete this h2 header --->
+<!--- Multi-setting configurations, or delete this heading --->
 ```
+
+Each tab carries an H4 because the tab block sits inside an H3. A tab with no heading isn't navigable by screen reader.
