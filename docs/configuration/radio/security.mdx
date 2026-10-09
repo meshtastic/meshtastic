@@ -29,7 +29,7 @@ The private key of the device, used to create a shared key with a remote device 
 
 Acceptable values: `repeated bytes`
 
-The public keys authorized to send administrative messages to this node, up to three. The node accepts a remote admin message only if it arrives encrypted as a direct message from a node whose public key is in this list.
+The public keys authorized to send administrative messages to this node, up to three. Over remote administration, the node accepts an admin message only if it arrives encrypted as a direct message from a node whose public key is in this list. The legacy admin channel is a separate, less secure path, available only when [Admin Channel Enabled](#admin-channel-enabled) is on.
 
 ### Managed Mode
 
