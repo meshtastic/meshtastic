@@ -49,7 +49,8 @@
     {
       "term": "Channel",
       "autoLink": false,
-      "definition": "At least two definitions in Meshtastic usage: 1) One of 8 configurable channels in the firmware, each supporting a separate name and encryption, with one set as primary and the rest secondary. 2) A specific frequency within a LoRa band that a device can be configured to use."
+      "definition": "A named, encrypted group that messages are sent to. A node holds up to eight, one of which is its primary channel. The frequency a node transmits on, once also called a channel, is its frequency slot.",
+      "relatedTerms": ["Primary Channel", "Frequency Slot", "PSK"]
     },
     {
       "term": "CLI",
@@ -74,6 +75,12 @@
       "definition": "A state in which a device is placed into for it to receive a firmware update."
     },
     {
+      "term": "Direct Message",
+      "aliases": ["DM"],
+      "definition": "A message sent to one node rather than broadcast to a channel. It's encrypted with a key that only the sender and the recipient can compute, so other nodes can relay it but can't read it.",
+      "relatedTerms": ["Broadcast", "PKC"]
+    },
+    {
       "term": "ESP32",
       "definition": "A chipset of microcontroller made/designed by Espressif, used by a number of devices. Higher power usage than nRF52, but often cheaper and supports Wi-Fi if desired."
     },
@@ -94,6 +101,11 @@
       "definition": "A Foreign Mesh is one in which the receiving node does not share any Channels with the transmitting node. When a node receives a message it is unable to decrypt, then the message is said to come from a Foreign Mesh."
     },
     {
+      "term": "Frequency Slot",
+      "definition": "The numbered frequency within a region's band that a node transmits on. Nodes must use the same frequency slot to hear each other. When it's left at 0, most regions pick the slot from a hash of the primary channel's name.",
+      "relatedTerms": ["Region", "Primary Channel", "Channel"]
+    },
+    {
       "term": "GNSS",
       "abbreviation": "Global Navigation Satellite System",
       "definition": "A multi-constellation satellite positioning receiver. Hardware listing GNSS support typically receives GPS, BeiDou, GLONASS and QZSS.",
@@ -110,6 +122,11 @@
       "abbreviation": "Global Positioning System",
       "definition": "A satellite positioning system. A node with a GPS module determines its own location and can report that position to the mesh.",
       "relatedTerms": ["GNSS"]
+    },
+    {
+      "term": "Hop Limit",
+      "definition": "The number of times a message is repeated by other nodes in the mesh. Each node that relays a message lowers it by one, and a node that receives a message with a hop limit of 0 doesn't repeat it.",
+      "relatedTerms": ["Mesh"]
     },
     {
       "term": "I2C",
@@ -201,6 +218,11 @@
       "definition": "A unit of frequency equal to one million hertz (cycles per second), used to specify the operating frequency of LoRa devices in the Meshtastic network, affecting range and data rate."
     },
     {
+      "term": "Modem Preset",
+      "definition": "The tradeoff between range and speed for LoRa transmissions. Each preset sets the bandwidth, spreading factor, and coding rate, and nodes need the same preset to hear each other.",
+      "relatedTerms": ["Region", "LoRa"]
+    },
+    {
       "term": "Module",
       "autoLink": false,
       "definition": "At least two definitions in Meshtastic usage: 1) A software plug-in to expand the capabilities of a Meshtastic device. 2) A hardware component or add-on for a Meshtastic device, such as a temperature sensor or GPS."
@@ -270,6 +292,11 @@
       "relatedTerms": ["PSK"]
     },
     {
+      "term": "Primary Channel",
+      "definition": "The channel used for a node's default traffic and its name in the mesh. It's channel 0, and its name helps set the node's frequency slot.",
+      "relatedTerms": ["Channel", "Frequency Slot"]
+    },
+    {
       "term": "Protobuf",
       "abbreviation": "Protocol Buffers",
       "aliases": ["Protocol Buffers"],
@@ -292,9 +319,15 @@
       "definition": "A single-board computer. With an attached LoRa radio it can run meshtasticd as a node."
     },
     {
+      "term": "Region",
+      "autoLink": false,
+      "definition": "The regulatory setting that determines legal frequencies and power for a location. It also decides which modem presets a node can use.",
+      "relatedTerms": ["Modem Preset", "Frequency Slot"]
+    },
+    {
       "term": "Repeater",
       "autoLink": false,
-      "definition": "Infrastructure node for extending network coverage by relaying messages with minimal overhead. Not visible in Nodes list.",
+      "definition": "A device role for infrastructure nodes, deprecated in firmware 2.7.11. A node set to it is switched to the Client role.",
       "relatedTerms": ["Router"]
     },
     {
@@ -392,6 +425,11 @@
       "term": "Telemetry",
       "autoLink": false,
       "definition": "The sending of sensor data or system metrics over the mesh network."
+    },
+    {
+      "term": "Traceroute",
+      "definition": "A request that reports the path a message took through the mesh. The result lists the nodes along the way in both directions, with the signal-to-noise ratio at each hop.",
+      "relatedTerms": ["Hop Limit", "SNR"]
     },
     {
       "term": "Transceiver",
