@@ -58,9 +58,13 @@ Beacons also steer the scan for you:
 
 This means a single beacon is enough for discovery to find and measure the mesh it points to — even a private one — without you having to know its settings in advance.
 
-### Switch to a beaconed channel
+### Add or switch to a beaconed channel
 
-When a beacon advertises a channel, its entry in the **Beacons** section has a **Switch to this channel** button. Tapping it (and confirming) sets your radio's primary channel to the advertised channel and applies the advertised region and preset. Your radio reboots and reconnects on that mesh, replacing your previous channel settings — so use it when you actually want to join the mesh the beacon is advertising.
+When a beacon advertises a channel, its entry in the **Beacons** section has a **Switch to this channel** button. It also gets an **Add channel** button when the advertised mesh is already on the frequency your radio is tuned to — adding the channel is enough to hear it, with no reboot and no change to your LoRa settings.
+
+Which of the two you are offered depends on the frequency the advertised mesh is on. Usually that comes from the channel's name, the region and the preset. A mesh can also sit on a frequency slot its name would not produce, and a beacon from one of those says which slot it is really using; the app takes it at its word rather than working the slot out itself, so **Add channel** is only offered when adding the channel would actually let you hear that mesh.
+
+Tapping **Switch to this channel** (and confirming) sets your radio's primary channel to the advertised channel and applies the advertised region and preset. Your radio reboots and reconnects on that mesh, replacing your previous channel settings — so use it when you actually want to join the mesh the beacon is advertising.
 
 ## Applying a Setting
 
