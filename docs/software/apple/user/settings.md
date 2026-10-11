@@ -46,13 +46,15 @@ LoRa settings control how your radio communicates on the mesh:
 | Setting | Description |
 |---------|-------------|
 | Region | Your geographical region. **Must be set correctly** — using the wrong region is illegal and prevents communication with local nodes. The standard regions are always available; the amateur (ham) 2m / 70cm / 1.25m bands and the EU 866 / narrow bands require firmware **2.8.0 or later** and only appear when your connected radio supports them. |
-| Modem Preset | Speed/range trade-off. Most users should use Long Fast or Long Slow. On firmware 2.8+, the preset list is filtered to those that are legal for the selected region (see below). |
+| Modem Preset | Speed/range trade-off. Which preset to use depends on your region — on firmware 2.8+ the list is filtered to those legal there, and the recommended one differs by region (see below). |
 | Bandwidth | Available under **Advanced** when **Use Preset** is off. The protobuf default value of 0 is shown as its effective firmware value: 250 kHz in sub-GHz regions and 812.5 kHz in the 2.4 GHz region. Choices are filtered for the selected region and connected radio. If a stored nonzero bandwidth is unsupported, the app shows a warning and prevents saving until you select a supported value. |
 | Hop Limit | The number of times a message is repeated by other nodes. Higher values increase range but also mesh traffic. |
 | Frequency Slot | Fine-tune the exact frequency within your region. |
 | Frequency Override | Use a specific frequency in MHz instead of the calculated slot. The LoRa and Licensed Operator settings show the stored frequency without rounding it. |
 
 On firmware **2.8.0 or later**, the radio tells the app which modem presets are legal in each region. When you pick a region, the Presets list narrows to the compatible set, and if your current preset isn't allowed there the app switches you to that region's default. Setting the region to **US** on a newly flashed node moves the stock **Long Fast** preset to **Long Turbo** — Long Fast's bandwidth is not US-compliant — while a deliberately chosen preset that is legal in the US is kept. Amateur (ham) bands such as the Tiny and Narrow presets are marked **licensed** — the app shows a warning, and you should enable **Licensed Operator** (and set your call sign) in **User** config before transmitting. On older firmware the full preset list is shown unchanged.
+
+Saving LoRa settings may reboot the radio and briefly disconnect it. If the radio reports a region from newer firmware that this app does not recognize, choose a supported region before saving.
 
 ### Channels
 
@@ -86,6 +88,19 @@ On hardened lockdown-firmware radios, this page also shows a **Lockdown** sectio
 
 Set your Long Name (display name) and Short Name (4-character/emoji identifier shown in the node circle).
 
+Both limits are counted in UTF-8 bytes rather than characters, because that is how the radio stores them. Most emoji are four bytes, so a single emoji fills the short name; some older symbols are smaller. Typing past the limit stops rather than cutting a character in half.
+
+How long a Long Name can be depends on the radio. Firmware 2.8 and later keeps
+24 bytes of it — those radios store every node they hear in a slimmer record to
+save memory, and truncate anything longer as it arrives. Older firmware keeps
+39. The hint under the field shows whichever applies to the radio you are
+connected to.
+
+A name you already have is left alone, even if it is longer than the radio you
+are now connected to would keep. Note that a 2.8 radio hearing an older one
+still stores only 24 bytes of its name, so a longer name is shortened by
+everyone else's radio even when your own keeps it.
+
 ### Bluetooth
 
 BLE radio settings including PIN mode and power saving. Changes apply on next radio restart.
@@ -117,7 +132,17 @@ Controls which direction the on-device compass points when the screen is at rest
 
 ### Network
 
-Wi-Fi SSID/password for TCP connection, NTP server, and Ethernet (supported hardware only).
+Wi-Fi SSID/password for TCP connection, NTP and syslog servers, UDP broadcast, and
+Ethernet. Each section appears only on hardware that has the radio it configures, so a
+board with neither Wi-Fi nor Ethernet shows nothing here.
+
+**Address Mode** chooses between DHCP and a static address. On DHCP the radio asks the
+network for its address and the static fields are not shown.
+
+Choosing **Static** reveals four address fields. Address, gateway and subnet are
+required: a static setup missing any of them leaves the node unreachable, so Save stays
+disabled until all three are complete and well formed. A malformed entry is shown in
+red. **DNS is optional** and may be left blank, which stores it as unset.
 
 ### Position
 
@@ -131,7 +156,13 @@ Battery saving profiles, sleep modes, and minimum wake time. Critical for solar-
 
 ## Module Configuration
 
-Optional feature modules. Only available when your connected node supports the module.
+Optional feature modules. A module's settings appear only when your connected node
+can actually use them, which means two things: the radio's firmware build did not
+leave the module out, and the firmware is new enough to have it at all. Where a
+module needs a particular firmware version, it is noted in the table below.
+
+A node that has not yet reported its firmware version is offered everything, so a
+screen may briefly appear before the radio finishes identifying itself.
 
 | Module | Description |
 |--------|-------------|
@@ -153,24 +184,26 @@ Optional feature modules. Only available when your connected node supports the m
 
 ### Traffic Management
 
-The Traffic Management module helps reduce unnecessary mesh traffic and improve network efficiency. It is available on nodes running firmware **2.8.0 or later**. Each feature is enabled implicitly by a non-zero value — turning a section's toggle off (or the master **Enabled** switch) clears its values and disables that feature on the radio.
+The Traffic Management module helps reduce unnecessary mesh traffic and improve network efficiency. It is available on nodes running firmware **2.8.0 or later**.
+
+The screen opens with a placement assessment: how many nodes this radio heard directly (over RF, within the last two hours), and whether that makes the module worth enabling. Traffic management pays off on a well-placed node with many direct neighbors — 50 or more heard in that window, ideally around 200. One transmission from such a node reaches most of them at once, so cutting hop counts on the chattiest packets removes the retransmission storm that follows each broadcast. On a node with a handful of direct neighbors it has little to police. Each feature is enabled implicitly by a non-zero value — turning a section's toggle off (or the master **Enabled** switch) clears its values and disables that feature on the radio. Turning a feature on starts its interval at the firmware default rather than zero, so saving right away enables it.
 
 | Setting | Description |
 |---------|-------------|
-| Enabled | Master enable for the traffic management module. |
+| Enabled | Turns the module on or off. |
 | **Position Deduplication** | |
-| Position Dedup | Drop redundant position broadcasts from the same node. |
-| Min Interval (s) | Minimum seconds between position updates from the same node. |
+| Position Dedup | Drop repeated position broadcasts. |
+| Minimum Interval | Positions from the same node arriving sooner than this are dropped. The firmware default is five hours. |
 | **NodeInfo Direct Response** | |
-| Direct Response | Respond to NodeInfo requests directly from local cache instead of flooding the mesh. |
-| Max Hops | Maximum hop distance from the requestor at which direct NodeInfo responses are served from the local cache. |
+| Direct Response | Answer NodeInfo requests from the local cache instead of flooding the mesh. |
+| Max Hops | Only answer requestors within this many hops, 1 to 3. The radio's role caps the effective value: routers allow up to 3, plain clients answer direct requestors only. |
 | **Rate Limiting** | |
-| Rate Limiting | Enable per-node rate limiting to throttle chatty nodes. |
-| Window (s) | Time window in seconds for rate limiting calculations. |
-| Max Packets | Maximum packets allowed per node within the rate limit window. |
+| Rate Limiting | Throttle nodes that send too many packets. |
+| Window | The time window packets are counted over. |
+| Max Packets | The most packets one node may send per window. |
 | **Unknown Packet Handling** | |
-| Drop Unknown | Enable dropping of unknown/undecryptable packets. |
-| Threshold | Maximum unknown/undecryptable packets per rate window before the source is dropped. |
+| Drop Unknown | Drop packets that cannot be decrypted. |
+| Threshold | How many per window before the sender is dropped. |
 
 ## Tools
 
@@ -232,7 +265,7 @@ MQTT and Serial settings are applied after the main transaction because either c
 
 You can cancel while a setting is being sent over Bluetooth or TCP; cancellation typically completes quickly. The app stops sending additional sections, then commits the sections already applied so the radio does not remain in an unfinished edit transaction. If the transport callback does not settle, the sheet allows dismissal after 15 seconds. A write already handed to the operating system may still reach the radio, so review the result before retrying.
 
-Because the radio can silently discard settings it accepts, the result screen also offers **Verify Against the Radio**: once the radio reconnects and sends its configuration back, it compares each imported section against what the radio actually holds. Re-running an import is safe.
+Because the radio can silently discard settings it accepts, imports that reboot the radio show **Check What Applied** while the app waits for it to reconnect. Once the radio sends its configuration back, the app automatically compares each imported section against what the radio actually holds. If that check can't run, tap **Verify Against the Radio** to try again. Re-running an import is safe.
 
 ## Automatic Documentation Translation
 
