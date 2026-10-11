@@ -10,8 +10,6 @@ parent: Developer Guide
 
 Technical documentation for contributing to the Meshtastic Android and Desktop app.
 
----
-
 ## Before You Open a PR
 
 Things that trip up first-time contributors — check these before requesting review:
@@ -25,8 +23,6 @@ Things that trip up first-time contributors — check these before requesting re
 - **Previews updated** — if you changed UI composables, update the corresponding `*Previews.kt` file and the screenshot-test baselines
 - **Branch naming** — branches must start with `feat/`, `fix/`, `chore/`, `docs/`, `build/`, `ci/`, `refactor/`, `test/`, or `deps/`
 
----
-
 ## What's New for Developers
 
 <!-- DEV_WHATS_NEW_START -->
@@ -35,23 +31,21 @@ Things that trip up first-time contributors — check these before requesting re
 Keep the last 5–8 entries and trim older ones from the bottom.
 -->
 
-**July 2026** — [Test Builds & Obtainium](test-builds.md) — New page, replacing the root `obtainium-test-builds.md`. Distributable Obtainium configurations now live in `obtainium/` (importable export, one-tap link generator, config-site submission).
+**September 2026** — [Navigation & Deep Links](navigation-and-deep-links.md) — Deep links route through Navigation 3's `UriDeepLinkMatcher` instead of a hand-rolled `when` block, and patterns are anchored, so an unmodelled trailing path no longer opens the family root.
 
-**July 2026** — Map layer stack (`MapLayer.kt`, `MapLayersManager`, GeoJSON/KML import, Site Planner) extracted from the Google flavor into shared `androidApp/src/main` source (#6148) — F-Droid now renders imported overlays via a new OSMdroid-based renderer, so both flavors compile one implementation.
+**September 2026** — [Measurement & Formatting](measurement.md) — `NumberFormatter.format` follows the OS locale; `formatInvariant` is the fixed-dot one for payloads another system parses.
 
-**July 2026** — [Persistence](persistence.md) — Local Mesh Discovery sessions and cached `msh.to` device links now persist to Room (`DiscoverySessionEntity`, `DiscoveryPresetResultEntity`, `DiscoveredNodeEntity`, `DeviceLinkEntity`).
+**September 2026** — [Documentation Style](documentation-style.md) — Section 11 of the Meshtastic design standards is now the style guide for `docs/en/`; this page keeps only the repository mechanics, the in-app renderer's admonition form, and the prose rules the standards leave open.
 
-**June 2026** — [Architecture](architecture.md) / [Codebase](codebase.md) — Protos migrated from the `core/proto` git submodule to the `org.meshtastic:protobufs` Maven artifact; there is no longer a local proto module to build or sync.
+**August 2026** — [Documentation Style](documentation-style.md) — New page: the house style guide for `docs/en/` prose, with rule IDs, a project word list, and the reasoning behind each convention.
 
-**June 2026** — AIDL/`IMeshService` removed (#5586). The mesh service is now in-process only, driven entirely through `RadioController` — no cross-process binder, no `aidl` stubs.
+**August 2026** — Map tile sources are one shared catalogue in `feature/map` (`MapTileCatalogue`, `RasterTileSpec`), so both flavors draw the same raster base maps and overlays from one definition.
 
-**June 2026** — [Testing](testing.md) — Split the screenshot pipeline: the new generate-only `:docs-screenshots` module holds doc-framed compositions, while `:screenshot-tests` stays the CI visual-regression gate — so reframing a doc image no longer churns a test baseline.
+**August 2026** — Both maps draw an imported feature's own icon and drape a KMZ `GroundOverlay` image at its `LatLonBox` (rotation included) — MapLibre via an `ImageSource` quad, Google via `GroundOverlayOptions` (#3786).
 
-**June 2026** — New feature modules: `feature:discovery` (mesh network discovery, #5275) and `feature:car` (Android Auto / Car App Library, google flavor only, #5633).
+**August 2026** — Offline map-pack downloads are gated on `offlineMapsSupported`, since the MapLibre offline API compiles on Desktop but silently downloads nothing there.
 
-**June 2026** — [Testing](testing.md) — Added the `:baselineprofile` module (#5735): a Macrobenchmark cold-start journey generates a Baseline Profile for `:androidApp` to AOT-compile hot startup paths.
-
-**June 2026** — [Persistence](persistence.md) — FTS5 full-text message search (#5373): a `PacketFts` virtual table mirrors `Packet.messageText`, kept in sync by Room-managed triggers.
+**August 2026** — New module `feature/map-maplibre`: the F-Droid flavor and Desktop now render every map surface (main map, node track, traceroute, discovery, inline mini-map) through `maplibre-compose` from one multiplatform module, and `osmdroid` is gone. The shared rules both renderers must agree on live in `feature/map` policy classes.
 
 <!-- DEV_WHATS_NEW_END -->
 
