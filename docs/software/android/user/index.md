@@ -10,8 +10,6 @@ parent: User Guide
 
 Documentation for using the Meshtastic Android and Desktop app.
 
----
-
 ## What's New in the Docs
 
 <!-- WHATS_NEW_START -->
@@ -20,17 +18,21 @@ Documentation for using the Meshtastic Android and Desktop app.
 Keep the last 5–8 entries and archive older ones by removing them.
 -->
 
-**July 2026** — [Discovery](discovery.md) — New Mesh Beacon: broadcast invitations to your mesh and receive Mesh invitations from others, with one-tap join or a preset-seeded Discovery scan.
+**September 2026** — [Nodes](nodes.md) — Nodes your node has not heard since its LoRa settings changed now carry an orange marker, a **Hide unheard nodes** filter, and a banner whose **Remove** action deletes them in bulk.
 
-**July 2026** — [Settings — Radio & User](settings-radio-user.md) — Security config now offers encrypted on-device key backup/restore and a packet-authenticity Protection Level (Strict / Balanced / Compatible).
+**September 2026** — [Settings — Radio & User](settings-radio-user.md) — Lockdown's debug-port lock is not reversible from the app, Managed Mode locks the whole configuration list, and the preset list is filtered to what your region permits.
 
-**July 2026** — [MQTT](mqtt.md) — Documented the "MQTT proxy on this phone" toggle: see whether your phone is relaying MQTT for the node and cut it off immediately.
+**September 2026** — [Local Mesh Discovery](discovery.md) — Signal colours are relative to the preset's demodulation floor rather than fixed thresholds, and a beacon's broadcast targets always hold at least one row.
 
-**July 2026** — [Map & Waypoints](map-and-waypoints.md) — Waypoints can now define a geofence: get notified when nodes enter or leave an area. Creator-only by default, with a per-geofence opt-in for others.
+**September 2026** — [Nodes](nodes.md) — Nodes on firmware 2.8 show signed and verified identity icons in place of the PKI lock, and **Signed only** and **Encrypted only** filters join the node list and the map.
 
-**July 2026** — [Map & Waypoints](map-and-waypoints.md) — Map Layers (import your own `.kml`/`.kmz`/GeoJSON overlays) and Site Planner (RF coverage estimation) are now available on F-Droid, not just Google Play.
+**September 2026** — [Map & Waypoints](map-and-waypoints.md) — Offline terrain (hillshade and contours) can be downloaded on Google Play, F-Droid, and Desktop.
 
-**July 2026** — [Nodes](nodes.md) — Added a "Nodes per Hop" histogram showing how many nodes sit at each hop distance, filterable to a last-heard time window.
+**August 2026** — [Local Mesh Discovery](discovery.md) — Mesh Beacon advertises the region and preset your radio actually uses, requires a region and a standard modem preset before it will broadcast, and hides invitations to channels your radio already has.
+
+**August 2026** — [Map & Waypoints](map-and-waypoints.md) — Filter the map by node role and by how a node was heard, from a new filter sheet.
+
+**August 2026** — [Map & Waypoints](map-and-waypoints.md) — Every map layer and overlay now has its own opacity slider.
 
 <!-- WHATS_NEW_END -->
 

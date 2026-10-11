@@ -1,7 +1,8 @@
 ---
 title: Navigation & Deep Links
 sidebar_position: 4
-last_updated: 2026-07-08
+last_updated: 2026-09-19
+description: How typed Navigation 3 routes and DeepLinkRouter work together, the supported deep link URIs, and how to add a new one.
 parent: Developer Guide
 ---
 
@@ -9,11 +10,11 @@ parent: Developer Guide
 
 The app uses **Navigation 3** with typed, serializable routes and centralized deep link resolution.
 
-## Route Architecture
+## Route architecture
 
 All routes are defined in `core/navigation/src/commonMain/kotlin/org/meshtastic/core/navigation/Routes.kt`.
 
-### Route Hierarchy
+### Route hierarchy
 
 ```kotlin
 interface Route : NavKey           // All routes implement NavKey
@@ -37,13 +38,18 @@ sealed interface SettingsRoute : Route {
 - Group related routes under a `sealed interface`
 - Graph entry points implement both the route interface and `Graph`
 
-## Deep Link Router
+## Deep link router
 
-`DeepLinkRouter` in `core/navigation` maps URI deep links to typed backstack lists.
+`DeepLinkRouter` in `core/navigation` maps URI deep links to typed backstack lists. Each supported link is a
+Navigation 3 `UriDeepLinkMatcher` pattern whose placeholders decode into the target route's fields, wrapped in
+`withBackStack` to synthesize the parents.
 
-### URI Format
+Patterns are anchored, so a path the patterns don't model returns null rather than falling back to the family
+root: `/firmware/anything-else` no longer opens the firmware screen.
 
-Both forms resolve through the same `DeepLinkRouter`, so any path below works with either scheme:
+### URI format
+
+Both forms resolve through the same `DeepLinkRouter`, so any deep link path works with either scheme:
 
 ```text
 meshtastic://meshtastic/{path}
@@ -51,32 +57,36 @@ https://meshtastic.org/{path}       # App Link, android:autoVerify — also open
 ```
 
 `adb shell am start -a android.intent.action.VIEW -d "meshtastic://meshtastic/{path}"` is the fastest way to
-trigger any route below from a shell or automation script without touching the UI.
+trigger any route in the Supported Deep Links table from a shell or automation script without touching the UI.
 
 For the `https` form to open in-app, each top-level path segment must also be declared as an
 `android:pathPrefix` in the `android:autoVerify` intent-filter in `androidApp/src/main/AndroidManifest.xml` —
 otherwise the link opens in the browser. Adding a new top-level route therefore takes three steps: add the
 segment to `DeepLinkRouter.topLevelPathSegments` (the router refuses to dispatch segments outside that set),
-add its `when` branch in `DeepLinkRouter.route()`, and add the matching `pathPrefix` to the manifest.
+add its matcher to `DeepLinkRouter.matchers`, and add the matching `pathPrefix` to the manifest.
 `DeepLinkManifestConsistencyTest` (androidApp unit tests) checks the manifest against the set, so a missing
 manifest entry fails CI.
 
-**Source of truth:** the always-current list of top-level segments is `topLevelPathSegments` in
-[`DeepLinkRouter`](https://github.com/meshtastic/Meshtastic-Android/blob/main/core/navigation/src/commonMain/kotlin/org/meshtastic/core/navigation/DeepLinkRouter.kt)
-— sub-paths live in the `route()` `when` block plus its helper maps (`settingsSubRoutes`, `nodeDetailSubRoutes`);
-the class-level KDoc is illustrative, not exhaustive. It also exists as executable spec in
-[`DeepLinkRouterTest.kt`](https://github.com/meshtastic/Meshtastic-Android/blob/main/core/navigation/src/commonTest/kotlin/org/meshtastic/core/navigation/DeepLinkRouterTest.kt).
-The table below is a snapshot for quick reference — check those two files if it looks out of date.
+**Source of truth:**
 
-### Supported Deep Links
+- The always-current list of top-level segments is `topLevelPathSegments` in
+  [`DeepLinkRouter`](https://github.com/meshtastic/Meshtastic-Android/blob/main/core/navigation/src/commonMain/kotlin/org/meshtastic/core/navigation/DeepLinkRouter.kt).
+- Sub-paths live in the `matchers` list plus its helper maps (`settingsSubRoutes`, `nodeDetailSubRoutes`).
+- The class-level KDoc on the `DeepLinkRouter` object lists example mappings, but it's illustrative, not
+  exhaustive.
+- The executable spec is
+  [`DeepLinkRouterTest.kt`](https://github.com/meshtastic/Meshtastic-Android/blob/main/core/navigation/src/commonTest/kotlin/org/meshtastic/core/navigation/DeepLinkRouterTest.kt).
+- The following table is a snapshot for quick reference — check those two files if it looks out of date.
+
+### Supported deep links
 
 | URI Path | Route | Notes |
 |----------|-------|-------|
 | `/connections` | `ConnectionsRoute.Connections(null)` | Connections screen |
-| `/connections?address={prefixedAddress}` | `ConnectionsRoute.Connections(address)` | Auto-connects to a device without manual selection — the address uses the app's internal transport-prefixed format: `t192.168.1.1:4403` (TCP), `xAA:BB:CC:DD:EE:FF` (BLE), `s/dev/ttyUSB0` (serial). Intended for scripts/AI tooling driving the app. |
-| `/connections?address=n` | `ConnectionsRoute.Connections("n")` | Disconnects the current device instead of connecting (`n` = the internal "no device selected" sentinel). |
-| `/wifi-provision` | `WifiProvisionRoute.WifiProvision(null)` | WiFi provisioning screen |
-| `/wifi-provision?address={mac}` | `WifiProvisionRoute.WifiProvision(mac)` | Provisioning targeting a specific device MAC |
+| `/connections?address={prefixedAddress}` | `ConnectionsRoute.Connections(address)` | Auto-connects to a node without manual selection — the address uses the app's internal transport-prefixed format: `t192.168.1.1:4403` (TCP), `xAA:BB:CC:DD:EE:FF` (BLE), `s/dev/ttyUSB0` (serial). Intended for scripts/AI tooling driving the app. |
+| `/connections?address=n` | `ConnectionsRoute.Connections("n")` | Disconnects the current node instead of connecting (`n` = the internal "no device selected" sentinel). |
+| `/wifi-provision` | `WifiProvisionRoute.WifiProvision(null)` | Wi-Fi provisioning screen |
+| `/wifi-provision?address={mac}` | `WifiProvisionRoute.WifiProvision(mac)` | Provisioning targeting a specific node MAC |
 | `/settings` | `SettingsRoute.Settings(null)` | Settings root |
 | `/settings/helpDocs` | `SettingsRoute.HelpDocs` | Docs browser |
 | `/settings/helpDocs/{pageId}` | `SettingsRoute.HelpDocPage(pageId)` | Specific doc page |
@@ -96,7 +106,7 @@ The table below is a snapshot for quick reference — check those two files if i
 | `/firmware` | `FirmwareRoute.FirmwareGraph` | Firmware screen |
 | `/firmware/update` | `FirmwareRoute.FirmwareUpdate` | Firmware update flow |
 
-### Backstack Synthesis
+### Backstack synthesis
 
 Deep links synthesize a full backstack, not just the target screen:
 
@@ -111,15 +121,16 @@ listOf(
 
 This ensures the user can navigate "up" correctly.
 
-## Adding a Deep Link
+## Adding a deep link
 
 1. Define the typed route in `Routes.kt`.
-2. Add the mapping in `DeepLinkRouter.settingsSubRoutes` (or equivalent for other graphs).
+2. Add the mapping in `DeepLinkRouter.settingsSubRoutes` (or equivalent for other graphs), and a matcher in
+   `DeepLinkRouter.matchers` if the path shape is new.
 3. Add a test in `DeepLinkRouterTest.kt`.
 4. Register the navigation entry in the appropriate feature module.
-5. Update the KDoc list on `DeepLinkRouter.route()` and the table above — they're the two places tooling/agents look to discover what deep links exist.
+5. Update the illustrative KDoc list on the `DeepLinkRouter` object (the class-level doc comment, not `route()`'s own KDoc) and the preceding table — both are quick-reference snapshots, not the source of truth. See the Source of Truth list earlier in this page for the authoritative places.
 
-## Navigation Entry Registration
+## Navigation entry registration
 
 Each feature module provides entries via an extension function:
 
@@ -135,9 +146,6 @@ These are called from the settings navigation composition.
 ## Testing
 
 Deep link routing is tested in:
-```
+```text
 core/navigation/src/commonTest/kotlin/org/meshtastic/core/navigation/DeepLinkRouterTest.kt
 ```
-
----
-
