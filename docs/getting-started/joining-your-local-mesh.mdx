@@ -49,7 +49,7 @@ What silence means depends on what you already know. If nodes are known to be ac
 
 ### Scan for them
 
-Local Mesh Discovery cycles the radio through a set of presets, listens on each for a dwell time you choose, and ranks them by what it hears. It is available in the [Android](/docs/software/android/user/discovery) and [Apple](/docs/software/apple/user/discovery) clients, but not the Web client or the CLI.
+Local Mesh Discovery cycles the radio through a set of presets, listens on each for a dwell time you choose, and ranks them by what it hears. It is available in the [Android](/docs/software/android/user/discovery) and [Apple](/docs/software/apple/user/discovery) clients.
 
 <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "1rem" }}>
   <ThemedImage
@@ -95,7 +95,7 @@ A preset scan listens on the default frequency slot with the default public chan
 
 ### Ask the local community
 
-Regional groups publish their settings to people joining, which is the only way to find a mesh a scan cannot see. The [local groups directory](/docs/community/local-groups) lists Discord servers, Telegram groups, and websites by region.
+Regional groups publish their settings to people joining, which is how to find a mesh a scan cannot see. The [local groups directory](/docs/community/local-groups) lists Discord servers, Telegram groups, and websites by region.
 
 ## Joining once you know the settings
 
@@ -113,7 +113,7 @@ Add private groups as secondary channels on 1 through 7 instead. They share the 
 
 ## Checking whether it worked
 
-Send a direct message rather than a channel message. The node a direct message is addressed to acknowledges it, and once the firmware exhausts its retransmissions without that acknowledgment, the client reports a delivery error.
+Send a direct message rather than a channel message. The node a direct message is addressed to acknowledges it, and only that acknowledgment confirms delivery. When a nearby node relays the message, the sending node treats the relay as an acknowledgment and stops retrying, so delivery stays unconfirmed until the recipient answers. When no node relays it and the retransmissions run out, the client reports a delivery error.
 
 A channel message gets a weaker check. The clients request an acknowledgment on channel messages too, but no single node is expected to answer a broadcast, so the sending node counts it as delivered as soon as it overhears another node repeat it. If no node repeats it, the client reports a delivery error, the same as a failed direct message. The silent failure is narrower: one nearby node repeats the message, the client receives a success acknowledgment, and no node beyond that one ever receives it.
 
