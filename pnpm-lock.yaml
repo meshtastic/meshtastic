@@ -11,7 +11,7 @@ overrides:
   webpack: ~5.105.0
 
 patchedDependencies:
-  docusaurus-plugin-glossary: 4e7a24950470698a3c8e0158dde1b37605b49f858e6a044521c803f2d4493c59
+  docusaurus-plugin-glossary@3.4.0: 4e492d2ff96421be0d7fe05ff3254b915095c7c8f81c860d78603715959a8ad8
 
 importers:
 
@@ -90,8 +90,8 @@ importers:
         specifier: ^2.1.1
         version: 2.1.1
       docusaurus-plugin-glossary:
-        specifier: 3.3.4
-        version: 3.3.4(patch_hash=4e7a24950470698a3c8e0158dde1b37605b49f858e6a044521c803f2d4493c59)(@docusaurus/core@3.10.2(@docusaurus/faster@3.10.2(@docusaurus/types@3.10.2(@swc/core@1.15.43)(@swc/html@1.15.43)(clean-css@5.3.3)(cssnano@6.1.2(postcss@8.5.27))(csso@5.0.5)(html-minifier-terser@7.2.0)(lightningcss@1.32.0)(postcss@8.5.27)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(supports-color@9.4.0))(clean-css@5.3.3)(cssnano@6.1.2(postcss@8.5.27))(csso@5.0.5)(html-minifier-terser@7.2.0)(postcss@8.5.27))(@mdx-js/react@3.1.1(@types/react@19.3.0)(react@19.3.0))(@rspack/core@1.7.12)(@swc/core@1.15.43)(@swc/html@1.15.43)(clean-css@5.3.3)(cssnano@6.1.2(postcss@8.5.27))(csso@5.0.5)(debug@4.4.3(supports-color@9.4.0))(html-minifier-terser@7.2.0)(lightningcss@1.32.0)(postcss@8.5.27)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(supports-color@9.4.0)(typescript@7.0.2))(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
+        specifier: 3.4.0
+        version: 3.4.0(patch_hash=4e492d2ff96421be0d7fe05ff3254b915095c7c8f81c860d78603715959a8ad8)(@docusaurus/core@3.10.2(@docusaurus/faster@3.10.2(@docusaurus/types@3.10.2(@swc/core@1.15.43)(@swc/html@1.15.43)(clean-css@5.3.3)(cssnano@6.1.2(postcss@8.5.27))(csso@5.0.5)(html-minifier-terser@7.2.0)(lightningcss@1.32.0)(postcss@8.5.27)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(supports-color@9.4.0))(clean-css@5.3.3)(cssnano@6.1.2(postcss@8.5.27))(csso@5.0.5)(html-minifier-terser@7.2.0)(postcss@8.5.27))(@mdx-js/react@3.1.1(@types/react@19.3.0)(react@19.3.0))(@rspack/core@1.7.12)(@swc/core@1.15.43)(@swc/html@1.15.43)(clean-css@5.3.3)(cssnano@6.1.2(postcss@8.5.27))(csso@5.0.5)(debug@4.4.3(supports-color@9.4.0))(html-minifier-terser@7.2.0)(lightningcss@1.32.0)(postcss@8.5.27)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(supports-color@9.4.0)(typescript@7.0.2))(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
       dompurify:
         specifier: ^3.4.16
         version: 3.4.16
@@ -4334,8 +4334,8 @@ packages:
     resolution: {integrity: sha512-l4gcSouhcgIKRvyy99RNVOgxXiicE+2jZoNmaNmZ6JXiGajBOJAesk1OBlJuM5k2c+eudGdLxDqXuPCKIj6kpw==}
     engines: {node: '>=6'}
 
-  docusaurus-plugin-glossary@3.3.4:
-    resolution: {integrity: sha512-3OdOzjcfx14iAJdlmzH3dXWHwLST/F9vErBn0aKnIwrf2OWxdZS/rInMQi7v3belPNFPr2aUZNraYtdfxJLMMw==}
+  docusaurus-plugin-glossary@3.4.0:
+    resolution: {integrity: sha512-7eX2QnvUhnLEMoqNQaaZvGJypAy28aMSc7ASncrFP1KSioQeZtgcU6FM0SxOXnHbq2xWeELw9Q3vz/8ev71qnw==}
     engines: {node: '>=20.0'}
     peerDependencies:
       '@docusaurus/core': ^3.0.0
@@ -4751,6 +4751,10 @@ packages:
 
   fs-extra@11.3.6:
     resolution: {integrity: sha512-w8ZNZr2mKIc7qeNaQ9AVPT1+iFaI+Avd4xudVOvdDJ8VytREi1Ft5Ih7hd9jjehod8vAM5GMsfQ/TpPf4EyoEA==}
+    engines: {node: '>=14.14'}
+
+  fs-extra@11.4.1:
+    resolution: {integrity: sha512-KYAb4c9BJQI6QqGKthV68OHe0badztdXJWKo0WtBA9IuCFPTKvE5ZdUBglP833aMjhaSPNO4A5j/EkzZtGlKjA==}
     engines: {node: '>=14.14'}
 
   fsevents@2.3.3:
@@ -13275,10 +13279,10 @@ snapshots:
     dependencies:
       '@leichtgewicht/ip-codec': 2.0.5
 
-  docusaurus-plugin-glossary@3.3.4(patch_hash=4e7a24950470698a3c8e0158dde1b37605b49f858e6a044521c803f2d4493c59)(@docusaurus/core@3.10.2(@docusaurus/faster@3.10.2(@docusaurus/types@3.10.2(@swc/core@1.15.43)(@swc/html@1.15.43)(clean-css@5.3.3)(cssnano@6.1.2(postcss@8.5.27))(csso@5.0.5)(html-minifier-terser@7.2.0)(lightningcss@1.32.0)(postcss@8.5.27)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(supports-color@9.4.0))(clean-css@5.3.3)(cssnano@6.1.2(postcss@8.5.27))(csso@5.0.5)(html-minifier-terser@7.2.0)(postcss@8.5.27))(@mdx-js/react@3.1.1(@types/react@19.3.0)(react@19.3.0))(@rspack/core@1.7.12)(@swc/core@1.15.43)(@swc/html@1.15.43)(clean-css@5.3.3)(cssnano@6.1.2(postcss@8.5.27))(csso@5.0.5)(debug@4.4.3(supports-color@9.4.0))(html-minifier-terser@7.2.0)(lightningcss@1.32.0)(postcss@8.5.27)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(supports-color@9.4.0)(typescript@7.0.2))(react-dom@19.3.0(react@19.3.0))(react@19.3.0):
+  docusaurus-plugin-glossary@3.4.0(patch_hash=4e492d2ff96421be0d7fe05ff3254b915095c7c8f81c860d78603715959a8ad8)(@docusaurus/core@3.10.2(@docusaurus/faster@3.10.2(@docusaurus/types@3.10.2(@swc/core@1.15.43)(@swc/html@1.15.43)(clean-css@5.3.3)(cssnano@6.1.2(postcss@8.5.27))(csso@5.0.5)(html-minifier-terser@7.2.0)(lightningcss@1.32.0)(postcss@8.5.27)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(supports-color@9.4.0))(clean-css@5.3.3)(cssnano@6.1.2(postcss@8.5.27))(csso@5.0.5)(html-minifier-terser@7.2.0)(postcss@8.5.27))(@mdx-js/react@3.1.1(@types/react@19.3.0)(react@19.3.0))(@rspack/core@1.7.12)(@swc/core@1.15.43)(@swc/html@1.15.43)(clean-css@5.3.3)(cssnano@6.1.2(postcss@8.5.27))(csso@5.0.5)(debug@4.4.3(supports-color@9.4.0))(html-minifier-terser@7.2.0)(lightningcss@1.32.0)(postcss@8.5.27)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(supports-color@9.4.0)(typescript@7.0.2))(react-dom@19.3.0(react@19.3.0))(react@19.3.0):
     dependencies:
       '@docusaurus/core': 3.10.2(@docusaurus/faster@3.10.2(@docusaurus/types@3.10.2(@swc/core@1.15.43)(@swc/html@1.15.43)(clean-css@5.3.3)(cssnano@6.1.2(postcss@8.5.27))(csso@5.0.5)(html-minifier-terser@7.2.0)(lightningcss@1.32.0)(postcss@8.5.27)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(supports-color@9.4.0))(clean-css@5.3.3)(cssnano@6.1.2(postcss@8.5.27))(csso@5.0.5)(html-minifier-terser@7.2.0)(postcss@8.5.27))(@mdx-js/react@3.1.1(@types/react@19.3.0)(react@19.3.0))(@rspack/core@1.7.12)(@swc/core@1.15.43)(@swc/html@1.15.43)(clean-css@5.3.3)(cssnano@6.1.2(postcss@8.5.27))(csso@5.0.5)(debug@4.4.3(supports-color@9.4.0))(html-minifier-terser@7.2.0)(lightningcss@1.32.0)(postcss@8.5.27)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(supports-color@9.4.0)(typescript@7.0.2)
-      fs-extra: 11.3.6
+      fs-extra: 11.4.1
       react: 19.3.0
       react-dom: 19.3.0(react@19.3.0)
       unist-util-visit: 5.1.0
@@ -13780,6 +13784,12 @@ snapshots:
   fresh@0.5.2: {}
 
   fs-extra@11.3.6:
+    dependencies:
+      graceful-fs: 4.2.11
+      jsonfile: 6.2.1
+      universalify: 2.0.1
+
+  fs-extra@11.4.1:
     dependencies:
       graceful-fs: 4.2.11
       jsonfile: 6.2.1
