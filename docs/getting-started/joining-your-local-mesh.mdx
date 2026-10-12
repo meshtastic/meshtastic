@@ -91,7 +91,7 @@ A scan reports what it heard on each preset, ranked by activity. Here the same a
   />
 </div>
 
-A scan hears only meshes on the channel it listens with, and the two clients choose that channel differently. The Apple client switches to the default public channel for the scan and restores your channel afterward. The Android client keeps your current primary channel, so a custom channel name or key means it scans your own frequency slot and key rather than the public ones. An empty result means nothing was heard on that channel nearby, not that nothing is running.
+A preset scan listens on the default frequency slot with the default public channel, which is what makes one scan comparable across presets. A mesh whose primary channel carries a custom name sits on a different frequency slot, and one with a custom key cannot be decoded, so neither appears in a scan. An empty result means nothing is running on the public channel nearby, not that nothing is running.
 
 ### Ask the local community
 
