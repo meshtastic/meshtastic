@@ -11,7 +11,7 @@ hide_table_of_contents: false
 import ThemedImage from "@theme/ThemedImage";
 import useBaseUrl from "@docusaurus/useBaseUrl";
 
-You flashed your first node, set your region, and heard nothing. Or you took a node that works fine at home to an event, switched to the event's settings, and your node list still showed familiar names that wouldn't answer.
+A freshly flashed node with the region set hears nothing. Or a node that works fine at home goes to an event, switches to the event's settings, and still lists familiar names that won't answer.
 
 Nothing is broken in either case. Your node is on different LoRa settings than the nodes you're trying to reach, and the fix is quick once you know where to look.
 
@@ -89,7 +89,7 @@ This scan heard 60 nodes on Medium Fast and six on Long Fast. A node left on the
   />
 </div>
 
-A scan listens on the default frequency slot with the default public channel. A mesh with a custom channel name is on a different slot, and one with a custom key can't be decoded, so neither shows up. An empty scan means nothing is on the public channel near you, not that nothing is there.
+A scan only hears meshes on the channel it's listening with. The Apple client switches to the default public channel for the scan and puts yours back afterward. The Android client keeps your current primary channel, so if you've renamed it or changed its key, it scans your own channel rather than the public one. An empty scan means nothing was heard on that channel, not that nothing is there.
 
 For anything a scan can't see, ask. Regional groups share their settings with people joining, and the [local groups directory](/docs/community/local-groups) lists Discord servers, Telegram groups, and websites by region.
 
