@@ -1,0 +1,176 @@
+---
+id: joining-your-local-mesh
+title: Joining your local mesh
+sidebar_label: Joining a Mesh
+slug: /getting-started/joining-your-local-mesh
+sidebar_position: 5
+description: How to find the LoRa settings the mesh near you uses, whether that is the defaults, a preset a community moved to, or a channel they publish themselves.
+---
+
+import Link from "@docusaurus/Link";
+import ThemedImage from "@theme/ThemedImage";
+import useBaseUrl from "@docusaurus/useBaseUrl";
+
+Two nodes reach each other only when they share their LoRa settings. The defaults are where most nodes start, and in many areas enough nodes stay there that the defaults act as a public mesh anyone can join. That is a convention rather than a guarantee, so a node on the defaults may find a busy mesh, or may hear nothing at all.
+
+This page covers how to find the settings in use around you, and how to join once you know them.
+
+## What the defaults are
+
+Three settings decide who a node can hear.
+
+| Setting | Default | Effect |
+| --- | --- | --- |
+| Region | Unset until you choose one | The frequency band the node is legally allowed to use |
+| Modem preset | Long Fast, or Long Turbo when the region is first set to US on the device screen | Range against speed, by setting bandwidth, spreading factor, and coding rate together |
+| Primary channel | The default public channel | The key that decrypts traffic, and the frequency slot |
+
+A modem preset bundles bandwidth, spreading factor, and coding rate into one named choice, balancing how far a message carries against how long it occupies the air. Presets exist so a community can agree on a single setting instead of three, and the default suits most areas. Setting the three individually is still available by turning off **Use Preset**, covered in the [LoRa configuration](/docs/configuration/radio/lora#modem-preset).
+
+Those same three parameters decide what the radio can demodulate, so the preset also decides who a node can hear. You choose your preset, and everyone else chooses theirs, and you reach only the ones whose choice matches yours. Two nodes on different presets don't have a slower link between them, they have no link at all, at any distance.
+
+Meshtastic defines the presets so these three values don't have to be dialed in by hand. The rule underneath is LoRa's: two radios only hear each other when all three match, which is why local communities tend to settle on one preset together.
+
+The preset also decides where the node listens. Where the primary channel name is unchanged, the preset name picks the frequency slot, so two presets put a node on two different frequencies. In the US region, Long Fast listens on slot 20 at 906.875 MHz while Long Turbo listens on slot 14 at 908.750 MHz.
+
+## Why the defaults may not match your area
+
+Three things commonly separate a new node from the mesh near it.
+
+Many communities have outgrown Long Fast. Congestion on a shared, duty-cycled medium gets worse as a mesh grows, so dense metropolitan meshes have been moving to faster presets for years. The reasoning is covered in [Is LongFast Holding Your Mesh Back?](/blog/why-your-mesh-should-switch-from-longfast).
+
+The default itself has moved. Setting the region to US on the device screen for the first time starts that node on Long Turbo, while setting the same region from a client or the CLI leaves it on Long Fast. Two nodes set up on the same day through different paths can therefore sit nearly 2 MHz apart, and a new node can hear nothing while an established local mesh carries on without it.
+
+Some meshes run their own settings entirely. Events frequently adopt a preset for the duration, and some communities use a custom channel name or key so their traffic is not on the public channel.
+
+What silence means depends on what you already know. If nodes are known to be active near you, from a local group or from a previous setup that worked, hearing nothing points at settings rather than range. If nobody has confirmed a mesh in your area, silence on its own says very little, and the question becomes whether anyone is there at all. Either way the next step is the same.
+
+## Finding the settings in use near you
+
+### Scan for them
+
+Local Mesh Discovery cycles the radio through a set of presets, listens on each for a dwell time you choose, and ranks them by what it hears. It is available in the [Android](/docs/software/android/user/discovery) and [Apple](/docs/software/apple/user/discovery) clients. Not currently available on the Web client or the CLI.
+
+<div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "1rem" }}>
+  <ThemedImage
+    alt="The Android client dwelling on LONG_FAST during a scan, with fourteen minutes and fifty-eight seconds remaining"
+    style={{ maxHeight: "480px", width: "auto" }}
+    sources={{
+      light: useBaseUrl("/img/getting-started/android-discovery-scan.webp"),
+      dark: useBaseUrl("/img/getting-started/android-discovery-scan_dark.webp"),
+    }}
+  />
+  <ThemedImage
+    alt="The Apple client collecting data on Long Range - Fast during a scan, with fourteen minutes and forty seconds remaining and twelve nodes discovered"
+    style={{ maxHeight: "480px", width: "auto" }}
+    sources={{
+      light: useBaseUrl("/img/getting-started/ios-discovery-scan.webp"),
+      dark: useBaseUrl("/img/getting-started/ios-discovery-scan_dark.webp"),
+    }}
+  />
+</div>
+
+A scan reports what it heard on each preset, ranked by activity. Here the same area carries 60 nodes on Medium Fast and six on Long Fast, which is what a node still sitting on the default looks like in a community that has moved.
+
+<div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "1rem" }}>
+  <ThemedImage
+    alt="An Android scan summary ranking MEDIUM_FAST first with sixty unique nodes and LONG_FAST second with six"
+    style={{ maxHeight: "480px", width: "auto" }}
+    sources={{
+      light: useBaseUrl("/img/getting-started/android-discovery-results.webp"),
+      dark: useBaseUrl("/img/getting-started/android-discovery-results_dark.webp"),
+    }}
+  />
+  <ThemedImage
+    alt="An Apple scan summary listing Medium Range - Fast first with sixty nodes, Long Range - Fast with six, and Short Range - Fast with two"
+    style={{ maxHeight: "480px", width: "auto" }}
+    sources={{
+      light: useBaseUrl("/img/getting-started/ios-discovery-results.webp"),
+      dark: useBaseUrl("/img/getting-started/ios-discovery-results_dark.webp"),
+    }}
+  />
+</div>
+
+A preset scan listens on the default frequency slot with the default public channel, which is what makes one scan comparable across presets. A mesh whose primary channel carries a custom name sits on a different frequency slot, and one with a custom key cannot be decoded, so neither appears in a scan. An empty result means nothing is running on the public channel nearby, not that nothing is running.
+
+### Ask the local community
+
+Regional groups publish their settings to people joining, which is the only way to find a mesh a scan cannot see. The [local groups directory](/docs/community/local-groups) lists Discord servers, Telegram groups, and websites by region.
+
+## Joining once you know the settings
+
+Set the region first, then match the modem preset. Both live in the [LoRa configuration](/docs/configuration/radio/lora). Changing the preset takes effect immediately and does not require re-pairing.
+
+Where a mesh uses its own channel, add it as described in [channel configuration](/docs/configuration/radio/channels). The fastest route is a channel URL or QR code shared by the group, which carries the channel name, key, and LoRa settings together.
+
+## Keeping a private channel on the public mesh
+
+Wanting private conversations does not mean leaving the mesh. Matching the modem preset is what puts a node on the same mesh as everyone else; holding a channel's key is what lets it read that channel. Those are separate, so a node can carry the public channel and a private one at the same time.
+
+The trap is renaming the primary channel. Channel 0 feeds the frequency slot, so giving it a private name moves the node to a different frequency and leaves it alone on a mesh of one. That is the most common way a node ends up unreachable while looking correctly configured.
+
+Add private groups as secondary channels on 1 through 7 instead. They share the primary channel's LoRa settings, carry their own keys, and leave the frequency slot untouched, so the node stays reachable on the public mesh while those conversations stay unreadable to it. [Channel configuration](/docs/configuration/radio/channels) covers adding them and sharing the key.
+
+## Checking whether it worked
+
+Send a direct message rather than a channel message. The node a direct message is addressed to acknowledges it, and once the firmware exhausts its retransmissions without that acknowledgment, the client reports a delivery error.
+
+A channel message gets a weaker check. The clients request an acknowledgment on channel messages too, but no single node is expected to answer a broadcast, so the sending node counts it as delivered as soon as it overhears another node repeat it. If no node repeats it, the client reports a delivery error, the same as a failed direct message. The silent failure is narrower: one nearby node repeats the message, the client receives a success acknowledgment, and no node beyond that one ever receives it.
+
+## After changing settings
+
+The node database persists across a configuration change and across a reboot, so nodes heard on previous settings stay in the list and are no longer reachable. A node carried to an event and switched to the settings the event runs keeps every node it heard at home, listed with its name and last-heard time, looking exactly like a node still in reach.
+
+<div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "1rem" }}>
+  <ThemedImage
+    alt="An Android node list showing sixty-one nodes with varied battery levels, hop counts, signal readings and last-heard times"
+    style={{ maxHeight: "480px", width: "auto" }}
+    sources={{
+      light: useBaseUrl("/img/getting-started/android-node-list.webp"),
+      dark: useBaseUrl("/img/getting-started/android-node-list_dark.webp"),
+    }}
+  />
+  <ThemedImage
+    alt="An Apple node list showing sixty-one nodes with varied battery levels, hop counts and last-heard times"
+    style={{ maxHeight: "480px", width: "auto" }}
+    sources={{
+      light: useBaseUrl("/img/getting-started/ios-node-list.webp"),
+      dark: useBaseUrl("/img/getting-started/ios-node-list_dark.webp"),
+    }}
+  />
+</div>
+
+Firmware 2.8.1 and later records which LoRa settings each node was heard on, and clients use it to mark nodes not heard on your current LoRa settings. [Configuration tips](/docs/configuration/tips#presets-and-unreachable-nodes) covers what that means for a working mesh.
+
+## Next steps
+
+<div className="indexCtasBody">
+  <div className="split-container">
+    <div className="split-item">
+      <Link
+        className={"button button--outline button--lg cta--button"}
+        to={"/docs/configuration/radio/lora/"}
+      >
+        LoRa Configuration
+      </Link>
+    </div>
+
+    <div className="split-item">
+      <Link
+        className={"button button--outline button--lg cta--button"}
+        to={"/docs/overview/radio-settings/"}
+      >
+        Radio Settings
+      </Link>
+    </div>
+
+    <div className="split-item">
+      <Link
+        className={"button button--outline button--lg cta--button"}
+        to={"/docs/configuration/tips/"}
+      >
+        Configuration Tips
+      </Link>
+    </div>
+  </div>
+</div>

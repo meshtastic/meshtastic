@@ -119,6 +119,16 @@ There are 8 total messaging channels. Channel 0 is your PRIMARY channel, with ch
 
 This property, formerly known as "LoRa Channel Number", configures the frequency for the radio. Check out the [frequency calculator](/docs/overview/radio-settings#frequency-slot-calculator) to view the relationship between "frequency slot" and radio frequency.
 
+## Presets and unreachable nodes
+
+Changing the modem preset, region, or frequency slot moves the radio without moving the node database, which persists across configuration changes and reboots. Nodes heard before the change stay in the list afterward, indistinguishable from nodes that are still reachable.
+
+Firmware 2.8.1 and later records the LoRa settings each node was heard on, and clients use it to mark nodes not heard on your current LoRa settings. It reports only that a node has not been heard on the settings in force; a radio cannot observe a channel it is not tuned to, so nothing can say which settings that node is now using. Nodes that arrived over MQTT are never marked, and nothing is erased when settings change, so returning to a previous configuration restores the previous marks.
+
+Test reachability with a direct message rather than a channel message. A direct message is acknowledged by the node it was sent to and reports a delivery error once retransmits are exhausted. A channel message counts as delivered as soon as any one node repeats it, so a success there proves only that a nearby node heard it, not that it reached anyone beyond.
+
+Before changing a mesh-wide setting, confirm what the nodes around you are using. See [Joining your local mesh](/docs/getting-started/joining-your-local-mesh).
+
 ## Best Practices
 
 - If you are part of a large mesh and don't know what a setting does, don't change it (unless you're super curious).

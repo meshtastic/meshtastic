@@ -36,6 +36,8 @@ When enabled, the `Modem Preset` fields will be adhered to, else the `Bandwidth`
 
 Default is `unset` which equates to `LONG_FAST`. Presets are pre-defined modem settings (Bandwidth, Spread Factor, and Coding Rate) which influence both message speed and range. The default will provide a strong mixture of speed and range, for most users.
 
+Nodes only hear each other when they share a preset, and where the primary channel name is unchanged the preset also determines the frequency slot. [Joining your local mesh](/docs/getting-started/joining-your-local-mesh) covers how to find the preset in use near you.
+
 A US node whose region is first set from its own screen starts on `LONG_TURBO` instead. `LONG_TURBO` and `LONG_FAST` nodes can't hear each other, so set the preset to `LONG_FAST` to join a mesh that uses it.
 
 The presets are designed to provide further options for optimizing either speed (and reduced network congestion) or range, which can be useful for two real world scenarios:

@@ -63,6 +63,8 @@ While you can have a different PRIMARY channel and communicate over SECONDARY ch
 To ensure devices with different PRIMARY channel name transmit on the same frequency, you must explicitly set the LoRa frequency slot.
 :::
 
+Renaming the PRIMARY channel therefore moves a node off the frequency slot the rest of its area is using. Keeping private groups on SECONDARY channels avoids that, as covered in [Joining your local mesh](/docs/getting-started/joining-your-local-mesh).
+
 ## Channel Settings Values
 
 The Channel Settings options are: Name, PSK, Use AEAD, Downlink Enabled, Uplink Enabled, and Mute. Channel settings are embedded in the `Channel` protobuf as a `ChannelSettings` protobuf and sent as an admin message.
