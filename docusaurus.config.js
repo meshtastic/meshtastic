@@ -2,7 +2,7 @@ require("dotenv").config();
 
 import path from "node:path";
 import remarkDefList from "remark-deflist";
-import glossaryPlugin from "docusaurus-plugin-glossary";
+import { remarkPlugin as glossaryRemarkPlugin } from "docusaurus-plugin-glossary";
 const remarkBaseUrlAssets = require("./src/remark/base-url-assets.js");
 
 // Terms link and show a definition on hover. Acronym expansion stays off: it
@@ -179,7 +179,7 @@ const config = {
             remarkDefList,
             [remarkBaseUrlAssets, { baseUrl }],
             [
-              glossaryPlugin.remarkPlugin,
+              glossaryRemarkPlugin,
               { glossaryPath, routePath: glossaryRoutePath, siteDir: __dirname },
             ],
           ],

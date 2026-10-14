@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from "react";
 import { usePluginData } from "@docusaurus/useGlobalData";
+import useBrokenLinks from "@docusaurus/useBrokenLinks";
 
 // Anchor ids must match the ones @theme/GlossaryTerm links to, so a tooltip
 // click lands on the right entry.
@@ -35,6 +36,16 @@ export default function Glossary() {
   }, [filtered]);
 
   const letters = Object.keys(grouped).sort();
+
+  // Docusaurus only knows about anchors that headings or components register.
+  // Every term link on the site points at one of these ids, so register them
+  // all, not just the ones the search filter is showing, or the build reports
+  // each of those links as a broken anchor.
+  const brokenLinks = useBrokenLinks();
+  for (const t of terms) {
+    brokenLinks.collectAnchor(termId(t.term));
+    brokenLinks.collectAnchor(`letter-${t.term.charAt(0).toUpperCase()}`);
+  }
 
   return (
     <div className="glossary">

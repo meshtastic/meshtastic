@@ -1,0 +1,169 @@
+diff --git a/dist/chunk-AR3J6MU6.js b/dist/chunk-AR3J6MU6.js
+index 8a5b7ae4d319bb2b57a265f5a9ba9e414ac46b06..84f39d6ac74309f1d02b5b23f50efcbd095cbd30 100644
+--- a/dist/chunk-AR3J6MU6.js
++++ b/dist/chunk-AR3J6MU6.js
+@@ -228,6 +228,16 @@ function remarkGlossaryTerms({
+         skip.add(textNode);
+       });
+     });
++    // A glossary tooltip inside a JSX element (a CTA button, a card) puts a
++    // link inside a link: it swallows the click and shows a tooltip where the
++    // page means to offer navigation. The parent type check below only sees a
++    // text node's immediate parent, and MDX wraps JSX child text in a paragraph
++    // first, so nested text slipped through. Skip text under any JSX element.
++    visit(tree, ["mdxJsxFlowElement", "mdxJsxTextElement"], (jsxNode) => {
++      visit(jsxNode, "text", (textNode) => {
++        skip.add(textNode);
++      });
++    });
+     return skip;
+   }
+   const transformer = (tree) => {
+diff --git a/dist/chunk-D7FIV2VD.js b/dist/chunk-D7FIV2VD.js
+index ce02e84221eef628f93c3e5bb59ac8a7b13b1c4e..9a2635ef05c3ae7b644fc50279674352a6928c4c 100644
+--- a/dist/chunk-D7FIV2VD.js
++++ b/dist/chunk-D7FIV2VD.js
+@@ -60,14 +60,18 @@ function glossaryPlugin(context, options = {}) {
+           routePath
+         })
+       );
+-      addRoute({
+-        path: routePath,
+-        component: path.join(currentDir, "components/GlossaryPage.js"),
+-        exact: true,
+-        modules: {
+-          glossaryData: glossaryDataPath
+-        }
+-      });
++      // routePath: null lets a site render the glossary itself, in a page of its
++      // own, without this plugin also registering one at the same path.
++      if (routePath !== null) {
++        addRoute({
++          path: routePath,
++          component: path.join(currentDir, "components/GlossaryPage.js"),
++          exact: true,
++          modules: {
++            glossaryData: glossaryDataPath
++          }
++        });
++      }
+       setGlobalData({
+         terms: glossaryContent.terms || [],
+         routePath
+diff --git a/dist/index.cjs b/dist/index.cjs
+index 85bb435410e82ca1108eb986c346fcea1e265c39..5119631704cad84f3aa3ba62ed209c56042211ba 100644
+--- a/dist/index.cjs
++++ b/dist/index.cjs
+@@ -693,6 +693,16 @@ function remarkGlossaryTerms({
+         skip.add(textNode);
+       });
+     });
++    // A glossary tooltip inside a JSX element (a CTA button, a card) puts a
++    // link inside a link: it swallows the click and shows a tooltip where the
++    // page means to offer navigation. The parent type check below only sees a
++    // text node's immediate parent, and MDX wraps JSX child text in a paragraph
++    // first, so nested text slipped through. Skip text under any JSX element.
++    (0, import_unist_util_visit.visit)(tree, ["mdxJsxFlowElement", "mdxJsxTextElement"], (jsxNode) => {
++      (0, import_unist_util_visit.visit)(jsxNode, "text", (textNode) => {
++        skip.add(textNode);
++      });
++    });
+     return skip;
+   }
+   const transformer = (tree) => {
+@@ -824,14 +834,18 @@ function glossaryPlugin(context, options = {}) {
+           routePath
+         })
+       );
+-      addRoute({
+-        path: routePath,
+-        component: import_path2.default.join(currentDir, "components/GlossaryPage.js"),
+-        exact: true,
+-        modules: {
+-          glossaryData: glossaryDataPath
+-        }
+-      });
++      // routePath: null lets a site render the glossary itself, in a page of its
++      // own, without this plugin also registering one at the same path.
++      if (routePath !== null) {
++        addRoute({
++          path: routePath,
++          component: import_path2.default.join(currentDir, "components/GlossaryPage.js"),
++          exact: true,
++          modules: {
++            glossaryData: glossaryDataPath
++          }
++        });
++      }
+       setGlobalData({
+         terms: glossaryContent.terms || [],
+         routePath
+diff --git a/dist/preset.cjs b/dist/preset.cjs
+index b348d97c4e8b34c7b7e5f8cce861e80fff00dcf2..f0a374b11f73028e3607df4d199cc915ee4b8d85 100644
+--- a/dist/preset.cjs
++++ b/dist/preset.cjs
+@@ -687,6 +687,16 @@ function remarkGlossaryTerms({
+         skip.add(textNode);
+       });
+     });
++    // A glossary tooltip inside a JSX element (a CTA button, a card) puts a
++    // link inside a link: it swallows the click and shows a tooltip where the
++    // page means to offer navigation. The parent type check below only sees a
++    // text node's immediate parent, and MDX wraps JSX child text in a paragraph
++    // first, so nested text slipped through. Skip text under any JSX element.
++    (0, import_unist_util_visit.visit)(tree, ["mdxJsxFlowElement", "mdxJsxTextElement"], (jsxNode) => {
++      (0, import_unist_util_visit.visit)(jsxNode, "text", (textNode) => {
++        skip.add(textNode);
++      });
++    });
+     return skip;
+   }
+   const transformer = (tree) => {
+@@ -811,14 +821,18 @@ function glossaryPlugin(context, options = {}) {
+           routePath
+         })
+       );
+-      addRoute({
+-        path: routePath,
+-        component: import_path2.default.join(currentDir, "components/GlossaryPage.js"),
+-        exact: true,
+-        modules: {
+-          glossaryData: glossaryDataPath
+-        }
+-      });
++      // routePath: null lets a site render the glossary itself, in a page of its
++      // own, without this plugin also registering one at the same path.
++      if (routePath !== null) {
++        addRoute({
++          path: routePath,
++          component: import_path2.default.join(currentDir, "components/GlossaryPage.js"),
++          exact: true,
++          modules: {
++            glossaryData: glossaryDataPath
++          }
++        });
++      }
+       setGlobalData({
+         terms: glossaryContent.terms || [],
+         routePath
+diff --git a/dist/remark/glossary-terms.cjs b/dist/remark/glossary-terms.cjs
+index e416f4535a8daaf2f18533c4cd48a40ce4efbfd3..ffc976749b7f6cd3be4862b704a74b5089dadee4 100644
+--- a/dist/remark/glossary-terms.cjs
++++ b/dist/remark/glossary-terms.cjs
+@@ -676,6 +676,16 @@ function remarkGlossaryTerms({
+         skip.add(textNode);
+       });
+     });
++    // A glossary tooltip inside a JSX element (a CTA button, a card) puts a
++    // link inside a link: it swallows the click and shows a tooltip where the
++    // page means to offer navigation. The parent type check below only sees a
++    // text node's immediate parent, and MDX wraps JSX child text in a paragraph
++    // first, so nested text slipped through. Skip text under any JSX element.
++    (0, import_unist_util_visit.visit)(tree, ["mdxJsxFlowElement", "mdxJsxTextElement"], (jsxNode) => {
++      (0, import_unist_util_visit.visit)(jsxNode, "text", (textNode) => {
++        skip.add(textNode);
++      });
++    });
+     return skip;
+   }
+   const transformer = (tree) => {

@@ -1,0 +1,94 @@
+---
+title: "Let's talk about 2.8"
+description: "2.8.1 alpha replaces the revoked 2.8.0 and isn't ready for wide deployment yet. Here's what 2.8 brings: signed packets, private-by-default location, and support for much larger meshes."
+slug: lets-talk-about-2-8
+authors: crichton
+tags: [meshtastic, firmware, release, security]
+date: 2026-10-08T09:00
+hide_table_of_contents: false
+image: "/img/blog/lets-talk-about-2-8.png"
+---
+
+The first 2.8 alpha didn't last long. A problem turned up in its packet signing code, so 2.8.0 is revoked and 2.8.1 replaces it. If any of your nodes run 2.8.0, update them to 2.8.1.
+
+**2.8.1 is an alpha and isn't ready for wide deployment.** Most people should wait. Install it if you're comfortable running into bugs and reporting them.
+
+The revocation shouldn't overshadow the release. 2.8 signs packets, keeps your location private by default, and handles much larger meshes. Here's what changed, and what to know before you upgrade from 2.7.
+
+{/* truncate */}
+
+## Why 2.8.0 was revoked
+
+2.8.1 fixes the signing problem by changing what a signature covers. Its signatures aren't compatible with 2.8.0, so signed broadcasts don't pass between 2.8.0 and 2.8.1 nodes. **Do not leave any node on 2.8.0.**
+
+Nodes on 2.7 don't sign packets, so they keep talking to 2.8.1 nodes.
+
+## Long Turbo is the US default
+
+FCC rules for full-power operation at 902–928 MHz (§15.247) set a minimum bandwidth of 500 kHz. Long Fast uses 250 kHz. Long Turbo uses 500 kHz, so a new US node starts on a preset that meets the requirement.
+
+The default applies only when you set the region to US on the device screen for the first time. Upgrading leaves your preset alone. The default doesn't lock you in, and you can change the preset at any time.
+
+Wide channels can carry a large mesh. [YYCMesh](https://yycmesh.com) in Calgary runs mostly the same settings as Long Turbo, 500 kHz at SF11 with a different coding rate, and sees more than 300 nodes on its public channel. Read their [500 kHz field report](https://yycmesh.com/blog/500khz-field-report) for the setup and results.
+
+Experiment to find what works in your area, then share your results in the comments.
+
+## Before you upgrade from 2.7
+
+Back up your configuration first. 2.7 and 2.8 nodes still talk to each other.
+
+- **Your node number changes.** It's derived from the node's public key. Other nodes see a new node, and your old entry stays in their lists until it ages out. Update favorites, MQTT topics, and dashboards that use the old number.
+- **Expect to reconfigure.** The filesystem format changed. If the node bootloops after upgrading, do a full erase and flash, then restore your configuration.
+- **Position and telemetry broadcasts are off.** Turn them back on if other people rely on them. Precise position isn't sent on public channels. Use a private channel to share an exact location.
+- **Long names are limited to 24 bytes.**
+- **Removed:** the nRF52832 target, the UA_868 region (nodes move to EU_868), and ATAK's unishox2 compression. Nodes on firmware too old to track hops aren't relayed.
+
+## What's new
+
+### Signed packets
+
+Nodes sign broadcasts with their identity key, so a receiver can confirm who sent them. Direct messages get verified delivery when both nodes hold each other's keys.
+
+The packet signature policy defaults to Compatible, which still accepts unsigned packets from older nodes. Balanced requires signatures from nodes that have signed before. Strict accepts only packets it can verify.
+
+Licensed amateur operators get signed plaintext. Messages are authenticated without being encrypted.
+
+### Geofenced waypoints
+
+Give a waypoint a radius or a rectangle, and your node alerts you when another node crosses it. Alerts show on the screen and can drive a buzzer or vibration motor.
+
+### Larger meshes
+
+The node database sizes itself to each board's memory. Traffic management filters duplicate packets and limits rates. Hop limits drop while the channel is congested and recover when it clears.
+
+### Radio
+
+- Tiny Fast and Tiny Slow presets, and spreading factors 5 and 6 on supported hardware.
+- Medium Turbo works.
+- LoRa changes apply without a reboot.
+- Amateur regions for 2m, 1.25m, and 70cm, with Ham Mode setup on the device.
+- A receive-only mode. The screen shows **Transmit Disabled** while it's on.
+
+### Screens
+
+BaseUI shows color on TFT screens. InkHUD adds offline map tiles and touch support.
+
+### Fixes
+
+- Fixed-position nodes broadcast their configured position. 2.7.24 through 2.7.26 sent 0,0.
+- Flash corruption that could erase an nRF52 node's region, channels, and keys (critical error #13) is fixed.
+- A direct message's acknowledgment reaches the sender even when the recipient doesn't share the channel.
+- Custom MQTT root topics survive a region change.
+- The BME680 uses open code instead of Bosch's library, saving about 39 KB of flash on a RAK4631. Air quality readings won't match your old numbers.
+
+### Hardware
+
+2.8 adds the T-Watch Ultra, ThinkNode M8 and M9, Wio Tracker L1 Pro 1W and L2, T-Beam BPF, Heltec RC boards, Meshnology W10 and W12, RAK3401 with the LR2021 radio, Axiometa Genesis Mini, and Nucleo WL55JC.
+
+## Get 2.8.1
+
+Update your clients, then flash 2.8.1 from the [Web Flasher](https://flasher.meshtastic.org). Report problems on [GitHub](https://github.com/meshtastic/firmware/issues).
+
+## Watch for the livestream
+
+The Meshtastic team is planning a livestream to walk through the features and changes in 2.8. Watch for the announcement.
