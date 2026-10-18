@@ -1,7 +1,8 @@
 ---
 title: Adding a Feature Module
 sidebar_position: 3
-last_updated: 2026-07-08
+last_updated: 2026-08-29
+description: Step-by-step guide for creating a new KMP feature module — module directory, build script, DI, routes, navigation entries, and the checklist.
 parent: Developer Guide
 ---
 
@@ -9,13 +10,13 @@ parent: Developer Guide
 
 Step-by-step guide for creating a new KMP feature module in the Meshtastic project.
 
-## 1. Create the Module Directory
+## Create the Module Directory
 
-```bash
+```shell
 mkdir -p feature/my-feature/src/{commonMain,commonTest,androidMain,jvmMain,iosMain}/kotlin/org/meshtastic/feature/myfeature
 ```
 
-## 2. Create `build.gradle.kts`
+## Create `build.gradle.kts`
 
 ```kotlin
 plugins {
@@ -45,7 +46,7 @@ kotlin {
 }
 ```
 
-## 3. Register in `settings.gradle.kts`
+## Register in `settings.gradle.kts`
 
 Add your module to the main `include()` block:
 
@@ -56,7 +57,7 @@ include(
 )
 ```
 
-## 4. Create the DI Module
+## Create the DI Module
 
 `src/commonMain/kotlin/org/meshtastic/feature/myfeature/di/FeatureMyFeatureModule.kt`:
 
@@ -71,13 +72,13 @@ import org.koin.core.annotation.Module
 class FeatureMyFeatureModule
 ```
 
-## 5. Register DI in App/Desktop
+## Register DI in App/Desktop
 
 Add your module to:
 - `androidApp/src/main/kotlin/org/meshtastic/app/di/AppKoinModule.kt`
 - `desktopApp/src/main/kotlin/org/meshtastic/desktop/di/DesktopKoinModule.kt`
 
-## 6. Add Navigation Routes
+## Add Navigation Routes
 
 In `core/navigation/src/commonMain/kotlin/org/meshtastic/core/navigation/Routes.kt`:
 
@@ -89,7 +90,7 @@ sealed interface MyFeatureRoute : Route {
 }
 ```
 
-## 7. Create Navigation Entries
+## Create Navigation Entries
 
 `src/commonMain/kotlin/org/meshtastic/feature/myfeature/navigation/MyFeatureNavigation.kt`:
 
@@ -102,13 +103,24 @@ import androidx.navigation3.runtime.NavKey
 import org.meshtastic.core.navigation.MyFeatureRoute
 
 fun EntryProviderScope<NavKey>.myFeatureGraph(backStack: NavBackStack<NavKey>) {
+    entry<MyFeatureRoute.MyFeatureGraph> {
+        MyFeatureScreen(onNavigateUp = { backStack.removeLastOrNull() })
+    }
     entry<MyFeatureRoute.MyFeatureHome> {
-        MyFeatureScreen()
+        MyFeatureScreen(onNavigateUp = { backStack.removeLastOrNull() })
     }
 }
 ```
 
-## 8. Source Set Guidelines
+Both the graph sentinel (`MyFeatureRoute.MyFeatureGraph`) and the primary screen (`MyFeatureRoute.MyFeatureHome`)
+navigate to the same composable, so the feature is reachable via either a top-level push or a deep-link graph
+push — the same pattern `feature:wifi-provision` and `feature:firmware` use.
+
+Then wire it up: call `myFeatureGraph(backStack)` from the shared `entryProvider<NavKey> { }` block in
+`androidApp`'s `Main.kt` and `desktopApp`'s `DesktopNavigation.kt`, alongside the other features' entries
+functions. See [Navigation Entry Registration](navigation-and-deep-links.md#navigation-entry-registration).
+
+## Source Set Guidelines
 
 | Source Set | Contains |
 |-----------|----------|
@@ -118,14 +130,14 @@ fun EntryProviderScope<NavKey>.myFeatureGraph(backStack: NavBackStack<NavKey>) {
 | `iosMain` | iOS-specific implementations |
 | `commonTest` | Shared unit tests |
 
-## 9. Testing Expectations
+## Testing Expectations
 
 Every feature module should have:
 - Unit tests in `commonTest` for business logic
 - UI tests using `compose-multiplatform-ui-test` where appropriate
 - No test dependency on other feature modules
 
-## 10. Checklist
+## Checklist
 
 - [ ] Module directory created
 - [ ] `build.gradle.kts` with correct plugins and dependencies
@@ -136,6 +148,3 @@ Every feature module should have:
 - [ ] Navigation entries registered
 - [ ] `./gradlew kmpSmokeCompile` passes
 - [ ] `./gradlew :feature:my-feature:allTests` passes
-
----
-

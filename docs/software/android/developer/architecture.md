@@ -1,17 +1,18 @@
 ---
 title: Architecture
 sidebar_position: 1
-last_updated: 2026-06-11
+last_updated: 2026-09-11
+description: How the Android and Desktop apps split into androidApp/desktopApp, feature modules, and core modules, and how radio control and navigation are layered across them.
 parent: Developer Guide
 ---
 
 # Architecture
 
-The Meshtastic Android and Desktop apps follow a modular Kotlin Multiplatform (KMP) architecture with clear layer boundaries (iOS is currently a compile-only validation target — there is no shipping iOS app yet).
+The Meshtastic Android and Desktop apps follow a modular Kotlin Multiplatform (KMP) architecture with clear layer boundaries. iOS is a compile-only validation target; no iOS app ships.
 
 ## Layer Overview
 
-```
+```text
 ┌─────────────────────────────────────────────┐
 │          androidApp / desktopApp            │  Platform entry points
 ├─────────────────────────────────────────────┤
@@ -39,7 +40,7 @@ The Desktop (Linux/macOS/Windows) entry point:
 - Compose Desktop window management
 - Desktop-specific DI (`DesktopKoinModule`)
 - Platform stubs for Android-only capabilities
-- BLE (Kable), Serial, and TCP transport implementations
+- `DesktopRadioTransportFactory` and a jSerialComm-based serial transport; the BLE and TCP transport implementations it wires up are shared code — they live in `core:network`, built on `core:ble`'s BLE primitives — not desktopApp-owned
 
 ### `feature/*` — Feature Modules
 
@@ -50,15 +51,15 @@ Each `feature/` module owns a vertical slice of functionality:
 | `feature:intro` | Onboarding/welcome flow |
 | `feature:messaging` | Messages, channels, contacts, quick chat |
 | `feature:connections` | Bluetooth/USB/TCP connection management |
-| `feature:map` | Map display, waypoints |
+| `feature:map` | Map display, waypoints — shared state, policy and the waypoint editor |
+| `feature:map-maplibre` | MapLibre map surfaces — used by the `fdroid` flavor and Desktop; the `google` flavor uses Google Maps instead. Tile-source definitions and the custom-source editor are in `feature:map`, so both renderers share them |
 | `feature:node` | Node list, node detail, metrics |
 | `feature:settings` | All configuration screens |
 | `feature:firmware` | Firmware update flow |
 | `feature:docs` | In-app documentation browser |
-| `feature:wifi-provision` | WiFi provisioning |
+| `feature:wifi-provision` | Wi-Fi provisioning |
 | `feature:widget` | Android home screen widgets |
 | `feature:discovery` | Mesh network discovery |
-| `feature:car` | Android Auto / Car App Library — google flavor only, conditionally registered in the google `FlavorModule` |
 
 Feature modules:
 - Use the `meshtastic.kmp.feature` convention plugin
@@ -93,13 +94,13 @@ Shared infrastructure used by all features:
 | `core:testing` | Test utilities |
 | `core:konsist` | Konsist architecture/convention tests |
 
-Protobuf models are no longer a local module — they come from the external `org.meshtastic:protobufs` Maven artifact (pinned in `gradle/libs.versions.toml`).
+Protobuf models come from the external `org.meshtastic:protobufs` Maven artifact (pinned in `gradle/libs.versions.toml`).
 
 ## KMP Source Sets
 
 Each module uses the standard KMP source set hierarchy:
 
-```
+```text
 src/
 ├── commonMain/     ← Shared code (all platforms)
 ├── commonTest/     ← Shared tests
@@ -170,6 +171,3 @@ Navigation uses **Navigation 3** with typed routes:
 - Each feature registers its own navigation entries
 
 See [Navigation & Deep Links](navigation-and-deep-links.md) for details.
-
----
-

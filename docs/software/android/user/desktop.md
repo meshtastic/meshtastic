@@ -1,41 +1,40 @@
 ---
 title: Desktop App
 sidebar_position: 14
-last_updated: 2026-07-07
+last_updated: 2026-09-11
 description: Install and use the Meshtastic Desktop app on Linux, macOS, and Windows — connections, feature parity, and keyboard shortcuts.
 parent: User Guide
 ---
 
 # Desktop App
 
-The Meshtastic Desktop application shares its core codebase with Android via Kotlin Multiplatform. Most features work identically on Linux, macOS, and Windows.
+This page covers installing the Meshtastic desktop app, connecting a radio, and how it differs from Android. The desktop app shares its core codebase with Android via Kotlin Multiplatform, so most features work identically across Linux, macOS, and Windows.
 
 ## Installation
 
 ### Linux
 
-- Download the `.deb` or `.AppImage` package from the releases page
+- Download the `.deb`, `.rpm`, or `.AppImage` package from the [releases page](https://github.com/meshtastic/Meshtastic-Android/releases)
+- Or install from Flathub: `flatpak install flathub org.meshtastic.MeshtasticDesktop`
 - Or build from source using `./gradlew :desktopApp:run`
 
 ### macOS
 
-- Download the `.dmg` package from releases
+- Download the `.dmg` package from the [releases page](https://github.com/meshtastic/Meshtastic-Android/releases)
 - Or build from source
 
 ### Windows
 
-- Download the `.msi` installer from releases
+- Download the `.msi` or `.exe` installer from the [releases page](https://github.com/meshtastic/Meshtastic-Android/releases)
 - Or build from source
 
 ## Connecting Your Radio
 
 ### USB Serial (Primary)
 
-The most reliable connection method on Desktop:
+The most reliable connection method on desktop:
 
-1. Connect your Meshtastic radio via USB cable.
-2. The app should detect the serial port automatically.
-3. If not detected, select the correct serial port from the Connect menu.
+Connect your radio via USB. The app detects the serial port automatically; if it doesn't, select the port from the Connect menu.
 
 ### TCP/IP
 
@@ -46,11 +45,10 @@ For network-connected radios:
 
 ### Bluetooth (BLE)
 
-Bluetooth Low Energy is supported on Desktop via the [Kable](https://github.com/JuulLabs/kable) library:
+Bluetooth Low Energy is supported on desktop via the [Kable](https://github.com/JuulLabs/kable) library:
 
-1. Ensure your system has a Bluetooth adapter.
-2. The app scans for nearby Meshtastic radios automatically.
-3. Select your device from the Connect screen.
+1. Ensure your system has a Bluetooth adapter. The app scans for nearby Meshtastic radios automatically.
+2. Select your radio from the Connect screen.
 
 ## Feature Parity
 
@@ -58,13 +56,14 @@ Bluetooth Low Energy is supported on Desktop via the [Kable](https://github.com/
 |---------|---------|---------|-------|
 | Messaging | ✓ | ✓ | Full parity |
 | Node List | ✓ | ✓ | Full parity |
-| Map | ✓ | ◐ | Map tab exists on desktop, but the interactive map view is Android-only |
+| Map | ✓ | ✓ | Interactive MapLibre map, with base map and overlay pickers and custom tile sources. Offline terrain (hillshade and contours) can be downloaded; offline base-map packs and local `.mbtiles` archives cannot |
+| Map layers (`.kml`/`.kmz`/GeoJSON) | ✓ | ✓ | Same layer store and sheet as Android; imported files draw on the desktop map |
+| Site Planner | ✓ | ✓* | *Opens in your browser on desktop; the estimate is not drawn on the desktop map |
 | Settings | ✓ | ✓ | Full parity |
 | Bluetooth (BLE) | ✓ | ✓ | Via Kable on desktop |
-| Firmware Update | ✓ | ✓ | In-app USB, BLE, and Wi-Fi (ESP32) update all work the same as Android |
+| Firmware Update | ✓ | ✓ | In-app USB, BLE, and Wi-Fi (ESP32) update work the same as Android. The USB maintenance flow — nRF52/RP2040 factory erase and bootloader upgrade — is Android-only |
 | Notifications | ✓ | ✓ | Native OS notifications |
 | Widgets | ✓ | ✗ | Android-only |
-| Android Auto | ✓ | ✗ | Android-only — not available on Desktop or iOS |
 | AI Assistant (Chirpy) | ✓* | ✗ | Google flavor Android only |
 | App Functions (system AI) | ✓† | ✗ | Google flavor Android only |
 
@@ -74,7 +73,7 @@ Bluetooth Low Energy is supported on Desktop via the [Kable](https://github.com/
 
 ## UI Differences
 
-The Desktop app uses the same Compose Multiplatform UI with adaptations for larger screens and desktop interaction.
+The desktop app uses the same Compose Multiplatform UI with adaptations for larger screens and desktop interaction.
 
 ### Keyboard Shortcuts
 
@@ -82,7 +81,7 @@ Shortcuts use **⌘** (Command) on macOS and **Ctrl** on Windows and Linux. (The
 
 | Shortcut | Action |
 |----------|--------|
-| **⌘/Ctrl+Q** | Quit the application |
+| **⌘/Ctrl+Q** | Quit the app |
 | **⌘/Ctrl+,** | Open Settings |
 | **⌘/Ctrl+1** | Switch to Messages tab |
 | **⌘/Ctrl+2** | Switch to Nodes tab |
@@ -93,17 +92,17 @@ Shortcuts use **⌘** (Command) on macOS and **Ctrl** on Windows and Linux. (The
 ### Window & System Tray
 
 - **Window resizing** — responsive layout adapts to window dimensions
-- **System tray** — minimize to system tray for background mesh operation
+- **System tray** — closing the window minimizes to the system tray for background mesh operation. On a desktop environment with no tray, there is nowhere to minimize to, so closing quits the app instead
 - **Tray menu** — right-click the tray icon to show window or quit
 - **Mouse interaction** — hover states and standard desktop navigation
 
 ### Notification Preferences
 
-The Desktop app provides in-app toggles for controlling which notifications are shown — messages, new nodes, and low battery alerts. Access these from **Settings → Notifications** within the app.
+The desktop app provides in-app toggles for controlling which notifications are shown. Find them in the **App Notifications** section of the Settings screen: **Direct message notifications**, **New node notifications**, and **Low battery notifications**.
 
 ## Built-in Documentation Browser
 
-The Desktop app includes a built-in documentation browser for quick access to help content without leaving the application.
+The desktop app includes a built-in documentation browser for quick access to help content without leaving the app.
 
 ![Docs browser with table of contents](/img/android/docs/docs-browser_toc.webp)
 
@@ -117,19 +116,27 @@ Individual doc pages render with full formatting:
 
 ## Building from Source
 
-```bash
+```shell
 git clone https://github.com/meshtastic/Meshtastic-Android.git
 cd Meshtastic-Android
 ./gradlew :desktopApp:run
 ```
 
 Requirements:
-- JDK 21
+- JDK 25 (Gradle can provision the toolchain itself via foojay)
 - No Android SDK required for desktop-only builds
 
 ## Known Limitations
 
-- The interactive map view is Android-only — the Map tab is present but does not render a map on desktop
+- Offline base-map downloads and local `.mbtiles` archives are not available on desktop. Offline terrain is — see [Map & Waypoints](map-and-waypoints.md).
+- `.kml`/`.kmz`/GeoJSON layer import works — see
+  [Map & Waypoints](map-and-waypoints.md#map-layers). Site Planner opens in your browser
+  rather than in the app; to bring its coverage estimate onto the map, click the transmitter pin
+  in the browser and use the planner's GeoJSON export, then add the file as a layer — not the KML
+  export, which is a ground-overlay image this map cannot draw. Custom network tile sources work
+  too — see [Map & Waypoints](map-and-waypoints.md#adding-your-own-tile-source)
+- The USB maintenance flow — nRF52/RP2040 factory erase and bootloader upgrade — is Android-only, and the
+  desktop app does not offer it. Use the [Web Flasher](https://flasher.meshtastic.org) instead
 - Some Android-specific features (widgets, specific notification channels) are unavailable
 - Performance may vary on low-spec hardware running Compose Desktop
 - BLE bonding is not yet supported on desktop (pairing works without bonding)
@@ -137,7 +144,5 @@ Requirements:
 ## Related Topics
 
 - [Connections](connections.md) — connection methods overview
-- [Firmware Updates](firmware.md) — USB, BLE, and Wi-Fi update all work the same as on Android
-
----
-
+- [Firmware Updates](firmware.md) — in-app USB, BLE, and Wi-Fi update all work the same as on Android
+- [Map & Waypoints](map-and-waypoints.md) — base maps, layers, custom tile sources, and what the desktop map does not do
