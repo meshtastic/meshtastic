@@ -1,7 +1,8 @@
 ---
 title: Contributing
 sidebar_position: 8
-last_updated: 2026-07-08
+last_updated: 2026-09-11
+description: Branch naming, commit style, PR workflow, and the verification gates a change must pass before merge.
 parent: Developer Guide
 ---
 
@@ -43,7 +44,7 @@ Examples:
 ## Commit Messages
 
 Follow conventional commit style:
-```
+```text
 feat(docs): add in-app documentation browser
 fix(ble): handle reconnection timeout
 refactor(navigation): migrate to typed routes
@@ -71,7 +72,7 @@ Before submitting:
 - **Line length:** 120 characters maximum
 
 Run formatting:
-```bash
+```shell
 ./gradlew spotlessApply
 ```
 
@@ -86,20 +87,19 @@ Run formatting:
 ## Verification
 
 Full pre-merge verification:
-```bash
+```shell
 ./gradlew spotlessCheck detekt kmpSmokeCompile test allTests
 ```
 
 For docs-specific changes, also run:
-```bash
+```shell
 ./gradlew generateDocsBundle validateDocsBundle
 ```
+
+Prose in `docs/en/` follows Section 11 of the [Meshtastic Client Design Standards](https://github.com/meshtastic/design/tree/master/standards) — see [Documentation Style](documentation-style.md) for what's specific to this repository.
 
 ## Getting Help
 
 - [Meshtastic Discord](https://discord.gg/meshtastic) — `#app-development` channel
 - GitHub Issues — for bug reports and feature requests
 - GitHub Discussions — for questions and ideas
-
----
-
