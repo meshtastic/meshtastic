@@ -35,6 +35,9 @@ const REPO_ROOT = path.resolve(__dirname, "..");
 const SRC_DOCS_DIR = path.join(APPLE_REPO_PATH, "docs");
 const DEST_DOCS_DIR = path.join(REPO_ROOT, "docs", "software", "apple");
 const DEST_IMAGES_DIR = path.join(REPO_ROOT, "static", "img", "apple");
+// Docusaurus version snapshots. They link the same /img/apple/ files as the
+// current pages, but no sync rewrites them, so their images must outlive the app's.
+const VERSIONED_DOCS_DIR = path.join(REPO_ROOT, "versioned_docs");
 
 const IMAGE_EXTENSIONS = new Set([
   ".png",
@@ -65,6 +68,30 @@ function collectFiles(dir) {
   }
   walk(dir);
   return results;
+}
+
+/**
+ * Collect the /img/apple/ basenames that frozen version snapshots still link,
+ * through Markdown image syntax or a useBaseUrl() call in raw HTML. Pruning one
+ * of these breaks the site build, since Docusaurus fails on a Markdown image it
+ * cannot resolve.
+ */
+function collectVersionedImageReferences() {
+  const names = new Set();
+  const re = /\/img\/apple\/([^)"'`\s>]+)/g;
+  for (const file of collectFiles(VERSIONED_DOCS_DIR)) {
+    const ext = path.extname(file).toLowerCase();
+    if (ext !== ".md" && ext !== ".mdx") continue;
+    const content = fs.readFileSync(
+      path.join(VERSIONED_DOCS_DIR, file),
+      "utf8",
+    );
+    let match;
+    while ((match = re.exec(content)) !== null) {
+      names.add(path.basename(match[1]));
+    }
+  }
+  return names;
 }
 
 /**
@@ -701,13 +728,18 @@ async function main() {
   }
 
   // Images — walk the full destination tree so subdirectories are covered.
+  // Keep any image a versioned_docs/ snapshot still links.
   const existingImageFiles = collectFiles(DEST_IMAGES_DIR).filter((f) =>
     IMAGE_EXTENSIONS.has(path.extname(f).toLowerCase()),
   );
+  const versionedImageBasenames = collectVersionedImageReferences();
 
   for (const file of existingImageFiles) {
     const basename = path.basename(file);
-    if (!sourceImageBasenames.has(basename)) {
+    if (sourceImageBasenames.has(basename)) continue;
+    if (versionedImageBasenames.has(basename)) {
+      console.log(`[KEEP]   img: ${basename} (linked from versioned_docs)`);
+    } else {
       fs.unlinkSync(path.join(DEST_IMAGES_DIR, file));
       console.log(`[REMOVE] img: ${basename}`);
     }
