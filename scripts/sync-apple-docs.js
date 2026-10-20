@@ -88,7 +88,8 @@ function collectVersionedImageReferences() {
     );
     let match;
     while ((match = re.exec(content)) !== null) {
-      names.add(path.basename(match[1]));
+      // Drop any ?query or #fragment so the name matches the file on disk.
+      names.add(path.basename(match[1].split(/[?#]/, 1)[0]));
     }
   }
   return names;
