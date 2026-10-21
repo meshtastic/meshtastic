@@ -68,34 +68,12 @@ Sets which packets the node [signs](/docs/overview/encryption#signed-broadcasts)
 | Policy                 | Signs outgoing packets | Accepts unsigned packets                                                                                   |
 | ---------------------- | ---------------------- | ---------------------------------------------------------------------------------------------------------- |
 | `COMPATIBLE` (default) | No                     | Yes                                                                                                        |
-| `BALANCED`             | Yes*                   | Yes, but ignores unsigned name and role changes from nodes that have signed before                         |
-| `STRICT`               | Yes*                   | No*                                                                                                        |
-
-* Direct Messages and ACKs are authenticated via PKC rather than XEdDSA. Some packets are never signed:
-
-- Packets on a channel with AES-CCM enabled. The channel's authentication tag already proves the sender holds the channel key, so every policy accepts them unsigned.
-- Traceroutes, because every hop that relays one changes it.
-- Packets too large to carry the 66-byte signature.
-
-In [licensed mode](/docs/configuration/radio/user#is-licensed-ham), direct messages aren't encrypted, so `BALANCED` and `STRICT` also sign packets sent to a single node. Acknowledgments carry an acknowledgment proof instead of a signature.
+| `BALANCED`             | Yes[^1]                | Yes, but ignores unsigned name and role changes from nodes that have signed before                         |
+| `STRICT`               | Yes[^1]                | No[^1]                                                                                                     |
 
 Under every policy, the node drops a packet whose signature is malformed or doesn't match the sender's known public key. A signature from a node whose public key isn't known yet can't be checked: `COMPATIBLE` and `BALANCED` treat the packet as unsigned, and `STRICT` drops it.
 
-#### Balanced
-
-`BALANCED` ignores an unsigned NodeInfo that would change the name or role of a node that has signed before, except on an AES-CCM channel. When this happens, the client shows a notification, at most once an hour. To accept that node's unsigned updates again, remove it from the node list.
-
-Firmware older than 2.8 strips signatures when it relays a packet, so a signed packet relayed by an older node arrives unsigned. A node that signed on earlier 2.8 firmware and now uses `COMPATIBLE` also sends unsigned updates. Use `BALANCED` only on a mesh where no relays run firmware older than 2.8.
-
-:::note
-
-For now, `BALANCED` accepts unsigned packets, because older firmware strips signatures when rebroadcasting messages. A future firmware release will change `BALANCED` to drop unsigned packets from known signers.
-
-:::
-
-#### Strict
-
-`STRICT` drops every unsigned packet except the ones listed in the table. Nodes on `COMPATIBLE`, nodes running firmware older than 2.8, and STM32WL-based nodes don't sign, so `STRICT` drops their broadcasts. It also drops broadcasts too large to carry a signature.
+Firmware older than 2.8 strips signatures when it relays a packet, so a signed packet relayed by an older node arrives unsigned. Due to this, `BALANCED` accepts unsigned packets to ease the migration. In a future update, it will be updated to drop unsigned packets from known signers.
 
 Firmware builds without packet signing, such as STM32WL builds, always use `COMPATIBLE`.
 
@@ -218,3 +196,5 @@ To restore your keys you may:
 
 - Use the Meshtastic CLI to run `meshtastic --configure config_backup.yaml` - This is the fastest way to get your entire node back to where you left it!
 - Manually paste or retype the keys into the client app from your saved location.
+
+[^1]: Traceroutes and oversize packets are unsigned for technical reasons, while Acknowledgments carry a smaller proof instead of a signature. Direct Messages are authenticated via PKC rather than XEdDSA.
