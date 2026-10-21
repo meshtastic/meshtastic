@@ -65,21 +65,21 @@ Acceptable values: `COMPATIBLE`, `BALANCED`, or `STRICT`
 
 Sets which packets the node [signs](/docs/overview/encryption#signed-broadcasts), and what it does with packets that carry no signature. This section describes firmware 2.8.2 and later.
 
-| Policy                 | Signs                                     | Accepts unsigned packets                                                                                   |
-| ---------------------- | ----------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
-| `COMPATIBLE` (default) | Nothing                                   | Yes                                                                                                        |
-| `BALANCED`             | Broadcasts, NodeInfo and position packets | Yes, but ignores unsigned name and role changes from nodes that have signed before                         |
-| `STRICT`               | Broadcasts, NodeInfo and position packets | Only encrypted direct messages, acknowledgments, traceroutes, key verification and AES-CCM channel packets |
+| Policy                 | Signs outgoing packets | Accepts unsigned packets                                                                                   |
+| ---------------------- | ---------------------- | ---------------------------------------------------------------------------------------------------------- |
+| `COMPATIBLE` (default) | No                     | Yes                                                                                                        |
+| `BALANCED`             | Yes*                   | Yes, but ignores unsigned name and role changes from nodes that have signed before                         |
+| `STRICT`               | Yes*                   | No*                                                                                                        |
 
-Under every policy, the node drops a packet whose signature is malformed or doesn't match the sender's known public key. A signature from a node whose public key isn't known yet can't be checked: `COMPATIBLE` and `BALANCED` treat the packet as unsigned, and `STRICT` drops it.
-
-Some packets are never signed:
+* Direct Messages and ACKs are authenticated via PKC rather than XEdDSA. Some packets are never signed:
 
 - Packets on a channel with AES-CCM enabled. The channel's authentication tag already proves the sender holds the channel key, so every policy accepts them unsigned.
 - Traceroutes, because every hop that relays one changes it.
 - Packets too large to carry the 66-byte signature.
 
 In [licensed mode](/docs/configuration/radio/user#is-licensed-ham), direct messages aren't encrypted, so `BALANCED` and `STRICT` also sign packets sent to a single node. Acknowledgments carry an acknowledgment proof instead of a signature.
+
+Under every policy, the node drops a packet whose signature is malformed or doesn't match the sender's known public key. A signature from a node whose public key isn't known yet can't be checked: `COMPATIBLE` and `BALANCED` treat the packet as unsigned, and `STRICT` drops it.
 
 #### Balanced
 
@@ -89,7 +89,7 @@ Firmware older than 2.8 strips signatures when it relays a packet, so a signed p
 
 :::note
 
-For now, `BALANCED` accepts unsigned packets, because older firmware strips signatures. A future firmware release will change `BALANCED` to drop those packets.
+For now, `BALANCED` accepts unsigned packets, because older firmware strips signatures when rebroadcasting messages. A future firmware release will change `BALANCED` to drop unsigned packets from known signers.
 
 :::
 
