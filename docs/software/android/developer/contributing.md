@@ -1,7 +1,8 @@
 ---
 title: Contributing
 sidebar_position: 8
-last_updated: 2026-07-08
+last_updated: 2026-09-28
+description: Branch naming, commit style, PR workflow, and the verification gates a change must pass before merge.
 parent: Developer Guide
 ---
 
@@ -36,14 +37,14 @@ Examples:
 
 1. **Fork** the repository (external contributors) or create a branch (maintainers).
 2. **Implement** your changes following the architecture guidelines.
-3. **Test** locally: `./gradlew spotlessCheck detekt kmpSmokeCompile test allTests`
+3. **Test** locally: `./gradlew spotlessCheck detekt detektTypeResolved kmpSmokeCompile test allTests`
 4. **Commit** with clear, descriptive messages.
 5. **Push** and open a Pull Request.
 
 ## Commit Messages
 
 Follow conventional commit style:
-```
+```text
 feat(docs): add in-app documentation browser
 fix(ble): handle reconnection timeout
 refactor(navigation): migrate to typed routes
@@ -56,7 +57,7 @@ Before submitting:
 - [ ] Code compiles on all targets: `./gradlew kmpSmokeCompile`
 - [ ] All tests pass: `./gradlew allTests`
 - [ ] Code style passes: `./gradlew spotlessCheck`
-- [ ] Static analysis passes: `./gradlew detekt`
+- [ ] Static analysis passes: `./gradlew detekt detektTypeResolved`
 - [ ] New code has appropriate test coverage
 - [ ] No `android.*` imports in `commonMain`
 - [ ] Koin modules registered if new DI is added
@@ -71,7 +72,7 @@ Before submitting:
 - **Line length:** 120 characters maximum
 
 Run formatting:
-```bash
+```shell
 ./gradlew spotlessApply
 ```
 
@@ -86,20 +87,19 @@ Run formatting:
 ## Verification
 
 Full pre-merge verification:
-```bash
-./gradlew spotlessCheck detekt kmpSmokeCompile test allTests
+```shell
+./gradlew spotlessCheck detekt detektTypeResolved kmpSmokeCompile test allTests
 ```
 
 For docs-specific changes, also run:
-```bash
+```shell
 ./gradlew generateDocsBundle validateDocsBundle
 ```
+
+Prose in `docs/en/` follows Section 11 of the [Meshtastic Client Design Standards](https://github.com/meshtastic/design/tree/master/standards) — see [Documentation Style](documentation-style.md) for what's specific to this repository.
 
 ## Getting Help
 
 - [Meshtastic Discord](https://discord.gg/meshtastic) — `#app-development` channel
 - GitHub Issues — for bug reports and feature requests
 - GitHub Discussions — for questions and ideas
-
----
-
