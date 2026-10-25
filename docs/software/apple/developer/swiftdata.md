@@ -209,7 +209,7 @@ To prevent unbounded database growth, the app enforces per-node caps when insert
 | Relationship | Cap | Behavior |
 |-------------|-----|-----------|
 | `NodeInfoEntity.positions` | 5 000 | Oldest positions deleted when exceeded |
-| `NodeInfoEntity.telemetries` | 5 000 per metrics type | Oldest telemetry of that type deleted |
+| `TelemetryEntity` (per `nodeNum`) | 5 000 per metrics type | Oldest telemetry of that type deleted |
 | `MessageEntity` (per channel) | 50 000 | Oldest messages in the channel deleted |
 
 These caps are enforced in `UpdateSwiftData.swift` during the upsert path, so they run on every incoming packet without requiring a separate maintenance task.
