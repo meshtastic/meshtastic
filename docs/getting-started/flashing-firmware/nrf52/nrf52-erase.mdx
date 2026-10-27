@@ -31,7 +31,7 @@ To reset the flash storage on your nRF52 board:
 
 #### Bootloader factory erase
 
-1. Download [meshtastic_factory_erase.uf2](https://github.com/meshtastic/nRF52_Bootloader/releases/latest/download/meshtastic_factory_erase.uf2) (attached to every [Meshtastic nRF52 bootloader release](https://github.com/meshtastic/nRF52_Bootloader/releases) from OTAFIX 2.4 on). One file works for every nRF52 board, so there is no SoftDevice version to match.
+1. Download [meshtastic_factory_erase.uf2](https://github.com/meshtastic/nRF52_Bootloader/releases/latest/download/meshtastic_factory_erase.uf2) (attached to every [Meshtastic nRF52 Bootloader](https://github.com/meshtastic/nRF52_Bootloader/releases) (formerly OTAFIX) release from OTAFIX 2.4 on). One file works for every nRF52 board, so there is no SoftDevice version to match.
 2. Copy it onto the drive.
 3. About half a second after the copy finishes, the drive disappears. A couple of seconds later it comes back. That is the erase done: no serial connection or command line is needed. (If you eject the drive instead, the device resets immediately.)
 4. Either copy the firmware `.uf2` for your device from the firmware you unzipped at the start onto the drive, or just unplug the device. The firmware that was already installed is kept and starts as if the device were brand new.
