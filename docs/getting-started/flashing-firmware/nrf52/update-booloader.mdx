@@ -12,9 +12,50 @@ To check which version of the bootloader your device is running, put the device 
 
 :::info
 
-Many nRF52-based Meshtastic devices ship with, or can be upgraded to, [Meshtastic's nRF52 bootloader](https://github.com/meshtastic/nRF52_Bootloader) (formerly OTAFIX) — a fork with faster, more reliable Bluetooth OTA updates. Its [releases page](https://github.com/meshtastic/nRF52_Bootloader/releases) lists current UF2/zip packages per board, and its README lists which boards it supports.
+Many nRF52-based Meshtastic devices ship with, or can be upgraded to, [Meshtastic's nRF52 bootloader](https://github.com/meshtastic/nRF52_Bootloader) (formerly OTAFIX), a fork with faster, more reliable Bluetooth OTA updates. Its [releases page](https://github.com/meshtastic/nRF52_Bootloader/releases) lists current UF2/zip packages per board. Releases up to OTAFIX 2.5 are tagged `0.9.2-OTAFIX2.x`; from 2.6.0 on they are tagged by a plain version number such as `2.6.0`.
 
 :::
+
+## Supported boards
+
+The Meshtastic nRF52 bootloader builds for the boards below. The second column is the start of the package file name on the releases page: the UF2 for [Method 2](#method-2-using-the-uf2-file) is `update-<package>-<version>_nosd.uf2`, and the zip for [Method 3](#method-3-using-adafruit-nrfutil) is `<package>-<version>_s140_<SoftDevice>.zip`. The third column is the name the device advertises while it waits for a [Bluetooth OTA update](/docs/getting-started/flashing-firmware/nrf52/ota/).
+
+| Board | Package | OTA name |
+| --- | --- | --- |
+| Elecrow ThinkNode M1 | `thinknode_m1_bootloader` | `TNM1_DFU` |
+| Elecrow ThinkNode M3 | `thinknode_m3_bootloader` | `TNM3_DFU` |
+| Elecrow ThinkNode M6 | `thinknode_m6_bootloader` | `TNM6_DFU` |
+| Heltec Mesh Node T096 | `heltec_t096_bootloader` | `T096_DFU` |
+| Heltec Mesh Node T1 | `heltec_t1_bootloader` | `T1_DFU` |
+| Heltec Mesh Node T114 | `heltec_t114_bootloader` | `T114_DFU` |
+| LILYGO T-Echo | `lilygo_techo_bootloader` | `LGTE_DFU` |
+| Meshtastic Generic, SoftDevice 6.1.1 (2.6.0 and later) | `meshtastic_6.1.1_bootloader` | `MESH_DFU` |
+| Meshtastic Generic, SoftDevice 7.3.0 (2.6.0 and later) | `meshtastic_7.3.0_bootloader` | `MESH_DFU` |
+| Minewsemi MX25LE01 | `minewsemi_mx25le01_bootloader` | `MX25_DFU` |
+| MuziWorks Base Uno, Base Duo and Superbase | `muzi_base_bootloader` | `MUZI_DFU` |
+| Nologo ProMicro nRF52840 | `promicro_nrf52840_bootloader` | `PROM_DFU` |
+| RAK3401 | `wiscore_rak3401_bootloader` | `3401_DFU` |
+| RAK4631 | `wiscore_rak4631_board_bootloader` | `4631_DFU` |
+| RAK WisMesh Tag | `wismesh_tag_bootloader` | `RTAG_DFU` |
+| Seeed SenseCAP Card Tracker T1000-E | `t1000_e_bootloader` | `T1KE_DFU` |
+| Seeed SenseCAP MeshTracker X1 | `mesh_tracker_x1_bootloader` | `MTX1_DFU` |
+| Seeed SenseCAP Solar Node P1 | `sensecap_solar_p1_bootloader` | `SCAP_DFU` |
+| Seeed Wio Tracker L1 | `wio_tracker_l1_bootloader` | `WTL1_DFU` |
+| Seeed Wio Tracker L1 Pro 1W (2.6.0 and later) | `wio_tracker_l1_pro_1w_bootloader` | `WTLP_DFU` |
+| Seeed XIAO nRF52840 BLE | `xiao_nrf52840_ble_bootloader` | `XIAO_DFU` |
+| Seeed XIAO nRF52840 BLE Sense | `xiao_nrf52840_ble_sense_bootloader` | `XIAO_DFU` |
+
+The two Meshtastic Generic bootloaders are for DIY nRF52840 boards with no board-specific bootloader. They drive no LED and use the reset pin as their only button. Pick the one matching the SoftDevice your firmware expects. They share a USB identity with the RAK4631, RAK3401, T-Echo, WisMesh Tag and MX25LE01, so a generic update UF2 installs over those boards' bootloaders and the reverse: check the package name before copying it.
+
+## What `INFO_UF2.TXT` tells you
+
+The drive that appears in [bootloader mode](/docs/getting-started/flashing-firmware/nrf52/entering-bootloader-mode/) carries `INFO_UF2.TXT`. Its lines are:
+
+- `UF2 Bootloader <version>`: the installed bootloader version, for example `0.9.2-OTAFIX2.5` or `2.6.0`.
+- `Model` and `Board-ID`: the board the bootloader was built for. Make sure the package you copy is for the same board.
+- `SoftDevice`: the installed Bluetooth stack, `S140 6.1.1` or `S140 7.3.0`. Firmware files and the older per-SoftDevice erase files must match it.
+- `Factory-Erase`: present from OTAFIX 2.4 on. The bootloader accepts the board-independent [factory erase file](/docs/getting-started/flashing-firmware/nrf52/nrf52-erase/#bootloader-factory-erase).
+- `Last-Fault`: on 2.6.0 and later, present only when the bootloader recorded a fault since the drive last mounted. It carries a fault id, program counter and info word for a bug report, and clears once shown. Starting the firmware also clears it, so it shows only when the next boot reaches the drive.
 
 ## Updating bootloader
 
@@ -33,7 +74,7 @@ See the app's [Firmware Updates guide](https://github.com/meshtastic/Meshtastic-
 
 ### Method 2: Using the UF2 File
 
-Depending on your device, you need to select the correct bootloader package. Below are the links to the bootloader packages:
+Depending on your device, you need to select the correct bootloader package. For every board in the [supported boards](#supported-boards) table, download the `update-<package>-<version>_nosd.uf2` file for your board from the [latest Meshtastic nRF52 bootloader release](https://github.com/meshtastic/nRF52_Bootloader/releases/latest). Older vendor and Adafruit builds for some boards:
 
 - [Lilygo T-Echo](https://github.com/meshtastic/firmware/raw/master/bin/update-lilygo_techo_bootloader-0.6.1_nosd.uf2)
 - [RAK4631](https://github.com/RAKWireless/WisBlock/raw/master/bootloader/RAK4630/Latest/update-wiscore_rak4631_board_bootloader-0.4.4_nosd.uf2)
@@ -44,14 +85,16 @@ Depending on your device, you need to select the correct bootloader package. Bel
 1. Download the correct UF2 Bootloader File.
 2. Connect your device to your computer via USB.
 3. Put the device into [bootloader mode](/docs/getting-started/flashing-firmware/nrf52/entering-bootloader-mode/). On most devices, double-press the reset button. A T1000-E still on the bootloader Seeed ships uses the gesture in [Seeed's T1000-E guide](https://wiki.seeedstudio.com/sensecap_t1000_e/): hold the button, then connect the charging cable twice in quick succession. The device should appear as a removable drive on your computer.
-4. Drag and drop the UF2 file you downloaded into the removable drive. The device will automatically update the bootloader and reset.
+4. Drag and drop the UF2 file you downloaded into the removable drive. The device will automatically update the bootloader and reset. A board with a display shows BOOTLOADER and a progress bar while the file copies (2.6.0 and later).
 5. Once the device resets, the update is complete. Your device is now running the latest bootloader version and you can proceed with [flashing the firmware](/docs/getting-started/flashing-firmware/nrf52/drag-n-drop/).
+
+The installed firmware normally survives a bootloader update. On 2.6.0 and later, a firmware larger than 744 KB (SoftDevice 6.1.1) or 740 KB (SoftDevice 7.3.0) overlaps the area the new bootloader is staged in, so the bootloader marks it invalid before writing rather than leave a damaged copy to start. The device then comes back up in bootloader mode showing NO FIRMWARE: copy the firmware `.uf2` again.
 
 ### Method 3: Using adafruit-nrfutil
 
 :::warning
 
-Unlike uf2 uploads, adafruit-nrfutil does not check if you have the correct bootloader package for your device. If you flash the wrong bootloader, you may brick your device. Please verify the SHA256 checksum before flashing.
+Unlike uf2 uploads, adafruit-nrfutil does not check if you have the correct bootloader package for your device. If you flash the wrong bootloader, you may brick your device. Check that the package name matches your board and the SoftDevice version in `INFO_UF2.TXT`, and verify the SHA256 checksum where one is given.
 
 :::
 
@@ -61,7 +104,7 @@ These instructions assume you have python and pip already installed. If you do n
 
 :::
 
-Depending on your device, you need to select the correct bootloader package. Below are the links to the bootloader packages:
+Depending on your device, you need to select the correct bootloader package. For every board in the [supported boards](#supported-boards) table, download the `<package>-<version>_s140_<SoftDevice>.zip` file for your board from the [latest Meshtastic nRF52 bootloader release](https://github.com/meshtastic/nRF52_Bootloader/releases/latest). Older vendor and Adafruit builds for some boards:
 
 - [Lilygo T-Echo](https://github.com/meshtastic/firmware/raw/master/bin/lilygo_techo_bootloader-0.6.1.zip) SHA256: 85d8a334bbf82802d712e183f29ec5215f06786ca88914687c437aceab75d9cf
 - [RAK4631](https://github.com/RAKWireless/WisBlock/raw/master/bootloader/RAK4630/Latest/wiscore_rak4631_board_bootloader-0.4.4_s140_6.1.1.zip) SHA256: df99fee1ceb4ec77c171ec5d2529c604cd0cce891f51c15de8a32825a8a3f8c7
@@ -85,7 +128,10 @@ adafruit-nrfutil --singlebank --touch 1200 --verbose dfu serial --package <downl
 
 5. Once the process finishes, the update is complete. Your device is now running the latest bootloader version and you can proceed with [flashing the firmware](/docs/getting-started/flashing-firmware/nrf52/drag-n-drop/).
 
-On OTAFIX 2.0 or later, flashing the bootloader package this way clears the bootloader's record of the installed firmware, so the device comes back waiting for a Bluetooth OTA update rather than starting the firmware: no USB drive and no serial port appear. That is expected, not a failure. Put the device into [bootloader mode](/docs/getting-started/flashing-firmware/nrf52/entering-bootloader-mode/) for the UF2 drive and copy the firmware across, or complete a [Bluetooth OTA update](/docs/getting-started/flashing-firmware/nrf52/ota/).
+Flashing the bootloader package this way clears the bootloader's record of the installed firmware, so the device comes back with no firmware to start. That is expected, not a failure. What you see next depends on the bootloader version:
+
+- OTAFIX 2.0 to 2.5: the device waits for a [Bluetooth OTA update](/docs/getting-started/flashing-firmware/nrf52/ota/). No USB drive and no serial port appear. Put the device into [bootloader mode](/docs/getting-started/flashing-firmware/nrf52/entering-bootloader-mode/) for the UF2 drive and copy the firmware across, or complete the OTA update.
+- 2.6.0 and later: while the USB cable stays connected to a computer, the device comes straight back as the UF2 drive, showing NO FIRMWARE on boards with a display. Copy the firmware `.uf2` onto it. Unplugged, it waits for a Bluetooth OTA update instead, and plugging the cable back in brings the drive up again.
 
 ### Method 4: Using a Debugger
 
