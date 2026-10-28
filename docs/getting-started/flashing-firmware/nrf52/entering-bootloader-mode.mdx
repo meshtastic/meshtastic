@@ -26,10 +26,21 @@ The device reboots into bootloader mode and mounts the drive. The Android client
 
 The SenseCAP Card Tracker T1000-E and SenseCAP MeshTracker X1 have one button and no reset button, so the double-press doesn't apply. On the [Meshtastic nRF52 Bootloader](https://github.com/meshtastic/nRF52_Bootloader) (formerly OTAFIX) 2.5 or later, connect the USB cable, then hold the button while the device starts and keep holding it for 3 seconds. The drive appears a few seconds later. A short press while the device starts, or a hold while the firmware is running, doesn't reach the bootloader. The steps are on each device page: [Card Tracker T1000-E](/docs/hardware/devices/seeed-studio/sensecap/card-tracker/#flashing) and [MeshTracker X1](/docs/hardware/devices/seeed-studio/sensecap/meshtracker-x1/#flashing).
 
-To leave bootloader mode without flashing, eject the drive. Unplugging doesn't leave bootloader mode: the device stays in it on battery, and plugging it back in only mounts the drive again.
+To leave bootloader mode without flashing, eject the drive. Unplugging doesn't leave bootloader mode while firmware is installed: the device stays in it on battery, and plugging it back in only mounts the drive again.
 
 A T1000-E on an nRF52 bootloader before OTAFIX 2.5 has no button path into the bootloader, and ejecting the drive doesn't leave it, so use the Meshtastic client method and copy a firmware file to get out.
 
+## Devices with no firmware
+
+A device whose firmware is missing or damaged, for example after a bootloader package was flashed with `adafruit-nrfutil` or a firmware copy was interrupted, starts in bootloader mode by itself. What it does there depends on the [Meshtastic nRF52 Bootloader](https://github.com/meshtastic/nRF52_Bootloader) version:
+
+- OTAFIX 2.0 to 2.5: it waits for a [Bluetooth OTA update](/docs/getting-started/flashing-firmware/nrf52/ota/) and shows no drive and no serial port. Use the reset button or the single-button hold to mount the drive instead.
+- 2.6.0 and later: connected to a computer by USB, it mounts the drive on its own, with NO FIRMWARE as the title on boards with a display. On battery it waits for a Bluetooth OTA update, and connecting the USB cable while no phone is connected mounts the drive. Unplugging the cable from the drive returns it to the Bluetooth OTA wait. A charger or power bank supplies power but is not a computer, so after about 3 seconds the device waits for a Bluetooth OTA update as it does on battery.
+
+## Leaving bootloader mode by timeout
+
+On 2.6.0 and later, a device with firmware installed that sits in bootloader mode for 6 minutes with no activity starts the firmware. A Bluetooth connection, a read or write on the drive, a USB connection and a serial update each restart the 6 minutes; a Bluetooth connection left idle does not. A device with no firmware keeps waiting.
+
 ## Checking your bootloader version
 
-`INFO_UF2.TXT` on the mounted drive names the bootloader version, and from OTAFIX 2.4 on carries a `Factory-Erase:` line. [Update nRF52 Bootloader](/docs/getting-started/flashing-firmware/nrf52/update-nrf52-bootloader/) covers moving to a newer one.
+`INFO_UF2.TXT` on the mounted drive names the bootloader version, and from OTAFIX 2.4 on carries a `Factory-Erase:` line. On 2.6.0 and later it can also carry a `Last-Fault:` line, which records a bootloader fault for a bug report. [Update nRF52 Bootloader](/docs/getting-started/flashing-firmware/nrf52/update-nrf52-bootloader/#what-info_uf2txt-tells-you) explains each line and covers moving to a newer bootloader.
