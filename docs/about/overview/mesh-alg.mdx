@@ -31,7 +31,7 @@ need to consider the MeshPacket and Sub-packet message types.
 
 All data is converted into LoRa symbols which are sent to the radio for transmission. The details are described elsewhere, but it is worth noting that in addition to the converted packet bytes described below, there is also a preamble sent at the start of any data packet.
 
-This preamble allows receiving radios to synchronize clocks and start framing. We use a preamble length of 16, which is longer than the minimum preamble length of 8, to let SX126x LoRa receivers sleep for a while, which lowers power consumption.
+This preamble allows receiving radios to synchronize clocks and start framing. Below 1 GHz, Meshtastic uses a preamble length of 16, which is longer than the minimum preamble length of 8, to let SX126x LoRa receivers sleep for a while, which lowers power consumption. Regions in the 2.4 GHz band use a preamble length of 12.
 
 After the preamble comes the LoRa Physical Header, which contains information about the packet length as well as a sync word to distinguish networks. For Meshtastic, it is set to `0x2B`.
 
@@ -48,7 +48,7 @@ This layer is conventional non-reliable LoRa packet transmission. A packet gener
 |  0x0D  |                  1 byte                  |  Bits   | Packet Header: Channel hash. Used as hint for decryption for the receiver.                              |
 |  0x0E  |                  1 byte                  |  Bytes  | Packet Header: Next-hop used for relaying.                                                              |
 |  0x0F  |                  1 byte                  |  Bytes  | Packet Header: Relay node of the current transmission.                                                  |
-|  0x10  | Max. 237 bytes (excl. protobuf overhead) |  Bytes  | Actual packet data. Unused bytes are not transmitted.                                                   |
+|  0x10  |              Max. 239 bytes              |  Bytes  | Actual packet data: the encoded `Data` protobuf, plus 12 bytes when PKC or AEAD encryption is used. Unused bytes are not transmitted. |
 
 #### Packet Header Flags
 
@@ -63,11 +63,11 @@ This layer is conventional non-reliable LoRa packet transmission. A packet gener
 
 - **Packet Header:** is described directly by the `PacketHeader` class in the C++ source code. But indirectly it matches the first portion of the `MeshPacket` protobuf definition. Note that the packet header is not encoded using a protobuf, but is sent as raw bytes. This both saves airtime and allows receiving radio hardware to optionally filter packets before waking the main CPU.
 
-- **Packet Header - NodeIDs:** are constructed from the bottom four bytes of the MAC address of the Bluetooth address. Because the OUI is assigned by the IEEE, and we currently only support a few CPU manufacturers, the upper byte is de-facto guaranteed unique for each vendor. The bottom 3 bytes are guaranteed unique by that vendor.
+- **Packet Header - NodeIDs:** A node's number is a CRC-32 of its public key. Before the node has a key, for example while its region is unset, the number comes from its MAC address.
 
 - **Packet Header - Unique ID:** The ID is a large, 32 bit ID to ensure there is enough unique state to protect an encrypted payload from attack.
 
-- **Payload:** An encrypted and packed protobuf encoding of the SubPacket protobuf. Only the SubPacket is encrypted, while headers are not. This allows the option of eventually allowing nodes to route packets without knowing anything about the encrypted payload. For more information, see the [encryption](/docs/overview/encryption) and [Protobuf API Reference](https://buf.build/meshtastic/protobufs/). Any data past the maximum length is truncated.
+- **Payload:** An encrypted and packed protobuf encoding of the SubPacket protobuf. Only the SubPacket is encrypted, while headers are not. This allows the option of eventually allowing nodes to route packets without knowing anything about the encrypted payload. For more information, see the [encryption](/docs/overview/encryption) and [Protobuf API Reference](https://buf.build/meshtastic/protobufs/). A packet that would exceed the maximum length isn't sent.
 
 #### Carrier-Sense Multiple Access with Collision Avoidance (CSMA/CA)
 
@@ -84,7 +84,7 @@ The default messaging provided by Layer 1 is extended by setting the `WantAck` f
 > Broadcast messages treat this flag specially: Since ACKs for broadcasts would rapidly flood the channel, the normal ACK behavior is suppressed. Instead, the original sender listens to see if at least one node is rebroadcasting this
 > packet (because naive flooding algorithm). If it hears that, the odds (given typical LoRa topology) are very high that every node should eventually receive the message. So FloodingRouter.cpp generates an implicit ACK which is delivered to the original sender. If after some time we don't hear anyone rebroadcast our packet, we will timeout and re-transmit, using the regular resend logic.
 
-If a transmitting node does not receive an ACK (or NAK) packet after a certain expiration time, it will use Layer 1 to attempt a re-transmission of the sent packet. A reliable packet (at this 'zero hop' level) will be resent a maximum of three times. If no ACK or NAK has been received by then the local node will internally generate a NAK (either for local consumption or use by higher layers of the protocol). The re-transmission expiration time is based on the maximum time it would take to receive an (implicit) ACK, taking the airtime of the sent packet and any processing delay into account.
+If a transmitting node does not receive an ACK (or NAK) packet after a certain expiration time, it will use Layer 1 to attempt a re-transmission of the sent packet. A reliable broadcast is sent a maximum of three times in total, counting the first transmission, and a reliable direct message a maximum of five. If no ACK or NAK has been received by then the local node will internally generate a NAK (either for local consumption or use by higher layers of the protocol). The re-transmission expiration time is based on the maximum time it would take to receive an (implicit) ACK, taking into account the airtime of the sent packet, the current channel utilization, and a processing delay.
 For direct messages, the intended recipient will also send a real ACK all the way back to the original sender, but the device will only retransmit when it received no ACK at all.
 
 ### Layer 3: Multi-Hop Messaging
@@ -93,7 +93,7 @@ For direct messages, the intended recipient will also send a real ACK all the wa
 
 Given the various use-cases and scenarios Meshtastic supports, most of our protocol is built around [flooding](<https://en.wikipedia.org/wiki/Flooding_(computer_networking)>), meaning that every node rebroadcasts a packet it receives, up till a certain hop limit. However, an important difference in Meshtastic is that before rebroadcasting, a node listens a short while to see if another node has already rebroadcasted the packet. If so, it will not rebroadcast. "Managed Flooding" is therefore a better term.
 
-The principle is as follows. If any mesh node sees a packet with a HopLimit other than zero, it will decrement that HopLimit and attempt to rebroadcast on behalf of the original sending node. In order to promote letting nodes that are further away flood the message, such that the message eventually reaches farther, the contention window (see Layer 1) for a flooding message depends on the Signal-to-Noise Ratio (SNR) of the received packet. The CW size is small for a low SNR, such that nodes that are further away are more likely to flood first and closer nodes that hear this will refrain from flooding. An exception to this rule is for the `ROUTER` and `REPEATER` roles, that have a higher priority to rebroadcast and will do so even if they hear another node rebroadcasting.
+The principle is as follows. If any mesh node sees a packet with a HopLimit other than zero, it will decrement that HopLimit and attempt to rebroadcast on behalf of the original sending node. In order to promote letting nodes that are further away flood the message, such that the message eventually reaches farther, the contention window (see Layer 1) for a flooding message depends on the Signal-to-Noise Ratio (SNR) of the received packet. The CW size is small for a low SNR, such that nodes that are further away are more likely to flood first and closer nodes that hear this will refrain from flooding. The exception is the `ROUTER` and `ROUTER_LATE` roles, which rebroadcast even if they hear another node rebroadcasting. `CLIENT_BASE` does the same for packets to or from its favorited nodes.
 
 ### Example
 
@@ -112,24 +112,25 @@ The procedure is visualized in the following diagram:
 
 ![Next-Hop Routing procedure](/img/blog/NextHopRouting.webp)
 
-### Regular Broadcast Intervals
+### Regular broadcast intervals
 
-Without additional modules configured, nodes will produce three different types of regularly intervaled traffic as part of the mesh:
+Without additional configuration, a node broadcasts only its NodeInfo, every 3 hours by default (`device.node_info_broadcast_secs`).
 
-1. Device Telemetry
-   - Controlled by `telemetry.device_update_interval`
-   - Default: 30 minutes
+Device telemetry and position are off by default:
+
+1. Device telemetry
+   - Turned on with `telemetry.device_telemetry_enabled`
+   - Interval set by `telemetry.device_update_interval`
+   - Default: 1 hour, or 12 hours for `ROUTER` and `ROUTER_LATE`
 2. Position
-   - Controlled by `position.position_broadcast_secs`
-   - Default: 15 minutes\* (with [smart broadcast](/docs/configuration/radio/position/#smart-broadcast) enabled)
-3. NodeInfo user
-   - Controlled by `device.node_info_broadcast_secs`
-   - Default: 3 hours
+   - Shared only on channels where [position precision](/docs/configuration/radio/channels/#position-precision) is above 0
+   - Interval set by `position.position_broadcast_secs`
+   - Default: 1 hour, or 12 hours for `ROUTER` and `ROUTER_LATE`, with [smart broadcast](/docs/configuration/radio/position/#smart-broadcast) sending sooner after the node moves
 
 As meshes grow larger and traffic becomes more contentious, the firmware will increase these intervals. This is in addition to duty cycle, channel, and air-time utilization throttling.
 
-Starting with version 2.4.0, the firmware will scale back Telemetry, Position, and other ancillary port traffic for meshes larger than 40 nodes (nodes seen in the past 2 hours) using the following algorithm:
+For meshes larger than 40 nodes (nodes seen in the past 2 hours), the firmware scales back position and telemetry intervals using the following algorithm:
 
-`ScaledInterval = Interval * (1.0 + ((NumberOfOnlineNodes - 40) * 0.075))`
+`ScaledInterval = Interval * (1.0 + (NumberOfOnlineNodes - 40) * 2^SF / (BW_kHz * 100))`
 
-For example an active mesh of 62 nodes would scale back `telemetry.device_update_interval` to 79.5 minutes instead of the 30 minute default.
+`SF` and `BW_kHz` are the spreading factor and bandwidth in use. On Long Fast (SF11, 250 kHz), each node over 40 adds 0.08192. For example, a mesh of 62 online nodes on Long Fast stretches a 1-hour interval to about 168 minutes. Nodes in the `ROUTER`, `ROUTER_LATE`, `SENSOR`, `TRACKER`, and `TAK_TRACKER` roles aren't scaled.

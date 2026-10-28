@@ -1,93 +1,132 @@
 ---
 id: encryption-technical
-title: Updated Security Implementation
+title: Security Implementation
 sidebar_label: Encryption Technical
 sidebar_position: 5
-description: Technical Overview of Encryption Employed with Meshtastic from Firmware 2.5.0 Onwards
+description: Technical details of Meshtastic encryption, packet signing, acknowledgment proofs, node identity, and admin sessions.
 ---
 
-## PSK for Channels, PKC for Direct Messages and Admin Messages
+Meshtastic firmware protects packets with several mechanisms, each with its own key and its own cost in bytes. This page describes how each one is built. For the reasoning behind them and their limits, see [Meshtastic Encryption](/docs/overview/encryption) and [Known Limitations](/docs/about/overview/encryption/limitations).
 
-Up to version 2.4.x of the firmware, Meshtastic relied entirely on Pre-Shared Key (PSK) cryptography for all messaging. Starting with firmware version 2.5.0, Meshtastic introduced Public Key Cryptography (PKC) for Direct Messages (DMs) and added Session IDs for Admin Messages. Together, these enhancements bring the security architecture of Meshtastic to a new level of robustness.
+| Mechanism | Key | Bytes added to a packet |
+|---|---|---|
+| Channel encryption, AES-CTR | Channel PSK | 0 |
+| Channel encryption, AES-CCM | Channel PSK | 12 |
+| Direct message encryption, AES-256-CCM | Pairwise key from X25519 | 12 |
+| Packet signature, XEdDSA | Node's X25519 key pair | 66 |
+| Acknowledgment proof, HMAC-SHA256 | Pairwise key from X25519 | 10 |
 
-Below is a detailed overview of how PSK, PKC, and Session IDs are integrated into your system to secure Channels, Direct Messages, and Admin Messages.
+Every mechanism's overhead counts against the 255-byte LoRa frame, which also carries the 16-byte packet header.
 
-### 1. Chat Channels Using PSK
+## Channel encryption
 
-- **PSK Overview:**
+Channel messages are encrypted with AES-CTR under the channel's pre-shared key (PSK). A 16-byte key selects AES-128 and a 32-byte key selects AES-256. A key of length 0 disables encryption.
 
-  - Chat Channels continue to utilize a PSK for encrypting communications.
-  - All participants share the same PSK for their Channels, which is used for both encryption and decryption within the channel.
+A single-byte PSK is shorthand. `0` means no encryption, `1` selects the published default key, and `2` through `255` select the default key with that value minus one added to its last byte. These are public keys, not private ones. A secondary channel with no PSK uses the primary channel's key.
 
-- **Security Considerations:**
-  - **Confidentiality:** Only participants with the correct PSK can access messages within the Chat Channel.
-  - **Key Management:** Secure distribution and regular rotation of the PSK are essential to maintaining the channel's security.
+The 16-byte nonce is the packet ID as a 64-bit value in bytes 0–7, the sender's node number in bytes 8–11, and the block counter in bytes 12–15. AES-CTR adds no bytes and has no integrity check.
 
-### 2. DMs Now Using PKC
+The one-byte channel hash in the packet header is the XOR of the channel name's bytes with the XOR of the key's bytes. When the stored name is empty, the hash uses the modem preset's name.
 
-- **PKC Implementation for DMs:**
+### Authenticated channels (AES-CCM)
 
-  - **Public/Private Key Pairs:** Each node is equipped with a unique public/private key pair. The private key is securely stored on the node, and the public key is shared with other nodes, allowing for secure, authenticated communication.
-  - **Encryption and Signature:**
-    - **Encryption:** DMs are encrypted using the recipient’s public key, ensuring only the recipient with the corresponding private key can decrypt the message.
-    - **Digital Signatures:** DMs are signed with the sender’s private key before encryption, allowing the recipient to verify the sender’s identity and the message’s integrity using the sender’s public key.
+On firmware 2.8.1 and later, setting `use_aead` (`ChannelSettings` field 8) switches a channel to AES-CCM under the same PSK. The setting is experimental and off by default.
 
-- **Security Enhancements with PKC:**
-  - **Message Confidentiality and Integrity:** With PKC, each DM is encrypted and signed, ensuring that only the intended recipient can read the message, and verifying that it has not been tampered with.
+- A 12-byte authentication tag follows the ciphertext.
+- The nonce is the same as for AES-CTR.
+- The associated data is the sender and destination node numbers, 4 bytes each. Hop fields are left out because relays change them.
+- The channel hash is XORed with `0xAE`, so an AES-CCM channel and an AES-CTR channel with the same name and key have different hashes.
 
-### 3. Admin Messages: Enhanced Security with PKC and Session IDs
+A receiver doesn't fall back to AES-CTR when the tag fails to verify. A node without the setting can't match the packet to a channel, so it relays the packet as it would any packet it can't decrypt. AES-CCM requires a PSK: the firmware turns `use_aead` off on a channel with no key.
 
-- **Key Exchange with DH Curve25519:**
+## Direct messages
 
-  - **Initial Key Exchange Setup:**
+Each node has an X25519 key pair. The firmware generates it once a LoRa region is set.
 
-    - **Key Generation:** A Diffie-Hellman (DH) key exchange occurs using Curve25519 upon first communication between nodes. This generates a shared secret for establishing a symmetric encryption key.
-    - **Hardware Support:** Curve25519 is supported in hardware, ensuring efficient and secure key exchanges.
-    - **Shared Secret:** The derived shared secret is used for all subsequent communications between the nodes.
+To encrypt a direct message, the sender computes the X25519 shared secret from its private key and the recipient's public key, and hashes it with SHA-256 to get a 32-byte key. The firmware recomputes this key for every packet rather than storing it. The message is encrypted with AES-256-CCM under that key, with an 8-byte tag and no associated data. A 4-byte random extra nonce goes into the AES-CCM nonce and is appended after the tag, so the packet grows by 12 bytes.
 
-  - **Use of Shared Secret for Encryption:**
-    - **Symmetric Encryption:** Following the key exchange, messages are encrypted and decrypted using the shared secret with symmetric encryption algorithms like AES-CTR or AES-CCM.
-    - **Efficiency:** Symmetric encryption, especially when based on a secure DH exchange, balances security and performance, making it ideal for real-time applications.
+A direct message is sent with a channel hash of `0` and `pki_encrypted` set. The firmware encrypts a packet this way when all of these hold:
 
-- **Session ID for Admin Messages:**
+- The packet originates on this node and is addressed to one node.
+- The node has a private key and isn't in licensed mode.
+- The portnum isn't `TRACEROUTE_APP`, `NODEINFO_APP`, `ROUTING_APP`, or `POSITION_APP`, which use channel encryption.
 
-  - **Session ID Usage:** Session IDs are generated for each admin session and used as an additional value inside the encrypted packet. This ensures that each session is secure and unique.
-  - **Session Duration:** The session ID is valid only for a short duration (e.g., 300 seconds) and is discarded once the session ends or after the next control message is sent.
+If the firmware has no public key for the destination, it doesn't send the packet and returns `PKI_SEND_FAIL_PUBLIC_KEY`. The first `KEY_VERIFICATION_APP` packet is the exception: it goes out on the channel so the two nodes can exchange keys.
 
-  - **Security Enhancements with PKC and Session ID:**
-    - **Replay Attack Mitigation:** By utilizing session IDs, replay attacks are effectively mitigated. Old session IDs cannot be reused, ensuring that intercepted packets are invalidated.
-    - **Isolated Impact:** The use of session IDs confines any issues related to session management to admin messages, without affecting broader communication functions like DMs or Chat Channels.
+An acknowledgment for a direct message that arrived on a channel the node doesn't hold is sent encrypted as a direct message instead, so the sender still gets it. Relays can't read that acknowledgment.
 
-### 4. Overall Security Architecture
+A node that isn't in licensed mode rejects a `TEXT_MESSAGE_APP` packet addressed to it that was encrypted with a channel key.
 
-- **Integration of PKC with Existing Systems:**
+Direct messages aren't signed. The AES-CCM tag authenticates them, because only the two nodes can derive the key. Either node could have produced the tag, so it doesn't prove authorship to anyone else.
 
-  - **Direct Messages:** PKC enhances the security of DMs by providing encryption, authentication, and integrity through the use of asymmetric encryption and digital signatures.
-  - **Admin Messages:** The combination of PKC and session IDs secures admin-related operations, providing an additional layer of protection for critical functions.
+## Packet signing
 
-- **Use of PSK with Existing Systems:**
+Nodes sign packets with XEdDSA, which produces Ed25519 signatures from the node's X25519 key pair, so there is no second key pair to manage. A verifier converts the sender's X25519 public key to the matching Ed25519 key.
 
-  - **Channels:** PSKs continue to be used for group communication, ensuring secure message exchanges within the channel.
+The signature is 64 bytes in `Data.xeddsa_signature` (field 10), which encodes to 66 bytes. It sits inside `Data`, so it's encrypted along with the payload.
 
-- **Scalability and Performance:**
-  - **Efficient Use of Resources:** PKC for DMs leverages asymmetric encryption for secure communication, while PSKs for Chat Channels and session IDs for admin messages optimize resource consumption on the platform.
-  - **Memory Management:** The selective use of PKC, PSKs, and session IDs ensures that memory and computational resources are effectively managed, allowing the system to scale while maintaining high security.
+The signed bytes are:
 
-## Trust Model and Operational Security
+```text
+version(1) | from(4) | id(4) | to(4) | portnum(4) | request_id(4) | reply_id(4) | emoji(4) | bitfield(4) | flags(1) | payload(N)
+```
 
-The cryptographic protections described above (PSK, PKC, Session IDs) defend messages as they traverse the LoRa mesh. They sit on top of two assumptions that operators should understand: the link between a node and a directly connected client is trusted, and node identity is established via Trust On First Use rather than a signing authority.
+`version` is `0x01`. In `flags`, bit 0 is `want_response` and bit 1 records whether `bitfield` is present. The signature doesn't cover the channel, the hop fields, `next_hop`, or `relay_node`, because relays change them.
 
-### Local Trust Boundary
+The firmware signs a packet it originates when the packet isn't encrypted as a direct message, it's a broadcast or the node is in licensed mode, and the encoded `Data` with a signature plus the 16-byte header fits in 255 bytes. A packet that doesn't fit is sent unsigned. Any signature a client supplies is discarded first.
+
+On receipt:
+
+- With a stored key for the sender, the firmware verifies the signature and drops the packet if it fails, under every policy. A valid signature marks the sender as a signer.
+- With no stored key, a signed NodeInfo is accepted as first contact only if the CRC-32 of its public key equals the sender's node number and the signature verifies under that key. The key is then stored.
+- A signature field that is neither empty nor 64 bytes is dropped.
+- An unsigned packet is handled by [`packet_signature_policy`](/docs/configuration/radio/security/#packet-signature-policy). Packets encrypted as direct messages pass every policy.
+
+Clients see the result in `MeshPacket.xeddsa_signed` and `NodeInfo.has_xeddsa_signed`. `DeviceMetadata.has_xeddsa` reports whether the firmware build includes signing. STM32WL builds don't.
+
+## Acknowledgment proof
+
+On firmware 2.8.1 and later, an acknowledgment can prove that it came from the node that received the packet. Without a proof, anyone holding the channel key can forge one.
+
+The proof is 8 bytes in `Routing.ack_proof` (field 4), which encodes to 10 bytes:
+
+```text
+ack_proof = HMAC-SHA256(shared_key, "ack" | LE32(from) | LE32(to) | LE32(request_id) | routing)[0..8)
+```
+
+`shared_key` is the same SHA-256 of the X25519 secret used for direct messages. `routing` is the encoded `Routing` message without the proof. Covering the `Routing` bytes stops a key holder from turning a successful acknowledgment into a failure.
+
+The recipient attaches a proof when it holds the sender's public key. The sender checks it against the key of the node it addressed, not the key of whoever the acknowledgment claims to be from. The firmware reports the result to the client in `MeshPacket.ack_proof_status`: `ACK_PROOF_ABSENT`, `ACK_PROOF_VALID`, `ACK_PROOF_INVALID`, or `ACK_PROOF_NO_KEY`. Only `ACK_PROOF_VALID` means the recipient received the packet.
+
+The proof is advisory. The firmware still accepts an acknowledgment with a missing or invalid proof, and an overheard rebroadcast still stops retransmission without one.
+
+## Node identity
+
+A node's number is the CRC-32 of its 32-byte public key. Until the node has a key, for example while its region is unset, the number comes from its MAC address. Generating a new key gives the node a new number.
+
+The firmware checks that a node number matches its key only for a signed first-contact NodeInfo. When a known node advertises a different public key, the firmware drops that NodeInfo. When a remote node advertises this node's own public key, the firmware notifies the client that the key may be compromised.
+
+## Admin messages
+
+A node accepts a remote admin message only if it arrives encrypted as a direct message from a node whose public key matches one of up to three `admin_key` entries. A message that changes state must also carry the node's 8-byte session passkey. A passkey is valid for 300 seconds after it's issued, and the node issues a new one once the current one is older than 150 seconds.
+
+The legacy admin channel, a channel named `admin` in any letter case, works only when `admin_channel_enabled` is set. [Managed mode](/docs/configuration/radio/security/#managed-mode) requires at least one admin key.
+
+## Trust model and operational security
+
+The cryptographic protections described above defend messages as they traverse the LoRa mesh. They sit on top of two assumptions that operators should understand: the link between a node and a directly connected client is trusted, and node identity is established via Trust On First Use rather than a signing authority.
+
+### Local trust boundary
 
 A client connected to a node over Bluetooth, USB serial, Wi-Fi, or Ethernet has full local API access. From that local connection, a client can read decrypted channel traffic, send messages as the node, change configuration (subject to [managed mode](/docs/configuration/radio/security/#managed-mode)), and read the node's private key for backup. The on-air cryptography does not extend below this boundary. Anything inside scope of the local trust relationship (a shared LAN, a USB cable to an untrusted host, a phone paired over Bluetooth) should be treated as an extension of the node itself.
 
-### Node Identity: Trust On First Use (TOFU)
+### Node identity: trust on first use
 
 Meshtastic uses a Trust On First Use (TOFU) model for node identity. There is no central authority that signs node keys, so the first public key a node hears for a given NodeNum is the one it binds to that NodeNum going forward. This is a hard requirement of operating as a decentralized ad-hoc mesh.
 
-Client applications and the firmware include mitigations for the consequences of TOFU, such as favoriting nodes to prevent NodeDB rolloff and surfacing public-key changes in the UI. Firmware 2.8.X further strengthens node identity claims and message authenticity by adding XEdDSA packet signing, which reuses each node's existing X25519 key pair to sign User packets and other short packets so receivers can verify that a packet came from the holder of the bound public key. For the detailed discussion of NodeDB limits, spoofing edge cases, and the XEdDSA design, see [Known Limitations and Future Plans of Meshtastic's Encryption](/docs/about/overview/encryption/limitations).
+Client applications and the firmware include mitigations for the consequences of TOFU, such as favoriting nodes to prevent NodeDB rolloff and surfacing public-key changes in the UI. Deriving the node number from the public key and signing broadcasts narrow it further. For NodeDB limits and spoofing edge cases, see [Known Limitations](/docs/about/overview/encryption/limitations).
 
-### Local Administration Over Wi-Fi
+### Local administration over Wi-Fi
 
 :::warning
 Administering a Meshtastic node over an untrusted Wi-Fi network, including setting Wi-Fi credentials on an ESP32, is not recommended. All local admin traffic, not just the initial credential write, is exposed to that network.
@@ -95,8 +134,4 @@ Administering a Meshtastic node over an untrusted Wi-Fi network, including setti
 
 When a client reaches a node over Wi-Fi or Ethernet, that connection is part of the trust boundary described above. If the underlying network is untrusted (open Wi-Fi, a network shared with parties you do not control), config writes, key reads, decrypted message traffic, and the Wi-Fi PSK itself during provisioning are all exposed on that network. Setting [`network.wifi_ssid` and `network.wifi_psk`](/docs/configuration/radio/network/) over an untrusted Wi-Fi connection is a common case of this exposure but not the only one.
 
-The recommended pattern is to provision and administer nodes over a trusted channel: Bluetooth from a phone, USB serial to a trusted host, or [Remote Administration](/docs/configuration/remote-admin/) over the mesh itself. There is no current roadmap item to secure local administration over untrusted Wi-Fi; it may be addressed in a future release.
-
-## Conclusion
-
-Meshtastic layers three mechanisms: PSK encryption for channels, PKC for direct and admin messages, and session IDs for replay protection on admin sessions. These choices are shaped by hard platform constraints, chiefly the 256 byte LoRa packet limit and the limited memory of the supported MCUs, which bound how much cryptographic overhead each packet and each node can carry. These mechanisms operate within the trust and identity model described above: protections on the air do not extend to the local API surface, and node identity rests on TOFU rather than a signing authority.
+The recommended pattern is to provision and administer nodes over a trusted channel: Bluetooth from a phone, USB serial to a trusted host, or [Remote Administration](/docs/configuration/remote-admin/) over the mesh itself.
