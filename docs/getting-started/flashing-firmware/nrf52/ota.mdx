@@ -16,13 +16,13 @@ While it waits for an OTA update, the device advertises a board-specific name en
 
 :::caution
 
-OTA firmware updates come with an increased risk of failure. On bootloaders before OTAFIX 2.0, a failed update leaves the device in a non-working state that needs physical access to recover. See [When an update fails](#when-an-update-fails) for later bootloaders.
+OTA firmware updates come with an increased risk of failure. On bootloaders before OTAFIX 2.1, a failed update leaves the device in a non-working state that needs physical access to recover. See [When an update fails](#when-an-update-fails) for later bootloaders.
 
 :::
 
 ## When an update fails
 
-On OTAFIX 2.0 and later a device left with no firmware waits for another OTA update rather than getting stuck, so a failed transfer can be run again. From 2.6.0, a phone that disconnects mid-transfer can reconnect and start the transfer over without resetting the device, and a flash write that times out is retried instead of ending the session. On 2.6.0 and later a device with no firmware that is connected to a computer by USB mounts as a UF2 drive instead, so the firmware can also be installed by [Drag & Drop](/docs/getting-started/flashing-firmware/nrf52/drag-n-drop/); [Entering Bootloader Mode](/docs/getting-started/flashing-firmware/nrf52/entering-bootloader-mode/#devices-with-no-firmware) describes both states.
+On OTAFIX 2.1 and later a device left with no firmware waits for another OTA update rather than getting stuck, so a failed transfer can be run again. From 2.6.0, a phone that disconnects mid-transfer can reconnect and start the transfer over without resetting the device, and a flash write that times out is retried instead of ending the session. On 2.6.0 and later a device with no firmware that is connected to a computer by USB mounts as a UF2 drive instead, so the firmware can also be installed by [Drag & Drop](/docs/getting-started/flashing-firmware/nrf52/drag-n-drop/); [Entering Bootloader Mode](/docs/getting-started/flashing-firmware/nrf52/entering-bootloader-mode/#devices-with-no-firmware) describes both states.
 
 If an update fails early with `Error: Operation Failed` in a Nordic app, turn off **Request High MTU** in the app's settings, or change the packets receipt notification value (try 12, 8 or 1).
 

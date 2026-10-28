@@ -130,7 +130,7 @@ adafruit-nrfutil --singlebank --touch 1200 --verbose dfu serial --package <downl
 
 Flashing the bootloader package this way clears the bootloader's record of the installed firmware, so the device comes back with no firmware to start. That is expected, not a failure. What you see next depends on the bootloader version:
 
-- OTAFIX 2.0 to 2.5: the device waits for a [Bluetooth OTA update](/docs/getting-started/flashing-firmware/nrf52/ota/). No USB drive and no serial port appear. Put the device into [bootloader mode](/docs/getting-started/flashing-firmware/nrf52/entering-bootloader-mode/) for the UF2 drive and copy the firmware across, or complete the OTA update.
+- OTAFIX 2.1 to 2.5: the device waits for a [Bluetooth OTA update](/docs/getting-started/flashing-firmware/nrf52/ota/). No USB drive and no serial port appear. Put the device into [bootloader mode](/docs/getting-started/flashing-firmware/nrf52/entering-bootloader-mode/) for the UF2 drive and copy the firmware across, or complete the OTA update.
 - 2.6.0 and later: while the USB cable stays connected to a computer, the device comes straight back as the UF2 drive, showing NO FIRMWARE on boards with a display. Copy the firmware `.uf2` onto it. Unplugged, it waits for a Bluetooth OTA update instead, and plugging the cable back in brings the drive up again.
 
 ### Method 4: Using a Debugger
