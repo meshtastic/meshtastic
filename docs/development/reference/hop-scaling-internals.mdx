@@ -1,0 +1,337 @@
+---
+id: hop-scaling-internals
+title: Hop Scaling Internals
+sidebar_label: Hop Scaling Internals
+sidebar_position: 10
+description: How the firmware estimates mesh size from a 512-byte sampled histogram and picks a smaller hop limit for routine broadcasts, without touching text messages or unicast traffic.
+---
+
+import ThemedImage from "@theme/ThemedImage";
+import useBaseUrl from "@docusaurus/useBaseUrl";
+
+**Firmware 2.8.0.** Hop scaling first shipped in 2.7.24 ([#10176](https://github.com/meshtastic/firmware/pull/10176)).
+
+Every routine Meshtastic broadcast carries a `hop_limit` that controls how many times the mesh relays it. Many devices are set to a hop limit of 7 so that text messages can cross a large mesh. That same setting is expensive for routine broadcasts - position, telemetry, nodeinfo and neighborinfo - because in a dense mesh, relaying each of them out to 7 hops burns airtime for no benefit. In a sparse or chain-like mesh, those hops are still needed.
+
+Hop scaling resolves the tension by estimating how many nodes are reached at each hop distance and choosing the smallest hop limit that still covers enough of the active mesh. **The configured hop limit becomes an upper bound rather than a fixed value applied to every packet type.**
+
+Sources of truth, on `develop` - the module is not on `master`: [HopScalingModule.h](https://github.com/meshtastic/firmware/blob/develop/src/modules/HopScalingModule.h) and [HopScalingModule.cpp](https://github.com/meshtastic/firmware/blob/develop/src/modules/HopScalingModule.cpp), with the sampling hook in [NodeDB.cpp](https://github.com/meshtastic/firmware/blob/develop/src/mesh/NodeDB.cpp) and the application point in [Router.cpp](https://github.com/meshtastic/firmware/blob/develop/src/mesh/Router.cpp).
+
+## What is affected
+
+The scaled hop limit is applied in `Router::send()` to decoded broadcasts originated by this node on four port numbers:
+
+| Port                | Packet type                  | Typical interval |
+| :------------------ | :--------------------------- | :--------------- |
+| `POSITION_APP`      | GPS position                 | 15 min to 2 h    |
+| `TELEMETRY_APP`     | Battery, environment sensors | 15 min to 1 h    |
+| `NODEINFO_APP`      | Node name, hardware info     | 3 h              |
+| `NEIGHBORINFO_APP`  | Direct neighbour list        | 6 h              |
+
+Not affected: unicast traffic, admin packets, routing packets, text messages, and anything relayed on behalf of another node. Those keep the configured hop limit.
+
+The recommendation can only lower a packet's hop limit, never raise it - the code applies it only when `variableHopLimit < p->hop_limit`. A node configured for 3 hops is never pushed out to 5.
+
+## Enablement
+
+There is no runtime setting. Hop scaling is a compile-time capability, `HAS_VARIABLE_HOPS`, enabled by default on every target except STM32WL, which lacks the RAM. A variant can opt out by defining it to `0` in `variant.h`. The role floor described below is likewise unconditional.
+
+## The stored model
+
+`HopScalingModule` holds a fixed 512-byte structure: 128 entries of 4 bytes each, with no padding.
+
+| Field          | Bits | Meaning                                                                        |
+| :------------- | :--- | :----------------------------------------------------------------------------- |
+| `nodeHash`     | 16   | Session-seeded hash of the sender's node ID                                    |
+| `hops_away`    | 3    | Last observed hop distance, 0 to 7                                             |
+| `seenHoursAgo` | 13   | Hourly presence bitmap; bit 0 is the most recent hour, bit 12 is 12 hours ago  |
+
+That single array gives the module three things at once: a bounded sample of the mesh, a hop-distance histogram, and a 13-hour activity history per sampled node.
+
+The hash is an XOR-fold of the 32-bit node ID mixed with a per-session seed drawn from `random()` at construction. Two devices therefore sample different subsets of the mesh, and the same device samples a different subset after a clear.
+
+State survives reboots. The entries, both denominators, the hold counter and the hash seed are written to `/prefs/hopScalingState.bin` at each hourly rollover and restored at construction, so a node does not need to re-accumulate 13 hours of history after every restart. Restored entries are available to sampling immediately, but the boot default of `HOP_MAX` stands until the first rollover produces a recommendation.
+
+### What gets sampled
+
+Sampling is driven from the NodeDB receive path, and only genuine RF receptions count: the packet must have arrived over `TRANSPORT_LORA` **and** not be marked `via_mqtt`. An MQTT-origin packet that a gateway rebroadcasts onto LoRa arrives as `TRANSPORT_LORA` with `via_mqtt` set, and usually carries `hop_start == 0`; counting those would both inflate the local mesh-size estimate with nodes that are not really on the RF mesh and pile them into the hop-0 bucket, which is exactly the bucket that pulls the recommendation lowest.
+
+## Sampling and scaling
+
+Two denominators control two distinct gates:
+
+| Denominator            | Gate       | Effect                                                          |
+| :--------------------- | :--------- | :-------------------------------------------------------------- |
+| `samplingDenominator`  | Admission  | Which incoming nodes are admitted into the histogram            |
+| `filteringDenominator` | Counting   | Which stored entries are counted during the hourly estimation   |
+
+Both use the same hash-space test:
+
+```text
+passesFilter(nodeHash, denom) := (nodeHash & (denom - 1)) == 0
+```
+
+When the histogram fills past 80 percent, `trimIfNeeded()` first evicts entries not seen in any of the last 13 hours. If it is still crowded, `samplingDenominator` doubles (bounded at 128), `filteringDenominator` is raised to match immediately, and entries that no longer pass the stricter gate are dropped. The histogram thereby keeps a smaller controlled sample and recovers the population estimate by multiplying counts back up.
+
+### Why two denominators
+
+The estimate itself does not need two. `passesFilter` is a uniform hash-space subsample and the two masks nest: for powers of two `D ≤ F`, every entry that passes `F` also passes `D`, and on average `D/F` of the entries admitted at `D` go on to be counted at `F`. Each counted entry therefore stands for `F` nodes, so `raw_count × F` estimates the population regardless of which denominator admitted the entries - which is exactly what the code computes, `counts.total × filteringDenominator`.
+
+The second denominator exists for **stability**, not accuracy. Scale-up must take effect at once, but scale-down must not immediately reinterpret older samples as though they had been collected at the new denominator, and newly admitted nodes have not yet accumulated enough `seenHoursAgo` history to be reliable. So:
+
+1. `samplingDenominator` may halve as soon as the histogram looks sparse again (fewer than 20 percent of capacity counted).
+2. `filteringDenominator` is held at its elevated value for 13 rollovers after the last scale-up.
+3. Once the hold expires, `filteringDenominator` halves by **one step per hour** toward `samplingDenominator` rather than jumping straight down, giving the hop walk a gradual descent.
+
+A companion array, `denominatorHistory[13]`, records which `filteringDenominator` was in effect when each hour's bit was set, so per-hour totals are always scaled by the multiplier that was actually active for that hour.
+
+## The hourly algorithm
+
+The module ticks every 5 minutes and performs a rollover every 12th tick.
+
+```text
+1. Advance denominatorHistory, then tally entries passing filteringDenominator
+   and seen within the last 13 hours:
+     - raw per-hop counts
+     - raw per-hour seen counts for hours 0..12
+     - trend counters: new, returning, lapsed, olderThan4h, agingOut
+
+2. Compute the activity ratio and pick a politeness regime.
+     recent = h0 + h1
+     older  = h1 + h2
+     ratio  = recent / older
+
+3. Scale and cache trend data.
+     per-hour totals use denominatorHistory[h]
+     trend counters use the current filteringDenominator
+
+4. Walk hop buckets 0 to 7.
+     cumulative += perHop[hop] * filteringDenominator
+     first hop where cumulative >= 40 becomes the base hop
+     if the floor is never reached, use hop 7
+
+5. Apply the one-hop politeness extension.
+
+6. Scale-down check, then hold-counter tick and filteringDenominator step-down.
+
+7. Shift every 13-bit seen bitmap left by one hour.
+
+8. Persist state to flash.
+```
+
+The hop decision is made entirely from the filtered sample the histogram holds - there is no second estimator.
+
+### Politeness regimes
+
+The activity ratio compares a two-hour recent window against a two-hour older one, both taken from the per-hour seen counts:
+
+```text
+recent = h0 + h1
+older  = h1 + h2
+ratio  = recent / older
+```
+
+Two details are easy to miss. The windows **overlap on `h1`**, so the ratio measures the slope across three hours rather than two disjoint periods; and both terms are the **raw** per-slot counts, before the `denominatorHistory[h]` scaling applied to the reported per-hour figures, so a denominator change part-way through those three hours tilts the ratio slightly.
+
+The comparison is done in integers to avoid floating point - `recent × 10` against `older × 9` and `older × 12` - which is where the 0.9 and 1.2 boundaries come from. The ratio then decides how far past the 40-node floor the algorithm may go, as an interpolation between a floor of 40 nodes and a ceiling of 80:
+
+```text
+politeLimit = 40 + (80 - 40) × politenessNumerator / 4
+```
+
+| Activity ratio | Regime   | Numerator | Reach limit | Meaning                                          |
+| :------------- | :------- | :-------- | :---------- | :----------------------------------------------- |
+| `< 0.9`        | Generous | 4/4       | 80          | Mesh looks quiet or shrinking; allow more reach  |
+| `0.9` to `1.2` | Default  | 2/4       | 60          | Mesh looks stable; moderate extension            |
+| `> 1.2`        | Strict   | 1/4       | 50          | Mesh looks busy or growing; minimise extra relays |
+
+If either the recent or the older window has a count of 1 or less, the regime falls back to Default rather than reading noise as a trend.
+
+The extension rule looks exactly one hop beyond the base hop, and only when there is a hop to look at:
+
+```text
+if baseHop < 7:                                        # no hop-8 bucket exists
+    atNext = perHop[baseHop + 1] * filteringDenominator
+    if (cumulative + atNext) <= politeLimit:
+        baseHop += 1
+```
+
+The guard matters: the walk falls through to hop 7 whenever no bucket reaches the floor, and `perHop` has buckets 0 to 7 only. Note also that `atNext` is scaled by `filteringDenominator`, exactly as the cumulative count in the walk is - both sides of the comparison are estimated populations, not raw entry counts. The firmware evaluates the whole comparison multiplied through by the politeness denominator, so the interpolation stays in integer arithmetic.
+
+That gives a practical reach envelope of roughly 50 to 80 nodes in larger meshes while preserving 40 as the floor.
+
+### Role floor
+
+Sensor and tracker roles exist to push data into the mesh, so clamping their reach is counterproductive. A floor is applied after the hop walk:
+
+| Role                     | Floor |
+| :----------------------- | :---- |
+| `TRACKER`, `TAK_TRACKER` | 2     |
+| `SENSOR`                 | 1     |
+| All other roles          | 0     |
+
+The final recommendation is `max(suggestedHop, roleFloor)`, so a tracker on a dense mesh still reaches 2 hops.
+
+## Trend statistics
+
+Each rollover also emits a small set of trend counters, all scaled to estimated full-mesh population:
+
+| Counter               | Meaning                                                          |
+| :-------------------- | :--------------------------------------------------------------- |
+| `newThisHour`         | Seen only in the just-completed hour, with no prior history in the retained 13-hour bitmap |
+| `returningThisHour`   | Seen this hour and in at least one older hour                    |
+| `lapsedSinceLastHour` | Seen last hour but not this hour                                 |
+| `olderThan4h`         | Absent from hours 0 to 3, but present somewhere in hours 4 to 12 |
+| `agingOut`            | Only bit 12 remains; disappears entirely at the next rollover    |
+
+These do not feed the hop decision. They are a compact way to observe whether the sampled mesh is growing, stable, fading or aging out.
+
+## Log format
+
+Every line is tagged `[HOPSCALE]`. There are two groups: three lines emitted once per hourly rollover, and three more emitted on **every** 5-minute tick.
+
+### Hourly rollover
+
+The primary source of truth, written at the end of `rollHour()`:
+
+```text
+[HOPSCALE] rollHour: entries=96/128 samp=1/4 filt=1/4 counted=83 est=332 suggestedHop=1 polite=2/4
+[HOPSCALE] scaledSeenPerHour (h0=now): [320 300 288 276 264 252 244 236 228 220 212 204 196]
+[HOPSCALE] trend: new=16 returning=304 lapsed=20 olderThan4h=40 agingOut=8
+```
+
+| Field          | Meaning                                                   |
+| :------------- | :--------------------------------------------------------- |
+| `entries`      | Live sampled entries, over the fixed 128-slot capacity     |
+| `samp`         | Current ingest denominator                                 |
+| `filt`         | Current counting denominator                               |
+| `counted`      | Filtered entries seen within the last 13 hours             |
+| `est`          | Estimated mesh size, `counted × filt`                      |
+| `suggestedHop` | Hop chosen by the walk, **before** the role floor          |
+| `polite`       | Politeness numerator over 4 - `1` strict, `2` default, `4` generous |
+
+### Every 5-minute tick
+
+```text
+[HOPSCALE] hop=1 histActive=1 fill=75% samp=1/4 filt=1/4 entries=96 lastCounted=83 polite=2/4 nextRoll=60min
+[HOPSCALE] nodes perHop: [8 20 18 12 9 8 5 3]
+[HOPSCALE] last scaled perHop: [32 80 72 48 36 32 20 12]
+```
+
+`hop` is the value `Router::send()` will actually apply, so it is the one to read when checking behaviour - unlike `suggestedHop` above, it has the role floor applied. `nodes perHop` is the **raw** filtered sample and sums to `lastCounted`; `last scaled perHop` is that array multiplied by `filt` and sums to `est`. `histActive` is 0 until the first rollover completes, during which the recommendation is still the boot default of 7.
+
+Finally, `Router::send()` logs a `[HOPSCALE] hop_limit X -> Y for portnum N` line each time it actually lowers a packet's hop limit.
+
+**Note:** everything except `entries`, `counted` and `nodes perHop` is already scaled by `filt`, so at `filt=1/4` every per-hour, trend and scaled-perHop figure is necessarily a **multiple of 4**. A value that is not is a misread line, not a rare state. The example above is internally consistent: `83 × 4 = 332`, the raw per-hop array sums to 83, its scaled counterpart sums to 332, and `new + returning = 320` equals the `h0` bucket.
+
+## Worked scenarios
+
+Each chart below plots the **scaled** per-hop buckets - the filtered sample multiplied by `filteringDenominator`, which is what the hop walk actually consumes. All five share one 0-45 axis so the shapes are directly comparable, and the `cumulative` column is the running total the walk tests against the 40-node floor.
+
+### A. Dense local mesh
+
+An urban or event mesh where most nodes sit within 1 or 2 hops. `filteringDenominator = 1`.
+
+<ThemedImage
+  alt="Nodes reached at each hop in a dense local mesh: 25, 30, 15, 5, 10, 15, 10 and 0 from hop 0 to hop 7. Cumulative reach crosses the 40-node floor at hop 1, at 55 nodes."
+  className="max-w-full h-auto"
+  sources={{
+    light: useBaseUrl("/img/hop-scaling/scenario-a-light.svg"),
+    dark: useBaseUrl("/img/hop-scaling/scenario-a-dark.svg"),
+  }}
+/>
+
+| Regime   | Limit | `70 <= limit` | Final hop |
+| :------- | :---- | :------------ | :-------- |
+| Strict   | 50    | no            | 1         |
+| Default  | 60    | no            | 1         |
+| Generous | 80    | yes           | 2         |
+
+Dense meshes usually collapse to 1 or 2 hops.
+
+### B. Spread sparse mesh
+
+Nodes spread evenly across distance, with no dominant dense core. `filteringDenominator = 1`.
+
+<ThemedImage
+  alt="Nodes reached at each hop in a spread sparse mesh: 5, 8, 12, 15, 10, 6, 10 and 10 from hop 0 to hop 7. Cumulative reach reaches the 40-node floor exactly at hop 3."
+  className="max-w-full h-auto"
+  sources={{
+    light: useBaseUrl("/img/hop-scaling/scenario-b-light.svg"),
+    dark: useBaseUrl("/img/hop-scaling/scenario-b-dark.svg"),
+  }}
+/>
+
+The floor is reached exactly, not overshot, and `50 <= 50` holds even under Strict - so every regime lands on **4 hops**.
+
+### C. Deep linear chain
+
+A long rural chain where every relay matters. `filteringDenominator = 1`.
+
+<ThemedImage
+  alt="Nodes reached at each hop in a deep linear chain: 2, 3, 3, 4, 3, 2, 2 and 3 from hop 0 to hop 7. Cumulative reach tops out at 22 and never reaches the 40-node floor."
+  className="max-w-full h-auto"
+  sources={{
+    light: useBaseUrl("/img/hop-scaling/scenario-c-light.svg"),
+    dark: useBaseUrl("/img/hop-scaling/scenario-c-dark.svg"),
+  }}
+/>
+
+On the shared scale this mesh barely registers. Cumulative reach tops out at 22 and never hits the 40-node floor, so the walk falls through to `HOP_MAX` and the recommendation is **7 hops**. This is the case the design is most careful about: a sparse mesh keeps its full reach.
+
+### D. Repeater cluster
+
+A few local nodes, a few routers at hop 1, and a large population behind them at hop 2. `filteringDenominator = 1`.
+
+<ThemedImage
+  alt="Nodes reached at each hop in a repeater cluster: 3, 5, 45, 8, 3, 2, 2 and 3 from hop 0 to hop 7. A single large spike at hop 2 carries cumulative reach from 8 to 53, clearing the 40-node floor."
+  className="max-w-full h-auto"
+  sources={{
+    light: useBaseUrl("/img/hop-scaling/scenario-d-light.svg"),
+    dark: useBaseUrl("/img/hop-scaling/scenario-d-dark.svg"),
+  }}
+/>
+
+The single hop-2 spike carries the whole decision: it alone clears the floor from a cumulative of 8. 61 then clears neither the Strict limit of 50 nor the Default limit of 60, so repeater-fed clusters stop at **2 hops**, with 3 allowed only when the mesh looks quiet.
+
+### E. Megamesh under histogram scaling
+
+The real mesh is far larger than 128 slots, so the histogram has already scaled up. `samplingDenominator = filteringDenominator = 4`.
+
+The raw filtered sample is only `[8 10 9 7 5 3 2 3]` - 47 entries - but every bucket is multiplied by 4:
+
+<ThemedImage
+  alt="Nodes reached at each hop in a megamesh after histogram scaling: 32, 40, 36, 28, 20, 12, 8 and 12 from hop 0 to hop 7. Cumulative reach clears the 40-node floor at hop 1 with 72 nodes and reaches 108 by hop 2."
+  className="max-w-full h-auto"
+  sources={{
+    light: useBaseUrl("/img/hop-scaling/scenario-e-light.svg"),
+    dark: useBaseUrl("/img/hop-scaling/scenario-e-dark.svg"),
+  }}
+/>
+
+108 exceeds even the Generous limit of 80, so the result is **1 hop**. Note how much taller this chart is than scenario C on the same scale: when the sample implies a very large mesh, scaling pushes the hop limit down aggressively despite the small raw sample.
+
+### Summary
+
+| Scenario         | Sample and scale                    | Final hop | Why                                          |
+| :--------------- | :---------------------------------- | :-------- | :------------------------------------------- |
+| Dense local      | `[25 30 15 5 10 15 10 0] × 1`       | 1 to 2    | Hop 1 already clears the 40-node floor       |
+| Spread sparse    | `[5 8 12 15 10 6 10 10] × 1`        | 4         | Hop 3 reaches 40 and hop 4 still fits        |
+| Deep chain       | `[2 3 3 4 3 2 2 3] × 1`             | 7         | Floor never reached                          |
+| Repeater cluster | `[3 5 45 8 3 2 2 3] × 1`            | 2 to 3    | A huge hop-2 cluster dominates               |
+| Megamesh         | `[8 10 9 7 5 3 2 3] × 4`            | 1         | The scaled sample already implies a big mesh |
+
+All five outcomes come from one bounded data structure: the sampled histogram, its hop buckets, its 13-hour bitmap history, and its denominator-based scaling.
+
+## Compiled limits
+
+| Constant                   | Value            | Meaning                                                |
+| :------------------------- | :--------------- | :----------------------------------------------------- |
+| `CAPACITY`                 | 128 entries      | 512 bytes total, 4 bytes per entry                     |
+| `MAX_HOP`                  | 7                | Ceiling on any recommendation                          |
+| `FILL_HIGH_PCT`            | 80               | Fill level that triggers trim and possible scale-up    |
+| `FILL_LOW_PCT`             | 20               | Counted level below which sampling scales down         |
+| `DENOM_MIN` / `DENOM_MAX`  | 1 / 128          | Denominator bounds, always powers of two               |
+| `FILTER_DENOM_HOLD_ROLLS`  | 13 rollovers     | Hold before `filteringDenominator` may step down       |
+| Target floor / ceiling     | 40 / 80 nodes    | Hop-walk threshold and generous extension ceiling      |
+| `RUNS_PER_HOUR`            | 12               | 5-minute ticks per hourly rollover                     |
