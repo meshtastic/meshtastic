@@ -34,7 +34,7 @@ A T1000-E on an nRF52 bootloader before OTAFIX 2.5 has no button path into the b
 
 A device with no valid firmware, for example after a bootloader package was flashed with `adafruit-nrfutil` or a firmware copy was interrupted, starts in bootloader mode by itself. What it does there depends on the [Meshtastic nRF52 Bootloader](https://github.com/meshtastic/nRF52_Bootloader) version:
 
-- OTAFIX 2.0 to 2.5: it waits for a [Bluetooth OTA update](/docs/getting-started/flashing-firmware/nrf52/ota/) and shows no drive and no serial port. Use the reset button or the single-button hold to mount the drive instead.
+- OTAFIX 2.1 to 2.5: it waits for a [Bluetooth OTA update](/docs/getting-started/flashing-firmware/nrf52/ota/) and shows no drive and no serial port. Use the reset button or the single-button hold to mount the drive instead.
 - 2.6.0 and later: connected to a computer by USB, it mounts the drive on its own, with NO FIRMWARE as the title on boards with a display. On battery it waits for a Bluetooth OTA update, and connecting the USB cable while no phone is connected mounts the drive. Unplugging the cable from the drive returns it to the Bluetooth OTA wait. The bootloader gives a computer 3 seconds to recognize the drive and otherwise falls back to the Bluetooth OTA wait, so a charger or power bank is expected to behave like battery.
 
 ## Leaving bootloader mode by timeout
