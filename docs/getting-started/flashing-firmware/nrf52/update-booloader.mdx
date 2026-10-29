@@ -45,7 +45,7 @@ The Meshtastic nRF52 bootloader builds for the boards below. The second column i
 | Seeed XIAO nRF52840 BLE | `xiao_nrf52840_ble_bootloader` | `XIAO_DFU` |
 | Seeed XIAO nRF52840 BLE Sense | `xiao_nrf52840_ble_sense_bootloader` | `XIAO_DFU` |
 
-The two Meshtastic Generic bootloaders are for DIY nRF52840 boards with no board-specific bootloader. They drive no LED and use the reset pin as their only button. Pick the one matching the SoftDevice your firmware expects. They share a USB identity with the RAK4631, RAK3401, T-Echo, WisMesh Tag and MX25LE01, so a generic update UF2 installs over those boards' bootloaders and the reverse: check the package name before copying it.
+The two Meshtastic Generic bootloaders are for DIY nRF52840 boards with no board-specific bootloader. They drive no LED and use the reset pin as their only button. Pick the one matching the `SoftDevice` line in `INFO_UF2.TXT`: a `_nosd.uf2` update leaves the installed SoftDevice in place, and changing it takes a full `.zip` package in Method 3. They share a USB identity with the RAK4631, RAK3401, T-Echo, WisMesh Tag and MX25LE01, so a generic update UF2 installs over those boards' bootloaders and the reverse: check the package name before copying it.
 
 ## What `INFO_UF2.TXT` tells you
 
@@ -88,7 +88,7 @@ Depending on your device, you need to select the correct bootloader package. For
 4. Drag and drop the UF2 file you downloaded into the removable drive. The device will automatically update the bootloader and reset. A board with a display shows BOOTLOADER and a progress bar while the file copies (2.6.0 and later).
 5. Once the device resets, the update is complete. Your device is now running the latest bootloader version and you can proceed with [flashing the firmware](/docs/getting-started/flashing-firmware/nrf52/drag-n-drop/).
 
-The installed firmware normally survives a bootloader update. On 2.6.0 and later, a firmware larger than 744 KB (SoftDevice 6.1.1) or 740 KB (SoftDevice 7.3.0) overlaps the area the new bootloader is staged in, so the bootloader marks it invalid before writing rather than leave a damaged copy to start. The device then comes back up in bootloader mode showing NO FIRMWARE: copy the firmware `.uf2` again.
+The installed firmware normally survives a bootloader update. When the installed bootloader is 2.6.0 or later, a firmware larger than 744 KB (SoftDevice 6.1.1) or 740 KB (SoftDevice 7.3.0) overlaps the area the new bootloader is staged in, so the bootloader marks it invalid before writing rather than leave a damaged copy to start. The device then comes back up in bootloader mode showing NO FIRMWARE: copy the firmware `.uf2` again. An older installed bootloader does not do this, so after updating from one, copy the firmware again if it is that large.
 
 ### Method 3: Using adafruit-nrfutil
 

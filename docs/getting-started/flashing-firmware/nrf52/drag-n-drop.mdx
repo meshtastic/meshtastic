@@ -32,7 +32,7 @@ If you have just performed a [Factory Erase](/docs/getting-started/flashing-firm
 
 On the [Meshtastic nRF52 Bootloader](https://github.com/meshtastic/nRF52_Bootloader) (formerly OTAFIX) 2.6.0 and later:
 
-- A firmware file built for the other SoftDevice version (the `SoftDevice` line in `INFO_UF2.TXT`) is rejected: the drive stays up, nothing is installed, and a board with a display shows WRONG FILE. Copy the right file next. Earlier bootloaders write such a file, and it can damage the SoftDevice.
+- A firmware file built for the other SoftDevice version (the `SoftDevice` line in `INFO_UF2.TXT`) is rejected when the host writes the file front to back: the drive stays up, nothing is installed, and a board with a display shows WRONG FILE. Copy the right file next. Earlier bootloaders write such a file, and it can damage the SoftDevice.
 - The old firmware is marked invalid as soon as the copy starts, so a cable pulled mid-copy leaves the device with no firmware rather than a damaged one. Plugged back into the computer, it comes back as the drive, showing NO FIRMWARE on boards with a display, and you copy the file again.
 - Boards with a display show a progress bar while the file copies.
 
