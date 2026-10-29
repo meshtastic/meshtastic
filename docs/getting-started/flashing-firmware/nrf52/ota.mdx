@@ -22,7 +22,7 @@ OTA firmware updates come with an increased risk of failure. See [When an update
 
 ## When an update fails
 
-A device left with no firmware waits for another OTA update, so a failed transfer can be run again. A phone that disconnects mid-transfer can reconnect and start the transfer over without resetting the device. A device with no firmware that is connected to a computer by USB mounts as a UF2 drive instead, so the firmware can also be installed by [Drag & Drop](/docs/getting-started/flashing-firmware/nrf52/drag-n-drop/); [Entering Bootloader Mode](/docs/getting-started/flashing-firmware/nrf52/entering-bootloader-mode/#devices-with-no-firmware) describes both states.
+A device left with no firmware waits for another OTA update, so a failed transfer can be run again. On bootloader 2.6.0 and later, a phone that disconnects mid-transfer can reconnect and start the transfer over without resetting the device. On the same versions, a device with no firmware that is connected to a computer by USB mounts as a UF2 drive instead, so the firmware can also be installed by [Drag & Drop](/docs/getting-started/flashing-firmware/nrf52/drag-n-drop/); [Entering Bootloader Mode](/docs/getting-started/flashing-firmware/nrf52/entering-bootloader-mode/#devices-with-no-firmware) describes both states.
 
 If an update fails early with `Error: Operation Failed` in a Nordic app, turn off **Request High MTU** in the app's settings, or change the packets receipt notification value (try 12, 8 or 1).
 

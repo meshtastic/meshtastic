@@ -30,11 +30,11 @@ To leave bootloader mode without flashing, eject the drive. Unplugging doesn't l
 
 ## Devices with no firmware
 
-A device with no valid firmware, for example after an interrupted firmware copy, starts in bootloader mode by itself. Connected to a computer by USB, it mounts the drive, with NO FIRMWARE as the title on boards with a display. On battery it waits for a [Bluetooth OTA update](/docs/getting-started/flashing-firmware/nrf52/ota/), and connecting the USB cable while no phone is connected mounts the drive. The bootloader gives a computer 3 seconds to recognize the drive and otherwise waits for a Bluetooth OTA update, so a charger or power bank is expected to behave like battery.
+A device with no valid firmware, for example after an interrupted firmware copy, starts in bootloader mode by itself. On bootloader 2.6.0 and later, connected to a computer by USB, it mounts the drive, with NO FIRMWARE as the title on boards with a display. On battery it waits for a [Bluetooth OTA update](/docs/getting-started/flashing-firmware/nrf52/ota/), and connecting the USB cable while no phone is connected mounts the drive. The bootloader gives a computer 3 seconds to recognize the drive and otherwise waits for a Bluetooth OTA update, so a charger or power bank is expected to behave like battery.
 
 ## Leaving bootloader mode by timeout
 
-A device with firmware installed that sits in bootloader mode for 6 minutes with no activity starts the firmware. A Bluetooth connection, a read or write on the drive, a USB connection and a serial update each restart the 6 minutes; a Bluetooth connection left idle does not. A device with no firmware keeps waiting.
+On bootloader 2.6.0 and later, a device with firmware installed that sits in bootloader mode for 6 minutes with no activity starts the firmware. A Bluetooth connection, a read or write on the drive, a USB connection and a serial update each restart the 6 minutes; a Bluetooth connection left idle does not. A device with no firmware keeps waiting.
 
 ## Checking your bootloader version
 
