@@ -32,7 +32,7 @@ Go to **Settings → MQTT**:
 | Port | Default is 1883 (unencrypted) or 8883 (TLS). |
 | Username | MQTT broker username (optional). |
 | Password | MQTT broker password (optional). |
-| Root Topic | The topic prefix for all published messages (default: `msh`). |
+| Root Topic | The topic prefix for all published messages (default: `msh`). **Find Topics** shows the topics for your region, state and city and the topics active on your broker. |
 | Enabled | Toggle MQTT bridging on/off. |
 | Encryption Enabled | Encrypt packets before publishing. Recommended — prevents the broker from reading message content. |
 | JSON Enabled | Removed. JSON packet support was deprecated and removed in firmware. |
