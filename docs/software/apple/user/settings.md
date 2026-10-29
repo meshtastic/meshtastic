@@ -148,6 +148,8 @@ red. **DNS is optional** and may be left blank, which stores it as unset.
 
 GPS update interval, position precision, and smart position broadcasting. Enable **Broadcast Position** to share your location with the mesh.
 
+The GPS pin settings (the receive, transmit and enable GPIOs) are for boards where you wire up the GPS yourself. On a board whose maker builds the GPS in, they are hidden, here and in settings search.
+
 The **GPS Mode** selector (Enabled / Disabled / Not Present) is the single source of truth for the GPS state that the app writes to the radio. The older on/off `gpsEnabled` field it replaced is deprecated: the app no longer writes it, but still reads it from older firmware so existing devices keep working. No action is needed when upgrading — your GPS setting is preserved.
 
 ### Power
@@ -180,30 +182,22 @@ screen may briefly appear before the radio finishes identifying itself.
 | Store & Forward | Store packets for nodes that are temporarily offline. |
 | Serial | UART serial output for integration with other hardware. |
 | Telemetry | Device, environment, and air-quality sensor reporting. |
-| Traffic Management | Mesh traffic optimization — position deduplication, rate limiting, and unknown-packet filtering. Requires firmware 2.8.0+. |
 
-### Traffic Management
+### Mesh Beacon
 
-The Traffic Management module helps reduce unnecessary mesh traffic and improve network efficiency. It is available on nodes running firmware **2.8.0 or later**.
-
-The screen opens with a placement assessment: how many nodes this radio heard directly (over RF, within the last two hours), and whether that makes the module worth enabling. Traffic management pays off on a well-placed node with many direct neighbors — 50 or more heard in that window, ideally around 200. One transmission from such a node reaches most of them at once, so cutting hop counts on the chattiest packets removes the retransmission storm that follows each broadcast. On a node with a handful of direct neighbors it has little to police. Each feature is enabled implicitly by a non-zero value — turning a section's toggle off (or the master **Enabled** switch) clears its values and disables that feature on the radio. Turning a feature on starts its interval at the firmware default rather than zero, so saving right away enables it.
+A mesh beacon lets nearby radios find your mesh and join it. It is available on nodes running firmware **2.8.0 or later**, and needs a LoRa region set first. The beacon always uses the radio's own region, and offers the radio's own modem preset.
 
 | Setting | Description |
 |---------|-------------|
-| Enabled | Turns the module on or off. |
-| **Position Deduplication** | |
-| Position Dedup | Drop repeated position broadcasts. |
-| Minimum Interval | Positions from the same node arriving sooner than this are dropped. The firmware default is five hours. |
-| **NodeInfo Direct Response** | |
-| Direct Response | Answer NodeInfo requests from the local cache instead of flooding the mesh. |
-| Max Hops | Only answer requestors within this many hops, 1 to 3. The radio's role caps the effective value: routers allow up to 3, plain clients answer direct requestors only. |
-| **Rate Limiting** | |
-| Rate Limiting | Throttle nodes that send too many packets. |
-| Window | The time window packets are counted over. |
-| Max Packets | The most packets one node may send per window. |
-| **Unknown Packet Handling** | |
-| Drop Unknown | Drop packets that cannot be decrypted. |
-| Threshold | How many per window before the sender is dropped. |
+| Listen for Beacons | Hear beacons from other meshes and show them in discovery. |
+| Broadcast a Beacon | Send a beacon from this radio. The settings below appear only while this is on. |
+| Message | Short text sent with each beacon, up to 60 bytes. |
+| Channel | The channel listeners are offered to join. It must be one of this radio's channels. |
+| Frequency Slot | The slot listeners should tune to for the offered channel. Leave it empty and they work it out from the region, preset and channel name, which is right for most meshes. Set it only if your mesh uses a different slot. |
+| Interval | How often the beacon is sent. The minimum is one hour. |
+| Broadcast On | Where the beacon is sent. Each target is a channel, a preset and an optional frequency slot, and gets its own copy of the beacon. A target whose channel is no longer on the radio is marked and must be changed before saving. |
+
+A frequency slot must be within the range for the region and preset; the screen shows the range when a value is outside it.
 
 ## Tools
 
