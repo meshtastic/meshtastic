@@ -10,13 +10,21 @@ import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 import { Icon } from "@iconify/react";
 
-nRF52 devices from RAK are able to accept OTA firmware updates from a mobile device over bluetooth. Older T-Echo bootloaders do not have OTA support.
+nRF52 devices running the [Meshtastic nRF52 Bootloader](https://github.com/meshtastic/nRF52_Bootloader) accept OTA firmware updates from a mobile device over Bluetooth, as do RAK devices on their stock bootloader. Older T-Echo bootloaders do not have OTA support. [Update nRF52 Bootloader](/docs/getting-started/flashing-firmware/nrf52/update-nrf52-bootloader/#supported-boards) lists the boards the Meshtastic bootloader supports.
+
+While it waits for an OTA update, the device advertises a board-specific name ending in `_DFU`, for example `4631_DFU` on a RAK4631 or `T1KE_DFU` on a T1000-E. The full list is in the [supported boards](/docs/getting-started/flashing-firmware/nrf52/update-nrf52-bootloader/#supported-boards) table. Stock Adafruit bootloaders advertise as `AdaDFU`.
 
 :::caution
 
-OTA firmware updates come with an increased risk of failure. If the update process fails, your device will be left in a non-working state and require physical access for intervention.
+OTA firmware updates come with an increased risk of failure. See [When an update fails](#when-an-update-fails).
 
 :::
+
+## When an update fails
+
+A device left with no firmware waits for another OTA update, so a failed transfer can be run again. On bootloader 2.6.0 and later, a phone that disconnects mid-transfer can reconnect and start the transfer over without resetting the device. On the same versions, a device with no firmware that is connected to a computer by USB mounts as a UF2 drive instead, so the firmware can also be installed by [Drag & Drop](/docs/getting-started/flashing-firmware/nrf52/drag-n-drop/); [Entering Bootloader Mode](/docs/getting-started/flashing-firmware/nrf52/entering-bootloader-mode/#devices-with-no-firmware) describes both states.
+
+If an update fails early with `Error: Operation Failed` in a Nordic app, turn off **Request High MTU** in the app's settings, or change the packets receipt notification value (try 12, 8 or 1).
 
 <Tabs
   groupId="settings"
