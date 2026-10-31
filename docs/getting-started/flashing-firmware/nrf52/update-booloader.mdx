@@ -12,7 +12,7 @@ To check which version of the bootloader your device is running, put the device 
 
 :::info
 
-Many nRF52-based Meshtastic devices ship with, or can be upgraded to, [Meshtastic's OTAFIX bootloader](https://github.com/meshtastic/Adafruit_nRF52_Bootloader_OTAFIX) — a fork with faster, more reliable Bluetooth OTA updates. Its [releases page](https://github.com/meshtastic/Adafruit_nRF52_Bootloader_OTAFIX/releases) lists current UF2/zip packages per board, and its README lists which boards it supports.
+Many nRF52-based Meshtastic devices ship with, or can be upgraded to, [Meshtastic's nRF52 bootloader](https://github.com/meshtastic/nRF52_Bootloader) (formerly OTAFIX) — a fork with faster, more reliable Bluetooth OTA updates. Its [releases page](https://github.com/meshtastic/nRF52_Bootloader/releases) lists current UF2/zip packages per board, and its README lists which boards it supports.
 
 :::
 
@@ -22,7 +22,7 @@ Below are the steps to update your bootloader.
 
 ### Method 1: From the Meshtastic Android App (Easiest, if supported)
 
-For boards OTAFIX supports, the Meshtastic Android app can flash the bootloader directly — no manual download needed. This in-app path is Android-only for now; the iOS/iPadOS app does not yet offer a bootloader upgrade, so use one of the manual methods below on Apple platforms.
+For boards the nRF52 bootloader supports, the Meshtastic Android app can flash the bootloader directly — no manual download needed. This in-app path is Android-only for now; the iOS/iPadOS app does not yet offer a bootloader upgrade, so use one of the manual methods below on Apple platforms.
 
 1. Connect the radio over **USB/serial** (not Bluetooth).
 2. Open the connected radio's configuration and go to **Advanced → Firmware Update**.

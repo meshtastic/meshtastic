@@ -14,6 +14,16 @@ Recent user-facing changes from roughly the last 12 months. Newest at the top.
 Show roughly the last 12 months of changes; archive entries older than a year by removing them.
 -->
 
+**Oct 2026** — [Hardware Showcase](showcase.md) — On Apple Vision Pro, a room with real-size models of Meshtastic radios on display tables, grouped by maker: pick one up and turn it over in your hand. The radios on your mesh are on the wall rack. Open it from the spatial map.
+
+**Oct 2026** — [Bluetooth Device Connection](bluetooth.md#live-activity) — The Live Activity now shows what you choose: a mesh status glance from the Connect screen, or one node from its detail screen with its battery, signal, last heard and distance. It survives a dropped link and appears on the Apple Watch Smart Stack and, on iOS 26, the CarPlay Dashboard.
+
+**Oct 2026** — [Map & Waypoints](map.md) — On Apple Vision Pro, the spatial map now keeps a full offline map of the mesh, streets and terrain, and grows it whenever the app is open, not only while the spatial map is showing.
+
+**Sep 2026** — [Firmware Updates](firmware.md) — Factory Erase now uses the OTAFIX bootloader's own erase when the radio's bootloader supports it: one file for every board, and the installed firmware is kept, so the radio boots factory-fresh instead of needing firmware reinstalled. Older bootloaders are unchanged.
+
+**Sep 2026** — [Firmware Updates](firmware.md) — The bootloader board list and erase files are now fetched from meshtastic.org in the background rather than being fixed at each app release, so newly supported boards work without an app update. The app still ships with a copy and falls back to it when offline. Five more boards are supported as a result.
+
 **Aug 2026** — [Settings](settings.md) — New Waypoints notification setting: received-waypoint alerts can be switched off on their own. Reaction alerts follow the existing message notification settings.
 
 **Jul 2026** — [Settings](settings.md) — Packet Authenticity: on firmware that reports XEdDSA support, Security settings gains a Protection Level of Compatible, Balanced, or Strict, controlling whether your radio accepts mesh packets it cannot cryptographically authenticate; Strict asks for confirmation first, and the setting matches the Meshtastic app for Android.
@@ -54,7 +64,7 @@ Show roughly the last 12 months of changes; archive entries older than a year by
 
 **May 2026** — [Settings](settings.md) — Neighbor Info Module Config: neighbor info broadcasting with configurable update interval (4–72 hours).
 
-**May 2026** — [Settings](settings.md) — Pax Counter: added WiFi and BLE RSSI threshold fields for device counting sensitivity.
+**May 2026** — [Settings](settings.md) — Pax Counter: added Wi-Fi and BLE RSSI threshold fields for device counting sensitivity.
 
 **May 2026** — [Settings](settings.md) — Compass Orientation: new 8-option picker in Display config for radios mounted at non-standard angles.
 

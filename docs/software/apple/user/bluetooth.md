@@ -29,7 +29,18 @@ Because that is hard to undo on a roof, tower, or other remote node, the app ask
 
 ## Live Activity
 
-Long press a connected radio row to start a Live Activity (iOS 16.2+). The Live Activity shows mesh status on your Lock Screen and in Dynamic Island.
+A Live Activity keeps the mesh on your Lock Screen and in the Dynamic Island. It shows one of two things, chosen when you start it:
+
+- **Mesh status** — the connection, nodes online, unread messages and the radio's battery.
+- **One node** — its battery, signal, when it was last heard and how far away it is.
+
+Tap **Live Activity** on the Connect screen while a radio is connected, choose what to show (for a node, pick it from the list; favorites come first), and tap **Start Live Activity**. You can also open a node and choose **Track in Live Activity**.
+
+Only one runs at a time; starting the other kind switches it. Stop it from the same **Live Activity** row, or from the node's detail screen.
+
+If the radio's link drops, the Live Activity shows **Disconnected** and picks up again when the app reconnects. Disconnecting the radio yourself, or switching to a different radio, ends it. iOS stops updating a Live Activity after 8 hours, and the Connect screen shows when that will be.
+
+On iOS 18 and later, a running Live Activity also appears in the Smart Stack on a paired Apple Watch, and on iOS 26 on the CarPlay Dashboard.
 
 ## Managing Multiple Radios
 
@@ -72,5 +83,5 @@ The app displays the Bluetooth signal strength of nearby devices during scanning
 ---
 
 :::tip Connected Radio
-Swipe left to disconnect. Long press to start the Live Activity or to power off the radio (you'll be asked to confirm).
+Swipe left to disconnect. Long press for more options, such as powering off the radio (you'll be asked to confirm).
 :::

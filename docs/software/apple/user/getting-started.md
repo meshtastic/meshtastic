@@ -37,7 +37,7 @@ The first time you open the app, a short guided setup walks you through the perm
 
 ![Bluetooth permission screen](/img/apple/onboarding_bluetooth.webp)
 
-**2. Local Network** — lets the app find radios connected over WiFi or Ethernet.
+**2. Local Network** — lets the app find radios connected over Wi-Fi or Ethernet.
 
 ![Local Network permission screen](/img/apple/onboarding_localNetwork.webp)
 

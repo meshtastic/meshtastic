@@ -69,13 +69,18 @@ Select a node from the drop-down to manage connected or remote devices.
 | ![Favorites](/img/apple/favorite.webp) | **Favorites** — favorited contacts and nodes with recent messages appear at the top of the contact list. |
 | ![Long press](/img/apple/longPress.webp) | **Long Press Actions** — long press to favorite or mute the contact, or delete a conversation. |
 
+The contact list shows the contacts you can actually direct message. Nodes that report themselves as
+unmessagable, and nodes no public key has been received for, are left out — the radio would refuse to
+send to them. A contact you already have a conversation with stays in the list either way, so an
+existing thread is never hidden.
+
 ### Encryption
 
 ![Encryption legend](/img/apple/lockLegend.webp)
 
 | Icon | Meaning |
 |------|---------|
-| ![Shared Key](/img/apple/lockOpen.webp) | **Shared Key** — direct messages are using the shared key for the channel. |
+| ![No Public Key](/img/apple/lockOpen.webp) | **No Public Key** — no public key has been received for this node, so direct messages to it cannot be sent. Use **Exchange User Info** on the node to ask for one. |
 | ![Public Key Encryption](/img/apple/lockClosed.webp) | **Public Key Encryption** — direct messages use the public key infrastructure for encryption. Requires firmware 2.5 or later. |
 | ![PKI Mismatch](/img/apple/keySlash.webp) | **Public Key Mismatch** — the most recent public key for this node does not match the previously recorded key. Verify who you are messaging with by comparing public keys in person or over the phone. |
 

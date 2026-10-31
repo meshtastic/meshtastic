@@ -23,9 +23,14 @@ The Nodes tab shows every device your radio has heard on the mesh. Tap any node 
 
 | Icon | Meaning |
 |------|---------|
-| ![Shared Key](/img/apple/lockOpen.webp) | **Shared Key** — direct messages are using the shared key for the channel. |
+| ![No Public Key](/img/apple/lockOpen.webp) | **No Public Key** — no public key has been received for this node, so direct messages to it cannot be sent. Use **Exchange User Info** on the node to ask for one. |
 | ![Public Key Encryption](/img/apple/lockClosed.webp) | **Public Key Encryption** — direct messages use public key infrastructure. Requires firmware 2.5+. |
 | ![PKI Mismatch](/img/apple/keySlash.webp) | **Public Key Mismatch** — public key does not match the previously recorded key. Verify the contact out-of-band. |
+
+Every radio has generated a keypair since firmware 2.5, so direct messages use it. A radio with no
+public key for the destination refuses to send rather than falling back to the channel key, so a node
+showing the open lock cannot be messaged until its node info arrives. Node detail shows **No Public
+Key** in place of the public key row for those nodes, and they are left out of the contact list.
 
 ## Device Roles
 
@@ -95,6 +100,16 @@ The signal meter shown here (and on a node's detail screen) rates link quality f
   <img src={useBaseUrl("/img/apple/compact_mqtt.webp")} alt="MQTT-bridged node" />
 </picture>
 
+## Nodes Not Heard on Your Current LoRa Settings
+
+Changing the radio's preset, region or frequency slot moves it to a different channel, and nodes it heard before may no longer be reachable. On firmware 2.8.1 and later, the radio reports for each node whether it has heard that node over LoRa on the settings it is using now, including after changes made from the device's menu or the CLI.
+
+A node the radio has not heard shows **Not heard on current LoRa** under its last-heard time. That is separate from online and offline: a node can be online and still not heard on these settings. Nodes known only over MQTT are never marked, because they don't reach your radio over LoRa. Switching back to the earlier settings brings back the earlier answers on their own.
+
+When most of the list is in that state, the Nodes tab shows a notice such as **87 nodes not heard on your current LoRa settings**. Choose **Remove Them** to open a confirmation that includes the number of nodes, such as **Remove 1 node?** or **Remove 10 nodes?**. Confirming removes those nodes from this app and the connected radio, and keeps favorites and the connected node. A node returns if it is heard again. Choose **Keep** to dismiss the notice until more nodes join that count. Nothing is removed unless you choose to.
+
+Older firmware doesn't report this, so the marker and the notice don't appear.
+
 ## Context Menu Actions
 
 Long-press any node in the list to access quick actions:
@@ -104,9 +119,11 @@ Long-press any node in the list to access quick actions:
 - **Status Message** — set the status your radio broadcasts to the mesh (connected node only, firmware 2.8+)
 - **Mute notifications / Unmute** — silence alerts from this node
 - **Message** — open a direct message conversation with this node
-- **Trace Route** — discover the path messages take to reach this node
+- **Trace Route** — discover the path messages take to reach this node (see [Trace Routes](traceroute.md))
 - **Ignore / Remove from ignored** — hide this node from normal views
 - **Remove** — remove the node from your local database
+
+Open a node and choose **Track in Live Activity** to keep it on your Lock Screen and in the Dynamic Island: its battery, signal, when it was last heard and how far away it is. See [Live Activity](bluetooth.md#live-activity).
 
 ## Display Names
 
@@ -121,6 +138,7 @@ Tap the filter icon above the list to narrow which nodes are shown. Filters appl
 | Filter | What it shows |
 |--------|---------------|
 | **Online** | Only nodes heard in the last two hours. |
+| **Hide Not Heard on Current LoRa** | Hides nodes your radio has not heard on its current LoRa settings. Needs firmware 2.8.1 or later. |
 | **Favorites** | Only nodes you have starred. |
 | **Public Key Encryption** | Only nodes using PKI-encrypted direct messages. |
 | **Environment** | Only nodes reporting environment telemetry (temperature, humidity, pressure). |
@@ -149,7 +167,7 @@ Tap a node and scroll to the Logs section for detailed metrics:
 | ![Positions](/img/apple/logPositions.webp) | GPS position data including latitude, longitude, and altitude. |
 | ![Environment](/img/apple/logEnvironment.webp) | Sensor data: temperature, humidity, barometric pressure. |
 | ![Detection Sensor](/img/apple/logDetectionSensor.webp) | Motion or door open/close alerts from the node. |
-| ![Trace Routes](/img/apple/logTraceRoutes.webp) | Recorded trace route paths showing the hops a message took through the mesh. |
+| ![Trace Routes](/img/apple/logTraceRoutes.webp) | Recorded trace route paths showing the hops a message took through the mesh, with a chart and a hop-by-hop timeline. See [Trace Routes](traceroute.md). |
 
 When a node has a known position, the Logs section also offers **Estimate Coverage** (`cellularbars`). It switches to the Map tab and opens the Site Planner coverage-estimate form prefilled from that node. See [Coverage Estimate (Site Planner)](map.md) on the Map page for the full flow.
 
@@ -172,10 +190,6 @@ Tap any node to see the full detail view with hardware info, signal metrics, env
 
 For messageable nodes, use **Actions > Share Contact QR** to show a Meshtastic contact link and QR code that another device can scan.
 
-### Share Connected Node
-
-When a radio is connected, a **Share Connected Node** button appears in the node list toolbar. It opens the same share sheet as **Share Contact QR**, pre-filled with your own node — a quick way to hand someone your contact without finding yourself in the list.
-
 ### Write a Contact to an NFC Tag
 
 On iPhones with NFC hardware (iOS 18 or later), the contact share sheet also offers **Write to NFC Tag**. Hold a writable NFC tag near the top of your iPhone and the contact link is saved to it, replacing whatever the tag held before. Anyone can then tap that tag with their phone to open the contact in Meshtastic — the tag carries exactly the same link the QR code encodes.
@@ -185,6 +199,10 @@ On iPhones with NFC hardware (iOS 18 or later), the contact share sheet also off
 Opening a Meshtastic contact link — by scanning a QR code, tapping a shared link, or tapping an NFC tag — presents a confirmation sheet before anything is added. The sheet shows the node's colored initials, its long name, and an explanation that adding the contact saves their name and public key to your connected node. Choose **Add Contact** to import, or **Cancel** to dismiss.
 
 If the import fails — most often because the radio disconnected — the sheet stays open and shows the reason so you can reconnect and tap **Add Contact** again. It closes only once the contact has actually been sent to your node. A link that is damaged or truncated is reported as an invalid format instead of being imported.
+
+If the contact carries a different public key than your node already holds for that node number, the sheet says so and **Add Contact** stays disabled until you turn on **Replace the stored key**. Importing replaces the key your node encrypts direct messages to that contact with, so only continue if you expected it to change — they reset their node, or set it up again. A contact you have never added, or one carrying the same key you already hold, imports without the extra step.
+
+A contact that carries no public key cannot be added. **Add Contact** is disabled and the sheet says the contact does not include one. The key is the point of a shared contact — it is what lets your node send direct messages to that contact — and applying a keyless one would clear the key your node already held, breaking direct messages that used to work. For the same reason, a node you have no public key for cannot be shared from this app.
 
 Importing a contact requires firmware 2.6.9 or later on the connected node.
 
@@ -207,6 +225,7 @@ The hardware section shows information about the physical device running the nod
 | Status | Meaning |
 |--------|---------|
 | **Supported Hardware** | Device is actively supported with firmware updates. |
+| **Maker Hardware** | Independent maker hardware that is built and tested, but not Backer or Partner hardware. |
 | **Discontinued Hardware** | Device is no longer supported and does not receive firmware updates. |
 
 For supported devices, the support tier is shown below the hardware name:
@@ -222,6 +241,8 @@ For supported devices, the support tier is shown below the hardware name:
 For devices with known purchase links, an **I want one** section appears below the hardware info. It shows the official vendor link and regional marketplace options (Amazon, Rokland, AliExpress, and others) sourced from [msh.to](https://msh.to).
 
 Marketplace links are filtered to your device region, so only stores that ship to your area are shown. Vendor links (directly from the device manufacturer) are always shown regardless of region.
+
+Some of these are affiliate links. The app says so — product links may be affiliate links, and purchases may earn Meshtastic a commission. In the **I want one** section the disclosure sits in small print below the links; the full directory at **Settings → Device Links** shows it above them.
 
 > **Tip — No purchase links shown**
 > Purchase links require an internet connection on first launch and after clearing app data. Connect the app to update the device catalog.

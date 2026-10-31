@@ -56,7 +56,8 @@ The app uses natural scaling — short distances stay in meters or feet, while l
 
 - **Node list** — distance and bearing to each node
 - **Node detail** — altitude, distance from your position
-- **Map** — waypoint distances, trace route hop distances
+- **Map** — waypoint distances
+- **Trace route timeline** — the length of each hop
 - **Compass** — distance to selected node
 - **Altitude chart** — Y-axis labels adapt to your locale
 
