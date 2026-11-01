@@ -14,6 +14,10 @@ Recent user-facing changes from roughly the last 12 months. Newest at the top.
 Show roughly the last 12 months of changes; archive entries older than a year by removing them.
 -->
 
+**Oct 2026** — [Bluetooth Device Connection](bluetooth.md#widgets-and-controls) — The Connect screen's Live Activity row is now **Widgets**: one sheet to start or switch the Live Activity and to see which widgets and controls are on your screens, with how to add the rest.
+
+**Oct 2026** — [Cinema](cinema.md) — On Apple Vision Pro, a search and rescue tent with the app on a big screen, the 3D map in front of you, your team on the whiteboard and the latest trace route on the wall.
+
 **Oct 2026** — [Hardware Showcase](showcase.md) — On Apple Vision Pro, a room with real-size models of Meshtastic radios on display tables, grouped by maker: pick one up and turn it over in your hand. The radios on your mesh are on the wall rack. Open it from the spatial map.
 
 **Oct 2026** — [Bluetooth Device Connection](bluetooth.md#live-activity) — The Live Activity now shows what you choose: a mesh status glance from the Connect screen, or one node from its detail screen with its battery, signal, last heard and distance. It survives a dropped link and appears on the Apple Watch Smart Stack and, on iOS 26, the CarPlay Dashboard.
