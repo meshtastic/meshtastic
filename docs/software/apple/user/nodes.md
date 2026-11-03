@@ -119,9 +119,11 @@ Long-press any node in the list to access quick actions:
 - **Status Message** — set the status your radio broadcasts to the mesh (connected node only, firmware 2.8+)
 - **Mute notifications / Unmute** — silence alerts from this node
 - **Message** — open a direct message conversation with this node
-- **Trace Route** — discover the path messages take to reach this node
+- **Trace Route** — discover the path messages take to reach this node (see [Trace Routes](traceroute.md))
 - **Ignore / Remove from ignored** — hide this node from normal views
 - **Remove** — remove the node from your local database
+
+Open a node and choose **Track in Live Activity** to keep it on your Lock Screen and in the Dynamic Island: its battery, signal, when it was last heard and how far away it is. See [Live Activity](bluetooth.md#live-activity).
 
 ## Display Names
 
@@ -165,7 +167,7 @@ Tap a node and scroll to the Logs section for detailed metrics:
 | ![Positions](/img/apple/logPositions.webp) | GPS position data including latitude, longitude, and altitude. |
 | ![Environment](/img/apple/logEnvironment.webp) | Sensor data: temperature, humidity, barometric pressure. |
 | ![Detection Sensor](/img/apple/logDetectionSensor.webp) | Motion or door open/close alerts from the node. |
-| ![Trace Routes](/img/apple/logTraceRoutes.webp) | Recorded trace route paths showing the hops a message took through the mesh. |
+| ![Trace Routes](/img/apple/logTraceRoutes.webp) | Recorded trace route paths showing the hops a message took through the mesh, with a chart and a hop-by-hop timeline. See [Trace Routes](traceroute.md). |
 
 When a node has a known position, the Logs section also offers **Estimate Coverage** (`cellularbars`). It switches to the Map tab and opens the Site Planner coverage-estimate form prefilled from that node. See [Coverage Estimate (Site Planner)](map.md) on the Map page for the full flow.
 
@@ -223,6 +225,7 @@ The hardware section shows information about the physical device running the nod
 | Status | Meaning |
 |--------|---------|
 | **Supported Hardware** | Device is actively supported with firmware updates. |
+| **Maker Hardware** | Independent maker hardware that is built and tested, but not Backer or Partner hardware. |
 | **Discontinued Hardware** | Device is no longer supported and does not receive firmware updates. |
 
 For supported devices, the support tier is shown below the hardware name:

@@ -70,15 +70,9 @@ After Siri reads messages aloud, they are automatically marked as read so they n
 
 ## Live Activity
 
-When a Meshtastic device connects during a CarPlay session, a **Dynamic Island / Lock Screen Live Activity** starts automatically (iOS only, not available on macOS). It displays:
+When a Meshtastic device connects during a CarPlay session and no Live Activity is running, a **mesh status Live Activity** starts automatically (iOS only, not available on macOS). It shows the connection, nodes online, unread messages and the radio's battery. On iOS 26 it appears on the CarPlay Dashboard as well as the Lock Screen and Dynamic Island.
 
-- Node name and short name
-- Uptime, channel utilisation, and air-time TX percentage
-- Packets sent, received, and relay statistics
-- Online and total node counts
-- A 15-minute countdown timer synced with the telemetry reporting interval
-
-The Live Activity ends automatically when CarPlay disconnects.
+When CarPlay disconnects, the Live Activity it started ends. A Live Activity you started yourself — mesh status or tracking a node — keeps running. See [Live Activity](bluetooth.md#live-activity).
 
 > **Tip —** For implementation details and component architecture, see the [CarPlay Developer Guide](../developer/carplay.md).
 

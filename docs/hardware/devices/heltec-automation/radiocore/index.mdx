@@ -1,0 +1,139 @@
+---
+id: radiocore
+title: HELTEC® RadioCore
+sidebar_label: RadioCore
+sidebar_position: 7
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+import { DeviceImage } from "@site/src/components/DeviceImage";
+
+The Heltec RadioCore series is a family of compact core modules that pair an SX1262 LoRa radio with an ESP32-S3, ESP32-C6, or nRF52840. All three share the same 40.10 x 23.82 x 12.54 mm form factor, a board-to-board (BTB) connector, and two 10-pin headers, so they mount on a Heltec expansion board such as the RD02G or on a custom carrier board. The Full Accessory Kit includes the RD02G expansion board.
+
+<Tabs
+groupId="heltec"
+queryString="heltec"
+defaultValue="rc32"
+values={[
+{label: 'RC32', value: 'rc32'},
+{label: 'RCC6', value: 'rcc6'},
+{label: 'RC52', value: 'rc52'}
+]}>
+<TabItem value="rc32">
+
+## RadioCore RC32
+
+<DeviceImage device="heltec_rc32.svg" alt="Heltec RadioCore RC32" size="sm" center />
+
+The RC32 is the ESP32-S3 RadioCore module. Meshtastic only supports the LoRa radio module.
+
+- **MCU:**
+  - ESP32-S3R8 (Wi-Fi and Bluetooth 5.0 LE)
+- **LoRa Transceiver:**
+  - Semtech SX1262
+- **Frequency Options:**
+  - 863 - 870 MHz
+  - 902 - 928 MHz
+- **Power:**
+  - USB-C 5 V
+  - 3.3 V pin header
+  - 3.3 - 4.2 V battery on the VBAT pin
+- **Connectors:**
+  - USB-C
+  - BTB connector
+  - 2 x 10-pin headers
+  - IPEX 4.0 antenna connector for LoRa
+
+### Features
+
+- Meshtastic firmware supports an optional 128 x 220 TFT display and an optional GNSS module.
+- 2.4 GHz Wi-Fi for MQTT and network connections.
+
+### Resources
+
+- Firmware file: `firmware-heltec-rc32-X.X.X.xxxxxxx.bin`
+- Purchase links
+  - International
+    - [Heltec](https://msh.to/heltec-rc32/)
+
+</TabItem>
+
+<TabItem value="rcc6">
+
+## RadioCore RCC6
+
+<DeviceImage device="heltec_rcc6.svg" alt="Heltec RadioCore RCC6" size="sm" center />
+
+The RCC6 is the ESP32-C6 RadioCore module. Meshtastic only supports the LoRa radio module.
+
+- **MCU:**
+  - ESP32-C6 (Wi-Fi)
+- **LoRa Transceiver:**
+  - Semtech SX1262
+- **Frequency Options:**
+  - 863 - 870 MHz
+  - 902 - 928 MHz
+- **Power:**
+  - USB-C 5 V
+  - 3.3 V pin header
+  - 3.3 - 4.2 V battery on the VBAT pin
+- **Connectors:**
+  - USB-C
+  - BTB connector
+  - 2 x 10-pin headers
+  - IPEX 4.0 antenna connector for LoRa
+
+### Features
+
+- Meshtastic firmware supports an optional 128 x 220 TFT display. GNSS is not supported on the RCC6.
+- No Bluetooth support, so clients connect over Wi-Fi or USB serial.
+
+### Resources
+
+- Firmware file: `firmware-heltec-rcc6-X.X.X.xxxxxxx.bin`
+- Purchase links
+  - International
+    - [Heltec](https://msh.to/heltec-rcc6/)
+
+</TabItem>
+
+<TabItem value="rc52">
+
+## RadioCore RC52
+
+<DeviceImage device="heltec-rc52.svg" alt="Heltec RadioCore RC52" size="sm" center />
+
+The RC52 is the nRF52840 RadioCore module, and every version includes the SX1262 LoRa radio. The nRF52840 draws less power than the ESP32 modules, which suits battery and solar nodes.
+
+- **MCU:**
+  - nRF52840 (Bluetooth 5.0 LE)
+- **LoRa Transceiver:**
+  - Semtech SX1262
+- **Frequency Options:**
+  - 863 - 870 MHz
+  - 902 - 928 MHz
+- **Power:**
+  - USB-C 5 V
+  - 3.3 V pin header
+  - 3.3 - 4.2 V battery on the VBAT pin
+- **Connectors:**
+  - USB-C
+  - BTB connector
+  - 2 x 10-pin headers
+  - IPEX 4.0 antenna connector for LoRa
+
+### Features
+
+- Meshtastic firmware supports an optional 128 x 220 TFT display and an optional GNSS module.
+- Low sleep current, rated by Heltec at 7 µA.
+
+### Resources
+
+- Firmware file: `firmware-heltec-rc52-X.X.X.xxxxxxx.uf2`
+- Purchase links
+  - International
+    - [Heltec](https://msh.to/heltec-rc52/)
+
+</TabItem>
+</Tabs>

@@ -16,16 +16,71 @@ For more comprehensive information on the Station Series of devices, be sure to 
 <Tabs
 groupId="station-series"
 queryString="station-series"
-defaultValue="g2"
+defaultValue="g3"
 values={[
+{label: 'Station G3', value: 'g3'},
 {label: 'Station G2', value: 'g2'}
 ]}>
+
+<TabItem value="g3">
+
+## Station G3
+
+<DeviceImage device="station-g3.svg" alt="Station G3" size="lg" center />
+
+The Station G3 is modular. A motherboard carries a separate MCU daughterboard and RF daughterboard, so each can be replaced or upgraded on its own. The MCU socket follows the Raspberry Pi 40-pin GPIO layout, so a Raspberry Pi Zero 2 W can take the place of the ESP32-S3 daughterboard and run [meshtasticd](/docs/meshtasticd/installation/), the Meshtastic daemon for Linux.
+
+### Specifications
+
+- **MCU**
+  - ESP32-S3 (16 MB flash, 8 MB PSRAM) on the BQESP32V1M daughterboard
+    - Wi-Fi
+    - Bluetooth 5.0
+- **LoRa Transceiver**
+  - Semtech SX1262 on the BQ35LORA900V1M daughterboard
+  - LoRa Power Amplifier
+  - Low-noise amplifier (LNA) with dynamic gain control, which a jumper can disable
+- **Frequency options**
+  - 850 - 930 MHz
+- **Navigation Module**
+  - Optional (1x GROVE GPS Socket)
+- **Antenna**
+  - SMA Socket
+- **Connectors**
+  - USB-C (15 V PD) or DC5521 barrel jack (9 V - 19 V), on the motherboard
+  - USB-C on the MCU daughterboard, for data only
+
+### Features
+
+- 1.3 inch OLED screen
+- User button
+- Four jumper-set power levels, from about 31 dBm (default) to 34 dBm (boost) on Meshtastic firmware
+- GROVE I2C Socket
+- GROVE GPS Socket
+- Raspberry Pi compatible 40-pin MCU daughterboard socket
+- Power good checker LEDs
+
+The power supply must provide at least 25 W, and must not exceed 19 V. Power Level 4 requires at least 10 V.
+
+### Resources
+
+- Firmware file: `firmware-station-g3-X.X.X.xxxxxxx.bin`
+- [BQ Voyage's Official Wiki](https://wiki.bqvoy.com/en/devkits/station-g3)
+- Purchase Links:
+  - International
+    - [Official Store](https://msh.to/station-g3/)
+
+</TabItem>
 
 <TabItem value="g2">
 
 ## Station G2
 
 <DeviceImage device="station-g2.svg" alt="Station G2" size="lg" center />
+
+:::info
+The Station G2 is discontinued. Meshtastic still supports it, but it's no longer available for purchase.
+:::
 
 ### Specifications
 
