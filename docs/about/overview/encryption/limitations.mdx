@@ -42,7 +42,7 @@ Packets sent from a connected client may set the “pki_encrypted” boolean to 
 
 ## Message length is not hidden
 
-Encryption hides the content of a packet, but not its size. AES-CTR, used for channel messages, is a stream cipher: the ciphertext is exactly as long as the plaintext. PKI DMs use AES-CCM, which adds a fixed 12 bytes (an 8-byte authentication tag and a 4-byte nonce), so their length still tracks the plaintext. Meshtastic does not pad, compress, or add filler to messages before encrypting them.
+Encryption hides the content of a packet, but not its size. By default, channel messages use AES-CTR, a stream cipher: the ciphertext is exactly as long as the plaintext. A channel with [Use AEAD](/docs/configuration/radio/channels/#use-aead) turned on uses AES-CCM instead, which adds a fixed 12-byte tag. PKI DMs also use AES-CCM, with a fixed 12 bytes of overhead (an 8-byte authentication tag and a 4-byte nonce). In every case the packet's length still tracks the plaintext, because Meshtastic does not pad, compress, or add filler to messages before encrypting them.
 
 Anyone in radio range can see how long each packet is, even without the key. When the set of likely messages is small, length alone can give the content away. For example, a canned message reply of "Yes" is one byte longer than "No". If this matters for your use, don't rely on the message text being private when its length is distinctive.
 
