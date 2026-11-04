@@ -90,7 +90,7 @@ The installed firmware normally survives a bootloader update. On 2.6.0 and later
 
 :::warning
 
-Unlike uf2 uploads, adafruit-nrfutil does not check if you have the correct bootloader package for your device. If you flash the wrong bootloader, you may brick your device. Check that the package name matches your board and the SoftDevice version in `INFO_UF2.TXT`, and verify the SHA256 checksum where one is given.
+adafruit-nrfutil does not check the package against your device at all, and a UF2 upload checks only the USB identity, which several boards share. If you flash the wrong bootloader, you may brick your device. For either method, check that the package name matches your board and the SoftDevice version you intend to run, and verify the SHA256 checksum where one is given.
 
 :::
 
