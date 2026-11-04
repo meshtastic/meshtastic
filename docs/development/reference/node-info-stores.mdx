@@ -1,0 +1,216 @@
+---
+id: node-info-stores
+title: NodeInfo Stores
+sidebar_label: NodeInfo Stores
+sidebar_position: 8
+description: The four node-identity and traffic-state stores in the firmware - the NodeDB hot store, the warm tier, and the two Traffic Management caches - with their capacities, trust model and lookup order.
+---
+
+**Firmware 2.8.0**, which is where the three-tier arrangement arrives. The persistent warm tier landed in [#10705](https://github.com/meshtastic/firmware/pull/10705) and the TMM NodeInfo payload cache in [#10745](https://github.com/meshtastic/firmware/pull/10745); neither exists in 2.7.26 or earlier, where the hot store and the TMM unified cache are the only node stores.
+
+This page is an overview of the node-identity and traffic-state databases that the Traffic Management Module (TMM) either owns or leans on. There are four stores in play, but only three form the identity lookup chain:
+
+1. **NodeDB hot store** - the authoritative `NodeInfoLite` array (identity tier 1).
+2. **Warm tier** (`WarmNodeStore`) - minimal persisted records for hot-store evictees (identity tier 2).
+3. **TMM NodeInfo payload cache** - the ephemeral **third identity tier**: full `User` payloads plus direct-response metadata; PSRAM-backed on hardware, plain heap in native tests.
+
+The fourth store, the **TMM unified cache** - flat 10-byte-per-node traffic-shaping state - is not part of that chain. It sits beside it, keyed by the same node number, and only its 4-bit cached role acts as a final fallback when all three identity tiers miss.
+
+Sources of truth, on `develop` - the warm tier and the NodeInfo cache do not exist on `master`: [NodeDB.h](https://github.com/meshtastic/firmware/blob/develop/src/mesh/NodeDB.h) and [NodeDB.cpp](https://github.com/meshtastic/firmware/blob/develop/src/mesh/NodeDB.cpp), [WarmNodeStore.h](https://github.com/meshtastic/firmware/blob/develop/src/mesh/WarmNodeStore.h) and [WarmNodeStore.cpp](https://github.com/meshtastic/firmware/blob/develop/src/mesh/WarmNodeStore.cpp), [TrafficManagementModule.h](https://github.com/meshtastic/firmware/blob/develop/src/modules/TrafficManagementModule.h) and [TrafficManagementModule.cpp](https://github.com/meshtastic/firmware/blob/develop/src/modules/TrafficManagementModule.cpp), with sizing in [mesh-pb-constants.h](https://github.com/meshtastic/firmware/blob/develop/src/mesh/mesh-pb-constants.h).
+
+## Memory classes
+
+The warm tier and the unified cache size themselves from a build's memory class, which ranks it by *usable application heap after platform overheads* - the SoftDevice, the WiFi and BLE stacks - rather than by raw RAM or chip family. The hot store is flash-shaped and the NodeInfo cache is present-or-absent, so neither is classed:
+
+| Class  | Heap                  | Parts                                        |
+| :----- | :-------------------- | :------------------------------------------- |
+| LARGE  | PSRAM or host         | ESP32-S3 with PSRAM, portduino/native        |
+| MEDIUM | ~250-500 KB, no PSRAM | ESP32-S3/C6/P4 without PSRAM                 |
+| SMALL  | ~100-250 KB           | classic ESP32/S2/C3, nRF52840, RP2040/RP2350 |
+| TINY   | under 32 KB           | STM32WL                                      |
+
+An unclassified chip lands in SMALL on purpose: small caches are a recoverable default, an exhausted heap is not. Where a capacity table below names a specific part beside these classes, that part is deliberately class-deviant and the reason is given under the table.
+
+## 1. NodeDB hot store (authoritative)
+
+- **What:** the classic `meshNodes` array of `NodeInfoLite` - full identity as flattened fields: names, role, public key, and bitfield flags such as the XEdDSA-signed bit. Position and telemetry live in satellite stores reached through copy-out accessors rather than nested members. Everything else on this page is a cache or a fallback for it.
+- **Eviction:** the oldest non-protected node when full. On eviction the node's essentials are **absorbed into the warm tier**; on re-admission the warm record is rehydrated back, including the XEdDSA-signed bit.
+- **Persistence:** the node database file in LittleFS, saved on the usual NodeDB cadence.
+- **Authority:** key pinning, signer provenance and identity content all originate here. The lookup helpers other stores mirror:
+  - `copyPublicKeyAuthoritative()` - hot store, then warm tier. The pin reference for caches; never consults opportunistic caches.
+  - `copyPublicKey()` - the above, then **TMM's NodeInfo cache as a last resort**, which extends the encrypt-to pool for nodes both tiers have forgotten.
+  - `isVerifiedSignerForKey()` - key-matched signer verdict across hot and warm.
+  - `isKnownXeddsaSigner()` - key-agnostic "should this node's signable traffic arrive signed", across hot and warm. A gate that checked only the hot store would let a warm-evicted signer be impersonated with unsigned frames.
+  - `getNodeRole()` - hot store, then the role cached in the warm tier, else client.
+
+**Capacity** (`MAX_NUM_NODES`):
+
+| ESP32-S3        | Native (portduino) | nRF52840, generic ESP32 | STM32WL |
+| :-------------- | :----------------- | :---------------------- | :------ |
+| 250 / 200 / 100 | 200, configurable  | 120                     | 10      |
+
+This store is flash-shaped rather than heap-shaped, so it is unclassed - the node database file has to fit the filesystem. The fixed-cap platforms take their value from `mesh-pb-constants.h`; the 120 covers nRF52840 plus generic ESP32 including the C3, and is what keeps the file inside the stock 28 KB LittleFS partition.
+
+**Two platforms do not take their cap from that header, and neither is a compile-time constant:**
+
+- **ESP32-S3** picks a tier at boot from the flash chip size (15 MB or more / 7 MB or more / smaller).
+- **Native and portduino** resolve it from *runtime* config: the variant header defines the cap as `portduino_config.MaxNodes`, default **200**, overridable per host with `General: MaxNodes` in the YAML. Because the variant header is reached first, the portduino branch of `mesh-pb-constants.h` never fires - it is guarded so it can no longer be misread as the native cap.
+
+:::warning
+Do not read `mesh-pb-constants.h` for the native number. The protected-node cap derives from `MAX_NUM_NODES` - protected nodes must stay below `MAX_NUM_NODES - 2` - so a wrong reading gives a wrong cap (248 instead of 198) and makes a genuinely saturated database look impossible.
+:::
+
+The separate 250 in `getMaxNodesAllocatedSize()` is a decode allowance for files written by larger-cap firmware. It is not a cap on the running build.
+
+## 2. Warm tier (NodeDB-owned)
+
+- **What:** the long-tail second tier. When a node ages out of the hot store, a minimal record survives so direct messages keep encrypting: the key is expensive to re-learn, and everything else rebuilds from traffic in seconds.
+- **Entry:** exactly 40 bytes - node number, last-heard time, and the 32-byte public key. The low 7 bits of the timestamp are omitted and replaced with metadata (role in 4 bits, protected category in 2, XEdDSA-signed in 1), leaving about 128 seconds of recency resolution, which is plenty for LRU ranking.
+- **Eviction:** LRU by last-heard, with keyed entries outranking keyless ones. Keyless candidates never displace keyed entries.
+- **Persistence:** nRF52840 uses a 12 KB raw-flash record ring below LittleFS, with append, replay and compaction; everywhere else a file in LittleFS.
+- **Membership invariant:** a node lives in the hot store **or** the warm tier, never both. Re-admission removes the warm record and restores the role, protected and XEdDSA-signed bits.
+
+**Capacity** (`WARM_NODE_COUNT`):
+
+| LARGE | MEDIUM | RP2040 / RP2350 | nRF52840 | SMALL | TINY |
+| :---- | :----- | :-------------- | :------- | :---- | :--- |
+| 2000  | 150    | 150             | 100      | 100   | 0    |
+
+TINY's `0` disables the tier outright. At 40 bytes per entry, LARGE costs about 80 KB and lives in PSRAM; MEDIUM about 6 KB of heap. Both named parts are class-deviant on purpose: RP2040 and RP2350 are bounded so the warm-tier write fits the 8-second watchdog rather than by RAM, and nRF52840 dropped from 200 to 100 because its RAM cache is allocated from the roughly 115 KB heap arena shared with the SoftDevice, which 2.8.0 field reports showed at 99% use.
+
+## 3. TMM unified cache (traffic state)
+
+- **What:** TMM's own flat array of packed 10-byte records - the per-node state behind position deduplication, rate limiting and unknown-packet filtering, plus two piggybacked caches:
+  - a **next-hop hint**, the last-byte relay hint, written only from ACK-confirmed next-hop routing decisions. It has no expiry and keeps the slot alive across sweeps.
+  - a **4-bit device role**, split across the top bits of two count bytes. It is seeded from NodeDB (hot, then warm) the first time a node is tracked and refreshed on observed NodeInfo, after which TMM's position policy reads it instead of scanning NodeDB per packet. It survives total NodeDB eviction, so a special-role node keeps its position exemption after ageing out of both tiers. Note that `getNodeRole()` does **not** consult it - see [How a lookup falls through the tiers](#how-a-lookup-falls-through-the-tiers).
+- **Entry layout:** node number (4 bytes), position fingerprint (1), rate count (1), unknown count (1), position time (1), rate/unknown time (1), next hop (1) - 10 bytes on all platforms. Timestamps are free-running modular ticks with presence carried by non-zero sentinels: no epochs, no absolute time.
+- **Eviction:** linear scan. Insertion into a full cache evicts the stalest entry, preferring to keep entries that carry a next-hop hint **or** a cached non-client role - the long-tail state this cache exists to retain.
+- **Persistence:** none. PSRAM or heap only, rebuilt from traffic.
+
+**Capacity** (`TRAFFIC_MANAGEMENT_CACHE_SIZE`, variant-overridable):
+
+| LARGE | MEDIUM | SMALL | nRF52840 | Module compiled out |
+| :---- | :----- | :---- | :------- | :------------------ |
+| 2048  | 500    | 400   | 250      | 0                   |
+
+At 10 bytes per entry that is about 5 KB on MEDIUM and 2.5 KB on nRF52840, which is class-deviant for the same heap reason as the warm tier - its class would give 400. Even 250 entries tracks more than twice the 120-node hot store, and LRU victim recycling absorbs busier meshes.
+
+## 4. TMM NodeInfo payload cache (the ephemeral third tier)
+
+- **What:** a flat array of payload entries, PSRAM-backed on hardware, holding the full cached `User` payload - names, role, key - plus the metadata behind TMM's spoofed direct NodeInfo replies, independent of NodeDB. The serve and throttle behaviour is documented in [Traffic Management Internals](/docs/development/reference/traffic-management-internals). This cache is also the last-resort key source for `copyPublicKey()`.
+- **Availability:** ESP32 with PSRAM is the production home - 2000 entries is too large for MCU internal RAM - plus native unit-test builds on the plain heap, so the trust and retention paths run in CI.
+- **Entry:** node number, the full `User`, an `obsTick` recency stamp at 3 minutes per tick, the source channel, a decoded bitfield, and packed single-bit flags for observed, full-user, member, and the two key-provenance bits. The direct-response throttle keeps no per-entry state here; it uses separate RAM tables.
+- **Persistence:** none. This tier is deliberately ephemeral and reconstructs from NodeDB seeding plus observed traffic after every boot.
+
+**Capacity:**
+
+| ESP32 + PSRAM | Native unit-test builds | Everything else |
+| :------------ | :---------------------- | :-------------- |
+| 2000          | 2000                    | not compiled    |
+
+Not class-tiered - the array is either compiled or it is not. Linear scan in every build, since NodeInfo traffic is low-rate.
+
+### Trust and provenance model
+
+- **Key pin, three layers deep.** An incoming NodeInfo key is checked against `copyPublicKeyAuthoritative()` (hot then warm, the same coverage as NodeDB's own pin) and, failing NodeDB knowledge, against the cache's **own previously cached key** - a trust-on-first-use pin. Mismatches are dropped, never overwritten. A frame advertising *this node's own* key is dropped outright as impersonation.
+- **Key provenance.** The XEdDSA-signed bit is set when a frame's signature was router-verified, or when NodeDB already knew the node as a signer **for the same key**. The manually-verified bit is set when the user confirmed possession out-of-band by QR code or fingerprint, and is re-seeded from the hot store's own flag at reconcile. Either bit makes the key *proven*, which is the predicate the replay gate, eviction tiering and pubkey-pool callers use. Both are monotonic per slot; a changed key resets both.
+- **Unsigned-identity gate.** A NodeInfo arriving *unsigned* from a node the firmware has ever verified as a signer - across hot **and** warm tiers - drives no cache, role or identity write. Warm coverage matters: a signer evicted to the warm tier would otherwise be forgeable with its own public key until re-heard. The same rule guards the router's unsigned-broadcast drop.
+- **Serve-gate honesty.** Only a genuinely *heard* NodeInfo frame stamps the recency flag - seeding and write-through do not - so a silent node never looks alive to the replay path. The sweep clears that flag to enforce the 6-hour serve window.
+
+### Consistency with NodeDB (anti-entropy)
+
+Four mechanisms keep this tier a superset of NodeDB's identities. All **merge rather than overwrite**, so a keyless commit never costs the cache a learned key.
+
+| Mechanism            | When                        | Role                             |
+| :------------------- | :-------------------------- | :------------------------------- |
+| Write-through hooks  | every identity or key commit | immediate upsert                 |
+| Reconcile sweep      | boot seed, then hourly       | re-seed from hot and warm tiers  |
+| Membership refresh   | inside the hourly reconcile  | re-mark which nodes NodeDB holds |
+| Purge hooks          | node removal or reset        | drop the node from both caches   |
+
+Two details that bite. The reconcile sweep transfers signer verdicts only when **key-matched**. And membership refresh clears then re-marks from both tiers, rather than doing a per-entry NodeDB lookup each sweep, which would be O(entries × members) under the lock. A keyless warm-tier record still marks membership even though it has no `User` to seed - membership is a keep-alive, independent of whether a full user payload is present. Because the re-mark is only hourly, hook-driven additions and explicit purges are immediate, but a **passive** NodeDB eviction may lag membership by up to an hour.
+
+**Retention.** No timed eviction. Slots die only by LRU displacement on insert, ranked by trust tiers - members and proven keys are stickiest - and the seeding pass additionally refuses to churn one member out for another.
+
+**Key-commit funnel.** Every path that writes a remote key into the hot store must route the write-through. Full-identity commits funnel through `updateUser()`; bare-key commits - the admin-channel learn during decode, and manual verification - funnel through `commitRemoteKey()`, which carries explicit provenance. Never assign a public key directly when **learning or rotating a remote key**: the cache would silently diverge until the next reconcile. The one direct write during warm-tier re-admission is exempt, because it restores a key the warm tier already holds, which this cache already tracks as a member.
+
+**Enable gate.** The write-through hooks, the sweep, the packet path **and** the key and user accessors all no-op while the module's runtime config flag is off, so cache content, maintenance and reads are keyed to the same condition. This enforces, rather than merely documents, the corollary that the pubkey-pool superset property holds only while the module is enabled: a disabled module's frozen cache never feeds PKI resolution or name rehydration.
+
+## Property matrix
+
+Side-by-side view of what each store actually holds; "-" means not held.
+
+| Property                   | 1. Hot store                       | 2. Warm tier                   | 3. NodeInfo cache                  | 4. Unified cache                |
+| :------------------------- | :--------------------------------- | :----------------------------- | :--------------------------------- | :------------------------------ |
+| Struct                     | `NodeInfoLite`                     | `WarmNodeEntry`                | `NodeInfoPayloadEntry`             | `UnifiedCacheEntry`             |
+| Node number                | yes                                | yes                            | yes (0 = free)                     | yes (0 = free)                  |
+| Names and user id          | yes (flattened)                    | -                              | yes (full `User`)                  | -                               |
+| Public key (32 B)          | yes (authoritative)                | yes (keyed entries)            | yes (pinned; TOFU or proven)       | -                               |
+| Key source - XEdDSA signed | bitfield flag                      | 1 bit (in last-heard)          | flag                               | -                               |
+| Key source - manual scan   | bitfield flag                      | - (not carried)                | flag                               | -                               |
+| Device role                | `role` field                       | 4-bit role (metadata steal)    | in cached `User`                   | 4-bit role (final fallback)     |
+| Recency                    | last-heard (Unix s)                | last-heard (128 s quantised)   | `obsTick` (3 min) + observed flag  | modular ticks                   |
+| Position / telemetry       | satellite accessors                | -                              | -                                  | 8-bit position fingerprint      |
+| Protected / favorite       | bitfield flags                     | 2-bit protected category       | - (membership instead)             | -                               |
+| Routing hint               | yes (persisted)                    | -                              | -                                  | ACK-confirmed relay byte        |
+| Direct-reply metadata      | -                                  | -                              | source channel, decoded bitfield   | -                               |
+| Traffic-shaping counters   | -                                  | -                              | -                                  | rate and unknown counts         |
+| Entry size                 | largest (full struct)              | 40 B exact                     | `sizeof(User)` + 8, padded         | 10 B exact                      |
+| Capacity (entries)         | 250/200/120/100/10 (native 200\*)  | 2000/150/150/100/100/0         | 2000, or not compiled              | 2048/500/400/250/0              |
+| Persistence (durable)      | LittleFS (node DB)                 | flash ring (nRF52840) / LittleFS | none (rebuilt)                   | none                            |
+| Storage (runtime)          | heap                               | heap / PSRAM (ESP32)           | PSRAM (hardware) / heap (test)     | PSRAM / heap                    |
+
+\* Native and portduino is not a compile-time value: it is `portduino_config.MaxNodes`. The host default is 200, settable per host via `General: MaxNodes`, and the WASM build overrides it to 80. See the hot-store capacity section above.
+
+## How a lookup falls through the tiers
+
+There is no single fallback chain. Every lookup starts at the hot store and then the warm tier, but what happens after that depends on **which question is being asked** - and the difference is deliberate, because trusting an opportunistic cache is safe for some answers and not for others.
+
+### Public keys
+
+```text
+ copyPublicKeyAuthoritative()      copyPublicKey()               copyPublicKeyForDecrypt()
+ "the pin reference"               "the outbound key"            "the decrypt-side key"
+        │                                  │                              │
+        ▼                                  ▼                              ▼
+ 1. hot store                       1. hot store                   1. hot store
+        │ miss                             │ miss                         │ miss
+        ▼                                  ▼                              ▼
+ 2. warm tier                       2. warm tier                   2. warm tier
+        │ miss                             │ miss                         │ miss
+        ▼                                  ▼                              ▼
+      fail                          3. NodeInfo cache              3. NodeInfo cache,
+                                       (TOFU or proven)               proven keys only
+                                           │ miss                         │ miss
+                                           ▼                              ▼
+                                          fail                           fail
+```
+
+`copyPublicKeyAuthoritative()` stops at the warm tier by design - it is the pin reference that caches are checked *against*, so consulting a cache would make the check circular. The other two both reach the NodeInfo cache but apply different trust: outbound encryption accepts a trust-on-first-use key, because the cost of being wrong is an undeliverable message. An authenticated decrypt accepts only a **key-proven** entry, because the cost of being wrong is accepting a forged sender.
+
+### Device role
+
+```text
+ getNodeRole()                          TMM position policy (resolveSenderRole())
+ general-purpose                        the position hot path
+        │                                      │
+        ▼                                      ▼
+ 1. hot store (with user)             first sighting: seed from getNodeRole()
+        │ miss                                 │  (so hot → warm → client)
+        ▼                                      ▼
+ 2. warm tier cached role              thereafter: the unified cache's 4-bit role
+        │ miss                                    is authoritative, refreshed on
+        ▼                                         each observed NodeInfo
+      CLIENT
+```
+
+`getNodeRole()` never consults either TMM cache; a node missing from both NodeDB tiers reads back as `CLIENT`. The unified cache's 4-bit role is therefore **not** a third tier bolted onto that chain - it is a separate resolution used only by TMM's own position policy, seeded from NodeDB once and then trusted so the hot path does no NodeDB scan per packet. It outlives total NodeDB eviction, which is exactly why a special-role node keeps its position exemption after ageing out of both tiers.
+
+### Identity content
+
+Names and the full `User` payload live only in the hot store and the NodeInfo cache. The warm tier carries no names at all, so there is no hot → warm → cache chain for them: a hot-store miss goes straight to the NodeInfo cache, if that cache is compiled in.
+
+## See also
+
+- [Traffic Management Module Usage](/docs/configuration/module/traffic-management) - the settings that drive the two TMM caches.
+- [Traffic Management Internals](/docs/development/reference/traffic-management-internals) - the direct-response path that reads these stores, and the tick clocks behind their timestamps.
