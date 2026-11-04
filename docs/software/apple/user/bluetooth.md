@@ -34,13 +34,17 @@ A Live Activity keeps the mesh on your Lock Screen and in the Dynamic Island. It
 - **Mesh status** — the connection, nodes online, unread messages and the radio's battery.
 - **One node** — its battery, signal, when it was last heard and how far away it is.
 
-Tap **Live Activity** on the Connect screen while a radio is connected, choose what to show (for a node, pick it from the list; favorites come first), and tap **Start Live Activity**. You can also open a node and choose **Track in Live Activity**.
+Tap **Widgets** on the Connect screen while a radio is connected, choose what to show (for a node, tap **Node** and pick it from the list; favorites come first), and tap **Start Live Activity**. You can also open a node and choose **Track in Live Activity**.
 
-Only one runs at a time; starting the other kind switches it. Stop it from the same **Live Activity** row, or from the node's detail screen.
+Only one runs at a time; starting the other kind switches it. Stop it from the same **Widgets** sheet, or from the node's detail screen.
 
 If the radio's link drops, the Live Activity shows **Disconnected** and picks up again when the app reconnects. Disconnecting the radio yourself, or switching to a different radio, ends it. iOS stops updating a Live Activity after 8 hours, and the Connect screen shows when that will be.
 
 On iOS 18 and later, a running Live Activity also appears in the Smart Stack on a paired Apple Watch, and on iOS 26 on the CarPlay Dashboard.
+
+### Widgets and controls
+
+The same **Widgets** sheet lists the Meshtastic Home Screen and Lock Screen widgets (Mesh Status, Node Tracker, Messages, Node Map and Trace Route) and the Control Center controls, and shows which ones are on your screens. iOS doesn't let an app place a widget or a control, so the sheet gives the steps. On the Home Screen, touch and hold an empty spot, tap **Edit**, then **Add Widget**, and search for Meshtastic. On the Lock Screen, touch and hold it, tap **Customize**, then **Lock Screen**, tap the widget area and choose Meshtastic.
 
 ## Managing Multiple Radios
 
