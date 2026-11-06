@@ -1,0 +1,53 @@
+---
+id: genesis-mini
+title: Axiometa Genesis Mini
+sidebar_label: Genesis Mini
+sidebar_position: 1
+---
+
+import { DeviceImage } from "@site/src/components/DeviceImage";
+
+<DeviceImage device="axiometa-genesis-mini.svg" alt="Axiometa Genesis Mini" size="lg" center />
+
+The Axiometa Genesis Mini is an ESP32-S3 board with four AX22 module ports. In the Meshtastic build, the LoRa radio, the display and the rotary encoder are each a module plugged into one of those ports.
+
+## Specifications
+
+- **MCU**
+  - ESP32-S3-MINI-1-N4R2
+    - 2.4GHz Wi-Fi, Bluetooth 5 LE
+    - 4 MB flash, 2 MB PSRAM
+- **LoRa Transceiver**
+  - Elecrow LR1262 module (Semtech SX1262)
+- **Power**
+  - Three AA or AAA alkaline cells. The board has no charger, so USB powers the node but does not charge the cells.
+- **Connectors**
+  - USB-C
+  - Four AX22 module ports
+  - STEMMA QT (I2C)
+
+## Module ports
+
+The Meshtastic firmware expects each module in a set port:
+
+| Port | Module                                         |
+| :--: | :--------------------------------------------- |
+|  1   | AX22-0034 display (ST7735S, 160 x 80 IPS)      |
+|  2   | Elecrow LR1262 LoRa module                     |
+|  3   | AX22-0003 rotary encoder (optional)            |
+
+The radio and the display are required. A firmware build with different port numbers is needed to use other ports.
+
+## Features
+
+- 160 x 80 color display with an always-on backlight.
+- Rotary encoder for navigating screens and menus.
+- RGB LED and user button.
+- No GPS.
+
+## Resources
+
+- Firmware file: `firmware-axiometa-genesis-mini-X.X.X.xxxxxxx.bin`
+- Purchase Links:
+  - International
+    - [Axiometa](https://msh.to/axiometa-genesis-mini)
