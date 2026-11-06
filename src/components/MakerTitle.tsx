@@ -11,7 +11,7 @@ import React from "react";
  * the title text stays in the translation catalog rather than in MDX prose.
  * The mark is decorative: the heading beside it names the page.
  */
-export function MakerTitle(): JSX.Element {
+export function MakerTitle(): React.JSX.Element {
   const title = translate({
     id: "hardware.maker.title",
     message: "Maker Hardware",
