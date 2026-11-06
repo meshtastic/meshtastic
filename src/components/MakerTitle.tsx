@@ -9,6 +9,7 @@ import React from "react";
  * `--tier-maker` token in src/css/variables.css, never a derivation of the
  * accent. The page sets `hide_title: true` and renders this in its place, so
  * the title text stays in the translation catalog rather than in MDX prose.
+ * The mark is decorative: the heading beside it names the page.
  */
 export function MakerTitle(): JSX.Element {
   const title = translate({
@@ -16,29 +17,17 @@ export function MakerTitle(): JSX.Element {
     message: "Maker Hardware",
     description: "Title of the Maker hardware page",
   });
-  const label = translate({
-    id: "hardware.maker.mark",
-    message: "Maker hardware",
-    description:
-      "Accessible name of the wrench mark on the Maker hardware page",
-  });
 
   return (
     <header className="mt-3 mb-6 flex items-center gap-3">
-      <span
-        role="img"
-        aria-label={label}
-        title={label}
-        className="flex shrink-0 items-center"
+      <Wrench
+        className="shrink-0"
         style={{ color: "var(--tier-maker)" }}
-      >
-        <Wrench
-          size={40}
-          strokeWidth={2.25}
-          aria-hidden="true"
-          focusable="false"
-        />
-      </span>
+        size={40}
+        strokeWidth={2.25}
+        aria-hidden="true"
+        focusable="false"
+      />
       <Heading as="h1" className="mb-0">
         {title}
       </Heading>
