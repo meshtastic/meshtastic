@@ -35,6 +35,8 @@ bash scripts/build-docs.sh --output Meshtastic/Resources/docs
 
 Commit the regenerated files under `Meshtastic/Resources/docs/` with your PR.
 
+To add a place for the Apple Vision Pro cinema, see [Cinema Environments](cinema-environments.md).
+
 ## Branch Naming
 
 Branch from `main` (trunk-based development). Use descriptive names:
