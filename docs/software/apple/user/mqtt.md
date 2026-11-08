@@ -39,6 +39,9 @@ Go to **Settings → MQTT**:
 | TLS Enabled | Use TLS for the MQTT connection. Requires a broker with TLS support. |
 | Proxy to Client | Route MQTT traffic through the phone app rather than directly from the radio. Useful for radios without Wi-Fi. |
 
+> **Warning — Custom root topic reset**
+> Radio firmware **2.7.12 through 2.8.0** has a bug that can replace a custom root starting with `msh`, such as `msh/US/bayarea`, with the new region's default (`msh/EU_868` after switching to EU_868, for example) when the LoRa region is changed. Saving other LoRa settings leaves it alone. After changing the region, return to **MQTT**, restore your custom **Root Topic**, and tap **Save**. Read the setting back from the radio to confirm it was saved. The fix is in **radio firmware 2.8.1 and later**; updating the Apple app alone does not fix the radio.
+
 ## Topic Structure
 
 Meshtastic publishes to:

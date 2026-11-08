@@ -10,11 +10,15 @@ The Map tab shows all nodes that have shared a position, overlaid on an Apple Ma
 
 The map **reopens where you last left it** — your last-viewed area and zoom are remembered between launches, so you don't have to pan back after every relaunch. On a fresh install (before you've moved the map) it frames your current location, then your connected radio, then the center of your nodes.
 
+The map's buttons sit where Apple Maps puts them. **3D** tilts the map and **2D** flattens it again, the location button follows your position, and the compass appears once the map is turned. On iPhone these are in the bottom left corner; on iPad, Mac and Apple Vision Pro they're in the top right. The 3D button is hidden when the map is zoomed out too far to tilt. In the bottom right corner, one bar holds the coverage estimate, filter, legend and map options buttons.
+
 ## Node Pins
 
 Each node that has reported a GPS position appears as a colored circle pin on the map. The **green solid line** shows a directly connected node; **orange dashed lines** show nodes reached via the mesh. A purple star marks a waypoint. Tap a pin to see the node name, last heard time, signal info, and a shortcut to send a direct message.
 
 Pins update automatically when a new position packet is received from the mesh.
+
+With node clustering on, pins only merge into a numbered badge once they overlap by about half, so nearby nodes stay separate as long as their names can be read. A node with an approximate position sits at the center of its precision circle, and the circle is hidden while the node is inside a badge.
 
 ### Overlapping nodes at the same spot
 
@@ -22,7 +26,7 @@ When several nodes report the *same* (or nearly the same) location — for examp
 
 ## Filtering Nodes on the Map
 
-Tap the **filter button** (funnel icon, `line.3.horizontal.decrease.circle`) in the bottom-right toolbar to open the Map Filters sheet. When any filter is active, the icon appears **filled** to indicate filtering is in effect.
+Tap the **filter button** (funnel icon, `line.3.horizontal.decrease.circle`) in the button bar on the right to open the Map Filters sheet. When any filter is active, the icon appears **filled** to indicate filtering is in effect.
 
 | Filter | Description |
 |--------|-------------|
@@ -46,11 +50,11 @@ Tap the layer icon (top-right) to switch between:
 |-------|-------------|
 | Standard | Default Apple Maps street/satellite hybrid |
 | Satellite | Aerial imagery |
-| GeoJSON Overlays | Custom map layers loaded from `.geojson` files in the app's file storage |
+| Imported overlays | Custom map layers loaded from `.geojson`, `.kml` and `.kmz` files in the app's file storage |
 
 ## Map Options
 
-Tap the **info button** (`info.circle`) in the bottom-right toolbar to open the Map Options sheet. Alongside the base layer picker it offers:
+Tap the **info button** (`info.circle`) in the button bar on the right to open the Map Options sheet. Alongside the base layer picker it offers:
 
 | Option | Description |
 |--------|-------------|
@@ -62,36 +66,69 @@ Tap the **info button** (`info.circle`) in the bottom-right toolbar to open the 
 | Convex Hull | Draw an outline around the outermost LoRa nodes to visualize mesh coverage |
 | Traffic | Show Apple Maps live traffic |
 | Points of Interest | Show Apple Maps points of interest |
+| Weather Radar | Show NOAA precipitation radar over the map, refreshed every five minutes. Only offered in the lower 48 United States (where the radar has data) and needs a network connection. Radar data from NOAA/NCEP. |
+| Hillshade | Shade the terrain's relief, lit from the northwest, over areas of your offline maps that have terrain. Standard map layer only, including when **Offline Tiles** is on. The shading draws at full strength to one zoom past the terrain data and fades out over the next: from street level in where only the global (zoom 12) terrain is downloaded, and further in where high-resolution terrain is. |
+| Shade Valleys | Shown when Hillshade is on, off by default. Also darkens valley floors and gorges by how much of the sky they see, looking out in eight directions, up to about a kilometer when zoomed out and less when zoomed in close, so deep valleys read as deep. Shading takes longer to draw with it on. |
+| Contour Lines | Elevation contours over areas of your offline maps that have terrain, on every map layer. |
 
 ### Opening the spatial map (Apple Vision Pro)
 
-On Apple Vision Pro, the round glass menu under the app's tab bar, at the window's left edge, opens the 3D spatial map from any tab, and the [Hardware Showcase](showcase.md). The map wheel button on the 2D map opens it too.
+On Apple Vision Pro, the round glass menu under the app's tab bar, at the window's left edge, opens the 3D spatial map from any tab, the [Hardware Showcase](showcase.md) and the [Cinema](cinema.md). The map wheel button on the 2D map opens it too.
+
+### Zooming the spatial map (Apple Vision Pro)
+
+The zoom slider in the spatial map's toolbar sets how much of the mesh is on the table. All the way left shows the whole mesh; each equal step to the right doubles the zoom, and the zoom shows next to the slider. The terrain is redrawn when you let go of the slider. Pinching the table zooms too, and **Show in 3D** on a node zooms in on it.
 
 ### Direct links on the spatial map (Apple Vision Pro)
 
 On the 3D spatial map, the **link** button in the toolbar draws the same direct links as the 2D map, between the tops of the pins. It is off by default and has its own setting. Lines use the signal quality colors, are dashed when only one direction is known, and fade as they get older. To keep the volume smooth, at most 12 SNR pills are shown: the selected node's links when a node is selected, otherwise the newest links, your radio's first. Links are hidden while a trace route is shown.
 
+### Weather radar on the spatial map (Apple Vision Pro)
+
+**Weather Radar** in the 3D spatial map's map menu, next to Contour Lines, drapes NOAA precipitation radar over the terrain, following the hills, at the same strength as on the 2D map. It is the 2D map's setting and is offered the same way: in the lower 48 United States, with a network connection. The radar is fetched when the map opens, when the area on the table changes, and every five minutes while it is shown. It is hidden while the device is offline, and when the table shows an area outside the radar's coverage. Radar data from NOAA/NCEP.
+
+### Buildings on the spatial map (Apple Vision Pro)
+
+**Buildings** in the 3D spatial map's map menu raises the buildings from your downloaded offline maps on the terrain, at their height from OpenStreetMap, with the same height exaggeration as the hills. It is offered where a downloaded street map covers part of the table, and is off by default. A map downloaded at **High detail** has every building; a **Standard** map has only the largest. On Vision Pro, downloads start at High detail. Buildings without a height in OpenStreetMap stand about two floors tall. The further the table is zoomed out, the fewer are drawn: every building on a table a few kilometers across, only the larger ones on a wider one, and none past about 20 km. Building data © OpenStreetMap contributors.
+
 ### Offline Maps
 
 A dedicated section of the sheet for working without a connection: a link opens the list of downloaded map regions to manage them or download new ones, and the **Offline Tiles** toggle overlays a downloaded region on the base map so it keeps rendering with no internet connection.
 
+#### Importing a map file
+
+To use a map file you already have, open the offline map list and tap **Import MBTiles or PMTiles File**, or the import button in the corner of the screen. You can also open a `.mbtiles` or `.pmtiles` file from the Files app. The app checks the file, copies it in, and adds it to the list, where it counts toward the same limits as a downloaded map: 512 MB per map (1 GB on Apple Vision Pro), 10 maps, and 3 GB in total. A file that is already installed, is too large, or isn't a map is turned down with a message. It shows on the map with the **Offline Tiles** toggle, like a downloaded map.
+
 ### Offline map for the spatial map (Apple Vision Pro)
 
-The 3D spatial map needs elevation data to show hills and valleys, and a street map to draw on when there is no internet connection. With **Download Terrain Automatically** on (in the spatial map's map menu, on by default), the app keeps one full offline map of its own, named **Spatial Map area** in the offline map list: the Standard detail street map plus terrain for the mesh. It works like any other offline map, so it also shows on the 2D map when offline tiles are in use. Where it overlaps one of your own maps, both are drawn. The spatial map creates it the first time you open it. After that it grows while the app is open on Vision Pro, not only while the spatial map is: the app checks the mesh's area shortly after launch, after each new connection, and every five minutes while a radio is connected. A terrain-only region from an earlier version is replaced with a full one the next time the app checks. If you delete the region in Offline Maps, it comes back only the next time you open the spatial map. The area is the one the spatial map would show, around your connected radio, with the map filters left off. Your own offline map regions are never changed, and this one never blocks them: it doesn't count toward your map count or the total storage limit for your downloads. It only grows while there is room under that limit, counting your maps too. Where your maps already have streets and terrain for the whole area, nothing more is downloaded. If the street map for the area is over the per-map limit, a smaller area around the mesh is tried. If none fits, the street map you already have is kept, terrain is downloaded for the rest, and the spatial map says so. A failed download is retried later, and a cancelled one is not retried for that area. Turn the setting off to stop automatic downloads; **Download Terrain** in the spatial map's toolbar still downloads on request.
+The 3D spatial map needs elevation data to show hills and valleys, and a street map to draw on when there is no internet connection. With **Download Terrain Automatically** on (in the spatial map's map menu, on by default), the app keeps one full offline map of its own, named **Spatial Map area** in the offline map list: the High detail street map plus terrain for the mesh. Where High detail would be over the size limits, it uses Standard. It works like any other offline map, so it also shows on the 2D map when offline tiles are in use. Where it overlaps one of your own maps, both are drawn. The spatial map creates it the first time you open it. After that it grows while the app is open on Vision Pro, not only while the spatial map is: the app checks the mesh's area shortly after launch, after each new connection, and every five minutes while a radio is connected. A terrain-only region from an earlier version is replaced with a full one the next time the app checks. If you delete the region in Offline Maps, it comes back only the next time you open the spatial map. The area is the one the spatial map would show, around your connected radio, with the map filters left off. Your own offline map regions are never changed, and this one never blocks them: it doesn't count toward your map count or the total storage limit for your downloads. It only grows while there is room under that limit, counting your maps too. Where your maps already have streets and terrain for the whole area, nothing more is downloaded. If the street map for the area is over the per-map limit, a smaller area around the mesh is tried. If none fits, the street map you already have is kept, terrain is downloaded for the rest, and the spatial map says so. A failed download is retried later, and a cancelled one is not retried for that area. Turn the setting off to stop automatic downloads; **Download Terrain** in the spatial map's toolbar still downloads on request.
+
+When no node has a position yet, there is no mesh area to download. The spatial map then shows the newest offline map you downloaded yourself, centered on the table, and switches to the mesh as soon as positions arrive. If you have no downloaded maps, it opens **Download New Map** a few seconds after it opens, so you can search for a place and download one; the table moves to that map when the download finishes. This happens once each time the spatial map opens, and only while **Download Terrain Automatically** is on.
 
 ### Map Overlays
 
 Custom GeoJSON overlays you've uploaded are listed here, each with its own toggle and file details (format, feature count, size, upload date). Swipe a file left to delete it, or tap **Upload Map Data** to add another. The section's master toggle turns uploaded overlays on the map on or off as a group.
 
+#### KML and KMZ files
+
+Besides GeoJSON, you can import KML and KMZ files, such as the ones Google Earth, CalTopo and survey tools export. Tap **Upload Map Data** and pick the file, or open one from Files, AirDrop or the Share Sheet. The app converts it to a layer you manage like any other. If a file can't be imported, you get a message saying why.
+
+- **What comes through:** points, lines and polygons (holes included), with their names, descriptions, line and fill colors, and line widths. Placemarks the file marks hidden stay hidden.
+- **Images:** a KMZ can also carry ground overlays (an image laid on the map between four edges, turned if the file says so) and custom point icons. Ground overlays draw under the map's labels. A plain KML has no images with it, so its image overlays are left out and its points show the standard marker.
+- **Nothing is downloaded:** an icon or overlay image that lives on the web is not fetched, because that would tell the web server where you are looking. It is left out.
+- **Not imported:** folders (their features are shown, without the folder structure), network links, tours, 3D models and extended data.
+- **Limits:** a file may be up to 50 MB, and a KMZ may unpack to at most 50 MB. A file with nothing the map can draw, or one that is damaged, is turned down.
+- **Where it shows:** on the main map. The per-node and other maps don't draw imported layers.
+
 ## Coverage Estimate (Site Planner)
 
-Estimate the radio coverage of a transmitter site without leaving the app. The app drives the hosted [Meshtastic Site Planner](https://site.meshtastic.org) — a SPLAT!/ITM propagation simulator — and imports the resulting coverage map as a styled GeoJSON overlay.
+Estimate the radio coverage of a transmitter site without leaving the app. The app predicts received signal strength on the device with the ITU-R P.1812 propagation model over Mapterhorn terrain, the same engine the Android app uses, and adds the result to the map as a styled GeoJSON overlay. It uses the same inputs and color palettes as the [Meshtastic Site Planner](https://site.meshtastic.org), though its SPLAT!/ITM model won't match pixel for pixel.
 
 ### Starting an estimate
 
 You can open the estimate form two ways:
 
-- **From the map** — tap the coverage button (`cellularbars`) in the bottom-right toolbar. The form is prefilled from the connected radio and located at the current map center.
+- **From the map** — tap the coverage button (radio tower) in the button bar on the right. The form is prefilled from the connected radio and located at the current map center.
 - **From a node** — open a node with a known position, scroll to the **Logs** section, and tap **Estimate Coverage**. The map recenters on that node and opens the form prefilled from it.
 
 ### The estimate form
@@ -101,20 +138,20 @@ The form mirrors the Site Planner's own panels. The **Transmitter** and **Displa
 | Section | Fields |
 |---------|--------|
 | Site / Transmitter | Site name, latitude/longitude, transmit power (W), frequency (MHz), antenna height (m), antenna gain (dBi). Location shortcuts fill the coordinates from **My Location**, the selected **Node**, or the **Map Center**. |
-| Receiver | Receiver sensitivity (dBm) — the coverage threshold. |
-| Simulation Options | Maximum range (km) and a high-resolution terrain toggle (which caps the range at 70 km). |
+| Receiver | Receiver sensitivity (dBm) — the coverage threshold — and receiver height, how high above the ground the listening node is (1 m, a handheld, by default). |
+| Simulation Options | Maximum range, from 1 to 150 km. |
 | Display | Color palette for the coverage map (Mesh, Plasma, Viridis, CMRmap, Cool, Turbo, Jet). |
 
 **Prefill from the connected radio:** frequency is computed from the radio's region, modem preset, and channel; transmit power is converted from the device's dBm setting; and receiver sensitivity is mapped from the modem preset (for example LongFast → −139 dBm). Antenna gain and height aren't part of the device config, so they keep the planner's defaults. You can edit any value before running.
 
 ### Running it
 
-Tap **Estimate**. A progress indicator appears while the planner computes the coverage; you can **Cancel** at any time. When it finishes, the styled coverage map is added as a map overlay (in its dBm colors), the GeoJSON overlays layer is enabled, and the map recenters on the transmitter. The imported layer is managed like any other GeoJSON overlay in **Map Options**.
+Tap **Estimate**. A progress indicator appears while the coverage is computed; you can **Cancel** at any time. The result is drawn as six signal bands starting at the receiver sensitivity. When it finishes, the styled coverage map is added as a map overlay (in its dBm colors), the GeoJSON overlays layer is enabled, and the map recenters on the transmitter. The imported layer is managed like any other GeoJSON overlay in **Map Options**.
 
 A new estimate hides older estimates for the same node, so estimates for different nodes can be shown together. Estimates run from the map center or another location replace each other.
 
-> **Note — Requires a network connection**
-> The coverage simulation runs in the hosted Site Planner, so an internet connection is needed. Estimates time out after 45 seconds; on failure the flow ends cleanly without leaving a stuck spinner.
+> **Note — Terrain download**
+> The first estimate in an area downloads its terrain tiles, so it needs an internet connection; later estimates there use the cached terrain. Terrain from an offline map region you've downloaded is used without the network. The frequency must be between 30 and 6000 MHz, the range the model covers. Terrain data © [Mapterhorn](https://mapterhorn.com/attribution).
 
 ### Coverage on the spatial map (Apple Vision Pro)
 
@@ -185,7 +222,7 @@ A trace route can be drawn on the map to show the path a packet took through the
 
 Tap **▶** in the route banner for a guided 3D flythrough over satellite imagery: it flies the outbound path, lands at the target, then flies the return path and eases back to the map. Tap the **speed control** to cycle the pace from 1× up to 5× (1×, 1.5×, 2×, 2.5×, 3×, 4×, 5×) — adjustable mid-flight — and **■** to stop.
 
-Tap the **legend** button (map icon, bottom-right) for a key to the colors and markers.
+Tap the **legend** button (map icon, in the button bar on the right) for a key to the colors and markers.
 
 ### On the spatial map (Apple Vision Pro)
 
