@@ -6,9 +6,9 @@ sidebar_position: 2
 description: Instructions for building InkHUD with a different character set
 ---
 
-Because of hardware constraints, fonts contain a limited number of characters.
+Because of hardware constraints, fonts contain a limited number of characters, and a firmware build carries one character set only.
 By default, InkHUD is built with a "Western European" character set (Windows-1252).
-Fonts are also provided for "Central European" and "Cyrillic" character sets.
+Fonts are also provided for "Central European", "Cyrillic" and "Greek" character sets.
 
 ## Choosing a Character Set
 
@@ -17,29 +17,57 @@ Wikipedia maintains a comprehensive list of which languages are supported by eac
 - https://en.wikipedia.org/wiki/Windows-1252 - Western European (InkHUD default)
 - https://en.wikipedia.org/wiki/Windows-1250 - Central European
 - https://en.wikipedia.org/wiki/Windows-1251 - Cyrillic
+- https://en.wikipedia.org/wiki/Windows-1253 - Greek
 
 ## Changing the Character Set
 
 To use an alternative character set, you will need to [build the Meshtastic firmware](/docs/development/firmware/build/).
 
-The choice of font is set in `/variants/<Device Model>/nicheGraphics.h`.
+The character set is selected with a build flag. These are the same flags that select the language font for BaseUI.
 
-Find the lines:
+| Build flag     | Character set                   |
+| -------------- | ------------------------------- |
+| _(none)_       | Windows-1252 (Western European) |
+| `-D OLED_PL=1` | Windows-1250 (Central European) |
+| `-D OLED_CS=1` | Windows-1250 (Central European) |
+| `-D OLED_RU=1` | Windows-1251 (Cyrillic)         |
+| `-D OLED_UA=1` | Windows-1251 (Cyrillic)         |
+| `-D OLED_GR=1` | Windows-1253 (Greek)            |
 
-```cpp
-// Prepare fonts
-InkHUD::Applet::fontLarge = FREESANS_9PT_WIN1252;
-InkHUD::Applet::fontSmall = FREESANS_6PT_WIN1252;
+Append the flag to `build_flags` of the device's InkHUD environment in `/variants/<Device Model>/platformio.ini`, for example for the Heltec Mesh Pocket:
+
+```ini
+[env:heltec-mesh-pocket-5000-inkhud]
+build_flags =
+  ${inkhud.build_flags}
+  ${nrf52840_base.build_flags}
+  -I variants/nrf52840/heltec_mesh_pocket
+  -D HELTEC_MESH_POCKET
+  -D HELTEC_MESH_POCKET_BATTERY_5000
+  -D OLED_RU=1
 ```
 
-Replace with either:
+Or pass it on the command line without editing any file:
 
-```cpp
-InkHUD::Applet::fontLarge = FREESANS_9PT_WIN1250;
-InkHUD::Applet::fontSmall = FREESANS_6PT_WIN1250;
+```shell
+# Linux / macOS (bash, zsh)
+PLATFORMIO_BUILD_FLAGS="-D OLED_RU=1" pio run -e <environment>
+
+# Windows PowerShell
+$env:PLATFORMIO_BUILD_FLAGS="-D OLED_RU=1"; pio run -e <environment>
+
+# Windows Command Prompt
+set "PLATFORMIO_BUILD_FLAGS=-D OLED_RU=1" && pio run -e <environment>
 ```
 
+On Windows the variable stays set for the rest of the terminal session, so later builds in that window use the same character set.
+
+The LilyGo T5 E-Paper S3 Pro uses larger fonts that exist only in Windows-1253 and ignores these flags.
+
+To pick fonts individually, assign them in `/variants/<Device Model>/nicheGraphics.h`, for example:
+
 ```cpp
-InkHUD::Applet::fontLarge = FREESANS_9PT_WIN1251;
+InkHUD::Applet::fontLarge = FREESANS_12PT_WIN1251;
+InkHUD::Applet::fontMedium = FREESANS_9PT_WIN1251;
 InkHUD::Applet::fontSmall = FREESANS_6PT_WIN1251;
 ```
