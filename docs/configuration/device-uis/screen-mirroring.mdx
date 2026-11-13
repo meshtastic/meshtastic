@@ -1,0 +1,81 @@
+---
+id: screen-mirroring
+title: Screen mirroring
+sidebar_label: Screen mirroring
+sidebar_position: 4
+description: Show the screen of your connected node live in the Android or Apple app, and control the node from the mirror.
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+Screen mirroring shows the screen of the node your client is connected to, live, inside the Android or Apple app. Input from the mirror, such as a tap or a direction key, goes back to the node as if it were pressed on the device.
+
+## Requirements
+
+- A node with a screen, running [BaseUI](./baseui/index.mdx) or [Meshtastic UI](./meshtasticui/index.mdx) (MUI). [InkHUD](./inkhud/index.mdx) devices can't be mirrored.
+- For MUI, firmware built with MUI mirroring enabled. No release build enables it, so an MUI device on release firmware can't be mirrored.
+- A local connection to the node over Bluetooth, USB, or the network. Only the connected node can be mirrored, never another node on the mesh.
+- On a node with lockdown enabled, a client that has unlocked the node. The mirror then shows the same redacted screen the device does.
+
+If the node's firmware can't mirror its screen, Android shows **Screen mirroring needs newer firmware** and Apple shows no **Device Screen** option.
+
+## Open the mirror
+
+<Tabs
+  groupId="settings"
+  defaultValue="apple"
+  values={[
+    { label: "Android", value: "android" },
+    { label: "Apple", value: "apple" },
+    { label: "Web", value: "web" },
+  ]}>
+
+<TabItem value="android">
+
+### Android
+
+1. In **Settings**, under **Advanced**, select **Debug Panel**.
+2. Select the **Mirror** tab.
+3. Turn on mirroring for a live stream, or select **Refresh** for a single frame.
+
+The 3D device model, opened from the connected node's details, shows the same live screen on devices whose model includes one.
+
+</TabItem>
+<TabItem value="apple">
+
+### Apple
+
+1. Open the details of the node your client is connected to.
+2. Select **Device Screen**.
+
+</TabItem>
+<TabItem value="web">
+
+### Web
+
+Not available in the Web client. The Python CLI doesn't support mirroring either.
+
+</TabItem>
+</Tabs>
+
+## Control the node
+
+| Input                            | Effect on the node                                                           |
+| -------------------------------- | ---------------------------------------------------------------------------- |
+| Tap the mirror                   | On a touchscreen device, touches the screen at that point.                   |
+| Swipe the mirror                 | Moves in the direction of the swipe.                                         |
+| Arrow keys on a client keyboard  | Move in that direction. Enter selects, and Esc goes back.                    |
+| On-screen keys (Android)         | **Up**, **Down**, **Left**, **Right**, **OK**, and **Back**.                 |
+
+A touchscreen MUI device has no back key, so navigate it by tapping, as on the device.
+
+Input acts on the node the same as a press on the device. On MUI, a held **OK** in a message field sends the message.
+
+## Behavior and limits
+
+- The mirror has the lowest priority on the connection. Messages and other mesh traffic go first, so on Bluetooth the mirror slows while the mesh is busy.
+- When the node's screen is asleep, BaseUI mirrors the last frame it drew. MUI mirrors a black screen until the device wakes, which any input from the mirror does.
+- An e-ink screen refreshes slowly. Prefer a single frame over a live stream.
+- Mirroring stops when the client disconnects or the node reboots. Open the mirror again after reconnecting.
+- Up to six connections to one node can mirror at the same time.
