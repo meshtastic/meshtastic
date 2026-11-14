@@ -1,0 +1,161 @@
+---
+id: region-preset-compatibility
+title: Region to Preset Compatibility
+sidebar_label: Region/Preset Compatibility
+sidebar_position: 6
+description: How the firmware declares which modem presets are legal in which LoRa region, and how a client app should decode and apply that map in its config UI.
+---
+
+**Firmware 2.8.0 or later** ([#10736](https://github.com/meshtastic/firmware/pull/10736)) sends `FromRadio.region_presets`. Firmware 2.7.26 and earlier never sends it, so a client must treat its absence as "no constraints" - see [rule 2](#semantics-and-rules).
+
+Not every modem preset is legal in every LoRa region. Narrow EU SRD bands, the EU 868 "narrow" band, amateur bands and the 2.4 GHz band each accept only a specific subset of presets. The firmware enforces this internally - it clamps or rejects illegal combinations - but a client had no way to *know* the rules, so a user could pick an illegal region and preset pair in the UI and only discover the problem after the device silently corrected it.
+
+From 2.8 the firmware **declares the legal region-to-preset combinations** to the client during the `want_config` handshake, so a client can constrain its preset picker to the valid set for the selected region and warn about licensed-only bands. It is purely advisory metadata: the firmware remains the source of truth and still validates and clamps on its own.
+
+## Protocol
+
+The map arrives as a `FromRadio` payload variant, `region_presets` (field 19), carrying three messages:
+
+```protobuf
+// A distinct set of legal modem presets shared by one or more LoRa regions.
+message LoRaPresetGroup {
+  repeated Config.LoRaConfig.ModemPreset presets = 1;        // legal presets for this group
+  Config.LoRaConfig.ModemPreset          default_preset = 2; // always one of `presets`
+  bool                                   licensed_only = 3;  // amateur band - warn or gate
+}
+
+// Associates a single LoRa region with its preset group, by index.
+message LoRaRegionPresets {
+  Config.LoRaConfig.RegionCode region = 1;
+  uint32                       group_index = 2; // index into LoRaRegionPresetMap.groups
+}
+
+// The full map, delivered grouped to fit one FromRadio packet.
+message LoRaRegionPresetMap {
+  repeated LoRaPresetGroup   groups = 1;        // each distinct preset list
+  repeated LoRaRegionPresets region_groups = 2; // every known region, to a group index
+}
+```
+
+### Why it is grouped
+
+A `FromRadio` packet is capped at 512 bytes. Most regions share one identical preset list, so the map is delivered **grouped**: `groups` holds each *distinct* preset list once, and `region_groups` maps every known region onto one of those groups by index. That keeps the encoded size additive rather than multiplicative, well under the cap.
+
+The firmware's own array bounds - clients need not enforce these, but they bound what you can receive - are 8 groups, 38 region entries (one per region code), and 11 presets per group.
+
+## When it is delivered
+
+`region_presets` is sent **once** during the `want_config` handshake, as a single `FromRadio` message, in this position:
+
+```text
+my_info → (deviceuiConfig) → node_info(self) → metadata → region_presets → channel… →
+config… → moduleConfig… → node_info(others)… → fileInfo… → config_complete_id → (live packets)
+```
+
+That is, immediately after `metadata` and before the first `channel`. It is included for a normal full `want_config` and for the config-only nonce, and **omitted** for the nodes-only nonce, which skips metadata and config entirely. A client must not assume it always arrives.
+
+## Decoding into a usable lookup
+
+Flatten the grouped wire form into a map from region to preset info:
+
+```text
+struct RegionPresetInfo { Set<ModemPreset> presets; ModemPreset default; bool licensedOnly }
+
+fun decode(map: LoRaRegionPresetMap): Map<RegionCode, RegionPresetInfo> {
+  result = {}
+  for (rg in map.region_groups) {
+    if (rg.group_index >= map.groups.size) continue   // defensive: malformed or forward data
+    g = map.groups[rg.group_index]
+    result[rg.region] = RegionPresetInfo(
+      presets = g.presets.toSet(),
+      default = g.default_preset,
+      licensedOnly = g.licensed_only)
+  }
+  return result
+}
+```
+
+Persist this map alongside the rest of the downloaded config, so the LoRa config screen can read it synchronously.
+
+## Semantics and rules
+
+These are what keep the UX correct across firmware versions. Implement all of them.
+
+1. **An absent region means no constraint.** If a region code does not appear in `region_groups`, the client has no compatibility information for it and **must not restrict** its preset choices - fall back to the full preset list. This happens for a handful of region codes with no firmware band-table entry: today `EU_874`, `EU_917`, `ITU1_70CM`, `ITU2_70CM` and `ITU3_70CM`.
+2. **An absent message means no constraint.** Firmware older than 2.8 never sends the map. Clients **must** tolerate it being absent entirely and keep their existing unconstrained behaviour. Do not block the config screen waiting for it.
+3. **`default_preset` is always a member of its group's `presets`.** Use it to pre-select a preset when the user switches to a region whose valid set excludes the current selection, instead of leaving an illegal selection or guessing.
+4. **`licensed_only` marks amateur bands.** Surface a warning or a gate. The firmware also requires the operator's licensed flag for these regions, so coordinate the two - the user should not be able to pick a licensed band without acknowledging licensing.
+5. **The EU regions auto-swap.** The firmware treats the EU sibling regions (`EU_868`, `EU_866`, `EU_N_868`) specially: if the user is in one of them and selects a preset belonging to a sibling's list, the firmware **swaps the region** rather than rejecting the preset. To make that visible in a picker, the firmware advertises the **same superset** - the union of the trio's presets - for all three siblings, so a client filtering normally will offer every EU 86x preset regardless of which sibling is selected. The consequence: **do not assume the region is immutable across a preset change.** After an admin config write, re-read the resulting `LoRaConfig` and reflect the possibly-changed region back into the UI.
+6. **Use it as a UI guard, not as a validator of truth.** The firmware still validates and clamps on its own. The map exists to stop a user *selecting* an illegal combination; it is not a security or correctness boundary.
+
+## UI recommendations
+
+- In the LoRa config screen, when a region is selected, filter or disable the modem-preset picker down to that region's presets - while preset mode is on.
+- If the current preset is not in the newly selected region's set, move the selection to that region's `default_preset`.
+- Show a licensed badge or confirmation for regions where `licensed_only` is true.
+- If a region is absent from the map, or the whole message is absent, render the full preset list as before. **Never show an empty picker.**
+
+## Compatibility
+
+- **Old clients, new firmware:** an unknown `FromRadio` payload variant is ignored by protobuf decoders, and the relative ordering of the known messages is unchanged, so existing apps are unaffected.
+- **New clients, old firmware:** the message never arrives, which the rules above already treat as "no constraints".
+- **Enum growth:** new region and preset values may appear over time. Decoders should pass unknown enum values through rather than failing; an unknown region in `region_groups` is harmless - the client just has no localised name for it.
+
+## Platform notes
+
+**Note:** these describe how each client repository consumes the protobufs, not durable file paths. Both repos have been refactored away from older layouts - re-pin against a specific commit if you need exact locations.
+
+### Android
+
+The protobufs are a **published Maven artifact, not a submodule**, declared in `gradle/libs.versions.toml`. A `region_presets`-aware build therefore needs a new published protobufs release, then a bump of that version string.
+
+Because the protobufs are Wire-generated, the `FromRadio` oneof is **not** a payload-variant enum - each arm is a nullable field, so the new variant is handled by adding an arm to the existing `when` in the FromRadio packet handler, delegating to a handler that mirrors the existing metadata and config-complete ones. Expose the decoded map from the radio-config repository as a flow, mirroring the local-config and channel-set flows, and consume it in the radio-config view model. The region and preset dropdowns are preferences in the LoRa config item list; gate the preset dropdown on the selected region's entry in the map.
+
+### Apple
+
+The protobufs are **vendored** into a local Swift package, generated from the protobufs git submodule by a script. To get field 19: advance the submodule, regenerate, and commit both the regenerated sources and the submodule pointer. There is no published-artifact dependency, so Apple can regenerate from any commit.
+
+Dispatch is a real `switch` over the payload variant in the accessory manager, so add a `.regionPresets` case with its handler alongside the existing config and metadata handlers. Config is persisted with SwiftData, so store the decoded map on a settings or connection model for the LoRa view to read. That view holds both the region picker and the preset picker; filter the latter by the selected region's entry.
+
+### Python and web
+
+Both consume the published protobufs and will see `region_presets` once their protobuf dependency includes field 19. Until then it decodes as an unknown field and can be ignored.
+
+## Reference payload
+
+For decoder unit tests. With the 2.8 region table the firmware emits **6 groups**. Group indices are assigned in region-table order - the first region to use a profile creates its group - so they are stable as listed:
+
+| Group                   | `default_preset` | `licensed_only` | Presets                                                                                                                      |
+| :---------------------- | :--------------- | :-------------- | :--------------------------------------------------------------------------------------------------------------------------- |
+| 0 (standard)            | `LONG_FAST`      | false           | LONG_FAST, LONG_SLOW, MEDIUM_SLOW, MEDIUM_FAST, SHORT_SLOW, SHORT_FAST, LONG_MODERATE, SHORT_TURBO, LONG_TURBO, MEDIUM_TURBO |
+| 1 (EU 868)              | `LONG_FAST`      | false           | EU 86x superset, below                                                                                                       |
+| 2 (EU 866 SRD)          | `LITE_FAST`      | false           | EU 86x superset, below                                                                                                       |
+| 3 (EU 868 narrow)       | `NARROW_SLOW`    | false           | EU 86x superset, below                                                                                                       |
+| 4 (amateur 20 kHz)      | `TINY_FAST`      | **true**        | TINY_FAST, TINY_SLOW                                                                                                         |
+| 5 (amateur 100 kHz)     | `NARROW_SLOW`    | **true**        | NARROW_FAST, NARROW_SLOW                                                                                                     |
+
+The **EU 86x superset** advertised by groups 1, 2 and 3 is the union of the trio's own band presets, because the firmware auto-swaps region within the trio on preset selection, so any of these is a legal pick from any of the three regions:
+
+```text
+LONG_FAST, LONG_SLOW, MEDIUM_SLOW, MEDIUM_FAST, SHORT_SLOW, SHORT_FAST, LONG_MODERATE,
+LITE_FAST, LITE_SLOW, NARROW_FAST, NARROW_SLOW
+```
+
+The three groups remain distinct despite sharing that list, because their defaults differ.
+
+Region to group index:
+
+| Group | Regions                                                                                                                                                       |
+| :---- | :------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| 0     | US, EU_433, CN, JP, ANZ, ANZ_433, RU, KR, TW, IN, NZ_865, TH, UA_433, MY_433, MY_919, SG_923, PH_433, PH_868, PH_915, KZ_433, KZ_863, NP_865, BR_902, LORA_24 |
+| 1     | EU_868                                                                                                                                                        |
+| 2     | EU_866                                                                                                                                                        |
+| 3     | EU_N_868                                                                                                                                                      |
+| 4     | ITU1_2M, ITU2_2M, ITU3_2M                                                                                                                                     |
+| 5     | ITU2_125CM                                                                                                                                                    |
+
+**Note:** several groups carry overlapping preset lists but stay distinct: groups 1, 2 and 3 share the EU 86x superset yet differ in default, and group 5 shares the narrow presets with group 3 but differs in licensing. **Decoders must key on the group, not on the preset list**, to preserve the default and the licensing flag.
+
+Regions absent from the table, and therefore unconstrained: `EU_874`, `EU_917`, `ITU1_70CM`, `ITU2_70CM`, `ITU3_70CM`.
+
+This table is generated from the firmware's region table at runtime. Treat the firmware as authoritative and these values as the expected snapshot for the 2.8 table.
