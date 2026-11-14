@@ -14,6 +14,7 @@ Screen mirroring shows the screen of the node your client is connected to, live,
 ## Requirements
 
 - A node with a screen, running [BaseUI](./baseui/index.mdx) or [Meshtastic UI](./meshtasticui/index.mdx) (MUI). [InkHUD](./inkhud/index.mdx) devices can't be mirrored.
+- Firmware newer than 2.8.2. No 2.8.2 build includes screen mirroring.
 - For MUI, firmware built with MUI mirroring enabled. No release build enables it, so an MUI device on release firmware can't be mirrored.
 - A local connection to the node over Bluetooth, USB, or the network. Only the connected node can be mirrored, never another node on the mesh.
 - On a node with lockdown enabled, a client that has unlocked the node. The mirror then shows the same redacted screen the device does.
@@ -78,4 +79,4 @@ Input acts on the node the same as a press on the device. On MUI, a held **OK** 
 - When the node's screen is asleep, BaseUI mirrors the last frame it drew. MUI mirrors a black screen until the device wakes, which any input from the mirror does.
 - An e-ink screen refreshes slowly. Prefer a single frame over a live stream.
 - Mirroring stops when the client disconnects or the node reboots. Open the mirror again after reconnecting.
-- Up to six connections to one node can mirror at the same time.
+- Up to six connections to a BaseUI node can mirror it at the same time. An MUI node streams to one connection at a time, and a second connection gets no frames until the first stops.
