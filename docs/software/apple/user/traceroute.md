@@ -18,7 +18,7 @@ The app waits up to two minutes for an answer. Until then the entry reads **Wait
 
 ## The Trace Route Log
 
-Open a node and choose **Trace Route Log** in the Logs section to see every trace route you sent to that node.
+Open a node and choose **Trace Route Log** in the Logs section to see every trace route you sent to that node. It also lists the ones you didn't send: a route to that node your radio traced on its own screen or from another app, labeled **Observed**, and a trace that node ran to your radio, labeled **Traced us**. A trace to your radio only shows the route it took to reach you, since your radio answers it without the app.
 
 - **Time window** — pick how far back the chart and list go: 1 hour, 24 hours, 1 week, 2 weeks, 1 month or all. It starts at 24 hours. 1 hour and All are always offered; each of the others appears once the log goes back that far.
 - **Chart** — forward hops (orange, solid) and return hops (blue, dashed) use the left axis; the round trip (purple) uses the right axis, in seconds. Tap the chart to highlight the nearest entry in the list. Tap **Hops** to fold the chart away.

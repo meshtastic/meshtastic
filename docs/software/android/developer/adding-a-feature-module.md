@@ -1,7 +1,7 @@
 ---
 title: Adding a Feature Module
 sidebar_position: 3
-last_updated: 2026-09-29
+last_updated: 2026-10-21
 description: Step-by-step guide for creating a new KMP feature module — module directory, build script, DI, routes, navigation entries, and the checklist.
 parent: Developer Guide
 ---
@@ -24,7 +24,11 @@ plugins {
 }
 
 kotlin {
-    android { withHostTest { isIncludeAndroidResources = true } }
+    @Suppress("UnstableApiUsage")
+    android {
+        namespace = "org.meshtastic.feature.myfeature"
+        withHostTest { isIncludeAndroidResources = true }
+    }
 
     sourceSets {
         commonMain.dependencies {
@@ -45,6 +49,12 @@ kotlin {
     }
 }
 ```
+
+`meshtastic.kmp.feature` declares the `jvm()` target, and `iosSimulatorArm64()` on hosts that can run
+Kotlin/Native. It adds the Compose,
+Navigation 3, Lifecycle and Koin dependencies, and puts `core:testing` on `commonTest`. It also derives
+the Android namespace from the module path when none is set, which for a hyphenated path such as
+`:feature:my-feature` isn't a valid package name, so set `namespace` yourself.
 
 ## Register in `settings.gradle.kts`
 
@@ -90,6 +100,11 @@ sealed interface MyFeatureRoute : Route {
 }
 ```
 
+A new sealed route interface also has to be registered in `MeshtasticNavSavedStateConfig`
+(`core/navigation/.../NavigationConfig.kt`) with `subclassesOfSealed<MyFeatureRoute>()`, or saving the
+back stack fails to serialize its routes. Add an instance of each new route to `allRouteInstances` in
+`NavigationConfigTest`, which round-trips every route through saved state.
+
 ## Create Navigation Entries
 
 `src/commonMain/kotlin/org/meshtastic/feature/myfeature/navigation/MyFeatureNavigation.kt`:
@@ -116,16 +131,16 @@ Both the graph sentinel (`MyFeatureRoute.MyFeatureGraph`) and the primary screen
 navigate to the same composable, so the feature is reachable via either a top-level push or a deep-link graph
 push — the same pattern `feature:wifi-provision` and `feature:firmware` use.
 
-Then wire it up: call `myFeatureGraph(backStack)` from the shared `entryProvider<NavKey> { }` block in
-`androidApp`'s `Main.kt` and `desktopApp`'s `DesktopNavigation.kt`, alongside the other features' entries
-functions. See [Navigation Entry Registration](navigation-and-deep-links.md#navigation-entry-registration).
+Then wire it up: call `myFeatureGraph(backStack)` from the `entryProvider<NavKey> { }` block in
+`androidApp`'s `Main.kt` and from `desktopNavGraph` in `desktopApp`'s `DesktopNavigation.kt`, alongside the
+other features' entries functions. See [Navigation Entry Registration](navigation-and-deep-links.md#navigation-entry-registration).
 
 ## Source Set Guidelines
 
 | Source Set | Contains |
 |-----------|----------|
 | `commonMain` | Models, ViewModels, shared UI, DI module, navigation |
-| `androidMain` | Android-specific implementations (e.g., platform APIs) |
+| `androidMain` | Android-specific implementations (e.g. platform APIs) |
 | `jvmMain` | Desktop-specific implementations |
 | `iosMain` | iOS-specific implementations |
 | `commonTest` | Shared unit tests |
@@ -147,7 +162,7 @@ Every feature module should have:
 - [ ] If the module is user-facing, a page under `docs/en/user/` and a `MODULE_TO_DOCS` entry for it in `scripts/check-doc-coverage.js`; the check fails when a listed module's page is missing, and a module with no entry needs no page
 - [ ] DI module created with `@ComponentScan`
 - [ ] DI module registered in app and desktop roots
-- [ ] Routes added to `Routes.kt`
+- [ ] Routes added to `Routes.kt`, the sealed interface registered in `NavigationConfig.kt`, and an instance of each route in `NavigationConfigTest`
 - [ ] Navigation entries registered
 - [ ] `./gradlew kmpSmokeCompile` passes
 - [ ] `./gradlew :feature:my-feature:allTests` passes

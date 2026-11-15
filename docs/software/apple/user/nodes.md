@@ -114,11 +114,11 @@ Older firmware doesn't report this, so the marker and the notice don't appear.
 
 Long-press any node in the list to access quick actions:
 
-- **Add to favorites / Remove from favorites** — star important nodes so they appear at the top of the list
+- **Message** — open a direct message conversation with this node
 - **Display name** — give a node a local nickname (see Display Names below)
 - **Status Message** — set the status your radio broadcasts to the mesh (connected node only, firmware 2.8+)
+- **Add to favorites / Remove from favorites** — star important nodes so they appear at the top of the list
 - **Mute notifications / Unmute** — silence alerts from this node
-- **Message** — open a direct message conversation with this node
 - **Trace Route** — discover the path messages take to reach this node (see [Trace Routes](traceroute.md))
 - **Ignore / Remove from ignored** — hide this node from normal views
 - **Remove** — remove the node from your local database
@@ -127,9 +127,9 @@ Open a node and choose **Track in Live Activity** to keep it on your Lock Screen
 
 ## Display Names
 
-You can give any node a local nickname that's shown throughout the app instead of its device long name — in the node list, node details, and messages. Set it from the node's long-press menu ("Display name") or from the **Name** row in Node Detail. The avatar circle always shows the node's actual short code, unaffected by the nickname. While a display name is set, Node Detail also shows the node's real long name in a **Long Name** row under **Name**.
+You can give any node a local nickname that's shown throughout the app instead of its device long name — in the node list, node details, messages, mentions, notifications, CarPlay, the map, trace routes, the configuration screens, widgets, the Watch, and the Vision Pro spatial map and Cinema. A Live Activity that's already running keeps the names it started with. Searching for nodes or contacts finds them by either name, and lists sorted by name use the one they show. Set it from the node's long-press menu ("Display name") or from the **Name** row in Node Detail. The avatar circle always shows the node's actual short code, unaffected by the nickname. While a display name is set, Node Detail also shows the node's real long name in a **Long Name** row under **Name**.
 
-Display names are stored only on this device and are never sent over the mesh, shared, or exported — they don't change the node's real identity, so QR codes and contact sharing still use the device's actual name.
+Display names are stored only on this device and are never sent over the mesh, shared, or exported — they don't change the node's real identity, so QR codes, contact sharing, exports and the trace route share image still use the device's actual name.
 
 ## Filtering & Search
 
@@ -168,6 +168,12 @@ Tap a node and scroll to the Logs section for detailed metrics:
 | ![Environment](/img/apple/logEnvironment.webp) | Sensor data: temperature, humidity, barometric pressure. |
 | ![Detection Sensor](/img/apple/logDetectionSensor.webp) | Motion or door open/close alerts from the node. |
 | ![Trace Routes](/img/apple/logTraceRoutes.webp) | Recorded trace route paths showing the hops a message took through the mesh, with a chart and a hop-by-hop timeline. See [Trace Routes](traceroute.md). |
+
+### Requesting Telemetry
+
+Since firmware 2.7.13 nodes don't broadcast telemetry by default, so asking is often the only way to see a node's readings. For another node, while you're connected, the Device Metrics, Environment Metrics, Air Quality Metrics, Power Metrics and Local Stats logs each have a request button (`arrow.clockwise`) beside them. Tapping it asks the node for that kind of reading and says the request was sent; each kind can be asked again after 30 seconds. The reply shows in node details and in that log, and a log with nothing in it yet opens once the reply arrives. If the mesh reports that the request failed, for example because the node has no such sensor or couldn't be reached, the app says so with the node, the kind of reading and the reason, even if you've left the node.
+
+Linux nodes running `meshtasticd` also have a **Host Metrics Log** (`server.rack`) with its own request button. Host metrics are the computer's uptime, free memory, load average (1, 5 and 15 minutes), free disk space and an optional note set on the node. The newest reading also shows in a **Host** section in node details.
 
 When a node has a known position, the Logs section also offers **Estimate Coverage** (`cellularbars`). It switches to the Map tab and opens the Site Planner coverage-estimate form prefilled from that node. See [Coverage Estimate (Site Planner)](map.md) on the Map page for the full flow.
 
@@ -208,9 +214,11 @@ Importing a contact requires firmware 2.6.9 or later on the connected node.
 
 ### Air Quality
 
-Nodes with a particulate-matter sensor — reporting the firmware's Air Quality telemetry — show an **Air Quality** section with the latest PM2.5, PM1.0, and PM10 readings in µg/m³.
+Nodes with a particulate-matter or CO2 sensor — reporting the firmware's Air Quality telemetry — show an **Air Quality** section with the latest PM2.5, PM1.0, and PM10 readings in µg/m³ and CO2 in ppm. CO2 is marked Good under 1000 ppm, Stuffy under 2000, Poor under 5000, Unsafe under 30000, and Evacuate above that.
 
-An **Air Quality Metrics Log** entry appears under the node's logs, with a seven-day chart and table of the particulate-matter readings (configurable columns), a **Clear** action to delete stored readings, and **CSV export**.
+An **Air Quality Metrics Log** entry appears under the node's logs, with a seven-day chart and table of the readings (configurable columns), a **Clear** action to delete stored readings, and **CSV export**. Particulates and CO2 are charted separately, so CO2's hundreds of ppm don't flatten the particulate lines.
+
+The environment, air quality and power logs give each unit its own chart: temperature, humidity, pressure, light and so on are never drawn against one shared scale. Pressure uses a 100 hPa window, 950–1050 hPa near sea level, that moves with the readings for a node at altitude. Only readings the node actually sends are charted. The power log lists every channel that reports, up to eight, by the names you give them under **Label Channels**, and node details uses the same names.
 
 ### Signed Node
 
@@ -238,7 +246,7 @@ For supported devices, the support tier is shown below the hardware name:
 
 ### 3D Model
 
-For many radios, the hardware image can turn into a 3D model of the device: tap the image, or the rotate button on it. Drag to turn the model and pinch to zoom; the photo button switches back to the picture. On iPhones and iPads that support augmented reality, and on Apple Vision Pro, the AR button places the model in the room around you at its real size. Most models ship with the app and work offline; any that don't are downloaded the first time they're shown.
+For many radios, the hardware image can turn into a 3D model of the device: tap the image, or the rotate button on it. Drag to turn the model and pinch to zoom; the photo button switches back to the picture. In the full-screen view, the info button shows the model's copyright notice: the models are Meshtastic's own, not covered by the app's GPL, and the devices, logos and marks they show belong to their makers. On iPhones and iPads that support augmented reality, and on Apple Vision Pro, the AR button places the model in the room around you at its real size. On an iPhone or iPad the model lands on the first table or floor the camera finds, turned to face you. **AR** and **Object** at the top switch between the model in the room and the model on its own, the share button sends the model's file, and the record button records the screen, then opens the recording to save or share. **Banana for Scale** stands a real-size banana on the table beside the model. A sideways drag turns the model on its surface. For the radio you're connected to, the model in the room also shows its live screen, with the radio's buttons under the camera view. Most models ship with the app and work offline; any that don't are downloaded the first time they're shown.
 
 ### Device Screen
 
@@ -246,9 +254,27 @@ When the radio you're connected to has a screen and its firmware can share it, t
 
 Below the screen are the radio's buttons: four directions around **OK**, with **Back** underneath. Hold a direction to repeat it, or hold **OK** for a long press. You can also swipe on the screen to move in that direction. On radios with a touch screen, tapping the picture touches the same spot on the radio, and holding it long-presses there. With a keyboard attached, including on a Mac, **Use Keyboard** sends the arrow keys, Return and Esc to the radio until you turn it off; an outline around the screen shows when it's on.
 
-The radio's 3D model at the top of the same node detail shows its screen live too, on the model's own display, while the model is open. So does the model on the stand in the Apple Vision Pro [cinema](cinema.md#radio-models), with the radio's buttons on the card beside it.
+The radio's 3D model at the top of the same node detail shows its screen live too, on the model's own display, while the model is open, and in the room from the AR button. So does the model on the stand in the Apple Vision Pro [cinema](cinema.md#radio-models), with the radio's buttons on the card beside it.
 
 The screen only comes over your direct connection to the radio, never over the mesh, so it isn't available for other nodes. Firmware that can't share its screen doesn't show the row.
+
+### Remote Shell
+
+A Linux `meshtasticd` node on firmware 2.8.2 or later shows **Remote Shell** under **Administration**. It opens a terminal that runs a shell on the node's computer, over the mesh. The row also shows while the node's firmware version isn't known yet; opening it asks for the version, and an older node says so. Remote administration must be turned on in the app's settings.
+
+The node only accepts a shell from a radio whose public key is in its admin key list, the same list remote administration uses, and the session travels as encrypted direct messages. Opening the shell starts a remote admin session first if one isn't up. If the node never answers, the app says so and names the two usual causes: the node doesn't list your radio's key as an admin key, or it's out of range. The shell works best between nodes that hear each other directly.
+
+The mesh carries a few hundred bytes a second, so the terminal is built for short commands:
+
+- The top of the screen always shows the session state and, once open, the measured round trip. When the node closes the session or stops answering, **Reconnect** starts a new one.
+- Once the node has echoed a character on the current line, what you type shows at once, underlined until the node echoes it. At a prompt that doesn't echo, such as a password prompt, nothing you type is drawn, and nothing is drawn on a line that asks for a password, passphrase or PIN.
+- When the node hasn't acknowledged input for a few seconds, a note shows how long ago it was last heard.
+- **Line Mode**, in the **⋯** menu, sends a whole command at once with a single transmission. Up and down recall earlier commands, and the chips above the box fill in common ones such as `uptime` and `df -h`. It's the lightest way to use the shell on a busy mesh. At a password prompt the box hides what you type and keeps it out of history.
+- On a touch screen, a row of keys above the keyboard adds esc and ctrl on the left and the arrows on the right; hold an arrow to repeat it. Between them, swipe sideways for tab, alt, `~`, `|`, `/`, `-`, home, end, pgup and pgdn. Tap ctrl or alt once to apply it to the next key, twice to lock it, and a third time to release it. The keyboard key at the end puts the keyboard away; tap the output to bring it back. With a hardware keyboard, Control and Option chords and the navigation keys go straight to the shell, and Option still types the characters your layout puts on it, such as `@` or `|`.
+- Pinch the output to change the text size.
+- The menu also has **Paste**, **Copy All Output**, **Clear Screen**, **End Session** and text size. **End Session** closes the shell but keeps the screen open, showing Closing until the close has gone to your radio, then **Reconnect**. You can select and copy any output, and scrolling up while output arrives keeps your place. The terminal's bell is a light tap.
+
+Colors, bold, dim, underline and progress lines that redraw in place all work. Colors and dim text are adjusted to stay readable on light and dark backgrounds. Full-screen programs such as `vi` or `top` need more than the mesh can carry, so the app shows a notice instead of drawing them.
 
 ### Where to Buy
 

@@ -23,6 +23,18 @@ Channel conversations load the most recent **50 messages** by default. Scroll to
 | **0** (primary circle) | Primary channel — broadcast packets are sent here. Location data is broadcast from the first channel where it is enabled (firmware 2.7+). |
 | **1–7** | Secondary channels — separate messaging groups, each secured by their own key. |
 
+### Archived Channels
+
+A conversation belongs to its channel, not to the slot the channel sits in. A channel is its name and its key. A channel with a blank name takes its name from the modem preset, so changing the preset makes it a different channel. Changing the region does not.
+
+- A channel that moves to another slot keeps its conversation.
+- A channel that is replaced, rekeyed, removed, or renamed by a preset change has its conversation archived. The new channel starts with an empty conversation.
+- Archived conversations are listed under **Archived**, after the radio's channels, with the name the channel had. They can be read, searched, copied and deleted, but not sent to, replied to or reacted in.
+- Adding the same channel again brings its archived messages back.
+- Direct messages are never archived.
+
+Conversations that were already mixed together before this version stay as they are.
+
 ### Channel Configuration
 
 ![Channel form](/img/apple/channelForm_primary.webp)

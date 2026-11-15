@@ -1,8 +1,8 @@
 ---
 title: App Functions
 sidebar_position: 19
-last_updated: 2026-08-30
-description: Expose mesh capabilities to the Android system and on-device AI assistants (e.g. Gemini) so they can run mesh workflows without opening the app.
+last_updated: 2026-10-21
+description: Expose mesh capabilities to the Android system and on-device AI assistants such as Gemini, so they can run mesh workflows without opening the app.
 parent: User Guide
 ---
 
@@ -21,7 +21,7 @@ Control App Functions from **Settings → System AI**. The screen has:
 
 > ⚠️ **Important:** App Functions ship switched on. On a Google-flavor build the master toggle and every individual function, **Send message** included, start enabled — so an assistant can read your mesh data and send messages to your mesh until you turn **Allow AI access** off.
 
-The functions are grouped into a **Write** section (functions that change something or send data to your mesh) and a **Read** section (functions that only return information).
+The functions are grouped into a **Write functions** section (functions that change something or send data to your mesh) and a **Read functions** section (functions that only return information).
 
 ![App Functions screen with master and per-function toggles](/img/android/docs/app-functions_settings.webp)
 
@@ -31,16 +31,16 @@ The screenshot has **Send message** and **Get recent messages** switched off to 
 
 | Function | What it does |
 |----------|--------------|
-| **Send message** | Sends a text message to a contact (direct message) or to a channel. The mesh carries at most 233 bytes of text, so keep assistant-composed messages short. |
+| **Send message** | Sends a text message to a contact (direct message) or to a channel. It refuses text over 228 bytes, and sends at most five messages a minute, so keep assistant-composed messages short. |
 
 ### Read Functions
 
 | Function | What it returns |
 |----------|-----------------|
-| **Get mesh status** | Whether you're connected to a radio, and how many nodes are online. |
+| **Get mesh status** | Whether you're connected to a node, and how many nodes are online. |
 | **Get node list** | The list of nodes on your mesh. |
 | **Get channel info** | Information about your channels. |
-| **Get device status** | Status of your connected radio. |
+| **Get device status** | Status of your connected node. |
 | **Get node details** | Detailed information about a specific node. |
 | **Get mesh metrics** | Telemetry and metrics from your mesh. |
 | **Get recent messages** | Recent messages from your conversations. |

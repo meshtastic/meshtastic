@@ -21,7 +21,7 @@ Things that trip up first-time contributors — check these before requesting re
 - **Protos are an external dependency** — protobuf models come from the `org.meshtastic:protobufs` Maven artifact (pinned in `gradle/libs.versions.toml`); change protos upstream and bump the version, never edit generated code locally
 - **Docs updated** — if you changed user-visible UI, update the corresponding page under `docs/en/user/`
 - **Previews updated** — if you changed UI composables, update the corresponding `*Previews.kt` file and the screenshot-test baselines
-- **Branch naming** — branches must start with `feat/`, `fix/`, `chore/`, `docs/`, `build/`, `ci/`, `refactor/`, `test/`, or `deps/`
+- **Branch naming** — start the branch with `feat/`, `fix/`, `chore/`, `docs/`, `build/`, `ci/`, `refactor/`, `test/`, or `deps/`, or use a spec branch name; [Contributing](contributing.md) has the full rule
 
 ## What's New for Developers
 
@@ -31,7 +31,13 @@ Things that trip up first-time contributors — check these before requesting re
 Keep the last 5–8 entries and trim older ones from the bottom.
 -->
 
-**September 2026** — [Navigation & Deep Links](navigation-and-deep-links.md) — Deep links route through Navigation 3's `UriDeepLinkMatcher` instead of a hand-rolled `when` block, and patterns are anchored, so an unmodelled trailing path no longer opens the family root.
+**October 2026** — [Navigation & Deep Links](navigation-and-deep-links.md) — The route table covers every pattern the router accepts, including the fallbacks that open the nearest nodes, map, or settings route for an unknown sub-path.
+
+**October 2026** — [Persistence](persistence.md) — Each connected node has its own database, app data backup and restore are documented, and telemetry is read from `MeshLog` rather than `Packet`.
+
+**October 2026** — [Test Builds & Obtainium](test-builds.md) — Promotion moves one release from tag to tag, and post-release cleanup deletes the prereleases.
+
+**September 2026** — [Navigation & Deep Links](navigation-and-deep-links.md) — Deep links route through Navigation 3's `UriDeepLinkMatcher` instead of a hand-rolled `when` block.
 
 **September 2026** — [Measurement & Formatting](measurement.md) — `NumberFormatter.format` follows the OS locale; `formatInvariant` is the fixed-dot one for payloads another system parses.
 
