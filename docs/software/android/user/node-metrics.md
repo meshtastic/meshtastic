@@ -1,7 +1,7 @@
 ---
 title: Node Metrics
 sidebar_position: 5
-last_updated: 2026-09-28
+last_updated: 2026-10-21
 description: Telemetry dashboards for each mesh node — device health, environment sensors, air quality, signal quality, power, traceroute, and position history.
 parent: User Guide
 ---
@@ -87,14 +87,14 @@ CO₂ readings are color-coded by severity so you can read air quality at a glan
 
 ![Air quality readings with color-coded CO₂ severity](/img/android/docs/node-metrics_air_quality.webp)
 
-An air-quality log/metrics button appears on the node detail screen **only when the node has reported air-quality telemetry**. From the Air Quality view you can:
+The **Air-Quality Metrics** row is always listed on the node detail screen; its chart button appears once the node has reported air-quality telemetry. From the Air Quality view you can:
 
 - Select a **time frame** for the charts.
 - Filter with **metric chips** — only metrics that have data are shown.
 - **Refresh / request** the latest air-quality telemetry.
 - **Export to CSV** for analysis in a spreadsheet.
 
-> 💡 **Tip:** Air Quality metrics require a compatible air-quality sensor on the remote node. See [Telemetry & Sensors](telemetry-and-sensors.md) for supported hardware.
+See [Telemetry & Sensors](telemetry-and-sensors.md) for supported air-quality hardware.
 
 ## Signal Quality
 
@@ -105,11 +105,10 @@ Radio signal quality information:
 | SNR | Signal-to-Noise Ratio (higher is better) |
 | RSSI | Received Signal Strength Indicator (closer to 0 is better) |
 | Noise Floor | Local background RF noise in dBm (more negative is quieter) |
-| Hop Count | Number of mesh hops for last message |
 
 ### Signal Quality Reference
 
-Signal quality is rated from **SNR relative to the active LoRa modem preset's demodulation floor**, not from fixed thresholds — a given SNR means different things on different presets (e.g. −15 dB is fine on LongSlow but unusable on ShortFast). When RSSI and a noise-floor reading are both available, the app also rates their difference against the preset limit and uses the worse rating. Otherwise, RSSI is display-only. In the table, *limit* is the preset's SNR limit.
+Signal quality is rated from **SNR relative to the active LoRa modem preset's demodulation floor**, not from fixed thresholds — a given SNR means different things on different presets (for example, −16 dB rates Good on Long Fast but None on Short Fast). When RSSI and a noise-floor reading are both available, the app also rates their difference against the preset limit and uses the worse rating. Otherwise, RSSI is display-only. In the table, *limit* is the preset's SNR limit.
 
 | Quality | Criteria |
 |---------|----------|
@@ -120,9 +119,9 @@ Signal quality is rated from **SNR relative to the active LoRa modem preset's de
 
 See [Understanding the Signal Meter](signal-meter.md) for the full explanation.
 
-Local Stats from your connected radio are also shown in Signal Quality when available. These logs include noise floor, traffic counters, relay counters, online node counts, and radio uptime. The noise floor chart uses a dashed reference line at -85 dBm to help identify a busy RF environment.
+Local Stats from your connected node are also shown in Signal Quality when available. These logs include noise floor, traffic counters, relay counters, online node counts, and uptime. The noise floor chart uses a dashed reference line at −85 dBm to help identify a busy RF environment.
 
-- **Request** — ask the connected radio for a fresh Local Stats telemetry report
+- **Request** — ask the connected node for a fresh Local Stats telemetry report
 - **Clear** — remove Local Stats logs for that node
 - **Save** — export the visible Local Stats history as CSV
 
@@ -141,7 +140,7 @@ The node detail screen shows cards for channels 1 to 3. Use the chart button on 
 
 Traceroute shows the path a message takes through the mesh:
 
-1. From the node detail screen's **Telemetry** section, tap the refresh button on the **Traceroute** row. You cannot traceroute your own node, and the button accepts one request every 30 seconds.
+1. From the node detail screen's **Telemetry** section, tap the refresh button on the **Traceroute** row. You cannot traceroute your own node. The app sends at most one traceroute every 30 seconds, to any node, and **Trace Route** in the node list's touch & hold menu shares that cooldown.
 2. The app sends a traceroute request to the target node.
 3. Results show each hop with its SNR.
 
@@ -149,19 +148,27 @@ Traceroute shows the path a message takes through the mesh:
 
 A traceroute is a round trip, so each saved result carries a hop count in each direction, **Forward Hops** and **Return Hops**, plus the **Round Trip** time in seconds. A result marked **Direct** reached the target with no relay in between. Tap a result to read the route traced toward the destination and the route traced back to you, with the SNR of every hop. That view offers **View on map**, which draws the same path, as long as the start and destination nodes have both shared a position.
 
+A relay that didn't record itself in the route shows as **Unknown hop**, and a relay your node has no record of shows as its node ID, such as `!a1b2c3d4`.
+
+The history also keeps traceroutes this app didn't request:
+
+- **Observed** marks a response from this node to a request made elsewhere, such as one started from your node's own screen. It has hop counts but no round-trip time, and its points on the chart are hollow rings.
+- **Traced by** *node* marks a traceroute that node ran to yours. It shows the inbound route with the SNR of each hop, but no return route, no round-trip time, and no map, and it stays off the chart.
+
 A result marked **No Response** means the target never answered. It may be out of range, asleep, or configured not to reply. Wait for the 30-second cooldown to clear and try again; if it keeps failing, send a direct message first to confirm the node is reachable at all.
 
 ## Position Log
 
-Historical position data for nodes that share their location:
-- GPS coordinates
-- Altitude
-- Speed (if moving)
-- Timestamp for each position report
+The chart button on the **Position** row opens the node's position history: its track on a map, and a list of every position report with latitude, longitude, satellites in view, altitude, speed, heading, and timestamp. From the app bar you can:
+
+- **Export GPX** to save the track as a GPX file. Reports without a GPS fix are left out.
+- Save the list as CSV.
+- **Clear** the recorded track, after a confirmation. This can't be undone.
+- Ask a remote node for a fresh position.
 
 ## Neighbor Info
 
-Shows which nodes a given node can directly hear, useful for understanding mesh topology.
+Shows which nodes a given node can directly hear, useful for understanding mesh topology. The **Neighbor Info** row appears once that node's neighbor list has reached the app. See [Local Mesh Discovery](discovery.md#neighbor-info) for turning the module on.
 
 ## Host Metrics
 

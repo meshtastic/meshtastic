@@ -1,7 +1,7 @@
 ---
 title: Local Mesh Discovery
 sidebar_position: 12
-last_updated: 2026-10-12
+last_updated: 2026-10-21
 description: Explore your mesh network — the Local Mesh Discovery scanner, traceroute paths, neighbor maps, and node discovery tools.
 parent: User Guide
 ---
@@ -21,9 +21,9 @@ Local Mesh Discovery is a dedicated scanning mode that helps you find the best L
 
 Connect your node, then open **Settings → Advanced → Local Mesh Discovery**. On Android the **Advanced** section appears only for a locally connected node, never over remote admin, and stays grayed out until the app has finished reading the node's configuration. On a managed device its entries are disabled, except **Debug Panel**, which reads app-local logs and stays available. On desktop, Local Mesh Discovery has its own entry on the Settings screen, with no such gate.
 
-> ℹ️ **Note:** Discovery temporarily changes your node's LoRa settings while it scans, then restores your original configuration when it finishes.
+Discovery changes your node's LoRa settings while it scans, then restores your original configuration when it finishes.
 
-Each preset is scanned on the public mesh: the default frequency slot for that preset, decoded with the default public channel. If your node uses a custom frequency slot, the scan uses the default slot and puts your slot back when it finishes. If your primary channel has a custom name or key, the scan switches it to the default public channel before the first preset change and restores your channel when the scan ends, whether it completes, you stop it, or it fails. Channel changes don't reboot the node, so this happens at once at the start and end of the scan. You no longer need to put your primary channel on the default key before scanning.
+Each preset is scanned on the public mesh: the default frequency slot for that preset, decoded with the default public channel. If your node uses a custom frequency slot, the scan uses the default slot and puts your slot back when it finishes. If your primary channel has a custom name or key, the scan switches it to the default public channel before the first preset change and restores your channel when the scan ends, whether it completes, you stop it, or it fails. Channel changes don't reboot the node, so this happens at once at the start and end of the scan.
 
 ### Setting up a scan
 
@@ -31,8 +31,8 @@ Before starting, configure these controls:
 
 | Control | Description |
 |---------|-------------|
-| **LoRa preset picker** | Select one or more presets to scan. Discovery dwells on each selected preset in turn. |
-| **Dwell time** | Time to listen on each preset. Choose from 1, 5, 15, 30, 45, 60, 90, 120, or 180 minutes. Longer dwell times collect more packets and give a clearer picture, but take longer. |
+| **LoRa Presets** | Select one or more presets to scan. Discovery dwells on each selected preset in turn. |
+| **Dwell Time** | Time to listen on each preset. Choose from 1, 5, 15, 30, 45, 60, 90, 120, or 180 minutes. Longer dwell times collect more packets and give a clearer picture, but take longer. |
 | **Keep screen awake** | Keeps the display on for the scan. The scan itself holds a CPU wake lock for its whole run and posts a **Scanning LoRa presets…** notification, so it keeps collecting with the screen off or the app in the background. |
 
 The **Start Scan** button stays disabled — with an explanation of why — until the scan can run. Common reasons it's disabled:
@@ -82,7 +82,7 @@ Additional features available from the results:
 - **Discovery Map** — a map of the nodes found during the scan.
 - **Report export** — export a report as a PDF on Android, or as text on other platforms.
 
-> 💡 **Tip:** On **Google Play** builds, Discovery can generate an on-device AI summary (Gemini Nano) of your results. F-Droid builds always use the algorithmic summary — the proprietary ML Kit dependency is deliberately excluded from that flavor — so you get a readable interpretation of the scan either way.
+On **Google Play** builds, Discovery can generate an on-device AI summary (Gemini Nano) of your results. F-Droid builds always use the algorithmic summary, because that flavor leaves out the proprietary ML Kit dependency, so every build gives a readable interpretation of the scan.
 
 ## Mesh Beacon
 
@@ -91,12 +91,12 @@ Mesh Beacon lets nodes invite others to join their mesh. A beaconing node period
 Configure it under **Settings → Module configuration → Mesh Beacon**. The entry appears only on nodes running firmware 2.8.0 or newer. A read-only **Region** row at the top of the screen shows the region the beacon advertises: that region, and the preset, are always the ones the node itself uses, so a beacon can't invite anyone onto settings your node isn't running.
 
 - **Listen for beacons** — receive invitations broadcast by other nodes.
-- **Broadcast a beacon** — periodically advertise this mesh to nearby nodes, with an optional **Beacon message** of up to 100 bytes, a **Broadcast interval** picked from fixed intervals between 1 hour and 72 hours, and an **Offered channel** chosen from your node's own channels. The offered channel is required, and defaults to your primary channel. Over remote admin the picker offers the primary channel only.
+- **Broadcast a beacon** — periodically advertise this mesh to nearby nodes, with an optional **Message** of up to 60 bytes, a **Broadcast interval** picked from fixed intervals between 1 hour and 72 hours, and an **Offered channel** chosen from your node's own channels. The offered channel is required, and defaults to your primary channel. Over remote admin the picker offers the primary channel only.
 - **Broadcast targets** — where the beacon actually transmits. The list always holds at least one row: the first is the beacon's own transmission, not an extra. Each row picks a **Channel** and a **Transmit preset**. **Add target** appends a row, and **Remove target** deletes one — removing the last row replaces it with a fresh default rather than emptying the list.
 
 Two conditions block beacon setup:
 
-- **The node has no region set.** The screen shows nothing but *Set your node's region before setting up a beacon.* Set the region on **Settings → LoRa** first.
+- **The node has no region set.** The screen shows nothing but *Set your radio's region before setting up a beacon.* Set the region on **Settings → LoRa** first.
 - **The node uses custom LoRa settings.** A beacon advertises a modem preset for others to join, so a node with **Use Preset** turned off has no standard preset to offer. In that state **Broadcast a beacon** can be turned off but not on, and the broadcast settings are read-only. Listening for beacons is unaffected.
 
 Received invitations appear as **Mesh invitations** cards on the Discovery screen. Each card shows the sender's message plus the offered channel, region, preset, and signal quality, with these actions:
@@ -115,7 +115,7 @@ The following tools are available at any time from the node list and node detail
 
 ### Traceroute
 
-Traceroute reveals the exact path a message takes from your node to any other node on the mesh. It's the single most useful tool for debugging connectivity problems.
+Traceroute reveals the exact path a message takes from your node to any other node on the mesh, which makes it the first tool to reach for when debugging connectivity problems.
 
 #### Running a Traceroute
 
@@ -143,9 +143,9 @@ Each `⇊` line between two nodes is one relay hop, and the SNR on that line is 
 | All hops show Good SNR (green) | Healthy path — messages flow reliably |
 | One hop shows a poor SNR (orange or red) | Weak link — this relay segment is fragile |
 | Many hops (4+) | Long path — consider repositioning a node to shorten it |
-| Different path on retry | Mesh is adapting — multiple routes exist (this is good!) |
+| Different path on retry | Mesh is adapting — multiple routes exist, a sign of redundancy |
 
-> 💡 **Tip:** Run traceroute several times over a few minutes. If the path changes, your mesh has redundant routes — a sign of a well-connected network.
+Run traceroute several times over a few minutes, waiting out the 30-second cooldown between requests. If the path changes, your mesh has redundant routes, a sign of a well-connected network. A relay that didn't record itself in the route shows as **Unknown hop**.
 
 #### Troubleshooting with Traceroute
 
@@ -169,7 +169,7 @@ Once enabled and transmitting over LoRa, your node periodically broadcasts its n
 
 #### Viewing neighbor data
 
-- Open a node's detail screen and find **Neighbor Info** in the **Telemetry** section. The request button asks the node for its current neighbor list; once the app has received one, a second button on the same row opens the log of everything that node has reported. The row appears only on nodes that can answer a neighbor request, or that have already reported neighbors.
+- Open a node's detail screen and find **Neighbor Info** in the **Telemetry** section. The row appears once the app has received that node's neighbor list. Its log button opens everything that node has reported, and its request button asks the node for a fresh list.
 - Each neighbor entry shows the node that was directly heard and its signal quality.
 - Combine neighbor data from multiple nodes to understand the full mesh topology.
 
@@ -177,7 +177,7 @@ Once enabled and transmitting over LoRa, your node periodically broadcasts its n
 
 ### Node list as a discovery tool
 
-The node list itself is a powerful discovery tool when you use its filtering and sorting features effectively.
+The node list's filtering and sorting make it a discovery tool of its own.
 
 #### Finding new nodes
 
@@ -200,7 +200,7 @@ See [Nodes](nodes.md) for full details on filtering and sorting options.
 ## Tips for Mesh exploration
 
 - **Start with traceroute** — it gives you immediate, actionable information about a specific path.
-- **Enable Neighbor Info on key nodes** — especially routers and repeaters, to build a picture of the backbone.
+- **Enable Neighbor Info on key nodes** — especially routers, to build a picture of the backbone.
 - **Check the map** — node positions on the [Map](map-and-waypoints.md) combined with signal data help you understand why some links are strong and others are weak.
 - **Compare signal over time** — use the [Signal Meter](signal-meter.md) guide to interpret SNR and RSSI values correctly.
 
