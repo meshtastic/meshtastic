@@ -1,7 +1,7 @@
 ---
 title: Test Builds & Obtainium
 sidebar_position: 10
-last_updated: 2026-08-29
+last_updated: 2026-10-21
 description: Install and auto-update Meshtastic test builds from GitHub releases with Obtainium — channel configurations, APK selection, and the shareable config format.
 parent: Developer Guide
 ---
@@ -14,11 +14,9 @@ Builds from GitHub are signed with the project's release key (`CN=Kevin Hester, 
 
 > ⚠️ **Warning:** Uninstalling the Play Store version of Meshtastic clears the app's data — message history and settings on this phone are lost. Uninstall it before installing via Obtainium, then stay on Obtainium for updates.
 
----
-
 ## Which channels can Obtainium reach?
 
-Meshtastic for Android promotes builds up a ladder: `closed → open → production`. Each maps to a Google Play track, and the GitHub release is published (un-drafted) when a build is promoted to closed or higher.
+Meshtastic for Android promotes builds up a ladder: `internal → closed → open → production`. Each maps to a Google Play track. An internal build's GitHub release is a draft, which Obtainium can't see; it is published when the build is promoted to closed or higher.
 
 | Channel | Play track | On GitHub | Obtainium can install it? |
 |---|---|---|---|
@@ -27,15 +25,13 @@ Meshtastic for Android promotes builds up a ladder: `closed → open → product
 | **closed** beta | Alpha (Closed) | published prerelease, tag `vX.Y.Z-closed.N` | ✅ Yes |
 | **snapshot** | — (not on Play) | rolling prerelease, tag `snapshot` | ✅ Yes |
 
-Each promotion cuts its **own** tag, and older ones stay published — a whole run of `vX.Y.Z-open.N` tags accumulates during a version cycle, each still installable with APKs attached. So a channel gathers releases rather than moving a single one forward, and the channel configs in [One-Tap Setup](#one-tap-setup) pick the **newest** release whose title matches the channel.
+Each promotion moves the build's GitHub release to a **new** tag for its channel (`vX.Y.Z-closed.N`, then `vX.Y.Z-open.N`, then `vX.Y.Z`), and retitles it to match. A build that is not promoted further keeps its release, so during a version cycle a channel can hold several releases, and the channel configs in [One-Tap Setup](#one-tap-setup) pick the **newest** release whose title matches the channel. Once the production release ships and its docs are published, `post-release-cleanup.yml` deletes every internal, closed, and open release and tag at or below that version.
 
-Which release each channel currently resolves to is deliberately **not** listed on this page: it is archived per release tag and bundled into the app, so a live version number here would be frozen at build time and wrong within weeks. The [project README](https://github.com/meshtastic/Meshtastic-Android#get-meshtastic) carries the current state, refreshed automatically.
+Which release each channel resolves to is deliberately **not** listed on this page: it is archived per release tag and bundled into the app, so a live version number here would be frozen at build time and wrong within weeks. The [project README](https://github.com/meshtastic/Meshtastic-Android#get-meshtastic) carries the current state, refreshed automatically.
 
-A channel can legitimately be empty — most often `-closed`, early in a cycle before any build has been cut to it. The number of published `fdroid` ABI splits has changed across releases, which is why the filter matches every split.
+A channel can legitimately be empty: `-open` and `-closed` are empty between a production release and the next promotion, and `-closed` is often empty early in a cycle before any build has been cut to it. The number of published `fdroid` ABI splits has changed across releases, which is why the filter matches every split.
 
 **Snapshot** is different: it's an automated debug build of the latest commit on `main`, rebuilt and re-published under the single moving `snapshot` tag on every push. It never goes to Play. Because debug builds use a `.debug` application-ID suffix (`com.geeksville.mesh.fdroid.debug` / `com.geeksville.mesh.google.debug`) and the debug signing key, a snapshot installs as its **own separate app** — it sits alongside a Play/stable/beta install, so the uninstall-first warning earlier on this page does **not** apply to it.
-
----
 
 ## One-tap setup
 
@@ -72,8 +68,6 @@ At most one release entry plus the two snapshot entries. Tapping a second *relea
 
 To set things up by hand instead, follow the rest of this page.
 
----
-
 ## Manual setup
 
 1. Install Obtainium ([GitHub releases](https://github.com/ImranR98/Obtainium/releases) or [F-Droid / IzzyOnDroid](https://apt.izzysoft.de/fdroid/index/apk/dev.imranr.obtainium)).
@@ -106,7 +100,7 @@ To set things up by hand instead, follow the rest of this page.
 - **Filter release titles by regular expression:** `-(closed|open)`
 - **Filter APKs by regular expression:** see [Picking the APK](#picking-the-apk)
 
-Obtainium installs the newest promoted prerelease — whatever is currently in open or closed. The title filter is required to skip the always-newer `snapshot` prerelease; without it Obtainium would follow snapshot instead.
+Obtainium installs the newest promoted prerelease, whichever of open or closed it is. The title filter is required to skip the always-newer `snapshot` prerelease; without it Obtainium would follow snapshot instead.
 
 ### Snapshot (latest commit on `main`)
 
@@ -126,20 +120,18 @@ The APKs are named `…-debug-<versionCode>.apk` (not `-release.apk`), so use de
 | `fdroid` flavor, most phones (arm64) | `fdroid-arm64-v8a-debug-\d+\.apk` |
 | `fdroid` flavor, one-size-fits-all | `fdroid-universal-debug-\d+\.apk` |
 
-Snapshot releases attach only the debug APKs — no `.aab` or desktop installers.
+Snapshot releases attach the debug APKs and, for each platform whose build succeeded, the unsigned desktop installers from the same commit, each stamped with the versionCode. There is no `.aab`.
 
-> ℹ️ **Note:** Local debug builds and CI snapshots are update-compatible: the repo checks in a shared debug
-> keystore (`config/debug.keystore`) that both sign with, so Obtainium can update over your own debug
-> install. `INSTALL_FAILED_UPDATE_INCOMPATIBLE` means the installed build predates the shared keystore
-> (or was signed with another machine's default key) — uninstall that one build and reinstall.
+Local debug builds and CI snapshots are update-compatible: the repo checks in a shared debug
+keystore (`config/debug.keystore`) that both sign with, so Obtainium can update over your own debug
+install. `INSTALL_FAILED_UPDATE_INCOMPATIBLE` means the installed build predates the shared keystore
+(or was signed with another machine's default key) — uninstall that one build and reinstall.
 
 Two more things about release selection apply to every channel described earlier, not just snapshot:
 
-> **Leave "Fallback to older releases" ON.** It is not a channel-strictness setting, and turning it off breaks every channel config here. Obtainium's release loop breaks out after the first candidate when fallback is off, so a title filter never gets to skip past non-matching releases. A config pinned to `-open` or `^Snapshot` then fails with "Could not find a suitable release" when a newer production release sits at the head of the list. The title filter is what pins the channel; fallback is what lets Obtainium walk down to the newest release that matches it.
->
-> ℹ️ **Note:** If your channel filter still finds nothing, that channel has no published release — common early in a version cycle. Check the [project README](https://github.com/meshtastic/Meshtastic-Android#get-meshtastic) for what is live, or use the *Bleeding edge* form to follow whichever of open/closed is newest.
+> ⚠️ **Important:** Leave **Fallback to older releases** on. It is not a channel-strictness setting, and turning it off breaks the beta and snapshot configs. Obtainium's release loop breaks out after the first candidate when fallback is off, so a title filter never gets to skip past non-matching releases. A config pinned to `-open` or `^Snapshot` then fails with "Could not find a suitable release" when a newer production release sits at the head of the list. The title filter is what pins the channel; fallback is what lets Obtainium walk down to the newest release that matches it.
 
----
+If your channel filter still finds nothing, that channel has no published release, which is common early in a version cycle and between a production release and the next promotion. Check the [project README](https://github.com/meshtastic/Meshtastic-Android#get-meshtastic) for what is live, or use the *Bleeding edge* form to follow whichever of open/closed is newest.
 
 ## Picking the APK
 
@@ -152,9 +144,7 @@ Each release attaches the `google` flavor APK, several `fdroid` flavor APKs, plu
 | `fdroid` flavor, one-size-fits-all | `fdroid-universal-release\.apk` |
 | `fdroid` flavor, let Obtainium pick the ABI | `fdroid-.*-release\.apk` with **Auto-select by architecture** on |
 
-**Use the `google` flavor while testing.** It ships Firebase Crashlytics and Datadog RUM, so the crashes and errors you hit get reported back to the team — which is the whole point of a test phase. It also has Google push (FCM) and Google Maps. Pick an `fdroid` flavor only if you'd rather not send that telemetry. You can change your mind later: both flavors share the release key, so Obtainium updates across the flavor boundary without an uninstall. Expect the `google` flavor to show its analytics-consent screen the first time it starts.
-
----
+**Use the `google` flavor while testing.** It ships Firebase Crashlytics and Datadog RUM, so the crashes and errors you hit get reported back to the team — which is the whole point of a test phase. It also has Google Maps. Pick an `fdroid` flavor only if you'd rather not send that telemetry. You can change your mind later: both flavors share the release key, so Obtainium updates across the flavor boundary without an uninstall. Expect the `google` flavor to show its analytics-consent screen the first time it starts.
 
 ## Version detection turns itself off — that's expected
 
@@ -165,8 +155,6 @@ Release tags read `vX.Y.Z`, while our installed `versionName` reads `X.Y.Z (vers
 In particular, **do not set "Trim the version string"** to `\d+\.\d+\.\d+` hoping to fix it. That setting only rewrites the version parsed from the *release*; the unparseable side is the installed `versionName`, which it never touches — so reconciliation fails exactly as before. It also adds a failure mode: if the regex ever matches nothing (a tag without a three-part version), the update check fails outright with a "no version found" error instead of degrading quietly.
 
 Snapshot is a separate case: its tag is the literal string `snapshot` and never changes, so tag comparison can't work either. Those configs use date-based pseudo-versioning (**Release date as version** plus **Use the latest asset date as the release date**) instead.
-
----
 
 ## The config format
 
@@ -183,8 +171,6 @@ The same object travels in three shapes:
 `obtainium://add/<url>` only prefills the Add-App page; `obtainium://app/…` is what carries settings. Wrapping a link as `https://apps.obtainium.imranr.dev/redirect.html?r=obtainium://app/…` keeps it clickable where a custom scheme wouldn't linkify.
 
 Obtainium keys apps by package name, so the two stable flavors cannot coexist as separate entries — the config-site submission expresses them as alternate `configs` with an `altLabel` each. See [`obtainium/README.md`](https://github.com/meshtastic/Meshtastic-Android/blob/main/obtainium/README.md) for the full key reference and the submission checklist.
-
----
 
 ## Notes
 

@@ -1,7 +1,7 @@
 ---
 title: Contributing
 sidebar_position: 8
-last_updated: 2026-09-28
+last_updated: 2026-10-21
 description: Branch naming, commit style, PR workflow, and the verification gates a change must pass before merge.
 parent: Developer Guide
 ---
@@ -26,7 +26,7 @@ Branches use conventional-commit style prefixes:
 | `test/<scope>` | Test additions or fixes |
 | `deps/<scope>` | Dependency updates |
 
-Timestamp-based spec prefixes (`YYYYMMDD-HHMMSS-feature-name`, as created by `/speckit.git.feature`) are also valid for spec-driven work.
+Spec-driven work takes no prefix from that list: a numeric spec prefix (`005-tak-v2-protocol`) or the timestamp form `YYYYMMDD-HHMMSS-feature-name` created by `/speckit.git.feature`. `release/*` and `automation/*` are reserved for maintainers and automated workflows.
 
 Examples:
 - `feat/desktop-ble-transport`
@@ -37,7 +37,7 @@ Examples:
 
 1. **Fork** the repository (external contributors) or create a branch (maintainers).
 2. **Implement** your changes following the architecture guidelines.
-3. **Test** locally: `./gradlew spotlessCheck detekt detektTypeResolved kmpSmokeCompile test allTests`
+3. **Test** locally: `./gradlew spotlessCheck detekt detektTypeResolved assembleDebug kmpSmokeCompile test allTests`
 4. **Commit** with clear, descriptive messages.
 5. **Push** and open a Pull Request.
 
@@ -54,20 +54,20 @@ test(search): add keyword ranking tests
 ## Pull Request Checklist
 
 Before submitting:
-- [ ] Code compiles on all targets: `./gradlew kmpSmokeCompile`
-- [ ] All tests pass: `./gradlew allTests`
+- [ ] Code compiles on all targets: `./gradlew assembleDebug kmpSmokeCompile`
+- [ ] All tests pass: `./gradlew test allTests`
 - [ ] Code style passes: `./gradlew spotlessCheck`
 - [ ] Static analysis passes: `./gradlew detekt detektTypeResolved`
 - [ ] New code has appropriate test coverage
 - [ ] No `android.*` imports in `commonMain`
 - [ ] Koin modules registered if new DI is added
-- [ ] Routes added to `Routes.kt` if new navigation is introduced
+- [ ] Routes added to `Routes.kt` and registered in `NavigationConfig.kt` if new navigation is introduced
 - [ ] Documentation updated if user-facing behavior changes
 
 ## Code Style
 
-- **Formatting:** Enforced by Spotless (KtLint rules)
-- **Static analysis:** Detekt with project-specific configuration
+- **Formatting:** Enforced by Spotless, which runs ktfmt (kotlinlang style) and then ktlint, and checks only files changed since `origin/main`
+- **Static analysis:** Detekt with project-specific configuration (`config/detekt/detekt.yml`)
 - **Imports:** No wildcard imports; organized automatically by Spotless
 - **Line length:** 120 characters maximum
 
@@ -78,7 +78,7 @@ Run formatting:
 
 ## Architecture Rules
 
-- Feature modules must not depend on other feature modules
+- Feature modules must not depend on other feature modules; `feature:map-maplibre` and `feature:coverage` building on `feature:map` and `feature:map-terrain` are the exceptions
 - `commonMain` must not contain `android.*`, `java.io.*`, or platform-specific imports
 - Prefer interface + DI over `expect`/`actual` for complex platform behaviors
 - All navigation routes must be `@Serializable` and defined in `Routes.kt`
@@ -88,12 +88,19 @@ Run formatting:
 
 Full pre-merge verification:
 ```shell
-./gradlew spotlessCheck detekt detektTypeResolved kmpSmokeCompile test allTests
+./gradlew spotlessCheck detekt detektTypeResolved assembleDebug kmpSmokeCompile test allTests
 ```
 
-For docs-specific changes, also run:
+CI compiles the test shards with `-PwarningsAsErrors=true`; add it locally to catch a new Kotlin warning before CI does.
+
+For docs-specific changes, also run the Gradle bundle checks and the scripts the `docs-quality.yml` workflow runs on every docs pull request:
 ```shell
 ./gradlew generateDocsBundle validateDocsBundle
+node scripts/validate-doc-links.js docs/en
+node scripts/check-doc-coverage.js .
+node scripts/check-doc-aliases.js .
+node scripts/check-doc-freshness.js docs/en --max-age-days=180
+python3 scripts/docs/sync-locale-front-matter.py --check
 ```
 
 Prose in `docs/en/` follows Section 11 of the [Meshtastic Client Design Standards](https://github.com/meshtastic/design/tree/master/standards) — see [Documentation Style](documentation-style.md) for what's specific to this repository.
@@ -102,4 +109,4 @@ Prose in `docs/en/` follows Section 11 of the [Meshtastic Client Design Standard
 
 - [Meshtastic Discord](https://discord.gg/meshtastic) — `#app-development` channel
 - GitHub Issues — for bug reports and feature requests
-- GitHub Discussions — for questions and ideas
+- [GitHub Discussions](https://github.com/orgs/meshtastic/discussions/categories/android) — for questions and ideas
