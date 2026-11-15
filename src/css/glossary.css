@@ -1,12 +1,11 @@
-/* docusaurus-plugin-glossary overrides: align tooltip/term styling with the
-   Meshtastic design standards palette (section 7) instead of the plugin's
-   emphasis-scale defaults. */
-.glossaryTermWrapper .glossaryTerm {
-  border-bottom-color: color-mix(in srgb, var(--ifm-color-primary) 60%, transparent);
-}
-
-.glossaryTermWrapper .glossaryTerm:hover {
-  color: var(--ifm-color-primary);
+/* docusaurus-plugin-glossary overrides: the term is body text with a double
+   dotted underline, not another link. The plugin's classes are CSS modules, so
+   match the local name before the hash. */
+a[class*="glossaryTerm_"] {
+  color: inherit;
+  font-weight: inherit;
+  text-decoration: underline dotted;
+  border-bottom: 1px dotted;
 }
 
 .glossaryTermWrapper .tooltip {

@@ -14,6 +14,40 @@ Recent user-facing changes from roughly the last 12 months. Newest at the top.
 Show roughly the last 12 months of changes; archive entries older than a year by removing them.
 -->
 
+**Nov 2026** — [TAK](tak.md#certificates) — The TAK server issues its own certificates for each install instead of a set shared by every copy of the app, so only the client you set up from this phone's data package can connect. Export and import the data package again; remove the old Meshtastic connection in ATAK or iTAK first.
+
+**Nov 2026** — [Bluetooth](bluetooth.md#troubleshooting) — On Apple Vision Pro, when a radio asks for a Bluetooth PIN while pairing, the Connect screen says the headset can't enter one and to set the radio's pairing mode to No PIN (Just Works) from another device.
+
+**Nov 2026** — [Local Mesh Discovery](discovery.md#running-a-scan) — A finished scan stays on screen until **New Scan**, which starts the next setup with the beacons the scan just heard and the popular presets already selected.
+
+**Nov 2026** — [Cinema](cinema.md#fire-lookout) — On Apple Vision Pro, a node's card out the fire lookout's windows opens beside its marker as you see it from where you are, and sits on a bar you can pinch to move it.
+
+**Nov 2026** — [Cinema](cinema.md#radio-models) — On Apple Vision Pro, the connected radio's model on the cinema's stand shows its screen live, the card beside it has the radio's buttons and a size slider up to five times real size, and the stand and card turn to face you.
+
+**Nov 2026** — [Getting Started](getting-started.md#step-3-set-up-your-radio) — A radio that connects with no LoRa region opens a short setup for its region, preset and name, and **Set Up Radio** on the Connect screen and in Settings opens it any time.
+
+**Nov 2026** — [Getting Started](getting-started.md#first-launch-setup) — First-launch setup opens with a welcome page about off-grid messaging and location privacy, and the permission pages are restyled with plain icons and larger text.
+
+**Nov 2026** — [Cinema](cinema.md#fire-lookout) — On Apple Vision Pro, nodes out the fire lookout's windows are small chips on stems, standing at different heights where they're close together, and tapping one opens a card beside it with the node's details and buttons to show it on the 3D map or the screen.
+
+**Nov 2026** — [Cinema](cinema.md#fire-lookout) — On Apple Vision Pro, the fire lookout's shutters are all open, so the view shows round the screen and boards, the awnings are propped up out of the windows, and the cab stands 6 m (20 ft) lower.
+
+**Nov 2026** — [Cinema](cinema.md#fire-lookout) — On Apple Vision Pro, the **Turn Lookout** dial in the Cinema panel turns the fire lookout a sixteenth of a turn at a time, so the screen can face whichever part of the view you want.
+
+**Nov 2026** — [Map & Waypoints](map.md#map-options) — Hillshade has a Shade Valleys option that also darkens valley floors and gorges by how much of the sky they see, and hillshade now fades out past the zoom the downloaded terrain reaches instead of drawing made-up detail.
+
+**Oct 2026** — [Cinema](cinema.md#fire-lookout) — On Apple Vision Pro, the 3D map shows the fire lookout, cab and tower, on the summit you picked for it in the Cinema.
+
+**Oct 2026** — [Cinema](cinema.md#fire-lookout) — On Apple Vision Pro, a fire lookout to sit in: a glass cab on a summit at sunset. With terrain downloaded for the 3D map, it stands on one of the highest mountains in it, with the real terrain out the windows and every node marked where it is by bearing and distance.
+
+**Oct 2026** — [Cinema](cinema.md#boards) — On Apple Vision Pro, the tent has a second whiteboard: the status messages of your radio and of the latest nodes heard with one.
+
+**Oct 2026** — [Cinema](cinema.md) — On Apple Vision Pro, the Cinema has a second place to sit: a ham shack, with the app on the wall over an operating desk of radios, a window out to the antenna tower, and your team, the latest trace route and the net's check-ins on the same boards as in the tent.
+
+**Oct 2026** — [Bluetooth Device Connection](bluetooth.md#widgets-and-controls) — The Connect screen's Live Activity row is now **Widgets**: one sheet to start or switch the Live Activity and to see which widgets and controls are on your screens, with how to add the rest.
+
+**Oct 2026** — [Cinema](cinema.md) — On Apple Vision Pro, a search and rescue tent with the app on a big screen, the 3D map in front of you, your team on the whiteboard and the latest trace route on the wall.
+
 **Oct 2026** — [Hardware Showcase](showcase.md) — On Apple Vision Pro, a room with real-size models of Meshtastic radios on display tables, grouped by maker: pick one up and turn it over in your hand. The radios on your mesh are on the wall rack. Open it from the spatial map.
 
 **Oct 2026** — [Bluetooth Device Connection](bluetooth.md#live-activity) — The Live Activity now shows what you choose: a mesh status glance from the Connect screen, or one node from its detail screen with its battery, signal, last heard and distance. It survives a dropped link and appears on the Apple Watch Smart Stack and, on iOS 26, the CarPlay Dashboard.

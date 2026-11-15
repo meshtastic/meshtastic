@@ -6,7 +6,7 @@ sidebar_position: 7
 
 # Measurement & Locale
 
-How the app converts metric device data to locale-aware display values. All rules are defined in [Meshtastic Design Standards v1.4, Section 10](https://github.com/meshtastic/design/blob/master/standards/meshtastic_design_standards_latest.md).
+How the app converts metric device data to locale-aware display values. All rules are defined in [Meshtastic Design Standards v1.4, Section 10](https://github.com/meshtastic/design/blob/master/standards/meshtastic_design_standards_v1_4.md#10-units-measurement--locale).
 
 ## Core Principle
 
