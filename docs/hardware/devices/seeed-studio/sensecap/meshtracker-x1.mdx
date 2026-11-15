@@ -46,6 +46,8 @@ The MeshTracker X1 has one button and no reset button, so the double-press that 
 
 To leave bootloader mode without flashing, eject the drive.
 
+On 2.6.0 and later, a MeshTracker X1 with no firmware installed mounts the drive by itself when connected to a computer by USB, with no button press. On battery it waits for a [Bluetooth OTA update](/docs/getting-started/flashing-firmware/nrf52/ota/) instead.
+
 On an earlier bootloader, or to skip the button entirely, connect the device over USB and run `meshtastic --enter-dfu`. [Entering bootloader mode](/docs/getting-started/flashing-firmware/nrf52/entering-bootloader-mode/) covers every method.
 
 ## Resources
