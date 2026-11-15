@@ -1,7 +1,7 @@
 ---
 title: Messages & Channels
 sidebar_position: 3
-last_updated: 2026-09-14
+last_updated: 2026-10-21
 description: Send and receive messages, manage channels, configure encryption, search conversations, and use quick chat, reactions, and message actions.
 parent: User Guide
 ---
@@ -16,7 +16,7 @@ Channels are shared communication groups. All nodes configured with the same cha
 
 ### Default Channel
 
-Every Meshtastic radio comes with a default **LongFast** channel. It is encrypted with a well-known default key, so anyone running Meshtastic on the same preset can read it.
+Every Meshtastic node comes with a default **LongFast** channel. It is encrypted with a well-known default key, so anyone running Meshtastic on the same preset can read it.
 
 ### Channel Security
 
@@ -35,44 +35,45 @@ Key length alone does not change the icon: a 128-bit key and a 256-bit key both 
 
 ### Adding a Channel
 
-1. Connect to your radio. The **Channels** row stays grayed out until the app has a connection — see [Connections](connections.md).
+1. Connect to your node. The **Channels** row stays grayed out until the app has a connection — see [Connections](connections.md).
 2. Go to **Settings**, then tap **Channels** under **Configuration**.
 3. Tap the **+** button to add a channel. The editor opens on the new entry.
 4. Set the channel name and the **PSK**, and choose whether the channel uses MQTT uplink and downlink. Naming a new channel generates a fresh 256-bit key for you; the refresh icon beside **PSK** generates another one.
 5. Tap **Save** to close the editor. The change is still only on your phone.
-6. Tap **Send** at the bottom of the channel list to write the changes to the radio. **Cancel**, or leaving the screen without tapping **Send**, throws them away.
+6. Tap **Send** at the bottom of the channel list to write the changes to the node. **Cancel**, or leaving the screen without tapping **Send**, throws them away.
 7. Optional: share the channel URL or QR code with the people who need access.
 
 Tapping an existing channel opens the same editor, where you can change the name, the PSK, MQTT uplink and downlink, and position precision. Every edit on this screen — adding, editing, deleting, or dragging a channel into a new order — waits on **Send** the same way.
 
 ### Archived Channels
 
-A conversation belongs to the channel it was held on, not to the slot that channel occupied. When a channel leaves your radio — you scan a different channel QR, replace a channel's key, or switch the modem preset — its conversation is **archived** rather than deleted or merged into whatever takes the slot.
+A conversation belongs to the channel it was held on, not to the slot that channel occupied. When a channel leaves your node — you scan a different channel QR, replace a channel's key, or switch the modem preset — its conversation is **archived** rather than deleted or merged into whatever takes the slot.
 
 An archived conversation:
 
-- stays in the **Channels** list under the name the channel had, below the channels currently on your radio, marked with a history icon;
+- stays in the **Channels** list under the name the channel had, below the channels on your node, marked with a history icon;
 - keeps its full message history, searchable as usual;
-- is read-only — you cannot send, reply, or react, because the channel is no longer on the radio to send on, and it is not offered as a share target;
+- is read-only — you cannot send, reply, or react, because the channel is no longer on the node to send on, and it is not offered as a share target;
 - comes back automatically if you re-add that exact channel, taking its messages back to the live slot.
 
 Changing the modem preset archives the channel too: the preset is part of a default channel's identity, so **LongFast** and **MediumFast** are different channels even though neither the name nor the key changed. Changing only the region does not archive anything.
 
-To remove an archived conversation for good, long-press it in the conversation list and delete it.
+To remove an archived conversation for good, swipe it left in the conversation list, or touch & hold it and delete it from the action bar.
 
 ## Direct Messages
 
-Direct messages (DMs) go to one specific node. When both radios hold each other's public keys, your radio encrypts the message to that node's public key, so no one else on the mesh can read it — not even nodes that share your channel.
+Direct messages (DMs) go to one specific node. When both nodes hold each other's public keys, your node encrypts the message to the other node's public key, so no one else on the mesh can read it — not even nodes that share your channel.
 
-Your radio must already hold the other node's public key before it can send a DM. Keys travel inside node info, which nodes broadcast periodically, so the key usually arrives on its own once you have heard from that node. Until it does, a radio that has its own key pair — the default — refuses the send rather than falling back to channel encryption, and the message shows **Recipient key unavailable**.
+Your node must already hold the other node's public key before it can send a DM. Keys travel inside node info, which nodes broadcast periodically, so the key usually arrives on its own once you have heard from that node. Until it does, a node that has its own key pair — the default — refuses the send rather than falling back to channel encryption, and the message shows **Recipient key unavailable**.
 
-A public-key conversation carries a key icon in its top bar. A green closed lock means the direct message is protected by public-key encryption; a red key-off icon means the node's public key changed and no longer matches the one your radio stored. Tap the icon for the details.
+A public-key conversation carries an encryption icon in its top bar. A green closed lock means the direct message is protected by public-key encryption; a red crossed-out key means the node's public key changed and no longer matches the one your node stored. Tap the icon for the details. This icon describes the conversation's encryption, so it keeps the locks at every firmware version rather than showing the signed or verified badges from the node list.
 
 ### Sending a Direct Message
 
-1. Open the **Messages** tab.
-2. Select a conversation, or tap a node in the node list.
-3. Type your message and tap **Send**.
+1. Open the **Messages** tab and select a conversation, or touch & hold a node in the node list and choose **Message**.
+2. Type your message and tap **Send**.
+
+On a hardware keyboard, Enter sends the message and Shift+Enter starts a new line. The on-screen keyboard's Enter key always starts a new line.
 
 ### Managing the Conversation List
 
@@ -86,8 +87,9 @@ can act on it directly:
 - **Swipe right to mute** (swipe again to unmute) and **swipe left to delete**. Deleting asks
   first; muting shows a snackbar with **Undo**.
 - **Touch & hold to select** one or more conversations, then use the action bar to **Pin**,
-  **Mark unread**, mute or delete them together. Pinned conversations carry a pin marker and rise
-  to the top of **their own section**.
+  **Mark unread**, mute or delete them together. When every selected conversation is already
+  pinned, **Pin** becomes **Unpin**. Pinned conversations carry a pin marker and rise to the top
+  of **their own section**.
 - **The list is split into Channels and Direct Messages**, each with a collapsible header and each
   sorted independently — so a pinned direct message rises within its own section, not above the
   Channels one.
@@ -105,13 +107,17 @@ A status label appears under **your own** outgoing messages only (incoming messa
 
 | State | Meaning |
 |-------|---------|
-| Sending… | Queued or already handed to the radio, not yet resolved either way. Both stages share this text, but the icon and color change as it progresses — a yellow upload cloud while queued, a blue arrow once the radio has it |
-| Delivered to recipient | The strongest confirmation for a direct message — an acknowledgment came back |
+| Sending... | Queued or already handed to your node, not yet resolved either way. Both stages share this text, but the icon and color change as it progresses — a yellow upload cloud while queued, a blue arrow once your node has it |
+| Delivered to recipient | An acknowledgment came back for a direct message |
+| Delivered to recipient · proven | The strongest confirmation. The acknowledgment carried a proof that only the recipient could have produced. Needs firmware 2.8.1 or newer |
+| Delivery proof failed | Something acknowledged the message without the key only the recipient holds, so the acknowledgment doesn't show that the recipient received it |
 | Delivered to mesh | For a channel broadcast, the message reached the mesh (broadcasts have no per-recipient ack) |
 | Relayed, not confirmed by recipient | For a direct message, shown in a warning color — the message was relayed but no acknowledgment has come back yet |
 | Routing via SF++ chain… | Being routed/buffered by the Store & Forward Plus Plus chain |
 | Confirmed on SF++ chain | Confirmed delivered via the SF++ chain |
 | Error | Delivery failed — tap the status for the specific reason (see [Delivery Errors](#delivery-errors)) |
+
+Tap the status under a failed message, or under a direct message marked **Relayed, not confirmed by recipient**, and choose **Resend** to send it again. The message keeps its place in the conversation and its status starts over. **Resend** isn't offered for **Channel/key mismatch** or **Message is too large to send**, which a second attempt can't fix, or in an archived conversation.
 
 ### Delivery Errors
 
@@ -120,7 +126,7 @@ When a message fails to deliver, the error indicator shows what went wrong:
 | Error | Meaning | What to Do |
 |-------|---------|------------|
 | No route | No path exists to the destination node | The recipient may be offline or out of mesh range. Try later or move closer. |
-| No radio interface | No radio interface available to send | Check that your radio is connected and available. |
+| No radio interface | No radio interface available to send | Check that your node is connected and available. |
 | Failed to deliver to mesh | Retries exhausted. The same label covers three underlying causes — a relay refusing (NAK), a plain timeout, and running out of retransmits | Move closer, improve signal, or wait for conditions to improve. Tap the error for the specific cause. |
 | Rate limited | The mesh is throttling you for sending too fast | Wait before sending again. |
 | Not authorized | The destination refused the request | Check you have the right channel and keys for that node. |
@@ -155,7 +161,7 @@ Each quick chat entry has a **Name** — the button label, capped at five charac
 
 ### Searching Messages
 
-You can search the full history of any conversation directly from the chat screen:
+Search covers the full history of any conversation, from the chat screen:
 
 1. Open a conversation (a channel or a direct message).
 2. Tap the **search icon** in the top bar.
@@ -164,7 +170,11 @@ You can search the full history of any conversation directly from the chat scree
 
 ![Message search bar with result counter and previous/next arrows](/img/android/docs/messages_search_bar.webp)
 
-> 💡 **Tip:** Search is full-text and stays within the conversation you opened it from — it doesn't search across other channels or contacts. It matches against the messages already stored on your device, so it works fully offline.
+Search stays within the conversation you opened it from and doesn't reach other channels or contacts. It matches the messages stored on your phone, so it works offline.
+
+### Message filter
+
+The conversation's overflow menu also reaches the message filter, which hides messages containing words you list. **Message Filter** opens its settings, **Show N filtered** reveals what it hid in this conversation, and **Disable filter here** turns it off for this conversation alone. See [Settings — Modules & Admin](settings-module-admin.md) for the word list.
 
 ### Message Bubbles
 
@@ -184,7 +194,7 @@ Messages support lightweight inline **Markdown**. Received messages render the s
 
 When composing, focus the message field and type at least three characters to reveal a **formatting toolbar** below the input. Select text and tap a style to wrap it (tap again to remove it); with no selection, a style inserts an empty pair with the cursor between the markers. The link button opens a dialog to enter a URL. As you type, the field shows the styled text, but the message you send still contains the Markdown characters.
 
-> 💡 **Tip:** Formatting is carried as literal characters on the mesh — the same bytes iOS sends. Clients that don't support Markdown (older apps, plain firmware clients) will show the raw `**`/`~~` characters. URLs, email addresses, and phone numbers are still auto-linked whether or not you use Markdown.
+Formatting is carried as literal characters on the mesh, the same bytes the Apple client sends. Clients that don't support Markdown (older apps, plain firmware clients) show the raw `**`/`~~` characters. URLs, email addresses, and phone numbers are auto-linked whether or not you use Markdown.
 
 ### Mentions
 
@@ -203,7 +213,7 @@ React to messages with emoji:
 
 ![Emoji reaction badges displayed beneath a message](/img/android/docs/messages_reaction.webp)
 
-> 💡 **Tip:** Reactions are lightweight — they use minimal mesh bandwidth compared to full text messages.
+Reactions use less mesh bandwidth than full text messages.
 
 ### Replying
 
@@ -227,20 +237,22 @@ messages. That count is messages, not people — five unread from one person rea
 
 Touch & hold or double-tap a message to open the quick reaction bar, then tap **More message actions**
 (the overflow icon on that bar) to open the actions sheet. The emoji row runs across the top of the
-sheet — that is where reactions live — and beneath it, along with the message's timestamp and
-delivery status, are:
+sheet — that is where reactions live. Beneath it, **Signed · verified** appears on a message whose
+signature your node checked against the sender's key, and **Delivery proven**, **Delivery proof
+failed**, or **Delivery proof unchecked** appears when the acknowledgment for your message carried
+a delivery proof. The message's timestamp and delivery status follow, then these actions:
 
 - **Reply** — quote the message in your response
 - **Copy** — copy the message text to the clipboard
 - **Translate** — translate a received message into your device language, and toggle between the original and translated text (Google Play build only; uses on-device translation). The first translation into a language asks to download a one-time language model and tells you its size, then translates once the download finishes. If the download fails, or the message is already in your language, the app says so instead of translating
 - **Select** — start multi-select, so you can act on several messages at once
-- **Delete** — remove the message from this phone. It works on any message in the conversation, yours or not, and does not remove it from anyone else's radio or phone
+- **Delete** — remove the message from this phone. It works on any message in the conversation, yours or not, and does not remove it from anyone else's node or phone
 
 ### Message Priority
 
 The app sends every message you compose at the same, default priority — there is no
 emergency or alert tier to choose, and nothing in the app raises a direct message above a
-channel broadcast. Any prioritising between them happens in firmware, not here. (The app
+channel broadcast. Any prioritizing between them happens in firmware, not here. (The app
 does mark some of its own internal traffic, such as admin and traceroute packets, as
 reliable or background, but that is not something you control from the message composer.)
 

@@ -1,7 +1,7 @@
 ---
 title: Testing
 sidebar_position: 7
-last_updated: 2026-09-29
+last_updated: 2026-10-21
 description: Testing strategy for the Meshtastic KMP project — test categories, screenshot pipeline, baseline profiles, and CI integration.
 parent: Developer Guide
 ---
@@ -66,7 +66,7 @@ Uses Android Gradle Plugin's native (layoutlib) screenshot testing framework, sp
 ./gradlew :screenshot-tests:copyDocsScreenshots          # copy doc images from BOTH modules into docs/assets
 ```
 
-Rendering is host-deterministic here (layoutlib): a local `update` produces references byte-identical to CI, so locally-recorded goldens pass `validate`. See `docs/assets/screenshots/README.md` for which module a new screenshot belongs in.
+Rendering runs on the host through layoutlib, so goldens recorded locally are the ones CI validates against. `validate` allows an image-difference threshold of 0.0005, set in `AndroidScreenshotConventionPlugin`, because pixel-exact comparison fails some references. See `docs/assets/screenshots/README.md` for which module a new screenshot belongs in.
 
 #### Store screenshots
 
@@ -102,11 +102,11 @@ The Macrobenchmark generator (`BaselineProfileGenerator`) and the before/after b
 ./gradlew :baselineprofile:connectedGoogleBenchmarkReleaseAndroidTest  # Quantify the cold-start win
 ```
 
-The generated profile is merged into `androidApp/src/main/generated/baselineProfiles/` (`mergeIntoMain` in `androidApp/build.gradle.kts`), so the fdroid and google release builds both package it via `androidx.profileinstaller`.
+The generated profile is merged into `androidApp/src/main/generated/baselineProfiles/` (`mergeIntoMain` in `androidApp/build.gradle.kts`), so the fdroid and google release builds both package it via `androidx.profileinstaller`. `scheduled-baseline.yml` regenerates it daily on an emulator and opens a pull request when it changes.
 
-> ℹ️ **Note:** The journey covers cold start only (launch → first frame), because CI has no paired node. Post-connection screens (node list, map, message thread) aren't yet AOT-compiled.
+> ℹ️ **Note:** The journey covers cold start only (launch → first frame), because the harness connects to no node. Post-connection screens (node list, map, message thread) aren't AOT-compiled.
 
-Extending the journey past cold start needs a fake transport or a connected node wired into the harness.
+Extending the journey past cold start needs the harness to connect to a node, the way `:store-screenshots` connects to Demo Mode's showcase mesh.
 
 ## Test organization
 
@@ -150,14 +150,17 @@ feature/my-feature/src/
 ./gradlew spotlessCheck detekt detektTypeResolved
 
 # Full verification
-./gradlew spotlessCheck detekt detektTypeResolved kmpSmokeCompile test allTests
+./gradlew spotlessCheck detekt detektTypeResolved assembleDebug kmpSmokeCompile test allTests
 ```
 
 ## CI integration
 
 Tests run automatically on:
-- Pull request creation/update
-- Push to `main`
-- Pre-release validation
+- Pull requests whose changes match the `android` or `desktop` path filter (`pull-request.yml`)
+- The merge queue (`merge-queue.yml`)
+- Pushes to `main` (`main-check.yml`)
+
+Each of these calls `reusable-check.yml`. The test shards compile with `-PwarningsAsErrors=true`, so a Kotlin
+warning that passes a local build fails CI unless you pass the same flag.
 
 Single-runner jobs in `reusable-check.yml` run on the pinned Ubuntu LTS x64 label with JDK 25 and Gradle caching. Two jobs use a matrix: `test-shards` splits into `shard-core`, `shard-feature` and `shard-app`, and `build-desktop` runs across macOS, Windows and Linux x64 and arm64, on the labels its own matrix lists. Flatpak verification is its own workflow, not a job here. The pinned Ubuntu LTS arm label and the container-backed `ubuntu-slim` runners carry the lightweight jobs. `.skills/testing-ci/SKILL.md` has the four-tier rule.

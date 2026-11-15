@@ -1,7 +1,7 @@
 ---
 title: Debug Logs
 sidebar_position: 22
-last_updated: 2026-09-28
+last_updated: 2026-10-21
 description: View and export the app's own debug logs from inside the app, and attach a capture to a GitHub issue to help diagnose bugs — no adb required.
 parent: User Guide
 ---
@@ -18,10 +18,19 @@ If you're filing an issue, export your logs (see [Exporting](#exporting)) and at
 
 The Debug Panel has two tabs:
 
-- **Packets** — the decoded mesh traffic your radio has sent and received (protocol-level messages). Useful for diagnosing mesh and routing behavior.
+- **Packets** — the decoded mesh traffic your node has sent and received (protocol-level messages). Useful for diagnosing mesh and routing behavior.
 - **App logs** — the app's own diagnostic log (Android *logcat*), including warnings, errors, and stack traces from the app itself. This is usually what a bug report needs.
 
 Each tab has its own **export** button and produces its own file, so you can grab whichever is relevant — or both.
+
+## Viewing packets
+
+The **Packets** tab lists each logged packet; tap one to expand it, including its decoded payload where there is one.
+
+- **Search** — type in **Search in logs…** to highlight matches, and step between them with the arrows.
+- **Filters** — add your own text filters, or pick from **Preset Filters**: your own node ID, the broadcast address `!ffffffff`, `decoded`, today's date, and each port name. The match toggle switches between matching any filter and matching all of them.
+- **Settings** — the gear icon shows **Store mesh logs**, which turns writing packets to the log on or off, and **MeshLog retention period**, from one hour to a year, or **Never delete logs**.
+- **Clear Logs** — the delete icon removes every stored packet, after you confirm.
 
 ## Viewing app logs
 
@@ -48,4 +57,4 @@ The desktop app has no system logcat, so the **App logs** tab shows the app's ow
 ## Related Topics
 
 - [Help & In-App Docs](help-and-docs.md) — reading this documentation offline inside the app
-- [Connections](connections.md) — if the problem is getting connected to your radio in the first place
+- [Connections](connections.md) — if the problem is getting connected to your node in the first place

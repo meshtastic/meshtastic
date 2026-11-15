@@ -1,7 +1,7 @@
 ---
 title: Documentation Style
 sidebar_position: 11
-last_updated: 2026-09-14
+last_updated: 2026-10-21
 description: How this repository's docs work, and the one prose rule the Meshtastic design standards leave to us.
 parent: Developer Guide
 ---
@@ -12,7 +12,7 @@ Section 11 of the [Meshtastic Client Design Standards](https://github.com/meshta
 
 This page carries what Section 11 doesn't: how documentation works in this repository, two forms that differ here, and the one prose rule the standards leave open. Where the two ever disagree on something not listed here, Section 11 wins and this page is wrong.
 
-Pages under `docs/en/` ship to three places — the in-app docs browser, the GitHub Pages site, and meshtastic.org — so one page has to read well in all of them, and its English source is the translation base for 40+ locales on Crowdin. Section 11.1 describes the sync: user pages land in `docs/software/android/` on the documentation site weekly, taken from the latest release, and pull requests against those paths there are reverted.
+Pages under `docs/en/` ship to three places — the in-app docs browser, the GitHub Pages site, and meshtastic.org — so one page has to read well in all of them, and its English source is the translation base for 40+ locales on Crowdin. Section 11.1 describes the sync: user and developer pages land in `docs/software/android/` on the documentation site weekly, taken from the latest release. A CI guard there fails pull requests that touch those paths, and the next sync reverts any edit that gets through.
 
 Rules keep the IDs they had so review feedback and audit findings can still cite them. Rules that Section 11 now covers are retired, and their IDs aren't reused.
 
@@ -21,13 +21,13 @@ Rules keep the IDs they had so review feedback and audit findings can still cite
 Two rules changed when Section 11 landed. Neither is a sweep.
 
 - **Headings are sentence case** (11.5, and a quick check in 11.16). Existing Title Case headings stay until the page is edited for another reason. Re-casing a heading invalidates its translation memory across 40+ locales, so it happens as pages are touched and never as a pass of its own. Frontmatter `title` values are the nav labels the in-app browser and the site share, so they change with the rest of the nav rather than one page at a time.
-- **The hardware is a node** (11.4). This repo used *radio* to disambiguate the hardware from the phone, and roughly 300 uses of it remain. Prefer *node* in new writing and drop *radio* when you edit a page. *Phone* still means the Android handset the app runs on, which Section 11 has no word for.
+- **The hardware is a node** (11.4). This repo used *radio* to disambiguate the hardware from the phone, and many uses of it remain. Prefer *node* in new writing and drop *radio* when you edit a page. *Phone* still means the Android handset the app runs on, which Section 11 has no word for.
 
 ## Repository mechanics
 
-- **STRUCT-1** — Complete frontmatter on every page, user *and* developer: `title`, `parent`, `nav_order`, `last_updated` (bump it whenever content changes — CI checks freshness), `description` (one sentence, ~160 characters, used by search and link previews), and `aliases` (search terms the in-app browser resolves).
+- **STRUCT-1** — Complete frontmatter on every page, user *and* developer: `title`, `parent`, `nav_order`, `last_updated` (bump it whenever content changes; CI flags a page older than 180 days, as an advisory that never fails the build), `description` (one sentence, ~160 characters, used by search and link previews), and `aliases` (search terms the in-app browser resolves).
 - **HEAD-2** — One `#` H1 per page, and it matches the frontmatter `title` exactly. The in-app index is built from the frontmatter, so a mismatch shows the reader two different titles for one page.
-- **STRUCT-3** — User pages end with a `## Related Topics` section: bulleted links, each with an em-dash clause saying why you'd go there. The heading is a fixed section name shared by 22 pages, so like a frontmatter `title` it stays Title Case until they all change together.
+- **STRUCT-3** — User pages end with a `## Related Topics` section: bulleted links, each with an em-dash clause saying why you'd go there. The heading is a fixed section name shared by every user page, so like a frontmatter `title` it stays Title Case until they all change together.
 - **STRUCT-4** — No horizontal rules (`---`) in page bodies, and especially not at the end of the file — the site layout adds its own footer rule, so a trailing `---` renders as a doubled line.
 - **STRUCT-5** — New pages must be registered in `DocBundleLoader.kt` (the in-app index) — CI fails in both directions if the page and the index disagree.
 - **STRUCT-6** — Notable page changes get a *What's New* entry at the top of `user.md` or `developer.md`, in the format the HTML comment there specifies.
