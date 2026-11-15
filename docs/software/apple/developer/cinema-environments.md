@@ -35,6 +35,8 @@ The image is flat: one picture, with no depth of its own. That decides what look
 | Trace route | `traceRoute` | No | The latest trace route's card. The tent uses a 1.1 × 0.9 m framed print. |
 | Status | `nodeStatus` | No | The nodes' status messages, the connected radio's first. `CinemaEnvironment` titles it for the place and says whether it stands portrait (2:3) or lies landscape (3:2). The tent uses a 0.8 × 1.2 m portrait whiteboard beside the screen. |
 
+An environment can have its boards drawn as scrolls instead (`CinemaEnvironment.hasScrolls`, as the castle tower does). The app then draws each one whole, parchment and rollers, from `CinemaScroll`, and the viewer can roll it up out of the view. Paint only what it hangs from, and leave the space under it open. The anchor covers the whole scroll: the parchment's width plus 5.5% of it past each side for the rollers' ends, and its height plus 4.5% of its width above and below for the rollers. `castle_tower.py` has `scroll_size()` for this.
+
 A board is a plane passed to `anchor("<id>", plane, width, height)`. The plane's +X is the board's right and its +Z faces the viewer. Paint the board blank in the image (the app covers it), and light it about as bright as the panel will be, so the frame around it matches. The app skips any optional board an environment leaves out.
 
 ## Building a place
@@ -79,7 +81,9 @@ What's outside the room, and much of its light, comes from an HDRI: a 360° phot
 
 4K is enough when the HDRI is only seen through a door or windows, as in the tent. When it's most of the view, as on a hilltop or in a fire lookout's glass cab, use 8K or more, or it will look soft.
 
-An environment whose outside the app may replace, as it replaces the fire lookout's with real terrain, renders with `render_room(..., cutout=True)`: the HDRI still lights the room, but the image is left transparent wherever the camera saw past the room's geometry, glass included. The app then shows a sky sphere behind it, rendered from an HDRI alone by `sky.py` (a `sky <name> <hdri file> <rotation> <strength>` line in `build.sh`), and `CinemaEnvironment` says which sky images the environment has and where their sun is.
+An environment whose outside the app may replace, as it replaces the fire lookout's with real terrain, renders with `render_room(..., cutout=True)`: the HDRI still lights the room, but the image is left transparent wherever the camera saw past the room's geometry, glass included. The app then shows a sky sphere behind it, rendered from an HDRI alone by `sky.py` (a `sky <name> <hdri file> <rotation> <strength>` line in `build.sh`), and `CinemaEnvironment` says which sky images the environment has and where their sun is. The castle tower is lit by the same HDRI at the same turn as the fire lookout, so it uses the lookout's skies.
+
+An environment built in more than one stone or color renders once per variant with `stone_environment <script> <variant>` in `build.sh`, which passes `--stone <variant>` to the script, writes `<script>_<variant>.heic`, and ships one `<script>_anchors.json` for all of them. The castle tower does this for gray and pink.
 
 ## Rules for assets
 

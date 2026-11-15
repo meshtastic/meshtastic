@@ -41,7 +41,7 @@ The Configure picker lists live nodes from the current node database, with favor
 
 ### LoRa
 
-**Set Up Radio**, at the top of Radio Configuration, walks through region, preset and name for the connected radio; see [Getting Started](getting-started.md#step-3-set-up-your-radio). The LoRa screen has every setting:
+**Set Up Radio**, at the top of Radio Configuration, walks through region, preset and name for the connected radio, and on firmware 2.8 its status and nearby meshes; see [Getting Started](getting-started.md#step-3-set-up-your-radio). The LoRa screen has every setting:
 
 | Setting | Description |
 |---------|-------------|
@@ -81,6 +81,10 @@ Strict applies to every remote mesh packet, including positions, messages, telem
 The selector is disabled when the connected radio does not report XEdDSA support, or has not reported its capability yet — update that radio's firmware to configure the policy. Note that a verified signature proves which key sent a packet; it does not prove that a reported position or sensor reading is true or current.
 
 This setting matches the Meshtastic app for Android, and the policy is enforced by the radio rather than the app.
+
+#### Managed Device
+
+**Managed Device** makes the radio accept configuration only from a holder of one of its admin keys, so it can't be turned on until an admin key is set. Losing one admin key is fine while another still works. If every admin key is lost, the radio can't be configured again until it is erased and reflashed with the [Web Flasher](https://flasher.meshtastic.org). The one exception is the legacy admin channel: if it was turned on with another client, the radio still accepts settings sent over that channel. This app doesn't offer that setting.
 
 On hardened lockdown-firmware radios, this page also shows a **Lockdown** section with the session status, a **Lock Now** button, and a **Forget Stored Passphrase** button. See [Lockdown Mode](lockdown.md).
 

@@ -71,9 +71,13 @@ The first time a radio connects with no LoRa region set, the app opens a short s
 
    ![Radio setup preset page](/img/apple/radio_setup_preset.webp)
 
-3. **Name** — a **Long Name** (up to 24 bytes on firmware 2.8, 39 before) and a **Short Name** (up to 4 characters or one emoji, shown in the node circle) that other people see. This page can be skipped, and licensed operators do not see it: their name comes from the call sign in **Settings → User**.
+3. **Name** — a **Long Name** (up to 24 bytes on firmware 2.8, 39 before) and a **Short Name** (up to 4 characters or one emoji, shown in the node circle) that other people see. On firmware 2.8 the same form has an optional **Status**, a short note other people see in their node lists. This page can be skipped, and licensed operators do not see it: their name comes from the call sign in **Settings → User**.
 
    ![Radio setup name page](/img/apple/radio_setup_name.webp)
+
+4. **Nearby Meshes** (firmware 2.8) — turn on **Listen for Beacons** so the radio hears meshes nearby that advertise themselves. Beacons heard so far are listed with **Join**, or **Add** when the mesh runs on your preset and only needs its channel. **Scan for Meshes** opens [Local Mesh Discovery](discovery.md), and **Broadcast a Beacon** opens the Mesh Beacon settings to advertise your own mesh.
+
+   ![Radio setup nearby meshes page](/img/apple/radio_setup_beacons.webp)
 
 The last page reads back what the radio is set to.
 

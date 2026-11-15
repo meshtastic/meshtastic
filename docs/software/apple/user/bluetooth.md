@@ -17,7 +17,16 @@ The Meshtastic app connects to your radio over Bluetooth Low Energy (BLE). You c
 
 The app remembers your preferred device and reconnects automatically when the radio is in range.
 
-A radio that connects with no LoRa region set opens the radio setup flow (region, preset and name). **Set Up Radio** on the Connect screen opens it again any time; see [Getting Started](getting-started.md#step-3-set-up-your-radio).
+A radio that connects with no LoRa region set opens the radio setup flow (region, preset and name, and on firmware 2.8 status and nearby meshes). **Set Up Radio** on the Connect screen opens it again any time; see [Getting Started](getting-started.md#step-3-set-up-your-radio).
+
+## Connecting from a QR Code or NFC Tag
+
+Some radios show a connect code on their screen, and provisioning tools print one on a label. Scan it with the Camera app, or read an NFC tag with **Settings → Tools → Scan NFC Tag**, and the app asks **Connect to this device?** with the radio's address. Nothing happens until you tap **Connect**, and **Cancel** leaves your current connection alone.
+
+- **Bluetooth radio:** iOS doesn't let apps pick a radio by its Bluetooth address, so the Connect screen opens and you tap the radio in the list. If the code has a pairing PIN, the prompt shows it and the app copies it when you tap **Connect**; paste it when iOS asks to pair. The copied PIN stays on this device and clears after five minutes.
+- **Network radio:** the app connects to it over TCP, the same as a manual connection.
+
+A code with an address the app can't read opens the Connect screen without connecting. A code scanned before you finish first-time setup waits until setup is done.
 
 ## Disconnecting a Radio
 
