@@ -14,6 +14,30 @@ Recent user-facing changes from roughly the last 12 months. Newest at the top.
 Show roughly the last 12 months of changes; archive entries older than a year by removing them.
 -->
 
+**Nov 2026** — [Cinema](cinema.md#castle-tower) — On Apple Vision Pro, the cinema can be set on top of a medieval castle tower, in gray or pink stone, on the same summits as the fire lookout, with its boards as scrolls you can roll up to see the view behind them.
+
+**Nov 2026** — [Cinema](cinema.md#fire-lookout) — On Apple Vision Pro, the fire lookout's real terrain has conifers on its forested ground, near and far, like the painted view's forest.
+
+**Nov 2026** — [Cinema](cinema.md#boards) — On Apple Vision Pro, the Team Favorites board scrolls: pinch and drag it to see favorites past the first eight.
+
+**Nov 2026** — [Nodes](nodes.md#3d-model) — On iPhone and iPad, the AR button opens every node's model in the app's own AR view, with **Banana for Scale**, which stands a real-size banana beside it. It has **AR** and **Object** views, a record button and a share button, like the view it replaces.
+
+**Nov 2026** — [Cinema](cinema.md#radio-models) — On Apple Vision Pro, **Banana for Scale** on the card beside a radio's model in the cinema stands a real-size banana next to it.
+
+**Nov 2026** — [Map & Waypoints](map.md#map-options) — Contour lines on the Apple Vision Pro 3D map show their elevation, set in a gap along the line like a printed topographic map, and the 2D map's contour labels are spread further apart.
+
+**Nov 2026** — [Map & Waypoints](map.md#offline-maps) — The offline map names parks, schools, hospitals and other landmarks, and on Apple Vision Pro the 3D map's Offline layer prints street names along their streets.
+
+**Nov 2026** — [Getting Started](getting-started.md#step-3-set-up-your-radio) — On firmware 2.8, radio setup asks for an optional status message with the name, and ends on a Nearby Meshes page to listen for beacons, join a mesh heard so far, scan, or broadcast your own.
+
+**Nov 2026** — [Firmware Updates](firmware.md#installing-an-update) — When an nRF52 Bluetooth update loses the radio partway, the app starts it over from the beginning, up to three times, so it can finish instead of leaving the radio stuck in update mode.
+
+**Nov 2026** — [Nodes](nodes.md#device-screen) — On iPhone and iPad, the AR button on the connected radio's 3D model stands it on a table or the floor at its real size with its screen live, and the radio's buttons under the camera view.
+
+**Nov 2026** — [Firmware Updates](firmware.md#bootloader-behavior-nrf52) — New section on how the Meshtastic nRF52 Bootloader drive works, including the T1000-E and MeshTracker X1.
+
+**Nov 2026** — [Settings](settings.md#data-management) — Messages, nodes and telemetry from before 2.7.25 are recovered when the app starts, or for another radio, when you switch to it: that update moved the app's database and left the old one unused. Switching radios backs up the previous radio again, and if the backup fails the switch stops and nothing is deleted. Bringing in data from an earlier version now happens after the app opens, so a large database no longer gets the app closed at launch.
+
 **Nov 2026** — [TAK](tak.md#certificates) — The TAK server issues its own certificates for each install instead of a set shared by every copy of the app, so only the client you set up from this phone's data package can connect. Export and import the data package again; remove the old Meshtastic connection in ATAK or iTAK first.
 
 **Nov 2026** — [Bluetooth](bluetooth.md#troubleshooting) — On Apple Vision Pro, when a radio asks for a Bluetooth PIN while pairing, the Connect screen says the headset can't enter one and to set the radio's pairing mode to No PIN (Just Works) from another device.

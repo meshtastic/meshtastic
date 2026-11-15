@@ -32,7 +32,7 @@ Go to **Settings → MQTT**:
 | Port | Default is 1883 (unencrypted) or 8883 (TLS). |
 | Username | MQTT broker username (optional). |
 | Password | MQTT broker password (optional). |
-| Root Topic | The topic prefix for all published messages (default: `msh`). **Find Topics** shows the topics for your region, state and city and the topics active on your broker. |
+| Root Topic | The topic prefix for all published messages (default: `msh`). **Find Topics** listens to your broker for a minute and suggests topics for where you are: your region, your country when the broker's topics use it, your state or province and city, and community meshes that serve your area. Community meshes and neighboring states come from a directory shared with the Android app, so both suggest the same topics. Other active topics are listed under your state or city first, then under a community mesh or a neighboring state, then the rest. |
 | Enabled | Toggle MQTT bridging on/off. |
 | Encryption Enabled | Encrypt packets before publishing. Recommended — prevents the broker from reading message content. |
 | JSON Enabled | Removed. JSON packet support was deprecated and removed in firmware. |
