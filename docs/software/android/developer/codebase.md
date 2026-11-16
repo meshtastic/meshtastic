@@ -1,7 +1,7 @@
 ---
 title: Codebase
 sidebar_position: 2
-last_updated: 2026-09-28
+last_updated: 2026-10-21
 description: Repository layout, package namespacing, and the Gradle build system — convention plugins, build variants, and key tasks.
 parent: Developer Guide
 ---
@@ -14,27 +14,28 @@ Repository layout, namespacing conventions, and build system overview.
 
 ```text
 Meshtastic-Android/
-├── androidApp/                 # Android application module
+├── androidApp/             # Android application module
 │   ├── src/main/           # Shared Android code
 │   ├── src/google/         # Google Play flavor (proprietary Google integrations — Gemini, Maps, Play services)
 │   └── src/fdroid/         # F-Droid flavor (FOSS-only)
-├── desktopApp/                # Desktop JVM application
-├── feature/                # Feature modules (KMP)
+├── desktopApp/             # Desktop JVM application
+├── feature/                # Feature modules (KMP, except widget)
 │   ├── intro/
 │   ├── messaging/
 │   ├── connections/
 │   ├── map/
 │   ├── map-maplibre/
 │   ├── map-terrain/
+│   ├── coverage/
 │   ├── node/
 │   ├── settings/
 │   ├── firmware/
 │   ├── docs/
 │   ├── wifi-provision/
-│   ├── widget/
+│   ├── widget/             # Android library
 │   └── discovery/
-├── core/                   # Core infrastructure modules (KMP)
-│   ├── barcode/
+├── core/                   # Core infrastructure modules (KMP, except barcode and nfc)
+│   ├── barcode/            # Android library
 │   ├── ble/
 │   ├── common/
 │   ├── data/
@@ -46,7 +47,7 @@ Meshtastic-Android/
 │   ├── model/
 │   ├── navigation/
 │   ├── network/
-│   ├── nfc/
+│   ├── nfc/                # Android library
 │   ├── prefs/
 │   ├── repository/
 │   ├── resources/
@@ -57,8 +58,11 @@ Meshtastic-Android/
 ├── baselineprofile/        # Baseline Profile generation for :androidApp
 ├── screenshot-tests/       # Compose Preview screenshot tests (visual-regression gate)
 ├── docs-screenshots/       # Doc-framed composition screenshots (generate-only, not CI-gated)
+├── store-screenshots/      # Store-listing screenshots captured from the real apps (instrumented)
+├── schema-strings/         # JVM generator for schema_strings.xml from the protobufs field metadata
 ├── build-logic/            # Convention plugins and build helpers
-│   └── convention/
+│   ├── convention/
+│   └── settings-plugin/    # meshtastic.develocity settings plugin
 ├── docs/                   # Documentation source (markdown)
 │   └── en/                 # English source; other locales live under docs/<locale>/user/
 │       ├── user/
@@ -98,7 +102,7 @@ Located in `build-logic/convention/src/main/kotlin/`. The full set is registered
 
 | Plugin | Purpose |
 |--------|---------|
-| `meshtastic.kmp.feature` | Standard feature module setup |
+| `meshtastic.kmp.feature` | Feature module setup: applies `meshtastic.kmp.library`, `meshtastic.kmp.library.compose` and `meshtastic.koin`, and adds the Compose, Navigation 3, Lifecycle and Koin dependencies every feature needs |
 | `meshtastic.kmp.library` | Shared KMP library module |
 | `meshtastic.kmp.library.compose` | KMP library that also ships Compose UI |
 | `meshtastic.kmp.jvm.android` | Adds the `jvmAndroidMain` source set shared by the Android and desktop JVM targets |
@@ -121,7 +125,7 @@ block rather than assuming a plugin does or does not exist.
 ### Key Gradle Tasks
 
 ```shell
-# Compile check of every KMP module for JVM and iosSimulatorArm64 (excludes :desktopApp), plus the device-test APKs
+# Compile every KMP module's commonMain metadata, JVM main, and iosSimulatorArm64 main and test sources (excludes :desktopApp), and assemble the device-test APKs
 ./gradlew kmpSmokeCompile
 
 # Run all tests: allTests covers KMP modules, test covers Android/JVM-only modules; run both
@@ -156,4 +160,6 @@ Key dependencies in `gradle/libs.versions.toml`:
 | Database | Room KMP |
 | Networking | Ktor |
 | Markdown | multiplatform-markdown-renderer |
-| Testing | kotlin-test, compose-ui-test |
+| BLE | Kable |
+| Serial | usb-serial-for-android (Android), jSerialComm (Desktop) |
+| Testing | kotlin-test, Kotest, Mokkery, Turbine, Compose Multiplatform UI test |

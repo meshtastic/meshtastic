@@ -1,7 +1,7 @@
 ---
 title: How the Meshtastic Signal Meter Works
 sidebar_position: 15
-last_updated: 2026-09-09
+last_updated: 2026-10-21
 description: How the signal meter rates quality from SNR relative to the LoRa modem preset — spread spectrum, presets, and what the bars really mean.
 parent: User Guide
 ---
@@ -50,7 +50,7 @@ A great RSSI paired with a one- or two-bar rating (None or Bad) points to local 
 
 In the app, signal data appears in several places:
 
-- **Node list** — a signal-bars icon, shown only for nodes your radio heard directly. A node reached through a relay shows its hop count instead, because the SNR your radio measured describes the last hop, not the whole path
+- **Node list** — a signal-bars icon, shown only for nodes your node heard directly over LoRa. A node reached through a relay shows its hop count instead, because the SNR your node measured describes the last hop, not the whole path
 - **Node detail** — SNR, RSSI, and the quality word in the **Details** card at the top of the screen
 - **Traceroute** — per-hop signal quality for each relay node
 - **Signal Quality** — historical SNR and RSSI data in the metrics charts

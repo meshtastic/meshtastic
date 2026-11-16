@@ -17,8 +17,8 @@ Meshtastic nodes can report sensor data across the mesh, giving you visibility i
 | Device Metrics | Battery level, battery voltage, channel utilisation, airtime fraction |
 | Local Stats | Packets received/transmitted, relayed packets, duplicate packets, bad receives, node counts, noise floor |
 | Environment | Temperature (°C/°F), relative humidity (%), barometric pressure (hPa) |
-| Air Quality | PM1.0, PM2.5, PM10 particulate counts (µg/m³) |
-| Power | Voltage and current readings from power monitoring sensors |
+| Air Quality | PM1.0, PM2.5, PM10 particulate counts (µg/m³), CO2 (ppm) |
+| Power | Voltage and current readings from power monitoring sensors, up to eight channels |
 
 ### Device Metrics
 

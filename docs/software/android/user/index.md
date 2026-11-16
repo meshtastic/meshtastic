@@ -18,23 +18,21 @@ Documentation for using the Meshtastic Android and Desktop app.
 Keep the last 5–8 entries and archive older ones by removing them.
 -->
 
-**September 2026** — [Notifications](notifications.md) — A new page lists every notification category, what each opens when tapped, when a message stays quiet, and what a message notification lets you do from the shade or a watch.
+**October 2026** — [Firmware Updates](firmware.md) — What the Meshtastic nRF52 Bootloader does while the update drive is up, and where a node waits after a dropped Bluetooth update.
 
-**September 2026** — [Nodes](nodes.md) — Nodes your node has not heard since its LoRa settings changed now carry an orange marker, a **Hide unheard nodes** filter, and a banner whose **Remove** action deletes them in bulk.
+**October 2026** — [Settings — Radio & User](settings-radio-user.md) — Each configuration screen has its own section, settings use the app's exact labels, and every table lists the default value.
 
-**September 2026** — [Settings — Radio & User](settings-radio-user.md) — Lockdown's debug-port lock is not reversible from the app, Managed Mode locks the whole configuration list, and the preset list is filtered to what your region permits.
+**October 2026** — [Firmware Updates](firmware.md) — A node on firmware from 2.3.15 up to 2.5.14 stays connected behind a required-update screen, and the Connect tab flags a newer stable release.
 
-**September 2026** — [Local Mesh Discovery](discovery.md) — Signal colours are relative to the preset's demodulation floor rather than fixed thresholds, and a beacon's broadcast targets always hold at least one row.
+**October 2026** — [Messages & Channels](messages-and-channels.md) — A failed message can be resent in place, and on firmware 2.8.1 or newer a direct message can show **Delivered to recipient · proven**.
 
-**September 2026** — [Nodes](nodes.md) — Nodes on firmware 2.8 show signed and verified identity icons in place of the PKI lock, and **Signed only** and **Encrypted only** filters join the node list and the map.
+**October 2026** — [Desktop App](desktop.md) — Site Planner computes coverage inside the app and adds it to the map as a layer.
 
-**September 2026** — [Map & Waypoints](map-and-waypoints.md) — Offline terrain (hillshade and contours) can be downloaded on Google Play, F-Droid, and Desktop.
+**October 2026** — [Map & Waypoints](map-and-waypoints.md) — The AR mesh view draws nodes and waypoints over the phone's camera and turns you toward the one you are finding.
 
-**August 2026** — [Local Mesh Discovery](discovery.md) — Mesh Beacon advertises the region and preset your radio actually uses, requires a region and a standard modem preset before it will broadcast, and hides invitations to channels your radio already has.
+**September 2026** — [Notifications](notifications.md) — A page that lists every notification category, what each opens when tapped, when a message stays quiet, and what a message notification lets you do from the shade or a watch.
 
-**August 2026** — [Map & Waypoints](map-and-waypoints.md) — Filter the map by node role and by how a node was heard, from a new filter sheet.
-
-**August 2026** — [Map & Waypoints](map-and-waypoints.md) — Every map layer and overlay now has its own opacity slider.
+**September 2026** — [Nodes](nodes.md) — On firmware 2.8.1 or newer, nodes your node has not heard since its LoRa settings changed carry an orange marker, a **Hide unheard nodes** filter, and a banner whose **Remove** action deletes them after you confirm.
 
 <!-- WHATS_NEW_END -->
 
