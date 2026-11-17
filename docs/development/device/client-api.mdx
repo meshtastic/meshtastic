@@ -106,7 +106,30 @@ This device will work with any MTU size, but it is highly recommended that you c
 
 ### Protobuf API
 
-On connect, you should send a want_config_id protobuf to the device. This will cause the device to send its node DB and radio config via the fromradio endpoint. After sending the full DB, the radio will send a want_config_id to indicate it is done sending the configuration.
+On connect, you should send a want_config_id protobuf to the device. This will cause the device to send its node DB and radio config via the fromradio endpoint. After sending the full DB, the radio will send a config_complete_id to indicate it is done sending the configuration.
+
+### BLE Handshake Details for Third-Party Implementations
+
+The official phone apps (iOS and Android) expect a specific sequence of responses from the device during the initial BLE connection. If you are implementing a BLE server that speaks the Meshtastic client API (e.g. a custom node or bridge), these details are required for the apps to accept the connection.
+
+**Config phase nonces.** The iOS app uses two sequential `want_config_id` values: `69420` for the radio config phase and `69421` for the NodeDB phase. Each phase must be completed by sending a `FromRadio` with a matching `config_complete_id`. The Android app uses a single random nonce. Your implementation must echo back the exact `want_config_id` it received.
+
+**Required config sequence.** When the app sends `want_config_id`, the device must respond with all of the following (in any order, before `config_complete_id`):
+- `MyNodeInfo` — the device's own node number
+- `DeviceMetadata` — **must** include a `firmware_version` string that contains a dot (e.g. `"2.5.14"`, not `"2514"`); versions below `2.5.14` may be rejected
+- `Config` packets for: `lora`, `device`, and `bluetooth` sections
+- At least one `Channel` (index 0)
+- `NodeInfo` entries for all known nodes
+
+**Heartbeat writes.** The iOS app writes a zero-length (or minimal) `ToRadio` as a heartbeat before and between config requests. The device must accept these without error.
+
+**Empty-read drain.** After each `config_complete_id`, the app reads `FromRadio` until it gets an empty response. This signals the end of a phase. If the device never returns empty, the app hangs.
+
+**Admin packets addressed to the device itself.** The app may send admin commands (e.g. `set_time`) addressed to the device's own node number via `ToRadio`. These must be handled locally and **not** rebroadcast over the mesh.
+
+**Acknowledgments.** When a text message is sent with `want_ack = true`, the device must respond with a `FromRadio` containing a `Routing` packet whose `request_id` matches the original `MeshPacket.id`. Without this, the app shows the message as failed.
+
+**Pairing.** The iOS app triggers BLE pairing by subscribing to the encrypted `FromNum` characteristic. If the device requires pairing, it should be initiated at this point (not on initial connection).
 
 ### Other Bluetooth Services
 
