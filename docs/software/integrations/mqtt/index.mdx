@@ -162,6 +162,19 @@ Check out [MQTT Settings](/docs/configuration/module/mqtt) for full information.
 `uplink_enabled` will tell the device to publish mesh packets to MQTT.
 `downlink_enabled` will tell the device to subscribe to MQTT, and forward any packets from there onto the mesh.
 
+### Targeted downlink
+
+Available from firmware version 2.8.3 on.
+By default every gateway with downlink enabled on a channel transmits each packet it receives from the broker. A service that answers a node can limit this to the gateways that heard the node: it lists their node numbers in `target_gateways` of the ServiceEnvelope it publishes, at most eight. The node number of a gateway is in the `gateway_id` of the envelopes it uploads (`!abcd1234` is node number `0xabcd1234`).
+
+- A gateway that is listed transmits the packet; a gateway that is not listed ignores it.
+- An empty list keeps the default: every gateway with downlink enabled transmits the packet.
+- Firmware older than 2.8.3 ignores the list and transmits the packet as before.
+- An envelope with more than eight targets is rejected as invalid.
+- With [Targeted Downlink Only](/docs/configuration/module/mqtt#targeted-downlink-only) set, a gateway transmits only downlink that lists it.
+
+`lora.ignore_mqtt` still applies on both ends: a gateway with it enabled drops all downlink, and any node with it enabled drops packets that travelled via MQTT, so a reply only reaches nodes that have it turned off. Setting a region with a duty cycle limit, such as `EU_868`, turns it on, because traffic from the broker costs scarce airtime there.
+
 ### Gateway nodes
 
 Any meshtastic node that has a direct connection to the internet (either via a helper app or installed Wi-Fi/4G/satellite hardware) can function as a "Gateway node".

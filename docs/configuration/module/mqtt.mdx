@@ -11,7 +11,7 @@ import { Icon } from "@iconify/react";
 
 If your device is connected to Internet via Wi-Fi or ethernet, you can enable it to forward packets along to an MQTT server. This allows users on the local mesh to communicate with users on the internet. One or more channels must also be enabled as uplink and/or downlink for packets to be transmitted from and/or to your mesh (See [channels](/docs/configuration/radio/channels#downlink-enabled)).
 
-The MQTT module config options are: Enabled, Server Address, Username, Password, Encryption Enabled, JSON Enabled, TLS Enabled, Root Topic, Client Proxy Enabled, Map Reporting Enabled (with Position Precision and Publish Interval), and Okay to MQTT. MQTT Module config uses an admin message sending a `ConfigModule.MQTT` protobuf.
+The MQTT module config options are: Enabled, Server Address, Username, Password, Encryption Enabled, JSON Enabled, TLS Enabled, Root Topic, Client Proxy Enabled, Map Reporting Enabled (with Position Precision and Publish Interval), Targeted Downlink Only, and Okay to MQTT. MQTT Module config uses an admin message sending a `ConfigModule.MQTT` protobuf.
 
 ## Settings
 
@@ -79,6 +79,11 @@ The precision to use for the position in the map report. Defaults to a maximum d
 #### Map Report Publish Interval
 
 How often we should publish the map report to the MQTT server in seconds. Defaults to 3600 seconds (1 hour), which is also the minimum value.
+
+### Targeted Downlink Only
+
+Available from firmware version 2.8.3 on.
+If true, the node only transmits a downlinked packet when the packet names this node as a target gateway (`target_gateways` in the [ServiceEnvelope](/docs/software/integrations/mqtt/#targeted-downlink)) and ignores all other downlink. Channels still need downlink enabled. Use this to carry replies that a service addresses to your gateway without airing everything that reaches the broker. Defaults to false.
 
 ## MQTT Module Config Client Availability
 
@@ -166,6 +171,7 @@ The following configuration options are available in the Python CLI:
 |          mqtt.root           |     `string`      |                       |
 | mqtt.proxy_to_client_enabled |  `true`, `false`  |        `false`        |
 |  mqtt.map_reporting_enabled  |  `true`, `false`  |        `false`        |
+| mqtt.downlink_targeted_only  |  `true`, `false`  |        `false`        |
 
 :::tip
 
