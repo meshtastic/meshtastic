@@ -111,7 +111,7 @@ The `decoded` block is the `Data` message, the part of the packet that was encry
 - `want_response` — set when the sender asks the recipient to respond in kind.
 - `reply_id` — the ID of the message this one replies to.
 - `emoji` — when set, the payload is an emoji reaction, such as a heart.
-- `bitfield` — flags. Bit 0, `OK_TO_MQTT`, allows the packet to be uploaded to MQTT, and bit 1 mirrors `want_response`. The example's `bitfield: 1` means MQTT upload is allowed.
+- `bitfield` — flags. Bit 0, `OK_TO_MQTT`, allows the packet to be uploaded to MQTT; bit 1 mirrors `want_response`; and bit 2, `IS_AUTOMATION`, marks a packet sent by automation, such as a bot, rather than typed by a person. The example's `bitfield: 1` means MQTT upload is allowed.
 
 Alongside the routing fields described earlier, this example carries metadata that the receiving node adds:
 
