@@ -85,7 +85,7 @@ On the 3D spatial map, the **link** button in the toolbar draws the same direct 
 
 ### Weather radar on the spatial map (Apple Vision Pro)
 
-**Weather Radar** in the 3D spatial map's map menu, next to Contour Lines, drapes NOAA precipitation radar over the terrain, following the hills, at the same strength as on the 2D map. It is the 2D map's setting and is offered the same way: in the lower 48 United States, with a network connection. The radar is fetched when the map opens, when the area on the table changes, and every five minutes while it is shown. It is hidden while the device is offline, and when the table shows an area outside the radar's coverage. Radar data from NOAA/NCEP.
+**Weather Radar** in the 3D spatial map's map menu, next to Contour Lines, shows NOAA precipitation radar as cloud floating over the terrain: a few soft sheets just above the ground, following the hills, in the radar's colors so heavy rain still reads as heavy, drifting slowly up and down, with a faint shadow of the rain on the ground under them. With Reduce Motion on they hold still. Pins can be looked at and tapped through the clouds. It is the 2D map's setting and is offered the same way: in the lower 48 United States, with a network connection. The radar is fetched when the map opens, when the area on the table changes, and every five minutes while it is shown. It is hidden while the device is offline, and when the table shows an area outside the radar's coverage. Radar data from NOAA/NCEP.
 
 ### Buildings on the spatial map (Apple Vision Pro)
 
