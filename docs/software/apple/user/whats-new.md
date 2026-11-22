@@ -13,6 +13,20 @@ Recent user-facing changes from roughly the last 12 months. Newest at the top.
 **Month YYYY** — [Page title](../relative/path.md) — One sentence describing what changed or why it matters.
 Show roughly the last 12 months of changes; archive entries older than a year by removing them.
 -->
+**Nov 2026** — [Map](map.md#weather-radar-on-the-spatial-map-apple-vision-pro) — On Apple Vision Pro the weather radar floats over the 3D map's terrain as soft cloud with a shadow on the ground, and shows over the real terrain out the windows of the Cinema's fire lookout, castle, lighthouse, rooftop and sky deck.
+
+
+**Nov 2026** — [Bluetooth](bluetooth.md#widgets-and-controls) — A new Telemetry widget shows a node's environment, air quality and power readings on the Home Screen, in the same tiles as the node's details. It shows every reading the node reports, less any you hide; the large size shows four at a time with a button to see the rest.
+
+**Nov 2026** — [Bluetooth](bluetooth.md#widgets-and-controls) — The Node Map and Trace Route widgets come in the extra large portrait size on iPhone with iOS 27 and on Apple Vision Pro, with a tall map; the trace route one also shows both hop chains.
+
+**Nov 2026** — [Cinema](cinema.md#lighthouse) — On Apple Vision Pro, the cinema can be set in a lighthouse's lantern room over the sea, standing on a real headland from the downloaded terrain, turned to face the open water.
+
+**Nov 2026** — [Cinema](cinema.md#sky-deck) — On Apple Vision Pro, the cinema can be set in a glass-floored sky deck hung off one of the tallest real towers in your downloaded map, looking straight down at the city.
+
+**Nov 2026** — [Cinema](cinema.md#city-rooftop) — On Apple Vision Pro, the cinema can be set on the roof deck of a tall downtown building at sunset, standing on one of the tallest real buildings in your downloaded map, with the city round it.
+
+**Nov 2026** — [Cinema](cinema.md#space-station) — On Apple Vision Pro, the cinema can be set in a space station module, with Earth through the cupola's windows overhead, drifting by as the station flies, by day or by night with its city lights, at up to ten times real speed.
 
 **Nov 2026** — [Cinema](cinema.md#castle-tower) — On Apple Vision Pro, the cinema can be set on top of a medieval castle tower, in gray or pink stone, on the same summits as the fire lookout, with its boards as scrolls you can roll up to see the view behind them.
 
