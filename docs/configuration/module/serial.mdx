@@ -109,7 +109,7 @@ Starting with firmware 2.8.3, the serial module runs on [meshtasticd](/docs/mesh
    sudo systemctl restart meshtasticd
    ```
 
-5. Confirm the module started. The log shows `Init serial peripheral interface`, and for a PTY, `Serial: pty /dev/pts/3 linked at /tmp/meshserial`.
+5. Confirm the module opened the port. The log shows `Init serial peripheral interface` with no `Serial: cannot open` line after it, and for a PTY, `Serial: pty /dev/pts/3 linked at /tmp/meshserial`.
 
    ```shell
    journalctl -u meshtasticd -b | grep -i serial
@@ -137,7 +137,7 @@ What the log says at startup:
 
 | Log line | Meaning |
 | :------- | :------ |
-| `Init serial peripheral interface` | The module started. Missing means `serial.enabled` wasn't set when meshtasticd started. |
+| `Init serial peripheral interface` | The module is about to open the port. A `Serial: cannot open` line after it means the open failed and the module stopped. Missing means `serial.enabled` wasn't set when meshtasticd started, `SerialModule.Path` is empty, or the display runs in `COLOR` mode. |
 | `Serial: pty /dev/pts/3 linked at /tmp/meshserial` | The virtual port is ready. |
 | `Serial: cannot open /dev/ttyUSB0: Permission denied` | The `meshtasticd` user can't open the device. |
 | `Serial: cannot open /dev/ttyUSB0: No such file or directory` | No device at that path. |
