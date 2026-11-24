@@ -75,6 +75,47 @@ How long the module waits after the last received byte before treating the accum
 
 When enabled, redirects the primary USB serial port to serial module output instead of the debug console. **Only valid with `NMEA` and `CALTOPO` modes** — using it with any other mode will produce a configuration error and the module will not start. Has no effect if TX/RX GPIO pins are also configured (pogo-pin output takes precedence).
 
+## meshtasticd (Linux)
+
+Starting with firmware 2.8.3, the serial module runs on [meshtasticd](/docs/meshtasticd/). It uses a port on the host, named by `SerialModule.Path` in `/etc/meshtasticd/config.yaml` or a file in `config.d`, in place of the RX and TX GPIO pins.
+
+```yaml title="config.yaml"
+SerialModule:
+  Path: /dev/ttyUSB0 # a serial device; serial.baud sets its speed
+# Path: pty:/tmp/meshserial # or a virtual port meshtasticd creates and links here
+```
+
+Enable the module, then restart meshtasticd. The module is only created at startup, so enabling it over the API does nothing until a restart. `SIMPLE` needs a channel named `serial`:
+
+```shell
+meshtastic --host localhost --ch-add serial
+meshtastic --host localhost --set serial.enabled true --set serial.mode SIMPLE
+sudo systemctl restart meshtasticd
+```
+
+Bytes written to the port go out over the mesh, framed into a packet once the line is idle for `serial.timeout` ms (default 250) or 233 bytes arrive. This applies in `SIMPLE` and `TEXTMSG` mode. What the module receives is written back to the port. With the `pty:` path:
+
+```shell
+sudo -u meshtasticd cat /tmp/meshserial                     # what arrives from the mesh
+printf 'hello' | sudo -u meshtasticd tee /tmp/meshserial    # send to the mesh
+```
+
+- `SIMPLE`, `TEXTMSG`, `PROTO`, `NMEA` and `CALTOPO` work. `WS85`, `VE_DIRECT`, `MS_CONFIG` and Override Console Serial Port don't apply.
+- The module doesn't start when the display runs in `COLOR` mode (`DisplayMode: COLOR`).
+- The service runs as the `meshtasticd` user. The Debian and RPM packages add it to `dialout`, which covers `/dev/ttyUSB*` and `/dev/ttyACM*`.
+- A `pty:` port belongs to `meshtasticd`, so run the program on the other end as `meshtasticd` or root. Bytes one program writes go to meshtasticd, not to other programs that have the port open.
+- A serial device is opened once at startup. If it is unplugged, restart meshtasticd after reconnecting it.
+
+What the log says at startup:
+
+| Log line | Meaning |
+| :------- | :------ |
+| `Init serial peripheral interface` | The module started. Missing means `serial.enabled` wasn't set when meshtasticd started. |
+| `Serial: pty /dev/pts/3 linked at /tmp/meshserial` | The virtual port is ready. |
+| `Serial: cannot open /dev/ttyUSB0: Permission denied` | The `meshtasticd` user can't open the device. |
+| `Serial: cannot open /dev/ttyUSB0: No such file or directory` | No device at that path. |
+| `Serial: /tmp/meshserial exists and is not a symlink; not replacing it` | A file is in the way of the link. |
+
 ## Serial Module Config Client Availability
 
 <Tabs
@@ -418,7 +459,7 @@ meshtastic --port <USB_PORT> \
   --set serial.timeout 250
 ```
 
-Connect at `38400 8N1` and send up to **237 bytes** per packet. The module frames a packet by detecting a gap of `serial.timeout` milliseconds in the byte stream (default 250 ms).
+Connect at `38400 8N1` and send up to **233 bytes** per packet. The module frames a packet by detecting a gap of `serial.timeout` milliseconds in the byte stream (default 250 ms).
 
 ---
 

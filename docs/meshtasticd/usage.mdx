@@ -78,6 +78,15 @@ Webserver:
   RootPath: /usr/share/meshtasticd/web # Root Dir of WebServer
 ```
 
+### Serial Module
+
+Starting with firmware 2.8.3, the [serial module](/docs/configuration/module/serial/#meshtasticd-linux) can bridge a host serial port over the mesh. Name the port in `config.yaml`:
+
+```yaml
+SerialModule:
+  Path: /dev/ttyUSB0 # or pty:/tmp/meshserial for a virtual port
+```
+
 ### Bluetooth Support
 
 Bluetooth is currently unsupported and not functional on MeshtasticD devices.
