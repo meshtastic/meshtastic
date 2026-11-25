@@ -58,6 +58,22 @@ The band range is from 902 to 928 MHz.
 
 In North America, the available Frequency Slots depend on the bandwidth setting, which is included in the selected Radio Preset. The standard Preset, LongFast, provides 104 Frequency Slots. After a factory reset, the radio defaults to LongFast with a Frequency Slot of 0, which translates to Slot 20 (centered at 906.875 MHz) based on the channel hashing algorithm.
 
+## Japan Frequency Bands
+
+:::warning Breaking change for Japan (JP)
+Starting with firmware [VERSION], the JP region uses the frequency slot plan defined by ARIB STD-T108.
+
+Slot numbers map to different frequencies after updating, so nodes on [VERSION] or later will not hear nodes on earlier firmware.
+
+**Update all nodes in your mesh together, and re-check any manually set Frequency Slot.**
+:::
+
+The maximum power allowed for Japan is 20 mW (+13 dBm) antenna power, as defined by [ARIB STD-T108](https://arib.or.jp/english/std_tr/telecommunications/desc/std-t108.html).
+
+The band range is from 920.5 to 923.5 MHz.
+
+In Japan, the available Frequency Slots depend on the bandwidth setting, which is included in the selected Radio Preset in accordance with the regulatory requirements. The standard Preset, LongFast, provides 7 Frequency Slots.
+
 ## Data Rates
 
 ### Considerations
