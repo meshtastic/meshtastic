@@ -12,6 +12,7 @@ interface RegionProfile {
   presets: ModemPreset[];
   spacing: number; // gap between slots (MHz), also applied at the start of the band
   padding: number; // gap at each side of a slot (MHz)
+  unitChannelMHz?: number; // unit-channel raster (MHz); when > 0, overrides padding
   licensedOnly: boolean;
 }
 
@@ -25,6 +26,7 @@ interface RegionInfo {
   defaultPreset: ModemPreset;
   // 0 = hash the channel name, -1 = hash the preset name, > 0 = explicit 1-based slot
   overrideSlot: number;
+  bandSplitMHz?: number; // optional sub-band boundary (MHz) that slots never straddle
 }
 
 interface Modem {
@@ -49,6 +51,26 @@ const PROFILE_STD: RegionProfile = {
   ],
   spacing: 0,
   padding: 0,
+  licensedOnly: false,
+};
+
+const PROFILE_JP: RegionProfile = {
+  presets: [
+    Preset.LONG_FAST,
+    Preset.MEDIUM_SLOW,
+    Preset.MEDIUM_FAST,
+    Preset.SHORT_SLOW,
+    Preset.SHORT_FAST,
+    Preset.LITE_SLOW,
+    Preset.NARROW_FAST,
+    Preset.NARROW_SLOW,
+    Preset.SHORT_TURBO,
+    Preset.LONG_TURBO,
+    Preset.MEDIUM_TURBO,
+  ],
+  spacing: 0,
+  padding: 0,
+  unitChannelMHz: 0.2,
   licensedOnly: false,
 };
 
@@ -216,9 +238,10 @@ const RegionData = new Map<RegionCode, RegionInfo>([
       dutyCycle: 100,
       powerLimit: 13,
       wideLora: false,
-      profile: PROFILE_STD,
+      profile: PROFILE_JP,
       defaultPreset: Preset.LONG_FAST,
       overrideSlot: 0,
+      bandSplitMHz: 922.3,
     },
   ],
   [
@@ -699,29 +722,100 @@ const getBandwidth = (preset: ModemPreset, wideLora: boolean): number => {
   return wideLora ? modem.wideBw : modem.bw;
 };
 
-// Width of a slot in MHz: the bandwidth plus any spacing or padding the region requires.
-// spacing = gap between slots (0 for continuous spectrum) and at the beginning of the band
-// padding = gap at the beginning and end of the slot (0 for no padding)
-const getSlotWidth = (region: RegionInfo, bandwidth: number): number =>
-  region.profile.spacing + region.profile.padding * 2 + bandwidth / 1000;
+interface SlotPlan {
+  width: number;
+  count: number;
+  firstCenter: number;
+  lowerCount: number;
+  upperFirstCenter: number;
+}
 
-const getNumFreqSlots = (region: RegionInfo, bandwidth: number): number =>
-  Math.round(
-    (region.freqEnd - region.freqStart + region.profile.spacing) /
-      getSlotWidth(region, bandwidth),
+const getSlotPlan = (region: RegionInfo, bandwidth: number): SlotPlan => {
+  const bwMHz = bandwidth / 1000;
+  const spacing = region.profile.spacing;
+  const unitChannelMHz = region.profile.unitChannelMHz ?? 0;
+  const bandSplitMHz = region.bandSplitMHz ?? 0;
+
+  let padding = region.profile.padding;
+  if (unitChannelMHz > 0 && bwMHz > 0) {
+    const numUnits = Math.floor((bwMHz / unitChannelMHz) * (1 - 1e-6)) + 1;
+    const slotSpan = numUnits * unitChannelMHz;
+    padding = slotSpan > bwMHz ? (slotSpan - bwMHz) * 0.5 : 0;
+  }
+
+  const width = spacing + padding * 2 + bwMHz;
+  const centerOffset = bwMHz * 0.5 + padding;
+  const lowerFirst = region.freqStart + centerOffset;
+  const hasBandSplit =
+    bandSplitMHz > region.freqStart && bandSplitMHz < region.freqEnd;
+
+  if (bandwidth <= 0 || width <= 0 || region.freqEnd <= region.freqStart) {
+    return {
+      width,
+      count: 0,
+      firstCenter: lowerFirst,
+      lowerCount: 0,
+      upperFirstCenter: lowerFirst,
+    };
+  }
+
+  if (unitChannelMHz > 0 || hasBandSplit) {
+    const countSubBand = (subStart: number, subEnd: number): number => {
+      const span = subEnd - subStart;
+      if (span + spacing <= 0) {
+        return 0;
+      }
+      const tol = Math.min(subEnd * 1.5e-7, width * 0.25);
+      return Math.floor(((span + spacing + tol) / width) * (1 + 1e-6));
+    };
+
+    if (hasBandSplit) {
+      const lowerCount = countSubBand(region.freqStart, bandSplitMHz);
+      const upperCount = countSubBand(bandSplitMHz, region.freqEnd);
+      const upperFirst = bandSplitMHz + centerOffset;
+      const firstCenter =
+        lowerCount > 0 || upperCount === 0 ? lowerFirst : upperFirst;
+      return {
+        width,
+        count: lowerCount + upperCount,
+        firstCenter,
+        lowerCount,
+        upperFirstCenter: upperFirst,
+      };
+    }
+
+    const count = countSubBand(region.freqStart, region.freqEnd);
+    return {
+      width,
+      count,
+      firstCenter: lowerFirst,
+      lowerCount: count,
+      upperFirstCenter: lowerFirst,
+    };
+  }
+
+  const count = Math.max(
+    Math.round((region.freqEnd - region.freqStart + spacing) / width),
+    0,
   );
+  return {
+    width,
+    count,
+    firstCenter: lowerFirst,
+    lowerCount: count,
+    upperFirstCenter: lowerFirst,
+  };
+};
 
-// freqStart is the band edge, so add half the bandwidth (plus any padding) to reach the
-// middle of the first slot. Subsequent slots are spaced by the slot width.
-const getSlotFrequency = (
-  region: RegionInfo,
-  bandwidth: number,
-  slot: number,
-): number =>
-  region.freqStart +
-  bandwidth / 2000 +
-  region.profile.padding +
-  slot * getSlotWidth(region, bandwidth);
+const getSlotFrequency = (plan: SlotPlan, slot: number): number => {
+  if (plan.count <= 0 || slot < 0 || slot >= plan.count) {
+    return 0;
+  }
+  if (plan.lowerCount < plan.count && slot >= plan.lowerCount) {
+    return plan.upperFirstCenter + (slot - plan.lowerCount) * plan.width;
+  }
+  return plan.firstCenter + slot * plan.width;
+};
 
 // Helper function to determine the default (zero based) frequency slot
 const determineFrequencySlot = (
@@ -794,16 +888,15 @@ export const FrequencyCalculator = (): JSX.Element => {
 
   const selectedRegion = RegionData.get(region) ?? UNSET_REGION;
   const bandwidth = getBandwidth(modemPreset, selectedRegion.wideLora);
-  const numChannels = getNumFreqSlots(selectedRegion, bandwidth);
+  const slotPlan = getSlotPlan(selectedRegion, bandwidth);
+  const numChannels = slotPlan.count;
   const defaultSlot = determineFrequencySlot(
     selectedRegion,
     modemPreset,
     numChannels,
   );
   const channel = pickedSlot ?? defaultSlot;
-  const channelFrequency = roundFrequency(
-    getSlotFrequency(selectedRegion, bandwidth, channel),
-  );
+  const channelFrequency = roundFrequency(getSlotFrequency(slotPlan, channel));
 
   // Picking a preset that belongs to a sibling of the EU trio selects that sibling region
   const onModemPresetChange = (preset: ModemPreset) => {

@@ -67,17 +67,17 @@ The general-purpose presets are as follows, and follow a linear pattern of Faste
 
 9. `LONG_MODERATE`
 
-`EU_868` offers this list without the three Turbo presets, as 500 kHz bandwidth is not permitted in the 869.4 - 869.65 MHz band.
+`EU_868` offers this list without the three Turbo presets, as 500 kHz bandwidth is not permitted in the 869.4 - 869.65 MHz band. `JP` offers this list without `LONG_MODERATE` (which can exceed the 4-second transmission time limit) and adds `LITE_SLOW`, `NARROW_FAST`, and `NARROW_SLOW` for single-unit-channel operation in congested RF environments.
 
 #### Narrowband presets
 
-Three narrowband preset families serve bands that can't accommodate the general-purpose presets. Each family is exclusive to its regions and can't be selected anywhere else:
+Three narrowband preset families serve bands that can't accommodate the general-purpose presets, or where narrower channels better fit the local band plan and RF environment. Each family is available only in specific regions:
 
-|           Presets            | Bandwidth |                          Available in                           |    Default    |
-| :--------------------------: | :-------: | :-------------------------------------------------------------: | :-----------: |
-|   `LITE_FAST`, `LITE_SLOW`   |  125 kHz  |                            `EU_866`                             |  `LITE_FAST`  |
-| `NARROW_FAST`, `NARROW_SLOW` | 62.5 kHz  | `EU_N_868`, `ITU1_70CM`, `ITU2_70CM`, `ITU3_70CM`, `ITU2_125CM` | `NARROW_SLOW` |
-|   `TINY_FAST`, `TINY_SLOW`   | 15.6 kHz  |                 `ITU1_2M`, `ITU2_2M`, `ITU3_2M`                 |  `TINY_FAST`  |
+|           Presets            | Bandwidth |                             Available in                              |    Default    |
+| :--------------------------: | :-------: | :-------------------------------------------------------------------: | :-----------: |
+|   `LITE_FAST`, `LITE_SLOW`   |  125 kHz  |                  `EU_866`, `JP` (`LITE_SLOW` only)                    |  `LITE_FAST`  |
+| `NARROW_FAST`, `NARROW_SLOW` | 62.5 kHz  | `EU_N_868`, `JP`, `ITU1_70CM`, `ITU2_70CM`, `ITU3_70CM`, `ITU2_125CM` | `NARROW_SLOW` |
+|   `TINY_FAST`, `TINY_SLOW`   | 15.6 kHz  |                    `ITU1_2M`, `ITU2_2M`, `ITU3_2M`                    |  `TINY_FAST`  |
 
 See [Narrowband presets](/docs/overview/radio-settings#narrowband-presets) for their data rates and link budgets.
 
