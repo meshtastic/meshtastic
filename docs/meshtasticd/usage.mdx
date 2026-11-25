@@ -91,7 +91,7 @@ Webserver:
 
 By default `HTTPPort` listens on loopback (`127.0.0.1`) only, so only clients on the same host can reach it. Traffic on this port is unencrypted and unauthenticated, and it carries channel keys and admin messages. Set `HTTPBindAll: true` only on a network you trust.
 
-When the Web client is served from another site, Chrome can ask for local network access permission the first time it connects to this port.
+When the Web client is served from another site, Chrome can ask for local network access permission the first time it connects to this port. Grant it only to sites you trust. Loopback binding does not stop a granted site, or any program on the same host, from using this unauthenticated API.
 
 ### Bluetooth Support
 
