@@ -438,7 +438,7 @@ meshtastic --port <USB_PORT> \
 meshtastic --port <FTDI_PORT> --listen
 ```
 
-For embedded integration, use the [Meshtastic Arduino client library](https://github.com/meshtastic/Meshtastic-arduino).
+For embedded integration, use the [Meshtastic Arduino client library](https://github.com/meshtastic/Meshtastic-arduino). [Telemetry display on a Wio Terminal](#telemetry-display-on-a-wio-terminal) is a complete example.
 
 ---
 
@@ -670,6 +670,8 @@ Incorrect GPIO configuration can physically damage your hardware. Verify the sch
 | T-Beam v1.1 (recommended) | ESP32        | 14                | 13                | Alternative GPIO header        |
 | RAK4631 (RAK19007)        | nRF52840     | 16 (TXD1)         | 15 (RXD1)         | Set GPS Mode to `Not_Present`  |
 | RAK4631 (RAK19003 v2)     | nRF52840     | 20 (TXD0)         | 19 (RXD0)         |                                |
+| Meshnology W10            | ESP32-S3     | 17                | 18                | 43 and 44 are the on-board GPS |
+| Meshnology W12            | ESP32-S3     | 38                | 39                | Unpopulated GNSS header; 17 and 18 drive the screen |
 
 ---
 
@@ -777,3 +779,120 @@ void loop() {
   delay(500);
 }
 ```
+
+---
+
+## Telemetry display on a Wio Terminal
+
+A [Seeed Wio Terminal](https://wiki.seeedstudio.com/Wio-Terminal-Getting-Started/) wired to the serial module in `PROTO` mode shows the radio's telemetry on its screen. The sketch is the [WioTerminalDashboard example](https://github.com/meshtastic/Meshtastic-arduino/tree/master/examples/WioTerminalDashboard) in the Meshtastic Arduino library. It has three pages:
+
+- **Radio:** the connected radio's battery, voltage, channel use, airtime, online node count and packet counts.
+- **Nodes:** every node with its battery, channel use, airtime and when it was last heard.
+- **Environment:** temperature, humidity and pressure from nodes with sensors.
+
+The 5-way switch changes page and scrolls. The three top buttons jump straight to a page.
+
+<Tabs
+  groupId="wio-page"
+  defaultValue="radio"
+  values={[
+    { label: "Radio", value: "radio" },
+    { label: "Nodes", value: "nodes" },
+    { label: "Environment", value: "environment" },
+  ]}>
+<TabItem value="radio">
+
+![Wio Terminal showing the Radio page, with battery, voltage, channel use, airtime, node count and packet tiles, wired to a Meshnology W12 on a breadboard](/img/modules/Serial/wio-terminal-radio.webp)
+
+</TabItem>
+<TabItem value="nodes">
+
+![Wio Terminal showing the Nodes page, a list of nodes with battery, channel use, airtime and last heard columns](/img/modules/Serial/wio-terminal-nodes.webp)
+
+</TabItem>
+<TabItem value="environment">
+
+![Wio Terminal showing the Environment page while it waits for its first sensor readings](/img/modules/Serial/wio-terminal-environment.webp)
+
+</TabItem>
+</Tabs>
+
+### Wio Terminal wiring
+
+The Wio Terminal's 40-pin header uses the Raspberry Pi layout. Serial1 is on pin 8 (TX) and pin 10 (RX), with ground on pin 6. All of its signal pins are 3.3 V, the same as the radio's. Power each board from its own USB.
+
+The header has no pin 1 mark. Hold the Wio Terminal with its back facing you and the top buttons up: pins 1 and 2 are at the right-hand end, and the even pins are on the row nearer the top edge. Pins 6, 8 and 10 are the third, fourth and fifth from the right on that row.
+
+![Wio Terminal 40-pin header with pin 8 (TX), pin 10 (RX) and pin 6 (GND) highlighted, and the matching pins on a RAK4631, Meshnology W10 and Meshnology W12](/img/modules/Serial/wio-terminal-header.svg)
+
+Wire the Wio Terminal's TX to the radio's RX and its RX to the radio's TX, then turn on the serial module in `PROTO` mode at 19200 baud on those pins.
+
+<Tabs
+  groupId="wio-radio"
+  defaultValue="rak4631"
+  values={[
+    { label: "RAK4631", value: "rak4631" },
+    { label: "Meshnology W10", value: "w10" },
+    { label: "Meshnology W12", value: "w12" },
+  ]}>
+<TabItem value="rak4631">
+
+![Wio Terminal pin 8 wired to RX1, pin 10 to TX1 and pin 6 to GND on a RAK4631's RAK19007 base board](/img/modules/Serial/wio-terminal-rak4631.svg)
+
+```shell title="RAK4631 on a RAK19007 base board"
+meshtastic --port <USB_PORT> \
+  --set serial.enabled true \
+  --set serial.mode PROTO \
+  --set serial.baud BAUD_19200 \
+  --set serial.rxd 15 \
+  --set serial.txd 16
+```
+
+Set [GPS Mode](/docs/configuration/radio/position/#gps-mode) to `Not_Present`. A GPS module uses the same pins.
+
+</TabItem>
+<TabItem value="w10">
+
+![Wio Terminal pin 8 wired to GPIO 18, pin 10 to GPIO 17 and pin 6 to GND on a Meshnology W10](/img/modules/Serial/wio-terminal-meshnology-w10.svg)
+
+```shell title="Meshnology W10"
+meshtastic --port <USB_PORT> \
+  --set serial.enabled true \
+  --set serial.mode PROTO \
+  --set serial.baud BAUD_19200 \
+  --set serial.rxd 18 \
+  --set serial.txd 17
+```
+
+GPIO 43 and 44 go to the W10's on-board GPS, so use 17 and 18 on the side header.
+
+</TabItem>
+<TabItem value="w12">
+
+![Wio Terminal pin 8 wired to GPIO 39, pin 10 to GPIO 38 and pin 6 to GND on a Meshnology W12's GNSS header](/img/modules/Serial/wio-terminal-meshnology-w12.svg)
+
+```shell title="Meshnology W12"
+meshtastic --port <USB_PORT> \
+  --set serial.enabled true \
+  --set serial.mode PROTO \
+  --set serial.baud BAUD_19200 \
+  --set serial.rxd 39 \
+  --set serial.txd 38
+```
+
+On the W12, GPIO 17 and 18 drive the screen. Use the unpopulated GNSS header instead.
+
+</TabItem>
+</Tabs>
+
+The W10 and W12 look alike. To tell them apart, run `meshtastic --info` and look for `meshnology_w10` or `meshnology_w12` in `pioEnv`.
+
+### Install the sketch
+
+1. In the Arduino IDE, add the Seeed SAMD boards package and select **Seeeduino Wio Terminal**. The package includes the screen library the sketch uses.
+2. Install the **Meshtastic** library from the Library Manager.
+3. Open **File > Examples > Meshtastic > WioTerminalDashboard** and upload it.
+
+The sketch uses 19200 baud. To use another speed, change `kRadioBaud` in the sketch to match `serial.baud`.
+
+Once wired and configured, the status in the top right shows **Syncing** while the node list arrives, then the radio's short name. If it stays on **No radio**, check that TX and RX are crossed.
