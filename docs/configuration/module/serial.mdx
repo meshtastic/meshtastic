@@ -784,7 +784,7 @@ void loop() {
 
 ## Telemetry display on a Wio Terminal
 
-A [Seeed Wio Terminal](https://wiki.seeedstudio.com/Wio-Terminal-Getting-Started/) wired to the serial module in `PROTO` mode shows the radio's telemetry on its screen. The sketch is the [WioTerminalDashboard example](https://github.com/meshtastic/Meshtastic-arduino/tree/master/examples/WioTerminalDashboard) in the Meshtastic Arduino library. It has three pages:
+A [Seeed Wio Terminal](https://wiki.seeedstudio.com/Wio-Terminal-Getting-Started/) wired to the serial module in [`PROTO` mode](#proto--protobuf-client-api) shows the radio's telemetry on its screen. `PROTO` mode carries the [Meshtastic Protobuf Client API](/docs/development/device/client-api) over the serial pins, the same protocol phone apps use, so the Wio Terminal asks the radio for its node list and receives telemetry packets as protobufs. The sketch is the [WioTerminalDashboard example](https://github.com/meshtastic/Meshtastic-arduino/tree/master/examples/WioTerminalDashboard) in the Meshtastic Arduino library. It has three pages:
 
 - **Radio:** the connected radio's battery, voltage, channel use, airtime, online node count and packet counts.
 - **Nodes:** every node with its battery, channel use, airtime and when it was last heard.
