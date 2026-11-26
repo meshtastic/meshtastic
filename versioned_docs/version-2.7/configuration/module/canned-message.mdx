@@ -12,7 +12,7 @@ import ReactPlayer from "react-player";
 
 The Canned Message Module will allow you to send messages to the mesh network from the device without using the phone app. You can predefine text messages to choose from.
 
-The canned message module config options are: Enabled, Send Bell, Messages, Input Source, Rotary Encoder Enabled, Up Down Encoder Enabled, Input Broker Pin A, Input Broker Pin B, Input Broker Pin Press, Input Broker Event Clockwise, Input Broker Event Counter Clockwise, and Input Broker Event Press. Canned Message config uses an admin message sending a `ConfigModule.CannedMessage` protobuf.
+The canned message module config options are: Enabled, Send Bell, Messages, Rotary Encoder Enabled, Up Down Encoder Enabled, Input Broker Pin A, Input Broker Pin B, Input Broker Pin Press, Input Broker Event Clockwise, Input Broker Event Counter Clockwise, and Input Broker Event Press. Canned Message config uses an admin message sending a `ConfigModule.CannedMessage` protobuf.
 
 <div style={{ maxWidth: "800px", margin: "auto" }}>
   <ReactPlayer
@@ -42,16 +42,9 @@ The list of pre-set messages as configured by the user. Messages should be separ
 
 ### Input Source
 
-Input event sources accepted by the canned message module.
+From firmware 2.7.0, there is no input source to choose. The canned message module accepts input from every input device on the node, and the node detects a keyboard such as the CardKB by itself. Connect the keyboard before you power on the node, as it is only detected at startup.
 
-|      Value      |                             Description                              |
-| :-------------: | :------------------------------------------------------------------: |
-|     `_any`      | Default. Allows any peripheral input device connected to the device. |
-|    `rotEnc1`    |                         Basic Rotary Encoder                         |
-|  `upDownEnc1`   |     Up Down Encoder (use this also for RAK14006 Rotary Encoder)      |
-| `scanAndSelect` |              Single push-button (short and long press)               |
-|    `cardkb`     |           M5 Stack CardKB (this covers RAK14004 Keymatrix)           |
-|   `serialkb`    |                        Chatter serial keypad                         |
+The setting remains for older firmware, where it limits the module to one input device.
 
 ### Rotary Encoder Enabled
 
@@ -163,7 +156,6 @@ Example commands are below:
 | :------------------------------------: | :---------------------------------------: | :-------------------------: |
 |         canned_message.enabled         |              `true`, `false`              |           `false`           |
 |        canned_message.send_bell        |              `true`, `false`              |           `false`           |
-|   canned_message.allow_input_source    | `rotEnc1`, `_any`, `upDownEnc1`, `cardkb` |           `_any`            |
 |          --set-canned-message          |                 `string`                  | `""` (separate using pipes) |
 |  canned_message.inputbroker_event_cw   |             `InputEventChar`              |        (not defined)        |
 |  canned_message.inputbroker_event_ccw  |             `InputEventChar`              |        (not defined)        |
@@ -194,11 +186,6 @@ meshtastic --set canned_message.send_bell false
 
 ```shell title="Set Messages"
 meshtastic --set-canned-message "I need an alpinist!|Call Me|Roger Roger|Keep Calm|On my way"
-```
-
-```shell title="Set Input Source"
-meshtastic --set canned_message.allow_input_source "_any"
-meshtastic --set canned_message.allow_input_source "rotEnc1"
 ```
 
 ```shell title="Enable/Disable rotary1"
@@ -273,23 +260,6 @@ If you don't want to broadcast your freetext message, you can use the CardKB to 
 ### 3 Button up/down and RAK rotary encoder
 
 Just use UP/DOWN/ENTER to select a predefined message and send it.
-
-### Scan and Select
-
-Use a single push-button to select and send predefined messages.
-
-#### Setup
-
-- Connect a normally-open push-button between ground and a GPIO pin of your choice
-- Configure the canned messages module
-  - Set [Input Source](#input-source) to `scanAndSelect`
-  - Set [Input Broker Pin Press](#input-broker-pin-press) to your chosen GPIO
-  - Define a [list of pre-set messages](#messages)
-
-#### Usage
-
-- Short press: scroll through messages
-- Long press: send the currently highlighted message to your primary channel
 
 ### Rotary encoder
 
