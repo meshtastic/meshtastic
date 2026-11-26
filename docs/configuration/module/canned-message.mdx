@@ -12,7 +12,9 @@ import ReactPlayer from "react-player";
 
 The Canned Message Module will allow you to send messages to the mesh network from the device without using the phone app. You can predefine text messages to choose from.
 
-The canned message module config options are: Enabled, Send Bell, Messages, Rotary Encoder Enabled, Up Down Encoder Enabled, Input Broker Pin A, Input Broker Pin B, Input Broker Pin Press, Input Broker Event Clockwise, Input Broker Event Counter Clockwise, and Input Broker Event Press. Canned Message config uses an admin message sending a `ConfigModule.CannedMessage` protobuf.
+From firmware 2.7.0, there is no setting to turn the module on. It runs whenever it has messages to send or a keyboard is connected.
+
+The canned message module config options are: Send Bell, Messages, Rotary Encoder Enabled, Up Down Encoder Enabled, Input Broker Pin A, Input Broker Pin B, Input Broker Pin Press, Input Broker Event Clockwise, Input Broker Event Counter Clockwise, and Input Broker Event Press. Canned Message config uses an admin message sending a `ConfigModule.CannedMessage` protobuf.
 
 <div style={{ maxWidth: "800px", margin: "auto" }}>
   <ReactPlayer
@@ -24,10 +26,6 @@ The canned message module config options are: Enabled, Send Bell, Messages, Rota
 </div>
 
 ## Canned Message Module Config Values
-
-### Enabled
-
-Enables the canned message module.
 
 ### Send Bell
 
@@ -154,7 +152,6 @@ Example commands are below:
 
 |                Setting                 |             Acceptable Values             |           Default           |
 | :------------------------------------: | :---------------------------------------: | :-------------------------: |
-|         canned_message.enabled         |              `true`, `false`              |           `false`           |
 |        canned_message.send_bell        |              `true`, `false`              |           `false`           |
 |          --set-canned-message          |                 `string`                  | `""` (separate using pipes) |
 |  canned_message.inputbroker_event_cw   |             `InputEventChar`              |        (not defined)        |
@@ -169,15 +166,10 @@ Example commands are below:
 Because the device will reboot after each command is sent via CLI, it is recommended when setting multiple values in a config section that commands be chained together as one.
 
 ```shell title="Example:"
-meshtastic --set canned_message.enabled true --set canned_message.send_bell true
+meshtastic --set canned_message.send_bell true --set canned_message.rotary1_enabled true
 ```
 
 :::
-
-```shell title="Enable/Disable the Canned Message Module"
-meshtastic --set canned_message.enabled true
-meshtastic --set canned_message.enabled false
-```
 
 ```shell title="Enable/Disable send bell character"
 meshtastic --set canned_message.send_bell true
