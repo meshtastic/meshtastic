@@ -78,6 +78,21 @@ Webserver:
   RootPath: /usr/share/meshtasticd/web # Root Dir of WebServer
 ```
 
+#### Serving without TLS
+
+`HTTPPort` serves the same Web client and [API](/docs/development/device/http-api/) without Transport Layer Security (TLS), over plain HTTP and WebSocket. It's off unless set, and only works alongside `Port`.
+
+```yaml
+Webserver:
+  Port: 9443
+  HTTPPort: 9080 # Plain HTTP and WebSocket, loopback only
+  HTTPBindAll: false # true listens on every interface
+```
+
+By default `HTTPPort` listens on loopback (`127.0.0.1`) only, so only clients on the same host can reach it. Traffic on this port is unencrypted and unauthenticated, and it carries channel keys and admin messages. Set `HTTPBindAll: true` only on a network you trust.
+
+When the Web client is served from another site, Chrome can ask for local network access permission the first time it connects to this port. Grant it only to sites you trust. Loopback binding does not stop a granted site, or any program on the same host, from using this unauthenticated API.
+
 ### Bluetooth Support
 
 Bluetooth is currently unsupported and not functional on MeshtasticD devices.
