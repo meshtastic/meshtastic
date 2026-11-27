@@ -1,0 +1,210 @@
+---
+id: traffic-management
+title: Traffic Management Module Usage
+sidebar_label: Traffic Management
+description: Shape transit traffic on busy meshes - position deduplication, per-sender rate limiting, unknown-packet filtering and NodeInfo direct responses.
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+import { Icon } from "@iconify/react";
+
+:::warning
+The Traffic Management Module is under active development. Its settings and behaviour can still change between releases, so treat this page as a description of current firmware rather than a settled interface.
+:::
+
+**Firmware 2.8.2 or later.** The module first shipped in 2.8.0; 2.8.0 and 2.8.1 differ in two places, listed under [Differences in 2.8.0 and 2.8.1](#differences-in-280-and-281). Firmware 2.7.x has no Traffic Management module - see [Firmware 2.7.x](#firmware-27x).
+
+## Overview
+
+Earlier traffic-reduction work in Meshtastic asked client nodes to send automated packets less often. That works while every node cooperates, but a single misconfigured node broadcasting its position every 30 seconds - or flooding undecryptable packets - can still burden a whole mesh. Traffic Management moves enforcement to the nodes that relay, so a mesh can protect its shared airtime regardless of how its members are configured.
+
+The module shapes **transit** traffic: it filters or answers packets passing through your node before they are rebroadcast. It never filters packets addressed to you, and it never changes what your own node sends.
+
+From 2.8.0, on supported targets the module **ships enabled**, with position deduplication running at its 6-hour default. Every other feature defaults to off, so the module is on out of the box but opt-in per feature. It was introduced in [meshtastic/firmware#9358](https://github.com/meshtastic/firmware/pull/9358).
+
+From 2.8.0 there are also no separate on/off switches. **Each feature is enabled by giving its setting a non-zero value**, and disabled by setting it back to `0`.
+
+The module keeps a small amount of information about each node it has heard from recently - enough to spot a repeated position or an unusually chatty sender. This is rebuilt from traffic as it arrives and is not saved, so it starts empty after a reboot. How many nodes it can track at once depends on the device, from a couple of hundred on smaller boards to a couple of thousand on the roomiest. For the exact figures and how the stores relate, see [NodeInfo Stores](/docs/development/reference/node-info-stores).
+
+## Settings
+
+| Setting                             | Acceptable Values   | Default |
+| :---------------------------------- | :------------------ | :------ |
+| `nodeinfo_direct_response_max_hops` | `0`-`3` (`0` = off) | `0`     |
+| `position_min_interval_secs`        | seconds (`0` = off) | `21600` |
+| `rate_limit_max_packets`            | packets (`0` = off) | `0`     |
+| `rate_limit_window_secs`            | seconds (`0` = off) | `0`     |
+| `unknown_packet_threshold`          | packets (`0` = off) | `0`     |
+
+### nodeinfo_direct_response_max_hops
+
+When another node asks "who is node X?", your node can answer from what it already knows about X, instead of letting the question travel all the way to X and back. This setting controls how far away the asker may be for your node to do that.
+
+Two things decide the answer, in this order:
+
+1. **Your setting turns the feature on or off.** `0` means your node never answers on anyone else's behalf. Any other value turns it on.
+2. **Your device role then limits how far it reaches.** If your setting is higher than your role allows, the role wins.
+
+| Device role                            | Role allows | How far it actually reaches                              |
+| :------------------------------------- | :---------- | :------------------------------------------------------- |
+| `ROUTER`, `ROUTER_LATE`, `CLIENT_BASE` | up to 3     | Only nodes in direct range of yours - see the note below |
+| All other roles                        | 0           | Only nodes in direct range of yours                      |
+
+Watch out for the two different meanings of `0` here. Setting it to `0` yourself switches the feature off completely. But a role that "allows 0" has not switched it off - it still answers, just only for nodes it can hear directly. So putting `2` on a `CLIENT` does not disable anything; it turns the feature on and the role then trims its reach back to direct neighbours.
+
+If your node cannot tell how far away the asker is, it does not answer. A request that is itself signed is never answered on another node's behalf; it is passed on to the real node, which can sign its reply.
+
+**Note:** the reply is sent zero-hop, so it is never relayed onward and only arrives if the asker is in direct radio range of your node. A router will still take on a request from up to 3 hops away, and that asker then gets no answer at all, because the request is not passed on.
+
+This is the module's most security-sensitive feature, because the reply goes out under the other node's name and nothing in the exchange is verified. The firmware is careful about it: it only answers for nodes whose identity it has good reason to trust and has genuinely heard from recently, and it limits how often it will answer at all. See [Traffic Management Internals](/docs/development/reference/traffic-management-internals) if you want the specifics.
+
+### position_min_interval_secs
+
+The minimum time between position broadcasts from the same node **at the same location** before another is relayed. The default is 6 hours (`21600`); `0` disables it. The interval is counted in 6-minute steps.
+
+Deduplication only applies on the well-known public channels - an unencrypted or default-key channel named after a modem preset. Positions on private channels are always relayed.
+
+"Same location" is deliberately approximate: positions are compared against a grid rather than exactly, so a node that has only drifted a little still counts as not having moved. By default that grid is around 90 m across. Its size comes from the channel's `position_precision`, not from a module setting.
+
+The role of the node that **sent** the position can only **shorten** this interval, never lengthen it:
+
+| Role                 | Effective interval |
+| :------------------- | :----------------- |
+| Tracker, TAK Tracker | 1 hour             |
+| Lost and Found       | 15 minutes         |
+
+These role caps are firmware constants and are not configurable.
+
+### rate_limit_max_packets
+
+The number of transit packets one sender may spend per window. Once a sender exceeds the budget, its transit packets are dropped for the rest of the window. Both this and `rate_limit_window_secs` must be non-zero for rate limiting to run.
+
+Routing and admin packets are **exempt** - rate limiting never drops them. Values above `60` count as `60`.
+
+### rate_limit_window_secs
+
+The window over which `rate_limit_max_packets` is counted. Either value at `0` disables rate limiting.
+
+The window is counted in 5-minute steps, from one step up to 15 (75 minutes). A value under 300 seconds behaves as a single step, so it lasts until the next 5-minute boundary rather than for the number of seconds set.
+
+### unknown_packet_threshold
+
+Drops undecryptable traffic from a sender - a node on a different channel, or using a different key - once it passes this many packets within a fixed 5-minute window. `0` disables the filter, and values above `60` count as `60`.
+
+## Details
+
+### Differences in 2.8.0 and 2.8.1
+
+- Position deduplication defaulted to 5 hours (`18000`).
+- Relays rounded the coordinates in other nodes' position broadcasts on the public channels down to the channel's `position_precision`. 2.8.2 removed this ([meshtastic/firmware#12039](https://github.com/meshtastic/firmware/pull/12039)): the rewritten payload no longer matched the sender's signature, so receivers that knew the sender's key dropped it. Relays now forward positions unchanged.
+
+### Firmware 2.7.x
+
+Firmware 2.7.20 through 2.7.26 carry an earlier version of the Traffic Management configuration message, with on/off switches and extra fields, but contain no Traffic Management module. Nothing set there has any effect. A client that shows Traffic Management settings for a 2.7.x device is showing fields the firmware ignores.
+
+## Traffic Management Module Client Availability
+
+<Tabs
+  groupId="settings"
+  defaultValue="cli"
+  values={[
+    {
+      label: (
+        <>
+          <Icon icon="mdi:android" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Android
+        </>
+      ),
+      value: "android",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:apple" height="1.5rem" style={{ marginRight: "0.25rem" }} /> Apple
+        </>
+      ),
+      value: "apple",
+    },
+    {
+      label: (
+        <>
+          <Icon icon="mdi:terminal" height="1.5rem" style={{ marginRight: "0.25rem" }} /> CLI
+        </>
+      ),
+      value: "cli",
+    },
+  ]}>
+
+<TabItem value="android">
+
+### Android
+
+Not yet implemented.
+
+</TabItem>
+
+<TabItem value="apple">
+
+### Apple
+
+Available under module settings - see [Apple client settings](/docs/software/apple/user/settings).
+
+</TabItem>
+
+<TabItem value="cli">
+
+### CLI
+
+All Traffic Management settings are available in the Python CLI.
+
+| Setting                                              | Acceptable Values     | Default |
+| :--------------------------------------------------- | :-------------------- | :------ |
+| traffic_management.nodeinfo_direct_response_max_hops | `0`-`3` (`0` = off)   | `0`     |
+| traffic_management.position_min_interval_secs        | `integer` (`0` = off) | `21600` |
+| traffic_management.rate_limit_max_packets            | `integer` (`0` = off) | `0`     |
+| traffic_management.rate_limit_window_secs            | `integer` (`0` = off) | `0`     |
+| traffic_management.unknown_packet_threshold          | `integer` (`0` = off) | `0`     |
+
+:::tip
+Because the device reboots after each command sent via CLI, chain commands together when setting several values in one config section.
+
+```shell title="Example:"
+meshtastic --set traffic_management.rate_limit_window_secs 300 --set traffic_management.rate_limit_max_packets 10
+```
+
+:::
+
+#### Examples of CLI Usage
+
+```shell title="Deduplicate identical positions no more than once an hour"
+meshtastic --set traffic_management.position_min_interval_secs 3600
+```
+
+```shell title="Turn position deduplication off"
+meshtastic --set traffic_management.position_min_interval_secs 0
+```
+
+```shell title="Rate limit: at most 10 transit packets per node per 5 minutes"
+meshtastic --set traffic_management.rate_limit_window_secs 300 --set traffic_management.rate_limit_max_packets 10
+```
+
+```shell title="Drop undecryptable packets after 5 from the same node"
+meshtastic --set traffic_management.unknown_packet_threshold 5
+```
+
+```shell title="Answer NodeInfo requests from cache for requesters up to 2 hops away (routers)"
+meshtastic --set traffic_management.nodeinfo_direct_response_max_hops 2
+```
+
+```shell title="Get the Traffic Management Module configuration"
+meshtastic --get traffic_management
+```
+
+</TabItem>
+
+</Tabs>
+
+## See also
+
+- [Traffic Management Internals](/docs/development/reference/traffic-management-internals) - the direct-response serve gates, the throttle that bounds them, and the tick clocks behind the counters.
+- [NodeInfo Stores](/docs/development/reference/node-info-stores) - where a node keeps what it knows about other nodes, how much of it survives a reboot, and how it decides which of that is trustworthy enough to answer with.
