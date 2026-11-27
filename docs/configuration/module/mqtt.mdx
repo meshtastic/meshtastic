@@ -47,6 +47,8 @@ If true, we attempt to establish a secure connection using TLS.
 
 The root topic to use for MQTT messages. This is useful if you want to use a single MQTT server for multiple meshtastic networks and separate them via ACLs.
 
+The node uses the root exactly as typed and adds `/2/e/…` itself, so don't end it with a slash; it can be up to 31 bytes. A leading slash makes a different topic: `/msh/…` and `msh/…` don't match, so every node and subscriber on a network must use the same form, with or without it.
+
 ### Client Proxy Enabled
 
 If true, let the device use the client's (e.g. your phone's) network connection to connect to the MQTT server. If false, it uses the device's network connection which you have to enable via the [network settings](/docs/configuration/radio/network).
