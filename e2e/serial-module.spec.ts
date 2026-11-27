@@ -61,8 +61,10 @@ test.describe("Serial Module Documentation", () => {
     await page.goto(SERIAL_URL);
     const cliTab = page.getByRole("tab", { name: /CLI/i });
     await cliTab.click();
+    // Other tab groups on the page (the Wio Terminal wiring) also show serial.enabled, so pick the
+    // client-availability panel by its own "CLI" heading. The heading's name also carries its anchor link.
     const cliContent = page.getByRole("tabpanel").filter({
-      hasText: /serial.enabled/,
+      has: page.getByRole("heading", { name: /^CLI\b/ }),
     });
     await expect(cliContent).toBeVisible();
   });
