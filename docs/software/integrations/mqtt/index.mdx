@@ -52,7 +52,7 @@ When MQTT is enabled, the Meshtastic device simply uplinks and/or downlinks ever
 
 ### MQTT [Topics](https://www.hivemq.com/blog/mqtt-essentials-part-5-mqtt-topics-best-practices)
 
-If no specific [root topic](/docs/configuration/module/mqtt#root-topic) is configured, the default root topic will be `msh/REGION`.
+If no specific [root topic](/docs/configuration/module/mqtt#root-topic) is configured, the node uses `msh`. On the default broker it changes this to `msh/REGION` once a region is set.
 
 For each channel where uplink and/or downlink is enabled, two topics might be used:
 
@@ -76,11 +76,7 @@ If [encryption_enabled](/docs/configuration/module/mqtt#encryption-enabled) is s
 
 #### JSON topic
 
-:::note
-JSON is not supported on the nRF52 platform.
-:::
-
-If [JSON is enabled](/docs/configuration/module/mqtt#json-enabled), packets from the following [port numbers](/docs/development/firmware/portnum) are serialized to JSON: `TEXT_MESSAGE_APP`, `TELEMETRY_APP`, `NODEINFO_APP`, `POSITION_APP`, `WAYPOINT_APP`, `NEIGHBORINFO_APP`, `TRACEROUTE_APP`, `DETECTION_SENSOR_APP`, `PAXCOUNTER_APP` and `REMOTE_HARDWARE_APP`. These are then forwarded to the topic:
+From firmware 2.8 the node publishes protobufs only. The JSON topic is produced off the node by [mqtt-converter](https://github.com/meshtastic/mqtt-converter), which runs alongside your broker, decrypts each packet with the channel key and republishes it in the format below. Its `--root-topic` and `--region` together must give the node's root topic, for example `msh` and `US` for `msh/US`; use `--region ""` for a root with no region level, such as `msh` on a private broker. Packets from the following [port numbers](/docs/development/firmware/portnum) are serialized to JSON: `TEXT_MESSAGE_APP`, `TELEMETRY_APP`, `NODEINFO_APP`, `POSITION_APP`, `WAYPOINT_APP`, `NEIGHBORINFO_APP`, `TRACEROUTE_APP`, `DETECTION_SENSOR_APP`, `PAXCOUNTER_APP` and `REMOTE_HARDWARE_APP`. These are then forwarded to the topic:
 
 `msh/US/2/json/CHANNELNAME/USERID`.
 
@@ -124,11 +120,7 @@ If the message received contains valid JSON in the payload, the JSON is deserial
 
 #### JSON downlink to instruct a node to send a message
 
-You can also send a JSON message to the topic `msh/US/2/json/mqtt/` to instruct a gateway node to send a message to the mesh.
-
-To make this work, ensure that your node has a Meshtastic channel configured called "mqtt". Enable Downlink. The PSK can be random and doesn't matter. This channel allows the node to listen to messages on the `msh/US/2/json/mqtt/` topic.
-
-Reboot your device after creating this channel.
+You can also publish a JSON message to the topic `msh/US/2/json/CHANNELNAME/` to instruct a gateway node to send a message to the mesh, where `CHANNELNAME` is a channel on the gateway with Downlink enabled. [mqtt-converter](https://github.com/meshtastic/mqtt-converter) turns it into a protobuf packet, encrypts it with that channel's key and republishes it for the gateway to transmit.
 
 The JSON message should contain the following fields:
 
@@ -137,6 +129,8 @@ The JSON message should contain the following fields:
    "from": <decimal Node ID of MQTT node>,
    "to": <decimal Node ID of recipient for a DM (optional)>,
    "channel": <channel index (optional)>,
+   "id": <packet ID (optional)>,
+   "gateway_id": <gateway ID to publish as (optional)>,
    "type": "type",
    "payload": {
        "key":"value"
@@ -145,7 +139,7 @@ The JSON message should contain the following fields:
 }
 ```
 
-`from` and `payload` fields are required for a valid envelope (note that in firmware &lt;2.2.20 a field `sender` was required, but this is no longer the case). The `from` field should be equal to the decimal Node ID of the node that will transmit the message. If the Node ID (sometimes called User ID) is !7efeee00, then the decimal equivalent would be 2130636288. Optionally, you can specify a different channel than the primary channel by setting the `channel` field to a channel index (0-7). Furthermore, you can send a direct message by setting the `to` field to the decimal Node ID of the destination. If the `to` field is not set, the message will be broadcast to all nodes on the mesh.
+`from`, `type` and `payload` are required. `from` is the decimal Node ID the message is sent as, and must not be the gateway's own node number: the gateway ignores downlink packets from itself. `id` defaults to a random packet ID, and `gateway_id` to `!mqttconv`; it must not be the gateway's own ID either. If the Node ID (sometimes called User ID) is !7efeee00, then the decimal equivalent would be 2130636288. Optionally, you can specify a different channel than the primary channel by setting the `channel` field to a channel index (0-7). Furthermore, you can send a direct message by setting the `to` field to the decimal Node ID of the destination. If the `to` field is not set, the message will be broadcast to all nodes on the mesh.
 
 Currently two types of messages are supported: `"sendtext"` and `"sendposition"`.
 For the type `sendtext`, the `payload` should be a string containing the text to send. For the type `sendposition`, the payload should be an object with the fields `latitude_i`, `longitude_i`, `altitude` (optional) and `time` (optional).
@@ -155,7 +149,7 @@ For the type `sendtext`, the `payload` should be a string containing the text to
 Check out [MQTT Settings](/docs/configuration/module/mqtt) for full information. For quick start instructions, read on.
 
 - Connect your gateway node to Wi-Fi, by setting the `network.wifi_ssid`, `network.wifi_psk` and `network.wifi_enabled` preferences.
-- Alternatively use the RAK4631 with Ethernet Module RAK13800, by setting `network.eth_mode` and `network.eth_enabled` (note that JSON is not supported on the nRF52 platform).
+- Alternatively use the RAK4631 with Ethernet Module RAK13800, by setting `network.eth_mode` and `network.eth_enabled`.
 - Configure your broker settings: `mqtt.address`, `mqtt.username`, and `mqtt.password`. If all are left blank, the device will connect to the Meshtastic broker.
 - Set `uplink_enabled` and `downlink_enabled` as appropriate for each channel. Most users will just have a single channel (at channel index 0). `meshtastic --ch-index 0 --ch-set uplink_enabled true`
 
