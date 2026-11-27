@@ -57,19 +57,17 @@ The JSON output from [mqtt-converter](https://github.com/meshtastic/mqtt-convert
 
 #### 1. Using JSON-encoded messages
 
-:::note
-JSON is not supported on the nRF52 platform.
-:::
-
 Make sure [mqtt-converter](https://github.com/meshtastic/mqtt-converter) is running and your gateway has a channel with Downlink enabled.
 
 Below is a valid JSON envelope for information sent by MQTT to a device for broadcast onto the mesh. The `to` field is optional and can be omitted for broadcast. The `channel` field is also optional and can be omitted to send to the primary channel.
 
 ```json
 {
-  "from":<node number of the transmitter>,
+  "from":<node number the message is sent as, not the gateway's own>,
   "to": <node number of the receiver for a DM (optional)>,
   "channel": <channel index (optional)>,
+  "id": <packet ID (optional)>,
+  "gateway_id": <gateway ID to publish as (optional)>,
   "type":"sendtext",
   "payload": text or a json object go here
 }

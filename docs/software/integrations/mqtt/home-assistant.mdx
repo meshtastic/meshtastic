@@ -7,12 +7,6 @@ sidebar_position: 4
 
 ### Home Assistant Integrations for Meshtastic 
 
-:::warning Note
-
-Due to a known issue with nRF52 devices and JSON, nRF52 devices are not supported for use with Home Assistant at this time.
-
-:::
-
 Integrating Meshtastic into Home Assistant brings a new level of control and monitoring to your mesh network. On this page, we'll guide you through the process of creating Meshtastic MQTT sensor entities within Home Assistant. Whether you want to keep an eye on battery levels, environmental conditions, or even receive notifications from your mesh network, these integrations provide you with the tools to make it happen.
 
 From firmware 2.8 the node publishes protobufs only; the JSON topics this page uses are produced by [mqtt-converter](https://github.com/meshtastic/mqtt-converter).
@@ -327,7 +321,7 @@ This automation will check the send box for changes.  After typing a message, ei
 
 To make this work, ensure [mqtt-converter](https://github.com/meshtastic/mqtt-converter) is running and your gateway node has a channel with Downlink enabled; the converter needs that channel's PSK.
 
-Now make sure to publish to the same channel topic and to update the `from` field in the example below. A field `channel` can be added to transmit on a different channel index than the primary, or a `to` field can be added with a node number to send a DM.
+Now make sure to publish to the same channel topic, and set `from` in the example below to a node number other than the gateway's own: the gateway ignores downlink packets from itself. A field `channel` can be added to transmit on a different channel index than the primary, or a `to` field can be added with a node number to send a DM.
 
 ```yaml
 - alias: Meshtastic - Send Automation
@@ -349,7 +343,7 @@ Now make sure to publish to the same channel topic and to update the `from` fiel
         retain: false
         topic: msh/US/2/json/LongFast/
         payload: >-
-          {"from":1743426560,"type":"sendtext","payload":"{{    
+          {"from":123456789,"type":"sendtext","payload":"{{    
           states('input_text.meshtastic_send_box') }}"}
     - delay:
         hours: 0
