@@ -63,12 +63,12 @@ The drive that appears in [bootloader mode](/docs/getting-started/flashing-firmw
 
 Below are the steps to update your bootloader.
 
-### Method 1: From the Meshtastic Android App (Easiest, if supported)
+### Method 1: From the Meshtastic App (Easiest)
 
-For boards the nRF52 bootloader supports, the Meshtastic Android app can flash the bootloader directly — no manual download needed. This in-app path is Android-only for now; the iOS/iPadOS app does not yet offer a bootloader upgrade, so use one of the manual methods below on Apple platforms.
+For boards the nRF52 bootloader supports, the Meshtastic Android or iOS app can flash the bootloader directly — no manual download needed.
 
 1. Connect the radio over **USB/serial** (not Bluetooth).
-2. Open the connected radio's configuration and go to **Advanced → Firmware Update**.
+2. Open the connected radio's configuration and go to (on Android) **Advanced → Firmware Update** or  **Settings → Firmware Updates**.
 3. If an upgraded bootloader is published for your board, select **Upgrade bootloader**.
 4. The app reads `INFO_UF2.TXT` from the update drive to confirm the board, then writes the bootloader image. It then asks you to select the update drive again to write the firmware image — two drive selections in total.
 
