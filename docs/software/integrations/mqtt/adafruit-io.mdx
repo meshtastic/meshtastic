@@ -44,6 +44,8 @@ SNR = false
 RSSI = false
 ```
 
+From firmware 2.8 the node publishes protobufs only; the JSON topic this script subscribes to is produced by [mqtt-converter](https://github.com/meshtastic/mqtt-converter). Replace `US` in the topic with your region.
+
 ```python
 # Persistent mqtt client, watch for voltage, telemetry, message packets and publish them to io
 
@@ -228,7 +230,7 @@ while(True):
         mqttClient.loop_start()
         for channel in channel_array:
             print("Subscribing to %s" % channel)
-            mqttClient.subscribe("mesh/2/json/%s/#" % (channel))
+            mqttClient.subscribe("msh/US/2/json/%s/#" % (channel))
             time.sleep(1)
 
     time.sleep(.01)

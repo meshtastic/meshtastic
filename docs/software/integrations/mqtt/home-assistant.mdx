@@ -15,6 +15,8 @@ Due to a known issue with nRF52 devices and JSON, nRF52 devices are not supporte
 
 Integrating Meshtastic into Home Assistant brings a new level of control and monitoring to your mesh network. On this page, we'll guide you through the process of creating Meshtastic MQTT sensor entities within Home Assistant. Whether you want to keep an eye on battery levels, environmental conditions, or even receive notifications from your mesh network, these integrations provide you with the tools to make it happen.
 
+From firmware 2.8 the node publishes protobufs only; the JSON topics this page uses are produced by [mqtt-converter](https://github.com/meshtastic/mqtt-converter).
+
 :::info
 
 It is highly recommended to download MQTT Explorer for analyzing the JSON threads that come across the broker. This can be downloaded from [MQTT Explorer’s website](http://mqtt-explorer.com/).
@@ -323,9 +325,9 @@ First, create an input text helper entity. The preferred way to configure an inp
 
 This automation will check the send box for changes.  After typing a message, either hit enter or click off the box and the automation will send a text string in JSON to the mqtt broker.
 
-To make this work, ensure that your node has a Meshtastic channel configured called "mqtt" with downlink enabled. The PSK doesn't matter. This channel allows the node to listen to messages on the msh/US/2/json/mqtt/ topic.
+To make this work, ensure [mqtt-converter](https://github.com/meshtastic/mqtt-converter) is running and your gateway node has a channel with Downlink enabled; the converter needs that channel's PSK.
 
-Now make sure to publish to the same "mqtt" topic and to update the device ID and `from` field in the example below. A field `channel` can be added to transmit on a different channel index than the primary, or a `to` field can be added with a node number to send a DM.
+Now make sure to publish to the same channel topic and to update the `from` field in the example below. A field `channel` can be added to transmit on a different channel index than the primary, or a `to` field can be added with a node number to send a DM.
 
 ```yaml
 - alias: Meshtastic - Send Automation
@@ -345,7 +347,7 @@ Now make sure to publish to the same "mqtt" topic and to update the device ID an
       data:
         qos: 0
         retain: false
-        topic: msh/US/2/json/mqtt/!67ea9400
+        topic: msh/US/2/json/LongFast/
         payload: >-
           {"from":1743426560,"type":"sendtext","payload":"{{    
           states('input_text.meshtastic_send_box') }}"}

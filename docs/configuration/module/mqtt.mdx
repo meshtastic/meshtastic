@@ -11,7 +11,7 @@ import { Icon } from "@iconify/react";
 
 If your device is connected to Internet via Wi-Fi or ethernet, you can enable it to forward packets along to an MQTT server. This allows users on the local mesh to communicate with users on the internet. One or more channels must also be enabled as uplink and/or downlink for packets to be transmitted from and/or to your mesh (See [channels](/docs/configuration/radio/channels#downlink-enabled)).
 
-The MQTT module config options are: Enabled, Server Address, Username, Password, Encryption Enabled, JSON Enabled, TLS Enabled, Root Topic, Client Proxy Enabled, Map Reporting Enabled (with Position Precision and Publish Interval), and Okay to MQTT. MQTT Module config uses an admin message sending a `ConfigModule.MQTT` protobuf.
+The MQTT module config options are: Enabled, Server Address, Username, Password, Encryption Enabled, TLS Enabled, Root Topic, Client Proxy Enabled, Map Reporting Enabled (with Position Precision and Publish Interval), and Okay to MQTT. MQTT Module config uses an admin message sending a `ConfigModule.MQTT` protobuf.
 
 ## Settings
 
@@ -38,14 +38,6 @@ MQTT password to use (most useful for a custom MQTT server). If using a custom s
 Whether to send encrypted or unencrypted packets to the MQTT server. Unencrypted packets may be useful for external systems that want to consume meshtastic packets.
 
 Note: All messages are sent to the MQTT broker unencrypted if this option is not enabled, even when your uplink channels have encryption keys set.
-
-### JSON Enabled
-
-:::note
-JSON is not supported on the nRF52 platform.
-:::
-
-Enable the sending / consumption of JSON packets on MQTT. These packets are not encrypted, but offer an easy way to integrate with systems that can read JSON.
 
 ### TLS Enabled
 
@@ -161,7 +153,6 @@ The following configuration options are available in the Python CLI:
 |        mqtt.username         |     `string`      |       `meshdev`       |
 |        mqtt.password         |     `string`      |     `large4cats`      |
 |   mqtt.encryption_enabled    |  `true`, `false`  |        `false`        |
-|      mqtt.json_enabled       |  `true`, `false`  |        `false`        |
 |       mqtt.tls_enabled       |  `true`, `false`  |        `false`        |
 |          mqtt.root           |     `string`      |                       |
 | mqtt.proxy_to_client_enabled |  `true`, `false`  |        `false`        |
@@ -172,7 +163,7 @@ The following configuration options are available in the Python CLI:
 Because the device will reboot after each command is sent via CLI, it is recommended when setting multiple values in a config section that commands be chained together as one.
 
 ```shell title="Example:"
-meshtastic --set mqtt.enabled true --set mqtt.json_enabled true
+meshtastic --set mqtt.enabled true --set mqtt.encryption_enabled true
 ```
 
 :::
@@ -180,11 +171,6 @@ meshtastic --set mqtt.enabled true --set mqtt.json_enabled true
 ```shell title="Enable/Disable MQTT Module"
 meshtastic --set mqtt.enabled true
 meshtastic --set mqtt.enabled false
-```
-
-```shell title="Enable/Disable MQTT JSON"
-meshtastic --set mqtt.json_enabled true
-meshtastic --set mqtt.json_enabled false
 ```
 
 </TabItem>
