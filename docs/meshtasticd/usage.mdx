@@ -86,6 +86,23 @@ Bluetooth is currently unsupported and not functional on MeshtasticD devices.
 
 - The persistent .proto db files of the portduino version of meshtasticd are stored under: `/var/lib/meshtasticd/.portduino/default/prefs/`.
 
+### JSON packet log
+
+meshtasticd can write every packet it decodes to a file, one JSON object per line, in the same format as the [MQTT JSON topics](/docs/software/integrations/mqtt#json-topic). Set it in the `Logging` section of `config.yaml`:
+
+```yaml
+Logging:
+  JSONFile: /var/lib/meshtasticd/packets.json
+  JSONFileRotate: 60 # optional: start a new file every 60 minutes
+  JSONFilter: position # optional: log only one packet type
+```
+
+- **`JSONFile`**: the file to write. Without rotation, packets are appended to it, and meshtasticd exits at startup if it can't open it.
+- **`JSONFileRotate`**: minutes per file. Each file is named `<JSONFile>_YYYYMMDD-HHMMSS`. `0`, the default, writes one file.
+- **`JSONFilter`**: `textmessage`, `telemetry`, `nodeinfo`, `position`, `waypoint`, `neighborinfo`, `traceroute`, `detection`, `paxcounter`, `remotehardware`, or a port number. Leave it out to log every packet.
+
+The JSON log is written only when `TraceFile` is not set and `LogLevel` is not `trace`; otherwise the same JSON goes to the trace log.
+
 ## CLI Configuration
 
 Interaction with Meshtastic can be conducted via the command line:
