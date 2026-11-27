@@ -58,6 +58,22 @@ The band range is from 902 to 928 MHz.
 
 In North America, the available Frequency Slots depend on the bandwidth setting, which is included in the selected Radio Preset. The standard Preset, LongFast, provides 104 Frequency Slots. After a factory reset, the radio defaults to LongFast with a Frequency Slot of 0, which translates to Slot 20 (centered at 906.875 MHz) based on the channel hashing algorithm.
 
+## Japan Frequency Bands
+
+:::warning Breaking change for Japan (JP)
+Starting with firmware [VERSION], the JP region uses the frequency slot plan defined by ARIB STD-T108.
+
+Slot numbers map to different frequencies after updating, so nodes on [VERSION] or later will not hear nodes on earlier firmware.
+
+**Update all nodes in your mesh together, and re-check any manually set Frequency Slot.**
+:::
+
+The maximum power allowed for Japan is 20 mW (+13 dBm) antenna power, as defined by [ARIB STD-T108](https://arib.or.jp/english/std_tr/telecommunications/desc/std-t108.html).
+
+The band range is from 920.5 to 923.5 MHz.
+
+In Japan, the available Frequency Slots depend on the bandwidth setting, which is included in the selected Radio Preset in accordance with the regulatory requirements. The standard Preset, LongFast, provides 7 Frequency Slots.
+
 ## Data Rates
 
 ### Considerations
@@ -102,10 +118,10 @@ The link budget used by these calculations assumes a transmit power of 22 dBm an
 
 ### Narrowband presets
 
-Three narrowband preset families serve bands where the 250 kHz and 500 kHz general-purpose presets are not permitted. Each family belongs to specific [regions](/docs/configuration/region-by-country) and can't be selected anywhere else:
+Three narrowband preset families serve bands where the 250 kHz and 500 kHz general-purpose presets are not permitted, or where narrower channels better fit the local band plan and congested RF environments. Each family is available only in specific [regions](/docs/configuration/region-by-country):
 
-- **Lite** — `EU_866`, the 865.6 - 867.6 MHz European SRD band.
-- **Narrow** — `EU_N_868`, plus the 70cm and 1.25m amateur regions (`ITU1_70CM`, `ITU2_70CM`, `ITU3_70CM`, `ITU2_125CM`).
+- **Lite** — `EU_866`, the 865.6 - 867.6 MHz European SRD band (`Lite Fast` and `Lite Slow`), and `JP` (`Lite Slow`, fitting a single 200 kHz unit channel).
+- **Narrow** — `EU_N_868`, the 70cm and 1.25m amateur regions (`ITU1_70CM`, `ITU2_70CM`, `ITU3_70CM`, `ITU2_125CM`), and `JP`.
 - **Tiny** — the 2m amateur regions (`ITU1_2M`, `ITU2_2M`, `ITU3_2M`), where many administrations cap the occupied bandwidth well below 62.5 kHz.
 
 | Radio Preset  | Alt Preset Name | Data-Rate  | SF / Symbols | Coding Rate | Bandwidth  | Link Budget |
