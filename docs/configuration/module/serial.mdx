@@ -75,6 +75,74 @@ How long the module waits after the last received byte before treating the accum
 
 When enabled, redirects the primary USB serial port to serial module output instead of the debug console. **Only valid with `NMEA` and `CALTOPO` modes** — using it with any other mode will produce a configuration error and the module will not start. Has no effect if TX/RX GPIO pins are also configured (pogo-pin output takes precedence).
 
+## meshtasticd (Linux)
+
+Starting with firmware 2.8.3, the serial module runs on [meshtasticd](/docs/meshtasticd/). In place of the RX and TX GPIO pins, it uses a port on the host: a serial device such as `/dev/ttyUSB0`, or a pseudo-terminal (PTY), a virtual serial port that meshtasticd creates for another program on the same host to open.
+
+1. Name the port in `/etc/meshtasticd/config.yaml` or a file in `config.d`. A serial device runs at the speed set by `serial.baud`. A `pty:` path links the PTY at the path given.
+
+   ```yaml title="config.yaml"
+   SerialModule:
+     Path: /dev/ttyUSB0
+   ```
+
+   ```yaml title="config.yaml"
+   SerialModule:
+     Path: pty:/tmp/meshserial
+   ```
+
+2. For `SIMPLE` mode, add a channel named `serial`.
+
+   ```shell
+   meshtastic --host localhost --ch-add serial
+   ```
+
+3. Enable the module and set its mode.
+
+   ```shell
+   meshtastic --host localhost --set serial.enabled true --set serial.mode SIMPLE
+   ```
+
+4. Restart meshtasticd. The module is only created at startup, so enabling it does nothing until a restart.
+
+   ```shell
+   sudo systemctl restart meshtasticd
+   ```
+
+5. Confirm the module opened the port. The log shows `Init serial peripheral interface` with no `Serial: cannot open` line after it, and for a PTY, `Serial: pty /dev/pts/3 linked at /tmp/meshserial`.
+
+   ```shell
+   journalctl -u meshtasticd -b | grep -i serial
+   ```
+
+Bytes written to the port go out over the mesh. In `SIMPLE` and `TEXTMSG` mode, the module sends a packet once the line is idle for `serial.timeout` ms (default 250) or 233 bytes arrive. What the module receives is written back to the port. With the `pty:` path, read what arrives from the mesh:
+
+```shell
+sudo -u meshtasticd cat /tmp/meshserial
+```
+
+Send to the mesh:
+
+```shell
+printf 'hello' | sudo -u meshtasticd tee /tmp/meshserial
+```
+
+- `SIMPLE`, `TEXTMSG`, `PROTO`, `NMEA`, and `CALTOPO` work. `WS85`, `VE_DIRECT`, `MS_CONFIG`, and `override_console_serial_port` don't apply.
+- The module doesn't start when the display runs in `COLOR` mode (`DisplayMode: COLOR`).
+- The service runs as the `meshtasticd` user. The Debian and RPM packages add it to `dialout`, which covers `/dev/ttyUSB*` and `/dev/ttyACM*`.
+- A PTY belongs to `meshtasticd`, so run the program on the other end as `meshtasticd` or root. Bytes one program writes go to meshtasticd, not to other programs that have the port open.
+- A serial device is opened once at startup. If it is unplugged, restart meshtasticd after reconnecting it.
+
+What the log says at startup:
+
+| Log line | Meaning |
+| :------- | :------ |
+| `Init serial peripheral interface` | The module is about to open the port. A `Serial: cannot open` line after it means the open failed and the module stopped. Missing means `serial.enabled` wasn't set when meshtasticd started, `SerialModule.Path` is empty, or the display runs in `COLOR` mode. |
+| `Serial: pty /dev/pts/3 linked at /tmp/meshserial` | The virtual port is ready. |
+| `Serial: cannot open /dev/ttyUSB0: Permission denied` | The `meshtasticd` user can't open the device. |
+| `Serial: cannot open /dev/ttyUSB0: No such file or directory` | No device at that path. |
+| `Serial: /tmp/meshserial exists and is not a symlink; not replacing it` | A file is in the way of the link. |
+
 ## Serial Module Config Client Availability
 
 <Tabs
@@ -418,7 +486,7 @@ meshtastic --port <USB_PORT> \
   --set serial.timeout 250
 ```
 
-Connect at `38400 8N1` and send up to **237 bytes** per packet. The module frames a packet by detecting a gap of `serial.timeout` milliseconds in the byte stream (default 250 ms).
+Connect at `38400 8N1` and send up to **233 bytes** per packet. The module frames a packet by detecting a gap of `serial.timeout` milliseconds in the byte stream (default 250 ms).
 
 ---
 

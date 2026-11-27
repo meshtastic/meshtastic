@@ -93,6 +93,10 @@ By default `HTTPPort` listens on loopback (`127.0.0.1`) only, so only clients on
 
 When the Web client is served from another site, Chrome can ask for local network access permission the first time it connects to this port. Grant it only to sites you trust. Loopback binding does not stop a granted site, or any program on the same host, from using this unauthenticated API.
 
+### Serial module
+
+The serial module can bridge a host serial port over the mesh, set by `SerialModule.Path` in `config.yaml`. Read [serial module on meshtasticd](/docs/configuration/module/serial/#meshtasticd-linux) for setup.
+
 ### Bluetooth Support
 
 Bluetooth is currently unsupported and not functional on MeshtasticD devices.
