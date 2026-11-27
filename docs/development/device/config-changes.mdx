@@ -1,0 +1,42 @@
+---
+id: config-changes
+title: How Config Changes Take Effect
+sidebar_label: Config Changes
+sidebar_position: 5
+---
+
+A config write from a client, such as `set_config`, `set_module_config` or `set_channel`, is always saved. Whether the node also reconfigures its LoRa radio or reboots depends on what the write changed.
+
+## LoRa radio reconfiguration
+
+The node reprograms the radio live, without a reboot, only for:
+
+- `set_config` with `lora`, when a field the radio uses changes. Changing only the hop limit, transmit enable, duty-cycle override, PA fan, ignore lists or MQTT flags does not reconfigure it.
+- `set_channel`, when the frequency slot comes from the primary channel's name, and the primary channel's name or index changes.
+- `set_ham_mode`.
+
+Every other write is saved without touching the radio: the other config sections, module config, owner, fixed position, and favorite, ignored or muted nodes.
+
+## Reboots
+
+| Write | Reboots when |
+| --- | --- |
+| `set_config` `device` | button GPIO, buzzer GPIO, role or rebroadcast mode changes |
+| `set_config` `position` | any field changes except the broadcast interval, smart broadcast and its minimum distance, position flags, fixed position, and GPS mode between Enabled and Disabled |
+| `set_config` `power` | INA address, power saving, light sleep, minimum wake, battery shutdown, deep sleep or Bluetooth wait time changes |
+| `set_config` `display` | screen on duration, flip screen, OLED type or display mode changes |
+| `set_config` `network`, `bluetooth`, `security` | anything in that section changes |
+| `set_config` `lora` | never: LoRa changes apply live |
+| `set_module_config` MQTT, serial, telemetry | anything in that module changes |
+| `set_module_config` status message, mesh beacon | never |
+| `set_module_config`, any other module | always |
+| `set_owner`, `set_ham_mode` | always |
+| `set_channel`, fixed position, favorite, ignored and muted nodes | never |
+
+Re-sending a section unchanged does not reboot where the table says "changes".
+
+## Edit transactions
+
+Writes sent between `begin_edit_settings` and `commit_edit_settings` are applied but not saved. The commit saves once, and reboots or reconfigures the radio only if at least one write in the batch needed it.
+
+If no write arrives for 60 seconds, the node commits the open transaction itself, including any reboot it needs.
