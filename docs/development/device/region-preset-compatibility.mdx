@@ -83,15 +83,17 @@ These are what keep the UX correct across firmware versions. Implement all of th
 
 1. **An absent region means no constraint.** If a region code does not appear in `region_groups`, the client has no compatibility information for it and **must not restrict** its preset choices - fall back to the full preset list. This happens for region codes with no firmware band-table entry: today `EU_874`, `EU_917` and `UA_868`. The firmware rejects all three as unrecognised in an admin config write, so a client should not offer them at all. `UA_868` was retired in 2.8.0 ([#10994](https://github.com/meshtastic/firmware/pull/10994)), and a stored `UA_868` config is migrated to `EU_868` at boot.
 2. **An absent message means no constraint.** Firmware older than 2.8 never sends the map. Clients **must** tolerate it being absent entirely and keep their existing unconstrained behaviour. Do not block the config screen waiting for it.
-3. **`default_preset` is always a member of its group's `presets`.** Use it to pre-select a preset when the user switches to a region whose valid set excludes the current selection, instead of leaving an illegal selection or guessing.
+3. **`default_preset` is always a member of its group's `presets`.** Use it to pre-select a preset when the user switches to a region whose valid set excludes the current selection, instead of leaving an illegal selection or guessing. Between EU sibling regions, always use it - see rule 5.
 4. **`licensed_only` marks amateur bands.** Surface a warning or a gate. The firmware also requires the operator's licensed flag for these regions, so coordinate the two - the user should not be able to pick a licensed band without acknowledging licensing.
 5. **The EU regions auto-swap.** The firmware treats the EU sibling regions (`EU_868`, `EU_866`, `EU_N_868`) specially: if the user is in one of them and selects a preset belonging to a sibling's list, the firmware **swaps the region** rather than rejecting the preset. To make that visible in a picker, the firmware advertises the **same superset** - the union of the trio's presets - for all three siblings, so a client filtering normally will offer every EU 86x preset regardless of which sibling is selected. The consequence: **do not assume the region is immutable across a preset change.** After an admin config write, re-read the resulting `LoRaConfig` and reflect the possibly-changed region back into the UI.
+
+   The superset does not apply when the user changes the **region** between siblings. The firmware validates the new region against its own band presets, and rejects the whole LoRa config write if the current preset is not one of them, so the region does not change. On an explicit region change within the trio, always select the target region's `default_preset`, even when the current preset is in the advertised set.
 6. **Use it as a UI guard, not as a validator of truth.** The firmware still validates and clamps on its own. The map exists to stop a user _selecting_ an illegal combination; it is not a security or correctness boundary.
 
 ## UI recommendations
 
 - In the LoRa config screen, when a region is selected, filter or disable the modem-preset picker down to that region's presets - while preset mode is on.
-- If the current preset is not in the newly selected region's set, move the selection to that region's `default_preset`.
+- If the current preset is not in the newly selected region's set, move the selection to that region's `default_preset`. When the user changes between EU sibling regions, move it to the target region's `default_preset` unconditionally ([rule 5](#semantics-and-rules)).
 - Show a licensed badge or confirmation for regions where `licensed_only` is true.
 - If a region is absent from the map, or the whole message is absent, render the full preset list as before. **Never show an empty picker.**
 
@@ -103,7 +105,7 @@ These are what keep the UX correct across firmware versions. Implement all of th
 
 ## Platform notes
 
-**Note:** these describe how each client repository consumes the protobufs, not durable file paths. Both repos have been refactored away from older layouts - re-pin against a specific commit if you need exact locations.
+**Note:** these describe how each client repository consumes the protobufs, not durable file paths. Several repos have been refactored away from older layouts - re-pin against a specific commit if you need exact locations.
 
 ### Android
 
@@ -117,9 +119,13 @@ The protobufs are **vendored** into a local Swift package, generated from the pr
 
 Dispatch is a real `switch` over the payload variant in the accessory manager, so add a `.regionPresets` case with its handler alongside the existing config and metadata handlers. Config is persisted with SwiftData, so store the decoded map on a settings or connection model for the LoRa view to read. That view holds both the region picker and the preset picker; filter the latter by the selected region's entry.
 
-### Python and web
+### Python
 
-Both consume the published protobufs and will see `region_presets` once their protobuf dependency includes field 19. Until then it decodes as an unknown field and can be ignored.
+The generated bindings are **committed** under `meshtastic/protobuf/`, generated from the protobufs git submodule by `bin/regen-protobufs.sh`. The `protobuf` package dependency is only the runtime, so bumping it does not add field 19. To get it: advance the submodule, regenerate, and commit both the regenerated bindings and the submodule pointer. Users receive it in the next Meshtastic Python release. Older bindings decode it as an unknown field, which can be ignored.
+
+### Web
+
+The protobufs are **vendored** as a copy of the protobufs repository at `packages/protobufs`, generated to TypeScript with `buf`, and consumed by the app as the workspace package `@meshtastic/protobufs`. To get field 19: update that copy and regenerate. The same package is published to JSR for other JavaScript consumers, so those need a new JSR release.
 
 ## Reference payload
 
