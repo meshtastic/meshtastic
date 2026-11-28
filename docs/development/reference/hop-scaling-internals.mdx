@@ -98,7 +98,7 @@ The estimate itself does not need two. `passesFilter` is a uniform hash-space su
 The second denominator exists for **stability**, not accuracy. Scale-up must take effect at once, but scale-down must not immediately reinterpret older samples as though they had been collected at the new denominator, and newly admitted nodes have not yet accumulated enough `seenHoursAgo` history to be reliable. So:
 
 1. `samplingDenominator` may halve as soon as the histogram looks sparse again (fewer than 20 percent of capacity counted).
-2. `filteringDenominator` is held at its elevated value for 13 rollovers after the last scale-up.
+2. `filteringDenominator` is held at its elevated value for 13 rollovers after the last scale-up. The hold counts down only on rollovers where `filteringDenominator` is above `samplingDenominator`, so it starts draining when sampling first scales down, not at the scale-up itself.
 3. Once the hold expires, `filteringDenominator` halves by **one step per hour** toward `samplingDenominator` rather than jumping straight down, giving the hop walk a gradual descent.
 
 A companion array, `denominatorHistory[13]`, records which `filteringDenominator` was in effect when each hour's bit was set, so per-hour totals are always scaled by the multiplier that was actually active for that hour.
@@ -226,14 +226,14 @@ The remaining lines are warnings: `Histogram full, node dropped` when a new node
 
 ## Worked scenarios
 
-Each chart below plots the **scaled** per-hop buckets - the filtered sample multiplied by `filteringDenominator`, which is what the hop walk actually consumes. All five share one 0-45 axis so the shapes are directly comparable, and the `cumulative` column is the running total the walk tests against the 40-node floor. Each assumes the congestion gate is engaged; with it released, the node sends at its configured hop limit.
+Each chart below plots the **scaled** per-hop buckets - the filtered sample multiplied by `filteringDenominator`, which is what the hop walk actually consumes. All five share one 0-45 axis so the shapes are directly comparable, and the `cumulative` column is the running total the walk tests against the 40-node floor. The hop counts below are the **suggested hop**, before the [role floor](#role-floor) is applied and before `Router::send()` keeps the lower of it and the packet's own hop limit. Each assumes the congestion gate is engaged. Once it releases, the applied hop limit rises by one per rollover until it reaches the configured limit.
 
 ### A. Dense local mesh
 
 An urban or event mesh where most nodes sit within 1 or 2 hops. `filteringDenominator = 1`.
 
 <ThemedImage
-  alt="Nodes reached at each hop in a dense local mesh: 25, 30, 15, 5, 10, 15, 10 and 0 from hop 0 to hop 7. Cumulative reach crosses the 40-node floor at hop 1, at 55 nodes."
+  alt="Nodes reached at each hop in a dense local mesh: 25, 30, 15, 5, 5, 5, 5 and 0 from hop 0 to hop 7. Cumulative reach crosses the 40-node floor at hop 1, at 55 nodes."
   className="max-w-full h-auto"
   sources={{
     light: useBaseUrl("/img/hop-scaling/scenario-a-light.svg"),
@@ -241,11 +241,11 @@ An urban or event mesh where most nodes sit within 1 or 2 hops. `filteringDenomi
   }}
 />
 
-| Regime   | Limit | `70 <= limit` | Final hop |
-| :------- | :---- | :------------ | :-------- |
-| Strict   | 50    | no            | 1         |
-| Default  | 60    | no            | 1         |
-| Generous | 80    | yes           | 2         |
+| Regime   | Limit | `70 <= limit` | Suggested hop |
+| :------- | :---- | :------------ | :------------ |
+| Strict   | 50    | no            | 1             |
+| Default  | 60    | no            | 1             |
+| Generous | 80    | yes           | 2             |
 
 Dense meshes usually collapse to 1 or 2 hops.
 
@@ -309,17 +309,17 @@ The raw filtered sample is only `[8 10 9 7 5 3 2 3]` - 47 entries - but every bu
   }}
 />
 
-108 exceeds even the Generous limit of 80, so the result is **1 hop**. Note how much taller this chart is than scenario C on the same scale: when the sample implies a very large mesh, scaling pushes the hop limit down aggressively despite the small raw sample.
+108 exceeds even the Generous limit of 80, so the suggested hop is **1**. A `ROUTER` on this mesh still sends with 3, its role floor. Note how much taller this chart is than scenario C on the same scale: when the sample implies a very large mesh, scaling pushes the hop limit down aggressively despite the small raw sample.
 
 ### Summary
 
-| Scenario         | Sample and scale              | Final hop | Why                                          |
-| :--------------- | :---------------------------- | :-------- | :------------------------------------------- |
-| Dense local      | `[25 30 15 5 10 15 10 0] × 1` | 1 to 2    | Hop 1 already clears the 40-node floor       |
-| Spread sparse    | `[5 8 12 15 10 6 10 10] × 1`  | 4         | Hop 3 reaches 40 and hop 4 still fits        |
-| Deep chain       | `[2 3 3 4 3 2 2 3] × 1`       | 7         | Floor never reached                          |
-| Repeater cluster | `[3 5 45 8 3 2 2 3] × 1`      | 2 to 3    | A huge hop-2 cluster dominates               |
-| Megamesh         | `[8 10 9 7 5 3 2 3] × 4`      | 1         | The scaled sample already implies a big mesh |
+| Scenario         | Sample and scale             | Suggested hop | Why                                          |
+| :--------------- | :--------------------------- | :------------ | :------------------------------------------- |
+| Dense local      | `[25 30 15 5 5 5 5 0] × 1`   | 1 to 2        | Hop 1 already clears the 40-node floor       |
+| Spread sparse    | `[5 8 12 15 10 6 10 10] × 1` | 4             | Hop 3 reaches 40 and hop 4 still fits        |
+| Deep chain       | `[2 3 3 4 3 2 2 3] × 1`      | 7             | Floor never reached                          |
+| Repeater cluster | `[3 5 45 8 3 2 2 3] × 1`     | 2 to 3        | A huge hop-2 cluster dominates               |
+| Megamesh         | `[8 10 9 7 5 3 2 3] × 4`     | 1             | The scaled sample already implies a big mesh |
 
 All five outcomes come from one bounded data structure: the sampled histogram, its hop buckets, its 13-hour bitmap history, and its denominator-based scaling.
 
