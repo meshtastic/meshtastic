@@ -2,7 +2,7 @@
 id: device
 title: Device Configuration
 sidebar_label: Device
-description: Learn about and compare device roles such as Client, Repeater, and Router as well as other Device settings.
+description: Learn about and compare device roles such as Client and Router as well as other Device settings.
 ---
 
 import Tabs from "@theme/Tabs";
@@ -26,11 +26,9 @@ The device config options are: Role, Rebroadcast Mode, GPIO for User Button, GPI
 | SENSOR         | Broadcasts telemetry packets as priority.                                                                                                                        | Deploying in scenarios where gathering environmental or other sensor data is crucial, with efficient power usage and frequent updates.                      |
 | TAK            | Optimized for ATAK system communication, reduces routine broadcasts.                                                                                             | Integration with ATAK systems (via the Meshtastic ATAK Plugin) for communication in tactical or coordinated operations.                                     |
 | TAK_TRACKER    | Enables automatic TAK PLI broadcasts and reduces routine broadcasts.                                                                                             | Standalone PLI integration with ATAK systems for communication in tactical or coordinated operations.                                                       |
-| REPEATER [^4] | Infrastructure node for extending network coverage by always rebroadcasting packets once with minimal overhead. Not visible in Nodes list.                       | Best positioned in strategic locations to maximize the network's overall coverage. Device is not shown in topology.                                       |
 | ROUTER         | Infrastructure node for extending network coverage by always rebroadcasting packets once. Visible in Nodes list.                                                 | Best positioned in strategic locations to maximize the network's overall coverage. Device is shown in topology.                                             |
 | ROUTER_LATE    | Infrastructure node that always rebroadcasts packets once but only after all other modes, ensuring additional coverage for local clusters. Visible in Nodes list. More details in our blog: [Demystifying Router Late](/blog/demystifying-router-late/) | Ideal for covering dead spots or ensuring reliability for a cluster of nodes where placement doesn’t benefit the broader mesh. Device is shown in topology. |
 
-[^4]: This role has been deprecated as of firmware version 2.7.11
 :::tip
 Still not sure which role to use? Check out our blog post: [Choosing the Right Device Role](/blog/choosing-the-right-device-role/)
 :::
@@ -54,7 +52,6 @@ This table shows the **default** values after selecting a preset. As always, ind
 | TAK_TRACKER    | Yes             | Optional       | Regular           | Yes            | No                  | Yes                   |
 | ROUTER         | No[^2]          | No             | High              | Yes            | Yes                 | Yes                   |
 | ROUTER_LATE    | Yes             | Yes            | High              | Yes            | No                  | Yes                   |
-| REPEATER       | Yes             | No             | High              | Yes            | Yes                 | No                    |
 
 [^1]: **Awake Only** indicates retransmissions will occur normally but not while asleep between transmission intervals.
 
@@ -83,7 +80,7 @@ This setting defines the device's behavior for how messages are rebroadcasted.
 |        Value         |                                                                                                  Description                                                                                                  |
 | :------------------: | :-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
 |        `ALL`         |               ALL (Default) - This setting will rebroadcast ALL messages from its primary mesh as well as other meshes with the same modem settings, including when encryption settings differ.               |
-| `ALL_SKIP_DECODING`  |                                  ALL_SKIP_DECODING - Same as behavior as ALL, but skips packet decoding and simply rebroadcasts them. **Only available with Repeater role.**                                  |
+| `ALL_SKIP_DECODING`  |                                  ALL_SKIP_DECODING - Kept for compatibility; behaves the same as `ALL`.                                  |
 |     `LOCAL_ONLY`     |             LOCAL_ONLY - Ignores observed messages from foreign meshes that are open or those which it cannot decrypt. Only rebroadcasts message on the nodes local primary / secondary channels.             |
 |     `KNOWN_ONLY`     |            KNOWN_ONLY - Ignores observed messages from foreign meshes like LOCAL_ONLY, but takes it a step further by also ignoring messages from nodenums not in the node's known list (NodeDB).             |
 |        `NONE`        |                                       NONE - Only permitted for SENSOR, TRACKER and TAK_TRACKER roles, this will inhibit all rebroadcasts, not unlike CLIENT_MUTE role.                                       |
@@ -190,7 +187,7 @@ All device config options are available in the python CLI. Example commands are 
 
 | Setting                           | Acceptable Values                                                  | Default           |
 | --------------------------------- | ------------------------------------------------------------------ | ----------------- |
-| device.role                       | `CLIENT`, `CLIENT_MUTE`, `ROUTER`, `REPEATER`, `TRACKER`, `SENSOR` | `CLIENT`          |
+| device.role                       | `CLIENT`, `CLIENT_MUTE`, `ROUTER`, `TRACKER`, `SENSOR`             | `CLIENT`          |
 | device.rebroadcast_mode           | `ALL`, `ALL_SKIP_DECODING`, `LOCAL_ONLY`                           | `ALL`             |
 | device.button_gpio                | `0` - `34`                                                         | `0`               |
 | device.buzzer_gpio                | `0` - `34`                                                         | `0`               |
