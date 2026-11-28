@@ -1,0 +1,101 @@
+---
+id: rockchip-flashing
+title: Rockchip flashing
+sidebar_label: Rockchip flashing
+sidebar_position: 3
+description: Erase a Rockchip board's onboard storage and write an mPWRD-OS image to it, from the Meshtastic Flasher or from the command line.
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+Several of the boards mPWRD-OS supports are built on Rockchip chipsets and ship with onboard NAND flash or eMMC. Those boards need that storage handled before mPWRD-OS runs on them. [Board support](/docs/software/mpwrd-os/board-support) says which step applies to which board.
+
+Two tools do the job. The [Meshtastic Flasher](https://flasher.meshtastic.org/) runs in a browser and needs nothing installed, and `rkdeveloptool` runs from a command line.
+
+:::warning
+Erasing onboard storage removes the system the manufacturer shipped on the board, and it cannot be undone from these tools. Download the mPWRD-OS image for your board before you start.
+:::
+
+## Put the board in Maskrom mode
+
+Both tools need the board in Maskrom mode. On most boards, hold the Maskrom button for five seconds while applying power. Boards differ in where that button sits and whether it is labeled, so check the manufacturer's documentation for yours.
+
+Remove the microSD card before erasing onboard storage.
+
+## Meshtastic Flasher
+
+The Flasher's **Rockchip Flash Tool** connects to a board in Maskrom mode over USB. It reports the board's USB ID, active storage, and capacity once connected, and it can either erase the onboard storage or write an image to it. Image files are accepted as `.img`, `.img.gz`, or `.img.xz`, so a release download needs no unpacking. Both actions ask you to confirm before they run.
+
+1. Open the [Meshtastic Flasher](https://flasher.meshtastic.org/) and select **mPWRD-OS Tools**, then **Rockchip Flash Tool**.
+2. Select **Connect Rockchip device** and choose your board.
+3. Check the reported USB ID, active storage, and capacity against the board you meant to connect, and check that your image file matches that board.
+4. Select the target storage, then erase it or write your image to it.
+
+## rkdeveloptool
+
+### Install
+
+<Tabs groupId="operating-systems">
+  <TabItem value="debian" label="Debian / Ubuntu" default>
+
+  ```shell
+  sudo apt-get install rkdeveloptool
+  ```
+
+  </TabItem>
+  <TabItem value="fedora" label="Fedora">
+
+  ```shell
+  sudo dnf install rkdeveloptool
+  ```
+
+  </TabItem>
+  <TabItem value="macos" label="macOS">
+
+  ```shell
+  brew tap IgorKha/homebrew-rkdeveloptool
+  brew install rkdeveloptool
+  ```
+
+  </TabItem>
+  <TabItem value="windows" label="Windows">
+
+  Windows uses RKDevTool together with the Rockchip USB drivers, rather than `rkdeveloptool`. Both are published in the [mPWRD-OS rockchip-tools](https://github.com/mPWRD-OS/rockchip-tools) repository.
+
+  </TabItem>
+</Tabs>
+
+These commands reach the board over USB. Unless the RockUSB udev rules are installed, they need `sudo`.
+
+### List attached devices
+
+Confirm the board is connected and in Maskrom mode before going further. The command reports nothing when the board is not in Maskrom mode, and `rkdeveloptool` cannot choose between two attached boards, so connect one at a time.
+
+```shell
+sudo rkdeveloptool ld
+```
+
+### Erase flash
+
+Boards that ship pre-flashed from the factory need their onboard storage erased. Remove the microSD card first.
+
+```shell
+sudo rkdeveloptool ef
+```
+
+### Write an image to eMMC
+
+Supported on the Luckfox Lyra Ultra W. Check that the image you downloaded is the one built for your board before writing it.
+
+```shell
+sudo rkdeveloptool wl 0 <IMAGE_FILE>
+```
+
+Replace `<IMAGE_FILE>` with the image you downloaded from the [mPWRD-OS releases](https://github.com/mPWRD-OS/mPWRD-OS/releases) page. Extract it first, because `rkdeveloptool` does not read compressed images.
+
+Reboot the board once the write finishes. Removing power has the same effect.
+
+```shell
+sudo rkdeveloptool rd
+```

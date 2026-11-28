@@ -1,7 +1,8 @@
 ---
 title: Codebase
 sidebar_position: 2
-last_updated: 2026-07-08
+last_updated: 2026-10-21
+description: Repository layout, package namespacing, and the Gradle build system — convention plugins, build variants, and key tasks.
 parent: Developer Guide
 ---
 
@@ -11,28 +12,30 @@ Repository layout, namespacing conventions, and build system overview.
 
 ## Repository Structure
 
-```
+```text
 Meshtastic-Android/
-├── androidApp/                 # Android application module
+├── androidApp/             # Android application module
 │   ├── src/main/           # Shared Android code
-│   ├── src/google/         # Google Play flavor (Gemini, proprietary)
+│   ├── src/google/         # Google Play flavor (proprietary Google integrations — Gemini, Maps, Play services)
 │   └── src/fdroid/         # F-Droid flavor (FOSS-only)
-├── desktopApp/                # Desktop JVM application
-├── feature/                # Feature modules (KMP)
+├── desktopApp/             # Desktop JVM application
+├── feature/                # Feature modules (KMP, except widget)
 │   ├── intro/
 │   ├── messaging/
 │   ├── connections/
 │   ├── map/
+│   ├── map-maplibre/
+│   ├── map-terrain/
+│   ├── coverage/
 │   ├── node/
 │   ├── settings/
 │   ├── firmware/
 │   ├── docs/
 │   ├── wifi-provision/
-│   ├── widget/
-│   ├── discovery/
-│   └── car/
-├── core/                   # Core infrastructure modules (KMP)
-│   ├── barcode/
+│   ├── widget/             # Android library
+│   └── discovery/
+├── core/                   # Core infrastructure modules (KMP, except barcode and nfc)
+│   ├── barcode/            # Android library
 │   ├── ble/
 │   ├── common/
 │   ├── data/
@@ -44,7 +47,7 @@ Meshtastic-Android/
 │   ├── model/
 │   ├── navigation/
 │   ├── network/
-│   ├── nfc/
+│   ├── nfc/                # Android library
 │   ├── prefs/
 │   ├── repository/
 │   ├── resources/
@@ -55,8 +58,11 @@ Meshtastic-Android/
 ├── baselineprofile/        # Baseline Profile generation for :androidApp
 ├── screenshot-tests/       # Compose Preview screenshot tests (visual-regression gate)
 ├── docs-screenshots/       # Doc-framed composition screenshots (generate-only, not CI-gated)
+├── store-screenshots/      # Store-listing screenshots captured from the real apps (instrumented)
+├── schema-strings/         # JVM generator for schema_strings.xml from the protobufs field metadata
 ├── build-logic/            # Convention plugins and build helpers
-│   └── convention/
+│   ├── convention/
+│   └── settings-plugin/    # meshtastic.develocity settings plugin
 ├── docs/                   # Documentation source (markdown)
 │   └── en/                 # English source; other locales live under docs/<locale>/user/
 │       ├── user/
@@ -70,7 +76,7 @@ Meshtastic-Android/
 ## Namespacing Convention
 
 All Kotlin packages follow the pattern:
-```
+```text
 org.meshtastic.{layer}.{module}.{subpackage}
 ```
 
@@ -91,13 +97,23 @@ All build files use Kotlin DSL (`.gradle.kts`). Configuration:
 
 ### Convention Plugins
 
-Located in `build-logic/convention/src/main/kotlin/`:
+Located in `build-logic/convention/src/main/kotlin/`. The full set is registered in
+`build-logic/convention/build.gradle.kts`; these are the ones a module build applies most often:
 
 | Plugin | Purpose |
 |--------|---------|
-| `meshtastic.kmp.feature` | Standard feature module setup |
-| `meshtastic.kmp.jvm.android` | JVM + Android target configuration |
+| `meshtastic.kmp.feature` | Feature module setup: applies `meshtastic.kmp.library`, `meshtastic.kmp.library.compose` and `meshtastic.koin`, and adds the Compose, Navigation 3, Lifecycle and Koin dependencies every feature needs |
+| `meshtastic.kmp.library` | Shared KMP library module |
+| `meshtastic.kmp.library.compose` | KMP library that also ships Compose UI |
+| `meshtastic.kmp.jvm.android` | Adds the `jvmAndroidMain` source set shared by the Android and desktop JVM targets |
+| `meshtastic.koin` | Koin Annotations + K2 compiler plugin |
 | `meshtastic.kotlinx.serialization` | Serialization plugin setup |
+| `meshtastic.android.room` | Room KMP setup and schema location |
+| `meshtastic.android.screenshot` | Compose Preview screenshot testing |
+
+The rest cover the application and library variants, lint, detekt, spotless, Dokka, Kover,
+AboutLibraries, analytics, secrets, the docs tasks and the root aggregate — read the `register(…)`
+block rather than assuming a plugin does or does not exist.
 
 ### Build Variants (Android)
 
@@ -108,15 +124,15 @@ Located in `build-logic/convention/src/main/kotlin/`:
 
 ### Key Gradle Tasks
 
-```bash
-# Compile check across all KMP targets
+```shell
+# Compile every KMP module's commonMain metadata, JVM main, and iosSimulatorArm64 main and test sources (excludes :desktopApp), and assemble the device-test APKs
 ./gradlew kmpSmokeCompile
 
-# Run all tests
-./gradlew allTests
+# Run all tests: allTests covers KMP modules, test covers Android/JVM-only modules; run both
+./gradlew test allTests
 
 # Code quality
-./gradlew spotlessCheck detekt
+./gradlew spotlessCheck detekt detektTypeResolved
 
 # Android build
 ./gradlew assembleGoogleDebug assembleFdroidDebug
@@ -128,7 +144,7 @@ Located in `build-logic/convention/src/main/kotlin/`:
 ./gradlew :desktopApp:packageReleaseDistributionForCurrentOS
 
 # API reference (Dokka HTML → build/dokka/html)
-./gradlew dokkaGeneratePublicationHtml
+./gradlew :dokkaGeneratePublicationHtml
 ```
 
 ## Version Catalog Highlights
@@ -144,7 +160,6 @@ Key dependencies in `gradle/libs.versions.toml`:
 | Database | Room KMP |
 | Networking | Ktor |
 | Markdown | multiplatform-markdown-renderer |
-| Testing | kotlin-test, compose-ui-test |
-
----
-
+| BLE | Kable |
+| Serial | usb-serial-for-android (Android), jSerialComm (Desktop) |
+| Testing | kotlin-test, Kotest, Mokkery, Turbine, Compose Multiplatform UI test |

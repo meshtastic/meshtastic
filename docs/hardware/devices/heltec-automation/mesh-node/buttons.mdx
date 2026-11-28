@@ -7,11 +7,23 @@ sidebar_position: 1
 
 ## Mesh Node T114
 
-- **RST Button:**
-  - **Single press:** Resets the device.
-  - **Double press:** The device enters download mode.
-- **User Button:**
-  - **Long press:** Will signal the device to shutdown after 5 seconds.
-  - **Single press:** Changes the information page displayed on the device's screen.
-  - **Double press:** Sends an adhoc ping of the device's position to the network.
-  - **Triple press:** Enables/Disables the GPS Module on demand. If an NPN Transistor is added it will cut power to the GPS board. The NPN pin must be configured on the PIN_GPS_EN inside the Position module in the App for this switching to work.
+Most device functions are menu items rather than dedicated button presses. Hold the user button to open the menu for the screen currently shown. Short presses move through the menu, and another hold activates an item.
+
+The T114 has one user button. The pad silkscreened RESET is not wired as a second button in current firmware.
+
+- **RST button:**
+  - **Short press:** Reset the device.
+  - **Double press:** Enter download mode.
+- **User button:**
+  - **Short press:** Move to the next screen. With a menu open, move to the next item.
+  - **Hold about half a second:** Open the menu for the current screen. With a menu open, activate the highlighted item.
+  - **Hold about four seconds, then release:** Shut the device down. A rising four-note tone signals that shutdown is arming. This works only more than 30 seconds after boot.
+
+### InkHUD firmware
+
+The T114 also ships an optional InkHUD firmware image, which handles the button differently.
+
+- **Short press:** Move to the next applet.
+- **Hold about half a second:** Open the menu. Inside the menu, a short press moves the cursor and a hold activates the highlighted item.
+
+InkHUD has no shutdown-by-holding gesture. Shut down from the menu instead.

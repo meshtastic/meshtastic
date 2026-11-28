@@ -24,7 +24,9 @@ jobs:
             const prAuthor = context.payload.pull_request.user.login;
 
             // Get the list of changed files
-            const { data: files } = await github.rest.pulls.listFiles({
+            // Paginate: listFiles returns 100 per page, and a single page
+            // silently drops every file past the first hundred.
+            const files = await github.paginate(github.rest.pulls.listFiles, {
               owner,
               repo,
               pull_number: prNumber,
@@ -93,14 +95,17 @@ jobs:
                 }
               }
 
-              // Check for inconsistent import paths in MDX files
+              // Check for relative import paths introduced by this change.
+              // Only added lines count. Testing the whole patch matched the
+              // removed line too, so converting an import to the alias tripped
+              // the check on the very change that fixed it.
               if (filename.endsWith(".mdx") && patch) {
-                const hasRelativeImport =
-                  /from\s+["']\/src\//.test(patch) ||
-                  /from\s+["']\.\.\//.test(patch);
-                const hasSiteImport = /from\s+["']@site\/src\//.test(patch);
+                const hasRelativeImport = patch
+                  .split("\n")
+                  .filter((l) => l.startsWith("+") && !l.startsWith("+++"))
+                  .some((l) => /from\s+["'](\/src\/|\.\.\/)/.test(l));
 
-                if (hasRelativeImport && !hasSiteImport) {
+                if (hasRelativeImport) {
                   suggestions.push(
                     `🔗 **${filename}** — Looks like this uses a relative import path. Could you use the \`@site/src/\` alias instead? It's the canonical Docusaurus alias and is more explicit about the import source.`
                   );
@@ -120,11 +125,176 @@ jobs:
                 }
               }
 
-              // Praise good practices
+              // Check product and technology name casing in prose (11.4).
+              // The patch only identifies which lines were added; fence state
+              // is read from the head file, because a hunk can begin inside a
+              // fence with the opening marker outside the patch entirely.
+              if (/\.mdx?$/.test(filename) && patch && file.status !== "removed") {
+                const NOT_BEFORE = "(?<![.\\w/-])";
+                // Reject a dotted key such as bluetooth.enabled, but not a
+                // term that simply ends a sentence.
+                const NOT_AFTER = "(?![\\w-])(?!\\.\\w)";
+                const CASING = [
+                  // "Lora V3.0" and "Lora 32" are vendor product names, which
+                  // 11.4 exempts, so a version or model number is skipped.
+                  ["Lora(?!\\s+[Vv]?\\d)|LORA|lora", "LoRa"],
+                  ["Lorawan|LoraWAN", "LoRaWAN"],
+                  ["NRF52840|nrf52840", "nRF52840"],
+                  ["ESP32S3|esp32s3", "ESP32-S3"],
+                  ["WiFi|wifi|WIFI", "Wi-Fi"],
+                  ["Node-red|node-red", "Node-RED"],
+                  ["bluetooth", "Bluetooth"],
+                  ["mqtt|Mqtt", "MQTT"],
+                  ["Meshtasticd|MeshtasticD", "meshtasticd"],
+                  ["gps|Gps", "GPS"],
+                ].map(([alts, correct]) => [
+                  new RegExp(NOT_BEFORE + "(?:" + alts + ")" + NOT_AFTER, "g"),
+                  correct,
+                ]);
+
+                // Line numbers in the head file that this patch adds.
+                const addedLines = new Set();
+                let newLine = null;
+                for (const raw of patch.split("\n")) {
+                  const hunk = raw.match(/^@@ -\d+(?:,\d+)? \+(\d+)(?:,\d+)? @@/);
+                  if (hunk) {
+                    newLine = Number(hunk[1]);
+                  } else if (newLine === null || raw.startsWith("\\ No newline")) {
+                    continue;
+                  } else if (raw.startsWith("+")) {
+                    addedLines.add(newLine++);
+                  } else if (raw.startsWith(" ")) {
+                    newLine++;
+                  }
+                  // Removed lines do not advance the new-file line number.
+                }
+
+                let contents = "";
+                if (addedLines.size > 0) {
+                  try {
+                    const { data: blob } = await github.rest.git.getBlob({
+                      owner,
+                      repo,
+                      file_sha: file.sha,
+                    });
+                    contents = Buffer.from(
+                      blob.content.replace(/\n/g, ""),
+                      "base64"
+                    )
+                      .toString("utf8")
+                      .replace(/\r\n/g, "\n");
+                  } catch (error) {
+                    core.warning(
+                      `Could not read ${filename} for the casing check: ${error.message}`
+                    );
+                  }
+                }
+
+                const blankOut = (match) => " ".repeat(match.length);
+                const found = new Map();
+                let fence = null;
+                let frontMatter = false;
+                let braceDepth = 0;
+                let openTag = false;
+
+                const lines = contents ? contents.split("\n") : [];
+                for (const [index, line] of lines.entries()) {
+                  // Front matter is metadata: id and slug are lowercase by design.
+                  if (index === 0 && line.trim() === "---") {
+                    frontMatter = true;
+                    continue;
+                  }
+                  if (frontMatter) {
+                    if (line.trim() === "---") frontMatter = false;
+                    continue;
+                  }
+
+                  const marker = line.match(/^ {0,3}(`{3,}|~{3,})(.*)$/);
+                  if (marker) {
+                    const run = marker[1];
+                    const trailing = marker[2];
+                    if (!fence) {
+                      // A backtick fence info string cannot contain a backtick.
+                      if (run[0] !== "`" || !trailing.includes("`")) {
+                        fence = { character: run[0], length: run.length };
+                      }
+                    } else if (
+                      run[0] === fence.character &&
+                      run.length >= fence.length &&
+                      /^[ \t]*$/.test(trailing)
+                    ) {
+                      fence = null;
+                    }
+                    continue;
+                  }
+                  if (fence) continue;
+
+                  // Reference link definitions and import lines are paths.
+                  if (/^\s{0,3}\[[^\]]+\]:\s*\S+/.test(line)) continue;
+                  if (/^\s*(?:import|export)\s/.test(line)) continue;
+
+                  // Mask what is not prose. Code spans first, so a URL or tag
+                  // inside backticks is already gone.
+                  let prose = line
+                    .replace(/(`+)((?:(?!\1)[\s\S])*)\1/g, blankOut)
+                    .replace(/https?:\/\/\S+/g, blankOut)
+                    .replace(/\]\([^)]*\)/g, blankOut)
+                    .replace(/<[^>]*>/g, blankOut);
+
+                  // JSX expressions such as values={[{label: "..."}]} span lines
+                  // and hold JavaScript, not prose.
+                  const wasInExpression = braceDepth > 0;
+                  for (const character of prose) {
+                    if (character === "{") braceDepth++;
+                    else if (character === "}" && braceDepth > 0) braceDepth--;
+                  }
+                  if (wasInExpression || braceDepth > 0) continue;
+
+                  // A tag broken over several lines is not prose either.
+                  if (openTag) {
+                    const close = prose.indexOf(">");
+                    if (close === -1) continue;
+                    prose = " ".repeat(close + 1) + prose.slice(close + 1);
+                    openTag = false;
+                  }
+                  const lastOpen = prose.lastIndexOf("<");
+                  if (lastOpen !== -1 && prose.indexOf(">", lastOpen) === -1) {
+                    prose = prose.slice(0, lastOpen);
+                    openTag = true;
+                  }
+
+                  if (!addedLines.has(index + 1)) continue;
+
+                  // Key by the wrong spelling, so two wrong forms of the same
+                  // word are both reported.
+                  for (const [pattern, correct] of CASING) {
+                    const hits = prose.match(pattern);
+                    if (hits) for (const wrong of hits) found.set(wrong, correct);
+                  }
+                }
+
+                if (found.size > 0) {
+                  const list = [...found]
+                    .map(([wrong, correct]) => `\`${wrong}\` → \`${correct}\``)
+                    .join(", ");
+                  suggestions.push(
+                    `🔤 **${filename}** — Product name casing: ${list}. These are the official forms in design standard 11.4, and mixed casing across pages makes search and translation unreliable. Code, config keys, file paths, URLs and a vendor's own product names keep their own spelling.`
+                  );
+                }
+              }
+
+              // Added lines only, so removing an @site import is not praised.
               if (
                 filename.endsWith(".mdx") &&
                 patch &&
-                patch.includes("@site/src/")
+                patch
+                  .split("\n")
+                  .some(
+                    (l) =>
+                      l.startsWith("+") &&
+                      !l.startsWith("+++") &&
+                      l.includes("@site/")
+                  )
               ) {
                 praises.push(
                   `Using the \`@site/\` import alias in **${filename}**`

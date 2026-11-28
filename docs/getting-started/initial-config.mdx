@@ -178,11 +178,26 @@ Refer to [LoRa Region by Country](/docs/configuration/region-by-country) for a m
 
 Now that you have set the LoRa region on your device, you can continue with configuring any additional configs to suit your needs.
 
+Setting the region leaves your node on a default modem preset, and that default is not always what the mesh near you runs. Many communities have moved to a faster preset, and some use their own channel. A node whose settings do not match hears nothing from them. [Joining your local mesh](/docs/getting-started/joining-your-local-mesh) covers how to find the settings in use around you and join.
+
 <div className="indexCtasBody">
-  <Link
-    className={"button button--outline button--lg cta--button"}
-    to={"/docs/configuration/"}
-  >
-    Device Configuration
-  </Link>
+  <div className="split-container">
+    <div className="split-item">
+      <Link
+        className={"button button--outline button--lg cta--button"}
+        to={"/docs/getting-started/joining-your-local-mesh/"}
+      >
+        Joining a Mesh
+      </Link>
+    </div>
+
+    <div className="split-item">
+      <Link
+        className={"button button--outline button--lg cta--button"}
+        to={"/docs/configuration/"}
+      >
+        Device Configuration
+      </Link>
+    </div>
+  </div>
 </div>

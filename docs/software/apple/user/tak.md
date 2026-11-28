@@ -4,6 +4,8 @@ parent: User Guide
 sidebar_position: 9
 ---
 
+import useBaseUrl from "@docusaurus/useBaseUrl";
+
 # TAK Integration
 
 The Meshtastic app supports Team Awareness Kit (TAK) integration, enabling interoperability with ATAK (Android Team Awareness Kit), iTAK, and other CoT (Cursor-on-Target) compatible systems over LoRa mesh radio — no cellular or internet required.
@@ -33,7 +35,7 @@ The full TAK V2 wire format (shapes, routes, markers, casevac, emergency) requir
 
 ### TAK Identity
 
-The first section, **TAK Identity**, controls the firmware-level team and role identity the radio attaches to every position report:
+The first section, **TAK Identity**, controls the firmware-level team and role identity the radio attaches to every position report. It appears only on firmware **2.8.0 or later**, which is where the radio began reading its TAK configuration. On older firmware the section is hidden, because the radio would ignore anything set there. The rest of the screen still works: TAK traffic falls back to the legacy format described above.
 
 | Setting | Description |
 |---------|-------------|
@@ -41,8 +43,8 @@ The first section, **TAK Identity**, controls the firmware-level team and role i
 | Role | Your TAK role. Choices are Team Member (default), Team Lead, HQ, Sniper, Medic, Forward Observer, RTO, and K9. |
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="/img/apple/takIdentitySection_dark.webp" />
-  <img src="/img/apple/takIdentitySection.webp" alt="TAK Identity section with Team and Role pickers" />
+  <source media="(prefers-color-scheme: dark)" srcset={useBaseUrl("/img/apple/takIdentitySection_dark.webp")} />
+  <img src={useBaseUrl("/img/apple/takIdentitySection.webp")} alt="TAK Identity section with Team and Role pickers" />
 </picture>
 
 A **Save TAK Identity** button appears in the section only when there are unsaved changes. Saving dispatches an admin message to the connected node; you'll see the change reflected in TAK clients on the next position report.
@@ -66,11 +68,15 @@ The TAK Server runs in **read-only mode** until your primary channel has a non-d
 
 ### Certificates
 
-Import a P12 (PKCS#12) or PEM bundle for mTLS-protected ATAK / iTAK connections. The app stores the certificates encrypted in the keychain — they're not visible to other apps or to iTunes/Finder file sharing.
+The app issues its own certificates the first time the server starts: a certificate authority, a server certificate for `127.0.0.1`, and one client certificate. They belong to this install alone, so a TAK client set up from another phone's data package, or from a package exported before this version, can't connect here. The app keeps them in the keychain, where other apps and iTunes/Finder file sharing can't see them, and they stay on this device if you restore a backup elsewhere.
+
+The server certificate is good for two years and is renewed under the same authority before it runs out, so your TAK client keeps working without a new package. **Regenerate Certificates** issues a whole new set; every TAK client then needs the data package again. If a TAK client tries to connect with a certificate this install didn't issue, the Certificates section says so.
+
+You can still import your own server identity as a P12 (PKCS#12). The data package then trusts that certificate instead; the client certificate is always the one the app issued.
 
 ### Data Package
 
-Export a TAK data package zip that you can sideload into ATAK / iTAK. The client uses it to find and trust the app's local server without manually entering a host, port, or certificate.
+Export a TAK data package zip that you can sideload into ATAK / iTAK. The client uses it to find and trust the app's local server without manually entering a host, port, or certificate. The package holds the client certificate and its key, and a truststore with the certificate authority's certificate and nothing else. Importing it over an existing Meshtastic connection keeps the client's old certificates in some TAK clients: remove the old connection first, then import.
 
 ## Receiving Routes
 
@@ -99,7 +105,8 @@ Developers and curious users can read the full protocol detail in [TAK Protocol]
 **TAK client won't connect**
 - Make sure the in-app TAK Server is enabled in **Settings → TAK Server**.
 - Confirm your primary channel has a non-default name **and** encryption key — the server runs in read-only mode otherwise. Use **Fix Channel** in the warning banner if shown.
-- For mTLS clients, confirm a P12 / PEM bundle was imported under **Certificates**.
+- Export the data package again and import it in the client. A package from before the app issued its own certificates, or from another phone, no longer connects. Remove the old Meshtastic connection in the client before importing, so it doesn't keep the old certificates.
+- If **Certificates** says a client tried to connect with a certificate the app didn't issue, that's the same fix.
 
 **Routes don't show up in iTAK**
 - iTAK ignores route CoT from TCP streaming on purpose. Open the saved zip from **Files → Meshtastic → TAK Routes** and import it as a Mission Package.

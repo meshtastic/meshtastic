@@ -10,8 +10,6 @@ parent: User Guide
 
 Documentation for using the Meshtastic Android and Desktop app.
 
----
-
 ## What's New in the Docs
 
 <!-- WHATS_NEW_START -->
@@ -20,17 +18,21 @@ Documentation for using the Meshtastic Android and Desktop app.
 Keep the last 5–8 entries and archive older ones by removing them.
 -->
 
-**July 2026** — [Discovery](discovery.md) — New Mesh Beacon: broadcast invitations to your mesh and receive Mesh invitations from others, with one-tap join or a preset-seeded Discovery scan.
+**October 2026** — [Firmware Updates](firmware.md) — What the Meshtastic nRF52 Bootloader does while the update drive is up, and where a node waits after a dropped Bluetooth update.
 
-**July 2026** — [Settings — Radio & User](settings-radio-user.md) — Security config now offers encrypted on-device key backup/restore and a packet-authenticity Protection Level (Strict / Balanced / Compatible).
+**October 2026** — [Settings — Radio & User](settings-radio-user.md) — Each configuration screen has its own section, settings use the app's exact labels, and every table lists the default value.
 
-**July 2026** — [MQTT](mqtt.md) — Documented the "MQTT proxy on this phone" toggle: see whether your phone is relaying MQTT for the node and cut it off immediately.
+**October 2026** — [Firmware Updates](firmware.md) — A node on firmware from 2.3.15 up to 2.5.14 stays connected behind a required-update screen, and the Connect tab flags a newer stable release.
 
-**July 2026** — [Map & Waypoints](map-and-waypoints.md) — Waypoints can now define a geofence: get notified when nodes enter or leave an area. Creator-only by default, with a per-geofence opt-in for others.
+**October 2026** — [Messages & Channels](messages-and-channels.md) — A failed message can be resent in place, and on firmware 2.8.1 or newer a direct message can show **Delivered to recipient · proven**.
 
-**July 2026** — [Map & Waypoints](map-and-waypoints.md) — Map Layers (import your own `.kml`/`.kmz`/GeoJSON overlays) and Site Planner (RF coverage estimation) are now available on F-Droid, not just Google Play.
+**October 2026** — [Desktop App](desktop.md) — Site Planner computes coverage inside the app and adds it to the map as a layer.
 
-**July 2026** — [Nodes](nodes.md) — Added a "Nodes per Hop" histogram showing how many nodes sit at each hop distance, filterable to a last-heard time window.
+**October 2026** — [Map & Waypoints](map-and-waypoints.md) — The AR mesh view draws nodes and waypoints over the phone's camera and turns you toward the one you are finding.
+
+**September 2026** — [Notifications](notifications.md) — A page that lists every notification category, what each opens when tapped, when a message stays quiet, and what a message notification lets you do from the shade or a watch.
+
+**September 2026** — [Nodes](nodes.md) — On firmware 2.8.1 or newer, nodes your node has not heard since its LoRa settings changed carry an orange marker, a **Hide unheard nodes** filter, and a banner whose **Remove** action deletes them after you confirm.
 
 <!-- WHATS_NEW_END -->
 

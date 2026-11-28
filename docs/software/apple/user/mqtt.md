@@ -32,12 +32,15 @@ Go to **Settings → MQTT**:
 | Port | Default is 1883 (unencrypted) or 8883 (TLS). |
 | Username | MQTT broker username (optional). |
 | Password | MQTT broker password (optional). |
-| Root Topic | The topic prefix for all published messages (default: `msh`). |
+| Root Topic | The topic prefix for all published messages (default: `msh`). **Find Topics** listens to your broker for a minute and suggests topics for where you are: your region, your country when the broker's topics use it, your state or province and city, and community meshes that serve your area. Community meshes and neighboring states come from a directory shared with the Android app, so both suggest the same topics. Other active topics are listed under your state or city first, then under a community mesh or a neighboring state, then the rest. |
 | Enabled | Toggle MQTT bridging on/off. |
 | Encryption Enabled | Encrypt packets before publishing. Recommended — prevents the broker from reading message content. |
 | JSON Enabled | Removed. JSON packet support was deprecated and removed in firmware. |
 | TLS Enabled | Use TLS for the MQTT connection. Requires a broker with TLS support. |
 | Proxy to Client | Route MQTT traffic through the phone app rather than directly from the radio. Useful for radios without Wi-Fi. |
+
+> **Warning — Custom root topic reset**
+> Radio firmware **2.7.12 through 2.8.0** has a bug that can replace a custom root starting with `msh`, such as `msh/US/bayarea`, with the new region's default (`msh/EU_868` after switching to EU_868, for example) when the LoRa region is changed. Saving other LoRa settings leaves it alone. After changing the region, return to **MQTT**, restore your custom **Root Topic**, and tap **Save**. Read the setting back from the radio to confirm it was saved. The fix is in **radio firmware 2.8.1 and later**; updating the Apple app alone does not fix the radio.
 
 ## Topic Structure
 

@@ -4,6 +4,8 @@ parent: User Guide
 sidebar_position: 8
 ---
 
+import useBaseUrl from "@docusaurus/useBaseUrl";
+
 # Telemetry & Sensors
 
 Meshtastic nodes can report sensor data across the mesh, giving you visibility into the physical environment at remote locations.
@@ -15,8 +17,8 @@ Meshtastic nodes can report sensor data across the mesh, giving you visibility i
 | Device Metrics | Battery level, battery voltage, channel utilisation, airtime fraction |
 | Local Stats | Packets received/transmitted, relayed packets, duplicate packets, bad receives, node counts, noise floor |
 | Environment | Temperature (°C/°F), relative humidity (%), barometric pressure (hPa) |
-| Air Quality | PM1.0, PM2.5, PM10 particulate counts (µg/m³) |
-| Power | Voltage and current readings from power monitoring sensors |
+| Air Quality | PM1.0, PM2.5, PM10 particulate counts (µg/m³), CO2 (ppm) |
+| Power | Voltage and current readings from power monitoring sensors, up to eight channels |
 
 ### Device Metrics
 
@@ -41,8 +43,8 @@ Noise floor readings are shown in dBm when available. They can change quickly an
 The Indoor Air Quality scale shows category bands from Excellent (green) through Hazardous (maroon). The app supports multiple display modes for air quality readings:
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="/img/apple/aqi_all_modes_dark.webp" />
-  <img src="/img/apple/aqi_all_modes_light.webp" alt="Air Quality Index — all display modes" />
+  <source media="(prefers-color-scheme: dark)" srcset={useBaseUrl("/img/apple/aqi_all_modes_dark.webp")} />
+  <img src={useBaseUrl("/img/apple/aqi_all_modes_light.webp")} alt="Air Quality Index — all display modes" />
 </picture>
 
 ### Environment

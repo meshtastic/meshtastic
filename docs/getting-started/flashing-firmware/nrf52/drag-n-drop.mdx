@@ -2,7 +2,7 @@
 id: drag-n-drop
 title: Drag & Drop nRF52, RP2040, & RP2350 Firmware Updates
 sidebar_label: Drag & Drop (recommended)
-sidebar_position: 1
+sidebar_position: 2
 description: Instructions for using the Drag & Drop(recommended) file method to flash Meshtastic firmware to nRF52, RP2040, or RP2350 chipset devices.
 ---
 
@@ -22,11 +22,23 @@ If you have just performed a [Factory Erase](/docs/getting-started/flashing-firm
 
 1. Download and unzip the latest firmware from [Meshtastic Downloads](https://meshtastic.org/downloads).
 2. Connect your device to your computer with a USB data cable.
-3. Double click the reset button on your device (this will put it into bootloader mode).
+3. Put the device into [bootloader mode](/docs/getting-started/flashing-firmware/nrf52/entering-bootloader-mode/). On most devices, double-press the reset button.
 4. Notice a new drive will be mounted on your computer (Windows, Mac, Linux, or Android).
 5. Open this drive and you should see three files: `CURRENT.UF2`, `INDEX.HTM`, and `INFO_UF2.TXT`.
 6. Copy the appropriate firmware file (`firmware-DEVICE_NAME-X.X.X-xxxxxxx.uf2`) from the release onto this drive.
 7. Once the file has finished copying onto the drive, the device will reboot and install the Meshtastic firmware.
+
+#### What the bootloader checks
+
+On the [Meshtastic nRF52 Bootloader](https://github.com/meshtastic/nRF52_Bootloader) 2.6.0 and later:
+
+- A firmware file built for the other SoftDevice version (the `SoftDevice` line in `INFO_UF2.TXT`) is rejected: the drive stays up and a board with a display shows WRONG FILE. Copy the right file next.
+- The old firmware is marked invalid as soon as the copy starts, so a cable pulled mid-copy leaves the device with no firmware rather than a damaged one. Plugged back into the computer, it comes back as the drive, showing NO FIRMWARE on boards with a display, and you copy the file again.
+- Boards with a display show a progress bar while the file copies.
+
+#### Backing up the installed firmware
+
+`CURRENT.UF2` on the drive is a copy of the firmware installed on the device. Copy it to your computer to keep a backup, and copy it back onto the drive to reinstall that firmware.
 
 ### RP2040
 1. Download and unzip the latest firmware from [Meshtastic Downloads](https://meshtastic.org/downloads).

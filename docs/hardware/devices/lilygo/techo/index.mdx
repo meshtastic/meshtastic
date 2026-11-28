@@ -5,15 +5,32 @@ sidebar_label: T-Echo
 sidebar_position: 3
 ---
 
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
 import { DeviceImage } from "@site/src/components/DeviceImage";
+
+The T-Echo devices by LILYGO® pair a low-power nRF52840 micro-controller with an e-ink display and a GNSS receiver, in a pocket-sized case with a battery.
+
+Further information on the LILYGO® T-Echo devices can be found on LILYGO®'s [GitHub page](https://github.com/Xinyuan-LilyGO/LilyGO-T-Echo).
+
+<Tabs
+groupId="techo"
+queryString="techo"
+defaultValue="t-echo"
+values={[
+{label: 'T-Echo', value: 't-echo'},
+{label: 'T-Echo Plus', value: 't-echo-plus'},
+]}>
+
+<TabItem value="t-echo">
+
+## T-Echo
 
 <DeviceImage device="t-echo.svg" alt="LILYGO T-Echo" size="lg" center />
 
 The T-Echo by LILYGO® supports a low power consumption micro-controller and an e-ink display.
 
-Further information on the LILYGO® T-Echo devices can be found on LILYGO®'s [GitHub page](https://github.com/Xinyuan-LilyGO/LilyGO-T-Echo).
-
-## Specifications
+### Specifications
 
 - **MCU**
   - nRF52840 (Bluetooth BLE 5.0 & NFC)
@@ -28,16 +45,16 @@ Further information on the LILYGO® T-Echo devices can be found on LILYGO®'s [G
 - **Connectors**
   - U.FL antenna connector
 
-## Features
+### Features
 
 - Reset, Program and capacitive touch buttons
 - 1.54" eInk display
 - Optional BME280 - Humidity and Pressure Sensor
 - Comes with a case and battery
 
-## Resources
+### Resources
 
-- Firmware file: `firmware-t-echo-2.x.x.uf2`
+- Firmware file: `firmware-t-echo-X.X.X.xxxxxxx.uf2`
 - Purchase Links:
   - US
     - [Rokland 915MHz](https://msh.to/rokland-t-echo/)
@@ -45,4 +62,53 @@ Further information on the LILYGO® T-Echo devices can be found on LILYGO®'s [G
   - International
     - [LilyGO](https://msh.to/t-echo/)
 
-![LILYGO T-Echo](/img/hardware/t-echo.svg)
+</TabItem>
+
+<TabItem value="t-echo-plus">
+
+## T-Echo Plus
+
+<DeviceImage device="t-echo_plus.svg" alt="LILYGO T-Echo Plus" size="lg" center />
+
+The T-Echo Plus keeps the T-Echo's nRF52840 and 1.54" e-ink display, and adds a 2400 mAh battery, a haptic vibration motor, a buzzer, and a 1/4-inch mount thread. It sells alongside the T-Echo rather than replacing it.
+
+### Specifications
+
+- **MCU**
+  - nRF52840 (Bluetooth BLE 5.0 & NFC)
+- **LoRa Transceiver**
+  - Semtech SX1262
+- **Frequency options**
+  - 433 MHz
+  - 868 MHz
+  - 915 MHz
+  - 920 MHz
+- **Navigation Module**
+  - L76K GNSS receiver (Supports GPS, BeiDou, GLONASS & QZSS)
+- **Display**
+  - 1.54" SPI e-ink, 200 x 200
+- **Battery Capacity**
+  - 2400 mAh
+- **Motion Sensor**
+  - BHI260AP IMU
+- **Connectors**
+  - U.FL antenna connector
+
+### Features
+
+- Two buttons plus a capacitive touch button.
+- Haptic vibration motor and buzzer.
+- 1/4-inch mount thread for a tripod or clamp.
+- Optional BME280 temperature and pressure sensor.
+- Supports [InkHUD](/docs/configuration/device-uis/inkhud/).
+
+### Resources
+
+- Firmware file: `firmware-t-echo-plus-X.X.X.xxxxxxx.uf2`
+- Purchase Links:
+  - International
+    - [LilyGO](https://msh.to/t-echo-plus/)
+
+</TabItem>
+
+</Tabs>

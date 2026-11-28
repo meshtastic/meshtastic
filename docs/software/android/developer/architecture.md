@@ -1,17 +1,18 @@
 ---
 title: Architecture
 sidebar_position: 1
-last_updated: 2026-06-11
+last_updated: 2026-10-21
+description: How the Android and Desktop apps split into androidApp/desktopApp, feature modules, and core modules, and how radio control and navigation are layered across them.
 parent: Developer Guide
 ---
 
 # Architecture
 
-The Meshtastic Android and Desktop apps follow a modular Kotlin Multiplatform (KMP) architecture with clear layer boundaries (iOS is currently a compile-only validation target — there is no shipping iOS app yet).
+The Meshtastic Android and Desktop apps follow a modular Kotlin Multiplatform (KMP) architecture with clear layer boundaries. iOS is a compile-only validation target; no iOS app ships.
 
 ## Layer Overview
 
-```
+```text
 ┌─────────────────────────────────────────────┐
 │          androidApp / desktopApp            │  Platform entry points
 ├─────────────────────────────────────────────┤
@@ -39,7 +40,7 @@ The Desktop (Linux/macOS/Windows) entry point:
 - Compose Desktop window management
 - Desktop-specific DI (`DesktopKoinModule`)
 - Platform stubs for Android-only capabilities
-- BLE (Kable), Serial, and TCP transport implementations
+- `DesktopRadioTransportFactory`, which wires up the transports. The transports themselves are shared code in `core:network`: BLE built on `core:ble`'s primitives, TCP, and the jSerialComm-based `SerialTransport` in `core:network`'s `jvmMain`
 
 ### `feature/*` — Feature Modules
 
@@ -50,19 +51,21 @@ Each `feature/` module owns a vertical slice of functionality:
 | `feature:intro` | Onboarding/welcome flow |
 | `feature:messaging` | Messages, channels, contacts, quick chat |
 | `feature:connections` | Bluetooth/USB/TCP connection management |
-| `feature:map` | Map display, waypoints |
+| `feature:map` | Map display, waypoints — shared state, policy and the waypoint editor |
+| `feature:map-maplibre` | MapLibre map surfaces — used by the `fdroid` flavor and Desktop; the `google` flavor uses Google Maps instead. Tile-source definitions and the custom-source editor are in `feature:map`, so both renderers share them |
+| `feature:map-terrain` | Offline terrain: elevation decode, hillshade shading and contour lines, shared by both map flavors |
+| `feature:coverage` | Site Planner coverage computed on the device with `kp1812` (ITU-R P.1812) over Mapterhorn terrain, returned as GeoJSON for the map's layer list |
 | `feature:node` | Node list, node detail, metrics |
 | `feature:settings` | All configuration screens |
 | `feature:firmware` | Firmware update flow |
 | `feature:docs` | In-app documentation browser |
-| `feature:wifi-provision` | WiFi provisioning |
-| `feature:widget` | Android home screen widgets |
+| `feature:wifi-provision` | Wi-Fi provisioning |
+| `feature:widget` | Android home screen widgets (an Android library, not KMP) |
 | `feature:discovery` | Mesh network discovery |
-| `feature:car` | Android Auto / Car App Library — google flavor only, conditionally registered in the google `FlavorModule` |
 
 Feature modules:
-- Use the `meshtastic.kmp.feature` convention plugin
-- Depend on `core` modules, never on other `feature` modules
+- Use the `meshtastic.kmp.feature` convention plugin, except `feature:widget`, which applies `meshtastic.android.library`
+- Depend on `core` modules, not on other `feature` modules. The two exceptions are `feature:map-maplibre` and `feature:coverage`, which both build on `feature:map` and `feature:map-terrain`
 - Own their navigation entries and DI registrations
 - Contain platform-specific implementations in `androidMain`/`jvmMain`/`iosMain`
 
@@ -77,7 +80,7 @@ Shared infrastructure used by all features:
 | `core:ui` | Shared Compose components, icons, theme |
 | `core:resources` | Shared string resources |
 | `core:model` | Domain models |
-| `core:data` | Data layer abstractions |
+| `core:data` | Repository implementations, data sources and managers |
 | `core:domain` | Use cases / business logic |
 | `core:database` | Room KMP database |
 | `core:datastore` | DataStore preferences |
@@ -87,27 +90,50 @@ Shared infrastructure used by all features:
 | `core:di` | DI utilities |
 | `core:network` | HTTP/serial/transport |
 | `core:ble` | Bluetooth LE abstractions |
-| `core:barcode` | QR / barcode scanning (channel-share QR codes) |
-| `core:nfc` | NFC read/write support |
+| `core:barcode` | QR / barcode scanning (channel-share QR codes); Android library |
+| `core:nfc` | NFC read/write support; Android library |
 | `core:takserver` | Embedded TAK server integration |
 | `core:testing` | Test utilities |
 | `core:konsist` | Konsist architecture/convention tests |
 
-Protobuf models are no longer a local module — they come from the external `org.meshtastic:protobufs` Maven artifact (pinned in `gradle/libs.versions.toml`).
+Protobuf models come from the external `org.meshtastic:protobufs` Maven artifact (pinned in `gradle/libs.versions.toml`).
+
+### Build and test modules
+
+These ship no app code. They're kept out of Dokka and Kover aggregation and `kmpSmokeCompile`, and
+`scripts/check-module-list.py` exempts them.
+
+| Module | Responsibility |
+|--------|---------------|
+| `screenshot-tests` | Compose Preview screenshot tests, the visual-regression gate |
+| `docs-screenshots` | Doc-framed screenshot compositions, generate-only |
+| `store-screenshots` | Store-listing screenshots captured from the real app with UiAutomator |
+| `baselineprofile` | Baseline Profile generator and startup benchmark for `androidApp` |
+| `schema-strings` | Generates `schema_strings.xml` from the protobufs field metadata |
+
+`core:konsist` is exempt from aggregation too.
 
 ## KMP Source Sets
 
 Each module uses the standard KMP source set hierarchy:
 
-```
+```text
 src/
-├── commonMain/     ← Shared code (all platforms)
-├── commonTest/     ← Shared tests
-├── androidMain/    ← Android-specific
-├── jvmMain/        ← Desktop JVM-specific
-├── iosMain/        ← iOS-specific
-└── jvmTest/        ← Desktop test host
+├── commonMain/         ← Shared code (all platforms)
+├── commonTest/         ← Shared tests
+├── androidMain/        ← Android-specific
+├── jvmMain/            ← Desktop JVM-specific
+├── jvmAndroidMain/     ← Shared by Android and desktop JVM
+├── iosMain/            ← iOS-specific
+├── nativeMain/         ← Kotlin/Native code, built for the one iOS target (iosSimulatorArm64)
+├── jvmTest/            ← Desktop test host
+├── androidHostTest/    ← Android host (JVM) unit tests
+└── androidDeviceTest/  ← Instrumented tests (core:database, core:model)
 ```
+
+`jvmAndroidMain` exists only in modules that apply `meshtastic.kmp.jvm.android`. `nativeMain`,
+`androidHostTest` (modules that call `withHostTest`) and `androidDeviceTest` exist only in the
+modules that need them.
 
 **Golden Rules:**
 - No `android.*` imports in `commonMain`
@@ -125,7 +151,7 @@ The project uses **Koin** with annotation processing:
 
 ## Radio Control
 
-Features issue radio commands through `RadioController` (`core:repository`), a composite of four
+Features send commands to the node through `RadioController` (`core:repository`), a composite of four
 focused sub-interfaces so callers can depend on just the slice they need:
 
 | Sub-interface | Responsibility |
@@ -150,7 +176,7 @@ It is decomposed into focused provider interfaces following the Interface Segreg
 
 | Interface | Responsibility |
 |-----------|---------------|
-| `ConnectionStateProvider` | Read-only `connectionState: StateFlow<ConnectionState>` |
+| `ConnectionStateProvider` | Read-only `connectionState`, plus `connectionLifecycle` and `connectionEpochs` for code that has to correlate state with connection departures and completed handshakes |
 | `TracerouteResponseProvider` | Traceroute response state + clear |
 | `NeighborInfoResponseProvider` | Neighbor info response state + clear |
 | `ServiceStateWriter` | Write-side for handlers (set*, emit*, clear*) |
@@ -165,11 +191,8 @@ inject a controller sub-interface can read connection state without a separate d
 
 Navigation uses **Navigation 3** with typed routes:
 - All routes defined in `core/navigation/Routes.kt`
-- Routes are `@Serializable` data classes/objects
+- Routes are `@Serializable` data classes/objects, and each sealed route interface is registered in `MeshtasticNavSavedStateConfig` (`NavigationConfig.kt`) for saved-state restoration
 - Deep links resolved through `DeepLinkRouter`
 - Each feature registers its own navigation entries
 
 See [Navigation & Deep Links](navigation-and-deep-links.md) for details.
-
----
-

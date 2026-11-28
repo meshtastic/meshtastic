@@ -1,0 +1,212 @@
+---
+id: writing-style
+title: Writing style
+sidebar_label: Writing Style
+sidebar_position: 1
+description: "Voice, wording, structure, and mechanics for the Meshtastic documentation site."
+---
+
+This is the working guide for writing on this site. It expands Section 11 of the [Meshtastic Client Design Standards](https://github.com/meshtastic/design/tree/master/standards), which is the authority. Where this page and the standard disagree, the standard decides and this page is wrong.
+
+The rules apply to new and edited writing. They are not a mandate to sweep pages that nobody is touching.
+
+This page holds itself to its own rules, with one exception. Ruling a word out means naming it, so currently, simply, please, and e.g. appear on this page as examples rather than as usage.
+
+## Voice
+
+Write for a reader who is competent but new to the topic. Readers range from someone who bought a preassembled node to a developer reading protobuf definitions.
+
+Address the reader as you. Their node, their settings, and their region are theirs, so write "your node" rather than working around the pronoun. Don't open a section or a paragraph with "You". Lead with the subject, which is the system, the value, or the action.
+
+Use the imperative for a step: "Flash the firmware", "Select **Save**". Describe what the software does in the third person, with the node, client, or firmware as the subject. Write "the node repeats the message", not "your node repeats your messages".
+
+Don't use "the user" to mean the reader. Many readers are operators configuring nodes for other people, so it leaves them unsure who is meant.
+
+Refer to the project as Meshtastic, not "we". Keep the register plain, with no marketing language and no exclamation points.
+
+Contractions are house voice. Write you'll, doesn't, and it's. Warnings are the exception: there, write do not and cannot, because a negative contraction is the easiest thing on a page to skim past.
+
+Write in the timeless present. The node sends a position, not will send. Keep will for something genuinely later than the sentence.
+
+Don't date the page from inside it. Currently, now, soon, new, and as of this writing describe the moment of writing rather than the system, and the page outlives that moment. Where a fact really is bounded by a version, name the version.
+
+Drop simply, just, easy, easily, quickly, obviously, and of course wherever they characterize how hard the reader's task is. Telling a stuck reader that a step is easy only tells them they are the problem. Leave out please, scare quotes, and jokes.
+
+Don't give hardware or software intent. A node doesn't want, try, or think.
+
+Voice stays the same across the site; tone answers the reader's situation. Someone on a troubleshooting page has already lost an hour, so that page carries the calmest, most concrete writing on the site.
+
+## Plain language
+
+Jargon is necessary here, but introduce it rather than assume it. Define a technical term the first time it appears on a page, link to its reference page, or both. Expand acronyms on first use per page, as in pre-shared key (PSK). Readers arrive from search results, so first use is per page and not per site.
+
+Explain the consequence and not only the definition. Someone configuring hop limit needs to know what changes if they get it wrong.
+
+Keep sentences to roughly 25 words and one idea, and paragraphs to about five sentences and one topic. Front-load: the rule comes before its exceptions, and the main point before the qualification.
+
+Requirement words carry exact weight. Must is an obligation and must not a prohibition. Should is a recommendation that leaves a real alternative, can states a capability, and may states permission. Don't use shall.
+
+Write for example and such as rather than e.g., and that is rather than i.e. Inside a table cell or parentheses, where space is tight, e.g. is acceptable.
+
+Keep wording literal and inclusive. Use allowlist and blocklist, and singular they where gender isn't known. Don't borrow a disability as a figure of speech, so final check rather than sanity check. Don't reach for violent metaphor: the client stops responding, it doesn't hang or die.
+
+Use American spelling: color, behavior, gray, meter, organize. Use the serial comma in a list of three or more.
+
+Don't point at other parts of a page with above and below. Write earlier or the following, name the section, or link to it. The literal sense is fine: a signal below the noise floor is still below the noise floor.
+
+## Terminology
+
+A concept keeps the same name in the firmware, every client, and the documentation. Inconsistent terminology is the most common source of cross-platform confusion.
+
+| Concept                          | Use                                                   | Not                                            |
+| -------------------------------- | ----------------------------------------------------- | ---------------------------------------------- |
+| A device on the mesh             | node                                                  | peer, unit, station, mote                      |
+| The hardware in someone's hand   | node, or device                                       | radio, which means the LoRa transceiver itself |
+| Software that connects to a node | client, or the specific one: Android, Apple, Web, CLI | app, except for one specific mobile client     |
+| Software running on the node     | firmware                                              | OS, software                                   |
+| The Linux native daemon          | meshtasticd                                           | Linux client, daemon build                     |
+| A one-to-one message             | direct message                                        | private message, whisper                       |
+| A message to a channel           | broadcast                                             | group message, public message                  |
+| A LoRa speed and range profile   | modem preset; Long Fast in prose, `LONG_FAST` in code | mode, bandwidth setting                        |
+| The regulatory locale setting    | region                                                | country, frequency, band                       |
+| Wireless pairing to a client     | Bluetooth; `BLE` is fine in developer docs            | BT                                             |
+| Version identifiers              | firmware version and app version, kept distinct       | version, release                               |
+
+Product and technology names take their official casing: LoRa, LoRaWAN, nRF52840, ESP32-S3, Wi-Fi, Node-RED, Bluetooth, MQTT, meshtasticd, and GPS. Casing applies to prose only. URLs, file paths, code identifiers, protobuf field names, enum values, and configuration keys are literal strings and stay as they are.
+
+Quote an on-screen label exactly as it appears, in bold: "Select **Save**". If a label is wrong, fix the client rather than paraphrasing it here. Protobuf fields keep their schema form, so write `hop_limit` for the field and Hop Limit for the control.
+
+Leave mesh, node, and channel lowercase in prose.
+
+## Page structure
+
+Readers arrive from search and scan before they read, so the opening has to let them confirm they are in the right place. State the purpose in the first sentence after the title, without preamble and without restating the title. Put prerequisites before the steps: required hardware, firmware version, and prior configuration go up front.
+
+Use one H1 per page, which comes from the front matter `title`. Don't skip heading levels, since level conveys structure to screen readers and to the table of contents. Use sentence case. Keep headings descriptive and unique within a page, and avoid "Notes" and "Miscellaneous".
+
+Prefer a table wherever content has a repeating shape, such as settings, values, platform differences, or unit mappings. Close with next steps where a task continues elsewhere.
+
+Give each fact one home and link to it. Content repeated across pages drifts.
+
+## Instructions
+
+Number sequential steps and keep unordered lists for options that have no order. Use one action per step; if a step contains "and then", split it.
+
+State the location before the action, as in "In **Settings > Radio Configuration**, select **Region**". Name a control rather than describing where it sits, since position breaks across platforms and window sizes.
+
+State the expected result for any step whose outcome isn't immediately visible, such as a reboot or a reconnect. End a procedure by saying how to confirm it worked, naming the indicator to look for.
+
+Flag anything that erases configuration, regenerates keys, or breaks existing pairings in the step before it happens, not after.
+
+## Covering every client
+
+Cover every supported client for a feature, or say which clients support it. Silent omission reads as undocumented and generates duplicate issues. Name gaps plainly: "Not available on the Web client" is actionable, a missing tab isn't.
+
+Use platform tabs for per-client instructions, and keep the platform order the same on every page. List the CLI first where it exists, since it's the most stable reference. Give every tab a heading one level deeper than the section that contains it, so tabs inside an H2 take H3 headings.
+
+Keep tabs in sync when a procedure changes. A stale tab is worse than a missing one because it looks authoritative.
+
+Prefer select over tap or click in shared prose. Keep tap for mobile-specific content and click for desktop.
+
+Android and Apple client documentation is written in the client repositories and synced here. A CI guard rejects pull requests that edit `docs/software/android/` or `docs/software/apple/`. Open those against [Meshtastic-Android](https://github.com/meshtastic/Meshtastic-Android) or [Meshtastic-Apple](https://github.com/meshtastic/Meshtastic-Apple) instead.
+
+## Code and CLI examples
+
+Tag the language on every fenced block. Use `shell` for command-line examples rather than `bash`, `sh`, or `console`.
+
+Keep examples copy-pasteable and complete, with no omitted flags, no assumed earlier command, and no `...` standing in for real syntax. Leave out the shell prompt, and keep one command per line rather than chaining unrelated commands with `&&`.
+
+Mark placeholders with angle brackets and uppercase, as in `<YOUR_CHANNEL_NAME>`, and say what each one means and where to get the value.
+
+Never publish real pre-shared keys, API keys, MQTT credentials, node IDs, or personal coordinates, including expired or test ones. Use obviously fake values.
+
+## Screenshots, diagrams, and media
+
+Screenshots go stale, can't be translated, can't be searched, and can't be read aloud. Use them to orient a reader, not as the only place information exists. Setting names, values, and command syntax never live only inside an image.
+
+Provide both light and dark variants of client screenshots. Capture default themes and default configuration unless the screenshot exists to show a specific setting. Redact node names, real coordinates, map positions, keys, and other people's nodes before publishing.
+
+Use webp for screenshots and photos, and keep SVG for diagrams and logos. Social preview images are PNG at 1200 x 630. Store images under `static/img/` rather than beside the page.
+
+Prefer Mermaid or SVG over raster for diagrams. They stay sharp, diff cleanly in review, and their text stays selectable. Mermaid is enabled site-wide, so a fenced `mermaid` block renders without any import. Pair color with a label, shape, or pattern rather than carrying meaning by color alone.
+
+## Accessibility
+
+Every image needs alt text describing what the image conveys, not the fact that it's an image. Leave out "image of" and "screenshot of". Empty alt text is for genuinely decorative images, and it has to be written out explicitly. `![](/img/example.webp)` with no alt attribute is unlabeled rather than intentionally silent.
+
+Link text describes its destination. Avoid "click here", "here", "this link", and "read more". Don't place two links with similar text next to each other, because they're indistinguishable in a screen reader's link list.
+
+Tables need a real header row and no merged cells, and aren't for visual layout. Pair color-coded status with text. Keep structure simple, since deeply nested lists and multi-paragraph table cells are hard to navigate without sight.
+
+## Admonitions
+
+Admonitions are the most overused feature in documentation, and overuse cancels them out. A page carrying five callouts effectively carries none. Their value comes from being rare.
+
+Default to none. Write the information as body text. Promote it only where a reader skimming the page would suffer a real consequence from missing it. A real consequence is lost configuration, an unrecoverable device, hours spent on a wrong assumption, or a breach of local radio regulations. Useful to know is not a consequence.
+
+Use at most one admonition per H2 section.
+
+| Type      | For                                                                             |
+| --------- | ------------------------------------------------------------------------------- |
+| `note`    | Context that doesn't change the procedure                                       |
+| `info`    | Version requirements, scope limits, platform availability                       |
+| `tip`     | An optional shortcut or better alternative                                      |
+| `warning` | Misconfiguration that degrades the mesh or blocks connectivity                  |
+| `danger`  | Irreversible data loss, key regeneration, hardware damage, regulatory violation |
+
+Two aliases turn up that aren't in this table. Docusaurus treats `caution` as a deprecated alias rendering as a warning, and `important` as a legacy alias rendering as info. Write `warning` and `info` directly, and change the aliases as you touch a page. Frozen snapshots under `versioned_docs/` stay as they are.
+
+Don't stack or nest them. Required actions belong in the numbered procedure, never only inside a callout. Don't open a page or a section with an admonition to emphasize prose.
+
+Keep `danger` for irreversible or unlawful outcomes. Marking routine notes as warnings inflates the scale until real warnings stop registering.
+
+Bold is for UI labels and genuine emphasis, not whole sentences and not as a substitute for a heading. Code formatting is for field names, values, paths, and commands, not emphasis.
+
+## Units, dates, and numbers
+
+State the canonical unit when describing a device value or protobuf field, since values arrive in metric SI units. In user-facing prose give metric first with the imperial equivalent in parentheses, as in about 2 km (1.2 mi). Don't imply a client displays a fixed unit, since display units follow the reader's operating system locale. Leave hPa, degrees, microroentgens per hour, and percentages unconverted.
+
+Range depends on terrain, antenna, and preset, so state the conditions with any distance figure or leave the figure out.
+
+Spell the month in prose: March 14, 2026, and not 03/14/26. Keep ISO 8601 where the string is data rather than prose, which covers log excerpts, timestamp examples, and blog front matter. State the time zone, or use UTC, wherever a timestamp appears.
+
+Spell out zero through nine in prose and use numerals from 10 up. Numerals override that rule for any measurement carrying a unit, as in 3 dB and 915 MHz. They also override it for a value the reader types, and for anything taking a percent sign. Identifiers keep their numerals too, such as a section number or a firmware version.
+
+## Writing English that survives translation
+
+Source English is the translation base, and the MDX lint in CI exists because translation round-trips have broken builds before.
+
+Keep sentences short and simple, since long sentences with nested clauses compound translation errors. Avoid idiom, slang, humor, and cultural reference. Describe the mechanism rather than reaching for metaphor.
+
+Keep markdown structure plain. Inline HTML or JSX inside translated prose is a known build breaker, because round-trips corrupt tags until the page fails to build. Keep translatable text out of images, which aren't translated.
+
+Keep the function words that make a sentence's structure explicit, such as the, that, and who. "The radios that you have paired" parses more reliably than "the radios you paired".
+
+## Accuracy and versions
+
+Wrong documentation does more damage than missing documentation, because readers act on it.
+
+The site is versioned, so the version selector already tells a reader which release a page describes. Don't stamp a version inline where the selector already carries the fact. Read [Versioning](../versioning.mdx) for how snapshots are cut and when an inline version is warranted.
+
+Update the documentation in the same change as the behavior it describes. A firmware or client change that alters documented behavior isn't finished until the docs match. Re-check screenshots and step sequences whenever the relevant UI moves, since steps drift before prose does.
+
+Fix broken links when you find them. A dead link in a procedure stops the reader.
+
+## Text inside the clients
+
+Section 11.15 of the design standards covers labels, subtext, button text, error messages, and empty states in the clients themselves. Documentation and in-product text describe the same concepts, so use the same wording in both. Where a client's subtext and this site disagree, one of them is wrong.
+
+## Quick checks
+
+These are the rules a reviewer can check without judgment. `pnpm run lint:mdx` covers the first one and some of the JSX hazards; the rest are a read-through.
+
+- Every image has alt text, and decorative images carry an explicit empty alt.
+- Every code fence declares its language, and command-line examples use `shell`.
+- At most one admonition per H2 section, and neither the `caution` nor the `important` alias.
+- On-screen labels are quoted exactly as they appear, in bold.
+- Headings are sentence case, with one H1 and no skipped levels.
+- Product and technology names use their official casing.
+- Prose uses American spelling.
+- Running prose spells out for example and that is, rather than e.g. and i.e.
+- No currently, now, soon, or new dating the page from inside it.
+- Dates in prose spell the month.

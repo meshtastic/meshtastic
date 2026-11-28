@@ -16,10 +16,12 @@ queryString="gateway"
 defaultValue="gateway-ethernet"
 values={[
 {label: 'Ethernet MQTT Gateway', value: 'gateway-ethernet'},
-{label: 'WiFi MQTT Gateway', value: 'gateway-wifi'}
+{label: 'Wi-Fi MQTT Gateway', value: 'gateway-wifi'}
 ]}>
 
 <TabItem value="gateway-ethernet">
+
+## WisMesh Ethernet MQTT Gateway
 
 The WisMesh Ethernet MQTT Gateway provides a stable and wired connection between Meshtastic networks and MQTT brokers featuring an Ethernet interface.
 
@@ -61,18 +63,20 @@ The WisMesh Ethernet MQTT Gateway provides a stable and wired connection between
 
 ![RAK WisMesh Ethernet MQTT Gateway](/img/hardware/rak/wismesh-ethernet-gateway.webp)
 
-</ TabItem>
+</TabItem>
 
 <TabItem value="gateway-wifi">
 
-The WisMesh WiFi MQTT Gateway is a wireless solution for bridging Meshtastic networks to MQTT brokers.
+## WisMesh Wi-Fi MQTT Gateway
+
+The WisMesh Wi-Fi MQTT Gateway is a wireless solution for bridging Meshtastic networks to MQTT brokers.
 
 - **Base Board:**
   - [RAK19007](/docs/hardware/devices/rak-wireless/wisblock/base-board/?rakbase=RAK19007)
 - **MCU**
   - [RAK11200 (ESP32)](/docs/hardware/devices/rak-wireless/wisblock/core-module?rakcore=RAK11200)
     - Bluetooth BLE 4.2
-    - WiFi 802.11 b/g/n
+    - Wi-Fi 802.11 b/g/n
     - High power consumption (relative to nRF52)
 - **LoRa Transceiver:**
   - SX1262 ([RAK13300 LPWAN module](https://msh.to/rak13300))
@@ -91,22 +95,22 @@ The WisMesh WiFi MQTT Gateway is a wireless solution for bridging Meshtastic net
 
 ### Features
 
-- WiFi connectivity
+- Wi-Fi connectivity
 - Pre-assembled option with IP67 Unify Enclosure
   - Includes WisMesh Blade Antenna
   - Includes M8 Cable for 5V power
 
 ### Resources
 
-- Firmware file: `firmware-rak11200-X.X.X.xxxxxxx.uf2`
-- Further information on the WisMesh WiFi MQTT Gateway can be found on the [RAK Documentation Center](https://docs.rakwireless.com/product-categories/meshtastic/wismesh-wifi-mqtt-gw/).
+- Firmware file: `firmware-rak11200-X.X.X.xxxxxxx.bin`
+- Further information on the WisMesh Wi-Fi MQTT Gateway can be found on the [RAK Documentation Center](https://docs.rakwireless.com/product-categories/meshtastic/wismesh-wifi-mqtt-gw/).
 - Purchase Links:
   - International
     - [RAKwireless Store](https://msh.to/wismesh-wifi-gateway)
     - [RAKwireless AliExpress](https://msh.to/aliexpress-wismesh-wifi-gateway)
 
-![RAK WisMesh WiFi MQTT Gateway](/img/hardware/rak/wismesh-wifi-gateway.webp)
+![RAK WisMesh Wi-Fi MQTT Gateway](/img/hardware/rak/wismesh-wifi-gateway.webp)
 
-</ TabItem>
+</TabItem>
 
-</ Tabs>
+</Tabs>

@@ -1,0 +1,63 @@
+---
+title: "Measure power use for a solar Meshtastic node"
+description: "Measure a Meshtastic node's power use under realistic network traffic before choosing a solar panel and battery."
+slug: measuring-solar-node-power-consumption
+authors: MeshtasticTeam
+tags: ["Meshtastic", "solar", "power", "hardware", "battery"]
+date: 2026-09-21T09:00
+hide_table_of_contents: false
+---
+
+Measure the node's energy use before choosing a solar panel and battery. One current reading is not enough. Meshtastic nodes spend much of their time listening and draw more power when they transmit.
+
+{/* truncate */}
+
+## Measure energy over time
+
+Power is measured in watts. Multiply voltage by current to calculate it: 5 V × 50 mA = 250 mW.
+
+Energy is power used over time, measured in watt-hours (Wh). A node drawing 250 mW for 24 hours uses 6 Wh. Your panel and battery need to supply that daily energy, plus extra for cloudy days and system losses.
+
+Use a meter or bench power supply that totals watt-hours or amp-hours over time. Most handheld multimeters show a momentary reading, not accumulated energy. Check that the meter can resolve your node's low current. Some meters round small readings down to zero.
+
+Run the test for at least an hour. Two to six hours gives a more useful average if the traffic resembles your expected deployment.
+
+## Match the test to the deployment
+
+Give the node under test the role, region, modem preset, and power settings it will use in the field. For a solar-powered router, measure the energy it uses relaying traffic from other nodes.
+
+Set up three nodes: a sender, the router being measured, and a receiver. Put the receiver within the router's range but outside the sender's direct range. The receiver should get each test packet only after the router rebroadcasts it.
+
+**Do not run this test on a populated mesh.** Nearby nodes can receive and rebroadcast your packets even when they use a different channel name or encryption key. This can create traffic for other users. Put the test nodes on a frequency slot local users aren't using. If **Frequency Slot** is `0` (automatic), the primary channel name helps determine the frequency. Use a test name such as `TEST` and confirm that slot is clear locally. See [Frequency Slot settings](/docs/configuration/radio/lora#frequency-slot).
+
+Install the [Meshtastic Python CLI](/docs/software/python/cli) and connect the sending node to your computer over USB. This example sends one message every two minutes. Set a [hop limit](/docs/overview#how-it-works) of `1` so the router rebroadcasts each packet once. Change `120` to set a different interval.
+
+```python
+import time
+from meshtastic.serial_interface import SerialInterface
+
+radio = SerialInterface()
+try:
+    while True:
+        radio.sendText("power test", hopLimit=1)
+        time.sleep(120)
+finally:
+    radio.close()
+```
+
+The CLI's `--sendtext` option can't set the hop limit for one message, so this example uses the Meshtastic Python interface. Set `hopLimit=0` to measure reception without relays. That doesn't measure the router's relay load.
+
+Save the code as `power_test.py`. Reset the meter and note the start time before running `python power_test.py`. Stop the loop with Ctrl+C when the test ends, then note the stop time.
+
+## Calculate average power
+
+If the meter reports watt-hours, divide the reading by the test duration. For example, 0.72 Wh over three hours is an average draw of 240 mW.
+
+If it reports amp-hours, multiply the reading by the test voltage, then divide by the test duration. For a three-hour test at 5.1 V that uses 142 mAh:
+
+- 5.1 V × 142 mAh = 724.2 mWh
+- 724.2 mWh ÷ 3 h = 241.4 mW
+
+Multiply the average power by 24 hours to estimate daily energy use. At 241.4 mW, the node uses about 5.8 Wh per day. Use that estimate to size the panel and battery, allowing for weather and system losses.
+
+Original contribution by [KeithMon](https://github.com/KeithMon).

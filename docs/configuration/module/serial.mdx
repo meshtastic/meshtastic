@@ -75,6 +75,74 @@ How long the module waits after the last received byte before treating the accum
 
 When enabled, redirects the primary USB serial port to serial module output instead of the debug console. **Only valid with `NMEA` and `CALTOPO` modes** — using it with any other mode will produce a configuration error and the module will not start. Has no effect if TX/RX GPIO pins are also configured (pogo-pin output takes precedence).
 
+## meshtasticd (Linux)
+
+Starting with firmware 2.8.3, the serial module runs on [meshtasticd](/docs/meshtasticd/). In place of the RX and TX GPIO pins, it uses a port on the host: a serial device such as `/dev/ttyUSB0`, or a pseudo-terminal (PTY), a virtual serial port that meshtasticd creates for another program on the same host to open.
+
+1. Name the port in `/etc/meshtasticd/config.yaml` or a file in `config.d`. A serial device runs at the speed set by `serial.baud`. A `pty:` path links the PTY at the path given.
+
+   ```yaml title="config.yaml"
+   SerialModule:
+     Path: /dev/ttyUSB0
+   ```
+
+   ```yaml title="config.yaml"
+   SerialModule:
+     Path: pty:/tmp/meshserial
+   ```
+
+2. For `SIMPLE` mode, add a channel named `serial`.
+
+   ```shell
+   meshtastic --host localhost --ch-add serial
+   ```
+
+3. Enable the module and set its mode.
+
+   ```shell
+   meshtastic --host localhost --set serial.enabled true --set serial.mode SIMPLE
+   ```
+
+4. Restart meshtasticd. The module is only created at startup, so enabling it does nothing until a restart.
+
+   ```shell
+   sudo systemctl restart meshtasticd
+   ```
+
+5. Confirm the module opened the port. The log shows `Init serial peripheral interface` with no `Serial: cannot open` line after it, and for a PTY, `Serial: pty /dev/pts/3 linked at /tmp/meshserial`.
+
+   ```shell
+   journalctl -u meshtasticd -b | grep -i serial
+   ```
+
+Bytes written to the port go out over the mesh. In `SIMPLE` and `TEXTMSG` mode, the module sends a packet once the line is idle for `serial.timeout` ms (default 250) or 233 bytes arrive. What the module receives is written back to the port. With the `pty:` path, read what arrives from the mesh:
+
+```shell
+sudo -u meshtasticd cat /tmp/meshserial
+```
+
+Send to the mesh:
+
+```shell
+printf 'hello' | sudo -u meshtasticd tee /tmp/meshserial
+```
+
+- `SIMPLE`, `TEXTMSG`, `PROTO`, `NMEA`, and `CALTOPO` work. `WS85`, `VE_DIRECT`, `MS_CONFIG`, and `override_console_serial_port` don't apply.
+- The module doesn't start when the display runs in `COLOR` mode (`DisplayMode: COLOR`).
+- The service runs as the `meshtasticd` user. The Debian and RPM packages add it to `dialout`, which covers `/dev/ttyUSB*` and `/dev/ttyACM*`.
+- A PTY belongs to `meshtasticd`, so run the program on the other end as `meshtasticd` or root. Bytes one program writes go to meshtasticd, not to other programs that have the port open.
+- A serial device is opened once at startup. If it is unplugged, restart meshtasticd after reconnecting it.
+
+What the log says at startup:
+
+| Log line | Meaning |
+| :------- | :------ |
+| `Init serial peripheral interface` | The module is about to open the port. A `Serial: cannot open` line after it means the open failed and the module stopped. Missing means `serial.enabled` wasn't set when meshtasticd started, `SerialModule.Path` is empty, or the display runs in `COLOR` mode. |
+| `Serial: pty /dev/pts/3 linked at /tmp/meshserial` | The virtual port is ready. |
+| `Serial: cannot open /dev/ttyUSB0: Permission denied` | The `meshtasticd` user can't open the device. |
+| `Serial: cannot open /dev/ttyUSB0: No such file or directory` | No device at that path. |
+| `Serial: /tmp/meshserial exists and is not a symlink; not replacing it` | A file is in the way of the link. |
+
 ## Serial Module Config Client Availability
 
 <Tabs
@@ -418,7 +486,7 @@ meshtastic --port <USB_PORT> \
   --set serial.timeout 250
 ```
 
-Connect at `38400 8N1` and send up to **237 bytes** per packet. The module frames a packet by detecting a gap of `serial.timeout` milliseconds in the byte stream (default 250 ms).
+Connect at `38400 8N1` and send up to **233 bytes** per packet. The module frames a packet by detecting a gap of `serial.timeout` milliseconds in the byte stream (default 250 ms).
 
 ---
 
@@ -438,7 +506,7 @@ meshtastic --port <USB_PORT> \
 meshtastic --port <FTDI_PORT> --listen
 ```
 
-For embedded integration, use the [Meshtastic Arduino client library](https://github.com/meshtastic/Meshtastic-arduino).
+For embedded integration, use the [Meshtastic Arduino client library](https://github.com/meshtastic/Meshtastic-arduino). [Telemetry display on a Wio Terminal](#telemetry-display-on-a-wio-terminal) is a complete example.
 
 ---
 
@@ -670,6 +738,7 @@ Incorrect GPIO configuration can physically damage your hardware. Verify the sch
 | T-Beam v1.1 (recommended) | ESP32        | 14                | 13                | Alternative GPIO header        |
 | RAK4631 (RAK19007)        | nRF52840     | 16 (TXD1)         | 15 (RXD1)         | Set GPS Mode to `Not_Present`  |
 | RAK4631 (RAK19003 v2)     | nRF52840     | 20 (TXD0)         | 19 (RXD0)         |                                |
+| Meshnology W12            | ESP32-S3     | 38                | 39                | Unpopulated GNSS header; 17 and 18 drive the screen |
 
 ---
 
@@ -777,3 +846,105 @@ void loop() {
   delay(500);
 }
 ```
+
+---
+
+## Telemetry display on a Wio Terminal
+
+A [Seeed Wio Terminal](https://wiki.seeedstudio.com/Wio-Terminal-Getting-Started/) wired to the serial module in [`PROTO` mode](#proto--protobuf-client-api) shows the radio's telemetry on its screen. `PROTO` mode carries the [Meshtastic Protobuf Client API](/docs/development/device/client-api) over the serial pins, the same protocol phone apps use, so the Wio Terminal asks the radio for its node list and receives telemetry packets as protobufs. The sketch is the [WioTerminalDashboard example](https://github.com/meshtastic/Meshtastic-arduino/tree/master/examples/WioTerminalDashboard) in the Meshtastic Arduino library. It has three pages:
+
+- **Radio:** the connected radio's battery, voltage, channel use, airtime, online node count and packet counts.
+- **Nodes:** every node with its battery, channel use, airtime and when it was last heard.
+- **Environment:** temperature, humidity and pressure from nodes with sensors.
+
+The 5-way switch changes page and scrolls. The three top buttons jump straight to a page.
+
+<Tabs
+  groupId="wio-page"
+  defaultValue="radio"
+  values={[
+    { label: "Radio", value: "radio" },
+    { label: "Nodes", value: "nodes" },
+    { label: "Environment", value: "environment" },
+  ]}>
+<TabItem value="radio">
+
+![Wio Terminal showing the Radio page with the W12's battery, voltage, channel use, airtime, nodes online and packet counts, wired to the W12 on a breadboard](/img/modules/Serial/wio-terminal-radio.webp)
+
+</TabItem>
+<TabItem value="nodes">
+
+![Wio Terminal showing the Nodes page, two nodes with battery, channel use, airtime and last heard columns](/img/modules/Serial/wio-terminal-nodes.webp)
+
+</TabItem>
+<TabItem value="environment">
+
+![Wio Terminal showing the Environment page while it waits for its first sensor readings](/img/modules/Serial/wio-terminal-environment.webp)
+
+</TabItem>
+</Tabs>
+
+### Wio Terminal wiring
+
+The Wio Terminal's 40-pin header uses the Raspberry Pi layout. Serial1 is on pin 8 (TX) and pin 10 (RX), with ground on pin 6. All of its signal pins are 3.3 V, the same as the radio's. Power each board from its own USB.
+
+The header has no pin 1 mark. Hold the Wio Terminal with its back facing you and the top buttons up: pins 1 and 2 are at the right-hand end, and the even pins are on the row nearer the top edge. Pins 6, 8 and 10 are the third, fourth and fifth from the right on that row.
+
+![Wio Terminal 40-pin header with pin 8 (TX), pin 10 (RX) and pin 6 (GND) highlighted, and the matching pins on a RAK4631 and Meshnology W12](/img/modules/Serial/wio-terminal-header.svg)
+
+Wire the Wio Terminal's TX to the radio's RX and its RX to the radio's TX, then turn on the serial module in `PROTO` mode at 19200 baud on those pins.
+
+<Tabs
+  groupId="wio-radio"
+  defaultValue="w12"
+  values={[
+    { label: "Meshnology W12", value: "w12" },
+    { label: "RAK4631", value: "rak4631" },
+  ]}>
+<TabItem value="rak4631">
+
+![Wio Terminal pin 8 wired to RX1, pin 10 to TX1 and pin 6 to GND on a RAK4631's RAK19007 base board](/img/modules/Serial/wio-terminal-rak4631.svg)
+
+```shell title="RAK4631 on a RAK19007 base board"
+meshtastic --port <USB_PORT> \
+  --set serial.enabled true \
+  --set serial.mode PROTO \
+  --set serial.baud BAUD_19200 \
+  --set serial.rxd 15 \
+  --set serial.txd 16
+```
+
+Set [GPS Mode](/docs/configuration/radio/position/#gps-mode) to `Not_Present`. A GPS module uses the same pins.
+
+</TabItem>
+<TabItem value="w12">
+
+![Wio Terminal pin 8 wired to GPIO 39, pin 10 to GPIO 38 and pin 6 to GND on a Meshnology W12's GNSS header](/img/modules/Serial/wio-terminal-meshnology-w12.svg)
+
+```shell title="Meshnology W12"
+meshtastic --port <USB_PORT> \
+  --set serial.enabled true \
+  --set serial.mode PROTO \
+  --set serial.baud BAUD_19200 \
+  --set serial.rxd 39 \
+  --set serial.txd 38
+```
+
+On the W12, GPIO 17 and 18 drive the screen. Use the unpopulated GNSS header instead.
+
+</TabItem>
+</Tabs>
+
+In the Apple app, the same settings are under Settings > Module Configuration > Serial. These are the W12's:
+
+![Serial Config in the Meshtastic Apple app with Serial Enabled on, 19200 baud, Protobufs mode, RX on pin 39 and TX on pin 38](/img/modules/Serial/wio-terminal-app-serial-config.webp)
+
+### Install the sketch
+
+1. In the Arduino IDE, add the Seeed SAMD boards package and select **Seeeduino Wio Terminal**. The package includes the screen library the sketch uses.
+2. Install the **Meshtastic** library from the Library Manager.
+3. Open **File > Examples > Meshtastic > WioTerminalDashboard** and upload it.
+
+The sketch uses 19200 baud. To use another speed, change `kRadioBaud` in the sketch to match `serial.baud`.
+
+Once wired and configured, the status in the top right shows **Syncing** while the node list arrives, then the radio's short name. If it stays on **No radio**, check that TX and RX are crossed.
